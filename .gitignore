@@ -1,0 +1,15 @@
+# Gated dataset (research terms: no redistribution) and everything derived from it
+data/
+
+# Papers: copyrighted PDFs stay local; notes are tracked
+literature/**/*.pdf
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# OS / tools
+.DS_Store
+.cache/
