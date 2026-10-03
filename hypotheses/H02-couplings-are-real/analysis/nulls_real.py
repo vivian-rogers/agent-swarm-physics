@@ -27,68 +27,13 @@ ROOT = Path(__file__).resolve().parents[3]
 DATA = ROOT / "data/processed/H02-couplings-are-real"
 SHARED = ROOT / "data/processed/shared"
 NSURR = int(sys.argv[1]) if len(sys.argv) > 1 else 100
+SPIN = sys.argv[2] if len(sys.argv) > 2 else "active"   # 'talk' = post-hoc mapping
+SUFFIX = "" if SPIN == "active" else f"_{SPIN}"
 WORKERS = 3
 
 
-# ----------------------------------------------------------------- held-out comparison (N2)
-def mean_field_covs(S, labs):
-    """Per agent: mean spin of same-lab others (0 if none) and of other-lab agents. Returns (T, N, 2)."""
-    T, N = S.shape
-    out = np.zeros((T, N, 2))
-    labs = np.asarray(labs)
-    for i in range(N):
-        same = (labs == labs[i]) & (np.arange(N) != i)
-        other = labs != labs[i]
-        if same.any():
-            out[:, i, 0] = S[:, same].mean(1)
-        if other.any():
-            out[:, i, 1] = S[:, other].mean(1)
-    return out
-
-
-def loglik(eta, y):
-    return (y * eta - np.logaddexp(0, eta))
-
-
-def heldout(S, day, minute, labs):
-    """Leave-one-day-out log-lik per transition (nats, summed over agents) for M1, M2, M3."""
-    N = S.shape[1]
-    X, Y, pen, info = L.kinetic_design(S, day, minute, "block", "1")
-    dst = info["dst"]; dday = day[dst]
-    nb_cols = X.shape[1] - (1 + N)
-    blkcols = X[:, 1 + N:]
-    mf = mean_field_covs(S.astype(float), labs)[info["src"]]  # (T', N, 2)
-    rows = []
-    for d in np.unique(day):
-        tr, te = dday != d, dday == d
-        keep_tr = blkcols[tr].sum(0) > 0; keep_te = blkcols[te].sum(0) > 0
-        Xtr = np.hstack([X[tr][:, :1 + N], blkcols[tr][:, keep_tr]])
-        ptr = np.zeros((N, Xtr.shape[1])); ptr[:, 1:1 + N] = L.LAM_J; ptr[:, 1 + N:] = L.LAM_D; ptr[:, 0] = 1e-8
-        # M3: full couplings
-        B3 = L.fit_logistic(Xtr, Y[tr], ptr)
-        # M1: self only
-        p1 = ptr.copy(); cp = np.full((N, N), L.BIG); np.fill_diagonal(cp, L.LAM_J); p1[:, 1:1 + N] = cp
-        B1 = L.fit_logistic(Xtr, Y[tr], p1)
-        # M2: self + same-lab mean + other-lab mean (per-agent designs)
-        B2 = []
-        for i in range(N):
-            Xi = np.hstack([Xtr[:, :1], Xtr[:, 1 + i:2 + i], mf[tr, i, :], Xtr[:, 1 + N:]])
-            pi = np.zeros(Xi.shape[1]); pi[1:4] = L.LAM_J; pi[4:] = L.LAM_D; pi[0] = 1e-8
-            B2.append(L.fit_logistic(Xi, Y[tr][:, i:i + 1], pi)[0])
-        # test day: refit intercept + block fields with coupling part frozen as offset
-        Xte_f = np.hstack([np.ones((te.sum(), 1)), blkcols[te][:, keep_te]])
-        pf = np.zeros(Xte_f.shape[1]); pf[1:] = L.LAM_D; pf[0] = 1e-8
-        Ste = X[te][:, 1:1 + N]
-        off3 = Ste @ B3[:, 1:1 + N].T
-        off1 = Ste * np.diag(B1[:, 1:1 + N])[None, :]
-        off2 = np.stack([B2[i][1] * Ste[:, i] + mf[te, i, :] @ B2[i][2:4] for i in range(N)], 1)
-        res = {"day": int(d), "T": int(te.sum())}
-        for name, off in [("M1", off1), ("M2", off2), ("M3", off3)]:
-            Bf = L.fit_logistic(Xte_f, Y[te], pf, offset=off)
-            eta = Xte_f @ Bf.T + off
-            res[name] = float(loglik(eta, Y[te]).sum())
-        rows.append(res)
-    return rows
+# held-out comparison (N2) lives in h02lib: mean_field_covs, loglik, heldout
+from h02lib import heldout  # noqa: E402
 
 
 # ----------------------------------------------------------------- per chunk
@@ -168,15 +113,15 @@ def analyse(args):
 
 
 def main():
-    chunks = load_chunks()
+    chunks = load_chunks(SPIN)
     roster = pl.read_parquet(SHARED / "roster.parquet")
     labs = dict(zip(roster["agent"].to_list(), roster["lab"].to_list()))
     jobs = [(ch, c, labs, k) for k, (ch, c) in enumerate(sorted(chunks.items()))]
     with Pool(WORKERS) as pool:
         out = pool.map(analyse, jobs, chunksize=1)
-    pl.DataFrame([o[0] for o in out]).write_parquet(DATA / "real_chunks.parquet")
-    pl.DataFrame([r for o in out for r in o[1]]).write_parquet(DATA / "real_couplings.parquet", compression="zstd")
-    pl.DataFrame([r for o in out for r in o[2]]).write_parquet(DATA / "real_influence.parquet")
+    pl.DataFrame([o[0] for o in out]).write_parquet(DATA / f"real_chunks{SUFFIX}.parquet")
+    pl.DataFrame([r for o in out for r in o[1]]).write_parquet(DATA / f"real_couplings{SUFFIX}.parquet", compression="zstd")
+    pl.DataFrame([r for o in out for r in o[2]]).write_parquet(DATA / f"real_influence{SUFFIX}.parquet")
     print("done", len(out))
 
 

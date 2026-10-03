@@ -171,6 +171,25 @@ def pair_ep_gauss(G: np.ndarray):
     return out
 
 
+def pair_ep_blocks(G: np.ndarray, k: int = 4):
+    """Per-column block cross-fitted Gaussian pair EP: 2 mean_{a != b} gbar_a gbar_b / s^2 over k contiguous blocks.
+
+    Unbiased for 2 mu^2 / Var when blocks are independent; unlike pair_ep_gauss it does not assume g is serially
+    uncorrelated (within-day flicker makes g anti-correlated, which biases the iid correction downward)."""
+    G = np.asarray(G, dtype=np.float64)
+    T = G.shape[0]
+    if T < 2 * k:
+        return np.full(G.shape[1], np.nan)
+    edges = np.linspace(0, T, k + 1).astype(int)
+    M = np.array([G[edges[a]:edges[a + 1]].mean(0) for a in range(k)])
+    cross = (M.sum(0) ** 2 - (M ** 2).sum(0)) / (k * (k - 1))
+    v = G.var(0, ddof=1)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        out = 2.0 * cross / v
+    out[~(v > 0)] = np.nan
+    return out
+
+
 def pair_ep_exact(G: np.ndarray):
     """Per-column exact 1-observable bound (plug-in, biased upward): max_theta theta gbar - ln mean e^{-theta g}."""
     out = np.empty(G.shape[1])

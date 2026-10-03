@@ -19,13 +19,20 @@ ROOT = Path(__file__).resolve().parents[3]
 DATA = ROOT / "data/processed/H02-couplings-are-real"
 
 
-def load_chunks():
+def load_chunks(spin="active", min_bins=30):
+    """spin 'active' (state >= 3, pre-registered) or 'talk' (state == 4, post-hoc; agents need >= min_bins talk bins)."""
     sp = pl.read_parquet(DATA / "spins.parquet")
+    thr = {"active": 3, "talk": 4}[spin]
     out = {}
     for ch in sp["chunk"].unique().sort().to_list():
         d = sp.filter(pl.col("chunk") == ch)
+        if spin != "active":
+            ok = d.group_by("agent").agg((pl.col("state") >= thr).sum().alias("n")).filter(pl.col("n") >= min_bins)
+            d = d.join(ok.select("agent"), on="agent", how="semi")
+            if d["agent"].n_unique() < 3:
+                continue
         agents = sorted(d["agent"].unique().to_list())
-        piv = (d.with_columns(pl.when(pl.col("state") >= 3).then(1).otherwise(-1).cast(pl.Int8).alias("s"))
+        piv = (d.with_columns(pl.when(pl.col("state") >= thr).then(1).otherwise(-1).cast(pl.Int8).alias("s"))
                .pivot(on="agent", index=["day", "minute"], values="s").sort("day", "minute"))
         S = piv.select([str(a) for a in agents]).to_numpy()
         meta = d.select("goal_no", "mode", "regime").row(0)

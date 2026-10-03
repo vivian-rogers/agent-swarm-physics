@@ -2,8 +2,9 @@
 
 fig1_recovery.pdf  synthetic: P(leader ranked #1) and coupling AUC vs days, KI-1 vs EQ-PL, by leader strength
 fig2_nulls.pdf     real (exploratory): fraction of significant couplings per chunk for the null hierarchy, mode I vs C
-fig3_heldout.pdf   real: held-out log-lik gain per bin (M3 - M1, M2 - M1) per chunk, mode I vs C
+fig3_heldout.pdf   real: calibrated held-out z (M2 and M3 over M1 vs N1 surrogates) per chunk, mode I vs C
 fig4_g26.pdf       real: net outgoing influence z-scores in #26 (elected leader DeepSeek-V3.2 marked)
+fig5_meanfield.pdf H02-MF: Curie-Weiss beta*J0 per chunk vs N1 null; forward P(K) for #39
 """
 from __future__ import annotations
 
@@ -75,19 +76,29 @@ def fig2():
 
 
 def fig3():
-    R = pl.read_parquet(DATA / "real_chunks.parquet").sort("regime", "mode", "chunk")
-    fig, ax = plt.subplots(figsize=(6.6, 2.4))
+    R = pl.read_parquet(DATA / "heldout_null.parquet").sort("regime", "mode", "chunk")
+    R10 = pl.read_parquet(DATA / "heldout_null_b10_rIII.parquet").select("chunk", pl.col("z21").alias("z21_b10"))
+    R = R.join(R10, on="chunk", how="left")
+    fig, ax = plt.subplots(figsize=(6.6, 2.5))
     x = np.arange(R.height)
-    ax.bar(x - 0.2, R["ho_d31_per_bin"] * 1000, 0.38, color=[MODE[m] for m in R["mode"]], label="M3 (pairwise J) − M1")
-    ax.bar(x + 0.2, R["ho_d21_per_bin"] * 1000, 0.38, color=[MODE[m] for m in R["mode"]], alpha=0.45,
-           label="M2 (family + global field) − M1")
-    ax.axhline(0, color=INK2, lw=0.8)
-    ax.set_xticks(x); ax.set_xticklabels([f"{c}\n{m}/{r}" for c, m, r in zip(R["chunk"], R["mode"], R["regime"])],
-                                         fontsize=5.5)
-    ax.set_ylabel("held-out Δ log-lik\n(millinats / bin, all agents)")
-    ax.legend(fontsize=7, loc="lower left")
-    ax.set_title("Leave-one-day-out gain over independent agents with block fields (blue: mode I, orange: mode C)",
-                 fontsize=8, color=INK, loc="left")
+    cols = [MODE[m] for m in R["mode"]]
+    ax.scatter(x - 0.12, R["z21"], s=26, marker="o", color=cols, edgecolor="white", linewidth=0.5, zorder=3,
+               label="M2 (family + global mean field), 30-min null")
+    ax.scatter(x + 0.12, R["z31"], s=26, marker="s", facecolor="white", edgecolor=cols, linewidth=1.2, zorder=3,
+               label="M3 (pairwise J), 30-min null")
+    m = R["z21_b10"].is_not_null().to_numpy()
+    ax.scatter(x[m] - 0.12, R["z21_b10"].to_numpy()[m], s=22, marker="v", color=INK2, zorder=4,
+               label="M2, 10-min null (regime III)")
+    ax.axhline(0, color=INK2, lw=0.8); ax.axhline(2, color=INK2, lw=0.8, ls=":")
+    split = int((R["regime"] == "I").sum()) - 0.5
+    ax.axvline(split, color=GRID, lw=1.5)
+    ax.text(split - 0.3, 8.3, "regime I", ha="right", color=INK2, fontsize=7)
+    ax.text(split + 0.3, 8.3, "regime III", ha="left", color=INK2, fontsize=7)
+    ax.set_xticks(x); ax.set_xticklabels([f"{c[1:3]}.{c[-1]}\n{m}" for c, m in zip(R["chunk"], R["mode"])], fontsize=6)
+    ax.set_ylabel("z of held-out Δ log-lik\nvs block-shift surrogates")
+    ax.set_xlabel("goal.chunk and mode (blue I = individual objectives, orange C = shared objective)", fontsize=7)
+    ax.legend(fontsize=6.5, loc="upper left", ncol=1)
+    ax.set_ylim(-3.5, 9.2)
     fig.tight_layout(); fig.savefig(FIG / "fig3_heldout.pdf"); plt.close(fig)
 
 
@@ -102,13 +113,41 @@ def fig4():
         ax.set_yticks(np.arange(d.height)); ax.set_yticklabels(d["name"], fontsize=6.5)
         ax.axvline(0, color=INK2, lw=0.8); ax.axvline(2, color=INK2, lw=0.6, ls=":"); ax.axvline(-2, color=INK2, lw=0.6, ls=":")
         ax.set_xlabel("z of net outgoing influence vs N1")
-        ax.set_title(f"#26 ({lab}); orange = DeepSeek-V3.2", fontsize=8, color=INK, loc="left")
+        ax.set_title(f"#26, {lab} (orange: DeepSeek-V3.2)", fontsize=7.5, color=INK, loc="left")
     fig.tight_layout(); fig.savefig(FIG / "fig4_g26.pdf"); plt.close(fig)
+
+
+def fig5():
+    C = pl.read_parquet(DATA / "mf_cw.parquet").sort("regime", "mode", "chunk")
+    PK = pl.read_parquet(DATA / "mf_pk.parquet")
+    fig, ax = plt.subplots(1, 2, figsize=(6.6, 2.6), gridspec_kw={"width_ratios": [1.6, 1]})
+    x = np.arange(C.height)
+    lo = C["bJ0_null_mean"] - 2 * C["bJ0_null_sd"]; hi = C["bJ0_null_mean"] + 2 * C["bJ0_null_sd"]
+    ax[0].vlines(x, lo, hi, color=GRID, lw=5, label="N1 null ±2 sd")
+    ax[0].scatter(x, C["bJ0"], s=24, color=[MODE[m] for m in C["mode"]], edgecolor="white", linewidth=0.5, zorder=3)
+    split = int((C["regime"] == "I").sum()) - 0.5
+    ax[0].axvline(split, color=GRID, lw=1.5); ax[0].axhline(0, color=INK2, lw=0.8)
+    ax[0].text(split - 0.3, 0.6, "regime I", ha="right", color=INK2, fontsize=7)
+    ax[0].text(split + 0.3, 0.6, "regime III", ha="left", color=INK2, fontsize=7)
+    ax[0].set_xticks(x); ax[0].set_xticklabels([f"{c[1:3]}.{c[-1]}\n{m}" for c, m in zip(C["chunk"], C["mode"])], fontsize=5.5)
+    ax[0].set_ylabel(r"Curie–Weiss $\beta J_0$ (within 30-min blocks)"); ax[0].set_ylim(-0.2, 0.68)
+    ax[0].set_title("HH80: uniform equal-time coupling (blue I, orange C)", fontsize=8, color=INK, loc="left")
+    ax[0].legend(fontsize=6.5, loc="upper left")
+    ch = "g39c0"
+    d = PK.filter(pl.col("chunk") == ch).sort("K")
+    ax[1].bar(d["K"], d["obs"], color="#cde2fb", width=0.8, label="observed")
+    ax[1].plot(d["K"], d["ind"], "-", color=INK2, lw=1.5, label="independent")
+    ax[1].plot(d["K"], d["cw"], "--", color=MODE["C"], lw=1.5, label="Curie–Weiss")
+    ax[1].set_yscale("log"); ax[1].set_ylim(1e-4, 0.3)
+    ax[1].set_xlabel("K = active agents per minute"); ax[1].set_ylabel("P(K)")
+    ax[1].set_title(f"Forward P(K), #39 (N = 15)", fontsize=8, color=INK, loc="left")
+    ax[1].legend(fontsize=6.5, loc="upper left")
+    fig.tight_layout(); fig.savefig(FIG / "fig5_meanfield.pdf"); plt.close(fig)
 
 
 if __name__ == "__main__":
     import sys
     FIG.mkdir(exist_ok=True)
-    for f in (sys.argv[1:] or ["fig1", "fig2", "fig3", "fig4"]):
+    for f in (sys.argv[1:] or ["fig1", "fig2", "fig3", "fig4", "fig5"]):
         globals()[f]()
         print("wrote", f)

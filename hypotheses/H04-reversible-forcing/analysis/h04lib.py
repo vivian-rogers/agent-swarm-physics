@@ -33,6 +33,7 @@ FIG = ROOT / "hypotheses/H04-reversible-forcing/figures"
 HOLDOUT = json.loads((ROOT / "hypotheses/holdout.json").read_text())
 
 PRE, POST = 30, 60
+ISO_POST = 60  # isolation / control-eligibility window after the kick; sensitivity runs set 30 (then only A30 is clean)
 LAGS = np.arange(-PRE, POST + 1)
 L0 = PRE  # column index of tau = 0
 HIST = 15  # pre-history window for matching
@@ -216,6 +217,7 @@ class Cells:
     traj: np.ndarray         # (n_cells, len(LAGS)) int8, -1 = outside the day
     act_on: np.ndarray       # n(m)=1 and n(m-1)=0 (an activation at m)
     post30: np.ndarray       # sum_{s=1..30} n(m+s)
+    act10: np.ndarray = None # an activation (0->1) within tau = 1..10
     index: dict = field(default_factory=dict)  # (day,row,minute) -> cell id
 
     def strata(self, ids, nb_adjust: int = 0):
@@ -253,8 +255,8 @@ def build_cells(days: list[Day], agent_codes: np.ndarray, var: str = "active") -
         tod = (m * 3 // nm)[None, :].repeat(na, 0)
         loc = ((sprev * 4 + ACT_BINS[act15]) * 3 + IDLE_BINS[idl15]) * 3 + tod
         aidx = np.array([a_index[int(a)] for a in d.agents])[:, None].repeat(len(m), 1)
-        elig = (window_sum(d.hits_dir, -PRE, POST)[:, m] == 0)
-        nbw = window_sum(d.hits_nb, -PRE, POST)[:, m]
+        elig = (window_sum(d.hits_dir, -PRE, ISO_POST)[:, m] == 0)
+        nbw = window_sum(d.hits_nb, -PRE, ISO_POST)[:, m]
         pad = np.full((na, PRE + nm + POST), -1, dtype=np.int8)
         pad[:, PRE:PRE + nm] = y
         cols = PRE + m[:, None] + LAGS[None, :]                      # (len(m), n_lags)
@@ -274,6 +276,8 @@ def build_cells(days: list[Day], agent_codes: np.ndarray, var: str = "active") -
         parts["act_on"].append(act_on.ravel())
         parts["post30"].append(post30.ravel().astype(np.int16))
     c = Cells(**{k: np.concatenate(v) for k, v in parts.items()})
+    t = c.traj[:, L0:L0 + 11]
+    c.act10 = ((t[:, 1:] == 1) & (t[:, :-1] == 0)).any(axis=1)
     c.index = {(int(a), int(b), int(m)): j for j, (a, b, m) in enumerate(zip(c.day, c.row, c.minute))}
     return c
 
@@ -290,6 +294,12 @@ class Controls:
     act_local_n: np.ndarray
     act_traj_full: np.ndarray  # mean trajectory after spontaneous activations (per full stratum)
     act_traj_local: np.ndarray
+    non_traj_full: np.ndarray = None   # mean trajectory after a non-activation (n(m)=n(m-1)=0)
+    non_traj_local: np.ndarray = None
+    non_full_n: np.ndarray = None
+    non_local_n: np.ndarray = None
+    act10_full: np.ndarray = None      # P(activation within 10 min) among eligible cells
+    act10_local: np.ndarray = None
 
 
 def control_means(c: Cells, n_agents: int) -> Controls:
@@ -319,7 +329,16 @@ def control_means(c: Cells, n_agents: int) -> Controls:
         post = c.traj[a][:, L0 + 1:L0 + 31].astype(float)
         atf = np.stack([np.bincount(SF[a], weights=post[:, s], minlength=nf) for s in range(30)], 1) / af_n[:, None]
         atl = np.stack([np.bincount(SL[a], weights=post[:, s], minlength=nl) for s in range(30)], 1) / al_n[:, None]
-    return Controls(mf, kf, ml, kl, af, af_n, al, al_n, atf, atl)
+    z = e & (c.traj[:, L0] == 0) & (c.traj[:, L0 - 1] == 0) & (c.traj[:, L0 + 30] >= 0)
+    nf_n = np.bincount(SF[z], minlength=nf).astype(float)
+    nl_n = np.bincount(SL[z], minlength=nl).astype(float)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        post0 = c.traj[z][:, L0 + 1:L0 + 31].astype(float)
+        ntf = np.stack([np.bincount(SF[z], weights=post0[:, s_], minlength=nf) for s_ in range(30)], 1) / nf_n[:, None]
+        ntl = np.stack([np.bincount(SL[z], weights=post0[:, s_], minlength=nl) for s_ in range(30)], 1) / nl_n[:, None]
+        p10f = np.bincount(sf, weights=c.act10[e].astype(float), minlength=nf) / np.bincount(sf, minlength=nf)
+        p10l = np.bincount(sl, weights=c.act10[e].astype(float), minlength=nl) / np.bincount(sl, minlength=nl)
+    return Controls(mf, kf, ml, kl, af, af_n, al, al_n, atf, atl, ntf, ntl, nf_n, nl_n, p10f, p10l)
 
 
 # ----------------------------------------------------------------------------- Green's functions
@@ -443,7 +462,7 @@ def autocorr(days: list[Day], agents_w: dict[int, float], max_lag: int = POST) -
     num = {a: np.zeros(max_lag + 1) for a in agents_w}
     den = {a: np.zeros(max_lag + 1) for a in agents_w}
     for d in days:
-        free = window_sum(d.hits_dir, -PRE, POST) == 0
+        free = window_sum(d.hits_dir, -PRE, ISO_POST) == 0
         n = (d.state >= 3).astype(float)
         for i, a in enumerate(d.agents):
             a = int(a)
@@ -493,38 +512,151 @@ def ckp(r: Resp, W: np.ndarray, C: np.ndarray) -> dict:
 
 def onsager(c: Cells, ctl: Controls, cell_ids: np.ndarray, n_days: int, W: np.ndarray, max_wait: int = 10,
             nb_adjust: int = 0) -> dict:
-    """First activation within max_wait min after each kick vs. matched spontaneous activations."""
+    """Onsager-regression FD ratio, aligned on the responder's first activation within max_wait min after a kick.
+
+    For each kicked activation at minute a (stratum s at a): E_kick(u) = n(a+u), u = 1..30; E1(u) = mean after
+    spontaneous activations in s; E0(u) = mean after non-activations in s (same pre-history). Then
+    X(tau) = sum_{u<=tau} (E_kick - E0) / sum_{u<=tau} (E1 - E0); X = 1 if the kick acts only as a one-step field
+    on the activation (the reading turn); T_eff = 1/X. Also reports the kick's shift in P(activation within 10 min).
+    """
     ids = cell_ids[cell_ids >= 0]
-    kick_post, ctrl_post, dd, ktraj, ctraj = [], [], [], [], []
+    sf, sl = c.strata(ids, nb_adjust)
+    use_f = np.isfinite(ctl.act10_full[sf]) & (ctl.cnt_full[sf, L0 + 1] >= MIN_CTRL)
+    p10c = np.where(use_f, ctl.act10_full[sf], ctl.act10_local[sl])
+    dd0 = c.day[ids]
+    with np.errstate(invalid="ignore", divide="ignore"):
+        k10 = np.bincount(dd0, weights=c.act10[ids].astype(float), minlength=n_days)
+        c10 = np.bincount(dd0, weights=np.nan_to_num(p10c), minlength=n_days)
+        n10 = np.bincount(dd0, minlength=n_days).astype(float)
+        p_k, p_c = (W @ k10) / (W @ n10), (W @ c10) / (W @ n10)
+    out = {"p_act10_kick": ci(p_k), "p_act10_ctrl": ci(p_c), "p_act10_diff": ci(p_k - p_c)}
+    rows = []
     for j in ids:
         tr = c.traj[j]
         for w in range(1, max_wait + 1):
+            if tr[L0 + w] < 0:
+                break
             if tr[L0 + w] == 1 and tr[L0 + w - 1] == 0:
                 a = c.index.get((int(c.day[j]), int(c.row[j]), int(c.minute[j]) + w), -1)
                 if a < 0 or c.traj[a, L0 + 30] < 0:
                     break
                 sfa, sla = (int(x[0]) for x in c.strata(np.array([a]), nb_adjust))
-                if ctl.act_full_n[sfa] >= MIN_CTRL:
-                    cp, ct = ctl.act_full[sfa], ctl.act_traj_full[sfa]
-                elif ctl.act_local_n[sla] >= MIN_CTRL:
-                    cp, ct = ctl.act_local[sla], ctl.act_traj_local[sla]
+                if ctl.act_full_n[sfa] >= MIN_CTRL and ctl.non_full_n[sfa] >= MIN_CTRL:
+                    e1, e0 = ctl.act_traj_full[sfa], ctl.non_traj_full[sfa]
+                elif ctl.act_local_n[sla] >= MIN_CTRL and ctl.non_local_n[sla] >= MIN_CTRL:
+                    e1, e0 = ctl.act_traj_local[sla], ctl.non_traj_local[sla]
                 else:
                     break
-                kick_post.append(c.post30[a]); ctrl_post.append(cp); dd.append(c.day[a])
-                ktraj.append(c.traj[a, L0 + 1:L0 + 31]); ctraj.append(ct)
+                rows.append((c.day[a], c.traj[a, L0 + 1:L0 + 31].astype(float), e1, e0))
                 break
-            if tr[L0 + w] < 0:
-                break
-    if len(dd) < 10:
-        return {"n_activations": len(dd), "ratio": None}
-    dd = np.array(dd)
-    ks = np.bincount(dd, weights=np.array(kick_post, float), minlength=n_days)
-    cs = np.bincount(dd, weights=np.array(ctrl_post, float), minlength=n_days)
+    out["n_activations"] = len(rows)
+    out["share_of_kicks_activated"] = len(rows) / max(1, len(ids))
+    if len(rows) < 10:
+        out["X"] = None
+        return out
+    dd = np.array([r[0] for r in rows])
+    ek = np.array([r[1] for r in rows]); e1 = np.array([r[2] for r in rows]); e0 = np.array([r[3] for r in rows])
+    num = np.zeros((n_days, 30)); den = np.zeros((n_days, 30)); raw_k = np.zeros(n_days); raw_1 = np.zeros(n_days)
+    np.add.at(num, dd, np.cumsum(ek - e0, 1)); np.add.at(den, dd, np.cumsum(e1 - e0, 1))
+    np.add.at(raw_k, dd, ek.sum(1)); np.add.at(raw_1, dd, e1.sum(1))
     with np.errstate(invalid="ignore", divide="ignore"):
-        r = (W @ ks) / (W @ cs)
-    return {"n_activations": len(dd), "share_of_kicks_activated": len(dd) / len(ids), "ratio": ci(r),
-            "kicked_post30": float(np.mean(kick_post)), "spont_post30": float(np.mean(ctrl_post)),
-            "kicked_traj": np.mean(ktraj, 0).tolist(), "spont_traj": np.mean(ctraj, 0).tolist()}
+        X = (W @ num) / (W @ den)
+        out["X"] = {f"tau{t}": ci(X[:, t - 1]) for t in (1, 5, 10, 20, 30)}
+        out["Teff_tau30"] = ci(1 / X[:, 29])
+        out["_X30_rows"] = X[:, 29]
+        out["raw_ratio_post30"] = ci((W @ raw_k) / (W @ raw_1))
+    out["kicked_traj"] = ek.mean(0).tolist(); out["spont_traj"] = e1.mean(0).tolist(); out["non_traj"] = e0.mean(0).tolist()
+    return out
+
+
+def fdt_shape(r: Resp, W: np.ndarray, C: np.ndarray, split: int = 5, horizon: int = 30) -> dict:
+    """Field-units-free FDT shape test. Under FDT the impulse response is proportional to -dC/dtau, so the share of
+    the integrated response over tau = 1..horizon that falls after tau = split must equal the share of the
+    correlation drop C(0) - C(horizon) that occurs after tau = split."""
+    G = curves(r, W)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        fR = np.nansum(G[:, L0 + split + 1:L0 + horizon + 1], 1) / np.nansum(G[:, L0 + 1:L0 + horizon + 1], 1)
+    fC = (C[split] - C[horizon]) / (C[0] - C[horizon])
+    return {"share_resp_after": ci(fR), "share_corr_drop_after": float(fC), "split": split, "horizon": horizon,
+            "C_over_C0": (np.asarray(C) / C[0]).round(4).tolist()}
+
+
+# ----------------------------------------------------------------------------- H04-MF: mean-field forward check (HH81)
+
+MF_MA = 61     # centered moving-average window (min) for detrending the field
+MF_LAGS = 31
+
+
+def _ma(x: np.ndarray, w: int) -> np.ndarray:
+    h = w // 2
+    n = x.shape[1]
+    cs = np.concatenate([np.zeros((x.shape[0], 1)), np.cumsum(x, 1)], 1)
+    a = np.clip(np.arange(n) - h, 0, n); b = np.clip(np.arange(n) + h + 1, 0, n)
+    return (cs[:, b] - cs[:, a]) / (b - a)
+
+
+def e_time(c: np.ndarray) -> float:
+    """1/e crossing of a normalized correlation (or response) curve indexed by lag 0, 1, 2, ... (linear interpolation)."""
+    below = np.nonzero(c < 1 / np.e)[0]
+    if not len(below) or below[0] == 0:
+        return np.nan
+    t = below[0]
+    return float(t - 1 + (c[t - 1] - 1 / np.e) / (c[t - 1] - c[t]))
+
+
+def mf_day_stats(days: list[Day]) -> dict:
+    """Per-day sums for the Curie-Weiss inversion and autocorrelations (detrended and day-centered variants)."""
+    nd = len(days)
+    out = {k: np.zeros(nd) for k in ("v_tot", "v_ind", "v_tot_c", "v_ind_c", "hom_num", "hom_den")}
+    out["a1"] = np.zeros((nd, MF_LAGS)); out["am"] = np.zeros((nd, MF_LAGS))
+    for k, d in enumerate(days):
+        sp = 2.0 * (d.state >= 3) - 1.0
+        if sp.shape[1] < MF_MA:
+            continue
+        x = sp - _ma(sp, MF_MA)
+        X = x.sum(0)
+        out["v_tot"][k] = (X ** 2).sum(); out["v_ind"][k] = (x ** 2).sum()
+        xc = sp - sp.mean(1, keepdims=True)
+        out["v_tot_c"][k] = (xc.sum(0) ** 2).sum(); out["v_ind_c"][k] = (xc ** 2).sum()
+        m = sp.mean(0); N, T = sp.shape
+        out["hom_num"][k] = N * ((m - m.mean()) ** 2).sum(); out["hom_den"][k] = T * (1 - m.mean() ** 2)
+        for t in range(MF_LAGS):
+            out["a1"][k, t] = (x[:, :T - t] * x[:, t:]).sum()
+            out["am"][k, t] = (X[:T - t] * X[t:]).sum()
+    return out
+
+
+def mean_field(days: list[Day], W: np.ndarray) -> dict:
+    st = mf_day_stats(days)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        VR = (W @ st["v_tot"]) / (W @ st["v_ind"])
+        VRc = (W @ st["v_tot_c"]) / (W @ st["v_ind_c"])
+        VRh = (W @ st["hom_num"]) / (W @ st["hom_den"])
+        c1 = (W @ st["a1"]); c1 = c1 / c1[:, :1]
+        cm = (W @ st["am"]); cm = cm / cm[:, :1]
+    K = 1 - 1 / VR
+    tau0 = np.array([e_time(r) for r in c1]); taum = np.array([e_time(r) for r in cm])
+    tau0_int = c1[:, :31].sum(1) - 0.5
+    tau_pred = tau0 / (1 - K)
+    return {"VR": ci(VR), "K": ci(K), "K_daycentered": ci(1 - 1 / VRc), "K_homogeneous": ci(1 - 1 / VRh),
+            "tau0": ci(tau0), "tau0_integrated": ci(tau0_int), "tau_m": ci(taum), "tau_pred": ci(tau_pred),
+            "taum_over_tau0": ci(taum / tau0), "inv_1mK": ci(1 / (1 - K)),
+            "mf_p3_ratio": ci((taum / tau0) * (1 - K)),
+            "c1": c1[0].round(4).tolist(), "cm": cm[0].round(4).tolist(), "_tau_pred_rows": tau_pred, "_K_rows": K}
+
+
+def decay_rows(Gb: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Per bootstrap row: 1/e relaxation time after the smoothed peak, and effective width A60/peak (minutes)."""
+    rel, wid = [], []
+    for g in Gb:
+        post = np.nan_to_num(g[L0 + 1:])
+        sm = np.convolve(post, np.ones(3) / 3, mode="same")
+        p = int(np.argmax(sm)); pk = sm[p]
+        if pk <= 0:
+            rel.append(np.nan); wid.append(np.nan); continue
+        tail = sm[p:] / pk
+        rel.append(e_time(tail)); wid.append(post.sum() / pk)
+    return np.array(rel), np.array(wid)
 
 
 # ----------------------------------------------------------------------------- provenance
@@ -576,14 +708,14 @@ def build_sets(days: list[Day], resp: pl.DataFrame, c: Cells) -> dict:
     W = {}
     for k, d in enumerate(days):
         W[k] = {
-            "dir": window_sum(d.hits_dir, -PRE, POST),
-            "any": window_sum(d.hits_any, -PRE, POST),
+            "dir": window_sum(d.hits_dir, -PRE, ISO_POST),
+            "any": window_sum(d.hits_any, -PRE, ISO_POST),
             "pre": window_sum(d.hits_dir, -PRE, -1),
             "now2": window_sum(d.hits_dir, 0, 1),
             "now2_h": window_sum(d.hits_h, 0, 1),
             "now2_n": window_sum(d.hits_n, 0, 1),
-            "after2": window_sum(d.hits_dir, 2, POST),
-            "after1": window_sum(d.hits_dir, 1, POST),
+            "after2": window_sum(d.hits_dir, 2, ISO_POST),
+            "after1": window_sum(d.hits_dir, 1, ISO_POST),
         }
     r = resp.with_columns(pl.col("day").cast(pl.Int64))
     sets = {}
@@ -655,7 +787,7 @@ def build_sets(days: list[Day], resp: pl.DataFrame, c: Cells) -> dict:
             ok = (W[k]["pre"][i, m] == 0 and A[i, m] == 1 and H[i, m] == 1 and W[k]["after1"][i, m] == 1)
             dlt = -1
             if ok:
-                nxt = np.nonzero(A[i, m + 1:m + POST + 1])[0]
+                nxt = np.nonzero(A[i, m + 1:m + ISO_POST + 1])[0]
                 dlt = int(nxt[0]) + 1 if len(nxt) else -1
                 ok = 3 <= dlt <= 20 and H[i, m + dlt] == 1
             sel.append(ok); delta.append(dlt if ok else -1)

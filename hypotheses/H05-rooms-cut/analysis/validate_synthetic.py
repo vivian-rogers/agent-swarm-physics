@@ -131,7 +131,7 @@ def v3(rng, n_rep, nd=5, mu=0.06, sd=0.08, h0=-0.3):
     cx = rooms[i_all] != rooms[j_all]
     recs = []
     for rep in range(n_rep):
-        Jb = make_J(N, rooms, rng, mu_in=mu, sd=sd, mu_out=mu)
+        Jb = make_J(N, rooms, rng, mu_in=mu, sd=sd, mu_out=mu, self_c=0.7)
         h = np.full(N, h0) + rng.normal(0, 0.15, N)
         Sb, db = simulate_kinetic_ising(Jb, h, nd, DAY_LEN, rng=rng)
         mb = Sb.mean(0).astype(float)
@@ -170,6 +170,63 @@ def v3(rng, n_rep, nd=5, mu=0.06, sd=0.08, h0=-0.3):
             recs.append(rec)
             print("V3", {k: (round(float(v), 4) if isinstance(v, (float, np.floating)) else v) for k, v in rec.items()}, flush=True)
     return recs
+
+
+
+def v4(rng, n_rep, mus=(0.01, 0.02), nd=5):
+    """Village-matched power: 15 agents, rooms of 4 and 11 (the #best/#rest split), nd days before/after.
+
+    Before: one room, every off-diagonal J ~ N(mu, 0.05); after: cross-room J = 0 ('cut') or unchanged ('no_cut').
+    Self-coupling 0.7 and h ~ 0 give activity ~0.5 and flip rate ~0.2-0.25, like regime III active spins.
+    Scores the event DiD on kappa (cut arm vs. pairs co-located throughout) with the same day bootstrap and
+    assignment permutation used on the real data."""
+    N = 15
+    rooms = np.r_[np.zeros(4, int), np.ones(11, int)]
+    out = []
+    for mu in mus:
+        for rep in range(n_rep):
+            J = rng.normal(mu, 0.05, (N, N)); np.fill_diagonal(J, 0.7)
+            h = rng.normal(0, 0.15, N)
+            Sb, db = simulate_kinetic_ising(J, h, nd, DAY_LEN, rng=rng)
+            for variant in ("cut", "no_cut"):
+                Ja = J.copy()
+                if variant == "cut":
+                    Ja[rooms[:, None] != rooms[None, :]] = 0.0
+                Sa, da = simulate_kinetic_ising(Ja, h, nd, DAY_LEN, rng=rng)
+                S = np.vstack([Sb, Sa]); days = np.r_[db, da + nd]
+                tab = pair_day_table(S, days, np.arange(N))
+                pairs = sorted(set(zip(tab["i"].tolist(), tab["j"].tolist())))
+                pk = {p_: k for k, p_ in enumerate(pairs)}
+                M = np.full((len(pairs), 2 * nd), np.nan)
+                for i_, j_, d_, v_ in zip(tab["i"], tab["j"], tab["day"], tab["kappa"]):
+                    M[pk[(i_, j_)], d_] = v_
+                pa = np.array(pairs)
+
+                def did(lab, Mx=M, pre=np.arange(nd), post=np.arange(nd, 2 * nd)):
+                    cross = lab[pa[:, 0]] != lab[pa[:, 1]]
+                    dif = np.nanmean(Mx[:, post], 1) - np.nanmean(Mx[:, pre], 1)
+                    return np.nanmean(dif[cross]) - np.nanmean(dif[~cross])
+                eff = did(rooms)
+                bs = [did(rooms, pre=rng.integers(nd, size=nd), post=nd + rng.integers(nd, size=nd)) for _ in range(300)]
+                null = np.array([did(rng.permutation(rooms)) for _ in range(500)])
+                p = float((1 + np.sum(np.abs(null - null.mean()) >= abs(eff - null.mean()))) / 501)
+                lo, hi = np.percentile(bs, [2.5, 97.5])
+                kw = np.nanmean(M[:, :nd]); 
+                out.append({"mu": mu, "rep": rep, "variant": variant, "did_kappa": float(eff), "ci": [float(lo), float(hi)],
+                            "p_perm": p, "kappa_pre_mean": float(kw), "act": float((Sb > 0).mean()),
+                            "flip_rate": float((Sb[1:] != Sb[:-1]).mean())})
+            print("V4", out[-2], flush=True)
+    summ = {}
+    for mu in mus:
+        for variant in ("cut", "no_cut"):
+            rr = [r for r in out if r["mu"] == mu and r["variant"] == variant]
+            summ[f"mu={mu}|{variant}"] = {
+                "n": len(rr), "mean_did": float(np.mean([r["did_kappa"] for r in rr])),
+                "frac_ci_excludes_0": float(np.mean([(r["ci"][1] < 0) or (r["ci"][0] > 0) for r in rr])),
+                "frac_p_perm<0.05": float(np.mean([r["p_perm"] < 0.05 for r in rr])),
+                "kappa_pre_mean": float(np.mean([r["kappa_pre_mean"] for r in rr])),
+                "act": float(np.mean([r["act"] for r in rr])), "flip_rate": float(np.mean([r["flip_rate"] for r in rr]))}
+    return out, summ
 
 
 def summarize_v3(recs):
@@ -222,9 +279,11 @@ if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True); FIG.mkdir(parents=True, exist_ok=True)
     r1, Jh = v1(rng)
     r2 = v2(rng)
-    r3 = v3(rng, 4 if QUICK else 20)
+    r3 = v3(rng, 4 if QUICK else 20, mu=0.03, sd=0.05, h0=0.0)
+    r4, s4 = v4(rng, 4 if QUICK else 30)
     res = {"V1_asymmetric_stationary": r1, "V2_symmetric_nonstationary": r2,
            "V3_room_cut_replicates": r3, "V3_summary": summarize_v3(r3),
+           "V4_village_matched_power": r4, "V4_summary": s4,
            "params": {"day_len": DAY_LEN, "quick": QUICK, "seed": 20261003}, "runtime_s": time.time() - t0}
     (OUT / "synthetic_validation.json").write_text(json.dumps(res, indent=1, default=float))
     figure(r1, r3, Jh)

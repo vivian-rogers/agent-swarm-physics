@@ -246,6 +246,68 @@ def simulate(h0, Jself, Jx, D, Td, rng, blockfield=None, delay="none", K=5):
     return S.reshape(D * Td, N), day, minute
 
 
+# --------------------------------------------------------------------------- held-out comparison (N2)
+def mean_field_covs(S, labs):
+    """Per agent: mean spin of same-lab others (0 if none) and of other-lab agents. Returns (T, N, 2)."""
+    T, N = S.shape
+    out = np.zeros((T, N, 2))
+    labs = np.asarray(labs)
+    for i in range(N):
+        same = (labs == labs[i]) & (np.arange(N) != i)
+        other = labs != labs[i]
+        if same.any():
+            out[:, i, 0] = S[:, same].mean(1)
+        if other.any():
+            out[:, i, 1] = S[:, other].mean(1)
+    return out
+
+
+def loglik(eta, y):
+    return (y * eta - np.logaddexp(0, eta))
+
+
+def heldout(S, day, minute, labs):
+    """Leave-one-day-out log-lik per transition (nats, summed over agents) for M1, M2, M3."""
+    N = S.shape[1]
+    X, Y, pen, info = kinetic_design(S, day, minute, "block", "1")
+    dst = info["dst"]; dday = day[dst]
+    nb_cols = X.shape[1] - (1 + N)
+    blkcols = X[:, 1 + N:]
+    mf = mean_field_covs(S.astype(float), labs)[info["src"]]  # (T', N, 2)
+    rows = []
+    for d in np.unique(day):
+        tr, te = dday != d, dday == d
+        keep_tr = blkcols[tr].sum(0) > 0; keep_te = blkcols[te].sum(0) > 0
+        Xtr = np.hstack([X[tr][:, :1 + N], blkcols[tr][:, keep_tr]])
+        ptr = np.zeros((N, Xtr.shape[1])); ptr[:, 1:1 + N] = LAM_J; ptr[:, 1 + N:] = LAM_D; ptr[:, 0] = 1e-8
+        # M3: full couplings
+        B3 = fit_logistic(Xtr, Y[tr], ptr)
+        # M1: self only
+        p1 = ptr.copy(); cp = np.full((N, N), BIG); np.fill_diagonal(cp, LAM_J); p1[:, 1:1 + N] = cp
+        B1 = fit_logistic(Xtr, Y[tr], p1)
+        # M2: self + same-lab mean + other-lab mean (per-agent designs)
+        B2 = []
+        for i in range(N):
+            Xi = np.hstack([Xtr[:, :1], Xtr[:, 1 + i:2 + i], mf[tr, i, :], Xtr[:, 1 + N:]])
+            pi = np.zeros(Xi.shape[1]); pi[1:4] = LAM_J; pi[4:] = LAM_D; pi[0] = 1e-8
+            B2.append(fit_logistic(Xi, Y[tr][:, i:i + 1], pi)[0])
+        # test day: refit intercept + block fields with coupling part frozen as offset
+        Xte_f = np.hstack([np.ones((te.sum(), 1)), blkcols[te][:, keep_te]])
+        pf = np.zeros(Xte_f.shape[1]); pf[1:] = LAM_D; pf[0] = 1e-8
+        Ste = X[te][:, 1:1 + N]
+        off3 = Ste @ B3[:, 1:1 + N].T
+        off1 = Ste * np.diag(B1[:, 1:1 + N])[None, :]
+        off2 = np.stack([B2[i][1] * Ste[:, i] + mf[te, i, :] @ B2[i][2:4] for i in range(N)], 1)
+        res = {"day": int(d), "T": int(te.sum())}
+        for name, off in [("M1", off1), ("M2", off2), ("M3", off3)]:
+            Bf = fit_logistic(Xte_f, Y[te], pf, offset=off)
+            eta = Xte_f @ Bf.T + off
+            res[name] = float(loglik(eta, Y[te]).sum())
+        rows.append(res)
+    return rows
+
+
+
 # --------------------------------------------------------------------------- metrics
 def auc(scores, labels):
     scores = np.asarray(scores, float); labels = np.asarray(labels, bool)

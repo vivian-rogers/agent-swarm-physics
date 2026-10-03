@@ -10,7 +10,10 @@ Pre-registered decision rule (card, "Prediction", #45):
   FAIL otherwise. If the leader fails the present-population rule (row on every day and >= 30 active bins), the
   result is FAIL (not identifiable), reported as such.
 Secondary (reported, not decisive): KI-5 estimator; #best-room subset; EQ-PL hub rank (rival model);
-the leader's rank by z(I_k).
+the leader's rank by z(I_k); talk spin (state == 4, agents with >= 30 talk bins; added 2026-10-03 after exploratory
+round 1, before any holdout data was read); held-out mean-field test (leave-one-day-out dLL of M2 and M3 over M1
+vs 20 N1 surrogates; exploratory round 1 found z21 >= 2 in 3/5 regime-III mode-C chunks, so the card predicts
+z21 >= 2 for #45).
 
 Usage:
   dry run on a non-holdout goal (allowed during exploration):
@@ -33,6 +36,7 @@ import polars as pl
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import h02lib as L  # noqa: E402
+import mf  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[3]
 SHARED = ROOT / "data/processed/shared"
@@ -53,10 +57,15 @@ FROZEN = {
     "n_surrogates": 200,
     "seed": 20261003,
     "pass_rule": "leader rank by I_k == 1 AND z(I_k) vs N1 >= 2",
+    "secondary_talk_spin": "state == 4; population: >= 30 talk bins and present every day",
+    "secondary_meanfield": {"surrogates": 20, "prediction": "z21 >= 2 (regime III, mode C)"},
+    "secondary_H02MF": {"leader_follower_surrogates": 50, "cw_surrogates": 100,
+                        "prediction_MF_P6": "leader has the largest A = J_lf - J_fl of all agents and z_A >= 2",
+                        "note": "H02-MF (HH80 Curie-Weiss, HH83 leader-follower), added 2026-10-03 before any holdout read"},
 }
 
 
-def load_goal(goal, allow_holdout):
+def load_goal(goal, allow_holdout, spin="active"):
     cal = pl.read_parquet(SHARED / "calendar.parquet").filter(pl.col("goal_no") == goal).sort("pt_date")
     if cal["holdout"].any() and not allow_holdout:
         sys.exit(f"goal {goal} is in the locked holdout; refusing without --confirm-holdout")
@@ -66,12 +75,13 @@ def load_goal(goal, allow_holdout):
     ab = (pl.scan_parquet(SHARED / "activity_bins.parquet").filter(pl.col("pt_date").is_in(days))
           .select("pt_date", "minute", "agent", "state").collect())
     nd = len(days)
-    pres = (ab.group_by("agent").agg(pl.col("pt_date").n_unique().alias("nd"), (pl.col("state") >= 3).sum().alias("nact"))
+    thr = 3 if spin == "active" else 4
+    pres = (ab.group_by("agent").agg(pl.col("pt_date").n_unique().alias("nd"), (pl.col("state") >= thr).sum().alias("nact"))
             .filter((pl.col("nd") == nd) & (pl.col("nact") >= 30)))
     agents = sorted(pres["agent"].to_list())
     ab = ab.filter(pl.col("agent").is_in(agents)).with_columns(
         pl.col("pt_date").replace_strict({d: i for i, d in enumerate(days)}, return_dtype=pl.Int32).alias("day"),
-        pl.when(pl.col("state") >= 3).then(1).otherwise(-1).cast(pl.Int8).alias("s"))
+        pl.when(pl.col("state") >= thr).then(1).otherwise(-1).cast(pl.Int8).alias("s"))
     piv = ab.pivot(on="agent", index=["day", "minute"], values="s").sort("day", "minute")
     S = piv.select([str(a) for a in agents]).to_numpy().astype(np.int8)
     return S, piv["day"].to_numpy(), piv["minute"].to_numpy(), agents, days
@@ -120,6 +130,44 @@ def influence_test(S, day, minute, agents, leader, name, B, rng):
             "pass": bool(L.rank_of(I, k) == 1 and z[k] >= 2), "ranking": table}
 
 
+def meanfield_test(S, day, minute, agents, K, rng):
+    """Held-out dLL (M3 - M1, M2 - M1) per bin vs K N1 surrogates (exploratory round 1 statistic)."""
+    roster = pl.read_parquet(SHARED / "roster.parquet")
+    labs = dict(zip(roster["agent"].to_list(), roster["lab"].to_list()))
+    lab_arr = np.array([labs[a] for a in agents])
+
+    def stat(X):
+        ho = L.heldout(X, day, minute, lab_arr)
+        T = sum(r["T"] for r in ho)
+        return sum(r["M3"] - r["M1"] for r in ho) / T, sum(r["M2"] - r["M1"] for r in ho) / T
+
+    r31, r21 = stat(S)
+    segs = L.segments(day, minute, "block")
+    nul = np.array([stat(L.circular_shift(S, segs, rng)) for _ in range(K)])
+    return {"d31": r31, "z31": float((r31 - nul[:, 0].mean()) / nul[:, 0].std()),
+            "d21": r21, "z21": float((r21 - nul[:, 1].mean()) / nul[:, 1].std()),
+            "p21": float((1 + (nul[:, 1] >= r21).sum()) / (K + 1))}
+
+
+def mf_tests(S, day, minute, agents, leader, rng):
+    """HH83 leader-follower mean field for the named leader + HH80 Curie-Weiss beta*J0, both vs N1 surrogates."""
+    cfg = FROZEN["secondary_H02MF"]
+    segs = L.segments(day, minute, "block")
+    lf = mf.lf_all(S, day, minute)
+    nl = np.array([mf.lf_all(L.circular_shift(S, segs, rng), day, minute) for _ in range(cfg["leader_follower_surrogates"])])
+    A, An = lf[:, 1] - lf[:, 2], nl[:, :, 1] - nl[:, :, 2]
+    zA = (A - An.mean(0)) / An.std(0)
+    zlf = (lf[:, 1] - nl[:, :, 1].mean(0)) / nl[:, :, 1].std(0)
+    k = agents.index(leader)
+    cw = mf.cw_stats(S, day, minute)
+    cwn = np.array([mf.cw_stats(L.circular_shift(S, segs, rng), day, minute)["bJ0"] for _ in range(cfg["cw_surrogates"])])
+    return {"leader_J_lf": float(lf[k, 1]), "leader_J_fl": float(lf[k, 2]), "leader_A": float(A[k]),
+            "leader_z_A": float(zA[k]), "leader_rank_A": L.rank_of(A, k), "leader_z_lf": float(zlf[k]),
+            "leader_rank_lf": L.rank_of(lf[:, 1], k), "J_ff_median": float(np.median(lf[:, 0])),
+            "pass_MF_P6": bool(L.rank_of(A, k) == 1 and zA[k] >= 2),
+            "cw_bJ0": float(cw["bJ0"]), "cw_VR": float(cw["VR"]), "cw_z": float((cw["bJ0"] - cwn.mean()) / cwn.std())}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--confirm-holdout", action="store_true")
@@ -138,10 +186,10 @@ def main():
     S, day, minute, agents, days = load_goal(goal, allow)
     out = {"goal": goal, "leader": leader, "days": days, "agents": agents, "frozen": FROZEN,
            "run_at": dt.datetime.now(dt.timezone.utc).isoformat()}
+    rng = np.random.default_rng(FROZEN["seed"])
     if leader not in agents:
         out["primary"] = {"pass": False, "reason": "leader not in present population (not identifiable)"}
     else:
-        rng = np.random.default_rng(FROZEN["seed"])
         out["primary"] = influence_test(S, day, minute, agents, leader, FROZEN["primary_estimator"], a.surrogates, rng)
         out["secondary"] = [influence_test(S, day, minute, agents, leader, e, a.surrogates, rng)
                             for e in FROZEN["secondary_estimators"] if e != FROZEN["primary_estimator"]]
@@ -150,6 +198,13 @@ def main():
             idx = [agents.index(x) for x in sub]
             out["best_room"] = influence_test(S[:, idx], day, minute, sub, leader, FROZEN["primary_estimator"],
                                               a.surrogates, rng)
+        out["meanfield"] = meanfield_test(S, day, minute, agents, FROZEN["secondary_meanfield"]["surrogates"], rng)
+        out["H02MF"] = mf_tests(S, day, minute, agents, leader, rng)
+    St, dt_, mt, at, _ = load_goal(goal, allow, spin="talk")
+    if leader in at:
+        out["talk_spin"] = influence_test(St, dt_, mt, at, leader, FROZEN["primary_estimator"], a.surrogates, rng)
+    else:
+        out["talk_spin"] = {"pass": False, "reason": "leader has < 30 talk bins or missing days"}
     (DATA / f"{tag}.json").write_text(json.dumps(out, indent=1))
     p = out["primary"]
     print(tag, "N", len(agents), "leader", leader, {k: p.get(k) for k in ("leader_rank", "leader_z", "pass", "reason")})
