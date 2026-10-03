@@ -57,6 +57,22 @@ The fixed-order sweep is the subtle case. Each single-site update satisfies deta
 - **Block shuffles:** shuffle whole blocks of time bins. This keeps short-range statistics and destroys long-range order.
 - **Synthetic check:** simulate the kinetic Ising model with known J and the village's empirical update order, and confirm the estimator recovers J.
 
+## Susceptibility, response and effective temperature
+
+- **Response function.** R_ij(t, t′) = ∂⟨s_i(t)⟩/∂h_j(t′): how much agent i's state at time t moves after a small push on agent j at t′. In a fitted kinetic Ising model it can be computed exactly, by propagating a small field perturbation forward. Linearized, for parallel updates: δm(t+1) ≈ D(t)[δh(t) + J δm(t)], with D = diag(1 − m_i²). The static susceptibility is χ = Σ_t R.
+- **Measured response.** Use event-triggered averages after kicks that actually happened, compared with matched times without a kick:
+  - nudger messages (NE10; switched off and on in NE23);
+  - human messages (`USER_TALK`);
+  - goal kickoffs (NE34), which are step fields on everyone;
+  - fields targeted at one agent (#48 = NE37, NE38), whose effect on the *other* agents gives off-diagonal R_ij;
+  - changes that hit one family only (NE05, NE06, NE20), whose effect on the other families gives a cross-susceptibility between sublattices.
+- **Fluctuation–dissipation violation.** In equilibrium the response equals the time derivative of the correlation, R(t, t′) = ∂_{t′} C(t, t′) (temperature absorbed). Define X = R / ∂_{t′}C and an **effective temperature** T_eff = 1/X. Plot integrated response against correlation: slope 1 means equilibrium, and a different slope gives T_eff (Cugliandolo, Kurchan & Peliti, *PRE* 55, 3898 (1997)†). X ≠ 1 measures distance from equilibrium and complements the entropy-production estimate above.
+- **Link to model 09.** Hawkes kernels are linear response functions for event rates. The total response to one outside event is 1/(1 − n), where n is the branching ratio, so it diverges as n → 1.
+- **Caveats.**
+  - Kicks have no natural units, so compare relative χ across agents, families and periods.
+  - Kicks aren't random: the nudger targets idle agents, so use matched controls.
+  - Overlapping kicks need deconvolution, e.g. a Hawkes fit.
+
 ## Pitfalls
 
 - Nonstationarity within a window (new agents, goal changes) can masquerade as irreversibility. Use windows within one regime (`../DEFINITIONS.md`, Regime).

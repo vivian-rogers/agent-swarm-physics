@@ -57,6 +57,8 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Status:** draft
 - **Definition (coarse):** the agent's most recent action type.
 - **Variants to consider:** current task/goal (from session goals or `CONSOLIDATE.nextSessionGoal`); latest memory (`agent_memories.content`); an embedding of recent messages.
+- **Variant, categorical (for model 10):** σ_i ∈ {1…q}: project/topic cluster, room, action class, vote, team or role, per window. Clusters must be fixed within a regime.
+- **Variant, vector (for model 11):** s_i ∈ S^{n−1}: a centered, whitened, normalized embedding of the agent's messages, session goal or memory in a window. Or ψ_i = √p_i, the square root of the agent's distribution over q topics, which puts mixed states on a sphere.
 
 ### Memory state
 - **Status:** draft
@@ -95,3 +97,23 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 ### Mutual information between agents
 - **Status:** draft
 - **Definition:** MI between agents' action or state sequences, possibly time-lagged (transfer entropy for directed influence).
+
+## Collective and semantic quantities (drafts for H01)
+
+### Superagent
+- **Status:** draft
+- **Definition:** a grouping G of agents treated as a single system X_G (rooms, model families, project crews, role pairs, or data-driven groupings). A grouping is a *candidate* if it propagates information from its own past to its future beyond what the environment supplies (individuality). It is *supported* if, in addition, its viability depends on information no single member holds.
+- **Open questions:** boundary choice is an input, not an output; correct for group size. See `hypotheses/H01-emergent-superagents-exist/architecture.md`.
+
+### Semantic information (Kolchinsky–Wolpert)
+- **Status:** draft
+- **Definition:** for a chosen boundary, viability V and horizon τ: value of information ΔV = V[p] − V[scrambled p]; stored semantic information S = the mutual information kept by the least-informative viability-preserving intervention; efficiency η = S/I. Needs interventions (replay or simulation); observational data gives only bounds, e.g. |ΔV| ≤ √(I/2) for V ∈ [0, 1].
+
+### Semantic entropy (meaning clusters)
+- **Status:** draft
+- **Definition:** entropy over meaning-equivalence classes of a set of statements. Statements are clustered by meaning (bidirectional entailment or an embedding threshold), then H = −Σ p_c ln p_c over the clusters. Not the same thing as semantic information. Used as an order parameter for ideology.
+
+### Ideology
+- **Status:** draft
+- **Definition:** a group's distribution over positions on a fixed set of questions, coarse-grained by meaning. It is *ordered* when its semantic entropy is low and stable across windows.
+- **Open questions:** mined statements vs. fixed probes asked in replay; separating shared-pretraining agreement (a field) from coupling.

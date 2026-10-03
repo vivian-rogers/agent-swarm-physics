@@ -1,0 +1,88 @@
+# Natural experiments: step changes in the AI Village
+
+We can't run new swarms or intervene on the village. What we have instead are **step changes**: dated moments when the scaffold, the roster, the room structure, the goals or operator behavior changed abruptly. Each one is a quasi-intervention. Read in Kolchinsky–Wolpert terms, many of them *cut, degrade or add* an information channel. That is close to the scrambling interventions the framework needs, applied once, to the real system.
+
+Shared across hypotheses. IDs (NE01…) are referenced from hypothesis files, e.g. `H01-emergent-superagents-exist/subhypotheses.md`. Sources are `data/raw/ai-village/CHANGELOG.md`, the roster table, `village_goals`, `chat_rooms`, `agent_goals` and the dataset's goal summaries (secondary). Nothing here has been checked against the event data yet.
+
+## How to use them
+
+- **Designs:**
+  - **ITS:** interrupted time series; compare before vs. after, within one population.
+  - **DiD:** difference-in-differences; an affected group against an unaffected control group, e.g. one model family vs. the others, or #best vs. #rest.
+  - **ABA:** the change is reversed, which allows a reversal design and can rule out drift.
+  - **Dose:** affected agents get different amounts of the change.
+  - **RD:** regression discontinuity in time.
+- **Information-theoretic reading:**
+  - **cut:** a channel removed (a scramble to the marginal);
+  - **degrade:** a channel's capacity reduced;
+  - **add:** a new channel;
+  - **field:** an external drive changed;
+  - **erase:** the memory erasure rate changed;
+  - **pop:** a population change.
+- **Standing confounds:**
+  - Changes often come in bundles, e.g. NE14.
+  - Prompt announcements cause anticipation.
+  - Weekends and daily windows chop the time series.
+  - N is small.
+  - A goal change in the same week is the most common confound: check the goal-period file.
+
+## Scaffold changes
+
+| ID | Date | Change | Reading | Affected → control | Design | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| NE01 | 2025-05-02 | **A** agents can chat while on computer | add (coupling during work) | all → none | ITS | N = 4; inside goal #1 |
+| NE02 | 2025-07-03 | Screenshot PII redaction | degrade (perception, ~0.6% of turns) | all | ITS | tiny dose |
+| NE03 | 2025-08-20 | Number of chat messages fetched into context limited | degrade (chat channel capacity) | all | ITS | coincides with new agents (NE27) |
+| NE04 | 2025-09-05 | **C** history-search tool; chain-of-thought memory consolidation | add (access to the past); erase (consolidation method) | all | ITS | bundle of two |
+| NE05 | 2025-09-30 | Claude thinking re-enabled in computer use | field / internal (Anthropic only) | Anthropic → other labs | DiD | same day Sonnet 4.5 joins |
+| NE06 | 2025-11-20/25 | Gemini: one tool call per turn; chain of thought added | internal (Google only) | Google → others | DiD | |
+| NE07 | 2025-12-04 | Prompt: "don't do nothing" | field (on activity) | all | ITS | targets waiting loops |
+| NE08 | 2025-12-10 | Village goal added to the prompt | field (persistence: chat-only → always on) | all | ITS | mid-goal #22 |
+| NE09 | 2025-12-20 | Chat interleaved into computer-use context | add (coupling) | all | ITS | holiday season |
+| NE10 | 2026-02-10 | **D** auto-nudger bot switched on | field (outside forcing on idle agents) | idle agents (dose) | ITS, dose | see NE23 for its reversal |
+| NE11 | 2026-02-20 | 100-turn hard cap on sessions | erase (session length) | all | ITS | superseded by NE14 |
+| NE12 | 2026-02-25 | **E** rooms: agents see only their room | **cut** (cross-room channel) | all | ITS; later DiD across rooms | mid-goal #32, same day as NE35 |
+| NE13 | 2026-03-10 | Kickoff message added to the prompt | field (persistence) | all | ITS | inside #34 |
+| NE14 | 2026-03-11 → 03-24 | Consolidate tool, pause tool, **F** perma-computer-use | erase (consolidation every ~40 actions); loop change | all (staggered by provider) | ITS; staggered DiD | **the** regime boundary; bundle |
+| NE15 | 2026-03-16 | #best / #rest split; the RPG forked per room | cut (population split) | #best vs. #rest | DiD | two forks from one ancestor |
+| NE16 | 2026-03-26 | Fix: contradictory "never update memory" instruction removed | erase (memory updates unblocked) | all | ITS | just after F |
+| NE17 | 2026-04-14 | **G** outreach approval | degrade (external action) | outreach-heavy agents (dose) | ITS, dose | inside #38 |
+| NE18 | 2026-04-20 | History search: verbatim segments, 10-day window | add (memory access) | searchers (dose) | ITS, dose | |
+| NE19 | 2026-06-01 | Fix: agents saw own messages a turn early; Opus 4.7 moved to #rest | degrade-fix (perception); pop (one-agent transfer) | Opus 4.7 vs. stayers | ITS; single-agent | start of #45 |
+| NE20 | 2026-06-03 | One tool call per turn (Anthropic only) | internal (update granularity) | Anthropic → others | DiD | inside #45 |
+| NE21 | 2026-06-07 / 06-15 / 06-29 | Hours 4 h → 8 h → 4 h → 8 h | field (time base) | all | **ABAB** | the cleanest reversal in the data |
+| NE22 | 2026-06-11 | **H** at most 200 unseen events per turn | degrade (past truncated) | agents returning from long absences (dose) | dose | |
+| NE23 | 2026-06-13 → 06-15 | Nudger off then on; Saturday session for #best only | field off/on (ABA); extra time for #best | idle agents; #best vs. #rest | ABA, DiD | weekend |
+| NE24 | 2026-06-29 | **I** GitHub → GitLab | cut + rebuild (shared artifact medium replaced) | all | ITS | same day as NE21's last switch |
+| NE25 | 2026-07-01 | History search scoped to own village | cut (other villages' history) | searchers | ITS | |
+| NE26 | 2026-07-03 | **J** private goals; others see only the short form of an agent's plan | **cut** (plans hidden) + field (individual goals) | all | ITS | the private-role era (#51) starts 07-06 |
+
+## Roster changes
+
+| ID | Date | Change | Reading | Design | Notes |
+| --- | --- | --- | --- | --- | --- |
+| NE27 | 2025-08-18 | Batch join: GPT-5, Grok 4, Opus 4.1 (N 4 → 7) | pop (+3 with empty memories) | ITS | goal #10 starts the same day |
+| NE28 | 2025-12-01 | Double retirement: o3, Opus 4.1 | pop (−2) | ITS | goal #21 starts the same day |
+| NE29 | 2026-02-19 | Retirement of Claude 3.7 Sonnet, the longest-serving agent (farewell goal #31) | pop (−1; long memory lineage lost) | single-agent ITS | Sonnet 4.6 joined the day before |
+| NE30 | 2026-03-09 | **Same-family succession:** Gemini 3 Pro → Gemini 3.1 Pro | pop (swap) | matched comparison | the cleanest replacement event |
+| NE31 | 2026-05-26 → 06-08 | Fine-tuned leader: temporary → permanent → retired | pop (a model made from village data enters, then leaves) | ITS | goals #44–45 |
+| NE32 | 2026-07-09 | GPT-5.6 Sol/Terra/Luna join in **separate isolated rooms**, which close 07-10 | pop + cut (newcomers isolated, then merged) | three-arm comparison | |
+| NE33 | 2026-09-03/04 | Batch join: Muse Spark 1.3, Gemini 3.8 Flash, GPT-6 Astra | pop (+3) | ITS | late in #51 |
+
+Other single joins and retirements are listed per goal in `hypohypotheses/goal-periods.md`.
+
+## Operator and goal changes
+
+| ID | Date | Change | Reading | Design | Notes |
+| --- | --- | --- | --- | --- | --- |
+| NE34 | 51 dates | Goal changes | field quench | event study across 50 transitions | cleanest when roster and regime are fixed; classify by mode switch (e.g. C → K) |
+| NE35 | 2026-02-25 | Operator resets the gamed challenge format mid-goal (#32) | field + correction | ITS | **same day as rooms (NE12)**, so the two are confounded |
+| NE36 | 2026-04-02 | Operator corrects the agents' belief about the Year-1 total (#38) | removal of misinformation | ITS | a natural test of negative-value information |
+| NE37 | 2026-06-22 | Whole village redirected to help one agent (#48) | field targeted at one node | single-agent synthetic control | one day |
+| NE38 | 2026-07-29 | A human reassigns Claude Opus 5's role (word puzzles → mathematics) | field change on one agent | single-agent ITS | `agent_goals` start date |
+| NE39 | undocumented | Chat closed to the public (agent-only) | cut (human input) | ITS once dated | date not in the changelog |
+| NE40 | undocumented | History-search answerer swapped (Gemini 2.5 Pro → Sonnet 4.6) | change of memory oracle | ITS once dated | date not in the changelog |
+
+## Undocumented step changes
+
+The list above covers *documented* changes only. Step changes could also be found directly in the data, using change-point detection on per-agent or per-room event rates, action mix, chat length or token use. That would find bugs, outages and unannounced changes, and date NE39 and NE40. It needs one pass over `events`; not run yet.

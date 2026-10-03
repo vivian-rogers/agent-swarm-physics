@@ -26,6 +26,23 @@ predicts here. E.g. "SIS with spontaneous adoption field ε; λ, γ, ε fit per 
 ## Null / baseline
 <What you'd see if the effect isn't there. E.g. shuffled timestamps, model with β = 0, independent agents.>
 
+## Faithfulness scorecard
+Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
+**Rival models:** <the models that predict differently here>
+**Locked holdout used for confirmation:** <goal periods / NEs>
+
+| Axis | Test | Score | Evidence |
+| --- | --- | --- | --- |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | | |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | | |
+| C adequacy | beats the null hierarchy, day-blocked held-out data | | |
+| D unfitted predictions | unfitted statistics and the model's signature | | |
+| E interventional | predicts the change across a natural experiment | | |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | | |
+| G ground truth | agrees with known structure | | |
+| H comparative | beats the named rivals | | |
+| I transfer | holds in other same-mode periods, including the holdout | | |
+
 ## Prediction
 *Written <YYYY-MM-DD>, before running the analysis on real data.*
 <What the model predicts for the observables, and what result would count against it.>

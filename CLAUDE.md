@@ -14,7 +14,10 @@ the AI Village dataset as the primary system.
 | `physics-models/` | One folder per physics model (`NN-<slug>/`): the model, its interesting behavior, how it maps onto the swarm, how to fit it, nulls, pitfalls. Simulator/theory code for the model lives there too. `physics-models/README.md` is the index. |
 | `physics-models/DEFINITIONS.md` | Operational definitions of physics concepts in terms of dataset fields. **Every model and hypothesis uses these.** |
 | `hypotheses/H<NN>-<slug>/` | One research direction per folder. See "Hypotheses" below. Copy `hypotheses/_template/` to start one. |
-| `hypotheses/HYPOHYPOTHESES.md` | Loose, speculative ideas. No rigor required. Ideas graduate to an `H<NN>` folder once they have a model, a scheme and a prediction. |
+| `hypotheses/holdout.md` (+ `holdout.json`) | **Locked holdout** (2026-10-03): goal periods and NE windows reserved for confirmation. Every exploratory script must mask them (`infra/shared/common.py: holdout_mask`). |
+| `hypotheses/promotion-shortlist.md` | The first hypotheses to test (S1–S7), with plans, observables and implications. |
+| `hypotheses/natural-experiments.md` | Shared catalog of dated step changes (NE01…): scaffold, roster, rooms, operator and goal changes, with design notes. Use as quasi-interventions; we can't run new swarms. |
+| `hypotheses/hypohypotheses/` | Loose, speculative material. `HYPOHYPOTHESES.md`: one-line ideas, no rigor required; they graduate to an `H<NN>` folder once they have a model, a scheme and a prediction. `goal-periods.md`: every village goal period with its setup, size and a ranked list of suitable physics models. |
 | `literature/` | Papers (PDF) + one notes file per paper (same basename, `.md`). `literature/README.md` is the index. Don't re-extract or reprocess the PDFs; use the notes. |
 | `interpretation/` | Cross-hypothesis synthesis: what the results mean together. |
 | `writeup/` | Drafts for papers, posts, talks. |
@@ -35,6 +38,7 @@ hypotheses/H<NN>-<slug>/
 
 - Number hypotheses sequentially (`H01`, `H02`, …); never reuse a number. Parked or refuted ones stay, with their status updated.
 - Write the prediction and the null/baseline in the card **before** running the analysis on real data.
+- Score every hypothesis on the nine faithfulness axes (A–I) in its card's scorecard; definitions and promotion thresholds are in `writeup/paper.tex` ("Assessing model faithfulness"). Fit is not faithfulness: beat the strongest null, predict unfitted statistics, and use natural experiments as interventions. Lock the holdout goal periods and NEs before exploring.
 - The card names its model by folder (e.g. `physics-models/03-contagion`). Hypothesis-specific variants of the model are described in the card; general improvements go back into the model folder.
 - If a second hypothesis needs the same scheme, move that code into `infra/` and reference it from both cards rather than copying it.
 - Any term used in a card that is in `physics-models/DEFINITIONS.md` must be used with that definition. If a hypothesis needs a different one, add a named variant there (e.g. "interaction (mention-based)") rather than redefining it locally.
@@ -62,5 +66,8 @@ Each `data/processed/<name>/` folder has a `_provenance.json`:
 
 ## Conventions
 
-- Python, run via `uv`. Times are UTC unless a column says otherwise.
+- Python via `uv` with the project environment (`pyproject.toml`, `.venv`): `uv run python …`. Times are UTC unless a column says otherwise.
+- **Storage budget: 10 GB for the whole project** (raw is 5.4 GB; `.venv` ~0.4 GB). Keep processed outputs ≲1 GB: compressed parquet, small dtypes, no duplicated text; check `du -sh` around big builds.
+- **Compute:** run locally (10 cores, 32 GB) and parallelize independent scans (process pools, polars). Ask before using remote compute (givemeanode is available for Phase 2).
+- **Shared tables** live in `data/processed/shared/` and are built by `infra/shared/` (`scan_tables.py`, then `build_derived.py`).
 - Add a `LOG.md` entry when you start, finish, or abandon something, or make a decision worth remembering.

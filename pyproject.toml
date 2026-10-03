@@ -1,0 +1,16 @@
+[project]
+name = "agent-swarm-physics"
+version = "0.1.0"
+description = "Statistical physics of LLM agent swarms (AI Village)"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy",
+  "scipy",
+  "polars",
+  "pyarrow",
+  "orjson",
+  "matplotlib",
+]
+
+[tool.uv]
+package = false

@@ -13,3 +13,8 @@ __pycache__/
 # OS / tools
 .DS_Store
 .cache/
+
+# LaTeX build files
+*.aux
+*.log
+*.out

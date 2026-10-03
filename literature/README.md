@@ -1,6 +1,6 @@
 # Literature index
 
-Seven papers on information, replicators, thermodynamics and agency. Each has a notes file with the same structure (summary, formalism, mapping to the AI Village data, hypotheses, caveats). Dataset schema: `../data/raw/ai-village/SCHEMA.md`; scaffolding history: `../data/raw/ai-village/CHANGELOG.md`.
+Seven papers on information, replicators, thermodynamics and agency, plus one on the statistical mechanics of AI-agent collectives. Each has a notes file with the same structure (summary, formalism, mapping to the AI Village data, hypotheses, caveats). Dataset schema: `../data/raw/ai-village/SCHEMA.md`; scaffolding history: `../data/raw/ai-village/CHANGELOG.md`.
 
 | Paper | Year | Fields | One-line takeaway |
 | --- | --- | --- | --- |
@@ -11,6 +11,7 @@ Seven papers on information, replicators, thermodynamics and agency. Each has a 
 | [Bartlett et al., Physics of Life: Exploring Information as a Distinctive Feature of Living Systems](bartlett-2025-physics-of-life-information-roadmap.md) | 2025 | info theory, dynamics, thermodynamics | Roadmap arguing that using information for viability is measurable (semantic thresholds, fitness value of information, agnostic biosignatures), with coarse-graining and open-endedness as open problems. |
 | [Piñero et al., Information bounds production in replicator systems](pinero-2026-information-bounds-replicator-production.md) | 2026 | info theory, dynamics, stat mech | Replicator productivity in fluctuating environments splits into environmental uncertainty, side-information benefit and strategy mismatch, with a Kelly-like optimal strategy. |
 | [Aguilera, Ito & Kolchinsky, Inferring Entropy Production in Many-Body Systems Using Nonequilibrium Maximum Entropy](aguilera-2026-entropy-production-nonequilibrium-maxent.md) | 2026 | stat mech, thermodynamics, info theory | A convex dual of a nonequilibrium MaxEnt problem lower-bounds entropy production from trajectory correlations alone, scaling to 1000 units and recovering asymmetric couplings. |
+| [Physics of Agents: Statistical Mechanics Predicts Collective Behavior of AI Agents](arxiv-2608.16578-physics-of-agents.md) (arXiv:2608.16578) | 2026 | stat mech, dynamics | *Not yet read; stub notes only.* The most directly relevant paper to this project by title. |
 
 ## Cross-cutting themes
 

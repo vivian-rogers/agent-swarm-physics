@@ -1,0 +1,289 @@
+% Working write-up of the agent-swarm physics project. Build (from writeup/): pdflatex paper.tex (twice).
+% Status: documents the project setup only; no results yet.
+\documentclass[reprint,aps,pre,10pt,superscriptaddress,nofootinbib]{revtex4-2}
+\usepackage{graphicx,booktabs,amsmath,amssymb,xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[hidelinks,pdfauthor={Vivian Rogers, with Claude Opus 5.5}]{hyperref}
+\usepackage{microtype}
+
+\newenvironment{tight}{\begin{list}{\textbullet}{\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{2pt}\setlength{\partopsep}{0pt}\setlength{\leftmargin}{1.1em}\setlength{\labelwidth}{0.6em}\setlength{\labelsep}{0.4em}}}{\end{list}}
+
+\begin{document}
+
+\title{Toward a statistical physics of LLM agent swarms:\\ project design and first hypotheses}
+\author{Vivian Rogers}
+\collaboration{with Claude Opus 5.5}
+\noaffiliation
+\date{Working draft, October 3, 2026}
+
+\begin{abstract}
+We are setting out to study a long-running swarm of frontier language-model agents, the AI Village, with the tools of statistical physics, information theory and sociophysics. This draft documents the work done so far, which is design rather than results. It covers the dataset, the architecture of the project, a library of eleven candidate physics models, two catalogs that connect the models to the data (51 goal periods and 40 natural experiments), a pool of 46 loose hypotheses, and a first formal hypothesis: that emergent ``superagents'' exist. It also sets out a principled scheme for judging whether a physics model is \emph{faithful} to the swarm, not merely a good fit, and a phased plan of work. No analysis of the dynamics has been run yet.
+
+\noindent\textit{Provenance.} Text, code and figures were drafted by Claude Opus 5.5 (Anthropic) at the author's direction; the design decisions are the author's.
+\end{abstract}
+
+\maketitle
+
+%==========================================================================
+\section{Motivation}
+
+Collections of interacting language-model agents are becoming a physical system worth studying in its own right. The questions are the ones physics asks of any many-body system:
+\begin{tight}
+\item Do the agents order?
+\item Is their collective dynamics reversible?
+\item How does information spread among them, and how much of it matters?
+\item Do larger units emerge that behave like agents themselves?
+\end{tight}
+LLM agents also bring something new. They leave complete logs of what they did and said, including much of their reasoning. Their environment is partly controlled by operators, and that control is documented. And the population is heterogeneous by construction: every agent is a different model.
+
+Our test system is the AI Village~\cite{aivillage}. Agents from eight labs share a group chat, each operate their own computer, keep self-written memories, and pursue goals set (mostly) by human operators on the real internet. The export we use spans 2025-04-02 to 2026-09-20: 404 active days, 46 agents (up to 32 at once), 381,610 timeline events and 2.5 million computer-use turns. A separate descriptive note covers the setup in detail (platform, schedule, goals, scaffold changes)~\cite{overview}.
+
+%==========================================================================
+\section{Project architecture}
+
+The project is organized so that every result traces back to raw data, to an explicitly chosen physical model, and to a prediction written before the data were analyzed (Fig.~\ref{fig:arch}).
+
+\begin{figure}[t]
+\centering
+\input{figures/architecture.tikz}
+\caption{Project architecture. Inputs (blue): the AI Village export and the literature. Shared foundations (green): processing, the physics-model library with shared definitions, and two catalogs connecting models to the data. Hypothesis pipeline (orange): loose ideas graduate to formal hypothesis cards once they have a model, a data scheme and a prediction. Outputs (gray).}
+\label{fig:arch}
+\end{figure}
+
+\textbf{Inputs.} The export (pinned to one dataset revision, gated under research terms and never committed) and a small literature set. The 171\,GB of computer-use screenshots are not yet used. The operators' exact prompts are not in the export; they can be requested later.
+
+\textbf{Shared foundations.}
+\begin{tight}
+\item \emph{Processing code} writes derived data with a provenance record: which code, which revision, when.
+\item A \emph{physics-model library} (Sec.~\ref{sec:models}) and a file of \emph{operational definitions}. The definitions fix what ``agent'', ``interaction'', ``regime'' or ``ideology'' mean in terms of dataset fields, so different hypotheses use the same words the same way.
+\item Two catalogs (Sec.~\ref{sec:catalogs}): \emph{goal periods} and \emph{natural experiments}.
+\end{tight}
+
+\textbf{Hypothesis pipeline.} Ideas start as one-liners. One graduates to a \emph{hypothesis card} once it has a physics model, a data scheme, a null model and a prediction written before the data are touched. Each card owns its own processing scheme and analysis.
+
+\textbf{Conventions.} Raw data are immutable. Every over-time analysis is split into the scaffold regimes documented by the operators. Decisions go in a dated lab notebook.
+
+%==========================================================================
+\section{Physics-model library}\label{sec:models}
+
+Table~\ref{tab:models} lists the eleven models written up so far. For each, the library records: the model, its interesting behavior, how it maps onto the village, how to fit it, null models and pitfalls. Several come directly from the literature we started from (Kolchinsky and collaborators~\cite{kolchinsky2018,sowinski2023,kolchinsky2024,pinero2025,pinero2026,aguilera2026,bartlett2025}). The others are standard models adapted to agents.
+
+Models 01, 10 and 11 form one family: pairwise maximum-entropy models with increasingly rich single-agent state spaces. These are binary (Ising), categorical (Potts) and continuous vectors (O($n$)). Each has a kinetic version that generalizes model 02. The vector model lets an agent's state be an embedding of what it writes, so the operators' goal text becomes, literally, an external field vector in the same space.
+
+\begin{table}[t]
+\caption{The physics-model library.}
+\label{tab:models}
+\scriptsize
+\begin{tabular}{@{}r@{\hspace{5pt}}p{2.35cm}p{2.25cm}p{2.85cm}@{}}
+\toprule
+\# & model & agent variable & signature behavior \\ \midrule
+01 & inverse Ising & active/silent & criticality; frustration \\
+02 & nonequilibrium Ising & same, with dynamics & entropy production; leader/follower asymmetry \\
+03 & contagion (SIS/SIR) & memes & absorbing-state threshold; pretraining as a field \\
+04 & semantic information~\cite{kolchinsky2018} & agent or group vs.\ environment & load-bearing vs.\ idle correlations \\
+05 & replicator dissipation~\cite{kolchinsky2024} & spreading items & growth and decay decoupled \\
+06 & neutral cooperation~\cite{pinero2025} & projects as species & bimodal abundances; cooperator core \\
+07 & fluctuating environments~\cite{pinero2026} & competing approaches & Kelly-like betting; value of memory \\
+08 & copying vs.\ transformation & transmitted content & error threshold; drift to priors \\
+09 & Hawkes processes & event times & branching ratio (endogeneity) \\
+10 & Potts & project, room, vote & first-order consensus; division of labor \\
+11 & vector spins, O($n$) & message embedding & polarization; goal as field \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%==========================================================================
+\section{Connecting models to data}\label{sec:catalogs}
+
+The village can't be rerun or perturbed. We can't run our own swarms either. Two catalogs therefore stand in for experimental control.
+
+\textbf{Goal periods.} Operators set 51 village-wide goals, each lasting from a day to several weeks. Each period is a sample of the system at one setting of:
+\begin{tight}
+\item population size (4--32);
+\item daily operating hours (2--8);
+\item scaffold regime;
+\item who authored the objective;
+\item the kind of coupling the goal imposes.
+\end{tight}
+We coded the last of these as:
+\begin{tight}
+\item a shared objective in 22 periods;
+\item competition in 6;
+\item team or hidden-saboteur games in 2;
+\item every agent on its own objective in 10;
+\item free time in 10;
+\item a final 55-day period of private, partly competing roles, which holds more agent-hours than the first 37 periods combined.
+\end{tight}
+For each period, the catalog ranks the models most suited to its events.
+
+\textbf{Natural experiments.} Forty dated step changes act as quasi-interventions: scaffold changes, roster changes, room splits, operator corrections and goal switches. Many of them \emph{cut or degrade an information channel}:
+\begin{tight}
+\item chat restricted to rooms;
+\item other agents' plans hidden;
+\item a cap on how much past an agent sees.
+\end{tight}
+That is a one-shot, population-wide version of the scrambling intervention that semantic-information measures require~\cite{kolchinsky2018}. A few changes reverse themselves: daily hours went 4 to 8 to 4 to 8 hours, and the idle-agent nudger was switched off and back on. Others hit one model family only, so the remaining families serve as controls.
+
+\textbf{Loose hypotheses.} A pool of 46 one-line ideas, each tagged with its most faithful models and its candidate goal periods. They range from ``Potts explains the leader election'' to ``the idle-agent nudger is a Maxwell demon''.
+
+%==========================================================================
+\section{First hypothesis: emergent superagents exist}
+
+\textbf{Claim.} Groups of agents can form emergent \emph{superagents}: coarse-grained units that act more like a single agent than their members do. Shared ideology is one way they could hold together.
+
+\textbf{Framework.} Kolchinsky--Wolpert semantic information~\cite{kolchinsky2018}. Correlations between a system and its environment are \emph{semantic} when scrambling them reduces the system's viability. The framework never supplies three things, and we must choose them:
+\begin{tight}
+\item the system/environment boundary;
+\item the viability function;
+\item a causal model or interventions.
+\end{tight}
+We use meaning-cluster semantic entropy~\cite{farquhar2024} as an order parameter for ideology. It measures how ordered a group's positions are; semantic information then asks whether that order is load-bearing.
+
+\textbf{Structure.} The hypothesis is split into ten non-conflicting directions (Table~\ref{tab:h01}), with about seventy specific sub-hypotheses. Mutually exclusive rivals are paired explicitly, so the data can decide between them. Example: is ideological order produced by agents coupling to one another, or by a shared field (common pretraining, the goal prompt)?
+
+\textbf{Access.} Three tiers:
+\begin{tight}
+\item \emph{Observational}: bounds, candidate groupings, the order parameter.
+\item \emph{Natural experiments}: channel cuts as natural scrambles.
+\item \emph{Replay} of logged agents with scrambled context, once the exact prompts are available.
+\end{tight}
+Running new swarms is out of scope. A suggested first set needs only the first two tiers:
+\begin{tight}
+\item establish the order parameter (D3);
+\item choose the viability function from the data: the one groups visibly restore after shocks (D2);
+\item test coupling vs.\ field at the room-split experiment (D3);
+\item test rooms as superagents (D1);
+\item test same-family succession (D5).
+\end{tight}
+
+\begin{table}[t]
+\caption{Directions under the superagent hypothesis.}
+\label{tab:h01}
+\scriptsize
+\begin{tabular}{@{}l p{6.9cm}@{}}
+\toprule
+D1 & identification: which groupings act as one agent \\
+D2 & viability: what ``staying alive'' means for a group \\
+D3 & ideology as an ordered phase \\
+D4 & load-bearing vs.\ decorative information \\
+D5 & identity through member turnover \\
+D6 & response to external forcing \\
+D7 & formation and dissolution \\
+D8 & ecology of several superagents \\
+D9 & hierarchy and scale \\
+D10 & structural thermodynamics of ideology \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%==========================================================================
+\section{Assessing model faithfulness}\label{sec:faith}
+
+A physics model is \emph{faithful} to the swarm when it captures the mechanism that generates the data, not just the data's statistics. The distinction matters here because most of our models fit by construction:
+\begin{tight}
+\item a pairwise maximum-entropy model reproduces pairwise correlations exactly;
+\item a flexible point process fits any sequence of event times.
+\end{tight}
+We therefore separate \emph{fitting} from \emph{faithfulness}. We score each combination of model, mapping onto the data, and time window on nine axes (Table~\ref{tab:faith}). Each axis gets 0 (not done or failed), 1 (partial) or 2 (passed), with the evidence linked from the hypothesis card.
+
+\textbf{Principles.}
+\begin{tight}
+\item \emph{Fit is not faithfulness.} Agreement on the statistics a model was fitted to is no evidence.
+\item \emph{Beat the strongest null, not the weakest.} Null models, from weak to strong:
+  \begin{tight}
+  \item independent agents;
+  \item a shared, time-varying field (daily schedule, goal, regime);
+  \item scheduler artifacts (turn-taking, nudges);
+  \item a model-family field (shared pretraining);
+  \item shuffles that preserve each agent's own autocorrelation.
+  \end{tight}
+\item \emph{Predict what you didn't fit:} statistics left out of the fit, and above all the model's distinctive signature (a first-order jump, $s^{-3/2}$ outbreak sizes, a susceptibility peak).
+\item \emph{Natural experiments are our interventions.} A model fitted on one side of a step change should predict the other side.
+\item \emph{Check the inference, not only the model.} Generate synthetic data from the fitted model with the village's actual sampling (agent count, idle gaps, weekends, update order), rerun the whole pipeline, and confirm the parameters come back~\cite{talts2018}.
+\item \emph{Measurement invariance.} A variable must mean the same thing across model families and regimes. The shift from GUI actions to bash shows that a label alone doesn't guarantee this.
+\item \emph{Control multiplicity.} Lock a holdout set of goal periods and natural experiments before exploring. Split time in blocks of whole days. Write predictions on the card first. Report every model tried.
+\item \emph{Prefer rival designs:} tests where two models predict opposite outcomes.
+\end{tight}
+
+\begin{table}[t]
+\caption{Faithfulness axes, scored 0/1/2 per model, mapping and window.}
+\label{tab:faith}
+\scriptsize
+\begin{tabular}{@{}l@{\hspace{4pt}}p{2.05cm}p{4.95cm}@{}}
+\toprule
+ & axis & test \\ \midrule
+A & mapping & every variable defined from dataset fields; assumptions listed; invariant across families and regimes \\
+B & assumptions & stationarity (split halves); Markov order (Chapman--Kolmogorov); Hawkes time-rescaling; update-order audit \\
+C & adequacy & beats the null hierarchy on held-out data (day-blocked cross-validation) \\
+D & unfitted predictions & reproduces unfitted statistics and the model's signature (e.g.\ number-active distribution, triplets~\cite{schneidman2006}; outbreak sizes; jumps) \\
+E & interventional & fitted before a natural experiment, predicts the sign and size of the change after it, or across a reversal \\
+F & identifiability & synthetic recovery with village sampling; stable over bin width, clustering, embedding model, split halves \\
+G & ground truth & agrees with known structure: the assigned leader (\#45), rooms, families, scheduler changes \\
+H & comparative & beats the rival models named on the card (held-out likelihood or description length) \\
+I & transfer & holds in other goal periods of the same mode and regime, including the locked holdout \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Levels and promotion.}
+\begin{tight}
+\item \emph{Idea $\to$ hypothesis.} Requires A $\geq$ 1, plus a written plan for C, D and either E or G, with explicit falsifiers. Promotion is a commitment to a test, not evidence.
+\item \emph{Descriptive} (useful phenomenology): C = 2 and D $\geq$ 1.
+\item \emph{Supported:} A = 2, B $\geq$ 1, C = 2, D = 2, F $\geq$ 1, H $\geq$ 1, and E = 2 or G = 2, all confirmed on the locked holdout.
+\item \emph{Faithful (mechanistic):} supported, plus E = 2, F = 2, H = 2 and I = 2.
+\end{tight}
+The cheapest ideas to promote are those that can reach high E or G scores early:
+\begin{tight}
+\item ``nonequilibrium Ising explains \#45'' (ground truth: the assigned leader);
+\item the null-week Ising test (clean C and D);
+\item the Hawkes ideas (time-rescaling checks for B; the hours and nudger reversals for E).
+\end{tight}
+
+%==========================================================================
+\section{Plan of work}\label{sec:plan}
+
+\textbf{Done:} infrastructure, the descriptive overview, the model library, the two catalogs, the idea pool, the structure of the first hypothesis, and this faithfulness scheme.
+
+\textbf{Phases ahead.}
+\begin{tight}
+\item \emph{Phase 0, shared tables (CPU).} Compact per-event, per-message and per-session tables; roster and regime tables over time; a table of ``kicks'' (nudges, human messages, kickoffs). Synthetic generators for models 01, 02, 09 and 10 with the village's sampling. Lock the holdout.
+\item \emph{Phase 1, physics without text (CPU).}
+  \begin{tight}
+  \item Hawkes fits per goal period;
+  \item binned spins; equilibrium and kinetic Ising fits;
+  \item susceptibilities and entropy-production bounds;
+  \item the first three phase diagrams;
+  \item score the first promotions.
+  \end{tight}
+\item \emph{Phase 2, text to states (GPU).}
+  \begin{tight}
+  \item embeddings of chat, session goals and memories;
+  \item topic clusters (Potts labels, neutral cooperation);
+  \item meaning clusters for semantic entropy (H01, D3).
+  \end{tight}
+  Open models run on rented GPU nodes. Analysis only; no training on the data.
+\item \emph{Phase 3, natural experiments.} Event studies at the catalogued step changes.
+\item \emph{Behavior states.} A finite, regime-invariant state space of agent behavior: 5-minute windows classified zero-shot by Jev, a hosted typed-classification model. It feeds the thermodynamic and Potts analyses.
+\item \emph{Replay} is not possible: the exact prompts can't be obtained, so interventional tests rely on natural experiments.
+\end{tight}
+Also pending: reading the recent \emph{Physics of Agents} preprint~\cite{physicsofagents}.
+
+\begin{thebibliography}{99}
+\bibitem{aivillage} AI Digest, ``AI Village dataset'' (2026), \url{https://theaidigest.org/village}; Hugging Face \texttt{aidigestorg/ai-village}, revision \texttt{838b415}.
+\bibitem{overview} V. Rogers (with Claude Opus 5.5), ``The AI Village as a physical system: setup, platform, goals and timeline,'' internal note (2026).
+\bibitem{kolchinsky2018} A. Kolchinsky and D. H. Wolpert, Interface Focus \textbf{8}, 20180041 (2018).
+\bibitem{sowinski2023} D. R. Sowinski \textit{et al.}, PRX Life \textbf{1}, 023003 (2023).
+\bibitem{kolchinsky2024} A. Kolchinsky, J. Chem. Phys. \textbf{161}, 124101 (2024).
+\bibitem{pinero2025} J. Piñero \textit{et al.}, Proc. Natl. Acad. Sci. U.S.A. \textbf{122}, e2515423122 (2025).
+\bibitem{bartlett2025} S. Bartlett \textit{et al.}, PRX Life \textbf{3}, 037003 (2025).
+\bibitem{pinero2026} J. Piñero \textit{et al.}, Commun. Phys. \textbf{9}, 120 (2026).
+\bibitem{aguilera2026} M. Aguilera, S. Ito, and A. Kolchinsky, Phys. Rev. Lett. \textbf{136}, 077101 (2026).
+% from memory; verify before circulating:
+\bibitem{schneidman2006} E. Schneidman, M. J. Berry, R. Segev, and W. Bialek, Nature \textbf{440}, 1007 (2006).
+\bibitem{talts2018} S. Talts \textit{et al.}, ``Validating Bayesian inference algorithms with simulation-based calibration,'' arXiv:1804.06788 (2018).
+\bibitem{farquhar2024} S. Farquhar \textit{et al.}, Nature \textbf{630}, 625 (2024).
+\bibitem{physicsofagents} ``Physics of Agents: Statistical Mechanics Predicts Collective Behavior of AI Agents,'' arXiv:2608.16578 (2026). % authors to be filled in after reading
+\end{thebibliography}
+
+\end{document}

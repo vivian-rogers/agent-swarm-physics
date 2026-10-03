@@ -46,6 +46,19 @@ The fields h_i and couplings J_ij are **inferred** from data, not assumed. J_ij 
 - **Common drive:** goal changes, human messages and time of day push everyone together, which looks like J > 0. Use time-dependent fields h_i(t), or condition on the drive, and see what survives.
 - **Scheduler artifacts:** check how `villages.turn_id` and `active_agent_id` work. If the scaffolding lets only one agent act at a time, mutual exclusion forces J_ij < 0 everywhere. That would be a property of the software, not of the agents.
 
+## Susceptibility
+
+How strongly the swarm responds to a push. Two routes; this model gives the first, model 02 the second.
+
+- **From fluctuations (exact within the model).** For the max-ent form, with temperature absorbed into J and h:
+
+  $$\chi_{ij} \equiv \frac{\partial\langle s_i\rangle}{\partial h_j} = \langle s_i s_j\rangle - \langle s_i\rangle\langle s_j\rangle = C_{ij}, \qquad \chi = \frac{1}{N}\sum_{ij} C_{ij} = N\,\mathrm{Var}(m)$$
+
+- **Mode-resolved.** Diagonalize C. The top eigenvalue λ_max is the susceptibility of the softest collective mode, and its eigenvector says which agents move together when the swarm is pushed. In mean field χ ∝ (1 − J)⁻¹, which diverges as J's top eigenvalue → 1.
+- **Distance to criticality.** Rescale the fitted model by a fictitious inverse temperature, P_β ∝ P^β. Compute χ(β) and the heat capacity C(β) by Monte Carlo, or by exact enumeration for N ≲ 20. A peak near β = 1 means the real swarm sits near a critical point.
+- **Per goal period** these are the cheapest summaries available: binned activity only, no order parameter needed. See `hypotheses/hypohypotheses/phase-diagrams.md` (entry 2b).
+- **Caveat.** χ = C is the fluctuation–dissipation theorem, which assumes equilibrium. In the village it's an equal-time summary, not a guaranteed response. Compare it with measured responses (model 02); the mismatch is informative.
+
 ## Pitfalls
 
 - This is an **equilibrium** model: it only sees equal-time correlations, which are symmetric. Directed influence (i talks, then j replies) is invisible here. That is what model 02 is for.

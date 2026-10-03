@@ -1,0 +1,50 @@
+% Single-column project-architecture flowchart. \input by project-architecture.tex and paper.tex.
+% Needs: tikz with libraries arrows.meta, positioning, calc; xcolor.
+\definecolor{archIn}{HTML}{3f6fb5}
+\definecolor{archFd}{HTML}{3a7d6b}
+\definecolor{archHy}{HTML}{c2662d}
+\definecolor{archOut}{HTML}{6b6b6b}
+\begin{tikzpicture}[font=\scriptsize, node distance=4.2mm and 3mm,
+  bx/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center,
+             text width=3.55cm, inner sep=2.4pt, minimum height=8.5mm},
+  wide/.style={bx=#1, text width=7.6cm},
+  ar/.style={-{Stealth[length=1.7mm]}, line width=0.6pt, draw=black!65},
+  lb/.style={font=\tiny\itshape, text=black!70, fill=white, inner sep=0.8pt}]
+
+% inputs
+\node[bx=archIn, minimum height=12.5mm] (raw) {\textbf{AI Village export}\\46 agents, 51 goals, 381k events,\\2.5M computer-use turns};
+\node[bx=archIn, right=of raw.north east, anchor=north west, minimum height=12.5mm] (lit) {\textbf{Literature}\\8 papers, one notes file each};
+
+% foundations
+\node[bx=archFd, below=of raw] (proc) {\textbf{Processing}\\overview note, type counts,\\provenance};
+\node[bx=archFd, below=of lit] (pm) {\textbf{Physics-model library}\\models 01--11 +\\shared definitions};
+
+% catalogs
+\node[bx=archFd, below=of proc] (ne) {\textbf{Natural experiments}\\40 dated step changes};
+\node[bx=archFd, below=of pm] (gp) {\textbf{Goal periods}\\51 windows, ranked models};
+
+% ideas
+\node[bx=archHy, below=of gp] (hh) {\textbf{Hypohypotheses}\\46 ideas, tagged by\\model and period};
+
+% hypotheses
+\node[wide=archHy, anchor=north west] (h) at ($(raw.west |- hh.south)+(0,-4.2mm)$) {%
+  \textbf{Hypothesis cards}\quad question $\cdot$ model $\cdot$ data scheme $\cdot$ null $\cdot$\\
+  prediction \emph{written before data}\\[2pt]
+  \textit{H01: emergent superagents exist}\, (10 directions;\\
+  access: observational, natural experiments, replay)};
+
+% outputs
+\node[wide=archOut, below=of h] (out) {\textbf{Analysis} $\rightarrow$ \textbf{interpretation} $\rightarrow$ \textbf{write-up}};
+
+% arrows
+\draw[ar] (raw) -- (proc);
+\draw[ar] (lit) -- node[lb, right]{} (pm);
+\draw[ar] (proc) -- (ne);
+\draw[ar] (pm) -- (gp);
+\draw[ar] (proc.east) -- (gp.north west);
+\draw[ar] (gp) -- (hh);
+\draw[ar] (ne.south) -- node[lb, right, align=left]{quasi-\\interventions} (ne.south |- h.north);
+\draw[ar] (hh.south) -- node[lb, right]{graduates} (hh.south |- h.north);
+\draw[ar] (pm.east) -- ++(2.2mm,0) |- node[lb, pos=0.25, rotate=-90]{model} (h.east);
+\draw[ar] (h) -- (out);
+\end{tikzpicture}

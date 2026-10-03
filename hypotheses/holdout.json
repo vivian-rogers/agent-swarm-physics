@@ -1,0 +1,79 @@
+{
+ "locked_at": "2026-10-03T22:01:59.502414+00:00",
+ "seed": 20261003,
+ "ne_windows": [
+  {
+   "id": "NE12",
+   "why": "rooms channel cut (S4, S5, H01 D3.2)",
+   "start": "2026-02-23",
+   "end": "2026-03-02"
+  },
+  {
+   "id": "NE21+NE23",
+   "why": "hours ABAB reversal and nudger off/on (S3); starts Mon 06-08, the first 8 h weekday",
+   "start": "2026-06-08",
+   "end": "2026-07-06"
+  },
+  {
+   "id": "NE30",
+   "why": "same-family succession Gemini 3 Pro -> 3.1 Pro (H01 D5.1.b)",
+   "start": "2026-03-05",
+   "end": "2026-03-16"
+  },
+  {
+   "id": "#51-tail",
+   "why": "last two weeks of the private-role era",
+   "start": "2026-09-07",
+   "end": "2026-09-21"
+  }
+ ],
+ "goal_periods_held_out": [
+  1,
+  9,
+  14,
+  15,
+  22,
+  28,
+  29,
+  32,
+  34,
+  43,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50
+ ],
+ "drawn_by_mode": {
+  "C": [
+   1,
+   15,
+   28,
+   45
+  ],
+  "F": [
+   9,
+   22
+  ],
+  "I": [
+   14,
+   43
+  ],
+  "K": [
+   29
+  ],
+  "M": []
+ },
+ "blocked_by_ne_windows": [
+  32,
+  34,
+  46,
+  47,
+  48,
+  49,
+  50
+ ],
+ "rule": "Exploratory analyses must exclude every goal period listed and every window listed (PT dates, end exclusive). Use only for confirmation of pre-written predictions.",
+ "history": "Drawn once with the NE21 window starting 2026-06-07 (Sunday), which blocked #45 through a single weekend-day overlap; window corrected to start Monday 2026-06-08 and redrawn with the same seed, before any data was examined."
+}
