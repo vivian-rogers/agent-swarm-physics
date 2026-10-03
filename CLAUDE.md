@@ -13,7 +13,8 @@ the AI Village dataset as the primary system.
 | `infra/` | Shared processing code used by more than one hypothesis: raw-table loaders, time/regime handling, common transforms. |
 | `physics-models/` | One folder per physics model (`NN-<slug>/`): the model, its interesting behavior, how it maps onto the swarm, how to fit it, nulls, pitfalls. Simulator/theory code for the model lives there too. `physics-models/README.md` is the index. |
 | `physics-models/DEFINITIONS.md` | Operational definitions of physics concepts in terms of dataset fields. **Every model and hypothesis uses these.** |
-| `hypotheses/H<NN>-<slug>/` | One research direction per folder. See "Hypotheses" below. Copy `hypotheses/_template/` to start one. |
+| `hypotheses/H<NN>-<slug>/` | One research direction per folder, with one `G<NN>/` subfolder per goal period it's tested on. See "Hypotheses" below. Copy `hypotheses/_template/` to start one. |
+| `hypotheses/OVERVIEW.md` | Generated hypothesis × goal-period table (verdicts), built by `infra/overview/build_overview.py`. |
 | `hypotheses/holdout.md` (+ `holdout.json`) | **Locked holdout** (2026-10-03): goal periods and NE windows reserved for confirmation. Every exploratory script must mask them (`infra/shared/common.py: holdout_mask`). |
 | `hypotheses/promotion-shortlist.md` | The first hypotheses to test (S1–S7), with plans, observables and implications. |
 | `hypotheses/natural-experiments.md` | Shared catalog of dated step changes (NE01…): scaffold, roster, rooms, operator and goal changes, with design notes. Use as quasi-interventions; we can't run new swarms. |
@@ -30,15 +31,29 @@ Each hypothesis folder ties together one question, one physics model (from
 
 ```
 hypotheses/H<NN>-<slug>/
-├── README.md     # the card: question, model, data scheme, observables, null, prediction, status
+├── README.md     # the card: question, model, data scheme, observables, null, general predictions,
+│                 #   status, and a "Results by goal period" table linking the G folders
 ├── scheme/       # the postprocessing scheme: builds data/processed/H<NN>-<slug>/ from data/raw/
-├── analysis/     # fits the model to the processed data; tests the prediction
-└── figures/
+├── analysis/     # ONE pipeline for the hypothesis, run per goal period (e.g. --period G38)
+├── figures/      # cross-period summary figures
+├── G38/          # this hypothesis on goal period #38: README (verdict, role, why this period,
+│   └── figures/  #   dated prediction, result, period-specific scorecard) + per-period figures
+├── G41/ …
+└── NE15/         # a test across a natural experiment that spans goal periods (the named exception)
 ```
+
+- **Goal-period folders.** Each goal period a hypothesis is tested on gets a `G<NN>/` folder (two digits, e.g. `G08`, `G38`). Use `G35a`/`G35b` only when a step change splits a period. Copy `hypotheses/_template/GNN/`. The README's first lines are `**Verdict:**` (pending · supported · failed · mixed · descriptive · n/a) and `**Role:**` (exploratory · confirmatory). Write the period's prediction there before running on that period. Its data goes in `data/processed/H<NN>-<slug>/G<NN>/`.
+- **Tests across a boundary** (event studies, cuts, merges, reversals) go in `NE<NN>/` folders named after the natural experiment.
+- **`hypotheses/OVERVIEW.md`** is the hypothesis × goal-period table. It is generated from the G and NE folders by `infra/overview/build_overview.py`; never edit it by hand.
 
 - Number hypotheses sequentially (`H01`, `H02`, …); never reuse a number. Parked or refuted ones stay, with their status updated.
 - Write the prediction and the null/baseline in the card **before** running the analysis on real data.
 - Score every hypothesis on the nine faithfulness axes (A–I) in its card's scorecard; definitions and promotion thresholds are in `writeup/paper.tex` ("Assessing model faithfulness"). Fit is not faithfulness: beat the strongest null, predict unfitted statistics, and use natural experiments as interventions. Lock the holdout goal periods and NEs before exploring.
+- **Unit of analysis: one goal period** (decided 2026-10-03), split further at any step change inside it (see `natural-experiments.md`). Fit models *within* a period. Compare periods by comparing their fitted parameters, treating each period as a point on a phase diagram; never fit one model to pooled periods. Exceptions must be named and justified in the card:
+  - (a) **Shared instruments.** Embedding basis, meaning clusters, behavior taxonomy: a common ruler, so periods are comparable. A ruler is not a model.
+  - (b) **Agent-level properties.** Style or prior field, memory set point. Check invariance across periods first.
+  - (c) **The transition is the object.** Quench, NE event study, hysteresis: the design compares the two sides of a boundary.
+  - (d) **Too little data per period.** Use hierarchical partial pooling (period-specific parameters with shrinkage), reported next to the per-period estimates. Never pool completely.
 - The card names its model by folder (e.g. `physics-models/03-contagion`). Hypothesis-specific variants of the model are described in the card; general improvements go back into the model folder.
 - If a second hypothesis needs the same scheme, move that code into `infra/` and reference it from both cards rather than copying it.
 - Any term used in a card that is in `physics-models/DEFINITIONS.md` must be used with that definition. If a hypothesis needs a different one, add a named variant there (e.g. "interaction (mention-based)") rather than redefining it locally.
@@ -67,7 +82,7 @@ Each `data/processed/<name>/` folder has a `_provenance.json`:
 ## Conventions
 
 - Python via `uv` with the project environment (`pyproject.toml`, `.venv`): `uv run python …`. Times are UTC unless a column says otherwise.
-- **Storage budget: 10 GB for the whole project** (raw is 5.4 GB; `.venv` ~0.4 GB). Keep processed outputs ≲1 GB: compressed parquet, small dtypes, no duplicated text; check `du -sh` around big builds.
+- **Storage budget: 20 GB for the whole project** (raised from 10 GB on 2026-10-03) (raw is 5.4 GB; `.venv` ~0.4 GB). Keep processed outputs ≲1 GB: compressed parquet, small dtypes, no duplicated text; check `du -sh` around big builds.
 - **Compute:** run locally (10 cores, 32 GB) and parallelize independent scans (process pools, polars). Ask before using remote compute (givemeanode is available for Phase 2).
 - **Shared tables** live in `data/processed/shared/` and are built by `infra/shared/` (`scan_tables.py`, then `build_derived.py`).
 - Add a `LOG.md` entry when you start, finish, or abandon something, or make a decision worth remembering.

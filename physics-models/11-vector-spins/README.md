@@ -52,6 +52,17 @@ Vector spins have a distinction that Ising lacks: responding *along* the current
 - **Fluctuation route.** The covariance of the order-parameter vector **m** across windows: its eigenvalues are mode-resolved susceptibilities. In an ordered phase, expect transverse fluctuations ≫ longitudinal.
 - **Caveats.** The field's magnitude is unknown, so use relative χ. Embedding anisotropy inflates every alignment, so center and whiten first.
 
+## Mean-field forward version
+
+Mean-field O(n): **m** = L_n(β(J₀|**m**| + h)) **m̂**, with L_n(x) = I_{n/2}(x) / I_{n/2−1}(x) (modified Bessel functions; n = 3 gives the Langevin function coth x − 1/x). For unit spins the mean-field critical point is βJ₀ = n.
+- **Fit:** (βJ₀, h) per period from polarization and its fluctuations, in a reduced embedding dimension n.
+- **Predict:**
+  - the response along the field at kickoffs;
+  - the transverse susceptibility |**m**|/h;
+  - the ratio of transverse to longitudinal fluctuations.
+
+HH85.
+
 ## Pitfalls
 
 - Anisotropy and topic-vs-style confounds: two agents can align because they write alike, not because they are thinking about the same thing.

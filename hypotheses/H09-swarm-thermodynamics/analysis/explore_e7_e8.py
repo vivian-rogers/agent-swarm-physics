@@ -163,6 +163,14 @@ r2 = stats.spearmanr(d["V_prev_w"].to_numpy(), d["lines_removed_w"].to_numpy(), 
 dd = d.drop_nulls(["d_chars_w", "n_exposed_w", "V_prev_w"])
 A = np.c_[dd["n_exposed_w"].to_numpy(), dd["V_prev_w"].to_numpy()]
 coef = np.linalg.lstsq(A, dd["d_chars_w"].to_numpy(), rcond=None)[0]
+d2 = demean(c3.with_columns(pl.col("n_turns").cast(pl.Float64), pl.col("dt_s").cast(pl.Float64)), ["turn", "n_turns", "dt_s", "lnPt"])
+r_turns = stats.spearmanr(d2["n_turns_w"].to_numpy(), d2["turn_w"].to_numpy(), nan_policy="omit")
+r_dt = stats.spearmanr(d2["dt_s_w"].to_numpy(), d2["turn_w"].to_numpy(), nan_policy="omit")
+d2t = d2.filter(pl.col("tok_uncached").is_not_null())
+r_tok = stats.spearmanr(d2t["lnPt_w"].to_numpy(), d2t["turn_w"].to_numpy(), nan_policy="omit")
+r_pm_dt = stats.spearmanr(d["n_exposed_w"].to_numpy(), demean(c3.with_columns(pl.col("dt_s").cast(pl.Float64)), ["dt_s"])["dt_s_w"].to_numpy(), nan_policy="omit")
+e8["E8c_controls"] = {"spearman_turnover_vs_own_turns": float(r_turns.statistic), "spearman_turnover_vs_interval_s": float(r_dt.statistic),
+                      "spearman_turnover_vs_lnPtok": float(r_tok.statistic), "spearman_Pmsg_vs_interval_s": float(r_pm_dt.statistic)}
 e8["E8c"] = {"spearman_Pmsg_turnover": float(r1.statistic), "spearman_Vprev_lines_removed": float(r2.statistic),
              "dV_on_P_beta_chars_per_msg": float(coef[0]), "dV_on_Vprev_minus_gamma": float(coef[1]),
              "implied_relaxation_snapshots": float(-1 / coef[1]) if coef[1] < 0 else None,
@@ -187,6 +195,7 @@ for m in ("rate_per_h", "V", "turn", "rm"):
     rb = np.log(np.maximum(both[m + "_b"].fill_null(np.nan).to_numpy().astype(float), 1e-6) / np.maximum(both[m].to_numpy().astype(float), 1e-6))
     ne[m] = {"median_dln_after_0326": float(np.median(r)), "frac_abs_dln_gt_0.22": float(np.mean(np.abs(r) > 0.22)),
              "frac_increase": float(np.mean(r > 0)), "median_dln_0324_0325": float(np.nanmedian(rb))}
+ne["raw_medians_across_agents"] = {w_: {m: float(per[w_][m].median()) for m in ("rate_per_h", "V", "turn", "rm")} for w_ in per}
 ne["per_agent"] = both.select("agent", "rate_per_h", "rate_per_h_a", "V", "V_a", "turn", "turn_a").to_dicts()
 e8["E8d_NE14"] = ne
 R["E8"] = e8
@@ -212,8 +221,9 @@ dm = (ci.filter((pl.col("pt_date") >= "2026-03-02") & (pl.col("pt_date") < "2026
 xd = np.array([np.datetime64(x) for x in dm["pt_date"].to_list()])
 ax.plot(xd, dm["V"].to_numpy() / 1000, "o-", ms=1.5, lw=0.7, color="#3f6fb5", label="median memory size (k chars)")
 ax2 = ax.twinx(); ax2.plot(xd, dm["turn"].to_numpy(), "s-", ms=1.5, lw=0.7, color="#c2662d", label="median turnover 1-J")
-for dte, lab_ in (("2026-03-24", "NE14"), ("2026-03-26", "NE16")):
-    ax.axvline(np.datetime64(dte), color="0.4", lw=0.5, ls="--"); ax.text(np.datetime64(dte), ax.get_ylim()[1] * 0.95, lab_, fontsize=5)
+for dte, lab_, fy in (("2026-03-24", "NE14", 0.97), ("2026-03-26", "NE16", 0.90)):
+    ax.axvline(np.datetime64(dte), color="0.4", lw=0.5, ls="--")
+    ax.text(np.datetime64(dte), ax.get_ylim()[0] + fy * (ax.get_ylim()[1] - ax.get_ylim()[0]), " " + lab_, fontsize=5)
 ax.set_ylabel("k chars", color="#3f6fb5"); ax2.set_ylabel("1 - jaccard_prev", color="#c2662d")
 ax.tick_params(axis="x", labelrotation=45, labelsize=5); ax.set_title("non-holdout days (gaps = holdout)", fontsize=6)
 ax = axs[1]
@@ -236,3 +246,4 @@ out = {k: v for k, v in R["E8"].items() if k not in ("E8b", "E8d_NE14")}
 print(json.dumps(R["E7"], indent=1)); print(json.dumps(out, indent=1))
 print(json.dumps({k: v for k, v in R["E8"]["E8b"].items() if k != "per_agent"}, indent=1))
 print(json.dumps({k: v for k, v in R["E8"]["E8d_NE14"].items() if k != "per_agent"}, indent=1))
+print(json.dumps(R["E8"]["E8c_controls"], indent=1))

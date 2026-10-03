@@ -57,3 +57,26 @@ hypothesis's `scheme/` or `model/` until a second hypothesis needs it.
 - **`activity_bins`:** pt_date, minute, active_min, agent, talk, idle, consolidate, other_event, turns, paused, state (1 silent, 2 idle incl. declared pauses, 3 act, 4 talk). Agents on the roster only; Claude Code agent excluded.
 - **`kicks`:** t, kind ∈ {human_message, automated_message, goal_kickoff, roster_join, roster_leave, natural_experiment}, room, agent, ref.
 - **Holdout:** `calendar.holdout`, or `infra/shared/common.py: holdout_mask(pt_dates, goal_nos)`.
+
+### Artifacts tables (built by H07, 2026-10-03): `infra/shared/build_artifacts.py [scan|build]`
+One orjson pass over raw `computer_use_turns` (scan 184 s, 2 processes; build 25 s). All time, **including the holdout**: mask before exploring.
+- **`artifacts`** (13,186 rows, 0.45 MB; no text): one row per artifact.
+  - Columns: `artifact` (int32), `kind` (repo / site / file / domain), canonical `name`, `host`, `domain`, `parent` (file → repo; site → repo where derivable), `first_t`, `first_agent` (int8; null for humans), `first_speaker_kind`, `first_source`, `last_t`, `n_chat`, `n_action`, `n_intention`, `n_mentions`, `n_agents`.
+  - Counts: 2,404 repos, 1,355 sites, 5,747 files, 3,680 domains.
+- **`artifact_mentions`** (573,227 rows, 5.0 MB): artifact, t, agent, speaker_kind, `source` (chat 23,438 / action 536,399 / intention 13,390), `how` (url, bare, output, cwd, session_cwd), `verb` (git push/clone/fetch, gh pr view, deploy, fetch, …), room and message_id (chat only), `ref_index` (event_index for intentions; sidecar row for actions).
+- **`artifact_commands_text`** (sidecar, 739,733 rows, 23 MB): row, t, agent, session, act (bash / type), verbs, `cmd` (relevant non-comment lines, ≤ 300 chars; null for rows kept only for `cd` or restart tracking), urls, dirs, restart, clone_src, clone_dir, out_urls, `out_hashes` (commit hashes from git output), new_branch, error.
+- **Canonical names:**
+  - repo: `github.com/o/r` or `gitlab.com/ai-village-agents/village/<p>` (API URLs map to their repo);
+  - file: `<repo>:<path>`, plus Google Docs / Drive ids;
+  - site: `o.github.io/r`, GitLab Pages hosts, hosting platforms;
+  - domain: the registrable domain;
+  - localhost and private IPs dropped.
+- **Caveats:**
+  - Directory-based resolution is only 0.89 precise (`cwd`) and 0.81 (`session_cwd`) against git-printed remotes; strict uses should keep `how ∈ {url, output, bare}`.
+  - Raw turns are out of time order within a session (934k inversions), so the working directory is resolved after sorting.
+  - The Claude Code stream and memories are not scanned.
+- **Repo clones** used by H07 live in `data/raw/repos/` (bare, `--filter=blob:none`, plus blobs fetched by id; 5.8 MB; re-fetch commands in its `_source.md`).
+
+## Known issues
+- **`chat_core.mentions` is polluted: use `chat_mentions_clean.parquet` instead** (found by H04; root cause found 2026-10-03). `o1`'s alias set was empty (names under 4 characters were dropped), and the empty regex matched almost every message: 175k of 183k messages carry a spurious `o1`. **Fixed** in `common.mention_regexes` (o1 and o3 case-sensitive; agents with no alias skipped). `infra/shared/build_mentions_clean.py` writes the sidecar `chat_mentions_clean.parquet` (chat_core row order: `message_id`, `mentions_clean`, `mentions_roster` = also restricted to that day's roster); 342k → 168k mentions. chat_core itself is rebuilt by `scan_tables.py` once running analyses finish. Analyses that only looked at mentions of *current* agents were unaffected; anything counting "any mention" or mentions per message was not.
+- **`automated` speaker** covers the daily "pausing / resuming the village" messages as well as the nudger; separate them by text before treating `automated` as nudges.

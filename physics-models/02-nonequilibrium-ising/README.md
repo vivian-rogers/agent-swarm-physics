@@ -73,6 +73,12 @@ The fixed-order sweep is the subtle case. Each single-site update satisfies deta
   - Kicks aren't random: the nudger targets idle agents, so use matched controls.
   - Overlapping kicks need deconvolution, e.g. a Hawkes fit.
 
+## Mean-field forward version
+
+- **Mean-field Glauber dynamics:** τ₀ dm/dt = −m + tanh(β(J₀ m + h(t))). Linearized, the relaxation time is τ = τ₀ / (1 − βJ₀(1−m²)), which diverges at criticality. The βJ₀ from fluctuations (model 01, Curie–Weiss inversion) should *predict* the decay of measured responses to kicks: a forward consistency test with no J matrix. HH81.
+- **Leader–follower mean field:** one leader spin σ_L coupled to a follower population m_F, with τ₀ ṁ_F = −m_F + tanh(β(J_ff m_F + J_lf σ_L + h)). Two or three parameters capture directed influence; compare the fitted J_lf across weeks. HH83.
+- **Entropy production in mean field:** for the two-population model, the irreversibility comes from J_lf ≠ J_fl, so it can be predicted from the fitted parameters and compared with the model-free estimate.
+
 ## Pitfalls
 
 - Nonstationarity within a window (new agents, goal changes) can masquerade as irreversibility. Use windows within one regime (`../DEFINITIONS.md`, Regime).

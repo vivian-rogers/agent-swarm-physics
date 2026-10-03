@@ -7,16 +7,18 @@ Run: uv run python hypotheses/H03-self-excited-criticality/analysis/fit_periods.
 """
 from __future__ import annotations
 
+import sys
 import time
 from multiprocessing import Pool
 
 import numpy as np
 import polars as pl
 
-from common import (DATA, FITS, N_WORKERS, fit_model, hc, load, period_meta, specs, write_provenance)
+from common import (DATA, FITS, fit_path, select_goals, write_output, N_WORKERS, fit_model, hc, load, period_meta, specs, write_provenance)
 
-KS_MODELS = ["M1_B2", "P_B2", "M1_B0", "P_B0", "M1_B3", "M2_grid"]
-CV_MODELS = ["M1_B2", "P_B2", "M2_grid", "M1_B1", "P_B1", "M1_B3", "P_B3", "M3_sc", "M3_self", "P_B2a"]
+KS_MODELS = ["M1_B2", "P_B2", "M1_B0", "P_B0", "M1_B3", "P_B3", "M2_grid", "M1_B2_t30"]
+CV_MODELS = ["M1_B2", "M1_B2_t30", "P_B2", "M2_grid", "M1_B1", "P_B1", "M1_B3", "P_B3", "M1_B3_2h", "P_B3_2h",
+             "M3_sc", "M3_self", "P_B2a"]
 G = {}
 
 
@@ -60,10 +62,11 @@ def run_task(task):
         if ds.n < 20:
             continue
         f = fit_model(name, ds)
-        np.save(FITS / f"{goal}_{eset}_{name}.npy", f.p)
+        fit_path(goal, eset, name).parent.mkdir(parents=True, exist_ok=True)
+        np.save(fit_path(goal, eset, name), f.p)
         s = f.summary()
         s.update({"goal_no": goal, "set": eset, "model": name, **meta})
-        if name == "M1_B2":
+        if name in ("M1_B2", "M1_B2_t30"):
             s["n_prof_lo"], s["n_prof_hi"] = hc.profile_ci_n(f)
         if name in KS_MODELS:
             z = f.rescaled_intervals()
@@ -75,19 +78,42 @@ def run_task(task):
     return rows, cv
 
 
+def run_cv_only(task):
+    goal, eset = task
+    days, dm = G["days"], G["dm"][eset]
+    keys = days.filter(pl.col("goal_no") == goal).sort("day_id")["day_id"].to_list()
+    return cv_period(dm, keys, goal, eset)
+
+
+def main_cv_only():
+    days, _, _ = load()
+    size = days.group_by("goal_no").agg(pl.col("n_all").sum()).sort("n_all", descending=True)["goal_no"].to_list()
+    tasks = [(g, s) for g in select_goals(size) for s in ("ALL", "TALK")]
+    with Pool(N_WORKERS, initializer=_init) as pool:
+        out = pool.map(run_cv_only, tasks, chunksize=1)
+    write_output(pl.DataFrame([r for o in out for r in o]), "period_cv.parquet")
+    write_provenance({"period_cv.parquet": {"built_by": "analysis/fit_periods.py --cv-only",
+                                            "scheme": "5-fold day-blocked; goal's first day always in train; "
+                                                      "test-day unit levels refit, all else fixed; transferred "
+                                                      "within-day shape floored at median/20"}})
+
+
 def main():
+    if "--cv-only" in sys.argv:
+        return main_cv_only()
     FITS.mkdir(parents=True, exist_ok=True)
     days, _, _ = load()
     goals = sorted(days["goal_no"].unique().to_list())
     # biggest first for load balance
     size = days.group_by("goal_no").agg(pl.col("n_all").sum()).sort("n_all", descending=True)["goal_no"].to_list()
+    size = select_goals(size)
     tasks = [(g, s) for g in size for s in ("ALL", "TALK")]
     with Pool(N_WORKERS, initializer=_init) as pool:
         out = pool.map(run_task, tasks, chunksize=1)
     rows = [r for o in out for r in o[0]]
     cvs = [r for o in out for r in o[1]]
-    pl.DataFrame(rows, infer_schema_length=None).write_parquet(DATA / "period_fits.parquet", compression="zstd")
-    pl.DataFrame(cvs).write_parquet(DATA / "period_cv.parquet", compression="zstd")
+    write_output(pl.DataFrame(rows, infer_schema_length=None), "period_fits.parquet")
+    write_output(pl.DataFrame(cvs), "period_cv.parquet")
     write_provenance({"period_fits.parquet": {"built_by": "analysis/fit_periods.py", "goals": goals,
                                               "models": list(specs())},
                       "period_cv.parquet": {"built_by": "analysis/fit_periods.py",

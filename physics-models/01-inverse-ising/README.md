@@ -59,6 +59,17 @@ How strongly the swarm responds to a push. Two routes; this model gives the firs
 - **Per goal period** these are the cheapest summaries available: binned activity only, no order parameter needed. See `hypotheses/hypohypotheses/phase-diagrams.md` (entry 2b).
 - **Caveat.** χ = C is the fluctuation–dissipation theorem, which assumes equilibrium. In the village it's an equal-time summary, not a guaranteed response. Compare it with measured responses (model 02); the mismatch is informative.
 
+## Mean-field forward version (no N×N inference)
+
+At N ≲ 30 with short windows, inferring every J_ij is data-hungry and fragile. The forward alternative: posit a few-parameter mean-field model, estimate it from macroscopic moments, and test its predictions on observables not used in the fit.
+- **Curie–Weiss with a time-varying field:** m = tanh(β(J₀ m + h(t))). The fluctuation relation χ = N Var(m) = β(1−m²) / (1 − βJ₀(1−m²)) gives βJ₀ from the observed mean and variance (a two-moment inversion). βJ₀ → 1 is criticality. HH80.
+- **Free energy:** f(m) = −J₀m²/2 − hm − T s(m) is a double well for βJ₀ > 1, giving bistability and hysteresis. HH86.
+- **Block models:**
+  - rooms as sublattices (J_in, J_out), HH82;
+  - model families as K mean-field populations with a K×K coupling matrix, HH89.
+- **Spin-glass placement by moment matching:** the mean and spread of couplings from the correlation matrix's first two moments, placed on the Sherrington–Kirkpatrick diagram without full inference. HH87.
+- **Trade-off:** you give up agent-level heterogeneity, and gain robustness and *forward* falsifiability (faithfulness axis D). A good default before (or instead of) the full inverse problem.
+
 ## Pitfalls
 
 - This is an **equilibrium** model: it only sees equal-time correlations, which are symmetric. Directed influence (i talks, then j replies) is invisible here. That is what model 02 is for.

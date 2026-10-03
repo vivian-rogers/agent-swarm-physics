@@ -1,6 +1,6 @@
 # H02: Inferred couplings reflect real influence
 
-**Status:** running. Exploratory round 1 is done:
+**Status:** **#45 confirmation FAILED (locked holdout, run 2026-10-03):** the Fine-Tuned Leader ranks 4th of 18 by net outgoing influence (z = 0.76; the rule needed rank 1 and z ≥ 2). Before that, exploratory round 1 found:
 - The pipeline is identifiable at village sampling for a strong leader.
 - Pairwise couplings in non-holdout weeks are at null level.
 - A weak equal-time collective coupling exists, concentrated in regime-III shared-objective weeks.
@@ -110,9 +110,9 @@ Scored 2026-10-03 after exploratory round 1 (non-holdout only), for the pairwise
 | D unfitted predictions | unfitted statistics and the model's signature | 0 [MF: 0] | CW forward P(K) fails: TVD improves in only 5/13 significant chunks, the low tail is underpredicted 2–5× in 3/13, and the observed kurtosis is higher than CW predicts. |
 | E interventional | predicts the change across a natural experiment | 0 | Not attempted. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Synthetic (N = 18, 241 bins/day, calibrated fields, block drive): edge AUC 0.94 at 5 days; leader top-1 = 1.00 at J_L ≥ 0.3; null false-positive rate 5.8–7.6%. Robustness to preprocessing is weak: only 19% of significant couplings stay significant at 2-min bins, and a lag misspecification costs 25–50 points of leader recovery. |
-| G ground truth | agrees with known structure | 0 (pending) | #26's elected leader is not detected (rank 8/10; weak ground truth). #45 is pending (holdout). |
+| G ground truth | agrees with known structure | 0 | #26's elected leader not detected (rank 8/10). **#45 (locked holdout, 2026-10-03): failed**: the assigned leader ranks 4/18, z = 0.76 (Results 5). |
 | H comparative | beats the named rivals | 0 [MF: 1] | Synthetic: KI-1 beats EQ-PL decisively on leader recovery. Real: pairwise J does not beat the common-drive-only or family/mean-field rivals on held-out days. [The mean field beats independence in regime-III mode C.] |
-| I transfer | holds in other same-mode periods, including the holdout | 0 | Holdout not run. |
+| I transfer | holds in other same-mode periods, including the holdout | 0 | #45 holdout run: no leader signal (Results 5). #14/#49 transfer not run. |
 
 ## Prediction
 *Written 2026-10-03, before running any analysis on real data. The only real data seen so far: table schemas, the roster, and per-period day counts and window lengths from `calendar` (sampling design).*
@@ -182,6 +182,9 @@ Scored 2026-10-03 after exploratory round 1 (non-holdout only), for the pairwise
 - **MF-P4 (HH83, #26).** DeepSeek-V3.2's J_lf is not significantly > 0 (z < 2) and it is not the top agent by J_lf.
 - **MF-P5 (ordinary weeks).** At most ~5% of agent × chunk J_lf values exceed z = 2 beyond the null. If the mean-field coupling of MF-P2 is real, it shows up as J_ff > 0, not as a single leader.
 - **MF-P6 (#45, holdout, not run).** The Fine-Tuned Leader has the largest J_lf − J_fl of all agents and z ≥ 2 (secondary, not decisive).
+
+## Results by goal period
+One folder per goal period (`G<NN>/`) or spanning natural experiment (`NE<NN>/`), each with its verdict; the cross-hypothesis table is [../OVERVIEW.md](../OVERVIEW.md). Round-1 periods were scored against RP1 after the fact (`analysis/write_period_folders.py`): pairwise couplings reach the RP1 threshold in only G17 and G42; most periods sit at the null floor. G45 is the confirmatory failure.
 
 ## Results
 **Exploratory round 1, 2026-10-03. Non-holdout data only; nothing here is confirmatory.**
@@ -296,6 +299,24 @@ Setup:
   - The follower–follower J_ff is significant in regime III (median z_ff 3.5 for C, 2.35 for I) but not in regime I (0.3–0.5).
   - z_lf > 2 for 9% of regime-III agent-chunks. This is inflated by the real J_ff, which surrogates destroy.
   - The directed asymmetry z_A > 2 holds for only 0–2.9% of agents. No ordinary week has a leader.
+
+### 5. Confirmatory: #45, locked holdout (run 2026-10-03 23:13 UTC, signed off by Vivian; pre-registration commit e9bf2f7)
+`confirm_45.py --confirm-holdout` was run once, with settings frozen as committed. Output: `data/processed/H02-couplings-are-real/confirm_45.json`; days 06-01 to 06-05, N = 18, leader = agent 30.
+
+| Test | Result | Rule | Verdict |
+| --- | --- | --- | --- |
+| **Primary** (KI-1 block, active spin) | leader ranks **4/18**, I = 0.19, **z = 0.76**; top agent 18 has z = 1.90 | rank 1 and z ≥ 2 | **FAIL** |
+| KI-5 block | rank 16/18, z = −0.91 | secondary | — |
+| #best room only (N = 6) | **rank 1**, z = 1.28 | secondary | below z = 2 |
+| Talk spin (N = 12) | rank 5, z = 0.41 | secondary | — |
+| Held-out mean-field test | z21 = 1.26 (p = 0.10) | card predicted z21 ≥ 2 | fail |
+| H02-MF leader–follower (MF-P6) | asymmetry A ranks 1st but z = 0.27; J_lf ranks 9th | MF-P6 | fail |
+| Curie–Weiss | βJ₀ = 0.41, variance ratio 1.45, z = 6.5 | descriptive | strong collective co-activation in #45 |
+
+**Reading:**
+- The leader that the operators fine-tuned and installed is not visible as directed influence in 1-minute activity timing. Not across the whole village, and not robustly within its own #best room, where it ranks first but at z = 1.3.
+- This matches the round-1 conclusion: activity-timing couplings carry collective co-activation, not pairwise influence. Whatever leadership #45 had has to show up in message content or replies (H01 D3.2, Hawkes on talk), not in when agents are active.
+- The pre-registered credence was ~25% pass.
 
 ### Outcome vs prediction
 | ID | Prediction | Outcome | Verdict |

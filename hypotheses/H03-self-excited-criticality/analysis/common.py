@@ -21,7 +21,26 @@ import hawkes_core as hc  # noqa: E402
 
 DATA = ROOT / "data/processed/H03-self-excited-criticality"
 FIG = HERE.parent / "figures"
-FITS = DATA / "fits"
+FITS = DATA / "fits"   # legacy flat location (migrated to G<NN>/fits by fit_path)
+
+
+def gdir(goal: int) -> Path:
+    """Per-goal-period data folder (folder convention 2026-10-03)."""
+    return DATA / f"G{goal:02d}"
+
+
+def fit_path(goal: int, eset: str, model: str) -> Path:
+    return gdir(goal) / "fits" / f"{eset}_{model}.npy"
+
+
+def select_goals(goals, argv=None):
+    """--period G38[,G41] restricts a pipeline run to the named goal periods."""
+    argv = sys.argv if argv is None else argv
+    if "--period" not in argv:
+        return list(goals)
+    sel = argv[argv.index("--period") + 1]
+    want = {int(x.strip().lstrip("Gg#")) for x in sel.split(",")}
+    return [g for g in goals if g in want]
 N_WORKERS = 3
 BETA_STARTS = [1 / 5, 1 / 30, 1 / 300, 1 / 3000]
 MODE_ORDER = ["F", "I", "K", "M", "C", "P"]
@@ -56,6 +75,10 @@ def specs():
         "M1_B1": S("B1"),
         "M1_B3": S("B3"),
         "M1_B2_noexo": S("B2", exo=False),
+        "M1_B2_t30": S("B2", beta_min=1 / 1800.0),        # kernel tau <= baseline resolution (30 min)
+        "M1_B2_t5": S("B2", beta_min=1 / 300.0),           # fast kernel only (jitter test)
+        "M1_B3_2h": S("B3", cell_s=7200.0),                # per-day 2-h cells
+        "P_B3_2h": S("B3", cell_s=7200.0, kernel="none"),
         "P_B2": S("B2", kernel="none"),                    # inhomogeneous Poisson null (same baseline + exo)
         "P_B0": S("B0", exo=False, kick=False, kernel="none"),
         "P_B1": S("B1", kernel="none"),
@@ -87,6 +110,18 @@ def fit_model(name, ds, p0=None, beta_starts=BETA_STARTS):
     if ds.free_beta:
         return ds.fit(p0=p0, beta_starts=beta_starts)
     return ds.fit(p0=p0)
+
+
+def write_output(df: "pl.DataFrame", name: str):
+    """Cross-period run: write DATA/<name>. Per-period run (--period): write G<NN>/<name> for each goal in df."""
+    if df.height == 0 or "goal_no" not in df.columns:
+        return
+    if "--period" in sys.argv:
+        for (g,), sub in df.partition_by("goal_no", as_dict=True).items():
+            gdir(int(g)).mkdir(parents=True, exist_ok=True)
+            sub.write_parquet(gdir(int(g)) / name, compression="zstd")
+    else:
+        df.write_parquet(DATA / name, compression="zstd")
 
 
 def period_meta(days, keys):

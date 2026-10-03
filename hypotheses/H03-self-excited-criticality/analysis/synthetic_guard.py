@@ -21,7 +21,7 @@ from multiprocessing import Pool
 import numpy as np
 import polars as pl
 
-from common import BETA_STARTS, DATA, FITS, N_WORKERS, fit_model, hc, load, specs, write_provenance
+from common import BETA_STARTS, DATA, FITS, N_WORKERS, fit_model, fit_path, hc, load, select_goals, specs, write_output, write_provenance
 
 G = {}
 
@@ -47,19 +47,21 @@ def run_task(task):
     keys = days.filter(pl.col("goal_no") == goal).sort("day_id")["day_id"].to_list()
     sp = specs()
     ds = hc.Dataset(dm, keys, sp["M1_B2"])
-    p = np.load(FITS / f"{goal}_{eset}_M1_B2.npy")
+    p = np.load(fit_path(goal, eset, "M1_B2"))
     src = hc.FitResult(ds, p, np.nan, None)
     beta_hat = float(np.exp(p[ds.layout()[0]["ab"]][1]))
-    beta_sim = float(np.clip(beta_hat, 1 / 1000, 1 / 5))
+    beta_sim = float(np.clip(beta_hat, 1 / 1000, 1 / 5))  # realistic, identifiable timescale
     mu_fine = fine_rates(ds)
     rng = np.random.default_rng(7 * goal + (eset == "ALL"))
     rows = []
     scen = {
-        "n0": (dict(n_override=0.0), ["M1_B2", "M1_B0", "M1_B3", "M2_grid"], 0.0),
+        "n0": (dict(n_override=0.0), ["M1_B2", "M1_B2_t30", "M1_B0", "M1_B3", "M1_B3_2h", "M2_grid"], 0.0),
         "n0_fine": (dict(n_override=0.0, mu_db_override=mu_fine, bin_override=600.0, kick_scale=0.0, exo_scale=0.0),
-                    ["M1_B2", "M1_B3"], 0.0),
-        "n06": (dict(n_override=0.6, beta_override=beta_sim, base_scale=0.4, exo_scale=0.4), ["M1_B2"], 0.6),
-        "n09": (dict(n_override=0.9, beta_override=beta_sim, base_scale=0.1, exo_scale=0.1), ["M1_B2"], 0.9),
+                    ["M1_B2", "M1_B2_t30", "M1_B3", "M1_B3_2h"], 0.0),
+        "n06": (dict(n_override=0.6, beta_override=beta_sim, base_scale=0.4, exo_scale=0.4),
+                ["M1_B2", "M1_B2_t30", "M1_B3", "M1_B3_2h"], 0.6),
+        "n09": (dict(n_override=0.9, beta_override=beta_sim, base_scale=0.1, exo_scale=0.1),
+                ["M1_B2", "M1_B2_t30", "M1_B3", "M1_B3_2h"], 0.9),
     }
     for r in range(R):
         for sname, (kw, models, n_true) in scen.items():
@@ -83,10 +85,10 @@ def main():
     R = int(sys.argv[1]) if len(sys.argv) > 1 else 3
     days, _, _ = load()
     size = days.group_by("goal_no").agg(pl.col("n_all").sum()).sort("n_all", descending=True)["goal_no"].to_list()
-    tasks = [(g, s, R) for g in size for s in ("ALL", "TALK")]
+    tasks = [(g, s, R) for g in select_goals(size) for s in ("ALL", "TALK")]
     with Pool(N_WORKERS, initializer=_init) as pool:
         out = pool.map(run_task, tasks, chunksize=1)
-    pl.DataFrame([r for o in out for r in o]).write_parquet(DATA / "synthetic_guard.parquet", compression="zstd")
+    write_output(pl.DataFrame([r for o in out for r in o]), "synthetic_guard.parquet")
     write_provenance({"synthetic_guard.parquet": {"built_by": "analysis/synthetic_guard.py", "R": R}})
 
 

@@ -124,11 +124,26 @@ def mention_regexes(agents):
             aliases.add(name[len("Claude "):])
         if name.endswith(" Pro"):
             aliases.add(name[: -len(" Pro")])
-        aliases = {x for x in aliases if len(x) >= 4 or x == "o3"}
+        aliases = {x for x in aliases if len(x) >= 4 or x in ("o1", "o3")}
+        if not aliases:  # an empty alternation would match every message (the 2026-10-03 `o1` bug)
+            continue
         alt = "|".join(re.escape(x) for x in sorted(aliases, key=len, reverse=True))
-        flags = 0 if name == "o3" else re.IGNORECASE
+        flags = 0 if name in ("o1", "o3") else re.IGNORECASE
         pats[a["id"]] = re.compile(rf"(?<![\w.])(?:{alt})(?![\w]|\.\d)", flags)
     return pats
 
 
 URL_RE = re.compile(r"https?://[^\s<>()\"'`\]]+")
+
+
+def load_whitener(regime_name: str, dim: int = 32):
+    """Return W(x) mapping raw embeddings (n x 384) to whitened, centered n x dim coordinates for a regime.
+
+    Fitted on non-holdout statements by infra/shared/build_agent_vectors.py."""
+    import numpy as np
+    z = np.load(OUT / "embeddings" / f"whitening_{regime_name}.npz")
+    mu, U, w = z["mean"], z["components"][:, :dim], z["eigenvalues"][:dim]
+
+    def W(x):
+        return ((np.asarray(x, dtype=np.float32) - mu) @ U) / np.sqrt(w)
+    return W

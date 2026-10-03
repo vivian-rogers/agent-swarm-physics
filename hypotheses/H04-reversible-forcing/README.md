@@ -1,6 +1,6 @@
 # H04: External forcing reshapes the response kernel, reversibly
 
-**Status:** running. Exploratory round 1 done (2026-10-03, non-holdout only), including sub-hypothesis H04-MF. Confirmatory script written and dry-run on non-holdout surrogates; **not run on the holdout** (NE21/NE23). Level: hypothesis (A ≥ 1, plans for C, D, E); not yet descriptive (C < 2).
+**Status:** **confirmatory run on the locked holdout (2026-10-03): C1 FALSIFIED, in the opposite direction.** The branching ratio n is *higher* on 8 h days at all three hours switches; the ABAB contrast is at the edge of week-to-week noise. C2 is inconclusive, C3 untestable, C4 (NE23) partial with a failed manipulation check, and MF-C indistinguishable from week-to-week variation. Exploratory round 1 (non-holdout) found real but delayed nudge responses (Results). See [NE21/README.md](NE21/README.md).
 **Fields:** dynamics, stat mech, sociophysics
 **Literature:** none of the notes in `literature/` covers linear response; the references are in the model folders: Cugliandolo, Kurchan & Peliti, *PRE* 55, 3898 (1997)† (`physics-models/02-nonequilibrium-ising`, effective temperature); Crane & Sornette 2008† and Filimonov & Sornette 2015† (`physics-models/09-hawkes`).
 **Definitions used:** Regime; Driving / external field; Activity time (here: minutes since the day's empirical window start); Action; Interaction (broadcast) for bystanders; Population N(t). New operational terms are defined below (activity n, kick, Green's function G, FD ratio X).
@@ -62,11 +62,11 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Hawkes time-rescaling KS 0.008–0.020 vs. Poisson 0.037–0.071 (improved, still formally rejected at N ≈ 10⁴–10⁵). Time translation: weak pass for nudges. The one-step (Markov) field assumption fails; week-to-week nonstationarity of n is large (placebo \|Δn\| median 0.12) |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Hawkes beats the time-varying-field Poisson null in day-blocked 5-fold CV (I: +0.050, III: +0.066 nats/event, 5/5 folds). Matched G beats the no-kick null for nudges (III) and human messages (I) with clean placebo windows. Family-field and autocorrelation-preserving nulls not run |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | MF forward prediction of the kernel decay **fails** (5–26×); FDT signature absent. MF self-consistency (τ_m vs. τ₀/(1−K)) holds. Hawkes η_nudge decay (~12 min) independently matches the delayed G |
-| E interventional | predicts the change across a natural experiment | 0 | NE10 exploratory: thin (37 nudges; pre mostly held out), predictions not supported. NE21/NE23 confirmation not run |
+| E interventional | predicts the change across a natural experiment | 0 | NE10 exploratory: thin, not supported. **NE21 holdout (2026-10-03): predicted sign falsified** (n higher on 8 h days at 3/3 switches); NE23 manipulation check failed |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Hawkes recovery: n biased low by 0.03–0.06, η_nudge wide. G robust to isolation window, strict isolation and matching fallback (nudge A30 0.97–1.54, all > 0). K is detrending-sensitive (×2) |
 | G ground truth | agrees with known structure | 1 | Nudge responses sit on the named target, not on bystanders; mentioned agents respond immediately. The first non-holdout nudge is on 02-13, three days after the CHANGELOG's 02-10 |
 | H comparative | beats the named rivals | 1 | Beats rivals (a) no-kernel field and (b) n = 0. Does **not** beat (c) state-reset / hidden-state: delayed responses and Onsager X > 1 favor (c) over a field |
-| I transfer | holds in other same-mode periods, including the holdout | 0 | Holdout not used. The nudge kernel is similar on 4 h and 8 h days in III; not testable in I or II |
+| I transfer | holds in other same-mode periods, including the holdout | 0 | Holdout used for NE21/NE23: kernel comparisons inconclusive (wide CIs); T_eff untestable |
 
 ## Prediction
 *Written 2026-10-03, before any response, kernel, autocorrelation or Hawkes fit was computed on real data.* What had been looked at: kick counts by kind/regime/holdout, the template of non-holdout automated messages (8 nudge texts read in full to check the target mapping; one of them says the agent "took one action but then settled back into low-noise mode", which nudges my prior toward transient nudge responses), roster dates, and calendar metadata (dates, documented hours, goal numbers) for the NE21/NE23 design.
@@ -126,6 +126,9 @@ Added 2026-10-03 at the user's request (via the coordinator), after exploratory 
 - **MF-P3 (fluctuation-only self-consistency).** τ_m / τ₀ agrees with 1/(1 − K) within a factor 2 in regimes I and III.
 - **MF-P4 (hours proxy).** In regime III, K on 8 h days < K on 4 h days (activity spreads out; HH46 in mean-field form).
 - **Confirmatory (in `confirm_ne21_ne23.py`, not run).** K, τ₀, τ_pred and τ_G per NE21 segment; the sign of ΔK flips at each switch (lower on 8 h segments), and MF-P2's gap persists in every segment.
+
+## Results by goal period
+One folder per goal period (`G<NN>/`) or spanning natural experiment (`NE<NN>/`), each with its verdict; the cross-hypothesis table is [../OVERVIEW.md](../OVERVIEW.md). Round 1 pooled by regime; per-period kernels and n are a round-2 task (per-goal-period rule). NE21 is the confirmatory test.
 
 ## Results
 ### Exploratory round 1 (2026-10-03; non-holdout days only; EXPLORATORY, not confirmation)
@@ -250,6 +253,24 @@ Code: `analysis/h04lib.py` (machinery), `analysis/explore.py` (G, linearity, FD,
 - Activity bins are 1 min; computer-use turns dominate "act" in III.
 - The Onsager comparison conditions on activation within 10 min (75% of nudged targets).
 - The Hawkes slow component may absorb nonstationarity.
+
+### Confirmatory (locked holdout; run 2026-10-03 23:13–23:27 UTC, signed off by Vivian; pre-registration commit e9bf2f7)
+`confirm_ne21_ne23.py --confirm --i-understand-this-uses-the-locked-holdout` was run once. Output: `data/processed/H04-reversible-forcing/confirm_ne21_ne23.json`. Full table in [NE21/README.md](NE21/README.md).
+
+| Prediction | Result | Verdict |
+| --- | --- | --- |
+| **C1: n lower on 8 h days, flipping at every switch** | n: A1 (4 h) 0.31 → B1 (8 h) **0.67** → A2 (4 h) 0.46 → B2 (8 h) **0.89**. 0/3 switches with the predicted sign; all 3 flip the *other* way. ABAB contrast (4 h − 8 h) −0.39 [−0.46, −0.20]; placebo noise |p95| = 0.42 | **FALSIFIED** (reverse direction, at the noise edge) |
+| C1 secondary: fast part a₁ | 0.31 / 0.36 / 0.37 / 0.32 | indistinguishable from weekly variation |
+| C2: kernel invariant across hours | A30 ratio 8 h / 4 h: nudge 1.5 [−9.3, 13.0], human 4.6 [−37, 44] | inconclusive |
+| C3: Onsager T_eff reverses | < 10 kicked activations in some segment | untestable |
+| C4: NE23 nudger off (06-13) | **manipulation check failed: 9 "nudges" in the off session** (possibly pause/resume messages misclassified as nudges, see infra Known issues). Idle fraction and inactive-run length higher when off ✓; n unchanged ✓; kernel return ✗ | partial |
+| MF-C: loop gain K tracks hours | K: 0.32 / 0.17 / 0.25 / 0.27; ABAB 0.06 [−0.05, 0.21] vs placebo 0.12; decay gap ≥ 3× not in every segment | indistinguishable |
+
+**Reading:**
+- The pre-registered HH46 claim, that longer days spread activity out and lower n, is wrong in sign.
+- Longer days come with *more* self-excitation, reversibly at each switch. This is what exploration had hinted at ("n and K slightly higher on 8 h days, era-confounded").
+- The size is at the 95th percentile of the non-holdout week-to-week placebo, so the reverse effect is suggestive, not established.
+- A possible mechanism: longer sessions leave agents more unread context to react to (H08), so more activity is triggered by other activity. Recorded as a new idea, not a finding.
 
 ## Notes
 - 2026-10-03: opened from shortlist S3. Card and predictions written before any response was computed.

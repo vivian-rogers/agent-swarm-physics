@@ -1,6 +1,6 @@
 # H09: Agent swarms have an effective thermodynamics
 
-**Status:** running: exploratory round 1 done (E1–E5); round 2 in progress. Opened 2026-10-03 at Vivian's request.
+**Status:** exploratory rounds 1 (E1–E5) and 2 (E6–E8) done, light. Observable tables built (`idle_runs`, `consolidation_inflow`). Not promoted. Opened 2026-10-03 at Vivian's request.
 **Fields:** stat mech, thermodynamics, dynamics, info theory
 **Literature:** [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (entropy production); [Kolchinsky 2024](../../literature/kolchinsky-2024-dissipation-does-not-bound-replicator-rates.md) (caution on dissipation bounds); [Piñero et al. 2025](../../literature/pinero-2025-neutral-theory-cooperative-dynamics.md), [2026](../../literature/pinero-2026-information-bounds-replicator-production.md)
 **Definitions used:** Regime; Action; Activity time; Agent state (categorical); see [`../hypohypotheses/statmech-primitives.md`](../hypohypotheses/statmech-primitives.md).
@@ -29,6 +29,10 @@ And do those descriptions predict anything that simpler statistics don't?
 | T8 | Goal switches do work; fast switches dissipate more | HH63, HH07 |
 | T9 | Memory has an equation of state (volume vs. information pressure) | HH57, HH12 |
 | T10 | An effective temperature exists (fluctuation–dissipation ratio) and differs by regime and family | models 01 and 02, H08 |
+
+## Mean-field-forward variants (added 2026-10-03)
+- **T1/T2-MF:** the Curie–Weiss free energy f(m) = −J₀m²/2 − hm − T s(m), with βJ₀ from the two-moment inversion. It predicts a double well iff βJ₀ > 1, and hysteresis under field reversal. Compare with the Boltzmann-inverted landscapes (E1). The goal field then tilts f: fit on field-free periods, predict fielded ones (HH86, HH49).
+- **T5-MF:** timer-gated idling (round 2): the escape probability at the timer gate is a mean-field function of directed kicks (mentions); 1–2 parameters per regime.
 
 ## Model
 **From:** models 01, 02 (entropy production, response), 09 (kinetics), 10 (occupancy over categorical states), 06/07 (built-in free energies). The framing is model-agnostic; each T needs its own model choice when promoted.
@@ -145,8 +149,109 @@ Script: `analysis/explore_e1_e5.py`. Numbers: `data/processed/H09-swarm-thermody
 
 **Next.** Declared-duration idle traps; joint vs. single-agent entropy production from activity bins (HH67); memory equation of state (HH57) from `memory_stats` plus token inflow.
 
+### Exploratory round 2 (2026-10-03; non-holdout days only; light pass)
+Scope was cut mid-round to "observables first, quick descriptive numbers, no heavy fitting":
+- E6 ran as planned.
+- E7 got one quick plug-in pass. The held-out MaxEnt estimator is deferred until H05's EP estimator is available.
+- E8 is descriptive.
+
+Everything here is **exploratory**.
+- **Scripts** (in `analysis/`): `build_observables.py` (tables), `explore_e6_idle_traps.py`, `explore_e7_e8.py`.
+- **Numbers:** `explore_e6_idle_traps.json` and `explore_e7_e8.json` in `data/processed/H09-swarm-thermodynamics/`.
+- **Figures:** `figures/E6_idle_traps.pdf`, `E7_pairwise_irreversibility.pdf`, `E8_memory_eos.pdf`.
+
+**Two definitional findings came first.**
+1. **Regime-I WAIT is logged at the end of the gap, not its start.** In 82% of WAIT runs the WAIT event is logged < 1 s before the agent's next action. So a regime-I idle spell is measured as the gap from the previous non-idle action to the next one.
+   - Gaps containing a WAIT: median 51 s.
+   - Gaps without one: median 44 s, and the without-WAIT gaps have the longer tail (p90 498 s vs. 178 s).
+   - So regime-I WAIT is a turn-scale event, not a trap.
+2. **`actions` has a `pause` turn mirroring every PAUSE event**, about 0.1 s before it. It must be dropped, or each pause "ends" immediately.
+
+| | Prediction | Outcome | Verdict |
+| --- | --- | --- | --- |
+| E6a | heavy tail, CV > 1; lognormal or stretched exp beats power law by ΔAIC > 10 | CV 1.47 (I), 2.48 (III). Above the median dwell, lognormal wins in both regimes; the power law is +478 (I) and +850 (III). Above p90: in I the power law (α ≈ 3.0), lognormal and stretched exp are tied within ΔAIC 2.2; in III stretched exp wins (β ≈ 0.18) and the power law is +20 | **holds**, except in regime I's deep tail, where the fits can't be told apart |
+| E6b | ≥ 50% of declared pauses are whole minutes | 65% (modes 300, 60, 120, 30, 600 s; median 180 s); the 12-h default appears in 0.004% | **holds** |
+| E6b | ≥ 25% of pauses end > 30 s early | **0.22%**. A pause ends at its declared expiry plus a median 14 s turn latency (realized/declared 1.07). The 61 early wakes have a room message in the prior 60 s about as often as the day-swap null (77% vs. null p95 75%) | **refuted**: a regime-III pause is a timer that messages don't interrupt |
+| E6c | HR (room message in the prior 60 s) ≥ 1.5 in both regimes, above the day-swap null | **I: 3.06** (CI 2.68–3.49; null median 0.91, p95 0.96). III: **0.93** (CI 0.88–0.98; null p95 0.99) | **regime I only** |
+| E6c | @-mentions > undirected messages; nudger HR > 1 | III: mention **1.52** (CI 1.37–1.65; null p95 1.26) vs. undirected 0.90; nudger 1.02 (n.s.). I: mention 1.05 < undirected 2.45; nudger 2.15 (null p95 1.41; only 0.2% of bins) | **split**: in III only directed kicks work, and they act at the timer-expiry decision (stay paused or act) |
+| E6c | Kramers-like escape rate k = k₀ + c·r, rising with kick rate | I: rises, k₀ 0.40 /min, c 0.11 per (msg/min), ρ = 0.22. III: **falls** (ρ = −0.13). The peri-escape message density in regime I spikes in the ~20 s before escape (2.0× the null); flat in III | **regime I only** |
+| E6d | lab explains ≥ 30% of between-agent variance of log median dwell | 0.41 (III; 27 agents, 8 labs), 0.46 (I); but chance under label permutation is 0.26 and 0.23 (p = 0.12, 0.17). Large lab gaps exist: Moonshot median 1,625 s vs. Google and DeepSeek ~80 s | **not above chance** |
+| E7a | ≥ 80% of agents have single-agent EP above the minute-shuffle null | 85% (23/27). Median 0.0098 nats/min for the 4-state chain; OpenAI highest (0.020), Google lowest (0.003) | **holds** (plug-in, not held-out) |
+| E7b | collective term > 0, above the day-mismatch null | Pair excess ΔS_ij − null: median +0.0002 nats/min; **15%** of 351 pairs are above the null p95 (5% expected) | **weakly holds** (plug-in) |
+| E7c | collective term < Σ single (ratio 0.1–0.5) | Σ over pairs of excess / Σ_i S_i = **0.21** | **holds** (a crude pairwise-additive proxy, not a joint bound) |
+| E7d | pair excess vs. mutual @-mentions, ρ > 0.2 | ρ = 0.13 (p = 0.016) | **positive but below the threshold** |
+| E7e | per-agent collective EP rises with N | not run | **deferred** |
+| E8a | within-agent elasticity \|b\| < 0.1 | ln V vs. ln(1+P_msg): **0.16**. ln V vs. ln(1+P_tok): 0.024. But P_msg tracks interval length (ρ = 0.84) | **mixed**: holds for tokens, fails for messages, and P_msg is mostly a clock |
+| E8a | agent identity > 70% of var(ln V); lab > 30% | η²(agent) = 0.699; lab share 0.58 vs. permutation 0.24 (p = 0.005) | **holds** (agent share at the threshold) |
+| E8b | ≥ 60% of agents saturate (last-third growth < 0.2 × first-third) | 19%, but because there is no growth phase: median ln V growth is 0.016 in the first third and 0.052 in the last | **refuted as posed**: V is stationary around an agent-specific set point |
+| E8c | ρ(P_msg, turnover) > 0.1 | **−0.47**. Turnover also falls with own turns (−0.62) and with interval length (−0.57); it rises only with uncached tokens (+0.17) | **refuted** for messages; weak support for tokens |
+| E8c | ρ(V_prev, lines removed) > 0.2; ΔV = βP − γV_prev with β, γ > 0 | ρ = 0.61. β = +138 chars per exposed message; γ = 0.87 per snapshot (relaxation ≈ 1.2 snapshots) | **holds**, but γ ≈ 1 means each consolidation resets V to a set point, and the set point moves little with inflow (~+0.5% per message) |
+| E8d | NE14: ≥ 25% change for most agents in snapshot rate, V and turnover (fewer snapshots, larger V, more turnover) | 13 agents on both sides. Snapshots 15.9 → 5.1 per hour (all 13 down, all past the threshold). V 17.1k → 21.6k chars (85% up, but only 38% past the threshold). Turnover 0.23 → 0.38 (85% up, 69% past). Lines removed 0 → 9.5 median. The shifts already appear on 03-24/25, before NE16 | **holds** for rate and turnover; V has the right direction but is below the threshold |
+
+**Reading.**
+- *Idle dynamics changed character at the regime boundary.*
+  - In regime I, escape is message-triggered: the hazard triples after a room message, and messages spike just before escape.
+  - In regime III, the agent sets a timer, and the pause ends on schedule. The only outside influence is an @-mention, which raises the chance of acting rather than re-pausing at expiry (×1.5).
+  - So the regime-III "trap" is self-scheduled sleep with a stochastic gate, not barrier crossing driven by kicks. The heavy tail comes from the chosen durations and re-pause chains.
+  - For T5, Kramers escape fits regime I only. For T4 / HH52, directed messages act at a gate rather than as a field.
+- *Memory size is a set point.* It is agent- and lab-specific, restored at each consolidation, and moves little with message inflow. NE14 raised it about 20% and doubled per-snapshot turnover.
+- *Collective irreversibility (E7)* is present but small in this crude pass. It needs the held-out MaxEnt estimator before any claim.
+
+**Caveats.**
+- Kick labels are coincidences in time.
+- The day-swap null keeps the daily schedule but not within-day bursts. Part of the regime-I hazard ratio may be shared burstiness; the pre-escape spike is the stronger evidence.
+- E7 uses plug-in estimators: the raw 16-state ΔS_ij is biased negative (median −0.0047 observed, −0.0051 null), so only the null-subtracted excess means anything. There were 20 null draws, and no held-out days.
+- Tokens exist only for Claude and Gemini agents (20% of regime-III snapshots).
+- Snapshot semantics differ by regime: in regime I, memory snapshots come every ~49 s and are not consolidations.
+- NE14 is a bundle of changes (consolidate tool, pause tool, perma-computer-use), and only 13 agents are present on both sides.
+
+#### Observable tables (reusable; `data/processed/H09-swarm-thermodynamics/`)
+Both cover **all days** and carry a `holdout` flag. Exploratory users must filter `holdout == False`. Built by `analysis/build_observables.py` in about 2 s.
+
+- **`idle_runs.parquet`**: one row per idle spell (57k rows).
+  - *Identity:* agent, pt_date, regime, goal_no, holdout, idle_kind (WAIT / PAUSE).
+  - *Times:*
+    - t_prev_action: the previous non-idle row, the right start for regime-I WAIT.
+    - t_start: the first idle event.
+    - t_last_idle.
+    - t_end: the escape, or the window end if censored.
+  - *Durations:*
+    - censored.
+    - dwell_s = t_end − t_start, the right measure for PAUSE.
+    - gap_dwell_s = t_end − t_prev_action, the right measure for regime-I WAIT.
+    - n_idle_events.
+    - declared_first_s and declared_last_s (PAUSE).
+    - timer_expired: escape ≥ last declared expiry − 30 s.
+  - *Escape:*
+    - escape_kind: the first non-idle row, e.g. `AGENT_TALK` or `turn:bash`.
+    - **escape_cause** ∈ {censored, timer, mention, nudge, human, room_msg, none}. Assigned in priority order, from the kicks in the 60 s before escape. It is a **proximate, coincidence-based label, not causal**: base rates and nulls are in `explore_e6_idle_traps.json`.
+  - *Kick counts during the spell:* n_msgs / n_agent_msgs / n_human_msgs / n_nudges / n_mentions_during.
+  - *Kick flags in the 60 s before escape:* kick_msgs / mentions / nudges / human_msgs_60s.
+  - *Rules:* `pause` tool turns are dropped (mirrors); at equal timestamps, non-idle rows come first.
+- **`consolidation_inflow.parquet`**: one row per `memory_stats` snapshot (246k rows).
+  - *Identity:* agent, t, pt_date, regime, goal_no, holdout.
+  - *Interval:* t_prev, dt_s, same_day_prev.
+  - *Memory (copied from `memory_stats`):* n_chars, n_lines, n_headers, lines_kept / added / removed, jaccard_prev.
+  - *Size change:* d_chars and d_lines, relative to the previous snapshot.
+  - *Inflow in (t_prev, t]:*
+    - messages: n_exposed, n_exposed_agent / _human / _nudge / _mention;
+    - turns: n_turns, n_turns_tok;
+    - tokens: tok_acct, tok_uncached, tok_out, tok_context_last.
+  - *Flag:* consolidate_event_120s (true for 83% of regime-III snapshots).
+  - *Token accounting* is provider-aware (`tok_acct`):
+    - 'exclusive' (Anthropic): uncached = tok_in + tok_cache_write, context = tok_in + tok_cache_read + tok_cache_write.
+    - 'inclusive' (Gemini): uncached = tok_in − tok_cache_read, context = tok_in.
+    - Null for providers without token data.
+  - Use `same_day_prev` to drop intervals that span a night.
+
 ## Notes
 - 2026-10-03: opened at Vivian's request ("a whole new hypothesis for the general thermodynamics framing"). Predictions for E1–E5 written before data. Holdout locked first.
 - 2026-10-03: round-2 predictions (E6–E8) written before running them. Structural checks first found two things:
   - `actions.tok_in` follows two accounting conventions. For Anthropic it excludes cache reads (tok_in < tok_cache_read in most turns); for Gemini it includes them. OpenAI, DeepSeek, Kimi, GLM and Grok agents report no tokens.
   - Before 2026-06-11, a PAUSE without a duration defaulted to 12 h.
+- 2026-10-03: round 2 done as a light pass, after a scope change to "observables first".
+  - Built `idle_runs` and `consolidation_inflow` for reuse.
+  - E7 was a plug-in pass only; held-out MaxEnt EP is deferred to H05's estimator.
+  - Promotion candidates:
+    - T5, reframed: timer-gated idling with directed kicks acting at the gate. Natural experiments: NE14 (non-holdout) and NE22/NE23 (holdout).
+    - T9, reframed: memory size as an agent set point.

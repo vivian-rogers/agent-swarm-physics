@@ -13,9 +13,9 @@ from multiprocessing import Pool
 import numpy as np
 import polars as pl
 
-from common import DATA, FITS, N_WORKERS, fit_model, hc, load, specs, write_provenance
+from common import DATA, FITS, N_WORKERS, fit_model, fit_path, hc, load, select_goals, specs, write_output, write_provenance
 
-MODELS = {"M1_B2": None, "M2_grid": None, "M3_sc": None}
+MODELS = {"M1_B2": None, "M1_B2_t30": None, "M2_grid": None, "M3_sc": None}
 G = {}
 
 
@@ -28,7 +28,7 @@ def _init():
 def point_fit(dm, keys, goal, eset, name):
     spec = specs()[name]
     ds = hc.Dataset(dm, keys, spec)
-    p = np.load(FITS / f"{goal}_{eset}_{name}.npy")
+    p = np.load(fit_path(goal, eset, name))
     return hc.FitResult(ds, p, ds.loglik(p, grad=False), None)
 
 
@@ -42,10 +42,12 @@ def run_task(task):
     if len(keys) < 3:
         return rows
     for name in MODELS:
-        if not (FITS / f"{goal}_{eset}_{name}.npy").exists():
+        if not (fit_path(goal, eset, name)).exists():
             continue
         src = point_fit(dm, keys, goal, eset, name)
-        nb = B[0] if name == "M1_B2" else B[1]
+        nb = B[0] if name.startswith("M1") else B[1]
+        if days.filter(pl.col("goal_no") == goal)["n_all"].sum() > 30000:   # #51 whole period: cap (its drift
+            nb = max(nb // 3, 10)                                           # test uses the block bootstrap)
         for b in range(nb):
             bk = list(rng.choice(keys, len(keys), replace=True))
             ds = hc.Dataset(dm, bk, specs()[name])
@@ -57,7 +59,9 @@ def run_task(task):
             rows.append({"goal_no": goal, "set": eset, "model": name, "rep": b, "n": s["n"],
                          "tau_s": s.get("tau_s", s.get("tau_mean_s", np.nan)),
                          "n_self": s.get("n_self", np.nan), "n_cross": s.get("n_cross", np.nan),
-                         "n_fast300": s.get("n_fast300", np.nan)})
+                         "n_fast300": s.get("n_fast300", np.nan),
+                         "n_cross_fast300": s.get("n_cross_fast300", np.nan),
+                         "n_self_fast300": s.get("n_self_fast300", np.nan)})
     print(f"boot goal {goal} {eset}: {len(rows)} reps, {time.time() - t0:.0f}s", flush=True)
     return rows
 
@@ -67,11 +71,11 @@ def main():
     B2 = int(sys.argv[2]) if len(sys.argv) > 2 else 100
     days, _, _ = load()
     size = days.group_by("goal_no").agg(pl.col("n_all").sum()).sort("n_all", descending=True)["goal_no"].to_list()
-    tasks = [(g, s, (B1, B2)) for g in size for s in ("ALL", "TALK")]
+    tasks = [(g, s, (B1, B2)) for g in select_goals(size) for s in ("ALL", "TALK")]
     with Pool(N_WORKERS, initializer=_init) as pool:
         out = pool.map(run_task, tasks, chunksize=1)
     rows = [r for o in out for r in o]
-    pl.DataFrame(rows).write_parquet(DATA / "period_boot.parquet", compression="zstd")
+    write_output(pl.DataFrame(rows), "period_boot.parquet")
     write_provenance({"period_boot.parquet": {"built_by": "analysis/bootstrap.py", "B_M1": B1, "B_other": B2,
                                               "scheme": "resample village days with replacement within period; "
                                                         "periods with < 3 days skipped"}})

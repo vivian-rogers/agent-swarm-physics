@@ -93,6 +93,7 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 ### Entropy production / irreversibility
 - **Status:** draft
 - **Definition:** time-asymmetry of action-sequence statistics, e.g. KL divergence between forward and time-reversed transition probabilities.
+- **Variant: entropy production (pairwise AIK bound on activity spins)** (H05, 2026-10-03). Σ_g from g_ij = s_i(t+1)s_j(t) − s_i(t)s_j(t+1) on 1-min ±1 activity spins; θ cross-fitted or held out by day; reported per agent-hour; null = cross-day surrogate (the within-day circular-shift null manufactures irreversibility on real data). Companion: the cross-fitted Newton-step bound, lower noise floor. Recovers 69–85% of exact Σ on synthetic kinetic Ising; at village sample sizes, real-data Σ is at the noise floor. See `hypotheses/H05-rooms-cut/README.md`.
 
 ### Mutual information between agents
 - **Status:** draft
@@ -117,3 +118,16 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Status:** draft
 - **Definition:** a group's distribution over positions on a fixed set of questions, coarse-grained by meaning. It is *ordered* when its semantic entropy is low and stable across windows.
 - **Open questions:** mined statements vs. fixed probes asked in replay; separating shared-pretraining agreement (a field) from coupling.
+
+### Lineage
+- **Status:** draft (H07, 2026-10-03)
+- **Definition:** one artifact repository's default-branch history restricted to commits after a fork point A (`A..main`), where A is the newest ancestor commit contained in every fork's main. Fork membership and authorship come from commit e-mails (`<slug>@agentvillage.org`, 100% mapped to roster agents). See `hypotheses/H07-rpg-forks/README.md`.
+
+### Copy information (fork variant)
+- **Status:** draft (H07, 2026-10-03); unverified against the source paper
+- **Definition:** for an ancestor feature X (file contents, identifiers, names, numbers keyed by position in the ancestor) and its descendant Y in one lineage, I(X;Y) = I_copy + I_transform. I_copy = Σ_x p(x) · d(p(Y=x|X=x) ‖ p_Y(x)) · 1[p(Y=x|X=x) > p_Y(x)], with d the binary KL divergence; I_transform = I(X;Y) − I_copy ≥ 0. Report copy fraction c = P(Y = X) and chance-corrected κ alongside.
+- **Caveat:** this is H07's reading of Kolchinsky & Corominas-Murtra (model 08); the paper is not in `literature/`, so the definition still has to be checked against it.
+
+### Action (turn-merged)
+- **Status:** draft (H03, 2026-10-03)
+- **Definition:** an agent's `events` within 1 s of its own previous event count as one compound turn. Used for event-time (Hawkes) models so that one tool call logged as several events isn't counted as self-excitation. In regime III `events_core` lacks computer-use turns, so "all events" changes meaning there; use `actions` for regime III turns.

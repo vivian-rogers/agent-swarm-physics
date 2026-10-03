@@ -47,8 +47,13 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 *Written <YYYY-MM-DD>, before running the analysis on real data.*
 <What the model predicts for the observables, and what result would count against it.>
 
+## Results by goal period
+| Period | Role | Verdict | Key numbers |
+| --- | --- | --- | --- |
+| [G<NN>](G<NN>/README.md) | exploratory | | |
+
 ## Results
-<Filled in after analysis. Link to analysis/ and figures/.>
+<Cross-period synthesis, filled in after analysis: how the result depends on mode, regime and rooms; heterogeneity across periods. Link to analysis/ and figures/.>
 
 ## Notes
 <Dated notes, dead ends, decisions.>

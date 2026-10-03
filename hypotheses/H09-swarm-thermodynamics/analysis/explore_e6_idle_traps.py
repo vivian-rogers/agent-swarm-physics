@@ -415,7 +415,12 @@ for reg in ("I", "III"):
     bylab = (g.group_by("lab").agg(pl.len().alias("spells"), pl.col("agent").n_unique().alias("agents"), pl.col("dwell").median().alias("median_dwell_s"),
                                    (pl.col("dwell").filter(~pl.col("cens")).std() / pl.col("dwell").filter(~pl.col("cens")).mean()).alias("cv"))
              .sort("spells", descending=True))
-    e6d[reg] = {"agents": pa.height, "lab_share_of_between_agent_var_log_median": ss_lab / ss_tot if ss_tot else None,
+    _am, _al = pa["lm"].to_numpy(), pa["lab"].to_numpy()
+    def _share(lab_arr):
+        g0 = _am.mean(); return sum(np.sum(lab_arr == l) * (_am[lab_arr == l].mean() - g0) ** 2 for l in np.unique(lab_arr)) / np.sum((_am - g0) ** 2)
+    _null = np.array([_share(RNG.permutation(_al)) for _ in range(2000)])
+    e6d_perm = {"lab_share_perm_null_median": float(np.median(_null)), "lab_share_perm_p": float(np.mean(_null >= _share(_al)))}
+    e6d[reg] = {"agents": pa.height, "lab_share_of_between_agent_var_log_median": ss_lab / ss_tot if ss_tot else None, **e6d_perm,
                 "n_labs": int(pa["lab"].n_unique()), "by_lab": bylab.to_dicts()}
     # per-lab kick RR (any, tau 60)
     B = haz_store[reg][0]

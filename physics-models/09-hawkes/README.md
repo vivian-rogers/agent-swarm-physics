@@ -57,6 +57,10 @@ $$\lambda_i(t) = \mu_i(t) + \sum_j \sum_{t_k^j < t} \phi_{ij}(t - t_k^j)$$
 - **Nonstationarity fakes criticality.** If the true baseline varies (time of day, goal changes) but μ is fitted as constant, the fit attributes the variation to self-excitation and n is pushed toward 1 (Filimonov & Sornette 2015). Model the baseline seriously before believing any n near 1.
 - **Scheduler regularity.** If the scaffolding polls agents on a fixed cadence, event times inherit that clock. Check the inter-event-time distribution for spikes at fixed lags first.
 - **Small N, many parameters.** N² kernels for N ≈ 10–30 agents; regularize, or group agents by model family.
+- **A flexible baseline doesn't identify n either** (H03, 2026-10-03). A Poisson process with a 10-min rate profile gives n̂ ≈ 0.5 under a smooth within-day baseline. Report a bracket over baselines (constant → smooth → per-day cells), not a single n.
+- **Jitter tests can be unpowered.** Jittering event times by ~10 min barely moves n̂ for a true n = 0.6 process (Δ ≈ 0.025). Calibrate a jitter test's power on synthetic data before reading anything into it.
+- **Slow cross-kernels mimic shared modulation.** Cross-excitation with timescales of 10–30 min is indistinguishable from a common rate drive. Only fast cross terms (seconds to a few minutes) beat agent-shift nulls cleanly.
+- **Day windows with gaps.** Days containing two sessions with a long silence distort the within-day baseline shape. Split days at silences longer than about 1 h.
 
 ## Hypothesis seeds
 

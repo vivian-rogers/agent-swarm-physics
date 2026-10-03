@@ -1,6 +1,6 @@
 # H05: Cutting the cross-room channel lowers entropy production, and rooms become coupled blocks
 
-**Status:** running. Exploratory round 1 (non-holdout) is done (2026-10-03): rooms are coupled blocks **for the chat (talk) channel**; the entropy-production part is **not detectable** at this sampling. Confirmatory NE12/NE15 script written and dry-run on non-holdout stand-ins, **not run on the holdout**.
+**Status:** **confirmatory run on the locked holdout (2026-10-03): INCONCLUSIVE by the pre-registered rule.** The primary pair DiD at the 03-16 split (C1) **passed**: separated pairs lost talk coupling relative to pairs that stayed together. The MF J_out criterion passed. The pooled TWFE (C3) had the right sign but was not significant (z = 1.4). The 02-25 placebo behaved: no separation, no change. Exploratory round 1 had found rooms to be coupled blocks for talk; EP is not detectable at this sampling.
 **Fields:** stat mech, thermodynamics, dynamics, info theory
 **Literature:** [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (the estimator)
 **Origin:** shortlist S4 ([`../promotion-shortlist.md`](../promotion-shortlist.md)); idea HH33; feeds H01 D1.1.a (rooms are superagents), D3.2 and D9.2 ([`../H01-emergent-superagents-exist/subhypotheses.md`](../H01-emergent-superagents-exist/subhypotheses.md)).
@@ -54,11 +54,11 @@ Scored for round 1 (exploratory, non-holdout), mapping = 1-min binned spins, reg
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Daily schedule handled by the cross-day surrogate. V2: nonstationarity with symmetric J gives no spurious EP. But heterogeneous misaligned profiles do (circular-shift null > 0 on real data). No update-order audit; parallel form assumed. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Talk couplings beat the shared-field (cross-day) null and the room-label null (X2 pooled p < 1e-3). Whole-swarm EP does **not** beat the cross-day null. No held-out likelihood comparison of a room-structured vs. unstructured kinetic Ising. |
 | D unfitted predictions | unfitted statistics and the model's signature | 0 | Not attempted. The MF loop gain (0.05–0.4) is computed but no forward prediction was tested. |
-| E interventional | predicts the change across a natural experiment | 1 | Non-holdout room events: pooled TWFE for talk β > 0 (1 min: κ_x z = 2.6, c0_x z = 2.6; 5 min: c0_x z = 2.5, κ_x z = 1.7, and z = 2.7 in the two-room era). Single events have the right sign for talk but are underpowered (V4 power 23–63%). Active spins: mixed or wrong sign. EP change not detectable. |
+| E interventional | predicts the change across a natural experiment | 1 | Non-holdout room events: pooled TWFE for talk β > 0 (1 min: κ_x z = 2.6, c0_x z = 2.6; 5 min: c0_x z = 2.5, κ_x z = 1.7, and z = 2.7 in the two-room era). Single events have the right sign for talk but are underpowered (V4 power 23–63%). Active spins: mixed or wrong sign. EP change not detectable. **Holdout (2026-10-03):** C1 pair DiD at NE15 passed (sign + significance; size not pre-registered, so E stays 1); pooled C3 not significant. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | V1: θ vs. J − Jᵀ r = 0.89–0.95. V3: a cut is recovered by pair DiD (20/20) and by the Newton EP bound. V4: low power at village coupling. MF estimator recovers J_out ≈ 0 after a cut. Talk results robust from 1 to 5 min; active results are not. |
 | G ground truth | agrees with known structure | 1 | Talk couplings follow the room partition in 6/6 regime III two-room windows (J_sym and MF J_in > J_out). Blind partition recovery was not tried, and room-specific goals/kickoffs (a room field) are only partly removed by the surrogate. |
 | H comparative | beats the named rivals | 0 | Rivals (shared artifacts/goals; Hawkes) not compared by held-out likelihood. Active-spin coupling being room-independent is what the artifact/task rival predicts. |
-| I transfer | holds in other same-mode periods, including the holdout | 1 | Talk block structure holds across 6 regime III windows and in #35 (regime II), not in #36 or #39. Holdout not used yet. |
+| I transfer | holds in other same-mode periods, including the holdout | 1 | Talk block structure holds across 6 regime III windows and in #35 (regime II), not in #36 or #39. Holdout used 2026-10-03: the talk cut effect transfers to the NE15 split (C1), and J_out → 0 (C5); J_in rose instead of staying put. |
 
 ## Prediction
 *Written 2026-10-03, before running any analysis on real data. At this point only the room assignments (treatment structure, from `rooms_timeline`/`events_core.room`) had been looked at, no activity statistics.*
@@ -104,6 +104,9 @@ Scored for round 1 (exploratory, non-holdout), mapping = 1-min binned spins, reg
   - **Confirmed** if C1, C3 and C5's J_out criterion all pass.
   - **Refuted** if C1 and C3 both have the wrong sign, or CIs centred on 0 with |effect| below half the exploratory effect.
   - Otherwise **inconclusive**.
+
+## Results by goal period
+One folder per goal period (`G<NN>/`) or spanning natural experiment (`NE<NN>/`), each with its verdict; the cross-hypothesis table is [../OVERVIEW.md](../OVERVIEW.md). Round-1 periods were scored against P2 after the fact (`analysis/write_period_folders.py`). Of the six P2 windows, talk κ_x passes in G38, G41 and G44, is mixed in G37 and G42, and fails in G39. That is more sobering than the pooled "6/6 within > cross", which used direction only. NE15 is the confirmatory test.
 
 ## Results
 ### Exploratory round 1 (2026-10-03; non-holdout only: 99 days, #35–#42, #44 and #51 up to 09-04; holdout asserted absent)
@@ -157,6 +160,28 @@ Scored for round 1 (exploratory, non-holdout), mapping = 1-min binned spins, reg
 3. **The thermodynamic half of S4 can't be tested at this resolution.** Pairwise EP on 1-min activity is at the null level, and the synthetic results show that even a real cut moves EP only if it doesn't shift activity levels. A better test needs a higher-signal state (talk/reply events, action classes as in H09 E2) or event time.
 
 **Bin-width robustness.** Talk results hold at 5-min bins; active-spin room effects do not. `explore_bin5.json`.
+
+### Confirmatory (locked holdout; run 2026-10-03 23:13 UTC, signed off by Vivian; pre-registration commit e9bf2f7)
+`confirm_ne12.py --confirm` was run once, card prediction hash 9df7b66d2a2a3d69. Output: `data/processed/H05-rooms-cut/confirm/confirm_ne12.json`.
+
+| Prediction | Result | Verdict |
+| --- | --- | --- |
+| C6: no pair separated on 02-25 | 0 separated pair-days before or after | ✓ (asserted) |
+| **C1 (primary): NE15 cut-arm DiD < 0, talk** | κ_x DiD = **−0.022** [−0.038, −0.008], p_perm = **0.021**; c0_x DiD = **−0.037** [−0.065, −0.004], p_perm = **0.016** (18 cut pairs, 37 stay; pre = 10 days, post = 5) | **PASS** |
+| C2: same, active spins (direction only) | κ_x −0.015 [−0.038, 0.007], p = 0.34; c0_x +0.007, p = 0.82 | mixed, n.s. (as expected) |
+| **C3 (primary): pooled TWFE 02-09 → 03-20, talk κ_x, β > 0 at z > 1.96** | β = +0.013 (larger than the expected +0.008), two-way SE 0.0093, **z = 1.40**. c0_x: β = +0.029, z = 1.98 (not the pre-registered measure) | **FAIL** (right sign, not significant) |
+| C4: no whole-swarm EP drop at 02-25 | post − pre CI includes 0 (talk and active) | ✓ (a null; low power) |
+| C5 (MF-C): J_out → 0 after the split | J_out: +0.032 [−0.011, 0.082] (pre) → **−0.033 [−0.092, 0.025]** (#35) | **PASS** |
+| C5 (MF-C): J_in unchanged | J_in: +0.023 [−0.013, 0.059] → **+0.139 [0.06, 0.35]** | **FAIL: J_in rose** |
+| 02-25 placebo (talk) | κ_x post − pre −0.004 [−0.012, 0.005]; c0_x +0.002 [−0.009, 0.012] | ✓ no change |
+
+**Overall (pre-registered rule): INCONCLUSIVE.** "Confirmed" needed C1, C3 and C5-J_out; C3 missed. Not refuted, since C1 passed.
+
+**Reading:**
+- Cutting the channel did what the block model says to the cross-room pairs: their chat coupling dropped to about zero, and the drop is detectable at the pair level on held-out data.
+- The pooled design across 02-09 → 03-20 is noisier than the single-cut DiD.
+- **New, unpredicted:** within-room coupling *rose* after the split, roughly ×6, with a CI excluding 0. Possibly the attention that cross-room partners had received was redirected to room-mates (a conserved attention budget?), or the #35 forks raised in-room coordination. Worth its own HH; check against #35's fork activity (H07).
+- Under the project's per-goal-period rule (adopted after this pre-registration), C1 is the natural design: one cut, compared across the boundary. C3's pooled TWFE is exactly the kind of cross-period pooling the rule discourages.
 
 ## Notes
 - 2026-10-03: card opened (one of five parallel agents). Holdout masked via `calendar.holdout` and `holdout.json`.

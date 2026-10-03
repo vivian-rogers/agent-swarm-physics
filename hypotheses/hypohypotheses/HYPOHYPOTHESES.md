@@ -165,3 +165,90 @@ Common move: where occupancy of coarse states is roughly stationary, invert it, 
   *Models:* 10, 11, 08 · *Periods:* #35–#51; NE19
 - **HH67 · Irreversibility is collective.** Single agents' action sequences are nearly reversible, but the swarm's joint dynamics is irreversible: entropy production in the joint process exceeds the sum over agents. That would be a superagent signature (H01). *Check:* per-agent vs. joint entropy-production bounds (Aguilera hierarchy Σ₁ ≤ Σ₂ ≤ …).
   *Models:* 02, 09 · *Periods:* #51; regime III
+
+**Classic graph analysis: spectra, communities, centrality, temporal and higher-order networks**
+
+Graphs to build from the shared tables:
+- **exposure:** who could see whom (`exposure`);
+- **reply:** consecutive messages in a room within Δt;
+- **mention:** from `chat_core.mentions`;
+- **co-activity:** correlated `activity_bins`;
+- **artifact co-editing:** once the artifact table exists.
+
+All are weighted and directed where natural, per goal period.
+
+- **HH68 · The Laplacian's spectral gap sets consensus speed.** Diffusion on the interaction graph predicts consensus time ∝ 1/λ₂ (the algebraic connectivity). Periods with a larger λ₂ converge faster. The leading eigenvector picks out the core. *Check:* λ₂ per goal period vs. time to consensus.
+  *Models:* 10, 11, 03 · *Periods:* #19, #31, #40 (consensus events); compare across regimes
+- **HH69 · Communities follow families before the rooms change and rooms after it.** Modularity-based communities (Louvain or spectral; Potts ground states) align with model families early and with rooms after NE12. *Check:* normalized mutual information (NMI) between detected communities and rooms, families and projects, over time.
+  *Models:* 10, 01 · *Periods:* regime I vs. III; NE12 (held out: confirmation only); NE15
+- **HH70 · Centrality identifies coordinators.** Eigenvector, PageRank and Katz centrality on the directed mention/reply graph single out coordinators. They agree with the out-influence from kinetic Ising (H02) and Hawkes (H03): triangulation. The Gini coefficient of centrality rises in shared-objective weeks. *Check:* rank correlation of centrality with inferred influence; centrality Gini by mode.
+  *Models:* 02, 09, 10 · *Periods:* shared-objective weeks; #26; #45 (held out)
+- **HH71 · Rich club and preferential attachment.** A stable rich club of long-tenured agents persists across goals. Newcomers attach preferentially: their contacts are disproportionately high-degree agents. *Check:* rich-club coefficient vs. degree-preserving nulls; newcomer attachment kernel.
+  *Models:* 06, 03 · *Periods:* batch joins #10 (NE27), #51 (NE33); whole roster
+- **HH72 · Temporal reachability is much smaller than static reachability.** Time-respecting paths limit spread: the set reachable within a day is far smaller than the static graph suggests. Temporal motifs (reply chains, triangles) differ by mode. *Check:* temporal reachability sets; temporal motif counts vs. time-shuffled nulls.
+  *Models:* 03, 09 · *Periods:* all non-holdout; regime I vs. III
+- **HH73 · The exposure graph percolates.** As the exposure threshold (minimum contacts per day) varies, a giant component appears at a threshold related to the epidemic threshold λ_c = ⟨k⟩/⟨k²⟩. Rooms push cross-room spread below percolation. *Check:* giant-component size vs. threshold, per period.
+  *Models:* 03, 10 · *Periods:* before vs. after rooms; #40 (single coordination room)
+- **HH74 · Reciprocity is high and hierarchy is low, except in leader weeks.** Mentions and replies are reciprocated (politeness norms). Feed-forward motifs and hierarchy appear mainly in leader weeks. *Check:* reciprocity, triad census, a hierarchy index (e.g. Krackhardt) by mode.
+  *Models:* 02, 10 · *Periods:* #26, #45 (held out) vs. shared-objective and free weeks
+- **HH75 · Agents prefer their own family.** Agents mention and reply to same-family agents beyond what room co-location explains. *Check:* assortativity coefficient by lab, controlling for room.
+  *Models:* 10, 11, 01 · *Periods:* #51 (many families); regime III
+- **HH76 · Graph diffusion predicts who adopts a term next.** A heat kernel on the weighted interaction graph predicts which agents adopt a new term next, better than degree alone. *Check:* rank of actual next adopters under heat-kernel vs. degree predictors.
+  *Models:* 03, 08, 11 · *Periods:* #20, #42, #43 (held out), #51
+- **HH77 · A few collective modes beyond random-matrix noise.** The activity correlation matrix has only 1–3 eigenvalues above the Marchenko–Pastur edge: a "market mode" (schedule / common field), a room mode, a family mode. *Check:* eigenvalue spectrum vs. Marchenko–Pastur; what the top eigenvectors load on.
+  *Models:* 01, 11 (random-matrix tool) · *Periods:* each non-holdout period with N ≥ 10
+- **HH78 · Multilayer bridges.** The chat, exposure, mention and artifact layers are partly redundant. The multiplex participation coefficient finds "bridge" agents linking rooms and projects. *Check:* inter-layer edge overlap; participation coefficients; bridges vs. roles in #51.
+  *Models:* 10, 06 · *Periods:* #40, #51
+- **HH79 · Group interactions beat pairwise ones.** Three or more agents in a thread matter beyond pairwise exposure: simplicial (higher-order) contagion. Joint exposure from two agents raises adoption more than two separate exposures do. *Check:* adoption vs. pairwise and triadic exposure counts.
+  *Models:* 03, 06 (higher-order contagion, Piñero 2025) · *Periods:* #19, #40, #51
+
+**Mean-field-forward variants: fix a few-parameter model, predict, compare (no N×N J learning)**
+
+The idea: instead of inferring every coupling J_ij (the inverse problem, data-hungry at small N), posit a mean-field model with 1–4 interpretable parameters. Estimate them from a few macroscopic moments, then test the model's *forward* predictions on observables not used in the fit.
+- **HH80 · Curie–Weiss explains co-activation (variant of HH01, HH44; H09 E1).** A uniform-coupling Ising model with a time-varying field, m = tanh(β(J₀m + h(t))), has only two parameters. Estimate βJ₀ from the two-moment relation χ = β(1−m²)/(1 − βJ₀(1−m²)), using the observed mean activity and its variance. βJ₀ ≈ 0 in null weeks, is largest in shared-objective weeks, and βJ₀ → 1 marks criticality. *Check:* βJ₀ per non-holdout period; forward-predict the shape of P(K) and the variance ratio.
+  *Models:* 01 (mean-field) · *Periods:* all non-holdout; null weeks #10, #17, #20, #39, #41, #42; regime III
+- **HH81 · Mean-field Glauber predicts response kernels (variant of HH31, HH46; H04).** Mean-field dynamics, dm/dt = [−m + tanh(β(J₀m + h))]/τ₀, give a relaxation time τ = τ₀ / (1 − βJ₀(1−m²)). The βJ₀ estimated from fluctuations (HH80) should *predict* how fast responses to kicks decay: a consistency test without learning J. *Check:* predicted vs. measured response decay time per regime.
+  *Models:* 02 (mean-field), 09 · *Periods:* non-holdout kicks; NE21 and NE23 for confirmation
+- **HH82 · Two-block mean field for rooms (variant of HH33; H05).** Rooms are sublattices with coupling J_in within and J_out across (plus fields), fitted from within- and cross-room covariances only. Prediction: J_out → 0 after rooms arrive; J_in unchanged. *Check:* (J_in, J_out) before vs. after room events.
+  *Models:* 01 and 02 (mean-field), 10 · *Periods:* regime III rooms; #40; #51 (#focus); NE12 for confirmation
+- **HH83 · Leader–follower mean field (variant of HH23; H02).** One leader spin coupled to a mean-field population of followers, with 2–3 parameters (J_lf, J_ff, h). It detects leader weeks from the asymmetric response, with no N×N inference. *Check:* fitted J_lf in #26 and #45 vs. ordinary weeks.
+  *Models:* 02 (mean-field) · *Periods:* #26; #44 vs. #45 (held out)
+- **HH84 · Mean-field Potts consensus (variant of HH22, HH25, HH26).** A uniform-coupling q-state Potts model predicts a *first-order* jump at a critical coupling βJ_c(q). Estimate βJ from the dominant option's share and its fluctuations; the jump-vs.-gradual call follows. *Check:* jump size and hysteresis vs. the mean-field prediction for the observed q.
+  *Models:* 10 (mean-field) · *Periods:* #19, #31, #40; #26 (votes)
+- **HH85 · Mean-field O(n) for ideological polarization (variant of HH27–HH29, HH49, HH58; H01 D3).** **m** = L_n(β(J₀|**m**| + h)) **m̂**, where L_n is the n-dimensional Langevin function. Fit (βJ₀, h) per period from polarization and its fluctuations; transverse susceptibility |**m**|/h. *Check:* polarization response at kickoffs; the transverse vs. longitudinal fluctuation ratio.
+  *Models:* 11 (mean-field) · *Periods:* #8, #21, #41, #44 (#rest); kickoffs
+- **HH86 · Mean-field free energy and hysteresis (variant of HH47, HH49; H09 T1/T2).** f(m) = −J₀m²/2 − hm − T·s(m) develops a double well when βJ₀ > 1. That predicts bistable activity, and hysteresis when a field reverses. Compare it with the Boltzmann-inverted landscapes. *Check:* is the double well predicted wherever the inverted landscape shows one, after removing the field?
+  *Models:* 01 (mean-field) · *Periods:* regime III non-holdout; field reversals (NE21 for confirmation)
+- **HH87 · Moment-matched spin-glass placement (variant of phase diagram #2).** Estimate the mean and spread of couplings from the first two moments of the correlation matrix (mean-field / TAP relations) rather than inferring J. Place each period on the Sherrington–Kirkpatrick phase diagram. *Check:* agreement with the full-J placement where both are possible.
+  *Models:* 01 (mean-field / SK) · *Periods:* all non-holdout
+- **HH88 · Mean-field contagion is enough (variant of HH35, HH36).** At N ≲ 30, two-parameter Bass curves (spontaneous p, imitation q) fit meme adoption as well as network models do. Network structure only matters after rooms. *Check:* held-out likelihood of Bass vs. network SIS per meme, before and after rooms.
+  *Models:* 03 (mean-field) · *Periods:* #20, #42, #51
+- **HH89 · Family-level mean field (variant of HH10, HH75; H01 D1.1.b).** Treat model families as K mean-field populations with a K × K family coupling matrix (e.g. 3 × 3 for the three largest labs) instead of N × N. That tests family homophily in coupling with ~9 parameters. *Check:* within-family vs. cross-family couplings and their stability over time.
+  *Models:* 01 and 02 (mean-field) · *Periods:* #51; regime III
+- **HH90 · Attention is conserved: cutting a channel redirects coupling to the partners that remain (from the H05 holdout run, 2026-10-03).** After the 03-16 #best/#rest split, cross-room talk coupling fell to ≈0 as predicted. But within-room coupling *rose* about 6× (J_in 0.023 → 0.139, CI excluding 0), which the block model did not predict. If each agent has a fixed attention budget (it reads a fixed amount of context per turn), then removing partners raises the coupling to those left, so Σ_j J_ij is roughly constant across cuts and merges. *Check:* Σ_j J_ij per agent before and after every room event (NE15, 05-04 merge, 05-11 split, #focus, transfers); does row-sum conservation beat the "only the cut pairs change" rival? Rule out #35's fork activity (H07) as a confound.
+  *Models:* 02, 10 (two-block mean field), 09 · *Periods:* #35 (NE15), #40/#41 (05-04, 05-11), #focus; H08 (context is the coupling) gives the mechanism
+
+## Round-1 inspired (added 2026-10-03, after H02–H05, H07, H09 and the first holdout runs)
+
+- **HH91 · Longer sessions run hotter.** H04's holdout run found the branching ratio *higher* on 8 h days at all three hours switches (0.67 and 0.89 vs 0.31 and 0.46). Mechanism guess: a longer session accumulates more unread context per turn, so each turn has more to react to, and more activity is triggered by activity. *Check:* within periods, n̂ against session length and against the unread backlog at turn start; non-holdout 4 h vs 8 h segments of #51.
+  *Models:* 09, 02 · *Periods:* #51 (non-holdout 8 h stretches), regime III; NE21 already used for H04
+- **HH92 · Messages couple to a hidden variable.** The response to a message is a read-out delay (the wait until the agent's next turn) convolved with a fast response. So the response kernel G(τ) should be predictable, *with no free parameters*, from the distribution of inter-turn intervals: a two-variable kinetic Ising model (visible activity plus a hidden "unread context" field). This explains H04's 4-minute dead time and 15-minute plateau. *Check:* predicted G(τ) from turn-interval statistics vs H04's measured kernels, per goal period.
+  *Models:* 02, 09 · *Periods:* regime III non-holdout kicks
+- **HH93 · Influence lives in content, not timing.** Content transfer (does i's message embedding predict the direction of j's next message, beyond the goal field?) finds leaders that activity timing misses (H02 failed on #45 with timing). *Check:* content transfer entropy or a VAR on whitened vectors; ground truth from #26 (election), #44 (#best fine-tune week); #45 for confirmation, if the holdout policy allows a second hypothesis to use it.
+  *Models:* 11, 02 · *Periods:* #13, #26, #40, #44
+- **HH94 · Joint silences are platform stalls.** H02's collective co-activation is partly everyone going quiet together. That is a common field (API outages, scaffold restarts), not coupling. *Check:* joint-silence bins vs simultaneous errors or latency spikes across agents in `actions`. Does Curie–Weiss βJ₀ vanish after conditioning on them?
+  *Models:* 01, 09 · *Periods:* H02 chunks with lull-sensitive βJ₀; regime I
+- **HH95 · Cultural change runs on a touch clock.** H07 found the per-file-touch mutation rate nearly equal across the two RPG forks (ratio 1.0–1.2), while commit and wall-clock rates differ. Is the per-touch rate universal across artifacts, agents and families? *Check:* other shared artifacts in the artifacts tables (#40 the-universe, #44, #51 repos).
+  *Models:* 08, 05 · *Periods:* #35, #40, #44, #51
+- **HH96 · One agent nucleates re-theming.** In H07, two commits by one agent carried 59–77% of #best's content divergence. Content change in shared artifacts is a nucleation event (heavy-tailed per-agent shares, first-order jumps), not gradual drift. *Check:* the distribution of per-commit and per-agent shares of content change across shared artifacts; are the nucleators the same agents or families?
+  *Models:* 10, 08 · *Periods:* #35, #40, #51
+- **HH97 · Behavior is a Markov state model with a few metastable sets.** Spectral clustering of the behavior-state transition matrix (Jev states) gives a few slow sets ("attractors": coding, debugging loops, existential talk). The spectral gap, or mixing time, is a per-period order parameter, smallest in stuck periods. *Check:* MSM on Jev states per goal period; implied timescales; compare with H16 traps.
+  *Models:* 02, 10 · *Periods:* all non-holdout; #32 and #45 for confirmation
+- **HH98 · Steerability differs by model family.** Per-family susceptibility to nudges and to human messages (mean-field χ_f, response amplitude A30): which models are steerable, and by what? *Check:* H04's kernels split by lab within goal periods.
+  *Models:* 01/02 (mean-field), 09 · *Periods:* regime III kicks; #51
+- **HH99 · Attention dilutes as 1/k.** The probability that an agent responds to a given message falls roughly as 1/k with the number k of messages pending at its turn, so the mean-field J/N normalization is literal. H03 already found per-pair triggering falls with N (ρ = −0.73). This would be the micro-mechanism behind HH90 and the fall of n̂ with N. *Check:* response probability vs pending-message count at the agent's next turn.
+  *Models:* 01, 09 · *Periods:* regime III, #51
+- **HH100 · One curve for all periods.** Per-period loop gains and branching ratios (H02 βJ₀, H03 n̂, H04 K, H05 J_in/J_out) collapse onto a single function of an operational control parameter, such as messages per agent-turn or N. A data collapse would be the swarm's phase diagram. *Check:* gather the per-period estimates from the G folders; collapse them on candidate control parameters; held-out periods as tests.
+  *Models:* 01, 09, 02 · *Periods:* all non-holdout per-period estimates
+- **HH101 · Aging.** Day-to-day content autocorrelation C(t_w + τ, t_w) depends on the waiting time t_w since the kickoff, not just the lag τ, as in spin-glass aging. Agents restart daily with memory, which is like field cooling. Longer goals age more. *Check:* whitened agent-day vectors; C as a function of τ at fixed t_w across long goals.
+  *Models:* 01 (SK / glassy), 11 · *Periods:* long goals #4, #8, #38, #51

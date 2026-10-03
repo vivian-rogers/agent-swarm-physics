@@ -103,3 +103,18 @@ Order: S1 and S2, then S3 and S4 (all laptop), then S5–S7 after Phase 2 (text 
 - **Implications:** a measured "mutation rate" and inheritance curve for agent-made artifacts; validates model 08's decomposition; tests whether room isolation is real (feeds H01 D1 and D5).
 - **Data note:** needs the artifact table. Fetching the public repositories' commit histories was approved by Vivian (2026-10-03).
 - **Axes:** C, D, E (the split itself), G (known fork date).
+
+
+## Shortlist 2 (2026-10-03): magnet-like and Kolchinsky models, chosen for practical swarm analysis
+
+Proposed after exploratory round 1 (H02–H05, H07, H09) and the first holdout runs. Vivian picked items 1, 2, 3, 4, 6, 9 and 10. She had no intuition for item 5 (HH90, attention conservation) and was lukewarm on items 7 (HH13 + HH09, transmission) and 8 (HH12 + HH57, consolidation), so those stay as HHs.
+
+| # | Hypothesis | From | Models | Assigned |
+| --- | --- | --- | --- | --- |
+| S8 | Goals are Legendre pushes | HH49 + HH85 | 11, 01 | H10 |
+| S9 | Division of labor vs herding is the sign of a Potts coupling | HH24 + HH26 + HH84 | 10 | H11 |
+| S10 | Groupthink is dimensional collapse | HH77 + HH58 | 01, 11 + RMT | H12 |
+| S11 | Model families carry their own fields and couple by family | HH10 + HH75 + HH89 | 11, 10, 01/02 | H13 |
+| S12 | Entropy production of behavior-state sequences | HH19 + HH67 | 02 + AIK estimator | H14 |
+| S13 | Semantic information through natural scrambles | HH43 → H01 D4.1.b | 04 | H15 |
+| S14 | Metastable traps and Kramers escape | HH53 + HH86 | 02, 01, 11 | H16 |

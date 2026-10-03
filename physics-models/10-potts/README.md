@@ -49,6 +49,10 @@ Fields h_i(a) carry agent-specific preferences, e.g. a model family's prior for 
 - **Circular shift** per agent, as in model 01.
 - **Independent model** (fields only): the Potts couplings must beat it on held-out likelihood.
 
+## Mean-field forward version
+
+Uniform-coupling q-state Potts in mean field. The order parameter is the dominant option's share x, which solves a self-consistency equation. For q ≥ 3 the transition is **first-order**, at a critical coupling of order βJ_c = 2(q−1) ln(q−1)/(q−2) for the standard J/N normalization (check the normalization before use). Below it the symmetric (disordered) solution is stable; above it a jump to consensus. Fit βJ from the dominant share and its fluctuations, then predict the jump size and the hysteresis width. Forward-testable on consensus events without inferring q²N² couplings. HH84.
+
 ## Pitfalls
 
 - Clustering choices define q and the labels. Results must be stable across reasonable clusterings.

@@ -18,7 +18,7 @@ from multiprocessing import Pool
 import numpy as np
 import polars as pl
 
-from common import DATA, FITS, N_WORKERS, hc, load, specs, write_provenance
+from common import DATA, FITS, N_WORKERS, fit_path, hc, load, select_goals, specs, write_output, write_provenance
 
 GAPS = [60.0, 300.0]
 R_SIM = 5
@@ -48,7 +48,7 @@ def run_task(task):
     fits = {}
     for m in ("M1_B2", "P_B2"):
         ds = hc.Dataset(dm, keys, sp[m])
-        p = np.load(FITS / f"{goal}_{eset}_{m}.npy")
+        p = np.load(fit_path(goal, eset, m))
         fits[m] = hc.FitResult(ds, p, np.nan, None)
     f = fits["M1_B2"]
     rows += hist_rows(goal, eset, "reconstructed", 0.0, hc.reconstruct_cascades(f, rng, n_samples=5))
@@ -72,10 +72,10 @@ def run_task(task):
 def main():
     days, _, _ = load()
     goals = sorted(days["goal_no"].unique().to_list(), reverse=True)
-    tasks = [(g, s) for g in goals for s in ("ALL", "TALK")]
+    tasks = [(g, s) for g in select_goals(goals) for s in ("ALL", "TALK")]
     with Pool(N_WORKERS, initializer=_init) as pool:
         out = pool.map(run_task, tasks, chunksize=1)
-    pl.DataFrame([r for o in out for r in o]).write_parquet(DATA / "cascades.parquet", compression="zstd")
+    write_output(pl.DataFrame([r for o in out for r in o]), "cascades.parquet")
     write_provenance({"cascades.parquet": {"built_by": "analysis/cascades.py", "gaps_s": GAPS, "R_sim": R_SIM,
                                            "reconstruction_samples": 5}})
 

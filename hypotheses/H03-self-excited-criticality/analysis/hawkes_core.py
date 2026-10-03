@@ -174,6 +174,8 @@ class Spec:
     kick: bool = True
     kernel: str = "exp"          # exp (free beta) | grid | powerlaw | none | selfcross (agent-level grid)
     grid_taus: np.ndarray = field(default_factory=lambda: GRID_TAUS.copy())
+    beta_min: float = BETA_MIN   # slowest allowed kernel rate (tau_max = 1/beta_min)
+    cell_s: float = BIN_S        # B3 cell width
 
 
 class Dataset:
@@ -217,11 +219,15 @@ class Dataset:
         elif b == "B2":
             self.unit = self.day.copy(); self.Lu = L; self.shape = True; self.ubin = self.bin
         elif b == "B3":
-            cell = self.day * Kb + self.bin
-            valid = (L.ravel() > 0)
-            idx = -np.ones(D * Kb, np.int64); idx[valid] = np.arange(valid.sum())
-            self.unit = idx[cell]; self.Lu = L.ravel()[valid][:, None]; self.shape = False
+            cw = spec.cell_s
+            Kc = int(np.ceil(self.T.max() / cw))
+            Lc = np.clip(self.T[:, None] - cw * np.arange(Kc)[None, :], 0, cw)
+            cell = self.day * Kc + np.minimum((self.t // cw).astype(np.int64), Kc - 1)
+            valid = (Lc.ravel() > 0)
+            idx = -np.ones(D * Kc, np.int64); idx[valid] = np.arange(valid.sum())
+            self.unit = idx[cell]; self.Lu = Lc.ravel()[valid][:, None]; self.shape = False
             self.ubin = np.zeros(self.n, np.int64)
+            self.Kc, self.Lc = Kc, Lc
         elif b == "B2a":
             # unit = (day, active agent)
             pairs = [(i, a) for i, d in enumerate(days) for a in d.active]
@@ -331,7 +337,7 @@ class Dataset:
         if self.free_beta:
             a, b = sl["ab"].start, sl["ab"].start + 1
             lo[a], hi[a] = -20.0, np.log(5.0)
-            lo[b], hi[b] = np.log(BETA_MIN), np.log(BETA_MAX)
+            lo[b], hi[b] = np.log(self.spec.beta_min), np.log(BETA_MAX)
         if self.powerlaw:
             a, th = sl["pl"].start, sl["pl"].start + 1
             lo[a], hi[a] = -20.0, np.log(5.0)
@@ -440,8 +446,11 @@ def transfer_params(src: "FitResult", dst: Dataset, fresh_levels=True):
     p = dd.init_params()
     if dd.shape and sd.shape:
         s_src = np.concatenate([[0.0], src.p[ssl["s"]]])
-        idx = np.minimum(np.arange(1, dd.Kb), sd.Kb - 1)
-        p[dsl["s"]] = s_src[idx]
+        occ = sd.Lu.sum(0) > 0
+        med = float(np.median(s_src[occ])) if occ.any() else 0.0
+        b = np.arange(1, dd.Kb)
+        # bins the source never covered (e.g. a test day with a longer window) get the median shape value
+        p[dsl["s"]] = np.where(b < sd.Kb, s_src[np.minimum(b, sd.Kb - 1)], med)
     nk_s = sd.n_fixed_nonkernel if sd.powerlaw else sd.K
     nk_d = dd.n_fixed_nonkernel if dd.powerlaw else dd.K
     wmap = dict(zip(sd.names[:nk_s], src.p[ssl["w"]]))
@@ -478,8 +487,8 @@ def profile_ci_n(fit: "FitResult", level_chi2=3.841):
     except Exception:
         pass
     try:
-        a_hi = min(4.9, max(2 * a_hat, a_hat + 0.5))
-        hi = brentq(h, a_hat * 1.001, a_hi, xtol=1e-3) if h(a_hi) > 0 else a_hi
+        a_hi = min(4.9, max(2 * a_hat, a_hat + 1.0))
+        hi = brentq(h, a_hat * 1.001, a_hi, xtol=1e-3) if h(a_hi) > 0 else np.inf  # censored
     except Exception:
         pass
     return float(lo), float(hi)
@@ -491,6 +500,12 @@ def eval_heldout(src: "FitResult", daymap, test_keys):
     if ds.n == 0:
         return 0.0, 0
     p, mask = transfer_params(src, ds)
+    if ds.shape:
+        # MLE puts s_b -> 0 on within-day bins with no training events; floor the transferred shape at 1/20 of
+        # its median (same for Hawkes and Poisson) so a test event in such a bin is not scored at ~zero rate
+        sl, _ = ds.layout()
+        full = np.concatenate([[0.0], p[sl["s"]]])
+        p[sl["s"]] = np.maximum(p[sl["s"]], np.median(full) - np.log(20.0))
     f = ds.fit(p0=p, fixed=mask)
     return f.ll, ds.n
 
@@ -528,6 +543,9 @@ class FitResult:
             out["n_self"] = float(ws.sum()); out["n_c_pair"] = float(wc.sum())
             out["n_cross"] = float(wc.sum() * mbar1); out["n"] = out["n_self"] + out["n_cross"]
             out["m_bar"] = mbar1 + 1
+            fast = ds.spec.grid_taus <= 300
+            out["n_self_fast300"] = float(ws[fast].sum())
+            out["n_cross_fast300"] = float(wc[fast].sum() * mbar1)
             out["tau_self_s"] = float((ws * ds.spec.grid_taus).sum() / max(ws.sum(), 1e-300))
             out["tau_cross_s"] = float((wc * ds.spec.grid_taus).sum() / max(wc.sum(), 1e-300))
             for tau, a_, b_ in zip(ds.spec.grid_taus, ws, wc):
@@ -562,11 +580,12 @@ class FitResult:
         sl, _ = ds.layout()
         c, s, w = ds.components(self.p)
         # baseline cumulative: per-event closed form on 30-min bins
+        wgrid, Kg = BIN_S, ds.Kb_all
         if ds.spec.baseline == "B3":
-            Kb = ds.Kb_all
-            valid = ds.L.ravel() > 0
-            mu_db = np.zeros(ds.D * Kb); mu_db[valid] = c
-            mu_db = mu_db.reshape(ds.D, Kb)
+            wgrid, Kg = ds.spec.cell_s, ds.Kc
+            valid = ds.Lc.ravel() > 0
+            mu_db = np.zeros(ds.D * Kg); mu_db[valid] = c
+            mu_db = mu_db.reshape(ds.D, Kg)
         elif ds.shape:
             mu_db = c[:, None] * s[None, :]
             if mu_db.shape[1] < ds.Kb_all:
@@ -575,9 +594,9 @@ class FitResult:
             mu_db = np.repeat(c[:, None], ds.Kb_all, 1)
         else:
             mu_db = np.full((ds.D, ds.Kb_all), c[0])
-        cum_full = np.concatenate([np.zeros((ds.D, 1)), np.cumsum(mu_db * BIN_S, 1)], 1)
-        b_ = (ds.t // BIN_S).astype(np.int64)
-        lam_base = cum_full[ds.day, b_] + mu_db[ds.day, np.minimum(b_, ds.Kb_all - 1)] * (ds.t - b_ * BIN_S)
+        cum_full = np.concatenate([np.zeros((ds.D, 1)), np.cumsum(mu_db * wgrid, 1)], 1)
+        b_ = np.minimum((ds.t // wgrid).astype(np.int64), Kg - 1)
+        lam_base = cum_full[ds.day, b_] + mu_db[ds.day, b_] * (ds.t - b_ * wgrid)
         Lam = lam_base.copy()
         k = 0
         if ds.spec.kick and ds.first.any():
