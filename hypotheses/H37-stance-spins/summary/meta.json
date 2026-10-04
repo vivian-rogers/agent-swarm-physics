@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 2.0,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: pre-registered predictions, 30k Jev labels with two blind validation sets, synthetic validation at the real reply graphs (S1-S6), four periods with verdicts, a calibrated null for the detector, and a #34 confirmatory script with dry run. Not done: a second labeller or rater, the holdout run, contested periods, signed reply dynamics.",
+    "faithfulness": "Clear but partial: the positive control passes strongly (beats team permutation, agent fields and topic; teams recovered 7/10), but the hypothesis' general claim fails where conflict is not assigned (#51 roles, #26 ballots), and the per-pair and faction nulls needed post-hoc calibration.",
+    "usefulness": "A cheap detector of assigned or explicit sides with measured accuracy and a calibrated false-alarm rate that an operator can run on chat logs. Payoff is limited because LLM swarms rarely produce stance conflict, Jev's negative calls are imprecise, and the saboteur use case is untested (holdout)."
+  },
+  "one_line": "Stance labels recover assigned debate teams that topic cannot (7/10 exact), but rival, opposed and voting agents show no stance conflict",
+  "rated_by": "H37 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

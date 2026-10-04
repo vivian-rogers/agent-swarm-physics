@@ -7,6 +7,11 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **H37 (stance spins), round 1: the detector works on assigned conflict; generalization failed.** Jev labelled 30,461 reply pairs ($1.12 of $2; blind sign κ 0.67 random / 0.37 enriched; "oppose" precision 0.30).
+  - **#12:** opponents −0.13 vs teammates +0.32 (AUC 0.74; topic 0.48), drafted teams recovered exactly in 7/10 debates, contrast gone within 10 min of the verdict. This rescues the antiferromagnet H21 missed in the topic channel.
+  - **Elsewhere, no stance conflict:** #51 rivals and the Prankster's opposed pairs are not negative; #26 stance ignores ballots. Post hoc: #51's 10 antagonistic pairs cluster on norm-enforcing roles (governance friction, OR 4.4).
+  - Sign-shuffle and FDR nulls are anti-conservative → calibrated ordered-logit null (Amendment 2). Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0. `confirm_g34.py` written, not run.
+  - Sent to DQ2: reuse H37's labels where pairs overlap; separate corrections/declines from "oppose"; use the calibrated null.
 - **H38 (joint silences are platform stalls), round 1: mostly refuted, with a yes for regime III.**
   - Joint silences occur at the rate independent agents produce (median excess 0.008 of minutes). Infrastructure-error bursts make them *less* likely (log OR −0.43; HH94 fails in reverse). Village-off gaps are the operator's schedule (84%).
   - **But about two thirds of regime-III collective co-activation is infrastructure** (median f_scaffold 0.68): agents starting and stopping together at the daily resume and pause. The regime II → III rise goes away (NE14 +0.15 → +0.01; H19's +0.11 → +0.017). Regime I is not affected (0.11); #44 and the #51 head keep their full excess.

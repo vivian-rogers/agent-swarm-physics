@@ -1,0 +1,24 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\input{../../../writeup/hypothesis-pages/hpage.tex}
+\def\hID{H37}
+\def\hTitle{Conflict lives in stance, not topic: stance spins are antiferromagnetic}
+\def\hStatus{exploratory round 1 done (2026-10-04): detector validated on assigned conflict; the generalization failed. Zero-shot stance labels see the \#12 debate teams that topic embeddings cannot (AUC 0.74 vs 0.48; teams recovered exactly in 7/10 debates), but find no...}
+\def\hStage{level: hypothesis  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-04}
+\def\hBadges{\hbadge{Complete}{40\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{2/5}{f5bcbb}{0b0b0b}\ \hbadge{Usefulness}{2.5/5}{e9e7e1}{0b0b0b}}
+\def\hPeriodSummary{1 supported, 2 failed, 1 mixed}
+\def\hDate{Updated 2026-10-04}
+\def\hFooter{H37-stance-spins $\cdot$ generated 2026-10-03 19:14 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H37-stance-spins/README.md $\cdot$ ratings: H37 agent (suggested)}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G12 & $\checkmark$ & supported (positive control passes P1–P5) \\
+G26 & $\times$ & failed (stance does not track ballots; no factions) \\
+G40 & $\sim$ & mixed (no false faction or pair alarm; conflict level not low) \\
+G51 & $\times$ & failed (no stance antagonism between rival or opposed roles; diffuse negative pairs elsewhere) \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 1 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 1 & H comparative & 1 \\
+D unfitted predictions & 1 & I transfer & 0 \\
+E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} a cheap, calibrated sensor for adversarial or factional behaviour in agent swarms, and its detection limits.\item \textbf{H37-R1} A second labeller and rater.\item \textbf{H37-R2} Find conflict where it might exist.\item \textbf{H37-R3} Kinetic stance.\item \textbf{H37-R4} Run the \#34 confirmation after sign-off, as the saboteur test (D8.3).\end{itemize}}
+\input{content.tex}
+\begin{document}
+\makehpage
+\end{document}

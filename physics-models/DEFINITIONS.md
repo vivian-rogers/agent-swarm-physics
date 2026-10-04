@@ -170,3 +170,9 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Silence reason** of a silent present agent, first match: `pre`/`post` (before its first or after its last active minute of the day), `infra_err` (gap adjacent to an infrastructure-error turn, ≤ 15 min), `consol` (before a CONSOLIDATE, ≤ 15 min), `pause` (declared wait/pause spell), `none`.
 - **Stall (explained joint silence):** a joint-silence minute outside the day's scheduled run, or in which ≥ half the silent present agents have a recorded reason. Strict variant: all silent agents but one have a reason.
 - **Agent-state conditioning:** before a synchrony statistic, drop off-schedule minutes and set an agent's not-started / finished / consolidating / error-gap minutes to its block mean; compare against block-shift surrogates processed the same way. f_scaffold = 1 − E_adj / E_raw.
+
+### H37 named variants (2026-10-04; see `hypotheses/H37-stance-spins/README.md`)
+- **Interaction (addressed reply, 30 min):** B's message names A's author within 30 min of A's message. **Interaction (adjacent reply, 5 min):** B posts within 5 min of A in the same room. Pairs are kept only where Jev says B responds to A.
+- **Stance spin:** Jev's zero-shot reply stance on a pair (oppose … support), used as soft s_e = P(support) − P(oppose).
+- **Stance coupling (residual):** the pair's mean stance after an ordered logit with speaker and target effects removes agent fields.
+- **Frustration index (ground-state):** the share of signed residual bonds violated by the best two-camp split (exhaustive or annealed).

@@ -1,0 +1,36 @@
+\hwhat{H22 found that rival agents in \#51 co-move in \emph{topic}, so topic cannot show conflict. Does \emph{stance} show it? A zero-shot labeller (Jev) marked 30k reply pairs (B to A: agree, support, neutral, oppose, undermine; \$1.12) in \#12, \#26, \#40 and \#51; blind validation gave $\kappa_{\rm sign}=0.67$ (random) and 0.37 (enriched). In the \#12 debates, stance separates opponents from teammates (AUC 0.74 after agent effects) while topic does not (0.48). The best two-camp split of each debate's stance graph recovers the drafted teams exactly in 7 of 10 debates. The contrast vanishes within 10 min of the verdict. Elsewhere there is little to find. \#51 rivals and opposed roles are as friendly as anyone, \#26 stance ignores ballots, and \#51's 10 antagonistic pairs (vs 0.33 expected) sit on norm-enforcing roles (post hoc). \#34 saboteur test written, \textbf{not run}.}
+
+\hmodel{Models 01 (signed Ising) and 10 (Potts communities). The spin is a bond: the stance $s_e\in[-1,1]$ of reply $e$ from $j$ to $i$ (Jev probabilities). $a_j,b_i$: agent fields (agreeableness, likability) of an ordered logit with cut points $c_k$; $\Delta$: camp coupling; $J_{ij}$: residual pair stance after the fields; $\xi_i=\pm1$: camp. Factions are the ground state of $H(\xi)$; frustration is the weight it leaves unsatisfied. $\gamma$: same-team ($\delta^{\rm team}_{ij}=1$) minus opposite-team stance, fields absorbed.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+P(\sigma_e\le k)=\operatorname{logistic}\!\big(c_k-a_j-b_i-\Delta\,\xi_i\xi_j\big),\quad \sigma_e\in\{-,0,+\}\\
+s_e=p_{\rm agree}+p_{\rm support}-p_{\rm oppose}-p_{\rm undermine}\\
+s_e=\mu+a_j+b_i+\gamma\,\delta^{\rm team}_{ij}+\varepsilon_e\\
+H(\boldsymbol\xi)=-\textstyle\sum_{i<j}J_{ij}\,\xi_i\xi_j\\
+f=\tfrac12\Big(1-\max_{\boldsymbol\xi}\big[-H(\boldsymbol\xi)\big]\big/\textstyle\sum_{i<j}|J_{ij}|\Big)
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) \#12: AUC for telling same-team from opposite-team replies, with agent effects removed. Stance (blue) separates the teams only while they debate; topic similarity of the same reply pairs (orange) never does. (b) \#51: role-class mean minus unrelated pairs, with the 95\% role-permutation null (gray). Rivals and the Prankster's opposed pairs are not negative in stance; rivals are slightly closer in topic too.}
+
+\htelos{Partly useful, mostly sobering. Useful: a cheap, calibrated detector that finds assigned sides from replies alone and stays quiet in cooperative weeks. An operator who suspects factions or a scapegoated agent can run it for cents per thousand messages, as long as the structural alarms are checked against an agent-field null; the naive nulls fire falsely. Sobering: LLM agents almost never take sides unless a protocol tells them to. Rivalry, opposed incentives and elections all came out polite. So this detector will mostly confirm nothing is happening; whether it catches covert sabotage is the open \#34 question. The raw ``negative reply'' rate is mostly correction friction plus label noise and should not be monitored on its own.}
+
+\hbottom{Stance labels see the conflict a debate assigns (teams recovered 7/10, topic blind to it), but rival, opposed and voting agents in this village show no stance conflict, so ``conflict lives in stance'' holds only where conflict is imposed.}
+
+\hresults{\footnotesize\noindent\begin{tabular}{@{}p{0.30\columnwidth}p{0.52\columnwidth}p{0.12\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\
+P1 \#12 teams in stance & teammates $+0.32$, opponents $-0.13$; $\gamma=0.42$, $p=0.0002$ & held\\
+P2 \#12 not in topic & AUC 0.74 (stance) vs 0.48 (topic); $p=0.0002$ with topic covariate & held\\
+P3 \#12 camps $\ge0.80$ & 0.89 ($p<10^{-4}$), exact 7/10; topic graph 0.71 & held\\
+P5 \#12 after verdict & $\gamma$ 0.42 $\to$ 0.03; relaxation, no sign flip & held\\
+P6 \#51 Prankster pairs & $T_{\rm OP}=+0.02$ (2 pairs, both positive) & failed\\
+P7 \#51 rivals & $T_{\rm SR}=+0.085$ in stance, $+0.078$ in topic & failed\\
+P9 \#51 negative pairs & 0 of 13 in conflict roles (post hoc: 10/13 norm-enforcing) & failed\\
+P10 \#26 ballots & Mantel $r=0.01$, $p=0.47$ (power $\le0.42$) & failed\\
+P12 \#40 false alarm & no pairs, no camps; but 20\% labelled ``oppose'' & mixed
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Synthetic \#12 on the real reply graph: the team contrast is detectable from $\Delta\approx0.5$ logit with Jev's measured noise; real \#12 matches $\Delta\gtrsim1$. (b) Camp alarms under agent fields only: the sign-shuffle null fires falsely (28\% at \#40, 100\% at \#51); the calibrated ordered-logit null holds 4\%.}
+
+\hcaveats{One labeller and one rater; my blind labels define truth, and Jev's ``oppose'' is only 30\% precise. Debate rebuttals often address the other team rather than a named agent, so the reply graph undersamples them. Graphs outside \#51 are small (7--14 agents); balance indices were unstable and were not used. \#51 rests on 6 rival and 2 opposed pairs, \#26 on 10 agents; the failures exclude only strong (1--2 logit) effects. The calibrated null (Amendment 2) and the governance-friction reading came after the data. One embedding model for the topic baseline.}
+
+\hnext{A second labeller and a human rater; the calibrated detector on contested periods (\#19, \#31) and, pre-registered, on the \#51 tail; signed reply dynamics (does a negative reply beget one?); the \#34 saboteur confirmation after sign-off.}

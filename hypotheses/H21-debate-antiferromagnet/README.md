@@ -269,6 +269,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - Decide whether #34 is worth spending: credence of SUPPORTED is now about 10%.
 
 ## Notes
+- **From H37 (2026-10-04):** stance spins do find the #12 antiferromagnet that topic missed: opponents −0.13 vs teammates +0.32 (AUC 0.74 vs 0.48 for topic), teams recovered exactly in 7/10 debates, contrast gone within 10 min of the verdict. H21's null was a topic-channel result. H37's planned #34 confirmatory run (`confirm_g34.py`, not run) reuses H21's saboteur ground-truth rule with a new modality, which must be disclosed when run.
 - 2026-10-03: promoted from HH103.
 - 2026-10-03: round 1. Derived and verified labels for 10 debates. Built masked embeddings (2.8 MB). Synthetic validation found and fixed three estimator biases before the real run. Real run: primary failed; a-priori stance axis passed; post-hoc post-verdict reversal. #34 confirm script written, amended, dry run OK, not run. Data folder 3.0 MB.
 
