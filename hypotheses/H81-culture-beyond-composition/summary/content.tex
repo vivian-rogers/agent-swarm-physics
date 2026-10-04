@@ -1,0 +1,34 @@
+\hwhat{The test asks whether the village content vector carries a slow component that its members do not explain. The composition null is each member's personal vector, fitted on its other goal periods, plus the measured goal fields (kickoff, goal text, room kickoffs, human messages). The residual is compared between blocks of different goal periods. Regime I (24 goals, May 2025 to February 2026) shows a slow mode. Blocks at most 14 days apart align ($\bar s=0.17$, bge). The alignment decays with $\tau_u\approx23$--28 days. The contrast is 3 times the synthetic null in both embedding models. It survives member turnover, dropping Gemini 2.5 Pro, and the scaffold steps. Regime III is marginal. Inside \#51 the common mode lives about 3 days. Roster joins do not move it. The holdout script exists and is not run.}
+
+\hmodel{Vector spins (model 11). The spin $v_{i,d}$ is agent $i$'s style-residualized content vector on day $d$ (32-d). $a_i$ is the personal vector (weights, family, style). $h_G$ is the exogenous field of goal period $G$, removed by projection $\Pi_G$. $w_b$ is a topic field with no memory. $u_b$ is the collective slow mode, an Ornstein--Uhlenbeck vector with correlation time $\tau_u$. The order parameter is the block culture residual $u_b$. The statistic $D$ is the near-minus-far similarity of $u_b$ across goal boundaries, adjusted for goal similarity ($D_{\rm adjg}$) and member overlap ($D_{\rm adj}$).}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+v_{i,d}=a_i+h_{G(d)}+w_{b(d)}+u_{b(d)}+e_{i,d},\qquad \langle u_b\cdot u_{b'}\rangle\propto e^{-|t_b-t_{b'}|/\tau_u}\\
+r_{i,b}=\Pi_G\bigl(\bar v_{i,b}-\hat a_i^{(-G)}\bigr),\qquad u_b=\langle r_{i,b}\rangle_{i\in b}\\
+D=\langle\cos(u_b,u_{b'})\rangle_{\Delta t\le14\,\mathrm d}-\langle\cos(u_b,u_{b'})\rangle_{\Delta t\ge42\,\mathrm d}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Regime I: mean similarity of culture residuals between blocks of different goal periods against their lag. Bands are the 90\% range of the synthetic composition null (S0) on the real panel. Similarity is high below two weeks and decays over about a month. (b) The slow-mode contrast $D_{\rm adjg}$ per model and regime (dots), the S0 95th percentile (grey bars) and the planted mean for a slow mode with half the period-field variance (ticks).}
+
+\htelos{Expect a village to drift as a whole on a timescale of about a month, independent of who is in it. In regime I, half of the period-to-period content variance beyond the goal fields is this slow mode. An operator who wants a clean goal change should not expect the new kickoff to reset the village: neighbouring goals share about 0.17 of their residual direction. The mode does not respond to roster changes, so adding or retiring agents is not a lever on it. Its carrier is unknown. It may be the shared record (sites, documents, repos) or an outside drift that every agent reads. For monitoring, compare a village with its own last two to three weeks, not with its whole history.}
+
+\hbottom{In regime I the village content has a collective slow mode ($\tau_u\approx25$ days) beyond its members and the measured goal fields, carried across turnover; it is absent inside \#51 and does not jump at roster events.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (bge / gte)} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 equal-time share $\kappa>$ null & \raggedright 29/33, 31/33 periods; median 0.51 / 0.53 (field-dominated) & \raggedright pass\tabularnewline
+\raggedright P2 slow mode $D_{\rm adjg}>$ S0 q95 & \raggedright I: 0.237 / 0.208 (q95 0.081 / 0.089); III: 0.256 / 0.275 (q95 0.245 / 0.250) & \raggedright pass (I)\tabularnewline
+\raggedright P2 decay over weeks & \raggedright $\tau_u=28\pm5$ / $23\pm4$ d & \raggedright pass\tabularnewline
+\raggedright P3 across turnover ($D_{\rm adj}$) & \raggedright I: 0.166 / 0.170 (q95 0.10); size-matched disjoint 0.188 / 0.156 & \raggedright pass (I)\tabularnewline
+\raggedright P4 jumps at roster events & \raggedright percentile 0.08 / 0.14 over 22 events & \raggedright fail\tabularnewline
+\raggedright P5 without Gemini 2.5 Pro & \raggedright $\times1.06$ / $\times1.06$; size-matched $\times0.90$ / $\times0.96$ & \raggedright pass\tabularnewline
+\raggedright N1 G51 slow mode inside \#51 & \raggedright $L_{\rm slow}=-0.005$; common mode $\tau\approx3$ d & \raggedright fail\tabularnewline
+\raggedright N2 NE33/NE32 batch joins & \raggedright stayer-jump percentiles 0.14--0.89 & \raggedright fail\tabularnewline
+\raggedright PH scaffold steps, 3 fields & \raggedright within segments 0.157 / 0.154; 3 covariates 0.237 / 0.209 & \raggedright post hoc\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Synthetic pass rates on the real regime-I panel. The goal-adjusted contrast detects a slow mode (S1) and also member drift (S2). The overlap-adjusted contrast rejects drift. (b) Equal-time collective share $\kappa$ per goal period with the sign-flip null (grey).}
+
+\hcaveats{Only measured exogenous directions are removed. A slow outside drive that every agent reads would look the same. The HH's literal composition null is biased: it produced $+0.37$ in regime-III synthetics, so the estimator uses two-way fixed effects (Amendment A1). Power is 0.96--0.99 for a slow mode with half the period-field variance and 0.67--0.69 at a quarter. Regime III has 9 goals and power $\le0.42$. Regime I has 4--12 agents. The turnover-disjoint statistic has low power unless size-matched. $\tau_u$ is a descriptive fit.}
+
+\hnext{Name the carrier: regress the slow mode on long-lived artifacts that agents read (context ledger) against posted-but-unread artifacts. Probe outside drift with dated external topics. Fit one OU model to the H81 profile and H82's boundary trace.}

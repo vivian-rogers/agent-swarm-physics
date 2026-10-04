@@ -1,0 +1,81 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before real data; synthetic validation at real counts in both regimes and both models (found that the HH's literal composition null manufactures a slow mode; fixed as Amendment A1); replication on 33 periods plus regime-level slow-mode tests; two natives (G51, NE33/NE32); seven preprocessing variants with their own nulls; three post hoc rival checks; scorecard; frozen, guarded confirm script dry-run, not run. No holdout run, no carrier test.",
+  "faithfulness": "The slow-mode contrast is 3x the synthetic composition null in both models in regime I, has the planted OU shape (tau 23-28 d, negative far-epoch similarity), survives member turnover (overlap-adjusted and size-matched disjoint), Gemini removal, scaffold segments and three exogenous covariates. It fails the interventional signature (no roster jumps), is absent inside #51 and marginal in regime III, and an unmeasured slow exogenous drift is not excluded. Scorecard A1 B1 C2 D1 E0 F2 G1 H1 I0.",
+  "usefulness": "First positive egregore result: a collective state variable with a measured timescale (~25 days) that outlives members. It tells an operator not to expect a goal change or a roster change to reset the village and to compare a village with its last 2-3 weeks. Practical leverage is limited until the carrier (record vs outside drift) is identified."
+ },
+ "one_line": "Regime-I village content carries a collective slow mode beyond composition and goal fields (tau_u ~25 d; contrast 0.24/0.21 vs null 0.08/0.09), across turnover; absent in #51, no roster jumps.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "OU slow mode in regime I; none in #51"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Size-matched groupings and independent-agent floor"
+  },
+  {
+   "model": "04-semantic-information",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Egregore framing only; no viability function fitted"
+  }
+ ],
+ "rated_by": "H81 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "In regime I, village content has a collective slow mode beyond its members' own vectors and the measured goal fields: it decays over 23–28 days and survives member turnover (D_adj 0.17 vs null q95 0.10); it is absent in regime III and inside #51. Excluded: an unmeasured slow external drift every agent reads",
+  "scope": "regime I (24 goals), regime III marginal; natives G51, NE33/NE32",
+  "direction": "positive",
+  "original_verdict": "supported (regime I)",
+  "credence": 0.66,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null (two-way FE composition null; literal null shown to manufacture structure)",
+    "x": 2,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "synthetic identification (power 0.96–0.99 at share 0.5)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "robust (both models, 7 variants, without Gemini 2.5 Pro, size-matched)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: unmeasured slow external drift rival open",
+    "x": 0.6,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: no jump at roster events; regime III absent",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "expect a slow village culture over weeks in chat-mode swarms; it does not follow roster changes",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.32,
+  "scientific_value": 4,
+  "rater": "coordinator, updated after round 1b (H81 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

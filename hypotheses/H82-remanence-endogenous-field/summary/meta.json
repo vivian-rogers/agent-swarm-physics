@@ -1,0 +1,76 @@
+{
+ "complete": 45,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before real data; synthetic validation on the real 25 boundaries in both models (found the placebo-correction null bias; Amendments A1-A3; showed the newcomer clause unpowered); replication with 12 preprocessing and rival variants; three natives (NE27, NE32, NE15 in-flight placebo); two post hoc mechanism checks; scorecard; frozen, guarded confirm script with a C2 for the post hoc finding, dry-run, not run.",
+  "faithfulness": "The endogenous loading is 3x the null in both models and robust to every variant, and it is not wrap-up. But the model's own form fails: no decay within 5 days (P3), part of the asymmetry is H81's slow mode, and the agent's own previous content absorbs it (the HH's individual-memory kill, post hoc). Read > unread in one model. Scorecard A1 B0 C2 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "Tells an operator that a goal change does not erase the previous goal: expect about a week of carry-over of each veteran's own threads, partly through what it reads; resetting a specific agent's context is the lever. It refutes the strong egregore reading (record-borne remanence) at this sample size rather than establishing it."
+ },
+ "one_line": "The previous goal leaves a persistent day-1 trace (dgamma ~0.15, 3x null, 25 boundaries) that does not decay within 5 days and is carried by each agent's own previous content, not the village record.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Endogenous field real but member-carried, no decay"
+  },
+  {
+   "model": "04-semantic-information",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Record-as-store framing; newcomer test unpowered"
+  },
+  {
+   "model": "12-information-dynamics",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "In-flight placebo (read vs unread) for NE15"
+  }
+ ],
+ "rated_by": "H82 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Day-1 content of a new goal carries the previous period's village content (Δγ₁ ≈ 0.15, 3× the null, 25 boundaries, both models), without decay over 5 days; the agent's own previous content absorbs it entirely, so the trace lives in members, not the village record",
+  "scope": "25 goal boundaries; natives NE27, NE32, NE15",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.71,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "replication (25 boundaries, both models)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "robust (12 variants)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: own-past absorption found post hoc",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "clear or refresh agent context at goal changes if you want a clean start",
+  "magnitude": "small",
+  "generality": "agents with context resets",
+  "expected_usefulness": 1.06,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H82 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

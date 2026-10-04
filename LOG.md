@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **H81 and H82, round 1: the first positive egregore-type result.** **H81:** in regime I, village content has a collective slow mode beyond its members and the measured fields (τ ≈ 23–28 d), surviving member turnover and every robustness variant; it is absent in regime III and #51 (common mode ≈ 3 active days) and does not jump at roster events. Open rival: a slow external drift all agents read. A methods find: the literal composition null manufactures structure, so two-way fixed effects are needed. **H82:** the previous period's content loads on day 1 (Δγ₁ ≈ 0.15, 3× null), but each agent's own past absorbs it, so the trace is in members, not the record. GOALS Q3 status updated; the H83/H88 agent was warned about the leave-out artifact.
 - **Shared vocabulary consolidated.** `DEFINITIONS.md` gains 123 terms in 10 dated sections, covering all the must-include terms. Eleven naming conflicts were resolved with qualified names and subscripts (κ alone meant six things). `physics-models/README.md` gains "What held up (round 1)" per model:
   - nonequilibrium Ising 2 supported / 12 mixed / 6 refuted as primary;
   - inverse Ising 1/7/6;

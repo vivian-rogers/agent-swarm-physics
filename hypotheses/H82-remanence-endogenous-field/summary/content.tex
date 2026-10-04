@@ -1,0 +1,33 @@
+\hwhat{The test decomposes each agent's day-1 content in a new goal period into an exogenous field (new kickoff, goal text, previous kickoff, operator messages), the agent's prior from other periods, and the previous period's village centroid. It runs on 25 goal boundaries with both embedding models. The previous centroid loads by $\Delta\gamma_1\approx0.15$ beyond placebo centroids, 3 times the synthetic null. The trace does not decay over five days. The next period's centroid also loads, at about half the size. With the agent's own previous content as a regressor, the village centroid adds nothing ($-0.02$ / $-0.06$). Newcomers are too few to test. Read previous content predicts day-1 content better than unread content in one model. The holdout script exists and is not run.}
+
+\hmodel{Vector spins (model 11) with a two-part mean field. The spin $v_{i,d}$ is the agent-day content vector (32-d, style-residualized). $X_{\rm ex}$ are the exogenous directions. $p_i$ is the agent's prior, fitted without periods $P$ and $P-1$. $e_{P-1}^{(-i)}$ is the previous village centroid without agent $i$. Its loading $\gamma$ is the endogenous field. The quench (H54) is the loading $\alpha$ on the new kickoff. Hysteresis is $\gamma>0$ with $\gamma[P-1]>\gamma[P+1]$. A record-borne trace would also load in newcomers.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+v_{i,d}=\textstyle\sum_k\alpha_k X_{\mathrm{ex},k}+\beta\,p_i^{(-P,-X)}+\gamma_d\,e_X^{(-i)}+\varepsilon_{i,d}\\
+\Delta\gamma_d=\gamma_d[X{=}P{-}1]-\mathrm{median}_{|Q-P|\ge2}\,\gamma_d[X{=}Q],\qquad A=\gamma_1[P{-}1]-\gamma_1[P{+}1]
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Day-1 remanence excess $\Delta\gamma_1$ per goal boundary with agent-bootstrap 95\% intervals; dotted lines mark the synthetic null bias. Regime-I boundaries rest on 3--4 agents. (b) Random-effects mean of $\Delta\gamma_d$ minus the null bias over the first five active days. There is no decay.}
+
+\htelos{A goal change re-points agents onto the new kickoff, but each veteran keeps its own previous themes for at least five days. That carry-over is about 0.15 in loading units, beyond the new fields and the agent's prior. For an operator: a new goal does not erase the old one, so expect about a week of mixed content. Retire or reset a specific agent's context if its old thread must stop. Nothing here shows that the village record carries the trace on its own. The trace follows members and partly what they read.}
+
+\hbottom{The previous goal leaves a persistent trace on day-1 content ($\Delta\gamma_1\approx0.15$, 25 boundaries), but it is each agent's own carry-over, not a decaying remanence of the village record.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (bge / gte)} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 $\Delta\gamma_1>$ S0 q95 & \raggedright 0.158 / 0.153 (q95 0.055 / 0.063); 17/25, 16/25 positive & \raggedright pass\tabularnewline
+\raggedright P2 asymmetry $A>$ S0 q95 & \raggedright 0.093 / 0.104 (q95 0.036 / 0.052); part is lag geometry & \raggedright pass\tabularnewline
+\raggedright P3 decay within days & \raggedright $\Delta\gamma_d$ 0.15, 0.15, 0.11, 0.13, 0.13 & \raggedright fail\tabularnewline
+\raggedright P4 newcomers carry it & \raggedright 5 boundaries, 1 newcomer each; power $\le0.18$ & \raggedright inconcl.\tabularnewline
+\raggedright N1 NE27 empty-memory join & \raggedright no trace of \#8 for veterans or newcomers & \raggedright fail\tabularnewline
+\raggedright N2 NE32 isolated newcomers & \raggedright $+0.036$ [0.006, 0.081] / $+0.010$ [$-0.020$, 0.039] & \raggedright mixed\tabularnewline
+\raggedright N3 NE15 read vs unread & \raggedright $+0.071$ [$-0.007$, 0.148] / $+0.106$ [0.039, 0.174] & \raggedright mixed\tabularnewline
+\raggedright PH after kickoff only & \raggedright 0.152 / 0.156 & \raggedright post hoc\tabularnewline
+\raggedright PH own past as regressor & \raggedright $-0.024$ / $-0.060$ & \raggedright post hoc\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Mean day-1 loading on the previous, a placebo and the next period's centroid (19 boundaries with an eligible next period). (b) Synthetic power on the real boundaries: the pooled test reaches 0.83--0.92 at $\gamma=0.05$; the newcomer test stays below 0.2.}
+
+\hcaveats{Each boundary is one regression on 3--15 agents. The placebo-corrected excess is biased upward under the null ($+0.02$ / $+0.03$), so decisions use the synthetic percentile. The newcomer clause, the HH's central claim, is untestable at this sample size. The own-past regressor also contains the village state as the agent saw it, so the PH2 result says which regressor wins, not which mechanism acts. Part of the asymmetry is the lag geometry of H81's slow mode.}
+
+\hnext{Model each agent's carry-over with a decay over the whole period and compare it with H81's $\tau_u$. Pool all newcomer first weeks against same-day veterans, after a synthetic power check. Extend the read-vs-unread test to memory and history-search reads.}

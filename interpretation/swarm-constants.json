@@ -371,6 +371,26 @@
    "model": "15",
    "source": "H95",
    "meaning": "A concrete artifact in the goal settles the swarm in under an hour."
+  },
+  {
+   "symbol": "τ_u",
+   "name": "village-culture slow-mode decay time (regime I)",
+   "value": "28 ± 5 d (bge), 23 ± 4 d (gte); within #51 common mode ≈ 3 active days",
+   "kind": "timescale",
+   "scope": "24 regime-I goals; absent in regime III",
+   "model": "11",
+   "source": "H81",
+   "meaning": "A collective content mode beyond the members persists for weeks in chat-mode swarms (an external-drift rival is open)."
+  },
+  {
+   "symbol": "Δγ₁",
+   "name": "day-1 previous-period carry-over",
+   "value": "0.158 / 0.153 (bge/gte), no decay over days 1–5; absorbed by the agent's own previous content",
+   "kind": "response",
+   "scope": "25 boundaries",
+   "model": "11",
+   "source": "H82",
+   "meaning": "Agents carry their own old content into a new goal; the village record adds nothing beyond that."
   }
  ]
 }
