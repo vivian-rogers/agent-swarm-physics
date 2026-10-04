@@ -3,7 +3,7 @@
 **Code:** `infra/shared/stance_v2.py` (sample, blind sheet, Jev labelling, validation, compile).
 **Table:** `data/processed/shared/reply_stance_v2.parquet` (codes only); working files in `data/processed/shared/stance_v2/` (label JSONL with codes only; gated blind sheets and keys).
 **Status:** pre-registered 2026-10-04 (UTC), before any v2 sample was drawn or any v2 label requested. Results go below the line, dated.
-**Outcome (2026-10-04):** v2.0 and v2.1 failed the gate on the draft and on the first fresh sheet. **v2.1 passed on the second, Vivian-authorized confirmation sheet (Amendment 2).** The validated observable is `disagree` with confidence ≥ 0.6: precision 0.67 [0.54, 0.80], n = 44. `reply_stance_v2.parquet` covers 55,428 of 61,533 non-holdout pairs.
+**Outcome (2026-10-04):** v2.0 and v2.1 failed the gate on the draft and on the first fresh sheet. **v2.1 passed on the second, Vivian-authorized confirmation sheet (Amendment 2).** The validated observable is `disagree` with confidence ≥ 0.6: precision 0.67 [0.54, 0.80], n = 44. `reply_stance_v2.parquet` covers all 61,533 non-holdout pairs (after round 3). Held-out labels are kept apart in `data/processed/holdout_labels/`.
 **Downstream:** H21, H22, H37, H55, H64.
 
 ## Why
@@ -248,4 +248,13 @@ The DQ10 total including the first round is $2.98: DQ10 round 1 spent $0.0259 of
 - **Corrections and declines:** `p_correct` is over-called (precision 0.26–0.55). `decline` was 0.90 on fresh sheet 1 and 0.50–0.61 on confirm2.
 - **Not validated:** the hard class and the other classes, beyond the κ above.
 
-**Held-out stance labels (pass c): not run.** Labelling the 18,621 held-out pairs would cost about $0.91, which did not fit under the $3 cap after the non-holdout pass. Vivian set the non-holdout pass first. To run it later: `uv run --with httpx python infra/shared/holdout_labels.py stance2 --cap <cap>`. The script refuses unless the confirm2 gate has passed, and writes to `data/processed/holdout_labels/stance_v2_holdout.jsonl` and `reply_stance_v2_holdout.parquet`.
+**Held-out stance labels (pass c): not run in round 2 (done in round 3, below).** Labelling the 18,621 held-out pairs would cost about $0.91, which did not fit under the $3 cap after the non-holdout pass. Vivian set the non-holdout pass first. To run it later: `uv run --with httpx python infra/shared/holdout_labels.py stance2 --cap <cap>`. The script refuses unless the confirm2 gate has passed, and writes to `data/processed/holdout_labels/stance_v2_holdout.jsonl` and `reply_stance_v2_holdout.parquet`.
+
+### Round 3 (2026-10-04): coverage completed; held-out labels prepared
+The coordinator set a new cap of $1.50 for this round; Vivian had authorized held-out stance labels on the condition that the gate passed. Round spend **$1.1953**:
+- **Non-holdout remainder:** the remaining regime-I pairs, plus the 4 earlier call errors, were labelled for $0.2931. `reply_stance_v2.parquet` now has **61,533 / 61,533 labelled (100%)**. It was recompiled and its `_provenance.json` updated.
+- **Held-out pairs:** the same population rule, applied to the locked holdout (cand, p_reply ≥ 0.5). **18,621 / 18,621 labelled**; 4 call errors on the first pass were retried and labelled; $0.9022.
+  - **Where:** `data/processed/holdout_labels/reply_stance_v2_holdout.parquet` (keys `B_message_id`, `A_message_id`; `stance2`, `stance2_conf`, `p_*`; `holdout = true`). Raw answers are in `stance_v2_holdout.jsonl`.
+  - **Not merged** into `reply_stance_v2` or `reply_pairs`. Only completeness was checked; no distribution or statistic was computed.
+  - **Use:** confirm scripts derive `disagree_validated` themselves (`stance2 == "disagree"` and `stance2_conf >= 0.6`). The `_agent` variant also needs `a_kind != 2`, which is carried in the file.
+- **DQ10 total spend:** $0.0259 + $2.9512 + $1.1953 = **$4.17**.
