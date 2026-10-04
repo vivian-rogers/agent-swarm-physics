@@ -37,6 +37,8 @@ A perfect copier and a perfect permutation (each x mapped to a different y) have
 
 ## Pitfalls
 
+- **I_copy definition confirmed** (Kolchinsky & Corominas-Murtra 2020; `literature/kolchinsky-2020-copying-versus-transformation.md`): copy information is the binary KL d(p(x|x) ‖ p_Y(x)) when p(x|x) > p_Y(x), else 0. Transformation information is the rest of I. The prior p_Y can be any reference, so "copying beyond what unread agents reproduce at the same lag" is computable directly. For embeddings, use the generalized loss form w ∝ p_Y e^{−λℓ}.
+
 - **Simultaneous convergence mimics copying** (H57, 2026-10-04): near-duplication between agents is mostly contemporaneous convergence (same moment, no reading), and backlog does not raise echo (raw upper bound +0.0016 per doubling of k, ~5% of the planted effect). Addressed replies are rephrased, not copied (0.1–2% near-copies). Use lag-matched unread pairs as the chance baseline.
 - Agents can re-fetch the original from a tool or the web, which looks like perfect copying but is a fresh lookup. Exclude reproductions that follow a lookup.
 - Small alphabets (dates, yes/no) inflate chance agreement; use the decomposition, not raw accuracy.
