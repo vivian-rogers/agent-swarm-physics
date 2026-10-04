@@ -156,6 +156,15 @@ All numbers are in `data/processed/shared/reply_threading/validation/results.jso
 9. **Graph-level nulls:** sign-shuffle and per-pair FDR are anti-conservative on these graphs (H37). Use H37's calibrated ordered-logit agent-field null (`hypotheses/H37-stance-spins/analysis/calibrate.py`, import only).
 10. **Label JSONLs key pairs by chat_core row index**, pinned in `reply_threading/msg_index.parquet`. `reply_pairs` carries message ids, so it survives a chat_core rebuild (DQ7). Re-running `compile` after a rebuild needs `msg_index.parquet` (kept).
 
+## DQ10 note: stance v2 (2026-10-04)
+DQ10 tried to replace this file's 4-class stance with an 8-class taxonomy (`stance_v2.md`, `infra/shared/stance_v2.py`). That taxonomy separates disagreement on the merits from correction, decline, coordination, questions, acknowledgments and information.
+- **Verdict:** the pre-registered gate failed twice (v2.0 on the draft, v2.1 on a fresh 150-pair sheet). The hard `disagree` class has reweighted precision 0.48. The confident flag (`disagree` with confidence ≥ 0.6) was right 7 of 7 times, but n = 7 is under the required 15.
+- **Consequence:** no shared table was built. **Limits 1 above still holds:** use this file's stance in aggregate only.
+- **New evidence on this file's labels** (blind reference, fresh sheet):
+  - only 12% of DQ2 `opposes` pairs are disagreement on the merits; the rest are inform 32%, coordinate 22%, correct 18%, decline 14%;
+  - `opp_type = position` holds 6 disagreements out of 19;
+  - DQ2's 4-class κ on those items is 0.26, against 0.64 for v2.1 mapped to the same classes.
+
 ## Rebuild
 ```
 uv run python infra/shared/reply_threading.py candidates                       # H18 pools (labels were drawn from these)

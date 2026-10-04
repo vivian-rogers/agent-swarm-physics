@@ -262,6 +262,8 @@ Seven builders and nine libraries are now shared and registered in `build_all.py
 
 ## Known issues
 
+- **DQ2 `opposes` is mostly not conflict** (DQ10): in a blind fresh sample only 12% of DQ2-opposes pairs dispute A on the merits (the rest: information 32%, logistics 22%, corrections 18%, declines 14%). Stance v2 (`stance_v2.py`) failed its precision gate, so no replacement table exists; use DQ2 stance in aggregate only.
+- **Behavior states v3.1 over-call `execute_task`** (DQ10 fresh reference, κ 0.60): a small own-notes or log commit inside a checking or debugging window makes the window execute_task (precision 0.66, recall 0.92). Use probability vectors or gate on non-trivial artifact changes.
 - **The regime-III whitening center is dominated by #51 statements** (H98): uniform-field magnitudes measured from the origin are ≈ 0 for #51 by construction (raw-center R 0.92–0.98). Use a leave-own-period-out reference center.
 - **H22's pooled overlap variance W_P is anti-conservative** under per-agent day shifts (size 0.10–0.45; H98). Use the lag-residualized W.
 - **#51 same-role rivals have identical `agent_goal` texts** (H98); role-permutation (Mantel-style) tests on near-identical role vectors are anti-conservative (size 0.26). Majority-role assignment per unit can leak a later role backwards (agent 41 in 51i); check `t_valid_from` per day.

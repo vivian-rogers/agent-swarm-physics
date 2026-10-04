@@ -87,3 +87,12 @@ OPTIONAL_STEPS["behavior_states_v3"] = [
 # Rebuilding the table from the archived answers is free and local:
 STEPS.append(["uv", "run", "python", "infra/behavior_states/label_v3.py", "--all", "--compile-only"])  # after scan_turn_outcomes
 ```
+
+## DQ10 fresh blind reference (2026-10-04)
+200 non-holdout windows were blind-labelled on the full v3 evidence (two subagent labellers). Against v3.1:
+- behavior κ 0.60 [0.52, 0.67], reweighted 0.62;
+- 85% agreement at confidence ≥ 0.8 (n = 89);
+- blocked κ 0.54, others_work κ 0.53, addresses κ 0.86, progress ρ 0.76;
+- the two references agree with each other at κ 0.85.
+
+Reading (pre-registered): **confirmed**. The main confusion is over-called execute_task (small own-notes commits inside checking or debugging windows). Details: `infra/behavior_states/DESIGN.md`, "Fresh blind reference on v3 states".

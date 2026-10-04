@@ -195,3 +195,67 @@ Other per-regime figures:
 - **Context windows can leak.** The previous and next window's commands are shown as context; one audit miss took its label from the next window.
 - **message_act is not in v3.** Use v2's draft or DQ2's reply stance.
 - **Inactive windows inside an agent's span** (`active = false`, `in_span = true`) are unlabeled idle-by-absence. Decide explicitly how a state model treats them.
+
+## Fresh blind reference on v3 states (DQ10, 2026-10-04)
+
+### Pre-registration (written before the sample was drawn or any window read)
+**Why.** DQ3's κ of 0.38 was measured against blind labels made on the thin v1 state. The v3.1 decision rested on two A/B audits by one adjudicator. This is the owed check: a fresh blind reference on the full v3 evidence.
+
+**Sample.** 200 non-holdout active windows with a v3.1 label, none from the 200 DQ3 draft windows. Strata regime × lab with equal allocation, as in the DQ3 draft (`infra/behavior_states/blind_reference_v3.py sample`, seed 20261004). Population weights = N_stratum / n_stratum.
+
+**Labelers.** Two separate Claude subagents, 100 windows each (assigned at random). Each sees the exact v3 state Jev saw (`assemble_v3.state_dict`), shuffled, plus the v3.1 definitions verbatim from `label_v3.py`. They never see Jev's labels, confidences or the stratum. Per window they give: behavior (11 states), a second choice, blocked, others_work, progress (0–4), addresses_participant (chat windows only), and an ambiguity flag.
+
+**Report** (`blind_reference_v3.py compare`): behavior κ (raw and reweighted) with bootstrap CI; the confusion matrix; agreement and κ at Jev confidence ≥ 0.8, 0.5–0.8 and < 0.5; κ by regime and by labeler; agreement with "Jev's top-2 contains the reference"; blocked, others_work and addresses κ; progress Spearman ρ; and the same metrics on the windows the labeler did not flag as ambiguous.
+
+**Reading (fixed in advance).**
+- **Confirmed:** behavior κ ≥ 0.50 and agreement ≥ 80% at confidence ≥ 0.8.
+- **Weak:** κ 0.40–0.50. Downstream users should use probability vectors and the confusion matrix, not hard labels.
+- **Fails:** κ < 0.40. Then hard labels are not a measurement, and the confusion matrix says which states to merge.
+
+No Jev calls are made for this check.
+
+### Result (2026-10-04): v3.1 confirmed on full evidence
+Results file: `data/processed/behavior_states/blind_ref_v31/results.json`.
+- **Sample:** 200 non-holdout windows, two blind subagent labellers with 100 each.
+- **Reference flags:** 105 of the 200 windows were flagged ambiguous by their labeller.
+- **Jev calls:** none.
+
+| Metric | Value |
+| --- | --- |
+| behavior κ (raw, 95% bootstrap CI) | **0.60 [0.52, 0.67]** (agreement 68%) |
+| behavior κ (population-reweighted) | 0.62 [0.49, 0.73] (agreement 71%) |
+| agreement / κ at Jev confidence ≥ 0.8 | **85% / 0.78 (n = 89)** |
+| agreement / κ at confidence 0.5–0.8 | 57% / 0.49 (n = 70) |
+| agreement / κ at confidence < 0.5 | 46% / 0.39 (n = 41) |
+| windows the labeller did not flag ambiguous | κ 0.79, agreement 84% (n = 95) |
+| Jev top-2 contains the reference | 90% |
+| κ by regime, I / II / III | 0.52 / 0.54 / 0.65 |
+| κ by labeller, A / B | 0.62 / 0.57 |
+| blocked κ (agreement) | 0.54 (90%); Jev flags 17%, reference 8.5% |
+| others_work κ (agreement) | 0.53 (93%) |
+| addresses_participant κ | 0.86 (n = 100 chat windows) |
+| progress Spearman ρ | 0.76 (Jev's mean 1.64 vs the reference's 1.28) |
+
+**Reading (pre-registered): confirmed.** κ is at least 0.50 and agreement at confidence ≥ 0.8 is at least 80%. This closes the check owed since DQ3. The old κ of 0.38 measured the thin v1 reference more than v3.1.
+- **Confidence is calibrated again** against a reference that sees the same evidence (85% at ≥ 0.8). DQ3's "68% at ≥ 0.8" warning was a reference artifact.
+- **Progress agrees with a full-evidence reference** (ρ 0.76, against 0.63 versus the thin reference). Jev scores slightly higher.
+
+**Where Jev and the reference differ** (rows Jev, columns reference):
+- **execute_task is over-called.** Jev labels 83 windows execute_task, the reference 60. Precision is 0.66 and recall 0.92. Jev's execute_task holds 6 reference verify_report, 6 research, 5 debug and 4 communicate_external windows. Both labellers named the cause: a small own-notes or log commit inside a checking or debugging window. The tie-breaker rule makes that window execute_task.
+- **research_browse absorbs debugging by reading code:** 8 windows.
+- **debug_recover is under-called** (recall 0.35), and so are verify_report (recall 0.58, precision 0.88) and idle (recall 0.44).
+- **Rare states:** plan_coordinate is precise (4/4) but under-called (recall 0.5). self_maintenance is 1/5 (3 of its windows are reference idle).
+
+**Inter-rater ceiling.** Both sheets were labelled twice by independent subagent runs; the earlier run's output was kept as `ref2_labels_*_original.json`.
+- The two references agree at κ 0.85 (88%); blocked κ 0.79.
+- Jev agrees with the second reference at κ 0.63.
+- Where the two references agree (n = 176), Jev matches them in 73% of windows.
+
+**Advice to users**
+- Hard labels are usable. Prefer probability vectors for execute_task vs verify, research or debug.
+- For "real work", use execute_task gated on non-trivial artifact changes (`n_commit_ok`, `n_push_ok`, `n_file_write`), not the argmax alone.
+- Jev's blocked flag fires about twice as often as the reference's. Use `p_blocked` ≥ 0.7, or the soft value.
+
+**Limits**
+- The reference labellers are the same model family as the designer (Claude). A human audit of a subset by Vivian is still the stronger check.
+- One labeller of the first run reported that a shared scratch file was being written by another process during labelling. It rebuilt its labels from its own rows and never read the other rows' labels.
