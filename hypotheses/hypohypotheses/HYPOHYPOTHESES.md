@@ -514,3 +514,6 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
   *Models:* 02, 09 · *Builds on:* H50, HH190
 - **HH210 · The missing immune system: uncorrected errors live long.** If norm-enforcement is rare or only role-assigned (H55), errors and loops in agent swarms persist far longer than in human groups, where correction is spontaneous. Signature: long claim lifetimes and a low correction rate per error, which in Kolchinsky terms is weak self-maintenance. *Check:* numeric-claim correction latencies (Jev true/false labels, H34 R3) and loop lifetimes in the village vs human forums.
   *Models:* 04, 06 · *Builds on:* H55, H34, H12
+
+---
+**HH211–HH243 live in [`HHs_newsims.md`](HHs_newsims.md):** ideas that need new agent-swarm simulations (reasoning effort as a stat-phys control parameter, controlled Kolchinsky-style superagent experiments, randomized interventions and replica ensembles). Not pursued in this project (Vivian, 2026-10-04). The next in-project HH is HH244.
