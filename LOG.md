@@ -7,6 +7,23 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **H01 exploratory round 1 (D3.1.a, D3.2) done** (agent; non-holdout; one folder per goal period):
+  - **Rooms are more ordered than random groups on 96% of days, but the median ΔH −0.098 misses the locked −0.1.** Order is largest where rooms got different instructions (#38 −0.34 to −0.38, i.e. a room field). The exception is #41 (−0.19), same task in both rooms.
+  - **Exposure-coupling residual** +0.013 per e-fold: rotation-null p = 0.005, but random-effects p = 0.019 misses p < 0.01, and it depends on the representation.
+  - **Merge DiD** +0.18 (p = 0.004; confounded with a goal change). Day-to-day co-fluctuation lives inside rooms (12/12 two-room units).
+  - **The "order is mostly field" prior fails:** P5 holds only at null level. **P9 failed in the other direction:** content-level mean-field βJ₀/n has median 0.74 (34/41 units ≥ 0.5). That's an upper bound, since it conflates room-level daily drives with coupling, but it's well above the 0.06–0.4 loop gains measured on activity.
+  - Agent-field invariance fails in regimes II and III, so the first-day fallback was used (Amendment 3).
+  - Scorecard A1 B1 C1 D1 E1 F1 G1 H0 I1. `confirm_d32.py` written and dry-run (NE15 DiD, NE12 placebo, transfer to #45–#47); not run.
+- **Promoted (Vivian): HH103 → H21 (#12 debate antiferromagnet), HH102 → H22 (#51 spin glass), HH39 → H23 (leader distillation, copy vs transformation), HH28 → H24 (#21 forecast coupling switch-on); HH22 (#26 election) folded into H11 as G26.** Four agents launched; 16 running.
+  - **H23 note:** the temporary fine-tuned leader (agent 28) ran on 05-28 and 05-29 inside #44 (not held out; 27 messages), so exploration doesn't need #45.
+  - **Holdout reuse policy** (default, set by Claude; Vivian can override; in `hypotheses/holdout.md`): a held-out period used by one hypothesis may confirm another only with committed predictions, a different, unexamined observable, and disclosure.
+- **givemeanode:** $433.91 credit (expires 2026-11-03), $0 spent this month, $200 cap; no stored secrets or connections; `autor` CLI not installed here. Planned first GPU job: a second embedding model (e5-large-v2) as the robustness check most hypotheses need. **Blocked on a one-time step by Vivian:** a private storage bucket (or an HF connection), so the gated text can reach a node without passing credentials through chat.
+- **Promoted HH97 → H17 (behavior metastable sets), HH99 → H18 (attention dilution), HH100 → H19 (loop-gain collapse), HH101 → H20 (content aging)** (Vivian). Four round-1 agents launched; 12 agents now running (H01, H10–H20). Added HH102 (#51 as a spin glass) and HH103 (#12 debate as a two-sublattice antiferromagnet).
+- **Jev taxonomy v2** (`label_windows.py`; execute_task with an artifact-change tie-breaker, narrower verify_report, idle_monitor, stricter blocked/others_work, addresses_participant; adds intention age, previous-window actions, longest identical-action run, first-window flag; `--keys` to relabel an exact sample, since polars grouped sampling isn't reproducible):
+  - Same 200 windows, vs blind Claude labels (v1 definitions, mapped): behavior κ 0.50 (v1: 0.53). But agreement when Jev's confidence ≥ 0.8 rose to **87%** (v1: 75%; n = 69).
+  - **blocked κ 0.38** (v1: 0.15; agreement 0.93). others_work κ 0.28 (v1: 0.20). verify→execute confusion 14 (v1: 19).
+  - Cost $0.011 per 200 windows.
+  - Plan: use Jev's full probability vectors as soft states (ψ = √p, model 11) rather than hard labels. Vectorize state assembly before the full ~200k-window run (~$10).
 - **H03 (self-excited criticality), exploratory round 1 done** (agent; 35 non-holdout periods, one G folder each):
   - **Subcritical everywhere:** median n̂ = 0.41 for talk (0.43 for all events). With the most flexible baseline, the bracket is n ≈ 0.2–0.4; no period exceeds 0.8.
   - **No coupling-mode effect,** contrary to prediction: shared-objective 0.32 vs free 0.53, p = 0.75. n̂ *falls* with N (ρ = −0.53). In #51, n̂ falls as the roster grows (ρ = −0.64), the opposite of the predicted drift toward criticality. A naive constant-baseline fit would have "confirmed" it spuriously (n̂ ≈ 0.99).

@@ -118,3 +118,20 @@ Proposed after exploratory round 1 (H02–H05, H07, H09) and the first holdout r
 | S12 | Entropy production of behavior-state sequences | HH19 + HH67 | 02 + AIK estimator | H14 |
 | S13 | Semantic information through natural scrambles | HH43 → H01 D4.1.b | 04 | H15 |
 | S14 | Metastable traps and Kramers escape | HH53 + HH86 | 02, 01, 11 | H16 |
+
+### Round-1-inspired promotions (2026-10-03)
+| # | Hypothesis | From | Models | Assigned |
+| --- | --- | --- | --- | --- |
+| S15 | Behavior is a Markov state model with metastable sets | HH97 | 02, 10 + MSM | H17 |
+| S16 | Attention dilutes as 1/k | HH99 | 01, 09, 02 | H18 |
+| S17 | One curve for all periods (loop-gain data collapse) | HH100 | 01, 09, 02 | H19 |
+| S18 | Aging of content correlations | HH101 | 01 (SK), 11 | H20 |
+
+### Goal-period-specific promotions (2026-10-03)
+| # | Hypothesis | From | Models | Assigned |
+| --- | --- | --- | --- | --- |
+| S19 | The debate week (#12) is a two-sublattice antiferromagnet | HH103 | 11, 10, 01 | H21 |
+| S20 | Private, conflicting goals make #51 a spin glass | HH102 | 01 (SK), 11, 10 | H22 |
+| S21 | Leader distillation copies vocabulary, transforms plans (#44) | HH39 | 08, 04, 11 | H23 |
+| S22 | Forecast week (#21): drafting → comparison switches the coupling on | HH28 | 11, 01 | H24 |
+| S23 | Potts explains the election (#26) | HH22 | 10 | folded into H11 as `G26` |

@@ -52,3 +52,14 @@ Keep Jev's confidence for every value. Soft labels (a probability per state) fee
 - Message act (99 windows with own chat): report 81, propose 9, thank_praise 4, others ≤ 2. **Too coarse:** "report" swallows almost everything. Candidate split: status update / result announcement / handoff.
 - **verify_report may be absorbing chat-heavy windows**: check in the hand audit whether it is really "posted a status message".
 - Next: hand audit (κ) on ~40 windows by Vivian, revise taxonomy, then invariance and Markov checks, then `--all`.
+
+## Validation (2026-10-03)
+**Taxonomy v2** (`label_windows.py`; execute_task with an artifact-change tie-breaker, narrower verify_report, idle_monitor, stricter blocked/others_work, addresses_participant; adds intention age, previous-window actions, longest identical-action run, first-window flag; `--keys` to relabel an exact sample, since polars grouped sampling isn't reproducible):
+  - Same 200 windows, vs blind Claude labels (v1 definitions, mapped): behavior κ 0.50 (v1: 0.53). But agreement when Jev's confidence ≥ 0.8 rose to **87%** (v1: 75%; n = 69).
+  - **blocked κ 0.38** (v1: 0.15; agreement 0.93). others_work κ 0.28 (v1: 0.20). verify→execute confusion 14 (v1: 19).
+  - Cost $0.011 per 200 windows.
+  - Plan: use Jev's full probability vectors as soft states (ψ = √p, model 11) rather than hard labels. Vectorize state assembly before the full ~200k-window run (~$10).
+
+- **v1 blind second labeler** (Claude agent, all 200 windows, no access to Jev's answers): behavior κ 0.53 (61%); message_act κ 0.54; progress rank correlation 0.70; blocked κ 0.15; others_work κ 0.20.
+- **Ambiguities it reported:** build vs verify; "monitoring"; producing vs posting externally; looping agents; courtesy openers in message acts; replies addressed to humans; behaviors with no home (gameplay, trading).
+- **State-assembly gaps:** stale intentions; recap messages desynchronized from the actions; boot windows; looping agents.

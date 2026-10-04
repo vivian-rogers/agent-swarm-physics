@@ -29,3 +29,11 @@ Locked 2026-10-03, **before any dynamics or exploratory analysis was run.** Mach
 
 ## History
 The first draw started the NE21 window on Sunday 2026-06-07, which blocked #45 through a single weekend-day overlap. The window was corrected to start on Monday 06-08 (the first 8-hour weekday) and redrawn once with the same seed, still before any data had been examined. The redraw then selected #45 at random anyway. The draw stands; redrawing again would defeat the purpose.
+
+## Reuse of a held-out period by a second hypothesis (default policy, 2026-10-03)
+Set by Claude when H23 needed #45, which H02 had already used for its confirmatory run. Vivian can override. A held-out period that one hypothesis has used for confirmation may confirm a second hypothesis only if:
+1. the second hypothesis's predictions and confirmatory script are committed before its run;
+2. its observable is a different statistic, or a different data modality, from what earlier runs computed on that period, and nobody has examined it. Example: H02 computed #45's activity-timing couplings; nobody has looked at #45's message content;
+3. the reuse is disclosed in both cards and in `LOG.md`.
+
+Exploratory work still never touches held-out periods.

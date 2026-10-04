@@ -127,6 +127,16 @@ These are the candidate viability functions (decision 1 in the architecture). Ea
 
 ---
 
+## Mean-field-forward variants (added 2026-10-03)
+These posit a few-parameter mean-field model per group instead of learning full couplings, and test forward predictions. Robust at small group sizes. See `../mean-field-variants.md`.
+- **D1-MF · Block mean field for candidate groups.** Each candidate superagent (room, family, crew) is a block with couplings J_in and J_out, fitted from covariances only. A superagent candidate has J_in ≫ J_out, stable across windows (HH82, HH89).
+- **D3-MF · Mean-field order for ideology.** Group positions follow mean-field O(n) (embeddings) or Potts (stances): **m** = L_n(β(J₀|**m**| + h)) **m̂**. Fit (βJ₀, h) per group.
+  - **D3-MF.a** coupling-driven order has βJ₀ near or above the mean-field critical value; field-driven order has βJ₀ ≈ 0 with large h. A mean-field version of the D3.2 rival test (HH85).
+  - **D3-MF.b** stance consensus is first-order (mean-field Potts with q ≥ 3; HH84).
+- **D6-MF · Mean-field susceptibility.** Group susceptibility follows from βJ₀ and m, and predicts responses to kickoffs without a full model (HH80, HH81).
+
+---
+
 ## Picking a starting set
 
 Cheapest and most informative first (tier 0 or NE, no prompts needed):

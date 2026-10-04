@@ -131,3 +131,11 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 ### Action (turn-merged)
 - **Status:** draft (H03, 2026-10-03)
 - **Definition:** an agent's `events` within 1 s of its own previous event count as one compound turn. Used for event-time (Hawkes) models so that one tool call logged as several events isn't counted as self-excitation. In regime III `events_core` lacks computer-use turns, so "all events" changes meaning there; use `actions` for regime III turns.
+
+### H01 named variants (2026-10-03; see `hypotheses/H01-emergent-superagents-exist/README.md`)
+- **Semantic entropy (rarefied k-means):** entropy over k = 40 k-means clusters of per-regime whitened bge statement vectors (n = 32); each agent rarefied to 8 statements per day.
+- **Agent state (vector), whitened statement mean:** normalized mean of whitened statement vectors per agent-day; also a fixed-8-statement version, so exposure isn't confounded with how much an agent wrote.
+- **Interaction (exposure count):** number of j's messages on day d that reached i (from `exposure`), used as log(1 + E).
+- **Goal field ĝ:** embedding of the goal text plus kickoff; per-room and per-agent versions exist (#38, #44 rooms; #51 private goals).
+- **Agent field h_i:** cross-fitted from other periods, or first-day (fallback when cross-period invariance fails: it did in regimes II and III).
+- **Residual alignment:** cosine of two agents' vectors after projecting out ĝ and both agents' fields.
