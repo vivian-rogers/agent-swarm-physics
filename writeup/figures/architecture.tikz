@@ -7,7 +7,7 @@
 \begin{tikzpicture}[font=\scriptsize, node distance=3.6mm and 3mm,
   bx/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center,
              text width=3.55cm, inner sep=2.4pt, minimum height=8mm},
-  wide/.style={bx=#1, text width=7.6cm},
+  wide/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center, text width=7.6cm, inner sep=2.4pt, minimum height=8mm},
   ar/.style={-{Stealth[length=1.7mm]}, line width=0.6pt, draw=black!65},
   lb/.style={font=\tiny\itshape, text=black!70, fill=white, inner sep=0.8pt}]
 
