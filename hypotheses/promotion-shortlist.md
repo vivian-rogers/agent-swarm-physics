@@ -135,3 +135,24 @@ Proposed after exploratory round 1 (H02–H05, H07, H09) and the first holdout r
 | S21 | Leader distillation copies vocabulary, transforms plans (#44) | HH39 | 08, 04, 11 | H23 |
 | S22 | Forecast week (#21): drafting → comparison switches the coupling on | HH28 | 11, 01 | H24 |
 | S23 | Potts explains the election (#26) | HH22 | 10 | folded into H11 as `G26` |
+
+### Usefulness-first promotions (2026-10-04)
+Vivian picked these from HH107–HH126 and the leftovers. HH92 was already H08's primary test (H08 is running). HH119 is low priority.
+
+| # | Hypothesis | From | Models | Assigned |
+| --- | --- | --- | --- | --- |
+| S24 | A distance-to-criticality dial, T/T_c, per window and per channel | HH107 | 01, 09, 11 | H25 (wave 1) |
+| S25 | The swarm is near-critical in what it says but subcritical in when it acts | HH108 | 11, 01 | H26 (wave 2) |
+| S26 | Critical slowing down warns of herding waves hours ahead | HH109 | 10, 01 | H27 (wave 1) |
+| S27 | Links are the contagion vector of herding | HH114 | 10 (kinetic), 03 | H28 (wave 1) |
+| S28 | Driver nodes: where an operator message moves the whole swarm | HH110 | 02 (linear response), graph controllability | H29 (wave 1) |
+| S29 | An operator-susceptibility gauge χ_op: how steerable is the swarm today? | HH116 | 01, 11 | H30 (wave 1) |
+| S30 | Consensus time scales with the interaction graph's spectral gap | HH115 | 10, graph diffusion | H31 (wave 1) |
+| S31 | A net information current identifies de facto leaders | HH118 | 11, 02 | H32 (wave 1) |
+| S32 | The diversity–productivity curve is an inverted U: the swarm's operating point | HH119 | 11, 06 | H33 (wave 2) |
+| S33 | Idea cascades follow a power law whose exponent reads off the distance to criticality | HH122 | 03, 09 | H34 (wave 2) |
+| S34 | The nudger is a measurably inefficient Maxwell demon | HH124 | 04 (Kolchinsky), 02 | H35 (wave 2) |
+| S35 | A reorganization alarm: susceptibility and multi-information peak at transitions | HH126 | 01, 11 | H36 (wave 2) |
+| S36 | Conflict lives in stance, not topic: stance spins are antiferromagnetic | HH125 | 01 (signed), 10 | H37 (wave 2) |
+| S37 | Joint silences are platform stalls | HH94 | 01, 09 | H38 (wave 1) |
+| S38 | Catalysts vs. fields | HH52 | 09, 02, 10 | H39 (wave 2) |

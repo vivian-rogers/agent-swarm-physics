@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **Promoted (Vivian), usefulness-first batch → H25–H39:** HH107 dial, HH108, HH109, HH114, HH110, HH116, HH115, HH118, HH119 (low priority), HH122, HH124, HH126, HH125, HH94, HH52. HH92 is H08's primary test (running). Wave 1 (H25, H27, H28, H29, H30, H31, H32, H38) launched now; wave 2 (H26, H33–H37, H39) starts as slots free.
 - **H14 (behavior entropy production), round 1:** mostly refuted as posed.
   - No per-family arrow of time (HH19), no collective irreversibility (HH67), none of the predicted work cycles (HH56).
   - Agents are irreversible on fine tool actions (80–100% of agents, all periods). The coarse-state arrow is small and 52–100% carried by the scaffold's consolidation step.
