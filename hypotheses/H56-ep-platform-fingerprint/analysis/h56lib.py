@@ -7,6 +7,12 @@ The estimators reproduce H14's (imported read-only for the equality test) exactl
   cfx_counts     H14 ep_cfx (cross-fitted exact dual with count-based Theta)
   plugin_counts  H14 ep_plugin (biased foil)
 Folds follow H05/H14: sorted fold labels, label i -> fold i % k, k = min(5, #labels).
+
+Estimator switch (ep_newton recheck, 2026-10-04; infra/README "Known issues", H90): H56_EP=xprod (default) is the
+legacy cross-product Newton form above and reproduces round 1 exactly; H56_EP=heldout uses the corrected held-out
+Newton bound (infra/shared/ep_newton.py: newton_counts_heldout; per-column ridge, theta fitted off-fold). In heldout
+mode every analysis output goes to data/processed/H56-ep-platform-fingerprint/recheck_epfix/ (OUTROOT); inputs are
+always read from DATA. H56_OUTROOT overrides the output root (used to verify that the default reproduces round 1).
 """
 from __future__ import annotations
 
@@ -23,6 +29,13 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[3]
 DATA = ROOT / "data/processed/H56-ep-platform-fingerprint"
 H14 = ROOT / "hypotheses/H14-behavior-entropy-production/analysis"
+sys.path.insert(0, str(ROOT / "infra/shared"))
+import ep_newton as EPN  # noqa: E402
+
+EP = os.environ.get("H56_EP", "xprod")
+assert EP in ("xprod", "heldout"), EP
+OUTROOT = Path(os.environ["H56_OUTROOT"]) if os.environ.get("H56_OUTROOT") else (
+    DATA if EP == "xprod" else DATA / "recheck_epfix")
 VARIANTS = ["act_all", "act_agent", "coarse_all", "coarse_agent", "act_agent_b3", "coarse_agent_b3"]
 QV = [11, 11, 6, 6, 11, 6]
 ACT = ["shell", "click", "scroll", "look", "type", "chat", "idle", "consolidate", "search", "session", "other"]
@@ -49,8 +62,47 @@ def _merge_folds(C_labels, k=None):
 
 
 def newton_counts(C_labels, ridge=1e-3, pairs=None):
-    """Cross-fitted Newton-step bound (nats per transition) from per-label count matrices (L, q, q), L >= 2.
-    pairs: optional list of (a, b), a < b, restricting the observables (a sub-bound)."""
+    """Newton-step bound (nats per transition) from per-label count matrices (L, q, q), L >= 2; dispatches on H56_EP
+    (default: the legacy cross-product form, round 1). pairs: optional list of (a, b), a < b (a sub-bound)."""
+    if EP == "heldout":
+        return newton_counts_heldout(C_labels, pairs=pairs)
+    return newton_counts_xprod(C_labels, ridge=ridge, pairs=pairs)
+
+
+def _allowed(iu, ju, pairs):
+    allowed = np.zeros(len(iu), bool)
+    pset = set(map(tuple, pairs))
+    for kk, (a, b) in enumerate(zip(iu, ju)):
+        allowed[kk] = (int(a), int(b)) in pset
+    return allowed
+
+
+def newton_counts_heldout(C_labels, pairs=None, c=EPN.RIDGE_C):
+    """Corrected held-out Newton bound (infra/shared/ep_newton.py). pairs=None calls the shared
+    `newton_counts_heldout` unchanged; with pairs, the same closed form restricted to those indicator columns
+    (one ridge block = the restricted set), i.e. the held-out bound on the sub-observable set."""
+    if pairs is None:
+        return EPN.newton_counts_heldout(C_labels, c=c)
+    C_labels = np.asarray(C_labels, dtype=np.float64)
+    if len(C_labels) < 2:
+        return np.nan
+    F = EPN.merge_folds(C_labels)
+    C = F.sum(0)
+    if C.sum() < 3:
+        return np.nan
+    q = C.shape[0]
+    iu, ju = np.triu_indices(q, 1)
+    keep = ((C[iu, ju] + C[ju, iu]) > 0) & _allowed(iu, ju, pairs)
+    if not keep.any():
+        return np.nan
+    iu, ju = iu[keep], ju[keep]
+    fst = [(int(round(Ff.sum())), Ff[iu, ju] - Ff[ju, iu], np.diag(Ff[iu, ju] + Ff[ju, iu])) for Ff in F]
+    return EPN.newton_heldout_from_folds(fst, {"all": np.arange(len(iu))}, c=c)["all"]["sigma"]
+
+
+def newton_counts_xprod(C_labels, ridge=1e-3, pairs=None):
+    """LEGACY (round 1). Cross-fitted Newton-step bound (nats per transition) from per-label count matrices
+    (L, q, q), L >= 2. pairs: optional list of (a, b), a < b, restricting the observables (a sub-bound)."""
     C_labels = np.asarray(C_labels, dtype=np.float64)
     L = len(C_labels)
     if L < 2:
@@ -65,11 +117,7 @@ def newton_counts(C_labels, ridge=1e-3, pairs=None):
     s = C[iu, ju] + C[ju, iu]
     keep = s > 0
     if pairs is not None:
-        allowed = np.zeros(len(iu), bool)
-        pset = set(map(tuple, pairs))
-        for kk, (a, b) in enumerate(zip(iu, ju)):
-            allowed[kk] = (a, b) in pset
-        keep &= allowed
+        keep &= _allowed(iu, ju, pairs)
     if not keep.any():
         return np.nan
     iu, ju, s = iu[keep], ju[keep], s[keep]

@@ -22,7 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import event_study as ES  # noqa: E402
 import h56lib as L  # noqa: E402
 
-REP = L.DATA / "replication"
+REP = L.OUTROOT / "replication"
 
 
 def magnitude_table():
@@ -82,7 +82,10 @@ def main():
                                    tv.group_by("weekday").agg(pl.len(), pl.col("newton_t").abs().mean()).sort("weekday").iter_rows()}
         out["null_spread"][v] = {"sd_t_all_days": float(tv["newton_t"].std()), "q95_abs_t": float(np.percentile(np.abs(tv["newton_t"].to_numpy()), 95)),
                                  "share_abs_t_gt_2.25": float((tv["newton_t"].abs() > 2.25).mean())}
-    syn = json.loads((L.DATA / "synthetic/summary.json").read_text())
+    syn_path = L.OUTROOT / "synthetic/summary.json"
+    if not syn_path.exists() and L.EP == "xprod":   # verify runs: the round-1 synthetic is the legacy one
+        syn_path = L.DATA / "synthetic/summary.json"
+    syn = json.loads(syn_path.read_text())
     out["null_spread"]["synthetic_fine_null_sd_t"] = syn["fine"]["null_t_sd"]["newton"]
     out["null_spread"]["synthetic_fine_tau95"] = syn["fine"]["tau95"]["newton"]
     # NE14b and NE18/NE40 magnitude percentiles
@@ -98,7 +101,7 @@ def main():
                     "t": float(r["newton_t"][0]), "fpos": float(r["newton_fpos"][0]), "p_n2": r["p_n2"][0]}
     # Holm over the six pre-specified primaries (p for the effect H56 predicts; absence claims noted)
     res = json.loads((REP / "results.json").read_text())
-    nat = {k: json.loads((L.DATA / f"native/{k}.json").read_text()) for k in ("NE14", "NE43")}
+    nat = {k: json.loads((L.OUTROOT / f"native/{k}.json").read_text()) for k in ("NE14", "NE43")}
     prim = {"P1 scaffold_tool V1 (N2 class)": res["class_tests"]["act_all"]["scaffold_tool:all"]["p_random_date"],
             "P2 goal V1 jump (N2 class; H56 predicts none)": res["class_tests"]["act_all"]["goal:all"]["p_random_date"],
             "P4 scaffold enrichment V1": res["blind"]["act_all"]["classes"]["scaffold_tool"]["p"],

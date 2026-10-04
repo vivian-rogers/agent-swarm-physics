@@ -17,6 +17,8 @@ Scenarios (all agents unless stated):
 Statistics: within-agent count-matched |t| (Newton, cfx, plug-in matched), plug-in unmatched (foil), and the
 day-pooled swarm statistic (composition-sensitive). Threshold tau = 95th percentile of the null runs.
 Run: OMP_NUM_THREADS=1 uv run python hypotheses/H56-ep-platform-fingerprint/analysis/synthetic.py [--fast]
+ep_newton recheck (2026-10-04): H56_EP=heldout computes the Newton statistics only (cfx and the plug-ins do not change)
+with the corrected estimator and writes to recheck_epfix/synthetic/; --workers 1 runs in one process (STANDARDS 9).
 """
 from __future__ import annotations
 
@@ -37,9 +39,10 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import h56lib as L  # noqa: E402
 
-OUT = L.DATA / "synthetic"
+OUT = L.OUTROOT / "synthetic"
 N_AG, N_DAY, D0, K = 12, 20, 10, 3
 TEMPL = {"fine": dict(q=11, sigma=0.08), "coarse": dict(q=6, sigma=0.008)}
+EST3 = ("newton", "cfx", "plugin") if L.EP == "xprod" else ("newton",)
 
 
 def agent_lengths(rng, n_days):
@@ -82,15 +85,17 @@ def changed(ag, scen, rng_shared):
 
 def window_stat(Cpre_list, Cpost_list, rng, R=4):
     """Per-agent matched EP (pre, post) for newton/cfx/plugin plus unmatched plug-in. C*_list: per agent (days, q, q)."""
-    res = {e: [] for e in ("newton", "cfx", "plugin", "plugin_raw")}
+    res = {e: [] for e in EST3 + (("plugin_raw",) if "plugin" in EST3 else ())}
     lev = {e: [] for e in res}
     for Cpre, Cpost in zip(Cpre_list, Cpost_list):
         if Cpre.sum() < 100 or Cpost.sum() < 100:
             continue
-        mp = L.matched_pair(Cpre, Cpost, rng, R=R, est=("newton", "cfx", "plugin"))
-        for e in ("newton", "cfx", "plugin"):
+        mp = L.matched_pair(Cpre, Cpost, rng, R=R, est=EST3)
+        for e in EST3:
             res[e].append(mp[e][1] - mp[e][0])
             lev[e].append(0.5 * (mp[e][0] + mp[e][1]))
+        if "plugin_raw" not in res:
+            continue
         a, b = L.plugin_counts(Cpre.sum(0)), L.plugin_counts(Cpost.sum(0))
         res["plugin_raw"].append(b - a)
         lev["plugin_raw"].append(0.5 * (a + b))
@@ -192,15 +197,18 @@ def main():
                 jobs.append((templ, sc, seed, templ == "fine" and sc == "aff_up50" and _ < (30 if a.fast else 80)))
                 seed += 1
     t0 = time.time()
-    with ProcessPoolExecutor(max_workers=a.workers) as ex:
-        res = list(ex.map(one_run, jobs, chunksize=4))
+    if a.workers == 1:
+        res = [one_run(j) for j in jobs]
+    else:
+        with ProcessPoolExecutor(max_workers=a.workers) as ex:
+            res = list(ex.map(one_run, jobs, chunksize=4))
     print(f"{len(res)} runs in {time.time() - t0:.0f} s")
     (OUT / "runs.json").write_text(json.dumps(res))
     summarize(res)
 
 
 def summarize(res):
-    ests = ["newton", "cfx", "plugin", "plugin_raw"]
+    ests = [e for e in ["newton", "cfx", "plugin", "plugin_raw"] if e in res[0] or e in res[0].get("with_scaffold", {})]
     summ = {}
     for templ in ("fine", "coarse"):
         null = [r for r in res if r["templ"] == templ and r["scen"] == "null"]

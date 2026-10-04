@@ -29,7 +29,7 @@ import polars as pl
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import h56lib as L  # noqa: E402
 
-OUT = L.DATA / "replication"
+OUT = L.OUTROOT / "replication"
 K = 3
 MIN_TRANS = 100
 MIN_AGENTS = 4
@@ -528,6 +528,11 @@ def main():
     (OUT / "period_points.json").write_text(json.dumps(per_rows, indent=1))
     prov_path = L.DATA / "_provenance.json"
     prov = json.loads(prov_path.read_text())
+    if L.OUTROOT != L.DATA:   # recheck / verify runs: own provenance file, the round-1 one is left untouched
+        import subprocess
+        gc = subprocess.run(["git", "-C", str(L.ROOT), "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
+        prov = {"scheme": prov["scheme"], "estimator": L.EP, "code_git_commit": gc + "+uncommitted (H56_EP switch)"}
+        prov_path = L.OUTROOT / "_provenance.json"
     prov["replication"] = {"built_by": "hypotheses/H56-ep-platform-fingerprint/analysis/event_study.py",
                            "git_commit": prov["scheme"]["git_commit"], "inputs": "scheme outputs + shared/roster",
                            "params": {"k": K, "min_trans": MIN_TRANS, "min_agents": MIN_AGENTS, "span_days": SPAN_DAYS,

@@ -25,3 +25,4 @@ Figure: `figures/g51_tday.pdf` (t(d) on V1 and V5 with every event). Data: `data
 
 ## Notes
 - The #51 kickoff (07-06) is not scored: its pre-window lies in the NE21+NE23 holdout.
+- **2026-10-04, ep_newton recheck (post hoc; card "Recheck (ep_newton fix)").** Held-out Newton bound. Enrichment 0.69× → 0.92× (p 0.71): held. The within-agent daily trend falls to V1 ρ −0.40 → −0.24 (p 0.12) and V5 −0.25 → −0.12 (p 0.43), so **the V1 trend failure is withdrawn**. The daily O1 values (n₀ = 120, d = 55) carry a legacy bias of about +0.04 nats/transition (synthetic). The 07-31 unexplained change-point is gone; 08-10 stays (f₊ 0.56). No #51 change-point shows the platform signature. The verdict stays **mixed**: P10 holds in both parts, and the signature search (P4, second part) found nothing.

@@ -31,3 +31,4 @@ Figure: `figures/ne43_placebo.pdf`. Data: `data/processed/H56-ep-platform-finger
 
 ## Notes
 - Suggested shared-file change: `hypotheses/natural-experiments.md` NE43 and `infra/README.md` Known issues should say that the daily bookends end after 08-04 and the nudges after 08-20; `period_units` does not split #51 at either date.
+- **2026-10-04, ep_newton recheck (post hoc).** Held-out Newton bound. V1 t −1.28 / −0.02 / −0.80 over the three designs (was −1.55 / −0.20 / −1.08), Friday p ≥ 0.38. Idle sector (k3) −70%, p 0.38. The verdict stays **descriptive**.

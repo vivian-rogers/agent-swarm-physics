@@ -24,8 +24,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import event_study as ES  # noqa: E402
 import h56lib as L  # noqa: E402
 
-OUT = L.DATA / "native"
-REP = L.DATA / "replication"
+OUT = L.OUTROOT / "native"
+REP = L.OUTROOT / "replication"
 IDLE = {"act_all": 6, "act_agent": 6, "coarse_all": 4, "coarse_agent": 4, "act_agent_b3": 6, "coarse_agent_b3": 4}
 CONS = {"act_all": 7, "coarse_all": 5}
 SEARCH_ACT = 8

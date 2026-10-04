@@ -247,3 +247,89 @@ Coarse chains (Σ ≈ 0.008): power 0.13–0.14 at ±50%. Blind detector (fine, 
   4. `physics-models/02-nonequilibrium-ising` pitfalls: count matching by subsampling does not equalize the bias of the plug-in or of the cross-fitted exact dual (thinning changes their noise), so use the cross-fitted Newton bound. A scaffold reset leaves an irreversible relaxation transient in the "agent-only" chain; drop a burn-in after every reset.
   5. `infra/shared/`: `h56lib.newton_counts` / `cfx_counts` compute H14's estimators from count matrices (exactly equal, about 100× faster); worth moving to `infra/shared/` if H14's re-evaluation adopts them.
 - 2026-10-04, compute and disk: local, ≤ 2 processes, about 1 CPU-hour in total (the synthetic study was about 40 min of it). `data/processed/H56-ep-platform-fingerprint/` is about 4 MB.
+
+## Recheck (ep_newton fix) (2026-10-04)
+*Post hoc estimator recheck. No prediction, threshold, state definition or catalog changed. Trigger: infra/README "Known issues" (H90). H56 copied the legacy cross-product Newton count form at d/n up to 0.46: 55 fine-class columns on n₀ = 120 transitions per agent-day (O1), and on ≥ 100 transitions per side in O2. That is the regime where the legacy form gives a spurious positive bound. Non-holdout only (the day list is asserted against `holdout_mask`). No confirm script was run.*
+
+**What changed.**
+- **Switch.** `H56_EP=heldout` in `analysis/h56lib.py` routes `newton_counts` to `infra/shared/ep_newton.py: newton_counts_heldout`. Sector sub-bounds (`pairs`) use the same closed form on the restricted columns. Outputs go to `data/processed/H56-ep-platform-fingerprint/recheck_epfix/`. The default (`xprod`) is the round-1 code path.
+- **Default reproduces round 1 exactly.** I reran `event_study.py`, `native.py` and `posthoc.py` in default mode into a scratch folder. All 13 replication and native outputs equal the stored files (`recheck_epfix/verify_default.json`). The one exception is the row order of NE40's descriptive `schema` table, which comes from an unordered `group_by`. Round 1 ran the natives as `--test NE40,NE14,NE43`, then `--test G51`; the RNG stream depends on that order.
+- **Rerun with the switch:** the event study, all four natives, posthoc and the synthetic study (Newton only; `cfx` and the plug-ins do not change). New script `analysis/recheck_epfix.py` adds three things: a level synthetic at H56's d/T, a real-data block-flip null for the per-agent EP level, and the old → new comparison (`recheck_epfix/compare.json`).
+- **Scale.** The held-out bound is shrunk by its ridge to about 0.5 of its long-run value. Raw magnitudes are not comparable with round 1. Only excess over a null, |t| against the same-estimator day pools, and null tests are compared.
+
+**Synthetic, event layout** (H56's own `synthetic.py` at village counts: 12 agents, 3 + 3 days, median 600 transitions per agent-day, d ≤ 55; τ = null p95; 120 runs per scenario):
+
+| scenario (fine chain, Σ ≈ 0.08) | legacy Newton | held-out Newton |
+| --- | --- | --- |
+| occupancy only, EP held / + task mix | 0.05 / 0.03 | **0.11** / 0.08 |
+| transitions ×2 / ×0.5 | 0.03 / 0.05 | 0.04 / 0.06 |
+| 3 newcomers 2× EP / one agent ×3 | 0.04 / 0.03 | 0.06 / 0.03 |
+| affinity +25% / +50% / −50% | 0.34 / 0.78 / 0.89 | **0.45 / 0.86 / 0.90** |
+| coarse chain ±50% | 0.13 / 0.14 | 0.16 / 0.16 |
+| reset cadence 40 → 20: with scaffold / cut agent chain | 1.00 / 0.68 | 1.00 / 0.73 |
+| blind detector, +50%: hit within ±1 day (null) ; false alarms per day | 0.78 (0.09); 0.03–0.04 | 0.85 (0.11); 0.04–0.05 |
+| null SD of t (real data: 1.23 → 1.23) | 1.13 | 1.10 |
+
+The held-out bound has more power. Its false-alarm rate under EP-preserving occupancy changes is 0.11 (13/120). That is just over the P0 estimator rule's 0.10 line and not separable from 0.07 at n = 120. The cause is its per-column ridge, which depends on the occupancy. The burn-in check (0.68 → 0.05) was not rerun: its code is not in the repository.
+
+**Synthetic, level layout** (new, `recheck_epfix.py --synthetic`; not covered by `ep_newton_synthetic.py`, which tests nested pairwise sets). One 11-state chain per agent.
+- **Daily O1** (n₀ = 120, 4 quarter folds, d = 55; 300 runs): on reversible chains (Σ = 0) the legacy bound reads **+0.043** nats/transition (positive in 64% of runs); held-out reads −0.036 (positive in 25%). At true Σ = 0.08: legacy 0.104, held-out −0.004. At Σ = 0.16: legacy 0.171, held-out 0.025. **The round-1 daily level is about half bias, and the held-out daily level cannot resolve Σ ≲ 0.16.** Daily magnitudes (`figures/daily_series.pdf`) are unusable in both forms.
+- **Per-agent period level vs a block-flip null** (each (day, quarter) block transposed with probability ½; 100 runs, R = 50): size 0.02 / 0.06 / 0.01 (held-out) and 0.02 / 0.03 / 0.01 (legacy) at 3 × 160, 5 × 600 and 16 × 450 transitions. Power at Σ = 0.02 is 0.08 / 0.89 / 1.00 (held-out) and 0.09 / 0.85 / 1.00 (legacy); at Σ = 0.08 it is ≥ 0.48 / 1.00 / 1.00 in both. The held-out level is 0.46–0.52 of the true Σ at 5–16 days (legacy 0.93–1.03).
+
+**Old → new (non-holdout; nats per transition where a unit applies)**
+
+| Number quoted in the card | Old (legacy) | New (held-out) | Verdict change? |
+| --- | --- | --- | --- |
+| **Is fine-action EP real?** (not tested in round 1). Agents above the block-flip null, V1, per period | (legacy, recomputed) ≥ 0.8 in 32/35 periods, min 0.67 | ≥ 0.8 in **34/35**, min 0.67 (G02, 3 agents); median excess 0.019–0.133 | new test; supports "irreversibility is real" |
+| same, V5 (agent-only + burn-in) / V3 coarse / V6 | 23/35 / 22/35 / 7/35 periods ≥ 0.8 | 24/35 (min 0.43) / 22/35 / 10/35; V6 excess ≤ 0.008 | new test |
+| per-period median EP V1 (raw) | 0.042–0.276 | 0.019–0.131 (ridge-shrunk; not comparable) | no (scale) |
+| scaffold share, median by regime I / II / III | 0.50 / 0.22 / 0.16 (raw ratio) | 0.45 / 0.25 / **0.13** (excess ratio; raw ratio 0.44 / 0.25 / 0.13) | no |
+| P1 scaffold-tool class, V1: mean \|t\|, N2 p (weekday-placebo p) | 1.10, 0.23 (0.07) | 0.92, **0.63** (0.41) | no (still failed; weaker) |
+| P1 same, excluding NE14b / V5 / prompts V1 | 0.25 / 0.09 / 0.93 | 0.64 / 0.75 / 0.84 | no |
+| P1 per-event hits (Amendment 3), tool V1 / V5 | 0/17 / 1/17 (CL 2025-07-16) | 0/17 / 0/17 | no (the V5 hit goes) |
+| P2 goal V1: hits, class p | 3/28 (#4, #5, #6), 0.08 | 3/28 (#5, #11, #26), 0.14 | no (held, borderline) |
+| P2 roster / room V1: hits, class p | 0/21, 0.56 / 1/5, 0.78 | 0/21, 0.82 / 0/5, 0.64 | no |
+| P2 goal V2 / **V5**: class p (weekday-placebo p) | 0.11 / **0.007** (0.039) | 0.32 / **0.024** (0.22) | no ("failed for goal on V5" still holds against N2, not against weekday placebos) |
+| P3 scaffold-tool − goal \|t\|, V1 / V5 | −0.06 (p 0.60) / −0.09 | −0.21 (p 0.83) / −0.35 (p 0.95) | no (still failed; R1 still ahead) |
+| P4 enrichment near scaffold-tool, V1 / V5 | 0.61× (p 0.87) / 0.82× | 0.78× (p 0.77) / 0.60× (p 0.89) | no |
+| P4 unexplained change-points V1; platform signature (f₊ ≥ 0.8, all providers same sign) | 6; card said "none with f₊ ≥ 0.8" | 8; **2025-12-31: f₊ 0.90, all 3 providers up** (10 agents) | correction, see below |
+| P5 NE14b fine carriage V2 / V5 | 0.82 / 0.82 | 1.06 / 1.03 | no (n/a; the agent chain carries all of the fine fall) |
+| P6(a) family η², V1 | 0.34, p 0.0005 | 0.34, p 0.001 | no (met) |
+| P6(b) family η², V5 | 0.40, p 0.0005 | **0.42**, p 0.0005 | no (failed; R4 stronger) |
+| P6 coarse V3 → V6 | p 0.011 → 0.56 | p 0.040 → 0.58 | no |
+| P7 NE43 V1 t, three designs (Friday p) | −1.55 / −0.20 / −1.08 (≥ 0.38) | −1.28 / −0.02 / −0.80 (≥ 0.38) | no |
+| P7 idle sector, k3 | −76%, p 0.25 | −70%, p 0.38 | no |
+| P8 NE14b V1: agents falling, change, t, Tuesday p | 8/12, −28%, −1.33, 0.33 | 7/12, −18%, −0.83, 0.56 | no (still failed) |
+| P8 NE14b coarse V3 change; carriage V4 / V6 | −45%; 0.62 / 0.71 | −31%; 0.55 / 0.88 | no (still > 0.5) |
+| P9 NE40 EP at 04-20: t, p; search sector t | −0.18, 0.86 (card; stored 0.83); 0.40 | −0.56, 0.60; 0.79 | no |
+| P10 G51 enrichment at roster/room/operator | 0.69×, p 0.93 | 0.92×, p 0.71 | no (held) |
+| **P10 G51 within-agent daily trend, V1** / V5 | **ρ −0.40 (p 0.006)** / −0.25 | **ρ −0.24 (p 0.12)** / −0.12 (p 0.43) | **yes: the V1 trend failure is withdrawn** |
+| G51 unexplained change-points (V1) | 07-31 (two days after the 07-29 schema change), 08-10 | 08-10 only | the 07-31 candidate is withdrawn |
+| Post hoc sign synchrony S at scaffold-tool events, V1 / V5 | 0.20 vs 0.14, **p 0.047 / 0.013** | 0.16 vs 0.15, **p 0.37 / 0.35** | **yes: the post hoc lead is withdrawn** |
+| Post hoc magnitude M, V1 / V5 | p 0.95 / 0.06 | p 0.84 / 0.29 | no |
+| Holm over six primaries | P6(b) 0.003; P2 0.40; others ≥ 0.90 | P6(b) 0.003; P2 0.68; others 1.0 | no |
+
+**Correction to round 1 (P4, second part).** The round-1 text says no unexplained change-point had f₊ ≥ 0.8. The stored 2026-01-01 change-point (V1) had f₊ = 0.80 exactly (8/10 agents), and all three providers moved up. The held-out run puts the same feature at 2025-12-31 (f₊ 0.90). On its letter, the pre-registered signature is met once in both runs. The candidate sits on the New Year break, with 10 agents. It is more likely a holiday schedule or calendar effect (R3) than an undocumented platform change. P4 stays failed on its primary part (enrichment 0.78×). V5's 2025-06-06 candidate has 4 agents from one provider, so it does not count.
+
+**Per-period verdicts** (replication rule of `write_period_folders.py`, applied to the held-out event table; `recheck_epfix/period_verdicts.json`):
+- **G11 and G26: descriptive → failed.** Their kickoffs become hits: G11 t 2.20 → 2.65 (p 0.062 → 0.046); G26 t −1.72 → −2.82 (p 0.092 → 0.031). Verdict lines updated, with a dated note.
+- G04 and G06 kickoffs are no longer hits (p 0.05 → 0.11 and 0.35). Both stay failed because their scaffold events miss.
+- All other replication folders are unchanged.
+- **Natives:** NE14 failed, NE40 failed, NE43 descriptive. G51 stays mixed: both parts of P10 now hold, but no #51 change-point shows the platform signature. A dated note is added to each native folder.
+
+**Verdict changes.**
+- **Card level: none.** H56 stays refuted as posed. No scaffold class moves within-agent EP beyond same-regime random days, and the scaffold classes are weaker than in round 1 (V1 p 0.63, V5 0.75). Family differences survive scaffold removal more strongly (V5 η² 0.42).
+- **Withdrawn:**
+  - the post hoc sign-synchrony lead, which was C6 in `confirm.py` and the basis of redirect H56-R2;
+  - the G51 V1 trend failure (P10 now holds on both chains);
+  - the 07-31 G51 candidate;
+  - round-1 daily EP magnitudes, which are about half estimator bias at n₀ = 120.
+- **Weakened:** rival R1 (task mix). The goal class still beats N2 on V5 (p 0.024), but not the weekday-matched placebos (0.22), and not V1 (0.14). The held-out bound's occupancy false-alarm rate (0.11) means part of a kickoff "hit" can be estimator sensitivity to the action mix. R1 is now ahead of H56 (P3) but not shown to win.
+- **P0(ii)** is now met for fine chains (0.86 / 0.90 at ±50%); coarse chains are still blind (0.16). **P0(i)** is borderline (0.11 vs the 0.10 rule). `cfx` was not rerun; it had less power in round 1, so Newton (held-out) stays primary, with this flag.
+- **New, supporting:** fine-action EP is real per agent. It exceeds a reversible null with the same estimator for ≥ 80% of agents in 34/35 periods, and on the agent-only chain in 24/35.
+- **Scorecard:** unchanged (A1 B1 C0 D0 E0 F1 G0 H0 I0). D loses the post hoc lead it never scored; F gains power and a borderline nuisance rate.
+- **Confirm script:** `analysis/confirm.py` uses `L.newton_counts`, so it runs the legacy form unless `H56_EP=heldout` is set. It must be re-frozen on the held-out estimator, with C6 dropped or demoted, before any holdout run. It was not edited or run.
+- **Per-period estimates:** 1,082 rows in `per_period_estimates` (H56 had none before). The legacy round-1 rows (`[legacy cross-product Newton, round 1]`, post_hoc false) cover the median EP, family η² and kickoff t. The post hoc rows carry `post hoc` in `method`: `[held-out Newton, per-column ridge; post hoc ep_newton recheck 2026-10-04]`, plus legacy flip-null rows `[legacy cross-product Newton, post hoc recompute 2026-10-04]`.
+- **Compute:** one process, 2 threads, run in sequence. About 4 min for the event study and natives, 24 min for the synthetic (machine load 80+), and 2 min each for the level synthetic and the flip null. `recheck_epfix/` is about 3 MB.
+
+**Claim that stands:** fine-action irreversibility is real and mostly the agents' own, not the platform's. With the held-out Newton bound, ≥ 80% of agents exceed a reversible block-flip null in 34/35 non-holdout periods. The scaffold share of the excess is 0.13 in regime III. Lab differences survive scaffold removal (V5 η² 0.42, p 0.0005). No scaffold class moves EP beyond same-regime random days (V1 p 0.63, V5 p 0.75). Excluded: the post hoc sign-synchrony lead (withdrawn), daily-level magnitudes (estimator bias at n₀ = 120), the G51 07-31 candidate (withdrawn), the New Year signature candidate (calendar, not platform), and coarse-chain event tests (unpowered, 0.16).

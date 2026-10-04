@@ -35,3 +35,4 @@ Figure: `figures/ne14_agents.pdf`. Data: `data/processed/H56-ep-platform-fingerp
 ## Notes
 - 2026-10-04: the "consolidate" act class is regime-specific (session start/stop in regime II, CONSOLIDATE in regime III); the coarse states merge them, so only coarse sector statistics are comparable across the boundary.
 - The 03-24 date is where the switch shows in the logs, although the changelog places related work from 03-11; the 03-11 → 03-13 provider-staggered rollout is in the holdout and is targeted by `analysis/confirm.py`.
+- **2026-10-04, ep_newton recheck (post hoc).** Held-out Newton bound. V1: 7/12 agents fall (was 8/12), −18% (was −28%), t −0.83 (was −1.33), Tuesday p 0.56 (was 0.33). Coarse V3: −31%, t −0.99. Carriage: fine V2/V5 1.06/1.03 (was 0.82/0.82), coarse V4/V6 0.55/0.88 (was 0.62/0.71). The verdict stays **failed**.

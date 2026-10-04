@@ -25,3 +25,4 @@ Figure: `figures/ne40_stylometry.pdf`. Data: `data/processed/H56-ep-platform-fin
 ## Notes
 - Suggested catalog update: NE40 dated 2026-04-20, deployed with NE18 (evidence: stylometric markers of the answers; Gemini-style bullets end on 04-17).
 - Answer stylometry is a far better undocumented-change detector than behavioral EP for anything that changes a tool's output.
+- **2026-10-04, ep_newton recheck (post hoc).** Held-out Newton bound. EP at 04-20: t −0.56, p 0.60 (was −0.19, p 0.83); search sector t 0.79, p 0.56. The stylometric dating does not use EP and is unchanged. The verdict stays **failed**.
