@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **Wave 2 launched in full (Vivian: spin up more agents):** H26, H33, H35, H36, H37, H39. H37 may call Jev for stance labels on reply pairs, with a **hard $2 cap** (key via `.env` loader; Jev use previously approved). About 18 agents running; each limited to ≤ 2 threads.
 - **H21 (#12 debate antiferromagnet), round 1:** **failed.**
   - #12 was a tournament of 10 debates with re-drafted teams and rotating judges; labels verified.
   - No two-sublattice order in full content space (Δ̄ 0.028, p 0.34; true team split recovered in 1/10).
