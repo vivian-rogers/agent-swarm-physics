@@ -23,7 +23,7 @@
   "scope": "regime-III periods (forced erasures); natives NE41, NE34",
   "direction": "positive",
   "original_verdict": "failed (artifact semantic information)",
-  "credence": 0.76,
+  "credence": 0.7,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -61,9 +61,51 @@
   "decision": "protect the context window; artifacts and memory notes don't buy output back",
   "magnitude": "material",
   "generality": "agents with context resets",
-  "expected_usefulness": 1.89,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H70 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.75,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.76,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 3 (blind, 2026-10-04)",
+    "claim": "At forced context erasures, re-reading the agent's own artifact adds no output beyond its placebo association (pooled call-scale Delta_V_rel -0.05 [-0.13, +0.01], so a channel value >= +10% is excluded; synthetic power 1.0 at +30%), although the artifact pointer carries 0.14 bits of allocation and the erasure itself costs 41% of output.",
+    "credence": 0.64,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "synthetic recovery and power on the real event skeleton (+30% recovered, power 1.0 pooled); size ~0.11 mildly anticonservative",
+      "x": 1.5,
+      "evidence": "card Synthetic validation; Amendments A1-A2"
+     },
+     {
+      "factor": "partial replication: per-period CIs include 0 in 9 call-scale periods, only 2-3 powered",
+      "x": 1.5,
+      "evidence": "card Results by goal period"
+     },
+     {
+      "factor": "intervention partly consistent: 21k scaffold-timed erasures vs pseudo-erasures, but open flags are agent-chosen",
+      "x": 1.5,
+      "evidence": "card Design; NE41 native"
+     },
+     {
+      "factor": "penalty: parallel trends between arms checked only in synthetic",
+      "x": 0.8,
+      "evidence": "card scorecard B"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

@@ -29,7 +29,7 @@
   "scope": "317 bursts in 7 periods; natives G31, G39, G40",
   "direction": "negative",
   "original_verdict": "failed (work signal)",
-  "credence": 0.61,
+  "credence": 0.56,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -58,13 +58,50 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 1.75,
   "decision": "watch chat links to anticipate pile-ons; work signals come after",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.22,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (H63 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.98,
+  "scientific_value": 2.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.61,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 3 (blind, 2026-10-04)",
+    "claim": "Deploy-type state changes do not precede herding bursts more often than matched non-burst clusters (7/317 vs 100/5,470; OR_S 1.53 [0.77, 3.05], time-shift z -0.23), so a strong work-led field step (OR >= ~3, where stylized synthetic power is 1.0) is excluded; chat links precede 60% of bursts (OR 11.9).",
+    "credence": 0.51,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2,
+    "ladder": [
+     {
+      "factor": "stylized synthetic size/power (joint criterion 15/15 power, <= 1/15 size) plus time-shift null and matched controls (one design); not real schedules",
+      "x": 1.5,
+      "evidence": "card Amendment A1; Outcome vs prediction S1-S3"
+     },
+     {
+      "factor": "partial replication: failed in 6/7 tested periods, but small per-period counts and #51 dominates pooled OR",
+      "x": 1.5,
+      "evidence": "card Results by goal period"
+     },
+     {
+      "factor": "penalty: 'state change' proxied by deploy-type events only",
+      "x": 0.7,
+      "evidence": "card scorecard A; Caveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

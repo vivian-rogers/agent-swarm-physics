@@ -29,7 +29,7 @@
   "scope": "29 units; natives G51 (Gemini server time), G44",
   "direction": "negative",
   "original_verdict": "refuted as posed",
-  "credence": 0.68,
+  "credence": 0.58,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -62,9 +62,51 @@
   "decision": "read co-activation in large swarms as congestion, not coordination",
   "magnitude": "small",
   "generality": "scheduled swarms",
-  "expected_usefulness": 1.02,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H66 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.87,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.68,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 3 (blind, 2026-10-04)",
+    "claim": "In regime III the cross-agent call-turnaround (latency) field is a load meter, not a driver of co-activation: it rises with the number of active agents in 28/29 units (median corr +0.11), opposite to the sign a silencing field gives (-0.34 to -0.66), and it is village-wide, not per provider.",
+    "credence": 0.47,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "replication of the sign: positive in 28/29 units over 11 periods (beyond 2 null SD in 17/29)",
+      "x": 2,
+      "evidence": "card Amendment 2"
+     },
+     {
+      "factor": "post hoc synthetic identification: W2 drive vs W6 congestion separate only by sign",
+      "x": 1.5,
+      "evidence": "card Amendment 2; synthetic w6_posthoc"
+     },
+     {
+      "factor": "ground truth: Gemini server time validates the turnaround proxy (r 0.49) and does not co-move across agents",
+      "x": 1.5,
+      "evidence": "card Native G51; scorecard G"
+     },
+     {
+      "factor": "penalty: turnaround mixes generation, execution and overhead",
+      "x": 0.8,
+      "evidence": "card Caveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

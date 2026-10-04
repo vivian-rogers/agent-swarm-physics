@@ -23,7 +23,7 @@
   "scope": "17 periods (9 powered), 170 agent-periods; natives G51, NE42",
   "direction": "negative",
   "original_verdict": "refuted",
-  "credence": 0.75,
+  "credence": 0.76,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -47,13 +47,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 1.5,
+  "value_if_true": 1.75,
   "decision": "model attention dilution with one exponent per period",
   "magnitude": "small",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.12,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H68 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.33,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.75,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 3 (blind, 2026-10-04)",
+    "claim": "Per-agent attention-dilution exponents form one narrow unimodal distribution per period (tau 0.09-0.20 around mu 0.54-0.87), not a {0,1} two-strategy mixture: bimodality rejected in 0/9 periods powered (>= 0.85) for that mixture, tau upper bound < 0.35 in 7/9, no agent-period below beta 0.25.",
+    "credence": 0.76,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "per-agent estimator and mixture test calibrated on real skeletons (unbiased, coverage 0.89-0.99, false pass <= 0.05, power >= 0.85 in 9 periods); F=2",
+      "x": 2,
+      "evidence": "card Synthetic validation; Amendments B1-B2"
+     },
+     {
+      "factor": "replication: no bimodality in 9/9 powered periods",
+      "x": 2,
+      "evidence": "card Outcome vs prediction P1"
+     },
+     {
+      "factor": "partly robust: per-message mention-factor variant, engagement control, reply-response ranking (rho 0.52)",
+      "x": 1.5,
+      "evidence": "card Findings 5; P5; scorecard F"
+     },
+     {
+      "factor": "penalty: mention proxy response; low-volume agents dropped (thread followers could hide there)",
+      "x": 0.8,
+      "evidence": "card Caveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

@@ -29,7 +29,7 @@
   "scope": "27 periods, 99,695 held-out ideas; natives G26, G35, NE42",
   "direction": "positive",
   "original_verdict": "failed (forecastability)",
-  "credence": 0.51,
+  "credence": 0.64,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -57,9 +57,51 @@
   "decision": "keep seed messages short and single-topic if you want an idea to spread",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 0.77,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (H61 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.96,
+  "scientific_value": 2.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.51,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 3 (blind, 2026-10-04)",
+    "claim": "Seed features observable at an idea's first use add no reliable held-out forecast skill for 24-h reach beyond the poster + kickoff-day + room-size baseline B4: CI > 0 in 2/8 powered periods (>= 2,500 test ideas), gains <= ~6 millinats/idea where present (G38, G51); pooled +0.1 +/- 1.6.",
+    "credence": 0.76,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "calibrated null and power on real feature matrices (S1 size 0.03 after A1; S2 power 1.0 at >= 2,400 test ideas); F=2",
+      "x": 2,
+      "evidence": "card Synthetic validation; Amendments A1-A2"
+     },
+     {
+      "factor": "replication: no gain beyond B4 in 6/8 powered periods",
+      "x": 2,
+      "evidence": "card Results by goal period; Outcome vs prediction P1"
+     },
+     {
+      "factor": "partly robust: bge and gte specificity (4/27 vs 5/27 CI>0); stand-in #51 later days +2.9 [-0.6, 6.4]",
+      "x": 1.5,
+      "evidence": "card Model- and style-dependence; Confirmatory dry run"
+     },
+     {
+      "factor": "penalty: H34 hashed markers count co-generated uses; length/load partly measure the marker rule",
+      "x": 0.8,
+      "evidence": "card Caveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

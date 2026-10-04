@@ -29,7 +29,7 @@
   "scope": "46 units; natives G26, G35, G44, G12",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.7,
+  "credence": 0.63,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -63,13 +63,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 2.0,
   "decision": "route through people who answer, not through designated leaders",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.4,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (H65 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.26,
+  "scientific_value": 2.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.7,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 3 (blind, 2026-10-04)",
+    "claim": "Designated leaders and judges gain attention (+0.39 and +0.45 agent replies per statement on-role, p <= 0.007) but are not content routers: no strong-router rise in read-gated inflow (chi x2 with outflow x0.2, where within-agent power is 1.0) in #35 or #12; the elected #26 leader is a source instead.",
+    "credence": 0.56,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "within-agent role permutation, synthetic size 0.00-0.15 and router power 1.00 on real skeletons (one design)",
+      "x": 2,
+      "evidence": "card Synthetic validation; Amendment A1"
+     },
+     {
+      "factor": "partial replication: 2 powered within-agent natives, #26 and #44 consistent; < 6 units",
+      "x": 1.5,
+      "evidence": "card Outcome vs prediction N1-N4"
+     },
+     {
+      "factor": "penalty: co-response lambda/chi ~0.6 and DQ2 content-selected parents",
+      "x": 0.8,
+      "evidence": "card Caveats 3-4"
+     },
+     {
+      "factor": "penalty: #35 inflow reaches significance under gte (+0.18, p 0.009)",
+      "x": 0.8,
+      "evidence": "card N2 row"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

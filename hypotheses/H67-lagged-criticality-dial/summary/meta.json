@@ -35,7 +35,7 @@
   "scope": "66 units, 35 periods; natives NE14, NE42, G51",
   "direction": "positive",
   "original_verdict": "failed (lagged > equal-time)",
-  "credence": 0.81,
+  "credence": 0.79,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -69,13 +69,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.5,
+  "value_if_true": 2.75,
   "decision": "name the recipient: named messages couple ×19; the swarm is far from runaway (T/T_c ≈ 8)",
   "magnitude": "material",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 2.02,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H67 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 2.17,
+  "scientific_value": 3.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.81,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 3 (blind, 2026-10-04)",
+    "claim": "The hop-1 read-out talk loop gain g_lag is subcritical everywhere (every unit's upper bound < 0.40 over 66 units, 35 periods): regime-III median 0.13, about half from messages naming the recipient, and ~0 in regimes I/II.",
+    "credence": 0.76,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.5,
+    "ladder": [
+     {
+      "factor": "calibrated null and recovery on real call grids (bias -1 to -3%, coverage 0.88-0.98, null 7.5%, burst 10%); F=2",
+      "x": 2,
+      "evidence": "card Amendment A1; Outcome vs prediction S1, S2, S4"
+     },
+     {
+      "factor": "replication: all 66 units subcritical; g_lag > 0 at 95% in 7/8 regime-III periods",
+      "x": 2,
+      "evidence": "card P1; scorecard I"
+     },
+     {
+      "factor": "partly robust: trim, exogenous controls, decision-time, heterogeneous radius within 10%; quiet-recipient subset -34%; rank agreement with H42 (same data); round 1 only",
+      "x": 1.5,
+      "evidence": "card P6; scorecard B; Post hoc A2"
+     },
+     {
+      "factor": "penalty: hop-1 only (hops 2-3 not placebo-corrected); wrong clock in regime I",
+      "x": 0.8,
+      "evidence": "card Caveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

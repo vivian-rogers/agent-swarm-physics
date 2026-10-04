@@ -29,7 +29,7 @@
   "scope": "G38, G40, G41, G51 (≥ 30 loop episodes); natives G38, NE41, G51",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.83,
+  "credence": 0.85,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -63,13 +63,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.5,
+  "value_if_true": 2.75,
   "decision": "break restatement loops by erasing context, not by sending new input",
   "magnitude": "material",
   "generality": "agents with context resets",
-  "expected_usefulness": 2.07,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H69 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 2.34,
+  "scientific_value": 3.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.83,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 3 (blind, 2026-10-04)",
+    "claim": "Restatement loops are held by the context window: at matched lag and call distance, an agent near-copies its own earlier statement 3.4x [2.6, 4.5] more often when that statement is still in context than when an erasure removed it (4/4 scorable periods, I2 0; pseudo-erasure 1.13).",
+    "credence": 0.86,
+    "value_if_true": 3.0,
+    "mechanism_level": "M2",
+    "fragile": false,
+    "scientific_value": 3.5,
+    "ladder": [
+     {
+      "factor": "calibrated recency null on real skeletons (size 0-0.06) plus pseudo-erasure placebo; F=2",
+      "x": 2,
+      "evidence": "card Synthetic validation; Amendments A1-A5"
+     },
+     {
+      "factor": "intervention partly consistent: enrichment holds at scaffold-timed forced boundaries (3.53); NE41 exit 2.4x but heterogeneous (I2 0.74)",
+      "x": 1.5,
+      "evidence": "card P4, N-NE41"
+     },
+     {
+      "factor": "partial replication: 4/4 scorable periods (< 6), G39 2.2 descriptive",
+      "x": 1.5,
+      "evidence": "card Results by goal period"
+     },
+     {
+      "factor": "robust: both embedding models (bge 3.5, gte 6.1, both 8.6) and templated exclusion",
+      "x": 2,
+      "evidence": "card scorecard A, F"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

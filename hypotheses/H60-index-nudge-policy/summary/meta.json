@@ -29,7 +29,7 @@
   "scope": "G51 (nudger-on days, cross-fitted), G38; natives NE43, NE44",
   "direction": "positive",
   "original_verdict": "failed (index policy)",
-  "credence": 0.42,
+  "credence": 0.44,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -58,13 +58,50 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 1.5,
   "decision": "nudge each trap once at its second gate; don't build an index",
   "magnitude": "small",
   "generality": "scheduled nudgers",
-  "expected_usefulness": 0.84,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (H60 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.66,
+  "scientific_value": 2.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.42,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 3 (blind, 2026-10-04)",
+    "claim": "In G51 (nudger on, short pauses), a fitted gate index (trap age, gate index, read-out clock) does not raise active calls per nudge by >= x2.9 over the logged nudger, the effect size where synthetic power is 0.8 (observed x1.08 [-0.30, 3.44]; x0.69 vs once-early).",
+    "credence": 0.47,
+    "value_if_true": 1.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "synthetic recovery/size on real G51 design (S1 power 0.8 at x2.9, S2 0/16 false); F=1",
+      "x": 1.5,
+      "evidence": "card Synthetic validation S1-S2"
+     },
+     {
+      "factor": "single powered unit (G51; G38 has 49 nudged gates, below power)",
+      "x": 0.6,
+      "evidence": "card Results by goal period; rule 9"
+     },
+     {
+      "factor": "partly robust: myopic and Gittins-style index both fail on active calls, cross-fitted halves",
+      "x": 1.5,
+      "evidence": "card Outcome vs prediction P1, P2, P7"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

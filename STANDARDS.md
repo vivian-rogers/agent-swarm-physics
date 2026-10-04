@@ -51,7 +51,7 @@ Each one has produced fake collective order in this project at least once. Every
 ## 5. Reporting
 - Write per-period rows to `per_period_estimates` with `write_estimates`. Give CIs with `ci_kind` from the allowed set. Report the unit count (n units) and units for every number.
 - Give every number with an uncertainty, a scope (periods, regime, channel) and its source table.
-- Card: Round sections are dated, with old → new tables, a scorecard A–I, and round-2 redirects.
+- Card: Round sections are dated, with old → new tables, a scorecard A–I, and round-2 redirects. Each Round section ends with one line, `**Claim that stands:**`. It is one scoped clause with its key number, plus a named list of exclusions (withdrawn, post hoc or unpowered sub-results). Raters score that clause (RUBRIC adjudication rule 1).
 - Summary (2 pages): `content.tex` in the house style, and `meta.json` with v1 ratings, `one_line` and `models`. The coordinator writes `v2`.
 - Code: put every new input behind a switch so that earlier rounds reproduce exactly. Every `data/processed/` folder has a `_provenance.json`.
 
