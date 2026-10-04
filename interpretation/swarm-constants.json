@@ -201,6 +201,26 @@
    "model": "11",
    "source": "H73",
    "meaning": "Style is mostly a fixed property of the agent; context and role add little."
+  },
+  {
+   "symbol": "Λ",
+   "name": "reply premium for idea adoption",
+   "value": "1.92 [1.52, 2.42] pooled; per-edge T ratio 2.70 [2.07, 3.51]; #51 9.6",
+   "kind": "ratio",
+   "scope": "23/26 periods; a thread field alone gives ≈ 3",
+   "model": "03",
+   "source": "H62",
+   "meaning": "Reply partners adopt ideas more than room-mates, but much of it is shared thread context, not copying."
+  },
+  {
+   "symbol": "p_reach",
+   "name": "P(new idea reaches a 2nd agent within 24 h)",
+   "value": "median 0.15; seed-length effect −0.26 ± 0.04 std log-odds",
+   "kind": "response",
+   "scope": "27 periods",
+   "model": "03",
+   "source": "H61",
+   "meaning": "Most new ideas die; long, item-dense seed messages spread each item less."
   }
  ]
 }

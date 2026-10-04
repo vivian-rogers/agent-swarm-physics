@@ -53,7 +53,8 @@ def _us(s: pl.Series) -> np.ndarray:
 class Base:
     """Tables shared by every period (loaded once)."""
 
-    def __init__(self, markers: bool = True):
+    def __init__(self, markers: bool = True, allow_holdout: bool = False):
+        self.allow_holdout = allow_holdout          # confirm scripts only: keeps held-out DQ2 parents
         self.cal = pl.read_parquet(SH / "calendar.parquet")
         self.chat = pl.read_parquet(SH / "chat_core.parquet", columns=["message_id", "t", "pt_date", "goal_no", "room",
                                                                        "speaker_kind", "agent", "length"]).with_row_index("msg")
@@ -80,7 +81,8 @@ class Base:
         if self._rp is None:
             self._rp = (pl.read_parquet(SH / "reply_pairs.parquet", columns=["b_msg", "a_msg", "pair_set", "parent",
                                                                             "holdout", "p_reply"])
-                        .filter((pl.col("pair_set") == "cand") & pl.col("parent") & ~pl.col("holdout"))
+                        .filter((pl.col("pair_set") == "cand") & pl.col("parent")
+                                & (pl.lit(self.allow_holdout) | ~pl.col("holdout")))
                         .select("b_msg", "a_msg", "p_reply"))
         return self._rp
 

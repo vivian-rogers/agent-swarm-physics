@@ -1,0 +1,65 @@
+{
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions, synthetic validation on real feature matrices (two runs; A1-A2 fixed a day-extrapolation artifact before real data), 27 eligible replication periods, three natives with dated predictions (G26, G35, NE42), both embedding models, estimates rows, and a frozen confirm script dry-run on stand-ins (not run). Missing: a powered convergence test and the holdout.",
+  "faithfulness": "The core claim fails: seed features beat the poster + kickoff baseline in 4/27 periods (pooled +0.1 +- 1.6 millinats/idea); poster identity carries most of the forecast skill. A replicated secondary signal survives: long and item-dense seed messages spread each item less (pooled -0.26 +- 0.04 and -0.08 +- 0.03), threaded seeds spread more. Contagiousness vs co-generation is untestable (unread adopters ~1%). Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I0.",
+  "usefulness": "One operator rule with numbers: post an item alone, short, and as a reply (-0.24 log-odds per SD of seed length in #51); reply in-degree and reader timing do not predict spread. A first-use forecast is worth computing only in a large regime-III swarm (top-decile lift 2.5 in #51)."
+ },
+ "one_line": "An idea's spread is mostly not forecastable at first use beyond who posted it (4/27 periods); long, item-dense seed messages spread each item less.",
+ "models": [
+  {
+   "model": "03-contagion",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Seed fitness adds held-out skill in 4/27 periods only"
+  },
+  {
+   "model": "08-copying-vs-transformation",
+   "role": "tool",
+   "outcome": "untested",
+   "note": "In-flight unread prior; too few unread adopters"
+  }
+ ],
+ "rated_by": "H61 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "An idea's spread is mostly not forecastable at first use beyond who posted it (seed features beat the class + poster + kickoff + room baseline in 4/27 periods); seed length and novel load reduce per-item spread",
+  "scope": "27 periods, 99,695 held-out ideas; natives G26, G35, NE42",
+  "direction": "positive",
+  "original_verdict": "failed (forecastability)",
+  "credence": 0.51,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (dilution in 19/27; seed length CI < 0 in 16/27)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic identification (estimator flaw fixed before real data)",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "penalty: seed-length effect post hoc",
+    "x": 0.7,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "keep seed messages short and single-topic if you want an idea to spread",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 0.77,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H61 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

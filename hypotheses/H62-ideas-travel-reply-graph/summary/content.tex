@@ -1,0 +1,34 @@
+\hwhat{H62 asks whether new ideas travel along reply edges rather than through the shared room. An idea is a hashed H34 marker. An agent's talk call is exposed through the reply channel when it has read a use by a DQ2 reply partner: the use replies to the agent, or the two exchanged a reply in the 2\,h before it. Otherwise the exposure is room-only. The test fits an idea-stratified adoption hazard on 26 eligible non-holdout periods. Reply exposure locks adoption more sharply in 23/26 periods (pooled $\Lambda=1.92$ [1.52, 2.42]) and transmits $2.7\times$ more per edge. But a thread field gives the same premium on real schedules. The matched-lag in-flight test inside the reply channel passes in only 2/14 powered periods. \textbf{Premium supported; transmission not shown.} The holdout is untouched.}
+
+\hmodel{Model 03 (contagion on a temporal network with a field), with model 09's parent structure. Agent $j$ updates only at its talk calls. The adoption hazard for idea $i$ at call $c$ has an idea-specific baseline $\lambda_{0,i}$, which absorbs fitness and idea-level fields. Binary exposures multiply it: a recent read through the reply channel ($E^{\rm rep}$) or the room only ($E^{\rm room}$). At a matched 300-s lag, the model also separates seen uses ($S$) from unread-only uses still in flight ($U$). Copying predicts $\beta_S>\beta_U$. A thread field (partners co-producing a term) predicts $\beta_S\approx\beta_U$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\lambda_{ij}(c)=\lambda_{0,i}(c)\exp\!\big(\beta_{\rm rep}E^{\rm rep}_{ij}+\beta_{\rm room}E^{\rm room}_{ij}+\textstyle\sum_{k}\beta_kZ^k_{ij}\big)\\
+\Lambda=e^{\beta_{\rm rep}-\beta_{\rm room}},\quad T_c=P(\text{adopt in 3 calls}\mid\text{1st read via }c),\quad C_{\rm rep}=e^{\beta_{S,{\rm rep}}-\beta_{U,{\rm rep}}}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Adoption hazard ratio against calls with no recent read, per period, for the reply channel (blue) and room-only exposure (orange), with Wald 95\% CIs. Reply exposure locks more sharply in 23/26 periods; the gap widens in regime III and peaks in \#51. (b) In-flight placebo per channel: seen over unread-only hazard at 300\,s. Open markers: fewer than 10 adoptions in a cell. Most reply-channel values sit at 1; only G38 and G51 lie clearly above.}
+
+\htelos{To spread an item, put it into an active reply thread rather than a broadcast. Per first read, a reply partner's use is adopted $2.7\times$ as often, and $10\times$ in a 25-agent room. Do not treat this as proof that agents copy each other. Outside the largest swarm, thread partners produce the same terms at the same moment without reading them. A copying monitor must compare read and unread uses at matched lag inside the thread.}
+
+\hbottom{Ideas spread through reply partners $\approx$2--3$\times$ more per edge than through the room, but in most periods conversation-carried co-production explains this as well as copying does.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.45\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+Synthetic: room, field, thread, reply & $\Lambda$ 0.93, 0.90, \textbf{3.2}, 10.5; $C_{\rm rep}$ (A1) 1.45, 1.71, 0.98, 2.25 & thread fakes $\Lambda$\\
+P1 $\Lambda$ CI $>1$ in $\ge$2/3 & 23/26; pooled 1.92 [1.52, 2.42] & pass\\
+P2 $T_{\rm rep}/T_{\rm room}$ CI $>1$ in $\ge$2/3 & 24/26; pooled 2.70 [2.07, 3.51] & pass\\
+P3 $C_{\rm rep}$ CI $>1$ in $\ge$1/2 & 2/14 powered; pooled 1.22 [0.93, 1.60] & fail\\
+P3 $C_{\rm room}\approx1$ & 12/12 CI $\ni1$; no synthetic power & untestable\\
+P4 reply share of $R_c\ge2\times$ & 5/26; median ratio 1.27 & fail\\
+P5 $T_{\rm room}$ falls with $N$ & $\rho=-0.15$ ($p$ 0.47) & fail\\
+P6 guard $\Lambda$ CI $>1$ & 23/26; median 1.80 & pass\\
+G51 largest premium, lowest $T_{\rm room}$ & $\Lambda$ 9.6 vs regime-III median 2.2 & supported\\
+NE42 room $T$ drops at merge; reply $T$ flat & room 0.004$\to$0.011$\to$0.011; reply within 30\% & mixed\\
+\end{tabular}}
+
+\hobsb{../figures/summary_obs2.pdf}{(a) Synthetic truths on the real messages, ledger reads and DQ2 parents of G20, G38 and G41 (median and IQR over 18 runs). A thread field yields $\Lambda$ and $T$ ratios near 3 without any reading. Only the unread-only placebo $C_{\rm rep}$ stays at 1 there, and it detects reply contagion in 44\% of runs. (b) Per-edge transmissibility against room size, by channel. The reply channel stays above the room channel; room-only transmissibility shows no clear trend with $N$.}
+
+\hcaveats{The decisive test ($C_{\rm rep}$) has power $\approx$0.44 per period, because unread-only reply exposures are rare. DQ2 finds one parent per message for 37--54\% of messages, so ties are under-detected; the shared simulator shows this attenuates $\Lambda$ ($\times$0.3--0.5) and does not create it. Ideas are hashed markers that count co-generated names and numbers. The C-clause verdict rule (A2) was written after the first synthetic run and before real data. One G20 outcome count was seen early, as disclosed in the card. The first real run's fitter diverged and was replaced before any result was used.}
+
+\hnext{Run \texttt{confirm.py} on the \#51 tail (premium C1--C3; transmission C5) after disclosure. Pool $C_{\rm rep}$ hierarchically across periods. Use a multi-parent reply sample to remove DQ2's one-parent budget. Separate same-thread from old-thread partners to measure the thread field directly.}
