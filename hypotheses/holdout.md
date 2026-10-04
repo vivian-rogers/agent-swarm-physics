@@ -48,4 +48,5 @@ Findings needing a decision:
 4. **#32 and #34:** H05's run collides with H12's and H19's Curie–Weiss tests and same-modality plans (H15, H16, H35, H38). H21, H33, H36, H37 and H01's `confirm_r2.py` wrongly call H05's #34 script unrun; H10's card wrongly says #32 is unused.
 5. **H19 and H38 plan the same equal-time gain statistic** on 9 held-out periods.
 6. Stale status lines (H02, H04, H05 cards), uncommitted confirm scripts, and cards without a confirmatory section are listed in the ledger JSON. The estimator-family tags are regex-based and need a human pass.
+7. **H43 disclosure (2026-10-04):** an early exploratory probe printed held-out nudge *counts* (no outcomes); disclosed in the H43 card.
 

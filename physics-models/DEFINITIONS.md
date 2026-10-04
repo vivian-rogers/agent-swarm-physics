@@ -259,3 +259,9 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 ### H32 named variants (2026-10-04; see `hypotheses/H32-information-current-leaders/README.md`)
 - **Content transfer (exposure-conditioned, cross-validated Gaussian):** the leave-one-day-out gain in predicting agent j's next message vector from an exposure-gated, decayed sum (τ = 15 min) of agent i's messages that j has seen, beyond j's own past, the day × room field, other seen senders, and humans and bots; minus the median of 40 cross-day shifts. Out_i, In_i, Net_i are row/column sums; T is the total.
 - **Outflow centralization Φ:** how concentrated the outflow is on one source (star ≈ 0.5–0.75 in synthetics; distributed ≈ 0.01–0.11).
+
+### H43 named variants (2026-10-04; see `hypotheses/H43-kick-refractory-window/README.md`)
+- **Receiving call:** the first model call of the recipient whose context contains a kick message (`context_ledger_items`); kicks are timed there, not at posting.
+- **Kick spacing (read-out):** the time (and number of calls) between the receiving calls of two kicks to the same agent; "same call" when both are read in one context assembly.
+- **Launched episode:** the run of active calls that follows an effective kick (minute-grid run of activity).
+- **Refractory ratio R(δ):** the second kick's effect (log hazard ratio of escape vs matched controls) ÷ the first kick's, as a function of spacing δ. R ≈ 1 means no refractoriness; R ≈ 0 means the second kick is wasted. Needs a positive first-kick effect to be meaningful.

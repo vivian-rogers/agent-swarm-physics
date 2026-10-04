@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 1.0,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: synthetic validation first (it broke and then fixed the estimator before real data), dated predictions, 33 replication folders plus 3 native tests (NE43, G38, G04), operator rule with split-half and bootstrap reliability, scorecard. Confirmatory script written and dry-run on stand-ins; holdout not run. Nudge and human curves are underpowered.",
+    "faithfulness": "The core claim is refuted: no refractory window, the window does not track the launched episode, and the episode-lock signature (recoverable in the synthetic) is absent; R stays 0.8-1.3 at all spacings. Only the mechanical same-call absorption (P4) and the cross-NE43 invariance (P7) hold. Scorecard A1 B1 C1 D0 E1 F1 G1 H1 I1; no holdout.",
+    "usefulness": "A clear, validated-in-sample negative design rule an operator can act on: re-kick after one read-out, not after a task episode; never stack kicks before the recipient's next model call; the nudger's 15-min floor is already past refractoriness, and its real limit is that nudges buy glances rather than sustained work. Evidence is strongest for mentions (G51, 15-period pool) and weaker for humans and nudges."
+  },
+  "one_line": "No refractory window: a second kick read by a later model call keeps 80-130% of the first kick's effect at any spacing; only kicks absorbed into the same read are wasted.",
+  "rated_by": "H43 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}
