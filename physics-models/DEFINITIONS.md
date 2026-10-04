@@ -188,3 +188,9 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Lever episode:** an isolated kick (nudge, human message, @-mention, erasure, kickoff, step) to an agent, with matched controls eligible on past information only and both arms cut at the next kick.
 - **Field effect (occupancy shift):** a lever's change in the stationary state occupancy of the agent's behavior chain (e.g. idle share), φ_exc ≥ 0.10 to count.
 - **Catalytic effect (escape at fixed occupancy):** a symmetric change in transition rates out of and into a state (K, |K| ≥ 0.10 to count) that leaves stationary occupancy unchanged. Catalytic fraction ρ = share of a lever's effect that is catalytic. The split depends on how a rate change is divided between forward and backward rates.
+
+### H25 named variants (2026-10-04; see `hypotheses/H25-criticality-dial/README.md`)
+- **Loop gain (equal-time, daily dial):** per day and channel, minute spins with stalls and scheduled-off minutes masked and 30-min block means removed; VR = Σ_t(Σ_i X_it)² / Σ_t Σ_i X_it², g = 1 − 1/VR, T/T_c = 1/g, amplification = VR. A lower bound on steady-state gain: blind to coupling delayed by minutes.
+- **Per-pair correlation ρ̄:** (VR − 1)/(N − 1). At fixed ρ̄, g = (N−1)ρ̄ / (1 + (N−1)ρ̄) rises with headcount, so compare swarms of different size on ρ̄, not g. Flat ρ̄ across N is a shared-field signature; flat g is J₀/N coupling.
+- **Platform stall (null-calibrated joint silence):** minutes whose joint silence exceeds a per-day null threshold (deterministic), used as a per-minute mask; catches 98% of planted outage minutes.
+- **Content soft spin (30-min window):** whitened message-embedding window mean per agent, after removing agent-day means and operator-message directions, with a method-of-moments noise correction.

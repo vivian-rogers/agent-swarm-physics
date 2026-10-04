@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 1.5,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: reusable dial with synthetic validation on real day designs (S1-S4), daily dials for all 35 non-holdout periods with dated per-period predictions and verdicts, H19/H03 agreement, event tests, post hoc size scaling; confirmatory script frozen and dry-run, holdout not run; the lagged dial (R1) is still missing.",
+    "faithfulness": "The Curie-Weiss reading holds for talk (J0/N size scaling beats the field model) and the instrument recovers equilibrium and fast-Hawkes swarms, but the headline P1 failed on content, the content reading is field-like rather than coupling, P5 failed, P7a failed, the dial is blind to delayed coupling (S3), and C = 1 with no holdout.",
+    "usefulness": "A documented compute_dial(...) that runs on any swarm's event logs with calibrated intervals, a stall detector that works, and two operator rules (track per-pair correlation, not g; use weekly means). Its alarm value is limited: green readings do not exclude slow context-mediated herding."
+  },
+  "one_line": "Daily Curie\u2013Weiss dial: activity/talk g \u2248 0.1 every day; content 'near-critical' is size \u00d7 shared-field correlation; blind to delayed coupling.",
+  "rated_by": "H25 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

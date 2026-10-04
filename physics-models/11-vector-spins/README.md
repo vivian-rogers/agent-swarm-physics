@@ -65,6 +65,7 @@ HH85.
 
 ## Pitfalls
 
+- **"Near-critical" content is size × a shared field** (H25, 2026-10-04): the content dial reads g ≈ 0.70, but per-pair correlation is flat in N (ρ̄ ≈ 0.28, α ≈ 0), and a time-varying exogenous field leaks 0.26–0.30 into g in synthetics. Removing operator-message directions takes out at most a fifth of it.
 - **Post-kickoff alignment drifts** (H36, 2026-10-04): about 40% of the within-day alignment-energy variance after a goal kickoff is a monotone drift (alignment relaxes from about 0.64 to 0.29 over hours; H31 τ ≈ 4.4 h). Detrend before reading variance as susceptibility or heat capacity.
 - **Recency confound for influence** (H29): content similarity falls 5–23× with message age, so compare seen and unseen messages within matched age bins.
 - **Leave-one-out axes and agent-centering** (H21): centering on a mean that includes agent i leaks i into its own leave-one-out axis; agent-centering anti-correlates an agent's residuals across windows and breaks label-permutation nulls for any cross-window axis. The real null spread is set by family co-variation, so i.i.d. synthetic noise overstates power about 2×.

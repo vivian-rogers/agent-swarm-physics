@@ -72,6 +72,7 @@ At N ≲ 30 with short windows, inferring every J_ij is data-hungry and fragile.
 
 ## Pitfalls
 
+- **Equal-time gains grow with N and miss delayed coupling** (H25, 2026-10-04): at fixed pair correlation ρ̄, g = 1 − 1/VR rises with headcount, so a bigger swarm looks closer to criticality with no change in coupling; compare ρ̄. The equal-time variance ratio reads ≈ 0 when agents react 2–8 min later (read-out gating, H08), so use lagged or Hawkes estimators for slow coupling.
 - **Signed bonds from ordinal labels** (H37, 2026-10-04): stance labels map onto bond signs J_ij (support ferromagnetic, oppose antiferromagnetic). After removing speaker/target fields, sign-shuffle and FDR nulls are anti-conservative (10–28% false camps); calibrate against a parametric agent-field null. Stance recovered assigned #12 debate teams (7/10 exact) but found no camps where no protocol assigns sides.
 - **Coupling scales as N^−0.6, not J/N** (H18, 2026-10-03): per-pair uptake falls sub-linearly with room size. Mean-field fits that assume J/N normalization will mis-scale across periods of different size.
 
