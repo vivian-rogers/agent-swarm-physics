@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 1.5,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Round 1 done on 32 non-holdout goal periods plus NE42: dated predictions in the card and every period folder, synthetic validation on three real skeletons (240 runs) with a synthetic-only amendment before real data, per-period verdicts, scorecard, 8 robustness variants, a labelled post-hoc sensitivity (A2). Confirmatory script for #28/#22/#14 frozen and dry-run (reproduces round 1), not run. Not done: per-message coupling, agenda-setting event study, style control, second embedding model, #51.",
+    "faithfulness": "The leader claim failed by its own pre-registered rules: humans as a known source rank above the median agent in only 4/16 periods, the elected #26 leader ranks 7/10 after the vote, the #44 operator 5/7. A source stands out in 2/18 periods, and NE42 shows no switch-on. What holds is narrower: transfer beats the cross-day shift null in 18/32 periods (15/32 within-day too), depends on exposure (7/8 multi-room weeks), and the outflow ranking replicates across halves (23/26). The level is sensitive to field removal, and the top-source identity is not robust. Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I0.",
+    "usefulness": "A computable diagnostic from chat logs: total content transfer T, a reproducible outflow ranking, and a 'does any source stand out' test, with measured synthetic accuracy and a known confound (fast responders). The actionable lesson is negative but relevant for steering: installed or elected leaders do not become content sources, and an installed fine-tuned leader was the most-influenced agent in its room. It does not tell an operator where to intervene."
+  },
+  "one_line": "Content transfer between agents is real and its outflow ranking reproducible, but elected, installed and operator leaders are not content sources",
+  "rated_by": "H32 agent (suggested)",
+  "updated": "2026-10-03",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

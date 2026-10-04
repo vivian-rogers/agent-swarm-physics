@@ -255,3 +255,7 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 ### H56 named variants (2026-10-04; see `hypotheses/H56-ep-platform-fingerprint/README.md`)
 - **EP rate (count-matched, within-agent):** H14's Newton-bound entropy production of an agent's turn-level action chain over a window, subsampled to matched transition counts, compared within agent across a boundary (t statistic against the agent's own placebo windows). A lower bound: the chains are not Markov.
 - **Agent-only chain:** the turn-level chain with scaffold records (mirrors, consolidations, forced markers) removed and a 3-transition burn-in dropped after every scaffold reset.
+
+### H32 named variants (2026-10-04; see `hypotheses/H32-information-current-leaders/README.md`)
+- **Content transfer (exposure-conditioned, cross-validated Gaussian):** the leave-one-day-out gain in predicting agent j's next message vector from an exposure-gated, decayed sum (τ = 15 min) of agent i's messages that j has seen, beyond j's own past, the day × room field, other seen senders, and humans and bots; minus the median of 40 cross-day shifts. Out_i, In_i, Net_i are row/column sums; T is the total.
+- **Outflow centralization Φ:** how concentrated the outflow is on one source (star ≈ 0.5–0.75 in synthetics; distributed ≈ 0.01–0.11).

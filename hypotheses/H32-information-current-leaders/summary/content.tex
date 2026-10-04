@@ -1,0 +1,38 @@
+\hwhat{Does agent $i$'s recent message, which $j$ had seen, predict the direction of $j$'s next message beyond $j$'s own past, a 5-direction goal field, the day$\times$room field and everything else $j$ saw? Tested with held-out-day cross-validation against circular-shift nulls on 32 non-holdout goal periods (\#3--\#44). Transfer is real but small: significant in 18/32 periods (15/32 against the stricter within-day null). It needs exposure (seen $>$ unseen in 7/8 multi-room weeks), and the outflow ranking replicates across halves of days (median $\rho=0.38$). It does not find leaders. A single source stands out in 2/18 periods. The elected leader of \#26 ranks 7/10 after the election and the \#44 operator 5/7. Humans beat the median agent in 4/16 periods. The installed fine-tuned leader is the weakest source in its room. The room merge (NE42) switched nothing on. Holdout script frozen, not run.}
+
+\hmodel{Models 11 and 02: a message-level vector autoregression on whitened embeddings with isotropic couplings. $\mathbf z_m$: agent $j$'s message vector after removing a 5-direction goal, kickoff and day$\times$room field. $\mathbf s_{ij}$: decayed sum ($\tau=15$\,min) of $i$'s messages that $j$ had seen. $\mathbf B_{m,c}$: baseline columns (own past, day$\times$room field, other seen senders, human and bot messages). $G_{ij}$: held-out gain (Gaussian transfer entropy). $\Phi$: noise-corrected concentration of outflow.}
+
+\hmath{\vspace{-6pt}
+\begin{gather*}
+\mathbf z_m=\textstyle\sum_c\beta_c\mathbf B_{m,c}+\kappa_{ij}\,\mathbf s_{ij}(t_m)+\boldsymbol\xi_m,\qquad
+\mathbf s_{ij}=\dfrac{\sum_{x\in\mathrm{seen}}e^{-\Delta t_x/\tau}\,\mathbf z_x}{1+\sum_{x\in\mathrm{seen}}e^{-\Delta t_x/\tau}}\\
+G_{ij}=1-\mathrm{SSE}_{\rm full}/\mathrm{SSE}_{\rm base}\ \text{(held-out days)},\qquad \mathrm{TE}_{i\to j}\approx-\tfrac12\ln(1-G_{ij})\\
+\mathrm{Out}_i=\langle\Delta G_{ij}\rangle_j,\quad \mathrm{Net}_i=\mathrm{Out}_i-\mathrm{In}_i,\quad
+\Phi=\frac{\mathrm{Var}_i(\mathrm{Out})-\overline{\sigma^2_{\rm null}}}{(N-1)\,\overline{\mathrm{Out}}^{\,2}}
+\end{gather*}\vspace{-6pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Total transfer $T$ (mean pair gain minus the null median) per goal period; gray bars: cross-day null 5--95\%. Filled: significant against both the cross-day and within-day nulls; ringed: cross-day only. (b) Where known sources rank by outflow. Humans (blue) are top sources only in the viewer-heavy first weeks. The elected (\#26) leader, the installed (\#44) leader and the \#44 operator are not top sources.}
+
+\htelos{For an operator, the honest answer to ``who is driving this swarm?'' is ``not whoever you put in charge''. Two cheap numbers fall out: total content transfer $T$ (is anyone actually listening to anyone?) and whether one source stands out. In this village, formal leaders, elected or fine-tuned, were not content sources. The installed leader was the most-influenced agent in its room, as H02 and H23 also found. Most weeks are distributed, with content flowing among several agents, often the strongest Claude model present. The caveats bite. In one room, a fast responder to outside news looks exactly like a leader. Operators who post little rank low by construction. The top name changes with preprocessing. Use it as a coupling monitor, not an org chart.}
+
+\hbottom{Exposure-gated content transfer between agents is real in about half the goal periods and gives a reproducible outflow ranking, but it does not identify the known leaders: elected, installed and operator sources all rank low.}
+
+\hresults{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.40\columnwidth}p{0.20\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\ \hline
+\raggedright P1 transfer in $\geq60\%$ of periods & \raggedright 18/32 (56\%); 15/32 under both nulls & \raggedright failed (narrowly) \tabularnewline
+\raggedright P2 a source stands out in $\geq50\%$ & \raggedright 2/18 transfer periods & \raggedright failed \tabularnewline
+\raggedright P3 split-half $\rho>0$ in $\geq2/3$, median $\geq0.3$ & \raggedright 23/26, median 0.38 & \raggedright supported \tabularnewline
+\raggedright P5 humans above the median agent in $\geq70\%$ & \raggedright 4/16 (only \#3--\#6) & \raggedright failed \tabularnewline
+\raggedright P6b \#26 elected leader top after the vote & \raggedright rank 7/10 ($z=0.1$) & \raggedright failed \tabularnewline
+\raggedright P7a \#44 installed leader not top & \raggedright last of 6 agents & \raggedright supported \tabularnewline
+\raggedright P7b \#44 operator top in \#best & \raggedright 5th of 7 sources & \raggedright failed \tabularnewline
+\raggedright P8 seen $>$ unseen (multi-room) & \raggedright 7/8 weeks, sign $p=0.035$; unseen sig.\ 1/8 & \raggedright supported \tabularnewline
+\raggedright P9 NE42 merge switches transfer on & \raggedright $+0.0001\%$, sign $p=0.39$ & \raggedright failed \tabularnewline
+\raggedright P10--P12 modes and rivals & \raggedright C $>$ I/F $p=0.10$; $\Phi$ by mode $p=0.42$; $|\rho|$ with timing 0.24 & \raggedright mixed \tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_validation.pdf}{Synthetic validation on real message skeletons. (a) A planted leader is ranked top in single-room weeks even at 0.5\% of followers' variance; the two-room week needs about 5\%. (b) False calls 0--10\%, but a fast responder to a hidden drive is called leader 90\% of the time in one room. (c) $\Phi$ separates star from distributed.}
+
+\hcaveats{Effects are fractions of a percent of residual variance, and with 32 periods and 13 predictions some passes are chance. In a single room a fast responder is indistinguishable from a leader; only multi-room exposure contrasts and the within-day null address it. The method sees sustained conversational influence, not one-shot agenda setting such as the \#26 goal announcement. Outflow is a total, so low-volume sources (operators) rank low. Transfer depends on how many field directions are removed (25, 18 and 7 significant periods for 1, 5 and 10). The top source's identity agrees in only 13--27 of 32 periods across preprocessing variants. In regime III, low-volume targets made leave-one-day-out unstable (post-hoc A2). One embedding model.}
+
+\hnext{Run the frozen holdout test (\#28, \#22, \#14). Add a per-message coupling so operators are judged per message, and an event-study variant for one-shot agenda setting. Add a style/family control before naming sources, age-matched seen vs unseen messages, a second embedding model, and the \#51 multi-room segments.}
