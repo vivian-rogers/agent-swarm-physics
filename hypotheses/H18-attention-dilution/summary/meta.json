@@ -38,82 +38,57 @@
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
  "v2": {
-  "claim": "Per-pair attention dilutes as k^-0.66 in every period",
-  "original_verdict": "supported (not 1/k)",
-  "credence": 0.83,
+  "claim": "In #51, attention per sender dilutes with batch size when batch size is set exogenously by a timer wake (k^−0.50 [0.45, 0.56]), which the reactive-timing null does not produce (≈ 0); the all-talk-call exponent k^−0.66 is not separable from reactive timing (that null gives 0.75–0.80), and in the small two-room periods the timer design is weak or contradictory",
+  "scope": "#51 (timer-wake design D2); 16 periods for D1 (descriptive)",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.64,
   "ladder": [
    {
     "factor": "base (pre)",
     "x": 0.4
    },
    {
-    "factor": "calibrated null",
-    "x": 2
+    "factor": "strongest null beaten: reactive-timing synthetic gives ≈ 0 for D2",
+    "x": 2.0,
+    "evidence": "card §Results / D2"
    },
    {
-    "factor": "replication",
-    "x": 2
+    "factor": "synthetic recovery at village sampling",
+    "x": 1.5,
+    "evidence": "card §F"
    },
    {
-    "factor": "robust to data/instruments",
-    "x": 2
+    "factor": "exogenous batch size (timer wake) as a quasi-intervention",
+    "x": 1.5,
+    "evidence": "card §Results / D2"
    },
    {
-    "factor": "rival beaten",
-    "x": 1.5
+    "factor": "penalty: one powered unit; G38 and G41 contradict",
+    "x": 0.6,
+    "evidence": "card §Results / D2"
    }
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.75,
-  "decision": "room/channel sizing",
-  "magnitude": "material",
-  "generality": "read-out-gated swarms",
-  "expected_usefulness": 2.28,
-  "scientific_value": 3.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
-  "raters": [
-   {
-    "rater": "coordinator",
-    "credence": 0.89,
-    "value_if_true": 2.5,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Per-sender response falls sub-linearly with the number of pending messages (beta-hat 0.66+/-0.02 on ledger visibility, 16/16 periods), so per-pair coupling scales as ~N^-0.6, and per-pair uptake falls with room size (rho -0.57).",
-    "credence": 0.74,
-    "value_if_true": 3.0,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3,
-    "ladder": [
-     {
-      "factor": "calibrated null mis-sized",
-      "x": 0.7,
-      "evidence": "invisible-sender placebo still 0.49x pending; conversation state contaminates mentions"
-     },
-     {
-      "factor": "replication",
-      "x": 2,
-      "evidence": "16/16 periods"
-     },
-     {
-      "factor": "robust to instruments",
-      "x": 2,
-      "evidence": "round 1 0.63 -> ledger 0.66; reply labels 0.85"
-     },
-     {
-      "factor": "intervention partly consistent",
-      "x": 1.5,
-      "evidence": "#51 exogenous-k timer-wake batches beta 0.45; #35 split k absorbs uptake"
-     }
-    ]
-   }
-  ],
-  "adjudicate": false
- }
+  "value_if_true": 2.0,
+  "decision": "expect each extra message in a batch to get less attention (≈ k^−0.5 per sender) when batches are not reply-driven",
+  "magnitude": "medium",
+  "generality": "read-out-gated LLM swarms",
+  "expected_usefulness": 1.29,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (coordinator correction after the visuals check: the scored claim was D1, which the card itself says does not beat reactive timing); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "Per-pair attention dilutes as k^-0.66 in every period",
+   "credence": 0.83,
+   "fragile": false,
+   "value_if_true": 2.75,
+   "expected_usefulness": 2.28,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04"
+  }
+ ]
 }

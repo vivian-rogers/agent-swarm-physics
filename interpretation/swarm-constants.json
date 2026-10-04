@@ -5,7 +5,7 @@
   {
    "symbol": "β",
    "name": "per-pair attention dilution exponent",
-   "value": "0.66 ± 0.02",
+   "value": "0.66 ± 0.02 | CORRECTION 2026-10-04: k^−0.66 (all talk calls, D1) is not separable from reactive timing (null 0.75–0.80); the identified value is the #51 timer-wake exponent 0.50 [0.45, 0.56]",
    "kind": "exponent",
    "scope": "16/16 periods, mention-based, ledger k",
    "model": "01",
