@@ -1,0 +1,35 @@
+\hwhat{The test asks whether Taylor's law gives a one-number gauge of the shared field. Per period unit, each agent's activity is counted in 15-minute bins, on the raw day window and on DQ8's all-present (trimmed) window. The HH's coefficient $c_T$ (variance $=a\mu+c_T\mu^2$ across agents) fails: Taylor's exponent is $b\approx0.85$ and $c_T\le0$ in most of 70 units. The pair-covariance coefficient $c_\times$ works as a gauge. It is small (0.016 raw, 0.008 trimmed), and the shared share of excess variance is 0.08. Trimming removes 77\% of it in regime III, matching H38's 70--80\%. The gauge is now a per-unit column. The holdout script exists and is not run.}
+
+\hmodel{Fluctuation scaling (model 14) with a multiplicative field $h(t)$ (model 02). Agent $i$'s count in bin $t$ is Poisson with rate $\mu_i\xi_t\zeta_{it}$. $\xi_t$ is a field shared by all present agents (scheduler, kickoff, operator) with variance $c_\times$. $\zeta_{it}$ is the agent's private burstiness with variance $s_i$. $c_\times$ is read from pair covariances and needs no spread in $\mu$. $\varphi$ is the shared share of super-Poisson variance.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+V_i=\mu_i+\bigl[c_\times+s_i(1+c_\times)\bigr]\mu_i^2,\qquad \mathrm{Cov}(y_i,y_j)=c_\times\,\mu_i\mu_j\\
+c_\times=\frac{\sum_{i<j}\mathrm{Cov}_{ij}}{\sum_{i<j}\mu_i\mu_j},\qquad
+\varphi=\frac{c_\times\sum_i\mu_i^2}{\sum_i(V_i-\mu_i)},\qquad r_\times=1-\frac{c_\times^{\rm trim}}{c_\times^{\rm raw}}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Variance against mean per agent, trimmed activity, units 38a and 51c. The points do not follow $b=2$; faster agents are more regular. (b) Shared-field coefficient per unit, raw against trimmed grid. Regime-III units fall toward the 75\%-removed line; regime-I units sit on the diagonal.}
+
+\htelos{Report \texttt{taylor\_c\_shared} on \texttt{activity\_trim} (and \texttt{activity\_raw}) from \texttt{per\_period\_estimates} next to any synchrony or influence claim. A trimmed $c_\times$ near 0.008 with $\varphi<0.1$ means the swarm's activity fluctuations are about 90\% private. Do not use Taylor's $b$ or $c_T$ as field measures in a clocked swarm: they track clock regularity. A raw $c_\times$ far above the trimmed one (e.g.\ 2.2 on 2026-03-31) flags a village-off gap inside the day window. Talk shares about 2.6 times more of its variance than activity ($\varphi$ 0.21 vs 0.08).}
+
+\hbottom{Taylor's $c$ measures clock regularity, not the field; the pair-covariance $c_\times$ measures the field, which is small and mostly the scheduler.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.31\columnwidth}p{0.50\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 raw $b\approx2$, $c_T>0$ & \raggedright $b$ 0.85 [0.21, 1.21]; $c_T>0$ in 31\% & \raggedright fail\tabularnewline
+\raggedright P2 trimmed $b\le1.3$ & \raggedright 0.82 (raw already $<1$) & \raggedright trivial\tabularnewline
+\raggedright P3 III: $r_\times\in[0.6,0.9]$; I $<0.4$ & \raggedright III 0.77 (13 units); I 0.06 (25) & \raggedright pass ($c_\times$)\tabularnewline
+\raggedright P4 kill: III $\varphi_{\rm trim}\ge0.5$ & \raggedright $\varphi$ 0.04; shift null $p<.05$ in 38\% & \raggedright not fired\tabularnewline
+\raggedright P5 call clock lowers $b$ & \raggedright lower in 58\% (need $\ge$67\%) & \raggedright fail\tabularnewline
+\raggedright P6 commits; specificity & \raggedright $b$ 1.26; $\rho$ 0.14 ($n=6$) & \raggedright b pass\tabularnewline
+\raggedright P7 $r_\times$ vs H38 $f_{\rm scaffold}$ & \raggedright $\rho$ 0.19 (13 units) & \raggedright fail\tabularnewline
+\raggedright P8 talk $\varphi$ $>$ activity & \raggedright 77\% of 64 units; 0.21 vs 0.08 & \raggedright pass\tabularnewline
+\raggedright N1 NE14 raw jump & \raggedright one off-gap day; trimmed $+0.001$ & \raggedright fail\tabularnewline
+\raggedright N2 NE43 operator stops & \raggedright $c_\times$ unchanged; $c_T$ no rise & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Daily $c_\times$ across NE14 (regime II to III). Raw and trimmed agree except on 2026-03-31, whose window holds a 513-minute all-silent gap. (b) Shared share $\varphi$ on trimmed grids, messages against activity, one point per unit: talk shares more.}
+
+\hcaveats{Across-agent fits have 4--32 points and a narrow mean range in regime III, so unit-level $b$ is unstable; the card uses medians. Day-bootstrap CIs under-cover (0.7--0.8 in synthetic runs). $c_\times$ counts equal-time coupling as field. Statistics depend on the 15-minute bin. The commit gauge exists in 13 units, so the kickoff-specificity test has 6 goal periods. The regularity reading of $b<1$ is post hoc.}
+
+\hnext{Fit a clock-aware Taylor law (renewal model of each agent's calls) and report the residual shared term. Split $c_\times$ into equal-time and one-call-lagged parts on the call clock, which separates field from read-out coupling. Use raw minus trimmed $c_\times$ as a daily off-gap flag. Run the frozen holdout test after sign-off.}

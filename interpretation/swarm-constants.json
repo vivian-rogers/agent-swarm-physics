@@ -321,6 +321,26 @@
    "model": "03",
    "source": "H63",
    "meaning": "Pile-ons are announced in chat; commits and deploys follow them."
+  },
+  {
+   "symbol": "c_×",
+   "name": "shared-field gauge (pair covariance)",
+   "value": "raw 0.016, trimmed 0.008 (regime III 0.013 → 0.005); shared share φ trimmed 0.04 (regime III); talk φ 0.21",
+   "kind": "field gauge",
+   "scope": "70 units, 15-min bins",
+   "model": "14",
+   "source": "H86",
+   "meaning": "The share of activity variance shared across agents; trimming the schedule removes most of it."
+  },
+  {
+   "symbol": "β_msg",
+   "name": "talk scaling with N",
+   "value": "0.33 [−0.18, 0.64] (regime I 0.09, III 0.77); addressing per message slope 0.79 [0.41, 1.39]",
+   "kind": "exponent",
+   "scope": "71 units",
+   "model": "14",
+   "source": "H85",
+   "meaning": "More agents do not mean proportionally more talk; each message addresses more."
   }
  ]
 }

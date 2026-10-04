@@ -1,0 +1,70 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before real data; a shared-field coefficient (c_x) added before real data because the HH's kill was ill-posed; synthetic validation on real presence grids (estimator recovery, null size and power, b ~ 2 from private burstiness); 70-unit replication on four channels, raw and trimmed; two natives (NE14, NE43); cross-checks with H38 and H54; scorecard; frozen, guarded confirm script dry-run, not run. Gauge written per unit (1,643 rows). No holdout run; no lagged split of c_x.",
+  "faithfulness": "The HH's Taylor premise fails: across agents b ~ 0.85 and c_T <= 0, so c_T and b are not field gauges. The pair-covariance coefficient behaves as a shared-field gauge: small (0.008 trimmed; phi 0.08), 77% removed by trimming in regime III (H38's 70-80%), unchanged by operator drives (NE43), larger for talk than activity (H50). Per-unit agreement with H38's f_scaffold fails, NE14's raw clause fails, and c_x does not separate field from equal-time coupling. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "Gives every hypothesis a one-number shared-field gauge per unit (taylor_c_shared, activity_trim/raw; taylor_phi_shared) in per_period_estimates, says ~90% of activity's excess variance is private, and warns not to use Taylor b or c_T as field measures in clocked agent swarms. Raw-minus-trimmed c_x flags village-off gaps."
+ },
+ "one_line": "Taylor's law across agents is not multiplicative (b ~ 0.85, c_T <= 0), so c is no gauge; the pair-covariance c_x is: small (0.008 trimmed, shared share 0.08), 77% removed by trimming in regime III, now a per-unit column.",
+ "models": [
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Taylor c_T and b fail as gauges; pair covariance c_x works"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Shared field h(t) small after trimming; scheduler carries it"
+  }
+ ],
+ "rated_by": "H86 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Taylor's c and exponent b are not field gauges for clocked agents (b ≈ 0.85 < 1); the pair-covariance coefficient c_× is: trimming removes 0.77 of it in regime III, leaving a shared share φ 0.04; talk shares more than activity (φ 0.21 vs 0.08)",
+  "scope": "70 units; natives NE14, NE43",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.68,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (70 units)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic identification (private burstiness gives b ≈ 1.9 with c_× ≈ 0; kill restated before real data)",
+    "x": 1.5,
+    "evidence": "card §A"
+   },
+   {
+    "factor": "cross-hypothesis agreement (H38 schedule share; H76 day edges)",
+    "x": 1.3,
+    "evidence": "H38, H76"
+   },
+   {
+    "factor": "penalty: c_× removal does not track H38 per unit (ρ 0.19)",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "report c_× (taylor_c_shared, activity_trim) as the shared-field gauge for every unit",
+  "magnitude": "material",
+  "generality": "scheduled swarms",
+  "expected_usefulness": 1.69,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H86 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

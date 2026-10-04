@@ -1,0 +1,34 @@
+\hwhat{The test asks how the swarm's outputs scale with its active population $N$. Each of 71 non-holdout period units gives one point: output per scheduled hour against $N$, with regime intercepts and goal-cluster bootstrap CIs. Talk is sublinear: messages scale as $N^{0.33}$ [$-0.18$, 0.64], and in regime I the room's talk volume is nearly fixed ($\beta=0.09$). Addressing per message rises as $N^{0.79}$ [0.41, 1.39], against $0.44$ predicted from H18's dilution and the measured pending set ($k\propto N^{1.29}$). Reply parents per message do not rise (0.02), so the HH's reply kill fires. Work exponents are not identified. The holdout script exists and is not run.}
+
+\hmodel{Allometric scaling (model 14) with a per-call response kernel (model 02). $Y_u$ is a unit's total output, $T_u$ its scheduled hours, $N_u$ its hour-weighted active population. $\alpha_r$ is a regime intercept and $\zeta_g$ a goal-period effect. Responses per talk call scale as $k^{1-\beta_d}$ with pending set $k\propto N^{\gamma_k}$ and H18's $\beta_d=0.66$. DQ2 keeps one reply parent per message, which caps reply counts.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\ln(Y_u/T_u)=\alpha_{r(u)}+\beta_Y\ln N_u+\zeta_{g(u)}+e_u\\
+\beta_{\rm ment}-\beta_{\rm msg}=(1-\beta_d)\,\gamma_k,\qquad
+\beta_{\rm reply}-\beta_{\rm msg}\approx(1-\beta_d)\,\gamma_k\,\frac{\lambda(1-f)}{f},\ \ f=1-e^{-\lambda}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Messages per scheduled hour against active population, one point per unit, colored by regime, with within-regime fits. Regime I is flat: more agents do not add talk. (b) Addressed agents per message against $N$. It rises in every regime, steepest in regime I.}
+
+\htelos{Do not expect more talk from more agents. In regime I each agent kept its call clock, but its share of talking calls fell as $N^{-0.89}$, so the room's message rate stayed near 130 per hour (IQR 96--148) from 4 to 11 agents. In regime III talk grows as $N^{0.77}$. A message in a larger room names more agents: addressing per message grows as $N^{0.5}$ to $N^{0.8}$. Expect it, and route long rosters into rooms: within a day, the larger room talks less per agent (room exponent 0.36 in \#38). Do not read reply-graph density as interaction load: reply parents per message stay flat in $N$ (median 0.35 in regime I, 0.51 in III). Budget $\pm0.5$ on any output exponent fitted across goal periods.}
+
+\hbottom{Talk is a shared, nearly fixed channel, not a per-agent output: messages scale as $N^{0.33}$ while addressing per message rises as dilution predicts.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.31\columnwidth}p{0.50\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 messages $\beta\in[0.85,1.15]$ & \raggedright 0.33 [$-0.18$, 0.64]; I 0.09, III 0.77 & \raggedright fail\tabularnewline
+\raggedright P2 replies $\beta\in[1.15,1.55]$ & \raggedright 0.36 [$-0.46$, 0.87]; per message 0.02 vs 0.32 & \raggedright kill fires\tabularnewline
+\raggedright P3 addressing/msg $=0.34\gamma_k$ & \raggedright 0.79 [0.41, 1.39] vs 0.44 [0.31, 0.52] & \raggedright pass\tabularnewline
+\raggedright P4 $\gamma_k\in[0.7,1.3]$ & \raggedright 1.29 [0.91, 1.52]; rooms 1.02 [0.88, 1.15] & \raggedright pass\tabularnewline
+\raggedright P5 work $\beta=1.0\pm0.1$ & \raggedright 1.89 [0.55, 7.76] (36 units) & \raggedright unident.\tabularnewline
+\raggedright P6 repos own vs shared & \raggedright CIs span $>5$ & \raggedright unident.\tabularnewline
+\raggedright N1 NE42 merge & \raggedright placebo $\times$2.5--7.5; $k$ ratio 1.34 & \raggedright fail\tabularnewline
+\raggedright N2 \#51 roster sweep & \raggedright SD $\ln n$ 0.08; CIs span $>2$ & \raggedright unident.\tabularnewline
+\raggedright N3 \#38 room contrast & \raggedright msg 0.36 [0.02, 0.82]; ment 1.12 & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Exponents across 71 units (blue, 95\% goal-cluster CIs) against predictions (orange): the reply prediction is 1.25 after the one-parent budget. (b) Within-day room-size exponents in the four rooms-era periods where room sizes vary, with the random-effects mean (squares).}
+
+\hcaveats{One decade of $N$, 35 goal clusters and regime intercepts give a level-exponent SD of 0.25 (synthetic), not the design 0.10. $N$ grew with calendar time, so model generations ride along. Regime-I chat mode showed agents a capped recent-chat window, which may shape the talk budget. Addressed pairs count names, including co-addressing (post hoc: names per naming message rise as $N^{0.44}$ in regime I). Reply parents carry DQ2's one-parent budget. Room contrasts have no room fixed effect. NE42 and the \#51 sweep could not identify a step.}
+
+\hnext{Fit a talk-budget model per call (talk probability against room traffic). Restrict addressing to senders with a pending message (the clean aggregate of H18). Measure work per incumbent agent across roster joins with agent fixed effects. Run the frozen holdout test after sign-off.}

@@ -19,6 +19,8 @@ Each one has produced fake collective order in this project at least once. Every
 - **The scheduler field is handled everywhere.** It is partly handled where a trim-then-block-shift null was never run (H01, H13, H14, H22, H31, H35, H58) or a swarm/EP block was not re-run (H09, H16).
 - In the impostor table, the **Status** column is `removed`, `partly`, `open`, or `n/a` (impostor not relevant).
 
+**Shared-field gauge (H86, 2026-10-04):** report `taylor_c_shared` (c_×, channel `activity_trim`) and `taylor_phi_shared` per unit. Taylor's c_T and b are not field gauges for clocked agents (b < 1).
+
 ## 2. Inputs (use these, not the old tables)
 - **Activity:** `activity_bins_fixed`, `outages_fixed`. The old `activity_bins` dropped about half the events.
 - **Visibility and exposure:** the context ledger (`call_windows`, `context_ledger_items`, `context_ledger_turns`). A message acts at the recipient's **receiving call**.
