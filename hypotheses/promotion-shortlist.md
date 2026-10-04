@@ -222,3 +222,12 @@ Vivian picked these from HH107–HH126 and the leftovers. HH92 was already H08's
 | S102 | Nights demagnetize: remanence decays per night | HH331 | 11, 15 | H103 (launched) |
 | S103 | Barkhausen avalanches when a field is stepped | HH330 | 01, 10, 14 | H104 (launched) |
 | S104 | Goals act on a two-state order parameter | HH130 | 01, 11 | H105 (launched) |
+| S105 | A finite magnet's magnetization wanders as 1/N: the slow mode's decay time should grow with village size | HH335 | 11, 14 | H106 (launched) |
+| S106 | Does the room split grow from zero (an instability) or appear at once (a hidden field)? | HH337 | 11, 10 | H107 (launched) |
+| S107 | Goldstone wandering: the spontaneous room direction should drift, while a fielded one stays pinned | HH338 | 11 | H108 (launched) |
+| S108 | The forced erasure is a demagnetizing pulse: where is the room's order stored? | HH339 | 11, 04 | H109 (launched) |
+| S109 | Exchange bias: an agent's own artifact shifts its goal-switch loop | HH340 | 01 | H110 (launched) |
+| S110 | A fluctuation–response sum rule for talk: Fano factor = 1/(1 − g)² | HH342 | 09, 14 | H111 (launched) |
+| S111 | Crossing claims anti-coordinate: parallel updates make 2-cycles | HH343 | 02, 10 | H112 (launched) |
+| S112 | Read-out channel capacity: information per call grows as k^(1−β) ≈ k^0.34 | HH345 | 04, 12 | H113 (launched) |
+| S113 | A Griffiths phase: rare strong pairs give a subcritical swarm heavy-tailed talk | HH346 | 09, 03, 01 | H114 (launched) |

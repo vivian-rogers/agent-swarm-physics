@@ -1002,6 +1002,7 @@ Each entry names a kill condition and says how it handles the four impostors (sc
   - *Kill:* the slope's CI includes 0 and excludes −0.5.
   - *Impostors:* estimation noise is the main fake ∝ 1/N, and the size-matched subsets remove it. Exogenous and priors: as in H81. Scheduler: n/a.
   - *Models:* 11, 14 · *Builds on:* H81, H89 (no persistent attractor), H85
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H106.
 - **HH336 · Aging, not memory: a universal tenure direction could fake the slow mode.** Every agent's leave-goal-out residual may drift in the same direction as its tenure grows: more self-reference, more village jargon, more talk about memory. Blocks close in time have similar mean tenure, so they would align with no transmission at all. In spin-glass language, the two-time correlation depends on the waiting time t_w (the sample's age), not only on the lag.
   - *Prediction (culture):* projecting out a leave-agent-out tenure direction d_τ changes D_near by < 20%. Block-pair alignment depends on calendar lag, not on the gap in mean tenure. Batch joins (NE27, NE33) make the tenure gap jump while the lag stays small, and the alignment does not drop across them.
   - *Check:* regress r_{i,b} on log tenure with one shared direction (leave-agent-out fit); re-run O2. Run a pair regression of s(b,b′) on Δt and Δ⟨tenure⟩ jointly.
@@ -1014,24 +1015,28 @@ Each entry names a kill condition and says how it handles the four impostors (sc
   - *Kill (SSB):* S(1) ≥ 0.8 S_final with day-1 direction cos ≥ 0.7, or the pre-period repos predict the direction. The "spontaneous" share is then a hidden field.
   - *Impostors:* exogenous: identical kickoffs plus the repo field as an explicit covariate. Priors: agent constants removed (H100). Scheduler: n/a. Convergence: growth alone cannot separate coupling from a self-made room drive; HH339 does that.
   - *Models:* 11, 10 · *Builds on:* H100, H102, H93
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H107.
 - **HH338 · Goldstone wandering: the spontaneous room direction should drift, while a fielded one stays pinned.** With no field, the direction of an ordered state costs no energy to rotate, so it diffuses (a Goldstone mode). With a field, it is pinned. H91 found that content modes rotate about 1 SD a day, but it did not compare fielded and unfielded rooms.
   - *Prediction:* the day-to-day angular diffusion of the room-difference direction Δ(d) is ≥ 2× larger in identical-kickoff periods than in #38 and #44 (room-specific kickoffs), after noise correction. Within identical periods, it scales as 1/(N_room |Δ|²).
   - *Check:* daily Δ(d), both models, style-residualized. Correct for noise with within-day split-half estimates. Compare with a relabel null.
   - *Kill:* identical-kickoff rotation ≤ fielded rotation. The "spontaneous" direction is then pinned like a field, and H100's residual is an unmeasured field.
   - *Impostors:* exogenous: the contrast is field vs no field. Priors: agent constants removed. Scheduler: n/a. Convergence: n/a (direction statistic).
   - *Models:* 11 · *Builds on:* H100, H91, H92
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H108.
 - **HH339 · The forced erasure is a demagnetizing pulse: where is the room's order stored?** NE41 wipes an agent's context at a time set by the scaffold (about 18.6k forced events, regime III). If the room's spontaneous order is held by coupling through the context (H08; H102: content follows the room you speak in), the agent's alignment with its room's direction should drop right after a forced erasure, then recover as it re-reads the room. If the order is held by a self-made field (its own repo, H70: 89% return), alignment should not drop. This is a Kolchinsky scramble of one channel.
   - *Prediction:* alignment with the room direction Δ_spont falls by ≥ 30% in the first 3 post-erasure statements and recovers in proportion to room items re-read (ledger). Alignment with the kickoff target, which is held in the prompt since NE13, does not fall.
   - *Check:* statement-level projections around forced erasures vs matched placebo calls (same agent, same day, no erasure); voluntary erasures as a second contrast. Use H100's identical-kickoff periods and #51g (#focus). Both models.
   - *Kill (context-held order):* no drop, with power ≥ 0.8 at a 30% drop. The spontaneous share is then held in artifacts or memory, not by coupling.
   - *Impostors:* scheduler: the timing is set by the scaffold, so the design is quasi-random. Exogenous: the kickoff-alignment control. Priors: agent fixed effects. Convergence: the recovery is regressed on items read vs posted-unread at matched age.
   - *Models:* 11, 04 · *Builds on:* H100, H102, H15, H69, H70
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H109.
 - **HH340 · Exchange bias: an agent's own artifact shifts its goal-switch loop.** In a ferromagnet bonded to a pinned layer, the hysteresis loop shifts sideways. H100's GPT-5.4 kept its old room's content after a move while it kept its old project, and H70 found that agents return to their own repo after an erasure. If the own artifact is the pinned layer, agents with a live own repo at a goal boundary should carry a constant offset toward the old goal, and the offset should last as long as they still commit to that repo.
   - *Prediction:* at goal boundaries, the old-goal alignment of agents who committed to their own repo in the last 2 days of the old period decays ≥ 2× slower than for unpinned agents. The offset ends within a day of their last commit to that repo.
   - *Check:* H96's old-goal alignment series, split by pinning status from DQ4 `work_commits`. Use agent fixed effects across boundaries, so that the same agent is pinned at some boundaries and not at others. Confirmatory: NE24 (06-29, GitHub → GitLab, inside the holdout window) replaces the pinning layer, so the bias should vanish there.
   - *Kill:* pinned and unpinned decay rates are within 25% of each other.
   - *Impostors:* priors: within-agent contrast. Exogenous: same boundary, same kickoff. Scheduler: n/a. Convergence: n/a (individual carry).
   - *Models:* 01 (hysteresis), 11 · *Builds on:* H96, H70, H100, H58
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H110.
 - **HH341 · Field-cooled vs zero-field-cooled: a goal given at the start vs one given mid-period.** In a spin glass, a sample cooled in a field ends up more magnetized than one cooled without a field that then gets the field, and the gap grows with how long it aged first. In #51, most private goals start with the period (field-cooled). Some agents get a new goal mid-period (NE38 and other `agent_goals` start times; zero-field-cooled). Newcomers (NE32, NE33) arrive fresh with their goal.
   - *Prediction:* at matched days since assignment, incumbents reassigned mid-period reach a lower plateau alignment with their own goal text than agents who had their goal from the start. Newcomers behave like the field-cooled agents. The deficit grows with the incumbent's age in #51 at reassignment (trap aging, H72).
   - *Check:* daily alignment of each agent's content with its own `agent_goal` vector (DQ5, both models, style-residualized), aligned on the assignment day. First count the reassignments; the test needs ≥ 5.
@@ -1044,12 +1049,14 @@ Each entry names a kill condition and says how it handles the four impostors (sc
   - *Kill:* trimmed Fano still exceeds the prediction by ≥ 2× in most units. Talk then clusters by a hidden field or coupling that the read-out loop misses.
   - *Impostors:* scheduler: trimming plus c_×. Exogenous: human and kickoff windows excluded. Priors: n/a (count statistic). Convergence: g comes from read-gated responses only.
   - *Models:* 09, 14 · *Builds on:* H67, H86, H38, H03
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H111.
 - **HH343 · Crossing claims anti-coordinate: parallel updates make 2-cycles.** In the Little model (all spins update at once), coupled spins can fall into period-2 oscillations that sequential updating never shows. In the village, two agents can switch to the same project within one read-out window without having read each other (a crossing, both messages in flight), or one after reading the other (sequential). H93 found that agents avoid occupied repos in #42 and #51.
   - *Prediction:* after a crossing co-switch, at least one of the two leaves the project within 5 calls ≥ 2× as often as after a sequential co-switch. Leaving is mostly mutual (a 2-cycle: both leave). Sequential co-switches stick (herding, H63).
   - *Check:* co-switches from `project_states` and DQ4 commits; crossing vs sequential classified from the ledger (each message's presence in the other agent's producing call); a time-shuffled null at matched lag.
   - *Kill:* departure rates are equal within CI.
   - *Impostors:* convergence: the in-flight vs read split is the design. Scheduler: matched lag. Exogenous: kickoff-named projects stratified. Priors: pair fixed effects.
   - *Models:* 02, 10 · *Builds on:* H93, H63, H40, H57
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H112.
 - **HH344 · Data collapse on each agent's own call clock: settling after a kickoff.** If an agent updates only at its calls (η ≈ 0, H40), its settling toward the kickoff target should be one exponential in its own call count, with one per-call update probability p. The swarm's settling in wall time (H48: about 4.5 h) is then not a single exponential: it is an average over the agents' call rates, and its shape is predicted with no extra parameter.
   - *Prediction:* per-agent alignment curves collapse onto one exponential in own calls (lower held-out error than in wall hours or active hours), with p stable across kickoffs within an agent. The swarm curve matches the call-rate mixture.
   - *Check:* per-agent day-1 to day-3 alignment with the kickoff direction (H54) against own calls (`call_windows`), wall hours and active hours; a cross-validated collapse metric.
@@ -1062,12 +1069,14 @@ Each entry names a kill condition and says how it handles the four impostors (sc
   - *Kill:* the exponent's CI excludes 0.34. Flat (exponent ≈ 0) means a hard capacity of one message per call; linear means no bottleneck.
   - *Impostors:* convergence: in-flight placebo. Exogenous: goal directions projected out. Priors: style_resid. Scheduler: n/a (call level).
   - *Models:* 04, 12 · *Builds on:* H18, H59, H08, H70
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H113.
 - **HH346 · A Griffiths phase: rare strong pairs give a subcritical swarm heavy-tailed talk.** Every unit is subcritical on average (g_lag ≤ 0.39). In a disordered system, rare strongly coupled regions can still be locally supercritical. That gives power-law tails with exponents that vary from period to period (a Griffiths phase), not the geometric tail of a uniform subcritical process. Ping-pong dyads that name each other are the candidate regions.
   - *Prediction:* reply-chain lengths have tails heavier than the geometric law with the unit's mean g. Pairs with pair gain g_ij > 0.5 carry the tail. Removing those pairs restores a geometric tail, and the tail exponent across units tracks the share of strong pairs.
   - *Check:* chains from `reply_pairs` (ledger-visible replies only), per-pair gains from named replies; trimmed at day edges; KS test against the fitted geometric; leave-strong-pairs-out refit.
   - *Kill:* tails are geometric at the mean g, or no pair has g_ij reliably > 0.5.
   - *Impostors:* scheduler: day-edge trim. Exogenous: human-initiated chains are split out. Convergence: ledger-read replies only. Priors: pair strength checked across periods (is it a family pairing?).
   - *Models:* 09, 03, 01 · *Builds on:* H67, H34, H18, H62
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H114.
 - **HH347 · Roster diversity is a quenched random field (random-field Ising across periods).** The agents' constants a_i (u_A 0.55, H73) are random fields fixed by the roster. In the mean-field random-field model, a wider field spread σ_h lowers both the response to a uniform field (the kickoff) and the equal-time order, and coupling J makes the drop steeper than it is for independent spins.
   - *Prediction:* across units, the kickoff quench depth (H54) and H81's equal-time collective share κ_G fall with σ_h, more steeply than a J = 0 null that moves each agent independently with its own observed displacement.
   - *Check:* σ_h = RMS spread of leave-period-out a_i among the agents present; regress per regime, controlling for N; the J = 0 null by permutation of displacements across agents.
