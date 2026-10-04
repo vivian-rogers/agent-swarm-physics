@@ -41,6 +41,7 @@ The Gaussian factor is a **cooperator core** centered at Nλ*. Here λ* is set s
 
 ## Pitfalls
 
+- **Exchangeability fails in the village** (H06, 2026-10-04): in free weeks 79–91% of projects are held by one agent, and NCD, Hubbell and herding all fail joint posterior-predictive checks in 27/30 fits. Add agent-specific innovation fields before comparing copying models. Finite-N λ sits well below the asymptotic λ\* at low μ (0.52 vs 0.75 at N = 13, μ = 0.003): use simulated λ. A two-moment fit is weakly identified along a μ–k ridge. `hypotheses/H06-neutral-cooperative-dynamics/analysis/ncd_core.py` is a reusable exact finite-N simulator.
 - The model assumes neutrality, well-mixed pairing and constant N. The village has different model families, chat rooms, and a changing roster.
 - Results depend on topic labeling and window size; report sensitivity to both.
 - For small N, simulate the stated rules directly rather than using the large-N asymptotics.

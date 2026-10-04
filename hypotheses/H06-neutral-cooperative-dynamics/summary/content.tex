@@ -1,3 +1,34 @@
-% AUTO STUB: replace with a written summary (see writeup/hypothesis-pages/RUBRIC.md). Keep this marker line out of written versions.
-\hwhat{\textit{Not yet summarized. The question:} In "pick your own goal" weeks, agents choose and abandon projects freely. Do project abundances follow *neutral cooperative dynamics* (Piñero-style: species, here projects, are equivalent, but joining is frequency-dependent and cooperative)? Signatures: bimodal abundances with a persistent cooperator core, Simpson concentration $\lambda$ near the predicted $\lambda$*($\mu$, N), and boundaries $\mu$\_B (bimodal) and $\mu$\_L (log-series) in the novelty rate $\mu$. Or does plain Hubbell neutral drift (log-series, no cooperation) explain them? Practical payoff: whether a free swarm concentrates its effort on a few shared projects by a predictable law, and what sets how many projects survive.}
-\hmodel{From: physics-models/06-neutral-cooperative-dynamics (read its README for the rules, $\lambda$*, $\mu$\_B, $\mu$\_L and the finite-N simulation), with physics-models/10-potts as the categorical-state view. H11 found strong herding (ferromagnetic Potts coupling) on project labels in 11/14 periods, including free weeks \#31 and \#37. That is the cooperative ingredient this model formalizes.}
+\hwhat{Agent slots carry a project label per 30-min window: a cluster of the agent's self-written goal (6 clusterings), or the repo it links. Exact finite-$N$ simulations with the real label gaps fit neutral cooperative dynamics (NCD), Hubbell drift and a herding rival to 9 statistics in 5 free weeks, 4 shared-goal weeks and 3 blocks of \#51. Synthetic power: $\approx0.9$ at $N\ge12$. \textbf{NCD failed:} 4/5 free weeks failed, 1 mixed. All three models are rejected (joint check $p<0.01$ in 27/30 free-week fits). Projects are fragmented: 79--91\% are held by one agent (NCD: 45--68\%), only 23--53\% of switches join a project someone else holds (models: $\approx100\%$), and Simpson $\lambda$ falls below every model's range. Copying adds little over independent agents ($\lambda$ 0.15 vs 0.12 in \#31). Frequency dependence has no consistent sign. Batch joins: failed. Holdout \#22 frozen, not run.}
+
+\hmodel{Model 06 (Pi\~nero et al.\ 2025). $N$ individuals (agent slots), each holding one species (project). Per step, with probability $\mu$ a new project replaces a random slot $C$. Otherwise $C$ copies slot $A$'s project only if $A$ and a third slot $B$ hold different projects: cooperation, so rare projects recruit more per capita. $\lambda=\sum_i x_i^2$ is the Simpson index of shares $x_i=n_i/N$. Rivals: Hubbell (always copy) and herding (copy favoured when $A,B$ agree).}
+
+\hmath{\vspace{-8pt}\begin{gather*}
+b_n=(1-\mu)\tfrac nN\big(1-\tfrac nN\big)^2,\qquad
+P_n\propto\frac{(1-\mu)^n}{n}\,e^{-(n-N\lambda^*)^2/2N}\\
+\tfrac1\mu=\sqrt{\tfrac{\pi N}{2}}\,\mathrm{erfcx}\!\Big(\sqrt{\tfrac N2}\,(\mu-\lambda^*)\Big),\quad
+\mu_B=\tfrac{e^{-2}}{\sqrt{2\pi N}},\ \ \mu_L=\sqrt{\tfrac{2}{\pi N}}\\
+P(\text{recruit to } i)\propto x_i\,e^{\beta x_i}:\ \ \beta<0\ \text{NCD},\ 0\ \text{Hubbell},\ >0\ \text{herding}
+\end{gather*}\vspace{-10pt}}
+
+\hobs{../figures/summary_obs.pdf}{Per period, goal clusters (km24). (a) Observed Simpson $\lambda$ (star) against the 95\% predictive ranges of the three fitted copying models (bars), and an independent-agents null (cross; each agent's day sequence shifted). The observation sits below all three models and close to the null. (b) Share of project switches that join a project another agent currently holds. Every copying model predicts $\approx1$; free and shared weeks give 0.15--0.53, and \#51 (private roles) 0.08--0.10.}
+
+\htelos{Neutral cooperative dynamics doesn't apply to these swarms, and neither does any model where agents are interchangeable copiers. Left to choose, LLM agents mostly run their own projects. Herding (H11) is a small layer on top: agents look at the same repos, but their stated plans stay private. The practical content is modest. If an operator wants a shared project, it has to be assigned; free time won't produce a ``core''. Two cheap diagnostics fall out: the singleton fraction and copy-consistency, which separate a collaborating swarm from a set of soloists (\#51 is the extreme). The elegant theory (bimodal core, $\lambda^*$ law) never came into range: $\mu$ is too high at $N\le30$.}
+
+\hbottom{Free LLM swarms don't form a cooperator core: projects are mostly private, so no exchangeable copying model (cooperative, neutral or herding) fits, and copying is only a small excess over independent agents.}
+
+\hresults{\begin{tabular}{@{}p{0.36\columnwidth}p{0.40\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 NCD beats rivals (free weeks) & 4 failed, 1 mixed; NCD wins 1/30 fits & failed\\
+Adequacy (joint PPC) & all 3 models fail in 27/30 fits ($p$ at floor) & failed\\
+P3 $\bar\lambda$ at NCD value & below every model; singletons 0.79--0.91 & failed\\
+P6 shared-goal herding & herding beats NCD 4/4, but $\bar\lambda$ below range & mixed\\
+P8 copying $>$ independent & small excess (\#31: 0.149 vs 0.117) & failed (rule)\\
+P4 cooperator core & $\hat\mu$ never below $\mu_B$ & n/a\\
+NE27/NE33 predict-after & every model over-predicts post-join $\bar\lambda$ & failed\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_validation.pdf}{Synthetic power of the P1 rule with exact finite-$N$ simulators on the real label mask: NCD is recovered 0.50--0.98 at $\mu\le 0.05$, and rivals are falsely supported $\le 0.12$.}
+
+\hcaveats{Goal clusters are topics, not repositories, which may inflate singletons; artifact labels are fragmented too. \#37 and \#38 pool two rooms. With all models rejected, ``best by likelihood'' tracks predictive spread, so herding's 20/30 wins are not evidence for herding. Results hold on the shared deterministic project labels (99.4--99.8\% agreement). The private-projects result sits against H11's herding in attention (artifact mentions); the work-output ledger should decide which describes work.}
+
+\hnext{Agent-specific innovation fields in NCD and Hubbell; repository-anchored species; per-room \#37/\#38; embedding swap; \#22 confirmation after sign-off.}

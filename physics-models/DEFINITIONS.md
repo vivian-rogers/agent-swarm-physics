@@ -211,3 +211,7 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Activity susceptibility χ_act (local projection, A30):** extra active minutes of the recipient in the 30 min after a kick, by local projection with matched pre-history strata (idle duration, recency) and a day fixed effect, adjusting for past kicks and future undirected kicks only. Policy-relative: 20–40% below the per-kick effect in synthetics.
 - **Content susceptibility χ_con (orthogonalized placebo):** the change in cosine between the recipient's next statement and the message's direction after projecting the direction off the recipient's last 8 statements, minus the same for same-kind messages from other days.
 - **Context fill:** turns since the last reset (`context_ledger_turns.ctx_pos` since `reset_consol`).
+
+### H06 named variants (2026-10-04; see `hypotheses/H06-neutral-cooperative-dynamics/README.md`)
+- **Agent state (categorical, intention cluster):** whitened bge intention vectors clustered within the period (k-means or Ward; ladder m ∈ {8, 24, 64}), carried forward up to 4 windows. Topics of stated intentions, not repositories (compare H11's project/artifact strict variant).
+- **Copy-consistency:** the share of an agent's project switches that go to a project another agent currently holds. Every exchangeable copying model (NCD, Hubbell, herding) predicts ≈ 1; the village shows 0.23–0.53 (0.08–0.10 in #51).

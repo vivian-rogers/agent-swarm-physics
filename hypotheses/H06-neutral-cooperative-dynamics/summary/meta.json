@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 0.5,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1 done: synthetic validation with power, 12 non-holdout periods plus NE27/NE33 with dated predictions, scorecard, robustness across 6 clusterings and the deterministic shared labels. The frozen #22 test is not run, and agent-field models (the obvious next step) are not built.",
+    "faithfulness": "The core prediction is refuted cleanly (P1 failed 4/5, mixed 1/5; C = D = E = H = 0). The model's shared assumption (exchangeable copying) fails in every period, so even the rivals are inadequate. Half a point for a well-understood, robust refutation, not for the model.",
+    "usefulness": "Two cheap diagnostics (singleton fraction, copy-consistency) that separate a collaborating swarm from soloists, and the unsurprising design rule that shared projects must be assigned. No lever, no validated monitor."
+  },
+  "one_line": "Free-week projects are mostly private: no exchangeable copying model fits (NCD failed 4/5), and copying is a small excess over independent agents.",
+  "rated_by": "H06 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept; page-2 sections written by coordinator from the round-1 report)"
+}
