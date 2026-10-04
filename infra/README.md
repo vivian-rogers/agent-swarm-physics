@@ -313,6 +313,10 @@ Two builders and two libraries are now shared, and `semantic_kappa` is extended.
 
 ## Known issues
 
+- **Single-event time placebos are anti-conservative** (H116: size 0.22 with 16 placebos): add an event-day field-only skeleton null. Ridge shrinks event steps by about half; report a λ ≈ 0 magnitude. Placebo splits inside a phase are not zero-centred; compare signed values.
+- **The multipartite call-clock EP bound is ≤ 0 at about 1,500 calls** (H116): below resolution for single events.
+- **A DQ6 leader that is the Claude Code agent is never a ledger recipient** (#35, 03-17 #rest), so that role window is lost (H115). The G44 all-present trim keeps only 43% of calls; use a per-room trim.
+- **`scheme/callspins.py` is byte-identical in H115 and H116** (per-call talk spins, read-gated inputs; matches the ledger's sender sets in 99.94–99.99% of calls): move to `infra/shared/`.
 - **With sparse stance flags, the fixed-effects team permutation is liberal** (size 0.09–0.12) under differential false positives (H21/H37 r1c): use a label-confusion stress null. Noise-aware logistic intervals under-cover (0.71–0.84) and separate when one group has zero flags.
 - **DQ2 "opposes" composition depends on context** (H21 r1c): 85% real disagreement across #12 debate teams vs 12% village-wide.
 - **`labelnoise.py` is duplicated in H21 and H37, and H22's role-class rule is re-implemented in H37's `r1c.py`**: move `labelnoise` and `role_relations` to `infra/shared/`.

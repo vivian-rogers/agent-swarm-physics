@@ -1,0 +1,59 @@
+{
+ "complete": 40,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic on the real skeletons with A0/A1 before real data; native event study with time, kickoff-matched, agent and skeleton placebos; two replication periods; estimates rows; confirm.py frozen, guarded, dry-run. Missing: holdout, pooled designation model, message-level mechanism.",
+  "faithfulness": "The predicted coupling step at the election is absent (pct 0.56 / 0.71), the negative control fails (a step at the re-election), and no designation in #12 or #35 shows a step; the test is powered only for steps >= 0.75. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I0.",
+  "usefulness": "An operator-relevant negative with a scale: appointing a leader changes the field, not per-call coupling at >= 0.75; plus a calibration lesson (time placebos alone are anti-conservative for single-event coupling steps). No lever."
+ },
+ "one_line": "Winning #26's election did not step up the per-call talk response to the winner (+0.09 +- 0.33 Ising; >= 0.75 excluded); judges and lead designers show no role step; a post hoc re-election step is unexplained.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "No coupling step at designation; powered for steps >= 0.75"
+  }
+ ],
+ "rated_by": "H116 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Winning the #26 election did not raise the per-call talk response to the winner (+0.09 ± 0.33; a step ≥ 0.75 Ising units excluded), and designated judges (#12) and leads (#35) carry no out-coupling step",
+  "scope": "#26, #12, #35",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.42,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic calibration with an event-day skeleton null (size 0.06)",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "replication across role events",
+    "x": 1.2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: pre-registered negative control failed (re-election step +0.31)",
+    "x": 0.6,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "don't expect an elected or designated leader to gain talk influence at the call level",
+  "magnitude": "small",
+  "generality": "LLM swarms with leaders",
+  "expected_usefulness": 0.42,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H116 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "complete": 40,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic on the real skeleton with amendment A1 before real data; blind ranking frozen and hashed before labels; G12 native plus three replication periods; estimates rows; confirm.py frozen, guarded and dry-run. Missing: holdout, clock comparison, named/unnamed split.",
+  "faithfulness": "The primary blind prediction is not supported (judge rank 1 in 3/10, p 0.15-0.24) and the HH's team clause is killed with the opposite sign (J_ST - J_OT = -0.16 +- 0.08, p 0.01). The estimator is identified (F = 2) and the result is a clean, powered negative for sinks >= 0.6. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I0.",
+  "usefulness": "A diagnostic with a sign: opposing camps answer each other in talk timing, so cross-block coupling can flag factions; blind role recovery from timing does not work at debate scale. No lever."
+ },
+ "one_line": "Blind talk-coupling ranking does not find the debate judge (rank 1 in 3/10; sink >= 0.6 excluded); debate talk couples across teams (J_ST - J_OT = -0.16 +- 0.08, p 0.01); the #26 leader is a talk source.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Judge not a resolvable sink; coupling runs across teams"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "Symmetric team blocks reversed (antiferromagnetic across teams)"
+  }
+ ],
+ "rated_by": "H115 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "In #12, per-call talk coupling runs across debate teams, not within them (J_ST − J_OT = −0.16 ± 0.08, p 0.01; J_OT 0.20 ± 0.05), and the judge is not recoverable blind as a coupling sink (a sink ≥ 0.6 Ising units excluded)",
+  "scope": "#12 (10 debates); replication G26, G35, G44",
+  "direction": "positive",
+  "original_verdict": "failed",
+  "credence": 0.5,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic power on the real skeleton (team blocks 0.87 at J 0.3)",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "blind protocol: ranking hashed before DQ6 labels were read",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "agrees with H21 (opponents engage; robustness, same period)",
+    "x": 1.1,
+    "evidence": "RUBRIC rule 4"
+   },
+   {
+    "factor": "penalty: one period, 7 agents",
+    "x": 0.6,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "in assigned debates, expect agents to answer opponents, not teammates; don't expect to find the judge from talk timing alone",
+  "magnitude": "small",
+  "generality": "LLM swarms with assigned roles",
+  "expected_usefulness": 0.5,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H115 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

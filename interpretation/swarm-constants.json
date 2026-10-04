@@ -741,6 +741,16 @@
    "model": "01",
    "source": "H21, H37 r1c",
    "meaning": "Real disagreement needs assigned sides and ends at the verdict; without sides it stays at 1–2%."
+  },
+  {
+   "symbol": "J_OT",
+   "name": "debate talk couplings per call (Ising units)",
+   "value": "#12 opposite team J_OT 0.20 ± 0.05, same team J_ST 0.04 ± 0.06; judge-sink bound < 0.6; election out-coupling step +0.09 ± 0.33; minimum detectable single-event step ≈ 0.6–0.75 (80% power, 10 agents, 83 min)",
+   "kind": "coupling",
+   "scope": "regime I role events",
+   "model": "02",
+   "source": "H115, H116",
+   "meaning": "Debaters answer opponents; leadership roles do not raise call-level talk influence."
   }
  ]
 }

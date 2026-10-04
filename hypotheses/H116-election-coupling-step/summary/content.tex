@@ -1,0 +1,32 @@
+\hwhat{HH354 asked whether winning the \#26 election steps up the winner's out-coupling: after the result at 19:35 UTC on 2026-01-05, do the other nine agents talk more often after reading agent 17? In 83-min windows on both sides the step is $+0.09\pm0.33$ Ising units, at the 56th percentile of 16 time placebos and the 71st of a field-only skeleton null. The in-coupling stays flat and EP is below resolution. Debate judges (\#12) and daily lead designers (\#35) carry no out-coupling step either. The pre-registered negative control failed: the 01-09 re-election shows a step of $+0.31\pm0.21$, above every placebo. The holdout is not run.}
+
+\hmodel{Model 02 on the call clock. Spin $s_j(c)=\pm1$: call $c$ of agent $j$ talks or not. Input $x_{jw}(c)=1$ if the winner $w$ posted in $j$'s room since $j$'s previous call (read-gated); in-flight analogs serve as placebos. Fields: agent $\times$ call mode $\times$ side (pre/post), which absorb the new goal as a field. Couplings: $J_{out}$ (readers' response to $w$), $J_{in}$ ($w$'s response to others), each with a post-result step $\Delta$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+P(s_j(c)=+1)=\frac{e^{H_j}}{2\cosh H_j},\quad H_j=h_{j,\kappa,\mathrm{side}}+J_{jj}s_j(c^-)+(J_{out}+\Delta J_{out}\,\mathrm{post})\,x_{jw}+(J_{oth}+\Delta J_{oth}\,\mathrm{post})\,X_{j,-w}\\
+\text{detect}\iff\Delta J_{out}\ge0.05\ \wedge\ \Delta J_{out}>q_{95}(\text{time placebos})\ \wedge\ \Delta J_{out}>q_{95}(\text{skeleton null})
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{Left: the winner's out-coupling step ($\lambda=4$) at the election result (blue) and at the re-election (red) against time placebos at matched offsets and agent placebos. Right: unpenalized steps with 95\% intervals for the two \#26 events and the pooled role steps of \#12 judges and \#35 lead designers.}
+
+\htelos{For an operator: electing or appointing a leader does not, by itself, make the other agents answer that agent more per call. A step of $\geq0.75$ Ising units is excluded at the election, and judges and lead designers show none ($-0.04\pm0.10$, $-0.02\pm0.11$). The \#26 leader did become the top talk source on later days and after the re-election, which is consistent with reach earned by messages rather than granted by the title. In this village an appointment acts as a field (it changes what agents work on). One event cannot resolve the 0.05 step HH354 asked about.}
+
+\hbottom{Winning the election did not raise the per-call talk response to the winner ($\Delta J_{out}=+0.09\pm0.33$; a step $\geq0.75$ excluded), and designated judges and lead designers carry no out-coupling step; a post hoc step at the re-election is unexplained.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.53\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+N1 $\Delta J_{out}\ge0.05$, beyond placebos & $+0.035$ ($\lambda$ 4); pct 0.56 time, 0.71 skeleton; $+0.09\pm0.33$ & not detected\\
+N1b $\Delta J_{in}$ in band & $-0.004$ in $[-0.15,+0.18]$ & consistent\\
+N1c winner above agent placebos & pct 0.56 of 9 & failed\\
+N2 no step at re-election & $+0.31\pm0.21$, above all placebos & failed\\
+N3 read step $>$ in-flight & $-0.02\pm0.28$ & failed\\
+N4 EP rises & $+0.002$ nats/call; bound $\le0$ & failed\\
+R role steps (\#12, \#35) & $-0.04\pm0.10$ ($p$ 0.76); $-0.02\pm0.11$ ($p$ 0.83) & failed\\
+Synthetic (F) & size 0.06 with both nulls; power 0.14 at 0.05, 0.96 at 1.0 & passed\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic.pdf}{Synthetic validation on the real \#24--\#27 skeletons (50 worlds). Left: detection rate against the planted step; time placebos alone are anti-conservative (size 0.22), the skeleton null restores 0.06. Right: ridge shrinkage of the estimate ($\lambda=4$ halves it), so magnitudes come from a $\lambda=0.01$ fit.}
+
+\hcaveats{One event gives a step SE of about 0.2 (shrunk) to 0.33 (unpenalized), so HH354's 0.05 is untestable here. The re-election step rests on 44 / 54 exposed reader-calls, untrimmed windows (A0) and post hoc placebo checks. Regime-I talk may not run on the all-call clock (H67). The multipartite EP bound is $\le0$ at 10 agents and 1,500 calls, so N4 has no power. Judges' and leads' role steps are ridge-shrunk.}
+
+\hnext{Model the leader's out-coupling as a function of its directive messages; pool all designations hierarchically for an SE near 0.05; pre-register the day-scale step from 01-05 to the term days; confirm on NE37 (\#47 $\to$ \#48).}

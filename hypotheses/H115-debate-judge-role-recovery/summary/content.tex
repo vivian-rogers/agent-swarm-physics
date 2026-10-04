@@ -1,0 +1,31 @@
+\hwhat{HH353 asked whether the per-call talk kinetic Ising, fitted blind to timing, ranks each debate's judge as the top sink of antisymmetric coupling. In the ten \#12 debates (7 agents, 3,644 calls) the ranking was frozen and hashed before any role label was read. The judge ranks first in 3 of 10 debates (median rank 2.5, mean normalized rank 0.38; uniform $p=0.15$, field-only skeleton $p=0.24$). The predicted team blocks come out reversed: debaters talk after reading an opponent, not a team-mate. As replication, the \#26 elected leader is the top talk source in 4 of 6 windows; \#35 lead designers and the \#44 leader show nothing. The holdout is not run.}
+
+\hmodel{Model 02. Spin $s_i(c)=\pm1$: call $c$ of agent $i$ talks or not, on the ledger call clock. Input $x_{ij}(c)=1$ if $j$ posted in $i$'s room since $i$'s previous call (read-gated); $x^P_{ij}$: posted during the call (in-flight placebo). Fields $h$: agent $\times$ call mode and agent $\times$ debate phase. Couplings $J_{ij}=\alpha_i+\beta_j$ (in, out); sink score $S_i$ = in minus out. Pair-type model: $J$ by same team, opposite team, judge and bench.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+P(s_i(c)=+1)=\frac{e^{H_i(c)}}{2\cosh H_i(c)},\quad H_i=h_{i,\kappa}+h_{i,\phi}+J_{ii}s_i(c^-)+\sum_{j}J_{ij}x_{ij}+\sum_j J^P_{ij}x^P_{ij}\\
+S_i=\sum_j\left(J_{ij}-J_{ji}\right),\qquad u=\frac{\mathrm{rank}(S)-1}{n-1}\quad(0=\text{top sink})
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{Left: the judge's blind sink rank in each debate under read-gated (blue) and in-flight (grey) couplings; the shaded band is the HH kill region. Right: the designated leader's normalized rank per role window (bars) against its field-only skeleton null (black ticks); 1 is the top source. The \#26 leader is a source; judges lean slightly toward the sink end.}
+
+\htelos{For a monitor: one-way roles do not show up as one-way talk timing at debate scale. A judge whose talk follows debaters' talk by $\geq0.6$ Ising units per read debater is excluded, so blind role detection from who-talks-after-whom fails for 7 agents and 300 calls per episode. Opposition does show up: opponents answer each other (cross-team $J$ 0.20 vs within-team 0.04). A cheap opposing-camp detector is therefore cross-block talk coupling, not within-block coupling. An elected leader can be the top talk source, but a single-agent rank needs a skeleton null (its null mean is 0.38 to 0.62, not 0.5).}
+
+\hbottom{The judge is not recoverable blind as a talk sink (rank 1 in 3/10 debates; a sink $\geq0.6$ is excluded), and debate talk couples across teams, not within them ($J_{ST}-J_{OT}=-0.16\pm0.08$, $p=0.01$).}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.31\columnwidth}p{0.52\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 judge top sink (median $\le2$, rank 1 in $\ge4$) & median 2.5, rank 1 in 3/10; $\bar u=0.38$ ($p$ 0.15 / 0.24) & not supported\\
+P1b within-agent contrast $>0$ & $+0.39$ (perm.\ $p$ 0.12) & not supported\\
+P1c read beats in-flight & mean rank 3.3 vs 4.0 & direction only\\
+P2 $J_{ST}-J_{OT}>0$ & $-0.16\pm0.08$; perm.\ $p(\le)=0.01$ & failed (reversed)\\
+P3 rulings as field steps & $J_{DJ}-J^P_{DJ}=+0.02\pm0.11$; $|\Delta h|$ in band & failed\\
+R1 leaders in source half ($\ge2/3$) & 9/13 pooled; G26 5/6, G35 3/5, G44 1/2 & G26 only\\
+Synthetic (F) & size $\le0.01$; 80\% power at sink $a=0.6$; team power 0.87 & passed\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic.pdf}{Synthetic validation on the real \#12 skeleton and call order (100 worlds per point). Left: judge rank-1 rate, support rule and kill rule against the planted sink $a$. Right: the judges' mean normalized rank in planted worlds; the observed value (red) sits at the median of $a=0.15$ worlds and excludes $a=0.6$.}
+
+\hcaveats{Regime-I talk may not run on the all-call clock (H67); the chat-mode clock variant moves the judge to median rank 4 but has little power. Per-debate fits use 170--630 calls, so only large role signals are resolvable. The pooled judge in- vs out-coupling ($J_{JD}=0.28$, $J_{DJ}=0.07$) points the predicted way but uses labels and is post hoc. The leader-as-source replication rests on one unit (Fisher $p\approx0.08$). The verdict step's sign reversal was found after the pre-registered $|\Delta h|$ rule failed.}
+
+\hnext{Blind team recovery from cross-block coupling (antiferromagnetic ground state); split reads into named and unnamed messages; confirm the focal-agent source rank on NE37 (\#48).}
