@@ -7,6 +7,22 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **Blind rater round 3 (H81–H102, plus H84 and H87) merged and adjudicated.** Mean |Δp| 0.11 against the coordinator. Adjudications: H85 0.64 (V 2.5; sublinear-talk clause only), H91 0.69 (scope narrowed instead of a power penalty, rule 2), H100 0.71 and no longer fragile (claim reworded "endogenous, not identified as coupling"; one open-impostor ×0.8), H102 0.51 (rule-1 re-score on the hopper clause). Card fixes: H100 G35 supported → mixed (regime II has no f_comp; summarize.py branch fixed); H92 G06 stays supported (the rater compared per-day gains, the rule uses period-mean MSE); H89 caption, H90 day counts, H81 telos (half-variance is an inference), H85 130/h now sourced in the card; H84's one-reached-agent power barely drops (0.85–0.94 at 0.30), but a 0.20 dip in the reached agent is not excluded. OVERVIEW rebuilt (was stale at H80).
+- **DQ10 done: stance v2 failed its gate (no table); behavior states v3.1 confirmed by a fresh blind reference.** Jev spend $0.026 of $6.
+  - **Stance v2** (`infra/data-quality/stance_v2.md`, `infra/shared/stance_v2.py`): 8 classes that split disagreement on the merits from correction, decline, coordination, ask, acknowledge and inform.
+    - v2.0 failed on the 200-pair draft (`disagree` reweighted precision 0.45).
+    - v2.1 (Amendment 1) failed on a fresh 150-pair sheet: hard class 7/13 (reweighted 0.48 [0.21, 0.76]); the confidence ≥ 0.6 flag 7/7 but n < 15.
+    - **No full run, no `reply_stance_v2` table.** Label and compile refuse without a passed gate.
+    - Still a better labeller than DQ2: κ 0.54 (DQ2 on the same items 0.26); 94% agreement at confidence ≥ 0.8; `decline` 0.90 precise.
+    - Only 12% of DQ2 `opposes` is disagreement on the merits (known issue added).
+    - Reference ceiling: two blind references agree at κ 0.71.
+    - **H21, H22, H37, H55 and H64 stay on DQ2 aggregate stance.** Confirming the confident flag needs a larger fresh sheet (≈ $0.02); Vivian's call.
+  - **Behavior states v3.1 fresh reference** (200 non-holdout windows, two blind labellers on the full v3 evidence):
+    - κ 0.60 [0.52, 0.67]; 85% agreement at confidence ≥ 0.8; blocked κ 0.54; progress ρ 0.76; references agree with each other at κ 0.85.
+    - Pre-registered reading **confirmed**. DQ3's κ 0.38 was the thin-state reference.
+    - execute_task is over-called (precision 0.66): small own-notes commits inside checking windows.
+    - Behavior-state users (H44, H14, H16, H17, H39, H55's `p_blocked`, HH267) are no longer waiting on this check.
+  - Validation steps registered in `build_all.py` (no API calls).
 - **H98 and H104, round 1: both fail as posed.** **H98:** #51's static content structure is a random field with a weak pull (disorder ratio 0.67–0.73 vs 0.24–0.53 in shared-goal weeks, after style removal only; role text explains 5–14%; b 0.23–0.31), but the pre-registered dynamic clause fails: day overlaps exceed the independent-agent null in 51d and 51g in both models, and 70% of the rival niche slope runs through reads and replies. NE32 untestable (isolated newcomers barely spoke); NE33 joiners start off-role (0.57 vs 0.83). **H104:** human messages do not release switch avalanches (#51 ×1.07–1.09, powered); between-step dispersion near Poisson; the HH kill condition is met; the crackling tail is unidentifiable at village counts; kickoffs give the large bursts (K 1.2–4.0 in 7/8). v2 credence H98 0.49, H104 0.49. Constants R_dis, X_step, p_join; holdout item 38; pitfalls in models 01 and 14; six known issues.
 - **Round 1 launched for H106–H114** (5 agents): H107+H108 (room split onset, Goldstone wandering), H109+H110 (erasure pulse, exchange bias), H111+H114 (Fano sum rule, Griffiths phase), H112+H113 (crossing claims, read-out capacity), H106 (slow-mode finite size, coordinated with H81 round 2).
 - **DEFINITIONS round 2:** 75 named-variant entries for H51, H84, H87, H93, H94, H96–H105 (15 symbol clashes resolved with subscripts, e.g. φ_mv, φ_K, R_rm, R_hop, D_A, ρ_K, Δρ_c); model "what held up" lines for 01, 02, 04, 10, 11.
