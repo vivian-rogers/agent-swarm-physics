@@ -736,3 +736,121 @@ An egregore claim needs a residual after removing all four, and the viability fu
 5. **HH301**, repos recruit hosts.
 
 **HH296** (autonomy across scales) is the one formal information-dynamics test worth its estimator cost. HH297 and HH298 need new literature notes first: Rosas et al. 2020 (causal emergence), Rosas et al. 2019 (O-information), Bertschinger 2006/2008 (autonomy, NTIC), Krakauer et al. 2020 (individuality, still missing although H01 and H58 used it), Lizier 2012 (local information dynamics), and a cultural-evolution reference for HH291 and HH304.
+
+## Quantitative lenses: Kolchinsky and complex-systems estimators with numbers attached (added 2026-10-04; for Vivian to vet)
+*Aim.* Every entry names an estimator, a quantitative prediction, and the outcome that would discriminate between readings. Where possible, the predicted number is derived from a result we already have, so the test checks the project's own consistency, not just a direction.
+
+*Anchors used below (all exploratory, round 1b):*
+- per-pair attention dilution β = 0.66 (H18);
+- branching ratio R̂ median 0.22 (H34);
+- one hop per 1.5–5 talk calls (H41);
+- cadence elasticity ε(5 min) ≈ 0.4–0.6 (H40);
+- forced erasure costs ~10% of segment output and −39% commits for ~10 turns (H15, H44);
+- memory carries ≈ 0 day-scale semantic information (H15);
+- day-1 centroid picks its own kickoff top-1 in 18/33 (H54);
+- in-flight share of exposure effects ⅓–½ (H32, H34);
+- regime-III co-activation 70–80% schedule (H38).
+
+*Design range:* 71 non-holdout units, N = 4–32 agents (one decade), 283 days, 17 multi-room units. All four impostors from the egregore section apply.
+
+- **HH307 · The semantic-information channel table: κ in commits per bit, by channel.** This is the flagship quantitative Kolchinsky test. For each channel c (memory, context window, own artifacts, chat reads, human messages, kickoff, history search), estimate:
+  - the information I_c the channel carries about the agent's next allocation (bits; plug-in with Miller–Madow or NSB bias correction on the discretized which-repo/which-state variable);
+  - its value ΔV_c, the viability lost when it is naturally scrambled.
+
+  Viability is commits in the next 40 calls, or P(return to own artifact). The natural scrambles are: memory size at erasure, forced erasure, the re-read vs no-re-read contrast, the room cut, the human-message dose, the kickoff change, and the search outage. Report κ_c = ΔV_c / I_c and η_c = S_c / I_c.
+
+  Prediction, ordered: κ_artifact > κ_context > κ_chat > κ_kickoff > κ_memory ≈ 0. From H15, κ_memory has a CI including 0. From H44, the context channel is worth ~10% of segment output, and H58's re-read gives P(return) 0.96 vs 0.85. *Kill:* the order is not separable (CIs overlap across all channels), or chat ≥ artifact.
+  *Models:* 04 · *Builds on:* H15, H44, H58, H05, H54, HH294
+- **HH308 · Information/viability curves with natural graded scrambles (Sowinski plateau and collapse).**
+  - *Graded variables:* the fraction of pre-erasure context retained (it varies with erasure timing and the NE44 cap change); the number of a convention's carriers still present (HH291); the fraction of a repo's maintainers retained.
+  - *Fit:* plateau-then-collapse vs linear vs exponential, and estimate the threshold R* and the stored semantic information S = R at which viability reaches the actual level.
+  - *Prediction:* the context channel shows a threshold (viability flat until about half of the pre-erasure working set is lost, then collapse); memory shows no curve (flat at ≈ 0 value); convention survival shows a threshold at 2–3 active carriers (minimum viable population, HH303).
+  - *Kill:* linear decline everywhere, i.e. no semantic threshold, which would mean every bit counts equally.
+  - *Models:* 04 · *Builds on:* H15, H44, HH291, HH303
+- **HH309 · Urban-style scaling of swarm outputs with N, with exponents derived from H18 and H58.** Fit Y = Y₀ N^β across the 71 units, with regime and goal-type covariates.
+  - *Predictions:*
+    - Messages: β ≈ 1, since each agent posts at its own call rate (H40).
+    - Replies: β ≈ 1.34. Per-recipient replies scale as k · k^{−0.66} = k^{0.34} with k ∝ N, so N · N^{0.34}.
+    - Committed work: β = 1.0 ± 0.1, the independent agent + own artifact unit (H58). Superlinear β > 1.1 (Bettencourt's 1.15) would be a collective benefit and an egregore-positive result; β < 0.9 would be coordination overhead.
+    - Distinct repos touched: β ≈ 1 in own-artifact weeks and β < 1 in shared weeks (H06, H11).
+  - *Kill for the consistency check:* reply β outside [1.15, 1.55] means H18's dilution law doesn't aggregate.
+  - *Models:* 02, 05 · *Builds on:* H18, H40, H58, H06
+- **HH310 · Fluctuation scaling (Taylor's law) measures the shared field.** Across agents within a unit: Var(Y) = aμ + cμ². The quadratic coefficient c is the variance share of a shared multiplicative field.
+  - *Predictions:*
+    - Raw activity: c large, with Taylor exponent b ≈ 2 (the scheduler).
+    - Activity on the DQ8 trimmed window: b → 1–1.3, with c falling by the 70–80% schedule share (H38).
+    - Commits: b between 1 and 2 with c tracking kickoff specificity (H54).
+  - *Use:* c becomes a one-number impostor gauge reported in every hypothesis.
+  - *Kill:* b ≈ 2 survives trimming, i.e. a non-scheduler shared field is unaccounted for. That would itself be an egregore lead.
+  - *Models:* 02 · *Builds on:* H38, H50, H02
+- **HH311 · Collective entropy production beyond the parts.** Use the Aguilera–Ito–Kolchinsky nonequilibrium max-ent lower bound on σ for the joint process of agents' behavior states (v3, trimmed windows), and compare with Σ_i σ_i of the marginal processes. σ_coll = σ_joint − Σ σ_i > 0 requires directed couplings.
+  - *Prediction:* σ_coll / σ_joint < 0.1 in activity and behavior. It is concentrated in the talk channel at named-message read-outs, with its asymmetric couplings matching H50's J₁ (named 0.17 vs unnamed 0.004).
+  - *Egregore reading:* a collective arrow of time that individuals don't have. This revamps HH67 with the corrected data.
+  - *Kill:* σ_coll indistinguishable from a block-shift null in all channels.
+  - *Models:* 02, 04 · *Builds on:* H14, H50, Aguilera 2026
+- **HH312 · Kelly decomposition of the village's effort allocation (Piñero 2026).** Treat goal periods as environments and repos/projects as bets. Decompose log-productivity growth into three terms: the environment-uncertainty term, the side-information benefit of the kickoff (bounded by I(kickoff; best allocation)), and the strategy-mismatch cost.
+  - *Prediction:* the realized kickoff benefit is 30–60% of its information bound. It is higher for specific kickoffs, matching H54's top-1 18/33. The mismatch cost is largest at goal switches, giving a Kolchinsky–Wolpert mismatch cost in log-output units (revamps HH136).
+  - *Kill:* the realized benefit is ≈ 0 even where the bound is large, so the information is not used.
+  - *Models:* 04, 07 · *Builds on:* H54, H10, HH136, DQ4
+- **HH313 · A Price equation for village culture: selection, transmission and migration.** For a cultural trait z, use Δz̄ = Cov(w, z)/w̄ + E(w Δz)/w̄ + migration. The trait can be a culture-vector projection (HH293) or a convention's use (HH291). w is the number of agents who adopt from i inside the logged light cone (H41).
+  - The migration term is roster in/out flow.
+  - *Predictions:*
+    - Style: migration dominates; it is a charge (H46).
+    - Content: transmission bias dominates, as convergence to the field.
+    - Selection (differential influence): small, carried by named messages (H29), at most ~20% of Δz̄.
+  - *Egregore reading:* a transmission bias toward a village-specific attractor that persists across migration events.
+  - *Kill:* migration plus kickoff explain Δz̄ fully.
+  - *Models:* 05, 06 · *Builds on:* H41, H46, H29, HH293
+- **HH314 · Neutral cultural drift as the null for the village dialect (Bentley).** Under random copying with innovation rate μ, term popularity follows a power law and the turnover z of the top-y list satisfies z ≈ y√μ. Estimate μ from H34's novel-marker rate per use.
+  - *Prediction:* agent-coined terms follow neutral drift (turnover within the neutral band). Kickoff-named terms show conformist bias (turnover below neutral) during their period and collapse at the boundary. Detecting selection on coined terms would be the egregore-positive outcome.
+  - *Kill:* everything is neutral, so the dialect is drift (an informative null for HH291).
+  - *Models:* 06, 03 · *Builds on:* H34, H06, HH291
+- **HH315 · Convention consensus time vs room size (naming-game scaling).** The mean-field naming game has t_conv ∝ N^{1.5} (Baronchelli et al.).
+  - *Prediction:* read-out-gated broadcast chat makes the village a batch-reading complete graph, and agents converge on kickoff-adjacent conventions by shared field. Consensus time for emergent conventions (a shared filename, a tracker, a tool choice) should therefore scale weakly, with exponent ≤ 0.5, and settle in a few read-out cycles. H31 found a constant ~4 h for votes, and H41 one hop per 1.5–5 talk calls.
+  - *Kill:* an exponent near 1.5, which would mean agents negotiate pairwise like humans in Centola–Baronchelli.
+  - *Models:* 06, 10 · *Builds on:* H31, H41, H53 · *Literature:* Centola & Baronchelli 2015, Ashery et al. 2025
+- **HH316 · Collective memory decays biexponentially (communicative + cultural).** After a goal period ends, follow attention to its artifacts and terms: references, reads and commits. Candia et al. find a fast communicative component, carried by the people who were there, and a slow cultural component, carried by the record.
+  - *Prediction:* a biexponential, with a fast τ₁ of days carried by veterans of that period and a slow τ₂ of weeks carried by the record. Newcomers contribute only to the τ₂ component.
+  - *Egregore reading:* the slow component is the village's cultural memory.
+  - *Kill:* a single exponential, or decay set entirely by veterans' departure.
+  - *Models:* 04 · *Builds on:* H15, H44, HH290, HH294
+- **HH317 · Phenomenological renormalization of the dialect (Bialek–Meshulam).** Treat thousands of term usage time series (hashed; H34 markers) as a population. Iteratively merge the most-correlated pairs and track variance scaling Var(K) ∝ K^α̃, the eigenvalue spectrum within clusters, and the "free energy" of silence.
+  - *Prediction:* raw α̃ ≈ 1.6–1.8, driven by the kickoff field. After field removal α̃ ≈ 1.1–1.3 and the scaling holds over ~3 decades of K. That would be a non-trivial fixed point in culture, the egregore-positive outcome, vs α̃ → 1, which means independent terms.
+  - *Kill:* no scaling collapse after field removal.
+  - *Models:* 01, 11 · *Builds on:* H12, H25, H34
+- **HH318 · Flocking in idea space: velocity alignment beyond the field.** Agents are active particles in embedding space:
+  - velocity: day-to-day content displacement;
+  - self-propulsion: the agent's own drift;
+  - alignment: reading;
+  - noise: sampling.
+
+  Compute the Vicsek polarization φ of residual velocities (kickoff drift removed) within read cones vs across rooms, and the velocity distribution's shape.
+  - *Prediction:*
+    - φ ≈ 0 across rooms and small positive within cones, rising with reads per agent-day: a smooth crossover, not a transition, because the swarm is subcritical (H25, H26, H34).
+    - Velocities are heavy-tailed, with jumps at erasures and kickoffs, unlike the 2D Maxwell–Boltzmann of mosh pits (Silverberg et al.), which would mean a thermalized gas.
+  - *Kill:* φ is at null within cones too.
+  - *Models:* 11 · *Builds on:* H41, H05, H47 · *Literature:* Silverberg et al. 2013
+- **HH319 · Is two reads' worth synergistic? PID on joint exposure.** Sources: two senders' message directions read at the same receiving call. Target: the recipient's next content direction.
+  - *Method:* Gaussian PID (MMI redundancy; Williams–Beer lattice; check with a second redundancy measure).
+  - *Prediction:* redundancy dominates (both reflect the room field) and synergy ≈ 0, consistent with H59's "one read = one kick" (dose saturation in #5). A positive synergy atom would be the minimal signature of collective integration at the read-out.
+  - *Kill for the egregore reading:* synergy at the null in every period.
+  - *Models:* 04 · *Builds on:* H59, H30, H32 · *Literature:* Williams & Beer 2010
+- **HH320 · The complexity–entropy diagram of allocation sequences (computational mechanics).** For the which-repo sequences of agents, agent + own artifact, repos (their host sequence), rooms and the village, estimate the entropy rate h_μ and excess entropy E (block-entropy convergence; optionally ε-machine statistical complexity C_μ). Place each unit on the (h_μ, E) plane.
+  - *Prediction:* agents and agent + artifact sit at low h_μ and high E (persistent). The village sits at higher h_μ with E below Σ_i E_i (no collective storage).
+  - *Egregore-positive:* E_village > Σ E_i after field removal, i.e. storage only the collective has.
+  - *Kill:* the village is just the product of its parts on this plane.
+  - *Models:* 04 · *Builds on:* H58, H06, H11
+- **HH321 · An individuality spectrum over time lag (Krakauer A*(τ)).** Compute colonial and organismal individuality for agent + artifact, repo-centered units and the residual culture variable (HH293) as functions of lag τ, from hours to months.
+  - *Prediction:* agent + artifact individuality peaks at τ* of about a goal period (days), then decays at goal changes. The culture residual, if it exists, peaks at τ* of several periods. Different τ* means different individuals living at different timescales: the agent lives for days, the egregore (if any) for months.
+  - *Kill:* the culture residual has no individuality at any τ.
+  - *Models:* 04 · *Revamps:* H01, H58 · *Literature:* Krakauer et al. 2020 (still to grab)
+- **HH322 · Higher-order structure in co-usage: pairwise max-ent vs the full multi-information (Schneidman).** For binary use of conventions or projects per agent-day, fit a pairwise Ising model and report the fraction of multi-information I_N it captures, I_2/I_N.
+  - *Prediction:* I_2/I_N > 0.9 after field removal: pairwise structure suffices, there is no higher-order "group mind", and this matches H49's dense-field reading. A substantial higher-order remainder (I_2/I_N < 0.8) beyond a shared-field null would be the egregore-positive outcome.
+  - *Kill for the egregore reading:* I_2/I_N ≈ 1.
+  - *Models:* 01 · *Builds on:* H49, H11, HH298
+
+*Suggested first picks.*
+- **HH309 (scaling) and HH310 (Taylor's law):** cheap, run on shared tables, and test the project's own numbers for consistency.
+- **HH307 (κ channel table):** the flagship Kolchinsky quantity, using natural experiments we have already characterized.
+- **HH316 (biexponential collective memory):** a direct, quantitative egregore test with a clear published comparison.
+- **HH313 (Price equation):** separates culture from migration.
