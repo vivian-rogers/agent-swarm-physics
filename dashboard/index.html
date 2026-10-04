@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab status</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --surface-1: #fcfcfb; --surface-2: #f3f2ee; --surface-3: #e9e7e1; --border: #e1dfd8;
+  --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #85847e;
+  --accent: #2a78d6;
+  --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
+  --ord-1: #86b6ef; --ord-2: #256abf; --ord-0: #ecebe6;
+  --seg-1: #2a78d6; --seg-2: #eb6834; --seg-3: #1baf7a; --seg-4: #eda100;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --surface-2: #232321; --surface-3: #2d2d2a; --border: #34342f;
+    --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
+    --accent: #3987e5; --ord-1: #3987e5; --ord-2: #86b6ef; --ord-0: #2d2d2a;
+    --seg-1: #3987e5; --seg-2: #d95926; --seg-3: #199e70; --seg-4: #c98500;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-1: #1a1a19; --surface-2: #232321; --surface-3: #2d2d2a; --border: #34342f;
+  --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
+  --accent: #3987e5; --ord-1: #3987e5; --ord-2: #86b6ef; --ord-0: #2d2d2a;
+  --seg-1: #3987e5; --seg-2: #d95926; --seg-3: #199e70; --seg-4: #c98500;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--surface-1); color: var(--text-primary); }
+body { font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.mono, td.num, .id { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; cursor: pointer; }
+button:hover { background: var(--surface-3); }
+input { font: inherit; color: inherit; background: var(--surface-1); border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px; width: 220px; }
+
+header { position: sticky; top: 0; z-index: 5; background: var(--surface-1); border-bottom: 1px solid var(--border); padding: 8px 16px; display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+header h1 { font-size: 14px; margin: 0; font-weight: 650; }
+.facts { display: flex; gap: 18px; flex-wrap: wrap; color: var(--text-secondary); }
+.facts b { color: var(--text-primary); font-weight: 600; }
+.live { margin-left: auto; color: var(--text-muted); display: flex; gap: 10px; align-items: baseline; }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); vertical-align: 1px; }
+.dot.off { background: var(--text-muted); }
+
+main { display: grid; grid-template-columns: minmax(0, 2.1fr) minmax(320px, 1fr); gap: 16px; padding: 12px 16px 40px; }
+@media (max-width: 1100px) { main { grid-template-columns: minmax(0, 1fr); } }
+section { margin-bottom: 18px; }
+section > h2 { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-secondary); margin: 0 0 6px; font-weight: 650; display: flex; gap: 10px; align-items: baseline; }
+section > h2 .sub { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--text-muted); }
+.scroll { overflow-x: auto; }
+
+table { border-collapse: collapse; width: 100%; }
+th { text-align: left; font-weight: 600; color: var(--text-secondary); font-size: 11px; padding: 4px 6px; border-bottom: 1px solid var(--border); white-space: nowrap; user-select: none; }
+th.sort { cursor: pointer; }
+th.sort:hover { color: var(--text-primary); }
+td { padding: 4px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr.click { cursor: pointer; }
+tr.click:hover td { background: var(--surface-2); }
+tr.changed td { animation: flash 1.6s ease-out; }
+@keyframes flash { from { background: color-mix(in srgb, var(--accent) 22%, transparent); } to { background: transparent; } }
+td.num { text-align: right; white-space: nowrap; }
+.muted { color: var(--text-muted); }
+.sec { color: var(--text-secondary); }
+.status-line { color: var(--text-muted); font-size: 12px; max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.title { font-weight: 550; max-width: 340px; }
+
+.pips { white-space: nowrap; letter-spacing: 1px; font-size: 11px; color: var(--text-primary); }
+.pips .e { color: var(--text-muted); }
+.pct { font-size: 11px; color: var(--text-secondary); margin-left: 4px; }
+
+.score { display: inline-grid; grid-template-columns: repeat(9, 16px); gap: 2px; }
+.sc { height: 16px; border-radius: 3px; font: 600 10px/16px ui-monospace, monospace; text-align: center; }
+.sc.v0 { background: var(--ord-0); color: var(--text-secondary); }
+.sc.v1 { background: var(--ord-1); color: #0b0b0b; }
+.sc.v2 { background: var(--ord-2); color: #fff; }
+:root[data-theme="dark"] .sc.v2 { color: #0b0b0b; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .sc.v2 { color: #0b0b0b; } }
+.sc.vn { border: 1px dashed var(--border); color: var(--text-muted); }
+
+.vbar { display: flex; height: 10px; width: 120px; border-radius: 3px; overflow: hidden; gap: 2px; background: transparent; }
+.vbar span { display: block; height: 100%; }
+.vcount { font: 11px ui-monospace, monospace; color: var(--text-secondary); white-space: nowrap; }
+.v-supported { background: var(--good); } .v-failed { background: var(--critical); } .v-mixed { background: var(--warning); }
+.v-descriptive { background: var(--ord-1); } .v-pending { background: var(--surface-3); } .v-na { background: var(--border); }
+
+.cell { display: inline-block; width: 22px; height: 20px; border-radius: 3px; text-align: center; font: 700 11px/20px ui-monospace, monospace; cursor: pointer; }
+.cell.supported { background: var(--good); color: #fff; }
+.cell.failed { background: var(--critical); color: #fff; }
+.cell.mixed { background: var(--warning); color: #0b0b0b; }
+.cell.descriptive { background: var(--ord-1); color: #0b0b0b; }
+.cell.pending { background: var(--surface-2); color: var(--text-muted); border: 1px dashed var(--border); }
+.cell.na, .cell.other { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+.cell.conf { outline: 2px solid var(--text-primary); outline-offset: -2px; }
+.grid td { padding: 2px 3px; border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent); }
+.grid td.plabel { white-space: nowrap; padding-right: 10px; max-width: 360px; overflow: hidden; text-overflow: ellipsis; }
+.grid th.hcol { writing-mode: vertical-rl; transform: rotate(180deg); padding: 4px 2px; font-family: ui-monospace, monospace; }
+
+.chip { display: inline-flex; gap: 4px; align-items: center; padding: 1px 6px; border-radius: 3px; border: 1px solid var(--border); font-size: 11px; white-space: nowrap; margin: 1px 2px 1px 0; }
+.chip.used { background: var(--surface-2); }
+.state { font-size: 11px; white-space: nowrap; }
+.state.running { color: var(--text-primary); }
+.state.stalled { color: var(--text-primary); }
+.state.stalled::before { content: "⚠ "; color: var(--serious); }
+.state.finished { color: var(--text-muted); }
+.level { font-size: 11px; color: var(--text-secondary); }
+.warn { color: var(--serious); }
+
+.stack { display: flex; height: 14px; border-radius: 3px; overflow: hidden; gap: 2px; background: var(--surface-2); position: relative; }
+.stack span { height: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 11px; color: var(--text-secondary); margin-top: 6px; }
+.legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
+.limit { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text-primary); }
+
+.log-entry { padding: 5px 0; border-bottom: 1px solid var(--border); }
+.log-entry summary { cursor: pointer; list-style: none; }
+.log-entry summary::-webkit-details-marker { display: none; }
+.log-entry .md { color: var(--text-secondary); font-size: 12px; margin: 4px 0 0 0; }
+.log-entry .md ul { padding-left: 18px; margin: 2px 0; }
+
+#drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(760px, 100vw); background: var(--surface-1); border-left: 1px solid var(--border); box-shadow: -8px 0 24px rgba(0,0,0,.12); transform: translateX(105%); transition: transform .18s ease; z-index: 20; display: flex; flex-direction: column; }
+#drawer.open { transform: none; }
+#drawer .bar { display: flex; gap: 10px; align-items: center; padding: 8px 14px; border-bottom: 1px solid var(--border); }
+#drawer .bar .path { font: 12px ui-monospace, monospace; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+#drawer .body { overflow: auto; padding: 4px 22px 40px; }
+#drawer .body pre { background: var(--surface-2); padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 12px; }
+#drawer .body code { font-size: 12px; }
+#drawer .body table { margin: 8px 0; font-size: 12px; }
+#drawer .body th, #drawer .body td { border: 1px solid var(--border); padding: 3px 6px; }
+#drawer .body h1 { font-size: 17px; } #drawer .body h2 { font-size: 14px; margin-top: 20px; } #drawer .body h3 { font-size: 13px; }
+
+#tip { position: fixed; z-index: 30; pointer-events: none; background: var(--text-primary); color: var(--surface-1); padding: 5px 8px; border-radius: 4px; font-size: 12px; max-width: 420px; display: none; white-space: pre-wrap; }
+.err { color: var(--critical); padding: 8px 16px; }
+.small { font-size: 11px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Agent-swarm physics · lab status</h1>
+  <div class="facts" id="facts"></div>
+  <div class="live"><span id="livedot" class="dot"></span><span id="updated">loading…</span>
+    <button id="pause" title="Pause auto-refresh">pause</button>
+    <button id="theme" title="Toggle light/dark">◐</button></div>
+</header>
+<div id="error" class="err" hidden></div>
+<main>
+  <div>
+    <section id="s-hyp">
+      <h2>Hypotheses <span class="sub" id="hyp-sub"></span>
+        <span style="margin-left:auto"><input id="filter" placeholder="filter: H1, running, mixed, holdout…"></span></h2>
+      <div class="scroll"><table id="hyp"></table></div>
+      <div class="legend small" style="margin-top:8px">
+        <span>Progress pips: card · predictions · synthetic check · periods with verdicts · scorecard · confirm script · holdout run (● done, ◐ partial, ○ not yet)</span>
+        <span>Scorecard A–I: <i style="background:var(--ord-0)"></i>0 <i style="background:var(--ord-1)"></i>1 <i style="background:var(--ord-2)"></i>2, dashed = not scored</span>
+      </div>
+    </section>
+    <section id="s-grid">
+      <h2>Goal periods × hypotheses <span class="sub">✓ supported · ✗ failed · ~ mixed · d descriptive · … pending · – n/a · outlined = confirmatory · 🔒 held-out period</span></h2>
+      <div class="scroll"><table class="grid" id="grid"></table></div>
+    </section>
+  </div>
+  <div>
+    <section><h2>Agents <span class="sub" id="ag-sub"></span></h2><table id="agents"></table></section>
+    <section><h2>Holdout ledger <span class="sub" id="ho-sub"></span></h2><div id="holdout"></div></section>
+    <section><h2>Lab notebook <span class="sub">latest LOG.md entries</span></h2><div id="log"></div></section>
+    <section><h2>Shared pipelines <span class="sub" id="pl-sub"></span></h2><div class="scroll"><table id="pipes"></table></div></section>
+    <section><h2>Storage <span class="sub" id="st-sub"></span></h2><div id="storage"></div></section>
+    <section><h2>Local processes <span class="sub">python under this project</span></h2><table id="procs"></table></section>
+    <section><h2>Git</h2><div id="git"></div></section>
+  </div>
+</main>
+<aside id="drawer"><div class="bar"><span class="path" id="dpath"></span><button id="dclose">close ✕</button></div><div class="body" id="dbody"></div></aside>
+<div id="tip"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store = { get(k, d) { try { const v = localStorage.getItem("lab." + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+                set(k, v) { try { localStorage.setItem("lab." + k, JSON.stringify(v)); } catch {} } };
+const SYM = { supported: "✓", failed: "✗", mixed: "~", descriptive: "d", pending: "…", "n/a": "–", other: "?" };
+const STAGES = ["card", "predictions", "synthetic", "periods", "scorecard", "confirm script", "holdout run"];
+let S = null, paused = false, sortKey = store.get("sort", "id"), sortDir = store.get("dir", 1), lastSeen = {};
+
+function ago(iso) {
+  if (!iso) return "—";
+  const s = (Date.now() - new Date(iso).getTime()) / 1000;
+  if (s < 60) return Math.max(0, Math.round(s)) + "s ago";
+  if (s < 3600) return Math.round(s / 60) + "m ago";
+  if (s < 86400) return Math.round(s / 3600) + "h ago";
+  return Math.round(s / 86400) + "d ago";
+}
+function dur(a, b) {
+  const s = (new Date(b) - new Date(a)) / 1000; if (!(s > 0)) return "—";
+  return s < 3600 ? Math.round(s / 60) + "m" : (s / 3600).toFixed(1) + "h";
+}
+const mb = b => b == null ? "—" : b >= 1e9 ? (b / 1e9).toFixed(2) + " GB" : b >= 1e6 ? (b / 1e6).toFixed(1) + " MB" : (b / 1e3).toFixed(0) + " kB";
+const gb = b => b == null ? "—" : (b / 1e9).toFixed(1);
+
+// ---------------------------------------------------------------- tooltip
+const tip = $("#tip");
+document.addEventListener("mousemove", e => {
+  const t = e.target.closest("[data-tip]");
+  if (!t) { tip.style.display = "none"; return; }
+  tip.textContent = t.dataset.tip; tip.style.display = "block";
+  const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8), y = Math.min(e.clientY + 14, innerHeight - tip.offsetHeight - 8);
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+});
+
+// ---------------------------------------------------------------- drawer
+let drawerPath = null;
+async function openFile(path) {
+  drawerPath = path;
+  $("#dpath").textContent = path; $("#dbody").innerHTML = '<p class="muted">loading…</p>'; $("#drawer").classList.add("open");
+  const r = await fetch("/api/file?path=" + encodeURIComponent(path)).then(r => r.json());
+  if (r.error) { $("#dbody").innerHTML = `<p class="err">${esc(r.error)}</p>`; return; }
+  $("#dbody").innerHTML = path.endsWith(".md") && window.marked ? marked.parse(r.text) : `<pre>${esc(r.text)}</pre>`;
+}
+async function openAgent(id, desc) {
+  drawerPath = null;
+  $("#dpath").textContent = "agent · " + desc; $("#dbody").innerHTML = '<p class="muted">loading…</p>'; $("#drawer").classList.add("open");
+  const r = await fetch("/api/agent?id=" + encodeURIComponent(id)).then(r => r.json());
+  const a = (S?.agents || []).find(x => x.id === id);
+  let html = "";
+  if (r.report) html += `<h2>Hand-back report</h2>` + (window.marked ? marked.parse(r.report) : `<pre>${esc(r.report)}</pre>`);
+  else html += `<p class="muted">No report yet${a ? " · " + a.state : ""}.</p>` + (r.latest_text ? `<h2>Latest message</h2>` + (window.marked ? marked.parse(r.latest_text) : `<pre>${esc(r.latest_text)}</pre>`) : "");
+  if (a?.last_tools?.length) html += `<h2>Recent tool calls</h2><table>` + a.last_tools.map(t => `<tr><td class="mono">${esc(t.tool)}</td><td>${esc(t.what)}</td><td class="muted">${ago(t.t)}</td></tr>`).join("") + `</table>`;
+  $("#dbody").innerHTML = html;
+}
+$("#dclose").onclick = () => $("#drawer").classList.remove("open");
+document.addEventListener("keydown", e => { if (e.key === "Escape") $("#drawer").classList.remove("open"); });
+$("#dbody").addEventListener("click", e => {
+  const a = e.target.closest("a"); if (!a || !drawerPath) return;
+  const href = a.getAttribute("href") || "";
+  if (/^[a-z]+:/i.test(href) || href.startsWith("#")) return;
+  e.preventDefault();
+  const base = drawerPath.split("/").slice(0, -1);
+  for (const part of href.split("#")[0].split("/")) { if (part === "..") base.pop(); else if (part && part !== ".") base.push(part); }
+  let p = base.join("/"); if (!/\.\w+$/.test(p)) p += "/README.md";
+  openFile(p);
+});
+
+// ---------------------------------------------------------------- sections
+function renderFacts() {
+  const hs = S.hypotheses, ag = S.agents, b = S.budget;
+  const run = ag.filter(a => a.state === "running").length, st = ag.filter(a => a.state === "stalled").length;
+  const r1 = hs.filter(h => h.stages.periods > 0 && h.stages.scorecard > 0).length;
+  const used = new Set(); S.holdout.goals.forEach(g => g.uses.some(u => !u.planned) && used.add(g.period)); S.holdout.windows.forEach(w => w.uses.some(u => !u.planned) && used.add(w.id));
+  const totalHo = S.holdout.goals.length + S.holdout.windows.length;
+  const repoParts = ["data/raw", "data/processed", ".venv", ".git"].reduce((s, k) => s + (b.parts[k] || 0), 0);
+  $("#facts").innerHTML = [
+    `<span><b>${hs.length}</b> hypotheses · <b>${r1}</b> with round-1 verdicts</span>`,
+    `<span><b>${run}</b> agents running${st ? ` · <b class="warn">${st}</b> stalled` : ""}</span>`,
+    `<span>holdout <b>${used.size}</b>/${totalHo} used</span>`,
+    `<span>storage <b>${gb(repoParts)}</b>/${b.limit_gb} GB <span class="muted">(+${gb((b.parts["uv cache (shared)"] || 0) + (b.parts["HF cache"] || 0))} caches)</span></span>`,
+    `<span><b>${S.git.uncommitted}</b> uncommitted</span>`,
+    `<span>Jev <b>$${(b.jev_usd || 0).toFixed(3)}</b></span>`,
+  ].join("");
+}
+
+function pips(st) {
+  return STAGES.map(k => { const v = st[k] || 0; return `<span class="${v === 0 ? "e" : ""}" data-tip="${k}: ${v === 1 ? "done" : v === 0 ? "not yet" : Math.round(v * 100) + "%"}">${v >= 1 ? "●" : v > 0 ? "◐" : "○"}</span>`; }).join("");
+}
+function scoreCells(sc) {
+  const names = { A: "mapping", B: "assumptions", C: "adequacy", D: "unfitted predictions", E: "interventional", F: "identifiability", G: "ground truth", H: "comparative", I: "transfer" };
+  return `<span class="score">` + "ABCDEFGHI".split("").map(a => { const v = sc[a];
+    return `<span class="sc ${v == null ? "vn" : "v" + v}" data-tip="${a} ${names[a]}: ${v == null ? "not scored" : v}">${v == null ? a : v}</span>`; }).join("") + `</span>`;
+}
+function vbar(c) {
+  const order = ["supported", "failed", "mixed", "descriptive", "pending"]; const tot = order.reduce((s, k) => s + (c[k] || 0), 0);
+  if (!tot) return `<span class="muted small">no period folders</span>`;
+  const segs = order.filter(k => c[k]).map(k => `<span class="v-${k}" style="flex:${c[k]}" data-tip="${c[k]} ${k}"></span>`).join("");
+  const txt = order.filter(k => c[k]).map(k => `${c[k]}${SYM[k]}`).join(" ");
+  return `<div class="vbar">${segs}</div><div class="vcount">${txt}</div>`;
+}
+function agentFor(hid) {
+  const as = S.agents.filter(a => a.hypothesis === hid);
+  return as.find(a => a.state === "running") || as.find(a => a.state === "stalled") || as[0];
+}
+function holdoutCell(h) {
+  if (h.confirm_verdicts.length) return h.confirm_verdicts.map(c => `<span class="cell ${c.verdict} conf" data-tip="${esc(c.period)}: ${esc(c.text)}">${SYM[c.verdict] || "?"}</span> <span class="small mono">${esc(c.period)}</span>`).join("<br>");
+  if (h.confirm_runs.length) return `<span class="small">run: ${esc(h.confirm_runs.join(", "))}</span>`;
+  if (h.confirm_scripts.length) return `<span class="small sec" data-tip="${esc(h.confirm_scripts.join(", "))}">script ready</span>`;
+  return `<span class="muted">—</span>`;
+}
+
+function renderHyp() {
+  const f = ($("#filter").value || "").toLowerCase().trim();
+  let hs = S.hypotheses.map(h => ({ ...h, agent: agentFor(h.id) }));
+  if (f) hs = hs.filter(h => [h.id, h.title, h.status, h.level, h.agent?.state, Object.entries(h.verdicts).filter(([, v]) => v).map(([k]) => k).join(" "), h.confirm_scripts.length ? "holdout confirm" : ""].join(" ").toLowerCase().includes(f));
+  const key = { id: h => h.id, progress: h => h.progress, activity: h => h.last_activity || "", data: h => h.data_bytes, level: h => h.level,
+                periods: h => Object.values(h.verdicts).reduce((a, b) => a + b, 0) }[sortKey] || (h => h.id);
+  hs.sort((a, b) => (key(a) > key(b) ? 1 : key(a) < key(b) ? -1 : 0) * sortDir);
+  const th = (k, label, cls = "") => `<th class="sort ${cls}" data-k="${k}">${label}${sortKey === k ? (sortDir > 0 ? " ▲" : " ▼") : ""}</th>`;
+  $("#hyp").innerHTML = `<thead><tr>${th("id", "ID")}<th>Hypothesis</th>${th("progress", "Progress")}<th>Scorecard</th>${th("periods", "Goal periods")}<th>Holdout</th>${th("activity", "Activity")}</tr></thead><tbody>` +
+    hs.map(h => {
+      const a = h.agent; const changed = lastSeen[h.id] && lastSeen[h.id] !== h.last_activity;
+      return `<tr class="click ${changed ? "changed" : ""}" data-card="${esc(h.card || "")}">
+        <td class="id">${h.id}</td>
+        <td><div class="title">${esc(h.title)}</div><div class="status-line" data-tip="${esc(h.status)}">${esc(h.status)}</div></td>
+        <td><span class="pips">${pips(h.stages)}</span><span class="pct mono">${h.progress}%</span><div class="level">${h.level}</div></td>
+        <td>${scoreCells(h.scores)}</td>
+        <td>${vbar(h.verdicts)}</td>
+        <td>${holdoutCell(h)}</td>
+        <td style="white-space:nowrap">${a ? `<span class="state ${a.state}">${a.state === "running" ? '<span class="dot"></span> ' : ""}${a.state}</span><br>` : ""}<span class="small muted">${ago(h.last_activity)} · ${mb(h.data_bytes)}</span></td></tr>`; }).join("") + `</tbody>`;
+  hs.forEach(h => lastSeen[h.id] = h.last_activity);
+  const lv = {}; S.hypotheses.forEach(h => lv[h.level] = (lv[h.level] || 0) + 1);
+  $("#hyp-sub").textContent = Object.entries(lv).map(([k, v]) => `${v} ${k}`).join(" · ");
+  $("#hyp").querySelectorAll("th.sort").forEach(t => t.onclick = () => { const k = t.dataset.k; sortDir = sortKey === k ? -sortDir : 1; sortKey = k; store.set("sort", sortKey); store.set("dir", sortDir); renderHyp(); });
+  $("#hyp").querySelectorAll("tr[data-card]").forEach(r => r.onclick = () => r.dataset.card && openFile(r.dataset.card));
+}
+
+function renderGrid() {
+  const G = S.grid; const used = G.hypotheses.filter(h => G.rows.some(r => r.cells[h]));
+  $("#grid").innerHTML = `<thead><tr><th>Period</th>${used.map(h => `<th class="hcol">${h}</th>`).join("")}</tr></thead><tbody>` +
+    G.rows.map(r => `<tr><td class="plabel" data-tip="${esc([r.period, r.title, r.regime && "regime " + r.regime, r.start && r.start + " → " + r.end].filter(Boolean).join(" · "))}">
+      <span class="mono">${esc(r.period)}</span> ${r.holdout ? "🔒" : ""} <span class="sec">${esc(r.title)}</span> <span class="muted small">${r.regime ? esc(r.regime) : ""}</span></td>` +
+      used.map(h => { const c = r.cells[h]; if (!c) return "<td></td>";
+        const cls = c.verdict === "n/a" ? "na" : c.verdict;
+        return `<td><span class="cell ${cls} ${c.role === "confirmatory" ? "conf" : ""}" data-path="${esc(c.path)}" data-tip="${h} × ${esc(r.period)} (${c.role}): ${esc(c.verdict_text || c.verdict)}">${SYM[c.verdict] || "?"}</span></td>`; }).join("") + `</tr>`).join("") + `</tbody>`;
+  $("#grid").querySelectorAll(".cell[data-path]").forEach(c => c.onclick = () => openFile(c.dataset.path));
+}
+
+function renderAgents() {
+  const ag = S.agents; const n = s => ag.filter(a => a.state === s).length;
+  $("#ag-sub").textContent = `${n("running")} running · ${n("stalled")} stalled · ${n("finished")} finished (48 h)`;
+  $("#agents").innerHTML = `<thead><tr><th>State</th><th>Task</th><th class="num">Tools</th><th class="num">Ran</th><th>Last</th></tr></thead><tbody>` +
+    ag.map(a => `<tr class="click" data-id="${esc(a.id)}" data-desc="${esc(a.description)}">
+      <td><span class="state ${a.state}">${a.state === "running" ? '<span class="dot"></span> ' : ""}${a.state}</span></td>
+      <td>${esc(a.description)}${a.last_tools?.length && a.state !== "finished" ? `<div class="small muted status-line" style="max-width:300px">${esc(a.last_tools[a.last_tools.length - 1].what || a.last_tools[a.last_tools.length - 1].tool)}</div>` : ""}</td>
+      <td class="num small">${a.tool_uses}</td><td class="num small">${dur(a.started, a.last_activity)}</td><td class="small muted">${ago(a.last_activity)}</td></tr>`).join("") + `</tbody>`;
+  $("#agents").querySelectorAll("tr[data-id]").forEach(r => r.onclick = () => openAgent(r.dataset.id, r.dataset.desc));
+}
+
+function renderHoldout() {
+  const H = S.holdout;
+  const isUsed = uses => uses.some(u => !u.planned);
+  const chip = (label, uses, extra = "") => `<span class="chip ${isUsed(uses) ? "used" : ""}" data-tip="${esc(extra || label)}${uses.length ? "\n" + uses.map(u => u.h + (u.planned ? " plans to use it (" + u.via + ", not run)" : " used it via " + u.via + " → " + u.verdict)).join("\n") : "\nunused"}">
+    <span class="mono">${esc(label)}</span>${uses.map(u => `<span class="cell ${u.planned ? "pending" : (u.verdict === "n/a" ? "na" : u.verdict)} ${u.planned ? "" : "conf"}" style="width:16px;height:15px;line-height:15px;font-size:10px" data-path="${esc(u.path)}">${u.planned ? "…" : (SYM[u.verdict] || "?")}</span><span class="small">${u.h}</span>`).join("")}</span>`;
+  const usedN = H.goals.filter(g => isUsed(g.uses)).length + H.windows.filter(w => isUsed(w.uses)).length;
+  $("#ho-sub").textContent = `${usedN} of ${H.goals.length + H.windows.length} held-out periods used`;
+  $("#holdout").innerHTML = `<div>${H.goals.map(g => chip(g.period, g.uses, g.period + " · " + g.title)).join("")}</div>
+    <div style="margin-top:4px">${H.windows.map(w => chip(w.id, w.uses, `${w.id} · ${w.start} → ${w.end} · ${w.why}`)).join("")}</div>
+    ${H.pending_confirm.length ? `<div class="small sec" style="margin-top:6px">Confirm scripts written, not run: ${H.pending_confirm.map(p => `<span class="mono">${p.h}</span>`).join(", ")}</div>` : ""}`;
+  $("#holdout").querySelectorAll("[data-path]").forEach(c => c.onclick = () => openFile(c.dataset.path));
+}
+
+function renderLog() {
+  const open = new Set(store.get("logOpen", []));
+  $("#log").innerHTML = S.log.slice(0, 14).map((e, i) => `<details class="log-entry" data-k="${esc(e.title)}" ${open.has(e.title) ? "open" : ""}><summary><span class="muted small mono">${esc(e.date)}</span> ${esc(e.title)}</summary>
+    <div class="md">${window.marked ? marked.parse(e.md.replace(/^-\s*/, "")) : esc(e.md)}</div></details>`).join("");
+  $("#log").querySelectorAll("details").forEach(d => d.ontoggle = () => { const s = new Set(store.get("logOpen", [])); d.open ? s.add(d.dataset.k) : s.delete(d.dataset.k); store.set("logOpen", [...s]); });
+}
+
+function renderPipes() {
+  const P = S.pipelines; const stale = P.provenance.filter(p => p.code_changed_since);
+  $("#pl-sub").innerHTML = `${P.tables.length} shared tables${stale.length ? ` · <span class="warn">${stale.length} built before their code last changed</span>` : ""}`;
+  $("#pipes").innerHTML = `<thead><tr><th>Builder</th><th>Built</th><th>Commit</th><th></th></tr></thead><tbody>` +
+    P.provenance.map(p => `<tr class="${p.script ? "click" : ""}" data-script="${esc(p.script || "")}"><td class="mono small">${esc(p.name)}</td><td class="small muted">${ago(p.built_at)}</td><td class="mono small muted" data-tip="${esc(p.git_commit || "")}">${esc((p.git_commit || "").slice(0, 7))}${(p.git_commit || "").includes("uncommitted") ? "*" : ""}</td>
+      <td class="small">${p.code_changed_since ? '<span class="warn" data-tip="the builder script changed after this table was built: rebuild?">⚠ code changed</span>' : ""}</td></tr>`).join("") +
+    `</tbody><thead><tr><th>Table</th><th class="num">Rows</th><th class="num">Size</th><th>Updated</th></tr></thead><tbody>` +
+    P.tables.map(t => `<tr><td class="mono small">${esc(t.name)}</td><td class="num small">${t.rows == null ? "" : typeof t.rows === "number" ? t.rows.toLocaleString() : esc(t.rows)}</td><td class="num small">${mb(t.bytes)}</td><td class="small muted">${ago(t.mtime)}</td></tr>`).join("") + `</tbody>`;
+  $("#pipes").querySelectorAll("tr[data-script]").forEach(r => r.onclick = () => r.dataset.script && openFile(r.dataset.script));
+}
+
+function renderStorage() {
+  const b = S.budget; const lim = b.limit_gb * 1e9;
+  const repo = [["data/raw", "--seg-1"], ["data/processed", "--seg-2"], [".venv", "--seg-3"], [".git", "--seg-4"]];
+  const caches = (b.parts["uv cache (shared)"] || 0) + (b.parts["HF cache"] || 0);
+  const tot = repo.reduce((s, [k]) => s + (b.parts[k] || 0), 0);
+  const scale = Math.max(lim, tot + caches) * 1.02;
+  $("#st-sub").textContent = `budget ${b.limit_gb} GB (CLAUDE.md)`;
+  $("#storage").innerHTML = `<div class="stack">${repo.map(([k, v]) => `<span style="width:${100 * (b.parts[k] || 0) / scale}%;background:var(${v})" data-tip="${k}: ${mb(b.parts[k])}"></span>`).join("")}
+      <span style="width:${100 * caches / scale}%;background:repeating-linear-gradient(45deg,var(--surface-3) 0 4px,var(--border) 4px 8px)" data-tip="model caches outside the repo: ${mb(caches)}"></span>
+      <span class="limit" style="left:${100 * lim / scale}%" data-tip="${b.limit_gb} GB budget"></span></div>
+    <div class="legend">${repo.map(([k, v]) => `<span><i style="background:var(${v})"></i>${k} ${mb(b.parts[k])}</span>`).join("")}
+      <span><i style="background:repeating-linear-gradient(45deg,var(--surface-3) 0 3px,var(--border) 3px 6px)"></i>caches ${mb(caches)}</span>
+      <span>| repo ${gb(tot)} GB · with caches ${gb(tot + caches)} GB of ${b.limit_gb}</span></div>
+    <div class="small muted" style="margin-top:6px">Per-hypothesis data: ${S.pipelines.per_hypothesis.map(d => `<span class="mono">${esc(d.name.split("-")[0])}</span> ${mb(d.bytes)}`).join(" · ")}</div>`;
+}
+
+function renderProcs() {
+  $("#procs").innerHTML = S.processes.length ? `<thead><tr><th>PID</th><th>Script</th><th class="num">CPU</th><th class="num">Elapsed</th></tr></thead><tbody>` +
+    S.processes.map(p => `<tr><td class="mono small">${p.pid}</td><td class="mono small" data-tip="${esc(p.script + " " + p.args)}">${esc(p.script)}</td><td class="num small">${p.cpu.toFixed(0)}%</td><td class="num small">${esc(p.elapsed)}</td></tr>`).join("") + `</tbody>`
+    : `<tr><td class="muted">none</td></tr>`;
+}
+
+function renderGit() {
+  const g = S.git;
+  $("#git").innerHTML = `<div class="small sec">branch <span class="mono">${esc(g.branch)}</span> · ${g.uncommitted} uncommitted paths</div>` +
+    g.commits.map(c => `<div class="small"><span class="mono muted">${esc(c.hash)}</span> ${esc(c.subject)} <span class="muted">${esc(c.when)}</span></div>`).join("");
+}
+
+function render() {
+  for (const f of [renderFacts, renderHyp, renderGrid, renderAgents, renderHoldout, renderLog, renderPipes, renderStorage, renderProcs, renderGit]) {
+    try { f(); } catch (e) { console.error(f.name, e); }
+  }
+}
+
+async function refresh() {
+  try {
+    const r = await fetch("/api/state"); const j = await r.json();
+    if (j.error) throw new Error(j.error);
+    S = j; $("#error").hidden = true; render(); tick();
+  } catch (e) { $("#error").hidden = false; $("#error").textContent = "Refresh failed: " + e.message; }
+}
+function tick() { if (S) $("#updated").textContent = `updated ${ago(S.generated_at)} · ${S.collect_ms} ms`; }
+setInterval(() => { if (!paused && !document.hidden) refresh(); }, 6000);
+setInterval(tick, 1000);
+$("#pause").onclick = () => { paused = !paused; $("#pause").textContent = paused ? "resume" : "pause"; $("#livedot").classList.toggle("off", paused); };
+$("#theme").onclick = () => { const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const next = cur === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = next; store.set("theme", next); };
+const th = store.get("theme", null); if (th) document.documentElement.dataset.theme = th;
+$("#filter").value = store.get("filter", ""); $("#filter").oninput = () => { store.set("filter", $("#filter").value); if (S) renderHyp(); };
+refresh();
+</script>
+</body>
+</html>
