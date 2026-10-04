@@ -311,6 +311,35 @@ Linear-probability model with agent × day × call-class fixed effects (class = 
 - **The ×9.5 is withdrawn** if Ω ≤ 2 (Q-R4a holds); it survives if Ω's CI lies above 2.
 - All talk statistics stay labelled post hoc in the A2 sense (the round-2 tests target a statistic chosen after round-1 data); the round-2 predictions themselves are pre-registered here.
 
+#### Round-2 synthetic and Amendment B1 (2026-10-04 21:30 UTC, after the synthetic, before any round-2 statistic on real data)
+Runs: `analysis/r2_synthetic.py` (units 38a, 41, 51c, 51g; 7 worlds × 6 replicates; drive and field sizes from a two-replicate calibration on 41 and 51c: drive amplitude 0.5, fast-field amplitude 0.6). Table: `r2/synthetic/runs.parquet`. Medians over 24 runs per world:
+
+| World | g_χ | Δρ₁ (V0, W0-corrected) | Δρ₁ V5 | Δρ₁ CI > 0 | room diff r̄_same − r̄_cross > 0 | J₁* > 0 (in-flight) | g₁ recovered | J₂ > 0 | J₀ room > 0 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| W0 independent at real calls | 0.01 | −0.003 | +0.002 | 0% | 6% | 4% | −0.02 | 0% | 0% |
+| W1a hop-1 coupling g = 0.13 | 0.08 | +0.039 | +0.024 | 33% | 56% | 100% | 0.147 | 4% | 4% |
+| W1b hop-1 coupling g = 0.30 | 0.17 | +0.103 | +0.105 | 96% | 89% | 100% | 0.339 | 17% | 4% |
+| W2 one-call-delayed g = 0.13 | 0.04 | +0.049 | +0.046 | 46% | 56% | 4% | g₂ = 0.130 | 67% | 0% |
+| W3 slow village drive | 0.17 | +0.107 | +0.178 | 92% | 0% (CI covers 0 in 78%) | 8% | −0.02 | 4% | 0% |
+| W4 slow room drive | 0.11 | +0.080 | +0.133 | 75% | 89% | 0% | 0.08 (room) | 46% | 67% |
+| W5 fast field 15 s | 0.12 | +0.008 | +0.031 | 17% | 11% | 0% | −0.03 | 0% | 0% |
+
+- **The real call skeleton makes no collective memory by itself.** Independent talk at the real calls gives Δρ₁ ≈ 0 (−0.002). The call-window part of the scheduler field cannot fake the round-1 excess at minute resolution.
+- **Hop-1 coupling at H67's size is weak on the minute grid.** g₁ = 0.13 gives Δρ₁ +0.02 to +0.06 per unit (#51 units +0.02), detected in 33% of units. g₁ = 0.30 gives +0.07 to +0.14. Per-unit Δρ₁ calls are underpowered; verdicts use regime pools.
+- **The call-clock kernel separates the worlds.** J₁* > 0 only in coupling worlds (100%; 0–8% otherwise), and g₁ is recovered with a +10–13% bias. The named/unnamed ratio recovers the planted ×19.
+- **The room partition beats a village-wide drive, not a room-local one.** W3: r̄_same ≈ r̄_cross (0.013 vs 0.015). W4 looks like coupling (89%). The in-flight contrast catches W4 instead: J₀(room) > 0 in 67% and J₁* > 0 in 0%.
+- **Validation criteria:** V5 on W0: vacuous pass (W0 has no Δρ₁ to remove). Room partition: W3 CI covers 0 in 78% (criterion 80%, marginal fail); W1b 89% (pass). J₂: W2 detected in 67% (criterion 70%, marginal fail); false calls 4% at g = 0.13 and 17% at g = 0.30 (criterion 15%, marginal fail). g₁ recovery: pass at the call level; the indirect-inference fit is validated in the R2 step.
+
+**Amendment B1 (estimator fixes found in the synthetic; applied before real data):**
+1. *V1 redefined.* Centring within occupancy cells faked Δρ₁ −0.05 to −0.07 in W0 (small-cell centring bias). V1 now subtracts the talk expected from the call skeleton alone, E_it = 1 − Π(1 − b) over agent i's calls whose output falls in minute t (b = agent × day × class talk rate), then centres within blocks. W0: V1 Δρ₁ +0.002.
+2. *Masks never re-centre.* Centring always uses the full kept 30-min block; V2 and V3 only drop minutes from the sums (re-centring fragmented blocks faked Δρ₁ down to −0.19).
+3. *Nudge mask 5 min.* A 15-min swarm-wide mask after each nudge removed 60–75% of #51 minutes. Nudges now mask 5 min; human and operator messages keep 15 min; kickoff days drop up to 60 min after the kickoff. The pre-registered 15-min version is reported as V3s/V5s.
+4. *W0 reference.* Every round-2 minute-grid Δρ₁ and ρ_s is reported against the unit's own W0 world (8 replicates): Δρ₁ᶜ = Δρ₁ − mean W0, with the W0 spread added to the CI in quadrature. Q-S1 is scored on V5 Δρ₁ᶜ. Q-R1a is scored on ρ_s − ρ_s(W0), because block centring biases ρ_s by about −0.02.
+5. *Primary grid.* The minute grid built from the call skeleton (the only grid the null worlds can reproduce) is primary for round 2. The round-1 `activity_bins` grid with the same removals is reported uncorrected as a check.
+6. *Kill-rule partition clause.* The room partition rules out only a village-wide drive. The coupling claim needs the call-clock gates: J₁* > 0 (in-flight) with J₀(room) ≈ 0, or named ≥ 5 × unnamed. A room-local drive is beaten only by these.
+7. *J₂ rule.* One-call-delayed coupling is claimed only if the pooled J₂ CI excludes 0 *and* J₂/J₁* ≥ 0.2. W1b gives J₂/J₁* = 0.03, so the ratio guards against the 17% false-call rate.
+8. *R2 simplification.* g₀ = 0 in the indirect inference. A fast field moves Δρ₁ by < 0.01 (W5), below one unit's SE (0.023–0.03).
+
 ## Round 2 redirects
 - **What the direction is really after:** a dynamical check that tells a coupling from a field without inferring J, on the clock at which agents actually update.
 - **H99-R1. Per-call clock.** Re-index talk on each agent's call sequence (H40, H67) so the single-agent memory is resolvable and Glauber vs one-call-delayed coupling separate at hop 1.
