@@ -7,7 +7,21 @@
   "faithfulness": "Mixed in both directions. HH77 loses its activity half: the market mode survives the calibrated null in 7/24 units and was largely a day-level artifact of the event-drop bug; talk (21/24) and content (24/24, model-robust) modes hold. HH58 fails at kickoffs (robust), but natively a strong uniform field compresses content (#12, PR -25%, p = 0.01, same sign in gte) and a contested vote does too (#26). C = 1 in both arms; E and G now 1 for the PR arm. Net unchanged at 1.5.",
   "usefulness": "A cheap restatement-rate monitor (either-model flag) that flags stuck agents, now robust across embedding models; a negative that matters for operators (activity co-activation is not a collective mode once schedule and data artifacts are removed); a field-compression effect that could become a 'strong-field' alarm, not yet validated beyond #12."
  },
- "one_line": "On corrected data the activity market mode is mostly artifact; talk and content modes are real, a strong field compresses content, kickoffs don't, and low-dimensional weeks are agents restating themselves.",
+ "one_line": "The activity market mode is mostly artifact; talk and content modes are real, a strong field compresses content, and low-PR weeks are self-restatement.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Activity mode is artifact; talk modes real, separate rooms in 7/10"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Content modes real; no kickoff collapse; motion field compresses PR"
+  }
+ ],
  "rated_by": "H12 round-1b agent (suggested)",
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",

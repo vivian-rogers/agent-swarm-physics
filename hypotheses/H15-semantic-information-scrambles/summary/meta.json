@@ -7,7 +7,15 @@
   "faithfulness": "Memory-is-load-bearing predictions failed again on corrected data; the erasure dip replicated with dated predictions on independent timing and output data (E 0 -> 1), memory dose does not buffer it, and the artifact-store rival failed. KW signature (plateau, eta) still untestable; D2.6 inconclusive for the pre-registered pool. Scorecard A1 B1 C1 D0 E1 F1 G1 H1 I1.",
   "usefulness": "One validated operator number: the 41-turn cap costs about a tenth of committed work (2.5-13% per period, matching H44), and the memory write does not recover it; levers are a longer cap or carrying task state across the wipe. Still scaffold engineering more than swarm physics."
  },
- "one_line": "Losing memory (or switching repo) costs nothing visible in a day; a forced context wipe costs ~39% of committed work for 10 calls, whatever the agent saves to memory",
+ "one_line": "Memory loss costs nothing visible in a day; a forced context wipe costs 39% of committed work for 10 calls, whatever the agent saves.",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Context load-bearing (-39% work); memory not; S and η unmeasured"
+  }
+ ],
  "rated_by": "H15 round-1b agent (suggested); round 1 calibrated by coordinator 2026-10-04",
  "updated": "2026-10-04",
  "v2": {

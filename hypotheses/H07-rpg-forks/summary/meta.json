@@ -7,7 +7,27 @@
   "faithfulness": "Copy information beats the shuffle nulls; the independent-lineage bound holds exactly for the RPG forks and fails, as it should, for a second fork family with a shared upstream; leakage is now bounded by what agents could read. The clock model was rejected, three of eight predictions failed and n = 2 forks.",
   "usefulness": "Per-feature copy fractions are a computable lineage diagnostic, and 'convergent repair mimics leakage' is a real caution for audits, but nothing here predicts or steers a swarm."
  },
- "one_line": "Forks diverge gradually in code, in one agent's jumps in content; no readable leakage; a fork family with a shared upstream re-converges",
+ "one_line": "Forks diverge by copying: code gradually per edit, content in one agent's jumps; no readable leakage, and a fork family with a shared upstream re-converges.",
+ "models": [
+  {
+   "model": "08-copying-vs-transformation",
+   "role": "primary",
+   "outcome": "supported",
+   "note": "Copying dominates; independent-lineage bound holds; holdout not run"
+  },
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Rooms as domains; named, not fitted"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Per-fork commit kernels; named, not fitted"
+  }
+ ],
  "rated_by": "RE-D2 round 1b (suggested); round 1 calibrated by coordinator 2026-10-04",
  "updated": "2026-10-04",
  "v2": {

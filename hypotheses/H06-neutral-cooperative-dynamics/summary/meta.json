@@ -7,7 +7,21 @@
   "faithfulness": "The core prediction stays refuted (P1 failed; stated goals reject every exchangeable model in 5/5 free weeks). NCD fits only work labels in one shared-goal week (#30), tied with Hubbell and without its core signature. Half a point for a robust, well-understood refutation.",
   "usefulness": "Round 1b separates stated sub-tasks from work: work-label singleton fraction and copy-consistency are cheap monitors of whether a swarm shares effort, and copying is shown to follow reading, so announcing a project is the lever to test. Still no validated intervention."
  },
- "one_line": "No cooperative (NCD) dynamics: stated goals are private sub-tasks everywhere; work concentrates on shared repos where they exist, with neutral copying at best; copying follows reading.",
+ "one_line": "No cooperative (NCD) dynamics: stated goals are private sub-tasks; work concentrates on shared repos with neutral copying at best, and copying follows reading.",
+ "models": [
+  {
+   "model": "06-neutral-cooperative-dynamics",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "NCD fails in 4/5 free weeks; Hubbell fits work at best"
+  },
+  {
+   "model": "10-potts",
+   "role": "rival",
+   "outcome": "refuted",
+   "note": "Herding (conformist) rival also inadequate on stated goals"
+  }
+ ],
  "rated_by": "RE-D2 round 1b (suggested); round 1 by H06 agent, calibrated by coordinator",
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept; page-2 sections written by coordinator from the round-1 report)",

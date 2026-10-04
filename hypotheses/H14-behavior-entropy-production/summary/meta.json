@@ -1,47 +1,61 @@
 {
-  "complete": 50,
-  "faithfulness": 1.5,
-  "usefulness": 1.5,
-  "rationale": {
-    "complete": "Round 1 and round 1b (shell sub-classes, scaffold removal with burn-in, Jev v3 states, block-flip null, synthetic checks, 3 native tests) are done. Open: the holdout run, regime-I periods beyond #27, count-matched within-agent designs, HMM-denoised semantic states.",
-    "faithfulness": "The hypothesis as posed failed: no per-family arrow (HH19; one fragile Anthropic>OpenAI signal on scaffold-free fine chains), no collective term (HH67), no work cycles, no useful-irreversibility link to output. The descriptive residue is now firm: fine-action arrows are universal and survive scaffold removal (beats rival R1 there), while the coarse arrow and the regime contrast are scaffold. Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I1.",
-    "usefulness": "A computable per-agent irreversibility fingerprint with calibrated nulls (DB, block-flip) and two methods warnings (shuffle nulls overstate; reset burn-ins on coarse windows manufacture arrows). No steering handle: EP does not track output or progress."
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 and round 1b (shell sub-classes, scaffold removal with burn-in, Jev v3 states, block-flip null, synthetic checks, 3 native tests) are done. Open: the holdout run, regime-I periods beyond #27, count-matched within-agent designs, HMM-denoised semantic states.",
+  "faithfulness": "The hypothesis as posed failed: no per-family arrow (HH19; one fragile Anthropic>OpenAI signal on scaffold-free fine chains), no collective term (HH67), no work cycles, no useful-irreversibility link to output. The descriptive residue is now firm: fine-action arrows are universal and survive scaffold removal (beats rival R1 there), while the coarse arrow and the regime contrast are scaffold. Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I1.",
+  "usefulness": "A computable per-agent irreversibility fingerprint with calibrated nulls (DB, block-flip) and two methods warnings (shuffle nulls overstate; reset burn-ins on coarse windows manufacture arrows). No steering handle: EP does not track output or progress."
+ },
+ "one_line": "Fine tool workflow is irreversible in every agent without the scaffold; coarse arrows and the regime contrast are scaffold; no family, collective or useful-work arrow.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Fine arrows universal; no family (HH19) or collective (HH67) arrow"
   },
-  "one_line": "Fine tool workflow is irreversible in every agent even without the scaffold; coarse arrows and the regime contrast are scaffold; no family, collective or useful-work arrow",
-  "rated_by": "H14 re-evaluation agent RE-B1 (suggested; round-1 values were coordinator-calibrated)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
-  "v2": {
-    "claim": "Fine-action irreversibility is real for every agent and survives scaffold removal; the regime contrast was scaffold",
-    "original_verdict": "mixed",
-    "credence": 0.72,
-    "ladder": [
-      {
-        "factor": "base (sec)",
-        "x": 0.3
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "partly robust",
-        "x": 1.5
-      }
-    ],
-    "mechanism_level": "M0",
-    "fragile": true,
-    "value_if_true": 1,
-    "decision": "none",
-    "magnitude": "small",
-    "generality": "this scaffold",
-    "expected_usefulness": 0.72,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Kinetic Potts states: per-agent cycles real; no cross-agent coupling term"
   }
+ ],
+ "rated_by": "H14 re-evaluation agent RE-B1 (suggested; round-1 values were coordinator-calibrated)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
+ "v2": {
+  "claim": "Fine-action irreversibility is real for every agent and survives scaffold removal; the regime contrast was scaffold",
+  "original_verdict": "mixed",
+  "credence": 0.72,
+  "ladder": [
+   {
+    "factor": "base (sec)",
+    "x": 0.3
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "partly robust",
+    "x": 1.5
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": true,
+  "value_if_true": 1,
+  "decision": "none",
+  "magnitude": "small",
+  "generality": "this scaffold",
+  "expected_usefulness": 0.72,
+  "scientific_value": 3,
+  "rater": "coordinator first pass (from integrated reports); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
 }

@@ -1,51 +1,65 @@
 {
-  "complete": 50,
-  "faithfulness": 1.5,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 over 35 periods plus round 1b: the original specification re-run on corrected inputs (exogenous drive, day splits, both split rules), a DQ8 trimmed surrogate null, and period-native tests (NE43, NE14, #2, #51). Holdout predictions are drafted but not locked; the kernel shape is being fitted by H42.",
-    "faithfulness": "Unchanged by the corrections: every mode and criticality prediction failed, n-hat is not identified against slow modulation, and only the fast cross term beats its null (now also the trimmed null). NE43 held its dated prediction and NE14 was mixed, so E rises to 1, but the hypothesis's central claims remain refuted.",
-    "usefulness": "A branching-ratio diagnostic with a schedule baseline that is robust to the data corrections and to day edges, a constant-baseline pitfall, and a practical fact: removing the operator's messages does not slow this swarm down."
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 over 35 periods plus round 1b: the original specification re-run on corrected inputs (exogenous drive, day splits, both split rules), a DQ8 trimmed surrogate null, and period-native tests (NE43, NE14, #2, #51). Holdout predictions are drafted but not locked; the kernel shape is being fitted by H42.",
+  "faithfulness": "Unchanged by the corrections: every mode and criticality prediction failed, n-hat is not identified against slow modulation, and only the fast cross term beats its null (now also the trimmed null). NE43 held its dated prediction and NE14 was mixed, so E rises to 1, but the hypothesis's central claims remain refuted.",
+  "usefulness": "A branching-ratio diagnostic with a schedule baseline that is robust to the data corrections and to day edges, a constant-baseline pitfall, and a practical fact: removing the operator's messages does not slow this swarm down."
+ },
+ "one_line": "Subcritical in every period and unchanged on corrected inputs; fast cross-triggering survives the trimmed null, and removal of the operator drive changes nothing.",
+ "models": [
+  {
+   "model": "09-hawkes",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Subcritical everywhere; no coupling-mode effect; fast cross-triggering beats null"
   },
-  "one_line": "Subcritical everywhere and unchanged on corrected inputs; fast cross-triggering survives the trimmed null; drive removal changes nothing",
-  "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
-  "v2": {
-    "claim": "Activity is subcritical everywhere (n \u2248 0.2\u20130.4)",
-    "original_verdict": "failed (criticality)",
-    "credence": 0.89,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      }
-    ],
-    "mechanism_level": "M0",
-    "fragile": false,
-    "value_if_true": 1.5,
-    "decision": "diagnostic: no runaway cascades to manage",
-    "magnitude": "small",
-    "generality": "read-out-gated swarms",
-    "expected_usefulness": 1.33,
-    "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "Cross-agent kernel as directed influence: fast cross-triggering is real"
   }
+ ],
+ "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
+ "v2": {
+  "claim": "Activity is subcritical everywhere (n ≈ 0.2–0.4)",
+  "original_verdict": "failed (criticality)",
+  "credence": 0.89,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "robust to data/instruments",
+    "x": 2
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "diagnostic: no runaway cascades to manage",
+  "magnitude": "small",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 1.33,
+  "scientific_value": 2,
+  "rater": "coordinator first pass (from integrated reports); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
 }

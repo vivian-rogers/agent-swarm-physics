@@ -8,7 +8,21 @@
   "usefulness": "A clear operational negative with a usable corollary: work persistence across resets lives in agents' own artifacts and the prompt, not in teams or memory, so make work state legible in the repo. Night continuity is a cheap diagnostic anyone can compute.",
   "r1b": "Round 1b (2026-10-04, RE-C3 agent) re-ran round 1 (D3.1.a/D3.2) on shared goal vectors, both embedding models, DQ5 restatement dedupe, style residualization and ledger exposure, plus two natives (G12 teams: failed; NE42 A-B-A: supported). Round-2 ratings unchanged; round-1 scorecard unchanged except E strengthened (still 1)."
  },
- "one_line": "No effective superagents: allocation persists through artifacts, single agents out-persist crews, the goal sets the rate",
+ "one_line": "No effective superagents: allocation persists through each agent's own artifacts, single agents out-persist crews, and the goal sets the work rate.",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "No group carries KW semantic information; no repair, no individuality maximum"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Round 1: rooms order content; coupling residual instrument-dependent"
+  }
+ ],
  "rated_by": "H01 round-2 agent (suggested)",
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (round 2 done: complete -> 45; faithfulness/usefulness as suggested)",

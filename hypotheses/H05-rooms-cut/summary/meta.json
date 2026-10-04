@@ -7,7 +7,27 @@
   "faithfulness": "Round 1b: talk block structure, pooled FE and the 05-11 split all strengthen on fixed data and survive DQ8's trim; HH248 (reads mediate the room effect) and NE42 attention reallocation were predicted before running and held; active-spin claims withdrawn; holdout run on buggy data stays inconclusive.",
   "usefulness": "\"Rooms decouple chat but not work\" is a validated design rule and a cheap monitor, but the chat half is nearly implied by the visibility scaffold and rests on one cut."
  },
- "one_line": "Rooms decouple chat only through what agents read (ledger); effect stronger on fixed data; work not room-structured",
+ "one_line": "Rooms decouple chat only through what agents read; the effect is stronger on fixed data, and work is not room-structured.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Talk blocks hold, reduce to read gating; EP unmeasurable; holdout inconclusive"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Block mean field: J_out falls to 0, but J_in rises"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "rival",
+   "outcome": "untested",
+   "note": "Named as rival or complement; not fitted"
+  }
+ ],
  "rated_by": "RE-R1 agent (suggested, round 1b); coordinator calibration pending",
  "updated": "2026-10-04",
  "v2": {

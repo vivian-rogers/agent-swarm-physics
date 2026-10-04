@@ -7,7 +7,27 @@
   "faithfulness": "Read-out gating now holds in every regime for addressing (14/17) and for reply labels (17/17), beats a pseudo-message null and an other-room placebo (8/8), survives a non-mention content response in regime III, and every named rival including a constant delay is beaten (H = 2). NE41 holds in sign on replies and NE32 passes cleanly. Still: the talk clause fails in regime I/II, the kernel shape is a transient the step model misses, ground truth covers one agent, and nothing is confirmed on the holdout.",
   "usefulness": "Concrete, computable facts for an operator: reactions wait for the next model call (coupling delay = call cadence), a nudge acts at the target's next call so its lag is the pause schedule, compaction cuts about a fifth of conversational coupling, and fetch logs reveal silent exposure failures. Modest novelty, since gating follows from scaffold design; no validated control knob."
  },
- "one_line": "Responses start at the call that received the message (addressing 14/17, replies 17/17; nudges too); erasure cuts reply coupling 21%",
+ "one_line": "Responses start at the call that receives the message (addressing 14/17, replies 17/17, nudges too); a forced erasure cuts reply coupling by 21%.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "supported",
+   "note": "Couplings act only at read-out; every named rival beaten"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "rival",
+   "outcome": "refuted",
+   "note": "Immediate-peak exogenous kernel loses to the read-out onset"
+  },
+  {
+   "model": "04-semantic-information",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Erasure reading: coupling falls 21%, below the predicted 30%"
+  }
+ ],
  "rated_by": "H08 re-evaluation agent RE-V1 (suggested)",
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (round 1b: faithfulness 3.0 accepted, the highest so far; not holdout-confirmed)",

@@ -7,7 +7,21 @@
   "faithfulness": "The corrected nudge kernel beats its nulls and now meets P1 (prompt response) in #51 and pooled 4 h days; NE43 confirms the field reading (n unchanged when the nudger stops). But the FDT and mean-field mappings fail, human-message kernels vanish on corrected data, NE43's trap prediction and NE10 fail, and the primary holdout prediction (C1) was falsified in reverse.",
   "usefulness": "A design rule with evidence from three hypotheses (H30, H35, H43): a nudge acts only on its named target at that agent's next model call, so its lag is the target's pause schedule; first nudges buy about 1.4 active minutes, repeats less; nudges to long-paused agents do nothing until they wake; human messages steer content, not activity."
  },
- "one_line": "A nudge acts only on its target, at the target's next call (no real dead time); the hours-reversal holdout was falsified in reverse",
+ "one_line": "A nudge acts only on its target, at the target's next model call; the hours-reversal holdout fails in the reverse direction.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Target-only nudge response measured; FDT fails; mean field underpredicts decay"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Holdout NE21: n rises on 8 h days, opposite to prediction"
+  }
+ ],
  "rated_by": "H04 re-evaluation agent RE-V1 (suggested)",
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (round 1b; usefulness kept at 2.5, parity with H30/H35/H43 lever results)",

@@ -7,7 +7,33 @@
   "faithfulness": "Some predictions beat their nulls (regime-I kick hazard, the consolidation cycle, timer-set pauses), but several were refuted and the thermodynamic constructs themselves (landscapes, Kramers barriers, equation of state) mostly reduce to schedule fields or scaffold mechanics.",
   "usefulness": "Round 1b: an operator rule with ledger evidence (address a paused agent; chatter alone keeps it asleep, OR 0.50 vs 3.1 for mentions), stable across drive withdrawal (NE43); memory set point independent of read inflow."
  },
- "one_line": "Thermo framing adds little; the timer gate reads context (chatter holds, @-mentions release); memory is an overshooting homeostat",
+ "one_line": "The thermodynamic framing adds little; the timer gate reads context (chatter holds, @-mentions release), and memory is an overshooting homeostat.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "Activity-landscape wells come from the schedule field, not coupling"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "EP estimator: chains irreversible; event-level EP collapses in regime III"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Escape-hazard kinetics: chatter holds the gate, mentions release it"
+  },
+  {
+   "model": "10-potts",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Occupancy and transitions over action-class states"
+  }
+ ],
  "rated_by": "RE-R1 agent (suggested, round 1b); coordinator calibration pending",
  "updated": "2026-10-04",
  "v2": {

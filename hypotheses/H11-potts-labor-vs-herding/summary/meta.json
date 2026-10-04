@@ -1,47 +1,55 @@
 {
-  "complete": 50,
-  "faithfulness": 1.5,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 done; round 1b re-evaluation on deterministic labels, the DQ4 work ledger and DQ6 ballots done, with a native layer (#26 per round, #31 and #40 in work). The frozen holdout test (#22, #28, #45) and a drive-vs-coupling kinetic model are not run.",
-    "faithfulness": "The core prediction (sign of J set by goal mode) failed and no first-order consensus passed; the effective ferromagnetic coupling beats the nulls and now also predicts coupling in work commits (D 0 -> 1), but drive and coupling are still not separated and the post hoc ownership pattern meets a counterexample (#35).",
-    "usefulness": "The attention-based coupling-beyond-fields statistic now tracks duplicated work: agents commit to the repos they attend (84%) and herd there in 4/6 shared weeks. A cheap monitor with modest evidence; the 'assign ownership' design rule is still post hoc."
-  },
-  "one_line": "Agents herd onto shared projects whatever the goal, in commits as well as attention; spread appears only as fixed ownership.",
-  "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.5 / 2.0)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
-  "v2": {
-    "claim": "Agents herd onto shared projects in attention and work; ownership disperses",
-    "original_verdict": "mixed",
-    "credence": 0.84,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      }
-    ],
-    "mechanism_level": "M1",
-    "fragile": false,
-    "value_if_true": 2.5,
-    "decision": "anticipate pile-ons and duplicated work",
-    "magnitude": "material",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 2.11,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done; round 1b re-evaluation on deterministic labels, the DQ4 work ledger and DQ6 ballots done, with a native layer (#26 per round, #31 and #40 in work). The frozen holdout test (#22, #28, #45) and a drive-vs-coupling kinetic model are not run.",
+  "faithfulness": "The core prediction (sign of J set by goal mode) failed and no first-order consensus passed; the effective ferromagnetic coupling beats the nulls and now also predicts coupling in work commits (D 0 -> 1), but drive and coupling are still not separated and the post hoc ownership pattern meets a counterexample (#35).",
+  "usefulness": "The attention-based coupling-beyond-fields statistic now tracks duplicated work: agents commit to the repos they attend (84%) and herd there in 4/6 shared weeks. A cheap monitor with modest evidence; the 'assign ownership' design rule is still post hoc."
+ },
+ "one_line": "Agents herd onto shared projects whatever the goal, in commits as well as attention; spread appears only as fixed ownership.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Coupling sign ignores goal mode: herding (βJ > 0) in 11/14 weeks"
   }
+ ],
+ "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.5 / 2.0)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
+ "v2": {
+  "claim": "Agents herd onto shared projects in attention and work; ownership disperses",
+  "original_verdict": "mixed",
+  "credence": 0.84,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "robust to data/instruments",
+    "x": 2
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "anticipate pile-ons and duplicated work",
+  "magnitude": "material",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 2.11,
+  "scientific_value": 3,
+  "rater": "coordinator first pass (from integrated reports); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
 }

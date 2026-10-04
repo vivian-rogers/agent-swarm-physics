@@ -1,55 +1,69 @@
 {
-  "complete": 65,
-  "faithfulness": 0.5,
-  "usefulness": 1.5,
-  "rationale": {
-    "complete": "Round 1, synthetic validation and the #45 holdout run are done; round 1b re-ran everything on the corrected minute grid with DQ8 nulls and added three period-native tests (#12 teams, the #44 leader, NE14) plus a synthetic check of what the bug did to the holdout rule. Open: message-level influence (H02-R1/R2), the #14/#49 transfer set, a decision on re-running #45.",
-    "faithfulness": "The core claim (pairwise activity couplings measure influence) is refuted on the holdout and on every corrected analog (#12, #44b, #26). The collective coupling that partly survived round 1 is mostly day edges once nulls are trimmed; only weak regime-I co-activation and a post-hoc talk-spin signal remain.",
-    "usefulness": "A clean, well-controlled negative with a concrete warning (trim day edges before any synchrony statistic; do not read leaders from activity timing) and one lead (talk-spin couplings), consistent with H50."
+ "complete": 65,
+ "faithfulness": 0.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1, synthetic validation and the #45 holdout run are done; round 1b re-ran everything on the corrected minute grid with DQ8 nulls and added three period-native tests (#12 teams, the #44 leader, NE14) plus a synthetic check of what the bug did to the holdout rule. Open: message-level influence (H02-R1/R2), the #14/#49 transfer set, a decision on re-running #45.",
+  "faithfulness": "The core claim (pairwise activity couplings measure influence) is refuted on the holdout and on every corrected analog (#12, #44b, #26). The collective coupling that partly survived round 1 is mostly day edges once nulls are trimmed; only weak regime-I co-activation and a post-hoc talk-spin signal remain.",
+  "usefulness": "A clean, well-controlled negative with a concrete warning (trim day edges before any synchrony statistic; do not read leaders from activity timing) and one lead (talk-spin couplings), consistent with H50."
+ },
+ "one_line": "Activity-timing Ising couplings stay at the null floor on corrected data; the regime-III collective coupling is the operator's day edges.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Pairwise couplings at null floor; #45 holdout leader test fails"
   },
-  "one_line": "Activity-timing couplings stay null on corrected data; the regime-III collective coupling was day edges",
-  "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
-  "v2": {
-    "claim": "Activity-timing pairwise couplings sit at the null floor; regime-III 'collective coupling' was day edges",
-    "original_verdict": "failed",
-    "credence": 0.95,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      },
-      {
-        "factor": "ground truth agrees",
-        "x": 1.5
-      },
-      {
-        "factor": "holdout passed (bug-tainted)",
-        "x": 2.5
-      }
-    ],
-    "mechanism_level": "M1",
-    "fragile": true,
-    "value_if_true": 2.5,
-    "decision": "monitoring: don't read activity synchrony as coordination",
-    "magnitude": "material",
-    "generality": "scheduled swarms",
-    "expected_usefulness": 2.38,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+  {
+   "model": "01-inverse-ising",
+   "role": "rival",
+   "outcome": "refuted",
+   "note": "Equal-time couplings null; mean-field term survives in regime I only"
   }
+ ],
+ "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
+ "v2": {
+  "claim": "Activity-timing pairwise couplings sit at the null floor; regime-III 'collective coupling' was day edges",
+  "original_verdict": "failed",
+  "credence": 0.95,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "robust to data/instruments",
+    "x": 2
+   },
+   {
+    "factor": "ground truth agrees",
+    "x": 1.5
+   },
+   {
+    "factor": "holdout passed (bug-tainted)",
+    "x": 2.5
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": true,
+  "value_if_true": 2.5,
+  "decision": "monitoring: don't read activity synchrony as coordination",
+  "magnitude": "material",
+  "generality": "scheduled swarms",
+  "expected_usefulness": 2.38,
+  "scientific_value": 3,
+  "rater": "coordinator first pass (from integrated reports); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
 }

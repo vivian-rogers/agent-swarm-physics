@@ -7,7 +7,21 @@
   "faithfulness": "P1 (fluctuations predict who moves) fails in every round-1b configuration and again along an agent-set goal (G26); the single-agent reassignment (NE38) lands outside the support of the unforced distribution, which no exponential tilt can reach. Only the existence of a push holds. Exploratory only, so not 0.",
   "usefulness": "A validated, model-robust instrument (goal-direction projection, noise-corrected variance) and a clear negative for operators: pre-goal fluctuation does not forecast compliance; an operator-written target acts as a room-specific field while 'pick your own goal' does not. Nothing to steer with yet."
  },
- "one_line": "Goals aren't Legendre pushes: free-week fluctuations don't predict who follows; agents converge instead",
+ "one_line": "Goals are not Legendre pushes: free-week fluctuations do not predict who follows a goal; agents converge on a common target instead.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Exponential tilt fails: fluctuations do not order who moves, 8/8 configs"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "secondary",
+   "outcome": "n/a",
+   "note": "Scalar Curie-Weiss loop gain reported descriptively only"
+  }
+ ],
  "rated_by": "RE-C1 re-evaluation agent (suggested)",
  "updated": "2026-10-04",
  "v2": {
