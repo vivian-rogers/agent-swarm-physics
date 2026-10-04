@@ -16,6 +16,7 @@ Steps (outputs in data/processed/shared/):
   kicks_classified     kicks_classified
   text_features        text_features
   outages              outages, stall_minutes, reasons (H38's rule; idle spells recomputed with H09's rule)
+  context_ledger       call_starts_logged (raw scan), call_windows, context_ledger_turns/_items (+ validation JSON)
 Tests (--tests): infra/shared/tests/test_*.py
 
 Usage:
@@ -73,6 +74,9 @@ STEPS = [
     {"name": "text_features", "cmd": "py", "script": "text_features.py", "outputs": ["text_features.parquet"]},
     {"name": "outages", "cmd": "py", "script": "outages.py",
      "outputs": ["outages.parquet", "stall_minutes.parquet", "reasons.parquet"]},
+    {"name": "context_ledger", "cmd": "py", "script": "context_ledger.py",
+     "outputs": ["call_starts_logged.parquet", "call_windows.parquet", "context_ledger_turns.parquet",
+                 "context_ledger_items.parquet"]},
 ]
 NAMES = [s["name"] for s in STEPS]
 

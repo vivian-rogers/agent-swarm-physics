@@ -5,7 +5,7 @@ Vivian's priority order: (1) postprocessed data quality; (2) re-evaluate every h
 | Item | Status | Output |
 | --- | --- | --- |
 | Consolidation into `infra/shared/` (goal fields, behavior states, project states, period units, classified kicks, text features, spectra, copy info, turn errors + outages, bash_head fix, `build_all.py`) | **done** (2026-10-04) | 47 MB of new tables; 13/13 tests pass; see `infra/README.md` → Shared pipeline |
-| DQ1 turn-level context ledger (+ `call_windows`, pause-aware visibility: H29) | running | `context_ledger_turns.parquet`, `context_ledger_items.parquet`, `call_windows.parquet` |
+| DQ1 turn-level context ledger (+ `call_windows`, pause-aware visibility: H29) | **done** (2026-10-04) | `context_ledger_turns.parquet`, `context_ledger_items.parquet`, `call_windows.parquet` |
 | DQ2 reply threading + stance labels (Jev, cap $8) | running | `reply_pairs.parquet`, `reply_graph.parquet` |
 | DQ3 Jev behavior states v3 + full run (cap $15) | running | `behavior_states_v3.parquet` |
 | DQ4 work-output ledger (read-only fetch of public agent repos; ≤ 2 GB) | running (2026-10-04) | `work_commits.parquet`, `work_daily.parquet`, `work_outcomes.parquet` |
@@ -55,7 +55,7 @@ Audit (2026-10-04): in ~15 of 34 hypotheses the period READMEs are near-identica
 | Wave | Hypotheses | Launch when |
 | --- | --- | --- |
 | A | H43, H46, H47, H49, H54, H56, H50 | launched 2026-10-04; paused by the session-limit outage, resume as DQ / near-done agents finish |
-| B | H40, H41, H42, H48, H52, H53, H45 | DQ1 (`call_windows`, context ledger) lands |
+| B | H40, H41, H42, H48, H52, H53, H45 | **unblocked** (DQ1 landed 2026-10-04); launch after wave A resumes |
 | C | H44 (DQ1 + DQ3 + DQ4), H55 (DQ2 + DQ5), H57 (DQ1 + DQ5), H58 (DQ4 + H01 round 2) | their inputs land |
 | D | H51 (one dial) | after waves B–C and the re-evaluation wave |
 Slots are capped at 20 concurrent agents; queued work launches as slots free, data-quality and re-evaluation first.

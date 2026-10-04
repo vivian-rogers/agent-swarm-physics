@@ -1,0 +1,768 @@
+{
+ "built_at": "2026-10-04T02:43:56.748875+00:00",
+ "calibration": {
+  "overhead": {
+   "busy_cu": {
+    "n": 311928,
+    "q05": 0.53120185,
+    "q25": 1.1160094999999999,
+    "median": 1.6960775,
+    "q75": 2.7448665,
+    "q95": 7.8125664999999955,
+    "share_lt_-2s": 0.0010162601626016261
+   },
+   "busy_chat": {
+    "n": 2404,
+    "q05": 22.423265549999996,
+    "q25": 40.764138,
+    "median": 54.741218,
+    "q75": 81.8912555,
+    "q95": 130.24198664999994,
+    "share_lt_-2s": 0.0
+   },
+   "summary": {
+    "n": 9168,
+    "q05": 0.58004415,
+    "q25": 1.17673125,
+    "median": 1.7945615,
+    "q75": 2.908716,
+    "q95": 8.911566049999998,
+    "share_lt_-2s": 0.0
+   },
+   "long_prev": {
+    "n": 5418,
+    "q05": 0.5093578500000001,
+    "q25": 1.0895845,
+    "median": 1.7466534999999999,
+    "q75": 3.73617375,
+    "q95": 41.66170504999993,
+    "share_lt_-2s": 0.0022148394241417496
+   },
+   "pause": {
+    "n": 2006,
+    "q05": 0.60890625,
+    "q25": 1.44600525,
+    "median": 3.1597229999999996,
+    "q75": 12.61402825,
+    "q95": 27.955358,
+    "share_lt_-2s": 0.0
+   },
+   "marker": {
+    "n": 9310,
+    "q05": 0.6525757999999999,
+    "q25": 1.22028925,
+    "median": 1.817521,
+    "q75": 3.067741,
+    "q95": 9.617280299999994,
+    "share_lt_-2s": 0.0
+   },
+   "after_summary": {
+    "n": 1536,
+    "q05": 0.13890824999999998,
+    "q25": 0.502416,
+    "median": 0.824784,
+    "q75": 1.207589,
+    "q95": 2.46152425,
+    "share_lt_-2s": 0.0
+   }
+  },
+  "n_logged": 341637,
+  "latency": {
+   "cu_busy": {
+    "n": 311928,
+    "q10": 4.736118,
+    "q50": 9.250450999999998,
+    "q90": 17.751390299999997
+   },
+   "chat_scheduled": {
+    "n": 2648,
+    "q10": 5.4048231,
+    "q50": 9.127321499999999,
+    "q90": 16.7145289
+   }
+  },
+  "rho": {
+   "cu": {
+    "n": 311928,
+    "q05": 0.43301576371054495,
+    "q50": 1.0,
+    "q95": 2.6619931555155327
+   },
+   "chat": {
+    "n": 2648,
+    "q05": 0.48603835797374967,
+    "q50": 0.9353036717665661,
+    "q95": 1.825830132808578
+   }
+  }
+ },
+ "lookback_dropped_pairs": 415,
+ "consistency": {
+  "rows": {
+   "call_windows": 2604092,
+   "turns": 2604092,
+   "items": 2101842,
+   "receiving_turns": 2526837
+  },
+  "violations": {
+   "t_start_after_t_first": 0,
+   "t_first_after_t_log": 0,
+   "start_outside_bounds": 0,
+   "t_start_not_monotone": 0,
+   "t_end_before_t_log": 0,
+   "window_start_not_before_call": 0,
+   "k_new_sum_minus_items": 0,
+   "items_after_call_start": 0,
+   "items_before_window": 0,
+   "items_on_summary_calls": 0,
+   "duplicate_agent_message": 0,
+   "sender_is_recipient": 0,
+   "age_negative": 0,
+   "room_mismatch": 0
+  },
+  "shares": {
+   "src": {
+    "event": 0.0664,
+    "action": 0.8774,
+    "both": 0.0562
+   },
+   "kind": {
+    "cu_action": 0.8752,
+    "talk": 0.0506,
+    "pause": 0.0162,
+    "wait": 0.0138,
+    "consolidate": 0.0201,
+    "session_start": 0.0096,
+    "session_stop": 0.0096,
+    "search": 0.0041,
+    "room_move": 0.0004,
+    "request": 0.0005
+   },
+   "start_src": {
+    "logged": 0.1898,
+    "prev_end": 0.7527,
+    "pause_expiry": 0.0138,
+    "marker": 0.0204,
+    "latency": 0.0233
+   },
+   "start_conf": {
+    "low": 0.0326,
+    "medium": 0.7776,
+    "high": 0.1898
+   },
+   "gap_kind": {
+    "busy": 0.9074,
+    "pause": 0.0152,
+    "pause_early": 0.0001,
+    "after_summary": 0.0292,
+    "marker": 0.0079,
+    "session_start": 0.0019,
+    "long_prev": 0.0366,
+    "first_of_day": 0.0017
+   },
+   "automated_kind_source": "kicks_classified",
+   "automated_kind_text_rule_disagreements": 0,
+   "items_uncertain": 0.2076,
+   "items_omitted_cap": 47080,
+   "turns_cap_hit": 585
+  }
+ },
+ "startup_checks": {
+  "after_pause_I": {
+   "n": 324,
+   "early_wake_share": 0.0123,
+   "latency_s": {
+    "5": 6.605,
+    "25": 11.231,
+    "50": 17.194,
+    "75": 26.882,
+    "95": 60.858
+   }
+  },
+  "after_pause_II": {
+   "n": 10,
+   "early_wake_share": 0.0,
+   "latency_s": {
+    "5": 6.84,
+    "25": 9.271,
+    "50": 16.709,
+    "75": 23.928,
+    "95": 92.12
+   }
+  },
+  "after_pause_III": {
+   "n": 28206,
+   "early_wake_share": 0.002,
+   "latency_s": {
+    "5": 1.209,
+    "25": 4.901,
+    "50": 10.506,
+    "75": 20.236,
+    "95": 57.813
+   }
+  },
+  "first_of_day_with_marker_share": 0.1755
+ },
+ "spot_checks": {
+  "II": {
+   "sampled_calls": 300,
+   "count_mismatches": 0
+  },
+  "I": {
+   "sampled_calls": 300,
+   "count_mismatches": 0
+  },
+  "III": {
+   "sampled_calls": 300,
+   "count_mismatches": 0
+  },
+  "raw_chat_check": {
+   "items": 235,
+   "found_in_raw": 233,
+   "time_mismatch": 0,
+   "room_mismatch": 0,
+   "raw_time_not_before_call_start": 0
+  }
+ },
+ "naive_vs_ledger": {
+  "I": {
+   "pairs": 454897,
+   "changed_receiving_call": 150064,
+   "changed_share": 0.3299,
+   "changed_by_gap_kind": {
+    "busy": 113519,
+    "after_summary": 8775,
+    "marker": 697,
+    "long_prev": 11613,
+    "first_of_day": 11363,
+    "pause": 3907,
+    "session_start": 190
+   },
+   "talk_invisible_naive": 122776,
+   "talk_invisible_naive_now_visible": 85451,
+   "talk_flip_share": 0.696,
+   "talk_flip_by_gap_kind": {
+    "busy": {
+     "naive_invisible": 94612,
+     "now_visible": 67284,
+     "share": 0.711
+    },
+    "pause": {
+     "naive_invisible": 3822,
+     "now_visible": 3536,
+     "share": 0.925
+    },
+    "after_summary": {
+     "naive_invisible": 5621,
+     "now_visible": 378,
+     "share": 0.067
+    },
+    "marker": {
+     "naive_invisible": 520,
+     "now_visible": 59,
+     "share": 0.113
+    },
+    "long_prev": {
+     "naive_invisible": 10328,
+     "now_visible": 8226,
+     "share": 0.796
+    },
+    "first_of_day": {
+     "naive_invisible": 6972,
+     "now_visible": 5953,
+     "share": 0.854
+    },
+    "session_start": {
+     "naive_invisible": 901,
+     "now_visible": 15,
+     "share": 0.017
+    }
+   }
+  },
+  "II": {
+   "pairs": 39504,
+   "changed_receiving_call": 8923,
+   "changed_share": 0.2259,
+   "changed_by_gap_kind": {
+    "busy": 6160,
+    "after_summary": 1208,
+    "marker": 93,
+    "long_prev": 578,
+    "first_of_day": 675,
+    "session_start": 26,
+    "pause": 183
+   },
+   "talk_invisible_naive": 5487,
+   "talk_invisible_naive_now_visible": 3772,
+   "talk_flip_share": 0.6874,
+   "talk_flip_by_gap_kind": {
+    "busy": {
+     "naive_invisible": 3712,
+     "now_visible": 2700,
+     "share": 0.727
+    },
+    "pause": {
+     "naive_invisible": 177,
+     "now_visible": 172,
+     "share": 0.972
+    },
+    "after_summary": {
+     "naive_invisible": 582,
+     "now_visible": 46,
+     "share": 0.079
+    },
+    "marker": {
+     "naive_invisible": 6,
+     "now_visible": 2,
+     "share": 0.333
+    },
+    "session_start": {
+     "naive_invisible": 0,
+     "now_visible": 0,
+     "share": 0.0
+    },
+    "long_prev": {
+     "naive_invisible": 441,
+     "now_visible": 381,
+     "share": 0.864
+    },
+    "first_of_day": {
+     "naive_invisible": 569,
+     "now_visible": 471,
+     "share": 0.828
+    }
+   }
+  },
+  "III": {
+   "pairs": 1063403,
+   "changed_receiving_call": 341083,
+   "changed_share": 0.3207,
+   "changed_by_gap_kind": {
+    "busy": 53188,
+    "pause": 253462,
+    "after_summary": 18626,
+    "marker": 43,
+    "long_prev": 2621,
+    "first_of_day": 13122,
+    "pause_early": 21
+   },
+   "talk_invisible_naive": 49643,
+   "talk_invisible_naive_now_visible": 32434,
+   "talk_flip_share": 0.6533,
+   "talk_flip_by_gap_kind": {
+    "busy": {
+     "naive_invisible": 16210,
+     "now_visible": 2330,
+     "share": 0.144
+    },
+    "pause": {
+     "naive_invisible": 28405,
+     "now_visible": 27148,
+     "share": 0.956
+    },
+    "after_summary": {
+     "naive_invisible": 734,
+     "now_visible": 100,
+     "share": 0.136
+    },
+    "long_prev": {
+     "naive_invisible": 1439,
+     "now_visible": 196,
+     "share": 0.136
+    },
+    "first_of_day": {
+     "naive_invisible": 2852,
+     "now_visible": 2660,
+     "share": 0.933
+    },
+    "marker": {
+     "naive_invisible": 3,
+     "now_visible": 0,
+     "share": 0.0
+    }
+   }
+  }
+ },
+ "logged_leave_out": {
+  "calls_with_logged_start": 494179,
+  "agents": [
+   6,
+   15,
+   22,
+   27,
+   44
+  ],
+  "error_s": {
+   "prev_end|busy": {
+    "n": 320960,
+    "err": {
+     "5": -6.139,
+     "25": -1.05,
+     "50": 0.0,
+     "75": 0.581,
+     "95": 1.166
+    },
+    "abs_le_2s": 0.833,
+    "logged_within_bounds": 0.9
+   },
+   "prev_end|after_summary": {
+    "n": 1536,
+    "err": {
+     "5": -1.637,
+     "25": -0.383,
+     "50": 0.0,
+     "75": 0.322,
+     "95": 0.686
+    },
+    "abs_le_2s": 0.96,
+    "logged_within_bounds": 0.9
+   },
+   "prev_end|long_prev": {
+    "n": 5174,
+    "err": {
+     "5": -16.775,
+     "25": -1.406,
+     "50": 0.081,
+     "75": 0.68,
+     "95": 1.254
+    },
+    "abs_le_2s": 0.784,
+    "logged_within_bounds": 0.926
+   },
+   "pause_expiry|pause": {
+    "n": 2006,
+    "err": {
+     "5": -24.796,
+     "25": -9.454,
+     "50": -0.0,
+     "75": 1.714,
+     "95": 2.549
+    },
+    "abs_le_2s": 0.413,
+    "logged_within_bounds": 0.899
+   },
+   "marker|after_summary": {
+    "n": 7677,
+    "err": {
+     "5": -7.798,
+     "25": -1.478,
+     "50": -0.11,
+     "75": 0.536,
+     "95": 1.148
+    },
+    "abs_le_2s": 0.79,
+    "logged_within_bounds": 0.903
+   },
+   "marker|marker": {
+    "n": 1633,
+    "err": {
+     "5": -7.67,
+     "25": -0.205,
+     "50": 0.393,
+     "75": 0.794,
+     "95": 1.22
+    },
+    "abs_le_2s": 0.889,
+    "logged_within_bounds": 0.883
+   },
+   "marker|first_of_day": {
+    "n": 52,
+    "err": {
+     "5": -13.027,
+     "25": -5.398,
+     "50": -2.189,
+     "75": -0.348,
+     "95": 0.862
+    },
+    "abs_le_2s": 0.442,
+    "logged_within_bounds": 0.769
+   },
+   "latency|busy": {
+    "n": 2404,
+    "err": {
+     "5": -5.357,
+     "25": -3.316,
+     "50": -1.281,
+     "75": 1.816,
+     "95": 8.375
+    },
+    "abs_le_2s": 0.349,
+    "logged_within_bounds": 0.881
+   },
+   "latency|long_prev": {
+    "n": 244,
+    "err": {
+     "5": -4.172,
+     "25": 0.29,
+     "50": 2.82,
+     "75": 5.953,
+     "95": 11.734
+    },
+    "abs_le_2s": 0.27,
+    "logged_within_bounds": 0.889
+   },
+   "latency|first_of_day": {
+    "n": 275,
+    "err": {
+     "5": -5.073,
+     "25": -0.915,
+     "50": 2.063,
+     "75": 7.542,
+     "95": 40.438
+    },
+    "abs_le_2s": 0.324,
+    "logged_within_bounds": 0.84
+   }
+  },
+  "item_assignment_agreement": {
+   "items": 158199,
+   "same_call": 0.9103,
+   "by_gap_kind": {
+    "busy": 0.8833,
+    "pause": 0.9207,
+    "after_summary": 0.9832,
+    "marker": 0.9565,
+    "long_prev": 0.9319,
+    "first_of_day": 0.9989,
+    "session_start": 0.0
+   }
+  }
+ },
+ "tokens": {
+  "all": {
+   "n": 988795,
+   "chars_new": {
+    "corr": 0.2284,
+    "slope_tok_per_char": 0.2123
+   },
+   "chars_naive": {
+    "corr": 0.1029,
+    "slope_tok_per_char": 0.0824
+   },
+   "chars_next": {
+    "corr": 0.0581,
+    "slope_tok_per_char": 0.0438
+   },
+   "chars_prev": {
+    "corr": 0.0352,
+    "slope_tok_per_char": 0.0259
+   },
+   "disagreeing_calls": {
+    "n": 95105,
+    "chars_new": 0.2973,
+    "chars_naive": 0.0297
+   }
+  },
+  "Google": {
+   "n": 374651,
+   "chars_new": {
+    "corr": 0.221,
+    "slope_tok_per_char": 0.5541
+   },
+   "chars_naive": {
+    "corr": 0.0948,
+    "slope_tok_per_char": 0.1101
+   },
+   "chars_next": {
+    "corr": 0.039,
+    "slope_tok_per_char": 0.0414
+   },
+   "chars_prev": {
+    "corr": 0.0306,
+    "slope_tok_per_char": 0.0324
+   },
+   "disagreeing_calls": {
+    "n": 39304,
+    "chars_new": 0.3417,
+    "chars_naive": 0.0786
+   }
+  },
+  "Anthropic": {
+   "n": 614144,
+   "chars_new": {
+    "corr": 0.2521,
+    "slope_tok_per_char": 0.1888
+   },
+   "chars_naive": {
+    "corr": 0.104,
+    "slope_tok_per_char": 0.0718
+   },
+   "chars_next": {
+    "corr": 0.0585,
+    "slope_tok_per_char": 0.0383
+   },
+   "chars_prev": {
+    "corr": 0.0297,
+    "slope_tok_per_char": 0.0189
+   },
+   "disagreeing_calls": {
+    "n": 55801,
+    "chars_new": 0.3049,
+    "chars_naive": 0.0082
+   }
+  }
+ },
+ "exposure": {
+  "exposure_pairs": 2102484,
+  "ledger_pairs": 2101842,
+  "both": 2101313,
+  "exposure_only": 449,
+  "ledger_only": 529,
+  "lag_by_regime": {
+   "II": {
+    "n": 39546,
+    "exposure_lag_s": {
+     "5": 9.0,
+     "25": 62.0,
+     "50": 179.0,
+     "75": 457.0,
+     "95": 1979.0
+    },
+    "ledger_visible_lag_s": {
+     "5": 1.236,
+     "25": 6.64,
+     "50": 19.263,
+     "75": 64.997,
+     "95": 297.941
+    },
+    "exposure_minus_ledger_s": {
+     "5": -2.223,
+     "25": 10.398,
+     "50": 112.526,
+     "75": 362.218,
+     "95": 1090.893
+    },
+    "share_exposure_over_by_60s": 0.6043
+   },
+   "I": {
+    "n": 454833,
+    "exposure_lag_s": {
+     "5": 5.0,
+     "25": 36.0,
+     "50": 131.0,
+     "75": 400.0,
+     "95": 1523.0
+    },
+    "ledger_visible_lag_s": {
+     "5": 1.442,
+     "25": 7.095,
+     "50": 17.578,
+     "75": 54.344,
+     "95": 284.125
+    },
+    "exposure_minus_ledger_s": {
+     "5": -18.252,
+     "25": 9.661,
+     "50": 56.957,
+     "75": 322.542,
+     "95": 999.532
+    },
+    "share_exposure_over_by_60s": 0.4956
+   },
+   "III": {
+    "n": 1063361,
+    "exposure_lag_s": {
+     "5": 16.0,
+     "25": 108.0,
+     "50": 290.0,
+     "75": 669.0,
+     "95": 2874.0
+    },
+    "ledger_visible_lag_s": {
+     "5": 1.863,
+     "25": 9.716,
+     "50": 49.964,
+     "75": 241.627,
+     "95": 2247.207
+    },
+    "exposure_minus_ledger_s": {
+     "5": -24.729,
+     "25": 1.024,
+     "50": 63.56,
+     "75": 372.484,
+     "95": 1139.289
+    },
+    "share_exposure_over_by_60s": 0.5066
+   }
+  }
+ },
+ "claude_code": {
+  "available": true,
+  "days": [
+   "2026-02-09",
+   "2026-02-10",
+   "2026-02-11",
+   "2026-02-12",
+   "2026-02-13",
+   "2026-02-16",
+   "2026-02-17",
+   "2026-02-18",
+   "2026-02-19",
+   "2026-02-20",
+   "2026-03-02",
+   "2026-03-03",
+   "2026-03-04",
+   "2026-03-16"
+  ],
+  "fetches": 8058,
+  "chat_pred_own_room": 7237,
+  "chat_seen_own_room": 4371,
+  "chat_seen_other_room": 1,
+  "chat_other_room_posted": 167,
+  "membership_recall": 0.9998,
+  "membership_precision": 0.604,
+  "timing_exact_call": 0.8543,
+  "timing_within_1_call": 0.9101,
+  "timing_later_than_predicted": 0.14,
+  "timing_earlier_than_predicted": 0.0057,
+  "delay_first_seen_s": {
+   "5": 0.675,
+   "25": 3.957,
+   "50": 17.142,
+   "75": 63.222,
+   "95": 715.923
+  },
+  "precision_by_kind": {
+   "agent": 0.6044,
+   "human": 0.6538,
+   "automated": 0.5455
+  },
+  "timing_exact_by_kind": {
+   "agent": 0.8558,
+   "human": 0.7059,
+   "automated": 0.7619
+  },
+  "by_goal": {
+   "G30": {
+    "pred_own": 2391,
+    "seen_own": 1356,
+    "precision": 0.5671,
+    "timing_exact_call": 0.8827,
+    "timing_within_1": 0.9462
+   },
+   "G31": {
+    "pred_own": 2800,
+    "seen_own": 1789,
+    "precision": 0.6389,
+    "timing_exact_call": 0.82,
+    "timing_within_1": 0.8541
+   },
+   "G33": {
+    "pred_own": 1791,
+    "seen_own": 1070,
+    "precision": 0.5974,
+    "timing_exact_call": 0.8822,
+    "timing_within_1": 0.9449
+   },
+   "G35": {
+    "pred_own": 255,
+    "seen_own": 156,
+    "precision": 0.6118,
+    "timing_exact_call": 0.8077,
+    "timing_within_1": 1.0
+   }
+  },
+  "mark_seen_fetch_share": 0.5575,
+  "note": "CC pulls events itself (get_events with limit and optional markAsSeen); the standard scaffold pushes all unseen events at every call. Precision < 1 reflects the pull loop (limits, re-reads), not the room rule; timing tests the window tiling on the messages it did see."
+ }
+}
