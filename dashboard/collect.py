@@ -155,6 +155,43 @@ def period_folders(hdir: Path) -> list[dict]:
     return out
 
 
+MODEL_RE = re.compile(r"physics-models/(\d{2})-[a-z0-9-]+")
+
+
+def card_models(text: str, meta: dict) -> list[dict]:
+    """Physics models a hypothesis uses. meta.json `models` (RUBRIC.md) wins; otherwise a fallback from the card:
+    models on the From/Models line or in the Model section are 'primary', other mentions 'mentioned'."""
+    if isinstance(meta.get("models"), list) and meta["models"]:
+        out = []
+        for m in meta["models"]:
+            mid = str(m.get("model", ""))[:2]
+            if mid.isdigit():
+                out.append({"model": mid, "role": m.get("role", "primary"), "outcome": m.get("outcome", "untested"),
+                            "note": m.get("note", ""), "source": "meta"})
+        return out
+    head = "\n".join(l for l in text.splitlines()[:12] if "From:" in l or "Models:" in l)
+    msec = sections(text).get("Model", "")
+    prim = set(MODEL_RE.findall(head)) | set(MODEL_RE.findall(msec))
+    allm = set(MODEL_RE.findall(text))
+    return ([{"model": m, "role": "primary", "outcome": "untested", "note": "", "source": "card"} for m in sorted(prim)] +
+            [{"model": m, "role": "mentioned", "outcome": "untested", "note": "", "source": "card"} for m in sorted(allm - prim)])
+
+
+def physics_models() -> list[dict]:
+    """Model index from physics-models/README.md (number, name, swarm variable, signature behaviour)."""
+    out = []
+    readme = ROOT / "physics-models/README.md"
+    if not readme.exists():
+        return out
+    for line in readme.read_text(errors="replace").splitlines():
+        m = re.match(r"\|\s*\[(\d{2})\]\(([^)]+)\)\s*\|\s*([^|]+)\|\s*([^|]*)\|\s*([^|]*)\|\s*([^|]*)\|", line)
+        if m:
+            out.append({"id": m.group(1), "path": "physics-models/" + m.group(2).strip("/") + "/README.md",
+                        "name": m.group(3).strip(), "fields": m.group(4).strip(), "variable": m.group(5).strip(),
+                        "signature": m.group(6).strip()})
+    return out
+
+
 def hypothesis(hdir: Path) -> dict:
     card = hdir / "README.md"
     text = card.read_text(errors="replace") if card.exists() else ""
@@ -196,6 +233,7 @@ def hypothesis(hdir: Path) -> dict:
     rating = {k: meta.get(k) for k in ("complete", "faithfulness", "usefulness", "one_line", "rated_by", "updated")}
     rating["rationale"] = meta.get("rationale", {})
     rating["v2"] = meta.get("v2")  # scoring v2 (writeup/scoring/scoring-v2.pdf): claim, credence, mechanism, fragility, V, EU, S
+    models = card_models(text, meta)
     size, newest, nfiles = dir_stats(hdir)
     dsize, dnewest, _ = dir_stats(data_dir)
     last = max(x for x in (newest, dnewest, 0) if x is not None) or None
@@ -208,7 +246,7 @@ def hypothesis(hdir: Path) -> dict:
         "confirm_scripts": confirm_scripts, "confirm_runs": [p["period"] for p in conf_run] or data_conf,
         "confirm_verdicts": [{"period": p["period"], "verdict": p["verdict"], "text": p["verdict_text"]} for p in conf_run],
         "data_bytes": dsize, "files": nfiles, "last_activity": iso(last),
-        "parked": "parked" in status.lower(), "rating": rating,
+        "parked": "parked" in status.lower(), "rating": rating, "models": models,
         "summary_pdf": str((hdir / "summary/summary.pdf").relative_to(ROOT)) if (hdir / "summary/summary.pdf").exists() else None,
     }
 
@@ -536,7 +574,7 @@ def state() -> dict:
     hs = cached("hyp", 8, hypotheses)
     out = {
         "generated_at": iso(time.time()), "root": str(ROOT),
-        "hypotheses": hs, "grid": grid(hs), "holdout": holdout(hs),
+        "hypotheses": hs, "grid": grid(hs), "holdout": holdout(hs), "models": cached("models", 60, physics_models),
         "agents": cached("agents", 5, agents), "pipelines": cached("pipelines", 30, pipelines),
         "log": cached("log", 10, log_feed), "git": git_state(), "processes": processes(), "budget": budget(),
     }

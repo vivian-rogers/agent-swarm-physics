@@ -137,6 +137,23 @@ td.num { text-align: right; white-space: nowrap; }
 
 #tip { position: fixed; z-index: 30; pointer-events: none; background: var(--text-primary); color: var(--surface-1); padding: 5px 8px; border-radius: 4px; font-size: 12px; max-width: 420px; display: none; white-space: pre-wrap; }
 .err { color: var(--critical); padding: 8px 16px; }
+.tabs { display: inline-flex; gap: 2px; margin-left: 8px; }
+.tabs button { font-size: 11px; text-transform: none; letter-spacing: 0; padding: 1px 8px; }
+.tabs button.on { background: var(--text-primary); color: var(--surface-1); border-color: var(--text-primary); }
+.mx td { padding: 2px 3px; border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent); }
+[hidden] { display: none !important; }
+.mx th.mcol { writing-mode: vertical-rl; transform: rotate(180deg); padding: 6px 2px; cursor: pointer; font-weight: 600; height: 170px; white-space: nowrap; vertical-align: bottom; text-align: left; }
+.mx th.mcol:hover { color: var(--text-primary); }
+.mx td.hl { white-space: nowrap; max-width: 300px; overflow: hidden; text-overflow: ellipsis; padding-right: 10px; }
+.mcell { display: inline-block; width: 24px; height: 20px; border-radius: 3px; text-align: center; font: 700 12px/20px ui-monospace, monospace; cursor: default; }
+.mcell.supported { background: var(--good); color: #fff; } .mcell.refuted { background: var(--critical); color: #fff; }
+.mcell.mixed { background: var(--warning); color: #0b0b0b; } .mcell.untested { background: var(--surface-3); color: var(--text-secondary); }
+.mcell.na { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+.mcell.guess { opacity: .55; outline: 1px dashed var(--text-muted); outline-offset: -1px; }
+.mx tfoot td { border-top: 2px solid var(--border); vertical-align: top; }
+.tally { display: flex; flex-direction: column; gap: 1px; font: 10px/12px ui-monospace, monospace; color: var(--text-secondary); align-items: center; }
+.tally .bar { display: flex; flex-direction: column-reverse; width: 14px; height: 40px; gap: 1px; }
+.tally .bar span { display: block; width: 100%; }
 .small { font-size: 11px; }
 </style>
 </head>
@@ -156,14 +173,22 @@ td.num { text-align: right; white-space: nowrap; }
         <span style="margin-left:auto"><input id="filter" placeholder="filter: H1, running, mixed, holdout…"></span></h2>
       <div class="scroll"><table id="hyp"></table></div>
       <div class="legend small" style="margin-top:8px">
-        <span>Progress pips: card · predictions · synthetic check · periods with verdicts · scorecard · confirm script · holdout run (● done, ◐ partial, ○ not yet)</span>
-        <span>Scoring v2 (writeup/scoring/scoring-v2.pdf): <b>Credence</b> = probability the stated claim survives an independent test (evidence ladder); <b>EU</b> = expected usefulness = credence × value-if-true (0–5); hover for claim, mechanism level M0–M2, fragility ⚠, value V and scientific value S. Grey = not yet scored in v2 (v1 rating shown faded). Red low ↔ gray ↔ blue high.</span>
-        <span>Scorecard A–I: <i style="background:var(--ord-0)"></i>0 <i style="background:var(--ord-1)"></i>1 <i style="background:var(--ord-2)"></i>2, dashed = not scored</span>
+        <span>Progress pips, in order: card, predictions, synthetic check, period verdicts, scorecard, confirm script, holdout run. ● done. ◐ partial. ○ not done.</span>
+        <span><b>Credence</b>: the probability that the stated claim survives an independent test. An evidence ladder gives it (writeup/scoring/scoring-v2.pdf). <b>EU</b>: credence × value if true (0–5). ⚠ marks a claim that changed between data versions. Hover a chip to see the claim, the mechanism level M0–M2, V and S. Red is low, gray is middle, blue is high.</span>
+        <span>Scorecard axes A–I: <i style="background:var(--ord-0)"></i>0 failed or not done <i style="background:var(--ord-1)"></i>1 partial <i style="background:var(--ord-2)"></i>2 passed. A dashed cell is not scored.</span>
       </div>
     </section>
     <section id="s-grid">
-      <h2>Goal periods × hypotheses <span class="sub">✓ supported · ✗ failed · ~ mixed · d descriptive · … pending · – n/a · outlined = confirmatory · 🔒 held-out period</span></h2>
-      <div class="scroll"><table class="grid" id="grid"></table></div>
+      <h2><span id="grid-title">Physics models × hypotheses</span><span class="tabs"><button data-v="models">models</button><button data-v="periods">goal periods</button></span>
+        <span class="sub" id="grid-sub"></span></h2>
+      <div class="scroll" id="mx-wrap"><table class="mx" id="mx"></table></div>
+      <div class="scroll" id="grid-wrap" hidden><table class="grid" id="grid"></table></div>
+      <div class="legend small" id="mx-legend">
+        <span>The glyph gives the role of the model in the hypothesis. <b>●</b> primary model. <b>◑</b> second model fitted. <b>⇄</b> rival that the test compares against. <b>∅</b> the model is the null. <b>⚙</b> estimator only. <b>·</b> mentioned in the card.</span>
+        <span>The color gives the outcome for the model after round 1b: <i style="background:var(--good)"></i>held <i style="background:var(--critical)"></i>refuted <i style="background:var(--warning)"></i>mixed <i style="background:var(--surface-3)"></i>not yet tested. A faded, dashed cell is a guess from the card text; the summary agent has not set it yet.</span>
+        <span>The footer gives, for each model, the outcomes where the model is primary or second. Click a column head to open the model. Click a row to open the card.</span>
+      </div>
+      <div class="legend small" id="grid-legend" hidden><span>✓ supported · ✗ failed · ~ mixed · d descriptive · … pending · – n/a · outlined = confirmatory run · 🔒 held-out period</span></div>
     </section>
   </div>
   <div>
@@ -210,7 +235,7 @@ function v2Chip(h, which) {
   }
   const val = which === "cred" ? v2.credence : v2.expected_usefulness;
   if (val == null) return `<span class="muted small">—</span>`;
-  const scale = which === "cred" ? val * 5 : val;
+  const scale = which === "cred" ? val * 5 : Math.min(5, val * 2.5 / 1.5);  // EU: gray at 1.5 (same as the compendium)
   const [, bg, fg] = DIV.reduce((a, b) => Math.abs(b[0] - scale) < Math.abs(a[0] - scale) ? b : a);
   const label = which === "cred" ? Math.round(val * 100) + "%" : val.toFixed(1);
   const flag = v2.fragile ? " ⚠" : "";
@@ -353,6 +378,54 @@ function renderGrid() {
   $("#grid").querySelectorAll(".cell[data-path]").forEach(c => c.onclick = () => openFile(c.dataset.path));
 }
 
+
+// ---------------------------------------------------------------- physics models × hypotheses
+const MSHORT = { "01": "Inverse Ising", "02": "Noneq. Ising", "03": "Contagion", "04": "Semantic info", "05": "Replicator dissipation", "06": "Neutral coop. dynamics", "07": "Fluctuating replicators", "08": "Copy vs transform", "09": "Hawkes", "10": "Potts", "11": "Vector spins" };
+const ROLE = { primary: "●", secondary: "◑", rival: "⇄", null: "∅", tool: "⚙", mentioned: "·" };
+const ROLE_TXT = { primary: "primary model", secondary: "second model", rival: "rival compared against", null: "model used as the null", tool: "estimator only", mentioned: "mentioned in the card" };
+const OUT_TXT = { supported: "the model held", refuted: "the model was refuted", mixed: "mixed result", untested: "not yet tested", "n/a": "not applicable" };
+let gridView = store.get("gridView", "models"), mSortKey = store.get("msort", "cred"), mSortDir = store.get("mdir", -1);
+function renderGridOrModels() {
+  $("#mx-wrap").hidden = gridView !== "models"; $("#mx-legend").hidden = gridView !== "models";
+  $("#grid-wrap").hidden = gridView !== "periods"; $("#grid-legend").hidden = gridView !== "periods";
+  $("#grid-title").textContent = gridView === "models" ? "Physics models × hypotheses" : "Goal periods × hypotheses";
+  document.querySelectorAll("#s-grid .tabs button").forEach(b => { b.classList.toggle("on", b.dataset.v === gridView);
+    b.onclick = () => { gridView = b.dataset.v; store.set("gridView", gridView); renderGridOrModels(); }; });
+  if (gridView === "models") renderModels(); else { $("#grid-sub").textContent = ""; renderGrid(); }
+}
+function renderModels() {
+  const M = S.models || []; const f = ($("#filter").value || "").toLowerCase().trim();
+  let hs = S.hypotheses.filter(h => (h.models || []).length);
+  if (f) hs = hs.filter(h => [h.id, h.title, h.rating?.v2?.claim, (h.models || []).map(m => m.model).join(" ")].join(" ").toLowerCase().includes(f));
+  const key = { id: h => h.id, cred: h => h.rating?.v2?.credence ?? -1, eu: h => h.rating?.v2?.expected_usefulness ?? -1,
+                n: h => (h.models || []).filter(m => m.role !== "mentioned").length }[mSortKey] || (h => h.id);
+  hs.sort((a, b) => (key(a) > key(b) ? 1 : key(a) < key(b) ? -1 : 0) * mSortDir);
+  const th = (k, label) => `<th class="sort" data-mk="${k}">${label}${mSortKey === k ? (mSortDir > 0 ? " ▲" : " ▼") : ""}</th>`;
+  const head = `<thead><tr>${th("id", "ID")}<th>Hypothesis</th>${th("cred", "Credence")}${th("eu", "EU")}` +
+    M.map(m => `<th class="mcol" data-path="${esc(m.path)}" data-tip="${esc(m.id + " " + m.name + "\nVariable: " + m.variable + "\nSignature: " + m.signature)}">${m.id} ${esc(MSHORT[m.id] || m.name.split(" (")[0].split(":")[0])}</th>`).join("") + `</tr></thead>`;
+  const body = hs.map(h => {
+    const by = {}; (h.models || []).forEach(m => { const cur = by[m.model]; const rank = r => ["primary", "secondary", "rival", "null", "tool", "mentioned"].indexOf(r);
+      if (!cur || rank(m.role) < rank(cur.role)) by[m.model] = m; });
+    return `<tr class="click" data-card="${esc(h.card || "")}"><td class="id">${h.id}</td><td class="hl" data-tip="${esc(h.rating?.v2?.claim || h.title)}">${esc(h.title)}</td>
+      <td>${v2Chip(h, "cred")}</td><td>${v2Chip(h, "eu")}</td>` +
+      M.map(m => { const c = by[m.id]; if (!c) return "<td></td>";
+        const out = c.outcome === "n/a" ? "na" : (c.outcome || "untested");
+        const tipTxt = `${h.id} × ${m.id} ${m.name}\nRole: ${ROLE_TXT[c.role] || c.role}\nOutcome: ${OUT_TXT[c.outcome] || c.outcome}${c.note ? "\n" + c.note : ""}${c.source === "card" ? "\n(guess from the card text)" : ""}`;
+        return `<td><span class="mcell ${out} ${c.source === "card" ? "guess" : ""}" data-tip="${esc(tipTxt)}">${ROLE[c.role] || "?"}</span></td>`; }).join("") + `</tr>`; }).join("");
+  const tally = M.map(m => { const c = { supported: 0, mixed: 0, refuted: 0, untested: 0 };
+    hs.forEach(h => (h.models || []).filter(x => x.model === m.id && (x.role === "primary" || x.role === "secondary")).forEach(x => { c[x.outcome in c ? x.outcome : "untested"]++; }));
+    const tot = c.supported + c.mixed + c.refuted + c.untested;
+    const seg = (k, v) => c[k] ? `<span style="flex:${c[k]};background:var(${v})"></span>` : "";
+    return `<td><div class="tally" data-tip="${esc(m.id + " " + m.name + ": as primary or second model\nheld " + c.supported + " · mixed " + c.mixed + " · refuted " + c.refuted + " · untested " + c.untested)}">
+      <div class="bar">${seg("supported", "--good")}${seg("mixed", "--warning")}${seg("refuted", "--critical")}${seg("untested", "--surface-3")}</div><span>${tot}</span></div></td>`; }).join("");
+  $("#mx").innerHTML = head + `<tbody>${body}</tbody><tfoot><tr><td></td><td class="small sec">models as primary or second: outcome counts</td><td></td><td></td>${tally}</tr></tfoot>`;
+  const fromMeta = S.hypotheses.filter(h => (h.models || []).some(m => m.source === "meta")).length;
+  $("#grid-sub").textContent = `${hs.length} hypotheses · ${M.length} models · ${fromMeta} with roles set in meta.json`;
+  $("#mx").querySelectorAll("th[data-mk]").forEach(t => t.onclick = () => { const k = t.dataset.mk; mSortDir = mSortKey === k ? -mSortDir : (k === "id" ? 1 : -1); mSortKey = k; store.set("msort", mSortKey); store.set("mdir", mSortDir); renderModels(); });
+  $("#mx").querySelectorAll("th.mcol").forEach(t => t.onclick = () => openFile(t.dataset.path));
+  $("#mx").querySelectorAll("tr[data-card]").forEach(r => r.onclick = () => r.dataset.card && openFile(r.dataset.card));
+}
+
 function renderAgents() {
   const ag = S.agents; const n = s => ag.filter(a => a.state === s).length;
   $("#ag-sub").textContent = `${n("running")} running · ${n("stalled")} stalled · ${n("finished")} finished (48 h)`;
@@ -424,7 +497,7 @@ function renderGit() {
 }
 
 function render() {
-  for (const f of [renderFacts, renderHyp, renderGrid, renderAgents, renderHoldout, renderLog, renderPipes, renderStorage, renderProcs, renderGit]) {
+  for (const f of [renderFacts, renderHyp, renderGridOrModels, renderAgents, renderHoldout, renderLog, renderPipes, renderStorage, renderProcs, renderGit]) {
     try { f(); } catch (e) { console.error(f.name, e); }
   }
 }
@@ -443,7 +516,7 @@ $("#pause").onclick = () => { paused = !paused; $("#pause").textContent = paused
 $("#theme").onclick = () => { const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
   const next = cur === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = next; store.set("theme", next); };
 const th = store.get("theme", null); if (th) document.documentElement.dataset.theme = th;
-$("#filter").value = store.get("filter", ""); $("#filter").oninput = () => { store.set("filter", $("#filter").value); if (S) renderHyp(); };
+$("#filter").value = store.get("filter", ""); $("#filter").oninput = () => { store.set("filter", $("#filter").value); if (S) { renderHyp(); renderGridOrModels(); } };
 refresh();
 </script>
 </body>
