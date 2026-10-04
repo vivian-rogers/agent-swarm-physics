@@ -2,32 +2,28 @@
 \input{../../../writeup/hypothesis-pages/hpage.tex}
 \def\hID{H57}
 \def\hTitle{Copying beats transformation when the backlog is large}
-\def\hStatus{round 1 running (predictions, nulls and the synthetic-validation plan written 2026-10-04 06:45 UTC, before any real-data outcome was computed).}
-\def\hStage{level: hypothesis  $\cdot$  pipeline checks 70\%  $\cdot$  updated —}
-\def\hBadges{{\scriptsize\color{inkmuted}\itshape not yet rated}}
-\def\hPeriodSummary{34 failed, 3 pending}
+\def\hStatus{round 1 done (2026-10-04): refuted as stated.}
+\def\hStage{level: hypothesis  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-04}
+\def\hBadges{\hbadge{Complete}{40\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{0.5/5}{c43a3a}{ffffff}\ \hbadge{Usefulness}{2/5}{f5bcbb}{0b0b0b}}
+\def\hPeriodSummary{37 failed}
 \def\hDate{Updated 2026-10-04}
-\def\hFooter{H57-copy-under-backlog $\cdot$ generated 2026-10-04 01:33 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H57-copy-under-backlog/README.md $\cdot$ ratings: not rated $\cdot$ DRAFT: auto stub, not yet written}
-\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G02 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G03 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G04 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G05 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G06 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G07 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G08 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G10 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G11 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G12 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G13 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G16 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G17 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\
-G18 & $\times$ & failed (pre-registered rule; the chance-corrected slopes are biased... \\\multicolumn{3}{l}{\textit{+23 more periods: see the card.}} \\\end{tabular}}
-\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & -- & F identifiability & -- \\
-B assumptions & -- & G ground truth & -- \\
-C adequacy & -- & H comparative & -- \\
-D unfitted predictions & -- & I transfer & -- \\
-E interventional & -- &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
-\def\hRoundTwo{\textit{No round-2 redirects yet.}}
+\def\hFooter{H57-copy-under-backlog $\cdot$ generated 2026-10-04 01:36 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H57-copy-under-backlog/README.md $\cdot$ ratings: H57 agent (suggested)}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G02 & $\times$ & failed (pre-registered rule; the chance-corrected slo... \\
+G03 & $\times$ & failed (pre-registered rule; the chance-corrected slo... \\
+G04 & $\times$ & failed (pre-registered rule; the chance-corrected slo... \\
+G05 & $\times$ & failed (pre-registered rule; the chance-corrected slo... \\
+G06 & $\times$ & failed (pre-registered rule; the chance-corrected slo... \\
+G07 & $\times$ & failed (pre-registered rule; the chance-corrected slo... \\
+G08 & $\times$ & failed (pre-registered rule; the chance-corrected slo... \\
+G10 & $\times$ & failed (pre-registered rule; the chance-corrected slo... \\
+G11 & $\times$ & failed (pre-registered rule; the chance-corrected slo... \\
+G12 & $\times$ & failed (pre-registered rule; the chance-corrected slo... \\\multicolumn{3}{l}{\textit{+27 more periods: see the card.}} \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 1 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 0 & H comparative & 0 \\
+D unfitted predictions & 0 & I transfer & 0 \\
+E interventional & 0 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} Does a swarm's verbatim reuse of read content (links, names, numbers, claims) depend on load, once simultaneous convergence is separated from copying by comparing read and unread messages at matched lag?\item \textbf{H57-R1} Verbatim reuse of read markers (artifacts, numbers, names) exceeds the unread baseline at matched lag, and the excess per read item is independent of backlog.\item \textbf{H57-R2} Contemporaneous convergence (unread near-copies within 15 s) is a swarm-level order parameter: it is highest in template-heavy regime-I weeks and predicts H12's dimensional collapse better than echo does.\item \textbf{H57-R3} A lag-resolved chance model (continuous q(lag) fitted on mutually invisible and cross-room pairs) replaces DQ5's 2-h cross\_echo flag as the shared copying instrument.\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage

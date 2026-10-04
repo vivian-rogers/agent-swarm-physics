@@ -1,0 +1,120 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\begin{document}
+\title{Scoring hypotheses: what faithfulness and usefulness should measure, and why}
+\author{Vivian Rogers, with Claude Opus 5.5}
+\affiliation{Agent-swarm physics project}
+\date[]{Proposal, 2026-10-04. Replaces the v1 ratings in \texttt{writeup/hypothesis-pages/RUBRIC.md} once approved.}
+\begin{abstract}
+We score every hypothesis so we can decide where effort, holdout tests and trust should go. The v1 scores do not do this well. They are compressed (usefulness is 2.5 for 24 of 53 hypotheses), self-assigned by the agent that did the work, attached to an ambiguous claim, and blind to fragility: in the round-1b re-runs on corrected data, roughly four in ten round-1 headline claims changed or were withdrawn. We propose scoring a \emph{stated, scoped claim} with a \emph{calibrated credence} built from an explicit evidence ladder, a \emph{mechanism level} and a \emph{fragility flag}. Usefulness becomes a \emph{decision value}: whose decision changes, by how much, how generally, multiplied by the credence to give an expected usefulness. Scientific value, which is where refutations and data-bug discoveries live, gets its own axis. Independent rater agents with shared anchors produce the scores, so we can measure how reliable the scoring itself is.
+\end{abstract}
+\maketitle
+
+\section{Why score at all}
+The scores feed four decisions, and each puts a requirement on them.
+\begin{enumerate}
+\item \textbf{Allocation.} Which hypotheses get a round 2, which get the locked holdout (a one-shot resource), and which get written up. This needs a score that ranks by \emph{expected value of more work}: high when a claim is plausible, untested and consequential.
+\item \textbf{Communication.} The compendium and any paper will be read by people who cannot audit 74 cards. A number next to a claim must mean the same thing everywhere, so it has to be \emph{calibrated}: a claim scored 0.8 should survive confirmation about 80\% of the time.
+\item \textbf{Self-correction.} This project runs dozens of agents down forking paths, with post-hoc rescues, LLM-labelled data and, as we learned today, a core table that silently dropped half the events. The score is where we should pay for those risks, so it must \emph{penalize fragility and reward robustness}, and it should not be set by the agent that did the work.
+\item \textbf{Synthesis.} The cross-hypothesis picture (coupling lives in context, synchrony is the scheduler, herding follows announcements) is a weighted average of results. The weights are the scores, so they must \emph{discriminate}.
+\end{enumerate}
+
+\section{What the v1 scores get wrong}
+\begin{itemize}
+\item \textbf{Compression.} Faithfulness spans 0.5--3.0 and usefulness 1.5--3.0 across 53 rated hypotheses; 24 have usefulness 2.5. A scale that puts almost everything in two bins cannot allocate.
+\item \textbf{Self-rating.} Each agent proposed its own ratings and I adjusted a few by parity. Nothing measures how much two raters would agree.
+\item \textbf{Ambiguous claim.} ``Faithfulness of H12'' could mean the original hypothesis (refuted), the round-1 headline (an artifact) or the surviving result (talk and content modes are real). These deserve very different numbers.
+\item \textbf{Refutations are undervalued.} A clean, powered refutation (H10, H49, H56) is some of our most reliable knowledge, but v1 gives it faithfulness 0.5--1.
+\item \textbf{Fragility is invisible.} The round-1b re-runs changed or withdrew the H12 activity market mode, H02's regime-III collective coupling, H19's channel split, H16's error-loop aging, H04's dead time and H14's regime contrast. About six in ten round-1 headlines survived. No v1 score anticipated which would fall.
+\item \textbf{Usefulness ignores magnitude and generality.} A nudge buys about one active minute (0.5\% of activity) yet scored like the context cap, which costs 4--11\% of output and breaks loops. A rule that only holds for this scaffold scored like one that holds for any LLM swarm.
+\item \textbf{Two kinds of value are mixed.} Operator value and scientific value (ruling out a model class, finding a data bug) are different and often anti-correlated.
+\end{itemize}
+
+\section{Faithfulness v2: credence in a scoped claim}
+\textbf{The object scored} is one sentence with a scope (periods, regime, channel) and a direction. Positive claims say something happens; negative claims say it does not, at a stated power. Each card lists its original hypothesis verdict separately.
+
+\textbf{Credence} $p$ is the probability that the claim survives an independent confirmatory test at its stated scope: the locked holdout where one exists, otherwise fresh comparable data. It is built transparently in log-odds. Start from a base rate set by provenance, then multiply the odds by evidence factors (Table~\ref{tab:ladder}), capping $p$ at 0.95 before any holdout and at 0.98 after one.
+
+\begin{table}[t]
+\caption{Evidence ladder for credence. Factors multiply the odds $p/(1-p)$.}
+\label{tab:ladder}
+\scriptsize
+\begin{tabular}{@{}p{3.4cm}p{1.2cm}p{3.4cm}@{}}
+\toprule
+Evidence & factor & criterion \\ \midrule
+Base: pre-registered primary & $p_0=0.40$ & prediction dated before the run \\
+Base: secondary / post hoc & 0.30 / 0.20 & labelled in the card \\
+Calibrated null passed (C) & $\times2$ & null size checked (DQ8 table or own synthetic) \\
+Null mis-sized or unchecked & $\times0.7$ & e.g.\ cross-day edge for $\lambda_1$ \\
+Replication across units (I) & $\times2$ & same sign in $\geq 2/3$ of $\geq 6$ independent units \\
+Single powered unit only & $\times0.6$ & \\
+Robust to data and instruments & $\times2$ & survived round 1b; both embedding models; estimator variants \\
+Changed under a data fix & $\times0.3$ & sign or significance flipped \\
+Identified (F) & $\times1.5$ & synthetic recovery at real counts \\
+Not identifiable at real counts & $\times0.5$ & \\
+Intervention consistent (E) & $\times2$ & natural experiment or quasi-random design \\
+Rival beaten (H) & $\times1.5$ & named rival loses on held-out data \\
+Ground truth agrees (G) & $\times1.5$ & DQ6 labels, known structure \\
+Holdout passed / failed & $\times5$ / $\times0.15$ & locked confirmatory run \\
+Penalties & $\times0.5$--$0.8$ & unvalidated LLM labels; known-problem inputs; uncorrected multiplicity \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Negative claims need power.} ``X does not happen'' earns credence only to the extent the design could have seen X: synthetic power $\geq 0.8$ at the effect size that would matter. Without it the verdict is ``inconclusive'', not ``refuted'' (H48 is the model case).
+
+\textbf{Mechanism level.} M0: a reproducible pattern. M1: consistent with a mechanism, meaning the model's signature is predicted and a rival rejected. M2: mechanism identified, meaning an intervention, a beaten rival and synthetic identification all agree.
+
+\textbf{Fragility flag.} Set when the headline estimate changed sign or significance between data versions (round 1 vs 1b) or across reasonable analytic variants. It stays on the record after the claim is repaired, as a reminder of the failure mode.
+
+\textbf{Calibration loop.} The v1 history gives an empirical base rate: about 60\% of round-1 exploratory headlines survived round 1b. The ladder's average credence for unre-run round-1 claims should sit near that. Once holdout runs exist, rater credences get Brier scores.
+
+\section{Usefulness v2: decision value}
+Ask five questions: whose decision changes, what the decision is, by how much, how sure we are, and how general it is.
+
+\textbf{Value if true} $V$ (0--5):
+\begin{itemize}
+\item \emph{Decision named.} An operator (nudging, context caps, rooms, vote windows, announcements, monitoring), a scaffold builder, an alignment or safety researcher (deference, detection), or a scientist choosing a model class. No decision means $V\leq1$.
+\item \emph{Magnitude} in the decision's own units, relative to the outcome it governs: negligible ($<1\%$; caps $V$ at 2), small (1--5\%), material (5--25\%), large ($>25\%$).
+\item \emph{Generality.} Specific to this scaffold ($-1$), any read-out-gated LLM swarm ($0$), any multi-agent LLM system ($+0.5$).
+\item \emph{Readiness.} The rule is written down and computable from standard logs ($+0.5$).
+\end{itemize}
+\textbf{Expected usefulness} $\mathrm{EU}=p\times V$: what we expect to gain by acting on the claim. Rank allocation by $V\times(1-p)$ restricted to cheap tests (high value, untested), and writeup by EU.
+
+\textbf{Scientific value} $S$ (0--5) is scored separately. It counts ruling out a model class, correcting earlier results, building an instrument, and unifying phenomena. Refutations and data-bug discoveries score here: the activity\_bins bug and the H12 artifact are high-$S$, low-EU results.
+
+\section{Process}
+\begin{enumerate}
+\item \textbf{Independent raters.} Three rater agents score from the cards and evidence, without the hypothesis agent's suggested ratings. Six anchor hypotheses are rated by all three, so inter-rater agreement is measured. Disagreements beyond $\Delta p>0.25$ or $\Delta V>1$ go to coordinator adjudication; Vivian spot-checks the anchors.
+\item \textbf{Evidence pointers.} Every factor in the ladder cites the card section or file it rests on, stored in \texttt{summary/meta.json} (schema v2).
+\item \textbf{History.} Scores are versioned (round 1, 1b, holdout) so fragility and calibration can be audited.
+\end{enumerate}
+
+\section{Worked examples}
+\begin{table}[t]
+\caption{v2 scores for six claims (illustrative; raters will recompute).}
+\label{tab:examples}
+\scriptsize
+\begin{tabular}{@{}p{3.3cm}cccccc@{}}
+\toprule
+Claim & $p$ & M & frag. & $V$ & EU & $S$ \\ \midrule
+H08: responses gated at the next model call & 0.95 & M2 & no & 3 & 2.9 & 4 \\
+H12 r1: one activity market mode & 0.22 & M0 & yes & 1.5 & 0.3 & 3 \\
+H12 1b: talk and content modes real & 0.84 & M1 & no & 2 & 1.7 & 3 \\
+H54: day-1 content lands on the kickoff & 0.94 & M2 & no & 3 & 2.8 & 3 \\
+H44: forced erasure costs 4--11\% output, breaks loops & 0.86 & M2 & no & 3.5 & 3.0 & 3 \\
+H04: a first nudge adds $\sim$1.4 active min & 0.39 & M1 & yes & 1.5 & 0.6 & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\textit{How two of these come out.} H08: base 0.40 (odds 0.67) $\times2$ calibrated placebo (other-room 8/8) $\times2$ replication (14/17) $\times2$ robust (strengthened in round 1b) $\times2$ interventions (NE41, NE32) $\times1.5$ rival (constant delay rejected) $\times1.2$ partial identification gives odds $\approx 19$, capped at $p=0.95$. Its value is a design fact (coupling delay equals call cadence) that holds for any read-out-gated swarm, but it partly follows from the scaffold, so $V=3$. H04: the effect is real across four estimators (H04, H30, H35, H43), but its size shrank under the data fix and only \#51 is powered, so $p\approx0.4$. A minute of activity is 0.5\% of the swarm's work, so $V=1.5$: a true but minor lever.
+
+\section{What changes, and what needs a decision}
+\begin{itemize}
+\item \textbf{Display.} The compendium table of contents and the dashboard show claim, $p$, M, fragility, $V$, EU, $S$ and holdout status. They sort by EU for writing and by $V(1-p)$ for allocation.
+\item \textbf{Rubric.} \texttt{RUBRIC.md} v2 replaces the 0--5 faithfulness and usefulness anchors. The A--I scorecard stays; it now feeds the ladder.
+\item \textbf{Decision for Vivian.} Approve the ladder's factors (they are deliberately coarse) and the three-rater process. The first full re-scoring uses all completed hypotheses and reports inter-rater agreement.
+\end{itemize}
+\end{document}

@@ -427,6 +427,7 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
 - **HH171 · Copying beats transformation when the backlog is large.** Copying dominates (H07) and each call processes a bounded context (H08, H18). Prediction: the copy-to-transformation information ratio between agents rises with backlog k: under load agents echo rather than transform (a speed–accuracy tradeoff). *Check:* DQ5 `cross_echo` and H07's copy/transformation estimators per window vs context-ledger backlog.
   *Models:* 08, 03 · *Periods:* #35, #51, regime III · *Builds on:* H07, H08, H18 · *Related:* HH153
   *Status (2026-10-04):* approved by Vivian → H57.
+  *Result (2026-10-04):* tested as H57: refuted. Backlog doesn't raise echo; most near-duplication is contemporaneous convergence; addressed replies are rephrased.
 - **HH172 · Rooms set the coherence length, so reorganization starts in one room.** Rooms are like-minded (H01) and cut coupling (H05); topic shift detects reorganizations (H36). Prediction: content correlation drops sharply at room boundaries, a per-room topic-shift detector beats the swarm-level one on room events (NE15, NE42), and at swarm-wide goal changes one room shifts first and leads. *Check:* per-room R1; room lead–lag at goal changes and room events.
   *Models:* 11 · *Periods:* two-room weeks, #51 rooms · *Builds on:* H36, H05, H01
   *Status (2026-10-04):* approved by Vivian → H47.
