@@ -86,21 +86,23 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | --- | --- | --- |
 | RE-A1 | H38, H12, H25 | **done** (2026-10-04) |
 | RE-C3 | H01 (round 1), H26, H36 | running (2026-10-04): shared goal vectors, both models, fixed bins, trimmed nulls, NE40/NE45 as detection targets |
-| RE-O1 | H15, H33, H35 | running (2026-10-04): work-ledger viability/productivity, real failures, both embedding models |
-| RE-V2 | H29, H30, H39 | running (2026-10-04): ledger visibility, fixed bins, leading-@ targets, lever_design, v3 states |
+| RE-O1 | H15, H33, H35| **done** (2026-10-04) |
+| RE-V2 | H29, H30, H39| **done** (2026-10-04) |
 | RE-A2 | H02, H19, H03 | **done** (2026-10-04) |
 | RE-V1 | H18, H08, H04 | **done** (2026-10-04) |
-| RE-R1 | H05, H09, H23 | running (2026-10-04): fixed bins (H05 gains for H19), ledger read counts (HH248), copy_info, DQ6 checkpoints |
+| RE-R1 | H05, H09, H23| **done** (2026-10-04) |
 | RE-B1 | H17, H16, H14 | **done** (2026-10-04) |
-| RE-C1 | H10, H20, H24 | running (2026-10-04): shared goal vectors, both embedding models, dedupe flags |
-| RE-C2 | H13, H21, H22 | running (2026-10-04): DQ6 ground truth (Opus 5 role), stance channel with calibrated null, style residuals, behavioral family test |
+| RE-C1 | H10, H20, H24| **done** (2026-10-04) |
+| RE-C2 | H13, H21, H22| **done** (2026-10-04) |
 | RE-P1 | H11, H31, H27 | **done** (2026-10-04) |
-| next | H44 (new, unblocked by DQ3); H06, H07, H28, H32, H34 | queued, 2–3 hypotheses per agent as slots free |
+| RE-D1 | H28, H32, H34 | running (2026-10-04): ledger visibility/exposure, shared project states, convergence-aware copying (H57), both models |
+| next | H06, H07 | queued until RE-C3 finishes |
 
 ## New hypotheses H59–H74 (promoted 2026-10-04): launch plan
 | Status | Hypotheses |
 | --- | --- |
-| running | H60, H61, H62, H63, H64, H65 |
-| waits for a running agent | H59 (RE-V2 lever table), H67 (H42), H74 (H36 round 1b) |
+| paused (compute) | H60, H61, H62, H63, H64, H65 (and H41, H58) |
+| waits for a running agent | H67 (H42 done; ready), H74 (H36 round 1b) |
+| ready (lever table landed 2026-10-04) | H59 |
 | queued (inputs ready) | H66, H68, H69, H70, H71, H72, H73 |
 
