@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **Re-evaluation RE-O1 (H15, H33, H35) launched** on the work ledger as viability and productivity, real failures, ledger erasure timing and both embedding models. H44's 162 estimate rows merged (CI kind mapped to `percentile`).
 - **H44 (erasure re-acquisition thrash), round 1: re-acquisition yes, thrash no.** After a forced context wipe, read share jumps 0.22 → 0.47 at the first call (Θ_c +0.079 [0.071, 0.086], 9/9 periods), writes fall 26% and work commits 38%; the 41-turn cap costs 4–11% of output per period; erasures break command loops (OR 0.11; G38 recurrence 16% vs 72%). No temperature pulse (entropy −0.027), no extra susceptibility to new room content (RR 0.97), coupling to pre-wipe items 0.60 (H08). **Artifacts restore output** (local files first → first write 2.6 calls sooner); memory written at the wipe does nothing. Design trade-off for operators: the cap breaks loops at a few percent of output. Scorecard all 1s; ratings 42 / 2.0 / 3.0. Cross-notes on H15, H39, H08; NE41 row updated; estimates merged. `confirm.py` not run.
 - **Re-evaluation RE-V2 (H29, H30, H39) launched:** operator levers on ledger visibility, fixed activity bins, leading-@ nudge targets, past-only lever designs and v3 states; asked for a reconciled lever table across H29/H30/H35/H39/H43/H50.
 - **Re-evaluation RE-A1 done (H38, H12, H25 round 1b on the fixed tables, with DQ8's calibrated nulls and native tests):**

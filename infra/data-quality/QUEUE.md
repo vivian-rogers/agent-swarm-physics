@@ -30,6 +30,7 @@ Each DQ agent writes only new files in `infra/` and new tables in `data/processe
 - `outages.py`: derive `scheduled` from runner start/stop (empty after 08-04 with the operator-message rule; RE-A1).
 - Move the trim-before-surrogate functions (H38 `trim_gains`/`l1_trim_blockshift`, H12 `trim_rows`/`spectrum_test_blockshift`, H25 trim variant) into `infra/shared/nulls.py`.
 - A stable shared statement id across `statements.parquet`, embeddings and `statement_flags` (H12 had to join on kind, agent, t, pt_date).
+- `estimates.py`: consider allowing `cluster_bootstrap` as a `ci_kind` (H44 had to map its agent-day cluster bootstrap to `percentile`).
 - `kicks_classified`: add `primary_target` (the nudge's leading @; 29% of nudges mention other agents too, H35).
 - DQ7 rebuild should also apply stall-adjusted (agent-state conditioned) variants of the collective statistics used by H02, H12 and H19.
 
@@ -76,6 +77,7 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | Agent | Hypotheses | Status |
 | --- | --- | --- |
 | RE-A1 | H38, H12, H25 | **done** (2026-10-04) |
+| RE-O1 | H15, H33, H35 | running (2026-10-04): work-ledger viability/productivity, real failures, both embedding models |
 | RE-V2 | H29, H30, H39 | running (2026-10-04): ledger visibility, fixed bins, leading-@ targets, lever_design, v3 states |
 | RE-A2 | H02, H19, H03 | running (2026-10-04) |
 | RE-V1 | H18, H08, H04 | running (2026-10-04) |
@@ -83,5 +85,5 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | RE-C1 | H10, H20, H24 | running (2026-10-04): shared goal vectors, both embedding models, dedupe flags |
 | RE-C2 | H13, H21, H22 | running (2026-10-04): DQ6 ground truth (Opus 5 role), stance channel with calibrated null, style residuals, behavioral family test |
 | RE-P1 | H11, H31, H27 | running (2026-10-04): shared labels, #26 per round, attention vs work space |
-| next | H01, H10, H13, H20, H21, H22, H24, H26, H36 (content); H15, H33, H35 (projects and outcomes); H44 (new, unblocked by DQ3); H05, H06, H07, H09, H23, H28, H32, H34 | queued, 2–3 hypotheses per agent as slots free |
+| next | H01, H10, H13, H20, H21, H22, H24, H26, H36 (content); H44 (new, unblocked by DQ3); H05, H06, H07, H09, H23, H28, H32, H34 | queued, 2–3 hypotheses per agent as slots free |
 
