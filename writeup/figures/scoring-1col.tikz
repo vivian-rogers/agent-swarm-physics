@@ -1,40 +1,24 @@
-% Single-column "Scoring" figure: Claude as the judge of credence (faithfulness) and estimated usefulness.
-% \input by scoring-1col.tex. Needs: tikz with libraries arrows.meta, positioning, calc; xcolor.
+% Single-column "Scoring" figure: Claude as two judges. \input by paper and scoring-1col.tex.
+% Needs: tikz (arrows.meta, positioning, calc); \claudespark (writeup/paper/claudespark.tex).
 \definecolor{scHy}{HTML}{c2662d}
 \definecolor{scJudge}{HTML}{8a4f9e}
-\definecolor{scRule}{HTML}{3a7d6b}
-\definecolor{scOut}{HTML}{6b6b6b}
-\begin{tikzpicture}[font=\scriptsize, node distance=3.6mm and 3mm,
-  bx/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center,
-             text width=3.55cm, inner sep=2.4pt, minimum height=8mm},
-  wide/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center,
-               text width=7.6cm, inner sep=2.4pt, minimum height=8mm},
-  ar/.style={-{Stealth[length=1.7mm]}, line width=0.6pt, draw=black!65},
-  lb/.style={font=\tiny\itshape, text=black!70, fill=white, inner sep=0.8pt}]
-
-\node[wide=scHy] (card) {\textbf{Hypothesis card and round-1 results}\\predictions written before the data, nulls, synthetic checks};
-
-\node[wide=scJudge, below=of card] (claim) {\textbf{Claude states the claim that stands}\\one sentence with its scope:\\what survived, positive or negative};
-
-\node[bx=scJudge, below=of claim.south west, anchor=north west] (j1) {\textbf{Claude, judge 1}\\the coordinator, who\\has seen the whole project};
-\node[bx=scJudge, below=of claim.south east, anchor=north east] (j2) {\textbf{Claude, judge 2}\\blind: sees the card and\\evidence, not judge 1's score};
-
-\node[wide=scRule, anchor=north] (rule) at ($(claim.south |- j1.south)+(0,-3.6mm)$) {%
-  \textbf{Both judges score the same two things}\\[1pt]
-  \textbf{credence (faithfulness)}: will it hold in a new test?\\
-  start at 0.4, 0.3 or 0.2 by when the prediction was written;\\
-  raise it for each check passed, lower it for weak inputs\\[1pt]
-  \textbf{estimated usefulness}: credence $\times$ value if true (0--5)};
-
-\node[wide=scJudge, below=of rule] (adj) {\textbf{Combine}\quad average the two scores;\\if they differ by more than 0.25, Claude adjudicates by written rules};
-
-\node[wide=scOut, below=of adj] (out) {\textbf{Research theses} $\rightarrow$ write-up\\ranked by credence and usefulness};
-
-\draw[ar] (card) -- (claim);
-\draw[ar] (claim.south -| j1.north) -- (j1.north);
-\draw[ar] (claim.south -| j2.north) -- (j2.north);
-\draw[ar] (j1.south) -- (j1.south |- rule.north);
-\draw[ar] (j2.south) -- (j2.south |- rule.north);
-\draw[ar] (rule) -- (adj);
-\draw[ar] (adj) -- (out);
+\definecolor{scOut}{HTML}{3a7d6b}
+\begin{tikzpicture}[font=\small, node distance=4mm and 4mm,
+  bx/.style={draw=#1, fill=#1!8, rounded corners=3pt, line width=0.7pt, align=center, inner sep=4pt, minimum height=8mm},
+  ar/.style={-{Stealth[length=2mm]}, line width=0.7pt, draw=black!60},
+  lb/.style={font=\scriptsize, text=black!65, fill=white, inner sep=1pt}]
+\node[bx=scHy, minimum width=7.4cm] (claim) {\textbf{Claim} \;\textcolor{black!60}{one scoped sentence per hypothesis}};
+\node[bx=scJudge, minimum width=3.5cm, below=6mm of claim.south west, anchor=north west] (j1) {\claudespark\; \textbf{Judge 1}\\[1pt]{\scriptsize coordinator}};
+\node[bx=scJudge, minimum width=3.5cm, below=6mm of claim.south east, anchor=north east] (j2) {\claudespark\; \textbf{Judge 2}\\[1pt]{\scriptsize blind}};
+\node[bx=scJudge, minimum width=7.4cm, below=6mm of j1.south west, anchor=north west] (mix) {\textbf{Combine}\; \textcolor{black!60}{\footnotesize log-odds mean; if $|\Delta p|>0.25$,} \claudespark\ \textcolor{black!60}{\footnotesize adjudicates}};
+\node[bx=scOut, minimum width=7.4cm, below=5mm of mix] (out) {\textbf{Thesis}\quad credence $p$ \;\textbullet\; $\mathrm{EU}=p\times V$};
+\draw[ar] (claim.south -| j1) -- (j1);
+\draw[ar] (claim.south -| j2) -- (j2);
+\draw[ar] (j1) -- node[lb, right]{$p,\,V$} (j1 |- mix.north);
+\draw[ar] (j2) -- node[lb, right]{$p,\,V$} (j2 |- mix.north);
+\draw[ar] (mix) -- (out);
+\node[below=2.5mm of out, font=\scriptsize, text=black!70, align=center] (rule) {%
+  $p$: start 0.4 / 0.3 / 0.2 (before data / redesigned / post hoc),\\
+  $\times$1.5--2 per passed check, $\times$0.5--0.8 for weak inputs, $p\le0.95$\\
+  $V$: value if true (0--5), set by the decision the claim changes};
 \end{tikzpicture}

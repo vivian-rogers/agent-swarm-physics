@@ -4,19 +4,19 @@
 \section{How agents couple}
 \label{sec:coupling}
 
-This section answers Q1: what couples one agent to another. The answer is reading. A message acts on its recipient at the read-out call, the first model call whose context holds the message. Earlier work fixed the coupling by design, for example with random pairs in a naming game~\cite{cp:ashery2025}. In the village, the scaffold sets who reads what.
+This section answers Q1: what couples one agent to another. Agents couple when they read messages, and the coupling is weak. A message acts on its recipient at the read-out call, the first model call whose context holds the message. Earlier work fixed the coupling by design, for example with random pairs in a naming game~\cite{ashery2025}. In the village, the scaffold sets who reads what.
 
-\subsection{Model: a kinetic Ising model gated at read-out}
+\subsection{Model: a kinetic Ising model that acts at the read-out call}
 \label{sec:coupling-model}
 
-The degree of freedom is the outcome of one model call. Call $c$ of agent $i$ starts at $t_{i,c}$ and is a talk call ($Y_{ic}=1$) or not. Its context holds the batch $B_{ic}$ of room messages that arrived after the previous call started. A field $h_i$ reaches all agents through their own calls: the scheduler's day edges, the kickoff and operator messages. A coupling $J_{ij}$ is the change in a call outcome of $i$ that a read message from $j$ causes. We use the kinetic Ising model of physics model 02~\cite{cp:aguilera2026}, but the read-out call gates the input:
+The degree of freedom is the outcome of one model call. Call $c$ of agent $i$ starts at $t_{i,c}$ and is a talk call ($Y_{ic}=1$) or not. Its context holds the batch $B_{ic}$ of room messages that arrived after the previous call started. A field $h_i$ reaches all agents through their own calls: the scheduler's day edges, the kickoff and operator messages. A coupling $J_{ij}$ is the change in a call outcome of $i$ that a read message from $j$ causes. We use the kinetic Ising model of physics model 02~\cite{aguilera2026}, but the input acts only at the read-out call:
 \begin{equation}
 P(Y_{ic}=1)=\sigma\Big(h_{i}(t_{i,c})+\textstyle\sum_{m\in B_{ic}}J_{i,\mathrm{src}(m)}\Big).
-\label{eq:cp-gated}
+\label{eq:cp-readout}
 \end{equation}
 Plain Glauber dynamics differs in its clock, its input and its lack of an address term.
 
-The read-out loop gain $g_{lag}=\bar m\,\bar r\,J_1^*$ is the number of extra talk messages that one message causes through reading at hop 1. Here $\bar m$ is messages per talk call, $\bar r$ is readers per message, and $J_1^*$ is the jump per read over the in-flight placebo (H67). For a linear branching process, the amplification of a push is $\chi=1/(1-g)$. The collective Fano ratio of talk counts at long windows is then
+The read-out loop gain $g_{lag}=\bar m\,\bar r\,J_1^*$ is the number of extra talk messages that one message causes through reads at hop 1. Here $\bar m$ is messages per talk call, $\bar r$ is readers per message, and $J_1^*$ is the jump per read over the in-flight placebo (H67). For a linear branching process, the amplification of a push is $\chi=1/(1-g)$. The collective Fano ratio of talk counts at long windows is then
 \begin{equation}
 \Phi=\frac{\mathrm{Var}\big(\sum_i n_i\big)}{\sum_i\mathrm{Var}(n_i)}=\frac{1}{(1-g)^2},
 \label{eq:cp-fano}
@@ -41,41 +41,41 @@ Convergence & read vs in-flight at matched time (H08, H41, H67, H113, H130) & re
 \subsection{The response starts at the read-out call}
 \label{sec:coupling-readout}
 
-On the context ledger, the chance that a recipient names the sender jumps at the read-out call and is near zero in flight (Fig.~\ref{fig:cp-readout}). The jump holds in 14/17 non-holdout periods on mentions and in 17/17 on reply labels. In G38 it is $D=+1.14$\,pp [0.80, 1.41], and the other-room placebo gives $|D|\le0.15$\,pp in 8/8 two-room periods. A forced erasure (NE41) cuts reply coupling to senders read before it by 21\% $\pm$ 7\% (8/9 periods; predicted 30\%). Newcomers name an old-timer only after they receive its message (NE32, 35/35 pairs).
+On the context ledger, the chance that a recipient names the sender jumps at the read-out call (Fig.~\ref{fig:cp-readout}). At the call in flight it is near zero. The jump occurs in 14/17 non-reserved periods on mentions and in 17/17 on reply labels. In G38 it is $D=+1.14$\,pp [0.80, 1.41], and the other-room placebo gives $|D|\le0.15$\,pp in 8/8 two-room periods. A forced erasure (NE41) cuts reply coupling to senders read before it by 21\% $\pm$ 7\% (8/9 periods; predicted 30\%). Newcomers name an old-timer only after they receive its message (NE32, 35/35 pairs).
 
-H08 concludes that the recipient's next model call gates the response\cred{0.91}. The talk clause of H08 fails. A call that reads a message is more likely to talk in only 6/17 periods, and in none of the 8 regime-I and II periods. We withdraw the 3-min lag of round 1, an artifact of dropped events and the isolation rule of H04.
+H08 concludes that the response starts at the recipient's next model call\cred{0.91}. The talk clause of H08 fails. A call that reads a message is more likely to talk in only 6/17 periods, and in none of the 8 regime-I and II periods. We withdraw the 3-min lag of round 1, an artifact of dropped events and the H04 isolation rule.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{H08-context-is-the-coupling/fig.pdf}
-\caption{A message acts at the recipient's read-out call. (a)~One G38 message: room-mates with a call in flight read it 7--24\,s later at their next call. Agents in long gaps read it 130--169\,s later and reply at that call. (b, c)~The excess chance that a call names the sender jumps at the read-out call ($o=1$) and not at the call in flight ($o=0$), in G38 and in 17 non-holdout periods. The other-room placebo stays flat.}
+\caption{A message acts at the recipient's read-out call. (a)~One G38 message: room-mates with a call in flight read it 7--24\,s later at their next call. Agents in long gaps read it 130--169\,s later and reply at that call. (b, c)~The excess chance that a call names the sender jumps at the read-out call ($o=1$) and not at the call in flight ($o=0$), in G38 and in 17 non-reserved periods. The other-room placebo stays flat.}
 \label{fig:cp-readout}
 \end{figure*}
 
-The same discontinuity separates fields from couplings (H50). A field reaches every agent at its next call, but a coupling waits hop by hop. Over 71 non-holdout units in 35 periods, a peer message increases the chance of talk at hop 1 ($J_1>0$ in 45/71 units, $<0$ in none). The scheduler's day edges explain 0.62 (regime I) and 0.67 (regime III) of activity co-movement. For talk, the coupling is larger than the field in 57/68 units. H50 concludes that activity co-movement is the scheduler's field and that talk spreads one read-out at a time\cred{0.85}.
+The same discontinuity separates fields from couplings (H50). A field reaches every agent at its next call, but a coupling waits hop by hop. Over 71 non-reserved units in 35 periods, a peer message increases the chance of talk at hop 1 ($J_1>0$ in 45/71 units, $<0$ in none). The scheduler's day edges explain 0.62 (regime I) and 0.67 (regime III) of activity co-movement. For talk, the coupling is larger than the field in 57/68 units. H50 concludes that activity co-movement is the scheduler's field and that talk spreads one read-out at a time\cred{0.85}.
 
-Novel items (links, numbers, rare words) obey the same bound (H41). Over 134k items in 32 periods, 0--4\% of in-room adoptions per period lie outside the logged light cone. The NE42 merge increased the cross-group hazard $\times$82 [21, 223] over \#39 and $\times$863 [186, 2365] over \#41. H41 concludes that novel items follow the light cone inside rooms and that rooms cage spread\cred{0.70}. The pre-registered gating test failed (10--12/32 periods), and the round-1b room-index fix reversed the \#51 bridge result.
+Novel items such as links and rare words obey the same bound (H41). Over 134k items in 32 periods, 0--4\% of in-room adoptions per period lie outside the logged light cone. The NE42 merge increased the cross-group hazard $\times$82 [21, 223] over \#39 and $\times$863 [186, 2365] over \#41. H41 concludes that novel items follow the light cone inside rooms and that rooms cage spread\cred{0.70}. The pre-registered read-out test failed (10--12/32 periods), and the round-1b room-index fix reversed the \#51 bridge result.
 
 \subsection{The clock is the call}
 \label{sec:coupling-clock}
 
-A reply-hazard model measures the exposure-time elasticity $\eta$: 0 for the call clock and 1 for the wall clock (H40). In regimes II--III (11 periods), $\eta\approx0$, and in G51 $\eta=0.00\pm0.05$. The call-clock model wins on held-out data in 33/33 periods. In regime I (22 periods), the call clock fails: $\eta=+0.51$ [0.41, 0.61]. H40 concludes that reply coupling uses the call clock in regimes II--III and partly the wall clock in regime I\cred{0.72}.
+A reply-hazard model measures the exposure-time elasticity $\eta$: 0 for the call clock and 1 for the wall clock (H40). In regimes II--III (11 periods), $\eta\approx0$ (G51: $0.00\pm0.05$). The call-clock model wins on reserved data in 33/33 periods. In regime I (22 periods), the call clock fails: $\eta=+0.51$ [0.41, 0.61]. H40 concludes that reply coupling uses the call clock in regimes II--III and partly the wall clock in regime I\cred{0.72}.
 
-The call clock also removes most cross-excitation (H42). Hawkes kernels with each agent's call clock as baseline win on held-out likelihood in 57/57 units. The talk that read messages cause falls to $n_{\rm cross}=0.004$ (median), from 0.061 in the wall-time fit of H03\cred{0.61}. The pre-registered estimator failed its synthetic guard, and the natives NE41, NE14 and \#51 failed.
+The call clock also removes most cross-excitation (H42). Hawkes kernels with each agent's call clock as baseline win on reserved likelihood in 57/57 units. The talk that read messages cause falls to $n_{\rm cross}=0.004$ (median), from 0.061 in the wall-time fit of H03\cred{0.61}. The pre-registered estimator failed its synthetic guard, and the natives NE41, NE14 and \#51 failed.
 
-An agent has no refractory window longer than one read-out (H43)\cred{0.69}. A second kick within 15\,min keeps $R=0.78$ [0.67, 0.89] of the first kick's effect.
+An agent has no refractory window longer than one read-out (H43)\cred{0.69}. A second mention read within 15\,min keeps $R=0.78$ [0.67, 0.89] of the effect of the first mention.
 
-\subsection{Address gating}
+\subsection{The address controls the coupling}
 \label{sec:coupling-address}
 
-The recipient's name carries the coupling. In regime III, H67 gives 0.079 [0.069, 0.089] extra talk calls per named read and 0.004 [0.003, 0.006] per unnamed read, a ratio of $\times19$. Named items are 3--16\% of reads, but they carry about half of $g_{lag}$. Content obeys the same gate (H29)\cred{0.65}. A named message moves the recipient's next statement 0.05--0.08 of the gap toward it in every \#51 segment, and an unnamed message 0.00--0.013. The pre-registered net pull of H29 was negative in 7/9 units, and its rankings of drivers do not predict held-out spread.
+The recipient's name carries the coupling. In regime III, H67 gives 0.079 [0.069, 0.089] extra talk calls per named read and 0.004 [0.003, 0.006] per unnamed read, a ratio of $\times19$. Named items are 3--16\% of reads, but they carry about half of $g_{lag}$. Content obeys the same address rule (H29)\cred{0.65}. A named message moves the recipient's next statement 0.05--0.08 of the gap toward it in every \#51 segment, and an unnamed message 0.00--0.013. The pre-registered net pull of H29 was negative in 7/9 units, and its rankings of drivers do not predict reserved spread.
 
 \subsection{The gain is weak and subcritical}
 \label{sec:coupling-gain}
 
-The read-out loop gain is subcritical in 66/66 units over 35 periods (H67)\cred{0.79}. The regime-III median is $g_{lag}=0.13$ (units 0.00--0.29, every upper bound $<0.40$), so one talk message causes about 0.13 more messages. In regimes I and II, $g_{lag}\approx0$ (regime I 0.005). The card's own hypothesis failed: the lagged gain is larger than the equal-time dial in only 7/35 periods. The equal-time dial counts fast shared fields as feedback, and in regime I it gives $g_{eq}=0.16$.
+The read-out loop gain is subcritical in 66/66 units over 35 periods (H67)\cred{0.79}. The regime-III median is $g_{lag}=0.13$ (units 0.00--0.29, every upper bound $<0.40$), so one talk message causes about 0.13 more messages through reads. In regimes I and II, $g_{lag}\approx0$ (regime I 0.005). The card's own hypothesis failed: the lagged gain is larger than the equal-time dial in only 7/35 periods. The equal-time dial counts fast shared fields as feedback, and in regime I it gives $g_{eq}=0.16$.
 
-The daily Curie--Weiss dial is also subcritical on all 282 non-holdout days, with median $g=0.16$ ($T/T_c\approx6$; H25)\cred{0.85}. Content reads near-critical (0.70), but this value is swarm size times a shared-field correlation. The largest period gain is 0.23, so $\chi\le1.31$ (H51). The gain explains 0 of 4 unfitted observables across 33 periods (leave-one-period-out $R^2\le0.22$, power 0.89). H51 concludes that regime and $N$ organize the phase diagram\cred{0.61}.
+The daily Curie--Weiss dial is also subcritical on all 282 non-reserved days, with median $g=0.16$ ($T/T_c\approx6$; H25)\cred{0.85}. The largest period gain is 0.23, so $\chi\le1.31$ (H51). The gain explains 0 of 4 unfitted observables across 33 periods (leave-one-period-out $R^2\le0.22$, power 0.89). H51 concludes that regime and $N$ organize the phase diagram\cred{0.61}.
 
 A gain at hop 1 also sets the swarm's fluctuations through Eq.~\eqref{eq:cp-fano} (H111). In regime III, the ratio of observed to predicted Fano factor of 10-min talk counts is $r_F=1.01$ [0.94, 1.09] over 18 units (Fig.~\ref{fig:cp-fano}). The cross-room covariance is positive in 0/12 units. H111 concludes that in regime III the read-out loop explains the collective talk variance\cred{0.65}. In regime I, talk co-varies $\times1.34$ [1.18, 1.52] more than the loop permits, and the cause is unknown.
 
@@ -86,18 +86,18 @@ A gain at hop 1 also sets the swarm's fluctuations through Eq.~\eqref{eq:cp-fano
 \label{fig:cp-fano}
 \end{figure*}
 
-Plain mean-field Glauber dynamics fails (H99). In regime III, collective talk keeps more lag-1 memory than Glauber predicts, also without the scheduler (median $\Delta\rho_1=+0.052$). The hop-1 gain of H67 reproduces this excess ($g_{1,\rm fit}/g_{lag}=0.96$, 24 units). H99 concludes that the memory is read-out coupling with a delay of one call\cred{0.63}. We withdraw the round-1 claim that the \#51 nudge response is $\times9.5$ the Onsager prediction.
+Plain mean-field Glauber dynamics fails (H99). In regime III, collective talk keeps more lag-1 memory than Glauber predicts, also after removal of the scheduler field (median $\Delta\rho_1=+0.052$). The hop-1 gain of H67 reproduces this excess ($g_{1,\rm fit}/g_{lag}=0.96$, 24 units). H99 concludes that the memory is read-out coupling with a delay of one call\cred{0.63}. We withdraw the round-1 claim that the \#51 nudge response is $\times9.5$ the Onsager prediction.
 
 \subsection{Capacity and memory of one read-out}
 \label{sec:coupling-capacity}
 
 In a read-out batch of $k$ messages, the chance that a talk call names a given sender falls as $k^{-0.66\pm0.02}$ (16/16 periods; H18). A reactive-timing null gives 0.75--0.80, so the data do not identify this exponent. In \#51, timer-wake batches set $k$ from outside, and the null gives $\approx0$. These batches give $k^{-0.45}$ [0.41, 0.50] (round 1b; round 1 gave 0.50). H18 concludes that attention per sender dilutes with batch size in \#51\cred{0.64}. In the small two-room periods the timer design is weak.
 
-Total content uptake grows as $k^{a_U}$ (H113). On \#51 timer-wake batches, $a_U=0.31$ [0.25, 0.37], and over 6 periods identified against a topic field, $a_U=0.23$ [0.16, 0.31]. Both values exclude one message per call ($a_U=0$), no bottleneck ($a_U=1$) and $1-0.45=0.55$ from H18. H113 concludes that the read-out channel has an intermediate capacity\cred{0.64}. The other 27 testable periods are not identified against a field.
+Total content uptake grows as $k^{a_U}$ (H113). On \#51 timer-wake batches, $a_U=0.31$ [0.25, 0.37], and over 6 periods identified against a topic field, $a_U=0.23$ [0.16, 0.31]. Both values exclude one message per call ($a_U=0$), no bottleneck ($a_U=1$) and the H18 value $1-0.45=0.55$. H113 concludes that the read-out channel has an intermediate capacity\cred{0.64}. In the other 27 testable periods, the data do not separate uptake from a topic field.
 
 A read pulls the reader's next statement toward the sender by $J_K=0.044$ [0.038, 0.050] more than the in-flight placebo (12 \#51 units; H130). The pull decays in about 7 calls. The agent's own content memory relaxes over about 100 calls (1\,h), with a rate ratio of 14.8 (90\% CI [7.2, 30.4])\cred{0.64}. The one-rate Ornstein--Uhlenbeck model fails.
 
 \subsection{What is not confirmed}
 \label{sec:coupling-open}
 
-All results here are exploratory, and no claim passed a holdout test. Each credence is the probability that the claim will survive one (cap 0.95). The first confirmatory runs will be H08 on the holdout periods and H40 on NE20. Regime I is the main open gap: the call clock and the Fano sum rule both fail there.
+All results here are exploratory, and no claim passed a test on reserved data. Each credence is the probability that the claim will survive one (cap 0.95). The first confirmatory runs will be H08 on the reserved data periods and H40 on NE20. Regime I is the main open gap: the call clock and the Fano sum rule both fail there.

@@ -20,7 +20,7 @@ cols = [f"{i:02d}" for i in range(1, 16)]
 MNAME = {"01": "inverse Ising", "02": "kinetic Ising", "03": "contagion", "04": "semantic info", "05": "replicators",
          "06": "neutral", "07": "fluct. env.", "08": "copying", "09": "Hawkes", "10": "Potts", "11": "vector spins",
          "12": "info dynamics", "13": "conventions", "14": "scaling", "15": "stoch. thermo"}
-OUT = {"supported": vs.C["blue"], "mixed": vs.C["orange"], "refuted": vs.C["red"]}
+OUT = {"supported": "#0ca30c", "mixed": "#8c8c8c", "refuted": "#d03b3b"}
 ROLE = {"primary": ("o", 46), "secondary": ("o", 18), "rival": ("D", 20), "null": ("s", 20), "tool": ("^", 20)}
 
 fig = plt.figure(figsize=(7.0, 3.35))
@@ -31,7 +31,7 @@ for i, hid in enumerate(rows):
             continue
         j = cols.index(m["model"])
         mk, sz = ROLE.get(m["role"], ("o", 10))
-        c = OUT.get(m.get("outcome"), vs.NULL)
+        c = OUT.get(m.get("outcome"), "#cfcfcf")
         hollow = m["role"] in ("null", "tool")
         ax.scatter(j, i, marker=mk, s=sz, facecolor="white" if hollow else c, edgecolor=c, lw=0.9, zorder=3)
 ax.set_xlim(-0.6, len(cols) - 0.4); ax.set_ylim(len(rows) - 0.4, -0.6)
@@ -48,11 +48,11 @@ items = [("primary", "o", 30, False), ("secondary", "o", 12, False), ("rival", "
 for k, (lab, mk, sz, hol) in enumerate(items):
     lx.scatter(0.15 + 2.0 * k, 0.75, marker=mk, s=sz, facecolor="white" if hol else vs.INK2, edgecolor=vs.INK2, lw=0.9)
     lx.text(0.42 + 2.0 * k, 0.75, lab, fontsize=6, va="center")
-for k, (lab, c) in enumerate([("supported", OUT["supported"]), ("mixed", OUT["mixed"]), ("refuted", OUT["refuted"]), ("untested", vs.NULL)]):
+for k, (lab, c) in enumerate([("supported", OUT["supported"]), ("mixed", OUT["mixed"]), ("refuted", OUT["refuted"]), ("untested", "#cfcfcf")]):
     lx.add_patch(Rectangle((0.15 + 2.0 * k, 0.0), 0.25, 0.3, color=c)); lx.text(0.5 + 2.0 * k, 0.15, lab, fontsize=6, va="center")
 
 # (b) the zoomed cell: verdict per goal period
-VC = {"supported": vs.C["blue"], "failed": vs.C["red"], "mixed": vs.C["orange"], "descriptive": vs.C["sky"]}
+VC = {"supported": "#0ca30c", "failed": "#d03b3b", "mixed": "#8c8c8c", "descriptive": "#a9d8a9"}
 h = hs[ZOOM_H]
 verd = {p["period"]: p["verdict"] for p in h["periods"]}
 bx = fig.add_axes([0.55, 0.22, 0.43, 0.58]); bx.axis("off")
@@ -60,7 +60,7 @@ ncol = 17
 for g in range(1, 52):
     r, c = (g - 1) // ncol, (g - 1) % ncol
     v = verd.get(f"G{g:02d}")
-    bx.add_patch(Rectangle((c, -r), 0.88, 0.88, color=VC.get(v, "#eeeeee"), ec="white", lw=0.5))
+    bx.add_patch(Rectangle((c, -r), 0.88, 0.88, color=VC.get(v, "#e3e3e3"), ec="white", lw=0.5))
     bx.text(c + 0.44, -r + 0.44, str(g), fontsize=4.6, ha="center", va="center", color="white" if v in VC else vs.MUTED)
 bx.set_xlim(-0.2, ncol + 0.2); bx.set_ylim(-2.4, 1.05)
 # regime bands under each period tile row: I = 1-32, II = 33-36, III = 37-51
@@ -70,13 +70,13 @@ for g in range(1, 52):
     bx.add_patch(Rectangle((c, -r - 0.10), 0.88, 0.06, color={"I": vs.C["sky"], "II": vs.MUTED, "III": vs.C["blue"]}[reg], lw=0))
 nes = [p for p in h["periods"] if p["period"].startswith("NE")]
 for k, p in enumerate(nes):
-    bx.add_patch(Rectangle((k * 2.6, -3.55), 2.4, 0.7, color=VC.get(p["verdict"], "#eeeeee"), ec="white"))
+    bx.add_patch(Rectangle((k * 2.6, -3.55), 2.4, 0.7, color=VC.get(p["verdict"], "#e3e3e3"), ec="white"))
     bx.text(k * 2.6 + 1.2, -3.2, p["period"], fontsize=5, ha="center", va="center", color="white")
 bx.set_ylim(-3.7, 1.05)
 title = f"(b) one cell: {ZOOM_H} × {ZOOM_M} ({MNAME[ZOOM_M]}), verdict per goal period"
 fig.text(0.55, 0.88, title, fontsize=7.5)
 fig.text(0.55, 0.835, h["title"][:78], fontsize=6.2, color=vs.INK2)
-lg = [("supported", VC["supported"]), ("failed", VC["failed"]), ("mixed", VC["mixed"]), ("descriptive", VC["descriptive"]), ("not tested", "#eeeeee")]
+lg = [("supported", VC["supported"]), ("failed", VC["failed"]), ("mixed", VC["mixed"]), ("descriptive", VC["descriptive"]), ("not tested", "#e3e3e3")]
 for k, (lab, c) in enumerate(lg):
     fig.patches.append(Rectangle((0.55 + 0.085 * k, 0.12), 0.012, 0.025, color=c, transform=fig.transFigure, figure=fig))
     fig.text(0.565 + 0.085 * k, 0.1325, lab, fontsize=5.8, va="center")

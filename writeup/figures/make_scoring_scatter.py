@@ -29,7 +29,7 @@ for h, p, v, *_ in rows:
     if h in POS:
         ax.annotate(h, (v, p), xytext=POS[h], textcoords="data", fontsize=6, color=vs.INK2, ha="center", va="center",
                     arrowprops=dict(arrowstyle="-", color=vs.MUTED, lw=0.5, shrinkA=1, shrinkB=3))
-ax.axhline(0.95, color=vs.NULL, lw=0.8, ls="--"); ax.text(0.08, 0.94, "cap before holdout", fontsize=6, color=vs.MUTED, va="top")
+ax.axhline(0.95, color=vs.NULL, lw=0.8, ls="--"); ax.text(0.08, 0.94, "credence cap (0.95)", fontsize=6, color=vs.MUTED, va="top")
 ax.set_xlim(0, 4.45); ax.set_ylim(0, 1.04); ax.set_xticks([0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5])
 ax.set_xlabel("value if true, $V$"); ax.set_ylabel("credence $p$")
 ax.scatter([], [], s=16, facecolor="white", edgecolor=vs.INK2, label="fragile (open marker)")

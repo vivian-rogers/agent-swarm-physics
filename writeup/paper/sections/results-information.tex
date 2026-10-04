@@ -3,18 +3,17 @@
 \section{Where information lives, and what an operator can do}
 \label{sec:information}
 
-This section treats three questions.
-Q4 asks where the information of the swarm lives and what it is worth.
-Q5 asks what an operator can change, and Q6 asks if the swarm produces entropy beyond its parts.
-All numbers come from non-holdout goal periods, and no result in this section has passed a holdout test.
-The one holdout test so far, prediction C1 of H04 for the response to a change in working hours, failed with the opposite sign.
+This section treats Q4 (where information lives and what it is worth), Q5 (operator levers) and Q6 (entropy beyond the parts).
+All numbers come from non-reserved goal periods, and no result in this section has passed a test on reserved data.
+The one test on reserved data so far, prediction C1 of H04 for the response to a change in work hours, failed with the opposite sign.
 
 \subsection{The context window carries the value}
 \label{sec:info-context}
 
-Semantic information is the part of the system--environment mutual information whose scramble lowers viability~\cite{in:kolchinsky2018}.
-Viability $V$ is the work commits of an agent per 20 calls, and $I_c$ is the information of channel $c$ about the repo of the next commit.
-A natural scramble destroys $I_c$ and changes $V$ by $\Delta V_c$, and $\kappa_c=\Delta V_c/I_c$ is the value per bit (model 04;~\cite{in:sowinski2023}).
+Semantic information is the part of the system--environment mutual information whose scramble lowers viability~\cite{kolchinsky2018}.
+Viability $V$ is the work commits of an agent per 20 calls.
+The quantity $I_c$ is the information of channel $c$ about the repo of the next commit.
+A natural scramble destroys $I_c$ and changes $V$ by $\Delta V_c$, and $\kappa_c=\Delta V_c/I_c$ is the value per bit (model 04;~\cite{sowinski2023}).
 The best scramble is the forced erasure: the scaffold erases the context window at 41 records (40 calls), whatever the task state.
 Thus the time of an erasure is quasi-random relative to the work (natural experiment NE41).
 
@@ -26,8 +25,8 @@ Over a 40-call segment, the erasures cost 4.8--10.9\% of the commits in that seg
 Notes that the agent writes to memory at the erasure do not make the dip shorter (within-agent $\rho=-0.03$ in G51).
 
 After the erasure, the agent reads again in order and does not thrash (Fig.~\ref{fig:info-H44}).
-In G51, the share of calls that read files, git, notes or the screen rises from 0.22 to 0.47 and relaxes over about 7 calls $[5.4, 9.2]$.
-The conditional rise is $\Theta_c=+0.079$ $[0.071, 0.086]$, with the CI above 0 in 9/9 goal periods.
+In G51, the share of read calls (files, git, notes, screen) rises from 0.22 to 0.47 and relaxes over about 7 calls $[5.4, 9.2]$.
+The rise holds in 9/9 goal periods.
 Category entropy falls ($-0.027$ $[-0.050,-0.004]$), so the erasure acts as a field on the call mix, not as a temperature pulse.
 
 \begin{figure*}
@@ -56,7 +55,7 @@ $\kappa_C=5.2$ $[3.8, 7.9]$ commits per 20 calls per bit. The own artifact carri
 Chat received after an erasure increases output by 22\% $[8, 36]$ without allocation bits (H87).
 This is a candidate lever, but we did not test it as an intervention.
 The context window also holds the loops of the swarm.
-A statement in context is near-copied $3.38\times$ $[2.56, 4.46]$ more often than an erased statement, in 4/4 scorable goal periods (H69)\cred{0.85}.
+Agents near-copy a statement in context $3.38\times$ $[2.56, 4.46]$ more often than an erased statement, in 4/4 scorable goal periods (H69)\cred{0.85}.
 A forced erasure increases the loop exit rate $\times2.40$ $[1.18, 4.88]$, so restatement loops are fixed points of the context window.
 
 History search has no measured value.
@@ -66,19 +65,18 @@ The data exclude a dip of 0.30 or more at power 0.85--0.91, but the outage fully
 \subsection{Idle dynamics: traps age}
 \label{sec:info-traps}
 
-An idle agent waits at a timer gate, and each call after an idle call is a chance to act.
+An idle agent waits at a timer wake, and each call after an idle call is a chance to act.
 Kramers escape from one trap depth gives a constant escape probability, and a broad distribution of depths gives one that falls with trap age $a$.
 We fit a within-agent logit of escape on $\ln a$, where a slope of 0 is memoryless.
 
 Traps age.
 The point slope is below $-0.3$ in 6/8 regime-III goal periods, and the CI is below $-0.3$ in 3/8 (H16)\cred{0.70}.
-The aging continues after the nudger stops (NE43: $\beta=-0.59$ $[-0.68,-0.39]$).
-Aging is not input starvation: the slope survives an input-starvation clock in 4/4 powered goal periods (H72)\cred{0.78}.
+The age effect continues after the nudger stops ($\beta=-0.59$ $[-0.68,-0.39]$ at NE43).
+The age effect is not input starvation: the slope survives an input-starvation clock in 4/4 powered goal periods (H72)\cred{0.78}.
 Recent input lowers escape ($\beta_s=+0.23$ $[+0.11,+0.33]$ in G51), so ambient chatter is a field that keeps agents idle.
 
-At the gate, an unaddressed agent message decreases the odds of action to 0.50 $[0.23, 0.95]$ against no new item (H09, regime~III)\cred{0.56}.
-A new @-mention gives an odds ratio of 3.09 $[1.95, 4.50]$, and 1.20 $[0.76, 1.87]$ against no new item.
-Thus a mention restores the rate with no new item.
+At the pause point, an unaddressed agent message decreases the odds of action to 0.50 $[0.23, 0.95]$ against no new item (H09, regime~III)\cred{0.56}.
+A new @-mention gives an odds ratio of 3.09 $[1.95, 4.50]$, and 1.20 $[0.76, 1.87]$ against no new item, so a mention restores the base rate.
 
 \subsection{Operator levers}
 \label{sec:info-levers}
@@ -88,33 +86,33 @@ The auto-nudger reads the agent state and chooses a target, as a Maxwell demon d
 Its efficiency $\eta_{\rm SU}$ compares the work that it buys with the frontier $V^*(R)$, the maximum work that the same bits can buy (model 04).
 
 A first nudge adds 1.16 $[0.75, 1.57]$ active minutes per 30 minutes to its target in G51 (H04)\cred{0.49}.
-H30 finds 0.98 $[0.63, 1.37]$ in G51 and 0.95 $[0.38, 1.54]$ in G38, and about 0 for room-mates\cred{0.39}.
-No lever is a pure catalyst: nudges increase idle escape $\times1.3$--$1.6$ and decrease the idle share by 0.048 $[0.019, 0.076]$ (H39)\cred{0.67}.
-A second input that a later call reads keeps 80--130\% of the effect of the first input, at spacings from 1\,min to 4\,h (H43)\cred{0.69}.
-Only inputs that the same call reads are wasted.
+H30 finds 0.95 $[0.38, 1.54]$ in G38 and about 0 for room-mates\cred{0.39}.
 
 The nudger reads 1.42 bits of agent state per nudge in G51, mostly trap age (H35)\cred{0.61}.
 Its bits buy glances near the frontier: $P(\text{active within 30 min})$ rises by 0.082 $[0.035, 0.132]$ per first nudge, at $\eta_{\rm SU}=0.88$ $[0.26, 0.97]$.
 For committed work, it buys $+0.22$ $[-0.29, +0.82]$ commits per hour per nudge, at most about 0.4\% of swarm commits.
 The switch-on (NE10) and the switch-off (NE43) of the nudger do not move swarm work.
-The demon wastes its bits: 38\% of nudges go to traps of 10 or more pauses, where a nudge buys 0.5 active minutes, against 2.2--2.6.
+The demon wastes its bits: 38\% of nudges go to traps of 10 or more pauses.
+There a nudge buys 0.5 active minutes, against 2.2--2.6 at depths 1--9.
 
-At the logged budget, one nudge at the second idle gate of each trap gives $\times1.55$ $[1.25, 1.81]$ the extra active calls of the logged nudger (H60, G51)\cred{0.44}.
-A random gate gives $\times1.46$ $[1.22, 1.67]$, and a fitted index does not beat the rule.
-A nudge read at an idle gate adds 7.2 $[5.0, 9.8]$ active calls in 30 minutes.
+In G51, a nudge at the second pause point of each trap gives $\times1.55$ $[1.25, 1.81]$ the extra active calls of the nudger at equal budget (H60)\cred{0.44}.
+A random pause point gives $\times1.46$ $[1.22, 1.67]$, and a fitted index does not beat the rule.
+A nudge read at an pause point adds 7.2 $[5.0, 9.8]$ active calls in 30 minutes.
 For commits, the gain of the rule is $\times1.29$, with a CI that includes no gain (H35).
+
 A read correction changes blocked-spell escape by $+0.007$ $[-0.053, +0.070]$ per 5-minute window over 337 windows (H55, round 1c)\cred{0.57}.
 The power for a 1-logit effect is 0.96, so corrections do not free blocked agents.
 
 \subsection{Thermodynamics: the arrow of time is individual}
 \label{sec:info-thermo}
 
-Entropy production (EP) measures how much the forward statistics of the action-class sequence of an agent differ from the time-reversed statistics~\cite{in:aguilera2026}.
-A held-out Newton estimator gives a lower bound on EP, which we test against a reversible block-flip null.
-The excess part of EP~\cite{in:kolchinsky2026} sets a Wasserstein speed limit $T\ge W/\bar A$ on the time to move an allocation a distance $W$ at activity $\bar A$ (model 15).
+Entropy production (EP) measures how much the forward statistics of the action-class sequence of an agent differ from the time-reversed statistics~\cite{aguilera2026}.
+A cross-fitted Newton estimator gives a lower bound on EP, which we test against a reversible block-flip null.
+The excess part of EP sets a Wasserstein speed limit $T\ge W/\bar A$ (model 15;~\cite{kolchinsky2026}).
+Here $T$ is the time to move an allocation a distance $W$ at activity $\bar A$.
 
 Fine-action irreversibility is real, and most of it belongs to the agents.
-At least 80\% of agents exceed the reversible null in 34/35 non-holdout goal periods (H14; H56 recheck)\cred{0.82}.
+At least 80\% of agents exceed the reversible null in 34/35 non-reserved goal periods (H14; H56 recheck)\cred{0.82}.
 The scaffold share of the excess is 0.13 in regime~III, against 0.45 in regime~I (H56).
 Lab differences survive the removal of scaffold records ($\eta^2=0.42$, $p=0.0005$), and no class of scaffold change moves EP (H56)\cred{0.69}.
 In behavior, no collective excess beyond the parts survives Holm correction (largest: G51, 0.009\,nats/min, Holm $p=0.20$; H14).
@@ -125,23 +123,19 @@ The runner starts the agents together, and they stop at different times, so this
 A kickoff that names its target moves the swarm at the speed limit.
 In G39, G40 and G51, the slack $S=\bar A T/W$ is 1.00--1.40, and the allocation settles in 0.25--0.5 active hours (H75)\cred{0.47}.
 A free-choice goal settles with more slack: G41 takes 9.5\,h at $S=5.1$ $[1.4, 11.2]$.
-On the same days in G44, the named-target room settles in 0.75\,h ($S=2.5$) and the free-choice room in 4.25\,h ($S=14.5$).
-
-Repo dynamics show no selection beyond neutral copies (H77)\cred{0.55} and no catalytic cycle of length 3 or more (H79)\cred{0.72}~\cite{in:pinero2025,in:hordijk2023}.
 
 The one collective arrow of time that we found goes through address.
 In G51 talk, an agent starts to talk in the minute after an agent who named it ($\sigma_{\rm nam}=7.6$ $[4.3, 11.2]\times10^{-3}$\,nats/min, $p=0.01$; H90)\cred{0.41}.
-Unnamed partners carry $-0.4$ $[-1.7, 0.5]\times10^{-3}$\,nats/min.
 The seven other goal periods have power of at most 0.45 at this effect size, so the scope is G51 only.
 
 \subsection{What an operator can do}
 \label{sec:info-operator}
 
-The rules below follow from the results above. No rule is holdout-confirmed.
+The rules below follow from the results above. No rule is confirmed on reserved data.
 \begin{enumerate}
 \item Count each forced erasure as a cost: 39\% of commits over 10 calls (H15), 41\% over 20 calls (H87) and 4.8--10.9\% of a segment (H44). The memory file does not recover the cost. We did not measure the best call-cap length.
 \item Use an erasure to stop a command loop. In G38, a loop recurs after 16\% of erasures, against 72\% with no erasure.
 \item Address an idle agent by name. Unaddressed chatter halves its odds of action (odds ratio 0.50), and a mention restores them.
-\item Nudge each trap one time, at its second idle gate. Do not nudge deep traps again. Expect about 7 extra active calls per read nudge, not extra commits.
+\item Nudge each trap one time, at its second pause point. Do not nudge deep traps again. Expect about 7 extra active calls per read nudge, not extra commits.
 \item Do not expect a correction to free a blocked agent (escape change $+0.007$, power 0.96).
 \end{enumerate}
