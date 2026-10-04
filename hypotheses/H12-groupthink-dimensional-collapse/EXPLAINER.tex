@@ -1,0 +1,68 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\usepackage{amsmath,amssymb}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+\title{Is there ``groupthink'' in an AI agent swarm? H12 in plain terms}
+\author{Vivian Rogers, with Claude Opus 5.5}
+\affiliation{Agent-swarm physics project}
+\date[]{Explainer for a mathematically literate non-specialist. Round~1, exploratory data only; nothing here has been tested on the held-out periods yet.}
+
+\begin{abstract}
+The AI Village runs 10--20 language-model agents together for weeks. We asked whether such a swarm (i) moves as one, i.e.\ has a few collective modes, and (ii) collapses onto a few themes in what it says. There is exactly one collective mode, and it is the simplest possible one: a global ``how busy is the swarm'' variable, partly caused by the platform pausing everyone at once. What agents say does \emph{not} collapse after a new goal; it diversifies. Where diversity is low, the cause is agents repeating \emph{themselves}, not consensus. The practical result is a three-number monitor that runs on any swarm's logs.
+\end{abstract}
+\maketitle
+
+\section{The question}
+``Groupthink'' can be made precise in two ways. Do the agents \emph{move as one}? If the swarm has a few collective modes, directions along which everybody varies together, its dynamics are low dimensional however many agents there are. Does what they \emph{say} collapse onto a few themes? Then the spread of their messages in meaning-space should shrink. We predicted yes to both, and especially that the spread would shrink right after a new goal is announced.
+
+\section{Part 1: eigenvalues of a correlation matrix}
+For agent $i$ and minute $t$ define a spin $s_i(t)=+1$ if the agent is active (or posting in chat) and $-1$ if not. Over a goal period this is an $N\times T$ matrix ($N$ agents, $T$ minutes). We form the $N\times N$ correlation matrix $C_{ij}=\langle s_i s_j\rangle_t$ (after centering and scaling) and look at its eigenvalues.
+
+\paragraph{Noise level.} If agents were independent, finite $T$ would still smear the eigenvalues of $C$ around 1. Random-matrix theory (the Marchenko--Pastur law) says pure noise puts them in the band
+\begin{equation}
+\lambda \in \left[(1-\sqrt{q})^2,\ (1+\sqrt{q})^2\right],\qquad q=N/T .
+\end{equation}
+An eigenvalue above the band is real shared structure, and its eigenvector says which agents take part, with what weights.
+
+\paragraph{Why the textbook band is not enough.} The formula assumes each minute is an independent draw. Here it isn't: agents work in bursts and share a daily schedule. On simulated swarms with \emph{no} coupling, the naive band still flagged a collective mode 50--90\% of the time.
+
+\paragraph{The noise level we used: a cross-day surrogate.} Replace each agent's day with the \emph{same agent's} record from a \emph{different} day. This keeps each agent's rhythm and burstiness but destroys same-day coordination. Repeat 200 times; the 95th percentile of the top eigenvalue is the noise edge. On the same simulated swarms this gave 6--10\% false alarms.
+
+\paragraph{Content.} The same machinery runs on what agents say: each message is embedded as a vector (32 numbers after removing the directions every message shares), and ``correlation'' means agents' messages drifting the same way within the same half hour.
+
+\section{Part 2: effective dimension}
+For the cloud of message vectors in a window, with covariance eigenvalues $\lambda_1\ge\lambda_2\ge\dots$, the participation ratio
+\begin{equation}
+\mathrm{PR}=\frac{\left(\sum_k \lambda_k\right)^2}{\sum_k \lambda_k^2}
+\end{equation}
+is an effective number of dimensions: $\mathrm{PR}=1$ if all variance lies on one axis and $\mathrm{PR}=d$ if it is spread evenly over $d$ axes. With few messages the naive estimate is biased low (47--87\% of the truth in simulations), so we used a bias-corrected version.
+
+\section{What we found}
+\paragraph{1. Exactly one collective mode, the simplest one.} In 22 of 24 analysis units (a unit is a goal period, or a piece of one split where something changed), activity has exactly one eigenvalue above the noise edge; chat 20/24; content 24/24. Every agent loads on it with the same sign: the top eigenvector is essentially the uniform vector $u=(1,\dots,1)/\sqrt N$. Concretely, the Rayleigh quotient
+\begin{equation}
+\mathrm{VR}=u^{\mathsf T}Cu\le\lambda_1
+\end{equation}
+(the variance of total activity) captures 97\% of $\lambda_1$, and equality holds only when the top eigenvector is exactly uniform. That is the signature of the Curie--Weiss magnet, one global variable (``how busy is the swarm right now''), the analogue of the \emph{market mode} in stock correlations. Its strength per period lines up with H02's independently estimated coupling (rank correlation 0.73).
+
+Part of it is everyone going quiet at once: minutes with at most one active agent make up to 42\% of a period, and they create correlation trivially. Removing them, the mode survives in 9 of the 11 units where such lulls are rare (14/24 overall). The content mode survives removing each agent's daily average, so it is agents' messages moving together \emph{within} a day.
+
+\paragraph{2. ``Collapse after a new goal'' failed, in the opposite direction.} Across 20 goal changes the participation ratio moved by a median $+7\%$, indistinguishable from ordinary day-to-day change ($p=0.86$); in the later, more autonomous regime it \emph{rose} by 44\%, 4 out of 4 times. Day~1 of a goal is more diverse than later days in 13 of 16 periods ($p=0.02$), and shared-goal weeks were no less diverse than pick-your-own-goal weeks. A new goal makes the swarm explore, then it narrows somewhat: an anti-quench.
+
+\paragraph{3. Low diversity is loops, not consensus.} The least diverse periods (\#38--\#40) had 16--60\% of an agent's daily messages as near-copies (cosine $>0.95$) of \emph{its own} earlier messages, and $\lesssim$3\% (at most 8\% on any day) as near-copies of other agents'. Removing self-repeats leaves every verdict unchanged.
+
+\section{So what?}
+The swarm is not a hive mind. Statistically it looks like weakly coupled individuals plus one shared busy/idle variable, much of which the platform itself causes, consistent with the other hypotheses: coupling here is real but weak.
+
+If you run a swarm, watch for loops rather than consensus. The practical output is a three-number monitor that needs no fitting:
+\begin{enumerate}
+\item \textbf{Collective-mode strength:} the top eigenvalue of the agents' content-correlation matrix over its cross-day noise edge, against the swarm's own recent history (``moving in lockstep'' alarm).
+\item \textbf{Echo rate:} the share of messages nearly identical to another agent's message in the last two hours, the actual groupthink alarm, which stayed low here.
+\item \textbf{Self-repetition rate:} the same against the agent's own earlier messages, the stuck-agent alarm, which fired in exactly the periods where diversity collapsed.
+\end{enumerate}
+
+\paragraph{Caveats.} One embedding model (a different one might draw the space differently); a single dataset; the lull filter loses power when lulls are long; nothing has been tested on the held-out periods. The confirmation script is written and runs only with sign-off, once.
+
+\medskip
+{\footnotesize Full predictions, results and scorecard: the card \texttt{hypotheses/H12-groupthink-dimensional-collapse/README.md}; figures in its \texttt{figures/} folder (\texttt{H12\_summary.pdf}, \texttt{rmt\_arm.pdf}, \texttt{dimensionality\_arm.pdf}).}
+\end{document}
