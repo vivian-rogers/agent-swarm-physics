@@ -344,3 +344,4 @@ Six helpers that two or more hypotheses had copied, moved into `infra/shared/` w
 - **DQ4 `goal_no == 51` includes about 27 automated streams that commit after the village's last calendar day (09-21 → 10-03)** (H80). They are not held out, and calendar-joined analyses silently drop them.
 - **`artifact_commands_text` keeps almost no execution lines** (2k of 740k rows) (H79). Execution must come from `bash_head_fixed` plus a cwd lookup. 81% of execution heads are `python3`/`python` heredocs, so head-only execution inflates "ran repo code" about 10×.
 - **DQ4's `automated` flag is defined by turn timing** (H80): any timing-based detector benchmarked on it is favoured by construction.
+- **`rooms_timeline` open rooms have a null `t_end`** (H41 bug, 2026-10-04). A filter like `t_end >= t_min` silently drops them and makes as-of room lookups return the previous room (61–70% stale in #51). Fill null `t_end` with +inf before filtering.

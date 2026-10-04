@@ -190,6 +190,9 @@ def load_skeleton(goal: int, cal: pl.DataFrame | None = None, days_filter=None, 
     st, en = np.r_[0, b], np.r_[b, len(m_sorted)]
     sk.readers_of = {int(m_sorted[s]): o[s:e] for s, e in zip(st, en)} if len(m_sorted) else {}
     rt = pl.read_parquet(SH / "rooms_timeline.parquet").with_columns(ts("t_start").alias("ts"), ts("t_end").alias("te"))
+    # Bug fix (coordinator, 2026-10-04, found by re-freeze batch B): rooms still open have no end time; the old filter
+    # (te >= t_min - 1 day) dropped them, so 61-70% of #51 lookups read the agent's previous room. Keep open rooms (te = +inf).
+    rt = rt.with_columns(pl.col("te").fill_null(float("inf")))
     sk.rooms = rt.filter((pl.col("te") >= sk.t_min - 86400) & (pl.col("ts") <= sk.t_max + 86400))
     return sk
 

@@ -68,7 +68,7 @@
    }
   ],
   "mechanism_level": "M1",
-  "fragile": false,
+  "fragile": true,
   "value_if_true": 2.75,
   "decision": "monitoring: chat logs can't attribute cross-room leaks; rooms cage chat-borne spread",
   "magnitude": "material",
@@ -123,6 +123,7 @@
     ]
    }
   ],
-  "adjudicate": false
+  "adjudicate": false,
+  "under_rerun": "room-index bug (2026-10-04): #51 and #38 room labels were stale; re-run in progress"
  }
 }
