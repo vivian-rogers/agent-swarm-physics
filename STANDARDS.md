@@ -73,7 +73,12 @@ Use Scoring v2 (`writeup/scoring/scoring-v2.pdf`, `RUBRIC.md`):
 - If two hypotheses need the same builder, move it into `infra/shared/` with a `--verify` and register it in `build_all.py`.
 - Never import from another hypothesis's folder in new code.
 
-## 9. Data and safety
+## 9. Compute
+- **Pools:** at most 2 workers per process, and one heavy job at a time per agent. Do not run parallel background jobs.
+- **Thread caps:** the venv's `sitecustomize.py` sets BLAS, OpenMP and polars threads to 2 by default. Override only with a reason.
+- **Why:** with 15–20 agents on the machine (10 cores), uncapped pools and implicit BLAS threads drove the load to 249 (2026-10-04). Jobs crawl and agents time out.
+
+## 10. Data and safety
 - `data/` is never committed.
 - No verbatim agent text in committed files.
 - No training on the data.
