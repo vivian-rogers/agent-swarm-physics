@@ -23,6 +23,13 @@ Steps (outputs in data/processed/shared/):
   embedding_agreement  bge vs gte agreement metrics
   outages              outages, stall_minutes, reasons (H38's rule; idle spells recomputed with H09's rule)
   context_ledger       call_starts_logged (raw scan), call_windows, context_ledger_turns/_items (+ validation JSON)
+  visibility           producing_calls (H28/H32/H34 "seen iff posted before the producing call's t_call"; + helpers)
+  pair_day_reads       pair_day_reads (H05's ledger read counts per pair-day)
+  kicks_targets        kicks_targets, kicks_receipts (leading-@ primary target; receiving call per message x agent)
+  calls                calls (H15/H44 regime-III per-call failures, write evidence, work commits, segments)
+  sustained_runs       sustained_run_starts (H35 and H43 rules)
+  copying              project_mentions_chat (+ H06's MH copying test as functions)
+  (each of these six takes --verify against the hypothesis copies it replaced; steps carry `deps`, shown by --list)
   work_ledger          work_repos, work_commits, work_api_writes, work_daily, work_outcomes (offline; `work_ledger.py refresh` refetches)
   ground_truth         ground_truth_labels (one gzip+grep pass over raw computer_use_turns)
   period_affordances   period_affordances (DQ9 catalog; event columns null on holdout units)
@@ -115,6 +122,19 @@ STEPS = [
     {"name": "context_ledger", "cmd": "py", "script": "context_ledger.py",
      "outputs": ["call_starts_logged.parquet", "call_windows.parquet", "context_ledger_turns.parquet",
                  "context_ledger_items.parquet"]},
+    # helpers consolidated from hypothesis folders (2026-10-04); each script also takes --verify against its originals
+    {"name": "visibility", "cmd": "py", "script": "visibility.py", "deps": ["scan_tables", "context_ledger"],
+     "outputs": ["producing_calls.parquet"]},
+    {"name": "pair_day_reads", "cmd": "py", "script": "pair_day_reads.py", "deps": ["context_ledger"],
+     "outputs": ["pair_day_reads.parquet"]},
+    {"name": "kicks_targets", "cmd": "py", "script": "kicks_targets.py", "deps": ["kicks_classified", "context_ledger"],
+     "outputs": ["kicks_targets.parquet", "kicks_receipts.parquet"]},
+    {"name": "calls", "cmd": "py", "script": "calls.py",
+     "deps": ["scan_tables", "turn_errors", "turn_outcomes", "work_ledger", "context_ledger"], "outputs": ["calls.parquet"]},
+    {"name": "sustained_runs", "cmd": "py", "script": "sustained_runs.py", "deps": ["context_ledger"],
+     "outputs": ["sustained_run_starts.parquet"]},
+    {"name": "copying", "cmd": "py", "script": "copying.py", "deps": ["scan_tables", "build_artifacts", "context_ledger"],
+     "outputs": ["project_mentions_chat.parquet"]},
     {"name": "ground_truth", "cmd": "py", "script": "ground_truth.py", "outputs": ["ground_truth_labels.parquet"]},
     {"name": "period_affordances", "cmd": "py", "script": "period_affordances.py", "outputs": ["period_affordances.parquet"]},
     # DQ2 reply threading: rebuild never calls the Jev API (`reply_threading.py label --phase ...` is manual)
@@ -198,6 +218,8 @@ def main():
             cmd = " ".join(Path(c).name if c.endswith(".py") else c for c in command(s))
             status = "present" if outputs_exist(s) else "missing"
             print(f"{i:2d}. {s['name']:<21} {status:<8}  {cmd}")
+            if s.get("deps"):
+                print(f"      deps: {', '.join(s['deps'])}")
             for o in s["outputs"]:
                 print(f"      {'+' if (OUT / o).exists() else '-'} {o}")
         return

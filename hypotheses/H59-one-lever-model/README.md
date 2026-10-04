@@ -249,6 +249,7 @@ Frozen from the G51 head: θ = 72.7°, K = (1, 0.44, 0.17, 0.10, 0.06, 0.09), tr
 - **H59-R5. Kickoffs** across regime-III periods with partial pooling (exception d), as the fifth class.
 
 ## Notes
+- **Standards note (coordinator, 2026-10-04):** this card's scheme imports H30's `leading_targets` across hypothesis folders, which STANDARDS.md §8 forbids. Switch to `data/processed/shared/kicks_targets.parquet` (`infra/shared/kicks_targets.py`, verified identical on 1,071 nudges) in round 2.
 
 - 2026-10-04: round 1 started. No other hypothesis's code is modified; H30's `leading_targets` is imported read-only (text read in memory only, never written).
 - 2026-10-04: the API stream stalled mid-round; work on disk was intact and the round resumed from the library step. Synthetic results and amendment A1 precede every real-data outcome fit.
