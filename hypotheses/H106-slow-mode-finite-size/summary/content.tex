@@ -1,0 +1,32 @@
+\hwhat{The test asks whether H81's regime-I culture slow mode has the inertia of a finite ordered magnet, whose direction wanders at a rate $\propto1/N$, or the rate of an outside drift, which does not depend on $N$. Culture vectors come from random 4-agent subsets in each goal$\times$week block (24 goals, $N$ 4--12), with split-half disattenuation. A synthetic on the real panel, run before any real statistic, shows that the slope cannot be measured: power 0.00 against $\alpha_k=-1$, and a noiseless oracle still has SD 0.45. The real slopes are $\alpha_k=+0.40\,[-1.62,2.41]$ (bge) and $+1.22\,[-1.45,3.88]$ (gte). The NE27 jump ($N$ 4$\to$7) and the \#51 joins are unpowered. Post hoc, the slow mode is strong before mid-November 2025 and weak or gone after it.}
+
+\hmodel{Vector spins (model 11) with finite-size scaling (model 14). $u(t)$ is the block culture residual of H81: members' content after two-way fixed-effect personal vectors and goal directions are removed. It is an Ornstein--Uhlenbeck vector with fixed variance and rate $k(t)$. A finite magnet has $\alpha_k=-1$; an outside drift has $\alpha_k=0$. $N$ is the daily active population; time is the active-day index $a$. $R_b$ is the split-half reliability of block $b$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+du=-k(t)\,u\,dt+\sqrt{2k(t)\sigma_u^2}\,dW,\qquad k(t)=k_6\,(N(t)/6)^{\alpha_k}\\
+\tilde s_{bb'}=\frac{\langle\cos(u_b^{(4)},u_{b'}^{(4)})\rangle}{\sqrt{\hat R_b\hat R_{b'}}}=A\,\exp\Bigl(-k_6\!\int_{a_b}^{a_{b'}}\!\bigl(N/6\bigr)^{\alpha_k}da\Bigr)+s_\infty
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Disattenuated similarity of 4-agent culture vectors between blocks of different goals against lag, for pairs inside each village-size class. Only the $N\ge8$ class lacks the near-lag similarity. (b) Real $\alpha_k$ with delete-one-goal jackknife 95\% CIs (dots) against the synthetic drift (D, $\alpha=0$) and magnet (M, $\alpha=-1$) distributions on the real panel. The two worlds overlap almost completely.}
+
+\htelos{Nothing changes for an operator. One village cannot show whether its culture has inertia that grows with headcount. Regime I holds one slow-mode trajectory of about 13 decay times, and $N$ rises in calendar order. A 1/$N$ law in a timescale needs several villages of different size. The useful by-product is post hoc: the slow mode lives in the small-village months (near-lag similarity 0.25--0.28 at $N<8$, 0.00--0.11 at $N\ge8$). If it is confirmed, do not expect a village of 10 to carry a month-long culture the way a village of 4--7 did. For H81, split the slow-mode tests at 2025-11-17.}
+
+\hbottom{The 1/$N$ finite-magnet signature of H81's slow mode is not identifiable in one village (power 0.00, oracle SD 0.45; real $\alpha_k$ +0.40 / +1.22 with CIs of $\pm2$), so this test does not weigh on the outside-drift rival; post hoc, the mode is confined to the $N<8$ era.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (bge / gte)} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 $\alpha_k$ CI excludes 0, includes $-1$ & \raggedright $+0.40\,[-1.62,2.41]$ / $+1.22\,[-1.45,3.88]$; power 0.00 & \raggedright inconcl.\tabularnewline
+\raggedright Evidence (A3) & \raggedright LR magnet/drift 0.90 / 0.65; D percentile 0.49 / 0.92 & \raggedright uninformative\tabularnewline
+\raggedright P2 NE27 $\Delta\ln k\approx-0.55$ & \raggedright $+0.41$ / $+0.38$ (CIs $\pm2$--4); power 0.06 / 0.09 & \raggedright inconcl.\tabularnewline
+\raggedright P3 full roster more negative & \raggedright V3 $+0.32$ / $+1.11$ vs V1 $+0.40$ / $+1.22$ & \raggedright weak yes\tabularnewline
+\raggedright P4 variants keep sign & \raggedright V2, V4, V5 flip (synthetic SD 1.2--2.7) & \raggedright no\tabularnewline
+\raggedright N2 \#51 joins $\Delta\phi>0$ & \raggedright NE32 $-0.09$ / $-0.38$; NE33 $+0.44$ / $-0.07$; power $\le0.21$ & \raggedright inconcl.\tabularnewline
+\raggedright Regime III (descr.) & \raggedright $+0.33$ / $-0.54$, CIs $\pm7$--10 & \raggedright no info\tabularnewline
+\raggedright PH1 era drop (post hoc) & \raggedright $d_\rho=-0.14$ / $-0.28$; percentile in D 0.11 / 0.00, in M 0.09 / 0.01 & \raggedright gte only\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Per-period near-lag similarity $\rho_G$ (blocks of other goals within 10 active days) against the active population; bars are $\pm1.96$ SE. (b) NE27 rate step $\Delta\ln k$ with jackknife CIs against the drift and magnet worlds; dotted ticks mark the magnet value $-0.55$.}
+
+\hcaveats{$N$ is collinear with calendar time: three levels (4, 6--8, 8--12) in date order, with NE03, NE04 and NE08 inside the span. The synthetic assumes one stationary OU mode; the real amplitude changes by era, which neither world contains. The estimator is shifted by $+0.4$ and attenuated to 0.2 of the true slope, though its CI covers the truth in 87--99\% of worlds. Per-period $\rho_G$ rests on 1--11 pairs. The era result is post hoc, clear in gte and marginal in bge.}
+
+\hnext{Confirm the era drop on the held-out goals (\#9, \#14, \#15 vs \#22, \#28, \#29; coordinate with H81). Test inertia cross-sectionally on parallel room trajectories of different size (\#38, \#44; H108), or across villages.}

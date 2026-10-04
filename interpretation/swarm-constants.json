@@ -375,11 +375,11 @@
   {
    "symbol": "τ_u",
    "name": "village-culture slow-mode decay time (regime I)",
-   "value": "28 ± 5 d (bge), 23 ± 4 d (gte); within #51 common mode ≈ 3 active days; round 2: joint OU τ with H82 20.9 ± 2.8 / 15.5 ± 2.2 d (regime I); τ_u 2.4 / 1.7 goal periods (84 / 57 documented h); regime III block τ 9.7 / 6.8 d, boundary 6.5 d",
+   "value": "28 ± 5 d (bge), 23 ± 4 d (gte); within #51 common mode ≈ 3 active days; round 2: joint OU τ with H82 20.9 ± 2.8 / 15.5 ± 2.2 d (regime I); τ_u 2.4 / 1.7 goal periods (84 / 57 documented h); regime III block τ 9.7 / 6.8 d, boundary 6.5 d; post hoc (H106): the regime-I amplitude sits in the N < 8 era (#2–#19, near-lag similarity 0.25/0.28 vs 0.11/0.00 for #20–#31); #51 common-mode lag-1 survival φ 0.54 (τ ≈ 1.6 active days)",
    "kind": "timescale",
    "scope": "24 regime-I goals; absent in regime III",
    "model": "11",
-   "source": "H81, H81 r2",
+   "source": "H81, H81 r2, H106",
    "meaning": "A collective content mode beyond the members persists for weeks in chat-mode swarms (an external-drift rival is open)."
   },
   {

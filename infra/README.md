@@ -313,6 +313,8 @@ Two builders and two libraries are now shared, and `semantic_kappa` is extended.
 
 ## Known issues
 
+- **A rate-vs-N slope of a slow collective mode cannot be identified within one village** (H106: one trajectory, oracle SD 0.45; regime-I N is collinear with calendar time).
+- **`estimates.py` rejects `local:` rows whose first/last day spans held-out days** (H106). Write such rows with `goal_no=None, holdout=False`.
 - **Wall-clock talk counts carry a shared call-density field** (H111: Φ 1.28 with no coupling planted on unit 41). Use the per-call residual clock. Circular block-shift nulls change private variance when talk-per-call drifts within a day, so F/F_shift ≠ Φ.
 - **Early regime-I units (#2–#7) lose most windows to public-chat human sessions** (H111).
 - **DQ2's reply forest lets one reader answer one message several times** (H114): pair gains L/R can exceed 1 (5 pairs). A finite message skeleton makes null reply tails lighter than geometric, so two-sided tail tests are anti-conservative.

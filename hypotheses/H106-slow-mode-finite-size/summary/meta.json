@@ -1,0 +1,60 @@
+{
+ "complete": 40,
+ "faithfulness": 0.5,
+ "usefulness": 0.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before real data; synthetic validation on the real panel in both models with seven worlds and an oracle check, which showed the test unpowered before any real statistic (Amendment A3); replication on 24 regime-I periods plus the card-level exponent and nine variants; regime III descriptive; two natives (NE27, G51 with NE32/NE33) with their own power; one labelled post hoc check calibrated against three worlds; frozen, guarded confirm script dry-run (both build paths), not run.",
+  "faithfulness": "The finite-magnet model cannot be tested here: the slope estimator has power 0.00 against alpha = -1 and an oracle has SD 0.45. Real alpha_k is +0.40 / +1.22 with CIs of +-2, likelihood ratio magnet/drift 0.65-0.90. Natives are unpowered. Scorecard A1 B1 C0 D0 E0 F0 G0 H0 I0.",
+  "usefulness": "A clear negative on feasibility: finite-size scaling of a slow timescale needs several villages, not one. The post hoc era result (slow mode only at N < 8) is a concrete lead for H81's carrier question, but unconfirmed."
+ },
+ "one_line": "The 1/N finite-magnet signature of H81's slow mode is not identifiable in one village (power 0.00; real alpha_k +0.40/+1.22, CIs +-2); post hoc, the mode is confined to the N < 8 era.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "untested",
+   "note": "Finite-magnet rotational diffusion; slope unidentifiable in one village"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Size-matched 4-agent subsets; finite-size exponent"
+  }
+ ],
+ "rated_by": "H106 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "In regime I (24 goals, N 4–12) the slow mode's finite-size exponent is not identifiable: α_k +0.40 [−1.62, 2.41] bge / +1.22 [−1.45, 3.88] gte, with power 0.00 under a true α = −1 and an oracle SD of 0.45, because one trajectory of ~13 decay times meets N collinear with time",
+  "scope": "regime-I panel, 24 goals; natives NE27, G51 (NE32, NE33)",
+  "direction": "negative",
+  "original_verdict": "mixed",
+  "credence": 0.62,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic on the real panel shows non-identifiability (oracle SD 0.45)",
+    "x": 2.0,
+    "evidence": "card §A3"
+   },
+   {
+    "factor": "both embedding models",
+    "x": 1.2,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 0.3,
+  "decision": "don't try to read a collective mode's finite-size scaling from one village",
+  "magnitude": "small",
+  "generality": "single-swarm studies",
+  "expected_usefulness": 0.18,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H106 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
