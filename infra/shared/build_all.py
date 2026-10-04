@@ -15,6 +15,10 @@ Steps (outputs in data/processed/shared/):
   project_states       project_states
   kicks_classified     kicks_classified
   text_features        text_features
+  build_embeddings_v2  second embedding model gte-modernbert (expensive: ~46 min on MPS)
+  style_resid          32-d whitened and style-residualized statement / agent vectors (both models)
+  statement_flags      self_repeat / cross_echo / templated per model + _both consensus
+  embedding_agreement  bge vs gte agreement metrics
   outages              outages, stall_minutes, reasons (H38's rule; idle spells recomputed with H09's rule)
   context_ledger       call_starts_logged (raw scan), call_windows, context_ledger_turns/_items (+ validation JSON)
   work_ledger          work_repos, work_commits, work_api_writes, work_daily, work_outcomes (offline; `work_ledger.py refresh` refetches)
@@ -77,6 +81,19 @@ STEPS = [
     {"name": "project_states", "cmd": "py", "script": "project_states.py", "outputs": ["project_states.parquet"]},
     {"name": "kicks_classified", "cmd": "py", "script": "kicks_classified.py", "outputs": ["kicks_classified.parquet"]},
     {"name": "text_features", "cmd": "py", "script": "text_features.py", "outputs": ["text_features.parquet"]},
+    {"name": "build_embeddings_v2", "cmd": "st", "script": "build_embeddings_v2.py", "expensive": True,
+     "outputs": ["embeddings/chat_gte_modernbert.npy", "embeddings/intentions_gte_modernbert.npy",
+                 "embeddings/agent_day_vec_gte_modernbert.npy", "embeddings/agent_win30_vec_gte_modernbert.npy",
+                 "embeddings/whitening_gte_modernbert_III.npz", "embeddings/goal_vectors_gte_modernbert.npy"]},
+    {"name": "style_resid", "cmd": "py", "script": "style_resid.py",
+     "outputs": ["embeddings/statements_style_resid_period32_bge_small.npy",
+                 "embeddings/statements_style_resid_period32_gte_modernbert.npy",
+                 "embeddings/agent_day_style_resid_period_gte_modernbert.npy",
+                 "embeddings/agent_win30_style_resid_gte_modernbert.npy"]},
+    {"name": "statement_flags", "cmd": "st", "script": "statement_flags.py",
+     "outputs": ["statement_flags.parquet", "statement_flags_meta.json", "statement_flags_by_period.parquet"]},
+    {"name": "embedding_agreement", "cmd": "py", "script": "embedding_agreement.py",
+     "outputs": ["embeddings/agreement_gte_modernbert.parquet"]},
     {"name": "outages", "cmd": "py", "script": "outages.py",
      "outputs": ["outages.parquet", "stall_minutes.parquet", "reasons.parquet"]},
     {"name": "context_ledger", "cmd": "py", "script": "context_ledger.py",

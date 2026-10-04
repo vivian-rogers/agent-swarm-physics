@@ -334,6 +334,7 @@ PR30 / PRday (bias-corrected, agent-capped, rarefied to a fixed n) is kept as a 
 Nothing is fitted, the cost is under a minute per swarm-day on a laptop, and the code is `analysis/h12lib.py` (`overlap_eig`, `spectrum_test`, `pr_rarefied`) plus `posthoc.near_dup_share`. Before trusting it on a new swarm, validate with `analysis/synthetic.py`, calibrated to that swarm's counts.
 
 ## Notes
+- **From DQ5 (2026-10-04): the self-repetition figure depends on the embedding model and is mostly restatement.** Exact repeats in regime III are 0–0.3%. In #38 bge flags 20% of chat and gte 10% (#40: 10% vs 6%); the #38 agent-day top decile is 71% under bge vs 26% under gte, and two agents drop from 67%/54% to 19%/23%. The qualitative reading (low diversity = agents restating themselves, not cross-agent consensus; cross-echo ≤ 1% in most periods) survives, but "16–60% copies" should read "restatements". Re-check with gte at 64 dims, bracketed by `self_repeat_both` (copies) and either-model flags (restatements).
 - 2026-10-03: promoted from shortlist 2 (HH77 + HH58 (shortlist 2, item 3)).
 - 2026-10-03: Observables, Null and Prediction written before any real-data run (see "What I had seen").
 - 2026-10-03: synthetic validation run; Amendment 1 written before any real-data statistic.
