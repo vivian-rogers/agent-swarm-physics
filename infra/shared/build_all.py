@@ -47,8 +47,12 @@ Steps (outputs in data/processed/shared/):
   idle_gates           idle_gates/idle_gates.parquet (H60 / H72 gates, trap clocks, in-flight placebo counts)
   day_matrices         day_matrices/ content_<model>{,_style_resid_period,_restate}.npz, spins.npz, rooms, days (H91 / H92)
   culture_vectors      culture_vectors/ agentdays, vecs_<model>_<variant>.npy, dirs_<model>, blocks (H81 / H82)
+  round-3 consolidation (2026-10-04; each takes --verify):
+  search_events        search_events (H84 / H56 history-search rows: answer repo ids + NE40 answer features; raw pass)
+  channel_pointers     channel_pointers/ events (H70 scramble events + H87 pointers), repo_ids, search_calls (H84)
   libraries (lib: no build step; `--verify` runs their self-checks / reproductions): hazard_fe, semantic_kappa,
   kickoff_naming, idea_markers, idea_ledger, replicator_hosts, replicator_fit, replicator_sim, read_response,
+  rooms_asof (H100 / H102 room of each statement), relabel (H100 joint two-period room relabel),
   ep_newton (Newton-step EP estimators, legacy + corrected; 2026-10-04)
 Tests (--tests): infra/shared/tests/test_*.py
 
@@ -197,6 +201,15 @@ STEPS = [
               "period_units"],
      "outputs": ["culture_vectors/agentdays.parquet", "culture_vectors/blocks.parquet",
                  "culture_vectors/dirs_bge_small.npz", "culture_vectors/dirs_gte_modernbert.npz"]},
+    # round-3 consolidation (2026-10-04)
+    {"name": "search_events", "cmd": "py", "script": "search_events.py",
+     "deps": ["scan_tables", "build_derived", "build_artifacts", "work_ledger"],
+     "outputs": ["search_events.parquet"]},
+    {"name": "channel_pointers", "cmd": "py", "script": "channel_pointers.py",
+     "deps": ["search_events", "scan_tables", "build_derived", "build_artifacts", "work_ledger", "period_units",
+              "context_ledger"],
+     "outputs": ["channel_pointers/events.parquet", "channel_pointers/repo_ids.parquet",
+                 "channel_pointers/search_calls.parquet"]},
     # libraries: nothing to build; registered so that --verify runs their checks and --list shows their deps
     {"name": "hazard_fe", "cmd": "py", "script": "hazard_fe.py", "lib": True, "deps": [], "outputs": []},
     {"name": "semantic_kappa", "cmd": "py", "script": "semantic_kappa.py", "lib": True, "deps": [], "outputs": []},
@@ -215,6 +228,9 @@ STEPS = [
      "deps": ["replicator_hosts", "replicator_fit"], "outputs": []},
     {"name": "read_response", "cmd": "py", "script": "read_response.py", "lib": True,
      "deps": ["build_agent_vectors", "build_embeddings_v2", "style_resid", "goal_fields"], "outputs": []},
+    {"name": "rooms_asof", "cmd": "py", "script": "rooms_asof.py", "lib": True,
+     "deps": ["build_derived", "build_agent_vectors"], "outputs": []},
+    {"name": "relabel", "cmd": "py", "script": "relabel.py", "lib": True, "deps": [], "outputs": []},
     {"name": "ep_newton", "cmd": "py", "script": "ep_newton.py", "lib": True, "deps": [], "outputs": []},
     {"name": "null_sizes", "cmd": "py", "script": "nulls.py", "args": ["--calibrate", "--reps", "100", "--surr", "49", "--workers", "2"],
      "expensive": True, "outputs": ["null_sizes.parquet"]},
