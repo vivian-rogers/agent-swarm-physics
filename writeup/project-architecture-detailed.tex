@@ -1,10 +1,13 @@
-% Project architecture diagram. Build: pdflatex project-architecture.tex
+% Project architecture diagram (poster size). Build: pdflatex project-architecture-detailed.tex
+% Page 1: architecture. Page 2: how credence and faithfulness are scored (figures/scoring.tikz).
 \documentclass{article}
-\usepackage[paperwidth=34cm,paperheight=21.5cm,margin=0.6cm]{geometry}
+\usepackage[paperwidth=34cm,paperheight=22.2cm,margin=0.6cm]{geometry}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{amssymb}
 \pagestyle{empty}
 
 \definecolor{cin}{HTML}{3f6fb5}    % inputs
@@ -12,12 +15,12 @@
 \definecolor{chyp}{HTML}{c2662d}   % ideas -> hypotheses
 \definecolor{cout}{HTML}{6b6b6b}   % outputs
 \definecolor{cgov}{HTML}{8c7a5a}   % governance
+\definecolor{chum}{HTML}{8a4f9e}   % Vivian / human decisions
 
 \tikzset{
   box/.style={draw=#1, fill=#1!8, rounded corners=3pt, line width=0.7pt, align=left,
               inner sep=5pt, font=\footnotesize, anchor=north west},
   plan/.style={box=#1, dashed, fill=white},
-  ttl/.style={font=\bfseries\small},
   col/.style={font=\bfseries\large, text=#1, anchor=south west},
   arr/.style={-{Stealth[length=2.6mm]}, line width=0.8pt, draw=black!60},
   lab/.style={font=\scriptsize\itshape, text=black!70, fill=white, inner sep=1.5pt},
@@ -31,180 +34,202 @@
 % ---------------- title
 \node[anchor=north west, font=\bfseries\LARGE] at (0,20.2) {Agent-swarm physics: how the project is architected};
 \node[anchor=north west, font=\normalsize, text=black!70] at (0,19.35)
-  {Vivian Rogers, with Claude Opus 5.5 \quad·\quad state as of 2026-10-03 \quad·\quad solid = exists; dashed = planned or empty \quad·\quad repo: \pth{agenttesting/}};
+  {Vivian Rogers, with Claude Opus 5.5 \quad·\quad state as of 2026-10-04 \quad·\quad solid = exists; dashed = planned \quad·\quad repo: \pth{agenttesting/} \quad·\quad page 2: how claims are scored};
 
-% ---------------- column headers
-\node[col=cin]    at (0,18.0)   {1 · Inputs};
-\node[col=cfound] at (7.0,18.0) {2 · Shared foundations};
-\node[col=chyp]   at (16.6,18.0){3 · Ideas $\rightarrow$ hypotheses};
-\node[col=cout]   at (27.9,18.0){4 · Outputs};
+% ---------------- column headers   (x: inputs 0, foundations 6.75, ideas 16.25, outputs 27.35; bus at 15.88)
+\node[col=cin]    at (0,18.0)     {1 · Inputs};
+\node[col=cfound] at (6.75,18.0)  {2 · Shared foundations};
+\node[col=chyp]   at (16.25,18.0) {3 · Ideas $\rightarrow$ hypotheses $\rightarrow$ scores};
+\node[col=cout]   at (27.35,18.0) {4 · Outputs};
 
 % ================= 1. INPUTS
-\node[box=cin, text width=5.6cm] (raw) at (0,17.7) {%
+\node[box=cin, text width=5.8cm] (raw) at (0,17.7) {%
   {\bfseries\small \pth{data/raw/ai-village/}}\\[2pt]
-  AI Village export (AI Digest, Hugging Face)\\
-  revision \pth{838b415} (exported 2026-09-20)\\
-  13 tables + transcript, 5.4\,GB: events,\\
-  chat, sessions, 2.5M computer-use turns,\\
-  memories, goals, roster, rooms, summaries\\
-  docs: README, SCHEMA, \textbf{CHANGELOG}\\
-  \pth{\_source.md}: revision, research terms\\
-  \emph{gated data: never committed}};
+  AI Village export (AI Digest), rev.\ \pth{838b415}
+  13 tables + transcript, 5.4\,GB: events, chat,
+  2.5M computer-use turns, memories, goals, rooms
+  \textbf{CHANGELOG}: scaffold steps $\Rightarrow$ 3 regimes
+  + agents' public repos (1.4\,GB)
+  \emph{gated: never committed, never trained on}};
 
-\node[plan=cin, text width=5.6cm] (shots) at (0,12.55) {%
-  {\bfseries\small screenshots (171\,GB)}\\
-  not pulled; OCR later, only on request};
-
-\node[plan=cin, text width=5.6cm] (prompts) at (0,11.05) {%
-  {\bfseries\small exact prompts (\pth{llm\_calls})}\\
-  not in the export; request from AI Digest\\
-  eventually (unlocks replay, Tier R)};
-
-\node[box=cin, text width=5.6cm] (lit) at (0,9.25) {%
+\node[box=cin, text width=5.8cm] (lit) at (0,14.0) {%
   {\bfseries\small \pth{literature/}}\\[2pt]
-  8 papers (PDFs untracked) + one notes file each\\
-  Kolchinsky lineage: semantic information,\\
-  replicators, entropy-production inference\\
-  + \emph{Physics of Agents} (arXiv:2608.16578, unread)\\
-  \pth{README.md}: index and cross-cutting themes};
+  29 papers, one notes file each: Kolchinsky
+  lineage (semantic information, EP inference,
+  selection), information dynamics, Ising,
+  Hawkes, cultural evolution};
 
-\node[box=cin, text width=5.6cm] (conv) at (0,5.6) {%
-  {\bfseries\small conversation notes}\\
-  pasted background, e.g. the Kolchinsky Q\&A\\
-  (filed inside the hypothesis it informs)};
+\node[box=cin, text width=5.8cm] (jev) at (0,11.4) {%
+  {\bfseries\small LLM labeller (Jev, OpenRouter)}\\[2pt]
+  zero-shot labels, each validated against a blind
+  reference before any full run: behavior states
+  v3.1 ($\kappa$ 0.60), reply threads, stance v2.1
+  (disagree precision 0.67)};
+
+\node[box=chum, text width=5.8cm] (viv) at (0,8.75) {%
+  {\bfseries\small Vivian (PI)}\\[2pt]
+  vets ideas in the dashboard (67 vetted: 52
+  approved, 13 later, 2 declined); signs off holdout
+  use and re-freezes; sets goals, standards, budgets};
+
+\node[plan=cin, text width=5.8cm] (shots) at (0,6.35) {%
+  {\bfseries\small not used yet}\\
+  screenshots (171\,GB; OCR only on request);
+  exact prompts (\pth{llm\_calls}); GPU nodes};
 
 % ================= 2. SHARED FOUNDATIONS
-\node[box=cfound, text width=8.4cm] (infra) at (7.0,17.7) {%
-  {\bfseries\small \pth{infra/ai\_village\_overview/}} \quad shared processing code\\[2pt]
-  \pth{scan\_turns.py}: action-type counts \quad \pth{figures.py}: figures, goal table\\
-  \pth{overview.tex} \quad \pth{build.sh}};
+\node[box=cfound, text width=8.4cm] (infra) at (6.75,17.7) {%
+  {\bfseries\small \pth{infra/shared/}} \quad 64 modules, one build graph\\[2pt]
+  \pth{build\_all.py --verify}: each shared step reproduces its\\
+  source hypothesis exactly; guarded \pth{--include-holdout}\\
+  \pth{data-quality/}: DQ1--DQ10 (context ledger, embeddings,\\
+  behavior states, reply threads, stance, null sizes, ground truth)};
 
-\node[box=cfound, text width=8.4cm] (proc) at (7.0,15.75) {%
-  {\bfseries\small \pth{data/processed/ai-village/}} \quad derived, rebuildable\\[2pt]
-  \pth{turns\_stats.json} · \pth{event\_type\_counts.json} · \pth{\_provenance.json}\\
-  \textbf{\pth{ai-village-overview.pdf}} (7 pp.): setup, platform, goals, forcing};
+\node[box=cfound, text width=8.4cm] (proc) at (6.75,15.2) {%
+  {\bfseries\small \pth{data/processed/shared/}} \quad rebuildable (3.9\,GB in all)\\[2pt]
+  calls \& \textbf{context ledger} (who could read what, at which call) ·\\
+  activity bins · outages · reply graph · stance v2 · behavior\\
+  states · embeddings (bge, gte) · culture vectors · event\\
+  catalog · schema diff · \textbf{per-period estimates} (18,444 rows)};
 
-\node[box=cfound, text width=8.4cm] (pm) at (7.0,13.55) {%
-  {\bfseries\small \pth{physics-models/}} \quad 11 models, one folder each\\[2pt]
-  \textbf{spin family:} 01 inverse Ising · 02 nonequilibrium Ising ·\\
-  \hspace*{1.5em}10 Potts · 11 vector spins (O($n$), embeddings)\\
-  \textbf{spreading \& transmission:} 03 contagion · 08 copying vs.\ transformation\\
-  \textbf{point processes:} 09 Hawkes\\
-  \textbf{information \& agency:} 04 semantic information\\
-  \textbf{replicators \& ecology:} 05 dissipation · 06 neutral cooperative ·\\
-  \hspace*{1.5em}07 fluctuating environments\\[3pt]
-  each: model · interesting behavior · mapping to village · fit · nulls · pitfalls\\[3pt]
-  \textbf{\pth{DEFINITIONS.md}}: shared vocabulary (agent, regime, interaction,\\
-  \hspace*{1.5em}state variants, superagent, semantic entropy, ideology, …)};
+\node[box=cfound, text width=8.4cm] (pm) at (6.75,12.6) {%
+  {\bfseries\small \pth{physics-models/}} \quad 15 models + shared vocabulary\\[2pt]
+  \textbf{spins:} 01 inverse Ising · 02 kinetic Ising · 10 Potts ·\\
+  \hspace*{1.5em}11 vector spins\\
+  \textbf{spreading:} 03 contagion · 08 copying · 09 Hawkes ·\\
+  \hspace*{1.5em}13 cultural conventions\\
+  \textbf{information:} 04 semantic information · 12 info dynamics\\
+  \textbf{replicators \& thermo:} 05 · 06 · 07 · 15 stochastic thermo\\
+  \textbf{fluctuations:} 14 scaling and Taylor laws\\[2pt]
+  each folder: model · village mapping · fit · nulls · pitfalls ·\\
+  \hspace*{1.5em}``what held up'' after round 1\\
+  \textbf{\pth{DEFINITIONS.md}}: 393 operational terms and variants};
 
-\node[box=cfound, text width=8.4cm] (gp) at (7.0,7.85) {%
-  {\bfseries\small \pth{hypotheses/hypohypotheses/goal-periods.md}} \quad (numbers from \pth{figures.py})\\[2pt]
-  all 51 goal periods: dates, N, agent-hours, regime, who wrote\\
-  the goal, coupling mode, scaffold changes inside,\\
-  \textbf{ranked physics models per week} + best weeks per model};
+\node[box=cfound, text width=8.4cm] (cat) at (6.75,7.6) {%
+  {\bfseries\small catalogs}\\[2pt]
+  \pth{goal-periods.md}: 51 periods with N, regime, mode, models\\
+  \pth{natural-experiments.md}: \textbf{NE01--NE46}, dated step\\
+  changes from the CHANGELOG and logs = our interventions};
 
-\node[box=cfound, text width=8.4cm] (ne) at (7.0,5.6) {%
-  {\bfseries\small \pth{hypotheses/natural-experiments.md}}\\[2pt]
-  NE01–NE40: dated step changes (scaffold, roster, rooms,\\
-  operators, goals) as \textbf{quasi-interventions}; channel cuts\\
-  read as natural scrambles; ITS / DiD / ABA / dose designs};
+\node[box=cfound, draw=red!55!black, fill=red!4, text width=8.4cm] (hold) at (6.75,5.55) {%
+  {\bfseries\small locked holdout} \quad \pth{holdout.md} + \pth{holdout\_ledger.json}\\[2pt]
+  periods and NE windows reserved since 2026-10-03; masked in\\
+  every exploratory script; 46 ledger items (uses, disclosures);\\
+  held-out labels stored apart, unexamined until confirmation};
 
-% ================= 3. IDEAS -> HYPOTHESES
-\node[box=chyp, text width=9.4cm] (hh) at (16.6,17.7) {%
-  {\bfseries\small \pth{hypotheses/hypohypotheses/HYPOHYPOTHESES.md}}\\[2pt]
-  loose ideas HH01–HH46, no rigor required; each tagged with\\
-  its most faithful \textbf{models} and candidate \textbf{goal periods / NEs};\\
-  includes 25 ``model X explains period Y'' claims};
+% ================= 3. IDEAS -> HYPOTHESES -> SCORES
+\node[box=chyp, text width=10.15cm] (hh) at (16.25,17.7) {%
+  {\bfseries\small \pth{HYPOHYPOTHESES.md}} \quad HH001--HH375, append-only\\[2pt]
+  loose ideas tagged by model, period and the four impostors; batches\\
+  go to the dashboard vetting strip; approved ones get an H number};
 
-\node[box=chyp, text width=9.4cm] (tmpl) at (16.6,15.55) {%
-  {\bfseries\small \pth{hypotheses/\_template/}} \quad the hypothesis card\\[2pt]
-  question · model (from \pth{physics-models/}) · data scheme ·\\
-  observables · null · \textbf{prediction written before data} · results};
+\node[box=chyp, text width=10.15cm] (card) at (16.25,15.75) {%
+  {\bfseries\small \pth{hypotheses/H01--H132/}} \quad one research direction each\\[2pt]
+  \textbf{card:} question (Q1--Q7) · model · data scheme · null ·\\
+  \hspace*{1.5em}impostor table · \textbf{dated predictions and kill rules, before data}\\
+  \textbf{round 1:} synthetic run on the real skeleton $\rightarrow$ dated amendments\\
+  \hspace*{1.5em}$\rightarrow$ two layers: replication + period-native tests (NEs)\\
+  \textbf{2,805 period folders} (G\textit{NN} / NE\textit{NN}), each with verdict and role\\
+  \textbf{\pth{confirm.py}}: frozen by hash, guarded, dry-run only\\
+  2-page RevTeX summary · estimates rows · ``claim that stands''};
 
-\node[box=chyp, text width=9.4cm, minimum height=9.15cm] (h01) at (16.6,13.4) {%
-  {\bfseries\normalsize H01 · Emergent superagents exist} \quad (status: idea)\\[1pt]
-  \pth{README.md} card · \pth{architecture.md} · \pth{subhypotheses.md} · \pth{notes/}};
+\node[box=chyp, text width=10.15cm] (stat) at (16.25,11.75) {%
+  {\bfseries\small status}\\[2pt]
+  round 1 done for 110+ hypotheses; round 2 for H01--H39, H81, H99;\\
+  newest batches H106--H132 (magnet, kinetic Ising) running;\\
+  holdout runs so far: H02, H04, H05; the rest await sign-off};
 
-% inner content of H01
-\node[box=chyp, fill=white, text width=4.15cm, font=\scriptsize] (dirs) at (16.85,12.25) {%
-  {\bfseries\footnotesize 10 directions (D1–D10)}\\[1pt]
-  D1 identification\\
-  D2 viability (what ``alive'' is)\\
-  D3 ideology as ordered phase\\
-  D4 load-bearing information\\
-  D5 identity through turnover\\
-  D6 response to forcing\\
-  D7 formation \& dissolution\\
-  D8 ecology of superagents\\
-  D9 hierarchy \& scale\\
-  D10 structural thermodynamics\\[2pt]
-  $\sim$70 sub-sub-hypotheses,\\ rivals marked $\leftrightarrow$};
+\node[box=chyp, text width=10.15cm] (score) at (16.25,9.8) {%
+  {\bfseries\small scoring v2} \quad (page 2) \quad \pth{summary/meta.json}\\[2pt]
+  credence: base rate $\times$ evidence factors, capped at 0.95 ·\\
+  coordinator + blind rater, log-odds mean · adjudication rules 1--9 ·\\
+  value $V$, $\mathrm{EU}=p\,V$, mechanism M0--M2, fragile flag ·\\
+  faithfulness scorecard A--I (0/1/2) and promotion levels\\
+  \textbf{112 claims scored}; 92 multi-rater; median credence 0.66};
 
-\node[box=chyp, fill=white, text width=4.3cm, font=\scriptsize] (tiers) at (21.4,12.25) {%
-  {\bfseries\footnotesize Tiers of causal access}\\[1pt]
-  \textbf{0} observational (bounds,\\ \hspace*{1em}candidates, order parameter)\\
-  \textbf{NE} natural experiments\\ \hspace*{1em}(replaces simulation)\\
-  \textbf{R} replay of logged agents\\ \hspace*{1em}(needs exact prompts)\\[2pt]
-  {\bfseries\footnotesize Lenses}\\
-  Kolchinsky--Wolpert semantic\\ information (model 04);\\
-  semantic entropy as the\\ ideology order parameter};
+\node[box=chyp, text width=10.15cm] (agents) at (16.25,7.15) {%
+  {\bfseries\small how the work runs}\\[2pt]
+  one coordinator session + up to 20 parallel agents (one or two\\
+  hypotheses each); agents never edit shared files; the coordinator\\
+  integrates each report: score, constants, issues, ledger, LOG, commit};
 
-\node[plan=chyp, text width=8.95cm, font=\scriptsize] (h01s) at (16.85,6.3) {%
-  \pth{scheme/} $\rightarrow$ \pth{data/processed/H01-…/} \quad\pth{analysis/}\quad\pth{figures/} \hfill (empty until chosen)};
-
-\node[plan=chyp, text width=9.4cm] (hnext) at (16.6,3.95) {%
-  {\bfseries\small H02, H03, …} \quad future hypotheses, graduated from the ideas file};
+\node[plan=chyp, text width=10.15cm] (next) at (16.25,4.95) {%
+  {\bfseries\small next} \quad first confirmatory holdout runs (H08, H40 on NE20,\\
+  H67, H111) after Vivian's sign-off; round 2 for the strongest leads};
 
 % ================= 4. OUTPUTS
-\node[plan=cout, text width=4.4cm] (interp) at (27.9,13.4) {%
+\node[box=cout, text width=5.05cm] (interp) at (27.35,17.7) {%
   {\bfseries\small \pth{interpretation/}}\\[2pt]
-  cross-hypothesis synthesis:\\ what results mean together};
+  \pth{swarm-constants.json}: 71\\
+  \hspace*{1em}constants with scope, source\\
+  \pth{lever-table.md}: operator levers\\
+  phase diagram: N $\times$ regime, $g_{\rm lag}$};
 
-\node[box=cout, text width=4.4cm] (wu) at (27.9,9.25) {%
-  {\bfseries\small \pth{writeup/}}\\[2pt]
-  \pth{paper.tex}: RevTeX write-up\\ \hspace*{1em}(in progress)\\
-  \pth{project-architecture.pdf} (1-column\\ \hspace*{1em}flowchart; this is the detailed one)};
+\node[box=cout, text width=5.05cm] (wu) at (27.35,14.9) {%
+  {\bfseries\small \pth{writeup/}} (RevTeX)\\[2pt]
+  \pth{paper.tex} · compendium (2 pp.\\
+  \hspace*{1em}per hypothesis) · syntheses ·\\
+  operator guide (47 instructions)\\
+  \pth{visuals/}: figures + animations};
+
+\node[box=cout, text width=5.05cm] (dash) at (27.35,12.05) {%
+  {\bfseries\small \pth{dashboard/}} (local)\\[2pt]
+  model $\times$ hypothesis matrix,\\
+  \hspace*{1em}sortable by credence and EU\\
+  phase diagram · constants ·\\
+  HH vetting strip};
+
+\node[box=cout, text width=5.05cm] (ov) at (27.35,9.25) {%
+  {\bfseries\small \pth{OVERVIEW.md}}\\[2pt]
+  generated hypothesis $\times$ period\\
+  verdict table (never hand-edited)};
+
+\node[box=cout, text width=5.05cm] (goals) at (27.35,7.15) {%
+  {\bfseries\small answers to Q1--Q7} (\pth{GOALS.md})\\[2pt]
+  coupling = reading at the next call;\\
+  fields beat coupling; subcritical;\\
+  one collective slow mode (open)};
 
 % ================= governance band
-\node[box=cgov, text width=31.6cm, font=\footnotesize] (gov) at (0,1.75) {%
+\node[box=cgov, text width=32.0cm, font=\footnotesize] (gov) at (0,2.65) {%
   {\bfseries\small Runs through everything:}\quad
-  \textbf{\pth{CLAUDE.md}} project map \& conventions \quad·\quad
-  \textbf{\pth{LOG.md}} dated lab notebook \quad·\quad
-  \textbf{git} (data and PDFs ignored) \quad·\quad
-  \textbf{\pth{\_provenance.json}} on every processed folder \quad·\quad
-  \textbf{regimes} from the CHANGELOG in every over-time analysis \quad·\quad
-  \textbf{predictions before data} \quad·\quad
-  no heavy processing unless asked};
+  \textbf{\pth{CLAUDE.md}} map \& conventions ·
+  \textbf{\pth{GOALS.md}} Q1--Q7 ·
+  \textbf{\pth{STANDARDS.md}} four impostors (scheduler field, exogenous field, shared priors, contemporaneous convergence), partition contrasts, two layers ·
+  \textbf{\pth{LOG.md}} lab notebook ·
+  \textbf{\pth{\_provenance.json}} on every processed folder ·
+  \textbf{predictions before data} ·
+  \textbf{one goal period = one unit} (compare fitted parameters, never pool) ·
+  compute $\le$ 2 workers per agent · storage $\le$ 20\,GB · data terms (no text in commits; cite AI Digest)};
 
-% ================= arrows (routed through the gaps between columns)
-% raw -> infra
-\draw[arr] (raw.east |- infra.west) -- node[lab, above]{read} (infra.west);
-% raw -> goal periods and natural experiments, via a bus at x = 6.55
-\draw[line width=0.8pt, draw=black!60] ($(raw.east)+(0,-1.6)$) -- (6.55,{15.95-1.6}) -- (6.55,4.3);
-\draw[arr] (6.55,7.0) -- (gp.west |- 0,7.0);
-\draw[arr] (6.55,4.3) -- (ne.west |- 0,4.3);
-\node[lab, rotate=90] at (6.55,10.6) {CHANGELOG, roster, goals};
-% infra -> processed
-\draw[arr] ($(infra.south)+(-2,0)$) -- node[lab, right]{build} ($(proc.north)+(-2,0)$);
-% literature -> models
-\draw[arr] (lit.north east) -- node[lab, above left, pos=0.4]{models 04--07} ($(pm.south west)+(0,0.25)$);
-% models -> goal periods
-\draw[arr] (pm.south) -- node[lab, right]{ranked models} (gp.north);
-% models -> ideas (tags), via x = 16.15
-\draw[arr] (15.75,12.9) -- (16.15,12.9) -- (16.15,16.75) -- (hh.west |- 0,16.75);
-\node[lab, rotate=90] at (16.15,14.8) {tags};
-% models -> H01
-\draw[arr] (15.75,11.2) -- node[lab, above]{model} (h01.west |- 0,11.2);
-% goal periods -> H01, NEs -> H01
-\draw[arr] (gp.east |- 0,7.0) -- node[lab, above]{windows} (h01.west |- 0,7.0);
-\draw[arr] (ne.east |- 0,4.6) -- node[lab, above]{Tier NE} (h01.west |- 0,4.6);
-% ideas -> template -> H01 -> next
-\draw[arr] (hh.south) -- node[lab, right]{graduates (model + scheme + prediction)} (tmpl.north);
-\draw[arr] (tmpl.south) -- node[lab, right]{instantiated as} (h01.north);
-\draw[arr, dashed] (h01.south) -- (hnext.north);
-% H01 -> interpretation -> writeup
-\draw[arr, dashed] (h01.east |- 0,12.9) -- node[lab, above]{results} (interp.west |- 0,12.9);
-\draw[arr, dashed] (interp.south) -- (wu.north);
-
+% ================= arrows
+% inputs -> foundations
+\draw[arr] (raw.east |- infra.west) -- node[lab, above]{scan} (infra.west);
+\draw[arr] ($(infra.south)+(-2.5,0)$) -- node[lab, right]{build} ($(proc.north)+(-2.5,0)$);
+\draw[arr] (jev.east) -- ++(0.3,0) |- ($(proc.west)+(0,-0.7)$);
+\node[lab, rotate=90] at (6.45,12.1) {labels};
+\draw[arr] (lit.east) -- node[lab, above]{models} (lit.east -| pm.west);
+% foundations -> hypotheses through a bus at x = 15.88
+\draw[line width=0.8pt, draw=black!60] (proc.east) -- (15.88,15.2-1.05);
+\draw[line width=0.8pt, draw=black!60] (pm.east) -- (15.88,0 |- pm.east);
+\draw[line width=0.8pt, draw=black!60] (cat.east) -- (15.88,0 |- cat.east);
+\draw[line width=0.8pt, draw=red!55!black] (hold.east) -- (15.88,0 |- hold.east);
+\draw[line width=0.8pt, draw=black!60] (15.88,0 |- hold.east) -- (15.88,13.6);
+\draw[arr] (15.88,13.6) -- (card.west |- 0,13.6);
+\node[lab, rotate=90] at (15.88,9.3) {inputs · models · periods · NEs · holdout mask};
+% ideas chain
+\draw[arr] (hh.south) -- node[lab, right]{vetted by Vivian} (card.north);
+\draw[arr] (card.south) -- (stat.north);
+\draw[arr] (stat.south) -- (score.north);
+\draw[arr, draw=chum] (viv.east) -- ++(0.15,0) |- (6.6,18.72) -| ($(hh.north)+(-3.5,0)$);
+% hypotheses -> outputs
+\draw[arr] (card.east |- interp.west) -- node[lab, above]{constants} (interp.west);
+\draw[arr] (card.east |- wu.west) -- node[lab, above]{summaries} (wu.west);
+\draw[arr] (score.east) ++(0,0.7) -- ++(0.3,0) |- node[lab, pos=0.75, above]{scores} (dash.west);
+\draw[arr] (score.east |- ov.west) -- node[lab, above]{verdicts} (ov.west);
+\draw[arr, dashed] (next.east) -- ++(0.4,0) |- (goals.west);
 \end{tikzpicture}
+
+\newpage
+\noindent\input{figures/scoring.tikz}
 \end{document}

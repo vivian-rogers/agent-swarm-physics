@@ -1,0 +1,20 @@
+% How claims are scored: credence ladder and faithfulness scorecard (standalone).
+% Build: pdflatex credence-faithfulness.tex   (data panel: uv run python writeup/figures/make_scoring_scatter.py)
+\documentclass{article}
+\usepackage[paperwidth=34cm,paperheight=22.2cm,margin=0.6cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\pagestyle{empty}
+\definecolor{cin}{HTML}{3f6fb5}
+\definecolor{cfound}{HTML}{3a7d6b}
+\definecolor{chyp}{HTML}{c2662d}
+\definecolor{cout}{HTML}{6b6b6b}
+\definecolor{cgov}{HTML}{8c7a5a}
+\definecolor{chum}{HTML}{8a4f9e}
+\begin{document}
+\noindent\input{figures/scoring.tikz}
+\end{document}

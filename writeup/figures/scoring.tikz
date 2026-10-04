@@ -1,0 +1,133 @@
+% How claims are scored: credence ladder (scoring v2) and the faithfulness scorecard.
+% \input by project-architecture-detailed.tex (page 2) and credence-faithfulness.tex.
+% Needs: tikz (arrows.meta, positioning, calc), graphicx, amssymb; colors cin cfound chyp cout cgov chum.
+\begin{tikzpicture}[x=1cm,y=1cm]
+\tikzset{
+  sbox/.style={draw=#1, fill=#1!7, rounded corners=3pt, line width=0.7pt, align=left,
+               inner sep=5pt, font=\footnotesize, anchor=north west},
+  chip/.style={draw=#1, fill=#1!15, rounded corners=2pt, font=\footnotesize, inner sep=3pt, align=center},
+  tag/.style={circle, draw=cfound, fill=cfound!15, font=\scriptsize\bfseries, inner sep=1.2pt, minimum size=4.2mm},
+  sarr/.style={-{Stealth[length=2.4mm]}, line width=0.8pt, draw=black!55},
+  slab/.style={font=\scriptsize\itshape, text=black!70, fill=white, inner sep=1.2pt},
+  hd/.style={font=\bfseries\large, text=#1, anchor=south west},
+}
+\newcommand{\dotz}{\tikz[baseline=-0.6ex]{\draw[black!40] (0,0) circle (0.9mm);}}
+\newcommand{\doto}{\tikz[baseline=-0.6ex]{\draw[cfound] (0,0) circle (0.9mm); \fill[cfound] (0,0) -- (90:0.9mm) arc (90:270:0.9mm) -- cycle;}}
+\newcommand{\dott}{\tikz[baseline=-0.6ex]{\fill[cfound] (0,0) circle (0.9mm);}}
+
+% ---------------- title
+\node[anchor=north west, font=\bfseries\LARGE] at (0,20.2) {How a claim is scored: credence and faithfulness};
+\node[anchor=north west, font=\normalsize, text=black!70] at (0,19.35)
+  {\textbf{Credence}: will this claim survive an independent confirmatory test? \quad \textbf{Faithfulness}: does the model capture the mechanism, not just the statistics? \quad Green letters link each factor to an axis.};
+\node[anchor=south west, font=\scriptsize, text=black!55, text width=15.2cm] at (0,0.1) {Rules: \texttt{writeup/hypothesis-pages/RUBRIC.md} (scoring v2, adjudication rules 1--9) · \texttt{STANDARDS.md} (impostors, two layers) · \texttt{paper.tex} §Assessing model faithfulness. State as of 2026-10-04.};
+
+\node[hd=chyp]   at (0,18.0)    {(a) Credence ladder (scoring v2, one per hypothesis)};
+\node[hd=cfound] at (16.6,18.0) {(b) Faithfulness scorecard (per model, mapping and window)};
+
+% ================= (a) CREDENCE
+\node[sbox=chyp, text width=15.2cm] (a1) at (0,17.7) {%
+  {\bfseries\small 1 · What is scored} \quad one clause: the card's \textbf{``claim that stands''}, with its scope (periods, units, effect size).\\
+  Withdrawn, post hoc or unpowered sub-results are named exclusions. A negative claim states the effect size\\
+  at which its power reaches 0.8 and is scoped to it; below that it is ``inconclusive''.};
+
+\node[sbox=chyp, text width=15.2cm] (a2) at (0,15.95) {%
+  {\bfseries\small 2 · Base rate $p_0$ from provenance}\\[3pt]
+  \tikz[baseline]{\node[chip=chyp]{\textbf{0.40} pre-registered primary\\[-1pt]\scriptsize prediction and estimator fixed before data};}\;
+  \tikz[baseline]{\node[chip=chyp]{\textbf{0.30} secondary\\[-1pt]\scriptsize estimator redesigned after data};}\;
+  \tikz[baseline]{\node[chip=chyp]{\textbf{0.20} post hoc\\[-1pt]\scriptsize claim found in the data};}};
+
+\node[sbox=chyp, text width=15.2cm] (a3) at (0,14.1) {%
+  {\bfseries\small 3 · Multiply the odds $p/(1-p)$ by each factor that applies} \quad (one design is credited once)\\[3pt]
+  \renewcommand{\arraystretch}{1.12}%
+  \begin{tabular}{@{}l@{\hspace{5pt}}p{8.7cm}@{\hspace{4pt}}l@{}}
+  \tikz[baseline=-0.6ex]\node[tag]{C}; & calibrated null passed (DQ8 sizes or own synthetic) & $\times 2$ \quad (mis-sized $\times 0.7$)\\
+  \tikz[baseline=-0.6ex]\node[tag]{I}; & replication: same sign in $\ge 2/3$ of $\ge 6$ independent units & $\times 2$ \quad (one unit $\times 0.6$)\\
+  \tikz[baseline=-0.6ex]\node[tag]{B}; & robust to data versions, embedding models, estimators & $\times 2$ \quad (changed by a fix $\times 0.3$)\\
+  \tikz[baseline=-0.6ex]\node[tag]{F}; & identified: synthetic recovery at the real counts & $\times 1.5$ \quad (not identifiable $\times 0.5$)\\
+  \tikz[baseline=-0.6ex]\node[tag]{E}; & consistent with a natural experiment (intervention) & $\times 2$\\
+  \tikz[baseline=-0.6ex]\node[tag]{H}; & rival model beaten on held-out data & $\times 1.5$\\
+  \tikz[baseline=-0.6ex]\node[tag]{G}; & ground truth agrees (DQ6 roles, rooms, scheduler) & $\times 1.5$\\
+  \tikz[baseline=-0.6ex]\node[tag, draw=red!55!black, fill=red!10]{I}; & \textbf{locked holdout} passed / failed & $\times 5$ \;/\; $\times 0.15$\\
+  & penalties: unvalidated LLM labels, problem inputs, multiplicity & $\times 0.5$--$0.8$ each
+  \end{tabular}};
+
+\node[sbox=chyp, text width=15.2cm] (a4) at (0,8.5) {%
+  {\bfseries\small 4 · Credence} \quad $p = \mathrm{odds}/(1+\mathrm{odds})$, \textbf{capped at 0.95} before a holdout run (0.98 after)};
+
+\node[sbox=chum, text width=7.35cm] (a5) at (0,7.6) {%
+  {\bfseries\small 5 · Two raters}\\[2pt]
+  coordinator + a \textbf{blind} rater (never sees\\
+  the other score) $\rightarrow$ log-odds mean.\\
+  $|\Delta p| > 0.25$ or $|\Delta V| > 1$ $\rightarrow$ adjudication\\
+  under rules 1--9 (score one clause; scope\\
+  negatives by power; same-data agreement\\
+  is robustness, not replication; \dots)};
+
+\node[sbox=chyp, text width=7.35cm] (a6) at (7.85,7.6) {%
+  {\bfseries\small 6 · Use and depth}\\[2pt]
+  value if true $V$ (0--5): the decision it changes,\\
+  magnitude in that decision's units, generality\\
+  $\mathrm{EU} = p\,V$ \quad (dashboard sorts by this)\\
+  \textbf{M0} pattern · \textbf{M1} signature + rival rejected ·\\
+  \textbf{M2} intervention + rival + synthetic\\
+  \textbf{fragile}: headline moved across versions};
+
+% worked example
+\node[sbox=cout, text width=15.2cm] (ex) at (0,3.95) {%
+  {\bfseries\small Worked example: H111 (talk obeys the Fano sum rule in regime III)}\\[4pt]
+  \tikz[baseline]{\node[chip=chyp, font=\scriptsize]{$p_0$\\\textbf{0.40}};}%
+  \,$\rightarrow$\,\tikz[baseline]{\node[chip=cfound, font=\scriptsize]{unfitted prediction\\from H67's $g_{\rm lag}$ $\times 2$\\[-1pt]\textbf{0.57}};}%
+  \,$\rightarrow$\,\tikz[baseline]{\node[chip=cfound, font=\scriptsize]{14/18 units\\$\times 1.5$\\[-1pt]\textbf{0.67}};}%
+  \,$\rightarrow$\,\tikz[baseline]{\node[chip=cfound, font=\scriptsize]{synthetic\\recovery $\times 1.3$\\[-1pt]\textbf{0.72}};}%
+  \,$\rightarrow$\,\tikz[baseline]{\node[chip=red!60!black, font=\scriptsize]{$g$ from the\\same data $\times 0.9$\\[-1pt]\textbf{0.70}};}%
+  \,$\rightarrow$\,\tikz[baseline]{\node[chip=red!60!black, font=\scriptsize]{NE42 native\\failed $\times 0.8$\\[-1pt]\textbf{0.65}};}%
+  \;$\Rightarrow$\;\tikz[baseline]{\node[chip=chyp, line width=1pt, font=\scriptsize]{$p = $ \textbf{0.65}\\$V = 2$, EU 1.3, M1};}};
+
+\draw[sarr] (a1.south) -- (a2.north);
+\draw[sarr] (a2.south) -- (a3.north);
+\draw[sarr] (a3.south) -- (a4.north);
+\draw[sarr] ($(a4.south)+(-3.8,0)$) -- ($(a5.north)+(0,0)$);
+\draw[sarr] ($(a4.south)+(3.8,0)$) -- ($(a6.north)+(0,0)$);
+
+% ================= (b) FAITHFULNESS
+\node[sbox=cfound, text width=15.7cm] (b0) at (16.6,17.7) {%
+  {\bfseries\small Fit is not faithfulness.} A maximum-entropy model reproduces its fitted correlations by construction.\\
+  Each axis scores \dotz\,0 not done or failed, \doto\,1 partial, \dott\,2 passed, with evidence linked from the card.};
+
+% 3 x 3 axis grid
+\def\ax#1#2#3#4#5{%
+  \node[sbox=cfound, fill=white, text width=4.85cm, minimum height=2.35cm] (#1) at (#2,#3) {%
+    \tikz[baseline=-0.6ex]\node[tag]{#1}; \;{\bfseries\small #4}\\[2pt]
+    {\scriptsize #5}};}
+\ax{A}{16.6}{16.2}{mapping}{every variable defined from dataset fields; assumptions listed; invariant across model families and regimes}
+\ax{B}{22.05}{16.2}{assumptions}{stationarity (split halves), Markov order, Hawkes time-rescaling, update-order audit; robust across data versions}
+\ax{C}{27.5}{16.2}{adequacy}{beats the null hierarchy on held-out data: the \textbf{four impostors} (scheduler field, exogenous field, priors, convergence)}
+\ax{D}{16.6}{13.65}{unfitted predictions}{reproduces statistics left out of the fit and the model's signature (a jump, $s^{-3/2}$ sizes, a sum rule)}
+\ax{E}{22.05}{13.65}{interventional}{fitted on one side of a natural experiment, predicts the sign and size on the other side, or across a reversal}
+\ax{F}{27.5}{13.65}{identifiability}{synthetic recovery with the village's real sampling; stable over bins, embedding model, split halves}
+\ax{G}{16.6}{11.1}{ground truth}{agrees with known structure: assigned roles and leaders, rooms, families, scheduler changes}
+\ax{H}{22.05}{11.1}{comparative}{beats the rival models named on the card (held-out likelihood, description length, partition contrasts)}
+\ax{I}{27.5}{11.1}{transfer}{holds in other periods of the same mode and regime, \textbf{including the locked holdout}}
+
+% promotion staircase
+\node[sbox=cfound, text width=15.7cm] (lv) at (16.6,8.45) {%
+  {\bfseries\small Promotion levels} (each step needs the one before)\\[4pt]
+  \tikz[baseline]{\node[chip=cout, text width=3.35cm]{\textbf{idea $\rightarrow$ hypothesis}\\[-1pt]\scriptsize A $\ge$ 1 + written plan for C, D and E or G, with falsifiers};}\,%
+  $\rightarrow$\,\tikz[baseline]{\node[chip=cin, text width=2.6cm]{\textbf{descriptive}\\[-1pt]\scriptsize C = 2, D $\ge$ 1};}\,%
+  $\rightarrow$\,\tikz[baseline]{\node[chip=cfound, text width=3.7cm]{\textbf{supported}\\[-1pt]\scriptsize A = 2, B $\ge$ 1, C = D = 2, F $\ge$ 1, H $\ge$ 1, E or G = 2, \emph{on the holdout}};}\,%
+  $\rightarrow$\,\tikz[baseline]{\node[chip=chyp, text width=3.2cm]{\textbf{faithful}\\[-1pt]\scriptsize supported + E = F = H = I = 2 (mechanistic)};}};
+
+% example scorecard
+\def\sq#1#2{\tikz[baseline=-0.6ex]{\node[draw=cfound, fill=cfound!#2, minimum size=5mm, inner sep=0, font=\scriptsize\bfseries]{#1};}}
+\node[sbox=cout, text width=7.3cm] (sc) at (16.6,5.75) {%
+  {\bfseries\small Example scorecard: H111}\\[4pt]
+  \sq{A}{45}\,\sq{B}{45}\,\sq{C}{45}\,\sq{D}{100}\,\sq{E}{45}\,\sq{F}{45}\,\sq{G}{45}\,\sq{H}{45}\,\sq{I}{0}\\[3pt]
+  {\scriptsize scores 1 1 1 2 1 1 1 1 0: an unfitted prediction passed (D = 2), but C needs a held-out null win and I needs the holdout. Level: \textbf{hypothesis}. Credence 0.65 says the claim is likely to hold; it does not say the model is the mechanism.}};
+
+\node[sbox=cout, text width=7.9cm, inner sep=3pt] (sc2) at (24.4,5.75) {%
+  {\bfseries\small (c) Where the scored claims sit}\\[1pt]
+  \includegraphics[width=7.3cm]{figures/scoring_scatter.pdf}};
+
+\draw[sarr] (b0.south) -- ++(0,-0.2);
+\draw[sarr] (lv.north |- G.south) -- (lv.north);
+\end{tikzpicture}
