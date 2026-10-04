@@ -341,6 +341,16 @@
    "model": "14",
    "source": "H85",
    "meaning": "More agents do not mean proportionally more talk; each message addresses more."
+  },
+  {
+   "symbol": "s_T",
+   "name": "Price transmission share of within-period culture change",
+   "value": "content 0.98 (IQR 0.95–1.00); style 0.95; conventions 0.98; migration 0.004 (style 0.044); selection ≤ 0.03",
+   "kind": "share",
+   "scope": "33 periods, both models",
+   "model": "13",
+   "source": "H89",
+   "meaning": "Culture changes because stayers change, not through turnover or differential influence; there is no persistent attractor."
   }
  ]
 }

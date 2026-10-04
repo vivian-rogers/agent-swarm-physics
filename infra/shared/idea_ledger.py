@@ -24,7 +24,7 @@ from __future__ import annotations
 import os
 
 for _v in ("POLARS_MAX_THREADS", "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "VECLIB_MAXIMUM_THREADS"):
-    os.environ.setdefault(_v, "4")
+    os.environ.setdefault(_v, "2")
 
 import datetime as dt  # noqa: E402
 import sys  # noqa: E402

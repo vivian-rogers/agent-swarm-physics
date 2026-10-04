@@ -1,0 +1,36 @@
+\hwhat{The test splits the day-to-day change of the village's mean trait into selection, transmission and migration with a Price equation. Traits are content (DQ5 vectors, style removed), style (H13's 20 features) and convention use. Fitness counts in-cone adopters from the context ledger. Over 33 non-holdout periods (245 day transitions), stayers' own change carries the content change: median transmission share 0.98 (33/33). Selection carries 0.01 and never beats its permutation null. Style moves by migration more than content in 21 of 26 periods with turnover, but its migration share is only 0.04 (max 0.29). The kickoff direction carries 0.04, so the kill does not fire. The remainder swings day to day with no attractor (persistence $C>0$ in 0/29). NE29 and NE32 pass. \#51's eleven joins do not move its net style. The holdout script is not run.}
+
+\hmodel{Cultural Price equation (model 13) with in-cone parentage. A trait $z_i(d)$ is agent $i$'s day-$d$ mean. Generations are consecutive active days. Stayers $S$, leavers $E$ and entrants $I$ define the open population. Stayer $j$ inherits $1-\lambda_j$ from itself and $\lambda_j$ from its in-cone sources. $\lambda_j$ is the share of its first uses that are in-cone adoptions. Fitness $w_i$ sums the parentage weights, $\bar w=1$. Shares $s_X$ are cross-fitted between message halves A and B (symmetrized). $C$ is the cross-fitted cosine of consecutive non-kickoff changes.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\Delta\bar z=\mathrm{Sel}+\mathrm{Trans}+\mathrm{Mig},\quad \mathrm{Sel}=\mathrm{Cov}_S(w,z),\quad \mathrm{Trans}=\mathrm{E}_S(w\,\Delta z)\\
+\mathrm{Mig}=\tfrac{1}{|A_{d'}|}\textstyle\sum_{I}(z_j-\bar z_S)-\tfrac{1}{|A_d|}\sum_{E}(z_i-\bar z_S)\\
+w_i=\textstyle\sum_{j\in S}\alpha_{ji},\quad \alpha_{jj}=1-\lambda_j\\
+s_X=\textstyle\sum_t\langle X_t^A,\Delta_t^B\rangle_{\rm sym}\big/\sum_t\langle\Delta_t^A,\Delta_t^B\rangle
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Migration share of the day-to-day change per goal period, for style (blue) and content (orange). Style sits above content in 21 of the 26 periods with any turnover. Seven periods have no turnover, so both shares are 0. (b) Persistence $C$ of the non-kickoff content change, with 95\% jackknife CIs. Independent daily topics give $-0.5$. A village attractor needs $C>0$, which no period reaches.}
+
+\htelos{For a monitor of collective culture: within a goal period, the village's mean content follows what the stayers do each day, not who is present and not who is influential. Read a content shift as a day field acting on everyone. Influential agents do not pull the mean ($|s_{\rm Sel}|\approx0.01$). Style is the roster-sensitive trait: it gets about ten times content's migration share (0.044 against 0.004). A style change on a day with a join or exit is therefore mostly composition. The split cannot tell copying from a common field at day resolution. Do not use it as evidence that agents copy each other. It is a bookkeeping identity with honest error bars. It is not a lever.}
+
+\hbottom{Content and conventions move by transmission and style partly by migration, but selection is undetectable and the remainder is day-topic swing, not a village attractor.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1a style migration $>$ content & \raggedright 21/33 ($p$ 0.08); ties excluded 21/26 & \raggedright fail (narrow)\tabularnewline
+\raggedright P1b migration largest for style & \raggedright 0/33; median $s_{\rm Mig}$ 0.044 & \raggedright fail\tabularnewline
+\raggedright P2 content: transmission $\ge0.5$ & \raggedright 33/33, both models; median 0.98 & \raggedright pass\tabularnewline
+\raggedright P3 $|s_{\rm Sel}|\le0.2$ & \raggedright 33/33 for each trait; median 0.01--0.03 & \raggedright pass\tabularnewline
+\raggedright P4 selection beyond null & \raggedright 1--3 of 33 per trait (chance 1.7) & \raggedright descr.\tabularnewline
+\raggedright P5 kill (R CI $\ni0$) & \raggedright R 0.92, CI $>0$ in 33/33; kickoff 0.04 & \raggedright not killed\tabularnewline
+\raggedright P6 attractor $C>0$ & \raggedright 0/29; median $-0.28$ & \raggedright fail\tabularnewline
+\raggedright N1 NE29 retirement & \raggedright style 0.16/0.03 vs content 0.05/0.00 & \raggedright pass\tabularnewline
+\raggedright N2 NE32 newcomers & \raggedright entry style 0.08 vs 0.02; content cos $+0.26$ & \raggedright pass\tabularnewline
+\raggedright N3 \#51 growth & \raggedright style roster share $-0.14$ [$-0.34$, $+0.05$] & \raggedright fail\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{Synthetic at real counts. (a) The noise-free migration share falls steeply with the day-field fraction $\varphi$. Dotted lines are the observed style shares. They imply $\varphi\approx0.07$ for style and $0.32$ for content. (b) Without cross-fitting, sampling noise inflates transmission by up to 0.08. Cross-fitting removes this bias.}
+
+\hcaveats{A day is a coarse generation. Presence turnover makes up most of the migration share; roster events are rare inside periods. The fitness spread is small ($\bar\lambda=0.28$), so selection in a 20--32-dimensional trait is bounded by design, and no valid test has power for it. The synthetic copy scenario gives the same shares as a pure field. The unread placebo has a median of 8 adoptions per period. Cumulative shares are not causal: with persistent fitness, selection and transmission accumulate and cancel. N2 rests on one newcomer across the merge, and the gte model does not reproduce its content cosine.}
+
+\hnext{Measure heritability directly: regress each adopter's next-day trait on its in-cone parents beyond the day mean, with unread parents as the placebo. Run the split on single axes and across goal switches with roster change.}
