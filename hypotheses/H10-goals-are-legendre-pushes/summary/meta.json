@@ -1,0 +1,13 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions, calibrated synthetic validation (3,060 replicates), Amendment 1 before real data, 3 pair tests plus 2 secondary pairs, 7 period folders, a 24-transition kickoff study, robustness variants and a scorecard. Confirmatory script written and dry-run checked, not run; no embedding-model swap; the two-state re-mapping is not started.",
+  "faithfulness": "The core unfitted prediction (free-week fluctuations predict who moves, P1) failed with the opposite sign in both regime-I pairs (robust across 11/12 variants), at pushes where the synthetic gives 95% power. The cross-transition version also failed with the opposite sign (Spearman -0.56, p = 0.015). The tilt loses to uniform translation; the variance test is untestable (non-perturbative pushes) and descriptively wrong-signed. Only the existence of a push holds. Exploratory only, so not 0.",
+  "usefulness": "A cheap, validated instrument (goal-direction projection with noise-corrected variance and an identifiability analysis) and a clear negative for operators: pre-goal fluctuation does not forecast compliance; goals act as common targets toggled collectively. Nothing yet to steer with."
+ },
+ "one_line": "Goals aren't Legendre pushes: free-week fluctuations don't predict who follows; agents converge instead",
+ "rated_by": "H10 agent (suggested)",
+ "updated": "2026-10-03"
+}

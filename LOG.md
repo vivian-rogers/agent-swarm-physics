@@ -7,6 +7,13 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **H10 (goals are Legendre pushes), round 1: FAILED.**
+  - Assigned goals push alignment by 1.4–3.1 free-week SDs, far outside linear response.
+  - Free-week fluctuations along the goal do **not** predict who moves (r −0.37, −0.69, +0.20; Stouffer p 0.89 at 95% synthetic power). Across 18 regime-I goal changes the kickoff jump *falls* with pre-period fluctuation (ρ −0.56).
+  - Variance along ĝ grows ×1.9–7.7 while transverse variance stays flat: goals act as a **quench toward a common target** that the swarm switches into together, not a tilt of the free-week landscape.
+  - Window-level content loop gains g = 0.51–0.79 (cf. H01 P9, H26).
+  - Scorecard A1 B1 C0 D0 E0 F1 G1 H0 I0. `confirm.py` (#22b→#23, #31a→#32) written, not run.
+- **Load watch:** ~18 agents running; load ~19 (10 cores). H10 reported load spikes up to ~170 earlier, likely unpinned BLAS threads; agents are now told ≤ 2 threads.
 - **Wave 2 launched in full (Vivian: spin up more agents):** H26, H33, H35, H36, H37, H39. H37 may call Jev for stance labels on reply pairs, with a **hard $2 cap** (key via `.env` loader; Jev use previously approved). About 18 agents running; each limited to ≤ 2 threads.
 - **H21 (#12 debate antiferromagnet), round 1:** **failed.**
   - #12 was a tournament of 10 debates with re-drafted teams and rotating judges; labels verified.
