@@ -1,0 +1,59 @@
+{
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic validation on real event skeletons (NE32, NE27; 100 reps x 5 worlds) with a dated pre-data amendment (IRLS fix, NE27 power); 10 non-holdout join events (replication + natives NE27, NE32), regime-I kickoff placebo; labelled post hoc checks; NE33 confirm.py frozen, guarded and dry-run. Missing: regime-III join-free placebo, kickoff-free baselines, holdout.",
+  "faithfulness": "The cross-fitted coupling model makes an unfitted, out-of-window prediction and loses to a constant shift in 6/10 events; the NE32 kill is partly a kickoff field in the baseline (post hoc). Couplings to newcomers exist, are address-gated (8/10) and are stable from day 1 in 2/3 resolved events, consistent with H67 and H83. Scorecard A1 B1 C1 D0 E1 F1 G1 H0 I0.",
+  "usefulness": "Operator rule: a join's first-day effect on incumbents is a context-dependent step, not predictable from couplings; naming carries engagement. Mostly a negative result with a design lesson (do not join on kickoff days)."
+ },
+ "one_line": "A join shifts incumbents' talk as a constant field, not as fitted newcomer couplings: the shift wins in 6/10 joins (NE32 dLL -3.7 [-6.9, -0.2] per 1,000 calls); the HH fails.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Spin addition with fitted couplings loses to a constant field shift"
+  }
+ ],
+ "rated_by": "H122 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "A batch join is not a spin addition: a constant field shift beats fitted newcomer couplings in 6 of 10 non-holdout joins (couplings win in 1); newcomers couple like incumbents, and reads that name an incumbent couple more (8/10)",
+  "scope": "10 non-holdout joins (NE32 stands in for NE33)",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.47,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic power at NE32 (1.00, size 0.04)",
+    "x": 1.5,
+    "evidence": "card §synthetic"
+   },
+   {
+    "factor": "replication across joins",
+    "x": 1.2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: kickoffs inside join windows (NE32 weakens without the kickoff day)",
+    "x": 0.75,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "expect a join to shift everyone's activity a little, not to add a coupled spin",
+  "magnitude": "small",
+  "generality": "LLM swarms with turnover",
+  "expected_usefulness": 0.47,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H122 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

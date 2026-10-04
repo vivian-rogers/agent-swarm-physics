@@ -1,0 +1,34 @@
+\hwhat{When agents join, a kinetic Ising model adds $J_{iN}s_N$ to every incumbent's field. HH363 predicts that newcomer couplings fitted on days 3--7 after a join, applied back to days 1--2, predict the incumbents' per-call talk better than a constant field shift. The test uses 10 non-holdout join events (4 in regime I, 1 in II, 5 in III), with a log-loss cross-fit on held-out days. \textbf{The HH fails.} The constant shift wins in 6 of 10 events, including NE32, the stand-in for NE33 ($\Delta LL=-3.7$ [$-6.9$, $-0.2$] nats per 1{,}000 calls; the kill fires). Couplings win in 1. Without the \#51 kickoff day in NE32's baseline, the result weakens to $-1.6$ [$-3.8$, $+0.7$] (post hoc). NE33 itself is held out and blind.}
+
+\hmodel{Kinetic Ising on the call clock (model 02). Incumbent $i$'s receiving call $c$ has talk spin $Y_{ic}$. Its field sums incumbent baselines $a_{i,\kappa}$ and the messages read at the call ($R$, ledger rule). The H18 dilution factor scales read couplings. Newcomers add a read coupling $J_N$ (MJ) or a uniform shift $\delta$ (MC). The in-flight placebo $P^N$ counts newcomer messages posted during the call: unreadable, at matched lag.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\mathrm{logit}\,P(Y_{ic}{=}1)=a_{i,\kappa}+\Big(\tfrac{\bar N_{post}}{\bar N_{pre}}\Big)^{-0.66}\!\big(\beta_m R^m_{ic}+\beta_o R^o_{ic}+\beta_P P_{ic}\big)+\gamma\!\cdot\!E_{ic}+\rho Y_{i,c-1}+\phi(k)\\
+\text{MC: }+\,\delta\qquad \text{MJ: }+\,J_N R^N_{ic}\qquad \text{MJ}_{pl}\text{: }+\,J_P P^N_{ic}\\
+\Delta LL=\langle\ell_{MC}\rangle_{d1\text{--}2}-\langle\ell_{MJ}\rangle_{d1\text{--}2}\quad(\delta,\ J\ \text{fit on days 3--7})
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/dLL_events_col.pdf}{Each row is one join event (number of newcomers in brackets), with $\Delta LL$ and its 95\% block-bootstrap CI. Values left of zero mean the constant shift predicts days 1--2 better than the fitted couplings. Six events sit left with CIs excluding zero, one sits right (Gemini 3.5 Flash, 05-20), and three include zero (all small regime-I joins).}
+
+\htelos{For an operator adding agents: the incumbents' first-day response is a uniform step whose sign depends on what else happens that week. A kickoff, a goal change or the end of a kickoff transient matters more than whom the newcomers talk to. Per newcomer message read, an incumbent's talk probability moves by about 0.009 (regime III median). A message that names the incumbent moves it more (named exceeds unnamed in 8/10 events). Practical rule: do not forecast a join's effect from couplings. If you want incumbents to engage a newcomer, have the newcomer name them. Do not schedule a join on a kickoff day if you want to measure it.}
+
+\hbottom{Fitted newcomer couplings do not predict incumbents' first two days after a join better than a constant field shift (6/10 events favour the shift; NE32 $\Delta LL=-3.7$ [$-6.9$, $-0.2$]); the HH fails.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S1--S4 synthetic (NE32) & power 1.00, kill power 1.00, size 0.04; NE27 power 0.47--0.64 & pass (NE32)\\
+P1 NE32 MJ beats MC (kill) & $-3.68$ [$-6.92$, $-0.25$]; post hoc w/o kickoff $-1.6$ [$-3.8$, 0.7] & failed\\
+P2 NE27: $J_N\approx0$, step = kickoff & $J_N$ 0.10 [$-0.03$, 0.23]; step inside 12-kickoff range & supported\\
+P3 fast step $J(1\text{--}2)/J(3\text{--}7)\in[0.5,2]$ & 1.82, 0.85, 0.29 (3 resolved) & mixed\\
+P4 read beats in-flight (where MJ wins) & +0.03 [$-0.13$, 0.20] (1 event) & weak\\
+P5 dilution helps & 4/10 events & failed\\
+P6 newcomers couple like incumbents & NE32 $-0.36$ [$-1.02$, 0.32] & supported\\
+P7 MJ wins in $\ge$1/2 of regime III & MJ 1/5, MC 4/5 & failed\\
+NE33 (confirmation only) & not run; frozen \texttt{confirm.py} & pending\\
+\end{tabular}}
+
+\hobsb{../figures/J_stability_col.pdf}{Newcomer read coupling fitted on days 3--7 against the same coupling fitted on days 1--2, per event (95\% CIs). Points near the dashed diagonal couple the same from day 1. Couplings exist in some events but are small and change sign across events, so they cannot carry the day-1--2 response.}
+
+\hcaveats{Kickoff fields sit inside several windows (NE27 day 1, two single joins on day 1, NE32's baseline). The constant-shift model absorbs them, so this design cannot separate a join field from a kickoff field. Single joins give 22--447 day-1--2 calls with a newcomer read. NE27 is underpowered and its kill is anti-conservative (size 0.12). The logistic model is linear in clipped read counts. The dilution exponent is H18's, not refitted.}
+
+\hnext{Run join-free pseudo-joins in regime III to size the calendar drift of $\delta$. Rebuild baselines without kickoff days. Fit a saturating read response. Run NE33 on the holdout with the frozen script.}

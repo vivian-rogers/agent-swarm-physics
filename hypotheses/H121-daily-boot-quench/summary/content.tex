@@ -1,0 +1,34 @@
+\hwhat{Every active day, each agent restarts from off. HH361 treats this daily boot as one quench, repeated on every day. It predicts that the collective talk share relaxes as one exponential on the call clock, with $\tau=\tau_0/(1-g_{lag})$ from H67's read-out gain. The test uses 3{,}135 boot replicas in 67 non-holdout units (34 periods). In regimes I and II the first call of the day talks with probability 0.49 against a steady state of 0.12, and the excess is gone by the next call ($\tau_{boot}\approx1$ call, as predicted). In regime III the pooled slowing ratio is $K_{boot}=22$ [6.9, 71], so \textbf{the kill fires}. There the curve is a weak first-call spike plus a slow talk excess that lasts hours. Collapse across days and the late-booter contrast are untestable. The holdout is not run.}
+
+\hmodel{Mean-field Glauber on the call clock (model 02). Agent $i$'s $k$-th receiving call of a day has talk spin $Y_{ik}$; $k=0$ is its boot. $m(k)$ is the mean over agent-days. $\rho_{self}$ is an agent's lag-1 talk autocorrelation across consecutive steady-state calls. $\tau_0$ is its relaxation time, floored at one call (one heat-bath update). $g_{lag}$ is H67's read-out loop gain, used unfitted. The rival is a slow start-up field.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+m(k)=m_\infty+A\,e^{-k/\tau_{boot}},\qquad \tau_{pred}=\frac{\max(1,\,-1/\ln\rho_{self})}{1-g_{lag}},\qquad K_{boot}=\frac{\tau_{boot}}{\tau_{pred}}\\
+\text{post hoc: } e(k)=m(k)-\overline{m}_{20\text{--}60},\quad \tau_{fast}=-1/\ln[e(1)/e(0)]
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/boot_excess_col.pdf}{Left: talk excess over the call-20--60 plateau, divided by its first-call value, pooled per regime. Dashed lines are the Glauber prediction $e^{-k/\tau_{pred}}$. Regimes I--II drop within one call. Regime III decays over about two calls, then keeps a tail. Right: talk rate over the steady state. Regime III stays 10--25\% above it for hundreds of calls (regime I/II first-call values, +3 and +7, are off scale).}
+
+\htelos{For an operator, the daily restart costs one call of extra chatter in chat-mode scaffolds. In the computer-use scaffold it adds a 10--20\% talk excess that fades over hours. Neither depends measurably on coupling. The coupling moves $\tau_{pred}$ by at most $\times1.4$ ($g_{lag}\le0.29$), and the single-agent memory sits at the one-call floor in 58 of 67 units. So the boot is not a usable probe of $g_{lag}$. Treat it as a scheduler field and trim it: drop the first call of each agent-day (regimes I--II), and in regime III treat the first hours as non-stationary. This is a measurement hygiene rule, not a lever.}
+
+\hbottom{The daily boot is a one-call talk spike plus, in regime III, a slow day-scale talk excess; the HH's single-exponential relation $\tau=\tau_0/(1-g_{lag})$ fails in regime III ($K_{boot}=22$ [6.9, 71]).}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S1--S4 synthetic (real call grids) & bias $\le$19\%; $\rho_{self}$ bias $-0.03$; collapse stat.\ replaced (A1) & 2/4 pass\\
+P1 regime-III $K_{boot}\in[0.5,2]$ (kill) & 22 [6.9, 71]; 37\% of units in band & failed\\
+P1$'$ $K_{boot}>2$ in $\ge2/3$ of units & I 35\%, II 0\%, III 63\% & failed\\
+P2 one exponential (CV) & 95--100\% pass; test unpowered & uninformative\\
+P3 collapse across days (kill) & 10/175 and 0/93 days resolved & untestable\\
+P4 late booters $\tau_{late}\le\tau_{sync}$ & 5 / 0 / 19 late agent-days & untestable\\
+P5 regime III vs I differs & ratio 48 (post hoc fast part 4.4) & supported\\
+P6 phase slope & power 0.05 & not reported\\
+Post hoc fast part & $K_{fast}$ 0.51 [0.39, 0.63] (I), 2.0 [0.8, 23] (III) & post hoc\\
+Natives NE14, NE43, NE42 & registered fits at bounds & mixed $\times3$\\
+\end{tabular}}
+
+\hobsb{../figures/K_vs_glag_col.pdf}{Registered slowing ratio per unit against H67's $g_{lag}$. The grey band is the kill band. Regime-I and II units cluster near $K=1$ or below (spike-only fits), but some lock onto slow drifts ($K\sim10^3$). Regime-III units spread over four decades: the single exponential picks the spike or the tail.}
+
+\hcaveats{$\tau_0$ is set by the one-call floor, not by measured memory, in 58 of 67 units, so $K\approx1$ in regimes I--II is nearly trivial. The fast/slow split is post hoc. The slow excess may be a diurnal talk profile rather than a relaxation. Per-day fits are unresolved: 4--30 boots per day are too few, so collapse is untested. The synthetic did not include a two-timescale world. H99 round 2 withdrew the $\times9.5$ kick excess that motivated the HH. The registered bootstrap CIs are mildly anti-conservative (coverage 0.78--0.84).}
+
+\hnext{Pre-register a two-component boot fit with a synthetic two-timescale world. Use mid-day restarts and late booters as clock-shifted replicas to separate the slow excess from a diurnal profile. Test $K_{fast}$ on the holdout (C2).}

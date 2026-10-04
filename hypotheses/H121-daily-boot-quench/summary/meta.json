@@ -1,0 +1,65 @@
+{
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic validation on real call grids (3 units x 6 worlds) with a dated pre-data amendment (world grid, collapse statistic); replication on 67 units / 34 periods; 3 natives with dated predictions; labelled post hoc fast/slow decomposition; confirm.py frozen, guarded and dry-run. Missing: collapse and late-booter tests (untestable at day resolution), two-timescale synthetic, holdout.",
+  "faithfulness": "The registered mean-field relation fails in regime III (K 22 [6.9, 71]) and agrees trivially in regimes I-II because tau0 sits at the one-call floor. Post hoc, the fast part of the boot relaxes within x2 of the call-clock prediction, but the coupling moves the prediction by at most x1.4, so the boot cannot test g_lag. Scorecard A1 B1 C0 D1 E0 F1 G1 H1 I0.",
+  "usefulness": "A measurement-hygiene rule: drop the first call of each agent-day in chat-mode scaffolds and treat the first hours of a regime-III day as non-stationary (+10-20% talk). Not a lever and not a coupling gauge."
+ },
+ "one_line": "The daily boot is a one-call talk spike plus a slow regime-III talk excess; the HH's single-exponential tau = tau0/(1-g_lag) fails in regime III (K_boot 22 [6.9, 71]).",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Single-exponential mean-field Glauber relaxation fails in regime III"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "rival",
+   "outcome": "mixed",
+   "note": "Discrete per-call AR form; fits the fast part only"
+  }
+ ],
+ "rated_by": "H121 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "The daily boot is a first-call talk spike that relaxes within about one call (regime I excess 0.36, τ ≈ 0.5–1 call), plus a slow day-scale talk excess in regime III (+12% [4, 20]%); the single-exponential relation τ = τ₀/(1 − g_lag) fails in regime III (K_boot 22 [6.9, 71])",
+  "scope": "67 units, 3,135 boots; natives NE14, NE43, NE42",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.52,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication across 67 units",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic validation (A1)",
+    "x": 1.3,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "penalty: two-timescale split post hoc",
+    "x": 0.85,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "each day's start is a one-call burst, not a slow relaxation the coupling sets",
+  "magnitude": "small",
+  "generality": "LLM swarms with daily sessions",
+  "expected_usefulness": 0.52,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H121 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
