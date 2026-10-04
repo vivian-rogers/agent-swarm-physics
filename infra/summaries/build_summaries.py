@@ -114,10 +114,10 @@ def badges(meta: dict) -> str:
 # ----------------------------------------------------------------------------------------- period diagram
 
 def goal_span(scope: str):
-    m = re.findall(r"#(\d{1,2})\s*[–-]\s*#?(\d{1,2})", scope)
-    if m:
-        return min(int(a) for a, _ in m), max(int(b) for _, b in m)
-    gs = [int(g) for g in re.findall(r"#(\d{1,2})\b", scope)]
+    """Goal range a spanning test covers: the min and max over every #NN and #NN–#MM mentioned."""
+    gs = [int(x) for a, b in re.findall(r"#(\d{1,2})\s*[–-]\s*#?(\d{1,2})", scope) for x in (a, b)]
+    gs += [int(g) for g in re.findall(r"#(\d{1,2})\b", scope)]
+    gs = [g for g in gs if 1 <= g <= 51]
     return (min(gs), max(gs)) if gs else None
 
 

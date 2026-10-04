@@ -1,0 +1,13 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done on the only candidate period (G21). Switch-on determined from the record before outcomes, predictions dated, synthetic validation at #21 sampling, per-period verdict, scorecard, figures. Confirmatory #14 script written and dry-run on #21 but not run. Round-2 designs (pair-level reading DiD, multi-dimensional field removal, embedding swap, second numeric labeler) not started.",
+  "faithfulness": "The core prediction (an alignment step at switch-on) failed against within-week and kickoff-matched placebos with adequate synthetic power for a moderate step. Snapshot betaJ0 did not rise. Numeric herding passed as pre-registered but vanished after an extraction audit. Only the alignment level beats the rotation null. Scorecard A1 B0 C1 D0 E0 F1 G1 H0 I0; no holdout.",
+  "usefulness": "A negative design lesson (an independent-first-draft phase does not preserve forecast diversity in an LLM swarm) and two computable diagnostics (switch-on detection from intentions plus mention share; alignment at kickoff). Plus a methods warning: regex-extracted numbers manufacture herding through regression to the mean. One week, N = 7, no ground truth, so the evidence is thin."
+ },
+ "one_line": "Forecast week: the coupling switch was real but early; alignment didn't jump and herding was an artifact",
+ "rated_by": "H24 agent (suggested)",
+ "updated": "2026-10-03"
+}

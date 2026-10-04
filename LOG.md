@@ -7,6 +7,18 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **H24 (forecast-week coupling switch), round 1 done:** the literal hypothesis failed.
+  - The document-coupling switch-on in #21 came **50 min** into the week, not mid-week: mentions of teammates went 7% → 74% at it.
+  - Residual content alignment did **not** step up (+0.010, inside both placebos). Agents were aligned from the first hour (A_res 0.33 vs rotation null 0.03); alignment ramped over the week (ρ 0.73, confounded).
+  - The pre-registered numeric "herding" (κ 0.70) was an **extraction artifact** (κ 0.25 after a hand audit). Exact non-round values pass between agents' forecasts, suggesting pairwise copying.
+  - Scorecard A1 B0 C1 D0 E0 F1 G1 H0 I0. `confirm.py` targets #14. Summary page written.
+- **Summary writer 2** done (H05, H07, H08, H09 pages; H08's page will be replaced by the reactivated H08 agent). Fixed the build script's NE span parser (it ignored single-goal mentions when a range was present).
+- **H20 (content aging), round 1 done:** **no aging** in day-to-day content across 29 non-holdout periods.
+  - Random-effects aging slope +0.021 ± 0.021 over the long and medium goals.
+  - #38's strong slope is a kickoff relaxation (lag-1 correlation 0.66 → 0.87 over 4 active days, then flat ~0.90 for 12 days), not aging. #51 rejects μ = 0.5 aging (p = 0.003).
+  - The pre-registered isotropic null was 2–3× too narrow (content fluctuates in only ~5–12 of 32 whitened dims); fixed post hoc (Amendment 2), both verdicts reported.
+  - Scorecard A1 B1 C1 D0 E0 F1 G1 H0 I0. Summary page written.
+- **Vivian: start the hypotheses that were never worked on.** **H06** (neutral cooperative dynamics in free weeks, HH42 / S6, approved earlier, never started) created and launched. **H08** (context is the coupling, parked) reactivated: H04 (delayed, context-mediated responses), H15 (context-erasure dip, NE41) and H18 (dilution) all point at it. HH92 (kernel predicted from turn timing) becomes its primary test.
 - **H18 (attention dilution), round 1 done:**
   - **Dilution is real in 16/16 periods but sub-linear and saturating, not 1/k:** the probability that a turn names a given pending sender falls as about k^−0.6 (pooled β̂ = 0.63 ± 0.02).
   - Survives exogenous batch size in #51 (timer-wake batches, β̂ 0.50). Per-pair uptake falls with room size (ρ −0.55; #51 segments −0.87), while senders addressed per turn stay flat, so **coupling scales as J ∝ N^−0.6**.

@@ -1,6 +1,6 @@
 # H08: Context is the coupling
 
-**Status:** idea, parked. Opened 2026-10-03 on a misread: the request was about the thermodynamics framing, which is H09. Kept because exposure calibration (C1) matters for every direction, and H numbers are permanent. Nothing has been run.
+**Status:** reactivated 2026-10-04 (Vivian: start the hypotheses never worked on). Originally parked on 2026-10-03 after a misread. Since then H04 (delayed, context-mediated responses), H15 (context-erasure dip, NE41) and H18 (attention dilution) have all pointed at it. Primary test: HH92, the response kernel predicted from turn timing.
 **Fields:** info theory, dynamics, stat mech
 **Literature:** [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md) (interventions on information channels)
 **Definitions used:** Interaction / exposure (`physics-models/DEFINITIONS.md`); Regime.

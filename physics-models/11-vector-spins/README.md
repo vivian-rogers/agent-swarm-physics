@@ -65,6 +65,10 @@ HH85.
 
 ## Pitfalls
 
+- **Snapshot βJ₀ from residual alignment absorbs a multi-dimensional field** (H24): removing only one goal direction ĝ leaves field leakage that reads as coupling (synthetic: βJ₀/n ≈ 0.34 at zero coupling). Remove the field along several directions, or fit it.
+
+- **Isotropic surrogate nulls are 2–3× too narrow** for embedding similarity and two-time statistics (H20): content fluctuates in only ~5–12 of 32 whitened dimensions. Build nulls from the empirical fluctuation covariance.
+
 - **Family alignment is mostly style** (H13, 2026-10-03). In bge embeddings, agents of the same lab align beyond the goal field, but the alignment vanishes after controlling for 20 numeric style features. Residualize on style before reading family or agent fields as positions.
 
 - Anisotropy and topic-vs-style confounds: two agents can align because they write alike, not because they are thinking about the same thing.

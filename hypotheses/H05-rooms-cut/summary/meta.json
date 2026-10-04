@@ -1,0 +1,13 @@
+{
+  "complete": 60,
+  "faithfulness": 2.5,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 with per-period verdicts and the confirmatory NE15 run are done; robustness, rivals (Hawkes, shared artifacts) and per-period re-analysis of the pooled tests remain.",
+    "faithfulness": "The talk-channel block model beats the shared-schedule and room-label nulls, and the primary holdout DiD passed, but the pooled primary test failed, J_in rose instead of staying fixed, the post-split window was not blind, and the entropy-production half is untestable.",
+    "usefulness": "\"Rooms decouple chat but not work\" is a validated design rule and a cheap monitor, but the chat half is nearly implied by the visibility scaffold and rests on one cut."
+  },
+  "one_line": "Rooms cut chat coupling (holdout DiD passed; verdict inconclusive); work isn't room-bound; EP unmeasurable",
+  "rated_by": "summary writer (suggested)",
+  "updated": "2026-10-04"
+}

@@ -1,0 +1,18 @@
+\hwhat{An exploratory framing, not one test: can swarm statistics be read as thermodynamics (landscapes, currents, traps, equations of state)? Two light non-holdout rounds; no scorecard or holdout run. Round 1: the activity landscape's two wells are reproduced by the daily schedule (a field, not coupling). Per-agent action chains are irreversible (78\% of cells beat the null), with a closed regime-III cycle consolidate $\to$ search $\to$ talk $\to$ pause, but event-level entropy production collapses after perma-computer-use. Agents are ergodic at day scale; restarts relax within a minute. Round 2 built reusable tables (\texttt{idle\_runs}, \texttt{consolidation\_inflow}). In regime I, room messages trigger escape from idling (hazard ratio 3.06; null p95 0.96). In regime III a pause is a self-set timer (0.22\% end early), and only @-mentions matter ($\times1.52$), at expiry. Memory size is an agent-specific set point, reset at each consolidation and barely moved by inflow. Collective entropy production: small (plug-in only).}
+
+\hmodel{No single model; each sub-claim borrows one (models 01, 02, 09, 10). $\lambda(t)$: escape hazard of an idle spell at elapsed dwell $t$; HR: hazard ratio, kick in the prior 60 s vs.\ none. $k_0$, $c$: base escape rate and kick sensitivity; $r$: kick rate. $t^*$: declared pause expiry; $p_{\rm gate}$: chance of acting at expiry. $\pi$, $P$: stationary law and transitions of an agent's action-class chain. $V$: memory size; $P_{\rm in}$: inflow; $\beta$, $\gamma$: response, relaxation.}
+
+\hmath{\vspace{-5pt}\footnotesize\setlength{\jot}{1pt}
+\begin{gather*}
+\lambda(t)=P(\text{escape at }t\mid\text{idle until }t),\qquad \mathrm{HR}=\lambda_{\rm kick}/\lambda_{\rm none}\\
+\text{regime I (Kramers-like):}\quad k\approx k_0+c\,r\\
+\text{regime III (timer gate):}\quad \lambda(t)\approx\delta(t-t^*)\,p_{\rm gate}(\text{@-mention})\\
+\sigma=\textstyle\sum_{x<y}(\pi_xP_{xy}-\pi_yP_{yx})\ln\dfrac{\pi_xP_{xy}}{\pi_yP_{yx}}\\
+\Delta V=\beta P_{\rm in}-\gamma V_{\rm prev}\ \Rightarrow\ V^*=\beta P_{\rm in}/\gamma
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Escape hazard ratio of idle spells: minutes with a kick in the previous 60 s vs.\ minutes without, stratified by elapsed dwell and time of day. Bars: agent-day bootstrap CIs where computed; ticks: 95th percentile of a day-swap null. Regime I: any room message triples escape. Regime III: room messages don't help; only @-mentions do. (b) Escape rate against kick rate over agent-day deciles (dashed: linear fit $k_0+c\,r$). It rises in I and falls in III.}
+
+\htelos{The thermodynamic vocabulary did little work; the useful findings are plain mechanics. The one an operator can use: in the current scaffold (regime III), an idle agent is asleep on a timer it set itself. Room chatter does not wake it. Only an @-mention raises the chance it acts, and only when the timer expires. To get a response, address the agent by name and expect a delay of up to its chosen pause. Regime-I agents were interruptible. ``Memory size is a set point'' says consolidation is a reset, not growing storage. The rest restates the scaffold: landscapes made by the schedule, day-scale ergodicity, and a consolidation cycle that is the prompt's own loop. Nothing here yet beats a simpler statistic.}
+
+\hbottom{As a framing, swarm thermodynamics has not yet earned its keep; its best result is a practical fact about scheduling: in the current scaffold, idle agents are timer-gated, and only @-mentions get through.}
