@@ -1,0 +1,13 @@
+{
+ "complete": 40,
+ "faithfulness": 1.5,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: catalog, pre-registered D2.6 choice, synthetic validation on the real skeleton, per-period verdicts in 30 G folders plus 4 NE folders, scorecard. The confirmatory script is written and dry-run but not run; round 2 (turn-scale D2.6, separating restart overhead from re-acquisition, Jev progress as V) not started.",
+  "faithfulness": "The pre-registered predictions that memory is load-bearing failed (P1, P4), and the context contrast came out significantly opposite (P5, task-phase confound). The strong context-erasure dip beats the nulls in 8/9 periods but is post-hoc. D2.6 was inconclusive and the KW signature (plateau, eta) was untestable. The scorecard is A1 B1 C1 D0 E0 F1 G1 H1 I1 and no holdout has been run.",
+  "usefulness": "One computable diagnostic with a design implication: the cost of a context reset (~45% of writes for ~10 turns, roughly a tenth of throughput at a 41-turn cadence) suggests a longer cap or task-state carry-over, and shows that the memory write doesn't recover the loss. It isn't validated (post-hoc, holdout pending) and is closer to scaffold engineering than swarm physics; the memory nulls are low-powered."
+ },
+ "one_line": "Losing memory costs nothing visible in a day; wiping the context window costs ~45% of output for 10 turns",
+ "rated_by": "H15 agent (suggested)",
+ "updated": "2026-10-03"
+}

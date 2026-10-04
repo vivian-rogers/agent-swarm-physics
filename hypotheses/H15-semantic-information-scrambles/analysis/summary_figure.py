@@ -24,9 +24,9 @@ plt.rcParams.update({"font.size": 7, "axes.spines.top": False, "axes.spines.righ
 res = json.loads((OUT / "results.json").read_text())
 prof = pl.read_parquet(OUT / "consolidation_profile.parquet")
 
-fig, (a, b) = plt.subplots(1, 2, figsize=(4.3, 2.6), gridspec_kw={"width_ratios": [1.25, 1]})
+fig, (a, b) = plt.subplots(1, 2, figsize=(4.3, 2.3), gridspec_kw={"width_ratios": [1.25, 1]})
 g = prof.group_by("kind", "off").agg(((pl.col("w_rate") * pl.col("n")).sum() / pl.col("n").sum()).alias("w")).sort("off")
-for kind, c, lab in (("CF", "#b2182b", "forced (41-turn cap)"), ("CV", "#2166ac", "voluntary")):
+for kind, c, lab in (("CF", "#b2182b", "forced"), ("CV", "#2166ac", "voluntary")):
     d = g.filter(pl.col("kind") == kind)
     off, w = d["off"].to_numpy(), d["w"].to_numpy()
     ref = w[(off >= -20) & (off <= -11)].mean()
@@ -41,8 +41,8 @@ a.text(11.5, 0.08, f"forced:\n−{-np.median(dips) * 100:.0f}% writes\nin turns 
 a.set_xlabel("turn relative to context erasure")
 a.set_ylabel("write rate / rate at turns −20…−11")
 a.set_title("context window: erased every 41 turns")
-a.set_ylim(0, 2.0)
-a.legend(frameon=False, fontsize=5.8, loc="upper left")
+a.set_ylim(0, 1.9)
+a.legend(frameon=False, fontsize=5.8, loc="lower left", handlelength=1.2, bbox_to_anchor=(0.0, 0.18))
 
 vm = res["vstar_meta"]
 rows = [("memory loss", "ML"), ("newcomer\n(empty memory)", "MN"), ("rewrite\n(control)", "MR"), ("chat cut", "CC")]

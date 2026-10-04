@@ -28,11 +28,9 @@ def field(text: str, name: str) -> str:
 
 
 def verdict_symbol(v: str) -> str:
-    v = v.lower()
-    for k, s in SYMBOL.items():
-        if v.startswith(k):
-            return s
-    return "?"
+    sys.path.insert(0, str(ROOT / "dashboard"))
+    from collect import verdict_key  # one parser for verdicts everywhere
+    return SYMBOL.get(verdict_key(v), "?")
 
 
 def main():

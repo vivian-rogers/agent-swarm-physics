@@ -81,12 +81,33 @@ def strip_md(s: str) -> str:
     return re.sub(r"\*\*|__|`", "", s).strip()
 
 
+SYNONYMS = (("not supported", "failed"), ("unsupported", "failed"), ("falsified", "failed"), ("refuted", "failed"),
+            ("fail", "failed"), ("inconclusive", "mixed"), ("partial", "mixed"), ("partly", "mixed"),
+            ("confirmed", "supported"), ("passed", "supported"), ("pass", "supported"), ("na", "n/a"), ("not applicable", "n/a"))
+
+
 def verdict_key(v: str) -> str:
-    v = v.lower()
+    v = collect_clean(v)
     for k in VERDICTS:
         if v.startswith(k):
             return k
+    for syn, k in SYNONYMS:
+        if v.startswith(syn):
+            return k
+    parts = re.findall(r"\bp\d+[a-z]?\s*:?\s*([a-z/ ]+?)(?:\(|;|,|$)", v)  # "P1 supported; P2 failed" → combine
+    if parts:
+        ks = {verdict_key(x.strip()) for x in parts} - {"other"}
+        if ks == {"supported"}:
+            return "supported"
+        if ks == {"failed"}:
+            return "failed"
+        if ks:
+            return "mixed"
     return "pending" if not v else "other"
+
+
+def collect_clean(v: str) -> str:
+    return re.sub(r"^[\W_]+", "", v.lower().replace("**", "")).strip()
 
 
 # --------------------------------------------------------------------------------------------- hypotheses
