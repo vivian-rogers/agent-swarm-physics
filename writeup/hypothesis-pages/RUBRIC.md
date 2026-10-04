@@ -1,6 +1,6 @@
 # Hypothesis summary pages: rubric and content rules
 
-Every hypothesis gets a one-page PDF summary at `hypotheses/H<NN>-<slug>/summary/summary.pdf`. All of them are appended, behind a color-coded table of contents, into `writeup/hypotheses-compendium.pdf`. This is a living status document, **not** the paper.
+Every hypothesis gets a **two-page** RevTeX summary at `hypotheses/H<NN>-<slug>/summary/summary.pdf`. All of them are appended, behind a color-coded table of contents, into `writeup/hypotheses-compendium.pdf`. This is a living status document, **not** the paper.
 
 Build everything (or one hypothesis) with:
 
@@ -18,6 +18,12 @@ uv run python infra/summaries/build_summaries.py --only H05 # one page (skip the
   - `\hobs{<figure path relative to summary/>}{<note>}` **Observables figure** and a note of ≤ 80 words. Show the observable that best shows how the strongest sub-hypotheses or periods went. One focused figure, ideally one or two panels, readable at about 4 in wide. Make a new one in `figures/` if the existing ones are full-page summaries.
   - `\htelos{...}` **So what?**, ≤ 130 words. Scope it to the project's purpose: *practically* understanding the dynamics of agent swarms. Be candid, even cynical. Would someone running, steering or aligning a swarm of LLM agents do anything differently because of this? Or is it a curiosity, a measurement artifact, or a restatement of something obvious? Say which.
   - `\hbottom{...}` **Bottom line**, one sentence.
+- **Page 2 (added 2026-10-04 at Vivian's request), also in `content.tex`:**
+  - `\hresults{...}` **Results vs predictions**, ≤ 150 words or a compact `tabular` sized to `\columnwidth` (≤ 10 rows): each main prediction, what was observed (with numbers), and the verdict.
+  - `\hobsb{<figure path>}{<note>}` **Second figure** and a note of ≤ 60 words: synthetic validation, or a second observable that matters (≤ 2.1 in tall at column width). Optional but encouraged.
+  - `\hcaveats{...}` **Caveats**, ≤ 120 words: the limits that would change the reading.
+  - `\hnext{...}` (optional, ≤ 60 words) next steps beyond the card's round-2 redirects.
+  - Generated automatically (don't write them): the goal-period table (from the period folders), the A–I scorecard (from the card) and the round-2 list (from the card's "Round 2 redirects" section).
 - **`meta.json`**: suggested ratings (the coordinator calibrates them across hypotheses):
   ```json
   {"complete": 45, "faithfulness": 2.0, "usefulness": 1.5,
@@ -25,7 +31,7 @@ uv run python infra/summaries/build_summaries.py --only H05 # one page (skip the
    "rated_by": "H05 agent (suggested)", "updated": "2026-10-04"}
   ```
 
-The goal-period diagram (`periods.pdf`) and the page header are generated from the `G<NN>/` / `NE<NN>/` folders and the card. Don't edit `summary.tex`; it is regenerated. The page must fit on **one** page; the build warns otherwise. LaTeX special characters (`# & % _ $`) must be escaped in content. Never quote agent message text (gated data).
+The goal-period diagram (`periods.pdf`) and the page header are generated from the `G<NN>/` / `NE<NN>/` folders and the card. Don't edit `summary.tex`; it is regenerated. The summary must be **exactly two pages**: page 1 is the overview, page 2 the details. The build warns otherwise. LaTeX special characters (`# & % _ $`) must be escaped in content. Never quote agent message text (gated data).
 
 ## Ratings
 

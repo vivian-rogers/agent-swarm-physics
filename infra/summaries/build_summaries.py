@@ -222,6 +222,60 @@ def write_stub(sdir: Path, h: dict):
         rf"\hmodel{{{tex_escape(model)}}}" "\n")
 
 
+
+AXIS_NAMES = {"A": "mapping", "B": "assumptions", "C": "adequacy", "D": "unfitted predictions", "E": "interventional",
+              "F": "identifiability", "G": "ground truth", "H": "comparative", "I": "transfer"}
+
+
+def period_table(h: dict, max_rows: int = 16) -> str:
+    ps = sorted(h["periods"], key=lambda p: (p["role"] != "confirmatory", p["verdict"] in ("pending", "other", "n/a"), p["period"]))
+    if not ps:
+        return r"\textit{No goal-period folders yet.}"
+    sym = {"supported": r"$\checkmark$", "failed": r"$\times$", "mixed": r"$\sim$", "descriptive": "d", "pending": r"$\cdots$", "n/a": "--", "other": "?"}
+    rows = []
+    for p in ps[:max_rows]:
+        txt = p.get("verdict_text") or p["verdict"]
+        txt = txt if len(txt) < 95 else txt[:92] + "..."
+        conf = r" \textbf{(holdout)}" if p["role"] == "confirmatory" else ""
+        rows.append(rf"{tex_escape(p['period'])} & {sym.get(p['verdict'], '?')} & {tex_escape(txt)}{conf} \\")
+    more = rf"\multicolumn{{3}}{{l}}{{\textit{{+{len(ps) - max_rows} more periods: see the card.}}}} \\" if len(ps) > max_rows else ""
+    return r"\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}" + "\n".join(rows) + more + r"\end{tabular}"
+
+
+def score_table(h: dict) -> str:
+    cells = []
+    for a in "ABCDEFGHI":
+        v = h["scores"].get(a)
+        cells.append(rf"{a} {AXIS_NAMES[a]} & {'--' if v is None else v} \\")
+    half = (len(cells) + 1) // 2
+    left, right = cells[:half], cells[half:]
+    body = "\n".join(l.replace(r" \\", "") + " & " + (right[i].replace(r" \\", "") if i < len(right) else " & ") + r" \\" for i, l in enumerate(left))
+    return (r"\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}" + body + r"\end{tabular}" +
+            rf"\par\smallskip Level: \textbf{{{tex_escape(h['level'])}}}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{{writeup/paper.tex}}).")
+
+
+def round_two(slug: str) -> str:
+    card = (HYP / slug / "README.md").read_text(errors="replace")
+    if "## Round 2 redirects" not in card:
+        return r"\textit{No round-2 redirects yet.}"
+    sec = card[card.index("## Round 2 redirects"):]
+    nxt = sec.find("\n## ", 5)
+    sec = sec[:nxt] if nxt > 0 else sec
+    items = []
+    ess = re.search(r"\*\*What the direction is really after:\*\*\s*(.+)", sec)
+    if ess:
+        e = re.sub(r"\*\*", "", ess.group(1)).strip()
+        items.append(r"\textbf{Essence.} " + tex_escape(e if len(e) < 330 else e[:327] + "..."))
+    for m in re.finditer(r"^- \*\*(H\d{2}-R\d+)\.?\s*(.*?)\*\*\s*(.*)$", sec, re.M):
+        rid, head, rest = m.group(1), m.group(2).strip(), m.group(3).strip()
+        if "superseded" in (head + rest).lower():
+            continue
+        text = (head + " " + rest).strip() if head else rest
+        first = re.split(r"(?<=[.!?])\s", re.sub(r"\*\*|`", "", text), maxsplit=1)[0]
+        items.append(rf"\textbf{{{rid}}} {tex_escape(first[:240])}")
+    return r"\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}" + "".join(rf"\item {x}" for x in items) + r"\end{itemize}"
+
+
 def build_page(h: dict) -> dict:
     hdir = HYP / h["slug"]
     sdir = hdir / "summary"
@@ -246,6 +300,9 @@ def build_page(h: dict) -> dict:
 \def\hPeriodSummary{{{period_summary(h)}}}
 \def\hDate{{Updated {meta.get('updated', dt.date.today().isoformat())}}}
 \def\hFooter{{{footer}}}
+\def\hPeriodTable{{{period_table(h)}}}
+\def\hScoreTable{{{score_table(h)}}}
+\def\hRoundTwo{{{round_two(h['slug'])}}}
 \input{{content.tex}}
 \begin{{document}}
 \makehpage
@@ -305,7 +362,7 @@ def compendium(hs: list[dict], results: dict):
 \author{{Vivian Rogers, with Claude Opus 5.5}}
 \date[]{{Living status document, regenerated {date}. Not the paper.}}
 \begin{{abstract}}
-One RevTeX page per hypothesis follows; click a row to jump to it. Ratings are estimates calibrated across hypotheses by the coordinator (rubric: \texttt{{writeup/hypothesis-pages/RUBRIC.md}}).
+Two RevTeX pages per hypothesis follow; click a row to jump to it. Ratings are estimates calibrated across hypotheses by the coordinator (rubric: \texttt{{writeup/hypothesis-pages/RUBRIC.md}}).
 \textbf{{Completion}}: estimated progress of the research direction (idea 5\%, round 1 done 35--50\%, holdout run 55--65\%, robustness and causal designs 70--85\%, settled 90--100\%). {legend_seq}
 \textbf{{Faithfulness}} (0--5, scoped): how well the model holds for what it claims (3 = descriptive or primary holdout passed; 4 = supported; 5 = faithful and mechanistic).
 \textbf{{Usefulness}} (0--5, unscoped): what an operator or alignment researcher can do with it, true or not (1 = vocabulary only; 2 = a diagnostic; 3 = a validated monitor or design rule; 4 = a steering lever; 5 = a transferable control knob). {legend_div}
@@ -320,7 +377,7 @@ One RevTeX page per hypothesis follows; click a row to jump to it. Ratings are e
     def compile_with(toc_pages: int) -> int:
         tex = template.replace("@@TABLES@@", tables)
         for i in range(len(built)):
-            tex = tex.replace(f"@@PAGE{i}@@", str(toc_pages + 1 + i))
+            tex = tex.replace(f"@@PAGE{i}@@", str(toc_pages + 1 + 2 * i))
         (PAGES / "compendium.tex").write_text(tex)
         for _ in range(2):
             r = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "compendium.tex"], cwd=PAGES,
@@ -343,9 +400,12 @@ One RevTeX page per hypothesis follows; click a row to jump to it. Ratings are e
     w = PdfWriter()
     for pg in PdfReader(PAGES / "compendium.pdf").pages:
         w.add_page(pg)
+    starts = {}
     for h in built:
-        w.add_page(PdfReader(HYP / h["slug"] / "summary/summary.pdf").pages[0])
-    ids = {h["id"]: toc + i for i, h in enumerate(built)}  # 0-based target page index
+        starts[h["id"]] = len(w.pages)
+        for pg in PdfReader(HYP / h["slug"] / "summary/summary.pdf").pages[:2]:
+            w.add_page(pg)
+    ids = starts  # 0-based index of each hypothesis' first page
     bbox = subprocess.run(["pdftotext", "-bbox", "-f", "1", "-l", str(toc), str(PAGES / "compendium.pdf"), "-"],
                           capture_output=True, text=True).stdout
     page_i, seen = -1, set()
@@ -360,11 +420,11 @@ One RevTeX page per hypothesis follows; click a row to jump to it. Ratings are e
             x0, y0, x1, y1 = (float(m.group(k)) for k in range(1, 5))
             rect = (x0 - 2, ph - y1 - 12, pw - x0, ph - y0 + 2)  # whole row, two text lines tall
             w.add_annotation(page_number=page_i, annotation=Link(rect=rect, target_page_index=ids[m.group(5)]))
-    for i, h in enumerate(built):
-        w.add_outline_item(f"{h['id']}: {h['title'][:60]}", toc + i)
+    for h in built:
+        w.add_outline_item(f"{h['id']}: {h['title'][:60]}", starts[h["id"]])
     with open(ROOT / "writeup/hypotheses-compendium.pdf", "wb") as f:
         w.write(f)
-    total = toc + len(built)
+    total = len(w.pages)
     for ext in (".aux", ".log", ".out", "Notes.bib", ".bbl", ".blg"):
         (PAGES / f"compendium{ext}").unlink(missing_ok=True)
     print(f"compendium: {total} pages ({toc} contents, {len(seen)} linked rows) → writeup/hypotheses-compendium.pdf")
@@ -382,7 +442,7 @@ def main():
             continue
         r = build_page(h)
         results[h["id"]] = r
-        flag = "ERROR " + r["error"] if r["error"] else (f"WARNING {r['pages']} pages" if r["pages"] != 1 else "ok")
+        flag = "ERROR " + r["error"] if r["error"] else (f"WARNING {r['pages']} pages" if r["pages"] != 2 else "ok")
         print(f"{h['id']}: {flag}{'  (stub)' if r['stub'] else ''}")
     if not args.only and not args.no_compendium:
         compendium(hs, results)

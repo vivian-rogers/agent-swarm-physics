@@ -1,0 +1,16 @@
+\hwhat{Does an agent's daily content diversity have an output optimum? For each agent-day: the participation ratio PR10 of its chat (self near-copies removed, rarefied to 10 statements, whitened bge) against $\log(1+\text{write turns})$, within agent and period, with day effects and activity controls. 17 non-holdout periods with logged write verbs, 1592 agent-days. The primary test is Simonsohn's two-lines test, validated first on the real design: 0--7\% false positives, 82\% power for a 0.4-SD inverted U. \textbf{No inverted U:} the slope is $+0.035$ ($p=0.26$) below the breakpoint and $-0.035$ ($p=0.35$) above it, and the curve is flat from PR10 $\approx 14$ up. Per period: 0 supported, 3 mixed, 11 failed, and the meta-analysed right slope has the wrong sign. PR10 improves day-blocked CV by 0.2\%; adding curvature makes it worse. Self-repetition does not predict same-day output either ($p=0.84$). Holdout script frozen, not run.}
+
+\hmodel{Model 11 (vector spins). Each chat statement is a unit vector in the regime's whitened 32-d bge space. An agent-day's covariance $\Sigma$ has participation ratio PR: 1 is a frozen spin repeating itself, 32 is isotropic (``paramagnetic'') content. H33 claims output peaks at an intermediate PR. Output: write turns (git push or commit, deploy, PR/MR create or merge) per agent-day, $y_{id}=\log(1+\text{writes})$; $\alpha_{iu}$, $\delta_d$: agent$\times$period and day effects; $z$: activity controls; $x_c$: Robin Hood breakpoint; $\nu=n-1$, $n=10$.}
+
+\hmath{\vspace{-8pt}\begin{gather*}
+\mathrm{PR}=(\operatorname{tr}\Sigma)^2/\operatorname{tr}\Sigma^2\ \ (\hat a,\hat b\ \text{unbiased from}\ W=\nu S)\\
+y_{id}=\alpha_{iu}+\delta_d+f(\mathrm{PR}_{id})+\gamma^{\!\top} z_{id}+\varepsilon_{id}\\
+f=b_1(x-x_c)[x<x_c]+b_2(x-x_c)[x\ge x_c]+c\,[x\ge x_c]\\
+\text{inverted U: } b_1>0,\ b_2<0\ (p<.05),\ \arg\max f\ \text{interior}
+\end{gather*}\vspace{-10pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Partial residuals of $\log(1+\text{write turns})$ by PR10 decile (within agent$\times$period, day effects and activity controls removed) with the 4-df spline: a gentle, non-significant rise that flattens above PR10 $\approx 14$. Dashed line: two-lines breakpoint. (b) Synthetic replay on the real design at PR10's measured reliability (0.55). The two-lines rule rarely calls a plateau an inverted U; the quadratic test does so 25--46\% of the time. The rule detects a 0.4-SD inverted U 82\% of the time.}
+
+\htelos{For operators: there is no content-diversity operating point to steer toward. Pushing agents to talk about more things, or fewer, should not be expected to change how much they ship. Write turns at the best PR10 and at the 90th percentile differ by at most about 9\%. The only hint is on the loop side (the bottom decile may write about 25\% less, not significantly), which H12's self-repetition rate catches more directly. Caveats: daily chat PR is half noise, and write turns count activity, not value. A clean null that retires a plausible dashboard metric.}
+
+\hbottom{Agent-day content diversity has no output optimum in this swarm: the curve is flat above PR10 $\approx 14$ and not distinguishable from flat below it, so there is no operating point to target.}

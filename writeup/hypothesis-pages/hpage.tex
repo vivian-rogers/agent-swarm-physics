@@ -21,6 +21,12 @@
 \newcommand{\hobs}[2]{\def\hObsFile{#1}\def\hObsNote{#2}}
 \newcommand{\htelos}[1]{\def\hTelos{#1}}
 \newcommand{\hbottom}[1]{\def\hBottom{#1}}
+% page 2 (written)
+\def\hResults{\textit{Pending.}}\def\hCaveats{\textit{Pending.}}\def\hObsBFile{}\def\hObsBNote{}\def\hNext{}
+\newcommand{\hresults}[1]{\def\hResults{#1}}
+\newcommand{\hcaveats}[1]{\def\hCaveats{#1}}
+\newcommand{\hobsb}[2]{\def\hObsBFile{#1}\def\hObsBNote{#2}}
+\newcommand{\hnext}[1]{\def\hNext{#1}}
 
 \newcommand{\hlegend}{{\color{inkmuted}\vchip{vgood}{white}{$\checkmark$}~supported\enspace
    \vchip{vbad}{white}{$\times$}~failed\enspace\vchip{vmix}{black}{$\sim$}~mixed\enspace
@@ -56,4 +62,22 @@
   \ifx\hObsFile\empty\par\smallskip{\small\color{inkmuted}\textbf{Observables.} \hObsNote}\fi
   \par\vfill
   {\tiny\color{inkmuted}\hFooter\par}
+  \clearpage
+  \section*{Results vs predictions}
+  \hResults
+  \ifx\hObsBFile\empty\else
+  \par\medskip\noindent\includegraphics[width=\columnwidth,height=2.1in,keepaspectratio]{\hObsBFile}\par\smallskip
+  {\footnotesize\noindent\textbf{Second figure.} \hObsBNote\par}
+  \fi
+  \section*{Goal periods in detail}
+  {\footnotesize \hPeriodTable\par}
+  \section*{Faithfulness scorecard}
+  {\footnotesize \hScoreTable\par}
+  \section*{Caveats}
+  \hCaveats
+  \section*{Round 2}
+  \ifx\hNext\empty\else \hNext\par\fi
+  {\footnotesize \hRoundTwo\par}
+  \par\vfill
+  {\tiny\color{inkmuted}\hFooter\ (page 2)\par}
 }

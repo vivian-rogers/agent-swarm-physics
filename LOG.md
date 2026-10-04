@@ -7,6 +7,9 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **H33 (diversity–productivity), round 1:** no inverted U; agent-day content diversity carries no usable information about write output (flat above PR10 ≈ 14). Two-lines slopes n.s.; cross-validation gain 0.2%. **No operating point to steer toward.** Within-agent PR10 reliability is only 0.55 (errors-in-variables caveat for any agent-day diversity regression). Scorecard A1 B1 C0 D0 E0 F1 G0 H0 I0.
+- **Summaries now two RevTeX pages** (Vivian). Page 2: results vs predictions, second figure and caveats (written), plus the goal-period table, A–I scorecard and round-2 redirects (generated). The compendium has 81 pages. Written page-2 sections will be filled during the re-evaluation on the improved data.
+- **Vivian's priorities (2026-10-04):** (1) improve postprocessed data quality; (2) then re-evaluate every hypothesis on the better data; (3) more physics-of-life, Kolchinsky-style HHs for her to vet. H01 round 2 relaunched as effective superagents in Kolchinsky–Wolpert terms (R4–R8).
 - **Shared-pipeline consolidation started (Vivian):** an agent is moving broadly useful per-hypothesis processing into `infra/shared/` as new modules and tables, without touching running hypotheses: goal fields (H01/H10), behavior states (H14), project states (H11), period units (H01/H03/H18/H22), classified kicks (H04/H16), style features (H13), spectra (H12), copy info (H07), the `bash_head` fix, a `build_all.py` entry point, and later the outages table (H38). Old locations become shims after running agents finish.
 - **H10 (goals are Legendre pushes), round 1: FAILED.**
   - Assigned goals push alignment by 1.4–3.1 free-week SDs, far outside linear response.
