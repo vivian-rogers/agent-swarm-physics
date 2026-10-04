@@ -191,3 +191,9 @@ Vivian picked these from HH107–HH126 and the leftovers. HH92 was already H08's
 | S71 | Trap aging is input starvation | HH260 | 09, 02 | H72 (ready) |
 | S72 | Style = weights + context + register | HH265 | 11, 04 | H73 (ready) |
 | S73 | An operator-grade change detector | HH268 | 02, 11 | H74 (waits) |
+| S74 | A thermodynamic speed limit on re-allocation | HH323 | 02, 05 | H75 (launched) |
+| S75 | Excess vs housekeeping irreversibility | HH324 | 02, 05 | H76 (launched) |
+| S76 | Repos as replicators: the selection-resolution bound | HH325 | 05, 06 | H77 (launched) |
+| S77 | Replicator growth order: herding vs division of labor | HH326 | 05, 06 | H78 (launched) |
+| S78 | An artifact-only autocatalytic set | HH327 | 05 | H79 (launched) |
+| S79 | Assembly index vs compression as an agent signature | HH328 | 04 | H80 (launched) |

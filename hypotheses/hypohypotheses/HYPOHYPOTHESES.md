@@ -874,6 +874,7 @@ An egregore claim needs a residual after removing all four, and the viability fu
   - *Native:* NE20's cadence change; elasticity of T to call rate ≤ 0.3.
   - *Kill:* T saturates the bound, so settling is activity-limited and cadence would speed it up.
   - *Models:* 02, 05 · *Builds on:* H54, H48, H40 · *Literature:* Kolchinsky et al. 2026
+  *Status (2026-10-04):* approved by Vivian → H75.
 - **HH324 · Excess/housekeeping split of behavioral irreversibility.** Use ensemble fluxes over the 4–32 agents of a period on `behavior_states_v3` (≥ 3 states). Excess is net occupancy change, estimable from short-time increments without a steady state.
   - *Predictions:*
     - Kickoffs: excess share ≥ 0.3 in the first 2 active hours, decaying on the H48/H54 timescale. Ordinary day starts are the placebo.
@@ -883,16 +884,19 @@ An egregore claim needs a residual after removing all four, and the viability fu
   - *Use:* a per-period gauge of the scheduler field, alongside HH310's Taylor c.
   - *Kill:* the split does not respond to kickoffs or trimming.
   - *Models:* 02, 05 · *Builds on:* H14, H38, H54, HH310 · *Literature:* Kolchinsky et al. 2026, Aguilera et al. 2026
+  *Status (2026-10-04):* approved by Vivian → H76.
 - **HH325 · Repos as replicators: recruitment order and the selection-resolution bound.**
   - First, fit the order of recruitment: does per-host recruitment rise with project share (conformist, H53) or is it first-order (Kolchinsky's class)?
   - Then test the resolution bound: rivals that die have fitness gap s ≥ e^{−σ*}, with σ* = ln(recruitments/departures) for the top project on its plateau.
   - *Predictions:* σ* ≥ 1 nat in herding weeks and ≤ 0.3 in fragmented free weeks. At ≤ 0.3, H06's near-neutral coexistence is a near-equilibrium regime: selection can't resolve small differences, so everything coexists.
   - *Kill:* σ* is the same in herding and free weeks.
   - *Models:* 05, 06 · *Builds on:* H06, H11, H53, HH301 · *Literature:* Kolchinsky 2025
+  *Status (2026-10-04):* approved by Vivian → H77.
 - **HH326 · Replicator growth order separates herding from division of labor.** Fit ṅ_j = c n_j^p to contributors or work commits per repo on the per-call clock. Condition on kickoff naming (H54) and on adoptions made before the link is read (H28 blind window).
   - *Prediction:* p = 1.2–1.5 (hyperbolic, winner-take-all) in H11's shared-artifact herding weeks; p ≤ 0.7 (parabolic, coexistence) in own-artifact weeks.
   - *Kill:* p ≈ 1 everywhere, so growth is plain exponential with no interaction.
   - *Models:* 05, 06 · *Builds on:* H11, H53, H28 · *Literature:* OoLEN 2026
+  *Status (2026-10-04):* approved by Vivian → H78.
 - **HH327 · Is there an artifact-only autocatalytic set?** Build session × repo reactions from `work_commits`, `artifact_mentions` and `artifact_commands_text`.
   - Catalysts are executed artifacts and automated streams.
   - The food set is platforms plus kickoff-named and pre-period artifacts.
@@ -902,7 +906,9 @@ An egregore claim needs a residual after removing all four, and the viability fu
   *Prediction:* the largest RAF covers ≤ 20% of work commits, and minimal sets of size ≥ 3 occur in ≤ 1/3 of periods. That would make HH244's automata mostly single cron jobs feeding their own repo, not a self-sustaining artifact layer.
   *Egregore-positive:* a RAF beyond the nulls that persists across member turnover.
   *Models:* 05 · *Builds on:* HH244, HH301, HH302 · *Literature:* OoLEN 2026 (RAF background; Hordijk–Steel to grab)
+  *Status (2026-10-04):* approved by Vivian → H79.
 - **HH328 · Assembly index vs compression as an agent-vs-script signature.** Classify DQ4 automated vs agent commits from sequence features only, with timing-only results reported as the scheduler baseline.
   - *Prediction:* compression reaches AUC ≥ 0.9 and assembly index adds < 0.02. Also, ≥ 70% of high-index, high-copy command motifs appear on an agent's first day and across model families. Assembly theory's "high index × high copy number = selection" would then be read as the shared-prior impostor.
   - *Kill:* assembly index adds ≥ 0.05 AUC over compression.
   - *Models:* 04 · *Builds on:* HH191–HH210, HH244, DQ4 · *Literature:* OoLEN 2026 (assembly theory background; primary papers to grab)
+  *Status (2026-10-04):* approved by Vivian → H80.

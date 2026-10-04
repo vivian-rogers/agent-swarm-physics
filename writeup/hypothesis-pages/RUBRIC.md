@@ -33,6 +33,38 @@ uv run python infra/summaries/build_summaries.py --only H05 # one page (skip the
 
 The goal-period diagram (`periods.pdf`) and the page header are generated from the `G<NN>/` / `NE<NN>/` folders and the card. Don't edit `summary.tex`; it is regenerated. The summary must be **exactly two pages**: page 1 is the overview, page 2 the details. The build warns otherwise. LaTeX special characters (`# & % _ $`) must be escaped in content. Never quote agent message text (gated data).
 
+## Writing style (Vivian, 2026-10-04): physicist voice, ASD-STE100 leaning
+Applies to every `content.tex` and to all dashboard text. The reader is a physicist who wants the model, the measurement and the result, and an operator who wants to know what to do.
+
+**Physicist content, in this order where it fits:**
+1. The system and the degrees of freedom: what a spin, state, field or coupling is in village terms.
+2. The model: the Hamiltonian, master equation or estimator, and the control and order parameters.
+3. The measurement: the observable, the estimator, the null, and the error bars or CI.
+4. The result: numbers with uncertainty and the number of units, plus what is ruled out.
+5. The impostors removed: scheduler field, kickoff/goal field, shared model priors, contemporaneous convergence.
+
+Separate a field (an external drive) from a coupling (an interaction). Report scaling exponents and timescales with units. Say "consistent with" when a test cannot reject a rival.
+
+**Language (ASD-STE100 leaning):**
+- One idea per sentence. At most 20 words for an instruction and 25 for a description. At most 6 sentences per paragraph.
+- Active voice and present tense. Name the agent of the verb: "the nudge raises", not "a raise is observed".
+- One word for one meaning, used the same way on every page (e.g. "read-out call", "field", "coupling", "unit", "period"). Use the DEFINITIONS.md terms.
+- Use specific numbers, not adjectives. "×1.5 [1.3, 1.7]", not "a large effect".
+- No filler or hype. Banned: notably, remarkably, crucially, striking, intriguing, interestingly, delve, landscape, rich, nuanced, robust (unless you mean "survives the stated variants"), compelling, powerful, key insight, sheds light, paves the way, "it is worth noting".
+- No rhetorical triplets, no em-dash asides, no rhetorical questions, no closing summary sentence that repeats the paragraph.
+- Use articles. Avoid phrasal verbs ("set up" → "build"; "find out" → "measure"). Avoid -ing nouns where a plain noun exists.
+
+**Practical value (`\htelos`):** say what an operator, a scaffold builder or a monitor can do with this result, in one or two instructions with a number. If nothing changes in practice, say that in one sentence.
+
+**`meta.json` field `models`** (for the dashboard's physics-model × hypothesis matrix):
+`"models": [{"model": "03-contagion", "role": "primary|secondary|rival|null|tool", "outcome": "supported|refuted|mixed|untested|n/a", "note": "≤ 12 words"}]`.
+- *primary:* the card's model.
+- *secondary:* a second model fitted.
+- *rival:* the model the card tests against.
+- *null:* the model serves as the null.
+- *tool:* only its estimator is used, e.g. Aguilera EP.
+- *outcome:* whether that model held for this hypothesis's claim after round 1b.
+
 ## Scoring v2 (2026-10-04): replaces the 0–5 faithfulness/usefulness ratings below
 Rationale and worked examples: `writeup/scoring/scoring-v2.pdf`. The v1 numbers stay in `meta.json` for history; the dashboard and compendium show v2 when present.
 
