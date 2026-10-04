@@ -21,15 +21,13 @@ P4 newcomers pay & $+0.15\to+0.20$; progress $+0.31\,[0.06,0.56]$ & $\times$\\
 P5 forced $<$ voluntary & writes $z\,+4.9\to$ work $z\,+2.3$ & $\times$\\
 P5$'$ forced-wipe dip & writes $-0.44$ (8/9) $\to$ work $-0.39\,[-0.42,-0.35]$ (7/9) & $\checkmark$ (NE41)\\
 P6 chat cut harmless & $-0.72\to-0.59$ (3 events) & $\times$\\
-P9 selection pre-trend & $z\,-1.4\to-0.3$ & not met\\
 P11 artifact switch costs (new) & work $-0.00\,[-0.17,0.17]$; $\kappa_{\rm AS}\approx0<\kappa_{\rm ML}$ & $\times$\\
 NE41 memory dose (native) & $\rho=+0.01$; high$-$low tercile $-0.05\,[-0.10,0.01]$ & $\checkmark$\\
-NE16 memory fix (native) & memory written 99\% before and after; dip $-0.19\,[-0.43,0.12]$ & $\sim$\\
 NE29 lineage retired (native) & incumbents' work $z=+0.13$ & $\checkmark$\\
 \end{tabular}}}
 
 \hobsb{../figures/r1b/F_r1b.pdf}{Round 1b. (a) Work commits per call around a context erasure on the DQ1 ledger, relative to calls $-20\ldots-11$: a forced wipe (41-turn cap) cuts committed work by about 39\% for ten calls; voluntary consolidations dip more after a work burst (task phase). (b) Day-scale scrambles (meta over goal periods, 95\% CI): memory loss, newcomers, the rewrite control, chat cuts and artifact switches, on $V^*$ and on work output. Nothing but the chat cut (3 events) departs from zero.}
 
-\hcaveats{Day-scale tests stay underpowered (synthetic power 17--41\%), and $V^*$ moved in both regimes when the reliability measure was corrected, so period verdicts are replications under a changed yardstick. 118 of 172 artifact switches fall on a goal's first day and cannot be estimated within a period; the rest are agent-chosen, like voluntary consolidations. The work-ledger $V$ is undefined before \#30. NE16's manipulation was negligible. The erasure dip is post-hoc in origin; NE41 replicated it with dated predictions on independent data but the holdout (C3) has not run. $V_{\rm files}$ passed D2.6 on 5 shocks and is outside the pre-registered pool.}
+\hcaveats{Day-scale tests stay underpowered (synthetic power 17--41\%), and $V^*$ moved in both regimes when the reliability measure was corrected, so period verdicts are replications under a changed yardstick. 118 of 172 artifact switches fall on a goal's first day and cannot be estimated within a period; the rest are agent-chosen, like voluntary consolidations. The erasure dip is post-hoc in origin; NE41 replicated it with dated predictions on independent data but the holdout (C3) has not run. $V_{\rm files}$ passed D2.6 on 5 shocks and is outside the pre-registered pool.}
 
-\hnext{Run \texttt{confirm\_ne30.py} (C3: forced-wipe dip) after re-freezing it on work commits; test $V_{\rm files}$ as a pre-registered viability on new shocks (holdout goal changes); separate restart overhead from re-acquisition with H44's call categories; an involuntary artifact scramble needs NE24 (held out).}
+\hnext{Re-freeze \texttt{confirm\_ne30.py} on work commits and run C3; pre-register $V_{\rm files}$ on new shocks.}

@@ -341,20 +341,23 @@ def compendium(hs: list[dict], results: dict):
                                  if (HYP / h["slug"] / "summary/meta.json").exists() else {})
         stub = r.get("stub", "AUTO STUB" in (HYP / h["slug"] / "summary/content.tex").read_text(errors="replace")[:200])
         c, f, u = ratings(meta)
-        line = meta.get("one_line") or h["status"]
+        v2 = meta.get("v2") or {}
+        cred, eu, frag = v2.get("credence"), v2.get("expected_usefulness"), v2.get("fragile")
+        line = v2.get("claim") or meta.get("one_line") or h["status"]
         line = line if len(line) < 120 else line[:117] + "..."
         title = h["title"] if len(h["title"]) < 72 else h["title"][:69] + "..."
         draft = r" \textcolor{gray}{\scriptsize(draft)}" if stub else ""
         rows.append(rf"\textbf{{{h['id']}}} & {tex_escape(title)}{draft}\newline"
                     rf"{{\scriptsize\color{{gray}}{tex_escape(line)}}} & {cell(c, seq_color, lambda v: f'{v:.0f}' + chr(92) + '%')} & "
-                    rf"{cell(f, div_color, lambda v: f'{v:g}')} & {cell(u, div_color, lambda v: f'{v:g}')} & @@PAGE{i}@@ \\")
-    head = r"\textbf{ID} & \textbf{Hypothesis} & \textbf{Complete} & \textbf{Faithful} & \textbf{Useful} & \textbf{p.}\\ \hline"
+                    rf"{cell(cred, lambda v: div_color(5 * v), lambda v: f'{v:.2f}' + ('!' if frag else ''))} & "
+                    rf"{cell(eu, lambda v: div_color(min(5, v * 2.5 / 1.5)), lambda v: f'{v:.1f}')} & @@PAGE{i}@@ \\")
+    head = r"\textbf{ID} & \textbf{Hypothesis} (scored claim) & \textbf{Complete} & \textbf{Credence} & \textbf{EU} & \textbf{p.}\\ \hline"
     chunks = [rows[i:i + 12] for i in range(0, len(rows), 12)]
     tables = "\n".join(r"\begin{center}\begin{tabular}{lp{0.6\textwidth}cccr}\hline " + head + "\n" + "\n".join(ch)
                        + "\n\\hline\\end{tabular}\\end{center}" for ch in chunks)
     legend_seq = " ".join(rf"\colorbox[HTML]{{{seq_color(x)[0][1:]}}}{{\textcolor[HTML]{{{seq_color(x)[1][1:]}}}{{\scriptsize {x}\%}}}}" for x in (5, 25, 50, 75, 100))
-    legend_div = " ".join(rf"\colorbox[HTML]{{{div_color(v)[0][1:]}}}{{\textcolor[HTML]{{{div_color(v)[1][1:]}}}{{\scriptsize {v:g}}}}}" for v in (0, 1, 2, 2.5, 3, 4, 5))
-    includes = "\n".join(rf"\includepdf[pages=1,link,linkname={h['id']}]{{../../hypotheses/{h['slug']}/summary/summary.pdf}}" for h in built)
+    legend_div = "Credence " + " ".join(rf"\colorbox[HTML]{{{div_color(5 * v)[0][1:]}}}{{\textcolor[HTML]{{{div_color(5 * v)[1][1:]}}}{{\scriptsize {v:g}}}}}" for v in (0, 0.2, 0.4, 0.5, 0.6, 0.8, 1))
+    includes = "\n".join(rf"\includepdf[pages=-,link,linkname={h['id']}]{{../../hypotheses/{h['slug']}/summary/summary.pdf}}" for h in built)
     date = dt.datetime.now().strftime("%Y-%m-%d %H:%M")
     template = rf"""\documentclass[aps,pre,onecolumn,10pt,nofootinbib]{{revtex4-2}}
 \usepackage{{xcolor}}
@@ -367,8 +370,8 @@ def compendium(hs: list[dict], results: dict):
 \begin{{abstract}}
 Two RevTeX pages per hypothesis follow; click a row to jump to it. Ratings are estimates calibrated across hypotheses by the coordinator (rubric: \texttt{{writeup/hypothesis-pages/RUBRIC.md}}).
 \textbf{{Completion}}: estimated progress of the research direction (idea 5\%, round 1 done 35--50\%, holdout run 55--65\%, robustness and causal designs 70--85\%, settled 90--100\%). {legend_seq}
-\textbf{{Faithfulness}} (0--5, scoped): how well the model holds for what it claims (3 = descriptive or primary holdout passed; 4 = supported; 5 = faithful and mechanistic).
-\textbf{{Usefulness}} (0--5, unscoped): what an operator or alignment researcher can do with it, true or not (1 = vocabulary only; 2 = a diagnostic; 3 = a validated monitor or design rule; 4 = a steering lever; 5 = a transferable control knob). {legend_div}
+\textbf{{Credence}} (scoring v2, \texttt{{writeup/scoring/scoring-v2.pdf}}): probability that the scored claim (gray line under each title) survives an independent confirmatory test at its stated scope, built from an evidence ladder; ``!'' marks a fragile claim (its headline changed between data versions). Red = low, gray = 0.5, blue = high.
+\textbf{{EU}} (expected usefulness) = credence $\times$ value if true (0--5: whose decision changes, by how much, how generally); gray $\approx$ 1.5. Six anchors were double-scored by a blind rater (mean $|\Delta p|$ = 0.11). {legend_div}
 \end{{abstract}}
 \maketitle
 {{\footnotesize
