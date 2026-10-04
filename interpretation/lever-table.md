@@ -20,6 +20,7 @@ Reconciles the round-1b results of H29, H30, H35, H39, H43, H50 and H04 (RE-V1).
 | Designated or elected leader | Gets attention (replies ×1.4, #35) but no extra broadcast reach in regime II; the elected leader's broadcast pull rose in regime I (#26) | – | – |
 | Context erasure | Field toward work in both state spaces (H39) | K depends on the state space (−0.15 B4, +0.27 V4); costs ~10% of a segment's committed output (H15, H44) | – |
 | Document sharing (forecast week) | Reading a teammate's document moves an agent toward them (H24 G21 DiD, +0.03; fades under style residualization) | – | – |
+| One-lever test (H59) | At the read-out (0–2 calls) every class acts as a talk-ward field with small catalysis (G51: nudge κ 0.33, h 3.97; @-mention κ 0.14, h 3.77; named human κ 0.60, h 4.39; broadcast human κ −0.12, h 1.77) | Class differences live in the tails (nudge 30-call tail ≈ nudger selection; regime-I mentions act on the work↔wait edge); leave-one-class-out fails in 4/4 periods | Class levers invariant across NE43; one read = one kick (#5 dose saturates) |
 
 **Reading.**
 - Nudges are cheap attention levers (a glance and about one active minute) that barely move committed work.

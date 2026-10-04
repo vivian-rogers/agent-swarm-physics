@@ -1,0 +1,61 @@
+{
+ "complete": 40,
+ "faithfulness": 0.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before any outcome fit, synthetic validation first (it rescaled planted effects and showed that the direction test is blind for idle-read classes, amendment A1), replication on G51, G38, G04, three native tests (NE43, G05 dose, NE38), 70 per-period estimate rows, confirmatory script frozen and dry-run, not run. Analysis limited to 3+1 periods by the compute budget.",
+  "faithfulness": "The claim as posed is refuted: leave-one-class-out loses to class-specific fits in all four periods (T 0.0-0.75), and the shared direction fails in G38 and G04. Only a narrower, post hoc regularity holds (shared response at the read-out call, 77-100% in G51 and for G04 humans), plus NE43 invariance and saturating dose. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0; no holdout.",
+  "usefulness": "Gives an operator a compact, measured description of the immediate effect of any input at the call that reads it (kappa, h, d per class; the nudge and the @-mention look alike there), shows the read-out delay alone is not enough for message classes, and locates the class differences in the aftermath (nudge tails, regime-I edge catalysis). The NE43 invariance and the G05 'one read = one kick' are directly usable."
+ },
+ "one_line": "One triple per operator-input class does not predict a held-out class; only the response at the read-out call is shared, and the classes differ in their tails.",
+ "rated_by": "H59 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "No single (field, catalysis, read-out delay) triple transfers across operator input classes (leave-one-class-out fails in G51, G38, G04, G05); at the read-out all classes act as a talk-ward field with small catalysis, and class differences live in the tails",
+  "scope": "G51, G38, G04 (replication); natives G05, NE43, NE38",
+  "direction": "negative",
+  "original_verdict": "failed (one lever)",
+  "credence": 0.63,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification (h within 12%, θ within 1–3°)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "replication (fails in 4/4 periods)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "intervention consistent (NE43: class levers invariant across the nudger stop)",
+    "x": 1.5,
+    "evidence": "native NE43"
+   },
+   {
+    "factor": "penalty: read-out-only regularity is post hoc",
+    "x": 0.7,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: direction test blind for nudges at G51 scale",
+    "x": 0.8,
+    "evidence": "card §Synthetic"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "model each input class separately beyond the read-out call; one read = one kick",
+  "magnitude": "small",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 1.25,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H59 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
