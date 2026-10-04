@@ -1,19 +1,19 @@
 {
- "complete": 45,
+ "complete": 65,
  "faithfulness": 2.0,
  "usefulness": 1.5,
  "rationale": {
-  "complete": "Round 1 done: card, impostor table and dated predictions before real data; synthetic validation at real counts in both regimes and both models (found that the HH's literal composition null manufactures a slow mode; fixed as Amendment A1); replication on 33 periods plus regime-level slow-mode tests; two natives (G51, NE33/NE32); seven preprocessing variants with their own nulls; three post hoc rival checks; scorecard; frozen, guarded confirm script dry-run, not run. No holdout run, no carrier test.",
-  "faithfulness": "The slow-mode contrast is 3x the synthetic composition null in both models in regime I, has the planted OU shape (tau 23-28 d, negative far-epoch similarity), survives member turnover (overlap-adjusted and size-matched disjoint), Gemini removal, scaffold segments and three exogenous covariates. It fails the interventional signature (no roster jumps), is absent inside #51 and marginal in regime III, and an unmeasured slow exogenous drift is not excluded. Scorecard A1 B1 C2 D1 E0 F2 G1 H1 I0.",
-  "usefulness": "First positive egregore result: a collective state variable with a measured timescale (~25 days) that outlives members. It tells an operator not to expect a goal change or a roster change to reset the village and to compare a village with its last 2-3 weeks. Practical leverage is limited until the carrier (record vs outside drift) is identified."
+  "complete": "Round 1 (card, synthetic validation, 33-period replication, natives, 7 variants, post hoc rivals, frozen confirm script) plus round 2 (2026-10-04): pre-registered carrier test with read vs posted-but-unread / used-but-unposted record partitions, operator-beyond-centroid removal, outside-topic permutation test, clock identifiability, and a joint OU fit with H82, each validated synthetically at real counts before real data (amendments A5-A7). Holdout not run.",
+  "faithfulness": "Regime-I slow mode is 3x the composition null in both models, survives turnover, Gemini removal, scaffold segments, operator directions beyond the centroid (D_adjg 0.24/0.23 vs q95 0.07/0.08) and shows no outside-topic concentration; H82's boundary loadings fit the same OU tau (weak test). It fails the interventional signature (no roster jumps), is absent inside #51, its carrier is not the long-lived artifact record (power 1.0), and calendar-time outside drift cannot be excluded because the clock is not identifiable. Scorecard A1 B1 C2 D1 E0 F2 G1 H1 I0 (unchanged).",
+  "usefulness": "First positive egregore result with a measured timescale (~3 weeks; joint with H82 16-21 d). Round 2 removes the obvious levers: the mode is not in the artifact record, operator messages or outside-world talk, so curating artifacts or rewording operator messages will not steer it. Operators should compare a village with its last 2-3 weeks. Leverage stays limited until the carrier (rolling chat window or calendar drift) is found."
  },
- "one_line": "Regime-I village content carries a collective slow mode beyond composition and goal fields (tau_u ~25 d; contrast 0.24/0.21 vs null 0.08/0.09), across turnover; absent in #51, no roster jumps.",
+ "one_line": "Regime-I village content carries a collective slow mode beyond composition and goal/operator fields (tau_u ~25 d, contrast 0.24/0.21 vs null 0.08/0.09) across turnover; it does not follow the artifact record members read; calendar drift not excluded.",
  "models": [
   {
    "model": "11-vector-spins",
    "role": "primary",
    "outcome": "mixed",
-   "note": "OU slow mode in regime I; none in #51"
+   "note": "OU slow mode in regime I (tau 23-28 d; shared tau with H82 boundary trace 16-21 d); none in #51"
   },
   {
    "model": "14-scaling-and-fluctuations",
@@ -28,7 +28,7 @@
    "note": "Egregore framing only; no viability function fitted"
   }
  ],
- "rated_by": "H81 agent (suggested)",
+ "rated_by": "H81 agent (suggested, round 2)",
  "updated": "2026-10-04",
  "v2": {
   "claim": "In regime I, village content has a collective slow mode beyond its members' own vectors and the measured goal fields: it decays over 23–28 days and survives member turnover (D_adj 0.17 vs null q95 0.10); it is absent in regime III and inside #51. Excluded: an unmeasured slow external drift every agent reads",

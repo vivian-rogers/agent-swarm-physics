@@ -1,11 +1,17 @@
 # H81: Culture beyond composition: the emergent slow mode
 
-**Status:** **exploratory round 1 done (2026-10-04, non-holdout only). Supported in regime I: the village content carries a slow collective mode (τ_u ≈ 23–28 days) beyond composition and the measured goal fields, carried across member turnover; not seen in regime III or inside #51, and it does not jump at roster events.**
+**Status:** **exploratory round 2 done (2026-10-04, non-holdout only). Supported in regime I: the village content carries a slow collective mode (τ_u ≈ 23–28 days) beyond composition and the measured goal fields, carried across member turnover; not seen in regime III or inside #51, and it does not jump at roster events.**
 - **Slow mode:** cross-goal culture residuals ≤ 14 d apart align (s̄ 0.17 / 0.14) and decay over 3–4 goal periods; contrast D_adjg 0.237 / 0.208 vs S0 95th percentile 0.081 / 0.089 (bge / gte).
 - **Not members:** the overlap-adjusted contrast (0.166 / 0.170) and the size-matched turnover-disjoint contrast pass; without Gemini 2.5 Pro ×1.06.
 - **Not measured fields:** survives three exogenous covariates and the scaffold-segment restriction (post hoc); unmeasured slow outside drift remains open.
 - **Fails:** roster events (percentile 0.08 / 0.14), #51 within-period slow mode (common mode τ ≈ 3 active days), NE33 batch joins.
 - Card and predictions written 2026-10-04 20:05 UTC before any real-data statistic; synthetic validation found that the HH's literal null manufactures a slow mode (Amendment A1). `analysis/confirm.py` written and dry-run, **not run**.
+- **Round 2 (2026-10-04, non-holdout):**
+  - The long-lived artifact record does not carry the regime-I mode: C_R1 +0.02 / −0.07 vs exogenous-drift q95 0.11 / 0.09, power 1.00. That channel could carry at most half of the mode.
+  - The mode survives removal of the operator directions beyond the centroid (D_adjg 0.24 / 0.23) and is not concentrated in outside-world talk.
+  - H82's boundary trace fits the same OU τ (joint 21 / 16 d; a weak test).
+  - The clock (calendar vs village time) is not identifiable. The exogenous-drift rival is **narrowed, not beaten**.
+  - In regime III, members do follow the artifact record they read (C_R1 +0.12 / +0.13).
 **Question (GOALS.md):** **Q3** (is there collective order beyond fields?). It is the composition test of the egregore programme: does the village content vector carry a slow component that its members' personal vectors and the goal fields do not explain?
 **Fields:** stat mech (vector spins, slow modes), info theory, sociophysics (cultural evolution)
 **Literature:** [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md) (the egregore framing of model 04); [Krakauer et al. 2020](../../literature/krakauer-2020-information-theory-of-individuality.md) (individuality favors the bigger unit, hence size-matched comparisons); [Heylighen 2016](../../literature/heylighen-2016-stigmergy-universal-coordination-mechanism.md) (the record as the carrier). No literature refinement was attached to HH293.
@@ -178,6 +184,8 @@ Readings: (1) after A1 the S0 bias is ≈ 0 (regime I D_adjg mean 0.001 / 0.003;
 | [NE33](goalperiod-subhypotheses/NE33/README.md) | native | failed | stayer-jump percentiles 0.86 / 0.78 (07-09), 0.89 / 0.72 (07-10), 0.83 / 0.53 (09-03), 0.17 / 0.14 (09-04) |
 | local: regime I span | replication | supported | D_adjg 0.237 / 0.208 (S0 q95 0.081 / 0.089); D_adj 0.166 / 0.170; τ_u 28 / 23 d |
 | local: regime III span | replication | mixed | D_adjg 0.256 / 0.275 (q95 0.245 / 0.250); size-matched fails |
+| local: regime I span (round 2) | replication | supported | record carrier C_R1 +0.02 / −0.07 (S_ex q95 0.11 / 0.09; failed carrier); D_adjg after operator removal 0.244 / 0.229 (S0 q95 0.07 / 0.08); L_out +0.004 / +0.009 (n.s.); joint τ with H82 20.9 / 15.5 d |
+| local: regime III span (round 2) | replication | descriptive | record-following C_R1 +0.12 / +0.13 (q95 0.04 / 0.05); τ blocks 9.7 / 6.8 d, H82 boundaries 6.5 / 6.5 d |
 
 ## Outcome vs prediction
 *Run 2026-10-04 20:24–20:35 UTC (`analysis/replication.py`, `analysis/natives.py`, `analysis/posthoc.py`). Non-holdout only. Thresholds are the S0 95th percentiles of Amendments A1–A4.*
@@ -215,7 +223,7 @@ Readings: (1) after A1 the S0 bias is ≈ 0 (regime I D_adjg mean 0.001 / 0.003;
 Figures: `figures/summary_obs.pdf` (profile s̄(Δt) with the S0 band; D_adjg real vs null and planted), `figures/summary_obsb.pdf` (synthetic pass rates for culture vs drift; κ per period). Data: `data/processed/H81-culture-beyond-composition/` (`replication/`, `natives/`, `posthoc/`, `synthetic/`, `confirm/confirm_dryrun.json`). Estimates: 88 rows in `per_period_estimates` (hypothesis H81).
 
 ## Faithfulness scorecard
-*Round 1, 2026-10-04.*
+*Round 1, 2026-10-04. Round 2 (same day) changed no score; see "Round 2 scorecard" below.*
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
 **Rival models:** R1 exogenous slow drift; R2 individual drift; R3 estimator-induced memory; R4 scaffold drift.
 **Locked holdout used for confirmation:** none yet (`analysis/confirm.py`, dry-run only).
@@ -229,7 +237,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | E interventional | predicts the change across a natural experiment | 0 | Roster events (22) and NE32/NE33 batch joins show no jump. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 | Synthetic at real counts found the literal-null artifact (+0.37) and fixed it (A1); power 0.96–0.99 at s = 0.5; 7 preprocessing variants agree. |
 | G ground truth | agrees with known structure | 1 | Scaffold steps and Gemini removal leave it; no labelled "culture" ground truth exists. |
-| H comparative | beats the named rivals | 1 | Beats R2 (overlap-adjusted and size-matched disjoint), R3 (S0), R4 (within segments), measured R1; unmeasured exogenous drift remains. |
+| H comparative | beats the named rivals | 1 | Beats R2 (overlap-adjusted and size-matched disjoint), R3 (S0), R4 (within segments), measured R1 (round 2: operator directions beyond the centroid and outside-world topics too); the artifact-record carrier is rejected (round 2); unmeasured calendar-time drift remains. |
 | I transfer | holds in other same-mode periods, including the holdout | 0 | Regime III marginal, #51 none; holdout not run. |
 
 ## Confirmatory predictions (written 2026-10-04 20:38 UTC after round 1, before any holdout use; `analysis/confirm.py`, dry-run only, **not run**)
@@ -239,7 +247,7 @@ Targets: held-out goal periods inside regime I (#9, #14, #15, #22, #28, #29) and
 - **Reuse disclosure:** H20 and H54 target the same regime-I held-out goals with day-level content statistics (different estimator family).
 
 ## Caveats
-- **Exogenous drift is not excluded.** Only measured directions (kickoff, goal text, human messages) and scaffold steps are controlled. A slow outside drive that all agents read (news, model releases, operator mood) would look the same.
+- **Exogenous drift is not excluded.** Only measured directions (kickoff, goal text, human messages) and scaffold steps are controlled. A slow outside drive that all agents read would look the same. Round 2 also removed operator directions beyond the centroid and tested outside-world talk (both negative), but the calendar-time vs village-time clock is not identifiable.
 - **The literal HH null is biased** (it manufactured +0.37 in regime III synthetics). The two-way FE fix assumes additive agent and goal effects.
 - **Regime I has 4–12 agents**; κ cannot be tested at N = 4 with sign flips.
 - **Turnover-disjoint statistics have low power** unless size-matched; P3 rests on the overlap-adjusted contrast.
@@ -250,13 +258,161 @@ Targets: held-out goal periods inside regime I (#9, #14, #15, #22, #28, #29) and
 *Proposed by the round-1 agent; the coordinator may revise.*
 - **Where round 1 went sideways:** the HH's literal composition null manufactures a slow mode when one goal period dominates an agent's history; the two-way FE estimator is the fix every composition test should use.
 - **What the direction is really after:** a village-level state variable that persists for weeks and survives turnover, and what carries it.
-- **H81-R1. Name the carrier.** Regress the culture residual on the content of long-lived artifacts (village sites, history documents, repos) read in the context ledger, vs posted-but-unread artifact content (in-flight placebo). A record-borne mode should follow what was read.
-- **H81-R2. Exogenous drift probe.** Project the slow mode onto calendar-dated outside topics (model names, release events) and onto operator-message style beyond the centroid direction.
+- **H81-R1. Name the carrier.** Regress the culture residual on the content of long-lived artifacts (village sites, history documents, repos) read in the context ledger, vs posted-but-unread artifact content (in-flight placebo). A record-borne mode should follow what was read. *(Done in round 2; see below.)*
+- **H81-R2. Exogenous drift probe.** Project the slow mode onto calendar-dated outside topics (model names, release events) and onto operator-message style beyond the centroid direction. *(Done in round 2; see below.)*
 - **H81-R3. Regime III with more units.** Use weekly blocks inside #38 and #51 with agent-goal removal and the held-out #45–#50 at confirmation; check whether the τ ≈ 3 d common mode of #51 is the regime-III form of the same object.
-- **H81-R4. Link to H82.** Fit one OU model to the boundary remanence (H82) and the block similarity profile together.
+- **H81-R4. Link to H82.** Fit one OU model to the boundary remanence (H82) and the block similarity profile together. *(Done in round 2; see below.)*
+
+## Round 2 (2026-10-04): the carrier, the exogenous-drift probe and the H82 link
+*Scope: H81-R1, R2 and R4. R3 (regime III with more units) is not part of this round.*
+
+### Round 2 design, predictions and kill rules
+*Written 2026-10-04 21:22 UTC, before any round-2 statistic on real data. Sampling facts seen beforehand (no culture residual was compared with any of them):*
+- *Long-lived (≥ 14 d old) repo, site and file mentions in agent chat on eligible agent-days: regime I 188 (21 artifacts), regime III 6,437 (122).*
+- *Agent-blocks with a non-empty ledger read set R and posted-but-unread set U: regime I 111 and 4 of 271; regime III 349 and 253 of 399. Agent-blocks with a used-but-unposted set (below): regime I 115 of 271.*
+- *Regime I has one chat room. Its documented active hours were 2 h/day (May–Jul 2025), 3 h (Aug–Oct) and 4 h (Nov 2025–Feb 2026). It has no idle gap longer than 3 days.*
+- *H82's stored outputs keep γ only for P−1, P+1 and the placebo median, so R4 refits H82's regression for every centroid.*
+
+**Inputs and estimator.** The shared `infra/shared/culture_vectors.py` tables (identical to round 1's), its `projectors`, and its `personal_vectors(method="fe")`: the **two-way agent + goal fixed effect** (Amendment A1), not the leave-goals-out mean. The exception is R4's H82 arm, which keeps H82's own prior (`prior_mean`, the leave-{P, Q}-out mean) so that it reproduces H82's estimator. Non-holdout only (`holdout_mask`, asserted). Both embedding models, `style_resid`. Code: `analysis/r2lib.py`, `analysis/r2_synthetic.py`, `analysis/r2_run.py`. Data: `data/processed/H81-culture-beyond-composition/round2/`.
+
+**R1. Name the carrier.**
+- **Long-lived artifact** for block b: a repo, site or file (not a bare domain) first seen ≥ 14 d before b's first day (`artifacts.first_t`).
+- **Record content** ρ_X^{(b, −i)}: the unit mean of day culture residuals r_{j,d} = Π_{G,j}(v_{j,d} − μ_j^{(−G)}) (FE personal vector, exogenous directions removed, centered as in round 1). The mean runs over eligible agent-days with j ≠ i, in the same regime, on days ≤ b's first day − 7 d, on which X was mentioned (chat, intention or action; `how` ∈ {url, output, bare}). It is the village state that the artifact's record holds, not the reader's own past.
+- **Read set** R_{i,b}: long-lived artifacts named in chat messages by others that entered i's context (`context_ledger_items` at i's calls on b's days).
+- **Posted-but-unread set** U_{i,b}: long-lived artifacts named in chat messages posted on b's days that never entered i's context in b. They are not in R_{i,b}, and i did not name or touch them in b. This is the in-flight placebo in regime III (rooms). In regime I (one room) U is empty for 267/271 agent-blocks. The pre-declared regime-I placebo is therefore **used-but-unposted**: long-lived artifacts that block-mates touched in actions or intentions in b, that never appeared in a chat item i read, and that i never touched. Regime III reports both placebos.
+- **Statistic C_R1** = mean over agent-blocks with both sets of [cos(r̃_{i,b}, â^R_{i,b}) − cos(r̃_{i,b}, â^U_{i,b})]. Here r̃ is the centered agent-block residual, â is the unit mean of the set's record vectors, and each goal carries total weight 1. Goal-cluster bootstrap CI.
+- **Mediation (secondary):** M_R = 1 − D_adjg(u_b with its projection on the block's read-record direction removed) / D_adjg(u_b); M_U likewise with the placebo direction.
+- **Nulls and power (synthetic, real panel, real sets and dates):** S0 (round 1's composition null); **S_ex** = round 1's S1 (a calendar-time OU mode, τ 28 d, share 0.5) with no reading effect, which is the exogenous-drift world; **S_rec** = planted record carriage. In S_rec, blocks are generated in time order, and each member's days in b get λ × the mean situational content (simulated vector minus the author's personal part) of the ≥ 7-d-old agent-days that mentioned the artifacts in R_{i,b}. λ ∈ {0.5, 1, 2}.
+- **P-R1 (record-borne mode; my prior 0.25):** in regime I, C_R1 > S_ex q95 in both models, and M_R − M_U > its S_ex q95. *Against:* C_R1 ≤ S_ex q95.
+- **Kill (record carrier as measured):** P-R1 fails while S_rec has power ≥ 0.8 at the λ whose mean D_adjg is closest to the round-1 value (0.237 / 0.208). Then the verdict is "the measured artifact record does not carry the mode". Without that power, R1 is **inconclusive**. Regime III is descriptive for the slow mode (marginal in round 1), but a pass there shows that reading the record moves content.
+
+**R2. Exogenous-drift probe.**
+- **R2a, operator beyond the centroid.** Each goal's projector also removes the top 3 principal directions of the goal's human messages and the human-message centroids of every non-holdout goal whose span lies within ±21 d. Placebo: the same number of human directions from goals ≥ 56 d away (20 draws). Statistics: retention ρ_op = D_adjg(removal) / D_adjg(primary) and ρ_pl (placebo mean). D_adjg(removal) is compared with its own S0 q95 (100 replicates). *Operator drift explains the mode* if ρ_op ≤ 0.5 and ρ_pl − ρ_op ≥ 0.25 in both models. *The mode survives* if D_adjg(removal) > its S0 q95 in both models.
+- **R2b, calendar-dated outside topics.** An agent statement is *outside* if it matches a fixed pattern list: explicit calendar dates, years 2024–2027 and holidays; news and release words (news, headline, announced, released, launch, election, stock market, breaking); and outside AI organisations (OpenAI, Anthropic, DeepMind, xAI, Meta AI, Mistral, DeepSeek, Nvidia, Microsoft). Model names are excluded because the agents carry them as names.
+  - For each agent-day: r_out is the residual of the unit mean of its outside statements. The control is a same-size random subset of its other statements, with the same residualization.
+  - Block b: c_out = mean r_out over agent-days of *other* goals within ±14 d, c_ctl likewise.
+  - **L_out** = goal-weighted mean of cos(u_b, c_out) − cos(u_b, c_ctl).
+  - Null: outside labels permuted within agent-days (200 draws).
+  - *Exogenous drift via outside topics* predicts L_out > permutation q95 in both models. A village culture predicts L_out ≤ q95.
+- **R2c, which clock?** OU profile fits s = A e^{−Δ/τ} + c over all cross-goal block pairs, under three clocks: calendar days; documented active hours (Σ `documented_hours` over calendar days, null → 2 h; schedule metadata only); and goal count |G_b − G_b′| (goal numbers as labels, held-out goals included as labels). The statistic is the weighted SSE, with the same 3 parameters per clock.
+  - Identifiability: OU modes planted on each clock (share 0.5; τ 28 d, its hour equivalent and 3 goals). A clock decision is used only if the planted clock gets the lowest SSE in ≥ 70% of replicates for that contrast. Otherwise R2c is **inconclusive**.
+  - *Exogenous drift* predicts that the calendar clock fits best. *A village-internal mode* predicts that active hours or goal count fits best.
+- **Rival R1 (exogenous slow drift) counts as beaten only if** (i) the mode survives R2a, (ii) R2b finds no outside concentration, and (iii) one discriminating test is positive: P-R1 passes, or R2c picks a village clock with accuracy ≥ 0.7. If (i) and (ii) hold and (iii) is inconclusive, the rival is **narrowed, not beaten**: measured operator and outside channels are excluded. If R2c picks calendar time with accuracy ≥ 0.7, the rival is **supported**.
+
+**R4. One OU mode for H81 and H82?**
+- H82's boundary regression (kickoff, goal text, previous kickoff, the day's human centroid, room kickoff, #51 agent goal, H82's prior, leave-i-out centroid) for **every** other non-holdout goal Q of the regime, on days d = 1–5 of P, at the 25 boundaries (rebuilt from the shared tables and checked against H82's `boundaries.parquet`). This gives γ_Q at the signed lag Δ = day d − mean date of Q's agent-days.
+- Fits: γ(Δ) = A₈₂ e^{−|Δ|/τ₈₂} + c₈₂ (each boundary weighted 1) and H81's s(Δ) = A₈₁ e^{−Δ/τ₈₁} + c₈₁. They are fitted separately and jointly (shared τ, Gaussian likelihood with a variance per data set). Statistics: Δτ = τ₈₂ − τ₈₁ (goal-jackknife SE) and LR = 2(ℓ_sep − ℓ_joint).
+- Calibration: one planted OU mode (S_ex) run through both pipelines (50 replicates per model), which gives the one-mode distributions of Δτ and LR.
+- **P-R4 (one mode; prior 0.35):** Δτ inside the synthetic 90% interval and LR ≤ its synthetic q95, in both models, with the shared τ in [14, 56] d. *Against:* Δτ or LR outside: H82's trace and H81's mode have different timescales. H82's PH2 (own-past content absorbs Δγ₁) favours this.
+
+**Estimates.** Rows `r2_*` per regime span (and per boundary-regime for R4) via `write_estimates`, role `replication`.
+
+### Round 2 synthetic validation (axis F; run 2026-10-04 21:28–21:42 UTC, before any round-2 statistic on real data)
+`analysis/r2_synthetic.py` → `round2/synthetic_{r1,r2a,r2c,r4}_<model>.json`. Real panels, real read and placebo sets, real dates; round-1 scales.
+
+**R1 (C_R1 pass rate against the S_ex 95th percentile; bge / gte).**
+
+| Regime / placebo | agent-blocks (goals) | S_ex mean C_R1 | S_ex q95 | S0 | S_rec λ 0.5 | λ 1 | λ 2 | D_adjg under S_rec λ 0.5 / 1 / 2 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| I / used-but-unposted | 54 (6) | −0.05 / −0.04 | 0.114 / 0.090 | 0.11 / 0.19 | 0.87 / 0.90 | 1.00 / 1.00 | 1.00 / 1.00 | 0.02 / 0.03 / 0.11 (bge); 0.02 / 0.03 / 0.10 (gte) |
+| III / posted-but-unread | 85 (3) | 0.01 / 0.01 | 0.044 / 0.047 | 0.03 / 0.06 | 0.52 / 0.47 | 0.90 / 0.86 | 0.00 / 0.01 | 0.08 / 0.13 / 0.29 |
+| III / used-but-unposted | 228 (5) | 0.02 / 0.02 | 0.065 / 0.069 | 0.02 / 0.03 | 0.55 / 0.32 | 0.98 / 0.97 | 0.98 / 0.98 | 0.09 / 0.14 / 0.31 |
+
+Readings:
+1. C_R1 is calibrated under exogenous drift. S_ex leaves it at or below 0: drift loads read and unread record content equally.
+2. In regime I, C_R1 has power ≥ 0.87 at λ ≥ 0.5.
+3. **The measured regime-I record channel is too sparse to make the observed mode.** Even at λ = 2, planted record carriage gives D_adjg 0.10–0.11, half of the observed 0.237 / 0.208. Only 54 agent-blocks in 6 goals have both sets.
+4. In regime III, strong recursive carriage (λ = 2) makes read and unread records alike, so the posted-but-unread contrast loses power there.
+5. The mediation ratios M_R and M_U are unstable. Their denominator D_adjg is near 0 in S0 and S_rec, which gives values from −28 to +26.
+
+**R2a.** Under S_ex (a mode unrelated to operator directions), removing the real operator directions (median 7 per goal in regime I) keeps 0.89–0.90 of D_adjg, and the placebo removal keeps 0.86–0.87. S0 q95 of D_adjg after the real removal: regime I 0.067 / 0.076, regime III 0.205 / 0.238.
+
+**R2c (100 replicates per planted clock; pairwise accuracy = P(planted clock has the lower SSE)).**
+- Planted calendar beats hours in 0.54 / 0.43 of replicates and goals in 0.57 / 0.64.
+- Planted hours beats calendar in 0.75 / 0.68.
+- Planted goal count beats calendar in 0.82 / 0.74 and hours in 0.77 / 0.70.
+- Calendar and documented hours cannot be told apart. A goal-count winner would be wrong in 36–43% of calendar-truth worlds.
+
+**R4 (one OU mode, τ 28 d, share 0.5; 100 replicates per model).**
+- τ₈₁ median 28 / 29 d. τ₈₂ median 22 / 22 d: the H82 arm is biased about 6 d low.
+- Δτ 90% interval [−33, +6] / [−27, +12] d. LR q95 7.2 / 6.9. The goal-jackknife z never exceeds 1.96: it is conservative.
+
+### Amendments (2026-10-04 21:43 UTC, after the synthetic validation, before any round-2 statistic on real data)
+- **A5 (R1 decision).** P-R1 is decided by C_R1 alone. M_R and M_U are reported as descriptive only (reading 5).
+  - λ* (the λ whose mean D_adjg is closest to the observed one) is 2 in regime I, where power is 1.00. A failed P-R1 in regime I is therefore "failed" by the kill rule.
+  - Reading 3 adds a structural fact that the real data cannot change: the measured long-lived-artifact channel can carry at most about half of the regime-I mode.
+- **A6 (R2c decision).** A clock contrast is decided only if both directions are identifiable: each clock, when planted, beats the other in ≥ 0.7 of replicates. No pair meets this (calendar vs hours 0.54 / 0.43; calendar vs goals 0.57 / 0.64 for the calendar direction). R2c is therefore **inconclusive by design**. Its real-data SSEs and τ per clock are reported as descriptive. The rival-R1 rule's condition (iii) can then pass only through R1.
+- **A7 (R4 calibration).** P-R4 uses the synthetic one-mode band for Δτ and LR, as pre-registered. The jackknife z is reported but not used, because it never rejects under one mode.
+
+
+### Round 2 outcome vs prediction
+*Run 2026-10-04 21:42–21:44 UTC (`analysis/r2_run.py` → `round2/r2_results.json`). Non-holdout only. Decision rules as amended (A5–A7). Estimator: shared `culture_vectors`, two-way FE personal vectors.*
+
+| Prediction | Observed (bge / gte) | Verdict |
+| --- | --- | --- |
+| **P-R1** regime I: C_R1 > S_ex q95 | **+0.021 [−0.17, 0.22] / −0.072 [−0.15, −0.00]** (q95 0.114 / 0.090; power 1.00 at λ* = 2); 54 agent-blocks, 6 goals. Mean cos with the read record 0.07 / 0.05; with the used-but-unposted record 0.05 / 0.12 | **failed** (kill rule met: the measured artifact record does not carry the regime-I mode) |
+| R1 regime III, posted-but-unread (descriptive) | **+0.119 [0.02, 0.26] / +0.128 [0.06, 0.26]** (q95 0.044 / 0.047); 85 agent-blocks, 3 goals | passes (record-following exists in regime III) |
+| R1 regime III, used-but-unposted (descriptive) | +0.096 [0.05, 0.14] / +0.092 [0.06, 0.12] (q95 0.065 / 0.069); 228 agent-blocks, 5 goals | passes |
+| Mediation M_R − M_U (A5: descriptive) | regime I −0.05 / −0.01; regime III +0.04 / +0.02 | uninformative |
+| **R2a** mode survives operator directions beyond the centroid | regime I D_adjg **0.244 / 0.229** after removing a median of 7 extra directions per goal (S0 q95 0.067 / 0.076). Retention ρ_op 1.03 / 1.10 vs placebo 0.94 / 0.97; S_ex predicts 0.89–0.90 for a non-operator mode | **survives**; operator drift does not explain it |
+| **R2b** outside-topic concentration | regime I L_out **+0.004 / +0.009** (permutation q95 0.018 / 0.014; p 0.35 / 0.15); 963 agent-days, 41 blocks, 16% of statements outside | **none**: the mode is not concentrated in outside-world talk |
+| **R2c** which clock (A6: inconclusive by design) | regime I weighted SSE: calendar 8.89 / 7.82, hours 8.85 / 7.78, goal count **8.67 / 7.59** (lowest in both). τ = 28 ± 5 / 23 ± 4 d, 84 ± 16 / 57 ± 10 h, **2.4 ± 0.4 / 1.7 ± 0.3 goal periods**. Regime III: calendar lowest | inconclusive (goal count lowest by 2.5–3%; identifiability < 0.7) |
+| **P-R4** one OU mode for H81 and H82 | regime I τ₈₁ 28.2 ± 5.1 / 23.2 ± 4.3 d, τ₈₂ 16.2 ± 3.4 / 12.6 ± 2.8 d; **Δτ −11.9 / −10.5** (one-mode 90% band [−33, +6] / [−27, +12]); LR 4.3 / 5.6 (q95 7.2 / 6.9); **joint τ 20.9 ± 2.8 / 15.5 ± 2.2 d** | **pass** (consistent with one mode; the band is wide) |
+| R4 regime III (descriptive) | τ₈₁ 9.7 ± 3.5 / 6.8 ± 1.9 d, τ₈₂ 6.5 ± 2.0 / 6.5 ± 1.5 d; joint 7.6 / 6.6 d | agree |
+| **Rival R1 (exogenous slow drift)** by the pre-registered rule | (i) survives R2a ✓; (ii) no outside concentration ✓; (iii) P-R1 failed and R2c is inconclusive ✗ | **narrowed, not beaten** |
+
+Check: the R4 H82 arm reproduces H82's stored γ[P−1] exactly (90 regime-I and 28 regime-III boundary-days; maximum difference 0).
+
+### Round 2 results
+**1. The long-lived artifact record does not carry the regime-I mode.**
+- In regime I, an agent's culture residual is no closer to the record content of the old artifacts it read than to the record of old artifacts its block-mates used but never posted. C_R1 = +0.02 / −0.07 against an exogenous-drift 95th percentile of 0.11 / 0.09.
+- The test had power 1.00 against planted record carriage at λ* = 2.
+- The channel is also thin. Only 188 old-artifact chat mentions fall in 9 months. Even full planted carriage through it makes at most half of the observed contrast (D_adjg 0.10–0.11 vs 0.21–0.24).
+- The regime-I read records are older than the placebo records (median 76 vs 25 d). The S_ex null carries that imbalance.
+
+**2. In regime III, members do follow the record they read.** C_R1 = +0.12 / +0.13 against posted-but-unread content from other rooms, and +0.10 / +0.09 against used-but-unposted artifacts. Both exceed their S_ex 95th percentiles in both models. This is the first content-level evidence that reading the artifact record moves an agent's content at week scale. Two limits apply: room topics differ (own-room vs other-room artifacts), and only 3–5 goals contribute.
+
+**3. Measured exogenous channels do not explain the mode.**
+- Removing each goal's top 3 human-message directions and the human centroids of neighbouring goals (±21 d) leaves D_adjg at 0.24 / 0.23. That is 1.03 / 1.10 of the primary value; a placebo removal keeps 0.94 / 0.97.
+- Statements about the outside world (dates, holidays, news and releases, AI companies) carry the slow mode no more than size-matched statements from the same agent-days (L_out +0.004 / +0.009; permutation p 0.35 / 0.15).
+- The rival that remains is a calendar-time drift that reaches every agent without passing through operator messages or outside-world talk.
+
+**4. The clock cannot be identified.** The goal-count clock gives the lowest profile SSE in both models (τ_u = 2.4 / 1.7 goal periods). The margin over the calendar clock (2.5–3%) is inside what the synthetic shows for calendar-time worlds, where goal count wins in 36–43% of replicates. Calendar time and documented active hours are indistinguishable at this sampling.
+
+**5. H81's slow mode and H82's boundary trace fit one OU timescale.**
+- In regime I, the shared τ is 21 ± 3 / 16 ± 2 d. H82's boundary loadings decay with τ₈₂ = 16 / 13 d. That is about 11 d shorter than H81's block profile and inside the one-mode band (the H82 arm is biased about 6 d low).
+- The H82 amplitude is 0.41–0.47 of H81's.
+- In regime III both timescales are about 7 d and agree.
+- The band is wide: it admits τ₈₂ from about 0 to 35 d. The joint fit therefore shows consistency, not identity. H82's PH2 (members' own past content absorbs the boundary trace) remains the better description of what carries the trace at a boundary.
+
+**Descriptive (post hoc, not decisive).** Within the 2–3 h/day era (pairs before 2025-11-01; 372 pairs) the calendar τ is 13–14 d. Within the 4 h/day era (75 pairs) the profile is flat. A village activity clock predicts the opposite order, but the late era has too few pairs to read.
+
+Figure: `figures/summary_r2.pdf` ((a) C_R1 with the S_ex band; (b) regime-I block profile and H82 boundary loadings with the shared-τ fit). Estimates: 34 `r2_*` rows in `per_period_estimates` (regime spans, both models).
+
+### Round 2 scorecard (old → new)
+| Axis | Round 1 | Round 2 | Why |
+| --- | --- | --- | --- |
+| A mapping | 1 | 1 | Unchanged; regime I only |
+| B assumptions | 1 | 1 | One OU form fits both the block profile and H82's boundary loadings; the clock is not identifiable |
+| C adequacy | 2 | 2 | Also survives operator directions beyond the centroid (D_adjg 0.24 / 0.23 vs S0 q95 0.07 / 0.08) |
+| D unfitted predictions | 1 | 1 | H82's loadings match a shared τ (a weak test); roster jumps still fail |
+| E interventional | 0 | 0 | No natural experiment added |
+| F identifiability | 2 | 2 | Every round-2 test validated at real counts; R2c shown non-identifiable before use |
+| G ground truth | 1 | 1 | Unchanged |
+| H comparative | 1 | 1 | Operator-beyond-centroid and outside-topic rivals beaten; the artifact-record carrier rejected (power 1.0); calendar-time drift open |
+| I transfer | 0 | 0 | Holdout not run; regime III τ ≈ 7 d (a different value) |
+
+### Round 3 redirects (proposed by the round-2 agent)
+- **Where round 2 went sideways:** the regime-I record channel visible in the data (old-artifact links) is too sparse to carry the mode even in principle. In a one-room village, the ledger's posted-but-unread partition is empty.
+- **H81-R5. The rolling chat window as the carrier.** Chat-mode prompts rebuild from recent chat, so each block reads the tail of the previous one. Test the culture residual of block b against the content of previous-block messages that entered members' calls, vs same-age messages that fell outside the fetch window. This needs the chat-mode fetch limit (Known issue: "unknown truncation in chat mode").
+- **H81-R6. Calendar-time drift through newcomers.** A calendar drift reaches a newcomer on day 1; a village mode reaches it only after reading. Pool all regime-I joins (not only boundary days) and compare newcomers' first-3-day loading on u_b with veterans', after a power check (H82-R3).
+- **H81-R7. Regime-III record-following with room topics removed.** Repeat C_R1 within rooms (read vs in-flight at matched lag, H57-style) to separate record-reading from room-topic fields.
+
+**Claim that stands:** In regime I, village content carries a collective slow mode beyond its members and the measured goal and operator fields (τ ≈ 23–28 d; D_adj 0.17 vs S0 q95 0.10; D_adjg 0.24 / 0.23 after removing operator directions beyond the centroid, S0 q95 0.07 / 0.08), and that mode does not follow the long-lived artifact record its members read (C_R1 +0.02 / −0.07 vs exogenous-drift q95 0.11 / 0.09, power 1.00). *Excluded:* unmeasured calendar-time outside drift (narrowed, not beaten; R2c inconclusive by design); the H82 one-mode match (consistent, weak test); regime-III record-following (room-topic confound, 3–5 goals); mediation ratios (unstable); the era split (post hoc, 75 pairs).
 
 ## Notes
 - 2026-10-04: a static village identity (a culture vector constant over a regime) is absorbed by the leave-goal-out personal vectors and by the regime whitening center, so H81 can detect only a time-varying culture. A static village identity is H83's (HH292) question.
 - 2026-10-04: the first drafts carried hand-written timestamps (20:20–21:15 UTC) that ran ahead of the clock. They were corrected at 20:24 UTC from file modification times: card 20:05, synthetic 20:10–20:15, amendments 20:17, native folders 20:18, replication 20:24–20:27.
 - 2026-10-04: runs used one process with numpy and polars at 2 threads. Data in `data/processed/H81-culture-beyond-composition/` (~3 MB) with `_provenance.json`. No code is imported from another hypothesis.
 - 2026-10-04: **Correction (2026-10-04, blind-rater check).** The summary telos said "half of the period-to-period content variance beyond the goal fields is this slow mode". That share is not measured. It is inferred because the observed regime-I contrast (D_adjg 0.237 / 0.208) matches the planted S1 scenario with s = 0.5 (Results 2: "matches the planted s = 0.5 scenario … i.e. a slow mode carrying about half"). The telos now states it as an inference. No result changes.
+- 2026-10-04 (round 2): code `scheme/build_r2.py`, `analysis/r2lib.py`, `r2_synthetic.py`, `r2_run.py`, `r2_write_estimates.py`, `r2_figures.py`. One process at a time with 2 threads; runtime about 15 min total. Data in `round2/` (about 1.2 MB) with `_provenance.json`. The panel, projectors and two-way FE personal vectors come from `infra/shared/culture_vectors.py`; nothing is imported from H82 (its stored boundaries and γ[P−1] are compared as data). Text was read only to flag outside-topic statements (regex); no text is stored.
