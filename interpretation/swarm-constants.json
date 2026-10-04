@@ -561,6 +561,16 @@
    "model": "05",
    "source": "H94",
    "meaning": "Work allocation is max-ent given activity, repo size, ownership and rooms; ownership is the goal-set price."
+  },
+  {
+   "symbol": "χ_max",
+   "name": "mean-field amplification bound",
+   "value": "χ = 1/(1 − g_lag) ≤ 1.31 in every unit; observables vary ×3 (herding, branching), ×13 (loops), ×127 (settling) across periods",
+   "kind": "bound",
+   "scope": "33 non-holdout periods",
+   "model": "02",
+   "source": "H51, H67",
+   "meaning": "Coupling amplifies at most ~30%, too little to organize the phase diagram; regime and N do the work."
   }
  ]
 }

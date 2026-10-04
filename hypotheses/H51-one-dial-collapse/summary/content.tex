@@ -1,0 +1,34 @@
+\hwhat{HH178 asked whether one effective coupling $K$ puts every goal period on one curve. H67's read-out loop gain $g_{lag}$ is that $K$: readers per message times an address-gated, size-diluted jump per read. H51 places 33 non-holdout periods by coupling ($g_{lag}$), field ($c_\times$, kickoff specificity) and $N$. It then scores four unfitted observables: settling time, herding share, idea branching and loop rate. $g_{lag}$ collapses none of them. Its cross-validated $R^2$ is $\le0.22$, and regime labels or $\log N$ do better. The within-regime permutation gives $p=0.07$; synthetic power is 0.89 at the effect that matters. A fitted single index is $\approx\log N$ and also collapses 0/4. In three natural experiments the observables follow $N$, not the dial. \textbf{The HH claim fails.} The holdout is not run.}
+
+\hmodel{Mean-field Potts/Ising (models 10, 02) near a subcritical fixed point. An agent's state (project, idea, talk) relaxes toward the local field $h_{ext}+K\,m$, where $m$ is the population order parameter. $K$ is the read-out coupling $g_{lag}$, $h$ the in-window shared field (H86 $c_\times$, trimmed) and $N$ the active population. One-dial collapse means that every observable $Y_j$ is a function of one combination $u(h,K,N)$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+m=h_{ext}\,\chi,\qquad \chi=\frac{1}{1-K},\qquad \tau_{relax}=\frac{\tau_0}{1-K}\\
+Y_j=F_j(u),\quad u=\mathbf{w}\cdot\mathbf{z},\quad \mathbf{z}=(g_{lag},\,\mathrm{asinh}(c_\times/0.01),\,S_{text},\,\log N)\\
+R^2_{cv}=1-\textstyle\sum_p\big(Y_p-\hat Y_{p}^{(-p)}\big)^2\big/\sum_p\big(Y_p-\bar Y^{(-p)}\big)^2
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/collapse_col.pdf}{Each point is one goal period. The x-axis is the read-out loop gain $g_{lag}$; colour and marker give the scaffold regime. Regime-I periods sit at $g_{lag}\approx0$ and spread over the whole range of every observable. Panel titles give the leave-one-period-out $R^2$ of $g_{lag}$, regime labels and $\log N$. None of the four panels lies on one curve.}
+
+\htelos{For an operator or a monitor: do not use the coupling dial to forecast swarm-level outcomes. Every configuration seen is subcritical ($g_{lag}\le0.23$), so coupling amplifies a push by at most $\times1.3$. Observables vary $\times3$ to $\times127$ across periods. Two coordinates carry what is predictable: the scaffold regime (loop rate falls from 17\% to 3--5\%) and the swarm size. Herding falls with $N$ ($\rho=-0.75$), and idea branching rises with $N$ inside \#51 ($\rho=0.83$). For a phase diagram, plot $N$ against $g_{lag}$ with the regime as marker, and keep $c_\times$ as an impostor gauge, not an axis.}
+
+\hbottom{No single effective coupling collapses the village's phase diagram: the read-out gain is too small to matter ($\chi\le1.31$), and scaffold regime and swarm size carry the predictable variation.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S1--S3 synthetic (real axes) & size 3--4\%; permutation power 0.89 at $\rho^2_K=0.3$; index $|\cos|\ge0.8$ in 98\% & pass\\
+P1 $g_{lag}$ collapses $\le1/4$ & 0/4; within-regime $p=0.073$ & supported\\
+P2 single index $\le2/4$ & 0/4; index $\approx\log N$ (weight 0.86--0.95) & supported\\
+P3 $g_{lag}\approx$ regime labels & worse than regime on herding ($-0.27$), loops ($-0.10$) & failed\\
+P4 $\rho(\hat R,g_{lag})>0$ in III & $-0.40$ $[-0.86,0.42]$, $n=8$ & failed\\
+P5 no critical speed-up & $\rho(\tau,g_{lag})=0.05$ $[-0.34,0.42]$ & supported\\
+P6 field beats $g_{lag}$ on $\ge2$ & 1/4; field $R^2_{cv}\le0.06$ & failed\\
+P7 equal-time dial no better & 4/4 & supported\\
+Natives NE14, NE42, G51 & K step barely moves loops; \#40 follows $N$ (4/4 signs); $\hat R$ rises with $N$ at flat $g_{lag}$ & mixed / failed / failed\\
+\end{tabular}}
+
+\hobsb{../figures/cvr2_col.pdf}{Leave-one-period-out $R^2$ per observable and model (27--33 periods). The read-out gain (red) and the single index (purple) never clear the collapse threshold (dotted, 0.15) while beating both rivals. $\log N$ wins for herding, regime labels for loops. Nothing predicts settling time.}
+
+\hcaveats{The unit is a goal period: 27--33 points per observable and only 8 in regime III. The negative rests on the permutation test and on cross-validated $R^2$; the 3/4 count rule is underpowered (18\%). The observables are not impostor-clean at period level. Herding has no in-flight placebo, loop rate depends on model family, and roster composition differs between periods. In regime I, $g_{lag}$ is measured on the wrong clock for talk. \#51's size sweep is confounded with calendar time. A post hoc regime-III pattern (herding rises with $g_{lag}$, $\rho=0.83$, $n=8$) is 2 of 48 tests. Predictions were written knowing the input cards' headlines.}
+
+\hnext{Test the regime-III herding--coupling lead on sub-units ($\ge20$ points). Fit within-regime size laws $Y\propto N^\beta$ for herding and branching. Rebuild herding and loops with convergence and family controls before any new collapse test.}

@@ -262,6 +262,9 @@ Seven builders and nine libraries are now shared and registered in `build_all.py
 
 ## Known issues
 
+- **H86's `gauge.parquet` has NaN (not null) c_× for 1-day units** (4b, 4d; H51): polars sums skip null but not NaN, so a day-weighted pool goes NaN. Use `fill_nan(None)` first.
+- **τ_settle (H48) agrees across embedding models only at ρ 0.56** (27 periods; H51).
+- **H11's `cowork_excess` covers only 12 periods**; H51's `build.herd_share` re-implementation covers 35 (Spearman 0.93 with H11). Candidate for `infra/shared/`.
 - **Share coefficients in choice logits are not coupling** (H93): fast common repo bursts (OU, τ ≈ 20 arrivals) give βĴ 1–3.4 with no coupling. For static fitness a log-cumulative-size control works; repo fixed effects (in-sample or cross-fitted) do not. An unmodelled assignment field is absorbed into the share coefficient and fakes bistability (H93 #44 #best).
 - **Patefield and parametric KL floors assume independent quanta** (H94): with work in runs they sit 0.2–1.2 bits too low; use a run-preserving null. Analytic breadth signatures misread runs as specialization. κ on repo sizes in own-artifact units tracks activity, not herding.
 - **Log-linear fits under quasi-separation need IPF with warm starts** (H94: the old solver gave D₃ > D₂ in 6 units).

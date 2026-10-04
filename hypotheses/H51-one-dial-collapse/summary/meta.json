@@ -1,0 +1,76 @@
+{
+ "complete": 42,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before any collapse statistic; two dated pre-real-data amendments (A0 herding re-implementation validated against H11 at rho 0.93; A1 after synthetic validation); synthetic validation at the real axis values (6 worlds x 100 runs); replication on 33 non-holdout periods with 7 variants; 3 natives with dated predictions; confirm.py frozen, guarded and dry-run. Missing: holdout run (needs H67's confirmatory g_lag first), regime-III sub-unit collapse, impostor-clean observables.",
+  "faithfulness": "The one-dial model (HH178) is refuted with power: g_lag collapses 0/4 unfitted observables, within-regime permutation p 0.07 at synthetic power 0.89, and the natives (NE42, G51) follow N, not the dial. The mean-field reading explains why (chi <= 1.31 against x3-x127 spreads). Rivals (regime, log N) win. Scorecard A1 B1 C1 D1 E0 F2 G0 H1 I0.",
+  "usefulness": "A clear negative for the phase-diagram deliverable: it tells the project which axes carry information (scaffold regime, N) and which do not (coupling, field gauges), and it fixes the dashboard's phase-diagram axes. Operator value is indirect: the coupling dial is not a forecasting tool."
+ },
+ "one_line": "No single effective coupling collapses the phase diagram: g_lag predicts 0/4 unfitted observables (within-regime p 0.07, power 0.89); regime labels and N carry the predictable variation.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "One-dial collapse onto the coupling fails across 33 periods"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Subcritical mean field explains why coupling barely matters"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Data-collapse scoring; N is the informative axis"
+  }
+ ],
+ "rated_by": "H51 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "The read-out loop gain g_lag does not collapse the phase diagram: it explains 0 of 4 unfitted observables across 33 periods (leave-one-period-out R² ≤ 0.22; within-regime permutation p 0.073; power 0.89 at 30% of within-regime variance), because every unit is subcritical (χ = 1/(1 − g) ≤ 1.31); regime and N carry the information",
+  "scope": "33 non-holdout periods; natives NE14, NE42, G51",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.61,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic power 0.89, size 3–4%",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "replication over 33 periods and 4 observables",
+    "x": 1.4,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "quantitative mechanism: χ ≤ 1.31 vs ×3–×127 observable spread",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: permutation p 0.073 near threshold; post hoc regime-III lead (ρ 0.83, n 8)",
+    "x": 0.85,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "place swarms on an N × regime diagram; coupling gain is too weak (subcritical) to organize behavior",
+  "magnitude": "medium",
+  "generality": "LLM swarms",
+  "expected_usefulness": 0.91,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H51 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

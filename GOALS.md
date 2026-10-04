@@ -40,5 +40,5 @@ Every hypothesis serves one of these. A new hypothesis card names its question (
 ## What "done" looks like
 - At least 3 core claims confirmed on the holdout, with credence ≥ 0.9 after the holdout.
 - Every claim scored with credence and EU, and every fragile claim flagged.
-- A phase diagram with every period placed by its fitted parameters. The axes are field strength, coupling and N.
+- A phase diagram with every period placed by its fitted parameters. After H51: x = N (H85 active population, log), marker = scaffold regime, y = g_lag (H67) as the coupling coordinate; field gauges (c_×, S_text) are reported as impostor gauges, not axes. No single dial collapses the diagram (χ ≤ 1.31).
 - A clear answer to Q3: either a collective variable that beats all four impostors and size-matched nulls, or a powered negative.
