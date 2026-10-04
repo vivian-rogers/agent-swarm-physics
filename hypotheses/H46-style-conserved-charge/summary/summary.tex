@@ -1,0 +1,36 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\input{../../../writeup/hypothesis-pages/hpage.tex}
+\def\hID{H46}
+\def\hTitle{Style is a conserved charge}
+\def\hStatus{exploratory round 1 done (2026-10-04, non-holdout only). Refuted as stated; the fingerprint part holds.}
+\def\hStage{level: hypothesis  $\cdot$  pipeline checks 100\%  $\cdot$  updated 2026-10-04}
+\def\hBadges{\hbadge{Complete}{42\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{1.5/5}{ee8584}{0b0b0b}\ \hbadge{Usefulness}{2.5/5}{e9e7e1}{0b0b0b}}
+\def\hPeriodSummary{7 supported, 15 failed, 11 mixed, 6 descriptive, 2 n/a}
+\def\hDate{Updated 2026-10-04}
+\def\hFooter{H46-style-conserved-charge $\cdot$ generated 2026-10-03 23:14 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H46-style-conserved-charge/README.md $\cdot$ ratings: H46 agent (suggested)}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G02 & d & descriptive \\
+G03 & $\sim$ & mixed \\
+G04 & $\times$ & failed \\
+G05 & $\sim$ & mixed \\
+G06 & $\sim$ & mixed \\
+G07 & $\times$ & failed \\
+G08 & $\checkmark$ & supported \\
+G10 & $\times$ & failed \\
+G11 & $\sim$ & mixed \\
+G12 & $\times$ & failed \\
+G13 & $\times$ & failed \\
+G16 & d & descriptive \\
+G17 & $\checkmark$ & supported \\
+G18 & $\sim$ & mixed \\
+G19 & $\times$ & failed \\
+G20 & $\times$ & failed \\\multicolumn{3}{l}{\textit{+25 more periods: see the card.}} \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 1 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 1 & H comparative & 0 \\
+D unfitted predictions & 1 & I transfer & 0 \\
+E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} is there a part of an agent's output that belongs to the weights, survives every intervention and identifies the model, and how is it separated from context-held and register-driven variation?\item \textbf{H46-R1} Genre-controlled style: residualize style on speech-act type (status update, reply, announcement, verdict; DQ2 reply threading) and on context position, then retest NE41, \#12 judges and the Prankster.\item \textbf{H46-R2} Fit the drift-and-reset model (an Ornstein–Uhlenbeck excursion around q\_i, growing with context position and reset at erasure).\item \textbf{H46-R3} Function-word stylometry (closed-class word frequencies, a second embedding model from DQ5) as an alternative charge, to check that digits and uppercase are what moves at goal switches.\item \textbf{H46-R4} Fingerprint as a monitor: an attribution ROC for 5/10/20 messages, combining style, content and a context-position correction, across goal switches and on the leader and NE30 successions.\item \textbf{H46-R5} Lab-dependent susceptibility (PH5): pre-register a Gemini/GPT vs Anthropic difference in register response for the \#51 tail and NE30.\end{itemize}}
+\input{content.tex}
+\begin{document}
+\makehpage
+\end{document}

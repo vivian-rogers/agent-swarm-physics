@@ -246,3 +246,8 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Kickoff specificity:** S_text (mean z of log counts per 100 words of numbers, named entities, artifacts/URLs, agent/role/room names, deadline terms), S_count (absolute counts), S_emb = 1 − mean_q cos(k̂_p, k̂_q) (distinctiveness).
 - **Re-quench amplitude (HH180):** a_m = cos(centroid after m, ê_m) − cos(centroid before m, ê_m) over 60-min windows for a mid-period human message m, minus length-matched decoy messages.
 - **Kickoff remanence (HH182):** daily kickoff excess A_ex(d) fitted as A_∞ + (A_1 − A_∞) e^{−(d−1)/τ_K}.
+
+### H46 named variants (2026-10-04; see `hypotheses/H46-style-conserved-charge/README.md`)
+- **Agent state (style, chat agent-day):** the 17 type-controlled H13 numeric style features (length, code and link shares controlled) averaged over an agent's chat messages in a day.
+- **Agent state (vector, chat agent-day, style-residualized):** DQ5's `style_resid_period` vectors.
+- **Boundary displacement percentile T:** the mean percentile of an agent's displacement across a boundary among its own placebo transitions (T = 0.5 under no change); T_s for style, T_c for content.

@@ -1,0 +1,36 @@
+\hwhat{We asked whether an agent's writing style (H13's 20 features, controlled for length, code and links) stays fixed under every natural experiment while its content (style-residualized embeddings) moves. Each boundary was scored against the agent's own day-to-day transitions. Style is not conserved. It moves at goal switches ($T_s=0.69$ vs content $0.86$; 21/24), across exogenously timed context erasures ($0.56$, while content does not move), for the \#51 Prankster (percentile 1.00) and for \#12 judges. It holds where content also holds (roster, scaffold) and after the nudger switch-off. Style is still a strong identity fingerprint: trained before and tested after a goal switch, it names agents at 0.76 (chance 0.15), against 0.51 for content. Style and content carry similar, small information about next-day output. Holdout script written, not run.}
+
+\hmodel{Vector spins (model 11) with two channels per message: a style vector $x$ and a content vector $y$. $q_i$: the agent's style charge (its weights). $\eta$: day jitter. $c_{i,d}$: content state, driven by goal, room and context. A natural experiment $b$ conserves style if the boundary displacement $D_b$ is exchangeable with the agent's own placebo transitions $D_p$. $T$: mean percentile. $V$: next-day work output (DQ4). $\epsilon$: context-held excitation, growing with position $k$ since the last reset (post hoc).}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+x_m=q_i+\eta_{i,d}+\epsilon_i(k_m)+\varepsilon_m,\qquad \epsilon_i(k{=}1)\approx0\ \text{after an erasure}\\
+D(d,d')=\lVert\bar x_d-\bar x_{d'}\rVert^2-\tfrac{\mathrm{tr}\,S_d}{n_d}-\tfrac{\mathrm{tr}\,S_{d'}}{n_{d'}},\qquad
+T=\Bigl\langle \Pr_p\!\bigl[D_p<D_b\bigr]\Bigr\rangle_{i,b}\\
+\text{conserved}\iff T_c>\tfrac12\ (p<.05),\ T_s\not>\tfrac12,\ T_s-\tfrac12\le\tfrac13\bigl(T_c-\tfrac12\bigr)\\
+I=-\tfrac12\log_2\!\bigl(1-R^2_{\rm cv}[\,V_{d+1}\mid x_d \text{ or } y_d\,]\bigr)
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) One faint dot per boundary: style vs content percentile against the agent's own day-to-day transitions. Big symbols: class means with 95\% CIs. Grey band: $|T-\tfrac12|\le0.1$. Goal switches and erasures leave the band in style; roster and scaffold do not move at all. (b) Identity across the same boundaries, trained before and tested after. Style beats content at most goal switches (blue dots above the diagonal).}
+
+\htelos{The useful result is the fingerprint. A handful of cheap formatting and punctuation rates identifies which model wrote a day's messages, even after the task changes. It does so better than embeddings of what was said, which matters for attribution and for spotting an unannounced model swap. The negative results are the warning label. Style is not a constant of the weights: it drifts as the context fills, snaps back at a context reset, and follows assigned registers such as a prankster role or a judge's chair. A monitor should therefore compare like with like: the same context position and the same speech act. The Kolchinsky--Wolpert framing added nothing actionable, since style and content predict tomorrow's output equally and only through today's.}
+
+\hbottom{Style is a strong identity fingerprint but not a conserved charge: it shifts at goal switches, at context erasures and under assigned registers, so it behaves like a substrate charge dressed by the context window.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 goal switch: $T_c\ge.70$, $T_s\le.60$ & \raggedright $T_c$ .86, $T_s$ .69 [.61,.77] (21/24) & \raggedright fail\tabularnewline
+\raggedright P2 erasure: style in band & \raggedright $T_s$ .564 [.51,.61]; $T_c$ .515 (CI $\ni\tfrac12$) & \raggedright fail\tabularnewline
+\raggedright P3--P6 rooms, nudger, roster, scaffold & \raggedright partial; conserved (1 boundary); nothing moves; nothing moves & \raggedright mixed\tabularnewline
+\raggedright P7 fingerprint survives & \raggedright style .76 vs content .51 (chance .15); style wins 22/24 & \raggedright pass\tabularnewline
+\raggedright P8 KW: style carries no info & \raggedright \#51: style $R^2$ .060 $\approx$ content .058; both 0 given today's output & \raggedright fail\tabularnewline
+\raggedright P9 personas in band & \raggedright Prankster 1.00; 5/17 $\ge$.9, by lab not role & \raggedright fail\tabularnewline
+\raggedright P10 NE38 role switch & \raggedright day: content .91, style .82; blocks: both 1.00 & \raggedright mixed\tabularnewline
+\raggedright P11 \#12 judge role from content only & \raggedright reversed: style .80--.90, content .60 & \raggedright fail\tabularnewline
+\raggedright P12 leader writes like its base & \raggedright Kimi K2.6 rank 2 (raw style: rank 1) of 17 & \raggedright pass (weak)\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Post hoc: within long context segments, a message's style moves away from the agent's own mean as the context fills and returns at the next reset. Content barely moves. (b) \#51 incumbents moving into private roles (red: Prankster; orange: media roles; squares: non-Anthropic), and \#12 one-time judges (style filled, content open).}
+
+\hcaveats{The 20 features mix formatting with content-adjacent rates: digits, uppercase and colons carry the goal-switch shift. A function-word stylometry might be conserved. Only length, code and links are controlled; speech-act genre is not, so the erasure and judge effects could be genre (a status update after a reset, a verdict). The drift continuing from position 2 to 7+ argues against a pure first-message effect. The persona comparison spans five weeks of held-out windows. The Prankster and NE38 are single agents; rooms has 4 boundaries and nudger 1. KW is observational and powered only in \#51 and \#38. Post hoc analyses are labelled.}
+
+\hnext{Residualize style on speech act and context position, then retest erasures, judges and personas. Fit the drift-and-reset model per lab. Build a 5/10/20-message attribution monitor combining style and content.}
