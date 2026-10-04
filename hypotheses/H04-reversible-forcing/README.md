@@ -273,6 +273,7 @@ Code: `analysis/h04lib.py` (machinery), `analysis/explore.py` (G, linearity, FD,
 - A possible mechanism: longer sessions leave agents more unread context to react to (H08), so more activity is triggered by other activity. Recorded as a new idea, not a finding.
 
 ## Notes
+- 2026-10-04: **H04-R1 tested in H08: not supported for nudges.** Read-out is fast (median 104 s), but the response starts at ~5 min; about half of H04's dead time is scheduler read-out and half something slower.
 - 2026-10-03: opened from shortlist S3. Card and predictions written before any response was computed.
 - 2026-10-03: exploratory round 1 run (non-holdout only); design changes listed under Results. H04-MF added at the user's request, with predictions written first.
 - 2026-10-03: the confirmatory script was dry-run on **non-holdout surrogate segments** (`--dry-run` → `dryrun_ne21_ne23.json`) to check the code path; those numbers have no bearing on the hypothesis. The dry run exposed that 5–10-day segment n varies by ±0.3 between same-hours weeks, which led to the placebo-switch analysis and the C1 / MF-C amendment. The real run needs `--confirm --i-understand-this-uses-the-locked-holdout`.

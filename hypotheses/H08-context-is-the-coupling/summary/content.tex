@@ -1,18 +1,36 @@
-\hwhat{Nothing has been run. H08 was opened on 2026-10-03 on a misread (the request was the thermodynamics framing, which became H09) and parked the same day; it stays because H numbers are permanent and every coupling model rests on an exposure model. The idea: agents interact only through what enters their context, so the coupling \emph{is} context inclusion. C1 (exposure reconstructed from the Claude Code agent's logged fetches) has predictions and data ready. C2--C3 (token inflow, compaction as erasure) are possible from token accounting. C4--C6 need the exact prompts (\texttt{llm\_calls}), which are not public: blocked. Other cards now bear on it. H04: nudge responses violate fluctuation--dissipation and arrive at the next turn, implicating unread context. H15: forced context erasure cuts write output 33--53\% for ${\sim}10$ turns. H18 (first fits, card not yet updated): per-message uptake falls with backlog, $\hat\beta\approx0.5$--$0.8$ in 16/16 periods, though reactive turn timing alone can fake $\approx0.8$.}
+\hwhat{Do agents couple only through what enters their model calls? We tested this in 17 non-holdout goal periods. (1) After a room message, the recipient's chance of addressing the sender jumps at its first call that started after the message, with no jump at the call already running. This held in 10/11 regime-II/III periods (16/17 post hoc, for recipients not mid-exchange); regime I fails. (2) HH92 fails for nudges: \#51 targets read the nudge in 1.7 min (median) but start working at $\approx$5 min, and a constant delay fits as well. (3) Forced context erasure (NE41) cuts addressing of senders read before it by 18\% (9/9 periods; predicted 30\%). (4) The Claude Code agent's fetches match a room rule (recall 0.97--1.00) until 2026-03-17, when its feed began replaying April 2025. Holdout script written, not run.}
 
-\hmodel{No primary model: a measurement hypothesis that would calibrate the exposure input of models 01, 02, 03, 09 and 11. $C_i(\tau)$: the set of events in agent $i$'s context at its call $\tau$; $s(e)$: the event's sender. Couplings act only through $C_i$. $\hat C_i$: the room-rule reconstruction (events in $i$'s room since its previous call $\tau^-$). $u_i$: uncached input tokens (new context per call); $a_i$: action; $G$: inflow-to-action response. $k$: unread messages at a turn; $\beta$: dilution exponent (H18).}
+\hmodel{Two-variable kinetic Ising model (02) with Hawkes kernels (09). Each agent has a visible spin $n_i$ (active per minute) and a hidden field $c_i$: the room events unread since its last model call. Calls start on the scaffold's schedule $s_{i,k}$ (after the previous action, or when a pause timer expires). At each call start the field is read and reset, and couplings $J_{ij}$ act only then. $W$: read-out delay; $h(u)$: post-read-out headroom; $o$: turn offset; $\beta_F$: coupling change after erasure.}
 
-\hmath{\vspace{-5pt}\footnotesize\setlength{\jot}{1pt}
-\begin{gather*}
-H_i(\tau)=h_i+\textstyle\sum_{e\in C_i(\tau)}J_{i\,s(e)}\\
-\hat C_i(\tau)=\{e:\ \mathrm{room}(e)=r_i,\ \tau^-<t_e\le\tau\}\\
-\mathrm{recall}=|\hat C\cap C|/|C|,\qquad \mathrm{precision}=|\hat C\cap C|/|\hat C|\\
-\mathbb E[a_i(\tau{+}\delta)]-\bar a_i=\textstyle\sum_{\delta'}G(\delta')\,u_i(\tau{+}\delta{-}\delta')\\
-P(\text{reply to }m\mid k)\propto k^{-\beta},\qquad \beta=1\ \Rightarrow\ \textstyle\sum_j J_{ij}\approx\text{const}
+\hmath{\vspace{-5pt}\begin{gather*}
+c_i(t)=\{e:\ \mathrm{room}(e)=r_i,\ s_i^{-}<t_e\le t\}\\
+P(a_i\mid s_{i,k})\propto \exp\big[a\,\big(h_i+\textstyle\sum_{e\in c_i(s_{i,k})}J_{i,\mathrm{src}(e)}\big)\big]\\
+G(\tau)=A\textstyle\sum_w p(w)\,\Theta(\tau-w)\,h(\tau-w)\\
+D=G_{\mathrm{addr}}(o{=}1)-G_{\mathrm{addr}}(o{=}0)
 \end{gather*}\vspace{-7pt}}
 
-\hobs{}{No figure: nothing has been run, and H08 has no goal-period folders, so the diagram above is empty. If C1 is run, the natural figure is the Claude Code agent's coverage of other-room events before and after NE12 (2026-02-25), with the room rule's recall. The C1 predictions (written before any data was touched): coverage of other rooms below 5\% after NE12, visibility depending on event type, median delay of minutes, room-rule recall at least 0.9.}
+\hobs{../figures/summary_obs.pdf}{Excess chance that a recipient's turn addresses the sender, by turn offset. Offset 0 is the call already running when the message arrived; offset 1 is the first call that started after it. Recipients not mid-exchange (post hoc); thin lines are periods, bold lines regime medians. The response appears only from the first call that can see the message, in every regime.}
 
-\htelos{Potentially the most practical question in the project, with zero evidence of its own. For anyone running a swarm, who influences whom is set by what enters each agent's context: visibility rules, fetch limits, compaction, memory. If the coupling is literally context inclusion, the operator's knobs are prompt-assembly rules, and the physics models elsewhere describe a context router. The indirect evidence (H04's delayed read-out, H15's erasure dip, H18's dilution, H05's room cut) points that way. But that is close to how the scaffold is built, so it is barely a hypothesis. The non-obvious parts, \emph{which} context items drive actions and how much (C4--C6), need prompts we can't get. C1 covers one atypical agent.}
+\htelos{An agent cannot react until its next model call starts, so the swarm's coupling delay is its call cadence: tens of seconds when busy, minutes when paused. That follows from how the scaffold is built, so the news is modest; the value is quantitative and diagnostic. Compaction cuts about a fifth of the conversational coupling. A nudge takes about 5 min to show, so don't expect instant effects. And the replay bug shows exposure can silently come loose from the room, so log what each agent actually fetched. HH92 failed; the gating result rests on mentions.}
 
-\hbottom{Parked and untested: H08 asks whether context inclusion is the coupling; other hypotheses increasingly say yes, but its own decisive tests need prompts the project does not have.}
+\hbottom{Agents respond only from the first model call after a message arrives, and erasing context cuts the coupling, but the nudge kernel is more than the read-out delay: ``context is the coupling'' fixes where responses land, not their full timing.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.44\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+C9 talk jumps at read-out ($\ge$70\% of periods) & 6/17 (6/9 regime III, 0/8 regime I/II) & partly\\
+C9 addressing jumps at read-out & 11/17 (10/11 regime II/III); clean subset 16/17 & partly\\
+C9 other-room messages give no jump & 6/8 two-room periods & yes\\
+C8 nudge onset = read-out CDF & \#51: $\Phi(1,5)$ 0.03 measured vs 0.52 predicted & no\\
+C8 context beats rivals in CV & beats immediate (0.77), Hawkes (0.80), not a 5-min delay (0.41) & no\\
+C8 non-paused targets respond sooner & $-0.02$ [$-0.09$, 0.05] & no\\
+NE41 erasure cuts coupling $\ge$30\% & $-18\%\pm6\%$; negative in 9/9 periods & sign only\\
+C1 room rule recall $\ge$0.9 & 0.97--1.00; 0.31 and 0.00 after the replay & until replay\\
+C1 types differ, delay minutes & uniform coverage (WAITs too); 14--23 s & refuted\\
+HH91: later half-day hotter (\#51) & $\hat n$ 0.70 vs 0.50, $\Delta$ +0.20 [0.10, 0.29] & yes\\
+\end{tabular}}
+
+\hobsb{../figures/summary_obs2.pdf}{(a) \#51 nudge kernel (95\% band) with the zero-parameter read-out prediction and the best constant delay. The median read-out is 1.7 min, but the response starts at about 5 min. (b) NE41: change in the chance of addressing a sender read before a forced erasure, relative to one read after it (same turns, equal age), per period and pooled.}
+
+\hcaveats{Responses are @-mentions; the discontinuity removes common causes, not the proxy. The regime-I call rule is doubtful (addressing peaks at turns classed in flight), so its failures may be logging, not absent coupling. C8 rests on one powered period (\#51, 303 nudges). Synthetic runs show the CV picks the right mechanism only about 2/3 of the time at this signal, and H04's matching leaves a pre-kick imbalance. Ground truth covers one agent with a different scaffold. The HH91 half-day effect may be within-day nonstationarity. No multiplicity correction; the C9 addressing and NE41 signs would survive one. Nothing confirmed on the holdout.}
+
+\hnext{Decompose the nudge lag into read-out plus a k-turn post-read-out lag, using talk and action turns. Swap mentions for a content-based reply measure. Fix the regime-I call rule. Test whether saving a sender to memory protects the thread across an erasure. Run the holdout script.}

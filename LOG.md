@@ -7,6 +7,14 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **H08 (context is the coupling), round 1:**
+  - **Responses are gated by read-out:** a recipient addresses a sender from the first turn whose model call began *after* the message arrived. Holds in 10/11 regime-II/III periods, and in 16/17 when restricted to recipients who hadn't just talked; #51 jump z ≈ 17. This explains H18's failed placebo (ongoing exchanges, not early sight).
+  - **HH92 not supported for nudges:** agents read a nudge fast (median 104 s), but the activity response starts at about 5 min. H04's dead time is about half read-out, half something slower; a constant ~5-min delay ties the context model.
+  - **NE41:** a context erasure cuts coupling to senders read before it by 18% ± 6% (9/9 periods); memory-only coupling rejected.
+  - **Data finding:** the Claude Code agent's event feed **replayed the village from 2025-04-02 starting 2026-03-17** (≈ one historical day per real day) until it left. 65% of its #35 and 100% of its #36 fetched events were a year old.
+  - HH91: #51 afternoon halves run hotter (n̂ 0.70 vs 0.50), but not via backlog.
+  - Scorecard all 1s (A–I). `confirm_holdout.py` written, not run.
+- **DQ3 (Jev v3 + full run) launched** in the slot H08 freed.
 - **H33 (diversity–productivity), round 1:** no inverted U; agent-day content diversity carries no usable information about write output (flat above PR10 ≈ 14). Two-lines slopes n.s.; cross-validation gain 0.2%. **No operating point to steer toward.** Within-agent PR10 reliability is only 0.55 (errors-in-variables caveat for any agent-day diversity regression). Scorecard A1 B1 C0 D0 E0 F1 G0 H0 I0.
 - **Summaries now two RevTeX pages** (Vivian). Page 2: results vs predictions, second figure and caveats (written), plus the goal-period table, A–I scorecard and round-2 redirects (generated). The compendium has 81 pages. Written page-2 sections will be filled during the re-evaluation on the improved data.
 - **Vivian's priorities (2026-10-04):** (1) improve postprocessed data quality; (2) then re-evaluate every hypothesis on the better data; (3) more physics-of-life, Kolchinsky-style HHs for her to vet. H01 round 2 relaunched as effective superagents in Kolchinsky–Wolpert terms (R4–R8).

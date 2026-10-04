@@ -1,13 +1,13 @@
 {
- "complete": 5,
- "faithfulness": 0,
- "usefulness": 1.5,
- "rationale": {
-  "complete": "Parked on the day it was opened; C1 predictions and a scheme sketch exist, but nothing has been built or run, and C4-C6 are blocked on non-public prompts.",
-  "faithfulness": "Untested; the supporting evidence (H04, H15, H18) belongs to other hypotheses and was not a test of H08's own predictions.",
-  "usefulness": "The framing names real operator knobs (context assembly, visibility, compaction), and C1-C2 would be computable from token logs, but nothing has been computed and the core claim is close to the scaffold's design."
- },
- "one_line": "Parked, untested: is context inclusion the coupling? H04, H15, H18 hint yes; decisive tests need prompts",
- "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
- "updated": "2026-10-04"
+  "complete": 45,
+  "faithfulness": 2.5,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: pre-registration, synthetic validation (axis F) with dated amendments, 17 per-period verdicts plus NE41, C1 ground truth, post-hoc robustness labelled, scorecard and a dry-run confirmatory script (not run). Round 2 must decompose the nudge lag and replace the mention response.",
+    "faithfulness": "The read-out gating (C9) beats a pseudo-message null and an other-room placebo in regimes II/III, and the synthetic common cause cannot produce it; NE41 is consistent in sign across 9 periods. But HH92's zero-parameter kernel fails for nudges (a constant delay fits as well), the talk clause fails in every regime-I/II period, ground truth covers one atypical agent, and nothing has been confirmed on the holdout.",
+    "usefulness": "Gives an operator concrete, computable facts: reactions wait for the next model call (so coupling delay = call cadence), compaction cuts about a fifth of conversational coupling, nudges take about 5 min to act, and fetch logs can reveal silent exposure failures (the Claude Code replay). Modest novelty, since the gating follows from scaffold design; no validated control knob."
+  },
+  "one_line": "Responses wait for the next model call (10/11 periods); nudges lag read-out ~3 min; erasure cuts coupling 18%",
+  "rated_by": "H08 agent (suggested)",
+  "updated": "2026-10-04"
 }

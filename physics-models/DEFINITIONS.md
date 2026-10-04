@@ -139,3 +139,8 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Goal field ĝ:** embedding of the goal text plus kickoff; per-room and per-agent versions exist (#38, #44 rooms; #51 private goals).
 - **Agent field h_i:** cross-fitted from other periods, or first-day (fallback when cross-period invariance fails: it did in regimes II and III).
 - **Residual alignment:** cosine of two agents' vectors after projecting out ĝ and both agents' fields.
+
+### Exposure (turn read-out) (H08, 2026-10-04)
+- **Call start:** the previous turn's time, or the pause expiry after a pause turn.
+- **Read-out turn:** an agent's first turn whose call starts after a message arrives. **In-flight turn:** a turn whose call started before the message.
+- Responses (addressing the sender) jump at the read-out turn, not the in-flight one (10/11 regime-II/III periods). Use this as the visibility rule; the shared context ledger (`infra/shared/context_ledger.py`) implements it.
