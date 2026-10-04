@@ -1,6 +1,39 @@
 # Confirmatory decisions for Vivian
 
-Status: **nothing has run on the holdout.** The re-frozen scripts (`analysis/confirm_r1b.py`, with notes in `analysis/CONFIRM_R1B.md`) were written beside the untouched originals and dry-run on non-holdout stand-ins only. Each script refuses to run unless it is committed and called with both confirm flags. This sheet collects every decision the re-freeze batches surfaced. Batches A, B and D will be added when they report.
+Status: **nothing has run on the holdout.** The re-frozen scripts (`analysis/confirm_r1b.py`, with notes in `analysis/CONFIRM_R1B.md`) were written beside the untouched originals and dry-run on non-holdout stand-ins only. Each script refuses to run unless it is committed and called with both confirm flags. This sheet collects every decision the re-freeze batches surfaced. All four batches (30 scripts) are in.
+
+## Cross-cutting decisions (affect many scripts)
+1. **The ledger's estimator-family tags.** Many scripts are blocked on targets that H02, H04 or H05's executed runs used: activity or talk spectra and kick responses on #32, #34, #45–#50. Either re-tag the ledger (holdout item 6's human pass), or rule case by case with the override flags. Without overrides:
+   - H26's channel-gap claim has no held-out target;
+   - H12's activity and talk claims rest on 3 units;
+   - H30's activity claim has no clean target.
+2. **The both-model rule.** Many r1b predictions now need both embedding models (bge and gte) to pass. When they disagree, a new outcome label, **model-dependent**, applies. Accept it?
+3. **Reversed or new primaries written from round-1b exploration.** These need explicit approval:
+   - H12 (C1 reversed, C1t, C2 threshold 0.7);
+   - H26 (C2-r1b and C3-r1b reversed);
+   - H19 (post-hoc k_llm model as primary);
+   - H35 (C8-r1b);
+   - H16 (C32-5-r1b);
+   - H31 (C2-r1b rule choice).
+4. **Frozen data files in gitignored `data/`.** These must not be rebuilt; the scripts hash-check them:
+   - H19 `r1b/results_trim/frozen_kllm_model_r1b.json` plus the refit channel and P1 models;
+   - H25 `r1b/results/frozen_confirm_r1b.json`;
+   - H23's gte corpus cache in `G44/r1b/`.
+5. **Disclosure lines.** Every run needs reuse disclosure lines in both cards and in LOG.md before it runs. Each script checks this.
+
+## Batch A (H01, H08, H11, H12, H15, H18, H19, H23, H25, H26), re-frozen 2026-10-04
+| Hyp | Recommendation | Your decision |
+| --- | --- | --- |
+| H01 | Adopt with changes: both models, a style variant, a new label "model-dependent"; drops P9. | Accept the both-model rule? |
+| H08 | Adopt. Adds CF1b-r1b (reply author). Retires CF3 (round 1b reversed it; the kernel belongs to H04/H43). | Approve retiring CF3 |
+| H11 | Adopt. Adds C4-r1b (work herding follows ownership, #45). C2 keeps the #35 contradiction disclosed. | none needed |
+| H12 | Adopt with changes. C1 reversed, C1t new, C2 threshold 0.7, C3 retired. **Activity and talk blocked** except on #28, #29 and the #51 tail. | Approve the changes; override the activity reuse? |
+| H15 | Adopt. Uses the re-chosen V*; the dip is measured on work commits. | Is C1 on NE30 acceptable? It shares a modality with H05's #34 run but measures a different statistic. |
+| H18 | Adopt. No prediction changes (exponents moved ≤ 0.1). | none needed |
+| H19 | Adopt with changes. New primary C1-r1b, post hoc but hash-locked. #32, #34 and #45 dropped. | Approve the post-hoc primary? |
+| H23 | Adopt with changes. C0-r1b applies the agent-30 exclusion (item 14). | Approve item 14, then commit the card |
+| H25 | Adopt with changes. Adds a gte agreement clause; Stage B re-frozen on the trimmed tables. | Accept the gte agreement clause, or order a gte exploratory run first? |
+| H26 | Adopt with changes. C2/C3 reversed (the content–activity gap is real). **Activity and talk on #46/#47 blocked.** | Override the block, or the gap claim has no target |
 
 ## Batch C (H31, H33, H43, H47, H49), re-frozen 2026-10-04
 
