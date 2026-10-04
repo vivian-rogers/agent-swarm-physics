@@ -10,9 +10,15 @@ ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "infra/shared"))
 import estimates as E  # noqa: E402
 
-D = ROOT / "data/processed/H14-behavior-entropy-production/r1b"
-SRC = "data/processed/H14-behavior-entropy-production/r1b"
-NOTE = "round 1b (2026-10-04)"
+import os  # noqa: E402
+
+# H14_EP=heldout (ep_gauss_crossfit recheck, 2026-10-04): rows from r1b/recheck_epfix/, method tagged; the round-1b
+# rows stay (write_estimates keys on statistic, channel, method, role, source).
+EP = os.environ.get("H14_EP", "xprod")
+D = ROOT / "data/processed/H14-behavior-entropy-production/r1b" / ("" if EP == "xprod" else "recheck_epfix")
+SRC = "data/processed/H14-behavior-entropy-production/r1b" + ("" if EP == "xprod" else "/recheck_epfix")
+NOTE = "round 1b (2026-10-04)" if EP == "xprod" else "ep_gauss_crossfit recheck (2026-10-04): supersedes the legacy-Newton row"
+TAG = "" if EP == "xprod" else " [held-out Newton, per-column ridge]"
 
 
 def main():
@@ -66,6 +72,10 @@ def main():
                          role="native", estimate=y.get("diff"), ci_lo=y.get("diff_ci", [None, None])[0], ci_hi=y.get("diff_ci", [None, None])[1],
                          ci_level=0.95, ci_kind="percentile", method="pooled soft v3 EP on productive-productive minus stuck-stuck transitions",
                          null="agent-day bootstrap", source=f"{SRC}/native_r1b.json", notes="round 1b native N3"))
+    if TAG:
+        for r in rows:
+            r["method"] = r["method"] + TAG
+            r["post_hoc"] = True
     out = E.write_estimates(rows, hypothesis="H14")
     print(out.height, "rows written")
 

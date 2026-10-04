@@ -48,7 +48,8 @@ Steps (outputs in data/processed/shared/):
   day_matrices         day_matrices/ content_<model>{,_style_resid_period,_restate}.npz, spins.npz, rooms, days (H91 / H92)
   culture_vectors      culture_vectors/ agentdays, vecs_<model>_<variant>.npy, dirs_<model>, blocks (H81 / H82)
   libraries (lib: no build step; `--verify` runs their self-checks / reproductions): hazard_fe, semantic_kappa,
-  kickoff_naming, idea_markers, idea_ledger, replicator_hosts, replicator_fit, replicator_sim, read_response
+  kickoff_naming, idea_markers, idea_ledger, replicator_hosts, replicator_fit, replicator_sim, read_response,
+  ep_newton (Newton-step EP estimators, legacy + corrected; 2026-10-04)
 Tests (--tests): infra/shared/tests/test_*.py
 
 Usage:
@@ -214,6 +215,7 @@ STEPS = [
      "deps": ["replicator_hosts", "replicator_fit"], "outputs": []},
     {"name": "read_response", "cmd": "py", "script": "read_response.py", "lib": True,
      "deps": ["build_agent_vectors", "build_embeddings_v2", "style_resid", "goal_fields"], "outputs": []},
+    {"name": "ep_newton", "cmd": "py", "script": "ep_newton.py", "lib": True, "deps": [], "outputs": []},
     {"name": "null_sizes", "cmd": "py", "script": "nulls.py", "args": ["--calibrate", "--reps", "100", "--surr", "49", "--workers", "2"],
      "expensive": True, "outputs": ["null_sizes.parquet"]},
     {"name": "per_period_estimates", "cmd": "py", "script": "estimates.py", "args": ["--backfill"],

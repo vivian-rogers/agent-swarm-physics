@@ -217,7 +217,8 @@ def n3_loops(rng, B_=200):
 def main():
     rng = np.random.default_rng(20261004)
     res = {"N1_NE43": n1_ne43(), "N2_NE14": n2_ne14(rng), "N3_loops": n3_loops(rng)}
-    (OUT / "native_r1b.json").write_text(json.dumps(RB.jsonable(res), indent=1))
+    RB.RES.mkdir(parents=True, exist_ok=True)
+    (RB.RES / "native_r1b.json").write_text(json.dumps(RB.jsonable(res), indent=1))
     print(json.dumps(RB.jsonable(res), indent=1)[:6000])
 
 

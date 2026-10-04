@@ -34,6 +34,14 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "hypotheses/H05-rooms-cut/analysis"))
 from ep import ep_gauss_crossfit, ep_heldout  # noqa: E402  (H05's validated estimators)
+sys.path.insert(0, str(ROOT / "infra/shared"))
+import ep_newton as EPN  # noqa: E402
+
+# Estimator switch (ep_gauss_crossfit recheck, 2026-10-04). Default "xprod" reproduces round 1 exactly;
+# H14_EP=heldout uses the corrected held-out Newton bound with a per-column, block-floored ridge
+# (infra/shared/ep_newton.py; blocks single / mf / pw in collective_ep).
+EP = os.environ.get("H14_EP", "xprod")
+assert EP in ("xprod", "heldout"), EP
 
 
 # ============================================================================ sequences
@@ -124,6 +132,8 @@ def newton(G, days):
     """Cross-fitted Newton bound (nats per row) with day folds; NaN if < 2 days or no columns."""
     if G.shape[1] == 0 or len(np.unique(days)) < 2:
         return np.nan
+    if EP == "heldout":
+        return float(EPN.ep_newton_heldout(G, days, k=_k(days))["sigma"])
     return float(ep_gauss_crossfit(G, days, k=_k(days))["sigma"])
 
 
@@ -200,7 +210,15 @@ def ep_cfx3(seq, day, q, order=None, alpha=0.5):
     return 0.5 * float(np.average(vals, weights=ws)) if vals else np.nan
 
 
-def newton_subsets(G, days, subsets, k=None, ridge=1e-3):
+def newton_subsets(G, days, subsets, k=None, ridge=1e-3, block=None):
+    """Dispatches on EP: legacy cross-product form (default, `_newton_subsets_xprod`) or the corrected held-out form
+    (per-column ridge floored by the mean variance of each column's block; `block` = block id per column of G)."""
+    if EP == "heldout":
+        return EPN.newton_subsets_heldout(G, days, subsets, k=k, block=block)
+    return _newton_subsets_xprod(G, days, subsets, k=k, ridge=ridge)
+
+
+def _newton_subsets_xprod(G, days, subsets, k=None, ridge=1e-3):
     """H05's cross-fitted Newton bound (ep_gauss_crossfit) for several column subsets of G, sharing one
     covariance and one set of fold means. Same formula: K_S + ridge * tr(K_S)/d_S * I; sigma = 2 mean_{a!=b}
     gbar_a' K_S^-1 gbar_b over day folds. Returns {name: sigma}."""
@@ -435,7 +453,8 @@ def collective_ep(Xp, Xn, d, q, work, chat, which=("mf", "pw")):
     for w in which:
         subsets[f"sigma1_{w}"] = np.r_[idx["single"], idx[w]]
         subsets[f"sigma_{w}_alone"] = idx[w]
-    r = newton_subsets(G, d, subsets)
+    blk = np.concatenate([np.full(b.shape[1], k) for k, (_, b) in enumerate(blocks)])
+    r = newton_subsets(G, d, subsets, block=blk)
     res = {"sigma1": r["sigma1"], "d_single": int(len(idx["single"]))}
     for w in which:
         res[f"sigma1_{w}"] = r[f"sigma1_{w}"]

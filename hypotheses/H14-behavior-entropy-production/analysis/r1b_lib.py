@@ -27,6 +27,14 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "hypotheses/H05-rooms-cut/analysis"))
 from ep import ep_gauss_crossfit  # noqa: E402  (H05's validated estimator, as in h14lib)
+sys.path.insert(0, str(ROOT / "infra/shared"))
+import ep_newton as EPN  # noqa: E402
+
+# Estimator switch (ep_gauss_crossfit recheck, 2026-10-04). Default "xprod" reproduces round 1b exactly;
+# H14_EP=heldout uses the corrected held-out Newton bound (infra/shared/ep_newton.py) and writes results under
+# r1b/recheck_epfix/ (round1b.py RES).
+EP = os.environ.get("H14_EP", "xprod")
+assert EP in ("xprod", "heldout"), EP
 
 
 # ============================================================================ count-based estimators (H56 closed forms)
@@ -40,6 +48,14 @@ def _merge_folds(C_labels, k=None):
 
 
 def newton_counts(C_labels, ridge=1e-3):
+    """Newton-step bound (nats per transition) from per-label (day) count matrices (L, q, q), L >= 2.
+    Dispatches on EP: legacy cross-product form (default) or the corrected held-out form."""
+    if EP == "heldout":
+        return EPN.newton_counts_heldout(C_labels)
+    return _newton_counts_xprod(C_labels, ridge)
+
+
+def _newton_counts_xprod(C_labels, ridge=1e-3):
     """Cross-fitted Newton-step bound (nats per transition) from per-label (day) count matrices (L, q, q), L >= 2."""
     C_labels = np.asarray(C_labels, dtype=np.float64)
     if len(C_labels) < 2:
@@ -187,6 +203,8 @@ def newton_G(G, day, k=None):
     if not keep.any():
         return np.nan
     k = min(5, len(np.unique(day))) if k is None else k
+    if EP == "heldout":
+        return float(EPN.ep_newton_heldout(G[:, keep], day, k=k)["sigma"])
     return float(ep_gauss_crossfit(G[:, keep], day, k=k)["sigma"])
 
 

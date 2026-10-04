@@ -333,3 +333,34 @@ Ratings suggestion: completeness 55, faithfulness 2.0 (from 1.5), usefulness 2.5
 - **H05-R1.** Rooms matter only insofar as they also split artifacts: cross-room pairs sharing a repo stay coupled through edits (E3).
 - **H05-R2.** The ×6 rise in within-room coupling after the split is attention reallocation, predicted in size by N_room^-0.6 (E5).
 - **H05-R3.** Information leaks across rooms through history search and artifacts at a measurable rate (a leak conductance).
+
+## Recheck (ep_gauss_crossfit fix) (2026-10-04)
+*Post hoc estimator recheck; no prediction changed. Trigger: infra/README "Known issues" (H90): the cross-fitted Newton bound `ep_gauss_crossfit` diverges when the observable count d nears the row count T, and a shared scalar ridge fakes collective EP on nested sets. Non-holdout only (`load_days` guard plus `holdout_mask`). The holdout C4 number was not rechecked (confirm script; not run).*
+
+**What changed.** The corrected estimator is `infra/shared/ep_newton.py: ep_newton_heldout`. On each day fold, θ = 2(K₋f + Λ)⁻¹μ₋f is fitted on the other folds. Λ is a per-column ridge, λ_k = K_kk + mean pair variance. The second-order dual 2θ·μ_f − ½θᵀK_fθ is evaluated on the held-out fold. It is a held-out lower bound: overfitting lowers it, and the ridge shrinks it to ~0.5 of 2μᵀK⁻¹μ. Compare it only with nulls computed by the same estimator. The legacy function is kept (`ep_newton.ep_gauss_crossfit`, verbatim). Recomputed here, it reproduces every stored round-1 value (max |Δ| 1e-17 over 124 numbers). Script: `analysis/recheck_epfix.py`. Numbers: `data/processed/H05-rooms-cut/recheck_epfix/recheck_bin1.json`. Cross-day null: 40 draws for both estimators (round 1 used 5), so legacy p-values move by Monte Carlo noise too.
+
+**Synthetic check** (`infra/shared/ep_newton_synthetic.py`, H05 layout: all pairwise g on binary spins, one set, 5 days × 230 steps, N 15):
+- Independent spins (Σ = 0): legacy +0.016 nats/step (SD 0.029), corrected −0.017 (SD 0.013). Cross-day size 0.07 and 0.02. At N 27 × 24 days: +0.006 and −0.012.
+- Planted asymmetric coupling (exact Σ 1.53): legacy 1.23 (0.80 of exact), corrected 0.59 (0.39), both detected in 30/30.
+
+**Old → new (round-1 panel, 1-min bins, active spins unless stated; per agent-hour)**
+
+| Number quoted in the card | Old | New (held-out Newton) | Verdict change? |
+| --- | --- | --- | --- |
+| X5 Newton EP range over 18 windows | −0.14 to +0.29 | −0.14 to +0.04 (fold SE 0.006–0.063) | no |
+| X5 windows within 2 cross-day null SD | 15/18 (legacy recomputed: 17/18) | 18/18; none with p ≤ 0.05 | no (strengthens the null) |
+| X5 exception #42 (excess over cross-day null) | +0.24 (recomputed +0.15, p 0.02) | +0.056 (null SD 0.046, p 0.10) | exception withdrawn |
+| X5 exception #51 W28 | +0.09 (recomputed +0.06, p 0.05) | +0.017 (null SD 0.016, p 0.17) | exception withdrawn |
+| X5 borderline #51 W31, W32, W35 (≈ +0.05) | +0.03, +0.02, +0.08 (recomputed) | +0.008, +0.014, +0.024 (p 0.39, 0.10, 0.07) | no |
+| P3 EP whole swarm #39 / #40 / #41 | +0.045 / +0.081 / −0.075 | −0.076 (SE 0.043) / −0.046 (0.026) / −0.129 (0.041) | no (still "merged highest", still at noise) |
+| P3 EP excess over cross-day null #39 / #40 / #41 | −0.04 / +0.05 / −0.07 (null SD 0.07–0.11) | −0.010 / +0.006 / −0.048 (null SD 0.039–0.042) | no |
+| P2 EP class-restricted within − cross per pair-hour, active | 4/6, pooled +0.013, Fisher p 0.29 | 4/6, +0.005, p 0.35 | no |
+| P2 EP same, talk | 2/6, −0.005, p 0.56 | 2/6, −0.002, p 0.80 | no |
+| X3 class-restricted EP DiDs | mixed signs (e.g. 05-11 cut arm active −0.043, talk +0.011) | mixed signs (−0.018, +0.005); 4 of 36 arm DiDs flip sign, all near 0 | no |
+| P1 Newton bound: 72–75% of Σ, ≈ 0 under shuffles | (round-1 synthetic) | corrected bound: 39% of exact Σ, −0.017 under independence (above) | no (P1 was about the held-out ML bound) |
+
+**Fixed + trimmed panel (round 1b inputs; information only, X5 was never scored there).** Legacy X5 reaches +2.12 per agent-hour in trimmed #44 (T = 201 for d = 105): the divergence the known issue describes. The corrected estimator gives −1.64 (SE 0.41) there, also unusable at d/T = 0.5. Elsewhere it lies within 2 null SD in 17/18 windows, with no window at p ≤ 0.05. Do not report Newton EP for windows with d/T > 0.25.
+
+**Verdict changes.** None. P2 EP stays "not supported", P3 EP stays "not detectable" and the X5 reading stands: pairwise EP on 1-min activity is at the shared-schedule null. The two X5 exceptions (#42, #51 W28) were estimator noise and are withdrawn. Per-period verdicts rest on talk coupling, not EP, so no G folder changes. H05 writes no EP rows to `per_period_estimates`.
+
+**Claim that stands:** pairwise entropy production on 1-min activity spins is indistinguishable from the cross-day schedule null in 18/18 non-holdout windows (held-out Newton excess ≤ +0.056 nats per agent-hour, every p ≥ 0.07). Excluded: the round-1 #42 and #51 W28 exceptions (withdrawn).

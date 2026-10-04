@@ -38,6 +38,8 @@ from common import holdout_mask  # noqa: E402
 SH = ROOT / "data/processed/shared"
 DATA = ROOT / "data/processed/H14-behavior-entropy-production"
 OUT = DATA / "r1b"
+# results folder: round 1b as run (legacy Newton) or the ep_gauss_crossfit recheck (H14_EP=heldout, 2026-10-04)
+RES = OUT if B.EP == "xprod" else OUT / "recheck_epfix"
 PERIODS = {"G27": [27], "G37": [37], "G38": [38], "G39": [39], "G40": [40], "G41": [41], "G42": [42], "G44": [44], "G51": [51]}
 REGIME3 = ["G37", "G38", "G39", "G40", "G41", "G42", "G44", "G51"]
 ACT = ["shell", "click", "scroll", "look", "type", "chat", "idle", "consolidate", "search", "session", "other"]
@@ -324,7 +326,7 @@ def run(period, R=200, fast=False):
             r_, p_ = stats.spearmanr(d_["v3s_newton"].to_numpy(), d_["out_rate"].to_numpy())
             res["R1_rho_v3s_out"] = {"rho": float(r_), "p": float(p_), "n": d_.height}
     res["runtime_s"] = round(time.time() - t0, 1)
-    od = OUT / period
+    od = RES / period
     od.mkdir(parents=True, exist_ok=True)
     df.write_parquet(od / "agents.parquet")
     (od / "results.json").write_text(json.dumps(jsonable(res), indent=1))
@@ -352,8 +354,8 @@ def jsonable(o):
 # ============================================================================ cross-period summary
 def summarize():
     rng = np.random.default_rng(20261004)
-    R = {p: json.loads((OUT / p / "results.json").read_text()) for p in PERIODS if (OUT / p / "results.json").exists()}
-    A = {p: pl.read_parquet(OUT / p / "agents.parquet") for p in R}
+    R = {p: json.loads((RES / p / "results.json").read_text()) for p in PERIODS if (RES / p / "results.json").exists()}
+    A = {p: pl.read_parquet(RES / p / "agents.parquet") for p in R}
     r1 = {p: json.loads((DATA / p / "results.json").read_text()) for p in PERIODS if (DATA / p / "results.json").exists()}
     out = {"periods": {}}
     for p, r in R.items():
@@ -422,7 +424,7 @@ def summarize():
                   "anth_minus_openai_sum": float(np.sum(diffs)) if diffs else None,
                   "anth_gt_openai_periods": int(np.sum(np.array(diffs) > 0)) if diffs else None, "n_diff": len(diffs)}
     out["family_meta"] = fam
-    (OUT / "summary_r1b.json").write_text(json.dumps(jsonable(out), indent=1))
+    (RES / "summary_r1b.json").write_text(json.dumps(jsonable(out), indent=1))
     print(json.dumps(jsonable({k: v for k, v in out.items() if k != "periods"}), indent=1))
 
 
@@ -439,7 +441,7 @@ def main():
         return
     if a.v3_b1c:
         for p in (a.period or list(PERIODS)):
-            f = OUT / p / "results.json"
+            f = RES / p / "results.json"
             res = json.loads(f.read_text())
             goals = PERIODS[p]
             rng = np.random.default_rng(20261104 + goals[0])

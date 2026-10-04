@@ -361,3 +361,75 @@ DQ9's cross-index lists NE06 (#20), NE14 (#36) and NE43 for H14. NE06 is dropped
 - **H14-R1.** Entropy production on work states (plan, build, verify, ship; Jev) correlates with output: useful irreversibility.
 - **H14-R2.** Loops are near-reversible cycles with zero progress; productive phases produce entropy. Efficiency = progress per unit of entropy produced.
 - **H14-R3.** The scaffold contributes a fixed entropy-production floor (the consolidation clock); subtracting it leaves agent-generated irreversibility (E1).
+
+## Recheck (ep_gauss_crossfit fix) (2026-10-04)
+*Post hoc estimator recheck; no prediction, threshold or state definition changed. Trigger: infra/README "Known issues" (H90). The legacy Newton bound diverges when the observable count d nears the row count T. A subset-dependent scalar ridge on nested sets biases ΔΣ = Σ(single ∪ w) − Σ(single). O4 is exactly that design: d = 272–1,166 observables on T = 696–11,352 minute transitions. Non-holdout only (`period_days` and `holdout_mask` asserts); no confirm script was run.*
+
+**What changed.** The corrected estimator is in `infra/shared/ep_newton.py`. On each day fold, θ = 2(K₋f + Λ)⁻¹μ₋f is fitted on the other folds and the second-order dual 2θ·μ_f − ½θᵀK_fθ is scored on the held-out fold. Λ is a per-column ridge, λ_k = K_kk + the mean variance of k's block (single / mf / pw). A column shared by nested sets is therefore shrunk identically in each set. The ridge shrinks the bound to ~0.5 of 2μᵀK⁻¹μ. **All new values are on that smaller scale**: compare them with nulls on the same estimator, not with round-1 magnitudes.
+- **Switch.** `H14_EP=heldout` in `h14lib` (`newton`, `newton_subsets` with block ids) and `r1b_lib` (`newton_counts`, `newton_G`). The default reproduces round 1 and round 1b exactly.
+- **Scripts.** `analysis/recheck_epfix.py` recomputes O4 with both estimators on the same grids and surrogates. The legacy values reproduce the stored point estimates in 9/9 periods. `round1b.py`, `native_r1b.py` and `estimates_r1b.py` were rerun with the switch.
+- **Outputs.** `data/processed/H14-behavior-entropy-production/recheck_epfix/collective.json` and `r1b/recheck_epfix/`. The cross-day null has 100 draws (40 in G51), redrawn for both estimators, so legacy p-values move by Monte Carlo noise. `cfx` values are unaffected.
+- **Not rerun.** Round-1 `act`, minute-grid and no-consolidate numbers. They have d ≤ 55, the round-1b chains supersede them, and only the estimator scale would change.
+
+**Synthetic check** (`infra/shared/ep_newton_synthetic.py`; H14's O4 layout on a 4-state driven Potts swarm: single = 6 transition indicators per agent, pw = 2 per pair; σ_coll = Σ(single ∪ pw) − Σ(single)):
+
+| Size (N × days, d / T) | Independent agents: σ_coll raw, legacy → corrected | Cross-day size, legacy → corrected | Power at planted J = 0.25 / 0.5, legacy → corrected | Corrected mean / its long-run value at J = 0.5 |
+| --- | --- | --- | --- | --- |
+| 15 × 5 (300 / 1,145) | +0.377 → −0.034 nats/step | 0.07 → 0.07 | 0.10 / 0.88 → 0.25 / 1.00 | 0.091 / 0.122 |
+| 13 × 16 (234 / 3,664) | +0.028 → −0.007 | 0.03 → 0.08 | 0.60 / 1.00 → 0.95 / 1.00 | 0.104 / 0.118 |
+| 27 × 24 (864 / 5,496) | +0.323 → −0.015 | 0.03 → 0.00 | 0.73 / 1.00 → 1.00 / 1.00 | 0.251 / 0.260 |
+
+In long runs (200 days) both estimators give σ_coll ≈ 0 (−0.015 to −0.0002) for independent agents. The legacy raw value is a finite-sample artifact that grows with d/T. The cross-day null carries the same artifact, so round 1's excess-over-null tests stayed calibrated but lost power. The planted collective bound at J = 0.25 is 0.04 nats/step (5-day size) and at J = 0.5 it is 0.20.
+
+**Old → new: collective term (O4, P4; nats per minute step, whole swarm)**
+
+| Period | ΔΣ_MF p (old → new) | ΔΣ_PW p (old → new) | ΔΣ_PW excess (old → new) | Raw ΔΣ_PW (old → new; null mean old → new) | Verdict change? |
+| --- | --- | --- | --- | --- | --- |
+| G27 (I) | **0.0495** → 0.88 (excess +0.025 → −0.002) | 0.66 → 0.51 | −0.012 → −0.000 | −0.005 → −0.002 | the regime-I MF lead is withdrawn |
+| G37 | 0.98 → 0.29 | 0.45 → 0.86 | +0.010 → −0.012 | +0.103 → −0.030 (0.093 → −0.018) | no |
+| G38 | 0.17 → 0.50 | 0.36 → 0.67 | +0.002 → −0.001 | +0.012 → −0.005 | no |
+| G39 | 0.99 → 0.0495 (Holm 0.40) | 0.71 → 0.71 | −0.059 → −0.014 | +0.375 → −0.045 (0.434 → −0.030) | no (n.s. after Holm) |
+| G40 | 0.93 → 0.84 | 0.55 → 0.40 | −0.007 → +0.003 | +0.196 → −0.017 (0.204 → −0.019) | no |
+| G41 | 0.50 → 0.99 | **0.03** (Holm 0.21) → 0.25 | +0.120 → +0.008 | +0.330 → −0.010 (0.211 → −0.018) | no (the unadjusted hit goes) |
+| G42 | 0.27 → 0.55 | 0.14 → 0.13 | +0.082 → +0.017 | +0.312 → −0.008 (0.231 → −0.025) | no |
+| G44 | 0.11 → 0.70 | 0.30 → 0.52 | +0.034 → −0.002 | +0.349 → −0.034 (0.315 → −0.031) | no |
+| G51 block | 0.32 → 0.07 | **0.024** (Holm 0.20) → **0.024** (Holm 0.20) | +0.025 → +0.009 (fold SE 0.003) | +0.031 → +0.005 (0.007 → −0.004) | no |
+
+- **P4 weak** (ΔΣ_MF above the null in ≥ 2 of 8 regime-III periods): 0/8 → 0/8 after Holm. It stays **unsupported**.
+- **P4 strong** (ΔΣ/Σ_1 ≤ 0.3): G51 PW excess/Σ_1 0.06 → 0.04 (0.025 against the `cfx` Σ_1); MF 0.003 → 0.001. It still **holds where testable**. The "≲ 10–15% of the single-agent sum" reading stands, now nearer 5%.
+- **Raw ΔΣ_PW** in the 5-day periods was +0.20 to +0.38. Its null means were +0.20 to +0.43, so it was almost all estimator bias. Card text that used it ("raw ΔΣ biased up by high-dimensional K̂⁻¹ inflation") was right about the cause. The corrected raw values are −0.045 to −0.008.
+- **S3 / P1(iv)** (5-day blindness below ~0.3–0.5 nats/min) was measured on H14's own Potts synthetic with the legacy estimator; that synthetic was not rerun. On the infra synthetic, the corrected estimator detects a 0.20 nats/min collective bound every time (legacy 0.88) and a 0.04 bound 25% of the time (legacy 10%). P1(iv) stays **failed** (power at 0.05 is below 0.8). The detection floor is lower than the card said.
+
+**Old → new: round 1b single-agent and pooled numbers** (share of test agents above the DB null; medians are excess in nats/transition and shrink by design)
+
+| Number quoted in the card | Old | New | Verdict change? |
+| --- | --- | --- | --- |
+| coarse share above null, G27 / G37 / G38 / G39 / G40 / G41 / G42 / G44 / G51 | 1.00 / 0.11 / 0.71 / 0.47 / 0.60 / 0.73 (r1) / 0.56 / 0.50 (r1) / 0.97 | 1.00 / 0.11 / 0.64 / 0.47 / 0.53 / 0.67 / 0.69 / 0.64 / 1.00 | no: P2's 80% bar is still met only in G51 (and G27); every G-folder verdict stands |
+| coarse median excess | 0.0025–0.073 | 0.0007–0.033 | no (scale) |
+| P2-fine: act_sh ≥ 80% above null | 9/9 (all 1.00) | 9/9 (0.90–1.00) | no |
+| act_sh median excess | 0.10–0.20 | 0.058–0.104 | no (scale) |
+| act_sh excess ≥ round-1 `act` excess | 9/9 | 4/9, but this compares the shrunk estimator with legacy round-1 values | not comparable; withdrawn as a test |
+| act_sh_b3 share above null | 0.75–1.00, 9/9 ≥ 50% | 0.75–1.00, 9/9 | no |
+| P9-b3: coarse_b3 keeps < 50% | 5/8 (0.06–1.14; G38 0.59, G42 1.14) | 5/8 (0.09–1.86; G38 0.63, G42 0.95, G37 1.86) | no (still failed narrowly) |
+| P9-b3: act_sh_b3 keeps ≥ 50% | 8/9 (0.41–1.04) | 8/9 (0.42–1.04) | no |
+| P2-v3 pooled v3 EP above flip-null p95 | 7/9, EP 0.003–0.026 | **8/9** (G40 flip p 0.14 → 0.045), EP 0.0008–0.011 | holds more strongly; G37 still n.s. |
+| v3s_b1 / b1c share kept, G51 | 6.5× / 1.9× | 5.6× / 1.8× | no (still a selection artifact) |
+| P6-v3: G27 / regime-III pooled ratio | 0.44–4.4; ≥ 2× only vs G40 | 0.38–5.2; ≥ 2× vs G40 and G37 | no (still failed) |
+| P3-family: stratified lab η² on act_sh_b3 | sum 2.41, p 0.35 | sum 2.36, p 0.39 | no |
+| HH19 Anthropic > OpenAI on act_sh_b3 | 8/8, one-sided p 0.04; summed difference 3.09; G40 outlier agent 16.5 nats/transition | 7/8, p 0.04; summed difference 0.74; same agent 3.0 | no ("weak support, fragile"; the outlier was mostly estimator blow-up) |
+| R1: v3 EP vs output, ρ (G51 / G38 / G27) | +0.14 / −0.34 / −0.16 | +0.16 / +0.01 / −0.16 | no (failed) |
+| N1 NE43: v3 bookends / nudger off; act_sh_b3 | −50% / −34%; −1% / +12% (placebo v3 −45%…+183%, act −24%…+43%) | −66% / +5%; +3% / +11% (placebo v3 −47%…+101%, act −28%…+46%) | no (bookend v3 change still just outside the placebo range; 1 of 4) |
+| N2 NE14 after/before: coarse / act_sh / v3 | 0.25 [0.04, 6.6] / 0.71 [0.22, 1.5] / 0.72 [0.07, 1.06] | 0.29 [0.03, 4.8] / 0.72 [0.20, 1.8] / undefined (pre-day EP −0.002) | no (mixed, underpowered); "v3 drops less than coarse" is no longer evaluable |
+| N3 productive − stuck v3 EP: G38 / G39 / G40 | −0.0004 / +0.06 / −0.40 [−3.1, −0.17] | −0.046 / +0.087 / −0.087 [−0.41, +0.19] | no (0/3); G40's "stuck is more irreversible" (CI below 0) is withdrawn |
+
+**Verdict changes.**
+- None at card level or in any G or NE folder. HH19, HH67 (P4) and the work-cycle predictions stay as they were. P2's per-period verdicts are unchanged.
+- **Withdrawn readings:**
+  - "Regime I (G27) shows a borderline mean-field term (p = 0.0495)", together with confirm criterion C8(c)'s basis;
+  - G41's unadjusted ΔΣ_PW hit;
+  - N3's G40 "stuck windows are more irreversible" interval;
+  - the round-1b comparison "act_sh excess ≥ round-1 act excess".
+- **Strengthened:** P2-v3 (8/9 periods).
+- **Per-period estimates.** Rows written to `per_period_estimates` with method suffix "[held-out Newton, per-column ridge]" or "[ep_gauss_crossfit recheck]" and `post_hoc` = true: the round-1b set (99) and the collective MF/PW excess (18). The legacy rows stay for comparison.
+
+**Claim that stands:** fine-action arrows of time are universal (act_sh above the DB null for ≥ 90% of agents in 9/9 non-holdout periods, held-out Newton), and no collective arrow is detectable beyond the cross-day null after Holm (largest: G51 pairwise excess 0.009 nats/min, 4% of Σ_1, p 0.024, Holm 0.20). Excluded: the G27 regime-I mean-field lead and the G41 pairwise hit (withdrawn).
