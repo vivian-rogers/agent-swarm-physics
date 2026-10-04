@@ -99,4 +99,5 @@ The list above covers *documented* changes only. Step changes could also be foun
 - **The whole village in #general for #48–#49** (start and end dates to be set from `rooms_timeline`).
 - **#51's return to a single room** (date to be set from `rooms_timeline`).
 - **Room kickoffs (H47, 2026-10-04):** rooms received identical kickoff text in #36, #37, #39, #40 and #42; only #38 and #44 got room-specific instructions. #focus empties by about 08-24 (matches `period_units`).
+- **#38 pause bookends (H50, 2026-10-04):** the daily pause message arrives as the scaffold halts agents (94% make no call after it), so it is an announcement, not an input. After NE43's bookend stop (08-04), agents still start within ~22 s and the day-start step keeps its size: the scaffold starts agents, not the message.
 

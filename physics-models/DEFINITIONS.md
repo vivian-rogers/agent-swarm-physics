@@ -278,3 +278,9 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Bulk vs worst-case mixing time:** relaxation times of the read-out Markov chain (who reads whom, per call), from the bulk of the spectrum vs the slowest mode.
 - **Kickoff remanence at active-hour resolution:** H54's remanence fit with τ in active hours; detectable in ~45% of periods.
 - **Newcomer assimilation gap:** a newcomer's content distance to the room centroid vs days since joining.
+
+### H50 named variants (2026-10-04; see `hypotheses/H50-field-vs-coupling-transfer-lag/README.md`)
+- **Call cycle (hop):** counting a recipient's model calls after a message: hop 0 = the call already running when the message arrived, hop 1 = its first call whose context can contain the message (`call_windows` t_call).
+- **Read-out jump J₁:** the increase in the probability that the recipient's hop-1 call is a talk call after a peer message, vs matched calls without one. Onset at hop 1 (not hop 0) is the signature of read-out-gated coupling.
+- **Field excess (shifted-input null):** the share of swarm co-movement explained by measured common inputs (schedule edges, human messages, nudges, platform errors) beyond the same inputs shifted in time.
+- **Coupling share (counterfactual, gated kernel):** the share of talk co-movement reproduced by a counterfactual built from the fitted hop kernels. Field and coupling shares are separate measures, not a partition: coupling amplifies field-driven talk.

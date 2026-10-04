@@ -1,0 +1,14 @@
+{
+  "complete": 45,
+  "faithfulness": 2.5,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: dated predictions and nulls; three-iteration synthetic validation (15 scenarios x 5 seeds) with pre-data amendments; 71 non-holdout units in 35 period folders (replication) plus 4 native tests (NE43, G51, NE14, G38) with their own predictions; robustness check on logged-start recipients; confirmatory script frozen, guarded and dry-run, not run. Missing: content channel (C3), regime-I kernel validation beyond hop 2, HH188 T_eff(omega), holdout run.",
+    "faithfulness": "The gated-coupling model is identified and beats its rivals: read-out jump > 0 in 45/71 units and < 0 in none, onset exactly at hop 1, ungated coupling rejected, pure field rejected for talk, HH167's regime split rejected. The activity collective mode is shown to be a schedule field (edges explain ~0.6 beyond a shifted-input null; synchronous halts in #38). Not higher because the holdout is not run, the kernel shape was not predicted (plateau in III, rise in I), several numeric predictions failed (nudge onset, regime-I field share, corner frequency), and decomposition shares are model-based and non-additive. Scorecard A1 B1 C1 D1 E1 F1 G1 H2 I1.",
+    "usefulness": "A clean mechanistic decomposition operators can use: activity synchrony is the scheduler (stagger or trim before reading it as coordination); talk spreads one read-out call at a time, and in regime III only to named recipients. A diagnostic and design rule rather than a validated lever; calibrated 3.0 -> 2.5."
+  },
+  "one_line": "Activity co-movement is the scheduler's field; talk spreads by a coupling gated at exactly one read-out call (45/71 units, onset hop 1, none negative); HH167's regime split fails",
+  "rated_by": "H50 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 -> 2.5; others kept)"
+}
