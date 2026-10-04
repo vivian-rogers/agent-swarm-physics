@@ -205,3 +205,9 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Loop gain (equal-time, room excess):** ρ_ex = (ρ_w − ρ_c)/(1 − ρ_c), with ρ_w and ρ_c the split-half-normalized within-room and cross-room per-pair correlations. Removes village-wide drives (not room-specific ones). Compare channels only at matched time resolution: day means inflate an equal-time gain as g_day = J(2 − J).
 - **Agent state (vector), linear statement mean:** the unnormalized mean of whitened statement vectors per agent and window (the norm keeps how strongly an agent leans, unlike the unit-normalized H01 variant).
 - **Exogenous drive direction:** a content direction imposed from outside the agents (goal text, kickoff, first-hour mean, operator messages) that is projected out before computing alignment.
+
+### H30 named variants (2026-10-04; see `hypotheses/H30-operator-susceptibility/README.md`)
+- **Operator kick classes:** N_tgt (nudge to its named agent), N_by (the same nudge seen by room-mates), H_men (human message naming the agent), H_und (human message not naming it). Matches `kicks_classified`.
+- **Activity susceptibility χ_act (local projection, A30):** extra active minutes of the recipient in the 30 min after a kick, by local projection with matched pre-history strata (idle duration, recency) and a day fixed effect, adjusting for past kicks and future undirected kicks only. Policy-relative: 20–40% below the per-kick effect in synthetics.
+- **Content susceptibility χ_con (orthogonalized placebo):** the change in cosine between the recipient's next statement and the message's direction after projecting the direction off the recipient's last 8 statements, minus the same for same-kind messages from other days.
+- **Context fill:** turns since the last reset (`context_ledger_turns.ctx_pos` since `reset_consol`).

@@ -1,0 +1,33 @@
+\hwhat{How much does one operator message move the agents who see it, and can that number be tracked day by day? We tested 16 non-holdout goal periods (regimes I--III), after a synthetic validation that found and fixed three estimator biases. \emph{Activity:} in G51 (875 nudges) a nudge adds 0.59 [0.24, 0.93] active minutes in the next 30 min for its target (1.04 with a day fixed effect). First nudges add 1.36; repeats 0.26; room-mates $\approx0$. G38 is null and the 3--5-day periods are too small. \emph{Content:} human messages turn recipients' next statements toward their new content: $+0.026$ cosine for room-mates, $+0.046$ for named agents, in 6 of 8 periods. Their activity effect is $\approx0$. \emph{Daily gauge:} mostly noise. Day-to-day variation is weak (G51 $p=0.08$, $R_1=0.28$), does not persist (lag-1 $-0.09$), and tracks neither goal age, context fill nor lab. H04's nudge effect (1.66) is inflated by its isolation rule. Holdout not run.}
+
+\hmodel{Models 01 and 11: linear response to impulsive fields. Each operator message $k$ is a field pulse on its recipients $i$. The activity spin is $n_i(t)\in\{0,1\}$. Content state: a whitened statement embedding $s_i$. Message direction $u_k$, projected off the span of the recipient's last 8 statements ($u^\perp_k$). $\chi_{\rm act}$: the 30-min integrated activity response, from a local projection with matched pre-history strata $\alpha_s$, day effects $\delta_d$ and kick counts $K$. $\chi_{\rm con}$: post-message alignment relative to same-kind placebo messages $p$. $\chi_{\rm op}(d)$: the day mean of per-kick responses $r_k$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+Y_i(m)\equiv\textstyle\sum_{\tau=1}^{30}n_i(m+\tau)=\alpha_{s(i,m)}+\delta_d+\sum_c\chi^c_{\rm act}K^c_i(m)+\beta\cdot K^{\rm adj}_i(m)+\varepsilon\\
+\chi_{{\rm con},k}=\bar s_i^{\,\rm post}\!\cdot u^\perp_k-\big\langle \bar s_i^{\,\rm post}\!\cdot u^\perp_p\big\rangle_p,\qquad u^\perp=\frac{(1-P_{\rm pre})u}{\|(1-P_{\rm pre})u\|}\\
+\chi_{\rm op}(d)=\frac{\sum_{k\in d}w_kr_k}{\sum_{k\in d}w_k},\qquad R_1=1-\frac{\mathrm{Var}_{\rm perm}[\chi_{\rm op}(d)]}{\mathrm{Var}[\chi_{\rm op}(d)]}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) The G51 daily nudge gauge: extra active minutes per nudge for the target, with day fixed effect, 95\% CIs, and the period mean and band. Day-to-day scatter is about the size of the daily CIs: no trend, no persistence. (b) Period-level $\chi_{\rm op}$: nudge$\to$activity in the three largest nudge periods (pre-registered model); first vs repeat nudges in G51 (day FE); human$\to$content in the human-dense periods (cosine $\times20$).}
+
+\htelos{Useful as a set of corrections rather than as a gauge. Someone steering an agent swarm should not watch a daily ``steerability'' number: at village message rates it is a period constant plus noise, and it does not age. What does carry over: one nudge to an idle agent buys about a minute of extra work, and only the first one does. Repeats and nudges sent into a swarm-wide lull buy almost nothing, and room-mates ignore other agents' nudges. To change \emph{what} agents write, say something new and name the agent; that moves content, not activity. The methods lesson may matter more: conditioning on whether the nudger fires again silently biased H04's estimate. The effects are small, single-embedding, and unconfirmed on the holdout.}
+
+\hbottom{Operator messages have a measurable period-level susceptibility (nudges move the target's activity, human messages move content), but day-to-day steerability is not a trackable state.}
+
+\hresults{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.25\columnwidth}p{0.57\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\
+P1 nudge$\to$target & G51 0.59 [0.24, 0.93] (FE 1.04); G38 $-0.08$; 4/9 small $>0$ & G51 only\\
+P2 bystanders $\approx0$ & G51 0.13 [$-0.11$, 0.38]; G38 $-0.54$ & G51 only\\
+P3 human$\to$activity & $\le0$ in regime I; named never $>$ room & $\times$\\
+P4 human$\to$content & 0.026 [0.021, 0.030]; named 0.046; 6/8 & \checkmark\\
+P5 nudge$\to$content & G51 0.003 [0.000, 0.005] & $\sim$\\
+P6 no daily state & G51 $p=0.08$, $R_1=0.28$, lag-1 $-0.09$ & \checkmark\\
+P7 no aging & G51 $-0.019$ [$-0.049$, 0.012]/day & \checkmark\\
+P8 context sawtooth & early 0.94 vs late 1.00 (G51) & $\times$\\
+P10 family & no Holm-significant lab & \checkmark\\
+P11 nulls & G51 pass; G38 placebo $-0.59$ & mixed\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_validation.pdf}{Synthetic validation at G51-like sampling. (a) Per-nudge activity response: the H30 estimator recovers zero and is 15--25\% low when the response is real (policy-relative). H04's isolated design is biased by $-1.6$ min at zero effect. (b) ``Same $\chi$ every day'' tests: Cochran's $Q$ over-rejects; without day fixed effects, day-level activity shocks fake heterogeneity (60\%).}
+
+\hcaveats{Only G51 resolves the nudge response; 3--5-day periods give unstable CIs. The G51 level depends on the specification (0.59 pre-registered, 1.04 with day FE; the latter's pre-window placebo is 0.31). Human activity in dense regime-I chat is not identified. Content uses one embedding model and measures only message-specific steering; human replies may share topics (common cause). Day FE, cluster permutation, fill-phase controls and the splits are post hoc (A2, disclosed). Automated messages stop after 2026-08-20 (undocumented), so the \#51 tail may hold no nudges.}

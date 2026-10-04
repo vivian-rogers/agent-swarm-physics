@@ -273,6 +273,7 @@ Code: `analysis/h04lib.py` (machinery), `analysis/explore.py` (G, linearity, FD,
 - A possible mechanism: longer sessions leave agents more unread context to react to (H08), so more activity is triggered by other activity. Recorded as a new idea, not a finding.
 
 ## Notes
+- **From H30 (2026-10-04): this card's nudge A30 (1.54–1.66 min) is inflated by its isolation rule.** Dropping nudges followed by another directed kick within 60 min is a post-treatment selection: the nudger re-fires on agents that stay idle (52% of G51 nudges), so the rule discards the nudges that didn't work. H30 reproduces 1.66 with this card's code. Over all G51 nudges the effect is 0.59 [0.24, 0.93] (1.04 with a day fixed effect); first nudges of an episode give 1.36, repeats 0.26. In synthetics the isolated design gives −1.6 at zero effect, with sign depending on the nudger's policy. The "nudges act only on the named agent" conclusion stands (room-mates ≈ 0).
 - 2026-10-04: **H04-R1 tested in H08: not supported for nudges.** Read-out is fast (median 104 s), but the response starts at ~5 min; about half of H04's dead time is scheduler read-out and half something slower.
 - 2026-10-03: opened from shortlist S3. Card and predictions written before any response was computed.
 - 2026-10-03: exploratory round 1 run (non-holdout only); design changes listed under Results. H04-MF added at the user's request, with predictions written first.
