@@ -521,6 +521,26 @@
    "model": "01",
    "source": "H101",
    "meaning": "Assigned teams show up as antiferromagnetic co-usage blocks across team lines."
+  },
+  {
+   "symbol": "Δρ_kick",
+   "name": "kickoff extra forgetting of agent content positions",
+   "value": "+0.26 ± 0.04 (16/18 kickoffs); ordinary-day memory ρ0 ≈ 0.62 (regime I), 0.83 (III); ρ at kickoff ≈ 0.4; along kickoff 0.63 vs transverse 0.25; day-1 overshoot a +0.12 ± 0.02",
+   "kind": "quench response",
+   "scope": "18 non-holdout kickoffs, both models",
+   "model": "11",
+   "source": "H97",
+   "meaning": "A new goal is an anisotropic restoring force that erases most of the previous content position, with day-1 overshoot."
+  },
+  {
+   "symbol": "p_goal",
+   "name": "on-goal occupancy after a kickoff",
+   "value": "decoy floor ≈ 0.03 → 0.23–0.44 in assigned weeks (always < ½); #51 own-goal ≈ 0.27 steady over 9 weeks; #12a two-state loop gain g₂ 0.10 → 0.74",
+   "kind": "order parameter",
+   "scope": "16 kickoffs",
+   "model": "10",
+   "source": "H105",
+   "meaning": "Goal adoption is a rising on-goal share with binomial spread; most statements stay off the literal goal."
   }
  ]
 }

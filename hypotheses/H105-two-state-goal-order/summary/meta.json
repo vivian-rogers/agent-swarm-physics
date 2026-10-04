@@ -1,0 +1,76 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: card and predictions before data, synthetic at the real window structure (6 scenarios), Amendment 1 before real data, 5 pairs x 8 configurations, 16 kickoffs, matched parametric bootstrap, 3 natives (G51, G12, NE38), per-period estimates, confirm.py frozen and dry-run, not run.",
+  "faithfulness": "The tilt (the hypothesis's model) cannot be tested at village sampling: P1/P3 not identifiable, P2 inconclusive. Only descriptive two-state facts (occupancy rise, p(1-p) variance scaling, flat transverse) stand. Scorecard A1 B0 C1 D0 E1 F2 G1 H0 I1.",
+  "usefulness": "An instrument lesson (free-week couplings unmeasurable; statement-level misclassification) and a clean descriptive footprint of goals. No operator decision changes."
+ },
+ "one_line": "Goals move a two-state on-goal occupancy from ~0.03 to 0.2-0.45 with variance growing as p(1-p) and transverse occupancy flat, but the free-week tilt forecast (HH130's fair Legendre test) is not identifiable at village sampling: inconclusive.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "untested",
+   "note": "two-state tilt not identifiable; descriptive scaling holds"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "rival",
+   "outcome": "refuted",
+   "note": "continuous Legendre already refuted by H10"
+  },
+  {
+   "model": "10-potts",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "q=2 categorical agent state"
+  }
+ ],
+ "rated_by": "H105 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "On-goal occupancy rises from the decoy floor (≈ 0.03) to 0.23–0.44 after a kickoff and its variance grows as p(1 − p) (Spearman 0.86 over 16 kickoffs, p 0.0003); the two-state tilt is not identifiable at village sampling",
+  "scope": "16 kickoffs; #12a; natives G51, G12, NE38",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.36,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "rank agreement of variance growth (16 kickoffs)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic shows the identification limit honestly",
+    "x": 1.0,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "penalty: only 7/16 within ×1.5 of the prediction",
+    "x": 0.7,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: embedding models disagree on all natives",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 0.5,
+  "decision": "read goal adoption as a rising on-goal share with binomial spread; don't fit a tilt",
+  "magnitude": "small",
+  "generality": "goal-driven LLM swarms",
+  "expected_usefulness": 0.18,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H105 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

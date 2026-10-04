@@ -262,6 +262,8 @@ Seven builders and nine libraries are now shared and registered in `build_all.py
 
 ## Known issues
 
+- **Slopes between unit-normalized embedding segments fake forgetting** (H97): when the common component grows (e.g. a day-1 topic), every agent's deviation shrinks, and an IV/regression slope "forgets" in 45–90% of pure-translation worlds. Use split-half disattenuated correlations.
+- **Agent-window majority spins from 2–4 statements** make free-week couplings unidentifiable (H105 synthetic): misclassification dilutes loop gain.
 - **Talk minutes have ρ_⊥(1) ≈ 0** (H99): per-agent relaxation-time estimators on 1-min talk spins are undefined. Use the per-call clock.
 - **Leave-in day-mean centring of content windows fakes g_χ ≈ −0.21** for independent agents (H99). Centre leave-one-out.
 - **Item-level bootstraps of plug-in entropies are biased** (H101): duplicated items lower the entropy. Use message-level or parametric bootstraps.

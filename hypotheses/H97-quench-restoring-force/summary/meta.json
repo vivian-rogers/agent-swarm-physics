@@ -9,10 +9,68 @@
  },
  "one_line": "A goal kickoff is a restoring force: cross-agent memory falls 0.68 -> 0.42 (drho +0.26 +/- 0.04, 16/18 kickoffs, both models), stiffer along the goal and overshooting on day 1; the per-agent rate is not shown to be an agent constant.",
  "models": [
-  {"model": "11-vector-spins", "role": "primary", "outcome": "mixed", "note": "restoring well confirmed; anisotropic, overshoots; HH-literal law fails"},
-  {"model": "02-nonequilibrium-ising", "role": "secondary", "outcome": "mixed", "note": "overdamped relaxation; day-1 overshoot breaks it"},
-  {"model": "10-potts", "role": "rival", "outcome": "untested", "note": "common-target (full reset) rival rejected as complete"}
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "restoring well confirmed; anisotropic, overshoots; HH-literal law fails"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "overdamped relaxation; day-1 overshoot breaks it"
+  },
+  {
+   "model": "10-potts",
+   "role": "rival",
+   "outcome": "untested",
+   "note": "common-target (full reset) rival rejected as complete"
+  }
  ],
  "rated_by": "H97 agent (suggested)",
- "updated": "2026-10-04"
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "A kickoff erases agents' pre-kickoff content positions beyond ordinary days (extra forgetting Δρ +0.26 ± 0.04, positive in 16/18 kickoffs, both models, 7 input variants); the force is anisotropic (0.63 along the kickoff vs 0.25 transverse) and day 1 overshoots (+0.12 ± 0.02)",
+  "scope": "18 non-holdout kickoffs; natives NE38, G44, G26",
+  "direction": "positive",
+  "original_verdict": "supported",
+  "credence": 0.7,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication: 16/18 kickoffs, both models, 7 variants",
+    "x": 2.0,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic calibration of the disattenuated ρ (false positives 0.025–0.05)",
+    "x": 1.5,
+    "evidence": "card §Amendment 1"
+   },
+   {
+    "factor": "intervention: NE38 reassignment erases the moved agent ~6× its ordinary day",
+    "x": 1.4,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: estimator changed after the synthetic (IV slope faked P1 in 45–90%); estimator-sensitive",
+    "x": 0.85,
+    "evidence": "card §Amendment 1"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "a new goal wipes most of an agent's previous content position within a day; expect day-1 overshoot toward the goal",
+  "magnitude": "medium",
+  "generality": "goal-driven LLM swarms",
+  "expected_usefulness": 1.06,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H97 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
 }

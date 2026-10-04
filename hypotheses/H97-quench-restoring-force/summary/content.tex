@@ -1,0 +1,34 @@
+\hwhat{HH246 says each agent relaxes into the kickoff target at its own rate, $\Delta v_i=\chi_i(\hat k-v_i)$. I measured how much of each agent's pre-kickoff position survives day 1, against ordinary days of the same agents, on 18 kickoffs (regimes I--III, 6--15 agents). The synthetic check came first and replaced a biased slope by a scale-free correlation. The kickoff erases position: memory falls from 0.68 to 0.42, $\Delta\rho=+0.26\pm0.04$, positive in 16/18 and in all 7 input variants. The law's shape fails. Forgetting is 2--3$\times$ larger along $\hat k$ than across it, and day~1 overshoots the settled level ($a=+0.12\pm0.02$). The per-agent $\chi_i$ does not repeat across kickoffs (split-half $r=0.30$, $p=0.14$; power 0.30). A one-agent reassignment (NE38) acts as a kickoff on that agent only. Holdout: not run.}
+
+\hmodel{Model 11 with overdamped relaxation (model 02). Agent state $v_i$: mean of unit regime-whitened statement vectors ($d=32$) on a day. Field: the kickoff, direction $\hat k$ from shared \texttt{goal\_fields}. Memory $\rho$: cross-agent correlation of positions before and after a boundary, with split-half true variances. $\rho_0$: the same on ordinary day boundaries. $\chi_i$: one agent's forgetting of its offset from the others. $a$: day-1 displacement beyond the law, relative to the days 2--5 level.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+v_i^{(1)}=t+\beta_i\,(v_i^{(0)}-t)+\eta_i,\qquad \chi_i=1-\beta_i\\
+\rho=\frac{\mathrm{cov}_i(v^{(1)},v^{(0)})}{\sqrt{\mathrm{var}_{\rm true}(v^{(0)})\,\mathrm{var}_{\rm true}(v^{(1)})}},\qquad \Delta\rho=\rho_0-\rho_{\rm kick}\\
+a=\langle\Delta_i\rangle-(1-\beta_\parallel)\langle T-u_i\rangle\quad(=0\ \text{under the law})
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Memory of the pre-kickoff position at each kickoff (filled) and on ordinary days of the same agents (open). The kickoff is below the placebo in 16 of 18. (b) Extra forgetting along the kickoff direction against the transverse one. Points above the diagonal mean a stiffer well along $\hat k$; transverse forgetting is still positive (median 0.25), so the kickoff is more than a push along $\hat k$.}
+
+\htelos{Useful as a correction, small as a lever. A kickoff does more than add a common push: it scrambles where each agent was, along the goal and, less, across it. Expect day-1 content to overshoot and then settle back (H54's remanence); do not read the day-1 level as the steady state. The per-agent rate is not a stable trait in these data, so an operator cannot yet rank agents by how fast they adopt a goal. To retarget one agent without disturbing the others, change only its goal text (NE38). For anyone measuring memory in embeddings: a slope between unit-normalized segments fakes forgetting when the common topic grows; use the disattenuated correlation.}
+
+\hbottom{A goal kickoff is a restoring force that erases about a quarter of each agent's relative position beyond an ordinary day, stiffer along the goal and overshooting on day~1; the agent's rate is not shown to be a trait.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.45\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 $\Delta\rho>0$ & \raggedright $+0.26\pm0.04$; 16/18; 7/7 variants & \raggedright supported\tabularnewline
+\raggedright P2 isotropy $\beta_\parallel-\beta_\perp$ & \raggedright $-0.17\pm0.16$; style $-0.37$; $\Delta\rho_\parallel$ 0.63 vs $\Delta\rho_\perp$ 0.25 & \raggedright passes; fragile\tabularnewline
+\raggedright P3 intercept $a=0$ & \raggedright $+0.12\pm0.02$ (gte $+0.17$) & \raggedright failed (R5/R6)\tabularnewline
+\raggedright P4 $\chi_i$ agent constant & \raggedright $r$ 0.30 ($p$ 0.14); gte 0.48 ($p$ 0.03); centered $-0.06$ & \raggedright inconclusive\tabularnewline
+\raggedright P6 no lab effect & \raggedright $p=0.49$ & \raggedright supported\tabularnewline
+\raggedright P8 weekend gap & \raggedright $\rho_0$ 0.73 vs 0.69 & \raggedright supported\tabularnewline
+\raggedright N1 NE38 one agent & \raggedright $\chi$ 0.57/0.70 vs others' 90th pct 0.47/0.40 & \raggedright supported\tabularnewline
+\raggedright N2 G44 rooms & \raggedright $+0.00$ / $-0.16$ & \raggedright failed\tabularnewline
+\raggedright N3 G26 leader's text & \raggedright below 3/3 placebos; no move toward it & \raggedright failed (confounded)\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_compact.pdf}{Synthetic swarms at the real structure of 23 kickoffs, 40 replicates per scenario. (a) A slope-based P1 passes under pure translation (R0) in 90\%; the correlation passes in 5\%. (b) The centered intercept flags overshoot, common-mode jumps and constant speed (R0, R4--R6) in 90--100\%, and the true law in 15--35\%.}
+
+\hcaveats{The target direction is a text embedding of the kickoff. Day~1 includes quoting the kickoff text. Each kickoff has 6--15 agents, so per-kickoff intervals are wide; the claim rests on the meta-analysis. The isotropy verdict depends on the estimator and the style variant. The previous period's last day can carry wrap-up content that ordinary days lack. Agent constancy has power 0.30, so its miss is not a negative. The G26 test cannot separate the leader's announcement from the day-1 transient.}
+
+\hnext{Resolve the relaxation in hours after the kickoff, gate it on each agent's read-out call (context ledger), and pool $\chi_i$ hierarchically. Run \texttt{confirm.py} on the 13 held-out kickoffs.}

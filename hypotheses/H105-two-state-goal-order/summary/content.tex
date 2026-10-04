@@ -1,0 +1,33 @@
+\hwhat{H10's Legendre test failed on continuous alignment. HH130 proposed a fairer test: treat each agent-window as on-goal or off-goal and ask whether a uniform field (tilt) on the free week predicts the assigned week's occupancy variance and who moves. I ran it on three free $\to$ assigned pairs, 16 kickoffs and three natives, in two embedding models. The synthetic came first and showed the tilt test is not identifiable at village sampling: with a true tilt it passes in 30\% of pairs, and in 40\% under a coupling change. The two-state picture holds descriptively. Occupancy rises from the decoy floor (0.02--0.05) to 0.23--0.44, its variance grows as $p(1-p)$ (Spearman 0.86 over 16 kickoffs), and transverse occupancy stays flat. Who moves: inconclusive in 3/3 pairs. Holdout: not run.}
+
+\hmodel{Model 01, forward mean field (Curie--Weiss with agent fields), in 0/1 spins. Spin $\sigma_{i,t}$: agent $i$'s statements in 30-min window $t$ are mostly on-goal (projection on $\hat g$ above the 95th percentile of decoy statements). Field $h_i$: each agent's on-goal tendency. Coupling $J_2$: synchronized switching. Occupancy $p_t$: mean spin. The tilt adds one $\lambda$ to every $h_i$ and keeps $J_2$. $g_2$: two-state loop gain.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+P(\sigma)\propto\exp\Big(\textstyle\sum_i h_i\sigma_i+\frac{J_2}{2N}n^2\Big),\quad n=\textstyle\sum_i\sigma_i\\
+\mathrm{Var}(n)=\frac{S}{1-J_2\bar q},\quad S=\textstyle\sum_i p_i(1-p_i),\quad g_2=J_2\bar q\\
+\text{tilt: }h_i\to h_i+\lambda\ \Rightarrow\ \rho_V=\ln\frac{V_A^{\rm obs}}{V_A(\lambda,J_2^F)}\approx0
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Observed against tilt-predicted growth of the occupancy variance, free (or previous) week to assigned week, for 16 kickoffs; the band is $\pm\ln1.5$. The ranks agree ($\rho_s=0.86$), but only 7/16 fall in the band; \#38a sits far below. (b) \#51: loop gain of each agent's spin along its own private goal (filled) and along the shared \#51 direction (open), per unit. Private fields do not synchronize, except the role-onset unit 51a.}
+
+\htelos{Mostly a methods result. The two-state view is the right bookkeeping for a goal: it moves only the on-goal occupancy, from about 0.03 to 0.2--0.45, and leaves other directions alone. But the forecast HH130 wanted, steerability from a free week, cannot be made from village logs with this instrument: free weeks have almost no on-goal windows, so their coupling is unmeasurable, and 2--4 statements per window misclassify the spin. An operator learns nothing new beyond H10 and H54. A monitor builder learns that occupancy measured this way needs a calibrated classifier before any fluctuation--response forecast.}
+
+\hbottom{Goals act on a two-state occupancy whose variance grows as $p(1-p)$, but the free-week tilt forecast is not identifiable at village sampling, so the Legendre question stays open.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.45\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 tilt variance & \raggedright $\rho_V$ $-0.71$, $+0.53$, $-2.45$; gte flips \#12a & \raggedright not identifiable\tabularnewline
+\raggedright P2 uniform logit shift & \raggedright $s$ $-0.60$, $+0.38$, $+2.53$; calibrated 0/3 & \raggedright inconclusive\tabularnewline
+\raggedright P3 $J_2$ unchanged & \raggedright $\Delta g_2$ $+0.64$, $+0.26$, $+0.03$ & \raggedright not identifiable\tabularnewline
+\raggedright P4 transverse flat & \raggedright $p_\perp\approx0.02$ in F and A & \raggedright supported\tabularnewline
+\raggedright P6 kickoffs & \raggedright 7/16 in band; $\rho_s$ 0.86 ($p$ 0.0003) & \raggedright half / half\tabularnewline
+\raggedright N1 G51 private goals & \raggedright $g_2$ $-0.08$ (bge), $+0.19$ (gte) & \raggedright mixed\tabularnewline
+\raggedright N2 G12 debate schedule & \raggedright removes 50\% of excess (gte); no excess (bge) & \raggedright mixed\tabularnewline
+\raggedright N3 NE38 one spin & \raggedright 0 $\to$ 0.96; others $+0.01$ / $+0.05$ & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_compact.pdf}{Latent Curie--Weiss spins at the real window structure of the three pairs, observed through statements as in the real pipeline (30 replicates per scenario). (a) The tilt (H) and a coupling change (R5) give the same $\rho_V$ spread. (b) The logit slope is biased low under the tilt (0.31) but near 0 under a common target (R2), so P2 keeps some resolution.}
+
+\hcaveats{"On-goal" is a text-embedding threshold; the 90\% and 98\% variants shift $p$ but not the conclusions. Spins built from 2--4 statements are often wrong, which drives the non-identifiability. The two models disagree on the sign of $\rho_V$ in \#12a and on both natives' second clauses. Free weeks are not field-free. The variance-growth agreement across kickoffs follows from any binary occupancy and does not test the tilt. The on-goal work variant was not run.}
+
+\hnext{Build a calibrated on-goal classifier with a measured confusion matrix, prove identifiability on the synthetic, and pool free-week couplings hierarchically before retesting the tilt.}
