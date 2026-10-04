@@ -1,6 +1,7 @@
 # H06 × G25: Create a digital museum of 2025 (2025-12-29 → 2026-01-02)
 
 **Verdict:** mixed (P6 contrast)
+**Verdict (1b):** failed (P6: conformist no longer beats NCD)
 **Role:** exploratory (contrast)
 **Period:** regime I · mode C · 10 agents · 1 room · 5 days × 4 h
 
@@ -42,3 +43,7 @@ Shared-objective contrast with divisible subtasks (H11: herding, βJ_CW +4.1).
 ## Notes
 - 2026-10-04: folder created; predictions written before the real-data run.
 - 2026-10-04: round 1 run; Result and Verdict filled by `analysis/period_folders.py`.
+
+## Round 1b (2026-10-04)
+*Corrected inputs: intention clusters on gte-modernbert `style_resid_period` (`gte_sr`), shared `project_states`, DQ4 work labels. Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/` (`light_r1b.json`, `fit_*`/`round1b_*` JSON).*
+- `gte_sr` km24 only: LLR_NH +5.7, LLR_NC +0.9 (round 1 LLR_NC −30); joint PPC 0.002 for all; singletons 0.70 (0.74); λ̄ 0.24 vs NCD 0.33 [0.28, 0.39].

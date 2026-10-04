@@ -1,7 +1,8 @@
 # H07 × NE15: the #best / #rest split and the two RPG lineages (2026-03-16 → last fork commit 2026-05-28)
 
 **Verdict:** mixed
-**Role:** exploratory
+**Verdict (1b):** mixed (unchanged); native light cone supported
+**Role:** exploratory; native (round 1b: ledger light cone)
 **Period:** spans #35 (regime II, mode C) → #36 (F perma-computer-use lands 03-24) → #37 (regime III, mode F) → #38–#44 (regime III), non-holdout days only (no fork commit falls on a held-out day). Two rooms: #best (GPT-5.4, Claude Opus 4.6, Gemini 3.1 Pro) and #rest (10 agents). 357 of 405 non-merge fork commits are in #35; #37 adds 29.
 
 ## Why this period
@@ -59,3 +60,22 @@ Figures: [`figures/fig_horizontal.pdf`](figures/fig_horizontal.pdf) (horizontal 
 - 2026-10-03: the horizontal statistic on union keys mixes mutation of shared keys with growth of one fork. Report it next to the ancestor-key identity (which isolates mutation).
 - Leakage counts are lower bounds. Identical-content matching cannot see a feature re-implemented after viewing the other fork. The Claude Code agent's fetches are not in `computer_use_turns`.
 - 2026-10-03: team labels are fixed at the split. The 04-27 reshuffle moved Opus 4.6 and GPT-5.4 into #rest (and GPT-5.5 into #best), so after 04-27 labels and rooms differ. Only 2 fork commits fall after 04-27 (05-13 GPT-5.4 README on #rest, by then a #rest member; 05-28 Gemini 2.5 Pro). The leakage ledger stops at 05-01.
+
+## Round 1b native: the ledger light cone
+**Role (round 1b):** native. *Prediction written 2026-10-04, before any ledger count for the forks.* Seen: round 1's leakage tables (posts, not reads).
+
+**Design.** Teams as at the split (DQ6 room assignment: #best = GPT-5.4, Opus 4.6, Gemini 3.1 Pro). From `context_ledger_items` × `call_windows`: every chat item that entered a call of a team-X agent between T0 and the end of #37, by sender team. A message is a *cross-team read* if its sender is in the other team. For each shared innovation, the window between its first and second commit: any cross-team read, by an agent of the later team, of a message whose text names the innovated item (file path, or content name; matched in memory, nothing written).
+- **N15-V1.** Cross-team items are ≤ 2% of all agent chat items read by the two teams during #35, and come only from the known co-presence episodes (Haiku 4.5 in #best on 03-19/20; the #general intervals). Credence 0.7.
+- **N15-V2 (H57: copying vs convergence).** 0 of the 3 shared innovations has a cross-team read naming the item before the later commit (all convergent). Credence 0.75.
+- **N15-V3.** Of the 5 cross-fork commits, each author had read (ledger) a message naming the other fork's repo or site before the commit (the channel is chat). Credence 0.4.
+
+### Result (round 1b, run 2026-10-04)
+Data: `data/processed/H07-rpg-forks/r1b/results_r1b.json` (`ledger`). Teams from DQ6 `room_assignment` (#35); agent chat items only; the Claude Code agent is not a ledger recipient.
+
+| Test | Observed | Verdict |
+| --- | --- | --- |
+| N15-V1 cross-team share ≤ 2%, only from known co-presence | #35: 288 of 14,572 items (1.98%); #36 3.0%; #37 1.4%. In #35 they come from the split hour (03-16 17:00–18:00 UTC: 67 items, #best messages posted in #general just before the move, read by 9 #rest agents), the 03-19 #general session and Haiku 4.5's visit (44), and 03-20 (172). | **mixed** (share holds; the day-1 hour is an extra, unpredicted source) |
+| N15-V2 no cross-team read naming a shared innovation before the later commit | 0 / 3 (battle-summary fallback: 5 cross items read by #best before the second commit, none naming it; tavern dice: 67, none; missing abilities: 38, none) | **supported**: all three are convergent (H57) |
+| N15-V3 cross-fork commit authors had read a message naming the target fork | 5 / 5 (first reads 03-19 20:59 and 03-20 20:47–20:57, in the #general/visit episodes) | **supported** |
+
+**Reading.** The rooms were a near-closed light cone: the only channels are the known co-presence episodes, and every cross-fork commit was preceded by a read of the other fork's address in one of them. The three shared innovations had no readable channel: convergent repair of inherited defects, as round 1 concluded, now with visibility rather than posting as the test. Caveat: the Claude Code agent (author of the second tavern-dice fix) has no ledger; its stream showed no fetch of the #best fork in round 1.

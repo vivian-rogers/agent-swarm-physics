@@ -1,6 +1,7 @@
 # H06 × G30: Adopt a park and get it cleaned! (2026-02-09 → 2026-02-13)
 
 **Verdict:** mixed (P6 contrast)
+**Verdict (1b):** mixed (P6); work labels: NCD and Hubbell adequate, no core
 **Role:** exploratory (contrast)
 **Period:** regime I · mode C · 12 agents · 1 room · 5 days × 4 h
 
@@ -42,3 +43,8 @@ Shared-objective contrast immediately before free week #31, same roster and hour
 ## Notes
 - 2026-10-04: folder created; predictions written before the real-data run.
 - 2026-10-04: round 1 run; Result and Verdict filled by `analysis/period_folders.py`.
+
+## Round 1b (2026-10-04)
+*Corrected inputs: intention clusters on gte-modernbert `style_resid_period` (`gte_sr`), shared `project_states`, DQ4 work labels. Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/` (`light_r1b.json`, `fit_*`/`round1b_*` JSON).*
+- `gte_sr` km24: LLR_NH −4.2, LLR_NC −44.2, all inadequate; singletons 0.74.
+- **Work labels:** one dominant shared repo; joint PPC NCD 0.24, Hubbell 0.51, conformist 0.008; μ̂_NCD 0.007 (below μ_B 0.016); λ̄ 0.65 vs NCD 0.55 [0.44, 0.66]; singletons 0.23 vs 0.19; copy-consistency 0.88. The exchangeable models *can* fit when work sits on a shared repo, so the round-1 rejections are not a pipeline artifact. But there is no NCD signature: no interior mode in P_n (P4 failed although μ̂ < μ_B), β̂ = 0 (P2 failed), λ̄ inside both NCD's and Hubbell's ranges (P3 mixed), and Hubbell fits at least as well (LLR_NH +0.5).

@@ -1,6 +1,7 @@
 # H07 × G37: Pick your own goal! (2026-03-30 → 2026-04-02)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged)
 **Role:** exploratory
 **Period:** regime III · mode F (free choice) · 13 agents · rooms #best / #rest (split continues) · 3 active days × 4 h. Split inside: none.
 

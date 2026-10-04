@@ -1,6 +1,6 @@
 # H07: The RPG forks diverge from a common ancestor at a measurable rate
 
-**Status:** running. Results are organized by goal period (see "Results by goal period"). Exploratory round 1 (non-holdout: #35 onward) done 2026-10-03: divergence is **gradual and measurable** at file and function level, **punctuated** for content (names, numbers), the two forks mutate content at very different team-specific rates, and the few shared innovations look like **convergent repair of inherited defects, not leakage**. Confirmatory test on the held-out #34 lineage written (`analysis/confirm_h34.py`), dry-run on non-holdout stand-ins, **not run**.
+**Status:** running; round 1b done 2026-10-04 (no verdict changes; natives: leakage is read-bounded, a second fork family re-converges through its upstream, nucleation is a trait not a role). Results are organized by goal period (see "Results by goal period"). Exploratory round 1 (non-holdout: #35 onward) done 2026-10-03: divergence is **gradual and measurable** at file and function level, **punctuated** for content (names, numbers), the two forks mutate content at very different team-specific rates, and the few shared innovations look like **convergent repair of inherited defects, not leakage**. Confirmatory test on the held-out #34 lineage written (`analysis/confirm_h34.py`), dry-run on non-holdout stand-ins, **not run**.
 **Fields:** info theory, dynamics, sociophysics
 **Literature:** Kolchinsky & Corominas-Murtra 2020 (copy vs. transformation; PDF not in `literature/`, see the caveat under Observables); Eigen 1971 (error threshold); Griffiths & Kalish 2007 (iterated learning). All cited via `physics-models/08-copying-vs-transformation/README.md`.
 **Origin:** shortlist S7 ([`../promotion-shortlist.md`](../promotion-shortlist.md)); idea HH38; goal periods #34 (held out) and #35; NE15 (the split).
@@ -58,9 +58,9 @@ Scored for round 1 (exploratory, non-holdout), mapping = git trees + tree-sitter
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | P1, P4 (monotone decline), P7 and the independent-lineage identity held; P3a (per-commit clock) and P6 failed. The touch clock collapsing the forks (μ ratio 1.0–1.2) is post hoc. |
 | E interventional | predicts the change across a natural experiment | 1 | Sign and rough size of the post-split divergence predicted (P1); no model fitted before the split (that needs #34, held out). |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 0 | No synthetic recovery. Partial robustness only (keyed vs. set measures; plain vs. conditional null). |
-| G ground truth | agrees with known structure | 1 | Commits match the room assignment (best 193/196, rest 241/242 by own-team agents); the lineages' common history ends at the last pre-split session. This validates the mapping, not the copy model. |
+| G ground truth | agrees with known structure | 1 | Commits match the room assignment (best 193/196, rest 241/242 by own-team agents); the lineages' common history ends at the last pre-split session. This validates the mapping, not the copy model. Round 1b: 99.4% / 100% on DQ6 `room_assignment` in #35; every cross-fork commit followed a ledger read of the target fork; DQ6 lead designers do not predict who nucleates content. |
 | H comparative | beats the named rivals | 1 | Model-08 seed rival (numbers most conserved) not supported; wall clock not beaten by commit clock (beaten by touch clock, post hoc); leakage rival not supported (shared innovations precede any channel). No likelihood comparison. |
-| I transfer | holds in other same-mode periods, including the holdout | 0 | Not tested (one split; NE32 involves no shared artifact; #34 confirmation not run). |
+| I transfer | holds in other same-mode periods, including the holdout | 1 | Round 1: not tested (one split; NE32 involves no shared artifact; #34 confirmation not run). **Round 1b (0 → 1):** the independent-lineage test transferred to a second fork family (`agent-papers`, #36) and flagged its channel (upstream syncs: identity excess 0.30, 29/29 shared files upstream-first). One event; holdout not run. |
 
 ## Prediction
 *Written 2026-10-03, before any repository history was fetched or any fork feature computed. Known at this point: the four repository names (from #35 chat URLs), their GitHub creation and last-push dates (API metadata: forks created 03-16 17:02–17:03 UTC; last pushes 04-03 for best and rest-week, 05-28 for rest, 04-03 for the ancestor repo), and room membership from `rooms_timeline` (#best = GPT-5.4, Opus 4.6, Gemini 3.1 Pro; Haiku 4.5 appears in #best from 03-19 20:46 to 03-20 17:14 UTC; most agents show short #general intervals near the end of 03-19 and 03-20).*
@@ -129,6 +129,57 @@ Scored for round 1 (exploratory, non-holdout), mapping = git trees + tree-sitter
 - 2026-10-03: the touch-clock result is post hoc (P3a named commits). C2 tests it on #34.
 - 2026-10-03: shared artifacts table built (`infra/shared/build_artifacts.py`). Directory-based repo resolution precision, checked against git-printed remotes: 0.89 (`cwd`) and 0.81 (`session_cwd`). Strict uses should keep `how ∈ {url, output, bare}`.
 - Next: run `confirm_h34.py --i-am-confirming` once the holdout is opened; add memories as a fourth artifact source; check NE32 and #40 (`the-universe` repo) for other shared-artifact forks; a paraphrase-level leakage detector (embedding similarity of new functions across forks).
+
+## Round 1b (improved data, 2026-10-04)
+
+### What changes in the inputs
+- **Copy information:** the shared `infra/shared/copy_info.py` (moved out of `h07lib`, tests claim equivalence) replaces `h07lib` for the end-of-#35 decompositions; reproduced, not re-derived.
+- **Commits (DQ4):** each fork commit is matched to the shared `work_commits` ledger; round 1 counted every commit under an agent identity, DQ4 separates agent work from `automated` commits (scripts, CI, cron).
+- **Room membership (DQ6):** P8 and the team assignment are re-scored on `ground_truth_labels` `room_assignment` (preferred, non-holdout) instead of `rooms_timeline`.
+- **Visibility (DQ1 context ledger):** leakage is re-counted as what each agent could have *read* (`context_ledger_items` joined to `call_windows`), not what was posted. Round 1's chat channel counted posts.
+- **Copying vs convergence (H57):** the three shared innovations are checked against the ledger: was any message naming the innovated item, from the other team, in the later adopter team's context before the later commit?
+- **Ground truth (DQ6):** #35 lead designers per room and day (03-16/17/18) for a native test.
+- **Not used by H07, unchanged:** `activity_bins` (the clocks use calendar active hours, which the event-drop bug did not touch), embeddings and `statement_flags` (H07's features are code and content keys, not text embeddings).
+- **Code:** `analysis/round1b.py` (runs only with `H07_DATA=r1b`; round-1 scripts unchanged), outputs in `data/processed/H07-rpg-forks/r1b/`.
+
+### Predictions for round 1b
+*Written 2026-10-04, before running anything on the round-1b inputs.* The round-1 predictions are unchanged and re-scored as written.
+
+**What I had seen when writing this:** H07's round-1 results; the DQ6 #35 lead-designer rows (#best: GPT-5.4 on 03-16, Opus 4.6 on 03-17, Gemini 3.1 Pro on 03-18; #rest: three different agents); a root-commit scan of the 633 on-disk clones (structural only: which repos share a root commit, their first/last commit dates and commit counts). Not seen: any DQ4 flag on the fork commits, any ledger count, the dates of the two Gemini 3.1 Pro content commits, or any divergence statistic on another fork family.
+
+- **R1b-1 (shared copy_info).** Every end-of-#35 copy fraction, κ and plug-in information value reproduces to 3 decimals. Credence 0.95.
+- **R1b-2 (DQ4 commits).** ≥ 95% of the post-split non-merge commits on the two main forks are DQ4 agent work (not `automated`); P6 stays failed (#best out-produces #rest per capita). Credence 0.85.
+- **R1b-3 (P8 on DQ6 rooms).** ≥ 90% of each main fork's post-split commits are by agents DQ6 assigns to the matching room. Credence 0.9.
+- **R1b-4 (visibility; NE15 native).** Predictions in [`NE15/README.md`](goalperiod-subhypotheses/NE15/README.md) (Round 1b section).
+- **Natives:** [`G35/`](goalperiod-subhypotheses/G35/README.md) (content nucleation by the day's lead designer, DQ6), [`NE15/`](goalperiod-subhypotheses/NE15/README.md) (ledger light cone), [`G36/`](goalperiod-subhypotheses/G36/README.md) (a second fork event: the `agent-papers` fork family of 03-26/27, forked from an outside agent's repo by three village agents in two rooms).
+
+### Results (round 1b, run 2026-10-04)
+Code: `analysis/round1b.py` (parts `copyinfo`, `dq4`, `p8`, `ledger`, `lead`, `papers`). Data: `data/processed/H07-rpg-forks/r1b/results_r1b.json` (+ `_provenance.json`). Estimates: `per_period_estimates` (H07, round 1b rows). Runtime ≈ 2 min, one process; no network (the `agent-papers` clones were already on disk from DQ4).
+
+**Old → new.**
+
+| Quantity | Round 1 | Round 1b |
+| --- | --- | --- |
+| End-of-#35 copy fractions, κ, I, I_copy (8 features × 2 forks + horizontal) | h07lib | shared `copy_info`: identical (max abs diff 0) |
+| Post-split non-merge fork commits that are DQ4 agent work | all counted (405) | 398 / 405 agent work; 0 automated; the 7 others are #best's day-1 commits whose canonical copy is `rpg-game` |
+| P6 commits per capita in #35, #best vs #rest | 53.7 vs 19.6 | 51.3 vs 19.6 (agent work, DQ6 team sizes 3 / 10): **P6 still failed** |
+| P8 own-team commits (rooms) | 98.5% / 99.6% (`rooms_timeline`) | #35: 99.4% / 100% (DQ6 `room_assignment`); all post-split 98.5% / 99.2%: **supported** |
+| Cross-team chat in #35 | posts: 3 chat links, 2 #general co-presence days | **reads (ledger):** 288 of 14,572 items (1.98%); #36 3.0%, #37 1.4% |
+| Shared innovations with a channel | 0 / 3 (posts, visits, searches) | 0 / 3 with a cross-team read naming the item before the later commit |
+| Cross-fork commits preceded by a read of the target fork's address | not measured | 5 / 5 |
+
+**Verdict changes.** None at the card level or per period. R1b-1, R1b-2 (P6 unchanged), R1b-3 supported. P5's mechanism verdict (convergent, not channel-borne) now rests on what agents could read, not on what was posted (H57's correction applied: identical new content with no readable channel is convergence).
+
+**Natives.**
+- **G35, lead designers (DQ6): failed, informatively.** The lead designer of the room-day made 0% of #best's content changes on 03-16 → 03-18 (C = 22% of commits); 0/5 room-days have their largest content commit by the lead. Gemini 3.1 Pro carries 86% of #best's #35 content changes whatever its role that day: nucleation looks like a trait (H07-R1), n = 1.
+- **NE15, ledger light cone: supported** (V2, V3; V1 mixed). Cross-team reads are 2% and come only from co-presence episodes, including an unpredicted one: the split hour on 03-16, when #rest still read #best's last #general messages. Every cross-fork commit followed such a read; no shared innovation did.
+- **G36, a second fork event (`agent-papers`, 03-26): supported** (2/3; 1 n/a). Contribution forks of an outside agent's repo: the two #best copies never moved on `main`; the #rest and org copies re-converged by syncing the upstream (identity on ancestor files 0.97 vs P(both unchanged) 0.67; 29 shared new files, all upstream-first). The independent-lineage bound fails exactly when a channel exists, the negative case the RPG lacked.
+
+**Scorecard changes (round 1b).** I 0 → 1: the independent-lineage test transferred to a second fork family and correctly flagged its channel (one event; the #34 confirmation is still not run). G stays 1 (DQ6 rooms and ledger reads validate the mapping; DQ6 leaders did not predict nucleators). H stays 1 (the leakage rival is now tested on reads and still loses). Others unchanged.
+
+**Model- and data-dependence.** Nothing here depends on an embedding model or on `activity_bins`. The copy-information decomposition is still our unverified reading of Kolchinsky & Corominas-Murtra. The ledger excludes the Claude Code agent as a recipient, which made the second tavern-dice fix, so V2 relies on round 1's fetch check for that commit. The second fork event is file-level only (trees, no contents), and only two of its four copies evolved.
+
+**Claim that stands.** Two isolated copies of one artifact diverge gradually and independently, with identical new content arising only by convergent repair (no readable channel). A second fork family with a shared upstream breaks the independent-lineage bound as expected. Content change is nucleated by one agent rather than by the designated leader.
 
 ## Round 2 redirects (2026-10-04)
 *From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*

@@ -1,6 +1,7 @@
 # H06 × NE33: Batch join Muse Spark 1.3, Gemini 3.8 Flash, GPT-6 Astra (+3) (2026-09-03/04)
 
 **Verdict:** failed ((a) failed: post λ̄ outside every model's 95% interval; (b) n/a, < 3 multi-option newcomer choices)
+**Verdict (1b):** failed (not re-run)
 **Role:** exploratory (spanning, inside #51)
 **Period:** regime III · #51 (private assigned roles) · pre side 2026-08-31 → 09-02 · post side 09-03 → 09-04 (the only non-holdout days after the join; the #51 tail from 09-07 is held out). ≈ 29 → 32 agents.
 

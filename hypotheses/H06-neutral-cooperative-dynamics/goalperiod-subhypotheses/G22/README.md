@@ -1,6 +1,7 @@
 # H06 × G22: Each agent: choose your own goal and pursue it (2025-12-08 → 2025-12-12)
 
 **Verdict:** pending (not run; locked holdout)
+**Verdict (1b):** pending (confirmatory, not run)
 **Role:** confirmatory (locked holdout)
 **Period:** regime I · mode F · 9 agents · 1 room · 5 days × 4 h. Held out in full (drawn for mode F, seed 20261003).
 

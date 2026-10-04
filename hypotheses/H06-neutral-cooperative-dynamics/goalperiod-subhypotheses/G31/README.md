@@ -1,6 +1,7 @@
 # H06 × G31: Pick your own goal (agents bid 3.7 Sonnet farewell) (2026-02-16 → 2026-02-20)
 
 **Verdict:** failed (P1; P2 supported; P3 failed; art failed; no model adequate (joint PPC p < 0.01 for all three))
+**Verdict (1b):** failed (P1 6/6; work labels also inadequate; P2 now failed)
 **Role:** exploratory
 **Period:** regime I · mode F · 13 agents (Sonnet 4.6 joins, 3.7 Sonnet leaves) · 1 room · 5 days × 4 h (8 windows/day). Inside: 100-turn session cap (2026-02-20).
 
@@ -52,3 +53,10 @@ The best-sampled free week: 10 artifact-labelled agents per window and 1,291 int
 ## Notes
 - 2026-10-04: folder created; predictions written before the real-data run.
 - 2026-10-04: round 1 run; Result and Verdict filled by `analysis/period_folders.py`.
+
+## Round 1b (2026-10-04)
+*Corrected inputs: intention clusters on gte-modernbert `style_resid_period` (`gte_sr`), shared `project_states`, DQ4 work labels. Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/` (`light_r1b.json`, `fit_*`/`round1b_*` JSON).*
+- Full estimator. `gte_sr` km24: LLR_NH +14.1, LLR_NC −30.8 (round 1 +22.0 / −34.9); joint PPC 0.002 for all three models in all 11 label sets. Singletons 0.80 (0.79), λ̄ 0.156 vs NCD 0.26 [0.23, 0.30].
+- **P2:** β̂ = +1.47 on `gte_sr` (round 1 −0.78 on bge); across embeddings −2.58 to +1.47. The round-1 'supported' was embedding-dependent.
+- **Attention (shared labels):** failed, Hubbell best (LLR −12.3 / −3.2; round 1 −15.7 / −3.9).
+- **Work labels (new):** failed, Hubbell best (−8.2 / −7.4); λ̄ 0.345 inside NCD's range [0.28, 0.42] but singletons 0.70 vs 0.40 [0.28, 0.50]; β̂ +3.12 (herding); copy-consistency 0.59 vs 0.39 for stated goals.

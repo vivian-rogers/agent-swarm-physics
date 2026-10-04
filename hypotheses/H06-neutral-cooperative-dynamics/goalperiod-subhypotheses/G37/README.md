@@ -1,6 +1,7 @@
 # H06 × G37: Pick your own goal! (2026-03-30 → 2026-04-01)
 
 **Verdict:** failed (P1; P2 failed; P3 failed; art mixed; no model adequate (joint PPC p < 0.01 for all three))
+**Verdict (1b):** failed (km24 only; all models inadequate)
 **Role:** exploratory
 **Period:** regime III · mode F · 13 agents · #best/#rest rooms (pooled: one free goal for both) · 3 days × 4 h (8 windows/day)
 
@@ -52,3 +53,7 @@ First free goal in regime III (audit accumulated frameworks and habits). H11: he
 ## Notes
 - 2026-10-04: folder created; predictions written before the real-data run.
 - 2026-10-04: round 1 run; Result and Verdict filled by `analysis/period_folders.py`.
+
+## Round 1b (2026-10-04)
+*Corrected inputs: intention clusters on gte-modernbert `style_resid_period` (`gte_sr`), shared `project_states`, DQ4 work labels. Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/` (`light_r1b.json`, `fit_*`/`round1b_*` JSON).*
+- `gte_sr` km24: LLR_NH −24.9, LLR_NC −30.5, joint PPC 0.002 for all; singletons 0.72 (round 1 0.83); λ̄ 0.141 vs NCD 0.20 [0.16, 0.25] and *below* the day-shift null (0.21). Work labels: 3.8 per window but only 5 non-novel switches (not testable).

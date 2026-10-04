@@ -1,4 +1,4 @@
-\hwhat{Agent slots carry a project label per 30-min window: a cluster of the agent's self-written goal (6 clusterings), or the repo it links. Exact finite-$N$ simulations with the real label gaps fit neutral cooperative dynamics (NCD), Hubbell drift and a herding rival to 9 statistics in 5 free weeks, 4 shared-goal weeks and 3 blocks of \#51. Synthetic power: $\approx0.9$ at $N\ge12$. \textbf{NCD failed:} 4/5 free weeks failed, 1 mixed. All three models are rejected (joint check $p<0.01$ in 27/30 free-week fits). Projects are fragmented: 79--91\% are held by one agent (NCD: 45--68\%), only 23--53\% of switches join a project someone else holds (models: $\approx100\%$), and Simpson $\lambda$ falls below every model's range. Copying adds little over independent agents ($\lambda$ 0.15 vs 0.12 in \#31). Frequency dependence has no consistent sign. Batch joins: failed. Holdout \#22 frozen, not run.}
+\hwhat{Agent slots carry a project label per 30-min window: a cluster of the agent's self-written goal, the repo it links, or (round 1b) the repo it commits to. Exact finite-$N$ simulations with the real label gaps fit neutral cooperative dynamics (NCD), Hubbell drift and a herding rival to 9 statistics. \textbf{NCD failed} in free weeks (4/5 failed, 1 mixed), and in rounds 1 and 1b all three models are rejected on stated goals in every free week (joint check $p<0.01$): 72--91\% of goal clusters are held by one agent. Round 1b (second embedding model, style removed) leaves this intact, but a control week whose project is known (\#35, one fork per room) shows stated goals just as fragmented while work sits 96--100\% on the room's fork: goal clusters measure sub-tasks, not projects. Work labels concentrate on shared repos where one exists; there Hubbell-like copying can fit (\#30), without NCD's signature. Copying follows reading: a project named in a message the agent has read predicts a switch (OR 8.6 vs unread).}
 
 \hmodel{Model 06 (Pi\~nero et al.\ 2025). $N$ individuals (agent slots), each holding one species (project). Per step, with probability $\mu$ a new project replaces a random slot $C$. Otherwise $C$ copies slot $A$'s project only if $A$ and a third slot $B$ hold different projects: cooperation, so rare projects recruit more per capita. $\lambda=\sum_i x_i^2$ is the Simpson index of shares $x_i=n_i/N$. Rivals: Hubbell (always copy) and herding (copy favoured when $A,B$ agree).}
 
@@ -12,23 +12,26 @@ P(\text{recruit to } i)\propto x_i\,e^{\beta x_i}:\ \ \beta<0\ \text{NCD},\ 0\ \
 
 \hobs{../figures/summary_obs.pdf}{Per period, goal clusters (km24). (a) Observed Simpson $\lambda$ (star) against the 95\% predictive ranges of the three fitted copying models (bars), and an independent-agents null (cross; each agent's day sequence shifted). The observation sits below all three models and close to the null. (b) Share of project switches that join a project another agent currently holds. Every copying model predicts $\approx1$; free and shared weeks give 0.15--0.53, and \#51 (private roles) 0.08--0.10.}
 
-\htelos{Neutral cooperative dynamics doesn't apply to these swarms, and neither does any model where agents are interchangeable copiers. Left to choose, LLM agents mostly run their own projects. Herding (H11) is a small layer on top: agents look at the same repos, but their stated plans stay private. The practical content is modest. If an operator wants a shared project, it has to be assigned; free time won't produce a ``core''. Two cheap diagnostics fall out: the singleton fraction and copy-consistency, which separate a collaborating swarm from a set of soloists (\#51 is the extreme). The elegant theory (bimodal core, $\lambda^*$ law) never came into range: $\mu$ is too high at $N\le30$.}
+\htelos{Neutral cooperative dynamics doesn't apply to these swarms. What agents \emph{say} they are doing is a spread of private sub-tasks in every week, so stated-goal abundances are a poor project census. What they \emph{work} on concentrates on a shared repo when the task offers one, and spreads out when the task hands each agent its own artifact or role (\#44 free room, \#51), as H11 found for effort. There, neutral copying is a fair description; there is no cooperator core. The copying that exists runs through reading, so an operator who wants a shared project must assign or announce it. Diagnostics: work-label singleton fraction and copy-consistency.}
 
-\hbottom{Free LLM swarms don't form a cooperator core: projects are mostly private, so no exchangeable copying model (cooperative, neutral or herding) fits, and copying is only a small excess over independent agents.}
+\hbottom{Free LLM agents state private sub-tasks but work on shared repos when one exists; no cooperative (NCD) dynamics, neutral copying at best, and copying follows what agents read.}
 
-\hresults{\begin{tabular}{@{}p{0.36\columnwidth}p{0.40\columnwidth}p{0.16\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
-P1 NCD beats rivals (free weeks) & 4 failed, 1 mixed; NCD wins 1/30 fits & failed\\
-Adequacy (joint PPC) & all 3 models fail in 27/30 fits ($p$ at floor) & failed\\
-P3 $\bar\lambda$ at NCD value & below every model; singletons 0.79--0.91 & failed\\
-P6 shared-goal herding & herding beats NCD 4/4, but $\bar\lambda$ below range & mixed\\
-P8 copying $>$ independent & small excess (\#31: 0.149 vs 0.117) & failed (rule)\\
-P4 cooperator core & $\hat\mu$ never below $\mu_B$ & n/a\\
-NE27/NE33 predict-after & every model over-predicts post-join $\bar\lambda$ & failed\\
+\hresults{\footnotesize\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.31\columnwidth}p{0.49\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (round 1 $\to$ 1b)} & \textbf{Verdict}\\\hline
+P1 NCD beats rivals (free) & 4 failed, 1 mixed $\to$ same count (\#11, \#16 swap) & failed\\
+Adequacy, stated goals & all 3 models rejected in 5/5 free weeks (both rounds) & failed\\
+Singletons, goals (free) & 0.79--0.91 $\to$ 0.72--0.84 (gte, style removed) & robust\\
+P2 rare-project advantage & \#31 $\hat\beta$ $-0.78\to+1.47$; sign varies by embedding & failed\\
+Work vs goals (R1b-3a) & work more concentrated: $\bar\lambda$ 5/5, copy 4/5 & supported\\
+NCD on work (R1b-3b) & inadequate 4/5; \#30 NCD and Hubbell adequate, no core & supported\\
+Copying needs reading & OR read vs unread 8.6 (attention), 5.6 (work) & supported\\
+\#35 known universe (native) & work 96--100\% on own fork; goal singletons 0.76 & supported\\
+\#51 rivals share (native) & goals 2/3 blocks; attention 0/3; work 0/3 & 1/3\\
+\#44 assigned vs free (native) & assigned arm more concentrated in 3 spaces & mostly\\
 \end{tabular}}
 
-\hobsb{../figures/synthetic_validation.pdf}{Synthetic power of the P1 rule with exact finite-$N$ simulators on the real label mask: NCD is recovered 0.50--0.98 at $\mu\le 0.05$, and rivals are falsely supported $\le 0.12$.}
+\hobsb{../figures/summary_r1b.pdf}{(a) Share of projects held by one agent: stated goals (grey round 1, blue round 1b) stay high everywhere, including \#35 where the project is known; work labels (orange) drop where a shared repo exists (\#30, \#35, \#38). Shaded: free weeks. (b) Probability of switching to a project held by another agent, by whether a message naming it had been read, posted but not yet read, or neither.}
 
-\hcaveats{Goal clusters are topics, not repositories, which may inflate singletons; artifact labels are fragmented too. \#37 and \#38 pool two rooms. With all models rejected, ``best by likelihood'' tracks predictive spread, so herding's 20/30 wins are not evidence for herding. Results hold on the shared deterministic project labels (99.4--99.8\% agreement). The private-projects result sits against H11's herding in attention (artifact mentions); the work-output ledger should decide which describes work.}
+\hcaveats{Compute was scarce: the full estimator (all clusterings) re-ran on \#11 and \#31 only; elsewhere the primary clustering, work labels and model-free statistics. Likelihood ratios near $\pm2$ and $\hat\beta$ depend on the embedding. In two-room weeks the ``unread'' class is mostly the other room's messages. The day-shift null cannot tell a persistent shared field (room assignment) from copying. Work labels cover public commits only (dense from \#30).}
 
-\hnext{Agent-specific innovation fields in NCD and Hubbell; repository-anchored species; per-room \#37/\#38; embedding swap; \#22 confirmation after sign-off.}
+\hnext{NCD/Hubbell with agent-specific fields on work labels; repo-anchored stated goals; \#22 confirmation (now on work labels as a secondary) after sign-off.}

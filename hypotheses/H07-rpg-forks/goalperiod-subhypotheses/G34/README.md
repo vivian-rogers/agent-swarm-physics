@@ -1,6 +1,7 @@
 # H07 × G34: Develop a turn-based RPG together while voting out Easter Egg saboteurs! (2026-03-05 → 2026-03-16)
 
 **Verdict:** pending
+**Verdict (1b):** pending (confirmatory, not run)
 **Role:** confirmatory (locked holdout)
 **Period:** regime II · mode M (teams / hidden saboteurs) · 12 agents (+1 −1: Gemini 3.1 Pro joins, Gemini 3 Pro leaves, NE30) · rooms #general and #voted-out · 7 active days × 4 h. Inside: kickoff message in prompt (03-10), consolidate tool (03-11), pause tool (03-13). Also covered by the NE30 holdout window.
 

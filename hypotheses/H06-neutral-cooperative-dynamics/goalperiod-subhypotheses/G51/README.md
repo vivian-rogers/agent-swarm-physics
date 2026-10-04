@@ -1,7 +1,8 @@
 # H06 × G51: Each agent: Maximize your assigned goal! (non-holdout part) (2026-07-06 → 2026-09-04 (blocks a: 07-06 → 07-10, b: 07-27 → 07-31, c: 08-24 → 08-28))
 
 **Verdict:** supported (P7 check passes: no block 'supported'; but the free weeks fail the same way, so the check is uninformative)
-**Role:** exploratory (check)
+**Verdict (1b):** supported (P7 check, model-free); native rivals 1/3
+**Role:** exploratory (check); native (round 1b: DQ6 roles)
 **Period:** regime III · mode P (private assigned roles) · 21 → 32 agents · rooms #general/#focus (pooled) · 8 h days (16 windows/day). Splits: three 5-day blocks analysed separately (the 28k intentions are clustered once, k-means only).
 
 ## Why this period
@@ -66,3 +67,26 @@ Block c:
 ## Notes
 - 2026-10-04: folder created; predictions written before the real-data run.
 - 2026-10-04: round 1 run; Result and Verdict filled by `analysis/period_folders.py`.
+
+## Round 1b native: same-role rivals (DQ6 roles)
+**Role (round 1b):** native. *Prediction written 2026-10-04, before computing anything on round-1b labels or DQ6 roles in H06.* Seen: the DQ6 list of 9 rival pairs (same role short name; 3 from 07-06, the rest from 07-09/10 and 07-24) and 2 opposed pairs; H11 round 1b's #51 work co-location (0.04–0.21) and attention co-location (0.18–0.30).
+
+**Design.** Blocks 51a, 51b, 51c (non-holdout). For each window and each pair of labelled agents, same-label indicator. s_rival = mean over pairs that are DQ6 rival pairs (valid at that time), s_other = mean over all other pairs; R = s_rival / s_other. Null: agent identities permuted within the block (999 draws; the rival-pair graph moves with the permutation), p = share of permuted R ≥ observed.
+- **N51-1 (a role is a topic field).** Intention clusters (`gte_sr` km24): R ≥ 3 with p < 0.05 in ≥ 2/3 blocks. Credence 0.75.
+- **N51-2 (attention).** Shared `project_states` labels: R ≥ 1.5 with p < 0.05 in ≥ 2/3 blocks. Credence 0.5.
+- **N51-3 (work).** Work-ledger labels: R ≥ 1.5 with p < 0.05 in ≥ 2/3 blocks. Credence 0.35 (rivals may compete, each in its own repo).
+- **Reading.** If N51-1 holds and N51-3 fails, the shared-role "species" in #51 is a shared field in what agents say, not shared work: species defined by stated goals follow assignments.
+
+### Result (round 1b, run 2026-10-04)
+Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/natives_r1b.json` (`G51`), `light_r1b.json`. Replication (model-free; fits not re-run for compute): `gte_sr` km24 singletons 0.96 / 0.95 / 0.97 (round 1 0.95 / 0.97 / 0.97), λ̄ ≈ 1/N, copy-consistency 0.10 / 0.10 / 0.10. One work fit (51a): all three models inadequate (joint p 0.002), singletons 0.93 vs NCD 0.63.
+
+| Block | R intentions (p) | R attention (p) | R work (p) |
+| --- | --- | --- | --- |
+| 51a | 5.2 (0.012) | 1.8 (0.17) | 0.0 (1.0; 64 rival pair-windows) |
+| 51b | 4.0 (0.031) | 0.7 (0.44) | 0.6 (0.26) |
+| 51c | 1.8 (0.21) | 2.4 (0.11) | 1.0 (0.28) |
+
+- **N51-1 (intentions, R ≥ 3, p < 0.05 in ≥ 2/3): supported** (2/3).
+- **N51-2 (attention): failed** (0/3 significant).
+- **N51-3 (work): failed** (0/3; rivals never share a work repo more than other pairs).
+- **Reading.** Same-role agents write about the same things (a shared field in stated goals) but do not work on, or link, the same repos more than other pairs. In #51 the stated-goal "species" follow assignments; work stays private.

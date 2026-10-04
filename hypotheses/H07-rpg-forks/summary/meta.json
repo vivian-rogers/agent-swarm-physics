@@ -1,42 +1,77 @@
 {
-  "complete": 40,
-  "faithfulness": 2.0,
-  "usefulness": 1.5,
-  "rationale": {
-    "complete": "Round 1 is done with period verdicts and a scorecard; the confirmatory #34 test is written but not run, and there is no synthetic recovery (axis F = 0) or transfer test.",
-    "faithfulness": "Copy information beats the shuffle nulls and the independent-lineage identity holds exactly, but the homogeneous-hazard clock was rejected, three of eight predictions failed, the touch clock is post hoc and n = 2 forks.",
-    "usefulness": "Per-feature copy fractions are a computable lineage diagnostic, and 'convergent repair mimics leakage' is a real caution for audits, but nothing here predicts or steers a swarm."
-  },
-  "one_line": "Forks diverge gradually in code, in team-chosen jumps in content; copying dominates; no leakage; n = 2",
-  "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
-  "updated": "2026-10-04",
-  "v2": {
-    "claim": "Forks diverge gradually in code; copying dominates; no leakage",
-    "original_verdict": "mixed",
-    "credence": 0.38,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "single powered unit",
-        "x": 0.6
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      }
-    ],
-    "mechanism_level": "M0",
-    "fragile": false,
-    "value_if_true": 1.5,
-    "decision": "fork/branch management",
-    "magnitude": "small",
-    "generality": "this scaffold",
-    "expected_usefulness": 0.56,
-    "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 2.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Rounds 1 and 1b are done with period verdicts, three natives and a scorecard; the confirmatory #34 test is written but not run, and there is no synthetic recovery (axis F = 0).",
+  "faithfulness": "Copy information beats the shuffle nulls; the independent-lineage bound holds exactly for the RPG forks and fails, as it should, for a second fork family with a shared upstream; leakage is now bounded by what agents could read. The clock model was rejected, three of eight predictions failed and n = 2 forks.",
+  "usefulness": "Per-feature copy fractions are a computable lineage diagnostic, and 'convergent repair mimics leakage' is a real caution for audits, but nothing here predicts or steers a swarm."
+ },
+ "one_line": "Forks diverge gradually in code, in one agent's jumps in content; no readable leakage; a fork family with a shared upstream re-converges",
+ "rated_by": "RE-D2 round 1b (suggested); round 1 calibrated by coordinator 2026-10-04",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Isolated copies diverge gradually and independently; identical new content arises only by convergent repair with no readable channel; a fork family sharing an upstream breaks the independence bound",
+  "scope": "NE15 (RPG forks), G36 agent-papers forks, G35",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.84,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "partial replication (two fork events)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "robust (copy_info exact; ledger reads)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "intervention consistent (NE15 light cone: 5/5 cross-fork commits after a read)",
+    "x": 2,
+    "evidence": "native NE15"
+   },
+   {
+    "factor": "ground truth agrees (DQ6 rooms, DQ4 commits)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "penalty: small n (3 shared innovations, 5 cross-fork commits)",
+    "x": 0.6,
+    "evidence": "card §Round 1b"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "leakage detection: identity beyond the independence bound flags a channel",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.69,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (RE-D2); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "Forks diverge gradually in code; copying dominates; no leakage",
+   "credence": 0.38,
+   "fragile": false,
+   "value_if_true": 1.5,
+   "expected_usefulness": 0.56,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

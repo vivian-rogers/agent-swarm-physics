@@ -1,6 +1,7 @@
 # H06 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
 **Verdict:** mixed (P6 contrast)
+**Verdict (1b):** mixed (P6; km24 all inadequate; work: Hubbell adequate, NCD not)
 **Role:** exploratory (contrast)
 **Period:** regime III · mode C · 12–14 agents · #best/#rest rooms (pooled; the rooms got different instructions) · 17 days × 4 h
 
@@ -42,3 +43,8 @@ Long shared-objective contrast in regime III (H11: herding, βJ_CW +4.3, but a s
 ## Notes
 - 2026-10-04: folder created; predictions written before the real-data run.
 - 2026-10-04: round 1 run; Result and Verdict filled by `analysis/period_folders.py`.
+
+## Round 1b (2026-10-04)
+*Corrected inputs: intention clusters on gte-modernbert `style_resid_period` (`gte_sr`), shared `project_states`, DQ4 work labels. Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/` (`light_r1b.json`, `fit_*`/`round1b_*` JSON).*
+- `gte_sr` km24: LLR_NH −140.3, LLR_NC −144.0 (round 1 LLR_NC −151), joint PPC 0.002 for all three; singletons 0.93 (0.94), λ̄ 0.094 vs NCD 0.41 [0.35, 0.48]; copy-consistency 0.14 (null 0.07). P6 stays mixed (conformist ≫ NCD, λ̄ below NCD).
+- **Work labels:** testable (52 changes); joint PPC NCD 0.007, Hubbell 0.047, conformist 0.002; λ̄ 0.46 vs NCD 0.41 [0.35, 0.48]; singletons 0.52; β̂ −4.7.

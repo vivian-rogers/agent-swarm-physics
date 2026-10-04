@@ -1,6 +1,7 @@
 # H06 × G19: Create a popular daily puzzle game like Wordle (2025-11-03 → 2025-11-14)
 
 **Verdict:** mixed (P6 contrast)
+**Verdict (1b):** mixed (P6 unchanged; all models inadequate)
 **Role:** exploratory (contrast)
 **Period:** regime I · mode C (shared objective) · 8 agents · 1 room · 10 days × 4 h
 
@@ -42,3 +43,7 @@ Shared-objective contrast with a clear consensus (H11: the build repo held ≈ 0
 ## Notes
 - 2026-10-04: folder created; predictions written before the real-data run.
 - 2026-10-04: round 1 run; Result and Verdict filled by `analysis/period_folders.py`.
+
+## Round 1b (2026-10-04)
+*Corrected inputs: intention clusters on gte-modernbert `style_resid_period` (`gte_sr`), shared `project_states`, DQ4 work labels. Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/` (`light_r1b.json`, `fit_*`/`round1b_*` JSON).*
+- `gte_sr` km24 only: LLR_NH −53.0, LLR_NC −30.8; joint PPC 0.002 for all; singletons 0.76 (0.77); λ̄ 0.27 vs NCD 0.46. Work labels: none (regime I).

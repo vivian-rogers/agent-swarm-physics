@@ -1,7 +1,8 @@
 # H06 × G44: Finetune your leader! (#rest room: pick your own goal) (2026-05-26 → 2026-05-29)
 
 **Verdict:** failed (P1; P2 failed; P3 failed; art failed; no model adequate (joint PPC p < 0.01 for all three))
-**Role:** exploratory
+**Verdict (1b):** failed (km24 and work inadequate); native two-arm mostly supported
+**Role:** exploratory; native (round 1b: two arms)
 **Period:** regime III · mode C for #best, free for #rest · #rest room only: 12 agents · 4 days × 4 h
 
 ## Why this period
@@ -52,3 +53,26 @@
 ## Notes
 - 2026-10-04: folder created; predictions written before the real-data run.
 - 2026-10-04: round 1 run; Result and Verdict filled by `analysis/period_folders.py`.
+
+## Round 1b native: two arms on the same days (#best assigned vs #rest free)
+**Role (round 1b):** native. *Prediction written 2026-10-04, before computing anything on round-1b labels in #44.* Seen: H11 round 1b's #44 numbers (both rooms pooled: work co-location 0.18, attention 0.43; ownership 0.51/0.74), no per-room H06 statistic.
+
+**Design.** Same days, same scaffold; #best (room 2) had an assigned team goal (fine-tune a leader), #rest (room 3) picked its own goals. Per room and label set (work, attention, `gte_sr` km24): λ̄ excess over the day-shift independent-agents null (λ̄ − null mean, 200 shifts) and copy-consistency excess, plus the singleton fraction.
+- **N44-1.** Work and attention labels: #best's λ̄ excess and copy-consistency excess both exceed #rest's. Credence 0.7.
+- **N44-2.** Intention clusters: #best's λ̄ excess exceeds #rest's. Credence 0.55.
+- **N44-3.** #best's singleton fraction is below #rest's on work labels. Credence 0.7.
+- Caveat written in advance: #best has 4–5 agents, so its λ̄ has a high floor (1/N); only null-relative excesses are compared.
+
+## Round 1b (2026-10-04)
+*Corrected inputs: intention clusters on gte-modernbert `style_resid_period` (`gte_sr`), shared `project_states`, DQ4 work labels. Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/` (`light_r1b.json`, `fit_*`/`round1b_*` JSON).*
+- `gte_sr` km24 (#rest): LLR_NH −9.0, LLR_NC −6.3, joint PPC ≤ 0.003; singletons 0.81 (0.86). Work labels (#rest): testable (42 changes), Hubbell best by < 2, joint PPC 0.002 / 0.010 / 0.005; singletons 0.92.
+
+### Native result (two arms)
+| Test | #best (assigned) | #rest (free) | Verdict |
+| --- | --- | --- | --- |
+| N44-1 λ̄ excess over day-shift null, work / attention | +0.066 (p 0.02) / +0.125 (p 0.01) | +0.008 (p 0.12) / +0.041 (p 0.01) | λ̄: supported |
+| N44-1 copy-consistency excess, work / attention | −0.003 (12 switches) / +0.109 | +0.162 (18) / +0.031 | attention yes, work no: **mixed** |
+| N44-2 λ̄ excess, intention km24 | +0.064 (p 0.01) | +0.008 (p 0.04) | **supported** |
+| N44-3 work singleton fraction | 0.88 | 0.92 | **supported** (small) |
+
+The assigned arm concentrates more than the free arm on the same days in all three label spaces; switch-based copy-consistency in work rests on 12–18 switches.

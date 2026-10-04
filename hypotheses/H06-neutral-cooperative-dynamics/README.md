@@ -1,6 +1,6 @@
 # H06: Free weeks show neutral cooperative dynamics with a cooperator core
 
-**Status:** exploratory round 1 done (2026-10-04). **Neutral cooperative dynamics (NCD) is refuted for free weeks:** P1 failed in 4/5 free weeks and mixed in 1 (card-level rule: failed). The reason is clean and holds in every period tested, free, shared-goal and #51 alike. Project abundances from self-written goals are far more fragmented than *any* exchangeable copying model allows (NCD, Hubbell, or herding). Singletons make up 0.79–0.91 of projects, only 0.23–0.53 of switches go to a project another agent holds (every copying model predicts ≈ 1), and all three models fail the joint posterior-predictive check in 27/30 free-week label sets. Copying adds only a small excess over independent agents. No cooperator core: μ̂ never falls below μ_B. A frozen confirmatory test on #22 is written, not run. Predictions were written 2026-10-04, before any real-data run.
+**Status:** exploratory round 1 done (2026-10-04); round 1b done (2026-10-04): P1 still failed; stated goals are fragmented even where the project is known (#35), while work labels concentrate on shared repos, where Hubbell-like copying can fit (#30); copying is read-mediated. **Neutral cooperative dynamics (NCD) is refuted for free weeks:** P1 failed in 4/5 free weeks and mixed in 1 (card-level rule: failed). The reason is clean and holds in every period tested, free, shared-goal and #51 alike. Project abundances from self-written goals are far more fragmented than *any* exchangeable copying model allows (NCD, Hubbell, or herding). Singletons make up 0.79–0.91 of projects, only 0.23–0.53 of switches go to a project another agent holds (every copying model predicts ≈ 1), and all three models fail the joint posterior-predictive check in 27/30 free-week label sets. Copying adds only a small excess over independent agents. No cooperator core: μ̂ never falls below μ_B. A frozen confirmatory test on #22 is written, not run. Predictions were written 2026-10-04, before any real-data run.
 **Fields:** stat mech, sociophysics
 **Origin:** HH42 + HH16 (`../hypohypotheses/HYPOHYPOTHESES.md`; shortlist S6 in `../promotion-shortlist.md`)
 **Definitions used:** "Agent state (categorical)" with two named variants: **agent state (categorical, project/artifact strict)** (H11's, imported) and a new **agent state (categorical, intention cluster)** (defined under Data scheme; proposed for DEFINITIONS.md). "Population N(t)", active-population variant (agent slots with a label in a window). "Regime" (each period sits inside one regime). "Interaction (broadcast)" is implicit in the model's well-mixed pairing (one room per scope).
@@ -235,3 +235,80 @@ Dry run on stand-ins #11 and #16 (`confirm_dryrun.json`): C1 not confirmed, C2 c
 - 2026-10-04: created and launched (S6, HH42; approved 2026-10-03, started 2026-10-04).
 - 2026-10-04: observables, nulls and predictions written before any real-data run; synthetic validation and amendments 1–3 appended before the run; exploratory round 1 run on 12 non-holdout periods (+ NE27, NE33 sides) and assembled. Period folders live in `goalperiod-subhypotheses/` (moved there mid-round at Vivian's request).
 - 2026-10-04: robustness check on the deterministic shared project labels (`data/processed/shared/project_states.parquet`, requested by the coordinator after H11's tie-breaking was found nondeterministic): same artifact-label verdicts in #31, #37, #44 (window-pair agreement 99.4–99.8%).
+
+## Round 1b (improved data, 2026-10-04)
+
+### What changes in the inputs
+- **Intention clusters (content):** DQ5's second embedding model (gte-modernbert) and `style_resid_period` (32-d, whitened per regime, the 20 H13 style features regressed out within goal period; non-holdout fit). The r1b primary label set is `gte_sr` k-means (km8/km24/km64) + Ward (wd8/24/64); comparison sets `bge_w` (round-1 basis, rebuilt from the shared statement array), `gte_w` (gte, whitened, no style removal) and `bge_sr` (bge, style-residualized). Same intents, windows and carry-forward as round 1, so all variants share one observation mask.
+- **Artifact (attention) labels:** shared deterministic `project_states` (W = 30, sources all) with H06's carry-forward. Round 1 used H11's nondeterministic files (8.1% of W30 labels differ, mostly renumbering).
+- **New label set, work labels:** **agent state (categorical, project, work ledger)** (H11 round 1b's variant): the repo with the most DQ4 agent work commits (`canonical & ~imported & author_kind == agent & ~automated`, author time) by agent i in window w, same tie rule as `project_states`, with H06's carry-forward. Dense from #30.
+- **Copying vs convergence (H57):** a new ledger-based test of the copying channel (below), using `context_ledger_items` + `call_windows` for who could have read what, and strict chat artifact mentions for what a message named.
+- **Not used by H06, unchanged:** `activity_bins` (H06 uses no activity statistic), DQ5 `statement_flags` (H06 has no near-duplicate statistic; its copying rate is copy-consistency, re-examined with the ledger test).
+- **Code:** `scheme/build_r1b.py` (labels into `data/processed/H06-neutral-cooperative-dynamics/r1b/<scope>/`), `analysis/round1b.py` (runs only with `H06_DATA=r1b`; round 1 still runs unchanged by default).
+
+### Predictions for round 1b
+*Written 2026-10-04, before building any round-1b label or running anything on it.* The round-1 predictions above are unchanged and are re-scored as written.
+
+**What I had seen when writing this:** H06's round-1 results; H11's round-1b card (work herds in #31, #33, #35 (z_N2 +2.2), #41; work co-location (share of labelled agents sharing a raw repo with a block-mate) #30 0.86, #31 0.54, #35 1.00, #37 0.58, #38 0.75, #44 0.18 (both rooms), #51 units 0.04–0.21; "work repo = attention project" 84% median; #31 work singletons 25% of repos with 87% of work on shared repos); H11's work-label row counts (#31 286, #35 228, #37 84, #38 429, #44 297, #51 8,508 agent-windows); the DQ6 #51 rival-pair list and the #35 lead-designer rows; RE-P1's species-vs-effort note. I had not computed any statistic on gte or style-residualized clusters, on work labels in H06's pipeline, or any ledger copying statistic.
+
+- **R1b-1 (replication, intention clusters `gte_sr`).** The round-1 failure pattern survives the second embedding model and style removal: P1 is not "supported" in any free week, and all three models fail the joint PPC (p < 0.01) on km24 in ≥ 4/5 free weeks; the free-week singleton fraction stays ≥ 0.7 in ≥ 4/5. Credence 0.75. (The rival reading: per-agent style splits one project into several clusters; if so, style removal lowers singletons by > 0.1 in ≥ 3/5 free weeks. Credence 0.15.)
+- **R1b-2 (artifact labels on shared `project_states`).** Same verdicts as round 1 wherever testable (#31, #37, #44 free; contrasts). Credence 0.85.
+- **R1b-3 (work labels; testable = the card's rule, ≥ 3 labelled slots per window and ≥ 20 changes).** (a) Work labels are more concentrated than stated goals: copy-consistency (work) > copy-consistency (`gte_sr` km24) and λ̄(work) > λ̄(km24) in every period testable in both. Credence 0.7. (b) The exchangeable models still fail: NCD not adequate (joint PPC p < 0.01) in ≥ 2/3 of testable work label sets. Credence 0.6. (c) In the free #rest of #44, work stays fragmented (singleton fraction ≥ 0.6). Credence 0.65.
+- **R1b-4 (copying channel, ledger; H57's design).** Unit: (agent i labelled at windows t and t+1, candidate project q held by another labelled agent at t, q ≠ i's label at t); outcome Y = i holds q at t+1. Exposure classes from chat messages by other agents with a strict mention of q (files and sites mapped to the parent repo, as in `project_states`): **V** = such a message entered one of i's calls during window t (ledger); **U** = such a message was posted during window t but had not entered i's context by the end of t (other room, or arriving later); **N** = neither. Rates are Mantel–Haenszel-stratified by q's abundance at t. Pooled over the free weeks and contrasts with labels:
+  - (a) attention labels: OR(V vs N) ≥ 2 and OR(V vs U) ≥ 1.5 (reading, not just salience, carries copying). Credence 0.6.
+  - (b) work labels: OR(V vs N) > 1 but OR(V vs U) < 1.5 (work moves with salience whether or not the message was read: convergence). Credence 0.4.
+  - The copy-consistency excess over the day-shift null (round 1: small) is then split into read-mediated and not.
+- **Natives** (predictions in the period folders, written before running): **G35** (known project universe: two room forks; a positive control for the pipeline and a test of what intention clusters measure), **G51** (DQ6 roles: same-role rival pairs vs other pairs), **G44** (two-arm: assigned #best vs free #rest on the same days).
+
+### Results (round 1b, run 2026-10-04)
+Code: `scheme/build_r1b.py`, `analysis/round1b.py` (`replicate` = full estimator; `fit` = one label set; `light` = model-free statistics + 100 day-shift draws; `copying`; `natives`), `analysis/summary_figure_r1b.py`. Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/` (labels per scope, `round1b_G11/G31.json`, `fit_<scope>_<set>.json`, `light_r1b.json`, `copying_r1b.json`, `natives_r1b.json`, `_provenance.json`; 1.2 MB). Estimates: `per_period_estimates` (H06, round 1b rows).
+
+**Compute and scope (disclosed).** The machine was oversubscribed (load ≈ 11 on 10 cores), so the full estimator (6 clusterings + 3 comparison embeddings + attention + work) ran on G11 and G31 only. Other periods got the model fit on `gte_sr` km24 (and on work labels where testable) plus model-free statistics for every label set; the 4/6-clustering clause of P1 is unchecked there, so their P1 calls use the single-set rule (`verdict_simple`). NE27, NE33 and the #51 intention fits were not re-run.
+
+**Old → new (stated goals, km24; free weeks first).**
+
+| Period | Singletons r1 → 1b | λ̄ r1 → 1b (NCD 1b) | LLR_NH / LLR_NC r1 → 1b | All three models inadequate (joint PPC < 0.01) | P1 (1b) |
+| --- | --- | --- | --- | --- | --- |
+| #11 | 0.91 → 0.84 | 0.21 → 0.22 (0.41) | −3.9 / −7.0 → +1.0 / −1.1 | yes (9/9 label sets) | mixed (was failed) |
+| #16 | 0.86 → 0.81 | 0.21 → 0.22 (0.41) | −0.8 / −8.8 → −6.3 / −9.4 | yes | failed* (was mixed) |
+| #31 | 0.79 → 0.80 | 0.15 → 0.16 (0.26) | +22.0 / −34.9 → +14.1 / −30.8 | yes (11/11) | failed (6/6) |
+| #37 | 0.83 → 0.72 | 0.14 → 0.14 (0.20) | −3.0 / −16.3 → −24.9 / −30.5 | yes | failed* |
+| #44 #rest | 0.86 → 0.81 | 0.13 → 0.13 (0.27) | −1.4 / −18.6 → −9.0 / −6.3 | yes | failed* |
+| #19 / #25 / #30 | 0.77 / 0.74 / 0.78 → 0.76 / 0.70 / 0.74 | below NCD in all | conformist ≫ NCD → #25 LLR_NC +0.9 | yes | P6 mixed / failed / mixed |
+| #38 | 0.94 → 0.93 | 0.09 → 0.09 (0.41) | LLR_NC −151 → −144.0 (LLR_NH −140.3) | yes | P6 mixed |
+| #51a–c | 0.95–0.97 → 0.95–0.97 | ≈ 1/N | not re-run | — | P7 passes (model-free) |
+
+\* single-clustering rule. **Card-level P1: failed (4/5 free weeks failed, 1 mixed), unchanged.**
+
+**New label set: work (DQ4).** Testable in #30, #31, #38, #44 #rest, #51a (not #37: 5 switches; not #35: 1).
+
+| Period | λ̄ work vs stated goals | copy-consistency work vs goals | singletons work | joint PPC NCD / Hubbell / conformist | best |
+| --- | --- | --- | --- | --- | --- |
+| #30 | 0.65 vs 0.15 | 0.88 vs 0.28 | 0.23 | **0.24 / 0.51** / 0.008 | NCD ≈ Hubbell (LLR_NH +0.5) |
+| #31 | 0.35 vs 0.16 | 0.59 vs 0.39 | 0.70 | 0.002 / 0.002 / 0.002 | Hubbell |
+| #38 | 0.46 vs 0.09 | 0.59 vs 0.14 | 0.52 | 0.007 / **0.047** / 0.002 | Hubbell |
+| #44 #rest | 0.17 vs 0.13 | 0.28 vs 0.40 | 0.92 | 0.002 / 0.010 / 0.005 | Hubbell (< 2) |
+| #51a | 0.10 vs 0.05 | 0.33 vs 0.10 | 0.93 | 0.002 / 0.002 / 0.002 | conformist |
+
+**Copying channel (R1b-4, pooled, Mantel–Haenszel over scope × abundance).** Attention labels (7 periods; 11,893 candidates): OR(read vs not mentioned) 1.62 [1.32, 1.98], OR(read vs posted-unread) 8.6 [4.5, 16.4], OR(posted-unread vs not mentioned) 0.19 [0.10, 0.38]. Work labels (5 periods; 4,880 candidates): 1.52 [0.99, 2.33], 5.6 [1.9, 16.1], 0.53 [0.18, 1.56]. A project named in a message the agent has *not yet read* predicts no switch to it; one it *has read* does. Copying in this swarm is read-mediated, not contemporaneous convergence (H57's control applied). Caveat: in two-room weeks the unread class is mostly the other room's messages.
+
+**Prediction scores.**
+- **R1b-1 supported:** P1 not supported in any free week; all three models inadequate on km24 in 5/5 free weeks; singletons ≥ 0.72 in 5/5. The style-split rival is not supported (largest drop 0.11, #37; 0.05–0.07 elsewhere).
+- **R1b-2 supported:** #31 attention on shared labels: Hubbell best, −12.3 / −3.2 (round 1 −15.7 / −3.9); #37 and #44 already checked on shared labels in round 1 (same verdicts).
+- **R1b-3:** (a) mostly supported: work more concentrated than stated goals in λ̄ 5/5 and in copy-consistency 4/5 (#44 #rest the exception); (b) supported: NCD inadequate in 4/5 testable work sets; (c) supported: #44 #rest work singletons 0.92.
+- **R1b-4:** (a) mixed (read vs unread 8.6 ≥ 1.5, but read vs none 1.62 < 2); (b) failed: work is read-mediated too (5.6).
+
+**Verdict changes.** None at the card level (P1 failed). Per period: #11 failed → mixed and #16 mixed → failed (LLRs near the ±2 thresholds move with the embedding); #31 P2 supported → failed (β̂ −0.78 on bge → +1.47 on gte; −2.6 to +1.5 across four embeddings); #25 P6: the conformist no longer beats NCD.
+
+**Natives.**
+- **G35, known universe: supported (2/3; 1 n/a).** Work and attention labels put 96–100% of each room's labelled agent-windows on its own fork (0% on the other); stated-goal clusters are as fragmented as in free weeks (singletons 0.76, λ̄ 0.15). The adequacy control could not run: nobody switched.
+- **G51, DQ6 roles: 1/3.** Same-role rivals share stated-goal clusters 4–5× more than other pairs (2/3 blocks, p ≤ 0.03), but not attention (0/3) or work (0/3).
+- **G44, two arms: mostly supported (3 of 4 parts).** The assigned #best arm concentrates beyond the day-shift null more than the free #rest arm in work, attention and stated goals (λ̄ excess +0.066 / +0.125 / +0.064 vs +0.008 / +0.041 / +0.008); work copy-consistency does not (12 vs 18 switches).
+
+**What this changes in the reading.** Round 1 said "projects are private". Round 1b splits it: **stated goals** are fragmented everywhere, even where the project is known to be shared (#35), so that statistic measures sub-task topics, not projects. **Work** is concentrated where a shared repo exists (#30, #35, #38) and private in own-artifact and private-role weeks (#44 #rest, #51), matching RE-P1's species-vs-effort split and H11's work herding. Exchangeable copying models can fit work (#30: NCD and Hubbell adequate), but with no NCD signature (no interior mode although μ̂_NCD 0.007 < μ_B 0.016, β̂ = 0, Hubbell as good). Copying that exists is read-mediated.
+
+**Scorecard changes (round 1b).** A stays 1 (the work state is added; #35 shows intention clusters are topics, not projects, a mapping limit now measured). C stays 0 for the hypothesis (NCD adequate only in #30 work, a shared-goal week, tied with Hubbell). F stays 1, now with the embedding model varied (verdicts stable; β̂'s sign is not). G stays 1, with stronger evidence: the labels recover #35's two forks, and #51's same-role pairs share stated topics. B, D, E, H, I unchanged.
+
+**Model- and style-dependence.** Singletons, λ̄ and adequacy are robust to the embedding model and to style removal (all four variants within 0.1). LLRs near ±2 and β̂ (frequency dependence) are not, so the per-period P1 calls for #11 and #16 and P2 anywhere are embedding-dependent. The work-label results do not depend on embeddings.
+
+**Claim that stands.** No exchangeable copying model describes what free LLM agents *say* they are doing (stated goals are fragmented sub-tasks everywhere). What they *work* on is concentrated on shared repos when one exists, where neutral (Hubbell-like) copying can fit with no cooperative signature, and private otherwise. The copying that exists follows what agents have read.

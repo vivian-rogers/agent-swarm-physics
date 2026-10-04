@@ -1,6 +1,7 @@
 # H06 × G11: Pursue whatever you'd like to (2025-08-25 → 2025-08-29)
 
 **Verdict:** failed (P1; P2 failed; P3 failed; art n/a; no model adequate (joint PPC p < 0.01 for all three))
+**Verdict (1b):** mixed (P1 by rule; all models still inadequate)
 **Role:** exploratory
 **Period:** regime I · mode F · 7 agents · 1 room (#general) · 5 days × ≈ 3 h (6 windows/day)
 
@@ -52,3 +53,7 @@ The first free week after the batch join of NE27 (N 4 → 7). goal-periods.md ra
 ## Notes
 - 2026-10-04: folder created; predictions written before the real-data run.
 - 2026-10-04: round 1 run; Result and Verdict filled by `analysis/period_folders.py`.
+
+## Round 1b (2026-10-04)
+*Corrected inputs: intention clusters on gte-modernbert `style_resid_period` (`gte_sr`), shared `project_states`, DQ4 work labels. Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/` (`light_r1b.json`, `fit_*`/`round1b_*` JSON).*
+- Full estimator (6 clusterings + 3 comparison embeddings). km24 `gte_sr`: LLR_NH +1.0, LLR_NC −1.1 (round 1: −3.9 / −7.0); joint PPC 0.002–0.003 for all three models in every label set. Singletons 0.84 (round 1 0.91), λ̄ 0.22 vs NCD 0.41 [0.33, 0.52]. The P1 verdict softens from failed to mixed because the km24 LLRs shrink, not because any model fits.

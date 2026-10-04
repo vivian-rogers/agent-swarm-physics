@@ -96,7 +96,7 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | RE-C2 | H13, H21, H22| **done** (2026-10-04) |
 | RE-P1 | H11, H31, H27 | **done** (2026-10-04) |
 | RE-D1 | H28, H32, H34 | running (2026-10-04): ledger visibility/exposure, shared project states, convergence-aware copying (H57), both models |
-| RE-D2 | H06, H07 | running (2026-10-04): copy_info/convergence (H57), work ledger, fixed bins, both models |
+| RE-D2 | H06, H07 | **done** (2026-10-04) |
 
 ## New hypotheses H59–H74 (promoted 2026-10-04): launch plan
 | Status | Hypotheses |

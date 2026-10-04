@@ -1,51 +1,78 @@
 {
-  "complete": 40,
-  "faithfulness": 0.5,
-  "usefulness": 1.5,
-  "rationale": {
-    "complete": "Round 1 done: synthetic validation with power, 12 non-holdout periods plus NE27/NE33 with dated predictions, scorecard, robustness across 6 clusterings and the deterministic shared labels. The frozen #22 test is not run, and agent-field models (the obvious next step) are not built.",
-    "faithfulness": "The core prediction is refuted cleanly (P1 failed 4/5, mixed 1/5; C = D = E = H = 0). The model's shared assumption (exchangeable copying) fails in every period, so even the rivals are inadequate. Half a point for a well-understood, robust refutation, not for the model.",
-    "usefulness": "Two cheap diagnostics (singleton fraction, copy-consistency) that separate a collaborating swarm from soloists, and the unsurprising design rule that shared projects must be assigned. No lever, no validated monitor."
-  },
-  "one_line": "Free-week projects are mostly private: no exchangeable copying model fits (NCD failed 4/5), and copying is a small excess over independent agents.",
-  "rated_by": "H06 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept; page-2 sections written by coordinator from the round-1 report)",
-  "v2": {
-    "claim": "No exchangeable copying model fits free weeks; most projects (species) are private",
-    "original_verdict": "refuted",
-    "credence": 0.86,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      },
-      {
-        "factor": "rival beaten",
-        "x": 1.5
-      }
-    ],
-    "mechanism_level": "M1",
-    "fragile": false,
-    "value_if_true": 1.5,
-    "decision": "none directly (counts species, not effort)",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 1.29,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 0.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Rounds 1 and 1b done: synthetic validation, 12 periods, a second embedding model, work-ledger labels, a ledger copying test and three natives. Under scarce compute the full clustering ladder re-ran on 2 periods only; #22 not run; agent-field models not built.",
+  "faithfulness": "The core prediction stays refuted (P1 failed; stated goals reject every exchangeable model in 5/5 free weeks). NCD fits only work labels in one shared-goal week (#30), tied with Hubbell and without its core signature. Half a point for a robust, well-understood refutation.",
+  "usefulness": "Round 1b separates stated sub-tasks from work: work-label singleton fraction and copy-consistency are cheap monitors of whether a swarm shares effort, and copying is shown to follow reading, so announcing a project is the lever to test. Still no validated intervention."
+ },
+ "one_line": "No cooperative (NCD) dynamics: stated goals are private sub-tasks everywhere; work concentrates on shared repos where they exist, with neutral copying at best; copying follows reading.",
+ "rated_by": "RE-D2 round 1b (suggested); round 1 by H06 agent, calibrated by coordinator",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept; page-2 sections written by coordinator from the round-1 report)",
+ "v2": {
+  "claim": "Agents state private sub-tasks everywhere; work concentrates on a shared repo when one exists (neutral copying at best, no cooperative core) and stays private otherwise; the copying that exists follows reading (read vs posted-unread OR 8.6)",
+  "scope": "5 free weeks + work-label periods; natives G35, G51, G44",
+  "direction": "positive",
+  "original_verdict": "refuted",
+  "credence": 0.84,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "replication (5/5 free weeks)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "partly robust (β̂ embedding-dependent; reduced estimator on most periods)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "rival beaten (copying follows reads, not convergence)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "ground truth agrees (G35 known universe)",
+    "x": 1.5,
+    "evidence": "native G35"
+   },
+   {
+    "factor": "penalty: full estimator on 2 periods only (compute)",
+    "x": 0.8,
+    "evidence": "card §Round 1b"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "what agents read sets what they work on; count projects from work, not stated goals",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.69,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (RE-D2); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "No exchangeable copying model fits free weeks; most projects (species) are private",
+   "credence": 0.86,
+   "fragile": false,
+   "value_if_true": 1.5,
+   "expected_usefulness": 1.29,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

@@ -327,3 +327,4 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Agent state (behavior, agent-day)** (H13 round 1b): the 11 Jev v3 state probabilities plus actions, real failures, commits and file writes per window, averaged per agent-day.
 - **Stance coupling (DQ2, soft)** (H21/H22 round 1b): the mean signed DQ2 stance (supports +1, opposes −1, weighted by label confidence) over a pair's reply edges. It measures agreement of positions, so assigned sides alone predict it.
 - **Glance; sustained run** (H35/H43): a glance is any activity within 30 min of a kick. A sustained run is ≥ 3 consecutive active ledger calls.
+- **Agent state (categorical, intention cluster)** (H06): the km24 cluster of an agent's stated goal / intention in a window. It is topic-level (sub-tasks), not a project label; use the work-ledger variant for projects.

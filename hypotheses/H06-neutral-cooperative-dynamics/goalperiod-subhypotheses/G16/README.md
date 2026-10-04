@@ -1,6 +1,7 @@
 # H06 × G16: Choose your own goal! (2025-10-06 → 2025-10-10)
 
 **Verdict:** mixed (P1; P2 failed; P3 supported; art n/a; no model adequate (joint PPC p < 0.01 for all three))
+**Verdict (1b):** failed (km24 only; all models inadequate)
 **Role:** exploratory
 **Period:** regime I · mode F · 7 agents · 1 room (#general) · 5 days × ≈ 3 h (6 windows/day)
 
@@ -52,3 +53,7 @@ Free week with operator rules (no more spreadsheets; stop reporting self-caused 
 ## Notes
 - 2026-10-04: folder created; predictions written before the real-data run.
 - 2026-10-04: round 1 run; Result and Verdict filled by `analysis/period_folders.py`.
+
+## Round 1b (2026-10-04)
+*Corrected inputs: intention clusters on gte-modernbert `style_resid_period` (`gte_sr`), shared `project_states`, DQ4 work labels. Data: `data/processed/H06-neutral-cooperative-dynamics/r1b/` (`light_r1b.json`, `fit_*`/`round1b_*` JSON).*
+- km24 fit only (compute). `gte_sr` km24: LLR_NH −6.3, LLR_NC −9.4, joint PPC 0.003 for all; singletons 0.81 (round 1 0.86); λ̄ 0.22 vs NCD 0.41; β̂ +1.76 (herding side). The ladder was not re-run, so the 4/6 clustering clause is unchecked.

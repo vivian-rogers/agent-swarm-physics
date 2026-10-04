@@ -1,7 +1,8 @@
 # H07 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-23)
 
 **Verdict:** mixed
-**Role:** exploratory
+**Verdict (1b):** mixed (replication unchanged); native lead-designer failed
+**Role:** exploratory; native (round 1b: lead designers)
 **Period:** regime II · mode C · 13 agents · rooms #best (GPT-5.4, Claude Opus 4.6, Gemini 3.1 Pro) and #rest (10 agents, including the Claude Code agent) · 5 active days × 4 h. Split inside: none. The period opens with the split itself (NE15, 03-16; see [`../NE15/README.md`](../NE15/README.md)).
 
 ## Why this period
@@ -67,3 +68,24 @@ Figure: [`figures/fig_clocks.pdf`](figures/fig_clocks.pdf) (src-file copy fracti
 ## Notes
 - 2026-10-03: keyed content features break on restructuring. #best's 03-19 `items.js` change moved keys, so keyed names (0.896) understate survival relative to the key-free set measure (0.951).
 - 2026-10-03: the conditional null for I_transform was added after seeing negative plain-shuffle values under strong copying (both reported).
+
+## Round 1b native: content nucleation by the day's lead designer (DQ6)
+**Role (round 1b):** native. *Prediction written 2026-10-04, before computing anything with the DQ6 lead designers.* Seen: the DQ6 rows (lead designer per room for 03-16, 03-17, 03-18; #best: GPT-5.4, Opus 4.6, Gemini 3.1 Pro in that order) and round 1's finding that two Gemini 3.1 Pro commits carry 59–77% of #best's content divergence; I have not looked up those commits' dates.
+
+**Design.** For each main fork, the keyed content changes (content names and data numbers whose value at the end of #35 differs from the ancestor), attributed to the first-parent commit that last changed each key (round 1's attribution). Lead-designer share L = share of attributed content changes made by the room's lead designer on the commit's PT day (03-16/17/18 only; other days excluded), against the lead designer's share of that room's non-merge commits on the same days (C).
+- **N35-L1.** In #best, L ≥ 0.5 and L > C. Credence 0.45 (the alternative is a trait: the same agent nucleates whatever its role that day).
+- **N35-L2.** Across both forks and the three days, the agent who makes the largest single content commit of a room-day is the lead designer in ≥ 4 of the 6 room-days that have a content commit. Credence 0.35.
+- **Reading.** L1 and L2 held → nucleation follows the designated role (a field); failed with the same agent dominating across days → a trait (H07-R1).
+
+### Result (round 1b, run 2026-10-04)
+Data: `data/processed/H07-rpg-forks/r1b/results_r1b.json` (`lead`). Content = inherited name and data-number keys changed at each first-parent step (net), 03-16 → 03-18 PT.
+
+| Test | Observed | Reference | Verdict |
+| --- | --- | --- | --- |
+| N35-L1 (#best: L ≥ 0.5 and L > C) | L = 0.00 of 87 content keys; the day-1 burst (66 keys) is by Gemini 3.1 Pro while GPT-5.4 was lead | lead designers' commit share C = 0.22 | **failed** |
+| N35-L2 (top content commit of a room-day by its lead, ≥ 4/6) | 0/5 room-days with content (#best 0/3, #rest 0/2) | — | **failed** |
+| Trait reading (post hoc summary) | Over all of #35, Gemini 3.1 Pro carries 426 of 497 #best content keys (86%), on lead and non-lead days alike; #rest changed 15 keys in total | — | descriptive |
+
+**Reading.** Content nucleation in #best follows one agent (Gemini 3.1 Pro) whatever the designated role that day, which supports H07-R1 (nucleators are a trait) over a role field. n = 1 nucleator in one fork.
+
+**Replication on corrected inputs.** Shared `copy_info` reproduces every end-of-#35 value exactly (max |Δ| = 0). All 405 post-split non-merge fork commits are in the DQ4 ledger, 0 automated, author agreement 405/405; 7 are flagged non-canonical only because the canonical copy of #best's day-1 commits is `rpg-game`. P6 on agent work: #best 51.3 vs #rest 19.6 commits per capita (was 53.7 vs 19.6): still failed. P8 on DQ6 rooms: #best 164/165, #rest 219/219 in #35 (all post-split: 98.5% / 99.2%): supported.
