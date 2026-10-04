@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **Re-evaluation RE-R1 (H05, H09, H23) launched** (load easing to ~150): fixed activity bins (H05's gains feed H19), ledger read counts (tests HH248, rooms as a read-out filter), shared `copy_info`, DQ6 checkpoints. Remaining for re-evaluation: H06, H07, H28, H32, H34.
 - **Re-evaluation RE-V1 done (H18, H08, H04 round 1b on the context ledger, reply labels, fixed bins, leading-@ targets, no future-kick isolation):**
   - **H08:** **read-out gating holds in every regime**: addressing jumps at read-out in 14/17 periods (17/17 with reply parents); regime I 1/6 → 4/6 (its round-1 failure was the call-start rule, not unlogged calls); other-room placebo 8/8. The nudge response starts at the receiving call (round-1 finding 2, the ~3-min post-read-out lag, withdrawn). NE41: replies −21% ± 7% (8/9). NE32: newcomers name an old-timer only after receiving that old-timer's message, 35/35 pairs. Faithfulness 3.0 (highest so far; not holdout-confirmed).
   - **H18:** dilution unchanged on ledger k (β 0.66 ± 0.02, 16/16); the placebo failure was mostly the visibility rule (invisible senders 0.85× → 0.49× the pending rate); reply-based exponents are not identified (one-parent budget). Faithfulness 2.5.
