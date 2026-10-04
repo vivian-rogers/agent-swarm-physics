@@ -339,3 +339,11 @@ Holdout reuse under the 2026-10-03 policy: H18's statistic (mention responses vs
     - `placebo_diag.py`, `posthoc_engagement.py`, `posthoc_recsat.py`;
     - `confirm_holdout.py`;
     - `periods.py`.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** The result is good, but responses were measured through mentions, which are contaminated.
+- **What the direction is really after:** Attention is the scarce resource, and coupling is its allocation.
+- **H18-R1.** A salience law, uptake = f(mention, recency, novelty, sender status), is fit and predicts held-out uptake (E5).
+- **H18-R2.** Total attention per turn is conserved; re-test with reply-threading labels.
+- **H18-R3.** An optimal room size maximizes total useful uptake (HH111).

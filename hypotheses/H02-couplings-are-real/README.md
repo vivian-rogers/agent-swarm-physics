@@ -362,3 +362,11 @@ Setup:
   - HH81: does βJ₀ predict response decay?
   - Run the transfer set (#14, #49) once the project unlocks confirmation.
 - Lull finding, relevant to H09 E1: the excess low tail of P(K) (everyone quiet together) is not reproduced by a Curie–Weiss coupling. It is better described as a fluctuating common field.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Influence was inferred from when agents are active, but the turn scheduler sets activity timing, so the couplings measured scheduling, not influence.
+- **What the direction is really after:** Who changes whose mind?
+- **H02-R1.** Influence is the change in j's next decision when i's message is in j's context (context ledger), compared with matched turns where it is not.
+- **H02-R2.** The #45 leader influenced plans, not activity: assignment-acceptance events (Jev-labeled) show its authority.
+- **H02-R3.** Influence follows authority markers (operator endorsement, titles, a leader role), not model family.

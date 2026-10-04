@@ -263,3 +263,10 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - 2026-10-03: real-data calibration failure found after the first run (z-overdispersion; low-dimensional fluctuations); Amendment 2 written and validated on synthetic data; both nulls reported.
 - 2026-10-03: confirmatory rules fixed in `analysis/confirm_h20.py` (not run; dry run on stand-ins only).
 - Proposed shared changes (not made): move the goal/kickoff embedding vectors (H01's `goals_raw.npy` + `goals.parquet`) into `infra/shared/embeddings/`; add the two named variants above and an "anisotropic null" pitfall to `physics-models/11-vector-spins` (embedding two-time and overlap statistics need nulls with the empirical fluctuation shape; isotropic surrogates are 2–3× too narrow).
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** No aging appeared: content dynamics are Markov.
+- **What the direction is really after:** The swarm has no long-term internal memory; all persistence is stored outside the agents.
+- **H20-R1.** Persistent content order is explained entirely by persistent fields (goal prompt, artifacts); without them content decorrelates within a day (E3, E4).
+- **H20-R2.** The ~2–4 day kickoff relaxation is set by artifact build-up, not agent memory.

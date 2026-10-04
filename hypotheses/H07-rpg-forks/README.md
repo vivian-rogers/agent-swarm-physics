@@ -129,3 +129,11 @@ Scored for round 1 (exploratory, non-holdout), mapping = git trees + tree-sitter
 - 2026-10-03: the touch-clock result is post hoc (P3a named commits). C2 tests it on #34.
 - 2026-10-03: shared artifacts table built (`infra/shared/build_artifacts.py`). Directory-based repo resolution precision, checked against git-printed remotes: 0.89 (`cwd`) and 0.81 (`session_cwd`). Strict uses should keep `how ∈ {url, output, bare}`.
 - Next: run `confirm_h34.py --i-am-confirming` once the holdout is opened; add memories as a fourth artifact source; check NE32 and #40 (`the-universe` repo) for other shared-artifact forks; a paraphrase-level leakage detector (embedding similarity of new functions across forks).
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Forks were treated as passive copying; the interesting signal was nucleation by a single agent.
+- **What the direction is really after:** Does culture in shared artifacts change by gradual drift or by rare rewrites from a few agents?
+- **H07-R1.** Content change in every shared artifact is heavy-tailed, dominated by a few nucleator agents, and nucleators are consistent across artifacts (a trait; HH96).
+- **H07-R2.** Mutation per file-touch is universal across artifacts and agents (HH95).
+- **H07-R3.** Forks re-converge when the same models meet the same bugs: the rate of convergent evolution is set by the shared prior (E4).

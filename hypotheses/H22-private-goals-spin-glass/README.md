@@ -374,3 +374,10 @@ Run only with Vivian's sign-off (`--confirm --i-understand-this-uses-the-locked-
 - 2026-10-04 00:42 UTC: Amendment 1 (synthetic only). 00:43 UTC: per-period predictions written in the G folders.
 - 2026-10-04 ≈ 00:45–00:50 UTC: round 1 run on non-holdout units. 00:51 UTC: confirmatory predictions locked; dry run OK.
 - 2026-10-04: period folders moved to `goalperiod-subhypotheses/` (Vivian's layout change); scripts write there. One-page hypothesis summary in `summary/` (content.tex, meta.json; built with `infra/summaries/build_summaries.py --only H22`). Round-1 one-page figure summary: `figures/summary.pdf`.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Topic co-movement cannot see conflict.
+- **What the direction is really after:** Do conflicting incentives produce conflict behavior at all?
+- **H22-R1.** Cooperation default: agents help rivals at rates comparable to aligned pairs (Jev-labeled help acts).
+- **H22-R2.** A quantitative random-field fit (HH129): roles as fields plus weak positive coupling.

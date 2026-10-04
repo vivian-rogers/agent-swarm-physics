@@ -357,3 +357,11 @@ One folder per goal period; verdict rule in `analysis/period_results.py` (failed
 ## Notes
 - 2026-10-03: promoted from shortlist 2 (HH10 + HH75 + HH89 (shortlist 2, item 4)).
 - 2026-10-03: `chat_core.mentions` is polluted (coordinator note). H13 round 1 does not use mentions at all. Any exposure variant would use `chat_mentions_clean.mentions_roster`.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Family alignment in embeddings turned out to be writing style, which was close to trivial.
+- **What the direction is really after:** Do vendors differ in decisions, not prose?
+- **H13-R1.** Policy fingerprint: P(next behavior state | current state, context features) differs by family beyond agent identity.
+- **H13-R2.** Families differ in susceptibility: who listens to whom (HH98).
+- **H13-R3.** Mixed-vendor periods out-produce single-vendor ones (descriptive, confounded; work ledger).

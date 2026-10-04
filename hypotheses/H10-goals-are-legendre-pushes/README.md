@@ -203,3 +203,11 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - 2026-10-03: calibration (random directions, non-test periods) and synthetic validation; Amendment 1 (P2 perturbative range, P3/P4 descriptive, P4 shrinkage) before any real-data statistic along a goal direction.
 - 2026-10-03: exploratory round 1 run: **failed**. Confirmatory script written, dry-run checked, not run. Period folders moved to `goalperiod-subhypotheses/` (coordinator's request).
 - Proposed for DEFINITIONS.md: "agent state (vector, statement-mean projection)", "goal field direction ĝ", "push size ε", "loop gain (window-level, along a direction)". Text is in the round-1 hand-back.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** A small-push, linear-response picture was tested on continuous alignment, but goals are large quenches.
+- **What the direction is really after:** How does a new goal propagate: as a field acting on everyone at once, or as contagion from early adopters?
+- **H10-R1.** Adoption onsets after a kickoff: a field predicts simultaneous onsets; contagion predicts onsets ordered by exposure to early adopters.
+- **H10-R2.** Goals act on a two-state on-goal/off-goal occupancy (HH130).
+- **H10-R3.** During the week, goal-specific content relaxes back toward family-prior directions (E4).

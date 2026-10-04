@@ -263,3 +263,11 @@ Takes over H01 D4 (D4.1.b first); H01 D2.6 chooses the viability function; H08 (
 - 2026-10-03, **bug fix after the first real run:** the memory snapshot written at a consolidation is logged microseconds *before* the CONSOLIDATE event, so the forward join left the stored-transfer dose missing for 95% of consolidations (the first ρ values had n ≤ 159). Fixed to a nearest-within-180 s join (coverage 99.9%). What I had seen: the first, nearly empty ρ values and the CF−CV contrast (unchanged by the fix).
 - 2026-10-03, **post-hoc analysis** (after seeing P5 significantly opposite and the turn profile): forced-consolidation write dip, turns +1…+10 vs −20…−11 (`posthoc_rd` in results; labelled post-hoc everywhere). It is the basis of confirmatory criterion C3.
 - 2026-10-03, **confirmatory script** `confirm_ne30.py` written after exploration, dry-run only. C1/C2 were made refutation-only after the dry run (stand-in values −0.93 and −0.20 SD showed effect-size thresholds are noise-dominated with 1–3 events); no holdout data was read.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Memory turned out to be irrelevant at day scale; the context carries the load.
+- **What the direction is really after:** Where does the swarm keep its knowledge? In artifacts and history, not in agents.
+- **H15-R1.** Stigmergic memory: after a memory loss, agents re-acquire state from artifacts (file reads, history search) within a few turns; richer artifact trails mean faster recovery (E3).
+- **H15-R2.** Semantic information is concentrated in the few items read first after a reset (the goal and the last messages).
+- **H15-R3.** Memory notes are performative: their content rarely reappears in later actions.

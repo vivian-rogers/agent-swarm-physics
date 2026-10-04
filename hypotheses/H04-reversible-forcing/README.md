@@ -277,3 +277,11 @@ Code: `analysis/h04lib.py` (machinery), `analysis/explore.py` (G, linearity, FD,
 - 2026-10-03: exploratory round 1 run (non-holdout only); design changes listed under Results. H04-MF added at the user's request, with predictions written first.
 - 2026-10-03: the confirmatory script was dry-run on **non-holdout surrogate segments** (`--dry-run` → `dryrun_ne21_ne23.json`) to check the code path; those numbers have no bearing on the hypothesis. The dry run exposed that 5–10-day segment n varies by ±0.3 between same-hours weeks, which led to the placebo-switch analysis and the C1 / MF-C amendment. The real run needs `--confirm --i-understand-this-uses-the-locked-holdout`.
 - Scheme: no separate build step. The mapping (nudge / bookend classification, targets, bystanders, direct-kick isolation) lives in `analysis/h04lib.py` (`load_messages`, `responder_rows`, `attach_hits`, `build_sets`); outputs are small JSON files in `data/processed/H04-reversible-forcing/`. If H03 (Hawkes) or H02 need the nudge/target mapping, move `load_messages` into `infra/`.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Messages were treated as fields on activity and searched for linear kernels; the kernel turned out to be the turn schedule.
+- **What the direction is really after:** The scaffold is the propagator: the response to any input is when the agent next looks, times whether it attends.
+- **H04-R1.** The response kernel equals the turn-interval survival function convolved with an uptake probability, with no free parameters (HH92, tested in H08).
+- **H04-R2.** The steering knob is the scheduler: shortening turn cadence raises susceptibility more than rewording or repeating a message (E1).
+- **H04-R3.** A salience law: uptake rises with mention, position and novelty in context and falls with backlog (E5).

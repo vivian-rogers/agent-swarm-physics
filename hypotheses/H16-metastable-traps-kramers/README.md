@@ -382,3 +382,11 @@ Verdict rule: the core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2) all s
   - #45 was used for confirmation by H02 (activity-timing couplings and its Curie–Weiss βJ₀ = 0.41). #32 lies inside H05's NE12 confirmatory window (room couplings on activity and talk spins).
   - H16's confirmatory statistics on these periods differ from those runs: dwell hazards, pause gates, loop hazards, kick dose laws and swarm bimodality. βJ₀ on #45 is **not** a confirmatory statistic for H16, because H02 computed it.
   - The H16 confirmatory script and predictions must be committed before the run.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** The Kramers barrier on a smoothed activity coordinate was an artifact; the aging was real.
+- **What the direction is really after:** Traps deepen by self-reinforcement as the context fills with the agent's own output.
+- **H16-R1.** Pólya urn: P(repeat) ∝ the share of the context that is own repeats. This predicts the aging exponent (about −0.8 in #51) from the measured context composition (E2).
+- **H16-R2.** One directed message works because it dilutes the urn; repeated messages add little once the context is diluted.
+- **H16-R3.** Trap depth is a model trait: some models loop more.

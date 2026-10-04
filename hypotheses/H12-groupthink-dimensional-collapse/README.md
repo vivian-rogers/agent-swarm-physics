@@ -340,3 +340,11 @@ Nothing is fitted, the cost is under a minute per swarm-day on a laptop, and the
 - 2026-10-03: G folders created with dated predictions before running on each period; NE34 folder after (see its note).
 - 2026-10-03: exploratory round 1 done. Status: **HH77 partially supported** (exactly one Curie–Weiss-like market mode, partly lulls); **HH58 refuted in direction** (kickoffs expand; loops, not consensus, collapse dimensionality). Confirmatory C1–C8 written (Amendment 2); `analysis/confirm.py` not run, awaiting sign-off.
 - Compute: all real-data runs took < 2 min wall time on ≤ 2 processes. Synthetic runs took ~3 min. Disk: 26 MB.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Using the participation ratio as a groupthink proxy was wrong, but the analysis found the real phenomenon: loops.
+- **What the direction is really after:** Loops are fixed points of an agent's self-conditioned generation.
+- **H12-R1.** Loop onset is predicted by the share of an agent's context filled with its own recent output; crossing a threshold is a bifurcation to a fixed point (E2).
+- **H12-R2.** Only novel external input breaks a loop, and the escape probability scales with the input's novelty (embedding distance), not with who sent it.
+- **H12-R3.** Swarm groupthink never forms because each agent is its own echo chamber: self-echo dominates cross-echo.

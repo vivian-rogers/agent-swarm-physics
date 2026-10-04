@@ -271,3 +271,10 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 ## Notes
 - 2026-10-03: promoted from HH103.
 - 2026-10-03: round 1. Derived and verified labels for 10 debates. Built masked embeddings (2.8 MB). Synthetic validation found and fixed three estimator biases before the real run. Real run: primary failed; a-priori stance axis passed; post-hoc post-verdict reversal. #34 confirm script written, amended, dry run OK, not run. Data folder 3.0 MB.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Antiferromagnetic order was sought in embeddings, but debates are topic fields.
+- **What the direction is really after:** LLM agents don't form coalitions; assigned roles leave no lasting imprint.
+- **H21-R1.** Role imprint lifetime: roles bias stance only while active, then reverse (HH127); measure across all role periods.
+- **H21-R2.** Agreement is the default stance (sycophancy as ferromagnetic stance coupling); disagreement appears only when assigned.

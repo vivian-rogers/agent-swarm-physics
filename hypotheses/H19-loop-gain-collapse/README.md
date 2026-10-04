@@ -329,3 +329,11 @@ Adding mode lowers LOPO ELPD for both (−0.7, −1.2).
   - Required: `goal_no`, `window`, `method`, `family` (E / T / O), `estimand`, `loop_gain` (bool), `value`, `se`.
   - Recommended: `lo`, `hi`, `ci_kind`, `n_days`, `N`, `spin_or_events` (talk / active / …: the channel turned out to matter more than the estimator), `bin_s`, `detrend`, `confirmatory` (bool), `built_by`, `notes`.
 - **Proposed DEFINITIONS.md entries** (not edited; outside H19's scope): loop gain (equal-time, 1 − 1/VR; channel-specific); loop gain (Hawkes n; fast cross n_x); attention load k̄ (per village turn, per LLM step); agent turn (village; LLM step).
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Collapsing heterogeneous estimators failed because they measure different channels.
+- **What the direction is really after:** The swarm has two order parameters, talk and work, that trade off.
+- **H19-R1.** Talk and work anticorrelate: periods and agents sit in talky or worky phases on a (talk, work) phase diagram.
+- **H19-R2.** Goal type (shared vs individual) moves the swarm between the two phases.
+- **H19-R3.** Messages per LLM step is the control parameter; pre-register the post-hoc collapse.

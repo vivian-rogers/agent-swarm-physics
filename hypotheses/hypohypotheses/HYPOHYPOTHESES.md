@@ -316,3 +316,15 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
   *Models:* 01 (random-field Ising), 11 · *Periods:* #51 non-holdout segments
 - **HH130 · Goals act on a two-state order parameter (on-goal vs off-goal), not a continuous alignment.** H10 found goals are quenches: variance along ĝ grows while transverse variance is flat, and agents switch on-goal together. For the occupancy p(t) of on-goal statements, a Legendre tilt *does* predict variance growth while p < ½. That gives the free-energy idea a fair second test in the right variables. *Check:* classify statements on-goal or off-goal; fit a two-state (Ising-like) mean field to p(t) through kickoffs; predict the variance trajectory from free-week fluctuations of p.
   *Models:* 01, 10 · *Periods:* free → assigned pairs (#11→#12, #16→#17, #37→#38); kickoffs (NE34)
+
+## Essence conjectures from the round-1 reflection (2026-10-04)
+- **HH131 · The harness is the Hamiltonian.** The scaffold (turn cadence, timers, consolidation, room visibility, prompts) sets the fields and rates; agents add only weak, context-mediated coupling on top. Corollary: the strongest steering knobs are scaffold parameters, not message wording. *Check:* see the redirected sub-hypotheses that cite E1 in `writeup/round1-reflection/round1-reflection.pdf`.
+  *Models:* cross-cutting · *Periods:* all
+- **HH132 · Self-reinforcement, not exchange, is the essential physics.** Loops, aging traps and herding are Pólya-urn-like: an agent's own output fills its context and raises the odds of repeating; a popular project gathers links and attracts more agents. Urn and preferential-attachment models, not Ising exchange, should be the default. *Check:* see the redirected sub-hypotheses that cite E2 in `writeup/round1-reflection/round1-reflection.pdf`.
+  *Models:* cross-cutting · *Periods:* all
+- **HH133 · Stigmergy beats chat.** Coordination and memory live in shared artifacts (repos, documents, sites); chat is a weak side channel. Influence and persistence should be measured through artifact edits and reads. *Check:* see the redirected sub-hypotheses that cite E3 in `writeup/round1-reflection/round1-reflection.pdf`.
+  *Models:* cross-cutting · *Periods:* all
+- **HH134 · Swarms relax to their priors.** Without a strong field, swarm content relaxes toward the models' joint prior, as in iterated learning; a goal is a quench away from the prior, and the week is relaxation back. *Check:* see the redirected sub-hypotheses that cite E4 in `writeup/round1-reflection/round1-reflection.pdf`.
+  *Models:* cross-cutting · *Periods:* all
+- **HH135 · Attention is the conserved quantity.** Coupling is an allocation of a fixed attention budget per turn (H18: uptake ∝ backlog^-0.6). Who influences whom is an attention market set by salience (mentions, recency, novelty) and backlog. *Check:* see the redirected sub-hypotheses that cite E5 in `writeup/round1-reflection/round1-reflection.pdf`.
+  *Models:* cross-cutting · *Periods:* all

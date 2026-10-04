@@ -226,3 +226,10 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - 2026-10-03: switch-on audit done before any outcome. The switch is on day 1 (τ\* = 50 min after open), not mid-week. Card reformulated (H24′ ramp) before analysis.
 - 2026-10-03: round 1 done (see Results). Disk: 7.9 MB in `data/processed/H24-forecast-coupling-switch/`.
 - Suggested DEFINITIONS.md variant (not added; outside this card's edit scope): **coupling switch-on (document access)**. τ_i = the start of the agent's first session whose self-written intention plans to read or compare teammates' work, confirmed within 60 min by a reasoning sentence describing another agent's document on screen (`scheme/h24lib.py`).
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** The alignment-step test missed the real story, which is pairwise copying.
+- **What the direction is really after:** Information aggregation in swarms is copying from the first or most confident agent, not averaging.
+- **H24-R1.** Anchoring cascade: first-posted numbers dominate the final consensus (a founder effect) in every estimation-like task.
+- **H24-R2.** Copy fidelity vs transformation of shared numbers (H07 machinery).

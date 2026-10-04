@@ -204,3 +204,11 @@ One folder per goal period (`G<NN>/`) or spanning natural experiment (`NE<NN>/`)
   6. Same-lab vs. same-room pairs (D9.2).
   7. Find out why added pairs' *activity* coupling fell in the shared-objective merge week (#40).
 - Proposed DEFINITIONS.md variant (not added; shared file): **Entropy production (pairwise AIK bound on activity spins):** Σ_g from g_ij = s_i(t+1)s_j(t) − s_i(t)s_j(t+1) on 1-min ±1 activity spins, cross-fitted or held-out by day, per agent-hour; null = cross-day surrogate.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** "Rooms decouple chat" is close to the scaffold's definition of a room, and entropy production on 1-min spins measured nothing.
+- **What the direction is really after:** Through which channels does information actually move?
+- **H05-R1.** Rooms matter only insofar as they also split artifacts: cross-room pairs sharing a repo stay coupled through edits (E3).
+- **H05-R2.** The ×6 rise in within-room coupling after the split is attention reallocation, predicted in size by N_room^-0.6 (E5).
+- **H05-R3.** Information leaks across rooms through history search and artifacts at a measurable rate (a leak conductance).

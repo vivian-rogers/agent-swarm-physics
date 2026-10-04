@@ -252,3 +252,11 @@ Script: `analysis/confirm_h14.py`. It refuses to run without `--confirm --i-unde
   4. `physics-models/10-potts`: the parallel kinetic-Potts simulator with exact EP (`h14lib.simulate_potts`, `potts_exact_ep`) could move there. Its README could note that cross-fitted Newton increments ΔΣ carry a high-dimensional positive bias that only a matched surrogate removes.
   5. `physics-models/02-nonequilibrium-ising` pitfalls: the Newton quadratic is not a bound at strong asymmetry. For transition indicators the exact dual has the closed-form optimum Θ_ab = ln(p_ab / p_ba) (`ep_cfx`).
   6. The H09 E2 claim (78% of agent cells irreversible vs. a shuffle null) used a shuffle null that destroys dwell structure. Against a detailed-balance surrogate, coarse per-turn irreversibility is much weaker; H09 might note this.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Entropy production on action classes measured the scaffold's consolidation cycle.
+- **What the direction is really after:** The arrow of time of work: progress is irreversible, chatter is reversible.
+- **H14-R1.** Entropy production on work states (plan, build, verify, ship; Jev) correlates with output: useful irreversibility.
+- **H14-R2.** Loops are near-reversible cycles with zero progress; productive phases produce entropy. Efficiency = progress per unit of entropy produced.
+- **H14-R3.** The scaffold contributes a fixed entropy-production floor (the consolidation clock); subtracting it leaves agent-generated irreversibility (E1).

@@ -155,3 +155,9 @@ What H23 predicts for the 16 v7-aug messages in #44, with the exploratory decisi
 - 2026-10-03: round 1 done; G44 verdict mixed (see Results). Bug fixed before the reported run: messages.parquet had plan acts from coder v1; rebuilt with the frozen v3.
 - 2026-10-03: reuse of #45 needs the H02 card and LOG.md disclosure lines (proposed in the hand-back; not edited here, outside this hypothesis' edit scope); `confirm_g45.py` checks for them.
 - 2026-10-03: the leader worked inside its own training repo on 05-29 and printed a diff of the scenario-draft file at 19:55:48 UTC (scenario inputs only, after 15 of its 16 messages). A tool lookup that precedes a reproduction counts as a fresh lookup, not copying (model 08 pitfall); only the last message (20:27) could be affected.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** The premise was wrong: the leader was self-distilled, not distilled from village text.
+- **What the direction is really after:** What does fine-tuning transmit, compared with prompting?
+- **H23-R1.** Style transmits through weights, decisions through context: the leader's influence came from its role prompt and position, not its fine-tune.

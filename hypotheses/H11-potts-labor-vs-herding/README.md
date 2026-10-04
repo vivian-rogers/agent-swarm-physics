@@ -294,3 +294,11 @@ Dry run on stand-ins (#31, #25, #38): C1 not confirmed, C2 inconclusive (#38 fai
 - 2026-10-03, **scheme amendment before analysis:** the first build used q ≤ 6 and a 5% share threshold. That gave q = 2 for #13 and #38, with long tails (47 and 74 distinct projects). Seeing only those structural counts, I changed to q ≤ 8 and 2% before any analysis. Raw unmerged labels are kept for robustness.
 - 2026-10-03: exploratory round 1 run and assembled (see Results). Scheme amendment (q ≤ 8 / 2%) was made before analysis. The action-only robustness variant was added after seeing #31's βJ_CW, and the local-shift null and ownership index after the full run; all are flagged above.
 - 2026-10-03: HH22 folded in as G26 by Vivian; G26 predictions written before running on #26. Vote states use `chat_mentions_clean.mentions_roster` (o1-bug-free), per the coordinator.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** The sign of the Potts coupling was tied to goal mode, but herding appears regardless of mode, which points to a mechanism.
+- **What the direction is really after:** Why do agents pile on: imitation, or attraction to where the work already is?
+- **H11-R1.** Preferential attachment: P(join X) ∝ (recent activity on X)^α. With α near 1 this is a Yule process, which predicts the project-size distribution (E2).
+- **H11-R2.** Herding is stigmergic, not social: artifact activity predicts joining better than chat mentions of X (E3, vs H28).
+- **H11-R3.** Herding is a coordination solution that raises output; own-artifact spread duplicates effort (test against the work ledger).

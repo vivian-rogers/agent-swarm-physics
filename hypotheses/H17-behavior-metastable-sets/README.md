@@ -231,3 +231,11 @@ The P9-Jev pre-registration must be written in this card before `confirm_h17.py 
 - 2026-10-03: period folders moved to `goalperiod-subhypotheses/G<NN>/` (coordinator); scripts and links updated.
 - 2026-10-03: #39's ratio is 1.249 with 400 surrogates and 1.251 with 100; the 400-surrogate value is used (verdict: failed).
 - Compute: ≈ 45 min wall of ≤ 2 local processes (synthetic 4 min; 27 periods 13 min, dominated by #51; extra N2 surrogates ≈ 20 min including a restart). Disk: 10 MB in `data/processed/H17-behavior-metastable-sets/`, 1.8 MB in this folder.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** A Markov state model on action classes recovered tool modes, i.e. the scaffold.
+- **What the direction is really after:** What are the metastable cognitive modes (planning, building, debugging, existential talk), and what switches them?
+- **H17-R1.** A soft Jev-state MSM recovers slow cognitive modes, and switches are driven by external input.
+- **H17-R2.** Debugging is the slowest mode and the main sink of time.
+- **H17-R3.** Mode switches synchronize across agents only through shared artifacts (E3).

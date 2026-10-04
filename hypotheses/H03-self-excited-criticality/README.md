@@ -314,3 +314,11 @@ Verdict count: C 11 failed, 4 mixed; F 2 supported, 5 mixed, 1 failed; I/K/M 11 
   - `test_core.py` (unit tests).
 
   Every multi-period script accepts `--period G<NN>`.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** A branching ratio on event timestamps mostly measured scaffold modulation. Criticality of timing is not the question that matters.
+- **What the direction is really after:** How autonomous is the swarm: what fraction of its activity is self-generated rather than driven by the scaffold or humans?
+- **H03-R1.** Autonomy fraction: classify every turn's trigger (scheduled, external message, peer message, self-continuation) from the context ledger; autonomy = peer + self share, tracked across regimes.
+- **H03-R2.** The swarm dies without drive: during outages and nudger-off sessions, peer-driven activity decays with a measurable lifetime.
+- **H03-R3.** Criticality, if anywhere, lives in content cascades (H34), not in timing.

@@ -280,3 +280,11 @@ P9 for the remaining 26 non-holdout units (regime I and #33) is in `figures/p9_m
 - 2026-10-03: predictions for D3.1.a and D3.2 written (P1–P9). **NE12 is a placebo, not a cut** (per H05): the D3.2 confirmatory test moves to the actual separations (#voted-out, NE15).
 - 2026-10-03: **starting set chosen by Vivian: D3.1.a** (ideology order parameter from mined statements) **and D3.2** (coupling- vs. field-driven order). Both need Phase 2 (embeddings / meaning clusters). D3.2's strongest test (NE12) is held out, so exploration uses #8, #21, #41 and the NE32 isolated triplet.
 - 2026-10-03: renamed from "Emergent superagents and the thermodynamics of ideology" to **"Emergent superagents exist"**. Sub-hypothesis set (D1–D10) written. No new swarms, so simulation was replaced by natural experiments. `llm_calls` to be requested eventually. Probes: both mined and fixed. Viability left open, with candidates in D2.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Ideological order was measured as embedding-cluster entropy, which mostly tracked room instructions and topic. Superagency itself was never measured.
+- **What the direction is really after:** Does a group behave more like one agent than its members do?
+- **H01-R1.** Causal emergence: a room's macro-state (its next behavior distribution, from Jev states) is more predictable from room-level state than from members' states (Hoel-style effective information).
+- **H01-R2.** The artifact is the superagent's body: a shared repo's edit stream has a lower entropy rate than any contributor's own stream, so the group acts through the artifact (E3).
+- **H01-R3.** Organs: inside a superagent, agents specialize into stable builder, verifier and reporter roles whose actions carry mutual information above chance.

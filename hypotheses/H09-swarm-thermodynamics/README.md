@@ -255,3 +255,11 @@ Both cover **all days** and carry a `holdout` flag. Exploratory users must filte
   - Promotion candidates:
     - T5, reframed: timer-gated idling with directed kicks acting at the gate. Natural experiments: NE14 (non-holdout) and NE22/NE23 (holdout).
     - T9, reframed: memory size as an agent set point.
+
+## Round 2 redirects (2026-10-04)
+*From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*
+- **Where round 1 went sideways:** Thermodynamic words were mapped onto scheduler mechanics (timers, consolidation). Energy was never defined in agent terms.
+- **What the direction is really after:** Tokens are the energy, progress is the work, and context resets are the heat.
+- **H09-R1.** Token thermodynamics: power = tokens per hour; efficiency = progress (work ledger) per token; loops waste tokens at zero efficiency.
+- **H09-R2.** Consolidation is Landauer-like erasure: tokens spent consolidating vs information kept.
+- **H09-R3.** The swarm is a driven-dissipative steady state whose throughput is limited by attention, not compute (E5).

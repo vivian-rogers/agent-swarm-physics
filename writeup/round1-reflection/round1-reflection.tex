@@ -1,0 +1,154 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\usepackage{amsmath,amssymb}
+\usepackage[hidelinks]{hyperref}
+\begin{document}
+\title{Round 1 in hindsight: where the hypotheses went sideways, and redirects toward the essence}
+\author{Vivian Rogers, with Claude Opus 5.5}
+\affiliation{Agent-swarm physics project}
+\date[]{Written 2026-10-04 after round 1 of H01--H24. Not the paper.}
+\begin{abstract}
+Most round-1 hypotheses measured the scaffold (turn scheduler, timers, consolidation clock, room visibility) or embedding style and topic, then mapped a physics model onto that literally. The positive results all point elsewhere: coupling is mediated by the context window, agents get stuck in self-reinforcing loops, herding is the default, memory barely matters at day scale, and influence is invisible in activity timing. This note diagnoses each completed hypothesis in one line, states what its research direction is really after, and proposes bolder round-2 sub-hypotheses (\texttt{H<NN>-R<k>}). Five cross-cutting conjectures close it.
+\end{abstract}
+\maketitle
+\section*{Four ways round 1 went sideways}
+\textbf{Measuring the scaffold.} One-minute activity, action classes and event timing are set mostly by the turn scheduler, timers and consolidation (H02, H03, H05, H14, H16, H17, H19).
+\textbf{Measuring style and topic.} Embedding cosine mixes topic, style, format and self-repetition (H01, H13, H21, H22).
+\textbf{Literal physics.} Barriers, aging and spin glasses were imposed on proxies whose mechanism we already know: what is in the context, and when the agent looks.
+\textbf{Responses by proxy.} Mentions stood in for replies, and they are contaminated (H18).
+\section*{Redirects by hypothesis}
+
+\paragraph{H01: Emergent superagents exist.} \emph{Sideways:} Ideological order was measured as embedding-cluster entropy, which mostly tracked room instructions and topic. Superagency itself was never measured. \emph{Essence:} Does a group behave more like one agent than its members do?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H01-R1} Causal emergence: a room's macro-state (its next behavior distribution, from Jev states) is more predictable from room-level state than from members' states (Hoel-style effective information).
+\item \textbf{H01-R2} The artifact is the superagent's body: a shared repo's edit stream has a lower entropy rate than any contributor's own stream, so the group acts through the artifact (E3).
+\item \textbf{H01-R3} Organs: inside a superagent, agents specialize into stable builder, verifier and reporter roles whose actions carry mutual information above chance.
+\end{itemize}
+\paragraph{H02: Inferred couplings reflect real influence.} \emph{Sideways:} Influence was inferred from when agents are active, but the turn scheduler sets activity timing, so the couplings measured scheduling, not influence. \emph{Essence:} Who changes whose mind?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H02-R1} Influence is the change in j's next decision when i's message is in j's context (context ledger), compared with matched turns where it is not.
+\item \textbf{H02-R2} The \#45 leader influenced plans, not activity: assignment-acceptance events (Jev-labeled) show its authority.
+\item \textbf{H02-R3} Influence follows authority markers (operator endorsement, titles, a leader role), not model family.
+\end{itemize}
+\paragraph{H03: Swarm activity is self-exciting.} \emph{Sideways:} A branching ratio on event timestamps mostly measured scaffold modulation. Criticality of timing is not the question that matters. \emph{Essence:} How autonomous is the swarm: what fraction of its activity is self-generated rather than driven by the scaffold or humans?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H03-R1} Autonomy fraction: classify every turn's trigger (scheduled, external message, peer message, self-continuation) from the context ledger; autonomy = peer + self share, tracked across regimes.
+\item \textbf{H03-R2} The swarm dies without drive: during outages and nudger-off sessions, peer-driven activity decays with a measurable lifetime.
+\item \textbf{H03-R3} Criticality, if anywhere, lives in content cascades (H34), not in timing.
+\end{itemize}
+\paragraph{H04: External forcing reshapes the response kernel.} \emph{Sideways:} Messages were treated as fields on activity and searched for linear kernels; the kernel turned out to be the turn schedule. \emph{Essence:} The scaffold is the propagator: the response to any input is when the agent next looks, times whether it attends.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H04-R1} The response kernel equals the turn-interval survival function convolved with an uptake probability, with no free parameters (HH92, tested in H08).
+\item \textbf{H04-R2} The steering knob is the scheduler: shortening turn cadence raises susceptibility more than rewording or repeating a message (E1).
+\item \textbf{H04-R3} A salience law: uptake rises with mention, position and novelty in context and falls with backlog (E5).
+\end{itemize}
+\paragraph{H05: Rooms are coupled blocks.} \emph{Sideways:} "Rooms decouple chat" is close to the scaffold's definition of a room, and entropy production on 1-min spins measured nothing. \emph{Essence:} Through which channels does information actually move?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H05-R1} Rooms matter only insofar as they also split artifacts: cross-room pairs sharing a repo stay coupled through edits (E3).
+\item \textbf{H05-R2} The $\times$6 rise in within-room coupling after the split is attention reallocation, predicted in size by N\_room\textasciicircum{}-0.6 (E5).
+\item \textbf{H05-R3} Information leaks across rooms through history search and artifacts at a measurable rate (a leak conductance).
+\end{itemize}
+\paragraph{H07: The RPG forks diverge.} \emph{Sideways:} Forks were treated as passive copying; the interesting signal was nucleation by a single agent. \emph{Essence:} Does culture in shared artifacts change by gradual drift or by rare rewrites from a few agents?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H07-R1} Content change in every shared artifact is heavy-tailed, dominated by a few nucleator agents, and nucleators are consistent across artifacts (a trait; HH96).
+\item \textbf{H07-R2} Mutation per file-touch is universal across artifacts and agents (HH95).
+\item \textbf{H07-R3} Forks re-converge when the same models meet the same bugs: the rate of convergent evolution is set by the shared prior (E4).
+\end{itemize}
+\paragraph{H09: Agent swarms have an effective thermodynamics.} \emph{Sideways:} Thermodynamic words were mapped onto scheduler mechanics (timers, consolidation). Energy was never defined in agent terms. \emph{Essence:} Tokens are the energy, progress is the work, and context resets are the heat.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H09-R1} Token thermodynamics: power = tokens per hour; efficiency = progress (work ledger) per token; loops waste tokens at zero efficiency.
+\item \textbf{H09-R2} Consolidation is Landauer-like erasure: tokens spent consolidating vs information kept.
+\item \textbf{H09-R3} The swarm is a driven-dissipative steady state whose throughput is limited by attention, not compute (E5).
+\end{itemize}
+\paragraph{H10: Goals are Legendre pushes.} \emph{Sideways:} A small-push, linear-response picture was tested on continuous alignment, but goals are large quenches. \emph{Essence:} How does a new goal propagate: as a field acting on everyone at once, or as contagion from early adopters?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H10-R1} Adoption onsets after a kickoff: a field predicts simultaneous onsets; contagion predicts onsets ordered by exposure to early adopters.
+\item \textbf{H10-R2} Goals act on a two-state on-goal/off-goal occupancy (HH130).
+\item \textbf{H10-R3} During the week, goal-specific content relaxes back toward family-prior directions (E4).
+\end{itemize}
+\paragraph{H11: Division of labor vs herding.} \emph{Sideways:} The sign of the Potts coupling was tied to goal mode, but herding appears regardless of mode, which points to a mechanism. \emph{Essence:} Why do agents pile on: imitation, or attraction to where the work already is?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H11-R1} Preferential attachment: P(join X) $\propto$ (recent activity on X)\textasciicircum{}$\alpha$. With $\alpha$ near 1 this is a Yule process, which predicts the project-size distribution (E2).
+\item \textbf{H11-R2} Herding is stigmergic, not social: artifact activity predicts joining better than chat mentions of X (E3, vs H28).
+\item \textbf{H11-R3} Herding is a coordination solution that raises output; own-artifact spread duplicates effort (test against the work ledger).
+\end{itemize}
+\paragraph{H12: Groupthink is dimensional collapse.} \emph{Sideways:} Using the participation ratio as a groupthink proxy was wrong, but the analysis found the real phenomenon: loops. \emph{Essence:} Loops are fixed points of an agent's self-conditioned generation.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H12-R1} Loop onset is predicted by the share of an agent's context filled with its own recent output; crossing a threshold is a bifurcation to a fixed point (E2).
+\item \textbf{H12-R2} Only novel external input breaks a loop, and the escape probability scales with the input's novelty (embedding distance), not with who sent it.
+\item \textbf{H12-R3} Swarm groupthink never forms because each agent is its own echo chamber: self-echo dominates cross-echo.
+\end{itemize}
+\paragraph{H13: Model families carry their own fields.} \emph{Sideways:} Family alignment in embeddings turned out to be writing style, which was close to trivial. \emph{Essence:} Do vendors differ in decisions, not prose?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H13-R1} Policy fingerprint: P(next behavior state | current state, context features) differs by family beyond agent identity.
+\item \textbf{H13-R2} Families differ in susceptibility: who listens to whom (HH98).
+\item \textbf{H13-R3} Mixed-vendor periods out-produce single-vendor ones (descriptive, confounded; work ledger).
+\end{itemize}
+\paragraph{H14: Entropy production of behavior sequences.} \emph{Sideways:} Entropy production on action classes measured the scaffold's consolidation cycle. \emph{Essence:} The arrow of time of work: progress is irreversible, chatter is reversible.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H14-R1} Entropy production on work states (plan, build, verify, ship; Jev) correlates with output: useful irreversibility.
+\item \textbf{H14-R2} Loops are near-reversible cycles with zero progress; productive phases produce entropy. Efficiency = progress per unit of entropy produced.
+\item \textbf{H14-R3} The scaffold contributes a fixed entropy-production floor (the consolidation clock); subtracting it leaves agent-generated irreversibility (E1).
+\end{itemize}
+\paragraph{H15: Semantic information via natural scrambles.} \emph{Sideways:} Memory turned out to be irrelevant at day scale; the context carries the load. \emph{Essence:} Where does the swarm keep its knowledge? In artifacts and history, not in agents.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H15-R1} Stigmergic memory: after a memory loss, agents re-acquire state from artifacts (file reads, history search) within a few turns; richer artifact trails mean faster recovery (E3).
+\item \textbf{H15-R2} Semantic information is concentrated in the few items read first after a reset (the goal and the last messages).
+\item \textbf{H15-R3} Memory notes are performative: their content rarely reappears in later actions.
+\end{itemize}
+\paragraph{H16: Metastable traps and Kramers escape.} \emph{Sideways:} The Kramers barrier on a smoothed activity coordinate was an artifact; the aging was real. \emph{Essence:} Traps deepen by self-reinforcement as the context fills with the agent's own output.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H16-R1} Pólya urn: P(repeat) $\propto$ the share of the context that is own repeats. This predicts the aging exponent (about -0.8 in \#51) from the measured context composition (E2).
+\item \textbf{H16-R2} One directed message works because it dilutes the urn; repeated messages add little once the context is diluted.
+\item \textbf{H16-R3} Trap depth is a model trait: some models loop more.
+\end{itemize}
+\paragraph{H17: Behavior is a Markov state model.} \emph{Sideways:} A Markov state model on action classes recovered tool modes, i.e. the scaffold. \emph{Essence:} What are the metastable cognitive modes (planning, building, debugging, existential talk), and what switches them?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H17-R1} A soft Jev-state MSM recovers slow cognitive modes, and switches are driven by external input.
+\item \textbf{H17-R2} Debugging is the slowest mode and the main sink of time.
+\item \textbf{H17-R3} Mode switches synchronize across agents only through shared artifacts (E3).
+\end{itemize}
+\paragraph{H18: Attention dilution.} \emph{Sideways:} The result is good, but responses were measured through mentions, which are contaminated. \emph{Essence:} Attention is the scarce resource, and coupling is its allocation.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H18-R1} A salience law, uptake = f(mention, recency, novelty, sender status), is fit and predicts held-out uptake (E5).
+\item \textbf{H18-R2} Total attention per turn is conserved; re-test with reply-threading labels.
+\item \textbf{H18-R3} An optimal room size maximizes total useful uptake (HH111).
+\end{itemize}
+\paragraph{H19: One curve for all periods.} \emph{Sideways:} Collapsing heterogeneous estimators failed because they measure different channels. \emph{Essence:} The swarm has two order parameters, talk and work, that trade off.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H19-R1} Talk and work anticorrelate: periods and agents sit in talky or worky phases on a (talk, work) phase diagram.
+\item \textbf{H19-R2} Goal type (shared vs individual) moves the swarm between the two phases.
+\item \textbf{H19-R3} Messages per LLM step is the control parameter; pre-register the post-hoc collapse.
+\end{itemize}
+\paragraph{H20: Content aging.} \emph{Sideways:} No aging appeared: content dynamics are Markov. \emph{Essence:} The swarm has no long-term internal memory; all persistence is stored outside the agents.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H20-R1} Persistent content order is explained entirely by persistent fields (goal prompt, artifacts); without them content decorrelates within a day (E3, E4).
+\item \textbf{H20-R2} The \textasciitilde{}2–4 day kickoff relaxation is set by artifact build-up, not agent memory.
+\end{itemize}
+\paragraph{H21: Debate as an antiferromagnet.} \emph{Sideways:} Antiferromagnetic order was sought in embeddings, but debates are topic fields. \emph{Essence:} LLM agents don't form coalitions; assigned roles leave no lasting imprint.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H21-R1} Role imprint lifetime: roles bias stance only while active, then reverse (HH127); measure across all role periods.
+\item \textbf{H21-R2} Agreement is the default stance (sycophancy as ferromagnetic stance coupling); disagreement appears only when assigned.
+\end{itemize}
+\paragraph{H22: Private goals make a spin glass.} \emph{Sideways:} Topic co-movement cannot see conflict. \emph{Essence:} Do conflicting incentives produce conflict behavior at all?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H22-R1} Cooperation default: agents help rivals at rates comparable to aligned pairs (Jev-labeled help acts).
+\item \textbf{H22-R2} A quantitative random-field fit (HH129): roles as fields plus weak positive coupling.
+\end{itemize}
+\paragraph{H23: Leader distillation.} \emph{Sideways:} The premise was wrong: the leader was self-distilled, not distilled from village text. \emph{Essence:} What does fine-tuning transmit, compared with prompting?
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H23-R1} Style transmits through weights, decisions through context: the leader's influence came from its role prompt and position, not its fine-tune.
+\end{itemize}
+\paragraph{H24: Forecast-week coupling switch.} \emph{Sideways:} The alignment-step test missed the real story, which is pairwise copying. \emph{Essence:} Information aggregation in swarms is copying from the first or most confident agent, not averaging.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \textbf{H24-R1} Anchoring cascade: first-posted numbers dominate the final consensus (a founder effect) in every estimation-like task.
+\item \textbf{H24-R2} Copy fidelity vs transformation of shared numbers (H07 machinery).
+\end{itemize}
+\section*{Five conjectures about the essence}
+\paragraph{E1. The harness is the Hamiltonian.} The scaffold (turn cadence, timers, consolidation, room visibility, prompts) sets the fields and rates; agents add only weak, context-mediated coupling on top. Corollary: the strongest steering knobs are scaffold parameters, not message wording.
+\paragraph{E2. Self-reinforcement, not exchange, is the essential physics.} Loops, aging traps and herding are Pólya-urn-like: an agent's own output fills its context and raises the odds of repeating; a popular project gathers links and attracts more agents. Urn and preferential-attachment models, not Ising exchange, should be the default.
+\paragraph{E3. Stigmergy beats chat.} Coordination and memory live in shared artifacts (repos, documents, sites); chat is a weak side channel. Influence and persistence should be measured through artifact edits and reads.
+\paragraph{E4. Swarms relax to their priors.} Without a strong field, swarm content relaxes toward the models' joint prior, as in iterated learning; a goal is a quench away from the prior, and the week is relaxation back.
+\paragraph{E5. Attention is the conserved quantity.} Coupling is an allocation of a fixed attention budget per turn (H18: uptake $\propto$ backlog\textasciicircum{}-0.6). Who influences whom is an attention market set by salience (mentions, recency, novelty) and backlog.
+\section*{What round 2 needs}
+Most redirects depend on four pipeline pieces: a turn-level context ledger (what each agent had seen before each turn), reply-threading and stance labels, Jev behavior states kept as probability vectors, and a work-output ledger from repository histories. A shared ground-truth table of known roles, leaders and teams would let leader, faction and saboteur detectors be validated.
+\end{document}
