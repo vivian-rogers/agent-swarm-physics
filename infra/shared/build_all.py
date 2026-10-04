@@ -12,6 +12,8 @@ Steps (outputs in data/processed/shared/):
   goal_fields          embeddings/goals.parquet + goal_vectors.npy
   period_units         period_units, period_step_changes
   behavior_states      states_turn, states_min
+  turn_outcomes        DQ3 raw pass: real failures vs stderr, artifact-change evidence, command text (expensive, ~8 min)
+  behavior_states_v3   DQ3 Jev v3.1 states compiled from stored answers (labelling itself is paid and manual)
   project_states       project_states
   kicks_classified     kicks_classified
   text_features        text_features
@@ -84,6 +86,12 @@ STEPS = [
     {"name": "period_units", "cmd": "py", "script": "period_units.py",
      "outputs": ["period_units.parquet", "period_step_changes.parquet"]},
     {"name": "behavior_states", "cmd": "py", "script": "behavior_states.py", "outputs": ["states_turn.parquet", "states_min.parquet"]},
+    # DQ3 Jev v3.1 states: the raw outcome scan is expensive; labelling is paid and manual
+    # (`label_v3.py --all --max-usd 15`, ~$13, resumable); the rebuild only recompiles from the stored answers.
+    {"name": "turn_outcomes", "cmd": "py", "script": "../behavior_states/scan_turn_outcomes.py", "expensive": True,
+     "outputs": ["../behavior_states/turn_outcomes.parquet"]},
+    {"name": "behavior_states_v3", "cmd": "py", "script": "../behavior_states/label_v3.py", "args": ["--all", "--compile-only"],
+     "outputs": ["behavior_states_v3.parquet"]},
     {"name": "project_states", "cmd": "py", "script": "project_states.py", "outputs": ["project_states.parquet"]},
     {"name": "kicks_classified", "cmd": "py", "script": "kicks_classified.py", "outputs": ["kicks_classified.parquet"]},
     {"name": "text_features", "cmd": "py", "script": "text_features.py", "outputs": ["text_features.parquet"]},

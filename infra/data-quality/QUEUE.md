@@ -7,7 +7,7 @@ Vivian's priority order: (1) postprocessed data quality; (2) re-evaluate every h
 | Consolidation into `infra/shared/` (goal fields, behavior states, project states, period units, classified kicks, text features, spectra, copy info, turn errors + outages, bash_head fix, `build_all.py`) | **done** (2026-10-04) | 47 MB of new tables; 13/13 tests pass; see `infra/README.md` → Shared pipeline |
 | DQ1 turn-level context ledger (+ `call_windows`, pause-aware visibility: H29) | **done** (2026-10-04) | `context_ledger_turns.parquet`, `context_ledger_items.parquet`, `call_windows.parquet` |
 | DQ2 reply threading + stance labels (Jev, cap $8) | **done** (2026-10-04; $7.90) | `reply_pairs.parquet`, `reply_graph.parquet` |
-| DQ3 Jev behavior states v3 + full run (cap $15) | running | `behavior_states_v3.parquet` |
+| DQ3 Jev behavior states v3 + full run (cap $15) | **done** 98.4% ($13.13); 3,313 #51 holdout windows await OpenRouter credit (`--retry-errors`) | `behavior_states_v3.parquet`; doc `DQ3-behavior-states-v3.md` |
 | DQ4 work-output ledger (read-only fetch of public agent repos; ≤ 2 GB) | **done** (2026-10-04) | `work_commits.parquet`, `work_daily.parquet`, `work_outcomes.parquet` |
 | DQ5 embedding robustness (second model, style-residualized vectors, statement flags) | **done** (2026-10-04) | `embeddings/*_<model>.npy`, `statement_flags.parquet` |
 | DQ6 shared ground-truth labels (#12 teams, #26 votes, #51 roles, #44 checkpoints, leaders; #34 holdout flagged) | **done** (2026-10-04) | `ground_truth_labels.parquet` |
