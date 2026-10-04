@@ -1,0 +1,32 @@
+\hwhat{The test asks whether designated leaders aggregate (high content inflow, broad replies, low outflow) rather than broadcast. Inflow $\chi$ and outflow $\kappa$ come from a read-gated linear-response fit on context-ledger reads, with an unread in-flight term for co-response. Reply rates come from DQ2. The fit runs on 46 period units and four native tests: an elected leader (\#26), rotating lead designers (\#35), an installed leader (\#44) and rotating judges (\#12). Synthetic runs came first and recalibrated the single-leader test. \textbf{No leader is a router} (0/4 natives). Lead designers and judges get +0.39 and +0.45 more replies per statement ($p\le 0.007$), and judges answer more agents. Their content inflow does not rise. The elected leader is a content \emph{source}. Across units, answering raises inflow ($\rho$ +0.29, 36/46), but attention is unrelated to content flow. \textbf{Mixed.} The holdout is not run.}
+
+\hmodel{Directed linear response (model 02) and information flow (model 04). The content state $z_B$ of agent $j$'s statement is a whitened 32-d embedding with the goal and kickoff field projected out. It responds to $j$'s own past, the day $\times$ room field $f$, read human messages $H$, unread in-flight messages $U$, and the decayed read input $S_{iB}$ from each agent $i$. Inflow $\chi_j$ is the slope on all reads. Outflow $\kappa_i$ is the extra slope on $i$'s reads in other agents' statements.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+z_B=a z_P+a'e_j+b f+h H_B+\lambda U_B+\textstyle\sum_i \kappa_{i\to j} S_{iB}+\xi_B\\
+S_{iB}=\frac{\sum_{A\in i,\ \mathrm{read}} w_A z_A}{1+\sum w_A},\quad w_A=e^{-\mathrm{age}/15\,\mathrm{min}}\\
+\chi_j:\ \kappa_{i\to j}\equiv\chi_j\ \forall i,\qquad \rho_R=\mathrm{pct}(\chi)-\mathrm{pct}(\kappa)
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/h65_obs.pdf}{(a) Single leaders: rank percentiles of inflow (blue) and outflow (orange) in three embedding variants; dotted lines are the skeleton-null means. The \#26 leader is a source. (b) Within-agent role contrasts: the role adds replies received (and reply breadth for judges), not content inflow or outflow. (c) Replication: answering correlates with inflow; attention alignment $D_p$ centres on 0.}
+
+\htelos{Do not install a leader to collect or relay information. In this village the role buys attention: about 0.4 more replies per statement and, for judges, broader answering. It does not make the leader absorb more content or pass it on. An elected leader can become a content source, which an operator should treat as an agenda field on the swarm. To route information, address the agents who must act on it; a hub does not relay it. Per-agent content coefficients are noisy, and same-room messages the agent had not yet read carry 0.6 of the read response.}
+
+\hbottom{Designated leaders are attention hubs, not content routers; the one elected leader is a content source.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (bge; gte; style)} & \textbf{Verdict}\\\hline
+\raggedright S3 null router calls at base rate & \raggedright 0--0.15 within agent; 0.50 single leader & \raggedright recalibrated\tabularnewline
+\raggedright R1 answering is absorbing & \raggedright $\rho$ +0.29 (36/46); +0.35; +0.28 & \raggedright yes\tabularnewline
+\raggedright R2 attention goes to sinks & \raggedright $D_p$ $-0.04$ (17/40); $-0.07$; $-0.06$ & \raggedright no\tabularnewline
+\raggedright R3 inflow $\neq$ outflow & \raggedright $\rho(\chi,\kappa)$ 0.14; 0.09; 0.14 & \raggedright yes\tabularnewline
+\raggedright R4 agrees with H32 outflow & \raggedright median $\rho$ 0.43 (27/32) & \raggedright yes\tabularnewline
+\raggedright N1 \#26 elected router & \raggedright pct $\chi$ 0.22, pct $\kappa$ 1.00 (null 0.32) & \raggedright no: source\tabularnewline
+\raggedright N2 \#35 lead designers & \raggedright $\Delta\chi$ +0.09 ($p$ 0.18; gte 0.009); $\Delta\kappa$ 0; replies +0.39 & \raggedright mixed\tabularnewline
+\raggedright N3 \#44 installed & \raggedright 27 statements; no call possible & \raggedright descr.\tabularnewline
+\raggedright N4 \#12 judges & \raggedright $\Delta\kappa$ $-0.06$; $\Delta\chi$ $-0.03$; replies +0.45, breadth +0.16 & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/h65_synth.pdf}{Synthetic router-call rates on the real skeletons (20 replicates per cell, 60 for single-leader nulls). Within-agent designs (\#35, \#12) recover planted routers and stay quiet under the null. The raw single-leader percentile rule fires in half of null replicates, because the skeleton biases one agent's rank. Those natives were recalibrated on their own null before the real run.}
+
+\hcaveats{Per-agent coefficients are noisy at role-window scale; the \#35 inflow contrast is significant under one embedding model only. Each single-leader native has one leader, so it is a weak test. Inflow includes answering mechanics, because DQ2 parents are partly content-selected. Unread in-flight messages carry 0.6 of the read response. The \#44 leader has 27 statements.}

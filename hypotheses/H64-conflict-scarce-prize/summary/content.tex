@@ -1,0 +1,32 @@
+\hwhat{The test asks whether stance antagonism between agents needs a rival-exclusive prize and ends when the prize is settled. Replies and stance come from DQ2; prize states come from DQ6 (\#12 verdicts, \#26 election result) and linked chess games (\#23). Dated predictions and a synthetic power study came first. \textbf{Debates (\#12):} opponents answer each other 0.78 [0.56, 1.10] worse than teammates while the prize is open, and 0.09 [$-0.26$, 0.39] after the verdict ($p=0.001$). Teammates do not change, and losers do not resent winners. \textbf{Competitions} (\#6, \#23, \#26, \#27) have more confident position-opposition than every-day weeks (4/4 above the median, $p=0.022$). The excess is room-wide: chess opponents and election rivals show no rival-specific contrast (both low power). Without a prize, no antagonism exceeds the agent-field null. \textbf{Supported}, with a narrowed reading. The holdout is not run.}
+
+\hmodel{Signed couplings on reply bonds (model 01) with a two-camp Mattis state (model 10). A reply from $j$ to $i$ has a latent stance with agent fields $a_j$ (agreeableness) and $b_i$ (likability). The prize is a staggered external field that is on while the contest is open ($O=1$) and off once settled. $R_{ij}=1$ marks rivals for one exclusive outcome. $\Delta$ is field-induced antagonism, $\delta$ a pair constant that survives settlement (remanence), and $\phi$ a contest field on every bond (heat).}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+y^*_e=\mu+a_j+b_i+\Delta\,R_{ij}\,O(t)+\delta\,R_{ij}+\phi\,O(t)+u_{k(e)}+\varepsilon_e\\
+\gamma_{\rm open}=\delta+\Delta,\quad \gamma_{\rm set}=\delta,\quad \hat\Delta=\hat\gamma_{\rm open}-\hat\gamma_{\rm set}\\
+r_p=\Pr\big[\text{confident opposes, position}\mid \text{reply}\big]
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/h64_obs.pdf}{(a) Confident position-opposition per period unit, by prize class (pre-registered). All four competition periods lie above the prize-free median; \#51 rivals without a prize sit inside the prize-free range. (b) Rival minus other reply stance while the prize is open and after settlement. In \#12 the contrast falls from $-0.78$ to $-0.09$ at the verdict. The \#23 and \#26 contrasts are small and uncertain.}
+
+\htelos{To end a fight between agents, settle the prize. In \#12 the stance contrast between opponents falls to its noise floor within the post-verdict phase ($\le$ 10 min), and losers show no residual hostility. Open contests raise disagreement across the whole room by a factor of about 1.2 to 3.5 in confident position-opposition. They do not create rival-specific feuds, and rival roles without a single winner (\#51) create none. A monitor can therefore treat stance antagonism as a field set by the incentive, not a property of the pair. The competition result rests on an unvalidated opposition subtype and on four regime-I periods.}
+
+\hbottom{An exclusive prize switches assigned antagonism on and its settlement switches it off within minutes; open competition raises disagreement room-wide, not between rivals.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 competition $>$ prize-free $r_p$ & \raggedright 4/4 above median 0.94\%; MW $p=0.022$ (regime I only: 0.010) & \raggedright yes\tabularnewline
+\raggedright P2 no excess pairs without a prize & \raggedright 25/26 units; \#51 11/12 (low-power test) & \raggedright yes\tabularnewline
+\raggedright P3 \#12 highest $r_p$ & \raggedright third (\#40, \#23 higher) & \raggedright no\tabularnewline
+\raggedright P4 \#51 at the prize-free level & \raggedright 1.06\% $<$ 75th pct 1.35\% & \raggedright yes\tabularnewline
+\raggedright N1a \#12 open contrast $<0$ & \raggedright $-0.78$ [$-1.10$, $-0.56$], $p=0.0002$ & \raggedright yes\tabularnewline
+\raggedright N1b vanishes at verdict & \raggedright $\Delta=-0.69$ ($p=0.001$); $\gamma_{\rm set}=-0.09$, CI $\ni 0$ & \raggedright yes\tabularnewline
+\raggedright N1c/d no heat, no resentment & \raggedright teammates $+0.00$; losers $+0.19$ [$-0.04$, 0.33] & \raggedright yes\tabularnewline
+\raggedright N2a \#26 runoff rivals & \raggedright $+0.25$ (14 replies), $p=0.86$ & \raggedright inconcl.\tabularnewline
+\raggedright N3a \#23 chess opponents & \raggedright $-0.13$ (44 replies), $p=0.31$ & \raggedright inconcl.\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/h64_synth.pdf}{Synthetic power of the prize-gated DiD on the real reply structures (hard labels, DQ2-like noise, 100 replicates). \#12 detects a 2-logit gated antagonism 78\% of the time; \#23 and \#26 at most 47\%. Planted remanence (squares) and heat (triangles) do not produce a negative $\Delta$. The card's equivalence clause was unidentifiable and was replaced before the real run.}
+
+\hcaveats{The competition contrast uses DQ2's position subtype, which has no validated precision ($\kappa$ 0.11). All four competition periods are regime I; topic (scores, rules) could raise disagreement without an incentive. The cluster-robust pair test misses even \#12, so the prize-free floor is weak evidence. \#26 and \#23 have 14 and 44 rival replies while open. The \#12 switch-off was known from H21 and H37; the new parts are the heat and remanence tests and the competition contrast.}

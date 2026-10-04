@@ -1,0 +1,34 @@
+\hwhat{The claim: a Gittins-style index of trap age and time since the last read-out chooses whom to nudge at least $\times2.3$ better than the logged nudger and better than H35's once-early rule. Units are idle gates, the calls after an idle call, where a nudge posted during the pause is read. A fixed-effect outcome model gives the nudge effect $\hat g(x)$ per state; policies spend the logged budget, and values are cross-fitted on held-out day halves. Replication: G51 (nudger on), G38; natives NE43, NE44. \textbf{The claim fails.} On active calls the index scores $\times1.08$ [$-0.30$, $3.44$] over the logged nudger and $\times0.69$ against once-early. The logged nudger is worse than random gate choice ($\times1.46$). The holdout is not run.}
+
+\hmodel{Feedback control of a restless bandit (model 04: value of a controller's information) with a kick read at the receiving call (model 09). The state is trap age $a$, gate index $k$ and time since the last directed read $r$. The myopic index is $\hat g(x)$; the Gittins-style variant allows one nudge per trap and waits when a later gate is worth more. Rivals: flat response (R0), logged near-optimal (R1), once-early optimal (R2), selection (R3).}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\mu(M,x)=\alpha_i+b(x,z)+M\,(\theta_0+\theta_a\ln a+\theta_k\ln k+\theta_r\ln r)\\
+\nu(x)=\hat g(x)=\mu(1,x)-\mu(0,x),\quad V(\pi)=\langle\hat g\rangle_{\pi},\ |\pi|=B\\
+\text{once-per-trap: nudge if }\nu(x)-\lambda\ge(1-h_0)\textstyle\sum_{x'}P_{xx'}V(x')
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Cross-fitted value per nudge of each policy at the logged budget, G51 (blue) and G38 (orange), with day-block 95\% CIs. (a) Active calls in 30 min: once-early and random beat the logged nudger; the index's selection does not transfer between day halves. (b, c) Sustained escape and glances: the index looks better than logged, a gain that nudger selection can also produce (synthetic S3).}
+
+\htelos{Use a simple rule, not an index. A nudge read at an idle gate adds 7.2 [5.0, 9.8] active calls in the next 30 min. The logged nudger aims at deep traps, where the response is lowest, so random gate choice beats it $\times1.46$ [1.22, 1.67]. Nudging each trap once at its second gate beats it $\times1.55$ [1.25, 1.81], as H35 found. A fitted index of age and read-out recency adds nothing on held-out days. The stake is small: all logged nudges together bought 0.19\% of the swarm's active calls. An operator who wants more output from nudges needs a larger budget or a work-directed message, not better targeting.}
+
+\hbottom{An index nudge policy does not beat once-early; the logged nudger is worse than random gate choice, and once-early beats it by $\times1.55$.}
+
+\hresults{\footnotesize\begin{tabular}{@{}p{0.38\columnwidth}@{\ }p{0.49\columnwidth}@{\ }c@{}}
+Prediction & Observed (G51 unless noted) & \\\hline
+\raggedright P1 index/logged $\ge2.3$ & \raggedright $\times1.08$ [$-0.30$, $3.44$] & $\times$\\
+\raggedright P2 index $>$ once-early & \raggedright $\times0.69$ [$-0.22$, $2.12$] & $\times$\\
+\raggedright P3 sustained flat & \raggedright effect $+0.24$; index $\times2.36$ [1.07, 2.99] & $\times$\\
+\raggedright P5 read-out clock adds & \raggedright $\times0.98$ & $\times$\\
+\raggedright P6 response not flat & \raggedright Wald $p=0.0004$ & \checkmark\\
+\raggedright P7 Gittins $\ge$ once-early & \raggedright $\times0.96$ & $\sim$\\
+\raggedright P8 G38 index/logged $\ni1$ & \raggedright $\times0.55$ [$-1.94$, $7.46$] & \checkmark\\
+\raggedright N1 NE43 selection check & \raggedright calibration 0.90 [0.71, 1.09]; 0.19\% & \checkmark\\
+\raggedright N2 NE44 shape flip & \raggedright $\theta_k<0$ both sides, CIs $\ni0$ & $\times$\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_validation.pdf}{Real G51 design, planted outcomes. (a) A planted $\times2.9$ index gain is recovered as $\times2.6$ (S1); a flat response gives $\times0.9$ (S2); a nudger that picks stuck agents fakes $\times2.6$ with no true gain (S3). (b) Share of replicates whose CI excludes 1: 0.8, 0.0 and 0.9.}
+
+\hcaveats{Values extrapolate the response into states the nudger never visits; the random-beats-logged result leans on that. Two day halves of about 17 days give wide ratio CIs. Selection on observables is assumed: S3 shows the estimator cannot detect a nudger that targets unobservably stuck agents, and NE43 checks only the untreated arm. Output is active calls, not commits; H35 found nudges buy $\approx0$ commits. Only two periods are eligible.}
+
+\hnext{Test once-early as an intervention (holdout or live A/B). Use @-mentions at gates as a second sender to separate response from selection. Re-price the policies with DQ4 work commits.}

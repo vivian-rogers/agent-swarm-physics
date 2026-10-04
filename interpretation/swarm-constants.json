@@ -241,6 +241,26 @@
    "model": "12",
    "source": "H69",
    "meaning": "Loops are copies of what is still in the context window; erasure breaks them."
+  },
+  {
+   "symbol": "β_age",
+   "name": "idle-gate trap aging (sustained escape)",
+   "value": "G51 −0.48 [−0.54, −0.41]; G38 −0.38; chatter hold β_s +0.23 [+0.11, +0.33]",
+   "kind": "exponent",
+   "scope": "4 powered aging periods",
+   "model": "02",
+   "source": "H72",
+   "meaning": "Escape gets harder the longer an agent idles; recent chatter makes it harder still."
+  },
+  {
+   "symbol": "Δ_prize",
+   "name": "assigned antagonism at prize settlement",
+   "value": "−0.78 open → −0.09 settled (Δ −0.69, p 0.001)",
+   "kind": "response",
+   "scope": "#12 debates",
+   "model": "10",
+   "source": "H64",
+   "meaning": "Antagonism tracks an open prize and stops within minutes of the verdict."
   }
  ]
 }

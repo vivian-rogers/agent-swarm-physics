@@ -1,0 +1,34 @@
+\hwhat{The claim: an idle agent's escape slows with trap age only because it has not read new input for a long time. Each call after an idle call is a gate, where the agent acts or idles again. Two clocks run at every gate: trap age $a$ since the last sustained run, and starvation $s$ since the last call that read a novel chat item (DQ1 ledger). A logit hazard with agent fixed effects holds both clocks; 18 goal periods with $\ge 200$ gates; natives NE43, blocked spells and the \#focus room. \textbf{The claim fails.} In all four periods that age with power, the age slope survives the control (G51: $-0.48 \to -0.53$). The starvation slope has the opposite sign: recent input lowers escape (G51 $+0.23$ [$+0.11$, $+0.33$]). The holdout is not run.}
+
+\hmodel{Discrete-time escape hazard on the call clock (model 09: exogenous input events; model 02: kinetic escape from the idle state). The state is idle or active per call. Current reads at the gate (directed, undirected, nudge, bookend) are kicks. Nuisance terms: declared pause, time of day, others' activity, last run length. Rivals: intrinsic aging (R1), two clocks (R2), kicks only (R3), a common room field (R4).}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\mathrm{logit}\,P(\mathrm{esc}_g)=\alpha_i+\beta_a\ln a_g+\beta_s\ln s_g+\gamma\!\cdot\!c_g+\delta\!\cdot\!z_g\\
+\text{H72: }\beta_a=0,\ \beta_s<0;\qquad \rho=1-\beta_a/\beta_{a0}\\
+b_{\rm impl}=\beta_s\,\kappa,\quad \kappa=\partial\ln s/\partial\ln a\ (\text{within agent})
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Age slope without $s$ (grey), with $s$ (orange) and the starvation slope (blue), periods with $\ge 500$ gates, day-block 95\% CIs. Orange sits on grey: starvation absorbs no aging. Blue is $\ge 0$ wherever it is resolved. (b) G51 under four input definitions and the glance outcome: the age slope never moves.}
+
+\htelos{Do not treat an aged idle agent as starved of input. Feeding it room chatter will not wake it: undirected input read in the last minutes lowers its escape odds by about 20\% per $e$-fold of recency in \#51. Kicks act only at the call that reads them. Trap depth is a property of the trap, about $a^{-0.5}$ in the odds, and it does not reset when input arrives. An operator should address the agent directly at a gate (H16, H60) and not count on ambient traffic. A scaffold builder who wants fewer deep traps should cap the trap, for example with a forced re-plan after $k$ re-pauses, and should not add more messages. Blocked (stuck-on-task) spells behave the same way: they age by themselves whatever the input.}
+
+\hbottom{Trap aging is intrinsic: the age clock survives every input-starvation control, and recent undirected input holds idle agents idle rather than freeing them.}
+
+\hresults{\footnotesize\begin{tabular}{@{}p{0.38\columnwidth}@{\ }p{0.49\columnwidth}@{\ }c@{}}
+Prediction & Observed & \\\hline
+\raggedright P1 aging in G51 & \raggedright $\beta_{a0}=-0.48$ [$-0.54$, $-0.41$] & \checkmark\\
+\raggedright P2 aging survives $s$ & \raggedright $\beta_a=-0.53$, $\rho=-0.09$; but $\beta_s=+0.23$ & $\sim$\\
+\raggedright P3 directed $s$ absorbs part & \raggedright $\beta_{s,\rm dir}=+0.09$, $\rho=-0.04$ & $\times$\\
+\raggedright P4 supported $\le\frac13$ & \raggedright 0/4 powered aging periods & \checkmark\\
+\raggedright P5 regime I unresolved & \raggedright 10/12 descriptive & \checkmark\\
+\raggedright P6 CV: age $>$ starvation & \raggedright 14.9 vs 1.3 nats/1000 gates & \checkmark\\
+\raggedright P7 in-flight placebo $\approx0$ & \raggedright 16/18; G51 $+0.16$ (A2, post hoc) & $\sim$\\
+\raggedright N1 NE43 & \raggedright not a starvation step ($s_{\rm dir}\times0.97$) & $\sim$\\
+\raggedright N2 blocked spells & \raggedright G51 $-0.54$, G27 $-0.70$, $s$ adds 0 & \checkmark\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_validation.pdf}{Parametric bootstrap on the real G51, G38 and G18 gate designs. (a) Planted age and starvation slopes are recovered within 0.02. (b) The verdict rule calls intrinsic aging ``failed'' in every replicate and a null world ``supported'' in $\le 5\%$. A pure starvation world yields almost no marginal aging ($-0.06$ to $-0.10$).}
+
+\hcaveats{The slopes are conditional associations at the gate; an unobserved agent state that makes an agent both read less and wake more could produce $\beta_s>0$. Trap age is measured from the last sustained run. Fourteen of 18 periods have too little aging to test. The planned split of $\beta_s$ by model family was not run. The first in-flight placebo window was outcome-dependent (pause timers); A2 fixed it after the first results, and no clock or verdict moved.}
+
+\hnext{Model the gate as a race between the agent's timer and the undirected-chatter rate, with mentions as the override. Test the context self-share (H16-R1's urn) as the aging variable on the same gates. Run \texttt{confirm.py} on the \#51 tail, \#45, \#47--\#50 and \#32.}

@@ -1,0 +1,70 @@
+{
+ "complete": 55,
+ "faithfulness": 0.5,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before any outcome; synthetic validation with heterogeneous, flat and selection worlds on the real G51 design; replication on the two eligible periods (G51, G38) for three outcomes; 2 natives (NE43 selection check, NE44 shape); 30 estimate rows; confirm.py frozen and dry-run, not run. Only two periods are eligible.",
+  "faithfulness": "The index claim fails: on active calls the index does not beat the logged nudger (x1.08 [-0.30, 3.44]) or once-early (x0.69), the read-out clock adds nothing, and NE44's shape flip fails. The sustained-escape gain (x2.36) is the kind the synthetic selection world fakes. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0.",
+  "usefulness": "Gives a concrete, replicated operator rule: nudge each idle trap once at its second gate (x1.55 [1.25, 1.81] over the logged nudger; random choice already beats it x1.46). Also prices the lever: a gate nudge adds 7.2 active calls, but the nudger's total is 0.19% of the swarm's calls. Rules out building a fancier index."
+ },
+ "one_line": "A Gittins-style nudge index does not beat once-early; the logged nudger is worse than random gate choice (x1.46), and once-early beats it x1.55.",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "State bits beyond trap position buy no extra work"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "tool",
+   "outcome": "supported",
+   "note": "Gate-read nudge adds 7.2 active calls in 30 min"
+  }
+ ],
+ "rated_by": "H60 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "No index policy beats a simple rule: nudge each trap once at its second idle gate (×1.55 [1.25, 1.81] over the logged nudger in #51; random choice ×1.46); a gate-read nudge adds +7.2 [5.0, 9.8] active calls in 30 min",
+  "scope": "G51 (nudger-on days, cross-fitted), G38; natives NE43, NE44",
+  "direction": "positive",
+  "original_verdict": "failed (index policy)",
+  "credence": 0.42,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification (planted gain recovered; null 0/16)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "single powered unit (G51)",
+    "x": 0.6,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "intervention consistent (NE43: no selection signature)",
+    "x": 1.5,
+    "evidence": "native NE43"
+   },
+   {
+    "factor": "penalty: a selection world fakes ×2.6 for sustained escape",
+    "x": 0.8,
+    "evidence": "card §Synthetic"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "nudge each trap once at its second gate; don't build an index",
+  "magnitude": "small",
+  "generality": "scheduled nudgers",
+  "expected_usefulness": 0.84,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H60 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

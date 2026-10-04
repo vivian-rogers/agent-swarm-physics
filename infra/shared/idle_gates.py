@@ -28,8 +28,8 @@ Definitions (call clock; DQ1 context ledger):
   covariates    prev_pause_s (declared duration of the previous pause), h_day (hours since the calendar window start),
                 swarm_act10 (share of other present agents with an active call in the previous 10 min), room (ledger),
                 last_run_len (calls in the last active run before the trap), in-flight placebo counts (messages by
-                others posted in the gate's room in (t_call, t_call + 60 s] and during the gate call (t_call, t_end],
-                which the gate cannot have read).
+                others posted in the gate's room in (t_call, t_call + 60 s] and during the gate call's model latency
+                (t_call, t_call + latency_s, capped at 60 s], which the gate cannot have read).
 
 Output: data/processed/shared/idle_gates/idle_gates.parquet (+ _provenance.json). Codes and numbers only, no text.
 Usage:  uv run python infra/shared/idle_gates.py            build
@@ -90,17 +90,20 @@ def leading_targets(message_ids: list[str]) -> dict:
     return out
 
 
-def load_calls() -> pl.DataFrame:
+def load_calls(include_holdout: bool = False, goal_nos=None) -> pl.DataFrame:
+    """Non-summary calls; held-out days only when include_holdout (confirmatory scripts, behind their own guard)."""
     ros = pl.read_parquet(SH / "roster.parquet").select("agent", "claude_code", "lab")
     cw = (pl.scan_parquet(SH / "call_windows.parquet")
           .filter(pl.col("ctx_mode") != "summary")
           .select("turn_id", "agent", "pt_date", "goal_no", "regime", "kind", "talk", "t_call", "t_end", "pause_s",
-                  "gap_kind", "first_of_day")
+                  "gap_kind", "first_of_day", "latency_s", "dur_api_s")
           .collect())
     cw = cw.join(ros, on="agent", how="left").filter(~pl.col("claude_code").fill_null(False)).drop("claude_code")
     keys = cw.select("pt_date", "goal_no").unique()
     hm = holdout_mask(keys["pt_date"].to_list(), keys["goal_no"].to_list())
-    keep = keys.filter(~pl.Series(hm))
+    keep = keys if include_holdout else keys.filter(~pl.Series(hm))
+    if goal_nos is not None:
+        keep = keep.filter(pl.col("goal_no").is_in(list(goal_nos)))
     cw = cw.join(keep, on=["pt_date", "goal_no"], how="inner")
     return cw.sort("agent", "pt_date", "t_call", "turn_id")
 
@@ -173,15 +176,18 @@ def swarm_activity(cw: pl.DataFrame) -> pl.DataFrame:
 
 def inflight(gates: pl.DataFrame) -> pl.DataFrame:
     """Messages by others (agents, humans) posted in the gate's room in (t_call, t_call + 60 s] (n_inflight60) and
-    during the gate call itself, (t_call, t_end] (n_inflight_call): the gate's context cannot hold them, and they
-    cannot answer the gate's own output, which is posted at t_end or later."""
+    during the gate call's model latency, (t_call, t_call + latency] (n_inflight_call): the gate's context cannot hold
+    them, and they cannot answer the gate's own output, which does not exist before the latency has elapsed."""
     ch = (pl.scan_parquet(SH / "chat_core.parquet")
           .filter(pl.col("speaker_kind").cast(pl.Utf8).is_in(["agent", "human"]))
           .select("t", "room", "agent").collect())
     res = np.zeros(gates.height, dtype=np.int16)
     res_c = np.zeros(gates.height, dtype=np.int16)
     t_g = gates["t_call"].dt.epoch("us").to_numpy()
-    t_e = gates["t_end"].dt.epoch("us").to_numpy()
+    # placebo window end: the gate call's model latency (its output cannot exist earlier). NOT t_end: for a pause
+    # call t_end includes the timer, which would make the window outcome-dependent (bug found 2026-10-04, H72).
+    lat = gates["latency_s"].fill_null(gates["dur_api_s"]).fill_null(10.0).to_numpy().astype(float)
+    t_e = t_g + (np.clip(lat, 1.0, 60.0) * 1_000_000).astype(np.int64)
     room_g = gates["room"].fill_null(-99).to_numpy()
     ag_g = gates["agent"].to_numpy()
     for (r,), c in ch.group_by(["room"]):
@@ -203,8 +209,8 @@ def inflight(gates: pl.DataFrame) -> pl.DataFrame:
     return gates.with_columns(pl.Series("n_inflight60", res), pl.Series("n_inflight_call", res_c))
 
 
-def build() -> pl.DataFrame:
-    cw = load_calls()
+def build(include_holdout: bool = False, goal_nos=None) -> pl.DataFrame:
+    cw = load_calls(include_holdout, goal_nos)
     cw = cw.with_columns((pl.col("kind").cast(pl.Utf8).is_in(IDLE_KINDS) & ~pl.col("talk")).alias("idle"))
     cw = cw.with_columns((~pl.col("idle")).alias("active"))
     ic = item_counts(cw)
@@ -285,7 +291,7 @@ def build() -> pl.DataFrame:
             "s_dir_none", "s_nudge_none", "s_lc",
             "n_novel", "n_peer", "n_content", "n_dir", "n_nudge_me", "n_nudge_other", "n_ment_agent", "n_human",
             "n_human_named", "n_bookend", "prev_pause_s", "h_day", "swarm_act10", "n_present", "first_of_day",
-            "n_inflight60", "n_inflight_call", "t_end"]
+            "n_inflight60", "n_inflight_call", "t_end", "latency_s"]
     g = g.select(keep).with_columns(
         pl.col("regime").cast(pl.Utf8), pl.col("k_any").cast(pl.Int16), pl.col("k_sus").cast(pl.Int16),
         pl.col("last_run_len").cast(pl.Int32),
