@@ -1,0 +1,33 @@
+\hwhat{HH368 says content trails a new goal like an overdamped particle, catching up at a rate set by each agent's model calls: the half-alignment time should scale as $1/(\text{call rate})$. I fitted each agent's day-1 approach to its settled alignment after 27 kickoffs (152 rising agents) on hour and call clocks, timed from the kickoff and from the agent's read-out call (context ledger). The synthetic check came first and replaced three estimators that read-out gating fools. There is no approach to time. 74\% of rising agents are already at their day-1 plateau in the read-out call itself; alignment then decays from about $2.4\times$ to $1\times$ the plateau over about 64 calls. The call-rate slope is $+0.59\,[-0.45,+1.75]$: inconclusive. Holdout: not run.}
+
+\hmodel{Model 11 with Glauber kinetics (model 02): the call is the attempt. Spin: agent $i$'s statement vectors in the regime-whitened 32-d basis. Field: the kickoff, direction $\hat k$; $a$ is the excess alignment over decoy kickoffs (H125). Per agent: pre level $P_i$, settled level $S_i$ (days 2--5), and a one-parameter rise on clock $c$ (hours or own calls, from $t_0$ or from the read-out call). Rival $R_L$: the field arrives as a step at the read-out call (H08 gating) and nothing relaxes.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+a_i(t)=P_i+A_i\big(1-e^{-c_i(t)/\tau}\big),\qquad T_{1/2}=\tau\ln 2\\
+\text{call clock: } \log T^{H}_{1/2,i}=\text{const}-\log r_i\ (s=-1);\quad \text{hour clock: } s=0\\
+\Delta\mathrm{SSE}_{\rm ro}=\frac{\mathrm{SSE}_H-\mathrm{SSE}_C}{\mathrm{SSE}_0-\min(\mathrm{SSE}_H,\mathrm{SSE}_C)}\ \text{(from the read-out call)}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Day-1 excess alignment of rising agents, normalized to each agent's late day-1 plateau (calls $\ge$64 after read-out, equal to 1 by construction), against own calls since the read-out call; both embedding models, 90\% CI. Dashed: a call-clock rise with $\tau=20$ calls. The data start at the top and decay. (b) The same against time since the kickoff, for the slower and faster halves of agents by call rate (bge).}
+
+\htelos{Expect a new goal to show up in an agent's output at its first read-out call, about 75~s after the kickoff, not after a catch-up period. Speeding up an agent's calls will not make it adopt a goal faster; it is already adopted within one call. What does relax over the next hour is the kickoff's salience, from $2.4\times$ to $1\times$ the plateau. Do not judge adoption from the first statements, which overstate it.}
+
+\hbottom{An agent adopts a new goal within its read-out call; there is no catch-up time for the call rate to set, and what follows is a decay of the kickoff's salience.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.45\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 pooled slope near $-1$ & \raggedright $+0.59\,[-0.45,+1.75]$; gte $+0.42$; power $\approx0.35$ & \raggedright inconclusive\tabularnewline
+\raggedright P2 collapse CR $<1$ & \raggedright 0.65 / 0.19; ties at the floor & \raggedright non-diagnostic\tabularnewline
+\raggedright P3 $\Delta$SSE$_{\rm ro}>0$ & \raggedright $-0.0009\,[-0.0019,+0.0001]$ & \raggedright not supported\tabularnewline
+\raggedright P4 relaxation beyond read-out & \raggedright immediate share 0.74 (relaxation worlds $\le$0.20) & \raggedright failed: $R_L$\tabularnewline
+\raggedright S1 slope steeper in II--III & \raggedright I $+0.34$, II--III $+1.00$ & \raggedright not supported\tabularnewline
+\raggedright S4 rising share $\ge0.5$ & \raggedright 0.60 / 0.57 & \raggedright supported\tabularnewline
+\raggedright N1 G51 slope (21 agents) & \raggedright all half times at the floor & \raggedright failed\tabularnewline
+\raggedright N2 NE38 prediction & \raggedright Opus~5 $T_{1/2}$ 0.20~h; predictions at the floor & \raggedright uninformative\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_compact.pdf}{Synthetic swarms on the real skeleton (27 kickoffs, real statement, call and read-out times; 12 replicates per world and rise amplitude). The pooled slope reaches power 0.67--0.92 only at a rise of 0.4. The read-out-origin clock test separates hour and call clocks at a rise $\ge0.2$ and stays silent under a read-out jump.}
+
+\hcaveats{The first statements after a read-out likely restate the kickoff, so part of the spike is copying, not re-orientation. Half times below the 0.36-s grid floor are ties, which make per-kickoff slopes 0. The median rise (0.15--0.19) is below the amplitude where the slope test has power, so the slope miss is not a negative. Five kickoffs lack a previous non-holdout day. The rise curve is a post hoc description.}
+
+\hnext{Fit the clock of the spike's decay from the read-out call (it is large enough to test); measure resolved rises at single-agent role changes (NE38 and \#51's later reassignments); run \texttt{confirm.py}.}

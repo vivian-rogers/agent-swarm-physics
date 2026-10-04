@@ -1,0 +1,65 @@
+{
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic on real skeletons (6 units x 4 worlds x 10, 5 segment designs x 4 worlds x 10) forcing Amendment A1 (P1/P2 non-identifiable; P3 primary); replication on 39 units and 17 kickoffs with gte/style/no-dedupe variants; natives G12, G51, NE38; 293 estimates rows; confirm.py frozen (SHA-256), dry-run only. Missing: an external classifier calibration, holdout run.",
+  "faithfulness": "The one-rate field fails cleanly: k_off falls in 15/17 kickoffs and in the #12 debate schedule, with a synthetic check that the rule does not invent k_off changes (0/30). The telegraph's own signatures (exponential dwells, p from dwells) are not identifiable with misclassified sparse labels. Scorecard A1 B1 C1 D0 E1 F2 G1 H1 I1.",
+  "usefulness": "Tells an operator what a goal buys: agents leave the goal ~6x less often per call (holding), as well as joining ~5x more often; latent on-goal stints of ~80 calls; a dynamics-based calibration of H105's classifier (q1 0.67, q0 0.045)."
+ },
+ "one_line": "An assigned goal is a symmetric field on a telegraph goal spin: kickoffs raise k_on and lower k_off (Delta ln k_off < 0 in 15/17 kickoffs; #12 debates the same), so HH367's 'k_on only' fails; dwell shape is not identifiable.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "q = 2 kinetic goal spin (telegraph HMM) fits and recovers rates; its shape signatures are not identifiable"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "Field enters both rates as in Glauber kinetics (symmetric), not as an attempt rate"
+  }
+ ],
+ "rated_by": "H126 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "On each agent's call clock, an assigned-goal kickoff lowers the off-goal switching rate as well as raising the on-goal rate (Δln k_off CI below 0 in 15/17 kickoffs; medians k_on ×5.3, k_off ÷5.7; #12 debate schedule −1.37 [−2.28, −0.35]): the goal acts as a symmetric field that also holds agents on goal",
+  "scope": "17 testable kickoffs; natives G12, G51, NE38",
+  "direction": "positive",
+  "original_verdict": "failed",
+  "credence": 0.64,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic recovery and discrimination of the kickoff classes (0/30 misread)",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "replication 15/17 kickoffs",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "native agrees (#12 schedule)",
+    "x": 1.2,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "a goal both recruits agents and keeps them on task",
+  "magnitude": "small",
+  "generality": "goal-driven LLM swarms",
+  "expected_usefulness": 0.64,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H126 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

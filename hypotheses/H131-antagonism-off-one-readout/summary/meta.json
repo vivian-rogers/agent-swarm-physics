@@ -1,0 +1,65 @@
+{
+ "complete": 50,
+ "faithfulness": 2.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic on the real reply skeleton (10 worlds x 100) forcing Amendment A1 (sign, first-reply cell, N3 descriptive); replication on #12 and #26; natives N1-N3; 16 estimates rows; confirm.py frozen (SHA-256), dry-run only. Missing: an in-flight partition, holdout run.",
+  "faithfulness": "The settlement switch-off is clean and survives label noise: 34/85 rival flags open, 0/87 teammates, 0/57 rivals after read, 0/21 at each rival's first post-read reply; DiD +0.32 [0.16, 0.52], p 0.0002. The HH's discriminating claim (read-out, not wall clock) is untestable; the topic-change rival is open. Scorecard A1 B1 C2 D1 E1 F2 G2 H1 I0.",
+  "usefulness": "An operator lever with a timing: conflict induced by a contest ends by each party's first reply after reading the settlement (median 93 s in #12), with no cool-down; whether reading is necessary is untested."
+ },
+ "one_line": "Assigned antagonism is fully off by each rival's first reply after it reads the verdict (#12: 0/21 first post-read rival replies flagged vs 40% while open; DiD +0.32, p 0.0002); read vs wall clock is untestable because no reply falls between verdict and read.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "supported",
+   "note": "Kinetic Ising quench: order gone by the first post-read update (no remanence)"
+  },
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "Two-camp (q = 2) Mattis field exists only while the prize is open"
+  }
+ ],
+ "rated_by": "H131 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "In #12, rival antagonism (validated disagreement in 34/85 rival replies while the prize is open, 0/87 between teammates) is fully off by each rival's first reply after reading the verdict (0/21; read-gated DiD +0.32 [+0.16, +0.52]); read vs wall-clock alignment is untestable (no in-flight replies)",
+  "scope": "#12 (10 debates); #26 inconclusive",
+  "direction": "positive",
+  "original_verdict": "supported",
+  "credence": 0.47,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated synthetic with label noise (size 0.02–0.03)",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "ground truth (DQ6 teams, verdict times)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: one period; same data as H21/H37/H64 (robustness)",
+    "x": 0.6,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "announcing an outcome ends assigned conflict at once",
+  "magnitude": "small",
+  "generality": "LLM swarms with assigned roles",
+  "expected_usefulness": 0.47,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H131 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

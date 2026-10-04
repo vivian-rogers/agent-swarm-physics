@@ -1,0 +1,33 @@
+\hwhat{HH366 says the kickoff response is an underdamped oscillator: content overshoots the settled goal level on day~1 and swings below it on days 2--3. A fading kickoff field gives the overshoot without the swing. I measured each agent's excess alignment with the kickoff on 27 kickoffs (regimes I--III, 4--21 agents) and compared days 2--3 with days 4--5, against 80 ordinary-day origins. The synthetic check came first: the test has size 0 and power 1 at damping $\zeta\le0.5$. Day~1 overshoots ($E_1=+0.055\pm0.012$, 22/27). Days 2--3 do not undershoot: $U=-0.006\,[-0.020,+0.008]$ (bge), $-0.002\,[-0.017,+0.013]$ (gte), inside the placebo spread. The response is overdamped. Holdout: not run.}
+
+\hmodel{Model 11 with the overdamped relaxation of model 02 as the rival. Spin: agent $i$'s statement vectors in the regime-whitened 32-d basis. Field: the kickoff, direction $\hat k$ from shared \texttt{goal\_fields}. Order parameter: the excess alignment $a=\langle z,\hat k\rangle$ minus the mean over decoy kickoffs, averaged linearly (no renormalized windows). Clock: active hours $h$ since the kickoff (H103). $M_{\rm osc}$: damped oscillator; $M_{\rm fade}$: overdamped spin in a fading field (two exponentials). Both carry a time-of-day profile.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+M_{\rm osc}:\ A(h)=A_\infty+Be^{-\lambda h}\cos(\omega h+\phi),\quad \zeta=\lambda/\sqrt{\lambda^2+\omega^2}\\
+M_{\rm fade}:\ A(h)=A_\infty+c_1e^{-h/\tau_1}+c_2e^{-h/\tau_2}\\
+U=\big\langle A_{i,4\text{--}5}-A_{i,2\text{--}3}\big\rangle_i,\qquad \zeta_{\rm pk}=\delta/\sqrt{\pi^2+\delta^2},\ \delta=\ln(E_1/U)
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Mean excess alignment relative to the days 4--5 level, by active day, over 27 kickoffs (both embedding models, 90\% CI). Day~1 overshoots; day~2 keeps $+0.02$; day~3 and later sit at the settled level. The gray band marks where $M_{\rm osc}$ predicts an undershoot. (b) $U$ per kickoff (bge) against ordinary-day origins (gray: 5--95\%). Kickoffs do not exceed the placebo spread.}
+
+\htelos{Read the steady state two active days after a kickoff. Day-1 content is about $0.055$ above the settled alignment and day~2 about $0.02$ above; there is no later dip to wait out. A drop in goal alignment on day~2 or~3 is the kickoff's salience fading, not a loss of the goal. An operator who wants to know where a swarm settled can stop watching after day~3.}
+
+\hbottom{The kickoff response is overdamped: content overshoots the goal on day~1 and settles within two active days without swinging below it.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.45\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 undershoot $U>0$, beyond placebo & \raggedright bge $-0.006\,[-0.020,+0.008]$, $p$ 0.79; gte $-0.002$, $p$ 0.69 & \raggedright failed (kill)\tabularnewline
+\raggedright P2 $M_{\rm osc}$ wins $\ge 2/3$ & \raggedright 18/27, 19/27; null size 0.12--0.20 & \raggedright no weight\tabularnewline
+\raggedright P3 $\zeta_{\rm pk}<1$ & \raggedright $\zeta_{\rm pk}\ge1$ in both models & \raggedright failed\tabularnewline
+\raggedright S1 overshoot $E_1>0$ & \raggedright $+0.055\pm0.012$ (22/27); gte $+0.062$ & \raggedright supported\tabularnewline
+\raggedright S2 $U$(III) $>$ $U$(I) & \raggedright $-0.019$ vs $-0.010$, $p$ 0.65 & \raggedright not supported\tabularnewline
+\raggedright N1 G51 own roles ($N=21$) & \raggedright $U_{\rm own}$ $-0.009$ / $-0.026$ & \raggedright failed\tabularnewline
+\raggedright N2 NE38 one agent & \raggedright no overshoot, $U$ at others' median & \raggedright failed\tabularnewline
+\raggedright N3 G38 ring-down & \raggedright $M_{\rm osc}$ wins; size 0.19--0.26; $\zeta$ 0.56 vs 0.04 & \raggedright weak\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_compact.pdf}{Synthetic swarms on the real skeleton of 27 kickoffs (40 replicates per world, both calibrations). P1 passes in no world without inertia (fading field, drift, time-of-day profile, day-4 re-kick, doubled day noise) and in every replicate with $\zeta=0.2$ or $0.5$ at the observed overshoot.}
+
+\hcaveats{The target is a text embedding of the kickoff, and day~1 contains restatements of it, which raise $E_1$ but not $U$. Only 10 long periods supply placebo origins. Damping between 0.5 and 1 gives an undershoot below 0.2$\times E_1$ and is not excluded. Model comparison by SSE is liberal for single kickoffs, so G38's preference for $M_{\rm osc}$ is weak. Two calendar days include village-off gaps that lengthen the active-hour clock.}
+
+\hnext{Fit the decay of the read-out spike (H127) on the call and hour clocks; remove kickoff restatements before measuring $E_1$; run \texttt{confirm.py} on the held-out kickoffs.}

@@ -1,0 +1,32 @@
+\hwhat{HH374 asks whether assigned antagonism switches off at each former rival's first call after it reads the verdict, as a weakly coupled kinetic Ising spin relaxes in one update when its field goes. H131 tests this in the ten judged debates of \#12 and the \#26 runoff with the validated stance~v2.1 conflict flag and the DQ1 read-out ledger. In \#12, 34 of 85 rival replies carry the flag while the prize is open; teammates carry 0 of 87. After each speaker reads the verdict, rivals drop to 0 of 57, and each rival's first post-read reply is already at 0 of 21. The HH's kill test cannot run: no reply falls between a verdict and its speaker's read, so read and wall-clock alignment coincide.}
+
+\hmodel{Kinetic Ising on reply bonds (model 02) with a staggered two-camp field (model 10, $q=2$). A reply by $j$ to $i$ from $j$'s call $c$ carries a latent conflict $z$. $R_{ij}=1$ for drafted rivals, $O_j(c)=1$ while $j$ has not read the verdict, $h$ is the prize field, and $u_j,v_i$ are agent fields. The flag $y$ is $z$ seen through the labeller: recall $\rho\approx0.6$, false-positive rate $\varepsilon\approx0.005$. Remanence lets $h$ decay over $\kappa$ post-read talk calls; H131 says $\kappa\to0$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\mathrm{logit}\,P(z=1)=\mu+u_j+v_i+h\,R_{ij}\,O_j(c)\,e^{-(k-1)/\kappa}\\
+P(y=1)=\rho\,P(z=1)+\varepsilon\,[1-P(z=1)]\\
+\Delta=(\bar y_{R=1}-\bar y_{R=0})_{\rm open}-(\bar y_{R=1}-\bar y_{R=0})_{\rm read}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/h131_obs.pdf}{Left: \#12 flag rates (Wilson 95\% CIs) for rival and teammate replies by phase and read status; ``1st post-read'' is each speaker's first rival reply after its ledger read of the verdict. Right: pass rates of the read-gated DiD (P1) and the first-reply test (N2) in planted worlds on the real reply skeleton (100 replicates each). N2 passes in 43\% of read-gated worlds and 5--12\% of slow-relaxation worlds.}
+
+\htelos{For an operator, assigned antagonism is a field: settle the contest and make sure each party reads the settlement, and its conflict ends by its first reply after that. In \#12 that took a median of 93 s after the verdict, with no cool-down and no resentment. The design cannot yet say whether the read itself or simply the passage of time ends the conflict, because in scheduled chat every agent read the verdict within seconds.}
+
+\hbottom{In the \#12 debates, rival antagonism (40\% of rival replies flagged while open; 0\% between teammates) is fully off by each rival's first reply after it reads the verdict (0/21). The read-out vs wall-clock question is untestable here.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S1 read $=$ clock on skeleton & 0/262 replies differ & confirmed\\
+S2 P1 power $\ge0.8$ & 0.65 & failed (A1)\\
+P1 \#12 read-gated DiD $\Delta>0$ & $+0.32$ [0.16, 0.52], $p$ 0.0002; $\gamma_{\rm set}$ $+0.03$ & pass\\
+P1 \#26 & $-0.01$, $p$ 0.72 (power 0.11) & inconclusive\\
+N1 kill: in-flight replies & 0 rival in \#12 and \#26 & untestable\\
+N2 first post-read reply at baseline & 0/21 vs open 0.45 ($p$ 0.0002) & pass\\
+N2 soft residual & 0.031 vs 0.45 (7\%) & small\\
+N3 switch-on (descriptive) & 0.44 vs 0.39 & non-discriminating\\
+Overall (A1 rule) & P1 + N2 pass; N1 untestable & narrowed\\
+\end{tabular}}
+
+\hcaveats{The verdict also ends the debate protocol, so ``nothing left to argue'' explains the switch-off as well as a removed field; the open-phase teammate contrast (0/87) is the only evidence that the antagonism is relation-specific. All flags come from one period and ten debates. The flag's precision is 0.61--0.67. Zero flags among 57 post-read rival replies bounds the latent rate at $\lesssim0.08$. The DiD sign was corrected and the first-reply cell redefined before outcomes (Amendment A1).}
+
+\hnext{Find an in-flight partition (regime II/III settlements, held-out \#29/\#34 via the frozen confirm); label whether post-verdict rival replies still discuss the motion; report a posterior for the latent post-read rate.}

@@ -1,0 +1,32 @@
+\hwhat{HH367 models each agent's on-goal state as a random telegraph signal. In that model dwells are exponential, two mean dwells predict the occupancy $p=k_{\rm on}/(k_{\rm on}+k_{\rm off})$, and a kickoff raises only $k_{\rm on}$. H126 fits a two-state hidden Markov model to H105's decoy-threshold on-goal labels on each agent's ledger call clock: 39 non-holdout units, 17 kickoffs, the \#12 debate schedule, \#51 private goals and Opus~5's reassignment. The decisive result is that a kickoff lowers $k_{\rm off}$ as well as raising $k_{\rm on}$: $\Delta\ln k_{\rm off}$ is below 0 in 15 of 17 kickoffs. The dwell-shape and occupancy clauses are not identifiable at village sampling (synthetic, before data).}
+
+\hmodel{Telegraph spin read through a noisy channel (models 10 and 02). The latent $s_{i,c}\in\{{\rm off},{\rm on}\}$ of agent $i$ switches per ledger call with $a_i=k_{\rm on}$ and $b_i=k_{\rm off}$. Statements are observed at irregular call gaps $\Delta$ and labelled on-goal with sensitivity $q_1$ and false-positive rate $q_0$. Rival: a 4-state aggregated chain whose dwells are mixtures of two geometrics. Kickoff designs fit segment rates before and after the boundary with shared emissions.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+P^{\Delta}=\Pi+\lambda^{\Delta}(I-\Pi),\quad \lambda=1-a-b,\quad \Pi_{\cdot,{\rm on}}=\tfrac{a}{a+b}\\
+P(b_k{=}1\mid s)=q_0+(q_1-q_0)\,\mathbb 1[s={\rm on}],\qquad \tau_{\rm on}=1/b,\ \tau_{\rm off}=1/a\\
+\text{one-rate field: }\Delta\ln a>0,\ \Delta\ln b=0;\quad \text{Glauber: }\Delta\ln a=-\Delta\ln b
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/h126_obs.pdf}{Left: kickoff rate changes with 90\% agent-bootstrap CIs (green: $k_{\rm on}$ only; red: $k_{\rm off}$ dominant; black: both move). Faint points are synthetic $k_{\rm on}$-only, $k_{\rm off}$-only and no-change worlds on the real skeletons. Most real kickoffs sit below zero on the $k_{\rm off}$ axis. Right: held-out-day occupancy ratio $\rho_p$ per unit; the $\pm30\%$ kill fires in 5/39 units. The synthetic shows this check passes under every rival.}
+
+\htelos{For an operator, a goal works by holding agents on goal as much as by recruiting them. A kickoff multiplies the per-call chance of switching onto the goal by about 5 and divides the chance of leaving it by about 6 (medians over 17 kickoffs). Latent on-goal stints last a median of 78 calls. Expect occupancy to respond to anything that interrupts agents (lower $k_{\rm off}$ is what a goal buys), not only to how often it is announced.}
+
+\hbottom{An assigned goal acts on both telegraph rates: it raises the on-rate and lowers the off-rate ($\Delta\ln k_{\rm off}<0$ in 15/17 kickoffs and in the \#12 debate schedule), so it is a symmetric field, not an attempt-rate field. Dwell shape is not identifiable here.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 exponential dwells & shape test power 0.05--0.10 (synthetic); ``heavy'' 6/39 & not identifiable\\
+P2 $p$ from dwells within 20\% & 28/39; kill ($>30\%$) 5/39; passes in all synthetic worlds & non-discriminating\\
+P3 kickoff raises $k_{\rm on}$ only & 2/17; $k_{\rm off}$ falls in 15/17 & failed\\
+P4 occupancy carried by $k_{\rm on}$ & $\rho(\ln k_{\rm on},{\rm logit}\,p)$ 0.37; $\rho(\ln k_{\rm off})$ $-0.50$ & failed\\
+P5 call clock beats wall (III) & 9/11 units & supported\\
+N1 \#12 debate field on $k_{\rm on}$ only & $+1.27$ / $-1.37$ [$-2.28$, $-0.35$] & failed\\
+N2 \#51 per-agent rates persist & median $\rho$ 0.61 (8 pairs) & supported\\
+N3 NE38 $k_{\rm on}$ only & $+3.2$ / $-5.1$ [$-12.9$, $+0.2$] & weak pass\\
+Overall (A1 rule) & P3 fails & failed\\
+\end{tabular}}
+
+\hcaveats{The on-goal label is a text-embedding proxy (bge decoy threshold); gte doubles the heavy-tail counts. In each kickoff's pre-segment, occupancy along the next goal sits at the decoy floor ($p\approx0.04$), so its $k_{\rm off}$ rests on few latent stints, although the synthetic gave 0/30 false $k_{\rm off}$ calls under a true $k_{\rm on}$-only change. Sparse regime-III units give unstable short dwells. A kickoff smoke test printed one result (K38) after Amendment A1 and before the full run.}
+
+\hnext{Calibrate the classifier externally (Jev on-goal sample) to restore shape power; fit semi-Markov dwell hazards on \#51 own-goal sequences; fit time-dependent rates through the kickoff day; run the frozen confirm (held-out kickoffs, C1: $k_{\rm off}$ falls in $\ge2/3$).}

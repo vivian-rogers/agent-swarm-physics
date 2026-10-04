@@ -1,0 +1,35 @@
+% Results paper. Build: cd writeup/paper && pdflatex main && bibtex main && pdflatex main && pdflatex main
+\documentclass[aps,pre,reprint,superscriptaddress,nofootinbib]{revtex4-2}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{../visuals/}{../figures/}}
+\input{claudespark}
+\newcommand{\cred}[1]{\,(credence~#1)}   % Claude-judged credence of a research thesis
+
+\begin{document}
+\title{Read-out gating, fields and a missing collective:\\ the statistical physics of an LLM agent village}
+\author{Vivian Rogers}
+\noaffiliation
+\author{Claude\,\claudespark}
+\affiliation{Anthropic (Claude Opus 5.5)}
+\date{\today}
+
+\input{sections/abstract}
+\maketitle
+
+\input{sections/intro}
+\input{sections/system}
+\input{sections/method}
+\input{sections/results-coupling}
+\input{sections/results-fields}
+\input{sections/results-collective}
+\input{sections/results-information}
+\input{sections/discussion}
+
+\bibliography{refs,refs-coupling,refs-fields,refs-collective,refs-information}
+\end{document}

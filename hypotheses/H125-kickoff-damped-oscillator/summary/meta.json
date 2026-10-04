@@ -1,0 +1,65 @@
+{
+ "complete": 45,
+ "faithfulness": 2.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and predictions before data, decoy-only calibration, synthetic (9 worlds x 40 replicates x 2 calibrations), Amendment 1 before real data, 27 kickoffs x 8 input configurations, 3 natives (G51, NE38, G38), per-period estimates, confirm.py frozen and dry-run (reproduces stand-ins), not run.",
+  "faithfulness": "HH366's oscillator fails a powered, calibrated test (size 0, power 1 at zeta <= 0.5): no undershoot in either model, inside the placebo-day spread. The overdamped reading is consistent with every test, but only the model-free U carries weight (SSE comparison liberal). Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "Gives an operator a reading rule: the settled goal alignment is visible two active days after a kickoff and there is no later dip. Small but concrete; corrects a tempting interpretation of the day-2 drop."
+ },
+ "one_line": "No day-2 undershoot: the kickoff response is overdamped; content overshoots on day 1 (E1 +0.055 +/- 0.012, 22/27) and settles within two active days (U -0.006 [-0.020, +0.008], inside 80 placebo origins; power 1 at zeta <= 0.5).",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "underdamped (inertial) kickoff response rejected; no undershoot"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "rival",
+   "outcome": "supported",
+   "note": "overdamped relaxation in a fading field fits"
+  }
+ ],
+ "rated_by": "H125 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "The kickoff response is overdamped: within-agent excess alignment overshoots on day 1 (+0.055 ± 0.012, 22/27 kickoffs, both models) and decays to its settled level within two active days with no undershoot (−0.006 [−0.020, +0.008]; power 1.00 for damping ζ ≤ 0.5)",
+  "scope": "27 kickoffs; natives G51, NE38, G38",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.64,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic power on the real skeleton",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "replication across 27 kickoffs, both models",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "placebo-day null",
+    "x": 1.2,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "after a new goal, expect a one-day overshoot that fades without ringing",
+  "magnitude": "small",
+  "generality": "goal-driven LLM swarms",
+  "expected_usefulness": 0.64,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H125 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
