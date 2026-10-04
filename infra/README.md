@@ -262,6 +262,12 @@ Seven builders and nine libraries are now shared and registered in `build_all.py
 
 ## Known issues
 
+- **The regime-III whitening center is dominated by #51 statements** (H98): uniform-field magnitudes measured from the origin are ≈ 0 for #51 by construction (raw-center R 0.92–0.98). Use a leave-own-period-out reference center.
+- **H22's pooled overlap variance W_P is anti-conservative** under per-agent day shifts (size 0.10–0.45; H98). Use the lag-residualized W.
+- **#51 same-role rivals have identical `agent_goal` texts** (H98); role-permutation (Mantel-style) tests on near-identical role vectors are anti-conservative (size 0.26). Majority-role assignment per unit can leak a later role backwards (agent 41 in 51i); check `t_valid_from` per day.
+- **Read-before vs read-after splits of commit outcomes are confounded by idleness** (H104): no commit without a call.
+- **Avalanche/tail tests are not identifiable with ≤ 25 steps and N ≤ 32** (H104); continuity-corrected burst ratios are invalid below 10 events. The #51 tail likely has few isolated human steps.
+- **Polars group_by float sums vary ~2e-7 between rebuilds** (H98).
 - **H86's `gauge.parquet` has NaN (not null) c_× for 1-day units** (4b, 4d; H51): polars sums skip null but not NaN, so a day-weighted pool goes NaN. Use `fill_nan(None)` first.
 - **τ_settle (H48) agrees across embedding models only at ρ 0.56** (27 periods; H51).
 - **H11's `cowork_excess` covers only 12 periods**; H51's `build.herd_share` re-implementation covers 35 (Spearman 0.93 with H11). Candidate for `infra/shared/`.

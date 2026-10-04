@@ -1,0 +1,35 @@
+\hwhat{H22 refuted a spin glass in \#51 and described a random-field system instead. H98 fits that picture as a mean-field random-field O($n$) model on 9 non-holdout regime-III units: 5 private-role \#51 units and 4 shared-goal weeks (\#38--\#41). After style removal, 67--73\% of the static content configuration in \#51 is agent-specific (disorder ratio $R$), against 24--53\% in shared-goal weeks. A weak positive pull acts on top ($b_{ex}=0.23$--$0.31$). Same-role rivals co-move because their role texts overlap: the niche slope fitted on non-rivals predicts the rival excess (bge). But reads and replies absorb 70\% of that slope, and day-to-day overlaps are synchronized in 2 of 5 units. \textbf{The claim fails by its pre-registered rule}; the static random-field part stands. The holdout is not run.}
+
+\hmodel{Mean-field random-field O($n$) model (models 01, 11). The spin $s_{id}$ is agent $i$'s whitened, style-residualized content on day $d$ ($n=32$). The quenched field $h_i$ holds role, own projects and priors; $\hat r_i$ is the whitened role text. $J$ pulls toward the room mean; $g_d$ is the day field. Within a day, window fluctuations follow a shared drive $\eta_w$ filtered by each agent's niche projector $P_i$, so co-movement grows with the squared niche overlap $n_{ij}^2$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+s_{id}\propto h_i+J\,m_{-i,d}+g_d+z_{id}+\epsilon_{id},\qquad R=\frac{\Delta^2}{\Delta^2+M^2}\\
+x_{iw}=(\alpha P_i+\beta)\,\eta_w+\xi_{iw}\;\Rightarrow\;\mathbb E\,J^c_{ij}\propto\alpha^2 n_{ij}^2+2\alpha\beta+n\beta^2\\
+\hat T_{SR}=\beta_n\,(\overline{n^2}_{SR}-\overline{n^2}_{U}),\qquad G=T_{SR}-\hat T_{SR}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_col.pdf}{Left: each unit on the random-field phase diagram (disorder ratio $R$, agent bootstrap CI; mean-field gain $b_{ex}$, day-bootstrap CI). \#51 units (red) sit at higher $R$ than every shared-goal week. Right: content co-movement against squared role-text overlap for all pairs in the 7 \#51 niche units. Rivals (red) have identical role texts ($n^2=1$). The binned mean of non-rivals rises with $n^2$.}
+
+\htelos{For an operator who assigns private roles, the role text sets only 5--14\% of where an agent's content sits. Most of the field is the agent's own projects, and a newcomer takes days to settle into its role (day-1 own-role percentile 0.57 vs 0.83 for incumbents). Agents with overlapping roles read and answer each other, and that conversation, not a shared field, carries most of their co-movement. To keep two roles from converging, give them non-overlapping role texts and separate rooms. In the room-split native, one moved agent lost all pull toward \#general (0.42 $\to$ 0.01). As a monitor, $R$ measured after style removal tells a private-goal swarm ($R\approx0.7$) from a shared-goal one ($R\le0.53$).}
+
+\hbottom{\#51's static structure is a random field with a weak pull, but its dynamics are not independent agents in a field: rivals co-move mostly through conversation chosen by niche, and some days move together.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.49\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 $R$(\#51) $>$ every contrast unit & 0.67--0.73 vs 0.24--0.53 (gte same; not without style removal) & supported\\
+P2 $b_{ex}>0$, all $<0.5$ & 5/5 \#51 CI $>0$ (0.23--0.31); \#41 0.55 & mixed\\
+P3 no collective switching ($W$) & BC $<0.555$ in 5/5; $W$ 3.05 ($p$ 0.007), 1.61 ($p$ 0.048) in 51d, 51g & failed (2/5)\\
+P4 niche slope predicts rival excess & $\beta_n$ 0.064 [0.009, 0.118]; $G$ $-0.034$ [$-0.095$, 0.028]; gte $\beta_n$ 0.010 (n.s.) & bge only\\
+P5 reads+replies keep $\ge70\%$ of $\beta_n$ & 0.084 $\to$ 0.025 (30\%) & failed\\
+P6 stance ferromagnetic & mean 0.51--0.64; $\beta_s$ 0.019 [$-0.066$, 0.103] & supported\\
+P7 role text in the field & $R^2_{role}$ 0.05--0.14, $p\le0.001$ (7/7) & supported\\
+NE32 isolated newcomers & 0--1 statements while isolated & untestable\\
+\#focus split & pull 0.42 $\to$ 0.01 (one mover), unchanged (other) & mixed\\
+NE33 joiners on day 1 & own-role percentile 0.57 vs 0.83 & failed\\
+\end{tabular}}
+
+\hobsb{../figures/niche_mediation_col.pdf}{Niche slope $\beta_n$ per \#51 unit and random-effects pool (diamonds), with same-lab control only (circles) and with ledger reads and DQ2 replies added (squares). In bge the pooled slope falls from 0.084 to 0.025. In gte (dark) it is null from the start.}
+
+\hcaveats{The niche result holds in bge only; \#51 is the least model-robust period (DQ5). $\hat T_{SR}$ extrapolates from non-rival overlaps $n^2\le0.56$ to rivals' $n^2=1$. DQ2 reply parents are partly content-selected, so the reply control may over-adjust; reads alone remove about 30\%. $R$ depends on the reference centre (Amendment A0) and on style residualization. $b_{ex}$ includes any common window drive. The sources of the $W$ excess (a join day, a slow drift) are post hoc readings. Two of three natives failed or were untestable; the room split has two agents.}
+
+\hnext{Model reading as niche-gated coupling $J_{ij}=J_0 f(n_{ij}^2)$ and test co-movement given reads. Add a day-level amplitude field to the overlap model. Fit newcomers' settling time into their role field.}

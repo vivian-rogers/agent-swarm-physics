@@ -571,6 +571,36 @@
    "model": "02",
    "source": "H51, H67",
    "meaning": "Coupling amplifies at most ~30%, too little to organize the phase diagram; regime and N do the work."
+  },
+  {
+   "symbol": "R_dis",
+   "name": "content disorder ratio (random field share)",
+   "value": "#51 0.67–0.73 vs shared-goal weeks 0.24–0.53 (style-residualized; raw contrast weeks 0.74–0.79); role text explains 5–14%; mean-field gain b_MF 0.23–0.31 (J ≲ 0.2)",
+   "kind": "disorder",
+   "scope": "#51 units, #38–#41",
+   "model": "01",
+   "source": "H98",
+   "meaning": "Private goals make a static random field; shared-goal disorder is mostly style."
+  },
+  {
+   "symbol": "X_step",
+   "name": "human-step switch response",
+   "value": "#51 ×1.07–1.09 (upper ×1.18–1.32); between-step dispersion D 1.12–1.18; kickoff ratio K 1.2–4.0 (48–100% of agents switch in the first 2 h on kickoff days vs 17–86%)",
+   "kind": "response",
+   "scope": "#51, 24 isolated steps; 8 period-channels",
+   "model": "14",
+   "source": "H104",
+   "meaning": "Human messages do not trigger avalanches; kickoffs do."
+  },
+  {
+   "symbol": "p_join",
+   "name": "newcomer day-1 own-role percentile",
+   "value": "0.57 vs incumbents 0.83",
+   "kind": "enculturation",
+   "scope": "NE33 late joiners (#51)",
+   "model": "11",
+   "source": "H98",
+   "meaning": "Late joiners start off their role and take time to align."
   }
  ]
 }

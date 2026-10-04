@@ -139,6 +139,7 @@ Each unit is a point on the (h_μ, E) plane. Periodic sequences sit at h_μ = 0,
 - **Embedding anisotropy inflates alignment.** Center and whiten (model 11). Statement-level geometry differs between bge and gte (10-NN overlap 0.26); use agent-window aggregates and both models.
 - **"Noise = temperature" is an analogy.** Sampling parameters are provider-set and not logged.
 - **Criticality readings were refuted before** (H03, H25, H26). Scaling here is a measurement of size laws and field strength, not a criticality test.
+- **Crackling exponents are unidentifiable at swarm scale** (H104): with ≤ 25 field steps and N ≤ 32, a τ = 3/2 avalanche world, a thin Poisson response and endogenous bursts all pass the Fano tail test at overlapping rates.
 
 ## Hypothesis seeds
 

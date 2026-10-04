@@ -1,0 +1,33 @@
+\hwhat{HH330 proposed Barkhausen crackling: when a human steps the external field mid-period, agents switch projects in avalanches with a heavy-tailed size law ($\tau\approx3/2$), and between steps they switch at random. The test uses work switches (DQ4) and attention switches (project states) on 8 eligible non-holdout period-channels. Only \#51 has power (24 isolated human steps). There, switching in the hour after a step is $\times1.09$ [0.84, 1.32] (work) and $\times1.07$ [0.97, 1.18] (attention) the time-shuffle null. A planted $\tau=3/2$ avalanche gives $\times1.87$ and $\times1.25$. Big bursts are as frequent between steps as after them. Between steps, switching is near-Poisson given each agent's rate. Kickoffs do move agents. \textbf{The claim fails}; the tail exponent is not identifiable at village counts. The holdout is not run.}
+
+\hmodel{Zero-temperature mean-field random-field Ising/Potts model driven by field steps (models 01, 10, 14). Each agent is a Potts spin $\sigma_i$ (its current project) with a quenched field $h_i$ and a coupling $J$ to the swarm. A human session at $t_k$ steps the field by $\Delta H_k$. Spins that cross threshold flip and can trigger others: an avalanche of $A_k$ flips. The burst size $S_k$ adds background flips $B_k$, whose distribution the time shuffle supplies.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+P(A)\propto A^{-\tau}\,\mathcal D(A/A^*),\quad \tau=\tfrac32\ \text{(mean-field RFIM)},\qquad S_k=A_k+B_k\\
+X=\frac{\langle S_k\rangle}{\langle S_k^{\rm null}\rangle},\quad F_A=\frac{\mathrm{Var}\,S-\mathrm{Var}\,S^{\rm null}}{\langle S\rangle-\langle S^{\rm null}\rangle},\quad D=\frac{\mathrm{Var}\,S_{\rm quiet}}{\mathrm{Var}\,S^{\rm null}_{\rm quiet}}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_col.pdf}{Distinct agents switching per 10-min bin around the 24 isolated human steps in \#51, divided by the time-shuffle null (each agent-day's switches rotated within its at-risk span). Gray: the null's 90\% band. The curve stays inside the band in both channels. Single bins outside it (+45 min work, +5 and +35 min attention) are about what 18 bins give by chance.}
+
+\htelos{For an operator, a mid-period message is a weak lever on what a swarm works on. It moves the addressed agent (NE38) but does not set off a cascade: the upper bound on the response is 18--32\% more switching in the next hour. To redirect a whole swarm, use a kickoff-scale change: on kickoff days 48--100\% of agents switch in the first 2 h, against 17--86\% on other days. For a monitor, switching between interventions is close to Poisson given each agent's own rate ($D\approx1.1$--$1.2$), so an unusual cluster of switches is a real event. Crackling exponents need far more steps than the village has. Do not fit them to an LLM swarm's logs at this scale.}
+
+\hbottom{Human messages do not release switch avalanches in the AI Village: the step response is within 10\% of the null where it can be measured, and the crackling tail cannot be identified with fewer than 25 steps.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.31\columnwidth}p{0.51\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 steps release switches ($X>1$) & pooled attention 0.91 [0.72, 1.14], work 1.04 [0.86, 1.25]; \#51 1.07, 1.09 (CIs incl.\ 1) & failed\\
+P2 heavy tail, $\tau\in[1.2,1.8]$ & $V$ 1.02, 1.19; $F_A$ CIs incl.\ 1; no avalanche component & inconclusive (A1)\\
+P3 Poisson between steps; BR $>1$ & \#51 $D$ 1.12, 1.18; BR CIs incl.\ 1 & $D$ yes; BR failed\\
+P4 burst grows with step size & $\rho$ $-0.30$, $-0.10$ (n.s.) & failed\\
+P5 kickoffs give the largest bursts & $K>1$ in 7/8 (1.16--3.97) & supported\\
+P7 no reverse causation & pre-step $X$ 0.82, 0.93 & supported\\
+NE38 local step stays local & target switches; others inside null band & supported\\
+NE43 nudger stop & ratio 1.22 [0.72, 2.03], 0.96 [0.86, 1.07]; inside placebo & mixed\\
+G44 room-local response & no response to localize & n/a\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_col.pdf}{Synthetic validation at \#51 counts (20 runs per world). The step response $X$ separates a response from none. The tail criterion ($V>1$ and $F_A$ CI $>1$) and the $\tau$ window pass as often for a thin Poisson response, or for endogenous bursts, as for $\tau=3/2$ avalanches. The tail is not identifiable at 24 steps.}
+
+\hcaveats{Only \#51 has power; the other periods have 3--4 isolated steps. Attention switches have 15-min resolution. The at-risk trim removes each agent's first 30 min, so morning steps rarely qualify. Work switches need a commit, so idle agents cannot switch, and the read-out split is uninformative. The step size (message count) is a crude field magnitude. Single variants show at most a 10--20\% response (switch counts: attention $\times1.13$, $p$ 0.013). Predictions were written knowing H28, H53 and H63.}
+
+\hnext{Event-study the kickoffs as the real field steps. Restrict human steps to messages that name a project. Move the spin to 30-min content states, which flip far more often than projects and may give tail power.}

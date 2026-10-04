@@ -1,0 +1,82 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic validation at real counts (4 worlds x 20 runs x 8 period-channels) answering the identifiability question, with a dated pre-data amendment; replication on 8 eligible period-channels with 6 variants; 3 natives (1 supported, 1 mixed, 1 uninformative); confirm.py frozen, guarded and dry-run. Missing: holdout run, kickoff event study, content-state avalanches.",
+  "faithfulness": "The Barkhausen model fails where it can be tested: no step response in #51 (X 1.07-1.09, below the planted effect's 5th percentile), the HH kill condition (bursts as frequent between steps) is met, no dose response. The tail is not identifiable. Scorecard A1 B1 C0 D0 E1 F1 G1 H0 I0.",
+  "usefulness": "A bounded operator fact (a mid-period message raises switching by at most ~20-30% and does not cascade; kickoffs move 48-100% of agents) and a monitoring baseline (near-Poisson switching between interventions). Also a methods warning: crackling exponents are not identifiable at swarm scales of N ~ 30 and < 25 steps."
+ },
+ "one_line": "No Barkhausen avalanches: in #51 human messages raise project switching by x1.07-1.09 (CI incl. 1; a tau = 3/2 law would give x1.25-1.87), bursts are as frequent between steps, the tail is unidentifiable at village counts; kickoffs do move agents.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Mean-field RFIM avalanches at field steps: no step response"
+  },
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "Project spins flip independently of human steps"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Size-law and dispersion estimators; tail unidentifiable"
+  },
+  {
+   "model": "03-contagion",
+   "role": "rival",
+   "outcome": "mixed",
+   "note": "Endogenous herding bursts add little over-dispersion (D 1.1-1.2)"
+  }
+ ],
+ "rated_by": "H104 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Human messages do not release switch avalanches: the #51 step response is ×1.07–1.09 (upper bounds ×1.18–1.32, below the Barkhausen world's 5th percentile), between-step dispersion is near Poisson (D 1.12–1.18), and big bursts are as common between steps as after; only kickoffs give large bursts (K 1.2–4.0 in 7/8)",
+  "scope": "#51 (24 isolated steps); 8 period-channels; natives NE38, NE43",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.49,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic power ≥ 0.95 for the step response",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "no reverse causation (pre-step X 0.82/0.93)",
+    "x": 1.1,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "native locality: NE38 step stays on its target",
+    "x": 1.1,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: only #51 has enough isolated steps; tail exponent unidentifiable",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "don't expect a human message to trigger a cascade; a kickoff does",
+  "magnitude": "medium",
+  "generality": "LLM swarms",
+  "expected_usefulness": 0.74,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H104 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
