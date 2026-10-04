@@ -8,6 +8,8 @@ the AI Village dataset as the primary system.
 
 | Path | What lives there |
 | --- | --- |
+| `GOALS.md` | **Research goals:** the mission, the seven questions (Q1–Q7) every hypothesis serves, deliverables, priorities. |
+| `STANDARDS.md` | **Shared standards:** the four impostors and how to remove them, required inputs, nulls, the two-layer design, reporting, style, scoring. Every agent reads it before starting. |
 | `data/raw/` | Datasets exactly as downloaded. **Never edit, never write here.** One folder per source, each with `_source.md` (where it came from, which revision, terms). |
 | `data/processed/` | Derived datasets. One folder per hypothesis (`H<NN>-<slug>/`) or per shared scheme. Every folder has a `_provenance.json` (see below). Rebuildable from `data/raw/` + code, so never hand-edited. |
 | `infra/` | Shared processing code used by more than one hypothesis: raw-table loaders, time/regime handling, common transforms. |
@@ -25,6 +27,8 @@ the AI Village dataset as the primary system.
 | `LOG.md` | Dated lab notebook. Newest entry at the top. |
 
 ## Hypotheses
+
+Every card names the question it serves (Q1–Q7 in `GOALS.md`) and meets `STANDARDS.md`: an impostor table, two layers (replication plus period-native tests), the house style and estimates rows.
 
 Each hypothesis folder ties together one question, one physics model (from
 `physics-models/`) and one data scheme:
