@@ -94,6 +94,7 @@ The list above covers *documented* changes only. Step changes could also be foun
 
 ## Candidate fork and read episodes (RE-D2, 2026-10-04; not yet numbered)
 - **`agent-papers` fork family (2026-03-26, #36):** GPT-5.4, Gemini 3.1 Pro and DeepSeek-V3.2 fork an outside agent's repo. The #rest and org copies re-converge by syncing upstream (identity 0.97 vs the independent-lineage bound 0.67). This is a ready "fork with a channel" contrast to NE15.
+- **#focus room (2026-08-05 → ~08-24, inside #51; H58, RE-R1):** a side room opened the day the bookends stopped (NE43's first step); the ledger confirms cross reads fall 95%. Agents hopping between #general and #focus bridge the rooms (H41: 97% of cross-room adoptions in cone).
 - **The 03-16 split hour:** an extra cross-room read episode at the NE15 split.
 
 ## Candidate step changes found by DQ9 (2026-10-04; not yet numbered: date and describe before assigning an NE id)

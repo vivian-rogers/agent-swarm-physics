@@ -1,0 +1,61 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done on a reduced scope (G51 + G38 replication, three natives), with a validated which-artifact state, an erasure re-acquisition analysis and a frozen confirm script; no holdout run.",
+  "faithfulness": "The core prediction (coordinated units beat agent + own artifact) failed where the method has power; the natives failed or were uninformative; signatures not identifiable. C = 1, D = 0.",
+  "usefulness": "A computable diagnostic (held-out coordination gain with an outside-reference null) and a design rule backed by an exogenous intervention: after erasures agents recover by re-reading their own artifact, so make work state legible per agent in its repo; group co-allocation is a field, not a lever."
+ },
+ "one_line": "No coordinated superagent: with a which-artifact state and real power, agent + own artifact stays the persistent unit; agents re-read their own repo after erasures",
+ "rated_by": "H58 round-1 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Where there is power (#51b–d), no coordination-defined unit is an effective superagent: co-movement onto artifacts is a shared field, and after a forced erasure members return to their own artifact (61% vs 1% to the group's), usually after re-reading it",
+  "scope": "#51b–d (powered), G38; natives NE42, #44, #focus",
+  "direction": "negative",
+  "original_verdict": "failed (superagents)",
+  "credence": 0.76,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification (size 0.5%; power 0.6–0.75 at ρ 0.5, ≥ 0.95 at ρ 0.7)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "partial replication (3 powered units)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "cross-hypothesis replication (H01 round 2)",
+    "x": 2,
+    "evidence": "H01"
+   },
+   {
+    "factor": "intervention consistent (11k forced erasures; NE42)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: several amendment rounds; power only in 3 units",
+    "x": 0.7,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "builders: treat agent + own artifact as the unit; re-reading the artifact is how agents recover",
+  "magnitude": "material",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.9,
+  "scientific_value": 4,
+  "rater": "coordinator, updated after round 1b (H58 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

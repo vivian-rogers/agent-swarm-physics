@@ -1,0 +1,37 @@
+\hwhat{H58 asked whether coordinated agents plus their artifacts form \emph{effective superagents}: units that predict which artifact their members work on next better than each member's own history does. A new unit state records \emph{which} repo each member advances per 30-min bin (DQ4 work ledger), and candidates come coordination-first: multi-layer communities (synchrony, co-adoption, replies, co-artifact), crews and a calibrated subset search. Rooms and labs are baselines, and \textbf{agent + own artifact} is the null unit. On real schedules the method has power 0.60--0.75 in \#51b--d (H01's binary state: $\le$5\%). Run on G51, G38 and natives NE42, \#44 and \#focus: \textbf{no unit beats the null where we have power}. The one qualifier (\#51e) is three agents avoiding each other's repos. After forced erasures members return to their \emph{own} artifact, not the group's. Holdout script frozen, not run.}
+
+\hmodel{Model 04 (Kolchinsky--Wolpert) with Krakauer-style individuality. Member state $s_i(b)$: the repo $i$ commits to in bin $b$; $\ell_i$: its last own repo, carried across bins, erasures and nights. $o_i$: the repo the other members are on. $\tilde\pi_i$, $\tilde\pi'_i$: $\pi_i$ renormalized without $\ell_i$ (and $o_i$). $M_0$ (agent + own artifact): stay on $\ell_i$ or move by $i$'s own repo popularity $\pi_i$. $M_1$ adds the option of joining $o_i$. The coordination gain $g$ is a held-out transfer entropy from the unit to its members about \emph{which} artifact.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+p_0(k)=w_s\,\delta_{k\ell}+(1-w_s)\,\tilde\pi_i(k)\\
+p_1(k)=w_s\,\delta_{k\ell}+(1-w_s)\big[v_j\,\delta_{ko}+(1-v_j)\,\tilde\pi'_i(k)\big]\\
+g_G=\big\langle \log_2 p_1(s_i')-\log_2 p_0(s_i')\big\rangle_{\text{held-out days}}\\
+A^*_G=I(x';x\,|\,y),\qquad \iota_G=A^*_G/H(x')
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Each marker is one candidate unit: the smaller of its two null z-scores (member-shift surrogates; outsiders on the same repos). Filled markers qualify, which also needs specificity $\ge$0.5. Search sets (diamonds) often beat the shift null: agents do co-allocate. They fail the outside reference, so outsiders on those repos co-move as much (a shared field). The only filled search unit, \#51e, has zero joins (avoidance).}
+
+\htelos{For someone running a swarm, the operational unit is still one agent and its own repository, not the team. Even a team with a dedicated shared repo (\#44 \#best) works in its members' own repos. After a context erasure an agent finds its way back by re-reading its own artifact, and sometimes its intention note, not by reading teammates. So the lever for continuity is the artifact: keep each agent's work state legible in its own repo. Don't expect a group to hold state for its members. Co-allocation on popular artifacts exists, but it behaves like a shared field (goal or popularity), so steering it means changing the field. Building a team channel won't do it. This is largely a sharper restatement of H01's negative, now with power where it matters.}
+
+\hbottom{No coordinated superagent: with a which-artifact state and real power, agent + own artifact remains the persistent unit, and group co-allocation is a shared field.}
+
+\hresults{\footnotesize\begin{tabular}{@{}p{0.31\columnwidth}p{0.47\columnwidth}l@{}}
+\hline
+prediction & observed & verdict\\\hline
+S0 power $\ge$0.8 at $\rho$=0.5 & 0.25 overall; 0.60--0.75 in \#51b--d; size 0.5\% & failed$^\dagger$\\
+P1 candidate in $\ge$2/3 units & 1/12 (powered 0/3); \#51e is avoidance & failed\\
+P2 communities beat rooms, labs & rooms 3/6, labs 0/9 & failed\\
+P4/P5 unit $\iota$, night gain & 0/1, 0/6 & not ident.\\
+P6 erasure $\to$ group artifact & log-OR $+0.19$ ($z$ 1.5); own $+0.25$ ($z$ 8) & failed\\
+P7 others compensate & others $-5.7\%$ ($z$ $-5.9$) & failed\\
+N1 NE42 \#40 unit & none in \#39--\#41; own file 75\% & mixed$^*$\\
+N2 \#44 team recovered & Jaccard 0.12; team $g<0$ & failed\\
+N3 \#focus cut & no pre-cut coordination & descr.\\
+\hline
+\end{tabular}\\[1pt]{\footnotesize $^\dagger$amended A2: nulls count only where power $\ge$0.5. $^*$by the letter.}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Synthetic validation on the real activity masks, simulating only \emph{which} repo. The decision rule finds a planted group store in the \#51 units (solid) and rarely in short weeks. H01's binary state (red) stays at chance everywhere. Gray lines: false positives under agent + own artifact and under a common field.}
+
+\hcaveats{Power exists only in \#51b--d; 5-day units and the \#40 and \#44 natives miss stores of $\rho\lesssim0.5$. $g$ rewards avoidance as well as attraction (found post hoc, A3). Artifact = repo, so division of labour within a repo is visible only at \#40's file level. Commits are attempts. Erasure outcome windows end at the next reset; the conditional estimate is primary. Reads are artifact mentions in executed commands. Replication was reduced to G51 and G38 (compute). No replay: natural scrambles only, and the artifact-store scramble (NE24) is in the holdout.}
+
+\hnext{Require attraction in the rule and model territoriality; file-level states for shared repos; run \texttt{confirm.py} on the \#51 tail and NE24.}
