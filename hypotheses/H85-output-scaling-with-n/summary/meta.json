@@ -25,46 +25,47 @@
  "rated_by": "H85 agent (suggested)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Talk scales sublinearly with N (β_msg 0.33; regime-I talk volume nearly conserved), while addressing per message rises with N (slope 0.79), consistent with H18's dilution; reply volume does not follow the predicted N^1.34; work exponents are not identifiable at 71 units",
-  "scope": "71 units, 35 goal clusters; natives NE42, G51, G38",
+  "claim": "Across non-holdout period units with regime intercepts, room message volume per scheduled hour grows sublinearly with active population N (beta_msg 0.33 [-0.18, 0.64], CI excludes 1; regime I 0.09, regime III 0.77): room talk is not a sum of independent agents. Excluded: the addressing-slope pass (P3/A2; two thirds of the slope is post hoc co-addressing, PH1), reply aggregation (HH kill fired), work and repo exponents (unidentified), the NE42 and G51 natives (placebo invalid; unidentified).",
+  "scope": "71 non-holdout units, 35 goal clusters, regimes I-III with intercepts; strongest in regime I (0.09), regime III near-extensive (0.77)",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.61,
+  "credence": 0.64,
   "ladder": [
    {
-    "factor": "base (pre)",
-    "x": 0.4
+    "factor": "base: pre-registered primary (P1 and its falsifier 'CI excludes 1' fixed before any real-data exponent; the falsifier is what happened, rule 3)",
+    "x": 0.4,
+    "evidence": "card \u00a7Prediction P1; \u00a7Outcome vs prediction"
    },
    {
-    "factor": "replication across units",
+    "factor": "calibrated estimator (synthetic at the real 71-unit layout: bias <= 0.02, cluster-CI coverage 0.90-0.93, verdicts on the wider of cluster and CR1 CIs, regime-confound scenario; one design, rule 8)",
+    "x": 2,
+    "evidence": "card \u00a7Synthetic validation; \u00a7Amendments A1; scorecard F = 2"
+   },
+   {
+    "factor": "partial replication (within-day room contrasts in 4 rooms-era periods, same sign: G38 0.36 [0.02, 0.82]; RE 0.85 [0.17, 1.53], CI includes 1)",
     "x": 1.5,
-    "evidence": "card §Results"
+    "evidence": "card \u00a7Results 1; N3"
    },
    {
-    "factor": "synthetic identification (primary moved to the per-message slope before real data)",
+    "factor": "partly robust (WLS 0.52, roster N 0.34, span N, active hours 0.26; one count instrument)",
     "x": 1.5,
-    "evidence": "card §Synthetic"
+    "evidence": "card \u00a7Outcome vs prediction P1"
    },
    {
-    "factor": "cross-hypothesis agreement (H18 dilution)",
-    "x": 1.3,
-    "evidence": "H18"
-   },
-   {
-    "factor": "penalty: level exponents SD ≈ 0.25 (low power)",
-    "x": 0.7,
-    "evidence": "card §Results"
+    "factor": "known confound: N grew with calendar time (model generations, operator practice); regime-I chat mode may cap the visible window",
+    "x": 0.6,
+    "evidence": "card \u00a7Caveats"
    }
   ],
-  "mechanism_level": "M1",
+  "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 2.25,
-  "decision": "plan talk budgets: adding agents does not add proportional talk",
-  "magnitude": "small",
-  "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.37,
+  "value_if_true": 2.5,
+  "decision": "scaffold builder / operator sizing rooms: do not budget talk or read-out load as N x a per-agent rate; at a doubling of N room talk rises x1.26 at the pooled point (x1.06 regime I, x1.7 regime III), not x2",
+  "magnitude": "material (pooled point: a 37% shortfall against extensive talk at a doubling; 15% in regime III; CI wide)",
+  "generality": "read-out-gated swarms (0) at best; the regime-I talk budget may be a chat-mode scaffold property (card Caveats), so -0.5; readiness not credited",
+  "expected_usefulness": 1.6,
   "scientific_value": 3.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean; ADJUDICATION NEEDED",
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind_r3; see adjudication)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -107,6 +108,40 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "adjudication": {
+   "date": "2026-10-04",
+   "decision": "Score the blind rater's single clause (sublinear talk). Credence from the rater's ladder, which follows the rules; V between the two ratings.",
+   "reasons": [
+    "Rule 1: the coordinator scored a composite (sublinear talk + addressing consistent with H18 + no reply aggregation + unidentified work). The claim that stands is one clause. The addressing pass is pre-registered, but post hoc PH1 shows two thirds of its slope is regime-I co-addressing, so it does not carry the H18 reading and is a named exclusion.",
+    "Rule 3: P1's stated falsifier (CI excludes 1) is what happened, so the sublinear-talk clause keeps the primary base 0.40.",
+    "Rule 6/8: the card scores F = 2; the synthetic suite is one design and is credited once, as a calibrated estimator (x2). The coordinator's separate 'cross-hypothesis agreement (H18)' factor is dropped: H18 agreement concerns the excluded addressing clause, and agreement on the same data is robustness, not replication (rule 4).",
+    "Rule 9: the four rooms-era room contrasts are partial replication only (x1.5); the random-effects mean 0.85 has a CI that includes 1.",
+    "V (rule 7): the decision is room sizing and read-out budgets. The magnitude is material at the pooled point (37% below extensive at a doubling; 15% in regime III). Generality is not shown outside this scaffold, and the regime-I budget may be set by chat mode, so -0.5 from 3.0. No readiness credit. The rater's 3.0 omits the scaffold caveat; the coordinator's 1.5 valued the composite."
+   ],
+   "rules": [
+    1,
+    3,
+    4,
+    6,
+    7,
+    8,
+    9
+   ],
+   "final": {
+    "credence": 0.64,
+    "value_if_true": 2.5,
+    "fragile": false,
+    "mechanism_level": "M0",
+    "expected_usefulness": 1.6
+   },
+   "previous": {
+    "credence": 0.61,
+    "value_if_true": 2.25,
+    "fragile": false,
+    "note": "log-odds mean of coordinator 0.58 / V 1.5 and blind_r3 0.64 / V 3.0"
+   }
+  },
+  "adjudication_note": "Different claim: the coordinator scored a composite including the addressing pass, which post hoc PH1 shows is two-thirds co-addressing; the blind rater scored only sublinear talk. Ruling: score the sublinear-talk clause at primary base (its falsifier happened), calibrated synthetic x2, partial room-contrast replication, partial robustness, calendar/chat-mode confound x0.6; V 2.5 (material, scaffold caveat -0.5)."
  }
 }

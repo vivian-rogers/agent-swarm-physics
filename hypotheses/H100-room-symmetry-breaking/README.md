@@ -136,7 +136,7 @@ Primary: bge style_resid, day-centred agent-day vectors; gte in brackets. Q = re
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G35](goalperiod-subhypotheses/G35/README.md) | replication | supported | Q 2.23 (p 0.012) [2.66, 0.014]; operator-message share 0.01; regime II, no f_comp |
+| [G35](goalperiod-subhypotheses/G35/README.md) | replication | mixed (corrected 2026-10-04; was supported) | Q 2.23 (p 0.012) [2.66, 0.014]; operator-message share 0.01; regime II, no f_comp or Q_res |
 | [G36](goalperiod-subhypotheses/G36/README.md) | replication | mixed | Q 1.68 (p 0.12) [1.10, 0.36]; f_comp 0.36; Q_spont 1.02 (p 0.43) |
 | [G37](goalperiod-subhypotheses/G37/README.md) | replication | supported | Q 2.30 (p 0.043); f_comp 0.09; Q_spont 2.55 (p 0.027) [2.75, 0.018] |
 | [G38](goalperiod-subhypotheses/G38/README.md) | native | mixed | Q 6.85 (p 0.001); f_comp 0.03; f_field 0.18 vs null 0.16 (p 0.36) [0.00]; Q_spont 5.68 (p < 0.001); mover Sonnet 4.6 φ 2.04 → 1.99 (already aligned) |
@@ -220,3 +220,4 @@ Primary: bge style_resid, day-centred agent-day vectors; gte in brackets. Q = re
 - ~20:28 UTC: scheme built; period folders written with their dated predictions. ~20:28–20:40: synthetic validation; Amendment 1 (~20:40) before the real-data run.
 - ~20:41 UTC: real-data run. One addition after seeing results (labelled): the pre-move native contrast significance (`C_pre_z`), computed because φ_pre of the 04-02 mover was positive. It does not change any verdict rule.
 - Suggested shared changes (not made; outside edit scope): DEFINITIONS entries for *room separation S, relabel excess Q, shares f_comp/f_field/f_spont, mover index φ, room remanence R*; a vector-spins pitfall ("room relabel nulls across two periods need a joint relabel when agent constants are removed imperfectly"); a natural-experiments note listing the non-holdout operator moves (04-02, 04-27, 05-25) with mover names; `rooms_timeline`-based "room of each statement" helper for `infra/shared/` (H100 and H102 both need it).
+- 2026-10-04: **Correction (2026-10-04, blind-rater check): G35 verdict supported → mixed.** The replication rule needs Q_res > 1 (p < 0.05) and f_comp < 0.5. Regime II (#35) has neither, because agent constants use the regime-III basis. `summarize.py` had graded #35 on Q alone. Q (2.23, p 0.012) does not remove composition, so the rule gives mixed. The code branch is fixed, and the period README and results table are updated. Card-level verdicts (P1–P7, HH66 mixed) do not change: P1 counts Q, which is unchanged, and the decomposition claims use regime III only. Period verdicts are now 2 supported (G37, G41), 6 mixed.

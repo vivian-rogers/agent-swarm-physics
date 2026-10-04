@@ -120,7 +120,7 @@ As in H91: the H12, H25, H26, H36 and H74 cards. Known to me: content modes exis
 | [G03](goalperiod-subhypotheses/G03/README.md) | replication | mixed | 2 days, N 4; gain vs raw +0.34/+0.41, vs LW-CC -0.01/+0.07 (bge/gte); best E4_lwcc/E1_mean |
 | [G04](goalperiod-subhypotheses/G04/README.md) | replication | supported | 19 days, N 4; gain vs raw +0.09/+0.12, vs LW-CC +0.05/+0.05 (bge/gte); best E1_mean/E1_mean |
 | [G05](goalperiod-subhypotheses/G05/README.md) | replication | mixed | 4 days, N 4; gain vs raw +0.02/+0.18, vs LW-CC -0.15/+0.01 (bge/gte); best E1_mean/E1_mean |
-| [G06](goalperiod-subhypotheses/G06/README.md) | replication | supported | 12 days, N 4; gain vs raw +0.19/-0.07, vs LW-CC +0.07/-0.19 (bge/gte); best E1_mean/E6_clip_mp |
+| [G06](goalperiod-subhypotheses/G06/README.md) | replication | supported (aggregation-sensitive; see Correction 2026-10-04) | 12 days, N 4; gain vs raw +0.19/-0.07, vs LW-CC +0.07/-0.19 (bge/gte; mean of per-day gains); mean MSE E5 lowest in both; best E1_mean/E6_clip_mp |
 | [G07](goalperiod-subhypotheses/G07/README.md) | replication | descriptive | 1 days, N 4; gain vs raw +0.25/+0.19, vs LW-CC +0.16/+0.12 (bge/gte); best E5_clip/E1_mean |
 | [G08](goalperiod-subhypotheses/G08/README.md) | replication | mixed | 16 days, N 4; gain vs raw -0.01/+0.07, vs LW-CC -0.01/+0.04 (bge/gte); best E3_lwi/E3_lwi |
 | [G10](goalperiod-subhypotheses/G10/README.md) | replication | mixed | 3 days, N 7; gain vs raw +0.31/+0.28, vs LW-CC +0.04/-0.08 (bge/gte); best E3_lwi/E3_lwi |
@@ -184,6 +184,7 @@ Card rule: P1 passes, P2 fails, and clipping does not lose to constant-correlati
 - 2026-10-04 ~20:36 UTC: Amendment 1 after the synthetic study (scope only), before real data.
 - Compute: synthetic ~2 min, real forecasts 36 s for 6 channels (one process, BLAS 2 threads).
 - `scheme/daymat.py` is an identical copy of H91's (no cross-hypothesis imports); suggested home `infra/shared/day_matrices.py`.
+- **Correction (2026-10-04, blind-rater check of G06).** The period verdicts apply the replication rule to *period-mean MSE* (`evaluate.py: E5_lowest_E2_E5`, `E5_beats_raw`). The "gain" columns in the period table and the period READMEs are *means of per-day relative gains* r. The two can disagree in sign when a few high-MSE days dominate the mean MSE. G06 is the clearest case: mean MSE puts E5 lowest in both models, so the verdict is supported, but the gte per-day gains are −0.07 vs raw and −0.19 vs LW-CC. No verdict changes. Sensitivity: judged on the mean per-day gains instead, 7 of 34 period verdicts move: G06, G16, G26 supported → mixed; G20 mixed → supported; G13, G35 mixed → failed; G21 failed → mixed. The count would be 12 supported instead of 14. P1 uses the per-day gains r_raw; P2 and the constant-correlation share use period-mean MSE (`evaluate.py`). Neither changes here.
 
 ## Round 2 redirects (2026-10-04)
 - **What the direction is really after:** how many persistent collective modes the swarm has once sampling noise is removed; the tie with constant-correlation shrinkage says one.

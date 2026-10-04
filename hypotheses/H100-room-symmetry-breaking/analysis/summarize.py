@@ -36,7 +36,9 @@ def verdict_period(P, r, g, mv, rem):
         if r["p"] > 0.2 and r["Q"] <= 1:
             return "failed"
         if P == 35:
-            return "supported" if r["p"] < 0.05 else "mixed"
+            # Correction 2026-10-04: regime II has no f_comp and no Q_res, so the card's "supported" clause
+            # (Q_res > 1, p < 0.05 and f_comp < 0.5) cannot be met; Q alone gives "mixed" (was "supported").
+            return "mixed"
         if r.get("f_comp", 1) >= 0.7:
             return "failed"
         if r["p_res"] < 0.05 and r.get("f_comp", 1) < 0.5:

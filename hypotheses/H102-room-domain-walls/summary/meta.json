@@ -25,51 +25,42 @@
  "rated_by": "H102 agent (suggested)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Rooms doing different work form two content domains (bimodality D 5.3–6.1 vs 1.7 with identical kickoffs), but there is no wall: what an agent says follows the room it speaks in, and reading the other room does not move home content (|κ_R| < 0.04 per e-fold; power ≥ 0.93 at 0.1)",
-  "scope": "#36, #38, #41, #44, #51g; replication 5 periods",
+  "claim": "In #51g (the #focus weeks), room hoppers are not intermediate on the inter-domain axis and hopping read-outs do not move a hopper's home-room content: kappa_R -0.014 [-0.042, 0.024] per e-fold, excluding kappa >= 0.1 (synthetic power >= 0.93); the one frequent hopper sits at s 0.06 vs the stayers' p95 0.21. Excluded: small per-read pulls (kappa < 0.1, unpowered), selection vs coupling (not separable), the domain half (D 5.3-6.1; a separate positive clause, not scored here).",
+  "scope": "one powered unit (51g: one hopper with >= 5 hop-days, ~50 hopping read-outs); the negative is scoped to kappa >= 0.1 per e-fold of read-outs (rule 2)",
   "direction": "negative",
   "original_verdict": "failed",
-  "credence": 0.52,
+  "credence": 0.51,
   "ladder": [
    {
-    "factor": "base (pre)",
-    "x": 0.4
+    "factor": "base: pre-registered primary (P2/P3 and the HH kill rule fixed before any H102 statistic; Amendment 1 before real data; the stated falsifier happened, rule 3)",
+    "x": 0.4,
+    "evidence": "card \u00a7Prediction; \u00a7Amendment 1"
    },
    {
-    "factor": "synthetic identification (power ≥ 0.93 at κ 0.1)",
+    "factor": "identified: synthetic recovery on the real 51g read skeleton (kappa_R power >= 0.93 at 0.1, recovered 0.08; the mixture world cannot fake intermediacy). Credited as identification, not as a sized null: the kappa_R bootstrap is liberal (size 0.05-0.18), which makes a non-rejection conservative (one design, rule 8)",
     "x": 1.5,
-    "evidence": "card §Synthetic"
+    "evidence": "card \u00a7Amendment 1"
    },
    {
-    "factor": "powered null on the read dose",
-    "x": 1.4,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "replication of domains (G41, G42 supported)",
-    "x": 1.3,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "penalty: one frequent hopper; ~50 items read inside #focus",
+    "factor": "single powered unit (51g; one hopper with >= 5 hop-days, ~50 hopping read-outs; G36's DeepSeek stint has no dose test and does not count, rule 9)",
     "x": 0.6,
-    "evidence": "card §Amendment 0"
+    "evidence": "card \u00a7Amendment 0; \u00a7Caveats"
    },
    {
-    "factor": "penalty: κ test liberal (size 0.05–0.18), fixed post hoc by α 0.01 + lag",
-    "x": 0.85,
-    "evidence": "card §Amendment 1"
+    "factor": "partly robust (bge/gte, style_resid/white32, dedupe; hopper positions agree within 0.05-0.25)",
+    "x": 1.5,
+    "evidence": "scorecard F; \u00a7Caveats"
    }
   ],
   "mechanism_level": "M0",
   "fragile": false,
   "value_if_true": 1.5,
-  "decision": "put agents in the room whose content you want; don't expect cross-room reading to carry content home",
+  "decision": "operator: a few agents visiting another room do not carry its content home (|kappa| < 0.04 per e-fold of reads); to move content across rooms, post into the other room or move the agent",
   "magnitude": "small",
   "generality": "multi-room LLM swarms",
-  "expected_usefulness": 0.78,
-  "scientific_value": 2.2,
-  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "expected_usefulness": 0.77,
+  "scientific_value": 2.25,
+  "rater": "2 raters (coordinator re-scored on one clause under rule 1 + blind_r3); log-odds mean; see adjudication",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -107,6 +98,44 @@
     ]
    }
   ],
-  "adjudicate": false
+  "adjudicate": false,
+  "adjudication": {
+   "date": "2026-10-04",
+   "decision": "Rule 1 requires a re-score. The coordinator's record scored a two-clause composite ('domains form' + 'no wall'). The claim that stands is the HH kill result (hoppers not intermediate; no dose response), so the coordinator re-scored that clause alone. Final credence is the log-odds mean of the re-score and blind_r3, as for any two raters (|dp| 0.08 < 0.25, no adjudication threshold crossed).",
+   "reasons": [
+    "Rule 1: one clause. The domain half (D 5.3-6.1) is a separate positive result. Its 'replication of domains (G41, G42) x1.3' factor no longer applies to the scored clause.",
+    "Rules 2 and 3: the negative is stated at kappa >= 0.1 per e-fold, where power is >= 0.93. P2/P3's stated falsifier is what happened, so the primary base stays.",
+    "Rule 8: the 51g synthetic is one design. It is credited once as identification (x1.5), not also as a 'powered null' (the coordinator's extra x1.4).",
+    "The coordinator's 'kappa test liberal, fixed post hoc' penalty is withdrawn. Amendment 1 (alpha 0.01 + lag) was written before real data, and a liberal test that does not reject makes the negative conservative. The 'one frequent hopper' penalty is the single-unit factor (x0.6) and is not stacked on it.",
+    "The re-scored coordinator ladder gives 0.47 and blind_r3 gives 0.55; log-odds mean 0.51. V 1.5 (both raters)."
+   ],
+   "rules": [
+    1,
+    2,
+    3,
+    8,
+    9
+   ],
+   "coordinator_rescore": {
+    "credence": 0.47,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.0
+   },
+   "final": {
+    "credence": 0.51,
+    "value_if_true": 1.5,
+    "fragile": false,
+    "mechanism_level": "M0",
+    "expected_usefulness": 0.77
+   },
+   "previous": {
+    "credence": 0.52,
+    "value_if_true": 1.5,
+    "fragile": false,
+    "note": "log-odds mean of coordinator composite 0.48 and blind_r3 0.55"
+   }
+  }
  }
 }

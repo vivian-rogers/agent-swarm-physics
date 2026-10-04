@@ -31,51 +31,47 @@
  "rated_by": "H100 agent (suggested)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Content differences between #best and #rest are mostly not composition (f_comp 0.03–0.18) and not along the measured kickoff/operator directions; a residual split beyond random groupings appears in 5/7 regime-III periods (f_spont 0.58–0.91) and leaves no remanence across periods (all |z| < 2)",
-  "scope": "8 periods (G35–G44), natives G38, G39, G41, G44; both embeddings",
+  "claim": "In regime-III two-room periods, the #best/#rest content separation exceeds random regroupings after removing members' leave-period-out constants and the measured room-field directions (Q_spont > 1, p < 0.05 in 5/7 bge, 4/7 gte; 3/5 identical-kickoff periods in both models; f_comp 0.03-0.18 where rooms separate). The residual is endogenous, not identified as coupling. Excluded: the explicit-field direction (P3 failed), movers (P5 mixed, 5 movers), remanence (a separate negative), the post hoc 'trigger' reading and the fielded-vs-identical ranking (rank p 0.048).",
+  "scope": "7 regime-III two-room non-holdout periods (#36-#44), both embedding models; G35 (regime II, no composition removal) is not part of the claim",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.63,
+  "credence": 0.71,
   "ladder": [
    {
-    "factor": "base (pre)",
-    "x": 0.4
+    "factor": "base: pre-registered primary (P4 and the Q_spont estimator fixed before any H100 statistic; Amendment 1 before real data)",
+    "x": 0.4,
+    "evidence": "card \u00a7Prediction P4; \u00a7Amendment 1"
    },
    {
-    "factor": "synthetic identification (Q null size 0.04)",
+    "factor": "calibrated null (real-skeleton synthetic: relabel size 0.04; Q_spont size <= 0.10 under sorted composition; the relabel null and the synthetic are one design, rule 8)",
+    "x": 2,
+    "evidence": "card \u00a7Amendment 1 (a)"
+   },
+   {
+    "factor": "partial replication (5/7 bge, 4/7 gte regime-III periods; 3/5 identical-kickoff periods in both models; gte below 2/3)",
     "x": 1.5,
-    "evidence": "card §Synthetic"
+    "evidence": "card \u00a7Outcome vs prediction P4; Headline 1"
    },
    {
-    "factor": "replication across periods and both models (bge 5/8, gte 6/8)",
+    "factor": "partly robust (both models, style_resid vs white32; #39 and #42 borderline and flip between models)",
     "x": 1.5,
-    "evidence": "card §Results"
+    "evidence": "scorecard F"
    },
    {
-    "factor": "calibrated relabel null with composition removed",
-    "x": 1.3,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "penalty: \"spontaneous\" is a residual; unmeasured room-specific work fields land in it (fielded weeks split most, rank p 0.048)",
-    "x": 0.6,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "penalty: mover test power 0.45 at ρ 0.3; movers split three ways",
-    "x": 0.85,
-    "evidence": "card §P5"
+    "factor": "penalty: open impostors (unrecorded room-specific work drives land in the residual; contemporaneous convergence untested)",
+    "x": 0.8,
+    "evidence": "card \u00a7Impostors; \u00a7Caveats 'Endogenous != coupling'"
    }
   ],
   "mechanism_level": "M0",
-  "fragile": true,
+  "fragile": false,
   "value_if_true": 1.5,
   "decision": "expect rooms to diverge in content on their own within a goal; reseeding rooms costs nothing across goals (no remanence)",
-  "magnitude": "medium",
+  "magnitude": "negligible to small (an expectation for room design, not a lever: identical rooms diverge at Q_spont 1.8-4.2)",
   "generality": "multi-room LLM swarms",
-  "expected_usefulness": 0.95,
-  "scientific_value": 2.8,
-  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "expected_usefulness": 1.06,
+  "scientific_value": 2.75,
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind_r3; see adjudication)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -113,6 +109,35 @@
     ]
    }
   ],
-  "adjudicate": false
+  "adjudicate": false,
+  "adjudication": {
+   "date": "2026-10-04",
+   "decision": "Score the residual-divergence clause as worded by the blind rater, with 'spontaneous' replaced by 'endogenous, not identified as coupling'. Fragile is false. The coordinator's residual objection is kept as one open-impostor penalty (x0.8), not as fragility or a x0.6 penalty.",
+   "reasons": [
+    "Fragile (RUBRIC clarification; rule 5): the flag refers to the scored headline changing sign or significance between data versions or reasonable variants. H100 has one data version, and the headline (a residual split in most regime-III periods) holds in both models (5/7, 4/7) and both vector variants. That #39 and #42 swap between models is partial robustness. An interpretive gap (what fills the residual) is not fragility.",
+    "Rule 1: the scored clause is the measured quantity, the residual after composition and measured field directions. That unmeasured work fields can sit in it threatens the word 'spontaneous', not the clause. So the claim is reworded ('endogenous, not identified as coupling') and the gap is carried as an open impostor (x0.8, as in H07's adjudication). The fielded-week ranking (rank p 0.048) is post hoc and an exclusion. It does not lower the identical-kickoff result (3/5 periods in both models; #41 p 0.001).",
+    "Rule 8: the coordinator stacked the synthetic (x1.5) and the relabel null (x1.3) from one design. They are credited once as a calibrated null (x2). The mover-power penalty (x0.85) concerns the excluded mover clause and is dropped (rule 1).",
+    "Mechanism: M0. The rejected rivals (composition, text-direction field) leave the mechanism open (coupling vs a self-made room drive), so the rater's M1 is not supported."
+   ],
+   "rules": [
+    1,
+    5,
+    8
+   ],
+   "final": {
+    "credence": 0.71,
+    "value_if_true": 1.5,
+    "fragile": false,
+    "mechanism_level": "M0",
+    "expected_usefulness": 1.06
+   },
+   "previous": {
+    "credence": 0.63,
+    "value_if_true": 1.5,
+    "fragile": true,
+    "note": "log-odds mean of coordinator 0.50 (fragile) and blind_r3 0.75 (not fragile)"
+   }
+  },
+  "adjudication_note": "Fragility and residual: the coordinator set fragile and x0.6 because 'spontaneous' is a residual that can hold unmeasured room work fields; the blind rater scored the measured residual clause. Ruling: score the residual clause, reworded as endogenous (not identified as coupling), with one open-impostor penalty x0.8; fragile false (one data version; headline holds in both models and variants); the synthetic and relabel null are one design (x2)."
  }
 }

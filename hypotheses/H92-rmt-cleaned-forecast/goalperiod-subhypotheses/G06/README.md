@@ -24,6 +24,8 @@ Relative gain of E5 over each rival, r = 1 − MSE_E5/MSE_rival, mean over targe
 | talk | 13 | 4 | +0.133 | -0.138 | -0.029 | +0.025 | E3_lwi |
 | act | 2 | 4 | -0.001 | -0.019 | -0.002 | +0.004 | E3_lwi |
 
+**Correction (2026-10-04, blind-rater check).** The verdict stays **supported**. The rule compares *period-mean MSE*, and E5 has the lowest mean MSE among E2–E5 in both models. bge: E5 0.0283, E3 0.0297, E4 0.0311, E2 0.0362. gte: E5 0.0345, E3 0.0364, E4 0.0378, E2 0.0415 (`periods.parquet`, `mse_*`). The table above reports a different statistic: the *mean of per-day relative gains* r = 1 − MSE_E5/MSE_rival. In gte these gains are negative (vs raw −0.07, vs LW identity −0.32, vs LW constant correlation −0.19). E5 wins on the high-MSE days that dominate the mean MSE, and it loses on most low-MSE days. Under the per-day-gain reading this period would be mixed. So G06's "supported" depends on how days are aggregated. It is not a robust point.
+
 Data: `data/processed/H92-rmt-cleaned-forecast/periods.parquet`, `forecasts.parquet`. CIs are in the shared estimates table.
 
 ## Scorecard (period-specific axes)

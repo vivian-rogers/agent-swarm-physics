@@ -31,35 +31,31 @@
  "rated_by": "H91 agent (suggested)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Day-to-day rotation of the top content eigenvectors does not flag goal kickoffs (AUC 0.56 vs topic shift 0.96, 23 kickoffs); content modes drift slowly every day (median z_boot 1.0) without event spikes, except at the NE42 merge. Excluded: strong regroupings beyond the powered range",
-  "scope": "23 kickoffs, 258 day pairs; natives NE42, G51",
+  "claim": "At non-holdout goal kickoffs at real counts (median N ~10, W ~8), day-to-day eigenvector rotation of the content matrix does not flag kickoffs (AUC 0.56 [0.40, 0.71], random-date p 0.34) and loses to the centroid-shift alarm R1 (Delta-AUC -0.41 [-0.56, -0.27]); combining the two adds nothing (-0.05 [-0.14, +0.01]). Excluded: strong regroupings in the powered range (W >= 16 or N >= 16; no scored kickoff there), the Dyson-stationarity clause (narrow, model-dependent), the daily drift (median z_boot 1.0) and the NE42 rotation (below z >= 2).",
+  "scope": "23 non-holdout kickoffs vs placebo days at the village's real counts; a claim about the detector at this sampling, not about whether kickoffs regroup agents (per-pair power 0.2-0.4 at the median day)",
   "direction": "negative",
   "original_verdict": "failed",
-  "credence": 0.6,
+  "credence": 0.69,
   "ladder": [
    {
-    "factor": "base (pre)",
-    "x": 0.4
+    "factor": "base: pre-registered primary (P1, its failure rule and the Amendment-1 null fixed before any real-data rotation statistic; the stated falsifier happened, rule 3)",
+    "x": 0.4,
+    "evidence": "card \u00a7Prediction P1; \u00a7Amendment 1"
    },
    {
-    "factor": "rival beaten (topic shift R1 by 0.41 AUC)",
+    "factor": "partly calibrated (same-day block-bootstrap null sized <= 0.05 for content on the real skeleton; random-date and placebo-day design; scorecard F = 1; one design, rule 8)",
     "x": 1.5,
-    "evidence": "card §Results"
+    "evidence": "card \u00a7Amendment 1 item 3; scorecard F"
    },
    {
-    "factor": "synthetic identification (bootstrap size ≤ 0.05)",
+    "factor": "partial replication (R1 > A_C at kickoffs across regimes I-III; each kickoff is below per-pair power for a regrouping, so kickoffs are not full replications of the null, rule 9)",
     "x": 1.5,
-    "evidence": "card §A1"
+    "evidence": "card \u00a7Results by goal period; \u00a7Outcome vs prediction P1"
    },
    {
-    "factor": "penalty: power 0.2–0.4 at real counts",
-    "x": 0.6,
-    "evidence": "card §Synthetic"
-   },
-   {
-    "factor": "penalty: bge–gte agreement weak (ρ 0.33)",
-    "x": 0.8,
-    "evidence": "card §Results"
+    "factor": "partly robust (style-resid +0.09, restate +0.07, pooled-split null 0.66: all far below R1's 0.96; per-day z agrees only weakly between models, rho 0.33)",
+    "x": 1.5,
+    "evidence": "card \u00a7Outcome vs prediction P1, P5"
    }
   ],
   "mechanism_level": "M0",
@@ -67,10 +63,10 @@
   "value_if_true": 1.0,
   "decision": "don't use eigenvector rotation as a reorganization alarm; use topic shift",
   "magnitude": "small",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 0.6,
+  "generality": "this village's content matrices (0); not shown elsewhere; no readiness",
+  "expected_usefulness": 0.69,
   "scientific_value": 2.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean; ADJUDICATION NEEDED",
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind_r3; see adjudication)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -108,6 +104,38 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "adjudication": {
+   "date": "2026-10-04",
+   "decision": "Score the detector-performance clause at real counts, with scope narrowed to where the test speaks. Remove the power and instrument penalties; keep partial credit for calibration, replication and robustness.",
+   "reasons": [
+    "Rule 2: the coordinator's x0.6 for power 0.2-0.4 at real counts is the penalty the rule forbids. Narrow the scope instead. At real counts the clause is a measured detector comparison (AUC and Delta-AUC with CIs that exclude the alternatives), and 'no strong regrouping at kickoffs' is a named exclusion.",
+    "Weak bge-gte agreement on per-day z (rho 0.33) is a reason for partial rather than full robustness. It is not a penalty: for a negative detector claim, two instruments that disagree day by day are what a noise-dominated score looks like, and the headline (A_C far below R1) holds in every variant.",
+    "Rule 9: kickoffs below per-pair power do not count as full replications of the null, so the rater's x2 for replication becomes partial (x1.5).",
+    "Rule 1: the coordinator's composite (kickoff failure + daily drift + NE42 exception) is reduced to the kickoff clause. 'Rival beaten' is not credited, because the rival comparison is the claim itself and was not made on held-out data.",
+    "Rule 3: P1's stated failure rule is what happened, so the primary base stays."
+   ],
+   "rules": [
+    1,
+    2,
+    3,
+    8,
+    9
+   ],
+   "final": {
+    "credence": 0.69,
+    "value_if_true": 1.0,
+    "fragile": false,
+    "mechanism_level": "M0",
+    "expected_usefulness": 0.69
+   },
+   "previous": {
+    "credence": 0.6,
+    "value_if_true": 1.0,
+    "fragile": false,
+    "note": "log-odds mean of coordinator 0.42 and blind_r3 0.75"
+   }
+  },
+  "adjudication_note": "Power treatment: the coordinator penalized low per-pair power (x0.6) and weak bge-gte agreement (x0.8); rule 2 replaces the power penalty with a narrowed scope (detector performance at real counts; strong regroupings excluded), and model disagreement on a noise-dominated score earns partial robustness, not a penalty. The rater's full replication becomes partial (rule 9)."
  }
 }

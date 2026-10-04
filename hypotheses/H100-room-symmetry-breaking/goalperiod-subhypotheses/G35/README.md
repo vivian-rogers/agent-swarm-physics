@@ -1,6 +1,6 @@
 # H100 × G35: RPG forks per room (2026-03-16 → 2026-03-20)
 
-**Verdict:** supported
+**Verdict:** mixed
 **Role:** replication
 **Period:** regime II · #best 3 agents, #rest 9 agents (agent-days by room of the day) · 5 non-holdout days.
 
@@ -28,6 +28,9 @@ Agents: #best 3, #rest 9 (≥ 2 days, one room); median 5.0 days per agent. Rela
 
 ## Scorecard (period-specific axes)
 - **C:** relabel null; **D:** f-shares and Q_res are not fitted; **F:** synthetic recovery on this skeleton (`synthetic/synthetic_summary.json`).
+
+## Correction (2026-10-04, blind-rater check)
+The verdict changes from **supported** to **mixed**. The period rule needs Q_res > 1 (p < 0.05) and f_comp < 0.5. #35 is regime II, where agent constants are not estimated (regime-III basis only), so neither Q_res nor f_comp exists. The round-1 code (`analysis/summarize.py`) graded #35 on Q alone (2.23, p 0.012). Q shows the rooms differ beyond random groupings. It does not remove composition: #best had 3 agents, and the operator chose them. The failed clause is not met either (Q > 1, p < 0.05), so the rule gives "mixed otherwise". The code now returns "mixed" for #35. `results/results.json` still carries the round-1 "supported" until the next run of `summarize.py`.
 
 ## Notes
 - Data: `data/processed/H100-room-symmetry-breaking/results/results.json` (key `G35`).

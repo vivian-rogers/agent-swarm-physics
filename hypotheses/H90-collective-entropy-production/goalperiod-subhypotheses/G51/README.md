@@ -14,6 +14,8 @@
 - P3 (after A1 the coupling test): Δ_addr(talk) = σ_nam − σ_un > 0 against the shift null.
 - Synthetic size class: S51 (N 27 × 33 days); Δ_addr power at J = 1 is 1.00, at G51's effect size (J ≈ 0.28) 1.00 (A3, post hoc).
 
+**Correction (2026-10-04, blind-rater check): G51 day counts.** G51 has 45 non-holdout days. The DQ8 all-present trim leaves 43 talk and activity days and 34 behavior days (`data/processed/H90-collective-entropy-production/G51/results.json`). The replication fit and native N2 (`run.py: native_g51_pairwise`, talk) use the 43 talk days. "33 days" is the synthetic size class S51 (N 27 × 33 days, `synthetic.py: SIZES`), fixed before the real run and smaller than G51's talk grid, so its talk power is conservative for G51. C1's "16–33 days" are the S38 and S51 size classes, not G51 day counts.
+
 ## Result
 *Run 2026-10-04 ~21:45 UTC (`analysis/run.py`; data `data/processed/H90-collective-entropy-production/G51/results.json`; figure `../../figures/summary_obs.pdf`).* Units: 10⁻³ nats per system step (1 min for talk/activity, 5 min for behavior); 95% day-bootstrap CIs; p against 100 (talk) / 50 block shifts.
 
