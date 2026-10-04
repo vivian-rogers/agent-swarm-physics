@@ -265,3 +265,10 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Kick spacing (read-out):** the time (and number of calls) between the receiving calls of two kicks to the same agent; "same call" when both are read in one context assembly.
 - **Launched episode:** the run of active calls that follows an effective kick (minute-grid run of activity).
 - **Refractory ratio R(δ):** the second kick's effect (log hazard ratio of escape vs matched controls) ÷ the first kick's, as a function of spacing δ. R ≈ 1 means no refractoriness; R ≈ 0 means the second kick is wasted. Needs a positive first-kick effect to be meaningful.
+
+### H53 named variants (2026-10-04; see `hypotheses/H53-announcement-nucleation/README.md`)
+- **Seed:** a project's first chat link in a period (agent or human poster); re-links after lulls analysed separately.
+- **Adoption (project label, H53):** a recipient's first project label after reading the seed, on `project_states` (deterministic H11 labels).
+- **Wave size (H53):** new adopters within 2 h of the seed.
+- **Call cycle (agent median):** the agent's median interval between model calls (`call_windows`).
+- **Receptive count:** uncommitted agents whose receiving call of the seed falls within one call cycle of posting (`context_ledger_items`).

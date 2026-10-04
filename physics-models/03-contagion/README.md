@@ -69,6 +69,7 @@ The mean-field SIS equation is a gradient flow, dρ/dt = −V'(ρ). Below thresh
 
 ## Pitfalls
 
+- **Seed-level wave-size regressions have no power under overdispersed project attractiveness** (H53 synthetic: 0–20% power at a ×4 effect); use within-seed, agent-level designs. Covariates counting others' adoptions before one's own exposure are biased negative.
 - **Exposure can ride a burst instead of causing it** (H28, 2026-10-04): links co-move with project switches (HR 2.3) but future links predict switches better than past ones in 10/11 herding weeks, with a 3.3× pre-trend. Always run a lead placebo and a pre-trend check, and calibrate the lead placebo on synthetics: cascades make future exposures positive too. Fine (project × day) fixed effects combined with outcome-dependent regressors bias κ negative when groups hold about 2 events; agent + project + day is unbiased.
 - **A shared field looks like branching** (H34, 2026-10-04): with no contagion at all, a common field produced R̂ up to 0.5 on real timelines, and exposure-ordering (timing-jitter) tests had 17% false positives and weak power. Use the post-exposure hazard ratio HR₁₀ (0/36 false positives, 18/18 power) and report R_c = R̂(1 − 1/HR₁₀). Within-idea dose-response estimates are biased low and pooled ones high. Idea cascades were subcritical everywhere (R̂ 0.06–0.39), with tails heavier than one branching law (heterogeneous contagiousness).
 - N is tiny (≈ 10–30 agents), so a single meme's curve is noisy and thresholds are smeared. The ensemble over memes is the real dataset.

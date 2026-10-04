@@ -257,6 +257,7 @@ If future links predict switches as well as past links do (lead ≥ lag), links 
 5. Re-check regime-I visibility (H18, H08), since P8 suggests chat may reach agents through unlogged turns.
 
 ## Notes
+- **From H53 (2026-10-04):** at a project's *first* chat link adoptions jump ×22.5 (18 before vs 592 after for brand-new projects; ×3.8 for carried-over ones), with only 1.5% of adopters lacking the link in context. H28's lead > lag pattern applies to projects already known; first links are real seeds.
 - 2026-10-04: promoted from HH114 by Vivian (usefulness-first batch); wave 1.
 - 2026-10-04: card written (model variant, scheme, observables, nulls, predictions P1–P10) before any real-data run.
 - 2026-10-04: Amendment 1 (FE, momentum) after the synthetic pilot; calibration notes and Amendment 2 (λ/R from E60) after the full synthetic run; both before any real-data fit.
