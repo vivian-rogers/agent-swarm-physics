@@ -195,6 +195,7 @@ def hypothesis(hdir: Path) -> dict:
             meta = {}
     rating = {k: meta.get(k) for k in ("complete", "faithfulness", "usefulness", "one_line", "rated_by", "updated")}
     rating["rationale"] = meta.get("rationale", {})
+    rating["v2"] = meta.get("v2")  # scoring v2 (writeup/scoring/scoring-v2.pdf): claim, credence, mechanism, fragility, V, EU, S
     size, newest, nfiles = dir_stats(hdir)
     dsize, dnewest, _ = dir_stats(data_dir)
     last = max(x for x in (newest, dnewest, 0) if x is not None) or None

@@ -157,7 +157,7 @@ td.num { text-align: right; white-space: nowrap; }
       <div class="scroll"><table id="hyp"></table></div>
       <div class="legend small" style="margin-top:8px">
         <span>Progress pips: card · predictions · synthetic check · periods with verdicts · scorecard · confirm script · holdout run (● done, ◐ partial, ○ not yet)</span>
-        <span>Useful = estimated usefulness for controlling, steering or aligning agent swarms (0–5); Faithful = scoped faithfulness (0–5); red low ↔ gray 2.5 ↔ blue high; rubric in writeup/hypothesis-pages/RUBRIC.md</span>
+        <span>Scoring v2 (writeup/scoring/scoring-v2.pdf): <b>Credence</b> = probability the stated claim survives an independent test (evidence ladder); <b>EU</b> = expected usefulness = credence × value-if-true (0–5); hover for claim, mechanism level M0–M2, fragility ⚠, value V and scientific value S. Grey = not yet scored in v2 (v1 rating shown faded). Red low ↔ gray ↔ blue high.</span>
         <span>Scorecard A–I: <i style="background:var(--ord-0)"></i>0 <i style="background:var(--ord-1)"></i>1 <i style="background:var(--ord-2)"></i>2, dashed = not scored</span>
       </div>
     </section>
@@ -202,6 +202,21 @@ function dur(a, b) {
 }
 const DIV = [[0,"#a32b2b","#fff"],[0.5,"#c43a3a","#fff"],[1,"#e34948","#fff"],[1.5,"#ee8584","#0b0b0b"],[2,"#f5bcbb","#0b0b0b"],[2.5,"#e9e7e1","#0b0b0b"],
              [3,"#b7d3f6","#0b0b0b"],[3.5,"#86b6ef","#0b0b0b"],[4,"#5598e7","#fff"],[4.5,"#2a78d6","#fff"],[5,"#1c5cab","#fff"]];
+function v2Chip(h, which) {
+  const v2 = h.rating?.v2;
+  if (!v2) {  // fall back to the faded v1 number
+    const v1 = which === "cred" ? h.rating?.faithfulness : h.rating?.usefulness;
+    return v1 == null ? `<span class="muted small">—</span>` : `<span class="muted small" data-tip="v1 rating (not yet rescored in v2)">${v1}</span>`;
+  }
+  const val = which === "cred" ? v2.credence : v2.expected_usefulness;
+  if (val == null) return `<span class="muted small">—</span>`;
+  const scale = which === "cred" ? val * 5 : val;
+  const [, bg, fg] = DIV.reduce((a, b) => Math.abs(b[0] - scale) < Math.abs(a[0] - scale) ? b : a);
+  const label = which === "cred" ? Math.round(val * 100) + "%" : val.toFixed(1);
+  const flag = v2.fragile ? " ⚠" : "";
+  const tipTxt = `${v2.claim || ""}\ncredence ${Math.round((v2.credence ?? 0) * 100)}% · ${v2.mechanism_level || ""}${v2.fragile ? " · FRAGILE" : ""}\nvalue if true V ${v2.value_if_true ?? "?"} · EU ${v2.expected_usefulness ?? "?"} · science S ${v2.scientific_value ?? "?"}\ndecision: ${v2.decision || "none"}\nrated by: ${v2.rater || "?"}`;
+  return `<span class="rchip" style="background:${bg};color:${fg}" data-tip="${esc(tipTxt)}">${label}${which === "cred" ? flag : ""}</span>`;
+}
 function ratingChip(v, why, who) {
   if (v == null) return `<span class="muted small" data-tip="not rated yet: summary page pending">—</span>`;
   const [, bg, fg] = DIV.reduce((a, b) => Math.abs(b[0] - v) < Math.abs(a[0] - v) ? b : a);
@@ -303,10 +318,11 @@ function renderHyp() {
   if (f) hs = hs.filter(h => [h.id, h.title, h.status, h.level, h.agent?.state, Object.entries(h.verdicts).filter(([, v]) => v).map(([k]) => k).join(" "), h.confirm_scripts.length ? "holdout confirm" : ""].join(" ").toLowerCase().includes(f));
   const key = { id: h => h.id, progress: h => h.progress, activity: h => h.last_activity || "", data: h => h.data_bytes, level: h => h.level,
                 periods: h => Object.values(h.verdicts).reduce((a, b) => a + b, 0),
-                useful: h => h.rating?.usefulness ?? -1, faith: h => h.rating?.faithfulness ?? -1 }[sortKey] || (h => h.id);
+                useful: h => h.rating?.usefulness ?? -1, faith: h => h.rating?.faithfulness ?? -1,
+                cred: h => h.rating?.v2?.credence ?? -1, eu: h => h.rating?.v2?.expected_usefulness ?? -1 }[sortKey] || (h => h.id);
   hs.sort((a, b) => (key(a) > key(b) ? 1 : key(a) < key(b) ? -1 : 0) * sortDir);
   const th = (k, label, cls = "") => `<th class="sort ${cls}" data-k="${k}">${label}${sortKey === k ? (sortDir > 0 ? " ▲" : " ▼") : ""}</th>`;
-  $("#hyp").innerHTML = `<thead><tr>${th("id", "ID")}<th>Hypothesis</th>${th("progress", "Progress")}<th>Scorecard</th>${th("periods", "Goal periods")}<th>Holdout</th>${th("useful", "Useful")}${th("faith", "Faithful")}${th("activity", "Activity")}</tr></thead><tbody>` +
+  $("#hyp").innerHTML = `<thead><tr>${th("id", "ID")}<th>Hypothesis</th>${th("progress", "Progress")}<th>Scorecard</th>${th("periods", "Goal periods")}<th>Holdout</th>${th("cred", "Credence")}${th("eu", "EU")}${th("activity", "Activity")}</tr></thead><tbody>` +
     hs.map(h => {
       const a = h.agent; const changed = lastSeen[h.id] && lastSeen[h.id] !== h.last_activity;
       return `<tr class="click ${changed ? "changed" : ""}" data-card="${esc(h.card || "")}">
@@ -316,8 +332,8 @@ function renderHyp() {
         <td>${scoreCells(h.scores)}</td>
         <td>${vbar(h.verdicts)}</td>
         <td>${holdoutCell(h)}</td>
-        <td>${ratingChip(h.rating?.usefulness, h.rating?.rationale?.usefulness, h.rating?.rated_by)}</td>
-        <td>${ratingChip(h.rating?.faithfulness, h.rating?.rationale?.faithfulness, h.rating?.rated_by)}</td>
+        <td>${v2Chip(h, "cred")}</td>
+        <td>${v2Chip(h, "eu")}</td>
         <td style="white-space:nowrap">${a ? `<span class="state ${a.state}">${a.state === "running" ? '<span class="dot"></span> ' : ""}${a.state}</span><br>` : ""}<span class="small muted">${ago(h.last_activity)} · ${mb(h.data_bytes)}</span></td></tr>`; }).join("") + `</tbody>`;
   hs.forEach(h => lastSeen[h.id] = h.last_activity);
   const lv = {}; S.hypotheses.forEach(h => lv[h.level] = (lv[h.level] || 0) + 1);

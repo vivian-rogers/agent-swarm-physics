@@ -33,7 +33,46 @@ uv run python infra/summaries/build_summaries.py --only H05 # one page (skip the
 
 The goal-period diagram (`periods.pdf`) and the page header are generated from the `G<NN>/` / `NE<NN>/` folders and the card. Don't edit `summary.tex`; it is regenerated. The summary must be **exactly two pages**: page 1 is the overview, page 2 the details. The build warns otherwise. LaTeX special characters (`# & % _ $`) must be escaped in content. Never quote agent message text (gated data).
 
-## Ratings
+## Scoring v2 (2026-10-04): replaces the 0–5 faithfulness/usefulness ratings below
+Rationale and worked examples: `writeup/scoring/scoring-v2.pdf`. The v1 numbers stay in `meta.json` for history; the dashboard and compendium show v2 when present.
+
+**What is scored:** one stated, scoped claim per hypothesis (the result that currently stands, positive or negative), with the original hypothesis verdict recorded separately.
+
+**Credence** `p` = probability the claim survives an independent confirmatory test at its stated scope. Start from the base rate and multiply the odds p/(1−p) by each factor that applies; cap 0.95 before a holdout run (0.98 after).
+
+| Evidence | Factor |
+| --- | --- |
+| Base: pre-registered primary / secondary / post hoc | p₀ = 0.40 / 0.30 / 0.20 |
+| Calibrated null passed (DQ8 sizes or own synthetic) | ×2 (mis-sized or unchecked ×0.7) |
+| Replication: same sign in ≥ 2/3 of ≥ 6 independent units | ×2 (single powered unit ×0.6) |
+| Robust to data versions and instruments (survived round 1b; both embedding models; estimator variants) | ×2 (changed under a data fix ×0.3) |
+| Identified: synthetic recovery at real counts | ×1.5 (not identifiable ×0.5) |
+| Intervention consistent (natural experiment / quasi-random) | ×2 |
+| Rival beaten on held-out data | ×1.5 |
+| Ground truth agrees (DQ6, known structure) | ×1.5 |
+| Holdout passed / failed | ×5 / ×0.15 |
+| Penalties: unvalidated LLM labels, known-problem inputs, uncorrected multiplicity | ×0.5–0.8 each |
+
+Negative claims ("X does not happen") need synthetic power ≥ 0.8 at the effect size that would matter; otherwise the claim is "inconclusive" and credence stays near its base.
+
+**Mechanism level:** M0 reproducible pattern; M1 mechanism-consistent (signature predicted, rival rejected); M2 mechanism identified (intervention + rival + synthetic).
+**Fragile:** true if the headline changed sign or significance between data versions or across reasonable analytic variants (kept on the record after repair).
+
+**Value if true** `V` (0–5): name the decision (operator, scaffold builder, alignment/safety, detection, science model choice; none → V ≤ 1); magnitude in the decision's units (negligible < 1% caps V at 2; small 1–5%; material 5–25%; large > 25%); generality (scaffold-specific −1; any read-out-gated LLM swarm 0; any multi-agent LLM system +0.5); readiness (rule written and computable from standard logs +0.5).
+**Expected usefulness** `EU = p × V`. **Scientific value** `S` (0–5): rules out a model class, corrects earlier results, builds an instrument, unifies phenomena (refutations and data-bug discoveries score here).
+
+**Process:** an independent rater (not the hypothesis agent) scores from the card and evidence; anchors are double-scored by the coordinator to measure agreement; disagreements beyond Δp > 0.25 or ΔV > 1 are adjudicated.
+
+**`meta.json` schema v2** (added under a `"v2"` key; v1 keys untouched):
+```json
+"v2": {"claim": "...", "scope": "...", "direction": "positive|negative", "original_verdict": "supported|refuted|mixed|inconclusive",
+       "credence": 0.72, "ladder": [{"factor": "calibrated null", "x": 2, "evidence": "card §Round 1b"}],
+       "mechanism_level": "M1", "fragile": false, "value_if_true": 2.5, "decision": "...", "magnitude": "small",
+       "generality": "read-out-gated swarms", "expected_usefulness": 1.8, "scientific_value": 3,
+       "rater": "rater-v2 (independent)", "rated_at": "2026-10-04"}
+```
+
+## Ratings (v1, kept for history)
 
 ### Estimated completion of the research direction (0–100 %)
 How far along the *direction* is, not just round 1.
