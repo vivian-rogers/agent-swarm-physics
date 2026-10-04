@@ -144,3 +144,29 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Call start:** the previous turn's time, or the pause expiry after a pause turn.
 - **Read-out turn:** an agent's first turn whose call starts after a message arrives. **In-flight turn:** a turn whose call started before the message.
 - Responses (addressing the sender) jump at the read-out turn, not the in-flight one (10/11 regime-II/III periods). Use this as the visibility rule; the shared context ledger (`infra/shared/context_ledger.py`) implements it.
+
+### H29 named variants (2026-10-04; see `hypotheses/H29-driver-nodes/README.md`)
+- **Influence coupling (content pull):** the slope a(S) = Σ y·u / Σ |u|² of a recipient's statement step y = x(τ_n) − x(τ_{n−1}) on the offset u = x_m − x(τ_{n−1}) to a message m, over a set S of (message, next-statement) rows. Net pull κ subtracts a cross-day placebo (same sender, another day) and the invisible-row pull.
+- **Visibility jump (boundary test):** the field-corrected pull of visible minus truly invisible messages (call window ≤ 30 s), within matched 10-s age bins, named vs named and unnamed vs unnamed. The preferred influence estimator (post hoc in H29).
+- **Driver score (mean-output Gramian):** D_k, the summed squared swarm response to a unit injection at agent k under the fitted linear pull network A with leak Γ. Steering energy E_k = N²/D_k.
+- **Net influence current:** I_k = out-strength − in-strength of agent k in A.
+
+### H31 named variants (2026-10-04; see `hypotheses/H31-consensus-time-spectral-gap/README.md`)
+- **Interaction (seen, weighted):** W_ij = agent j's messages first seen by agent i, per active hour (visibility via H18's call-start rule; see the Known issue on that rule).
+- **Consensus event (project share):** on H11 project labels carried forward up to 4 windows (30 min), project a reaches consensus when ≥ max(3, ⌈N/3⌉) agents and ≥ 50% of labelled agents hold it for 2 consecutive windows. **Frozen:** already met at the block's start (goal kickoff); **instant:** met in the window the project first appears; **gradual:** otherwise.
+- **Consensus time τ:** active time from the project's first appearance to the consensus window (floored at 0.25 h).
+- **Exposure spectral gap λ₂:** the second-smallest eigenvalue of a Laplacian of W. Variants: `w,sym` (L = D − (W + Wᵀ)/2, primary), `w,dir` (in-Laplacian, smallest nonzero Re λ), `bin` (normalized Laplacian of the binary graph), `rw` (random-walk Laplacian × the reading-turn rate), `core` (core agents only).
+- **Time-respecting DeGroot gap γ_tr:** the decay rate of disagreement under DeGroot averaging (α = 0.5) simulated on the real reading sequence.
+
+### H36 named variants (2026-10-04; see `hypotheses/H36-reorganization-alarm/README.md`)
+- **Population N(t), day-present:** roster agents (Claude Code excluded) with ≥ 10 active minutes that PT day (H38 uses ≥ 1 minute).
+- **Multi-information (Gaussian, activity spins):** I_G = −½ log det of the agents' 1-min activity correlation matrix, per pair. **(pairwise expansion, behavior states):** sum of pairwise plug-in MI of the 4-state activity class (Miller–Madow), per pair. **Content multi-information (overlap):** −½ log det of the normalized overlap matrix of agent-centered 30-min content vectors, per pair. All reported as excess over within-day surrogates.
+- **Heat-capacity analogue:** the variance over time of the alignment energy, Var_t(E)/n (activity) or Var_w(e(w)) × mean pair count (content).
+- **Content centroid shift (R1):** D(d) = 1 − cos(m̄_d, m̄_{d−1}), with m̄_d the mean whitened unit agent-day vector of day-present agents.
+
+### H38 named variants (2026-10-04; see `hypotheses/H38-platform-stalls/README.md`)
+- **Joint silence:** a minute with at most one day-present agent active (K_t ≤ 1) on a day with ≥ 3 present (H02's "lull", day-present version).
+- **Village-off gap:** a run of ≥ 10 consecutive minutes with K_t = 0 (H16's rule).
+- **Silence reason** of a silent present agent, first match: `pre`/`post` (before its first or after its last active minute of the day), `infra_err` (gap adjacent to an infrastructure-error turn, ≤ 15 min), `consol` (before a CONSOLIDATE, ≤ 15 min), `pause` (declared wait/pause spell), `none`.
+- **Stall (explained joint silence):** a joint-silence minute outside the day's scheduled run, or in which ≥ half the silent present agents have a recorded reason. Strict variant: all silent agents but one have a reason.
+- **Agent-state conditioning:** before a synchrony statistic, drop off-schedule minutes and set an agent's not-started / finished / consolidating / error-gap minutes to its block mean; compare against block-shift surrogates processed the same way. f_scaffold = 1 − E_adj / E_raw.

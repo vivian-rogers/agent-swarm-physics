@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 1.5,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done. Predictions and alarm rule were written before data. Synthetic validation at village sampling covered 9 scenarios (Amendment 1 fixed a z-scale bias before real data). 35 G and 7 NE folders hold dated predictions and verdicts. There are a scorecard and post hoc mechanism checks (detrending, sampling confounds, Friday placebos). The confirmatory script has frozen C1-C6 and was dry-run only. Not yet done: the holdout, an embedding swap and an intraday version.",
+    "faithfulness": "The core claim (fluctuation statistics peak at reorganizations) is mixed at best. Goal changes are detected above chance (AUC 0.68, random-date p 0.03) but at a 0.30 hit rate. All of the signal is content, and about 40% of it is a within-day drift. The activity channel is at chance, scaffold changes are missed, and the alarm loses to a first-moment rival by 0.26 AUC. Scorecard A1 B1 C1 D0 E0 F1 G1 H0 I0; no holdout.",
+    "usefulness": "There are now measured operating characteristics for a computable swarm alarm, and a clear message: use a topic-shift detector, not susceptibility. A post hoc combination (R1>=3 or content-fluctuation z>=2) gives 58% of goal changes at 2% window false alarms, with the physics score acting as a false-alarm filter. It is in-sample and frozen for the holdout. It does not see scaffold changes."
+  },
+  "one_line": "A susceptibility / multi-information alarm catches only a third of goal changes, all through content; a plain topic-shift detector does far better (AUC 0.95 vs 0.68)",
+  "rated_by": "H36 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

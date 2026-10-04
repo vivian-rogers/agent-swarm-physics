@@ -1,0 +1,36 @@
+\hwhat{Built a shared outage table (every minute with $\le 1$ active agent, 389 days, causes from logs) and asked, in 35 non-holdout periods, how much of H02/H19's collective co-activation is infrastructure. \textbf{Joint silences are mostly not platform stalls:} their rate is what independent agents produce (median excess 0.008 of minutes), infrastructure-error bursts make them \emph{less} likely (log OR $-0.43$), and scaffold states sit in them near chance; village-off gaps are 84\% operator-scheduled. \textbf{But in always-on regime III about two thirds of the co-activation is infrastructure} (median $f=0.68$, 8 periods), mostly agents starting and stopping together; the regime-III rise in co-activation vanishes (NE14: $+0.15\to+0.01$). In regime I, $f=0.11$; talk co-activation survives everywhere. Pre-registered stall-filter test P4 failed (median $f=0.25$); synthetic data showed the agent-state estimator is the sound one. Holdout script frozen, not run.}
+
+\hmodel{Models 01 (Curie--Weiss) and 09 (Hawkes). $s_i(t)=\pm1$: agent $i$ active in minute $t$; $h_i(b)$: per-agent field per 30-min block; $z(t)$: stall indicator (operator pause, not yet started or finished, consolidating, infrastructure error), a field that switches agents off; $\pi$: stall fraction; $p$: on-rate. Stall-adjusted gain: drop off-schedule minutes, set scaffold-unavailable agent-minutes to the agent's block mean, compare with block-shift surrogates treated the same way.}
+
+\hmath{\vspace{-8pt}\begin{gather*}
+P(\mathbf s)\propto\exp\!\Big[\tfrac{\beta J_0}{2N}M^2+\textstyle\sum_i\big(h_i(b)+\Delta_i z(t)\big)s_i\Big],\quad M=\sum_i s_i\\
+\mathrm{VR}=\frac{\sum_b n_b\operatorname{Var}_b M}{\sum_b n_b\sum_i\operatorname{Var}_b s_i},\qquad g=1-\mathrm{VR}^{-1}\\
+\text{stalls alone: }\ \mathrm{VR}-1\approx\frac{(N-1)\,\pi p}{1-(1-\pi)p}\quad(N{=}12,\,p{=}0.5,\,\pi{=}0.05\Rightarrow g\approx0.34)\\
+f=1-\frac{g_{\rm adj}-\langle g_{\rm adj}\rangle_{\rm null}}{g_{\rm raw}-\langle g_{\rm raw}\rangle_{\rm null}}
+\end{gather*}\vspace{-10pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Excess equal-time gain per goal period before and after conditioning on scaffold states (dashed: half removed). Regime-III points (red) drop to or below the dashed line, except \#44 and \#51; regime I (blue) stays on the identity line. Black edge: still $z>2$. (b) Primary causes of joint-silence minutes, mean over periods: in regime I most have no logged reason; in regime III, operator schedule, day edges and consolidation dominate. Infrastructure errors are under 1\%.}
+
+\htelos{A useful negative plus one practical rule. If you run an always-on swarm with a daily start and stop, any synchrony number (mean-field coupling, market-mode eigenvalue, co-activation) is mostly your own schedule: agents boot and stop together. Trim each day to the window in which all agents run, and condition on logged consolidation and error gaps, before reading such a number as coordination; here that removes about two thirds of it. Beyond that it's mostly bookkeeping: joint silences aren't a stall signal worth alerting on, error logs don't predict them, and real provider outages leave no trace here. Message-driven swarms (regime I) get nothing from this. The \#44 and \#51 residuals are the coupling worth studying.}
+
+\hbottom{Joint silences are mostly chance, not stalls, but in the always-on regime two thirds of the apparent collective co-activation is agents starting and stopping together, so trim to the common running window before measuring synchrony.}
+
+\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.40\columnwidth}p{0.45\columnwidth}p{0.12\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 JS share 0.05--0.30, above independence; village-off in $\le6$ periods & median 0.10; excess only 0.008; 9 periods & $\times$\\
+P2 scaffold reasons in JS above chance; timer pauses lead in regime III & explained 0.51 (strict 0.16), $>$ surrogate q95 in 8/35; pauses lead in 0/9 & $\times$\\
+P2d village-off minutes $\ge80\%$ scheduled & 84\% & $\checkmark$\\
+P3 infra-error bursts precede JS (OR $>1$) & reversed: log OR $-0.43$; 9/30 positive, 0 significant & $\times$\\
+P4 stall filter removes $\ge$ half of excess gain & median $f=0.25$ (III 0.63, I 0.16) & $\times$\\
+Amend.\ 2: scaffold conditioning & $f=0.68$ (III), 0.11 (I); H02 chunks 13$\to$9 significant & III $\checkmark$\\
+P5 $\lambda_1$ drop tracks stall share ($\rho\ge0.6$) & $\rho=0.89$; drop 0.48 of lull filter's & partial\\
+P6 regime III$-$I contrast shrinks $\ge$ half & $+0.125\to+0.017$ (86\%) & $\checkmark$\\
+P8 agreement with Hawkes fast $n_x$ ($\rho>0.3$) & $-0.38\to+0.05$ & $\times$\\
+P9 NE14 jump carried by stalls & $+0.15\,[0.07,0.23]\to+0.01$ (stall), $-0.06$ (scaffold) & $\checkmark$\\
+\end{tabular}}}
+
+\hobsb{../figures/synthetic.png}{Synthetic swarms (N = 12, 5 days; 50 replicates per condition). Stalls alone make the raw gain significant in 98\% of replicates. The pre-registered stall filter leaves 20\% false ``coupling'' at full marker recall; agent-state conditioning leaves 6\% and recovers planted coupling within $-5$ to $+23\%$. Both degrade when 30\% of stalls are unmarked (60\% and 36\%).}
+
+\hcaveats{LLM API failures leave no log line. They hide among the unexplained joint silences (31\% of JS minutes), so provider outages remain untested. The headline estimator (scaffold conditioning) was added after synthetic smoke runs and before any real-data gain analysis; the pre-registered stall filter failed. The surrogate test of ``explained above chance'' is weak for schedule-aligned stalls (G37 and G38 fail it despite $f\approx0.8$). Whether pauses count as infrastructure is a choice: regime-I waits are message-triggered, a coupling channel. Results depend on the half-of-silent rule (strict rule: explained share 0.16). The holdout has not been run.}
+
+\hnext{Per-provider silence test (all agents of one lab silent while others act) for API outages; run \texttt{confirm.py} (C1--C6, including the NE21 hours reversal, where 8-h days should dilute edge-induced co-activation); study the \#44 and \#51 residual coupling.}

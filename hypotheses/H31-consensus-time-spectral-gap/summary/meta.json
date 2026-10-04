@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 1.0,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Round 1 done: consensus events defined by rule before outcomes (project, vote, content), dated predictions in the card and in 27 period folders, synthetic validation of five truth models on the real reading schedules, a cross-period scaling test with leave-one-period-out model comparison, robustness at W = 15/30/60 plus post hoc controls, a forecast rule frozen, and a confirmatory script written and dry-run. Holdout not run. The mechanism tests (agent-level adoption vs connectivity, the merge A-B-A) are not started.",
+    "faithfulness": "The core prediction (tau proportional to 1/lambda2, slope 1) failed: slope 0.37 [0.08, 0.55], and the slope-1 rule loses to a constant out of sample. The primary statistic was shown to be underpowered (synthetic power 0.13). A field-only model is rejected for gradual events (not kick-locked; the slope lies outside the field truth's range), but diffusion, voter and herding are not distinguished. Content never converges. Scorecard A1 B1 C1 D0 E0 F1 G1 H1 I0; no holdout.",
+    "usefulness": "A computable base-rate forecast for swarm coordination time: about 4 active h from first appearance to majority, 80% interval 1-18 h, plus about 20% settled at kickoff and about 25% within 30 min. Also a design caution: chat-room spectral gaps mostly measure message volume. The post hoc lead (uneven exposure slows consensus) could become a monitor if confirmed. The payoff is modest and the intervals are wide."
+  },
+  "one_line": "Consensus time does not follow 1/lambda2: at best tau ~ lambda2^-0.37, a constant ~4 h forecast wins, and half of consensus is kickoff-set or one-window waves",
+  "rated_by": "H31 agent (suggested)",
+  "updated": "2026-10-03",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

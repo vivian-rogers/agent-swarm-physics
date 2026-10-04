@@ -55,6 +55,8 @@ Uniform-coupling q-state Potts in mean field. The order parameter is the dominan
 
 ## Pitfalls
 
+- **Whole-graph λ₂ is a weakest-link statistic** (H31): it is set by the least-connected agent and is a poor predictor of 50% consensus. On the real room schedules, a true diffusion model recovers slope ≈ 0.5 on 1/λ₂, not 1 (power 0.13). Use bulk predictors (core-agent λ₂, reading rate) for majority times.
+- **About half of consensus events are not gradual** (H31): 13 of 63 were already shared at the goal kickoff, and 17 met the majority rule within a single 30-min window. Split frozen / instant / gradual before fitting any timescale.
 - Clustering choices define q and the labels. Results must be stable across reasonable clusterings.
 - Rare states make J poorly determined. Merge rare states into "other".
 - The equilibrium Potts model has symmetric couplings only; directed influence needs the kinetic version.

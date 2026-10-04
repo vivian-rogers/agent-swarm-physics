@@ -5,6 +5,18 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-04 (UTC)
+
+- **H38 (joint silences are platform stalls), round 1: mostly refuted, with a yes for regime III.**
+  - Joint silences occur at the rate independent agents produce (median excess 0.008 of minutes). Infrastructure-error bursts make them *less* likely (log OR −0.43; HH94 fails in reverse). Village-off gaps are the operator's schedule (84%).
+  - **But about two thirds of regime-III collective co-activation is infrastructure** (median f_scaffold 0.68): agents starting and stopping together at the daily resume and pause. The regime II → III rise goes away (NE14 +0.15 → +0.01; H19's +0.11 → +0.017). Regime I is not affected (0.11); #44 and the #51 head keep their full excess.
+  - **Shared table built:** `outages.parquet` + `stall_minutes.parquet` (moving to `data/processed/shared/` via the consolidation agent). Operator rule: trim each day to the all-agents-running window before any synchrony statistic. Scorecard all 1s. `confirm.py` not run.
+- **H36 (reorganization alarm), round 1: mixed.** The susceptibility / multi-information alarm hits 10 of 33 goal changes (AUC 0.68, window false alarms 0.10), all through content; activity is at chance once roster and day-length changes are dropped. A plain topic-shift detector (R1, day-to-day content centroid shift) scores AUC 0.95. Post hoc, R1 ≥ 3 or Z_cont ≥ 2 catches 58% of goal changes at 2% window false alarms (in-sample; frozen as C3). Scaffold changes 1/13 (chance). Scorecard A1 B1 C1 D0 E0 F1 G1 H0 I0.
+- **H31 (consensus time vs spectral gap), round 1: the 1/λ₂ law fails.** τ ∝ λ₂^−0.37 [0.08, 0.55]; the slope-1 rule loses to a constant out of sample (log-RMSE 1.25 vs 1.08); synthetic power was only 0.13, because whole-graph λ₂ is a weakest-link statistic. Of 63 consensus events, 13 were frozen at the kickoff, 17 were one-window waves and 33 were gradual (median 4.5 active h). Content alignment never converges; it relaxes from about 0.64 to 0.29 after kickoffs (τ ≈ 4.4 h). Forecast rule: a constant ≈ 4 active h (80%: 1–18 h). Post hoc lead: the structural part of λ₂ (volume/λ₂) predicts τ. Scorecard A1 B1 C1 D0 E0 F1 G1 H1 I0.
+- **H29 (driver nodes), round 1: not supported; influence is address-gated (post hoc).** The pre-registered net pull came out negative in 7 of 9 units because of two artifacts: the H18 visibility rule misses messages that arrive during pauses and long tool calls (39–70% of "invisible" rows), and content similarity falls 5–23× with message age. Matched-age boundary test: a message naming the recipient pulls its next statement 3–6× more than an unnamed one (all 5 #51 segments). Controllability driver rankings are not reproducible (split-half 0.05–0.17) and predict no held-out spread (ρ 0.09). Scorecard A1 B1 C1 D0 E0 F1 G1 H0 I0. Usefulness calibrated to 2.5 (naming lever, parity with H04).
+- **Data-quality follow-ups from these four**, sent to the running agents: DQ1 builds a `call_windows` table and pause-aware visibility (H29); the consolidation agent moves H38's outage tables into shared, adds an `error_class` for `actions.error`, and makes H11's project-label tie-break deterministic (H31). Known issues, DEFINITIONS variants (H29, H31, H36, H38) and the Potts / vector-spin pitfalls updated; cross-notes added to the H02, H19, H11 and H18 cards.
+- **DQ4 (work-output ledger) and DQ5 (embedding robustness) launched** in the freed slots. The machine is CPU-saturated (load ~130, 0% idle, memory fine); new agents are told to stay at ≤ 2 threads.
+
 ## 2026-10-03
 
 - **H08 (context is the coupling), round 1:**

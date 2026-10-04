@@ -327,6 +327,7 @@ Holdout reuse under the 2026-10-03 policy: H18's statistic (mention responses vs
 6. Feed β̂ into H03 and H05 as the per-pair normalization J ∝ N^−β, and test whether it closes H03's n̂-vs-N trend.
 
 ## Notes
+- **From H29 (2026-10-04):** the call-start visibility rule labels messages that arrive during a PAUSE or long tool call as invisible, but the next call sees them (39–70% of regime-III invisible rows). Content similarity also falls 5–23× with message age. Together with H08's mid-exchange explanation, this accounts for the failed placebo. Re-run on the context ledger's visibility.
 - 2026-10-03: promoted from HH99.
 - 2026-10-03: observables, nulls, predictions and the choice of periods written before any real-data run.
 - 2026-10-03: synthetic validation, then amendments A1–A4, before any real-data fit. Round-1 fits, post-hoc diagnostics and the confirmatory script (not run). Code map:

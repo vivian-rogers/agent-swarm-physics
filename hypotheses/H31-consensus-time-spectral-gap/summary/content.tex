@@ -1,0 +1,35 @@
+\hwhat{Consensus events were defined by rule before outcomes and timed across non-holdout periods \#10--\#44: project-share majorities from H11's labels (63 events, 20 periods), the \#26 runoff vote, and content-alignment convergence. Their times were regressed on the exposure graph's spectral gap $\lambda_2$. Gradual project consensus (33 events, median 4.5 active h) scales sub-linearly, $\tau\propto\lambda_2^{-0.37}$ [0.08, 0.55], not as $1/\lambda_2$. The slope-1 law loses to a constant forecast out of sample (log-RMSE 1.25 vs 1.08); a free slope wins by 8\%. The synthetic run on the real schedules had already put this test's power at 0.13. Of the other events, 13 were frozen at the kickoff and 17 were one-window waves. Content never converged: it diverged after the kickoff in 12 of 35 blocks. The \#26 runoff jumped in 0.76 h (post hoc). Holdout not run.}
+
+\hmodel{Model 10's voter and Potts coarsening, plus graph diffusion (HH68). $W_{ij}$: agent $j$'s messages first seen by $i$ (call-start visibility), per active hour. $L$ is its symmetrized Laplacian, with spectral gap $\lambda_2$. The state $x_i$ is an agent's project (H11 labels) or its whitened statement embedding. Rivals run on the same reading schedule: DeGroot averaging (time-respecting gap $\gamma_{tr}$), the voter model ($\tau\propto N/u$, $u$ = reading rate), a herding wave, and a field (kick-locked timing).}
+
+\hmath{\vspace{-8pt}
+\begin{gather*}
+L=D-\tfrac12\,(W+W^{\top}),\qquad 0=\mu_1<\lambda_2\le\mu_3\le\dots\\
+\dot x_i=\textstyle\sum_j W_{ij}\,(x_j-x_i)\ \Rightarrow\ \tau\propto 1/\lambda_2\ \ \text{(H31)},\qquad \tau_{\rm voter}\propto N/u\\
+\log\tau_e=c+b\,\log(1/\lambda_2)+\epsilon_e:\quad \hat b=0.37\ [0.08,\,0.55]\ \ \text{vs. } b=1
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Gradual project-consensus times against the exposure spectral gap, with the calibrated slope-1 law (dashed), the free fit (solid) and the constant forecast (dotted). Triangles: instant one-window events ($\tau\le0.5$ h, censored). (b) Leave-one-period-out error of each forecast rule. Only the free sub-linear slope beats the constant, by 8\%. The voter, herding-wave and time-respecting models miss by an order of magnitude.}
+
+\htelos{Mostly negative, with one usable number. A swarm operator can't use the textbook ``consensus time $\propto 1/\lambda_2$''. In chat rooms everyone sees everything, so $\lambda_2$ is mostly message volume. And consensus comes in three kinds: about a fifth is fixed by the kickoff prompt, a quarter arrives as one-window link-sharing waves, and the rest takes hours. The usable rule is a base rate: from a project's first appearance, expect a majority after about 4 active hours (80\%: 1--18 h). One lead is worth testing: rooms with poorly connected members converge more slowly (post hoc). Content alignment never converged; it decayed after the kickoff. So more talk did not buy agreement in content.}
+
+\hbottom{Consensus in the village does not follow the $1/\lambda_2$ law: gradual project consensus scales only as $\lambda_2^{-0.37}$ and is forecast no better than by a constant ($\approx$4 active h, 80\%: 1--18 h), while half of all consensus is set by the kickoff or arrives in one-window waves.}
+
+\hresults{{\footnotesize\noindent\begin{tabular}{@{}p{0.30\columnwidth}p{0.47\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\
+P1 slope 1 on $\log(1/\lambda_2)$; beats constant & $0.37$ [0.08, 0.55]; RMSE 1.25 vs 1.08 & failed\\
+P2 no $N$ slope & $-0.51$ [$-1.38$, 0.72] & holds (not identifiable)\\
+P3 kick-locked & 0.41 vs placebo 0.25 ($p=0.002$), all from kickoff-frozen events & trivial\\
+P4 $\ge$60\% abrupt rises & 13\% (45\% with instant waves) & failed\\
+P5 content slope on $1/\gamma_{tr}$ & no convergence event (12 diverge) & untestable\\
+P6 room sign as diffusion & 3/4 two-room periods & weak pass\\
+P8 synthetic power $\ge$0.5 & 0.13 for $\lambda_2^{w,\rm sym}$ & failed\\
+P9 median $\tau$ 0.5--4 h & 4.5 h & failed (narrowly)\\
+P10 runoff $\le$1 h & 12.5 h by rule; 0.76 h rise post hoc & failed\\
+\end{tabular}}}
+
+\hobsb{../figures/summary_obs_b.pdf}{Synthetic truths run on the 28 real block schedules, through the same labels and detection rule. Every coupled dynamics gives an attenuated slope (0.3--0.5); a pure field gives about 0. The village estimate (orange band) excludes the field but cannot separate diffusion, voter and herding.}
+
+\hcaveats{Thirty-three gradual events from 14 periods, with one primary test that failed. The sub-linear slope ($p\approx0.04$) survives regime, period-length and $N$ controls. It does not survive the core-agent or event-window variants, dropping the pre-NE09 periods, or within-regime splits. $\lambda_2$, message volume, $N$ and regime co-vary. The split into frozen, instant and gradual events and the ``uneven exposure'' decomposition are post hoc. Labels measure attention (artifact mentions), not work. The call-start visibility rule is doubtful in regime I. The \#26 onset rule fired at the period start. Content uses one embedding model at 30-min resolution.}
+
+\hnext{Holdout run (\#29, \#46, \#47, \#49, \#50) after sign-off. An agent-level test: do poorly connected agents adopt later? Find what triggers instant waves (a shared link seen by $\ge3$ agents in one call cycle?). Use the \#39$\to$\#40$\to$\#41 merge as an intervention.}

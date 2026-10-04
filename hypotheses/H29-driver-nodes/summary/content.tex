@@ -1,0 +1,35 @@
+\hwhat{We built a content-influence network per goal period: how far agent $j$'s next statement moves toward a message from $i$ it has just seen, net of placebos. We then ranked agents by linear controllability (who, if injected, moves the swarm mean most) in 9 counted and 3 short non-holdout units (regime III, \#51). The pre-registered test failed in the opposite direction: the ``unseen'' placebo pulled more than seen messages in 7/9 units, because it held messages actually seen after pauses and because content similarity tracks recency. Post hoc, comparing seen and truly unseen messages at matched age, influence is real and goes through names. Named recipients move 0.03--0.09 of the gap per message in all five \#51 segments, unnamed ones 0.01--0.02. The driver ranking is not reproducible across days (median split-half 0.05--0.17) and predicts no held-out spread (pooled $\rho=0.04$--$0.09$), and neither does message volume. Holdout script written, not run.}
+
+\hmodel{Linear response (model 02) with vector content states (11): DeGroot/Friedkin--Johnsen dynamics. $x_j$: agent $j$'s whitened statement embedding. $V(\tau)$: messages that reached $j$ between its previous and current model calls. $a_{ij}$: pull per message. $A_{ij}=a_{ij}r_{ij}$, with $r_{ij}$ the messages from $i$ absorbed by $j$ per hour. $\Gamma$: relaxation toward the agent's own field. Driver score $D_k$: reachability of the swarm mean from agent $k$ over $T=4$\,h. $E_k=N^2/D_k$: energy to shift the mean through $k$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+x_j(\tau_n)=x_j(\tau_{n-1})+\textstyle\sum_{m\in V(\tau_n)}a_{s(m)j}\,[x_m-x_j(\tau_{n-1})]+\gamma_j[h_j-x_j]+\xi\\
+\dot{\mathbf x}=Q\mathbf x+\mathbf e_k u,\quad Q_{ji}=A_{ij},\ \ Q_{jj}=-\textstyle\sum_i A_{ij}-\Gamma\\
+D_k=\int_0^T\!\big(\mathbf 1^{\!\top}e^{Qt}\mathbf e_k\big)^2dt,\quad \mathbf 1^{\!\top}Q\,\mathbf e_k=\mathrm{out}_k-\mathrm{in}_k-\Gamma
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/h29_obs.pdf}{(a) Post hoc visibility jump at matched age (seen minus unseen messages within 30\,s of the reply), like-for-like: named recipients (blue) vs unnamed (orange). Named $\gg$ unnamed in every \#51 segment; the two-room weeks are underpowered. (b) Split-half reproducibility of rankings: message volume is always reproducible; the driver score only sometimes (grey band = what a true model gives on synthetic data).}
+
+\htelos{The useful part is negative and simple. To move an agent, name it: that is a 3--6$\times$ stronger lever than broadcast, and broadcast content barely propagates. To move the whole swarm, address every agent rather than hunting for a relay. Network controllability, the hypothesis' selling point, adds nothing measurable here. In one big room the ``driver'' is just the chattiest agent. In the small two-room weeks the ranking is noise. And no ranking, controllability or volume, predicts observed spread. The steering-cost result (a typical agent costs $\propto N^{2.7}$, a one-room hub stays flat) is model-only. A methodological warning travels too: ``seen vs unseen'' placebos built from turn timing are contaminated by pauses, and content similarity is dominated by recency.}
+
+\hbottom{Content influence between agents is real but address-gated (named $\approx$3--6$\times$ unnamed, post hoc), and linear controllability yields no reproducible or validated ``where to inject'' ranking beyond ``name the agents you want to move''.}
+
+\hresults{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.47\columnwidth}p{0.19\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\ \hline
+\raggedright S1--S4 synthetic: no false positives, ranking recovered & \raggedright 0/19 false positives; $\rho(\hat D,D_{\rm true})$ 0.47--0.79 (0.32 over-coupled) & \raggedright passed / partly \tabularnewline
+\raggedright P1 net pull $\kappa>0$ in $\geq 6/9$ & \raggedright 0/9 positive, 7/9 \emph{negative} (placebo contaminated) & \raggedright failed \tabularnewline
+\raggedright P2 placebo absorbs $\geq 50\%$ & \raggedright median ratio 1.7 & \raggedright exceeded \tabularnewline
+\raggedright \emph{post hoc} seen vs unseen at matched age & \raggedright $>0$ in 4/9 counted + 2 short; named 0.03--0.09 vs unnamed 0.01--0.02 (\#51) & \raggedright influence, address-gated \tabularnewline
+\raggedright P4 structural drivers uninformative & \raggedright $N_D\approx N$ sparse, 1 dense & \raggedright as predicted \tabularnewline
+\raggedright P5 split-half $D\geq0.4$ (G38, G51b, G51c) & \raggedright $-0.21, 0.17, -0.09$ (post hoc $-0.31, 0.87, 0.38$); volume 0.94 & \raggedright failed \tabularnewline
+\raggedright P6 held-out $\rho(D,H)$ pooled $\geq0.3$ & \raggedright 0.09 $[-0.08,0.27]$; volume $-0.06$ & \raggedright failed \tabularnewline
+\raggedright P8 $E^*\propto N^{1.5\text{--}2.3}$ & \raggedright best driver $\eta=-0.3$; median agent $2.7$ (model-only) & \raggedright not supported \tabularnewline
+\raggedright P9 humans via top drivers spread more & \raggedright 98 msgs, 0.10 vs 0.23, CI spans 0 & \raggedright failed \tabularnewline
+\raggedright P10 named $\geq2\times$ unnamed, unnamed $>0$ & \raggedright 7/9; unnamed $\leq0$ pre-reg, small $>0$ post hoc & \raggedright half \tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/h29_obsb.pdf}{(a) Synthetic data on real event skeletons: when the linear model is true, the driver score beats out-strength and volume at finding the best injection point. (b) Real data: no ranking predicts held-out 2-h swarm spread, and the spread statistic itself (grey) rarely replicates across halves of days.}
+
+\hcaveats{The positive findings are post hoc. The boundary test assumes the model call starts at the previous logged turn when that window is $\leq 30$\,s; the scaffold's context-assembly time is not logged. Like-for-like controls shrink the named effect by about a quarter (0.115 to 0.084 in G51b) but cannot exclude that named messages are answered in a different conversational mode, and mentions carry H18's engagement contamination. One embedding model (bge-small, whitened); raw 384-d vectors give unstable rankings in some units. The two-room weeks have only 30--60 visible rows within 10\,s of a reply. The synthetic common drive under-produces real co-response.}
+
+\hnext{Run \texttt{confirm.py} (G47, \#51 tail) after disclosures; compare with H32's transfer-entropy sources; repeat the boundary test with a second embedding model; test the naming lever on human messages with matched controls (H30); find what predicts the replicable G51b spread ranking.}

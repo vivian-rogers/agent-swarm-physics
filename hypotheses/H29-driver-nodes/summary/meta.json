@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 1.0,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: synthetic validation (5 conditions x 3 skeletons, plus post hoc recovery at fitted magnitudes), 12 per-period verdicts, pre-registered scoring, a diagnosed failure and a labeled post hoc amendment. The confirmatory script is written and dry-run, not run. The visibility-boundary measure needs a cleaner context-assembly timestamp, and a second embedding model, in round 2.",
+    "faithfulness": "The driver-node model fails as posed. The pre-registered influence test failed (wrong sign, contaminated placebo); the ranking is not reproducible (P5) and predicts no held-out spread (P6, D = 0, H = 0). The only positives (boundary jump, named >> unnamed) are post hoc (C capped at 1).",
+    "usefulness": "Gives a concrete lever comparable to H04's nudge-targeting rule: naming an agent moves its next statement 3-6x more than broadcast (5/5 #51 segments, post hoc), and controllability driver lists are not reliable. No validated relay choice."
+  },
+  "one_line": "Content influence is real but address-gated (named ~3-6x unnamed, post hoc); linear controllability gives no reproducible or validated 'where to inject' ranking",
+  "rated_by": "H29 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (usefulness 2.0 -> 2.5, parity with H04)"
+}

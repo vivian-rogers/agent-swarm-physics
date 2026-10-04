@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 2.0,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: shared outages table built for all days, synthetic validation (24 conditions), all 35 non-holdout periods plus the NE14 boundary, per-period verdicts, scorecard; confirmatory script frozen with a working dry run, holdout not run; provider-level (API) outages untested.",
+    "faithfulness": "The literal hypothesis (joint silences are platform stalls; the pre-registered stall filter removes most co-activation) failed: P2, P3 and P4 failed, and per-period verdicts were 8 supported / 7 mixed / 20 failed. A clear partial result holds: in regime III two thirds of co-activation is scaffold, NE14 and P6 pass, and the estimator is validated synthetically (C = 1, D = 1, E = 1, F = 1).",
+    "usefulness": "A computable, log-only preprocessing rule (trim to the common running window; condition on consolidation and error gaps) and an outage table other analyses reuse. It removes most spurious synchrony in always-on swarms. Its payoff is defensive (don't misread schedule as coordination), and it can't see API outages."
+  },
+  "one_line": "Joint silences are mostly chance, not stalls; but two thirds of regime-III co-activation is agents starting and stopping together.",
+  "rated_by": "H38 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

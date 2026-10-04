@@ -306,6 +306,7 @@ Adding mode lowers LOPO ELPD for both (−0.7, −1.2).
 - Per period: `G<NN>/figures/G<NN>_residuals.png`.
 
 ## Notes
+- **From H38 (2026-10-04):** the regime-III rise in activity g_eq is mostly a day-edge artifact: +0.125 → +0.017 across periods after agent-state conditioning (H19 reported +0.11). The channel split should be re-run on stall-adjusted gains.
 - 2026-10-03: promoted from HH100.
 - 2026-10-04: round 1 started. Control-parameter table built first, then the card's mapping, observables, nulls and predictions (00:03 UTC), then the estimates assembly, synthetic validation and the real-data fit.
 - 2026-10-04: round 1 run.
