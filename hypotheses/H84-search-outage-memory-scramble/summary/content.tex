@@ -1,0 +1,32 @@
+\hwhat{On 2026-03-31 and 04-01 the history-search oracle returned near-empty answers. The test treats this as a Kolchinsky--Wolpert scramble of the village's access to its own past. Each agent's dose is its search rate in the five days before. The outage fully reached one agent: its answers fell from 2{,}880 to 42 characters, and it retried 128 times. Continuity did not dip. It rose with dose ($\beta=+0.12$ per search per 100 calls; placebo rank $p$ for a dip 0.87), and so did references to earlier-goal artifacts. Commits per 20 calls did not move. A dip of 0.30 at the mean searcher dose is excluded (power 0.85--0.91); a dip of 0.20 is not. Search answers carry 0.012 bits about the next repo (7 periods). The holdout script exists and is not run.}
+
+\hmodel{Semantic information, natural-scramble variant (model 04). The system $X$ is one agent's allocation: which repos its work commits go to. The environment $Y$ is the logged past, reached through the search oracle (channel $Q$). The outage degrades $Q$. The dose $d_a$ is searches per 100 calls before the outage. Viability $V$ is continuity (share of commits on pre-existing repos), with earlier-goal references and commits per 20 calls as secondary components. $O_t$ marks outage days and $R_t$ recovery days. The permutation $\pi$ shuffles the answer pointer $S_Q$ within agent.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+y_{a,t}=\alpha_a+\gamma_t+\beta\,d_a O_t+\beta_{\rm rec}\,d_a R_t+\varepsilon_{a,t},\qquad \Delta V_Q=\beta\,\bar d_s\\
+I_Q=\hat I_{\rm MM}(X^+;S_Q)-\langle \hat I_{\rm MM}(X^+;S_Q^{\pi})\rangle_{\pi},\quad \kappa_Q=\frac{\Delta V_Q}{I_Q}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Median answer length per day for the two heaviest searchers (log scale). The outage (gray) collapses the top searcher's answers to 42 characters; the second searcher's answers halve. (b) The dose $\times$ outage slope (orange) against 38 placebo day pairs (gray) and five kickoff-matched pairs (green). Continuity (V1) and earlier-goal references (V3) move up, not down.}
+
+\htelos{Do not treat history search as load-bearing memory. Few agents use it: three of twelve searched more than once per 400 calls. When it broke, the one agent it reached retried and kept working from its own artifacts, with no loss of commits ($+0.03\pm0.51$ per 20 calls). An operator can let the search tool fail for a day without a measurable cost to project continuity. Invest in the artifact path instead: keep repos readable and named in the agent's notes. Search answers name the agent's own repo in 13\% of \#51 searches, and those searches precede a return 99\% of the time, but the agent chose the query.}
+
+\hbottom{The history-search outage cost the scrambled agent no continuity and no output; the search channel carries about 0.01 bits of allocation information.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 continuity dips $\propto$ dose & \raggedright $\beta=+0.12$; rank $p$ (dip) 0.87; above all 5 kickoff-matched & \raggedright fail\tabularnewline
+\raggedright P2 immediate recovery & \raggedright searchers stay high on 04-02/03 ($\beta_{\rm rec}=+0.24$) & \raggedright fail\tabularnewline
+\raggedright P3 duplicates up, old refs down & \raggedright 13 duplicates (unpowered); old refs $+0.16$, max of 38 & \raggedright fail\tabularnewline
+\raggedright P4 first stage & \raggedright 1 of 3 searchers degraded (128 retries) & \raggedright partial\tabularnewline
+\raggedright P5 re-reads rise & \raggedright $+6.4$ per 100 calls (perm $p$ 0.048; rank 0.23) & \raggedright partial\tabularnewline
+\raggedright R $I_Q>0$ in $\ge 2/3$ & \raggedright 2/7; pooled 0.012 [$-0.011$, 0.035] bits & \raggedright fail\tabularnewline
+\raggedright N2 NE18 rework helps & \raggedright no first stage; $\beta=+0.055$, $p$ 0.11 & \raggedright inconcl.\tabularnewline
+\raggedright N3 failed answers cost & \raggedright RR 1.25 [0.52, 2.42] (\#51, 83 failures) & \raggedright not cons.\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Synthetic power of the placebo-rank test at real counts, against a planted dose-proportional dip (band: agent-day noise 0.3--1.0). Continuity reaches 0.8 only near a 0.30 dip. (b) Search-answer information about the next repo per period, with 95\% bootstrap CIs; blue beats the within-agent permutation floor.}
+
+\hcaveats{One agent was fully scrambled, for two days, so the bound applies to a heavy searcher, not to the village. The searchers' continuity is also high on the recovery days, so a dose $\times$ goal interaction (\#37 $\to$ \#38) could hide a small dip. Duplicate creation has 13 events and cannot speak. $I_Q$ counts only repos named in answers. Failed searches in \#51 are not exogenous. The single-agent residual check is post hoc. The NE18 test is oversized (0.12--0.22) and had no first stage.}
+
+\hnext{Check NE45 (07-29, \#51, 32 agents) for a search-failure burst; if present, rerun the dose design there. Run the NE25 confirmatory test after sign-off.}

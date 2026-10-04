@@ -1,0 +1,33 @@
+\hwhat{The test builds the Kolchinsky--Wolpert channel table: for each information channel, the allocation bits it carries ($I_c$) and the commits lost when it is naturally scrambled ($\Delta V_c$). The ratio $\kappa_c$ is commits per 20 calls per bit. The main design pools 18{,}760 non-holdout forced erasures against matched pseudo-erasures. Only the context window has value: $\kappa_C=5.2$ [3.8, 7.9]. Its erasure costs 41\% of output for 0.08 bits. The own artifact carries the most bits (0.14) but no value: $\kappa_A=-0.6$ [$-1.6$, $+0.3$]. Memory, chat, search and human messages carry $\le0.04$ bits each, with value consistent with 0. The kickoff carries 0.36 bits and costs nothing. The predicted order (artifact first) fails. Receiving chat after an erasure raises output 22\% without allocation bits. The holdout script exists and is not run.}
+
+\hmodel{Semantic information, natural-scramble variant (model 04); plug-in estimators (model 12). The system $X^+$ is an agent's next allocation: the repo of its first work commit in 20 calls. Each channel $c$ has a pointer $S_c$, the repo it names. It is open ($o_c$) when it names the agent's own artifact. The scramble $s$ is a forced erasure. A pseudo-erasure at call 21 of a long segment is the placebo. $V$ counts work commits in 20 calls; the Poisson fit also adjusts for $\log(1{+}V_{\rm pre})$, commits in the 20 calls before. Strata $g$ are agent $\times$ period. For the context row, $I_C=I_{s=0}-I_{s=1}$ and $\Delta V_C$ is the erasure cost; $\kappa$ is defined only where the CI of $I_c$ lies above 0.02 bits.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+I_c=\hat I_{\rm MM}(X^+;S_c)\big|_{s=1}-\big\langle \hat I_{\rm MM}(X^+;S_c^{\pi})\big\rangle_{\pi\in g},\qquad \kappa_c=\Delta V_c/I_c\\
+\log E[V]=\phi_{g,s}+b_1 o_c+b_2\,o_c s+\dots,\quad \Delta V_c=\bar V_{o,s}(1-e^{-b_2})
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{The $\kappa$ table at forced erasures. (a) Allocation information per channel, bits, 95\% paired-bootstrap CIs. Kickoff (green square) is the day-scale goal change. (b) Commits per 20 calls lost when the channel is scrambled. Context (orange) is the erasure cost; the others are open $\times$ erasure differences. The gray diamond is the search outage (H84). Only context has a value whose CI excludes 0.}
+
+\htelos{Protect the context window, not the notes. A forced erasure costs 41\% of the next 20 calls' commits, 5.2 commits per 20 calls per bit removed. Lengthening the 41-call cap is the lever with a measured payoff. Do not expect memory notes, larger memories, history search or repo-naming chat to buy it back: none shows value above 0. The own repo is the best pointer (0.14 bits; return 0.96 when re-read), but re-reading after an erasure gains nothing beyond what it gains at any call. Chat after an erasure does raise output (+22\%), so a short status message to a freshly erased agent is a cheap candidate lever. It is untested as an intervention.}
+
+\hbottom{Of seven information channels, only the context window buys commits per bit ($\kappa_C=5.2$); the artifact carries more bits but no measurable value.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 $\kappa_A>\kappa_C>\kappa_G>\kappa_K>\kappa_M$ & \raggedright $\kappa_C$ 5.2 $\gg\kappa_A$ $-0.6$ ($P$ = 1.00); rest n.i., $\Delta V\approx0$ & \raggedright fail\tabularnewline
+\raggedright P2 $\kappa_C$ = 5.2 $\pm20\%$ & \raggedright 5.24 [3.79, 7.88]; cost 41\% & \raggedright pass\tabularnewline
+\raggedright P3 chat $\kappa_G$ CI $\ni0$ & \raggedright 0.020 bits; $\Delta V_{\rm rel}$ +0.04 [$-0.17$, +0.25] & \raggedright pass\tabularnewline
+\raggedright P4 human row unpowered & \raggedright no repo-naming item; dose +0.09 [$-0.20$, +0.40] & \raggedright pass\tabularnewline
+\raggedright P5 $\kappa_Q$ CI $\ni0$ & \raggedright 0.012 bits; outage $-0.03\pm1.0$; n.i. & \raggedright partial\tabularnewline
+\raggedright P6 $I_K\ge0.2$, $\kappa_K\ni0$ & \raggedright 0.36 [$-0.05$, 0.79]; $\kappa_K$ CI $\ni0$ & \raggedright partial\tabularnewline
+\raggedright P7 memory size null & \raggedright +0.01 [$-0.06$, +0.09] & \raggedright pass\tabularnewline
+\raggedright P8 no V40 sign flip & \raggedright none; artifact $-0.19$ [$-0.25$, $-0.14$] & \raggedright pass\tabularnewline
+\raggedright R context first, $\ge2/3$ & \raggedright 2/9 with $I_C$ identified; cost $>0$ in 7/9 & \raggedright fail\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Per period: the erasure cost (orange) is 0.30--0.45 of output in 7/9 periods; the artifact's open $\times$ erasure value (blue) straddles 0. (b) Synthetic at real counts: recovered vs planted $\Delta V_{\rm rel}$ for three rows in a world with value (W1) and one without (W0).}
+
+\hcaveats{$\kappa$ is a ratio of two noisy numbers. It is defined for context and artifact pooled, and for context alone in only 2/9 periods. Allocation is coarse-grained to the repo, so chat and human messages score near 0 bits by construction. Open flags are chosen by the agent. Search (46 open erasures) and human rows are unpowered. The chat row reproduces H70's room row. The per-period rule was clarified after the run; both counts are reported. $\eta=S/I$ is not identified: natural scrambles give one point, not the information--viability curve.}
+
+\hnext{Use a finer allocation variable (next behavior state or file) so chat can carry bits. Split the chat-after-erasure gain by item type with an in-flight placebo. Trace an information--viability curve with graded scrambles.}

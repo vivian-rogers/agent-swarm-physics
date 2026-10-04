@@ -1,0 +1,75 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before new-row data (H70 rows disclosed as prior knowledge); synthetic at real counts (two passes) that found and fixed the ratio-ordering failure (A1) before outcomes; N1 pooled NE41 table with paired bootstrap, N2 search outage (from H84), N3 kickoff (NE34); replication on 9 periods; scorecard; frozen, guarded confirm script dry-run only, not run. Graded scrambles (eta) and a finer allocation variable are open.",
+  "faithfulness": "The KW channel model holds for one channel: the context erasure costs 41% of output and kappa_C = 5.2 [3.8, 7.9] replicates H70 on an independent mapping; the predicted ordering (artifact first) fails, and every other row is consistent with zero value (powered for the artifact; unpowered for search and human). Erasure cost positive in 7/9 periods; kappa_C identified in 2/9. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "Gives an operator one number per channel: the context window is the only one worth protecting (41% of 20-call output; a longer cap is the lever); memory notes, memory size, history search and repo-naming chat buy nothing measurable. Flags chat after an erasure (+22%) as a cheap candidate lever. Not holdout-confirmed; the chat effect is not an intervention."
+ },
+ "one_line": "kappa table: only the context window buys commits per bit (kappa_C = 5.2 [3.8, 7.9] commits per 20 calls per bit; erasure costs 41%); the own artifact carries the most bits (0.14) but kappa_A = -0.6 [-1.6, +0.3]; memory, chat, search, human and kickoff values are consistent with 0.",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Context has value per bit; other channels none"
+  },
+  {
+   "model": "12-information-dynamics",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Plug-in MI with permutation floor and paired bootstrap"
+  }
+ ],
+ "rated_by": "H87 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Among the swarm's natural information channels, only the context window carries identifiable output value per bit (κ_C 5.2 [3.8, 7.9] commits per 20 calls per bit; a forced erasure costs 41% of output); artifacts, memory, chat reads and search are not identified above 0.02 bits",
+  "scope": "pooled NE41 forced erasures, 9 periods; natives G37, NE34",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.58,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "forced erasures as interventions (NE41)",
+    "x": 1.6,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic identification with the A1 ordering rule (power 0.92)",
+    "x": 1.5,
+    "evidence": "card §Amendment A1"
+   },
+   {
+    "factor": "robustness: same κ_C as H70 on an independent mapping (same data)",
+    "x": 1.2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: per-period rule applied post hoc; 2/9 periods supported under it",
+    "x": 0.8,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: artifact re-read equals its placebo value (value not separated from selection)",
+    "x": 0.9,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.0,
+  "decision": "lengthen the context cap before anything else; treat the context window as the only valuable channel",
+  "magnitude": "medium",
+  "generality": "any LLM swarm with context resets",
+  "expected_usefulness": 1.16,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H87 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

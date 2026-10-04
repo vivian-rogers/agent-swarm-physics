@@ -125,11 +125,11 @@
   {
    "symbol": "ΔW_erase",
    "name": "forced-erasure work cost",
-   "value": "commits −39% [−42, −35] for ~10 turns; ≈ 10% of a segment",
+   "value": "commits −39% [−42, −35] for ~10 turns; ≈ 10% of a segment; output −41% [−38, −44] over 20 calls (H87)",
    "kind": "response",
    "scope": "7/9 periods",
    "model": "04",
-   "source": "H15, H44",
+   "source": "H15, H44, H87",
    "meaning": "The context window carries the call-scale information; memory does not recover it."
   },
   {
@@ -285,11 +285,11 @@
   {
    "symbol": "κ_C",
    "name": "value of the context window per bit (Kolchinsky κ)",
-   "value": "5.2 [3.8, 8.4] commits per 20 calls per bit; artifact κ_A ≈ 0 (−0.6 [−1.7, +0.2])",
+   "value": "5.2 [3.8, 8.4] (H70); 5.2 [3.8, 7.9] on an independent mapping (H87) commits per 20 calls per bit; artifact κ_A −0.6 [−1.6, +0.3]; memory, chat reads, search, human messages not identified (I < 0.05 bits)",
    "kind": "information value",
-   "scope": "regime III forced erasures",
+   "scope": "regime III forced erasures (NE41), 9 periods",
    "model": "04",
-   "source": "H70",
+   "source": "H70, H87",
    "meaning": "Only the context window carries output value; artifacts carry location, not output."
   },
   {
@@ -451,6 +451,26 @@
    "model": "11",
    "source": "H100",
    "meaning": "A moved agent usually takes on its new room's content within a day; not universal."
+  },
+  {
+   "symbol": "g_chat_erase",
+   "name": "chat gain after an erasure",
+   "value": "+22% [8, 36] output beyond the placebo-call effect; ≈ 0 allocation bits",
+   "kind": "response",
+   "scope": "NE41 pooled",
+   "model": "04",
+   "source": "H87",
+   "meaning": "Chat helps a freshly erased agent restart work without carrying where-to-work information; a candidate lever, not yet tested as one."
+  },
+  {
+   "symbol": "ΔW_search",
+   "name": "history-search outage cost",
+   "value": "β +0.12 per search per 100 calls (dip ≥ 0.30 excluded); commits +0.03 ± 0.51",
+   "kind": "response",
+   "scope": "G37 outage, 1 fully reached agent",
+   "model": "04",
+   "source": "H84",
+   "meaning": "Losing history search for two days had no measured cost."
   }
  ]
 }

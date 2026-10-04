@@ -262,6 +262,9 @@ Seven builders and nine libraries are now shared and registered in `build_all.py
 
 ## Known issues
 
+- **κ is unstable when I < ~0.05 bits** (H87): raw κ ratios give false orderings in 32% of synthetic replicates when a row carries ~0.02 bits. Order channels only when both rows' information is clearly above 0.02 bits; `semantic_kappa.kappa_row` should get an `identified` flag.
+- **Human chat almost never names repos** (H87): 244 mentions in all, none inside a non-holdout call window, so human repo pointers are empty.
+- **Search-row builders are duplicated** (H70 events, H84 `search_events.py`, H87 pointers; also H56): move to `infra/shared/`.
 - **Two-period remanence nulls with independent relabels are biased** (H100, 2026-10-04): the leftover agent constant is shared by both periods, so independent relabels give median R ≈ 0.15 in null worlds. Relabel both periods jointly (size 0.025).
 - **"Room of each statement" lookup is duplicated** in H100's and H102's schemes (`rooms_timeline` as-of join with null `t_end` set to +inf). Move to `infra/shared/` when a third user appears.
 - **H\d{2} regexes skipped H100+** in `dashboard/collect.py`, `build_overview.py` and `build_summaries.py` (fixed 2026-10-04: `\d{2,}`). Any new script that matches hypothesis folders must use `H\d{2,}`.

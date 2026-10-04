@@ -1,0 +1,70 @@
+{
+ "complete": 40,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before real data; synthetic power at real counts (V1 underpowered at 0.20, powered at 0.30; NE18 oversized), amendments before outcomes; N1 outage, N2 NE18, N3 G51 failed answers; replication I_Q on 7 periods; scorecard; frozen, guarded confirm script (NE25 + held-out I_Q) dry-run only, not run. No holdout run; one agent fully scrambled.",
+  "faithfulness": "The HH's semantic-value model failed its own test: no continuity dip (beta +0.12, rank p 0.87), opposite-sign earlier-goal references, no output change; the kill clause (search carries ~0 semantic information) fits, within power 0.85-0.91 at a 0.30 dip. Interventional but one agent reached; NE18 had no first stage. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0.",
+  "usefulness": "Tells an operator that a broken history-search tool costs no measurable continuity or commits for a day or two, and that the artifact path, not search, carries continuity. Gives the search row of the kappa table (I_Q 0.012 bits; kappa not identified). Narrow: one event, one heavily affected agent."
+ },
+ "one_line": "The 03-31/04-01 history-search outage cost no continuity (beta +0.12 per search per 100 calls, rank p for a dip 0.87; dip >= 0.30 excluded) and no commits; search answers carry 0.012 bits of allocation information.",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Search outage removed bits but no viability"
+  },
+  {
+   "model": "12-information-dynamics",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Plug-in MI with permutation floor for I_Q"
+  }
+ ],
+ "rated_by": "H84 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "The 03-31/04-01 history-search outage cost no measurable continuity or commits: a dip of 0.30 at the mean searcher dose is excluded (power 0.85–0.91); smaller dips are not",
+  "scope": "G37 outage days vs 38 placebo day pairs; the outage fully reached one agent",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.38,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic power at the real counts (0.85–0.91 at 0.30)",
+    "x": 1.4,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "calibrated placebo days (38 pairs)",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: the outage fully reached only one agent (weak first stage)",
+    "x": 0.55,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: a 0.20 dip not excluded (power 0.63–0.74)",
+    "x": 0.9,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "don't spend effort protecting history search; its outage had no measured cost",
+  "magnitude": "small",
+  "generality": "LLM swarms with history search",
+  "expected_usefulness": 0.38,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H84 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

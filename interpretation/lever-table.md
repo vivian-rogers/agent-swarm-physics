@@ -24,6 +24,7 @@ Reconciles the round-1b results of H29, H30, H35, H39, H43, H50 and H04 (RE-V1).
 | Gate-read nudge, policy (H60) | +7.2 [5.0, 9.8] active calls in 30 min per nudge read at an idle gate | Once-early (one nudge at a trap's 2nd gate) ×1.55 over the logged nudger; random ×1.46; an index adds nothing | The logged nudger bought 0.19% of active calls (08-07 → 08-20) |
 | Ambient chatter (H72, H09) | A field that holds idle agents at the gate (β_s +0.23 in G51) | Not a catalyst | A mention releases; undirected chatter holds |
 | Prize settlement (H64) | Assigned antagonism switches off within minutes of a verdict | – | No resentment and no room-wide heat after settlement |
+| Context cap / erasure, κ view (H87) | Only the context window carries value per bit: κ_C 5.2 commits per 20 calls per bit; an erasure costs 41% of 20-call output | Chat right after an erasure: +22% output, ≈ 0 bits (candidate lever, untested as an intervention) | Lengthening the call cap is the lever; history-search outage had no measured cost (H84) |
 
 **Reading.**
 - Nudges are cheap attention levers (a glance and about one active minute) that barely move committed work.
