@@ -221,6 +221,26 @@
    "model": "03",
    "source": "H61",
    "meaning": "Most new ideas die; long, item-dense seed messages spread each item less."
+  },
+  {
+   "symbol": "σ_β",
+   "name": "between-agent SD of the dilution exponent",
+   "value": "0.09–0.20 (median ≈ 0.15); cross-period ICC 0.23",
+   "kind": "exponent spread",
+   "scope": "15 periods, 170 agent-periods",
+   "model": "14",
+   "source": "H68",
+   "meaning": "Dilution is one exponent per period; agents scatter narrowly around it."
+  },
+  {
+   "symbol": "OR_ctx",
+   "name": "restatement source-in-context enrichment",
+   "value": "3.38 [2.56, 4.46]; loop exit per forced erasure ×2.40 [1.18, 4.88]",
+   "kind": "response",
+   "scope": "G38, G40, G41, G51",
+   "model": "12",
+   "source": "H69",
+   "meaning": "Loops are copies of what is still in the context window; erasure breaks them."
   }
  ]
 }

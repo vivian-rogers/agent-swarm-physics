@@ -1,0 +1,75 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions, nulls, rivals and impostor table before data; synthetic validation on the real skeletons of all 9 regime-III periods (3 worlds) that caught two design errors, with five dated amendments before real data; replication on 9 periods (4 scorable); 3 natives (NE41 forced erasures, G38 loop week, G51 operator input); both embedding models, copy and template variants, in-flight and next-call placebos, pseudo-erasure control; confirm script frozen with a passing dry run (not run). Missing: holdout run, token-level own content, memory as residual carrier.",
+  "faithfulness": "The context-held part is well supported: source-location enrichment 3.4x [2.6, 4.5] at matched lag and call distance in 4/4 scorable periods (I2 0), forced-boundary enrichment 3.5x, pseudo-erasure ~1, NE41 erasure exit 2.4x and onset 0.54x, all beating a synthetic recency null with size <= 0.07. The share-threshold trigger and novelty exit fail. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "Gives a concrete scaffold lever with numbers: erasing or trimming the agent's own text in context breaks restatement loops (exit 2.4x, onset 0.54x), while messages and nudges do not (0.81x). Suggests capping own chat kept in context. Limited by four scorable periods and heterogeneous erasure effects."
+ },
+ "one_line": "Restatement loops are copies from the context window (source in context 3.4x, erasure exit 2.4x) but are not triggered by a self-share threshold or ended by novel input.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "context-held self-coupling yes; share threshold and input field no"
+  },
+  {
+   "model": "08-copying-vs-transformation",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "restatement is copying from in-context own statements"
+  }
+ ],
+ "rated_by": "H69 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Restatement loops are copies held by the context window: a statement still in context is near-copied 3.4× [2.6, 4.5] more than an erased one (4/4 periods, both models); forced erasure raises loop exit 2.4×; loops are not triggered by a self-share threshold nor ended by novel input",
+  "scope": "G38, G40, G41, G51 (≥ 30 loop episodes); natives G38, NE41, G51",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.83,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (4/4 scorable periods, I² 0)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "calibrated null (fake-boundary control 1.13)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "intervention consistent (NE41 forced erasure)",
+    "x": 2,
+    "evidence": "native NE41"
+   },
+   {
+    "factor": "robust (bge 3.5, gte 6.1)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: only 4 scorable periods",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "break restatement loops by erasing context, not by sending new input",
+  "magnitude": "material",
+  "generality": "agents with context resets",
+  "expected_usefulness": 2.07,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H69 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

@@ -1,0 +1,32 @@
+\hwhat{HH258 claims that the population dilution exponent ($k^{-0.66}$, H18) averages two kinds of agents: thin attenders ($\beta\approx1$) and thread followers ($\beta\approx0$), with lab-set weights. H68 fits one exponent per agent on H18's ledger pending sets in 17 periods (\#10--\#51, 170 agent-periods). A synthetic validation on the real skeletons came first. \textbf{The claim is refuted.} Agents scatter around the period mean with a between-agent SD of 0.09--0.20. The two-strategy world needs about 0.45. No period is bimodal (0/9 powered). In 7/9 powered periods the SD's upper 95\% bound is below 0.35. No agent sits near $\beta=0$ (lowest 0.25). Lab does not predict the exponent ($p$ 0.37), and an agent's exponent barely persists across periods (ICC 0.23). Two natives: \#51 fails, and NE42 has too few agents. The holdout script is written, not run.}
+
+\hmodel{Model 03 (contagion) with H18's uptake hazard. At talk turn $\tau$ of agent $i$, a pending sender $j$ with $n_j$ messages in a backlog of $k$ is addressed with a cloglog hazard. $\theta_{i,d}$ is an agent-day propensity, $\gamma$ a mention factor and $\beta_i$ the agent's dilution exponent. The population layer is unimodal (U), the H68 two-delta mixture, or a free two-component mixture. Each is fitted on $\hat\beta_i$ with its own sampling variance $s_i^2$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+P(r_{\tau j}=1)=1-\exp\!\big[-\theta_{i,d}\,n_j\,k_\tau^{-\beta_i}\,e^{\gamma m_j}\big]\\
+\text{U: }\hat\beta_i\sim\mathcal N(\mu,\,\tau^2+s_i^2)\\
+\text{H68: }\hat\beta_i\sim\pi\,\mathcal N(1,\,v_i)+(1-\pi)\,\mathcal N(0,\,v_i),\quad v_i=\tau_w^2+s_i^2\\
+\mathrm{LR}=2\,[\ell_{\rm M2}-\ell_{\rm U}],\qquad p\ \text{by parametric bootstrap under U}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{Per-agent exponents $\hat\beta_i$ with 95\% CIs, by period, colored by lab. The black bar is the random-effects mean. H68 predicts two clusters at 0 and 1 (dotted lines). Each period instead shows one cloud of width 0.1--0.2 around 0.55--0.87. No agent reaches 0, and the labs mix within every cloud.}
+
+\htelos{Dilution is an agent-level constant per period, not a property of the roster's family mix. A swarm designer can use one exponent per period ($\beta\approx0.6$--$0.9$) as the per-pair coupling normalization $J\propto N^{-\beta}$. A change of model families will not change it. There is no ``thread-follower'' species to protect from crowding: every agent ignores more of the backlog as the backlog grows. Concentrated agents dilute \emph{more} ($\rho$ +0.36). To keep a message from being lost in a large room, address it or shrink the room. Changing which models sit in the room does not help. In practice this result is a negative control, and it adds no new lever.}
+
+\hbottom{Every agent dilutes its attention with one narrow, unimodal exponent per period (between-agent SD 0.09--0.20), so $k^{-0.66}$ is a constant, not a mixture of two strategies.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 bimodal in $\ge$50\% powered & 0/9; SD upper $<0.35$ in 7/9; H68 fit 1--29 log-lik below U & failed\\
+P2 lab $\eta^2\ge0.4$, $p<0.05$; trait $\ge0.5$ & $\eta^2$ 0.16, $p$ 0.37; ICC 0.23 [$-$0.10, 0.50] & failed\\
+P3 mean of $\beta_i$ = pooled $\beta$ & 15/15 within 0.035 & passed\\
+P4 $\rho(\beta,C)<-0.3$ & +0.36 ($n$ 170) & reversed\\
+P5 mention vs reply rank $\ge0.3$ & 0.52 ($n$ 156) & passed\\
+\#51: bimodal; lab; timer wakes & SD 0.15 [0.11, 0.21]; lab $p$ 0.12; $\rho$ 0.15 & failed\\
+NE42 trait across the merge & 5 agents; $\rho$ 0.40 ($p$ 0.50) & no power\\
+Post hoc: H18's per-message mention factor & \#51 mean 0.87 $\to$ 0.63; all verdicts same & robust\\
+\end{tabular}}
+
+\hobsb{../figures/summary_obs2.pdf}{Synthetic validation on the real skeletons (17 periods, 4 worlds, 20 runs each). Left: in periods with at least 6 agents, the bimodality rule fires for the H68 world and never for one exponent. Right: the deconvolved spread $\hat\tau$. The village (gray) falls on the one-exponent and spread-0.15 worlds, far from H68's 0.45.}
+
+\hcaveats{The response is H18's mention proxy. Reply labels keep one parent per message, so only their agent ranking is used. Eligibility drops 53 of 223 agent-periods with few talks, and a quiet thread follower could hide there. The per-agent timer-wake check (\#51, 24 agents) does not exclude reactive timing per agent. The trait estimator is noisy. The level of $\beta$ depends on the mention-factor convention, but the spread does not. The holdout run needs a pending-set builder that keeps held-out days.}

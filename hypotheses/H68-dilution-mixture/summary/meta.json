@@ -1,0 +1,59 @@
+{
+ "complete": 40,
+ "faithfulness": 0.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions, nulls, impostor table and rivals before data; synthetic validation on the real skeletons of all 17 periods (4 population worlds x 20 runs, plus pooled family/trait worlds) with four dated amendments before real data; replication on all 17 H18 periods (9 powered); 2 natives (G51 with timer-wake exponents and lab test; NE42, underpowered); engagement, reply-ranking and per-message-mention variants (the last labelled post hoc); confirm script frozen with a passing dry run (not run; needs a holdout pending-set builder). Missing: holdout run, per-agent load/role analysis.",
+  "faithfulness": "The core claim is refuted consistently and with power: between-agent SD 0.09-0.20 vs ~0.45 needed, no bimodal period (0/9 powered), no agent near beta = 0, no lab effect (p 0.37), signature reversed (concentration rho +0.36). Scorecard A1 B1 C0 D0 E0 F2 G0 H0 I0; the 2 is on the instrument, not on the model.",
+  "usefulness": "A clean negative control: dilution is one agent-level constant per period, so H18's J ~ N^-beta normalization needs no composition correction and swapping model families will not change it. No new operator lever."
+ },
+ "one_line": "Attention dilution is one narrow unimodal exponent per period (between-agent SD 0.09-0.20), not a mixture of thin attenders and thread followers.",
+ "models": [
+  {
+   "model": "03-contagion",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "no two-strategy mixture; one exponent per period"
+  }
+ ],
+ "rated_by": "H68 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Attention dilution is one narrow unimodal exponent per period (between-agent SD 0.09–0.20), not a mixture of thin attenders and thread followers; lab does not set it",
+  "scope": "17 periods (9 powered), 170 agent-periods; natives G51, NE42",
+  "direction": "negative",
+  "original_verdict": "refuted",
+  "credence": 0.75,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification (bimodality power ≥ 0.85 in 9 periods; lab test size 0.08)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "replication (0/9 powered periods bimodal)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "robust (H18 convention reproduces H18 exactly; no verdict change)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "model attention dilution with one exponent per period",
+  "magnitude": "small",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 1.12,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H68 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

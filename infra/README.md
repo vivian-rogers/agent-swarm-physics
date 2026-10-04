@@ -349,3 +349,5 @@ Six helpers that two or more hypotheses had copied, moved into `infra/shared/` w
 - **Forward-chained models with a trend-in-day feature extrapolate and fake skill** (H61 synthetic: 30–80% false positives). Use a kickoff indicator.
 - **A thread field produces a reply premium Λ ≈ 3 with no reading** (H62 synthetic). Additive seen/unread placebo terms fake copying; code unread exposure as "unread-only".
 - **Plain Newton fits for idea-stratified Poisson models overflow on real cells** (H62): use the damped, log-sum-exp-stable `h62lib.fit_cpois`. Idea timelines: `infra/shared/idea_ledger.py`; marker rule: `infra/shared/idea_markers.py` (both verified against H34).
+- **H18 and H68 apply the mention factor differently** (per message vs per sender): this moves G51's β by 0.25 but not between-agent spreads. Pick one convention for new work (H18's per-message reproduces H18).
+- **In regime III the ledger's `first_of_day` is not a context reset** (H69): `ctx_pos` and `k_ctx` carry over the night. Segment by `reset_consol | reset_session`. Restatement and exit tests need ≥ 30 loop episodes per period (only #38–#41 and #51 qualify).
