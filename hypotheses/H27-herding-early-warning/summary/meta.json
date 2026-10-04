@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 1.0,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Round 1 done: pre-registered onset rule, nine-scenario synthetic validation, 19 non-holdout periods with per-period verdicts, scorecard, frozen and dry-run holdout script. The holdout test and the per-turn re-test are not run.",
+    "faithfulness": "The critical-slowing-down signature is absent: autocorrelation never rises (AUC 0.42). The composite beats placebos only at 15 min and fragilely (0.62 [0.51, 0.76], n = 8) and fails at 30 min. Rivals fit better (onsets out of nowhere; link announcements). C = D = H = 0; F = 1 shows the method can barely work at village N.",
+    "usefulness": "A clear, quantified negative an operator can act on (don't build CSD dashboards for 10-15-agent swarms), measured operating characteristics, and a rate-matched-shift check for any alarm. The positive pointer (links precede pile-ons) is post hoc."
+  },
+  "one_line": "Generic early-warning signals do not forecast LLM-swarm pile-ons: autocorrelation never rises, and alarms time no better than chance.",
+  "rated_by": "H27 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

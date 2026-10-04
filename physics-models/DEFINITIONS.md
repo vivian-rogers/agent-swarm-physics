@@ -176,3 +176,10 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Stance spin:** Jev's zero-shot reply stance on a pair (oppose … support), used as soft s_e = P(support) − P(oppose).
 - **Stance coupling (residual):** the pair's mean stance after an ordered logit with speaker and target effects removes agent fields.
 - **Frustration index (ground-state):** the share of signed residual bonds violated by the best two-camp split (exhaustive or annealed).
+
+### H11 named variants (2026-10-03; added 2026-10-04; see `hypotheses/H11-potts-labor-vs-herding/README.md`)
+- **Agent state (categorical, project/artifact strict):** σ_i(w) = the project with the most strict artifact mentions by agent i in window w (strict = `artifact_mentions` with `speaker_kind = agent` and `how ∈ {url, output, bare}`, one count per agent × source × turn/message × project; directory-resolved mentions dropped). Ties go to the most recent mention; no mention = missing, not idle. Projects with ≥ 2% of a period's labelled agent-windows get their own state (q ≤ 8); the rest merge into "other" (state 0). Measures attention to a project, not work on it. See the Known issue on tie-break reproducibility.
+- **Agent state (categorical, action class):** the regime-invariant action class of the agent's turns in the window (see the H11 card).
+
+### H27 named variants (2026-10-04; see `hypotheses/H27-herding-early-warning/README.md`)
+- **Herding onset (project-share step):** on H11 merged project labels, the first window in which project a's share of labelled agents is ≥ 0.5 with ≥ 3 agents on a and ≥ 4 labelled, the mean share over the previous hour was ≤ 0.25, and the mean share over the next hour stays ≥ 0.4. Scorable only with ≥ 6 h of prior record. Compare H31's consensus event (frozen / instant / gradual), which uses a two-window majority rule instead.

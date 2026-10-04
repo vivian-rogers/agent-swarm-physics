@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **H27 (herding early warning), round 1: critical slowing down does not warn of pile-ons (clear negative).** 21 onsets in 14 periods, only 8 scorable. Composite trend AUC 0.62 [0.51, 0.76] at 15 min, chance at 30 min; autocorrelation never rises (0.42). The frozen alarm catches 5/21 at 5.3 false alarms per day, no better than time-shifted alarms (p 0.07); a naive "a third already on it" alarm matches it with 2.6× fewer alarms. Synthetic: a true fold at N = 12 only reaches AUC ≈ 0.6. **Post hoc:** 11/21 onsets follow a chat link to the project within 30 min (OR 11.6, p 0.0005), passed to H28 as cross-hypothesis corroboration. Scorecard A1 B0 C0 D0 E0 F1 G1 H0 I0. `confirm_holdout.py` not run. H11's project-state variant added to DEFINITIONS (was missing).
 - **H37 (stance spins), round 1: the detector works on assigned conflict; generalization failed.** Jev labelled 30,461 reply pairs ($1.12 of $2; blind sign κ 0.67 random / 0.37 enriched; "oppose" precision 0.30).
   - **#12:** opponents −0.13 vs teammates +0.32 (AUC 0.74; topic 0.48), drafted teams recovered exactly in 7/10 debates, contrast gone within 10 min of the verdict. This rescues the antiferromagnet H21 missed in the topic channel.
   - **Elsewhere, no stance conflict:** #51 rivals and the Prankster's opposed pairs are not negative; #26 stance ignores ballots. Post hoc: #51's 10 antagonistic pairs cluster on norm-enforcing roles (governance friction, OR 4.4).

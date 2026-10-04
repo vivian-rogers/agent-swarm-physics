@@ -55,6 +55,7 @@ Uniform-coupling q-state Potts in mean field. The order parameter is the dominan
 
 ## Pitfalls
 
+- **Early-warning signals are barely identifiable at N ≈ 12** (H27): even a true fold (saddle-node) gives AUC ≈ 0.58–0.65 for rising autocorrelation and variance under perfect sampling; finite-N noise, not label sparsity, is the limit. The current share level beats the trends. On real data, autocorrelation never rose before herding onsets (AUC 0.42). A step-based onset rule also misses deterministic fold transitions.
 - **Whole-graph λ₂ is a weakest-link statistic** (H31): it is set by the least-connected agent and is a poor predictor of 50% consensus. On the real room schedules, a true diffusion model recovers slope ≈ 0.5 on 1/λ₂, not 1 (power 0.13). Use bulk predictors (core-agent λ₂, reading rate) for majority times.
 - **About half of consensus events are not gradual** (H31): 13 of 63 were already shared at the goal kickoff, and 17 met the majority rule within a single 30-min window. Split frozen / instant / gradual before fitting any timescale.
 - Clustering choices define q and the labels. Results must be stable across reasonable clusterings.
