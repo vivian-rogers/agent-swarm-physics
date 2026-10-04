@@ -351,6 +351,26 @@
    "model": "13",
    "source": "H89",
    "meaning": "Culture changes because stayers change, not through turnover or differential influence; there is no persistent attractor."
+  },
+  {
+   "symbol": "σ_nam",
+   "name": "collective talk entropy production through named partners",
+   "value": "7.6 [4.3, 11.2]×10⁻³ nats/min (0.017 nats per agent-hour); unnamed ≈ 0; behavior collective share 0.003",
+   "kind": "entropy production",
+   "scope": "G51",
+   "model": "15",
+   "source": "H90",
+   "meaning": "The only collective arrow of time runs through who names whom."
+  },
+  {
+   "symbol": "S_goal",
+   "name": "re-allocation slack by goal type",
+   "value": "assigned artifact: S 1.0–2.5, settling 0.25–0.75 active h; open goal: S 3.0–14.5, 4–13 h",
+   "kind": "ratio",
+   "scope": "9 kickoff units (post hoc split)",
+   "model": "15",
+   "source": "H95",
+   "meaning": "A concrete artifact in the goal settles the swarm in under an hour."
   }
  ]
 }

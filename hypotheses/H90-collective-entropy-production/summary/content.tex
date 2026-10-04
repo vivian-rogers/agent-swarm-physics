@@ -1,0 +1,35 @@
+\hwhat{I measured whether the swarm's joint dynamics are more irreversible than its agents' own dynamics. The estimator is the Aguilera--Ito--Kolchinsky max-ent bound on DQ8-trimmed windows, in three channels (5-min behavior states, 1-min talk, 1-min activity), on eight regime-III periods. Synthetic validation came first. In G51 (45 days, 21--32 agents) the talk channel carries a collective arrow of time: $\sigma_{\rm nam}=7.6\,[4.3,11.2]\times10^{-3}$ nats/min on named partners, none on unnamed partners (block-shift $p=0.01$). Single-agent talk is reversible, so this arrow is fully collective. Behavior is irreversible per agent ($0.078$ nats per 5 min) with a collective share of $0.003$. The seven smaller periods are underpowered. Pairwise directions do not follow who names whom. Holdout (\#51 tail): not run.}
+
+\hmodel{Models 15 (EP inference) and 02 (kinetic spins with asymmetric couplings). Spins: an agent's behavior state (5 soft states) or its talk or activity in a minute. Single observables $u_i$: one agent's time-antisymmetric patterns. Coupling observables $g_i$: agent $i$'s state against a partner field $h_i$, the mean over agents who named $i$ (named), never named either way (unnamed), or all others. $\Sigma_g$: the max-ent lower bound on entropy production for observables $g$; $\theta$: its multipliers.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\Sigma\ \ge\ \Sigma_g=\max_\theta\big[\theta^\top\langle g\rangle-\ln\langle e^{-\theta^\top g}\rangle\big]\\
+\Sigma_g\approx 2\langle g\rangle^{\!\top}K^{-1}\langle g\rangle\quad(\text{held out by day fold})\\
+g_i(t)=s_i(t{+}1)\,h_i(t)-s_i(t)\,h_i(t{+}1)\\
+h_i^{\rm nam}=\textstyle\sum_j w_{ji}s_j\big/\sum_j w_{ji}\quad(w_{ji}:\ j\text{ names }i)\\
+\sigma_{\rm coll}=\Sigma_{u\cup g}-\Sigma_u\ge 0,\qquad \Delta_{\rm addr}=\sigma_{\rm nam}-\sigma_{\rm un}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Talk collective EP per period with the named-partner (blue) and unnamed-partner (orange) fields, day-bootstrap 95\% CIs, and the block-shift null's 95th percentile (grey). Only G51 clears the null, on named partners only. (b) Behavior: single-agent bound $\Sigma_1$ (blue) and collective term (green). G51's single-agent arrow is clear; its collective term is $2\times10^{-4}$. G37 and G44 bars are clipped below the floor.}
+
+\htelos{Two uses, both modest. First, a monitor that wants to detect agents coordinating should look at talk timing between agents that name each other: that is where the swarm's only joint arrow of time sits, at about 0.017 nats per agent-hour in \#51. Second, a method warning: a block-shift or cross-day null does not separate coupling from a common drive with agent-specific lags; split partners by addressing instead. The detector needs about 40 days and 25 agents. On a 5-day, 15-agent week it has no power (power $\le0.05$ at the \#51 effect size). There is no egregore here: removing the naming partition removes the collective term.}
+
+\hbottom{The swarm's only measurable collective arrow of time is agents talking in the minute after the agents who named them talked; it is coupling between named pairs, not a new collective variable, and only a 45-day period can resolve it.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.45\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 $\rho_{\rm coll}<0.1$ (behavior, activity) & \raggedright G51 behavior $0.003$; activity $\Sigma\approx10^{-4}$ & \raggedright supported\tabularnewline
+\raggedright P2 talk $\sigma_{\rm coll}>$ shift null & \raggedright G51 $p=0.01$; 0/7 elsewhere & \raggedright G51 only\tabularnewline
+\raggedright P3 $\Delta_{\rm addr}>0$ (coupling test) & \raggedright G51 $8.0\,[5.1,12.1]\times10^{-3}$, $p=0.01$; G38 $p=0.08$ & \raggedright supported where powered\tabularnewline
+\raggedright P4 rank vs H50 $J_1$ & \raggedright Spearman $-0.29$ ($n=8$) & \raggedright failed\tabularnewline
+\raggedright P5 $\Sigma_1\approx\sum_i\sigma_i$ & \raggedright gap $\le0.033$ nats/step & \raggedright supported\tabularnewline
+\raggedright N1 G38 same room $>$ cross room & \raggedright $+1.6$ ($p\,0.03$) vs $-0.7$ ($p\,0.66$)$\times10^{-3}$ & \raggedright supported (weak)\tabularnewline
+\raggedright N2 G51 pair $\theta$ follows naming & \raggedright agreement 0.52 (null 0.55) & \raggedright failed\tabularnewline
+\raggedright N3 NE43 nudger off & \raggedright $\sigma_{\rm coll}$ in placebo range; $\sigma_{\rm nam}\times0.80$ & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_compact.pdf}{Synthetic agents at the three real sizes with soft labels. (a) Power of the address contrast against planted gated coupling $J$; the dashed line is G51's estimate ($J\approx0.28$). (b) A common drive with agent-specific lags and no coupling: the collective term beats the block-shift null in 63--100\% of large worlds, the address contrast in at most 10\%.}
+
+\hcaveats{One period carries the result. The 1-min talk bins put most read-out responses in the same bin as their cause, so the bound misses them and reads low. Naming uses any roster mention, not the leading-@ target. The block-shift null fails against lagged fields, so only the address contrast is a coupling claim. The estimator was fixed after a numerical failure on real behavior data (A2), then re-validated. The power reading of the small periods is post hoc (A3). No read vs unread split of the naming messages.}
+
+\hnext{Rebuild talk spins on each agent's call clock with the read-out call as origin, which should make 5-day periods testable. Split $\sigma_{\rm nam}$ by read vs posted-but-unread naming messages. Run \texttt{confirm.py} on the \#51 tail after registering H90 in the holdout ledger.}

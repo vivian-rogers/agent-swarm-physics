@@ -1,0 +1,75 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and predictions before data; synthetic validation at three real sizes (4 scenarios, power curves, size checks); 8 replication periods x 3 channels; 3 natives (G38 rooms, G51 pairwise, NE43); per-period estimates (123 rows); confirm.py frozen (#51 tail, #45, #47), not run. Two post-hoc amendments (A2 estimator fix, A3 power reading) disclosed.",
+  "faithfulness": "The predicted signature (talk-only, named > unnamed, behavior collective share ~0) appears in the one powered period (G51) against a field-robust null, but rests on one unit; 7/8 periods are underpowered; the pairwise native and the H50 ranking failed. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I1.",
+  "usefulness": "A methods result (shift and cross-day nulls cannot separate lagged fields from coupling; use the address split) and a monitoring signature (talk timing between named pairs). Needs ~40 days x 25 agents at 1-min bins; no operator lever."
+ },
+ "one_line": "The swarm's only measurable collective arrow of time is address-gated talk in G51 (sigma_nam 7.6e-3 nats/min, unnamed partners none, p 0.01); behavior is irreversible per agent with collective share 0.003; seven smaller periods are underpowered; block-shift nulls cannot separate lagged fields from coupling.",
+ "models": [
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "AIK collective EP bound; signal in G51 talk only"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "gated asymmetric couplings; no per-pair hierarchy"
+  }
+ ],
+ "rated_by": "H90 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "The swarm has one measurable collective arrow of time: in G51 talk, agents start talking in the minute after agents who named them (σ_nam 7.6 [4.3, 11.2]×10⁻³ nats/min, p 0.01); unnamed partners carry none; behavior and activity irreversibility is individual (collective share 0.003)",
+  "scope": "G51 (resolvable); 7 other periods underpowered; natives G38 rooms, G51 pairwise, NE43",
+  "direction": "positive",
+  "original_verdict": "supported in G51 only",
+  "credence": 0.48,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification (address split field-robust: FPR ≤ 0.10, power 1.0)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "single powered unit (G51)",
+    "x": 0.6,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "rival beaten (common-drive field fails the address contrast)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "cross-hypothesis agreement (H50 named coupling; H67 ×19)",
+    "x": 1.3,
+    "evidence": "H50, H67"
+   },
+   {
+    "factor": "penalty: estimator fixed after first real run (A2)",
+    "x": 0.8,
+    "evidence": "card §A2"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "directed coupling lives in named talk; look for it there, not in activity",
+  "magnitude": "small",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 0.97,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H90 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

@@ -36,6 +36,7 @@ Each one has produced fake collective order in this project at least once. Every
 - Information measures (A, A*, NTIC, Ψ, Ω): compare against **size-matched** random groupings, because these measures do not decrease as the system grows. Remove fields by regression and leave-one-out means, never by subtracting a leave-in mean, which fakes synergy.
 - Negative claims need power: a synthetic power of at least 0.8 at the effect size that would matter. Without it, the verdict is "inconclusive".
 - Report a placebo for every event study: other days, other boundaries, other rooms.
+- **Coupling claims need a partition contrast, not a shift null alone** (H90 synthetic): a common drive with agent-specific lags beats per-agent block-shift and cross-day nulls in 63–100% of worlds. Test named vs unnamed partners, same vs cross room, or read vs in-flight.
 
 ## 4. Design
 - **Unit of analysis:** one goal period, split at step changes (`period_units.parquet`). Fit within periods. Compare periods as points on a phase diagram. Never pool periods completely; the exceptions are listed in `CLAUDE.md`.

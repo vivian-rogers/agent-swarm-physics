@@ -1,0 +1,76 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card and predictions before data; synthetic (gauge curve, churn null, power, S/S0 check); nine kickoff units in eight periods; two room natives (G44, G38); post-hoc design-code test (labelled); per-period estimates (20 rows); confirm.py frozen (#45, #46, #47, #49), not run.",
+  "faithfulness": "The pre-registered gauge failed as a measurement (H54 name-token flags do not track specificity) and the primary test is underpowered (0.29). The post-hoc goal-type split is clean (5/5 vs 4/4, p 0.008) but post hoc and close to H75's earlier result. Scorecard A0 B1 C0 D1 E1 F1 G1 H1 I1.",
+  "usefulness": "Restates H75's kickoff rule on nine kickoffs: name or assign the artifact and the swarm settles in < 1 active h; open goals take 4-13 h. Useful and simple, but not new, and the slack is a read-out, not a lever."
+ },
+ "one_line": "Slack does not track the HH's specificity x (rho -0.01, n 9; x itself is invalid: word overlap, not specificity), but separates assigned-artifact goals (S 1.0-2.5, T_e < 1 h) from open goals (S 3-15, T_e 4-13 h) perfectly, post hoc (p 0.008).",
+ "models": [
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "slack monotone in captured fraction; x gauge invalid"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "kickoff field strength read from goal type, post hoc"
+  },
+  {
+   "model": "10-potts",
+   "role": "rival",
+   "outcome": "supported",
+   "note": "instant freeze onto assigned artifacts (H75 R2)"
+  }
+ ],
+ "rated_by": "H95 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Kickoff goal type sets re-allocation speed: goals that assign a concrete artifact settle at slack 1.0–2.5 within 0.25–0.75 active h, open goals at 3.0–14.5 over 4–13 h (Mann–Whitney p 0.008, 9 units); the pre-registered specificity measure x is invalid",
+  "scope": "9 kickoff units; natives G44, G38",
+  "direction": "positive",
+  "original_verdict": "failed as posed (post hoc goal-type split)",
+  "credence": 0.34,
+  "ladder": [
+   {
+    "factor": "base (post)",
+    "x": 0.2
+   },
+   {
+    "factor": "replication (9 units, perfect split)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "cross-hypothesis agreement (H75)",
+    "x": 1.3,
+    "evidence": "H75"
+   },
+   {
+    "factor": "quasi-intervention (G44 two rooms ×5.8)",
+    "x": 1.5,
+    "evidence": "native G44"
+   },
+   {
+    "factor": "penalty: post hoc code, small n",
+    "x": 0.7,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "give the swarm a concrete artifact in the kickoff to settle in under an hour",
+  "magnitude": "material",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 0.85,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H95 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

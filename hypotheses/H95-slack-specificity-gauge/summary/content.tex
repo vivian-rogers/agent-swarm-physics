@@ -1,0 +1,33 @@
+\hwhat{I tested whether H75's speed-limit slack $S=\bar AT/W$ falls with kickoff specificity across nine regime-III kickoff units (eight periods; G44's two rooms count separately). Specificity $x$ was the HH's: the share of day-1 work on repos that H54 flags as kickoff-named. The synthetic check came first: $S$ falls monotonically with the captured fraction of agents, but nine kickoffs give power 0.29. Result: $\rho(S,x)=-0.01$ ($p=0.50$). The measure itself fails: a free research week scores $x=0.74$ and ``build your own world'' scores 0. Post hoc, coding each goal by whether it assigns a concrete artifact splits the units perfectly: assigned $S=1.0$--$2.5$, open $S=3.0$--$14.5$ ($p=0.008$). G44's two rooms replicate this on the same days. Holdout: not run.}
+
+\hmodel{Models 15 (speed limit) and 11 (kickoff field). Each committing agent is a copy of a jump process on repos plus a null state; $p(t)$ is the share of agents on each repo after the kickoff. $W$: total-variation distance moved by the settling time $T_e$. $\bar A$: repo switches per agent per active hour. A captured fraction $q$ of agents lands on its settled repo at its first commit; the rest churn between side repos first.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+T_e\ \ge\ W/\bar A\quad(\text{counting identity}),\qquad S=\bar A\,T_e/W\ \ge 1\\
+S\ \approx\ \frac{q+(1-q)(1+a\tau_s)}{q+(1-q)\,m}\ \xrightarrow{\,q\to1\,}\ 1\\
+x=\frac{\#\{\text{day-1 commits on named repos}\}}{\#\{\text{day-1 commits}\}}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Slack against the pre-registered specificity $x$ for the nine kickoff units, with agent-bootstrap 95\% CIs (log scale). No trend. Colour is the post-hoc goal type: blue goals assign an artifact, orange goals leave the choice open. (b) Settling time by goal type: assigned goals settle in 0.25--0.75 active h, open goals in 4--13 h.}
+
+\htelos{The operator rule is H75's, now on nine kickoffs: assign each agent (or the group) a concrete artifact in the goal text, and the swarm settles in under an active hour with about one switch per moved agent. Open or objective-only goals take 4--13 active hours and 3--15 switches per net move. The slack is a fine read-out of this after the fact. It is not a thermodynamic cost: the bound is a counting identity. The pre-registered gauge (word overlap between repo names and the goal text) is useless for steering and should not be used.}
+
+\hbottom{The slack separates assigned-artifact goals from open goals with no overlap, but the HH's specificity measure does not track either; the useful gauge is the goal type, found post hoc and frozen for the holdout.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.45\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 $\rho(S,x)\le-0.5$ & \raggedright $-0.01$, $p=0.50$ ($n=9$; power 0.29) & \raggedright inconclusive; kill met\tabularnewline
+\raggedright P2 $\rho(T_e,x)\le-0.5$ & \raggedright $-0.02$ & \raggedright failed\tabularnewline
+\raggedright P3 $\rho(S/S_0,x)\le-0.3$ & \raggedright $+0.60$ & \raggedright failed\tabularnewline
+\raggedright P4 naming, not concentration & \raggedright partial $-0.09$; G39 has $x=0$ & \raggedright failed\tabularnewline
+\raggedright P5 text rival weaker & \raggedright $\rho(S,S_{\rm text})=+0.63$ & \raggedright failed\tabularnewline
+\raggedright N1 G44 rooms & \raggedright $\Delta x=+0.52$; $S$ ratio $\times5.8$ & \raggedright supported\tabularnewline
+\raggedright N2 G38 rooms & \raggedright $\Delta x=0.02$: no contrast & \raggedright failed\tabularnewline
+\raggedright Post hoc: goal type & \raggedright assigned $S\le2.5$ (5/5), open $S\ge3.0$ (4/4); $p=0.008$ & \raggedright descriptive\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_compact.pdf}{H75's commit-observed agents with a captured fraction $q$. (a) The median slack falls monotonically with $q$ for shared and per-agent targets (bands: 10--90\%). (b) $\rho(S,x)$ over nine kickoffs: with churn rates varying 16$\times$ and $q$ fixed (grey) the test has size 0.06; with $q$ varying (blue) it reaches $\rho_{\rm crit}$ in only 29\% of draws.}
+
+\hcaveats{Nine kickoff units cannot give a powered rank test. The goal-type code was chosen after the run, from goal titles I had listed before it; it is frozen for the holdout. G44's \#best room has 4 committing agents. G51's slack starts from the null state because its previous week is held out. Commits are the only observation of where agents work, so $T_e$ includes the first-commit delay and has a 15-min floor. $S$ and $T_e$ are not independent of each other.}
+
+\hnext{Score each agent's own instruction (village plus private goal) for a named artifact and test $S$ against that per-agent field. Merge the slack estimator with H75's in \texttt{infra/shared/}. Run \texttt{confirm.py} (C2: the four held-out kickoffs are coded open, so each should show $S\ge2.5$ or $T_e\ge2$\,h).}
