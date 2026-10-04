@@ -369,6 +369,7 @@ Run only with Vivian's sign-off (`--confirm --i-understand-this-uses-the-locked-
 - **Robustness:** embedding swap; with H20, test whether the high M is aging (t_w dependence).
 
 ## Notes
+- **From DQ6 (2026-10-04):** `agent_goals` overwrote Claude Opus 5's first #51 role (game dev, 07-24 → 07-29, then Mathematician at NE38), so this card treated it as roleless for those days. That adds two rival pairs. Use `ground_truth_labels` (`preferred`) in the re-evaluation.
 - 2026-10-03: promoted from HH102.
 - 2026-10-04 00:15 UTC: observables, nulls, predictions, units and pair-class coding written before any real-data run.
 - 2026-10-04 00:42 UTC: Amendment 1 (synthetic only). 00:43 UTC: per-period predictions written in the G folders.

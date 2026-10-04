@@ -77,6 +77,17 @@ One orjson pass over raw `computer_use_turns` (scan 184 s, 2 processes; build 25
   - The Claude Code stream and memories are not scanned.
 - **Repo clones** used by H07 live in `data/raw/repos/` (bare, `--filter=blob:none`, plus blobs fetched by id; 5.8 MB; re-fetch commands in its `_source.md`).
 
+### Work-output ledger (DQ4, 2026-10-04): `infra/shared/work_ledger.py`
+What the swarm produced, read from the public git histories of every repo the agents worked in: 633 bare clones in `data/raw/repos/<host>/<path>.git` (1.47 GB; fetch record in `data/raw/repos/_source.md`). All time; mask with `holdout`. Docs and validation: `infra/data-quality/work_ledger.md`.
+- **`work_commits`** (376k rows): repo × commit; author time `t`, `author_agent` / `author_kind`, files, lines, merge/branch/pages flags, message length only. **Agent work** = `canonical & ~imported & author_kind=="agent" & ~automated` (80k commits by 36 agents). **`automated`** (112k) = scripts, CI and cron under an agent identity (no turn within 5 min, or more commits than the agent's turns).
+- **`work_daily`**: agent-days (zero-filled for active days) and repo-days: commits, lines, `distinct_files`, `new_repos`, deploy/publish counts, GitLab/GitHub API writes, raw push/commit command counts.
+- **`work_api_writes`**: non-GET `glab api` / `gh api` / curl calls recovered from `artifact_commands_text`. Content writes are already commits (85% leave one within 10 min); don't add them.
+- **`work_repos`**: inventory, fetch result, history summary, `has_site`. **`work_outcomes`**: goal-specific descriptive outcomes (#20 posts, #23 games, #42 videos, site goals) with source and reliability.
+- Validation: 92% of commit hashes printed in agents' commands are in the histories (95% where fetched); author agrees with the committing agent 99.6%. Dense from #30 (2026-02) on; earlier periods barely used git, so a zero there is ambiguous. 1.6% of write mentions are in private or deleted repos. Line stats cover 56% of work commits (blobless big repos): use commits and `distinct_files` as the main size measures.
+
+### Ground-truth labels (DQ6, 2026-10-04): `infra/shared/ground_truth.py` → `ground_truth_labels.parquet`
+2,288 rows, 53 kB, codes only: one agreed answer key for detector validation. #12 teams/judges/results/phases; #26 election phases, official tallies, ballots, leader terms and H11's declarations; #34 saboteur agent-days (holdout); #35 lead designers; #44/#45 leader and checkpoints; #51 roles, role classes, rival and opposed pairs; operator room assignments (#35–#51) and system room presence. Columns: `goal_no`, `label_kind`, `unit`, `agent` / `agent_a`, `agent_b`, `value`, `detail`, `t_valid_from/to` (UTC), `source_kind`, `source_ref`, `confidence`, `derived_by`, `conflict_group`, `preferred`, `holdout`. **Use `preferred & ~holdout`.** Docs, conflicts and validation: `infra/data-quality/ground_truth_labels.md`.
+
 ### Shared pipeline (consolidated 2026-10-03): `infra/shared/build_all.py`
 One entry point runs every shared builder in dependency order, one at a time, each in its own process with thread caps (default 2):
 `scan_tables → build_derived → build_embeddings (skipped when present) → build_agent_vectors → build_mentions_clean → build_artifacts → turn_errors → goal_fields → period_units → behavior_states → project_states → kicks_classified → text_features → outages`.
@@ -203,3 +214,6 @@ Docs and validation: `infra/data-quality/context_ledger.md`, `context_ledger_val
 - **Days with ≤ 4 active agents give optimistic bootstrap SEs** (H25), which then dominate fixed-effect means; use random-effects means or require N ≥ 5.
 - **Split-half variances of rare talk events are unreliable at day level** (H26): some split-half correlations exceed 1. Use ≥ 30-min windows or pooled estimators for talk.
 - **H34's cascade trees use H18's call-start visibility rule**, so their parent assignment inherits the pause / long-tool-call misclassification (H29). Re-run on the context ledger's visibility in the re-evaluation wave.
+- **#26 had two elections** (DQ6): a 01-05 approval vote → 9–9–9 tie → 7–1–0 runoff (about 100 s), and a 01-09 confirmatory re-election (9–0). H11's "runoff jump" and runoff snapshot, and H31's E-V consensus time, measured the 01-09 vote. Use `ground_truth_labels` `phase` / `ballot` / `tally` rows and analyse per election round.
+- **`agent_goals` is a snapshot** (DQ6): Claude Opus 5's first #51 role (game dev, 07-24 → 07-29) was overwritten; an operator message recovers it. H22, H37 and `goal_fields` treat Opus 5 as roleless for those days. Use `ground_truth_labels`.
+- **Commits under agent identities are not all agent work** (DQ4): 112k of 192k agent-identity commits are automated (scripts, CI, cron), e.g. an 81.6k-commit cron stream under GPT-5's identity still running on 2026-10-04. Filter with `work_commits.automated`.

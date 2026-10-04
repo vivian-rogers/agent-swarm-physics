@@ -8,11 +8,11 @@ Vivian's priority order: (1) postprocessed data quality; (2) re-evaluate every h
 | DQ1 turn-level context ledger (+ `call_windows`, pause-aware visibility: H29) | **done** (2026-10-04) | `context_ledger_turns.parquet`, `context_ledger_items.parquet`, `call_windows.parquet` |
 | DQ2 reply threading + stance labels (Jev, cap $8) | running | `reply_pairs.parquet`, `reply_graph.parquet` |
 | DQ3 Jev behavior states v3 + full run (cap $15) | running | `behavior_states_v3.parquet` |
-| DQ4 work-output ledger (read-only fetch of public agent repos; ≤ 2 GB) | running (2026-10-04) | `work_commits.parquet`, `work_daily.parquet`, `work_outcomes.parquet` |
+| DQ4 work-output ledger (read-only fetch of public agent repos; ≤ 2 GB) | **done** (2026-10-04) | `work_commits.parquet`, `work_daily.parquet`, `work_outcomes.parquet` |
 | DQ5 embedding robustness (second model, style-residualized vectors, statement flags) | running (2026-10-04) | `embeddings/*_<model>.npy`, `statement_flags.parquet` |
-| DQ6 shared ground-truth labels (#12 teams, #26 votes, #51 roles, #44 checkpoints, leaders; #34 holdout flagged) | to do (small) | `ground_truth_labels.parquet` |
+| DQ6 shared ground-truth labels (#12 teams, #26 votes, #51 roles, #44 checkpoints, leaders; #34 holdout flagged) | **done** (2026-10-04) | `ground_truth_labels.parquet` |
 | DQ7 rebuild `chat_core` (clean mentions) and `actions` (fixed bash_head) atomically | after running agents finish | rebuilt core tables |
-| DQ9 period-affordance catalog (Vivian, 2026-10-04): per goal period, what it uniquely offers for testing (ground truth: teams, votes, roles, saboteurs, checkpoints; interventions inside it; structure: rooms, forks, private goals; outcome measures; N and length; holdout status), from `goal-periods.md`, DQ6 ground truth, `period_units`, NE catalog | after DQ6 | `hypotheses/hypohypotheses/period-affordances.md` + `period_affordances.parquet` |
+| DQ9 period-affordance catalog (Vivian, 2026-10-04): per goal period, what it uniquely offers for testing (ground truth: teams, votes, roles, saboteurs, checkpoints; interventions inside it; structure: rooms, forks, private goals; outcome measures; N and length; holdout status), from `goal-periods.md`, DQ6 ground truth, `period_units`, NE catalog | unblocked; launch when a slot frees (20-agent cap) | `hypotheses/hypohypotheses/period-affordances.md` + `period_affordances.parquet` |
 | DQ8 shared village-skeleton simulator + null library; per-period estimates schema; holdout (period × statistic) ledger | to do | `infra/shared/simulate.py`, `nulls.py`; schema doc |
 
 Each DQ agent writes only new files in `infra/` and new tables in `data/processed/shared/`; never `hypotheses/` and never existing tables. Docs go in `infra/data-quality/<name>.md`; the coordinator merges README and `build_all` registration text.

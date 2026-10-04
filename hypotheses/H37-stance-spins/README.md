@@ -228,6 +228,7 @@ The detector's camp and negative-pair statistics are compared with a **parametri
 - **H37-R4. Run the #34 confirmation** after sign-off, as the saboteur test (D8.3).
 
 ## Notes
+- **From DQ6 (2026-10-04):** `agent_goals` overwrote Claude Opus 5's first #51 role (game dev, 07-24 → 07-29, then Mathematician at NE38), so this card treated it as roleless for those days. That adds two rival pairs. Use `ground_truth_labels` (`preferred`) in the re-evaluation.
 - 2026-10-04: promoted from HH125 by Vivian (usefulness-first batch); wave 2.
 - 2026-10-04 01:35 UTC: data scheme, observables, nulls and predictions written before any real-data outcome (pair counts and 4 smoke-test labels from #40 seen; disclosed above).
 - 2026-10-04 01:39 UTC: Amendment 1 (debater-adjacent pairs; enriched validation set). 01:40–02:00 UTC: Jev labelled 30,461 pairs ($1.116, 0 errors). 01:53 UTC: per-period predictions in the G folders.

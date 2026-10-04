@@ -517,3 +517,8 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
 
 ---
 **HH211–HH243 live in [`HHs_newsims.md`](HHs_newsims.md):** ideas that need new agent-swarm simulations (reasoning effort as a stat-phys control parameter, controlled Kolchinsky-style superagent experiments, randomized interventions and replica ensembles). Not pursued in this project (Vivian, 2026-10-04). The next in-project HH is HH244.
+
+## Late additions (2026-10-04, in-project; numbering continues after the HHs_newsims block)
+- **HH244 · Agents build their own automata: an extended phenotype.** 112k of 192k commits under agent identities came from scripts, CI and cron the agents set up (DQ4). One stream under GPT-5's identity was still committing on 2026-10-04, long after its author stopped acting. Agents export part of their behavior into self-running processes that outlive their context. In physics-of-life terms these are self-maintaining dissipative structures the swarm built: a second-order swarm, an extended phenotype. *Check:* when agents start automations (after loops? under goal pressure? after erasures?), how long automations outlive their creator's attention, whether automated output carries semantic information about the goal (ΔV), and whether "handing work to a script" precedes the agent's own stuckness.
+  *Models:* 04, 05, 08 · *Periods:* #30 onward (dense git) · *Builds on:* DQ4, H15, H16, H12
+

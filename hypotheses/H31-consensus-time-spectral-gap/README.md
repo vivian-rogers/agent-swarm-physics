@@ -355,6 +355,7 @@ Per-period verdicts are descriptive. "Supported" or "failed" says whether the H3
 5. Content: replace the 30-min statement mean with day-level or topic-cluster states, and test whether the post-kickoff decay time tracks λ₂ (post hoc slope +0.86 [−0.10, 1.49], 12 events).
 
 ## Notes
+- **From DQ6 (2026-10-04): E-V measured the 01-09 re-election, not the runoff.** The keyword onset fired at 18:02 on 01-05 and the consensus time landed on 01-09 at 18:46. The actual runoff opened at 19:32:19 UTC on 01-05 and ended 7–1–0 within about 100 s. That agrees with the post-hoc 0.76-h rise being an upper bound. Redo E-V per election round with `ground_truth_labels`.
 - 2026-10-03: promoted from HH115 by Vivian (usefulness-first batch, wave 1). Round 1 started; card predictions written before any real-data run.
 - 2026-10-03: synthetic validation run and Amendments 1–2 recorded before any real-data event detection. Per-period predictions (`G<NN>/README.md`) written before the real-data run, using only outcome-free predictors.
 - 2026-10-03: round 1 run (W = 30 primary; W = 15 and 60 robustness), post hoc analyses flagged, forecast rule frozen (`analysis/frozen_rule.json`), confirmatory script dry-run on stand-ins #30, #39, #41, #42 and #44.

@@ -17,6 +17,8 @@ Steps (outputs in data/processed/shared/):
   text_features        text_features
   outages              outages, stall_minutes, reasons (H38's rule; idle spells recomputed with H09's rule)
   context_ledger       call_starts_logged (raw scan), call_windows, context_ledger_turns/_items (+ validation JSON)
+  work_ledger          work_repos, work_commits, work_api_writes, work_daily, work_outcomes (offline; `work_ledger.py refresh` refetches)
+  ground_truth         ground_truth_labels (one gzip+grep pass over raw computer_use_turns)
 Tests (--tests): infra/shared/tests/test_*.py
 
 Usage:
@@ -64,6 +66,9 @@ STEPS = [
      "outputs": ["artifact_commands_text.parquet", "artifacts.parquet", "artifact_mentions.parquet"]},
     {"name": "turn_errors", "cmd": "py", "script": "turn_errors.py",
      "outputs": ["turn_errors.parquet", "sessions.parquet", "actions_bash_head_fixed.parquet"]},
+    {"name": "work_ledger", "cmd": "py", "script": "work_ledger.py",
+     "outputs": ["work_repos.parquet", "work_commits.parquet", "work_api_writes.parquet", "work_daily.parquet",
+                 "work_outcomes.parquet", "work_ledger_validation.json"]},
     {"name": "goal_fields", "cmd": "st", "script": "goal_fields.py",
      "outputs": ["embeddings/goals.parquet", "embeddings/goal_vectors.npy"]},
     {"name": "period_units", "cmd": "py", "script": "period_units.py",
@@ -77,6 +82,7 @@ STEPS = [
     {"name": "context_ledger", "cmd": "py", "script": "context_ledger.py",
      "outputs": ["call_starts_logged.parquet", "call_windows.parquet", "context_ledger_turns.parquet",
                  "context_ledger_items.parquet"]},
+    {"name": "ground_truth", "cmd": "py", "script": "ground_truth.py", "outputs": ["ground_truth_labels.parquet"]},
 ]
 NAMES = [s["name"] for s in STEPS]
 

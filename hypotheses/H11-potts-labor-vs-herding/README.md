@@ -290,6 +290,7 @@ Dry run on stand-ins (#31, #25, #38): C1 not confirmed, C2 inconclusive (#38 fai
 6. Clean the #26 ballot: restrict to the candidate list and the runoff interval.
 
 ## Notes
+- **From DQ6 (2026-10-04): the G26 "runoff" analysis measured the wrong election.** #26 had a 01-05 approval vote (9–9–9 tie) and a 7–1–0 runoff that closed in about 100 s, then a 01-09 confirmatory re-election (9–0). Nine of the ten declarations in this card's runoff snapshot are dated 01-09. Redo the vote tests per round with `ground_truth_labels` (`phase`, `ballot`, `tally`) in the re-evaluation wave.
 - **From H31 (2026-10-04):** `modal()` breaks ties without `maintain_order`, so about 1% of labels flip between rebuilds; the confirmatory run must use the deterministic shared build. The #26 runoff winner's declared share rose 0.22 → ≥ 0.5 in 0.76 h, and many #18 and #26 projects reach a majority within one 30-min window: herding arrives as one-window waves.
 - 2026-10-03: promoted from shortlist 2 (HH24 + HH26 + HH84 (shortlist 2, item 2)).
 - 2026-10-03, **scheme amendment before analysis:** the first build used q ≤ 6 and a 5% share threshold. That gave q = 2 for #13 and #38, with long tails (47 and 74 distinct projects). Seeing only those structural counts, I changed to q ≤ 8 and 2% before any analysis. Raw unmerged labels are kept for robustness.
