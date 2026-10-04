@@ -59,16 +59,16 @@ Novel items such as links and rare words obey the same bound (H41). Over 134k it
 \subsection{The clock is the call}
 \label{sec:coupling-clock}
 
-A reply-hazard model measures the exposure-time elasticity $\eta$: 0 for the call clock and 1 for the wall clock (H40). In regimes II--III (11 periods), $\eta\approx0$ (G51: $0.00\pm0.05$). The call-clock model wins on reserved data in 33/33 periods. In regime I (22 periods), the call clock fails: $\eta=+0.51$ [0.41, 0.61]. H40 concludes that reply coupling uses the call clock in regimes II--III and partly the wall clock in regime I\cred{0.72}.
+A reply-hazard model measures the exposure-time elasticity $\eta$: 0 for the call clock and 1 for the wall clock (H40). In regimes II--III (11 periods), $\eta\approx0$ (G51: $0.00\pm0.05$). The call-clock model wins on data outside the fit in 33/33 periods. In regime I (22 periods), the call clock fails: $\eta=+0.51$ [0.41, 0.61]. H40 concludes that reply coupling uses the call clock in regimes II--III and partly the wall clock in regime I\cred{0.72}.
 
-The call clock also removes most cross-excitation (H42). Hawkes kernels with each agent's call clock as baseline win on reserved likelihood in 57/57 units. The talk that read messages cause falls to $n_{\rm cross}=0.004$ (median), from 0.061 in the wall-time fit of H03\cred{0.61}. The pre-registered estimator failed its synthetic guard, and the natives NE41, NE14 and \#51 failed.
+The call clock also removes most cross-excitation (H42). Hawkes kernels with each agent's call clock as baseline win on out-of-sample likelihood in 57/57 units. The talk that read messages cause falls to $n_{\rm cross}=0.004$ (median), from 0.061 in the wall-time fit of H03\cred{0.61}. The pre-registered estimator failed its synthetic guard, and the natives NE41, NE14 and \#51 failed.
 
 An agent has no refractory window longer than one read-out (H43)\cred{0.69}. A second mention read within 15\,min keeps $R=0.78$ [0.67, 0.89] of the effect of the first mention.
 
-\subsection{The address controls the coupling}
+\subsection{The coupling acts only on named messages}
 \label{sec:coupling-address}
 
-The recipient's name carries the coupling. In regime III, H67 gives 0.079 [0.069, 0.089] extra talk calls per named read and 0.004 [0.003, 0.006] per unnamed read, a ratio of $\times19$. Named items are 3--16\% of reads, but they carry about half of $g_{lag}$. Content obeys the same address rule (H29)\cred{0.65}. A named message moves the recipient's next statement 0.05--0.08 of the gap toward it in every \#51 segment, and an unnamed message 0.00--0.013. The pre-registered net pull of H29 was negative in 7/9 units, and its rankings of drivers do not predict reserved spread.
+The recipient's name carries the coupling. In regime III, H67 gives 0.079 [0.069, 0.089] extra talk calls per named read and 0.004 [0.003, 0.006] per unnamed read, a ratio of $\times19$. Named items are 3--16\% of reads, but they carry about half of $g_{lag}$. Content influence also acts only on named messages (H29)\cred{0.65}. A named message moves the recipient's next statement 0.05--0.08 of the gap toward it in every \#51 segment, and an unnamed message 0.00--0.013. The pre-registered net pull of H29 was negative in 7/9 units, and its rankings of drivers do not predict out-of-sample spread.
 
 \subsection{The gain is weak and subcritical}
 \label{sec:coupling-gain}
@@ -100,4 +100,4 @@ A read pulls the reader's next statement toward the sender by $J_K=0.044$ [0.038
 \subsection{What is not confirmed}
 \label{sec:coupling-open}
 
-All results here are exploratory, and no claim passed a test on reserved data. Each credence is the probability that the claim will survive one (cap 0.95). The first confirmatory runs will be H08 on the reserved data periods and H40 on NE20. Regime I is the main open gap: the call clock and the Fano sum rule both fail there.
+All results here are exploratory, and no claim passed a confirmation test on reserved goal periods. Each credence is the probability that the claim will survive one (cap 0.95). The first confirmatory runs will be H08 on the reserved goal periods and H40 on NE20. Regime I is the main open gap: the call clock and the Fano sum rule both fail there.

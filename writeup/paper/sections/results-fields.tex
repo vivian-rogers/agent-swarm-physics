@@ -11,7 +11,7 @@ A field is an external drive that acts on an agent whether or not the agent read
 \end{equation}
 with $\mathbf h_i(t)=\mathbf h_{\rm sched}(t)+h_g(t)\,\hat{\mathbf g}+\mathbf h_{r(i)}+\mathbf h_i^{0}$. The four terms are the scheduler, the goal $\hat{\mathbf g}$, the room $r(i)$ and a static agent term (style or a private goal). The scheduler term acts on activity, and the other terms act on content.
 
-All results here are exploratory and use non-reserved periods only, and no claim passed a test on reserved data. Only H05 ran its confirmatory test on the reserved data. The result was inconclusive, and the run used an activity table that dropped about half of all events.
+All results here are exploratory and use non-reserved periods only, and no claim passed a confirmation test on reserved goal periods. Only H05 ran its confirmation test on reserved data. The result was inconclusive, and the run used an activity table that dropped about half of all events.
 
 \subsection{The scheduler sets activity synchrony}
 
@@ -79,6 +79,6 @@ A shared model prior is one of the four impostors, because identical LLMs can de
 
 \subsection{Fields drift: the stationary window}
 
-A fit within a period assumes a stationary state. In \#38 (17 days), the kinetic-Ising parameters differ between halves about twice as much as between random day halves (H120)\cred{0.68}. The drift ratio is $R=1.95$ for activity and 2.18 for talk (Holm-corrected $p\le0.008$). The \#51 main body drifts by the same amount ($R=2.17$, 2.14). The 8-day unit 38a shows no drift ($R=1.28$, $p=0.13$, power 0.85). At these counts, the reserved maximum-entropy bound of Ref.~\cite{aguilera2026} cannot test drift in entropy production (power $\le0.30$).
+A fit within a period assumes a stationary state. In \#38 (17 days), the kinetic-Ising parameters differ between halves about twice as much as between random day halves (H120)\cred{0.68}. The drift ratio is $R=1.95$ for activity and 2.18 for talk (Holm-corrected $p\le0.008$). The \#51 main body drifts by the same amount ($R=2.17$, 2.14). The 8-day unit 38a shows no drift ($R=1.28$, $p=0.13$, power 0.85). At these counts, an out-of-sample version of the maximum-entropy bound of Ref.~\cite{aguilera2026} cannot test drift in entropy production (power $\le0.30$).
 
 Thus the stationary window is about one week, and a fit on a longer unit puts the field drift into the couplings. Practical value: split periods longer than eight days into units of at most eight days before you fit $J$ or $\mathbf h$.
