@@ -61,6 +61,13 @@ def run_period(args):
     res["onset"] = L.onset(s, "r_either")
     res["onset_chars"] = L.onset(s, "r_either", share="s_chars")
     res["onset_copy"] = L.onset(L.prepare(st, it, resp="r_both")[0], "r_both")
+    # segment-cut recheck (2026-10-04): round-1 same-day O, and the primary without left-censored segments
+    s_day, _ = L.prepare(st, it, resp="r_either", nov="nov_bge", o_scope="day")
+    res["onset_o_day"] = L.onset(s_day, "r_either")
+    if "seg_cens" in s.columns:
+        res["onset_nocens"] = L.onset(s.filter(~pl.col("seg_cens").fill_null(False)), "r_either")
+        res["n_seg_cens"] = int(s["seg_cens"].fill_null(False).sum())
+        res["n_o_seg_gt_o_day"] = int((s["o_seg"] > s["o_day"]).sum())
     # onset with an erasure indicator (NE41: first statement after a forced erasure)
     d0 = s.filter(pl.col("r_prev") == 0)
     if d0.height >= 50 and d0["r_either"].sum() >= 10:
@@ -128,6 +135,9 @@ def main():
     pooled["b_O"] = pool("onset", "b_O", "se_O", ok)
     pooled["b_K"] = pool("onset", "b_K", "se_K", ok)
     pooled["b_s_chars"] = pool("onset_chars", "b_s", "se_s", ok)
+    for v in ("onset_o_day", "onset_nocens"):
+        for b in ("b_s", "b_O", "b_K"):
+            pooled[f"{b}_{v.replace('onset_', '')}"] = pool(v, b, "se_" + b[2:], ok)
     pooled["exit_forced"] = pool("exit", "b_forced_between", "se_forced_between", ok)
     pooled["exit_vol"] = pool("exit", "b_vol_between", "se_vol_between", ok)
     pooled["exit_nov_read"] = pool("exit", "b_nov_read", "se_nov_read", ok)

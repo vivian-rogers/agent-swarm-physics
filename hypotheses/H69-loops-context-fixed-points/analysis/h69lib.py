@@ -88,9 +88,19 @@ def fit_logit(y, X, groups, sigma=SIGMA_FE, clusters=None, max_iter=50):
 
 
 # ============================================================================ preparation
+O_SCOPE = "seg"  # recheck 2026-10-04: O counts own statements over the whole context segment ("day" = round 1)
+
+
 def prepare(st: pl.DataFrame, items: pl.DataFrame | None, resp: str = "r_either", nov: str = "nov_bge",
-            nov_thr: float | None = None) -> tuple[pl.DataFrame, float]:
-    """Statement frame with previous-response state, self-share and input counts."""
+            nov_thr: float | None = None, o_scope: str | None = None) -> tuple[pl.DataFrame, float]:
+    """Statement frame with previous-response state, self-share and input counts.
+    O (own statements in context) is `o_ctx`: o_seg (whole segment, crosses midnight like k_ctx; primary since the
+    segment-cut recheck) or o_day (round 1: same PT day only); frames without o_seg fall back to o_day."""
+    sc = o_scope or O_SCOPE
+    if sc == "seg" and "o_seg" in st.columns:
+        st = st.with_columns(pl.col("o_seg").alias("o_ctx"), pl.col("own_chars_seg").alias("own_chars_ctx"))
+    else:
+        st = st.with_columns(pl.col("o_day").alias("o_ctx"), pl.col("own_chars_day").alias("own_chars_ctx"))
     if items is not None and items.height:
         read = items.filter(pl.col("inflight") == 0)
         if nov_thr is None:
@@ -111,8 +121,8 @@ def prepare(st: pl.DataFrame, items: pl.DataFrame | None, resp: str = "r_either"
     st = st.sort("agent", "t").with_columns(
         pl.col(resp).cast(pl.Int8).shift(1).over("agent", "pt_date").alias("r_prev"),
         pl.col("nov_read").shift(-1).over("agent", "pt_date").fill_null(0).alias("nov_read_next"),
-        (pl.col("o_day") / (pl.col("o_day") + pl.col("k_ctx")).clip(lower_bound=1)).alias("s_self"),
-        (pl.col("own_chars_day") / (pl.col("own_chars_day") + pl.col("chars_ctx")).clip(lower_bound=1)).alias(
+        (pl.col("o_ctx") / (pl.col("o_ctx") + pl.col("k_ctx")).clip(lower_bound=1)).alias("s_self"),
+        (pl.col("own_chars_ctx") / (pl.col("own_chars_ctx") + pl.col("chars_ctx")).clip(lower_bound=1)).alias(
             "s_chars"),
         (pl.col("agent").cast(pl.Utf8) + "_" + pl.col("pt_date")).alias("aday"),
     )
@@ -146,7 +156,7 @@ def onset(st: pl.DataFrame, resp: str = "r_either", share: str = "s_self"):
     C = _X(d, ONSET_CTRL)
     s = d[share].to_numpy().astype(float)
     lin = fit_logit(y, np.column_stack([s, C]), ag, clusters=cl)
-    split = fit_logit(y, np.column_stack([np.log1p(d["o_day"].to_numpy()), np.log1p(d["k_ctx"].to_numpy()), C]), ag,
+    split = fit_logit(y, np.column_stack([np.log1p(d["o_ctx"].to_numpy()), np.log1p(d["k_ctx"].to_numpy()), C]), ag,
                       clusters=cl)
     best = None
     for ss in np.arange(0.1, 0.91, 0.05):

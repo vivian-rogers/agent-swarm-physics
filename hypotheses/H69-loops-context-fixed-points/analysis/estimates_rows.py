@@ -28,7 +28,7 @@ def main():
         ep = o["episodes"]["r_either"]
         sc = o["scorable"]["episodes"]
         base = dict(period_unit=unit, goal_no=g, source=SRC, post_hoc=False,
-                    status="round 1" + ("" if sc else " (not scorable: < 30 episodes)"))
+                    status="round 1, segment-cut recheck 2026-10-04" + ("" if sc else " (not scorable: < 30 episodes)"))
         rows.append(dict(base, statistic="restatement_rate", channel="chat (cross-call, either model)",
                          estimate=ep["rate"], ci_lo=None, ci_hi=None, ci_kind="none", n=ep["n_stmt"],
                          n_kind="statements", method="DQ5 self_repeat bge|gte, source in an earlier call",

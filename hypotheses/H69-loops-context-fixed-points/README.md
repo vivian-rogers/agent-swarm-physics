@@ -201,3 +201,63 @@ Frozen C1–C6 on #43, #45–#47, #49, #50 and the #51 tail (scored at ≥ 30 ep
 - **H69-R1.** Measure own content in tokens (H45's prompt sizes) and test whether onset depends on own tool output as well as own chat.
 - **H69-R2.** Dose of erasure: does a partial context trim (NE22's 200-event cap, NE03's chat window) break loops in proportion to how much own text it removes?
 - **H69-R3.** Memory as the residual carrier: are post-erasure restatements of erased statements the ones written into memory at the consolidation (`memory_stats`)?
+
+## Recheck (segment cuts) — 2026-10-04
+*Requested by the vocabulary consolidation (Notes, coordinator recheck). Exploratory, non-holdout periods only; holdout masked; `confirm.py` not run. Round-1 outputs kept in `data/processed/H69-loops-context-fixed-points/recheck_segcuts/round1/`.*
+
+**Audit.** Checked against `physics-models/DEFINITIONS.md` ("Context segment", "Context segment, boundary rule", "Context fill, note", "Self-share (chat, segment)") and the `infra/README.md` known issues.
+- **Segment boundaries: already correct in the code.** `scheme/build.py` cut segments at `reset_consol | reset_session` only, never at `first_of_day`. The "Data scheme" step 2 above wrongly lists `first_of_day` as a segment start: the card text was wrong, the code was not. Against the infra rule (cumulative resets over each agent's full non-holdout ledger timeline), all 1,169,604 round-1 pairs have the same `in_seg`. No pair crosses midnight, because the DQ5 flag and the pair set are same-PT-day by design. The enrichment, forced-boundary enrichment, exit and NE41 statistics therefore did not depend on the cut.
+- **O (own statements in context) was cut at the day start: wrong.** `o_day` and `own_chars_day` counted only same-day own statements in the segment. K = `k_ctx` and `chars_ctx` carry over the night. So s = O/(O + K) mixed a day-cut numerator with a segment denominator, against the "Self-share (chat, segment)" definition. This affected 2 to 349 statements per period (0.2–2.5%), the first statements of mornings whose segment opened the evening before.
+- **Segment position and length were truncated at period edges.** `seg_pos` and `seg_len` (used by the pseudo-erasure) counted only the period's own days, so a segment open at a period's first morning or last evening was cut short.
+- **Known issues:** none apply.
+  - `memory_stats` (two rows per consolidation): not read; resets come from the ledger's CONSOLIDATE events, one flag per consolidation.
+  - `call_windows.t_end` (includes timers): not used; calls are matched on `t_first`–`t_log`, and in-flight items use [`t_call`, statement time).
+  - `rooms_timeline` null `t_end`: not read; the ledger's `room_at` is an as-of lookup on start times.
+  - `unique()` day order: days are sorted, and the agent-day bootstrap uses `np.unique` (sorted) with fixed seeds. The re-run reproduces every unchanged number to the last digit.
+
+**Fix (`scheme/build.py`, `analysis/h69lib.py`, `analysis/run_periods.py`).**
+- Each period is built on the agent's ledger timeline over its days plus up to 5 earlier and 1 later eligible active regime-III days. The lookback stops at held-out days, so G44 and G51 get no context days.
+- A new segment starts at a reset, at the agent's first loaded call, or after an unloaded active day. It is flagged `seg_cens` when no reset is flagged there: 0–79 statements per period.
+- New columns `o_seg` and `own_chars_seg` count own statements and characters in earlier calls of the same segment on any day. They are now primary in the self-share, the char-weighted share and the split onset model.
+- Variants: `onset_o_day` (round-1 O, which reproduces round 1 exactly) and `onset_nocens` (censored segments dropped; within 0.001 of primary).
+- Rebuilt G36–G42, G44 and G51; `run_periods.py --B 300 --procs 2`; `estimates_rows.py` (61 rows replaced, 21 changed: b_own, b_room and b_selfshare in 7 periods). The synthetic validation was not re-run, since it uses real skeletons and O moves in ≤ 2.5% of statements; its size and power table stands as written.
+
+**Old → new for every number the card quotes** (pooled = random effects over G38, G40, G41, G51):
+
+| Number | Round 1 | Recheck |
+| --- | --- | --- |
+| Pooled b_s (self-share) | 0.53 [−0.12, 1.19] | 0.51 [−0.13, 1.14] |
+| Pooled b_O (own, per log unit) | 0.34 [0.09, 0.60] | 0.32 [0.08, 0.57] |
+| Pooled b_K (room items at fixed O) | +0.04 [−0.17, 0.25] | +0.05 [−0.16, 0.26] |
+| Onset odds per doubling of own statements (Finding 3) | ×1.27 | ×1.25 |
+| Pooled b_s, char-weighted ("the char variant agrees") | 0.63 [−0.29, 1.55] | 0.62 [−0.29, 1.52] |
+| Hinge ΔAIC (P2): ≤ 2 except G51 | G39 2.0, G51 6.6 (s* 0.9) | G39 1.9, G51 6.6 (s* 0.9) |
+| Fill control `ctx_pos` in onset, G38/G40/G41 | +0.34 to +0.46 | +0.34 to +0.46 |
+| G38 b_s | 0.80 [0.03, 1.57] | 0.79 [0.02, 1.56] |
+| G38 b_O · b_K | 0.40 [0.05, 0.75] · 0.01 | 0.39 [0.04, 0.74] · 0.02 |
+| G40 b_s (n.s.) | 1.98 [−0.63, 4.58] | 1.92 [−0.69, 4.52] |
+| G40 b_O (period README only) | 0.59 [0.02, 1.17] | 0.56 [−0.01, 1.14] |
+| G41 b_s (n.s.) | 1.07 [−1.15, 3.30] | 1.04 [−1.20, 3.27] |
+| G51 b_s | −0.01 [−0.74, 0.71] | −0.02 [−0.75, 0.71] |
+| Pseudo-erasure OR (pooled) | 1.13 [0.99, 1.28] | 1.11 [0.98, 1.26] |
+| Pseudo-erasure G38 · G41 (period READMEs) | 0.97 · 1.13 | 0.97 · 1.02 |
+| Exit OR, forced erasure, s-adjusted | 2.85 [1.08, 7.57] | 2.85 [1.08, 7.56] |
+| In-context enrichment (pooled; bge; gte; both; forced boundaries) | 3.38 [2.56, 4.46], I² 0; 3.5; 6.1; 8.6; 3.53 | unchanged |
+| Enrichment per period (G38 3.9 [2.6, 6.4]; G39 2.2; G40 3.7 [1.7, 7.5]; G41 4.1 [2.0, 15.7]; G51 2.7 [1.7, 3.9]) | as quoted | unchanged |
+| Exit OR, forced erasure (pooled; G38; G40; G41; G51) | 2.40 [1.18, 4.88], I² 0.74; 4.9; 3.0; 1.25; 1.36 | unchanged |
+| Exit OR, voluntary erasure | 2.4 | unchanged |
+| Onset OR after a forced erasure (NE41) | 0.54 [0.34, 0.86] | unchanged |
+| Novel-read exit · in flight · next call | 1.23 [0.85, 1.78] · 1.58 [0.97, 2.57] · 0.92 | unchanged |
+| G38 novel-read exit | 1.62 [1.20, 2.20] | unchanged |
+| G51 nudges · humans read in a loop | 0.81 [0.49, 1.34] · 1.38 [0.48, 3.95] | unchanged |
+| Restatement rates, episodes, statement counts (all periods) | as quoted | unchanged |
+| Templated-excluded onset b_O (G38/G40/G41/G51) | 0.38 / 0.55 / 0.52 / 0.11 | 0.37 / 0.53 / 0.50 / 0.11 |
+
+**Verdicts: none change.**
+- P1 still fails: pooled b_s CI includes 0 and b_K ≥ 0. P2 is still inconclusive. P3, P4 and N-NE41 do not use O. P5 still fails. N-G51 still fails.
+- N-G38 is still supported, with a thinner margin: the b_s lower bound moves 0.03 → 0.02.
+- Period verdicts: G38 supported; G40, G41, NE41 mixed; G51 failed; G36, G37, G39, G42, G44 descriptive. The scorecard (A1 B1 C1 D1 E1 F2 G1 H1 I1) is unchanged.
+- One sub-result weakens: G40's own-count effect b_O loses significance (lower bound 0.02 → −0.01). It was not a verdict input.
+- `confirm.py` C4 and C5 (b_K, b_O) now run on segment O. The change is definitional and the frozen thresholds are untouched; the script is still not run.
+
+**Claim that stands:** restatements copy what is still in the agent's context window (in-context enrichment OR 3.38 [2.56, 4.46], 4/4 scorable periods, unchanged by the segment-cut recheck). Excluded: the self-share trigger (failed), the threshold (unpowered), and novel input ending loops (failed).

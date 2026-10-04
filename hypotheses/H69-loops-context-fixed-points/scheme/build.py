@@ -7,11 +7,16 @@ Definitions (card, "Data scheme"):
 - statement: an agent chat statement (DQ5 `statements`, kind = chat), mapped to its producing ledger call through its
   AGENT_TALK event (t_first <= t_event <= t_log of the agent's call; DQ2's rule);
 - segment: the agent's calls between two resets (reset_consol | reset_session); forced = reset_forced (NE41);
-  segments can cross midnight (regime III has no reset at day start);
+  segments cross midnight (regime III has no reset at day start; DEFINITIONS "Context segment, boundary rule").
+  Recheck 2026-10-04: segments are cut on the agent's ledger timeline over the period's days plus up to
+  LOOKBACK_DAYS earlier and LOOKAHEAD_DAYS later eligible active regime-III days, so a segment open at a period's
+  first morning keeps its earlier calls; a segment that reaches the start of the loaded window or an unloaded
+  (held-out) active day without a reset is left-censored (`seg_cens`);
 - cross-call restatement: DQ5 self_repeat by a model whose matched source statement comes from an EARLIER call;
   r_either (primary, H55 restatement), r_bge, r_gte, r_both (copy);
-- O (own statements in context): earlier statements of the agent from earlier calls of the same segment and PT day
-  (o_day; the flag's comparison set) and of the same segment on any day (o_all); K = k_ctx at the producing call;
+- O (own statements in context): earlier statements of the agent from earlier calls of the same segment on any day
+  (o_seg, own_chars_seg; primary since the recheck, matching K = k_ctx, which also carries over the night) and of the
+  same segment and PT day (o_day, own_chars_day; round 1, which cut O at first_of_day);
 - read items since the previous statement: ledger items of the agent's calls in (call of t-1, call of t];
 - in-flight items: messages by others in the agent's room (room at t_call) posted in [t_call, t_statement);
 - novelty of an item: 1 - max cosine (raw unit vectors) to the agent's last 5 statements before t (same day);
@@ -48,6 +53,8 @@ MAX_LAG_S = 3 * 3600
 MAX_PAIRS = 40
 N_RECENT = 5
 ALLOW_HOLDOUT = False  # only confirm.py sets this (guarded); round 1 never reads held-out rows
+LOOKBACK_DAYS = 5  # context-only days before the period (segments cross midnight); recheck 2026-10-04
+LOOKAHEAD_DAYS = 1  # context-only days after the period (segment lengths for the pseudo-erasure)
 
 
 def days_of(g: int) -> list[str]:
@@ -56,6 +63,37 @@ def days_of(g: int) -> list[str]:
     d = cal["pt_date"].to_list()
     hm = holdout_mask(d, [g] * len(d))
     return sorted(x for x, m, h in zip(d, hm, cal["holdout"].to_list()) if not m and not h)
+
+
+def context_days(days: list[str]) -> tuple[list[str], dict]:
+    """The period's days plus up to LOOKBACK_DAYS earlier / LOOKAHEAD_DAYS later eligible active regime-III days
+    (contiguous in the active calendar; stops at the first ineligible day). Returns the loaded days and a block id
+    per loaded day: the block changes where an active regime-III day between two loaded days is not loaded."""
+    cal = pl.read_parquet(SH / "calendar.parquet").filter(
+        (pl.col("regime").cast(pl.Utf8) == "III") & (pl.col("window_s") > 0)).sort("pt_date")
+    d = cal["pt_date"].to_list()
+    hm = holdout_mask(d, cal["goal_no"].to_list())
+    ok = {x: (ALLOW_HOLDOUT or not (m or h)) for x, m, h in zip(d, hm, cal["holdout"].to_list())}
+    pos = {x: i for i, x in enumerate(d)}
+    i0, i1 = pos[min(days)], pos[max(days)]
+    load = set(days)
+    for step, lim, start in ((-1, LOOKBACK_DAYS, i0), (1, LOOKAHEAD_DAYS, i1)):
+        j = start
+        for _ in range(lim):
+            j += step
+            if j < 0 or j >= len(d) or not ok[d[j]]:
+                break
+            load.add(d[j])
+    blk, b, prev_loaded = {}, 0, False
+    for x in d:
+        if x in load:
+            if not prev_loaded:
+                b += 1
+            blk[x] = b
+            prev_loaded = True
+        else:
+            prev_loaded = False
+    return sorted(load), blk
 
 
 class Emb:
@@ -81,36 +119,52 @@ def build(g: int, emb: Emb, flags: pl.DataFrame, stm: pl.DataFrame, ev: pl.DataF
     days = days_of(g)
     if not days:
         return {}
-    # ---- calls (all agent calls on these days), ordered per agent; segments over the agent's timeline
+    load_days, blk = context_days(days)
+    # ---- calls (all agent calls on the loaded days), ordered per agent; segments over the agent's timeline
     lt = (pl.scan_parquet(SH / "context_ledger_turns.parquet")
-          .filter(pl.col("pt_date").is_in(days) & (~pl.col("holdout") | pl.lit(ALLOW_HOLDOUT)))
+          .filter(pl.col("pt_date").is_in(load_days) & (~pl.col("holdout") | pl.lit(ALLOW_HOLDOUT)))
           .select("turn_id", "agent", "pt_date", "t_call", "t_first", "t_log", "ctx_mode", "k_ctx", "ctx_pos",
                   "chars_new", "k_new", "reset_consol", "reset_forced", "reset_session", "room")
           .collect().sort("agent", "t_call"))
     lt = lt.with_columns(
         (pl.col("reset_consol") | pl.col("reset_session")).fill_null(False).alias("reset_any"),
-        pl.col("reset_forced").fill_null(False))
+        pl.col("reset_forced").fill_null(False),
+        pl.col("pt_date").replace_strict(blk, return_dtype=pl.Int32).alias("_blk"))
+    # a segment starts at a reset (infra rule: reset_consol | reset_session, never first_of_day), at the agent's
+    # first loaded call, or after an unloaded active day (left-censored when no reset is flagged there)
+    lt = lt.with_columns((pl.col("_blk") != pl.col("_blk").shift(1).over("agent")).fill_null(True).alias("_new_blk"))
+    lt = lt.with_columns((pl.col("reset_any") | pl.col("_new_blk")).alias("_seg_start"),
+                         (pl.col("_new_blk") & ~pl.col("reset_any")).alias("_cens_start"))
     lt = lt.with_columns(
         pl.int_range(pl.len()).over("agent").alias("call_idx"),
-        pl.col("reset_any").cast(pl.Int32).cum_sum().over("agent").alias("seg"),
+        pl.col("_seg_start").cast(pl.Int32).cum_sum().over("agent").alias("seg"),
         pl.col("reset_forced").cast(pl.Int32).cum_sum().over("agent").alias("n_forced_cum"),
         pl.col("reset_any").cast(pl.Int32).cum_sum().over("agent").alias("n_reset_cum"),
     ).with_columns(
         pl.col("chars_new").fill_null(0).cum_sum().over("agent", "seg").alias("chars_ctx"),
         pl.int_range(pl.len()).over("agent", "seg").alias("seg_pos"),
-        pl.len().over("agent", "seg").alias("seg_len"))
-    # ---- statements -> calls
-    s = (stm.filter((pl.col("goal_no") == g) & pl.col("pt_date").is_in(days) & (~pl.col("holdout") | pl.lit(ALLOW_HOLDOUT))))
+        pl.len().over("agent", "seg").alias("seg_len"),
+        pl.col("_cens_start").any().over("agent", "seg").alias("seg_cens"))
+    # ---- statements -> calls (loaded days: the context-only days feed O over the segment, then are dropped)
+    s = stm.filter(pl.col("pt_date").is_in(load_days) & (~pl.col("holdout") | pl.lit(ALLOW_HOLDOUT)))
     s = s.join(chat.select("crow", "message_id", pl.col("length").alias("chars")), left_on="src_row", right_on="crow",
                how="left")
     s = s.join(ev, on="message_id", how="left").with_columns(pl.col("t_ev").fill_null(pl.col("t"))).sort("t_ev")
     cw = lt.select("turn_id", "agent", "t_first", "t_log").sort("t_first")
     s = s.join_asof(cw, left_on="t_ev", right_on="t_first", by="agent", strategy="backward")
-    n_all = s.height
+    n_all = s.filter((pl.col("goal_no") == g) & pl.col("pt_date").is_in(days)).height
     s = s.filter(pl.col("turn_id").is_not_null() & (pl.col("t_ev") <= pl.col("t_log")))
     s = s.join(lt.select("turn_id", "call_idx", "seg", "ctx_pos", "k_ctx", "chars_ctx", "n_forced_cum", "n_reset_cum",
-                         "t_call", "room", "seg_pos", "seg_len", "ctx_mode"), on="turn_id", how="left")
+                         "t_call", "room", "seg_pos", "seg_len", "ctx_mode", "seg_cens"), on="turn_id", how="left")
     s = s.filter(pl.col("ctx_mode") == "cu")
+    # O over the whole segment (any day): own statements and chars in earlier calls of the same segment
+    oc = (s.group_by("agent", "seg", "call_idx").agg(pl.len().alias("_n"), pl.col("chars").fill_null(0).sum().alias("_c"))
+          .sort("agent", "seg", "call_idx")
+          .with_columns(pl.col("_n").cum_sum().shift(1, fill_value=0).over("agent", "seg").alias("o_seg"),
+                        pl.col("_c").cum_sum().shift(1, fill_value=0).over("agent", "seg").alias("own_chars_seg")))
+    s = s.join(oc.select("agent", "seg", "call_idx", "o_seg", "own_chars_seg"), on=["agent", "seg", "call_idx"],
+               how="left")
+    s = s.filter((pl.col("goal_no") == g) & pl.col("pt_date").is_in(days))
     s = s.join(flags, on="srow", how="left").sort("agent", "t")
     # cross-call restatement: source statement's call must be earlier
     src_call = s.select(pl.col("srow").alias("src"), pl.col("call_idx").alias("src_call"))
@@ -236,6 +290,7 @@ def build(g: int, emb: Emb, flags: pl.DataFrame, stm: pl.DataFrame, ev: pl.DataF
     keep = ["sid", "srow", "agent", "pt_date", "goal_no", "t", "turn_id", "call_idx", "seg", "ctx_pos", "k_ctx",
             "chars_ctx", "chars", "room", "seg_pos", "seg_len", "r_either", "r_bge", "r_gte", "r_both", "flag_any",
             "templated", "cross_echo", "self_repeat_cos_bge", "self_repeat_cos_gte", "o_day", "own_chars_day",
+            "o_seg", "own_chars_seg", "seg_cens",
             "n_prev_day", "n_prev_xcall", "lag_prev_s", "calls_prev", "forced_between", "reset_between", "n_read",
             "n_inflight"]
     s = s.select([c for c in keep if c in s.columns])
@@ -250,7 +305,9 @@ def build(g: int, emb: Emb, flags: pl.DataFrame, stm: pl.DataFrame, ev: pl.DataF
                                          ("in_seg", pl.Boolean), ("forced_between", pl.Boolean),
                                          ("reset_between", pl.Boolean), ("same_half", pl.Boolean)], orient="row")
     pr.write_parquet(o / "pairs.parquet", compression="zstd")
-    info = dict(period=f"G{g:02d}", days=len(days), statements_mapped=s.height, statements_all=n_all,
+    info = dict(period=f"G{g:02d}", days=len(days), context_days=sorted(set(load_days) - set(days)),
+                statements_mapped=s.height, statements_all=n_all, seg_cens=int(s["seg_cens"].sum()),
+                o_seg_gt_o_day=int((s["o_seg"] > s["o_day"]).sum()),
                 items=it.height, pairs=pr.height, secs=round(time.time() - t0, 1))
     (o / "build.json").write_text(json.dumps(info, indent=1))
     return info
@@ -289,6 +346,8 @@ def main():
                                    "shared/context_ledger_items", "shared/events_core", "shared/chat_core",
                                    "shared/kicks_classified", "shared/calendar"]}],
             "params": {"periods": ps, "max_lag_s": MAX_LAG_S, "max_pairs": MAX_PAIRS, "n_recent": N_RECENT,
+                       "segments": "reset_consol | reset_session only (no first_of_day cut); O over the whole segment",
+                       "lookback_days": LOOKBACK_DAYS, "lookahead_days": LOOKAHEAD_DAYS,
                        "thresholds": thr, "holdout": "excluded (calendar.holdout | holdout_mask | ledger holdout)"},
             "built_at": dt.datetime.now(dt.timezone.utc).isoformat()}
     OUT.mkdir(parents=True, exist_ok=True)
