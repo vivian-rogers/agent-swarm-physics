@@ -326,6 +326,102 @@
    "decision": "approved",
    "decided_at": "2026-10-04T20:11:29.592058+00:00",
    "promoted_to": "H102"
+  },
+  {
+   "id": "HH334",
+   "title": "Two outside channels that could fake H81's slow mode: public chat (NE39) and providers",
+   "family": "egregore",
+   "q": "Q3",
+   "cost": "low",
+   "why": "NE39 cut ~100 public messages a day to ≤ 4; if H81's slow mode is an outside drift it should weaken after the cut, and a provider drift would ride on same-lab pairs only."
+  },
+  {
+   "id": "HH333",
+   "title": "Does culture age while the village sleeps? A clock test for H81",
+   "family": "egregore",
+   "q": "Q3",
+   "cost": "low",
+   "why": "Endogenous culture can only decorrelate while agents run, an outside drift decorrelates on calendar days; refit H81's decay on active vs calendar time."
+  },
+  {
+   "id": "HH335",
+   "title": "The slow mode's decay time should grow with N (finite-magnet wandering)",
+   "family": "magnet (round 2)",
+   "q": "Q3",
+   "cost": "low",
+   "why": "A finite magnet's direction diffuses at a rate ∝ 1/N, while an outside drift does not care about N; size-matched subsets remove the estimation-noise fake."
+  },
+  {
+   "id": "HH337",
+   "title": "Room split: grows from zero (instability) or appears at once (hidden field)?",
+   "family": "magnet (round 2)",
+   "q": "Q3",
+   "cost": "low",
+   "why": "True symmetry breaking starts at zero separation and picks its direction from early noise; a hidden work field gives full separation on day 1 along a direction the old repos predict. This turns H100's residual into a test."
+  },
+  {
+   "id": "HH338",
+   "title": "Goldstone wandering: spontaneous room directions drift, fielded ones stay pinned",
+   "family": "magnet (round 2)",
+   "q": "Q3",
+   "cost": "low",
+   "why": "With no field the ordered direction costs nothing to rotate, so it diffuses; compare day-to-day rotation in identical-kickoff vs room-specific-kickoff weeks."
+  },
+  {
+   "id": "HH339",
+   "title": "Forced erasure as a demagnetizing pulse: where is the room's order stored?",
+   "family": "magnet (round 2)",
+   "q": "Q3",
+   "cost": "low",
+   "why": "If room order is coupling held in context, alignment with the room drops right after a forced wipe (NE41, quasi-random timing) and recovers with re-reads; if it is a self-made repo field, it does not drop."
+  },
+  {
+   "id": "HH340",
+   "title": "Exchange bias: the own artifact shifts an agent's goal-switch loop",
+   "family": "magnet (round 2)",
+   "q": "Q5",
+   "cost": "medium",
+   "why": "A pinned layer shifts a hysteresis loop; agents still committing to their own repo at a goal boundary should carry the old goal ≥ 2× longer, with NE24 (repo host swap) as the confirmatory cut."
+  },
+  {
+   "id": "HH342",
+   "title": "Sum rule for talk: Fano factor = 1/(1 − g)²",
+   "family": "magnet (round 2)",
+   "q": "Q2",
+   "cost": "low",
+   "why": "A parameter-free check that H67's read-out gain explains all talk clustering after trimming; any excess Fano is a field or a coupling the read-out loop misses."
+  },
+  {
+   "id": "HH343",
+   "title": "Crossing claims anti-coordinate: parallel updates make 2-cycles",
+   "family": "quantitative",
+   "q": "Q1",
+   "cost": "medium",
+   "why": "Agents who pile onto a project with messages crossing in flight should both leave again (a Little-model 2-cycle), while sequential pile-ons stick; a read vs in-flight partition contrast."
+  },
+  {
+   "id": "HH344",
+   "title": "Data collapse of kickoff settling on each agent's own call clock",
+   "family": "quantitative",
+   "q": "Q1",
+   "cost": "low",
+   "why": "If agents update only at calls, per-agent settling is one exponential in own calls, and the swarm's 4.5-h settling curve follows from the call-rate mix with no new parameter."
+  },
+  {
+   "id": "HH345",
+   "title": "Read-out channel capacity: information per call grows as k^0.34",
+   "family": "quantitative",
+   "q": "Q4",
+   "cost": "low",
+   "why": "H18's dilution predicts batch uptake ∝ k^(1−β) and H59 says one read is one kick; one Gaussian-MI curve over the ledger tells which law holds."
+  },
+  {
+   "id": "HH346",
+   "title": "A Griffiths phase: rare strong pairs give a subcritical swarm heavy-tailed talk",
+   "family": "magnet (round 2)",
+   "q": "Q3",
+   "cost": "low",
+   "why": "Subcritical on average but locally supercritical ping-pong dyads would give non-geometric reply-chain tails that vanish when those pairs are removed."
   }
  ]
 }

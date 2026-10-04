@@ -971,3 +971,126 @@ These three build on today's results: the kickoff is a field (H54, H75), H82's r
   - *Kill:* hoppers are not intermediate, or the positions are not bimodal.
   - *Models:* 11, 01 · *Builds on:* H05, H41, H47, HH183
   *Status (2026-10-04):* approved by Vivian (dashboard) → H102.
+
+## Round-1 open questions through a magnet lens (added 2026-10-04; for Vivian to vet)
+These build on what round 1 found and on the questions it left open:
+- H81's slow mode has an open external-drift rival.
+- H100's "spontaneous" share is a residual (f_spont = 1 − f_comp − f_field), so any unmeasured field lands in it.
+- H102 found that content follows the room the agent speaks in.
+- Coupling is read-out gated and runs on a per-call clock (H08, H40, H50).
+- Every unit is subcritical (H34, H67).
+
+Each entry names a kill condition and says how it handles the four impostors (scheduler field, exogenous field, shared priors, contemporaneous convergence). All of them run on existing shared tables or on H81/H100/H102 outputs.
+
+- **HH333 · Does culture age while the village sleeps? A clock test for H81's slow mode.** An outside drift (the world, the operator's choice of themes) runs on calendar days whether or not the agents are running. Endogenous culture is carried only by agents reading and writing, so it can change only while the village is active. In magnet terms, an aging system with no dynamics does not age.
+  - *Prediction:* the decay of H81's cross-goal residual alignment s(Δ) collapses onto the active time between blocks (`calendar.active_offset_s`, or village talk volume) and not onto calendar days. Block pairs that span long off-gaps lose less alignment per calendar day than pairs at the same calendar distance with no gap.
+  - *Check:* refit H81's O2 decay with three clocks (calendar days, active hours, village messages), on both models, with size-matched 4-agent subsets. Compare fits by held-out pair likelihood. First run a power check: if the two clocks correlate above 0.95 over the regime-I block pairs, the result is inconclusive.
+  - *Kill:* the calendar clock fits as well as or better than the active clock. The slow mode is then consistent with an outside drift, and the egregore reading loses its best support.
+  - *Impostors:* scheduler: the clock comparison uses the schedule as the treatment. Exogenous: goal and human directions are projected out as in H81. Priors: leave-goal-out agent means. Convergence: n/a (cross-goal statistic).
+  - *Models:* 11, 14 · *Builds on:* H81, H103, HH331
+- **HH334 · Two outside channels that could fake the slow mode: the public chat (NE39) and the providers.** H81's open rival is a slow drift that all agents read. Two such channels can be cut or split in the data.
+  1. Until about 2025-07-01 (NE39), the public wrote about 100 messages a day into chat. After that, it wrote ≤ 4 a day.
+  2. Provider-side model updates (H74 found six undocumented API changes) would move all agents of one lab together.
+  - *Prediction:* the slow-mode contrast D_near is the same before and after NE39, within its bootstrap CI. Its pair alignment is the same for cross-lab and same-lab agent pairs.
+  - *Check:* (1) H81's O2 on regime-I blocks before NE39 (05-10 → 07-01) vs after, at matched member overlap. (2) Split the culture residual into lab means: is the across-block alignment carried by cross-lab pairs of agents (r_i,b · r_j,b′ with different labs) as much as by same-lab pairs? (3) Secondary: a newcomer's first-call statements, made before it has read any village message (ledger blind window), should carry no loading on the current slow mode.
+  - *Kill:* D_near falls by more than half after NE39, or the alignment is carried by same-lab pairs (cross-lab alignment at its null). Either one identifies an outside channel.
+  - *Impostors:* exogenous: this entry is the exogenous-field test, run as a natural experiment. Priors: the lab split is the shared-prior control. Scheduler and convergence: as in H81.
+  - *Models:* 11, 04 · *Builds on:* H81, H82, H74, H52
+- **HH335 · A finite magnet's magnetization wanders as 1/N: the slow mode's decay time should grow with village size.** In a finite ordered magnet with no pinning field, the direction of the total magnetization diffuses, and the rotational diffusion constant is ∝ 1/N (more spins, more inertia). An outside drift has no reason to depend on how many agents are present.
+  - *Prediction:* across regime-I blocks (N 4–12), the per-active-day decorrelation rate of the culture direction u_b falls with N_present, with a log-log slope near −1. An outside drift gives slope 0.
+  - *Check:* compute the decorrelation from random 4-agent subsets in each block (H81 O5b). The estimation noise is then the same at every N, and only the real N can set the inertia. Use split-half (odd/even days) disattenuation for the remaining noise. Both models.
+  - *Kill:* the slope's CI includes 0 and excludes −0.5.
+  - *Impostors:* estimation noise is the main fake ∝ 1/N, and the size-matched subsets remove it. Exogenous and priors: as in H81. Scheduler: n/a.
+  - *Models:* 11, 14 · *Builds on:* H81, H89 (no persistent attractor), H85
+- **HH336 · Aging, not memory: a universal tenure direction could fake the slow mode.** Every agent's leave-goal-out residual may drift in the same direction as its tenure grows: more self-reference, more village jargon, more talk about memory. Blocks close in time have similar mean tenure, so they would align with no transmission at all. In spin-glass language, the two-time correlation depends on the waiting time t_w (the sample's age), not only on the lag.
+  - *Prediction (culture):* projecting out a leave-agent-out tenure direction d_τ changes D_near by < 20%. Block-pair alignment depends on calendar lag, not on the gap in mean tenure. Batch joins (NE27, NE33) make the tenure gap jump while the lag stays small, and the alignment does not drop across them.
+  - *Check:* regress r_{i,b} on log tenure with one shared direction (leave-agent-out fit); re-run O2. Run a pair regression of s(b,b′) on Δt and Δ⟨tenure⟩ jointly.
+  - *Kill (of the culture reading):* D_near falls by ≥ 50% once d_τ is removed, or Δ⟨tenure⟩ beats Δt.
+  - *Impostors:* this is a shared-prior impostor that unfolds in time (every LLM ages the same way), and the check removes it. Others as in H81.
+  - *Models:* 11 · *Builds on:* H81, H46, H71, H83
+- **HH337 · Does the room split grow from zero (an instability) or appear at once (a hidden field)?** H100 found that two rooms with identical kickoffs still diverge (Q_spont up to 4.2 in #41), but the spontaneous share is a residual. True spontaneous symmetry breaking starts at zero separation. The separation then grows, and its direction is chosen by early fluctuations (nucleation, then coarsening). A hidden field, such as the work each room inherits, gives full separation on day 1, along a direction that the members' previous repos predict.
+  - *Prediction (SSB):* in H100's identical-kickoff periods, the day-1 separation is ≤ 0.3 of the period's final separation and grows monotonically. The day-1 direction aligns with the final direction at |cos| < 0.5. The members' previous-period repo labels (DQ4) do not predict the direction.
+  - *Check:* H100's cross-fitted separation S(d) and relabel excess per active day (or half-day). Correlate the direction Δ(d) with Δ(final). Predict Δ from a Potts field built from each room's pre-period repos (H100-R3 machinery).
+  - *Kill (SSB):* S(1) ≥ 0.8 S_final with day-1 direction cos ≥ 0.7, or the pre-period repos predict the direction. The "spontaneous" share is then a hidden field.
+  - *Impostors:* exogenous: identical kickoffs plus the repo field as an explicit covariate. Priors: agent constants removed (H100). Scheduler: n/a. Convergence: growth alone cannot separate coupling from a self-made room drive; HH339 does that.
+  - *Models:* 11, 10 · *Builds on:* H100, H102, H93
+- **HH338 · Goldstone wandering: the spontaneous room direction should drift, while a fielded one stays pinned.** With no field, the direction of an ordered state costs no energy to rotate, so it diffuses (a Goldstone mode). With a field, it is pinned. H91 found that content modes rotate about 1 SD a day, but it did not compare fielded and unfielded rooms.
+  - *Prediction:* the day-to-day angular diffusion of the room-difference direction Δ(d) is ≥ 2× larger in identical-kickoff periods than in #38 and #44 (room-specific kickoffs), after noise correction. Within identical periods, it scales as 1/(N_room |Δ|²).
+  - *Check:* daily Δ(d), both models, style-residualized. Correct for noise with within-day split-half estimates. Compare with a relabel null.
+  - *Kill:* identical-kickoff rotation ≤ fielded rotation. The "spontaneous" direction is then pinned like a field, and H100's residual is an unmeasured field.
+  - *Impostors:* exogenous: the contrast is field vs no field. Priors: agent constants removed. Scheduler: n/a. Convergence: n/a (direction statistic).
+  - *Models:* 11 · *Builds on:* H100, H91, H92
+- **HH339 · The forced erasure is a demagnetizing pulse: where is the room's order stored?** NE41 wipes an agent's context at a time set by the scaffold (about 18.6k forced events, regime III). If the room's spontaneous order is held by coupling through the context (H08; H102: content follows the room you speak in), the agent's alignment with its room's direction should drop right after a forced erasure, then recover as it re-reads the room. If the order is held by a self-made field (its own repo, H70: 89% return), alignment should not drop. This is a Kolchinsky scramble of one channel.
+  - *Prediction:* alignment with the room direction Δ_spont falls by ≥ 30% in the first 3 post-erasure statements and recovers in proportion to room items re-read (ledger). Alignment with the kickoff target, which is held in the prompt since NE13, does not fall.
+  - *Check:* statement-level projections around forced erasures vs matched placebo calls (same agent, same day, no erasure); voluntary erasures as a second contrast. Use H100's identical-kickoff periods and #51g (#focus). Both models.
+  - *Kill (context-held order):* no drop, with power ≥ 0.8 at a 30% drop. The spontaneous share is then held in artifacts or memory, not by coupling.
+  - *Impostors:* scheduler: the timing is set by the scaffold, so the design is quasi-random. Exogenous: the kickoff-alignment control. Priors: agent fixed effects. Convergence: the recovery is regressed on items read vs posted-unread at matched age.
+  - *Models:* 11, 04 · *Builds on:* H100, H102, H15, H69, H70
+- **HH340 · Exchange bias: an agent's own artifact shifts its goal-switch loop.** In a ferromagnet bonded to a pinned layer, the hysteresis loop shifts sideways. H100's GPT-5.4 kept its old room's content after a move while it kept its old project, and H70 found that agents return to their own repo after an erasure. If the own artifact is the pinned layer, agents with a live own repo at a goal boundary should carry a constant offset toward the old goal, and the offset should last as long as they still commit to that repo.
+  - *Prediction:* at goal boundaries, the old-goal alignment of agents who committed to their own repo in the last 2 days of the old period decays ≥ 2× slower than for unpinned agents. The offset ends within a day of their last commit to that repo.
+  - *Check:* H96's old-goal alignment series, split by pinning status from DQ4 `work_commits`. Use agent fixed effects across boundaries, so that the same agent is pinned at some boundaries and not at others. Confirmatory: NE24 (06-29, GitHub → GitLab, inside the holdout window) replaces the pinning layer, so the bias should vanish there.
+  - *Kill:* pinned and unpinned decay rates are within 25% of each other.
+  - *Impostors:* priors: within-agent contrast. Exogenous: same boundary, same kickoff. Scheduler: n/a. Convergence: n/a (individual carry).
+  - *Models:* 01 (hysteresis), 11 · *Builds on:* H96, H70, H100, H58
+- **HH341 · Field-cooled vs zero-field-cooled: a goal given at the start vs one given mid-period.** In a spin glass, a sample cooled in a field ends up more magnetized than one cooled without a field that then gets the field, and the gap grows with how long it aged first. In #51, most private goals start with the period (field-cooled). Some agents get a new goal mid-period (NE38 and other `agent_goals` start times; zero-field-cooled). Newcomers (NE32, NE33) arrive fresh with their goal.
+  - *Prediction:* at matched days since assignment, incumbents reassigned mid-period reach a lower plateau alignment with their own goal text than agents who had their goal from the start. Newcomers behave like the field-cooled agents. The deficit grows with the incumbent's age in #51 at reassignment (trap aging, H72).
+  - *Check:* daily alignment of each agent's content with its own `agent_goal` vector (DQ5, both models, style-residualized), aligned on the assignment day. First count the reassignments; the test needs ≥ 5.
+  - *Kill:* the reassigned agents' plateau is within the field-cooled agents' CI.
+  - *Impostors:* exogenous: the field is the object, and the goal text is the measured direction. Priors: within-family comparisons. Scheduler: day-level, trimmed. Convergence: n/a.
+  - *Models:* 01, 11 · *Builds on:* H54, H72, H98, NE38
+- **HH342 · A fluctuation–response sum rule for talk: Fano factor = 1/(1 − g)².** In a branching process with gain g, the variance of counts in long windows exceeds Poisson by exactly 1/(1 − g)². H67 measured g from read-out responses (regime III median 0.13, maximum 0.39). If the read-out loop is the only source of talk clustering, the spontaneous Fano factor of trimmed talk counts must equal 1/(1 − g_lag)² with no free parameter. Any excess is a field.
+  - *Prediction:* after DQ8 trimming and removal of c_×, the long-window Fano factor of per-unit talk matches 1/(1 − g_lag)² within 20% in ≥ 2/3 of regime-III units. Untrimmed, it exceeds the prediction: that excess is the scheduler field (H38).
+  - *Check:* per-unit talk counts in windows ≫ t_read; compare with H67's per-unit g; block-shift null for the field part.
+  - *Kill:* trimmed Fano still exceeds the prediction by ≥ 2× in most units. Talk then clusters by a hidden field or coupling that the read-out loop misses.
+  - *Impostors:* scheduler: trimming plus c_×. Exogenous: human and kickoff windows excluded. Priors: n/a (count statistic). Convergence: g comes from read-gated responses only.
+  - *Models:* 09, 14 · *Builds on:* H67, H86, H38, H03
+- **HH343 · Crossing claims anti-coordinate: parallel updates make 2-cycles.** In the Little model (all spins update at once), coupled spins can fall into period-2 oscillations that sequential updating never shows. In the village, two agents can switch to the same project within one read-out window without having read each other (a crossing, both messages in flight), or one after reading the other (sequential). H93 found that agents avoid occupied repos in #42 and #51.
+  - *Prediction:* after a crossing co-switch, at least one of the two leaves the project within 5 calls ≥ 2× as often as after a sequential co-switch. Leaving is mostly mutual (a 2-cycle: both leave). Sequential co-switches stick (herding, H63).
+  - *Check:* co-switches from `project_states` and DQ4 commits; crossing vs sequential classified from the ledger (each message's presence in the other agent's producing call); a time-shuffled null at matched lag.
+  - *Kill:* departure rates are equal within CI.
+  - *Impostors:* convergence: the in-flight vs read split is the design. Scheduler: matched lag. Exogenous: kickoff-named projects stratified. Priors: pair fixed effects.
+  - *Models:* 02, 10 · *Builds on:* H93, H63, H40, H57
+- **HH344 · Data collapse on each agent's own call clock: settling after a kickoff.** If an agent updates only at its calls (η ≈ 0, H40), its settling toward the kickoff target should be one exponential in its own call count, with one per-call update probability p. The swarm's settling in wall time (H48: about 4.5 h) is then not a single exponential: it is an average over the agents' call rates, and its shape is predicted with no extra parameter.
+  - *Prediction:* per-agent alignment curves collapse onto one exponential in own calls (lower held-out error than in wall hours or active hours), with p stable across kickoffs within an agent. The swarm curve matches the call-rate mixture.
+  - *Check:* per-agent day-1 to day-3 alignment with the kickoff direction (H54) against own calls (`call_windows`), wall hours and active hours; a cross-validated collapse metric.
+  - *Kill:* the call clock collapses no better than active hours. Content then settles on a different clock from replies (the per-call clock would be a talk-only law).
+  - *Impostors:* scheduler: calls and active hours are compared directly, and only between-agent cadence differences can separate them. Priors: cadence differs by lab, so require within-lab agreement. Exogenous: the field is the kickoff itself. Convergence: n/a.
+  - *Models:* 02, 11 · *Builds on:* H40, H48, H54, H75
+- **HH345 · Read-out channel capacity: information per call grows as k^(1−β) ≈ k^0.34.** H18's dilution (per-sender uptake ∝ k^−0.66) implies that the total uptake from a batch of k messages read at one call grows as k^0.34. H59 instead found that one read acts as one kick: dose saturates in #5. These two results disagree on the shape of the read-out channel's capacity curve.
+  - *Prediction:* the Gaussian mutual information between the batch's message directions and the reader's next statement grows as k^(0.34 ± 0.1). Per-message information falls as k^−0.66.
+  - *Check:* receiving calls from the ledger, with k the new items read; content projections orthogonalized to the reader's previous statement; the in-flight placebo at matched age; both models.
+  - *Kill:* the exponent's CI excludes 0.34. Flat (exponent ≈ 0) means a hard capacity of one message per call; linear means no bottleneck.
+  - *Impostors:* convergence: in-flight placebo. Exogenous: goal directions projected out. Priors: style_resid. Scheduler: n/a (call level).
+  - *Models:* 04, 12 · *Builds on:* H18, H59, H08, H70
+- **HH346 · A Griffiths phase: rare strong pairs give a subcritical swarm heavy-tailed talk.** Every unit is subcritical on average (g_lag ≤ 0.39). In a disordered system, rare strongly coupled regions can still be locally supercritical. That gives power-law tails with exponents that vary from period to period (a Griffiths phase), not the geometric tail of a uniform subcritical process. Ping-pong dyads that name each other are the candidate regions.
+  - *Prediction:* reply-chain lengths have tails heavier than the geometric law with the unit's mean g. Pairs with pair gain g_ij > 0.5 carry the tail. Removing those pairs restores a geometric tail, and the tail exponent across units tracks the share of strong pairs.
+  - *Check:* chains from `reply_pairs` (ledger-visible replies only), per-pair gains from named replies; trimmed at day edges; KS test against the fitted geometric; leave-strong-pairs-out refit.
+  - *Kill:* tails are geometric at the mean g, or no pair has g_ij reliably > 0.5.
+  - *Impostors:* scheduler: day-edge trim. Exogenous: human-initiated chains are split out. Convergence: ledger-read replies only. Priors: pair strength checked across periods (is it a family pairing?).
+  - *Models:* 09, 03, 01 · *Builds on:* H67, H34, H18, H62
+- **HH347 · Roster diversity is a quenched random field (random-field Ising across periods).** The agents' constants a_i (u_A 0.55, H73) are random fields fixed by the roster. In the mean-field random-field model, a wider field spread σ_h lowers both the response to a uniform field (the kickoff) and the equal-time order, and coupling J makes the drop steeper than it is for independent spins.
+  - *Prediction:* across units, the kickoff quench depth (H54) and H81's equal-time collective share κ_G fall with σ_h, more steeply than a J = 0 null that moves each agent independently with its own observed displacement.
+  - *Check:* σ_h = RMS spread of leave-period-out a_i among the agents present; regress per regime, controlling for N; the J = 0 null by permutation of displacements across agents.
+  - *Kill:* the slope does not differ from the J = 0 null. Diversity then only dilutes and does not couple.
+  - *Impostors:* priors: the impostor is the control parameter here, measured out of period. Exogenous: the kickoff is the uniform field. Scheduler: n/a. Convergence: equal-time κ is an upper bound (as in H81).
+  - *Models:* 01, 11, 14 · *Builds on:* H73, H54, H81, H98
+- **HH348 · Agents have an easy axis: kickoff response depends on the angle to their own constant.** A magnet with anisotropy responds more to a field along its easy axis than across it. H97 fits one susceptibility χ per agent. If the agent's constant a_i is an easy axis, χ depends on the angle θ between the kickoff target and a_i.
+  - *Prediction:* χ(θ) = χ_⊥ + (χ_∥ − χ_⊥) cos²θ, with χ_∥/χ_⊥ ≥ 1.5.
+  - *Check:* H97's day-1 displacements binned by cos θ (leave-period-out a_i). Null: random pseudo-kickoffs with the same θ distribution, which removes regression toward a_i.
+  - *Kill:* the ratio's CI includes 1.
+  - *Impostors:* priors: a_i is part of the claim; regression to the agent's mean is removed by the pseudo-kickoff null. Exogenous: the kickoff is the field. Scheduler and convergence: n/a.
+  - *Models:* 11 · *Builds on:* H97, H73, HH184
+- **HH349 · NE32's three replicas: a direct measure of the swarm's thermal noise.** On 2026-07-09 three GPT-5.6 agents (Sol, Terra, Luna) joined in separate isolated rooms, which closed on 07-10. That is one model, one prompt and no contact for a day: three replicas with the same disorder. Their overlap q in isolation measures how far one model's sampling noise spreads its content, and the change in q after the merge measures the village field on them.
+  - *Prediction:* the isolated-day q is close to a veteran's own day-to-day overlap (content is prior-dominated, the "temperature" is low). q rises by a measurable amount after 07-10, toward the village centroid.
+  - *Check:* pairwise cosines of the three agents' isolated-day statement vectors (white32 and style_resid, both models), projected orthogonal to their `agent_goal` vectors if those differ. Compare with veterans' consecutive-day self-overlap and with random same-lab pairs. Coordinate with H83, which uses the same newcomers to study drift toward the village.
+  - *Kill:* fewer than about 20 statements per agent on the isolated day (descriptive only), or q in isolation at the level of random cross-lab pairs (sampling noise dominates the prior).
+  - *Impostors:* priors: the design holds the prior fixed. Exogenous: goals projected out. Scheduler: same day. Convergence: impossible in isolation.
+  - *Models:* 11, 01 · *Builds on:* H73, H83, H13
+- **HH350 · A thermodynamic uncertainty relation for work: is output precision paid for in dissipation?** The TUR bounds the precision of any current by the entropy production: Var(J_t)/⟨J_t⟩² ≥ 2/(σ t). Commit output is a current. The housekeeping EP of the behavior cycle (H76) is a σ.
+  - *Prediction:* across agents within a period, the squared relative precision of commits per window scales as 1/σ (log-log slope ≈ −1), with a TUR ratio Q = σ t ε²/2 of 10–100 (far from the bound, since work is bursty). Commit currents sit farther from the bound than behavior-cycle currents.
+  - *Check:* per agent-period σ from H76's estimator on trimmed `behavior_states_v3`; commit current from DQ4 at t = 1–4 active hours; slope with agent-level bootstrap. A Q < 1 would flag an EP underestimate (a useful check on H14/H76).
+  - *Kill:* slope ≈ 0 (CI excludes −0.5). Output precision is then unrelated to behavioral dissipation.
+  - *Impostors:* scheduler: trimmed windows, with the excess removed (day edges are excess, H76). Priors: within-lab slopes. Exogenous and convergence: n/a (individual statistic).
+  - *Models:* 15 · *Builds on:* H76, H14, H90, H35
+
+*Suggested first picks.* HH334 (NE39 is a ready natural experiment against H81's outside-drift rival), HH333 and HH335 (two more cheap discriminators on the same H81 outputs), HH337 and HH339 (turn H100's residual into a measured quantity), HH342 (a parameter-free consistency check of H67's gain), and HH345 (settles a disagreement between H18 and H59).
