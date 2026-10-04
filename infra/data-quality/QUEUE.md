@@ -76,5 +76,6 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | RE-A2 | H02, H19, H03 | running (2026-10-04) |
 | RE-V1 | H18, H08, H04 | running (2026-10-04) |
 | RE-B1 | H17, H16, H14 | running (2026-10-04) |
-| next | H29, H30 (visibility and response); H01, H10, H13, H20, H21, H22, H24, H26, H36 (content); H11, H15, H27, H31, H33, H35 (projects and outcomes); H39 (behavior states); H44 (new, unblocked by DQ3); H05, H06, H07, H09, H23, H28, H32, H34 | queued, 2–3 hypotheses per agent as slots free |
+| RE-P1 | H11, H31, H27 | running (2026-10-04): shared labels, #26 per round, attention vs work space |
+| next | H29, H30 (visibility and response); H01, H10, H13, H20, H21, H22, H24, H26, H36 (content); H15, H33, H35 (projects and outcomes); H39 (behavior states); H44 (new, unblocked by DQ3); H05, H06, H07, H09, H23, H28, H32, H34 | queued, 2–3 hypotheses per agent as slots free |
 
