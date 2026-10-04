@@ -22,3 +22,16 @@ Each DQ agent writes only new files in `infra/` and new tables in `data/processe
 - H11 project labels: deterministic tie-break (consolidation agent).
 - DQ7 rebuild should also apply stall-adjusted (agent-state conditioned) variants of the collective statistics used by H02, H12 and H19.
 
+
+## Re-evaluation wave (Vivian, 2026-10-04: "go back through the older Hs with the better quality data")
+Starts once the consolidation, DQ1 (context ledger + `call_windows`), DQ5 (embedding pack) and DQ7 (atomic rebuild of `chat_core` / `actions`) have landed; DQ2–DQ4 and DQ6 join as they finish. One agent per hypothesis cluster, ≤ 2 threads each, holdout still locked. Each agent re-runs its hypotheses' pipelines on the shared tables, writes a dated "Round 1b (improved data)" section in the card and period folders (old numbers kept next to new), and fills the page-2 summary sections.
+
+| Cluster | Hypotheses | What changes for them |
+| --- | --- | --- |
+| Collective activity | H02, H03, H12, H19 | stall-adjusted / agent-state-conditioned statistics (H38); clean mentions; read-out Hawkes kernels (HH174) |
+| Visibility and response | H04, H08, H18, H29, H30 | context-ledger visibility and `call_windows` (pause-aware); matched-age boundary tests |
+| Content geometry | H01, H10, H13, H20, H21, H22, H24, H26, H36 | second embedding model; style-residualized vectors; `self_repeat` / `cross_echo` flags |
+| Projects and outcomes | H11, H15, H27, H31, H33, H35 | deterministic project states; work-output ledger as the viability / productivity measure |
+| Behavior states | H14, H16, H17, H39 | Jev v3 behavior states; `bash_head` fix; `error_class`; NE43 (nudger off) |
+| Stance and ground truth | H21, H22, H37 | DQ2 reply labels (correction vs oppose); DQ6 ground-truth labels; calibrated agent-field null |
+| Remaining | H05, H06, H07, H09, H23, H25, H28, H32, H34 | whichever of the above tables they consume (listed in each card's data scheme) |
