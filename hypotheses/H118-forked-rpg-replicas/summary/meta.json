@@ -1,0 +1,70 @@
+{
+ "complete": 40,
+ "faithfulness": 2.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; real-skeleton synthetic (five worlds plus a supplementary rule test; Amendment 1); native G35 (content and game state), 7 replication periods and a two-period control, both embedding models and three robustness variants; 61 estimates rows; confirm.py frozen (SHA-256) and dry-run, not run. Missing: hierarchical damage time, composition removal in regime II, holdout.",
+  "faithfulness": "The memory test is calibrated and the code excess beats an exact null, but the HH's two content clauses (decay within a day, no plateau) are not identifiable at G35's counts: tau_D spans the whole grid and the plateau test has power 0.16-0.29. The game state contradicts fast damage spreading (slow, frozen, correlated). Mixed per period; C = 1. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I1.",
+  "usefulness": "A planning number for forked teams: conversations decorrelate within an hour, artifacts keep about half their inherited code and diverge at the same hot spots. A diagnostic, not a lever."
+ },
+ "one_line": "After the NE15 fork the rooms' content shares no same-day state beyond day 1 and is far from identical replicas from the first hour, while the forked code diverges slowly with a frozen core (0.50) and correlated damage (identity excess 0.12); the content damage time and any rules plateau are not identified.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "replica overlap: content separates within an hour, code slowly with a frozen core and correlated damage"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "content spins: no same-day memory beyond day 1 in 7/8 periods; damage time and plateau unidentified"
+  }
+ ],
+ "rated_by": "H118 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "After the RPG fork (NE15), the two rooms' content separates within the first active hour (overlap 0.51 vs 0.80 for random rooms) and shares no same-day state after day 1 (memory 0.07 [−0.03, 0.17]; ≈ 0 in 6–7/8 periods), while code diverges slowly, freezes at the goal change, and keeps a frozen core (50% of inherited files untouched) with correlated hot spots (X 0.116)",
+  "scope": "#35 fork; replication 7 two-room periods",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.52,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic validation (amended estimator, size 0.07–0.13)",
+    "x": 1.3,
+    "evidence": "card §Amendment 1"
+   },
+   {
+    "factor": "replication of no-memory (6/7, both models)",
+    "x": 1.5,
+    "evidence": "card §Round 1"
+   },
+   {
+    "factor": "both embedding models",
+    "x": 1.2,
+    "evidence": "card §Round 1"
+   },
+   {
+    "factor": "penalty: one fork event; plateau test unpowered",
+    "x": 0.7,
+    "evidence": "card §Round 1"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "forked teams stop sharing content within an hour; shared code keeps a frozen core",
+  "magnitude": "small",
+  "generality": "multi-room LLM swarms",
+  "expected_usefulness": 0.52,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H118 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

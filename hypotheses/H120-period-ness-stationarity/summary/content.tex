@@ -1,0 +1,32 @@
+\hwhat{Every hypothesis in this project fits its model inside one goal period and treats the fit as one point on a phase diagram. That assumes the period is a stationary nonequilibrium steady state. HH360 tests the assumption on the longest periods: the 17-day charity drive (\#38), predicted stationary, and the \#51 main body (45 days), predicted to drift. H120 fits a kinetic Ising model to 1-min activity and talk spins of the core agents and asks whether the first and second halves (or a linear trend) differ more than random day halves do. \textbf{\#38 is not stationary, and the HH's kill fires.} Its halves differ about twice as much as random day halves in both channels. The drift is gradual, not a step at NE17. The 8-day unit 38a shows no drift.}
+
+\hmodel{Model 02 (kinetic Ising, logistic Glauber updates on a 1-min grid inside the DQ8 all-present window). Core agent $i$ updates with field $h_i$, couplings $J_{ij}$ (incl.\ persistence $J_{ii}$), weekday fields $\phi_{i,w}$ and a session-length field $\psi_i$, ridge 1 on $J$ in every window. Drift test: an efficient score statistic $W$ for $\theta_i(d)=\theta_i+\tau_d\delta_i$ on $(h_i,J_{i\cdot})$, from per-day gradients $g_d$ and Hessians $H_d$ at the pooled fit, calibrated by permuting days. Entropy production: the corrected held-out Newton bound on antisymmetric lagged pair and single-agent observables.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\mathrm{logit}\,P(s_i'=1\mid\mathbf{s})=h_i+\textstyle\sum_j J_{ij}s_j+\phi_{i,w(d)}+\psi_i L_d\\
+U_i=\textstyle\sum_d\tau_d\,P g_{i,d},\quad W=\sum_i U_i^\top V_i^{-1}U_i,\quad R=W_{obs}/\langle W\rangle_{\text{random day splits}}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/drift_by_window.pdf}{Left: drift ratio $R$ for the contiguous split (circles, squares) and the linear trend (triangles) per window; activity blue, talk orange; filled = permutation $p<0.05$. $R\approx1$ is a stationary window. \#38, \#51 main, 51g, \#27 and 19a drift; 38a, \#13, 4c do not. Right: synthetic power at the drift that matters (a re-randomization of $J$ at its own scale over the window); the dashed line marks 0.8. Regime-I units with 4--6 agents are underpowered.}
+
+\htelos{For anyone fitting models to a swarm's logs, including this project: a goal period is not one steady state. Kinetic Ising parameters move by about 0.2--0.4 placebo SD per day, so a 17-day period fit averages over a walking state. Two rules follow. Fit in windows of about one week (the 8-day unit 38a passes; the 13-day unit 51g does not). Report long-period parameters as trajectories or weekly points, not as one constant. Step changes do not explain the drift: NE17 is an ordinary boundary.}
+
+\hbottom{Inside long goal periods the kinetic Ising parameters of activity and talk drift beyond day-split placebo noise (\#38: R 1.95 and 2.18, Holm $\le$ 0.008; \#51: 2.17 and 2.14), with no step at NE17, while an 8-day unit shows no drift; entropy-production drift is not identifiable.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 synthetic: size, power, step rank & size $\le$0.12 per test; activity power 1.00 (\#38, \#51), 0.85 (38a); EP power $\le$0.30; step top-10\% 100\% & passed (EP unpowered)\\
+P1 \#38 stationary (HH) & R 1.95 / 2.18; trend 2.22 / 2.60; Holm $\le$0.008; robust to weekday strata and day-1 drop & \textbf{failed (kill)}\\
+P2 38a stationary & R 1.28 / 1.22; Holm $\ge$0.16; power 0.85 & supported\\
+P3 \#51 main drifts & R 2.17 / 2.14, $p$ 0.001 & supported\\
+P4 boundaries top 20\% & NE17 0.36 / 0.21; \#51 08-05 0.13 (activity) & failed / supported\\
+P5 replication: no drift $\ge6/8$ & 4/8 (3 underpowered); 8, 19a, 27, 51g drift & failed\\
+P6 EP stable in \#38, drifts in \#51 & no EP drift detected anywhere testable & inconclusive\\
+HH360 & \#38 drifts; \#51 drifts; no NE17 step & \textbf{failed}\\
+\end{tabular}}
+
+\hobsb{../figures/boundary_profile.pdf}{Split score $W$ at every day boundary of \#38 (left) and the \#51 main body (right), activity channel. Dashed lines: step changes (red: the pre-registered ones). A step would make one boundary stand out; instead $W$ rises smoothly toward the middle, the signature of a trend. Only \#51's 08-05 boundary (\#focus room, bookends stop) ranks in the top 13\%.}
+
+\hcaveats{The drift statistic includes the fields $h_i$ as well as $J$; post hoc, $J$ alone also drifts in \#38 and \#51, and \#38 drifts before its first roster join. Non-core agents (joiners) act as an unmodelled field. Talk is underpowered in most windows, and EP drift is unpowered everywhere; the 51g EP rejection rests on negative bounds and is not read as an arrow of time. First-order Markov dynamics on a 1-min grid is assumed. Regime-I units with 4--6 agents cannot tell stationarity from drift.}
+
+\hnext{Fit $J(t)$ with a random-walk prior and report a drift rate per day; estimate the longest stationary window per regime; regress the weekly drift on roster churn, operator volume and project churn; run the same test on H91's content modes. Confirmation on the \#51 tail and unit 1a (frozen, not run).}

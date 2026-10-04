@@ -1,0 +1,28 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\input{../../../writeup/hypothesis-pages/hpage.tex}
+\def\hID{H120}
+\def\hTitle{Is a goal period a stationary NESS? Within-period drift of J and EP (\#38, \#51 main)}
+\def\hStatus{exploratory round 1 done (2026-10-04, non-holdout only): failed (the HH kill fires). \#38 is not a stationary NESS: its first and second halves differ about twice as much as random day halves in the kinetic Ising fit of 1-min activity (drift ratio R 1.95, p ...}
+\def\hStage{level: descriptive  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-04}
+\def\hBadges{\hbadge{Complete}{45\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{3/5}{b7d3f6}{0b0b0b}\ \hbadge{Usefulness}{2.5/5}{e9e7e1}{0b0b0b}}
+\def\hPeriodSummary{1 supported, 4 failed, 3 mixed}
+\def\hDate{Updated 2026-10-04}
+\def\hFooter{H120-period-ness-stationarity $\cdot$ generated 2026-10-04 16:15 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H120-period-ness-stationarity/README.md $\cdot$ ratings: H120 agent (suggested)}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G04 & $\sim$ & mixed \\
+G06 & $\sim$ & mixed \\
+G08 & $\times$ & failed \\
+G13 & $\sim$ & mixed \\
+G19 & $\times$ & failed \\
+G27 & $\times$ & failed \\
+G38 & $\times$ & failed \\
+G51 & $\checkmark$ & supported \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 2 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 2 & H comparative & 1 \\
+D unfitted predictions & 1 & I transfer & 1 \\
+E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{descriptive}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} how fast a swarm's dynamical parameters walk inside a period, and what window a stationary fit can use.\item \textbf{H120-R1} Time-varying parameters: fit J(t) with a random-walk prior (Kalman or GP over days), report the drift rate per day with an interval, and place periods on the phase diagram as trajectories.\item \textbf{H120-R2} Stationary window length: estimate the longest window whose split test passes, per regime (38a passes at 8 days; 51g fails at 13).\item \textbf{H120-R3} Drivers of the walk: regress the weekly one-step $\delta$J on roster share outside the core, operator message volume and project churn (DQ4).\item \textbf{H120-R4} Content analog: the same score test on H91's content modes, to tie the two "about 1 SD a day" drifts.\end{itemize}}
+\input{content.tex}
+\begin{document}
+\makehpage
+\end{document}

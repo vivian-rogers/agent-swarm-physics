@@ -1,0 +1,31 @@
+\hwhat{HH358 treats the NE15 fork as a replica experiment. On 2026-03-16 the village split into \#best (3 agents) and \#rest (9), and each room took its own copy of the RPG built in \#34: the same rules and starting state, different players. In kinetic Ising, two replicas of one dynamics either stay together (frozen or field-ordered phase) or separate at a rate set by the noise (damage spreading). H118 measures the overlap of the two rooms' content per active hour and the overlap of the two forks' code per hour. \textbf{Content and code behave oppositely.} The rooms' content is already far from identical replicas in the first hour and shares no same-day state after day~1. The code separates slowly on the edit clock, keeps a frozen core of untouched files, and its damage is correlated.}
+
+\hmodel{Model 02 (replicas of a kinetic spin dynamics) with model-11 content spins. Content: $\mathbf{c}_r(b)$ is room $r$'s agent-weighted centroid of style-residualized statement vectors in active hour $b$, centred on a leave-own-period-out regime reference so that the shared static component stays in. Split halves give unbiased squared norms $S_r$. Code: each ancestor key (file, function) is a spin that keeps or changes its inherited value; two independent replicas are identical at a key with probability $c_Ac_B$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+q(b,b')=\frac{\mathbf{c}_A(b)\cdot\mathbf{c}_B(b')}{\sqrt{\langle S_A\rangle\langle S_B\rangle}},\quad M(d)=q_{eq}(d)-q_{lag}(d),\quad q_{eq}(t)=q_\infty+(q_0-q_\infty)e^{-t/\tau_D}\\
+X=q_{code}-c_A c_B,\qquad F=P(\text{unchanged in both forks})
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/g35_overlap.pdf}{Left: hourly replica overlap of the \#35 rooms (bge filled, gte squares; size = statement weight), with the fitted relaxation, the identical-replica level from joint relabels (dotted) and the identical-kickoff band (shaded). The overlap is low from the first hour and flat over five days. Right: the share of ancestor src files and functions identical in both forks (solid) against independent replicas (dashed). Code damage grows over 20 active hours and stays correlated.}
+
+\htelos{For an operator who forks a team onto copies of one artifact: the copies' conversations stop sharing a state within the first hour, so expect no residual coordination from the common start. The artifacts themselves diverge slowly and at the same hot spots: about half of the inherited code stays untouched in both copies, and identity exceeds independent copies by 0.12. A shared artifact acts as a field on where work lands, not on what the teams say. Two numbers to plan with: content overlap at the first hour 0.51 (vs 0.80 for random teams), code identity after five days 0.50.}
+
+\hbottom{After the NE15 fork the rooms' content shared no same-day state beyond day 1 and was far from identical replicas from the first hour, while their code diverged slowly with a frozen core and correlated damage; the content damage time and any rules plateau are not identified at these counts.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 synthetic: memory size, $\tau_D$, plateau, drive & memory test fixed to $M_{late}$ (size 0.07--0.13); $\tau_D$ slow-world power 0.58; plateau PI power 0.16--0.29; drive caught 100\% & 1/4 as written (Amendment 1)\\
+P1 G35 fast: $\tau_D\le4$\,h, no memory & $\tau_D$ 0.6\,h, CI 0.25--80 (gte 5.2\,h, no decay); $M_{late}$ 0.07 [$-$0.03, 0.17] & memory met; $\tau_D$ inconclusive\\
+P2 no plateau; HH kill & $q_\infty^{late}$ 0.25 [0.11, 0.35], band rank 2/5 (36a 0.62); kill silent & consistent, unpowered\\
+P3 code slow, frozen, $X>0$ & day 1 0.84 (pred.\ $\ge$0.85); end 0.50; $F$ 0.50; $X$ 0.116, $p$ 6e-12 & 3/4\\
+P4 replication: no memory $\ge5/7$ & 6/7 in each model; $\tau_D\le4$\,h 3/7 & memory met\\
+P5 control (G38, G44 below band median) & 0.06, $-$0.15 (gte 0.17, $-$0.21) & supported\\
+HH358 & content fast-looking but unidentified; code slow and correlated & mixed\\
+\end{tabular}}
+
+\hobsb{../figures/by_period.pdf}{Left: equal-time memory $M_{late}$ (days $\ge$ 2) per two-room period with agent $\times$ bin bootstrap 95\% intervals (bge filled, gte open). It covers 0 in \#35 and 6/7 kickoff restarts; \#44 (and \#41 in gte) is negative: same-day anti-alignment. Right: late overlap $q_\infty^{late}$. The two different-kickoff periods (\#38, \#44) are the lowest, as the control predicts; \#35 sits inside the identical-kickoff band.}
+
+\hcaveats{One fork event with 3 \#best agents: agent-bootstrap intervals are wide, and in regime II no agent constants exist, so composition is part of the day-1 separation. The real-skeleton synthetic shows that $\tau_D$ and the plateau rule are not identifiable at these counts, so ``no plateau'' is not a negative result. Memory in this estimator sees only same-day shared state; slow memory shared across days is invisible to it. Code identity is keyed (moved code counts as changed), and the game-state predictions were written after reading H07's day-level results.}
+
+\hnext{Hierarchical $\tau_D$ across the eight kickoffs; agent constants for regime-II agents from \#33 and \#36a; test whether \#34 touch counts (H07's C1) predict the shared hot spots behind $X$; link same-day anti-alignment to room-specific operator messages. Confirmation on \#45--\#47 and \#50 (frozen, not run).}

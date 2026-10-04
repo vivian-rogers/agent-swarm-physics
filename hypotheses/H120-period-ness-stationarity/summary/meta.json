@@ -1,0 +1,64 @@
+{
+ "complete": 45,
+ "faithfulness": 3.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; real-skeleton synthetic (five worlds, 10 windows, 2 channels; Amendment 1); 2 natives (whole #38 and #51 main, with 38a and boundary ranks) and 8 replication units; robustness (weekday-stratified splits, first-day drop) and labelled post hoc checks (J-only, h-only, pre-join); 80 estimates rows; confirm.py frozen (SHA-256) and dry-run, not run. Missing: time-varying fits, drivers of the drift, holdout.",
+  "faithfulness": "Scored on the claim that stands (periods drift): the HH's own stationarity prediction for #38 failed (the kill), but the drift claim rests on permutation-calibrated tests with synthetic size <= 0.12 and power 1.00 at the drift that matters, robust to weekday strata and the kickoff day, and replicates in 4/8 long units (the rest underpowered). EP drift is unidentifiable. Scorecard A1 B1 C2 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "A design rule for anyone fitting swarm models: fit in about one-week windows and report long periods as trajectories; it changes how this project's own phase diagram should be read. A diagnostic, not a lever."
+ },
+ "one_line": "A goal period is not a stationary NESS: kinetic Ising parameters of activity and talk drift beyond day-split placebo noise inside #38 (R 1.95-2.18, Holm <= 0.008) and #51 (R 2.14-2.17), gradually rather than at step changes, while an 8-day unit shows no drift.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "failed",
+   "note": "stationary kinetic Ising within a period rejected in #38 and #51 (drift ratio about 2); holds in the 8-day unit 38a"
+  }
+ ],
+ "rated_by": "H120 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Goal periods longer than about a week are not stationary: #38 drifts in both activity and talk couplings (half-vs-half ratio 1.95 / 2.18, trend 2.22 / 2.60, Holm ≤ 0.008), gradually rather than at a step; the #51 main body drifts too (2.17 / 2.14), while an 8-day unit (38a) is stationary (power 0.85)",
+  "scope": "#38, 38a, #51 main; replication 8 units (4 drift, 3 underpowered)",
+  "direction": "positive",
+  "original_verdict": "failed",
+  "credence": 0.68,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic size and power on the real skeleton",
+    "x": 1.5,
+    "evidence": "card §P0"
+   },
+   {
+    "factor": "robust to weekday stratification and dropping the kickoff day",
+    "x": 1.5,
+    "evidence": "card §Round 1"
+   },
+   {
+    "factor": "partial replication (4/8 drift)",
+    "x": 1.2,
+    "evidence": "card §Round 1"
+   },
+   {
+    "factor": "native contrast: the 8-day unit passes",
+    "x": 1.2,
+    "evidence": "card §Round 1"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "refit models in windows of about a week; a whole long period is not one steady state",
+  "magnitude": "large",
+  "generality": "method (any long swarm record)",
+  "expected_usefulness": 1.71,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H120 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
