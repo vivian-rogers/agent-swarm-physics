@@ -156,3 +156,22 @@ Vivian picked these from HH107–HH126 and the leftovers. HH92 was already H08's
 | S36 | Conflict lives in stance, not topic: stance spins are antiferromagnetic | HH125 | 01 (signed), 10 | H37 (wave 2) |
 | S37 | Joint silences are platform stalls | HH94 | 01, 09 | H38 (wave 1) |
 | S38 | Catalysts vs. fields | HH52 | 09, 02, 10 | H39 (wave 2) |
+| S39 | The call clock sets the coupling | HH154 | 02, 09 | H40 (waits for DQ) |
+| S40 | Read-out gating gives the swarm a light cone | HH155 | 02, 03 | H41 (waits for DQ) |
+| S41 | Cross-excitation is a delayed step at the next read-out | HH174 | 09 | H42 (waits for DQ) |
+| S42 | Kicks leave a refractory window | HH177 | 09, 03 | H43 (wave A, ready) |
+| S43 | Erasure makes agents busy but unproductive | HH156 | 02, 04 | H44 (waits for DQ) |
+| S44 | Context homeostasis: each agent keeps its context near a set point | HH166 | 04, 05 | H45 (waits for DQ) |
+| S45 | Style is a conserved charge | HH170 | 04, 11 | H46 (wave A, ready) |
+| S46 | Rooms set the coherence length | HH172 | 11 | H47 (wave A, ready) |
+| S47 | The settling time is a mixing time on the read-out graph | HH173 | 11, 03 | H48 (waits for DQ) |
+| S48 | Edge-trimmed regime III is a dilute ferromagnet | HH159 | 01 | H49 (wave A, ready) |
+| S49 | Field or coupling: transfer functions and lag tell which | HH167 | 01, 02 | H50 (waits for DQ) |
+| S50 | One dial: an effective coupling collapses the phase diagram | HH178 | 10, 02 | H51 (waits for DQ) |
+| S51 | Humans are just loud agents | HH164 | 02 | H52 (waits for DQ) |
+| S52 | Herding is announcement-seeded nucleation | HH168 | 10, 03 | H53 (waits for DQ) |
+| S53 | The kickoff text is the quench target | HH169 | 11, 10 | H54 (wave A, ready) |
+| S54 | Norm-enforcers are the swarm's immune cells | HH162 | 04, 06 | H55 (waits for DQ) |
+| S55 | Entropy production fingerprints the platform | HH175 | 02, 05 | H56 (wave A, ready) |
+| S56 | Copying beats transformation when the backlog is large | HH171 | 08, 03 | H57 (waits for DQ) |
+| S57 | Effective superagents are coordinated agents plus their artifacts | HH176 | 04 | H58 (waits for DQ) |

@@ -51,3 +51,12 @@ Audit (2026-10-04): in ~15 of 34 hypotheses the period READMEs are near-identica
 - **Layer 2, period-native tests:** for each hypothesis, 2–4 periods whose setup gives special leverage for *that* question (from the affordance catalog, DQ9). Each gets its own design: an observable, null, ground truth or intervention that only that period allows, its own prediction written before the run, and period-specific infra where needed (e.g. a #26 ballot parser, #12 team map, #51 role/goal fields, #35 fork trees, #44 checkpoints, NE43 nudger-off). Period README role: `native`.
 - The overview and dashboard should show the role, so a column of 35 replications isn't read as 35 independent tests.
 
+## New hypotheses H40–H58 (promoted 2026-10-04): launch plan
+| Wave | Hypotheses | Launch when |
+| --- | --- | --- |
+| A (running) | H43, H46, H47, H49, H54, H56, H50 | launched 2026-10-04 |
+| B | H40, H41, H42, H48, H52, H53, H45 | DQ1 (`call_windows`, context ledger) lands |
+| C | H44 (DQ1 + DQ3 + DQ4), H55 (DQ2 + DQ5), H57 (DQ1 + DQ5), H58 (DQ4 + H01 round 2) | their inputs land |
+| D | H51 (one dial) | after waves B–C and the re-evaluation wave |
+Slots are capped at 20 concurrent agents; queued work launches as slots free, data-quality and re-evaluation first.
+
