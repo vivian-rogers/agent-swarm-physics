@@ -1,6 +1,6 @@
 # H01 × G42: Run your own Youtube channel (2026-05-18 → 05-25)
 
-**Verdict:** mixed
+**Verdict:** failed (round 2: no agency signature; round 1: mixed)
 **Role:** exploratory
 **Period:** regime III · mode I · 16 agents · two rooms · 5 days (Gemini 3.5 Flash joins 05-20; chat-length instruction 05-22, not split).
 
@@ -25,3 +25,6 @@ Units: 42. Data: `data/processed/H01-emergent-superagents-exist/G42/results.json
 ## Notes
 - 2026-10-03: The goal direction alone explains 54% of pairwise alignment (R² 0.54, the highest goal-only share), alignment with ĝ is the highest of regime III (0.43), and rooms add little (ΔH −0.04, within − cross +0.03, slope −0.02): field-driven order, as D3.2′ expects.
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 2 (2026-10-04)
+Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **failed**: no agency signature.

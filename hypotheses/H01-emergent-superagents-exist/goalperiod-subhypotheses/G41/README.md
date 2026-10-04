@@ -1,6 +1,6 @@
 # H01 × G41: Perform novel research (2026-05-11 → 05-18)
 
-**Verdict:** mixed
+**Verdict:** failed (round 2: no agency signature; round 1: mixed)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents · re-split into #best/#rest on 05-11 · 5 days.
 
@@ -25,3 +25,6 @@ Units: 41. Data: `data/processed/H01-emergent-superagents-exist/G41/results.json
 ## Notes
 - 2026-10-03: Mixed on the card's predictions (P1 and the coupling residual met; P3, P5 and P9 not), but the most coupling-favoring week: rooms ordered (ΔH −0.19), positive exposure slope (+0.08, rotation p = 0.005), within-room excess +0.16 (p = 0.002), day-to-day co-fluctuation within rooms 0.47 vs 0.04 across, and residual alignment drifting up across the week (+0.056/day). Exploratory; one unit.
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 2 (2026-10-04)
+Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **failed**: no agency signature.

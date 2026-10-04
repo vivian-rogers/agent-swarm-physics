@@ -1,6 +1,6 @@
 # H01 × G51: Each agent: maximize your assigned goal (2026-07-06 → 09-20 (09-07 → tail held out))
 
-**Verdict:** mixed
+**Verdict:** mixed (round 2: continuity, partial agency; round 1: mixed)
 **Role:** exploratory
 **Period:** regime III · mode I/K · 21–32 agents · one room (#general) except #focus (51c: Gemini 2.5 Pro and Opus 4.8, 08-05 → 08-24) · 45 non-holdout days, split at 07-09 (NE32), 08-05, 08-25 (#focus) and 09-03 (NE33); 09-07 → tail held out.
 
@@ -31,3 +31,6 @@ NE32 (GPT-5.6 triplet, 07-09/07-10) is analysed in [`../NE32/`](../NE32/README.m
 ## Notes
 - 2026-10-03: Small but consistently positive exposure slopes in the big single room (51b +0.008, 51c +0.010, 51d +0.038; rotation p ≤ 0.06), the only setting with enough within-pair exposure variation for tight estimates. The assigned-goal field explains little of the alignment (goal-only R² ≤ 0.05). Mean-field βJ₀/n falls as N grows (0.73 → 0.35).
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 2 (2026-10-04)
+Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **mixed**: continuity, partial agency.

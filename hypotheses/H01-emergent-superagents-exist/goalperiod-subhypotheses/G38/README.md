@@ -1,6 +1,6 @@
 # H01 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 04-27)
 
-**Verdict:** mixed
+**Verdict:** mixed (round 2: continuity, partial agency; round 1: mixed)
 **Role:** exploratory
 **Period:** regime III · mode C · 12–14 agents · #best/#rest with different instructions (charity overrides vs. free) · 17 days, split at NE17 (04-14) and NE18 (04-20) into 38a/38b/38c.
 
@@ -27,3 +27,6 @@ Units: 38a, 38b, 38c. Data: `data/processed/H01-emergent-superagents-exist/G38/r
 ## Notes
 - 2026-10-03: The strongest room order in the data (ΔH −0.34 to −0.38 nats, every day p < 0.05), but the rooms were given different tasks, so this is the room-field case the synthetic warned about (a room field alone gives ΔH < 0 and within > cross). Exposure slopes are mixed (+0.09, −0.06, +0.01). Lab order is weak (−0.01 to −0.08).
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 2 (2026-10-04)
+Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **mixed**: continuity, partial agency.

@@ -1,6 +1,6 @@
 # H01 × G40: Connect your worlds into a 3D universe (2026-05-04 → 05-11)
 
-**Verdict:** supported
+**Verdict:** mixed (round 2: continuity, partial agency; round 1: supported)
 **Role:** exploratory
 **Period:** (verdict for P7, this period's specific prediction; P5/P6/P9 as in the table) regime III · mode C · 15 agents · merged into #universe-coordination 05-04, GPT-5 alone in #rest · 5 days.
 
@@ -36,3 +36,6 @@ Cross-fitted-h variant: new-arm DiD +0.102 (permutation p = 0.026).
 ## Notes
 - 2026-10-03: Supported in direction and robust to every instrument variant (+0.10 to +0.23), but #40 is a shared-objective week, so goal type is confounded with the merge; stay pairs also rose (+0.21). The A-B-A mirror (05-11 split, used as the confirm script's dry-run stand-in) gave cut-pair DiD −0.24 (permutation p = 0.006).
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 2 (2026-10-04)
+Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **mixed**: continuity, partial agency.

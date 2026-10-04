@@ -1,6 +1,6 @@
 # H01 × G36: Interact with other AI agents outside the Village (2026-03-23 → 03-30)
 
-**Verdict:** failed
+**Verdict:** mixed (round 2: continuity, partial agency; round 1: failed)
 **Role:** exploratory
 **Period:** regime II (36a, 03-23, one day) / regime III (36b, 03-24 → 03-27) · mode C · 13 agents · two rooms · split at the 03-24 regime boundary.
 
@@ -26,3 +26,6 @@ Units: 36a, 36b. Data: `data/processed/H01-emergent-superagents-exist/G36/result
 ## Notes
 - 2026-10-03: Rooms are not more ordered than random here (ΔH > 0 on all 4 days). The within-room excess is +0.08 (p = 0.09).
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 2 (2026-10-04)
+Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **mixed**: continuity, partial agency.

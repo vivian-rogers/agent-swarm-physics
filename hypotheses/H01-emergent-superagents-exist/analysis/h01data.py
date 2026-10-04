@@ -26,7 +26,7 @@ P1_EXTRA = ["36b", "37"]                                                        
 
 
 class Scheme:
-    def __init__(self, d=32, allow_holdout=False, base=OUT):
+    def __init__(self, d=32, allow_holdout=False, base=OUT, shared_room_kickoffs=True):
         self.base = Path(base)
         self.d = d
         self.st = pl.read_parquet(self.base / "statements.parquet").with_row_index("row")
@@ -42,7 +42,10 @@ class Scheme:
         self.ad = pl.read_parquet(self.base / "agent_day.parquet")
         self.units = {u["unit"]: u for u in json.loads((self.base / "units.json").read_text())}
         self.goals = pl.read_parquet(self.base / "goals.parquet")
-        self.graw = np.load(self.base / "goals_raw.npy")
+        self.graw = np.load(self.base / "goals_raw.npy").astype(np.float32)
+        self.room_kickoff_source = "h01 goals_raw.npy (uncorrected)"
+        if shared_room_kickoffs and self.graw.shape[1] == 384:
+            self._shared_room_kickoffs()
         self.bases = {}
         for R in ("I", "II", "III"):
             f = self.base / f"basis_{R}.npz"
@@ -61,6 +64,23 @@ class Scheme:
         self.adV = {k: unit(self.U[v].mean(0)) for k, v in self.adrows.items()}
 
     # ------------------------------------------------------------------ fields
+    def _shared_room_kickoffs(self):
+        """Correction 2026-10-04 (found by the shared-pipeline consolidation): per-room kickoff vectors are read from the
+        shared goal table (infra/shared/goal_fields.py, kind = kickoff_room; data/processed/shared/embeddings/). H01's own
+        goals_raw.npy had the #38 room-2 and room-3 kickoff rows swapped (a --reuse-goal-emb reload of vectors saved
+        under a different group_by order in scheme/build.py); all other kickoff rows match the shared table at
+        cos >= 0.999. Only the room-field robustness variant (field_basis(use_room=True)) uses these rows; the
+        period-level g-hat averages the room kickoffs and is unchanged by a label swap. Only for the bge instrument."""
+        sg = pl.read_parquet(SH / "embeddings/goals.parquet")
+        sv = np.load(SH / "embeddings/goal_vectors.npy").astype(np.float32)
+        n = 0
+        for r in self.goals.filter(pl.col("kind") == "kickoff").iter_rows(named=True):
+            m = sg.filter((pl.col("goal_no") == r["goal_no"]) & (pl.col("kind") == "kickoff_room") & (pl.col("room") == r["room"]))
+            if m.height:
+                self.graw[r["gid"]] = sv[int(m["gid"][0])]
+                n += 1
+        self.room_kickoff_source = f"shared goals table ({n} kickoff_room rows)"
+
     def _gvec(self, gid, regime):
         b = self.bases[regime]
         return unit(whiten_apply(self.graw[gid:gid + 1], b, self.d)[0])

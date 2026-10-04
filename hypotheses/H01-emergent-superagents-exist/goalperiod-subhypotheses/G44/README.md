@@ -1,6 +1,6 @@
 # H01 × G44: Finetune your leader (2026-05-26 → 06-01)
 
-**Verdict:** mixed
+**Verdict:** failed (round 2: no agency signature; round 1: mixed)
 **Role:** exploratory
 **Period:** regime III · mode C · 16–18 agents · two rooms with a per-room goal/kickoff override (05-26) · 4 days (Opus 4.8 and the temporary fine-tuned leader join 05-28).
 
@@ -25,3 +25,6 @@ Units: 44. Data: `data/processed/H01-emergent-superagents-exist/G44/results.json
 ## Notes
 - 2026-10-03: Rooms ordered (ΔH −0.11, meets both P1 criteria in this unit) and a large within-room excess (+0.24, p < 0.001), but the exposure slope is n.s. and the rooms had different kickoffs (room field).
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 2 (2026-10-04)
+Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **failed**: no agency signature.

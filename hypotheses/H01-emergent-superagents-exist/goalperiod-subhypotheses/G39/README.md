@@ -1,6 +1,6 @@
 # H01 × G39: Build your own interactive world (2026-04-27 → 05-04)
 
-**Verdict:** mixed
+**Verdict:** mixed (round 2: continuity, partial agency; round 1: mixed)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents · two rooms after the 04-27 transfer (3 agents #best → #rest; GPT-5.5 joins) · 5 days.
 
@@ -25,3 +25,6 @@ Units: 39. Data: `data/processed/H01-emergent-superagents-exist/G39/results.json
 ## Notes
 - 2026-10-03: Rooms barely more ordered than random (median ΔH −0.04, no day significant) but labs are (−0.25): the one unit where lab order beats room order. H05 also found no block structure in #39.
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 2 (2026-10-04)
+Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **mixed**: continuity, partial agency.

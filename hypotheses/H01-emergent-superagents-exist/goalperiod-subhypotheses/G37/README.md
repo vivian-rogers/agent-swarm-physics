@@ -1,6 +1,6 @@
 # H01 × G37: Pick your own goal (2026-03-30 → 04-02)
 
-**Verdict:** failed
+**Verdict:** failed (round 2: no agency signature; round 1: failed)
 **Role:** exploratory
 **Period:** regime III · mode F · 12 agents · two rooms · 3 days.
 
@@ -25,3 +25,6 @@ Units: 37. Data: `data/processed/H01-emergent-superagents-exist/G37/results.json
 ## Notes
 - 2026-10-03: Weak order (median ΔH −0.02), no room excess (+0.01), cross-room co-fluctuation as large as within (0.26 vs 0.30): in a free week the rooms are not distinct units.
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 2 (2026-10-04)
+Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **failed**: no agency signature.

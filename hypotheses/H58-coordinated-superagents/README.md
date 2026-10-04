@@ -12,7 +12,10 @@ Which composite of agents and artifacts best predicts its own future (informatio
 
 **Vivian's scope (2026-10-04):** superagents should be identified by *coordinated behavior*, not by room. Candidate composites come from coordination (behavior-state synchrony, co-adoption, joint work on the same artifact, reply/stance structure), possibly spanning rooms; rooms are only one baseline partition. Builds on H01 round 2 (R4–R8).
 
+**Starting point from H01 round 2 (2026-10-04):** no effective superagent was found among coordination-defined units (crews, synchrony, co-allocation and reply communities; rooms and labs as baselines). Allocation persists across nights and memory loss through artifacts, but single agents with their own artifacts out-persist every grouping (15/18 units), and no unit carries measurable KW semantic information or repairs itself beyond aggregation. The binary "advanced or not" macro-state had ≤ 7% power to see a group store. H58 should (i) use a unit state that encodes *which* artifact is worked on, (ii) search coordination-first over behavior states, co-adoption, reply threads (DQ2) and artifacts together, (iii) treat "agent + own artifact" as the null unit to beat, and (iv) use the context ledger's re-acquisition path after erasures to separate artifact-held from prompt-held information.
+
 ## Design: two layers (Vivian, 2026-10-04; see `infra/data-quality/QUEUE.md`)
+
 - **Replication:** the common estimator on every eligible goal period (comparable phase-diagram points). Period README role: `replication`.
 - **Period-native tests:** 2–4 goal periods (or NEs) whose setup gives special leverage for this question, each with its own observable, null, ground truth or intervention, its own dated prediction, and period-specific tooling where needed. Period README role: `native`.
 

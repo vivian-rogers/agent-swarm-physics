@@ -1,6 +1,6 @@
 # H01 × G35: Test your game to make it as fun and functional as you can (2026-03-16 → 03-23)
 
-**Verdict:** mixed
+**Verdict:** failed (round 2: no agency signature; round 1: mixed)
 **Role:** exploratory
 **Period:** regime II · mode C · 13 agents · #best/#rest (split 03-16, NE15; RPG forked per room) · 5 days. The pre-split window (#34) is held out.
 
@@ -25,3 +25,6 @@ Units: 35. Data: `data/processed/H01-emergent-superagents-exist/G35/results.json
 ## Notes
 - 2026-10-03: P5 R² (0.15) is below the D3.2′ falsifier (0.3) and far below its rotation null: alignment here is not field-like. The within-room excess is large (+0.22) but the exposure slope is ≈ 0, which the synthetic world produces for saturated coupling or a room field (the room forks). Day-to-day co-fluctuation within rooms ρ = 0.66 vs 0.09 across.
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 2 (2026-10-04)
+Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **failed**: no agency signature.
