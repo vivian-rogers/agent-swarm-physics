@@ -262,6 +262,12 @@ Seven builders and nine libraries are now shared and registered in `build_all.py
 
 ## Known issues
 
+- **Share coefficients in choice logits are not coupling** (H93): fast common repo bursts (OU, τ ≈ 20 arrivals) give βĴ 1–3.4 with no coupling. For static fitness a log-cumulative-size control works; repo fixed effects (in-sample or cross-fitted) do not. An unmodelled assignment field is absorbed into the share coefficient and fakes bistability (H93 #44 #best).
+- **Patefield and parametric KL floors assume independent quanta** (H94): with work in runs they sit 0.2–1.2 bits too low; use a run-preserving null. Analytic breadth signatures misread runs as specialization. κ on repo sizes in own-artifact units tracks activity, not herding.
+- **Log-linear fits under quasi-separation need IPF with warm starts** (H94: the old solver gave D₃ > D₂ in 6 units).
+- **Brock–Durlauf/Potts fixed-point stability** needs Re λ < 1 under logit dynamics (not |λ| < 1), plus damping for negative couplings (H93).
+- **H54's token rule tags 20/24 #31 work repos as kickoff-named** (H93): too permissive for repo names.
+- **Dashboard counted dry-run-only `confirm/` folders as holdout runs** (fixed 2026-10-04 in `collect.py`: a folder counts only if it holds a non-dry file). Write dry runs to names containing "dry".
 - **Slopes between unit-normalized embedding segments fake forgetting** (H97): when the common component grows (e.g. a day-1 topic), every agent's deviation shrinks, and an IV/regression slope "forgets" in 45–90% of pure-translation worlds. Use split-half disattenuated correlations.
 - **Agent-window majority spins from 2–4 statements** make free-week couplings unidentifiable (H105 synthetic): misclassification dilutes loop gain.
 - **Talk minutes have ρ_⊥(1) ≈ 0** (H99): per-agent relaxation-time estimators on 1-min talk spins are undefined. Use the per-call clock.

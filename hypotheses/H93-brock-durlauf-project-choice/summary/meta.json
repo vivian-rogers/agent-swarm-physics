@@ -29,5 +29,53 @@
   }
  ],
  "rated_by": "H93 round-1 agent (suggested)",
- "updated": "2026-10-04"
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Project choice is not bistable: every period sits below its Brock–Durlauf multiplicity boundary (βĴ/γ_c ≤ 0.86 at point estimates; P_multi < 0.5 in 51/54 fits), and the positive share coefficient (+2 to +6 in shared weeks) is mimicked by repo bursts, so it is not identified as coupling",
+  "scope": "11 work/attention periods; natives G37, G44, G51",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.56,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication across fits (51/54)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic estimator selection (M4 false positives ≤ 0.10)",
+    "x": 1.3,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "unfitted statistic: m* ranks observed concentration (Spearman 0.77)",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: power 0.25–1.00 by period; 3 fits fail the letter",
+    "x": 0.85,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: G44 #best shows the field impostor faking P_multi 0.97",
+    "x": 0.9,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "don't expect herding lock-in on repos; habit (2.5–6 nats) dominates project choice",
+  "magnitude": "small",
+  "generality": "LLM swarms choosing shared projects",
+  "expected_usefulness": 0.56,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H93 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
 }

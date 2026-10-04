@@ -1,0 +1,35 @@
+\hwhat{H94 asks whether the agent $\times$ repo allocation of DQ4 work is a maximum-entropy (Foley) equilibrium given its constraints. The data are 24 testable units in \#31--\#51, in 30-min work quanta grouped into episodes. A hierarchy of max-ent models adds agent activity, repo size, ownership and rooms. After these constraints, the information left above the run-persistence floor is $\le0.13$ of $I(\text{agent};\text{repo})$ in 23 of 24 units, and inside the floor's 95\% band in 12. Ownership is a price set by the goal: median 2.2 nats in shared weeks, 7.8 in own-role units ($p=0.0007$). Agents do not specialize beyond ownership. Episode concentration is at or above neutral copying in shared weeks; kickoff-named repos explain it in 2 of 6. The holdout is not run.}
+
+\hmodel{Models 10 and 05: a max-ent model of a categorical allocation, with repos as replicator abundances. A work quantum is one agent $\times$ 30-min window $\times$ repo with an agent commit; an episode is a run of quanta on one repo. The owner of a repo is its first committer in DQ4. $\lambda_{\rm own}$ and $\lambda_{\rm room}$ are Lagrange multipliers (prices, in nats). $D_k$ is the KL divergence from the level-$k$ max-ent table. $\kappa$ places the repo-size law between Maxwell--Boltzmann (0, even) and Bose--Einstein (1, neutral P\'olya copying).}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+P_k(i,j)\propto a_i\,b_j\,e^{\lambda_{\rm own}\,\mathrm{own}_{ij}+\lambda_{\rm room}\,\mathrm{room}_{ij}}\\
+D_k=\mathrm{KL}(\hat P\,\|\,P_k),\quad D_1=I(\text{agent};\text{repo}),\quad D_{k-1}-D_k=\mathrm{KL}(P_k\|P_{k-1})\\
+\kappa=\frac{H_{\rm MB}-H_{\rm obs}}{H_{\rm MB}-H_{\rm BE}}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Bits of agent--repo information per work quantum, $D_1$, split by what explains it: the ownership constraint, the room constraint, the run-persistence floor (what a max-ent draw with each agent-day's runs kept would show) and the residual. Shared-goal units on the left, own-artifact units on the right. Ownership removes 79--100\% of 2.7--4.1 bits in own-role units. In \#31a and \#33, plain max-ent with margins already sits at the floor.}
+
+\htelos{Work allocation in these swarms is statistically featureless once you know who works how much, which repos are big, who owns what and which room each agent sits in. There is no hidden plan to recover and no extra specialization. A monitor can therefore summarize allocation with two numbers per week: the ownership price $\lambda_{\rm own}$ and the concentration $\kappa$. The price is a lever: own-artifact goals raise it from about 2 to 8 nats, and a merge into one shared target (NE42) lowers it by $\ge7$ nats. To spread work, assign owners; to pool work, name one shared repo in the kickoff. Herding beyond neutral copying appears in 5 of 7 shared weeks, but kickoff naming accounts for it only twice.}
+
+\hbottom{Work episodes are allocated at maximum entropy given agent activity, repo sizes, ownership and rooms; the ownership price is a goal-set field (2.2 nats in shared weeks, 7.8 in own-role units).}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.44\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 $D_1-$floor $\ge0.5$ bit everywhere & \raggedright 20/24; \#31a 0.04, \#33 $-0.07$ & \raggedright failed\tabularnewline
+\raggedright P2 ownership $\ge0.5$ own, $<0.5$ shared & \raggedright 17/17 own; 6/7 shared & \raggedright supported\tabularnewline
+\raggedright P3 residual $\le0.2\,D_1$ (HH285) & \raggedright 23/24; in 95\% band 12/24 & \raggedright supported\tabularnewline
+\raggedright P4 $\lambda_{\rm own}$ own $>$ shared & \raggedright 7.8 vs 2.2 nats, $p=0.0007$ & \raggedright supported\tabularnewline
+\raggedright P5 $\kappa\ge1$ shared, $<1$ own & \raggedright 7/7 shared; 4/17 own & \raggedright mixed\tabularnewline
+\raggedright P6 named repos carry $\kappa$ & \raggedright 2/6 & \raggedright failed\tabularnewline
+\raggedright P7 singletons from ownership & \raggedright better than M1 24/24; $\pm25\%$ 9/24 & \raggedright failed\tabularnewline
+\raggedright P8 specialization beyond ownership & \raggedright breadth $<0.8$ in 1/24 & \raggedright failed\tabularnewline
+\raggedright N G40 NE42 merge & \raggedright $\lambda_{\rm own}$ $-7$ nats, $\kappa$ 0.16$\to$3.6 & \raggedright supported\tabularnewline
+\raggedright N G44 planned vs free arm & \raggedright planned arm owns more (10.2 vs 4.1) & \raggedright failed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_kappa.pdf}{Concentration $\kappa$ of work episodes per repo (dots) against the 95\% band of Bose--Einstein (neutral copying) draws at the same $K$ and $N$ (gray). Crosses: without kickoff-named repos. Lines: synthetic references for neutral copying, herding beyond neutral and planned teams.}
+
+\hcaveats{The persistence floor, the episode-level $\kappa$ and the breadth test were adopted after the synthetic checks and before the real run (A1); the M3 solver and the agent-level $\kappa$ are post hoc (A2). Max-ent with row, column and ownership constraints is close to saturated when most repos have one committer, so small residuals are partly by construction. In own-role units $\kappa$ tracks agent activity, not herding. Owners before DQ4 and private repos are unseen. 12 units with $<100$ quanta are descriptive.}
+
+\hnext{A reach (agents-per-repo) max-ent for herding free of activity; DQ6 rival pairs as a fourth constraint for \#51; $\lambda_{\rm own}$ by day vs kickoff wording.}

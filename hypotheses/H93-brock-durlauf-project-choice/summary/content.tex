@@ -1,0 +1,35 @@
+\hwhat{H93 fits project choice as a Brock--Durlauf (BD) logit with a share coupling $\beta J$, per period, on DQ4 work arrivals and attention labels in 13 periods (\#30--\#51). Multiple equilibria were predicted to split same-type weeks. The estimator M4 controls kickoff naming, habit and repo size; it passes the synthetic false-positive rule on all 13 schedules. $\hat{\beta J}>0$ (CI $>0$) in 5 of 10 identified work periods, $+1.9$ to $+5.8$. It is negative in the own-role weeks (\#51 $-11.7$ [$-19.0$, $-4.4$]). A post hoc synthetic shows that fast repo bursts without coupling give the same values. Every period lies below its multiplicity boundary ($\hat{\beta J}/\gamma_c\le0.86$). No same-field replica lands in a second state. The holdout is not run.}
+
+\hmodel{Model 10 (mean-field Potts) in its econ form, with model 05's repo fitness as the confound. An agent's state is its current repo or attention project. A choice event is a switch or a resumption. $s_j$ is the share of the other active agents on option $j$. The fields are kickoff naming $\mathrm{nm}_j$ (H54), habit $\mathrm{prev}_{ij}$ (the agent held $j$ before) and log cumulative arrivals $c_j$ (fitness proxy). $\beta J$ is the coupling in noise units. $\gamma_c$ is the coupling at which the fitted fields first support two stable states.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+P(j\mid e)\propto\exp\!\big(b_n\,\mathrm{nm}_j+b_o\,\mathrm{prev}_{ij}+b_c\ln(1{+}c_j)+\beta J\,s_j\big)\\
+m_j=\big\langle\mathrm{softmax}_j(h_{i\cdot}+\beta J\,m)\big\rangle_i,\quad\text{stable: }\mathrm{Re}\,\lambda(\partial F/\partial m)<1\\
+\gamma_c=\min\{\beta J:\ \#\text{stable fixed points}\ge2\}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Share coupling $\hat{\beta J}$ per period (95\% CI; DL pool over testable units). Filled circles: work arrivals; open squares: attention switches. Gray dashes: the naive share-only estimate M0. Triangles: $\gamma_c$, where the period's fitted fields would first support a second equilibrium. Every point estimate lies below its triangle. The share coefficient is positive in shared-goal weeks and negative in the own-role weeks \#42 and \#51.}
+
+\htelos{Agents do pile onto projects that others already work on: from 0 to a third of the agents multiplies the pick odds by about 2--7 in shared weeks. That term cannot be told apart from a common burst of repo attention, so do not read it as imitation. The useful result is negative: at the fitted fields no week is bistable. An operator need not fear that a free week will lock into a herd by chance. Herding follows the fields: what the kickoff names, which team is assigned, and habit, which is the largest term (odds $\times$12--400 of returning to one's own repo). To spread work, change the fields (assign owners, as in \#51), not the chat.}
+
+\hbottom{Project choice carries a share coefficient of $+2$ to $+6$ in shared weeks and $-6$ to $-12$ in own-role weeks, but repo bursts mimic it; at the fitted fields no period is bistable and no same-field replica splits.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.46\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 naive M0 $>0$ & \raggedright 8/10 work periods & \raggedright supported\tabularnewline
+\raggedright P2 fields+habit halve it & \raggedright 0/8 (ratio 0.58--2.8) & \raggedright failed\tabularnewline
+\raggedright P3 M4 CI $\ni0$ in $\ge$1/2 & \raggedright 3/10; $+$ in 5, $-$ in 2 & \raggedright failed\tabularnewline
+\raggedright P4 $P_{\rm multi}<0.5$ everywhere & \raggedright 51/54 fits; 3 small units fail & \raggedright failed (letter)\tabularnewline
+\raggedright P5 BD $m^*$ ranks $m$ & \raggedright Spearman 0.77, 10 periods & \raggedright supported\tabularnewline
+\raggedright P6 work, attention same sign & \raggedright 7/11 & \raggedright failed\tabularnewline
+\raggedright P8 BD vs neutral form tie & \raggedright 8/11 within 0.02 nats/event & \raggedright supported\tabularnewline
+\raggedright N G37 rooms, one field & \raggedright $\Delta m=+0.22$ in band, $p=0.50$ & \raggedright supported\tabularnewline
+\raggedright N G44 free vs assigned & \raggedright assigned arm $+13.9$: field absorbed & \raggedright failed\tabularnewline
+\raggedright N G51 12 same-goal units & \raggedright no herded unit ($m\le0.21$); AF $-11.7$ & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic identification on the real event schedules (40 runs per world; medians and ranges over skeletons). Static repo fitness spread fools the naive M2 but not M4. Fast repo-attention bursts (correlation time 20 arrivals) fool both. Power of M4 at $\beta J=3$ is 0.25--1.00 by period.}
+
+\hcaveats{The burst worlds, the read split and the stability fix are post hoc (A2). H54's token rule marks 31--100\% of chosen options as kickoff-named, so the kickoff field is measured poorly. An unmodelled field is absorbed into $\hat{\beta J}$; \#44's assigned team shows it. Work periods have 48--183 choice events outside \#51, and M4 power at $\beta J=3$ reaches 0.8 only in \#37, \#38 and \#51. $P_{\rm multi}$ treats the fitted fields as fixed and the logit's IIA as true. Commits are attempts; attention labels are mentions.}
+
+\hnext{An in-flight design (hosts the chooser could not yet have seen) or exogenous share shocks (expiries, exits) to identify $J$; assignment fields from DQ6 in the model.}

@@ -541,6 +541,26 @@
    "model": "10",
    "source": "H105",
    "meaning": "Goal adoption is a rising on-goal share with binomial spread; most statements stay off the literal goal."
+  },
+  {
+   "symbol": "βĴ_share",
+   "name": "project-choice share coefficient (not identified as coupling)",
+   "value": "+1.9 to +3.9 in shared weeks (#38 +2.22 [1.36, 3.07]); own-role #51 −11.7 [−19.0, −4.4]; habit b_own 2.5–6 nats; βĴ/γ_c ≤ 0.86 (γ_c ≈ 3–10)",
+   "kind": "coupling (upper bound)",
+   "scope": "10 identified work periods, M4",
+   "model": "10",
+   "source": "H93",
+   "meaning": "No period is bistable; repo bursts mimic the share term, and habit dominates."
+  },
+  {
+   "symbol": "λ_own",
+   "name": "ownership price in max-ent work allocation",
+   "value": "median 2.2 nats shared weeks (1.2–3.3) vs 7.8 own-role (4.8–20); D₁ 0.3–1.9 vs 2.7–4.1 bits per quantum; residual ≤ 0.13·D₁ in 23/24 units; κ on episodes 1.35–4.1 shared",
+   "kind": "Lagrange multiplier",
+   "scope": "24 units",
+   "model": "05",
+   "source": "H94",
+   "meaning": "Work allocation is max-ent given activity, repo size, ownership and rooms; ownership is the goal-set price."
   }
  ]
 }

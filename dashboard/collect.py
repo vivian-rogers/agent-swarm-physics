@@ -250,7 +250,12 @@ def hypothesis(hdir: Path) -> dict:
     conf = [p for p in periods if p["role"] == "confirmatory"]
     conf_run = [p for p in conf if p["verdict"] not in ("pending", "other")]
     data_dir = PROC / hdir.name
-    data_conf = [p.name for p in data_dir.glob("confirm*") if "dry" not in p.name.lower()] if data_dir.exists() else []
+    # A confirm folder counts as a holdout run only if it holds something other than dry-run output.
+    def _real_run(p):
+        if "dry" in p.name.lower():
+            return False
+        return any("dry" not in q.name.lower() for q in p.iterdir()) if p.is_dir() else True
+    data_conf = [p.name for p in data_dir.glob("confirm*") if _real_run(p)] if data_dir.exists() else []
     analysis = list((hdir / "analysis").glob("*.py")) if (hdir / "analysis").exists() else []
     confirm_scripts = [p.name for p in analysis if p.name.startswith("confirm")]
 
