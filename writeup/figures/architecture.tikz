@@ -4,7 +4,6 @@
 \definecolor{archFd}{HTML}{3a7d6b}
 \definecolor{archHy}{HTML}{c2662d}
 \definecolor{archOut}{HTML}{6b6b6b}
-\definecolor{archHold}{HTML}{8b2a2a}
 \begin{tikzpicture}[font=\scriptsize, node distance=3.6mm and 3mm,
   bx/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center,
              text width=3.55cm, inner sep=2.4pt, minimum height=8mm},
@@ -20,9 +19,9 @@
 \node[bx=archFd, below=of raw] (proc) {\textbf{Shared tables} (64 modules)\\context ledger, embeddings,\\reply graph, estimates};
 \node[bx=archFd, below=of lit] (pm) {\textbf{Physics models} 01--15\\+ 393 shared definitions};
 
-% catalogs and holdout
-\node[bx=archFd, below=of proc] (ne) {\textbf{Natural experiments}\\NE01--NE46 (interventions)};
-\node[bx=archHold, below=of pm] (hold) {\textbf{Held-out test data}\\goal periods set aside,\\untouched until final tests};
+% goal periods and natural experiments
+\node[bx=archFd, below=of proc] (gp) {\textbf{Goal periods}\\the data split into 51 swarm\\goal periods, one unit each};
+\node[bx=archFd, below=of gp] (ne) {\textbf{Natural experiments}\\NE01--NE46 (interventions)};
 
 % ideas
 \node[wide=archHy, anchor=north west] (hh) at ($(ne.south west)+(0,-3.6mm)$) {%
@@ -42,11 +41,11 @@
 % arrows
 \draw[ar] (raw) -- (proc);
 \draw[ar] (lit) -- (pm);
-\draw[ar] (proc) -- (ne);
-\draw[ar] (pm) -- (hold);
+\draw[ar] (proc) -- (gp);
+\draw[ar] (gp) -- (ne);
 \draw[ar] (hh) -- node[lb, right]{graduates} (h);
 \draw[ar] (ne.west) -- ++(-2.2mm,0) |- node[lb, pos=0.25, rotate=90]{interventions} (h.west);
-\draw[ar, draw=archHold] (hold.east) -- ++(2.2mm,0) |- node[lb, pos=0.25, rotate=-90]{kept out} (h.east);
+\draw[ar] (pm.south) -- node[lb, right]{models} (pm.south |- hh.north);
 \draw[ar] (h) -- (sc);
 \draw[ar] (sc) -- (out);
 \end{tikzpicture}
