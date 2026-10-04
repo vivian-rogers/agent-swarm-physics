@@ -1,6 +1,7 @@
 # H55 × G19: Daily puzzle game (2025-11-03 → 11-14)
 
 **Verdict:** failed
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · up to 8 agents · 10 non-holdout days · units 19a, 19b (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) -0.62 (8 agents; p greater 0.95, less 0.06); P2-v2 γ^D -0.70 pp (111 replies to C_v2 messages; label-noise null p greater 0.73); flag rate 0.90% vs 1.54%. Replies 2708, validated disagreement flags 41, replies to C_v2 messages 111. Immune contrasts are pooled across periods (card).

@@ -1,6 +1,7 @@
 # H64 × G40: connect worlds into a 3D universe (2026-05-04 → 2026-05-08)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime III · mode C · 15 agents · 1 room(s) · 5 days. Units: one unit. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 2.84% [0.38, 4.86] (confusion-corrected 3.51%; expected false-flag rate 0.72%); disagreeing pairs 2 vs label-noise null mean 1.83 (p 0.532). Prize-free median 0.96%.

@@ -2,6 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1: failed; rival homophily in every content variant)
+**Verdict (1c):** failed (unchanged) (round 1c, stance v2.1)
 **Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 24 → 27 agents · one room (#general; GPT-5.6 triplet isolated on 07-09, Grok 4.5 onboarding room 07-10, side room 07-24) · 19 days. Single joins inside (Grok 4.5 07-10, Kimi K3 07-17, Opus 5 07-24) handled by the population rule; NE38 (Opus 5's role restart, 07-29) inside.
 
@@ -77,3 +78,7 @@ Data: `data/processed/H22-private-goals-spin-glass/G51/<unit>/results.json`; fig
 | 51b | bge dedup | 0.47 (p 0.003) | 0.26 | 0.063 / 3 (p> 0.020) | -0.064 | 1.17 (p 0.20) | 0.45 (p 0.003) |
 | 51b | **stance (DQ2)** | dc split-half 0.43 (agent-field p 0.005) | 0.25 [0.08, 0.38] | 0.086 / 5 (p> 0.330) | 0.109 | – | neg. pairs 70 vs 8.1 |
 
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:10 UTC). Data: `data/processed/H22-private-goals-spin-glass/r1c/`.*
+
+Validated rival disagreement T^D_SR −0.16 pp (1 flag in 217 rival replies; NG p 0.66). Read vs in-flight Γ +0.15 [+0.01, +0.33] (bge), +0.11 [−0.03, +0.25] (gte): reading a rival pulls content toward it more than reading others (placebo percentile 0.80 / 0.73). τ₃(dc) of v2 soft stance 0.22 [−0.20, 0.89] (1b: 0.25 [0.08, 0.38]).

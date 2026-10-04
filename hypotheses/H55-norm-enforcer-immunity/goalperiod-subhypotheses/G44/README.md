@@ -1,6 +1,7 @@
 # H55 × G44: #best fine-tunes a leader; #rest picks its own goals (2026-05-26 → 05-29)
 
 **Verdict:** supported
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime III · up to 18 agents · 4 non-holdout days · units 44a, 44b (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) +0.29 (13 agents; p greater 0.17, less 0.83); P2-v2 γ^D -0.11 pp (38 replies to C_v2 messages; label-noise null p greater 0.50); flag rate 2.63% vs 1.33%. Replies 1315, validated disagreement flags 18, replies to C_v2 messages 38. Immune contrasts are pooled across periods (card).

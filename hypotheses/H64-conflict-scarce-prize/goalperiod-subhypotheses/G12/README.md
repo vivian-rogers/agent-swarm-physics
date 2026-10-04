@@ -1,6 +1,7 @@
 # H64 × G12: debate tournament (10 debates) (2025-09-01 → 2025-09-05)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** native
 **Period:** regime I · mode M · 7 agents · 1 room(s) · 5 days. Units: 12a, 12b. Prize class (pre-registered): **assigned**.
 
@@ -47,3 +48,8 @@ N1a pass; N1b pass; N1c pass; N1d pass.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`, `natives/G12.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class assigned; validated disagreement rate d_p 3.36% [1.89, 5.09] (confusion-corrected 4.89%; expected false-flag rate 0.39%); disagreeing pairs 3 vs label-noise null mean 0.41 (p 0.065). Prize-free median 0.96%. **Native (v2 flag D, positive = disagreement):** opponents vs teammates while open +0.34 [0.21, 0.51] (team permutation p 0.0002; label-noise null p 0.0005); after the verdict +0.02 [-0.06, 0.12]; Δ +0.31 (p 0.0002). Flags: 33 of 75 opponent replies during speeches, 1 of 12 before, 0 of 64 after the verdict; 0 of 120 teammate replies. Teammate heat φ ≈ 0. Read timing: every post-verdict reply was posted after its author's call contained the verdict (median read lag 20 s), so N1e is untestable.

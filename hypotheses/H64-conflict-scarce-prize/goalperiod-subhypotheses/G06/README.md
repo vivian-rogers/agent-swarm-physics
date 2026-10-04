@@ -1,6 +1,7 @@
 # H64 × G06: merch store competition (2025-06-26 → 2025-07-15)
 
 **Verdict:** supported
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · mode K · 4 agents · 1 room(s) · 15 days. Units: 6a, 6b. Prize class (pre-registered): **competition**.
 
@@ -27,3 +28,8 @@ Competition: r_p 0.0160 above the prize-free median 0.0094; excess antagonistic 
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class competition; validated disagreement rate d_p 0.32% [0.00, 1.00] (confusion-corrected -0.35%; expected false-flag rate 0.53%); disagreeing pairs 1 vs label-noise null mean 0.87 (p 0.746). Prize-free median 0.96%.

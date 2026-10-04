@@ -1,6 +1,7 @@
 # H55 × G38: charity fundraiser, year 2 (2026-04-02 → 2026-04-24)
 
 **Verdict:** failed
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** native
 **Period:** regime III · mode O/C · 12 → 14 agents · two rooms (#best, #rest) · 17 days; units 38a–38e (NE36 on day 1, NE17, NE18, two joins).
 
@@ -32,3 +33,8 @@ The loop-densest regime-III week with enough directed messages to test the rival
 | --- | --- | --- |
 | C adequacy | 0 | no lever beats the matched null here |
 | D unfitted predictions | 1 | HH210's coverage prediction holds (0.6%) |
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) -0.41 (11 agents; p greater 0.90, less 0.11); P2-v2 γ^D -0.25 pp (101 replies to C_v2 messages; label-noise null p greater 0.69); flag rate 0.00% vs 0.24%. Replies 2190, validated disagreement flags 5, replies to C_v2 messages 101. Immune contrasts are pooled across periods (card).

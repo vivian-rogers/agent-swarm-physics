@@ -1,6 +1,7 @@
 # H64 × G51: maximize your private assigned role (2026-07-06 → 2026-09-04)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime III · mode I/K · 32 agents · 2 room(s) · 45 days. Units: 51a, 51b, 51c, 51d, 51e, 51f, 51g, 51h, 51i, 51j, 51k, 51l. Prize class (pre-registered): **rivalry no prize**.
 
@@ -38,3 +39,8 @@ Private roles with rival pairs that compete on shared metrics but have no single
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+12 units; validated disagreement rate d_p 0.43–2.58% (period 0.85%, below the prize-free 75th percentile 1.51%); units with excess disagreeing pairs vs the label-noise null: 1/12 (51d, p 0.005).

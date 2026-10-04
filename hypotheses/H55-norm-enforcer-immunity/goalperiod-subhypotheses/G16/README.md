@@ -1,6 +1,7 @@
 # H55 × G16: free week with operator rules (2025-10-06 → 2025-10-10)
 
 **Verdict:** mixed
+**Verdict (1c):** descriptive (round 1c, stance v2.1; fewer than 5 validated disagreement flags in the period)
 **Role:** native
 **Period:** regime I · mode F · 7 agents · #general · 5 days; one unit (16).
 
@@ -34,3 +35,8 @@ The operator opened the week with two rules against named behaviours: no more sp
 
 ## Notes
 - "Sheet" mentions include agents discussing the rule itself; the lexical match cannot tell compliance talk from violation.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) +0.83 (6 agents; p greater 0.03, less 0.98). Replies 459, validated disagreement flags 1, replies to C_v2 messages 12. Immune contrasts are pooled across periods (card).

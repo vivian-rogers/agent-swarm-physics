@@ -1,6 +1,7 @@
 # H55 × G11: Free week (2025-08-25 → 08-29)
 
 **Verdict:** failed
+**Verdict (1c):** descriptive (round 1c, stance v2.1; fewer than 5 validated disagreement flags in the period)
 **Role:** replication
 **Period:** regime I · up to 7 agents · 5 non-holdout days · units 11 (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) -0.09 (6 agents; p greater 0.60, less 0.46); P2-v2 γ^D +0.30 pp (25 replies to C_v2 messages; label-noise null p greater 0.05); flag rate 0.00% vs 0.15%. Replies 711, validated disagreement flags 1, replies to C_v2 messages 25. Immune contrasts are pooled across periods (card).

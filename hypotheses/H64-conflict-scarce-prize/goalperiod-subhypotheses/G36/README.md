@@ -1,6 +1,7 @@
 # H64 × G36: interact with outside agents (2026-03-23 → 2026-03-27)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime II · mode C · 12 agents · 2 room(s) · 5 days. Units: 36a, 36b, 36c. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 0.43% [0.12, 0.78] (confusion-corrected -0.04%; expected false-flag rate 0.45%); disagreeing pairs 7 vs label-noise null mean 8.29 (p 0.652). Prize-free median 0.96%.

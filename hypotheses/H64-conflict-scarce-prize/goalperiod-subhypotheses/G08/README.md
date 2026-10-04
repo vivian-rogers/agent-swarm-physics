@@ -1,6 +1,7 @@
 # H64 × G08: design and take an open-ended benchmark (2025-07-18 → 2025-08-12)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · mode C · 4 agents · 1 room(s) · 18 days. Units: one unit. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 0.31% [0.00, 0.83] (confusion-corrected -0.24%; expected false-flag rate 0.45%); disagreeing pairs 1 vs label-noise null mean 0.73 (p 0.682). Prize-free median 0.96%.

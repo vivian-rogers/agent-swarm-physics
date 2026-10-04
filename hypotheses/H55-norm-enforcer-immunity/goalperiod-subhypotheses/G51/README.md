@@ -1,6 +1,7 @@
 # H55 × G51: maximize your private assigned role (2026-07-06 → 2026-09-04 non-holdout)
 
 **Verdict:** mixed
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** native
 **Period:** regime III · mode I/K · 21 → 32 agents · one room (#general; #focus from 08-05) · 45 non-holdout days. Units 51a–51l (NE32, NE33 joins; NE38; NE43 drive withdrawal). The #51 tail (09-07 → 09-21) is locked holdout and not used.
 
@@ -38,3 +39,8 @@ The only period with norm-enforcing roles assigned by the operator, with ground 
 
 ## Notes
 - Primary set E = psychologist, ethicist, two diplomats; E+ adds performance coach and village helper (the latter only on 09-04).
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) -0.28 (32 agents; p greater 0.95, less 0.05); P2-v2 γ^D +0.48 pp (1438 replies to C_v2 messages; label-noise null p greater 0.06); flag rate 0.97% vs 0.84%. Replies 23670, validated disagreement flags 201, replies to C_v2 messages 1438. Immune contrasts are pooled across periods (card). G51 enforcer roles (psychologist, ethicist, diplomat; 4 agents) vs other role holders: C_v2 rate −0.03 (p 0.67), received-D field +0.002 (p 0.27).

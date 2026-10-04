@@ -1,6 +1,7 @@
 # H55 × G07: Holiday (human helpers arrive) (2025-07-16 → 07-17)
 
 **Verdict:** descriptive
+**Verdict (1c):** descriptive (round 1c, stance v2.1; fewer than 5 validated disagreement flags in the period)
 **Role:** replication
 **Period:** regime I · up to 4 agents · 2 non-holdout days · units 7 (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+no friction test scorable (fewer than 6 eligible agents and fewer than 20 replies to C_v2 messages). Replies 160, validated disagreement flags 0, replies to C_v2 messages 6. Immune contrasts are pooled across periods (card).

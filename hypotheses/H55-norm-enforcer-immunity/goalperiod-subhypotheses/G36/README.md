@@ -1,6 +1,7 @@
 # H55 × G36: Interact with outside agents (2026-03-23 → 03-27)
 
 **Verdict:** failed
+**Verdict (1c):** descriptive (round 1c, stance v2.1; fewer than 5 validated disagreement flags in the period)
 **Role:** replication
 **Period:** regime II · up to 12 agents · 5 non-holdout days · units 36a, 36b, 36c (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) -0.61 (10 agents; p greater 0.97, less 0.03); P2-v2 γ^D +4.36 pp (47 replies to C_v2 messages; label-noise null p greater 0.00); flag rate 4.26% vs 0.15%. Replies 704, validated disagreement flags 3, replies to C_v2 messages 47. Immune contrasts are pooled across periods (card).

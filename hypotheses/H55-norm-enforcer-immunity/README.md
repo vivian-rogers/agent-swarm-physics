@@ -1,6 +1,7 @@
 # H55: Norm-enforcers are the swarm's immune cells
 
 **Status:** exploratory round 1 **done (2026-10-04 UTC): friction refuted, in reverse; immune function untestable at the sensor's recall; HH210's coverage claim holds.** Agents who correct others receive *warmer* replies, not colder (ρ −0.24 across 27 periods, p 0.04; #51 −0.60), and replies to a correction are no more negative than replies to the same agent's other messages. Corrections almost never reach a looping agent (0.65% of loop episodes), and where they do, no effect on escape is detectable; simply being addressed raises loop escape by 5 points. Design, observables, nulls and predictions written 2026-10-04 06:26 UTC, before any H55 outcome statistic. `analysis/confirm.py` (#51 tail, G22/G28/G29/G32) written and dry-run, **not run**.
+**Round 1c (stance v2.1, 2026-10-04, section below): failed.** With the validated v2.1 sensors and a label-noise null, correctors receive slightly *less* validated disagreement (ρ −0.16, p 0.047): the reversal holds. A read directed correction does not end blocked spells (Δ +0.007 [−0.053, +0.070], 337 treated windows, power 0.96 at 1 logit). Loops stay underpowered (93 treated steps). Immune family: underpowered → failed (blocked spells).
 **Fields:** sociophysics (norm enforcement, signed interactions), physics of life (Kolchinsky–Wolpert viability, error correction), stat mech (escape hazards)
 **Literature:** `literature/kolchinsky-2018-semantic-information-autonomous-agency.md` (viability, self-maintenance), `literature/bartlett-2025-physics-of-life-information-roadmap.md` (error correction as a cost of staying alive), `literature/pinero-2025-neutral-theory-cooperative-dynamics.md` (copying without fitness differences; the rival "loops end on their own").
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime; Population; Interaction, H37 variant *stance spin* and *stance coupling (residual)* (used with DQ2's 4-class labels, see below); *lever episode* (H39) for the event-study logic (past-only eligibility). New named terms proposed for DEFINITIONS.md (owner to add): **correction (H55 lexical marker)**, **directed read**, **loop episode (restatement / copy)**, **blocked episode (v3)**, **immune contrast Δ** (defined below).
@@ -220,6 +221,121 @@ The first immune-contrast draft was anti-conservative when corrections target es
   - **Before the frozen run:** `confirm.py` still has to join this file. Its `--label` stub is unchanged.
 - **C1 (primary):** random-effects ρ(c_j, ν_j) < 0 over the five targets (one-sided p < 0.05). Credence 0.5. **C2:** #51-tail negative pairs beat the agent-field null and concentrate on enforcers beyond their reply share (p < 0.10). 0.3. **C3:** blocked-spell Δ has 95% upper bound < 0.20. 0.55. **C4:** address effect on loops > 0 in the held-out periods. 0.5. **C5:** < 2% of loop episodes corrected. 0.85.
 - **Decision:** "friction reversed" confirmed if C1 passes; "missing immune system" confirmed if C3 and C5 pass.
+
+## Round 1c (stance v2.1, 2026-10-04)
+
+### Pre-registration (written 2026-10-04 22:14 UTC, before any round-1c statistic)
+**Seen before writing:** round 1 above; `infra/data-quality/stance_v2.md` (all rounds, Amendments 1–2, the nudge-reply caveat); the population class counts of `reply_stance_v2` (638 `disagree_validated_agent` flags in 61,533 pairs; correct 3,266, decline 1,487 hard labels); the confirm2 and fresh-sheet confusion numbers; the schemas of H55's `messages`, `reads_loop` and `reads_blocked`. No v2 statistic of any period, agent, loop or reply was computed.
+
+**Why a round 1c.** Round 1's correction sensor (DQ2 confident opposes with `opp_type` ∈ {correction, decline}) was precise (0.93) but saw about one correction in ten. The friction tests used DQ2's ordered stance, whose negative class is mostly not conflict. Round 1c replaces both with stance v2.1 classes and re-tests friction (P1, P2) and the immune tests (P4, P5), where recall was the limit (H55-R1).
+
+**Sensors (v2.1, all from `reply_stance_v2`; a message's class is its label toward its DQ2 parent).**
+- **Correction sensor C_v2:** the message's `stance2` ∈ {correct, decline}. `correct` is over-called (precision 0.39 on fresh sheet 1, 0.26–0.55 reweighted on confirm2; recall about 0.7). `decline` is precise (0.90 fresh; 0.50–0.61 confirm2). Precision of the union is about 0.5; recall about 0.7.
+- **Decline-only sensor (secondary):** `stance2` = decline. Fewer events, higher precision.
+- **Friction outcome:** `disagree_validated_agent` on the reply (precision 0.61–0.67, recall about 0.6). Secondary: s2 = p_agree − p_disagree.
+- Round-1 sensors stay reproducible (`corr_jev`); every new input is behind the round-1c script.
+
+**Label-noise null (NG) and synthetic validation (before any real statistic).**
+- **For friction outcomes:** as in H22's and H64's round-1c notes. The truth is a two-way logistic agent-field model with no correction effect. Observation uses recall r and a differential false-positive rate f_e ∝ Σ_k φ_k q_k(e), from the reply's non-disagree class profile and the confirm2 false-flag propensities. π ~ U[0.54, 0.80] and r ~ U[0.50, 0.75] per replicate.
+  - **R-label is built in:** replies to corrections that read like corrections or status reports get more false disagree flags under the null.
+- **For the correction sensor:** the synthetic flips a true correction indicator at precision 0.5 and recall 0.7. This propagates into c_j (P1), into the parent flag (P2) and into treated steps (P4, P5).
+- **Synthetic validation (real reply graphs and real loop and blocked step structures):**
+  - size of P1, P2, P4 and P5 under the null;
+  - power at the effects in round 1's synthetic (agent-level 0.3 and 0.6 logit per SD; reply-level δ = 0.5 and 1 logit; immune β_C = 0.5, 1 and 2 logit);
+  - the immune contrast keeps Amendment 2's agent demeaning.
+  - A test with size > 0.07 is descriptive only.
+
+**Re-tested predictions and kill rules.**
+
+| # | Prediction [credence] | Kill rule |
+| --- | --- | --- |
+| P1-v2 (primary) | friction, agent level: ρ_p(c_j, ν^D_j) > 0, where c_j is agent j's C_v2 rate and ν^D_j is the target field of D (two-way, received disagreement beyond the replier's habit). Random-effects ρ > 0 with p < 0.05 [0.2] | **Killed** (friction refuted) if the RE ρ ≤ 0 with p_one-sided > 0.2, at synthetic power ≥ 0.8 for an agent effect of 0.6 logit per SD. Round 1's **reversal** (correctors receive warmer replies) is **confirmed in v2** if the RE ρ < 0 with two-sided p < 0.05 |
+| P1b-v2 | the partial ρ given j's own speaker field (disagreement it sends) keeps ≥ half of P1-v2 [0.3] | as round 1 |
+| P2-v2 (primary) | friction, reply level: replies to a C_v2 message are flagged D more often than replies to the same target's other messages (speaker and target FE); RE γ^D > 0, p < 0.05 [0.3] | **Killed** if the RE γ^D ≤ 0 or NG p > 0.2, at synthetic power ≥ 0.8 for δ = 1 logit |
+| P2-decl | the same with the decline-only sensor [0.3] | descriptive |
+| P4-v2 (primary) | immune, loops: matched agent-demeaned Δ^loop > 0, p < 0.05, with C_v2 as the directed-correction flag [0.15] | **Killed** (no immune function) if Δ's 95% upper bound < 0.05 and synthetic power at true β_C = 1 logit is ≥ 0.8; else "underpowered" |
+| P5-v2 (primary) | immune, blocked spells: Δ^trap > 0, p < 0.05 [0.15] | as P4-v2 |
+| P6, P8 (descriptive) | any directed read raises loop escape (unchanged); fewer than 20% of loop episodes receive a C_v2 correction, also after correcting for the sensor's precision and recall [0.7] | descriptive |
+
+**Verdict rule (1c):** round 1's rule with the v2 sensors. *Supported* if one friction test (P1-v2 or P2-v2) and one immune test (P4-v2 or P5-v2) pass after Holm over the four. *Friction only* or *immune only* if one family passes. *Failed* if none passes and the failing tests had synthetic power ≥ 0.5 at the modest effects above. Else *underpowered*.
+
+**Not re-tested in 1c:** the natives G12, G16 and G38 (no stance-dependent clause beyond P1 and P2), and P7 (not identifiable, S4). The G51 enforcer native is re-run descriptively (c_j and ν^D_j of the four enforcer roles).
+
+**Unit-of-analysis exception (named):** (d) too few events per period for the immune contrast, as in round 1.
+
+### Synthetic validation (2026-10-04, before the real-data run)
+`analysis/r1c.py synth` and `synth2` → `data/processed/H55-norm-enforcer-immunity/r1c/synth.json`. The runs use real reply graphs and real loop and blocked step structures. Labels, corrections and outcomes are simulated with the v2 sensor noise: correction precision 0.5 and recall 0.7; disagreement with π and r drawn per replicate and differential false positives.
+- **P1-v2 (agent friction):**
+  - Per-period size is 0.05 in #51, #19 and #38. Power at 0.6 logit per SD is 0.42, 0.25 and 0.12.
+  - **Meta over the 25 P1-scorable periods:** size 0.025; power 0.43 at 0.3 and **0.83 at 0.6**. The kill rule applies.
+- **P2-v2 (reply friction):**
+  - **The pre-registered inference (cluster-bootstrap SEs pooled by DerSimonian–Laird) is invalid for this rare binary outcome.** It rejects in 73% of no-effect worlds, because the bootstraps are degenerate when a period has few flags.
+  - The label-noise-null pooled z (per-period γ minus its null mean, inverse-variance weighted by the null variance) has size 0.075 (40 replicates, SE ±0.04) and power 0.88 at δ = 1 logit.
+- **P4-v2 (loops, C_v2 on directed reads):** the observed flag rate per directed read is 0.035, implying a true rate of 0.025. Expected treated steps are about 110, against 21 in round 1. Size 0.01 (positive) and 0.07 (two-sided). **Power 0.15, 0.49 and 0.86 at β_C 0.5, 1 and 2.** At β_C = 1 the power is below 0.8, so P4-v2 can fail only as "underpowered".
+- **P5-v2 (blocked spells):** flag rate 0.037; about 385 treated windows, against 89 in round 1. Size 0.03 (positive) and 0.07 (two-sided). **Power 0.52, 0.96 and 1.0 at β_C 0.5, 1 and 2.** The kill rule applies.
+
+### Amendment A1c (2026-10-04, from the synthetic only, before any real-data statistic)
+P2-v2 and P2-decl inference changes from the DL pool of bootstrap SEs to the **NG-pooled z** (one-sided at 0.05), because the bootstrap version has size 0.73. The kill rule is unchanged: RE γ^D ≤ 0 or pooled NG p > 0.2. The power condition (≥ 0.8 at δ = 1) is met (0.88). Per-period bootstrap CIs are still reported, as descriptive values.
+
+### Results (2026-10-04, non-holdout)
+*Code: `analysis/stance_noise.py`, `analysis/r1c.py` (`synth`, `synth2`, `real`), `analysis/r1c_rows.py`. Data: `data/processed/H55-norm-enforcer-immunity/r1c/` (`synth.json`, `real.json`, `real_periods.json`). 51 rows in `per_period_estimates` (tag "round 1c, stance v2.1").*
+
+**Sensor coverage.** All 56,645 parented agent messages carry a v2 label. Replies to C_v2 messages are the treated set for P2. The validated disagreement flag marks about 1% of the 59,291 agent → agent replies.
+
+**Friction.**
+- **P1-v2 (agent level):** across 26 periods, agents with higher C_v2 rates receive *less* validated disagreement beyond the replier's habit.
+  - Random-effects ρ = **−0.16** (Fisher-z SE 0.08; two-sided p 0.047; one-sided p for friction 0.98); 8/26 positive.
+  - The partial ρ given the agent's own speaker field is −0.17. The decline-only rate gives −0.03 (p 0.73).
+- **P2-v2 (reply level, A1c inference):** the NG-pooled γ^D is **+0.27 pp (SE 0.16 pp; z 1.63, one-sided p 0.051)** over 25 periods; 12/25 periods are positive.
+  - The (invalid) DL pool gives −0.27 pp. The median confusion-corrected γ is −0.14 pp. The soft-sign contrast is +0.020 (replies to corrections lean *more* agreeing).
+  - Decline-only: 2 scorable periods (NG z 2.2), descriptive.
+- **P3 (descriptive), v2 composition of DQ2's confident received opposes:** correct 862, disagree 831, decline 430, inform 82, coordinate 32. About 58% are corrections or declines, against round 1's 66% by DQ2 subtype.
+
+**Immune function (C_v2 as the directed-correction flag; agent-demeaned matched contrasts).**
+- **P4-v2 (restatement loops):** Δ **+0.05 [−0.12, +0.21]** (93 treated steps, 63 matched; p 0.58).
+  - The novelty stratum gives −0.06. The hazard model with agent fixed effects gives b_C +0.48 (SE 0.23).
+  - Copy loops: Δ +0.13 [−0.13, +0.40] (40 treated); hazard b_C +0.92 (SE 0.37).
+  - Decline-only: 8 treated.
+- **P5-v2 (blocked spells):** Δ **+0.007 [−0.053, +0.070]** (337 treated windows, 269 matched; p 0.82); hazard b_C +0.11 (SE 0.13). Decline-only: +0.05 [−0.05, +0.16] (117 treated).
+- **P8 (coverage):** 2.9% of 2,875 restatement-loop episodes receive a C_v2 correction (implied true share 2.0%, at most 4%). 35% receive some directed message.
+- **G51 enforcers (descriptive):** the four enforcer-role agents vs the other role holders show a C_v2 rate difference of −0.03 (p 0.67) and a received-disagreement field difference of +0.002 (p 0.27).
+
+**Old → new.**
+
+| Clause | Round 1 (DQ2 sensors) | Round 1c (v2.1) | Change |
+| --- | --- | --- | --- |
+| P1: friction, agent level | ρ −0.24 [−0.44, −0.02], p 0.04 (reversed); 10/27 positive | ρ −0.16, p 0.047 (reversed); 8/26 positive; meta power 0.83 at 0.6 logit/SD | fail (reversed) → **killed, reversal confirmed in v2** (p 0.047, barely) |
+| P1b: partial given own speaker field | −0.24 | −0.17 | fail → fail |
+| P2: friction, reply level | γ −0.006 [−0.09, +0.08] (soft stance) | γ^D +0.27 pp (SE 0.16), NG p 0.051; corrected median −0.14 pp; soft +0.020 | fail → **not passed, not killed** (weak lean toward friction in the flag, against it in soft sign) |
+| P3: received negativity is mostly corrections | 66% (DQ2 subtype) | 58% correct + decline among DQ2 confident opposes | pass → pass |
+| P4: immune, loops | Δ −0.18 [−0.56, +0.14], 21 treated; power 0.08 | Δ +0.05 [−0.12, +0.21], 93 treated; power 0.49 at β_C = 1 | underpowered → **underpowered** (4× the events) |
+| P5: immune, blocked spells | Δ −0.02 [−0.12, +0.10], 89 treated; power 0.21 | Δ +0.007 [−0.053, +0.070], 337 treated; power 0.96 at β_C = 1, 0.52 at 0.5 | underpowered → **failed, powered** (CI excludes Δ ≥ 0.07; the kill bound 0.05 is missed narrowly) |
+| P8: corrections rarely reach loops (HH210) | 0.65% observed (≤ 6% true) | 2.9% observed (≈ 2% true, ≤ 4%) | pass → pass (tighter) |
+
+**Verdict (1c): failed** (round 1: friction failed, reversed; immune underpowered). By the card's rule, no primary passes after Holm (P1 reversed; P2 p 0.051; P4 p 0.58; P5 p 0.82). The failing tests have synthetic power ≥ 0.5 at modest effects: P1 meta 0.83 at 0.6 logit/SD; P5 0.52 at β_C 0.5 and 0.96 at 1.
+- **Friction is refuted in the validated channel.** Correctors draw slightly *less* disagreement.
+- **The immune function is absent in blocked spells.** A directed correction does not raise the per-window escape probability by 0.07 or more.
+- **Loops stay underpowered.** The hazard estimates lean positive in loops (b_C +0.48, SE 0.23; copies +0.92, SE 0.37), but the matched design (primary) does not.
+- **What changes:** the immune family moves from "underpowered" to "failed" in blocked spells, so the hypothesis moves from "friction failed, immune untestable" to "failed".
+- **Period folders:** `**Verdict (1c):**` lines were added to 35 folders.
+  - 1 supported (#26: replies to corrections flagged 3.5% vs 0.6%, NG p 0.02); 20 failed.
+  - 14 descriptive: fewer than 5 validated flags in the period. This per-period scorability rule is post hoc.
+
+**Scorecard after 1c:**
+- A 1 → 1: the correction sensor now has recall of about 0.7 but precision of about 0.5 (the `correct` class is over-called).
+- C 1 → 1. F 1 → 1 (A1c fixed an invalid inference before the real run). H 1 → 1 (deference beats friction again).
+- **A1 B1 C1 D1 E1 F1 G1 H1 I0**, unchanged.
+
+**Proposed re-freeze (needs Vivian's sign-off; `analysis/confirm.py` is not edited).**
+- **C1 (friction reversed):** switch from DQ2's ordered stance and `corr_jev` to the v2.1 sensors on held-out pairs (`data/processed/holdout_labels/reply_stance_v2_holdout.parquet`).
+  - Derive C_v2 as stance2 ∈ {correct, decline} and D as stance2 = disagree, confidence ≥ 0.6, a_kind ≠ 2.
+  - Use the received-D two-way field. The prediction is ρ < 0, with power about 0.8 only at the full-period meta level. Five targets give much less.
+- **C3 (blocked Δ upper bound < 0.20)** would use C_v2. That is about 4× the treated windows, so the frozen bound could tighten to 0.10.
+- **C5 (< 2% of loop episodes corrected)** must be restated for C_v2: the v2 observed share is 2.9% (implied true share about 2%).
+- The `opptype_holdout.parquet` path stays valid for the round-1 sensor.
+- Neither held-out file was opened.
+
+**Claim that stands:** Across 26 non-holdout periods, agents who correct or decline more receive slightly *less* validated disagreement, not more (random-effects ρ −0.16, p 0.047, with the labeller's confusion in the null). In blocked spells, a read directed correction does not raise escape: Δ +0.007 [−0.053, +0.070] per 5-min window over 337 treated windows, powered at 0.96 for a 1-logit effect. *Exclusions:* the loop immune test is underpowered (power 0.49 at 1 logit; the hazard robustness leans positive); the reply-level friction test is borderline (+0.27 pp, p 0.051) and its sign flips with correction for false flags; the C_v2 sensor is about half over-calls.
 
 ## Round 2 redirects
 - **What the direction is really after:** whether an agent swarm repairs its own errors, and what an operator must supply when it does not.

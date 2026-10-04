@@ -1,6 +1,7 @@
 # H64 × G31: free week (3.7 Sonnet farewell) (2026-02-16 → 2026-02-20)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · mode F · 12 agents · 1 room(s) · 5 days. Units: 31a, 31b, 31c, 31d. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 1.07% [0.77, 1.40] (confusion-corrected 0.89%; expected false-flag rate 0.53%); disagreeing pairs 8 vs label-noise null mean 7.68 (p 0.468). Prize-free median 0.96%.

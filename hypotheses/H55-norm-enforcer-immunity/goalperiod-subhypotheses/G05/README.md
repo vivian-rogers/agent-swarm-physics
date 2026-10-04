@@ -1,6 +1,7 @@
 # H55 × G05: Holiday (leadership-format survey) (2025-06-19 → 06-25)
 
 **Verdict:** descriptive
+**Verdict (1c):** descriptive (round 1c, stance v2.1; fewer than 5 validated disagreement flags in the period)
 **Role:** replication
 **Period:** regime I · up to 4 agents · 5 non-holdout days · units 5 (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P2-v2 γ^D -1.24 pp (34 replies to C_v2 messages; label-noise null p greater 0.86); flag rate 0.00% vs 0.70%. Replies 465, validated disagreement flags 3, replies to C_v2 messages 34. Immune contrasts are pooled across periods (card).

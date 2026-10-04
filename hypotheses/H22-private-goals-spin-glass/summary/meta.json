@@ -3,8 +3,8 @@
  "faithfulness": 1.0,
  "usefulness": 1.5,
  "rationale": {
-  "complete": "Round 1 plus round 1b: DQ6 roles, two embedding models, style residuals, dedupe, corrected talk, shared unit splits, the DQ2 stance channel with the calibrated agent-field null, and two native tests (NE38, G23). Holdout tail not run; lagged couplings still to do.",
-  "faithfulness": "Failed robustly: rivals co-move positively in every content variant and are friendly in stance; no conflict-coded negative couplings anywhere, including Opus 5's role change and chess opponents. The stance channel's unbalanced residuals fit the glass side of tau3(dc) but are non-specific (SK vs heterogeneous ferro) and unrelated to conflict.",
+  "complete": "Round 1 plus round 1b: DQ6 roles, two embedding models, style residuals, dedupe, corrected talk, shared unit splits, the DQ2 stance channel with the calibrated agent-field null, and two native tests (NE38, G23). Holdout tail not run; lagged couplings still to do. Round 1c: validated v2.1 disagreement flag with a label-noise null (synthetic-validated) and a read vs in-flight partition contrast in content.",
+  "faithfulness": "Failed robustly: rivals co-move positively in every content variant and are friendly in stance; no conflict-coded negative couplings anywhere, including Opus 5's role change and chess opponents. The stance channel's unbalanced residuals fit the glass side of tau3(dc) but are non-specific (SK vs heterogeneous ferro) and unrelated to conflict. 1c: rivals' homophily is read-gated (not convergence); the validated stance channel is underpowered and the 1b stance-balance signature does not replicate.",
   "usefulness": "A clean negative for mixed-motive swarms: conflicting incentives do not produce conflict couplings, in topic or stance; assigned roles pin topics and same-objective agents converge. The rival contrast, tau3(dc) and the calibrated stance null port to other logs."
  },
  "one_line": "#51 is no spin glass: roles pin positions, couplings are positive in topic and stance, rivals co-move, and no collective states form.",
@@ -31,84 +31,47 @@
  "rated_by": "RE-C2 round-1b agent (suggested; faithfulness and usefulness unchanged from the coordinator's calibration)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "#51 private goals produce no frustration: rivals' content is more similar (homophily) and stance is ferromagnetic",
-  "scope": "#51 units a–c; NE38; G23",
+  "claim": "In #51 (51b–51d), conflicting private goals produce no antagonism in content or stance: reading a rival's or opposed-role agent's statement pulls the reader's content toward it at least as much as reading anyone else (read-gated Γ +0.19 [+0.07, +0.31]), and validated rival disagreement is not elevated (+0.49 pp [−0.68, +1.67])",
+  "scope": "#51 units 51b–51d; #23",
   "direction": "negative",
-  "original_verdict": "refuted",
-  "credence": 0.63,
+  "original_verdict": "failed",
+  "credence": 0.6,
   "ladder": [
    {
     "factor": "base (pre)",
     "x": 0.4
    },
    {
-    "factor": "ground truth agrees (DQ6 roles)",
+    "factor": "partition contrast (read vs in-flight) passed",
     "x": 1.5,
-    "evidence": "card §Round 1b"
+    "evidence": "card §Round 1c"
    },
    {
-    "factor": "robust (homophily in every content variant)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "replication (3 units + shared splits)",
+    "factor": "synthetic validation on the real reply structure",
     "x": 1.5,
-    "evidence": "card §Round 1b"
+    "evidence": "card §Round 1c"
    },
    {
-    "factor": "spin glass vs heterogeneous ferromagnet not identifiable",
-    "x": 0.7,
-    "evidence": "Amendment 1"
+    "factor": "replication across 3 units, both embeddings",
+    "x": 1.2,
+    "evidence": "card §Round 1c"
+   },
+   {
+    "factor": "penalty: Γ vs random pair sets only suggestive",
+    "x": 0.85,
+    "evidence": "card §Round 1c"
    }
   ],
   "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 1.5,
-  "decision": "assigned rivalries don't create conflict",
+  "value_if_true": 1.0,
+  "decision": "don't expect assigned rivalry to make agents antagonistic; reading still pulls them together",
   "magnitude": "small",
-  "generality": "role-play swarms",
-  "expected_usefulness": 0.95,
-  "scientific_value": 2.2,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
-  "raters": [
-   {
-    "rater": "coordinator",
-    "credence": 0.68,
-    "value_if_true": 1.5,
-    "mechanism_level": "M0",
-    "fragile": false,
-    "scientific_value": 2
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "#51's private roles do not produce spin-glass order: same-role rivals co-move more than unrelated pairs (T_SR +0.04 to +0.06 in every variant), couplings are mostly positive, and the swarm never switches collectively (W~1).",
-    "credence": 0.58,
-    "value_if_true": 1.5,
-    "mechanism_level": "M0",
-    "fragile": false,
-    "scientific_value": 2.5,
-    "ladder": [
-     {
-      "factor": "partial replication",
-      "x": 1.5,
-      "evidence": "units 51a-e, 3-5 rival pairs each"
-     },
-     {
-      "factor": "robust to instruments",
-      "x": 2,
-      "evidence": "bge/gte, style residuals, dedupe, DQ2 stance"
-     },
-     {
-      "factor": "penalty: not identifiable",
-      "x": 0.7,
-      "evidence": "SK vs heterogeneous ferromagnet and kappa under common drive not identifiable; shared role prompts as fields"
-     }
-    ]
-   }
-  ],
-  "adjudicate": false
+  "generality": "LLM swarms with private goals",
+  "expected_usefulness": 0.6,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H22 round 1c); independent rater pending",
+  "rated_at": "2026-10-04"
  },
  "v2_history": [
   {
@@ -118,6 +81,15 @@
    "value_if_true": 1,
    "expected_usefulness": 0.6,
    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
+  },
+  {
+   "claim": "#51 private goals produce no frustration: rivals' content is more similar (homophily) and stance is ferromagnetic",
+   "credence": 0.63,
+   "fragile": false,
+   "value_if_true": 1.5,
+   "expected_usefulness": 0.95,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
    "rated_at": "2026-10-04"
   }
  ]

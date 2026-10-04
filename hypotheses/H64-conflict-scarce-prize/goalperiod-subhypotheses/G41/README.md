@@ -1,6 +1,7 @@
 # H64 × G41: novel research (2026-05-11 → 2026-05-15)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime III · mode I · 15 agents · 2 room(s) · 5 days. Units: one unit. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 2.09% [0.78, 3.59] (confusion-corrected 2.53%; expected false-flag rate 0.56%); disagreeing pairs 0 vs label-noise null mean 2.38 (p 1.000). Prize-free median 0.96%.

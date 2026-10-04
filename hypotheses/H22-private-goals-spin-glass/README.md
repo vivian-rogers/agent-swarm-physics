@@ -4,6 +4,8 @@
 
 The #51 content couplings are real but mostly positive, and same-role rivals co-move *more*, not less (the homophily rival).
 
+**Round 1c (stance v2.1, 2026-10-04, section below): failed, unchanged.** Validated disagreement between rivals is not elevated (+0.49 pp [−0.68, +1.67]), but the flag is too rare to decide (power 0.47 at OR 3): the stance clause is now inconclusive. The 1b stance-balance signature does not replicate (1/3). The read vs in-flight contrast kills the antiferromagnetic reading in content: rivals' homophily is a read-gated coupling (Γ +0.19 [+0.07, +0.31]).
+
 **Round 1b (2026-10-04, section below): failed, robustly.** Rival homophily holds in both embedding models, after style residualization and dedupe, and on the shared #51 splits (RE T_SR +0.04 to +0.06, p 0.01–0.05). In the new stance channel (DQ2) the swarm is ferromagnetic (mean stance ≈ 0.6), residual couplings are heterogeneous and unbalanced (τ₃(dc) 0.05–0.25) but rivals and opposed roles are not hostile. Natives: NE38 (Opus 5's role change) and G23 (chess opponents) show no antagonism. The balance index is indeterminate, and there are no collective metastable states. Observables, nulls and predictions were written 2026-10-04 00:15 UTC, and Amendment 1 (synthetic-based) at 00:42 UTC, both before any real-data run. The confirmatory script for the #51 tail is written, not run.
 **Fields:** stat mech, sociophysics
 **Origin:** HH102 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
@@ -17,7 +19,7 @@ The #51 content couplings are real but mostly positive, and same-role rivals co-
 | Scheduler field | partly | Cross-day surrogate as the noise floor (Null / baseline); talk spins use `activity_bins_fixed` but no trim. Close with trim-then-block-shift (§1, §3). | partly |
 | Exogenous field (kickoff/goal/operator) | yes | Couplings are defined beyond the field; role-field manipulation check (NE38). Same-role rivals co-move more, which a shared role field also predicts. Close with `agent_goals` and `goal_fields` regressors (§1). | partly |
 | Shared model priors | yes | Same-lab residualized couplings and family-block removal (Null / baseline); `style_resid_period` in both models. | removed |
-| Contemporaneous convergence | yes | Not handled: within-day content co-movement is not read-gated. Close with the in-flight placebo (§1). | open |
+| Contemporaneous convergence | yes | Round 1c: read vs in-flight partition contrast by pair class (RIF; `analysis/r1c_readflight.py`, both models). Rivals' co-movement is read-gated (read − in-flight +0.30 vs +0.10 for other pairs). Stance pairs are read by construction (ledger visibility). Equal-time J^c statistics of rounds 1/1b are still not read-gated. | removed (content clause, 1c); partly for the equal-time statistics |
 
 **Inputs:** all current: gte, `style_resid_period`, DQ5 dedupe, `activity_bins_fixed`, DQ6 roles, DQ2 stance. Couplings are co-movement, not ledger exposure.
 
@@ -434,6 +436,98 @@ Run only with Vivian's sign-off (`--confirm --i-understand-this-uses-the-locked-
 
 **Scorecard after 1b.** D 0 → 1 (the stance balance signature appears unfitted in 3/3 counted units, but without conflict-coded signs). E 0 → 1 (NE38 used as a dated field step: field response clear, coupling response homophily-sign, n.s.). F stays 1 (second model and style residuals done; τ₃(dc) and W are model-dependent). C, G, H, I unchanged (the homophily rival still wins; G23 adds a known-structure test with no antagonism).
 **Figure:** `figures/r1b_rivals_channels.pdf`. **Estimates:** 161 rows in `per_period_estimates` (ρ_split, T_SR, τ₃(dc) per unit and model, stance T_SR and negative-pair counts, natives).
+
+## Round 1c (stance v2.1, 2026-10-04)
+
+### Pre-registration (written 2026-10-04 22:10 UTC, before any round-1c statistic)
+**Seen before writing:** rounds 1 and 1b above; `infra/data-quality/stance_v2.md` (all rounds, Amendments 1–2, the nudge-reply caveat); the population class counts of `reply_stance_v2` (all periods pooled: 638 `disagree_validated_agent` flags in 61,533 pairs; hard classes coordinate 29,621, inform 11,861, agree 10,440, correct 3,266, ask 2,291, decline 1,487, disagree 1,349, acknowledge 1,218); the confirm2 confusion matrix; structural tables (H22 unit agents and roles, H65's G51 read tables). No v2 statistic of any #51 unit, pair class, period or agent was computed.
+
+**Why a round 1c.** Round 1b's stance channel used DQ2's soft stance (p_supports − p_opposes). DQ2 "opposes" is about 12% disagreement (DQ10), so round 1b could not tell a friendly swarm from a hostile one whose hostility the labeller missed. DQ10 now ships a validated conflict flag. Round 1c re-tests the two stance clauses (P4s, P3s) with it, and adds the read vs in-flight partition contrast that closes the open convergence impostor for the content clause (P4).
+
+**Sensor.** D_e = `disagree_validated_agent` on agent → agent pairs of `reply_stance_v2` (cand, p_reply ≥ 0.5, non-holdout; `holdout_mask` re-applied). Validated precision π 0.61–0.67 (CI lower bound 0.54), recall r ≈ 0.6. Secondary: soft sign s2 = p_agree − p_disagree (`s2_soft`; unvalidated per pair, used in sums only).
+
+**Label-noise null (NG, built into every stance test).**
+- Truth model: D*_e ~ Bernoulli(σ(μ + a_speaker + b_target + u_block)), with no pair-class term. Fields come from a two-way logistic fit to the observed flags; μ is shifted so that the expected true count is π·ΣD/r. u_block ~ N(0, σ_u²) per room × 30-min block, σ_u drawn from {0, 0.5, 1}.
+- Observation: D_e ~ Bernoulli(r·D*_e + f_e·(1 − D*_e)). π ~ U[0.54, 0.80] and r ~ U[0.50, 0.75] are drawn per replicate.
+- **Differential false positives.** f_e = c·Σ_k φ_k q_k(e), where q_k(e) = p_k(e)/(1 − p_disagree(e)) is the reply's non-disagree class profile and φ_k is the false-flag propensity of class k. φ_k = (confirm2 false flags of reference class k) / (population hard-class count of k): inform 11, correct 10, coordinate 3, agree 2, acknowledge 1, ask 1 of 28. c sets the mean of f_e to the implied false-positive rate (1 − π)·D̄/(1 − π·D̄/r). A pair class whose replies look more like corrections or status reports therefore gets more false flags under the null.
+- **Corrected contrast:** T* = (T − T_f)/(r − f̄), where T_f is the same contrast computed on f_e (the expected false-flag difference).
+- **Synthetic validation first (axis F):** the same generator on the real #51 reply structure with a planted class effect (true odds ratio 1, 2, 3, 5 for the class). Report size (OR 1) and power. The real-data verdict uses a test only if its size is ≤ 0.07; else the test becomes descriptive.
+
+**Observables.**
+- **P4v2 (primary), antiferromagnetic bond in stance.** Units 51b, 51c, 51d (counted), 51a, 51e (descriptive), and all non-holdout #51 pooled (descriptive, as in 1b). Agents and roles: each unit's `agents.parquet` (DQ6 roles, majority over present days). Statistic: T^D_K = mean two-way-FE residual of D over replies in class K minus that over class U (residuals after speaker and target means; percentage points of replies). K ∈ {SR, OP, SR ∪ OP, SY}. One-sided NG p (K = SR, OP, SR ∪ OP: greater; SY: less). Random-effects pool over 51b–51d (DerSimonian–Laird).
+- **P4v2-s (secondary):** the same contrast on s2 (antagonism predicts T^s_SR < 0).
+- **P3v2 (secondary):** τ₃(dc) of the stance coupling J^s from s2 (1b's code, three day folds, day bootstrap), and the camp score against the agent-field null.
+- **G23v2 (native, secondary):** chess opponents vs other pairs (1b's 21 opponent pairs), T^D_opp with node-permutation and NG.
+- **RIF (primary for the convergence impostor; content channel).** Per counted unit, the read-gated linear response of `infra/shared/read_response.py`, split by pair class. A target statement z_B of agent j (whitened bge, field-projected) is regressed on the round-1b nuisance (own past statement, own EWMA, room-day leave-out field, human reads) plus R_c (read agent statements from senders in class c relative to j) and U_c (in-flight statements, posted during j's call, from class c). Classes c ∈ {conflict = SR ∪ OP, other}. Isotropic coefficients χ_c (read) and λ_c (in-flight). **Γ = (χ_conflict − λ_conflict) − (χ_other − λ_other).** Inference: room × 1-h block bootstrap (1,000; H67's note on short day-block bootstraps); pooled over 51b–51d by inverse-variance random effects. H65's G51 tables (`targets`, `reads`) are the input; roles per target day from DQ6 spells.
+
+**Predictions (H22's antiferromagnetic reading) and kill rules.**
+
+| # | Prediction [credence] | Kill rule |
+| --- | --- | --- |
+| P4v2 | RE T^D_SR > 0, NG p < 0.05, and corrected T* > 0; same sign in ≥ 2 of 3 counted units [0.10] | **Killed** if RE T^D_SR ≤ 0 or NG p > 0.2, *provided* synthetic power at OR 3 (pooled 51b–51d) is ≥ 0.8; if power < 0.8 the clause is "inconclusive (stance sensor too rare)" |
+| P4v2-OP | pooled #51 T^D_OP > 0, NG p < 0.05 [0.10] | descriptive if < 20 OP replies |
+| P4v2-s | RE T^s_SR < 0 [0.10] | none (secondary) |
+| P3v2 | τ₃(dc) of J^s(v2) < 0.25 with CI upper < 0.5 in ≥ 2 of 3 [0.4] | reported as the 1b re-test; non-specific (SK vs heterogeneous ferro) |
+| RIF | RE Γ < 0 with 95% CI below 0 [0.05] | **Killed** if the CI of Γ includes 0 or Γ > 0. The homophily rival predicts χ_conflict − λ_conflict > 0 (read-gated positive coupling); contemporaneous convergence predicts χ ≈ λ |
+
+**Verdict rule (1c).** The hypothesis verdict stays "failed" unless P4v2 passes. A P4v2 pass would change the reading to "conflict lives in stance, not topic". A P4v2 kill with adequate power closes the stance clause that round 1b left open ("stance labels reliable only in aggregate").
+
+**Unit-of-analysis exceptions (named):** (a) the stance labeller and the embedding basis are shared rulers; (d) the RE pool over 51b–51d (partial pooling of per-unit estimates, never of data). The pooled #51 run is descriptive, as in 1b.
+
+### Synthetic validation (2026-10-04, before the real-data run)
+`analysis/r1c_stance.py synth` → `data/processed/H22-private-goals-spin-glass/r1c/synth.json`. Real 51b–51d reply structures (10,099 / 7,663 / 2,446 agent → agent replies; 217 / 113 / 40 same-role-rival replies). Each replicate plants a true odds ratio on SR replies, draws flags through the NG noise, refits the null on the synthetic flags and tests (150 replicates × 150 null draws).
+- **Size (OR 1):** SR 0.01 / 0.05 / **0.11** (51b / 51c / 51d); K 0.02 / 0.05 / **0.07**; pooled 51b–51d 0.03. By the pre-registered rule, 51d's SR and K tests are descriptive (size > 0.07); the pooled test is valid.
+- **Power, pooled SR test:** 0.19 / **0.47** / 0.77 at OR 2 / 3 / 5. **Power at OR 3 is below 0.8, so the P4v2 kill rule cannot fire: P4v2 can pass or be inconclusive, not fail.** The cause is rarity: about 1% of replies carry the flag, so 370 rival replies hold about 4 expected flags.
+
+### Results (2026-10-04, non-holdout)
+*Code: `analysis/stance_noise.py` (NG), `analysis/r1c_stance.py`, `analysis/r1c_readflight.py`, `analysis/r1c_rows.py`. Data: `data/processed/H22-private-goals-spin-glass/r1c/` (`synth.json`, `stance.json`, `readflight_bge_small.json`, `readflight_gte_modernbert.json`).*
+
+**Stance channel (v2.1 validated flag).** Flag counts are small: 86 / 54 / 42 flags in 51b / 51c / 51d. Same-role rivals carry 1 / 3 / 2 of them (in 217 / 113 / 40 replies); opposed-role pairs carry 0 (in 23 / 2 / 19).
+- **P4v2 (rivals disagree more):** T^D_SR = −0.16 / +1.47 / +0.86 percentage points (NG p 0.66 / 0.06 / 0.40). Random effects +0.49 pp [−0.68, +1.67]; pooled NG p 0.29; confusion-corrected +0.39 pp. All #51 pooled (descriptive): 6 flags in 400 rival replies vs 154 in 15,434 unrelated (+0.43 pp, p 0.35).
+- **P4v2-OP:** no flag in 55 opposed-role replies; T^D_OP −0.83 pp (p 0.72).
+- **P4v2-s (soft sign):** T^s_SR −0.027 / −0.034 / +0.043 (pooled #51 −0.020). Small, mixed sign; no inference planned.
+- **SY:** not identifiable under two-way fixed effects. A support role is a property of one agent, so its pair class is almost collinear with that agent's field (null sd 0.03 pp). Reported, not read.
+- **P3v2 (balance):** τ₃(dc) of J^s from s2 = 0.22 [−0.20, 0.89] / 0.18 [−0.14, 0.34] / 0.57 [−0.12, 4.7]. Only 51c meets the rule (< 0.25, CI upper < 0.5).
+- **G23v2 (chess opponents):** T^D −0.68 pp (214 opponent replies, 5 flags overall; node-permutation p 0.76, NG p 0.81).
+
+**Content channel, read vs in-flight (RIF).** Pooled linear response over target statements: 17,025 / 12,747 / 5,129 targets; 11 / 9 / 9 conflict pairs.
+- **bge:**
+  - Γ = +0.15 [+0.01, +0.33] / +0.11 [−0.10, +0.32] / +0.32 [+0.11, +0.51]; random effects **+0.19 [+0.07, +0.31]**.
+  - Read − in-flight for conflict pairs is +0.30 [+0.16, +0.44] (RE); for other pairs, +0.10 [+0.06, +0.14].
+- **gte:** Γ +0.11 / +0.10 / +0.50; RE +0.23 [−0.02, +0.49]. Read − in-flight is +0.34 [+0.09, +0.59] for conflict pairs and +0.10 for others.
+- **Placebo pair sets** (same number of random pairs): percentiles 0.80 / 0.80 / 0.92 (bge) and 0.73 / 0.75 / 0.95 (gte).
+  - The placebo spread (sd 0.15–0.23) is wider than the block bootstrap, because pair couplings are heterogeneous.
+  - Against the placebo, the conflict excess is suggestive only (Stouffer z ≈ 1.6, p ≈ 0.06, post hoc combination).
+  - **No unit has Γ below its placebo median.**
+- In-flight exposure to conflict partners is thin (130 / 53 / 40 targets), so λ_conflict is poorly estimated. The read coefficient χ_conflict alone is +0.30 to +0.56 (CI excludes 0 in every unit, bge).
+
+**Old → new.**
+
+| Clause | Round 1b | Round 1c | Change |
+| --- | --- | --- | --- |
+| P4s: rivals hostile in stance | DQ2 soft T_SR +0.086 / +0.127 / +0.011 (friendlier, n.s.); RE +0.086 [−0.11, 0.28] | validated flag T^D_SR RE +0.49 pp [−0.68, +1.67], NG p 0.29; 6 rival flags in total | fail → **inconclusive** (sensor too rare: power 0.47 at OR 3; a true OR up to about 4 is not excluded) |
+| P4s: opposed roles | +0.11 / −0.34 / +0.22 (2 pairs) | 0 flags in 55 replies; −0.83 pp | fail (unchanged; underpowered) |
+| P4s: support | −0.03 / −0.10 / −0.03 | not identifiable under two-way FE | withdrawn |
+| P3s: stance balance τ₃(dc) | 0.25 / 0.23 / 0.05, pass 3/3 | 0.22 / 0.18 / 0.57, pass 1/3 (wide CIs) | pass → **fail**: the unbalanced signature does not survive the validated channel |
+| G23: chess opponents | stance −0.005 (p 0.42) | T^D −0.68 pp (p 0.76) | fail (unchanged) |
+| P4: content, convergence impostor | open (equal-time co-movement) | conflict pairs' read − in-flight +0.30 vs +0.10 for other pairs; Γ RE +0.19 [+0.07, +0.31] (bge), +0.23 [−0.02, +0.49] (gte) | **antiferromagnetic reading killed** (Γ > 0 in 6/6 unit × model cells). Rival homophily is a read-gated coupling, not contemporaneous convergence |
+
+**Verdict (1c): failed, unchanged.**
+- **Content.** The content clause is stronger. Rivals' positive co-movement survives the in-flight placebo, so it is a coupling through reading. It is not convergence on a shared field.
+- **Stance.** The validated stance channel cannot decide the question. It sees about four expected rival flags per unit, so P4v2 is inconclusive rather than failed.
+- **Balance.** Round 1b's one positive stance signature (unbalanced residuals) came from DQ2's soft stance. It does not replicate with v2.1, so it is withdrawn.
+
+**Impostors.** Contemporaneous convergence for the content clause: open → removed (RIF, both models). For stance, every labelled pair is read by construction (ledger visibility); an in-flight stance placebo would need labels on invisible pairs, which v2.1 does not have.
+
+**Scorecard after 1c:** unchanged, A1 B1 C1 D1 E1 F1 G1 H0 I0. D stays 1 on the content signatures; the stance balance signature that raised D in 1b is withdrawn. F gains the noise-null validation but stays 1 (stance underpowered). H stays 0: the homophily rival now wins a read-gated test too.
+
+**Proposed re-freeze (needs Vivian's sign-off; `confirm_tail.py` is not edited).** `confirm_tail.py` tests content only (C1–C4). A frozen addition could carry two arms:
+- **C6:** the RIF Γ on the #51 tail. The rival is confirmed if Γ > 0 with its block-bootstrap CI above 0.
+- **C7 (descriptive):** T^D_SR on the tail, with `reply_stance_v2_holdout.parquet`. Derive the flag as stance2 = disagree, confidence ≥ 0.6, a_kind ≠ 2. Flag rarity makes C7 descriptive at the tail's size.
+
+The held-out labels were not opened.
+
+**Claim that stands:** In #51 (units 51b–51d), conflicting private goals produce no antagonism in either channel. Reading a same-role rival's or opposed-role agent's statement pulls the reader's content toward it at least as much as reading anyone else (read − in-flight +0.30 vs +0.10; Γ +0.19 [+0.07, +0.31], bge). Validated disagreement between rivals is not elevated beyond agent fields (+0.49 pp [−0.68, +1.67]). *Exclusions:* the stance clause is underpowered (power 0.47 at OR 3); the 1b stance-balance signature is withdrawn (1/3 units); the support class is not identifiable; the Γ excess over random pair sets is suggestive only (p ≈ 0.06, post hoc).
 
 ## Notes
 - **From DQ6 (2026-10-04):** `agent_goals` overwrote Claude Opus 5's first #51 role (game dev, 07-24 → 07-29, then Mathematician at NE38), so this card treated it as roleless for those days. That adds two rival pairs. Use `ground_truth_labels` (`preferred`) in the re-evaluation.

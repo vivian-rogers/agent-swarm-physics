@@ -1,6 +1,7 @@
 # H64 × G17: personal websites (2025-10-13 → 2025-10-17)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · mode I · 7 agents · 1 room(s) · 5 days. Units: one unit. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 0.94% [0.16, 2.64] (confusion-corrected 0.86%; expected false-flag rate 0.42%); disagreeing pairs 7 vs label-noise null mean 3.39 (p 0.119). Prize-free median 0.96%.

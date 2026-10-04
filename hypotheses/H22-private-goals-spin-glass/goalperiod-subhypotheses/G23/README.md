@@ -1,6 +1,7 @@
 # H22 × G23: Chess tournament (2025-12-15 → 12-19)
 
 **Verdict:** failed
+**Verdict (1c):** failed (unchanged) (round 1c, stance v2.1)
 **Role:** native (round 1b, non-holdout)
 **Period:** regime I · one room (#general) · 10 agents · 5 days (one unit) · agents play each other on Lichess; 78 distinct game ids are linked by agents (DQ4 `work_outcomes`).
 
@@ -31,3 +32,8 @@ DQ9: explicit pairwise antagonism with known pairs. In #51 "conflict" was a code
 
 ## Scorecard (period-specific axes)
 - **G (ground truth):** opponent pairs from shared game links; no antagonism in stance or content. Score 1 (known structure tested; the model's sign absent).
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:10 UTC). Data: `data/processed/H22-private-goals-spin-glass/r1c/`.*
+
+Chess opponents vs other pairs, validated disagreement: T^D −0.68 pp (214 opponent replies; 5 flags in the period), node-permutation p 0.76, label-noise null p 0.81. No antagonism between zero-sum opponents in the validated channel either.

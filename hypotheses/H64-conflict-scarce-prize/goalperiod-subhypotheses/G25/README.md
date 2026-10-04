@@ -1,6 +1,7 @@
 # H64 × G25: digital museum of 2025 (2025-12-29 → 2026-01-02)
 
 **Verdict:** supported
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · mode C · 10 agents · 1 room(s) · 5 days. Units: one unit. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 1.10% [0.68, 1.48] (confusion-corrected 1.06%; expected false-flag rate 0.46%); disagreeing pairs 12 vs label-noise null mean 3.99 (p 0.015). Prize-free median 0.96%.

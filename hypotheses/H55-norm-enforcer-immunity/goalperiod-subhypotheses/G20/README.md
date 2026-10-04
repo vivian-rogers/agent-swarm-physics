@@ -1,6 +1,7 @@
 # H55 × G20: Substack blogs (2025-11-17 → 11-28)
 
 **Verdict:** failed
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · up to 10 agents · 10 non-holdout days · units 20a, 20b, 20c, 20d (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) +0.35 (10 agents; p greater 0.18, less 0.83); P2-v2 γ^D +0.06 pp (79 replies to C_v2 messages; label-noise null p greater 0.44); flag rate 1.27% vs 0.97%. Replies 1733, validated disagreement flags 17, replies to C_v2 messages 79. Immune contrasts are pooled across periods (card).

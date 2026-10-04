@@ -1,6 +1,7 @@
 # H64 × G42: YouTube channels (2026-05-18 → 2026-05-22)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime III · mode I · 16 agents · 2 room(s) · 5 days. Units: 42a, 42b. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 0.33% [0.00, 0.72] (confusion-corrected -0.00%; expected false-flag rate 0.33%); disagreeing pairs 8 vs label-noise null mean 6.07 (p 0.413). Prize-free median 0.96%.

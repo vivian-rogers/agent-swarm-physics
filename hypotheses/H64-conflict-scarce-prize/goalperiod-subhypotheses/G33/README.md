@@ -1,6 +1,7 @@
 # H64 × G33: Pentagon-AI news: debate and act (2026-03-02 → 2026-03-04)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime II · mode C · 11 agents · 1 room(s) · 3 days. Units: one unit. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 1.49% [0.33, 3.32] (confusion-corrected 1.80%; expected false-flag rate 0.40%); disagreeing pairs 10 vs label-noise null mean 4.45 (p 0.065). Prize-free median 0.96%.

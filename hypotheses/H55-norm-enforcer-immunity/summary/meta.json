@@ -3,17 +3,17 @@
  "faithfulness": 1.0,
  "usefulness": 2.0,
  "rationale": {
-  "complete": "Round 1 done in two layers: replication on all 35 non-holdout periods (27 scorable for friction) plus four native tests (G51 roles, G12 judges, G16 operator rules, G38 loop-densest week), each with dated predictions. The correction sensor was validated blind (the a priori lexical marker failed and was replaced, Amendment 1). Synthetic validation on real structures found and fixed a targeting confound (Amendment 2). confirm.py is written and dry-run; it needs a small Jev pass that could not run (API credit). Not done: a high-recall sensor (so the immune test is underpowered), H16 TS3/TS4, any NE event study.",
-  "faithfulness": "The friction model is refuted in reverse with adequate power: correctors receive warmer replies (meta rho -0.24, p 0.04), with no reply-level friction. The immune model is not testable at the sensor's recall (power 0.08-0.21 at a modest effect); point estimates are null or negative. Only descriptive HH210 coverage and the generic address effect hold. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0.",
+  "complete": "Round 1 done in two layers: replication on all 35 non-holdout periods (27 scorable for friction) plus four native tests (G51 roles, G12 judges, G16 operator rules, G38 loop-densest week), each with dated predictions. The correction sensor was validated blind (the a priori lexical marker failed and was replaced, Amendment 1). Synthetic validation on real structures found and fixed a targeting confound (Amendment 2). confirm.py is written and dry-run; it needs a small Jev pass that could not run (API credit). Not done: a high-recall sensor (so the immune test is underpowered), H16 TS3/TS4, any NE event study. Round 1c: stance v2.1 sensors (correct/decline classes, validated disagreement flag), label-noise null, synthetic re-validation with an amendment (A1c) before the real run, 51 estimates rows.",
+  "faithfulness": "The friction model is refuted in reverse with adequate power: correctors receive warmer replies (meta rho -0.24, p 0.04), with no reply-level friction. The immune model is not testable at the sensor's recall (power 0.08-0.21 at a modest effect); point estimates are null or negative. Only descriptive HH210 coverage and the generic address effect hold. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0. 1c: friction reversal holds in the validated channel (rho -0.16, p 0.047); the blocked-spell immune test is now powered (0.96 at 1 logit) and null; loops remain underpowered.",
   "usefulness": "An operator learns two things: peer correction carries no social cost here (correctors are treated well), and the swarm almost never corrects a stuck agent (0.65% of loops; operator rules not peer-enforced), so error correction must be supplied from outside. The one lever (address a looping agent: +0.05 escape per message) is small, partly mechanical and echoes H29/H16."
  },
- "one_line": "Correctors get warmer replies (ρ −0.24, 27 periods); corrections reach 0.65% of loop episodes with no detectable effect; being addressed raises escape by 5 points.",
+ "one_line": "Correctors draw less disagreement, not more (v2.1: ρ −0.16); read corrections do not end blocked spells (Δ +0.007, powered); being addressed raises loop escape by 5 points.",
  "models": [
   {
    "model": "04-semantic-information",
    "role": "primary",
-   "outcome": "untested",
-   "note": "Viability value of corrections unmeasurable at sensor recall 0.1"
+   "outcome": "refuted",
+   "note": "Viability value of corrections ~0 in blocked spells (powered, v2.1); loops underpowered"
   },
   {
    "model": "06-neutral-cooperative-dynamics",
@@ -32,85 +32,57 @@
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
  "v2": {
-  "claim": "Peer correction carries no stance cost: agents who correct more receive no colder, if anything warmer, replies (random-effects rho -0.24 [-0.44, -0.02] over 27 periods; replies to a correction no colder than to the same agent's other messages), and corrections almost never reach looping agents (0.65% of loop episodes vs 35% that receive any directed message).",
-  "original_verdict": "refuted (friction)",
-  "credence": 0.56,
+  "claim": "A read correction does not end blocked spells (Δ +0.007 [−0.053, +0.070], 337 treated windows, power 0.96), and agents who correct or decline more receive slightly less validated disagreement, the reverse of friction (ρ −0.16, p 0.047, 26 periods)",
+  "scope": "26 periods; G51",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.57,
   "ladder": [
    {
-    "factor": "base: pre-registered primary (P1, P2, P8 dated before any outcome; sensor rule fixed in Amendment 1 before any outcome statistic; rho <= 0 was the stated falsifier)",
-    "x": 0.4,
-    "evidence": "card §Prediction, Amendment 1"
+    "factor": "base (pre)",
+    "x": 0.4
    },
    {
-    "factor": "calibrated null (synthetic on real reply graphs with measured label noise: P1 size 0.02-0.07, meta power > 0.9 at rho 0.4)",
-    "x": 2,
-    "evidence": "card §Synthetic validation S1; §Verdict"
-   },
-   {
-    "factor": "partial replication (17/27 periods negative; tau^2 0.17)",
+    "factor": "synthetic recalibration before data (A1c)",
     "x": 1.5,
-    "evidence": "card §Outcome vs prediction P1"
+    "evidence": "card §Round 1c"
    },
    {
-    "factor": "penalty: correction sensor recall about 0.1 (c_j a scaled rate; agent independence unchecked)",
-    "x": 0.8,
-    "evidence": "card §Caveats 1"
+    "factor": "powered null (0.96 at 1 logit)",
+    "x": 1.3,
+    "evidence": "card §Round 1c"
    },
    {
-    "factor": "penalty: stance labels noisy; warmth may be a labeller habit (one blind rater)",
+    "factor": "replication across 26 periods",
+    "x": 1.3,
+    "evidence": "card §Round 1c"
+   },
+   {
+    "factor": "penalty: the correction sensor is about half over-calls",
     "x": 0.8,
-    "evidence": "card §Caveats 2-3"
+    "evidence": "stance_v2.md"
    }
   ],
   "mechanism_level": "M0",
-  "fragile": false,
-  "value_if_true": 2.0,
-  "decision": "operator / scaffold builder: do not rely on peers to correct a stuck agent; supply correction from outside the peer network; enforcers need no protection",
+  "fragile": true,
+  "value_if_true": 1.0,
+  "decision": "don't count on peer corrections to unstick blocked agents",
   "magnitude": "small",
-  "generality": "read-out-gated swarms (0); no readiness (needs an LLM correction labeller)",
-  "expected_usefulness": 1.12,
-  "scientific_value": 2.5,
-  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
-  "rated_at": "2026-10-04",
-  "raters": [
-   {
-    "rater": "coordinator",
-    "credence": 0.46,
-    "value_if_true": 1.5,
-    "mechanism_level": "M0",
-    "fragile": false,
-    "scientific_value": 2
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Scope: 27 non-holdout periods, DQ2 correction subtype. Peer correction is not an immune response: corrections reach <1% of restatement loops and show no detectable effect on escape, correctors draw no colder (if anything warmer) replies, and any addressed message raises per-step loop escape by ~5 points.",
-    "credence": 0.39,
-    "value_if_true": 3.0,
-    "mechanism_level": "M0",
-    "fragile": false,
-    "scientific_value": 2.5,
-    "ladder": [
-     {
-      "factor": "calibrated null: synthetic on real reply graphs and loop structures (friction tests calibrated)",
-      "x": 1.5,
-      "evidence": "summary hobsb"
-     },
-     {
-      "factor": "penalty: correction sensor recall ~0.1 (precision 0.93, one rater)",
-      "x": 0.8,
-      "evidence": "summary hcaveats"
-     },
-     {
-      "factor": "penalty: addressed effect may be mechanical (an answer is not a restatement)",
-      "x": 0.8,
-      "evidence": "summary hcaveats"
-     }
-    ]
-   }
-  ],
-  "adjudicate": false,
-  "scope": "27 non-holdout periods, DQ2 confident correction/decline subtype (precision 0.93, recall about 0.1); the immune contrast is underpowered and not claimed",
-  "direction": "negative",
-  "adjudication_note": "V judgement driven by the claim: the blind rater's claim included the 'address an agent to break its loop' lever (+5 points per step) and scored V 3, while the coordinator's claim was the descriptive friction and coverage result (V 1.5). Ruling: the address effect is a pre-registered descriptive with an open mechanical confound and is absent in #38 and #51, and the immune contrast is an unpowered negative, so both stay out; the scored claim is the powered friction test plus coverage, at primary base since rho <= 0 was the pre-stated falsifier, with V small for the external-correction decision."
- }
+  "generality": "LLM swarms",
+  "expected_usefulness": 0.57,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H55 round 1c); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "Peer correction carries no stance cost: agents who correct more receive no colder, if anything warmer, replies (random-effects rho -0.24 [-0.44, -0.02] over 27 periods; replies to a correction no colder than to the same agent's other messages), and corrections almost never reach looping agents (0.65% of loop episodes vs 35% that receive any directed message).",
+   "credence": 0.56,
+   "fragile": false,
+   "value_if_true": 2.0,
+   "expected_usefulness": 1.12,
+   "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
+   "rated_at": "2026-10-04"
+  }
+ ]
 }

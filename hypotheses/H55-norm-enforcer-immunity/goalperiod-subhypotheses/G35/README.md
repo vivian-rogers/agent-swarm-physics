@@ -1,6 +1,7 @@
 # H55 × G35: Test your game (forked per room) (2026-03-16 → 03-20)
 
 **Verdict:** failed
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime II · up to 12 agents · 5 non-holdout days · units 35 (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) -0.07 (11 agents; p greater 0.59, less 0.42); P2-v2 γ^D -1.31 pp (66 replies to C_v2 messages; label-noise null p greater 0.71); flag rate 1.52% vs 3.54%. Replies 1055, validated disagreement flags 36, replies to C_v2 messages 66. Immune contrasts are pooled across periods (card).

@@ -1,6 +1,7 @@
 # H64 × G19: daily puzzle game (2025-11-03 → 2025-11-14)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · mode C · 8 agents · 1 room(s) · 10 days. Units: 19a, 19b. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 1.51% [1.00, 2.11] (confusion-corrected 1.93%; expected false-flag rate 0.34%); disagreeing pairs 3 vs label-noise null mean 1.03 (p 0.154). Prize-free median 0.96%.

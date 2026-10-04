@@ -1,6 +1,7 @@
 # H55 × G12: debate tournament (2025-09-01 → 2025-09-05)
 
 **Verdict:** mixed
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** native
 **Period:** regime I · mode O/M · 7 agents · one room · 5 days; units 12a (debates, 09-01 → 09-04) and 12b (NE04, 09-05, no debates).
 
@@ -32,3 +33,8 @@ Ten debates, each with a judge assigned by the operator protocol (DQ6 ground tru
 | --- | --- | --- |
 | C adequacy | 1 | whole-window judge contrast beats the sign test; the primary window does not |
 | G ground truth | 1 | judges (ground truth) are treated less warmly than teammates in 9/10 debates (whole window) |
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) -0.25 (7 agents; p greater 0.73, less 0.29); P2-v2 γ^D -3.01 pp (62 replies to C_v2 messages; label-noise null p greater 0.95); flag rate 0.00% vs 3.52%. Replies 1311, validated disagreement flags 44, replies to C_v2 messages 62. Immune contrasts are pooled across periods (card).

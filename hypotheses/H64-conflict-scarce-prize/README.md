@@ -5,6 +5,7 @@
 - **Competition raises position-opposition period-wide.** All four competition periods (#6, #23, #26, #27) sit above the prize-free median of confident position-opposition (0.94% of replies; theirs 1.1–3.4%; Mann–Whitney p 0.022; 4/4 also within regime I, post hoc). But the rival-specific contrast is not significant in #23 chess (−0.13, p 0.31) or #26 (+0.25, 14 replies): the competition effect looks like a contest-wide field, not antagonism between rivals.
 - **No antagonism without a prize:** 25/26 prize-free units and 11/12 #51 units show no excess antagonistic pairs against the calibrated agent-field null; #51's rate (1.06%) is inside the prize-free range. The cluster-robust pair count has low power (it finds no pairs in #12 either).
 - Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0. `analysis/confirm.py` (#29, #34 vote-outs, #51 tail) frozen and dry-run, **not run**.
+- **Round 1c (stance v2.1, 2026-10-04, section below): narrowed.** With the validated disagreement flag, the #12 switch-off is sharper (33/75 opponent replies flagged while open, 0/64 after the verdict; Δ +0.31 [+0.16, +0.52], p 0.0002, label-noise null p 0.0015). The competition contrast is killed (2/4 above the prize-free median, p 0.39): it rested on the unvalidated position subtype. Verdict: supported → narrowed ("settlement switches assigned conflict off").
 **Fields:** sociophysics, stat mech
 **Question served:** **Q3** (is there collective order beyond fields?): does antiferromagnetic stance order exist anywhere outside an assigned protocol? **Q2** second: if antagonism switches on and off with the state of a prize, it is a field (an incentive), not a coupling.
 **Literature:** none of the notes in `literature/` covers contests or signed networks. Cited from memory (†, not in `literature/`): Tullock, "Efficient rent seeking" (1980)† (contests for a single prize); Heider, *J. Psychol.* 21, 107 (1946)† and Cartwright & Harary, *Psychol. Rev.* 63, 277 (1956)† (structural balance); Sherif et al., *The Robbers Cave Experiment* (1961)† (inter-group hostility appears under competition for scarce rewards and fades under superordinate goals); Mattis, *Phys. Lett. A* 56, 421 (1976)† (a gauge-transformed ferromagnet as a two-camp antiferromagnet).
@@ -243,6 +244,113 @@ Guards: refuses without `--confirm --i-understand-this-uses-the-locked-holdout` 
 - **C3:** #34 vote-outs: replies involving the agent voted out are more negative in the 2 h before its move to #voted-out than in the preceding 30 h, beyond other replies (accused-label permutation p < 0.05). Credence 0.3.
 - **C4:** r_p(#51 tail) < 1.35% and at most half of the tail units show excess pairs. Credence 0.6.
 - **Decision:** "competition raises position-opposition" confirmed if C1 and C2 pass; the settlement switch-off generalizes beyond debates if C3 passes.
+
+## Round 1c (stance v2.1, 2026-10-04)
+
+### Pre-registration (written 2026-10-04 22:12 UTC, before any round-1c statistic)
+**Seen before writing:** round 1 above; `infra/data-quality/stance_v2.md` (all rounds, Amendments 1–2, the nudge-reply caveat); the population class counts of `reply_stance_v2` (638 `disagree_validated_agent` flags in 61,533 pairs; hard classes as in H22's round-1c note); the confirm2 confusion matrix; structural tables (#12 ground-truth phases, judges and verdict instants; the context-ledger schema). No v2 statistic of any period, debate, window or pair was computed.
+
+**Why a round 1c.** Round 1's primary native outcome was DQ2's soft stance, and P1 rested on DQ2's unvalidated `opp_type = position` subtype (κ 0.11; DQ10 finds 6 of 19 position pairs are disagreement). H64-R1 asked for a validated conflict sensor. DQ10 now ships one. Round 1c re-tests the clauses that depend on it.
+
+**Sensor.** D_e = `disagree_validated_agent` on H64's reply set (`replies.parquet`, joined to `reply_stance_v2` on (B, A); agent → agent, p_reply ≥ 0.5, non-holdout). Precision π 0.61–0.67 (lower bound 0.54), recall r ≈ 0.6. Secondary: s2 = p_agree − p_disagree. Sign convention for D: **positive contrast = more disagreement** (round 1's soft stance had negative = antagonism).
+
+**Label-noise null (NG).** As in H22's round-1c note:
+- truth D*_e from a two-way logistic agent-field model plus the design's fixed effects, with no relation or prize term, μ shifted to the implied true count π·ΣD/r, block shocks σ_u ∈ {0, 0.5, 1};
+- observation with recall r and a **differential false-positive rate** f_e ∝ Σ_k φ_k q_k(e) (the reply's non-disagree class profile times the confirm2 false-flag propensity of each class), mean set by π and r;
+- π ~ U[0.54, 0.80] and r ~ U[0.50, 0.75] per replicate.
+- Synthetic validation first on the real #12 and #23 reply structures: size (no planted effect) and power at planted true odds ratios 2, 3, 5 for the open-rival cell. A test whose NG size exceeds 0.07 is descriptive only.
+- **Corrected rates and contrasts:** d* = (d − f̄)/(r − f̄) per period, and T* = (T − T_f)/(r − f̄) for contrasts, where T_f is the contrast computed on f_e.
+
+**Re-tested predictions and kill rules.**
+
+| # | Prediction [credence] | Kill rule |
+| --- | --- | --- |
+| N1a-v2 (#12, primary) | γ^D_open > 0: opponents' replies are flagged more often than teammates' while the prize is open; team-permutation p < 0.01 and cluster-bootstrap CI above 0 [0.75] | N1a-v2 fails if p ≥ 0.05 |
+| N1b-v2 (#12, primary) | Δ^D = γ_open − γ_set > 0 with permutation p < 0.05; γ_set's CI includes 0; abs(γ_set) < ½ abs(γ_open) (A1 rule) [0.55] | **"Settlement switches assigned conflict off" is killed** if N1a-v2 passes and Δ^D ≤ 0 or γ_set ≥ ½ γ_open (disagreement outlives the verdict). If N1a-v2 fails, the clause is "inconclusive in the validated channel" |
+| N1c-v2, N1d-v2 | no heat on teammates (φ^D CI ∋ 0); no loser resentment (CI ∋ 0) [0.6 each] | as round 1 |
+| N1e-v2 (new, read timing) | the switch-off follows each debater's **first read** of the verdict, not its posting: replies posted after the verdict but before their author's call contains it keep the open contrast [0.3] | **untestable** if fewer than 15 opponent replies fall in the posted-but-unread interval (expected: likely untestable, because calls are frequent) |
+| P1-v2 (replication, primary) | the four competition periods (#6, #23, #26, #27) have a higher validated disagreement rate d_p than the prize-free periods: ≥ 3 of 4 above the prize-free median and Mann–Whitney one-sided p < 0.10, **on both** raw d_p and corrected d*_p [0.30] | **"Competition raises disagreement" is killed** if ≤ 2 of 4 are above the median or p ≥ 0.10 on raw d_p; it is **downgraded to a labeller-composition artifact** if it passes on raw d_p but fails on d*_p |
+| P2-v2 | no excess of significantly disagreeing pairs (cluster-robust, BH 0.1, binary D) against NG in ≥ 80% of prize-free units [0.6] | fails if excess in > 20% |
+| P3-v2 | #12 has the highest d_p of all eligible periods [0.5] | descriptive |
+| P4-v2 | #51 d_p below the prize-free 75th percentile [0.6] | as round 1 |
+| N2a-v2, N3a-v2 | #26 runoff rivals and #23 opponents: γ^D_open > 0, permutation p < 0.05 [0.15 each] | low-power natives; "inconclusive" unless p < 0.05 |
+
+**Verdict rule (1c):** round 1's rule with the v2 outcomes. *Supported* if N1b-v2 passes and (P1-v2 passes or N2a/N3a-v2 passes). *Narrowed* ("settlement switches off assigned conflict") if N1b-v2 passes and P1-v2 does not. *Failed* if N1b-v2 is killed or P2-v2 fails.
+
+**Unit-of-analysis exception (named):** (c) the transition is the object in the natives, as in round 1. Replication stays one period, one estimate.
+
+### Synthetic validation (2026-10-04, before the real-data run)
+`analysis/r1c.py synth` → `data/processed/H64-conflict-scarce-prize/r1c/synth.json`. Real #12 reply structure (271 debater replies). The world has speaker, target and window fields, differential false positives and a planted true odds ratio on open opponent replies. Team permutation (500) per replicate, 200 replicates.
+- **Size (OR 1):** N1a rule (p < 0.01) 0.03; N1b core 0.025. Both are within the 0.07 limit.
+- **The confusion matters at p < 0.05:** a team-permutation test at 0.05 rejects in 12.5% of no-effect worlds. The mean false contrast is +3 pp, because opponent replies look more like corrections and status reports. So the label-noise null p and the corrected contrast are reported next to the permutation p.
+- **Power (N1a):** 0.17 / 0.28 / 0.57 at OR 2 / 3 / 5. The validated flag is a weak instrument for a 271-reply native unless the effect is large.
+- **Excess disagreeing pairs** (cluster-robust count, binary D) against a refitted label-noise null: size 0.00–0.03 on the #13, #26, #38 and #41 structures.
+
+### Results (2026-10-04, non-holdout)
+*Code: `analysis/stance_noise.py`, `analysis/r1c.py` (`build`, `synth`, `natives`, `replication`), `analysis/r1c_rows.py`. Data: `data/processed/H64-conflict-scarce-prize/r1c/` (joined tables, `synth.json`, `natives.json`, `replication_units.json`, `replication_summary.json`). 138 rows in `per_period_estimates` (tag "round 1c, stance v2.1").*
+
+**#12 debates (native, primary).** The validated flag shows the switch in raw counts:
+- during speeches, **33 of 75 opponent replies** are flagged, and **0 of 60 teammate replies**;
+- before the speeches, 1 of 12 opponent replies and 0 of 27 teammate replies;
+- **after the verdict, 0 of 64 opponent replies** and 0 of 33 teammate replies.
+
+On the D scale (positive = disagreement), with speaker, target and window fixed effects:
+- **Open contrast** γ_open **+0.34 [+0.21, +0.51]**: team permutation p 0.0002, label-noise null p 0.0005. Confusion-corrected: +0.59 in true disagreement probability.
+- **After the verdict** γ_set +0.02 [−0.06, +0.12].
+- **Switch-off** **Δ +0.31 [+0.16, +0.52]**: permutation p 0.0002, label-noise null p 0.0015.
+- **Heat on teammates** φ −0.0001 [−0.10, +0.15].
+- **Resentment:** no flag at all after the verdict, so losers − winners is 0 (degenerate).
+- **Soft sign s2 (secondary):** γ_open −0.57 (p 0.0002), Δ −0.35 (p 0.046).
+
+**Read timing (N1e):** every one of the 97 post-verdict replies was posted after its author's call already held the verdict. The median lag from posting the verdict to the debater's first reading call is 20 s. N1e is **untestable**, as expected. The switch-off is complete by the first reply after reading.
+
+**#26 and #23 (low-power natives).**
+- **#26:** runoff rivals while open +0.008 (14 replies, 0 flags; permutation p 0.20).
+- **#23:** chess opponents in their open games −0.025 (44 replies, 0 flags; p 0.76).
+- Neither passes. Both are inconclusive, as predicted.
+
+**Replication.**
+- **P1-v2:** the validated disagreement rate is 0.32% (#6), 1.29% (#23), 0.78% (#26) and 1.62% (#27). The prize-free median is 0.96%, so **2 of 4** competition periods are above it (Mann–Whitney p 0.39). The confusion-corrected rates give the same order: 2/4, p 0.56. So do both corners of the precision–recall box (p 0.49–0.58).
+- **P2-v2:** 23 of 26 prize-free periods show no excess of disagreeing pairs against the label-noise null; #16, #25 and #44 do (p 0.015–0.035). Among the #51 units, 1 of 12 does (51d, p 0.005).
+- **P3-v2:** #12 is second (3.36%), just behind #35 (3.41%); #40 (2.84%) is third.
+- **P4-v2:** #51 is 0.85% [0.69, 1.05], below the prize-free 75th percentile (1.51%).
+- **Confusion correction is not neutral for every period.** In #2, #6, #8 and #38, the expected false-flag rate (0.31–0.53%) is as large as the observed rate. The corrected rate there is ≤ 0, which marks the floor of the instrument.
+
+**Old → new.**
+
+| Clause | Round 1 (DQ2) | Round 1c (v2.1 flag D) | Change |
+| --- | --- | --- | --- |
+| N1a: #12 opponents antagonistic while open | soft −0.78 [−1.10, −0.56], p 0.0002 | D +0.34 [+0.21, +0.51], p 0.0002; label-noise null p 0.0005 | pass → **pass** |
+| N1b: switch-off at the verdict | Δ −0.69, p 0.001; γ_set −0.09 | Δ +0.31 [+0.16, +0.52], p 0.0002; γ_set +0.02; 0 of 64 flags after the verdict | pass → **pass** (sharper) |
+| N1c: no heat on teammates | +0.00, CI ∋ 0 | −0.0001, CI ∋ 0; 0 teammate flags in any phase | pass → pass |
+| N1d: no loser resentment | +0.19, CI ∋ 0 | no flags after the verdict (degenerate) | pass → pass (trivially) |
+| N1e: switch-off follows reading (new) | — | untestable (0 unread post-verdict replies; read lag 20 s) | new: untestable |
+| P1: competition raises disagreement | position-opposition 4/4 above median, p 0.022 (unvalidated `opp_type = position`) | validated d_p 2/4 above median, p 0.39; corrected 2/4, p 0.56 | pass → **killed** (pre-registered kill rule) |
+| P2: no antagonism without a prize | 25/26 prize-free with no excess | 23/26 | pass → pass |
+| P3: #12 highest | third (#40, #23 higher) | second (#35 higher by 0.05 pp) | fail → fail |
+| P4: #51 like prize-free | 1.06% < 1.35% | 0.85% < 1.51% | pass → pass |
+| N2a: #26 runoff | +0.25 soft, p 0.86 | +0.008, 0 flags, p 0.20 | inconclusive → inconclusive |
+| N3a: #23 chess | −0.13 soft, p 0.31 | −0.025, 0 flags, p 0.76 | inconclusive → inconclusive |
+
+**Verdict (1c): supported → narrowed** ("settlement switches assigned conflict off"), by the card's rule: N1b-v2 passes, P1-v2 fails, N2a and N3a do not pass.
+- **Round 1's competition contrast does not survive the validated sensor.** It rested on DQ2's `opp_type = position`, which DQ10 found to be disagreement in only 6 of 19 pairs. Read it as a labeller-composition effect, not an incentive effect.
+- **The #12 switch-off is sharper in the validated channel.** Opponents' replies are flagged in 44% of speech-phase replies and in none after the verdict.
+- **Period folders:** `**Verdict (1c):**` lines were added to all 32 folders.
+  - Competition periods that change: #6 and #26 fall below the median (failed); #23 and #27 stay above it.
+  - Prize-free periods that change: #16, #25 and #44 now show excess pairs (failed); #18 no longer does (supported).
+
+**Physics reading.** The Mattis picture of round 1 holds and sharpens. The staggered field of the open debate induces antiferromagnetic replies on opponent bonds only (≈ 44% flagged vs 0% on teammate bonds). The induced order relaxes to zero within the first post-verdict reply, which always follows a read of the verdict. No uniform "heat" field and no remanence appear. Competition without assigned sides shows no measurable field in the validated channel.
+
+**Scorecard after 1c:** A 1 → 1, now with a validated sensor (precision 0.61–0.67), though recall (≈ 0.6) and power remain limits. D 1 → 1: the switch-off is still predicted, not fitted; P1 now fails. H 1 → 1: R-heat and R-relation are rejected in #12; R-protocol is no longer rejected at period level. The other axes are unchanged: **A1 B1 C1 D1 E1 F1 G1 H1 I0**.
+
+**Proposed re-freeze (needs Vivian's sign-off; `analysis/confirm.py` is not edited).**
+- **Why:** C1, C2 and C4 use r_p, the DQ2 position subtype, which DQ10 found mostly not disagreement.
+- **Proposal:** replace r_p by the validated rate d_p. Read it from `data/processed/holdout_labels/reply_stance_v2_holdout.parquet`, deriving `disagree_validated_agent` as stance2 = disagree, confidence ≥ 0.6 and a_kind ≠ 2. The threshold moves from 0.94% to the v2 prize-free median 0.96%.
+- **Credences:** about 0.3 for C1 and C2 after 1c, since P1 is killed on non-holdout data.
+- **C3** (#34 vote-outs) would switch to D, with the label-noise null p reported next to the permutation p.
+- The held-out labels were not opened.
+
+**Claim that stands:** In the #12 judged debates, the validated disagreement flag marks 33 of 75 opponent replies and 0 of 60 teammate replies while the prize is open. It marks 0 of 64 opponent replies after the verdict (switch-off Δ +0.31 [+0.16, +0.52], team permutation p 0.0002, label-noise null p 0.0015). The verdict is read within about 20 s, and no post-verdict reply precedes its author's read. *Exclusions:* the competition contrast (P1) is killed in the validated channel; the election and chess natives are inconclusive (0 flags in 14 and 44 rival replies); read timing (N1e) is untestable; resentment is degenerate (no flags after the verdict).
 
 ## Round 2 redirects
 **What the direction is really after:** what in an incentive structure makes LLM agents disagree, and how fast the disagreement relaxes when the incentive is removed.

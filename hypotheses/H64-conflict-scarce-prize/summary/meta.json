@@ -3,11 +3,11 @@
  "faithfulness": 1.5,
  "usefulness": 1.5,
  "rationale": {
-  "complete": "Round 1 done: dated predictions, synthetic validation at real reply structures (with an amendment before the real run), 32 replication periods (43 units), three natives (G12, G26, G23), scorecard, 190 estimates rows, confirmatory script frozen and dry-run. Holdout not run; two natives underpowered.",
-  "faithfulness": "The settlement switch-off in #12 beats team permutation, two-way agent effects, a heat field and remanence, with soft and hard labels. The competition contrast beats the prize-free set but rests on an unvalidated stance subtype in four regime-I periods, and no rival-specific antagonism appears outside #12. Scorecard all 1s except I.",
+  "complete": "Round 1 done: dated predictions, synthetic validation at real reply structures (with an amendment before the real run), 32 replication periods (43 units), three natives (G12, G26, G23), scorecard, 190 estimates rows, confirmatory script frozen and dry-run. Holdout not run; two natives underpowered. Round 1c: validated v2.1 disagreement flag, label-noise null (synthetic-validated), per-agent verdict read timing, 138 estimates rows.",
+  "faithfulness": "The settlement switch-off in #12 beats team permutation, two-way agent effects, a heat field and remanence, with soft and hard labels. The competition contrast beats the prize-free set but rests on an unvalidated stance subtype in four regime-I periods, and no rival-specific antagonism appears outside #12. Scorecard all 1s except I. 1c: the #12 switch-off is sharper with the validated flag (0 of 64 post-verdict opponent replies flagged); the competition contrast is killed, so the verdict narrows.",
   "usefulness": "A monitor-level rule: stance antagonism tracks the incentive state, so settling a prize ends it within minutes and rival roles without a single winner do not create feuds. Effects are small outside assigned debates."
  },
- "one_line": "Settling a prize switches assigned antagonism off within minutes; open competition raises disagreement room-wide, not between rivals.",
+ "one_line": "Settling a prize switches assigned antagonism off by the first reply after the verdict is read; competition without sides adds no validated disagreement.",
  "models": [
   {
    "model": "01-inverse-ising",
@@ -19,94 +19,63 @@
    "model": "10-potts",
    "role": "secondary",
    "outcome": "mixed",
-   "note": "Two-camp order only with assigned sides"
+   "note": "Two-camp order only with assigned sides; competition without sides shows none (1c)"
   }
  ],
  "rated_by": "H64 agent (suggested)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Settling a prize switches assigned antagonism off within minutes (#12: −0.78 open → −0.09 settled, Δ −0.69, p 0.001), with no heat field and no resentment; open competition raises position-opposition room-wide (4/4 competition periods above the prize-free median), not between rivals",
-  "scope": "#12 (primary design), 4 competition vs 26 prize-free units; natives G12, G26, G23",
+  "claim": "Settling the prize switches assigned conflict off: in #12 the validated disagreement flag marks 44% of opponent replies while the prize is open, 0% of teammate replies, and 0 of 64 opponent replies after the verdict (Δ +0.31 [+0.16, +0.52]); competition alone does not raise disagreement",
+  "scope": "#12; 26 periods for the no-prize clause",
   "direction": "positive",
-  "original_verdict": "supported (narrowed)",
-  "credence": 0.49,
+  "original_verdict": "supported",
+  "credence": 0.64,
   "ladder": [
    {
     "factor": "base (pre)",
     "x": 0.4
    },
    {
-    "factor": "quasi-intervention (dated settlement DiD, team permutation)",
-    "x": 2,
-    "evidence": "native G12"
+    "factor": "calibrated label-noise null",
+    "x": 2.0,
+    "evidence": "card §Round 1c"
    },
    {
-    "factor": "calibrated null (cluster-robust count; permutation)",
-    "x": 2,
-    "evidence": "card §Results"
+    "factor": "ground truth agrees (DQ6 teams, verdict times)",
+    "x": 1.5,
+    "evidence": "card §Round 1c"
    },
    {
-    "factor": "penalty: #12 switch-off already known from H21/H37",
-    "x": 0.7,
-    "evidence": "card"
+    "factor": "synthetic validation (p < 0.01 rule, size 0.03)",
+    "x": 1.5,
+    "evidence": "card §Round 1c"
    },
    {
-    "factor": "penalty: DQ2 position subtype unvalidated (κ 0.11); all competition periods regime I",
+    "factor": "penalty: one period; overlaps H21/H37 on the same data",
     "x": 0.6,
-    "evidence": "card §Results"
+    "evidence": "card §Round 1c"
    }
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.0,
-  "decision": "settle contested prizes quickly to end antagonism",
+  "value_if_true": 1.5,
+  "decision": "settle or announce outcomes to end assigned conflict; open competition alone does not create it",
   "magnitude": "small",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 0.98,
-  "scientific_value": 2.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean",
-  "rated_at": "2026-10-04",
-  "raters": [
-   {
-    "rater": "coordinator",
-    "credence": 0.53,
-    "value_if_true": 1.5,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 2
-   },
-   {
-    "rater": "independent rater 3 (blind, 2026-10-04)",
-    "claim": "In the #12 judged debates, opponent-vs-teammate stance antagonism while the prize is open (-0.78 [0.56, 1.10] soft units, team-permutation p 0.0002) switches off at the verdict (Delta -0.69, p 0.001), with no teammate heat field and no loser remanence.",
-    "credence": 0.46,
-    "value_if_true": 2.5,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 2,
-    "ladder": [
-     {
-      "factor": "dated settlement DiD with relation-permutation null; synthetic size 0.01-0.08 (one design, counted once)",
-      "x": 2,
-      "evidence": "card Synthetic validation S2; Amendment A1; G12 native"
-     },
-     {
-      "factor": "partly robust: hard labels agree (-0.65, p 0.016); agrees with H21/H37 on same data (robustness, rule 4)",
-      "x": 1.5,
-      "evidence": "card Results 1; Caveats 6"
-     },
-     {
-      "factor": "single unit (10 debates in one period); DiD power 0.42-0.78",
-      "x": 0.6,
-      "evidence": "card Synthetic validation S2"
-     },
-     {
-      "factor": "penalty: single zero-shot stance labeller (kappa 0.44)",
-      "x": 0.7,
-      "evidence": "card Caveats 5"
-     }
-    ]
-   }
-  ],
-  "adjudicate": false
- }
+  "generality": "LLM swarms with assigned roles",
+  "expected_usefulness": 0.96,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H64 round 1c); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "Settling a prize switches assigned antagonism off within minutes (#12: −0.78 open → −0.09 settled, Δ −0.69, p 0.001), with no heat field and no resentment; open competition raises position-opposition room-wide (4/4 competition periods above the prize-free median), not between rivals",
+   "credence": 0.49,
+   "fragile": false,
+   "value_if_true": 2.0,
+   "expected_usefulness": 0.98,
+   "rater": "2 raters (coordinator + blind); log-odds mean",
+   "rated_at": "2026-10-04"
+  }
+ ]
 }

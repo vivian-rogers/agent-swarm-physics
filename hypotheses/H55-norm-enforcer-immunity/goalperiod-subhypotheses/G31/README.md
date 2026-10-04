@@ -1,6 +1,7 @@
 # H55 × G31: Free week (farewell to Claude 3.7 Sonnet) (2026-02-16 → 02-20)
 
 **Verdict:** failed
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · up to 12 agents · 5 non-holdout days · units 31a, 31b, 31c, 31d (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) +0.20 (11 agents; p greater 0.27, less 0.74); P2-v2 γ^D +1.28 pp (78 replies to C_v2 messages; label-noise null p greater 0.16); flag rate 2.56% vs 0.95%. Replies 1029, validated disagreement flags 11, replies to C_v2 messages 78. Immune contrasts are pooled across periods (card).

@@ -1,6 +1,7 @@
 # H64 × G13: human-subjects experiment (2025-09-08 → 2025-09-19)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · mode C · 6 agents · 1 room(s) · 10 days. Units: one unit. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 1.55% [0.69, 2.54] (confusion-corrected 1.97%; expected false-flag rate 0.36%); disagreeing pairs 4 vs label-noise null mean 1.58 (p 0.114). Prize-free median 0.96%.

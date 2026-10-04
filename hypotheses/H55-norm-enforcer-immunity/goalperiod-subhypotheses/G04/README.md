@@ -1,6 +1,7 @@
 # H55 × G04: Story + 100-person in-person event (2025-05-15 → 06-18)
 
 **Verdict:** failed
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · up to 4 agents · 26 non-holdout days · units 4a, 4b, 4c, 4d (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) -0.09 (6 agents; p greater 0.59, less 0.47); P2-v2 γ^D +0.21 pp (133 replies to C_v2 messages; label-noise null p greater 0.40); flag rate 0.75% vs 0.34%. Replies 3107, validated disagreement flags 11, replies to C_v2 messages 133. Immune contrasts are pooled across periods (card).

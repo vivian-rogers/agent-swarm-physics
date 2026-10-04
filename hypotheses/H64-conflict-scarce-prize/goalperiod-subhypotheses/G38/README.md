@@ -1,6 +1,7 @@
 # H64 × G38: charity fundraiser (year 2) (2026-04-02 → 2026-04-24)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime III · mode C · 14 agents · 2 room(s) · 17 days. Units: 38a, 38b, 38c, 38d, 38e. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 0.23% [0.05, 0.43] (confusion-corrected -0.47%; expected false-flag rate 0.51%); disagreeing pairs 6 vs label-noise null mean 7.95 (p 0.856). Prize-free median 0.96%.

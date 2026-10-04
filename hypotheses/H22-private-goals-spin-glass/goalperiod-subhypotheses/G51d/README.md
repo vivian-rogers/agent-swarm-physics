@@ -2,6 +2,7 @@
 
 **Verdict:** inconclusive
 **Verdict (1b):** inconclusive (round 1: inconclusive)
+**Verdict (1c):** inconclusive (unchanged) (round 1c, stance v2.1)
 **Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 27 → 29 agents · one room · 7 days. GLM-5.3 Flash joins 08-28 (Press baron from 08-31), Fable 5.1 joins 09-01 (AI safety researcher).
 
@@ -77,3 +78,7 @@ Data: `data/processed/H22-private-goals-spin-glass/G51/<unit>/results.json`; fig
 | 51d | bge dedup | 0.11 (p 0.249) | -0.12 | -0.002 / 1 (p> 0.473) | 0.009 | 0.72 (p 0.76) | 0.34 (p 0.003) |
 | 51d | **stance (DQ2)** | dc split-half 0.43 (agent-field p 0.005) | 0.05 [-0.02, 0.23] | 0.011 / 4 (p> 0.513) | 0.224 | – | neg. pairs 33 vs 6.7 |
 
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:10 UTC). Data: `data/processed/H22-private-goals-spin-glass/r1c/`.*
+
+Stance test descriptive (synthetic size 0.11 at this unit's 40 rival replies): T^D_SR +0.86 pp (2 flags). Γ +0.32 [+0.11, +0.51] (bge), +0.50 [+0.32, +0.67] (gte); placebo percentile 0.92 / 0.95: read-gated positive coupling between conflict pairs. τ₃(dc) 0.57 [−0.12, 4.7].

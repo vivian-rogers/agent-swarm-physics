@@ -1,6 +1,7 @@
 # H64 × G26: elect a leader who sets the goal (2026-01-05 → 2026-01-09)
 
 **Verdict:** mixed
+**Verdict (1c):** mixed (round 1c, stance v2.1)
 **Role:** native
 **Period:** regime I · mode C · 10 agents · 1 room(s) · 5 days. Units: one unit. Prize class (pre-registered): **competition**.
 
@@ -44,3 +45,8 @@ N2a not passed (exact permutation over 116 rival sets).
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`, `natives/G26.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class competition; validated disagreement rate d_p 0.78% [0.18, 1.58] (confusion-corrected 0.67%; expected false-flag rate 0.38%); disagreeing pairs 8 vs label-noise null mean 6.25 (p 0.368). Prize-free median 0.96%. **Native:** runoff rivals while open +0.008 (14 replies, 0 flags; permutation p 0.20): inconclusive, as predicted.

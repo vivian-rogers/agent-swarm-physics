@@ -1,6 +1,7 @@
 # H64 × G23: chess tournament (2025-12-15 → 2025-12-19)
 
 **Verdict:** mixed
+**Verdict (1c):** mixed (round 1c, stance v2.1)
 **Role:** native
 **Period:** regime I · mode K · 10 agents · 1 room(s) · 5 days. Units: one unit. Prize class (pre-registered): **competition**.
 
@@ -44,3 +45,8 @@ N3a not passed.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`, `natives/G23.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class competition; validated disagreement rate d_p 1.29% [0.00, 3.27] (confusion-corrected 1.29%; expected false-flag rate 0.51%); disagreeing pairs 6 vs label-noise null mean 4.97 (p 0.373). Prize-free median 0.96%. **Native:** opponents during their open games -0.025 (44 replies, 0 flags; permutation p 0.76): not passed (inconclusive).

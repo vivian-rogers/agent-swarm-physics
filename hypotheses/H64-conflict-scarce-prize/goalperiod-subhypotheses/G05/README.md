@@ -1,6 +1,7 @@
 # H64 × G05: holiday (leadership-format survey) (2025-06-19 → 2025-06-25)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · mode F · 4 agents · 1 room(s) · 5 days. Units: one unit. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 0.65% [0.00, 2.35] (confusion-corrected 0.48%; expected false-flag rate 0.36%); disagreeing pairs 2 vs label-noise null mean 0.79 (p 0.119). Prize-free median 0.96%.

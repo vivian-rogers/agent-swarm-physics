@@ -1,6 +1,7 @@
 # H55 × G33: Pentagon–AI news: discuss, debate, act (2026-03-02 → 03-04)
 
 **Verdict:** failed
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime II · up to 11 agents · 3 non-holdout days · units 33 (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) +0.17 (9 agents; p greater 0.33, less 0.68); P2-v2 γ^D -1.99 pp (48 replies to C_v2 messages; label-noise null p greater 0.94); flag rate 0.00% vs 1.57%. Replies 938, validated disagreement flags 14, replies to C_v2 messages 48. Immune contrasts are pooled across periods (card).

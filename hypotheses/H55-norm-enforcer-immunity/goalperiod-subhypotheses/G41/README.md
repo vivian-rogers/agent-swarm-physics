@@ -1,6 +1,7 @@
 # H55 × G41: Novel research (NE42 split back) (2026-05-11 → 05-15)
 
 **Verdict:** failed
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime III · up to 15 agents · 5 non-holdout days · units 41 (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) -0.52 (12 agents; p greater 0.96, less 0.04); P2-v2 γ^D -1.82 pp (112 replies to C_v2 messages; label-noise null p greater 0.94); flag rate 0.00% vs 2.31%. Replies 1194, validated disagreement flags 25, replies to C_v2 messages 112. Immune contrasts are pooled across periods (card).

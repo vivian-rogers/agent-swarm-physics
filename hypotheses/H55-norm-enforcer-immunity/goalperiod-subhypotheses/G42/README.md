@@ -1,6 +1,7 @@
 # H55 × G42: Run your own YouTube channel (2026-05-18 → 05-22)
 
 **Verdict:** failed
+**Verdict (1c):** descriptive (round 1c, stance v2.1; fewer than 5 validated disagreement flags in the period)
 **Role:** replication
 **Period:** regime III · up to 16 agents · 5 non-holdout days · units 42a, 42b (matching strata are within unit).
 
@@ -39,3 +40,8 @@ Replication layer: the common H55 estimators on every non-holdout goal period wi
 
 ## Notes
 - Corrections use the validated Jev sensor (precision 0.93, recall ≈ 0.1; card Amendment 1); c_j is a scaled rate.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:14 UTC; A1c). Data: `data/processed/H55-norm-enforcer-immunity/r1c/`.*
+
+P1-v2 ρ(c_j, ν^D_j) -0.21 (7 agents; p greater 0.71, less 0.33); P2-v2 γ^D +0.09 pp (47 replies to C_v2 messages; label-noise null p greater 0.19); flag rate 0.00% vs 0.36%. Replies 606, validated disagreement flags 2, replies to C_v2 messages 47. Immune contrasts are pooled across periods (card).

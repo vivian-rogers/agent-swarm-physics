@@ -2,6 +2,7 @@
 
 **Verdict:** inconclusive
 **Verdict (1b):** inconclusive (round 1: inconclusive)
+**Verdict (1c):** inconclusive (unchanged) (round 1c, stance v2.1)
 **Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 27 agents · #general plus #focus (Gemini 2.5 Pro and Opus 4.8 moved there, 08-05 → 08-24); those two are excluded from couplings (variant keeps them) · 14 days.
 
@@ -78,3 +79,7 @@ Data: `data/processed/H22-private-goals-spin-glass/G51/<unit>/results.json`; fig
 | 51c | bge dedup | 0.48 (p 0.003) | 0.33 | 0.018 / 4 (p> 0.300) | 0.009 | 1.10 (p 0.31) | 0.10 (p 0.103) |
 | 51c | **stance (DQ2)** | dc split-half 0.39 (agent-field p 0.005) | 0.23 [0.06, 0.36] | 0.127 / 5 (p> 0.232) | -0.343 | – | neg. pairs 54 vs 6.7 |
 
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:10 UTC). Data: `data/processed/H22-private-goals-spin-glass/r1c/`.*
+
+T^D_SR +1.47 pp (3 flags in 113 rival replies; NG p 0.06; corrected +2.4 pp), not significant. Γ +0.11 [−0.10, +0.32] (bge), +0.10 (gte); placebo percentile 0.80 / 0.75. τ₃(dc) of v2 soft stance 0.18 [−0.14, 0.34] (meets the P3 rule).

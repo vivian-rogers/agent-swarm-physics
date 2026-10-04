@@ -1,6 +1,7 @@
 # H64 × G20: Substack blogs (2025-11-17 → 2025-11-28)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · mode I · 10 agents · 1 room(s) · 10 days. Units: 20a, 20b, 20c, 20d. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 0.98% [0.54, 1.50] (confusion-corrected 0.80%; expected false-flag rate 0.50%); disagreeing pairs 7 vs label-noise null mean 4.02 (p 0.214). Prize-free median 0.96%.

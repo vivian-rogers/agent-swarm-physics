@@ -1,6 +1,7 @@
 # H64 × G44: #best fine-tunes a leader; #rest own goals (2026-05-26 → 2026-05-29)
 
 **Verdict:** supported
+**Verdict (1c):** failed (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime III · mode C · 18 agents · 2 room(s) · 4 days. Units: 44a, 44b. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 1.37% [0.67, 2.06] (confusion-corrected 1.72%; expected false-flag rate 0.33%); disagreeing pairs 13 vs label-noise null mean 5.79 (p 0.035). Prize-free median 0.96%.

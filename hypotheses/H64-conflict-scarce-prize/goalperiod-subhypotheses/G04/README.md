@@ -1,6 +1,7 @@
 # H64 × G04: story + 100-person in-person event (2025-05-15 → 2025-06-18)
 
 **Verdict:** supported
+**Verdict (1c):** supported (round 1c, stance v2.1)
 **Role:** replication
 **Period:** regime I · mode C · 4 agents · 1 room(s) · 26 days. Units: 4a, 4b, 4c, 4d. Prize class (pre-registered): **prize free**.
 
@@ -27,3 +28,8 @@ Prize-free floor: no unit with excess antagonistic pairs (p_AF ≤ 0.05). r_p 0.
 
 ## Notes
 - Data: `data/processed/H64-conflict-scarce-prize/replication/units.json`. Holdout masked (`holdout_mask`); no held-out day enters.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Pre-registered in the card (Round 1c, 22:12 UTC). Data: `data/processed/H64-conflict-scarce-prize/r1c/`.*
+
+prize class prize_free; validated disagreement rate d_p 0.35% [0.16, 0.57] (confusion-corrected 0.02%; expected false-flag rate 0.34%); disagreeing pairs 3 vs label-noise null mean 1.42 (p 0.169). Prize-free median 0.96%.
