@@ -273,6 +273,8 @@ Reuse: H01 `confirm_r2.py` targets NE24 with crew re-formation, a different stat
 - **H58-R3. The agent + own artifact pair as the KW agent.** Its stored semantic information about the goal and other agents, from erasure re-acquisition (which file is re-read) with an in-flight placebo at matched lag.
 - **H58-R4. Run the powered holdout** (#51 tail) through `confirm.py`.
 
+- **Egregore revamp (coordinator, 2026-10-04):** the null for coordination-defined superagents moves the search to the stigmergic layer and to culture. See HH290–HH306 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` ("Egregores and collective information dynamics"), especially HH293 (culture beyond composition), HH290 (remanence), HH296 (autonomy across scales with the round-1b impostors as environment) and HH301 (repos recruit hosts).
+
 ## Notes
 - 2026-10-04: round 1 started (exploratory, non-holdout, local, ≤ 2 threads, no sub-agents). Formal setup and predictions written first. `activity_bins` / `outages` deliberately unused (coordinator's data-bug notice).
 - 2026-10-04: an API session limit interrupted the round after the synthetic validation and the re-acquisition run; resumed from disk (nothing rerun except unfinished steps). At the coordinator's request (compute scarce) replication was cut to G51 plus G38 (A2.6), with the round-1b lessons applied (scheduler synchrony, reading-gated coupling, convergence).
