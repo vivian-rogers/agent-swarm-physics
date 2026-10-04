@@ -12,6 +12,7 @@ Vivian's priority order: (1) postprocessed data quality; (2) re-evaluate every h
 | DQ5 embedding robustness (second model, style-residualized vectors, statement flags) | running (2026-10-04) | `embeddings/*_<model>.npy`, `statement_flags.parquet` |
 | DQ6 shared ground-truth labels (#12 teams, #26 votes, #51 roles, #44 checkpoints, leaders; #34 holdout flagged) | to do (small) | `ground_truth_labels.parquet` |
 | DQ7 rebuild `chat_core` (clean mentions) and `actions` (fixed bash_head) atomically | after running agents finish | rebuilt core tables |
+| DQ9 period-affordance catalog (Vivian, 2026-10-04): per goal period, what it uniquely offers for testing (ground truth: teams, votes, roles, saboteurs, checkpoints; interventions inside it; structure: rooms, forks, private goals; outcome measures; N and length; holdout status), from `goal-periods.md`, DQ6 ground truth, `period_units`, NE catalog | after DQ6 | `hypotheses/hypohypotheses/period-affordances.md` + `period_affordances.parquet` |
 | DQ8 shared village-skeleton simulator + null library; per-period estimates schema; holdout (period × statistic) ledger | to do | `infra/shared/simulate.py`, `nulls.py`; schema doc |
 
 Each DQ agent writes only new files in `infra/` and new tables in `data/processed/shared/`; never `hypotheses/` and never existing tables. Docs go in `infra/data-quality/<name>.md`; the coordinator merges README and `build_all` registration text.
@@ -43,4 +44,10 @@ Starts once the consolidation, DQ1 (context ledger + `call_windows`), DQ5 (embed
 - **DQ7 is now a single command** once agents finish: `uv run python infra/shared/scan_tables.py --only turns` (stable sort; the bash_head fix), then the chat_core rebuild with clean mentions. Until then use the `actions_bash_head_fixed` sidecar (`bash_head_fixed`, `error_class`, `system_class`).
 - **Further consolidation candidates:** H18 `scheme/build.py` (imported by H28, H29, H31, H34), H05 analysis code (H13, H14, H22), H22 scheme (H37), H15 `h15common` (H33), H09 `idle_runs`, H25 `dial.py`.
 - **Proposed CLAUDE.md conventions, for Vivian to approve:** rebuild shared tables with `build_all.py`; never import code from another hypothesis's folder (move it to `infra/shared/` with a `--verify`, leave a shim); use `period_units.parquet` unless the card justifies another split; use `bash_head_fixed` / `error_class` and `kicks_classified` instead of the raw columns.
+
+### Re-evaluation design rule: two layers per hypothesis (Vivian, 2026-10-04)
+Audit (2026-10-04): in ~15 of 34 hypotheses the period READMEs are near-identical apart from numbers (median word-set similarity 0.75–0.92; almost all written by a `write_period_folders.py`-style script). Only H07, H10, H37, H06, H22, H30, H35, H01 tailor their tests to each period. The strongest round-1 results came from period-specific leverage (H37 on #12 teams, H05's room cut, H08/H15 on NE41, H29 on #51 naming), so:
+- **Layer 1, replication:** the hypothesis's common estimator on every eligible period, giving comparable phase-diagram points. Period README role: `replication`. A templated prediction is fine here, labelled as such.
+- **Layer 2, period-native tests:** for each hypothesis, 2–4 periods whose setup gives special leverage for *that* question (from the affordance catalog, DQ9). Each gets its own design: an observable, null, ground truth or intervention that only that period allows, its own prediction written before the run, and period-specific infra where needed (e.g. a #26 ballot parser, #12 team map, #51 role/goal fields, #35 fork trees, #44 checkpoints, NE43 nudger-off). Period README role: `native`.
+- The overview and dashboard should show the role, so a column of 35 replications isn't read as 35 independent tests.
 
