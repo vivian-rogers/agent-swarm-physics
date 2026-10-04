@@ -7,7 +7,21 @@
     "faithfulness": "The core claim is refuted cleanly: scaffold changes (including NE14b and the dated NE40 swap) do not beat same-regime random days, goal kickoffs move the agent-only chain more than scaffold changes, and family differences survive scaffold removal. Only the 'no jump at roster/room/NE43' parts hold, and they are non-diagnostic. Scorecard A1 B1 C0 D0 E0 F1 G0 H0 I0.",
     "usefulness": "A well-validated negative for operators (do not use behavioral EP as a platform-change monitor) plus practical side results: NE40 dated to 04-20 from tool-output stylometry, an undocumented 07-29 tool-schema change, a search malfunction and the NE43 timeline, all found with plain log features, which point to the monitor that works. The EP detector itself is not usable."
   },
-  "one_line": "EP does not fingerprint the platform: scaffold changes (even NE14b, the 04-20 oracle swap) sit in the day-to-day spread; work and style set EP.",
+  "one_line": "EP does not fingerprint the platform: scaffold changes, including NE14b and the 04-20 oracle swap, sit in the day-to-day spread; work and style set EP.",
+  "models": [
+    {
+      "model": "02-nonequilibrium-ising",
+      "role": "primary",
+      "outcome": "refuted",
+      "note": "Scaffold changes do not move EP; goal kickoffs move it more"
+    },
+    {
+      "model": "05-replicator-dissipation",
+      "role": "secondary",
+      "outcome": "refuted",
+      "note": "Platform does not own the irreversibility; family differences survive scaffold removal"
+    }
+  ],
   "rated_by": "H56 agent (suggested)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",

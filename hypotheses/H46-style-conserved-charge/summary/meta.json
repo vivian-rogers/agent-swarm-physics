@@ -7,7 +7,21 @@
     "faithfulness": "The core claim (style invariant under every natural experiment, carrying no semantic information) is refuted. Style moves at goal switches, across exogenously timed erasures (while content does not), for the Prankster and for #12 judges, and it predicts output as well as content. What holds is narrower: style is a better identity fingerprint than content across goal switches, and a drift-and-reset picture (post hoc) explains the erasure result. Scorecard A1 B1 C1 D1 E1 F1 G1 H0 I0.",
     "usefulness": "A cheap, computable identity fingerprint (20 formatting and punctuation rates) that survives task changes better than embeddings: useful for attribution and for detecting model swaps. It comes with actionable warnings: style drifts with context length and resets at context erasure, and assigned registers move it, so monitors must condition on context position and speech act. Not yet validated as a monitor (no ROC, no holdout)."
   },
-  "one_line": "Style is not a conserved charge: it shifts at goal switches (T 0.69), across forced context erasures (0.56, content flat) and under assigned registers (Prankster, judges), yet it out-identifies content across goal switches (0.76 vs 0.51, chance 0.15)",
+  "one_line": "Style is not conserved: goal switches (T 0.69), forced erasures (0.56, content flat) and assigned registers move it; it identifies agents at 0.76 (content 0.51).",
+  "models": [
+    {
+      "model": "11-vector-spins",
+      "role": "primary",
+      "outcome": "mixed",
+      "note": "Strict style conservation refuted; charge plus context-held excitation fits (post hoc)"
+    },
+    {
+      "model": "04-semantic-information",
+      "role": "secondary",
+      "outcome": "refuted",
+      "note": "Style carries as much next-day information as content"
+    }
+  ],
   "rated_by": "H46 agent (suggested)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",

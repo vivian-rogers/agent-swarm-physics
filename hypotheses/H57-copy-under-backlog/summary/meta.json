@@ -7,7 +7,21 @@
     "faithfulness": "The core prediction is refuted: no rise of echo with backlog in any period (raw upper bound +0.0016 per doubling, about 5% of the synthetic effect), a message-level copy share of about 0 at every backlog, and no response to NE42's backlog jump or NE41's erasures. The pre-registered estimator itself proved invalid on real data (contemporaneous convergence), so the refutation rests on the post hoc bound and lag profiles. Scorecard A1 B1 C0 D0 E0 F1 G1 H0 I0.",
     "usefulness": "A diagnostic any operator can compute: compare near-duplicates between read messages and unread messages at the same lag before calling anything copying. In the village, simultaneous convergence accounts for the semantic near-duplication, and load does not make agents parrot. It corrects shared instruments (2-h echo flags) and readings in H12 and H07, but gives no lever."
   },
-  "one_line": "Backlog does not make agents echo (raw upper bound +0.0016 per doubling, ~5% of the H57 effect); addressed replies are rephrased, and most near-duplication is simultaneous convergence, not copying",
+  "one_line": "Backlog does not make agents echo (raw upper bound +0.0016 per doubling, ~5% of the H57 effect); most near-duplication is simultaneous convergence, not copying.",
+  "models": [
+    {
+      "model": "08-copying-vs-transformation",
+      "role": "primary",
+      "outcome": "refuted",
+      "note": "Copy share \u2248 0 at every backlog; no rise with load"
+    },
+    {
+      "model": "03-contagion",
+      "role": "secondary",
+      "outcome": "refuted",
+      "note": "No load-dependent copy transmission over read sets"
+    }
+  ],
   "rated_by": "H57 agent (suggested)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",

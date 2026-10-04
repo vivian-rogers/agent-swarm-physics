@@ -7,7 +7,21 @@
     "faithfulness": "The core claim (wave size set by the receptive fraction at the call-cycle scale) is refuted: RR_timely 1.06 [0.93, 1.22], R adds nothing out of sample, current share wins. Card rule: failed. The announcement-seeded part holds at a descriptive level (step at the link, room-bounded, read-out gated), and the #26 runoff shows wave = receptive count for a deadline-bound call. Scorecard A1 B1 C0 D1 E1 F1 G1 H0 I0.",
     "usefulness": "Two operator rules with evidence: announce projects (a first link seeds a ~20x wave; timing to the call clock adds <=9%), and for votes/polls size the window to read-out delays (a 2-min window disenfranchises ~1/3 of a regime-III swarm; >=15 min reaches ~90%). Calibrated 2.0 -> 2.5."
   },
-  "one_line": "Herding is announcement-seeded (adoptions jump ~20x at a project's first chat link and stay in the poster's room), but the call clock doesn't set wave size: prompt readers adopt no more (RR 1.06), and current share, not the receptive count, predicts pile-ons. The clock binds only for deadline-bound calls (#26 runoff: ballots = readers in window).",
+  "one_line": "Announcements seed herding (adoptions jump ~20\u00d7 at a first link, stay in-room), but read-out timing does not set wave size (RR 1.06); current share does.",
+  "models": [
+    {
+      "model": "10-potts",
+      "role": "primary",
+      "outcome": "mixed",
+      "note": "Read-out-clock nucleation fails; occupancy (current share) predicts waves"
+    },
+    {
+      "model": "03-contagion",
+      "role": "secondary",
+      "outcome": "supported",
+      "note": "Seed-locked, room-bounded adoption; shared-field rival rejected"
+    }
+  ],
   "rated_by": "H53 agent (suggested)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (usefulness 2.0 -> 2.5)",

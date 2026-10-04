@@ -7,7 +7,15 @@
   "faithfulness": "The core prediction (coordinated units beat agent + own artifact) failed where the method has power; the natives failed or were uninformative; signatures not identifiable. C = 1, D = 0.",
   "usefulness": "A computable diagnostic (held-out coordination gain with an outside-reference null) and a design rule backed by an exogenous intervention: after erasures agents recover by re-reading their own artifact, so make work state legible per agent in its repo; group co-allocation is a field, not a lever."
  },
- "one_line": "No coordinated superagent: with a which-artifact state and real power, agent + own artifact stays the persistent unit; agents re-read their own repo after erasures",
+ "one_line": "No coordinated superagent: with a which-artifact state and real power, agent + own artifact stays the unit; agents re-read their own repo after erasures.",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "No coordinated unit beats agent + own artifact where powered"
+  }
+ ],
  "rated_by": "H58 round-1 agent (suggested)",
  "updated": "2026-10-04",
  "v2": {

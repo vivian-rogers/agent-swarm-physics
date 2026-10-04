@@ -7,7 +7,15 @@
     "faithfulness": "The salience-only model (H52) beats its nulls only partly: it fails for replies (pooled premium CI > 0) and for G51 content, and holds for activity. Synthetic recovery is good for reply, activity and stance but content is identifiable only in the regime-III cell; the primary content statistic's naming effect has the wrong sign (P8). One natural experiment, with one of three predictions failed. Scorecard all 1s; no holdout.",
     "usefulness": "An alignment-relevant measurement with an operator rule (name the agent and frame the request in its current objective; human status buys answers, not obedience against the plan), and evidence that agent leaders get the same reply premium. Small effects, mostly two powered periods, labeller caveat. Parity with H30/H35 at 2.5."
   },
-  "one_line": "Matched on naming, read-out timing, novelty, length and room size, human messages get about twice the reply rate of agent messages and a small content pull, but agent leaders get the same reply premium and role-conflicting human messages get none: status-weighted attention, not deference.",
+  "one_line": "Matched on salience, humans get about twice the reply rate and a small content pull; agent leaders share the premium, and off-role messages get none.",
+  "models": [
+    {
+      "model": "02-nonequilibrium-ising",
+      "role": "primary",
+      "outcome": "mixed",
+      "note": "Salience-only response fails for replies; premium is status, not deference"
+    }
+  ],
   "rated_by": "H52 agent (suggested)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",

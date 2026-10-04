@@ -7,7 +7,27 @@
     "faithfulness": "The literal claim (settling = time for everyone to read everyone once) fails on magnitude: tau is ~10x the coverage time and ~80x the read-out chain's mixing time. The scaling claim is untested in practice: primaries lose to the constant in both models, but settling is detectable in only 11/27 periods and the real-like synthetic has ~0 power. Natives lean against read-out as the driver (#38, #51) with one weak positive (NE42, gte only). Scorecard A1 B1 C0 D0 E0 F1 G1 H0 I0.",
     "usefulness": "A diagnostic with a negative design implication: in broadcast rooms read-out coverage completes in minutes, so convergence on a new goal is not limited by who has read whom, and room merges or faster calls will not speed it via reading. Ledger coverage times are computable but weakest-link (one silent agent). No lever."
   },
-  "one_line": "Agents read each other within minutes but content settles over hours (tau ~10x coverage time); the cross-period scaling test had no power at real noise levels",
+  "one_line": "Agents read each other within minutes but content settles over hours (\u03c4 \u2248 10\u00d7 coverage time); the scaling test has no power at real noise.",
+  "models": [
+    {
+      "model": "11-vector-spins",
+      "role": "primary",
+      "outcome": "mixed",
+      "note": "Shallow-coverage settling refuted on magnitude; small-\u03b1 read-out averaging untested"
+    },
+    {
+      "model": "10-potts",
+      "role": "rival",
+      "outcome": "untested",
+      "note": "No \u03bb\u2082 variant beats a constant; test lacks power"
+    },
+    {
+      "model": "03-contagion",
+      "role": "tool",
+      "outcome": "n/a",
+      "note": "Read-out coverage as an SI process on the ledger"
+    }
+  ],
   "rated_by": "H48 agent (suggested)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
