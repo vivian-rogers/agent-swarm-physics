@@ -1,7 +1,7 @@
 # H33 × G33: Discuss, debate, and act on your views about the recent Pentagon-AI company news (2026-03-02 → 2026-03-05)
 
 **Verdict:** failed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Verdict (1b):** failed (work commits: b₁ -0.076, b₂ +0.206 (p 0.334); 2026-10-04)
 **Period:** regime II · mode C (shared objective) · N = 12 at start · 3 non-holdout days with PR10 · 31 agent-days with PR10 (10 agents with ≥ 3 days) · write turns on 97% of those agent-days.
 

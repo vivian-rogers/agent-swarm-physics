@@ -2,7 +2,7 @@
 
 **Verdict:** failed (no transfer)
 **Verdict (1b):** failed (ledger exposure: T -0.024% p 0.951, split-half ρ -0.54; gte p 0.952; style-resid p 0.048)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode F (free / none) · 7 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 
 ## Why this period

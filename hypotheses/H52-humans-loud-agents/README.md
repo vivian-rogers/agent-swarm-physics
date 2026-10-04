@@ -17,6 +17,24 @@
 **From:** HH164 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/02-nonequilibrium-ising/` (linear response to fields; fields vs couplings)
 **Data inputs (shared tables first):** DQ1 context ledger (`context_ledger_items`, `call_windows`, `context_ledger_turns`); DQ2 `reply_pairs` (`pair_set = cand`) and `reply_threading/candidates_ledger`; `kicks_classified`; `chat_core`, `chat_mentions_clean`; DQ5 embeddings (bge-small and gte-modernbert, regime whiteners; `statements_style_resid_period32`), `statement_flags`; `activity_bins_fixed`; DQ6 `ground_truth_labels`; `period_units`, `calendar`, `roster`. `chat_text` is read in memory only to find a nudge's leading @ (H35's rule); no text is written.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H52 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q5. The card prices human and bot messages as levers against matched agent messages. Q1 second: the premium rides on the read-out-gated, name-gated channel.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Rows align to the receiving call; strata include read-out age and recipient idleness; activity uses bias-corrected CEM with day and recipient fixed effects on `activity_bins_fixed` (A1). | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Human and bot messages are the fields under study, compared with same-day matched agent messages. Goal kickoffs are excluded from the primary (sensitivity only); same-class other-day placebos enter χ (N3). | removed |
+| Shared model priors | partly | Content repeated under gte and with style-residualized recipient statements (O7); premia hold. | removed |
+| Contemporaneous convergence | yes | H29's boundary design compares visible with truly invisible messages at < 30 s (N3b); it agrees in sign (P7). The primary DiD χ carries co-arrival and shared-topic biases (Synthesis 6); replies have no unread placebo. | partly |
+
+**Inputs:** round 1 uses the context ledger, DQ2 replies, both embeddings with `style_resid`, `statement_flags`, `activity_bins_fixed`, DQ6 roles and leaders, and the leading-@ target for nudges. Still old: none of the listed inputs. The work ledger is not used (activity is in active minutes).
+
+**Two layers:** 14 replication folders. Native tests: 6 (`G04`, `G35`, `G44`, `G51` and `NE43` mixed; `G26` descriptive).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on the corrected inputs (C1–C8). No re-freeze needed.
+
 ## Question
 On the read-out-gated, name-gated channel (H08: a response waits for the recipient's next model call; H29: a message that names its recipient pulls it 3–6× more than an unnamed one), does a human message move its recipient as much as an agent message with the same naming, read-out timing, content novelty, length, recipient state and room size? Or is there an **authority premium**, a deference term beyond salience?
 

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (transfer, split-half ρ +0.82; P5 fail)
 **Verdict (1b):** supported (ledger exposure: T +0.209% p 0.024, split-half ρ +0.76; gte p 0.048; style-resid p 0.048)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C (shared objective) · 14 agents · 2 rooms with ≥ 20 agent messages · 17 days. No splits (one unit per goal period).
 
 ## Why this period

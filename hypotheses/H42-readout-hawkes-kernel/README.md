@@ -15,6 +15,24 @@
 **From:** HH174 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` (approved by Vivian 2026-10-04) · **Models:** `physics-models/09-hawkes/`
 **Data inputs (shared tables first):** DQ1 `call_windows`, `context_ledger_turns`, `context_ledger_items`; `chat_core`, `calendar`, `period_units`, `period_affordances`, `roster`. (`stall_minutes` / `outages` dropped, A2.) H03's C recursions imported read-only (`hypotheses/H03-self-excited-criticality/analysis/hawkes_core.py: exo_sums, exp_sums`).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H42 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q1. The card asks whether cross-excitation runs through the recipient's read-out call. Q2 second: most exponential-kernel cross-triggering turns out to be call-schedule co-movement.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Agent-day baselines × a within-day shape; world B adds call-class baselines (A1); masks rebuilt from `call_windows` (A2); edge-trim sensitivity. The call clock beats the H03 world in 57/57 units. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Human, nudge and bookend items and a kickoff bump enter as exogenous drive, never as cross-excitation (Model). Shift and day-block nulls miss a shared 15-min field (synthetic, A3); the 0.05 field floor comes from one synthetic strength. Close with a fitted Cox shared-rate rival (R3). | partly |
+| Shared model priors | no | Talk timing with per-agent baselines; no family or content claim. | n/a |
+| Contemporaneous convergence | partly | Cross terms start at the read-out call, so unread messages carry no weight. The post hoc named-message excitation may be an exchange already in progress (Findings 6). Close with DQ2 reply-thread strata. | partly |
+
+**Inputs:** round 1 uses the context ledger and `call_windows`; it dropped `stall_minutes` / `outages` (A2) and never reads `activity_bins`. Still old: the named-message split uses the ledger's `ment` flag, not the leading-@ target. DQ2 replies, embeddings, work and failures are not inputs.
+
+**Two layers:** 33 replication folders. Native tests: 4 (`G19` call type, supported against the hypothesis; `G51`, `NE14` and `NE41` failed).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on the ledger inputs (C1–C5; C5 is the post hoc named-message test). No re-freeze needed for inputs.
+
 ## Question
 Does a multivariate Hawkes model whose cross-excitation fires only at the recipient's next model call fit better than exponential kernels, raise the cross-branching estimate, and make it consistent across regimes?
 

@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (r1 supported)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode C · 50 agent-days on 5 non-holdout days (2026-01-05 → 2026-01-09) · 9,302 agent-minutes on the trimmed grid.
 
 ## Why this period

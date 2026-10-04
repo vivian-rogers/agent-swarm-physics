@@ -12,6 +12,24 @@
 **From:** HH154 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` (with HH187, lags quantized in call cycles, as a secondary check) · **Models:** `physics-models/02-nonequilibrium-ising/` (Glauber attempt rates), `physics-models/09-hawkes/` (response kernels)
 **Data inputs (shared tables first):** DQ1 `call_windows`, `context_ledger_items`, `context_ledger_turns`; DQ2 `reply_pairs` (`pair_set = cand`, `parent`, `p_reply`) and `reply_threading/b_meta_ledger` (the call that produced each reply); `chat_core`, `chat_mentions_clean`, `roster`, `calendar`, `period_units`; DQ5 agent-day `white32` / `style_resid_period` vectors (style controls); H29's boundary estimator is *not* used in round 1 (see Notes).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H40 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q1. The card measures whether coupling runs per recipient model call or per minute.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | The hazard is per item after its read-out call, on ledger call times, not activity synchrony. Overnight `first_of_day` read-outs are dropped (Data scheme). The pause-timer dose uses waits declared before the message (N1a). | removed |
+| Exogenous field (kickoff/goal/operator) | partly | Items are agent-to-agent messages only; human and operator messages are not items. Agent × unit intercepts absorb period-level drives. There is no kickoff-day control. | partly |
+| Shared model priors | yes | Lab fixed effects and two DQ5 style PCs in the between-agent slope s (Observables 2); per-call coupling is a lab/style trait (R² 0.25). The tertile collapse (P5) is confounded by family. Close by matching on family before the collapse (R5). | partly |
+| Contemporaneous convergence | partly | Risk sets start at the read-out call, so m is in context before any reply counts. DQ2 parents are partly content-selected (axis A). | removed |
+
+**Inputs:** round 1 uses the context ledger (`call_windows`, items, turns), DQ2 replies and DQ5 style vectors; it never reads `activity_bins` (Notes). Still old: the `ment` covariate uses `chat_mentions_clean`, not the leading-@ target. Work, failures and gte are not inputs.
+
+**Two layers:** 30 replication folders (regime I 20, II 3, III 7). Native tests: 4 (`G51` supported; `NE41` mixed; `G18` and `G36` failed).
+
+**Confirm script:** `analysis/confirm.py` exists, frozen and dry-run on the ledger and DQ2 inputs. No re-freeze needed (round-1b synthesis decision 3: frozen and ready).
+
 ## Question
 Is a recipient's coupling per unit wall time its coupling per model call times its call rate, so that call cadence is a coupling knob and slow-cadence agents are weakly coupled "heavy spins"? Equivalently: does the response to another agent's message run on the recipient's **call clock** (a fixed chance per model call) or on the **wall clock** (a fixed chance per minute, whatever the cadence)?
 

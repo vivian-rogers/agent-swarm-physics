@@ -1,7 +1,7 @@
 # H33 × G44: Finetune your leader! (2026-05-26 → 2026-06-01)
 
 **Verdict:** failed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Verdict (1b):** mixed (work commits: b₁ +0.087, b₂ -0.046 (p 0.549); 2026-10-04)
 **Period:** regime III · mode C (shared objective) · N = 16 at start · 4 non-holdout days with PR10 · 49 agent-days with PR10 (11 agents with ≥ 3 days) · write turns on 88% of those agent-days.
 

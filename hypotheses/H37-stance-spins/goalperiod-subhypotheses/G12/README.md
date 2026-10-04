@@ -1,7 +1,7 @@
 # H37 × G12: Form two teams and debate each other, while one agent judges (2025-09-01 → 2025-09-08)
 
 **Verdict:** supported (positive control passes P1–P5)
-**Role:** exploratory (positive control)
+**Role:** replication (exploratory) (positive control)
 **Period:** regime I · mode M · 7 agents · one room (#general) · 5 days (debates 09-01 → 09-04). Ten Asian-Parliamentary debates with re-drafted teams and rotating judges (H21's verified labels, `../../../H21-debate-antiferromagnet/scheme/labels/g12_debates.json`).
 
 ## Why this period

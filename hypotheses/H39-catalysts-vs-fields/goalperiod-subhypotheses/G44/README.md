@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** failed (r1 mixed); nudge K +0.10 (n 9)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime III · mode C · 65 agent-days on 4 non-holdout days (2026-05-26 → 2026-05-29) · 14,992 agent-minutes on the trimmed grid.
 
 ## Why this period

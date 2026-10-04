@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged)
-**Role:** exploratory (E-P + E-C)
+**Role:** replication (exploratory) (E-P + E-C)
 **Period:** regime I · mode I · 7 agents · #general · 5 non-holdout days (15.0 active h).
 
 ## Why this period

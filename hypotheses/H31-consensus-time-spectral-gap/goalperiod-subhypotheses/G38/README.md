@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (unchanged)
-**Role:** exploratory (E-P + E-C; two-room contrast (T6))
+**Role:** replication (exploratory) (E-P + E-C; two-room contrast (T6))
 **Period:** regime III · mode C · 12 agents · #best, #rest · 17 non-holdout days (72.2 active h).
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime III · mode I/K (?) · N = 21 at start · 45 non-holdout active days · events inside: NE32, NE-side-room, NE38, NE-focus, NE33
 
 ## Why this period

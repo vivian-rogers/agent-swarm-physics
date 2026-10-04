@@ -16,6 +16,24 @@ Predictions were written 2026-10-04 01:30 UTC, before any real-data run.
 **Origin:** HH122 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); tests HH108 at the idea level.
 **Definitions used:** Population N(t); Regime; Interaction (broadcast; the shared `exposure` room rule) with the named variant *Interaction (visible exposure)* below; Contagion / adoption event, with the marker set fixed by the *Idea (H34 marker rule)* below. **New here, proposed for `physics-models/DEFINITIONS.md`** (not edited; outside H34's scope): *Idea (H34 marker rule)*, *Interaction (visible exposure)*, *Adoption cascade (exposure tree)*, *Branching ratio (content, adopter-level)*.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. Every entry rests on this card and its round-1b section.*
+
+**Question served:** Q3. Idea cascades are subcritical in 32/32 periods, so there is no near-critical collective order. Q1 second: HR₁₀ measures coupling through reading.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | HR₁₀ is a hazard per at-risk talk turn, stratified by idea. The jitter null (N0) keeps each agent's turn rate. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Human and automated parents make roots; roster names are excluded from markers. N0 failed its synthetic guard (A2). S2 simulated only a constant field; a bursty field also gives HR₁₀ > 1 (Caveats). R̂ is 1.5× higher on kickoff days. Close with a kickoff-matched placebo and goal-text marker exclusion (§1, row 2). | partly |
+| Shared model priors | partly | Not handled. Shared pretraining can coin the same marker without exposure (field ε, Model). Close with a cross-family HR₁₀ and a first-day control (§1, row 3). | open |
+| Contemporaneous convergence | yes | Round 1b H57 placebo: read uses beat unread ones in 30/32; unread uses carry about half the hazard ratio. HR₁₀ and R_c are not net of the unread term. | partly |
+
+**Inputs:** round 1b uses the context ledger for every exposure quantity. Embeddings, activity bins, work and failures are not inputs (ideas are hashed text markers). P4 still reads H03's and H19's round-1 activity-gain tables as comparators.
+
+**Two layers:** no folder has role `replication`. The common estimator runs on 32 period folders under role `exploratory`. Native tests: 2 (`G35` lead designers as seeders, mixed; `G26` elected leader as seeder, failed).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on H18's call-start visibility. **Re-freeze on ledger visibility before any holdout run** (holdout.md items 8 and 15). Add the unread placebo as a clause at re-freeze.
+
 ## Question
 Track adoption cascades of new terms or ideas after exposure. Cascade sizes P(s) ~ s^−τ, with cutoff and exponent set by the branching ratio, tie to HH107's dial and predict how far misinformation spreads. *Check:* cascade trees from exposure plus first use; fitted branching vs HH107.
 

@@ -1,7 +1,7 @@
 # H37 × G26: Elect a village leader (2026-01-05 → 2026-01-12)
 
 **Verdict:** failed (stance does not track ballots; no factions)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 10 agents · one room · 5 days. Approval voting over several candidates, then a runoff won by DeepSeek-V3.2 (H11 G26: abrupt jump 0.18 → 0.80).
 
 ## Why this period

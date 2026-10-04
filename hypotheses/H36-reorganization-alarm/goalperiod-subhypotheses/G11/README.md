@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode F (free / none) · N = 7 at start · 5 non-holdout active days
 
 ## Why this period

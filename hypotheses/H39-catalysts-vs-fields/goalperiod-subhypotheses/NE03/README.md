@@ -1,7 +1,7 @@
 # H39 × NE03: Chat messages fetched into context limited (2025-08-20, #10)
 
 **Verdict:** failed
-**Role:** exploratory (round 1, non-holdout; spanning test)
+**Role:** replication (exploratory) (round 1, non-holdout; spanning test)
 **Period:** see Prediction for the windows; non-holdout days only.
 
 ## Why this test

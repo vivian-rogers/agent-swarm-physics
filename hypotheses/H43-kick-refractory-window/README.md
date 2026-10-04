@@ -16,6 +16,24 @@ Side finding: a first nudge after a quiet spell makes idle agents glance (×1.75
 **From:** HH177 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/09-hawkes/` (refractory / renewal variant), `physics-models/03-contagion/` (SIRS-like refractory compartment)
 **Data inputs (shared tables first):** `kicks_classified`, `states_min` (behavior states), `period_units`, DQ1 context ledger (`call_windows`, `context_ledger_turns`, `context_ledger_items`), DQ4 work ledger (`work_commits`, `work_api_writes`) for writes, `calendar`.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H43 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q5. The deliverable is a kick-spacing rule for operators. Q1 second: the read-out call, not the task episode, is the unit of coupling.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Outcomes run from the receiving call. Matched strata include day third and a swarm-activity tercile (Observables). No synchrony statistic. | removed |
+| Exogenous field (kickoff/goal/operator) | partly | A 30-min quiet rule for primers; other-class kicks in the previous 10 min are a stratum; both arms cut at the next kick. The nudger's text trigger is unobserved, so nudge facilitation may be selection (Caveats). | partly |
+| Shared model priors | no | Same-agent controls where a stratum has ≥ 5; no family or content claim. | n/a |
+| Contemporaneous convergence | no | The refractory ratio compares read kicks; no copying or influence claim. | n/a |
+
+**Inputs:** round 1 uses the context ledger, DQ4 work ledger and shared `states_min`; it never reads `activity_bins` (Caveats). Still old: nudge kicks are ledger items with the `ment` flag, which also counts agents named second; the leading-@ target is not applied. Embeddings and failures are not inputs.
+
+**Two layers:** 33 replication folders (12 testable class × period cells, none passed). Native tests: 3 (`G04` and `NE43` failed; `G38` untestable).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on the ledger and work ledger. No re-freeze for activity or visibility. Apply the leading-@ target to C4's nudges before any holdout run (STANDARDS §2).
+
 ## Question
 After an effective kick (nudge, named message, human message), is the recipient refractory for about the length of the task episode the kick launched, so that a second kick inside that window has near-zero marginal effect? Operator payoff: a minimum kick-spacing rule per kick type.
 

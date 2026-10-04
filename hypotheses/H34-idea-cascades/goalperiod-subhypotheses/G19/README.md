@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.23, HR₁₀ 8.4 [6.7, 10.8], tail heavy; H57 placebo HR unread/seen 2.9/5.1)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 7 agents at start (median room size 7) · 10 non-holdout days. Setup: Make a popular daily puzzle game. Many candidate concepts (Chronos, Huedle, Maplink, …) were brainstormed, then the swarm converged and shipped.
 
 ## Why this period

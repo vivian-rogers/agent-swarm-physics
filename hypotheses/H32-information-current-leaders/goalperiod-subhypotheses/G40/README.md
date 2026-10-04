@@ -2,7 +2,7 @@
 
 **Verdict:** failed (no transfer)
 **Verdict (1b):** failed (ledger exposure: T -0.171% p 1.000, split-half ρ -0.06; gte p 0.238; style-resid p 1.000)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C (shared objective) · 15 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 
 ## Why this period

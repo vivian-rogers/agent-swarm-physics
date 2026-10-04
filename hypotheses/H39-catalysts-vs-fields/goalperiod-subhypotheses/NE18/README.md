@@ -1,7 +1,7 @@
 # H39 × NE18: History search: verbatim segments, 10-day window (2026-04-20, #38)
 
 **Verdict:** supported
-**Role:** exploratory (round 1, non-holdout; spanning test)
+**Role:** replication (exploratory) (round 1, non-holdout; spanning test)
 **Period:** see Prediction for the windows; non-holdout days only.
 
 ## Why this test

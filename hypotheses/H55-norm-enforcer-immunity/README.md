@@ -7,6 +7,24 @@
 **From:** HH162 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` (also HH210, the missing immune system) · **Models:** `physics-models/04-semantic-information/`, `physics-models/06-neutral-cooperative-dynamics/`; signed bonds per `physics-models/01-inverse-ising/` (pitfall: calibrated agent-field null)
 **Data inputs (shared tables first):** DQ2 `reply_pairs` (parents, soft stance, `opp_type`), DQ5 `statement_flags` (`self_repeat_bge`, `self_repeat_gte`, `self_repeat_both`), DQ1 context ledger (`context_ledger_items`, `context_ledger_turns`), DQ3 `behavior_states_v3` (`p_blocked`), DQ6 `ground_truth_labels` (#51 roles, #12 judges and teams), `chat_core` + `chat_mentions_clean` + `chat_text` (text in memory only), `period_units`; H16 trap tables (TS3/TS4, read-only, secondary).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H55 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q5. The card asks whether the swarm repairs its own failures or an operator must supply the repair (being addressed is the working lever). Q3 second: self-repair would be a collective function.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Loops are within-day runs; matched strata include period unit and loop age; outcomes are agent-demeaned (Amendment 2). No synchrony statistic. | removed |
+| Exogenous field (kickoff/goal/operator) | partly | Sender kind (agent or human) is a matching stratum (O5). G16 compares an operator-rule week with a no-rule baseline. | removed |
+| Shared model priors | yes | Speaker and target fields from the ordered logit absorb agreeableness (O2, R-style); the partial ρ is unchanged. A shared politeness field and a labeller habit are not separated (Caveat 3). Close with a cross-family split of the friction ρ and a second labeller (§1, row 3). | partly |
+| Contemporaneous convergence | partly | Directed reads are timed by the ledger between the two statements, so the agent read them before the outcome (O5). | removed |
+
+**Inputs:** round 1 uses DQ2 replies and stance, DQ5 `statement_flags` (both models), the context ledger, DQ3 `behavior_states_v3` and DQ6 roles. Activity bins and work are not inputs. Still old: directed reads by naming use `chat_mentions_clean`, not the leading-@ target.
+
+**Two layers:** 31 replication folders. Native tests: 4 (`G12`, `G16` and `G51` mixed; `G38` failed).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on the corrected inputs (C1–C5). No re-freeze needed. Prerequisite before a run: a Jev correction-subtype pass on held-out pairs (about $0.08), not yet done.
+
 ## Question
 Do the agents that issue the most corrections and declines draw more negative stance, and do corrections read by an agent stuck in a self-repetition loop or a blocked spell precede the end of that loop or spell? At swarm level, do periods with more or stronger enforcement have shorter loops? If so, friction is the price of error correction, and a swarm without enforcers loops longer (HH210).
 

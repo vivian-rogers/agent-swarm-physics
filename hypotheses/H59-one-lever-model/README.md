@@ -17,6 +17,24 @@
 **From:** HH251 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` ("Making the faithful ones better") · **Models:** `physics-models/02-nonequilibrium-ising/`, `physics-models/09-hawkes/`
 **Data inputs (shared tables first):** DQ1 context ledger (`context_ledger_items`, via H43's per-call table `data/processed/H43-kick-refractory-window/calls.parquet`, itself built from shared `call_windows`), leading-@ nudge targets (H30's `h30lib.leading_targets`, imported read-only; queued for `infra/shared/`), `roster`, `chat_core`. Round-1b numbers from H30, H35, H39, H43, H04 and H50 enter through `interpretation/lever-table.md` (predictions, ground-truth axis).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H59 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q5. The card asks whether one (field, catalyst, delay) triple per input class describes every operator lever.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Call-level transitions on the ledger clock; the baseline has agent and day effects, run-length aging and time since the agent's first call (Data scheme). | removed |
+| Exogenous field (kickoff/goal/operator) | partly | The kick classes are the fields under study; unaddressed chatter and bookends read at the call are baseline nuisance terms. Kickoffs are too few per period to test (stated limit). | removed |
+| Shared model priors | partly | Agent fixed effects in the baseline; there is no family-field null (axis C). Close with per-family triples or a lab interaction on κ and h (§1, row 3). | open |
+| Contemporaneous convergence | partly | Kicks are timed at the receiving call; a pre-read term (lag −1) absorbs sender selection on the recipient's current state. A mention-driven talk call may still be a co-response to the same earlier turn; no in-flight placebo. | partly |
+
+**Inputs:** round 1 uses the context ledger (through H43's per-call table built from `call_windows`) and the leading-@ nudge target. Activity bins, work, failures and embeddings are not inputs. Still old: none of the listed inputs.
+
+**Two layers:** 3 replication folders (G51, G38, G04). Native tests: 3 (`NE43` supported; `G05` mixed; `NE38` descriptive).
+
+**Confirm script:** `analysis/confirm.py` exists, frozen and dry-run, built on the corrected inputs (C1–C5 on the #51 tail). No re-freeze needed.
+
 ## Question
 Can every operator input class (nudge, human message, @-mention, kickoff, operator message to one agent) be described by one triple (field strength, catalytic strength, read-out delay) in a single generalized linear response, so that a model fitted on three classes predicts the fourth?
 

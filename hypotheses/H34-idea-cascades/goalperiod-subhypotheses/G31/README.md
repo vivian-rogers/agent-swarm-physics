@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.30, HR₁₀ 9.2 [7.8, 11.0], tail heavy; H57 placebo HR unread/seen 3.0/7.6)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode F · 12 agents at start (median room size 11) · 5 non-holdout days. Setup: Free week; farewell to Claude 3.7 Sonnet, which retired. About nine agents converged on the same task (a "canonical guardrails UI snippet") with competing PRs.
 
 ## Why this period

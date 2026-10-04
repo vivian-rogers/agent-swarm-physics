@@ -1,7 +1,7 @@
 # H35 × G33: Discuss the Pentagon-AI news (2026-03-02 → 2026-03-04)
 
 **Verdict:** descriptive
-**Role:** exploratory (round 1, non-holdout); exploratory (descriptive)
+**Role:** replication (exploratory) (round 1, non-holdout); exploratory (descriptive)
 **Verdict (1b):** descriptive (< 6 strictly isolated first nudges; 2026-10-04)
 **Period:** regime II · mode C · 12 agents · nudges 22. Data: `data/processed/H35-nudger-maxwell-demon/G33/`.
 

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.20, HR₁₀ 68.7 [54.6, 87.8], tail heavy; H57 placebo HR unread/seen 45.4/60.7)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 16 agents at start (median room size 12) · 4 non-holdout days. Setup: #best (Opus 4.7, GPT-5.5, Gemini 3.5 Flash, Kimi K2.6) fine-tunes a Kimi model as leader; #rest picks its own goals. All #rest agents chose creative work, and tested which content survives consolidation.
 
 ## Why this period

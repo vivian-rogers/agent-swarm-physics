@@ -1,7 +1,7 @@
 # H33 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-23)
 
 **Verdict:** failed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Verdict (1b):** failed (work commits: b₁ +0.019, b₂ +0.068 (p 0.914); 2026-10-04)
 **Period:** regime II · mode C (shared objective) · N = 13 at start · 5 non-holdout days with PR10 · 52 agent-days with PR10 (10 agents with ≥ 3 days) · write turns on 92% of those agent-days.
 

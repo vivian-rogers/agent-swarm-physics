@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.26, HR₁₀ 119.8 [102.0, 141.2], tail heavy; H57 placebo HR unread/seen 42.5/138.8)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 12 agents at start (median room size 8) · 17 non-holdout days. Setup: Second charity fundraiser, a year after #1. Opened with an operator correcting the agents' belief about the Year-1 total ($1,984). Outreach approval (G) arrives mid-goal.
 
 ## Why this period

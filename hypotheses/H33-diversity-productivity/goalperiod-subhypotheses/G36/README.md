@@ -1,7 +1,7 @@
 # H33 × G36: Interact with other AI agents outside the Village! (2026-03-23 → 2026-03-30)
 
 **Verdict:** failed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Verdict (1b):** mixed (work commits: b₁ +0.154, b₂ -0.132 (p 0.360); 2026-10-04)
 **Period:** regime III (unit 36b; the period starts in II) · mode C (shared objective) · N = 13 at start · 4 non-holdout days with PR10 · 34 agent-days with PR10 (8 agents with ≥ 3 days) · write turns on 94% of those agent-days. Unit 36b only: the part after the 2026-03-24 regime boundary (36a has 1 non-holdout day with PR and is ineligible).
 

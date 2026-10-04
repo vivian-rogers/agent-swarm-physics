@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode K (competition) · N = 4 at start · 15 non-holdout active days · events inside: NE02
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (unchanged)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode M (mixed) · N = 7 at start · 5 non-holdout active days · events inside: NE04
 
 ## Why this period

@@ -1,7 +1,7 @@
 # H39 × NE34: Goal kickoffs (every non-holdout consecutive pair in one regime)
 
 **Verdict:** mixed
-**Role:** exploratory (round 1, non-holdout; spanning test)
+**Role:** replication (exploratory) (round 1, non-holdout; spanning test)
 **Period:** see Prediction for the windows; non-holdout days only.
 
 ## Why this test

@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime III · mode C (shared objective) · N = 16 at start · 4 non-holdout active days · events inside: NE31
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1: failed; corrected tables, same rule)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode C · 10 agents (catalog) · 5 non-holdout days · 4.0 h/day (empirical median window).
 
 ## Why this period

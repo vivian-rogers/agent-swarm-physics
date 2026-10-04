@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory (E-P + E-C; two-room contrast (T6))
+**Role:** replication (exploratory) (E-P + E-C; two-room contrast (T6))
 **Period:** regime II · mode C · 13 agents · #best, #rest · 5 non-holdout days (19.9 active h).
 
 ## Why this period

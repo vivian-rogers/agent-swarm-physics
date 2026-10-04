@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** inside #36 (2026-03-23 → 03-30); the NE14 rollout start (03-11) is in held-out #34
 
 ## Why this test

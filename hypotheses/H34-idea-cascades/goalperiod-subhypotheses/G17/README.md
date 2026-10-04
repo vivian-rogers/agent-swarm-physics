@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** supported (ledger visibility: R̂ 0.25, HR₁₀ 11.5 [5.9, 24.5], tail ok; H57 placebo HR unread/seen 10.8/17.6)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode I · 7 agents at start (median room size 7) · 5 non-holdout days. Setup: Each agent builds a personal website with a new codex tool; deployment know-how split agents into the lucky and the stuck.
 
 ## Why this period

@@ -1,7 +1,7 @@
 # H39 × NE41: Forced context erasure at the 41-turn consolidation cap (regime III)
 
 **Verdict:** failed
-**Role:** exploratory (round 1, non-holdout; spanning test)
+**Role:** replication (exploratory) (round 1, non-holdout; spanning test)
 **Period:** see Prediction for the windows; non-holdout days only.
 
 ## Why this test

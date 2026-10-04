@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (bge) / failed (gte)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** spans #2–#51 (35 non-holdout kickoffs; transitions as the object, exception c)
 
 ## Why this test

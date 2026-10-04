@@ -5,6 +5,24 @@
 **Origin:** HH119 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); companions HH105 (loops, not consensus, collapse dimensionality) and HH113 (stuckness predicts output collapse).
 **Definitions used:** Agent; Regime (whitening is per regime; never pooled across 2026-03-24 without a unit split); Agent state, variant *vector* (whitened statement vectors, d = 32); Driving / external field (absorbed by day fixed effects). New named variant proposed for `DEFINITIONS.md` (H33 may not edit it): **"effective dimensionality (agent-day, self-deduplicated, rarefied PR)"**, defined under Observables; it is H12's bias-corrected participation ratio applied to one agent's day after H12's self-repeat removal.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. Every entry rests on this card and its round-1b section.*
+
+**Question served:** Q5. The card asks for an operating point an operator could hold, and finds none. Q4 second: it tests whether content diversity carries information about output.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Day fixed effects and an engaged-minute control (T5; `activity_bins_fixed` in round 1b) absorb the schedule. | removed |
+| Exogenous field (kickoff/goal/operator) | partly | Day fixed effects absorb kickoffs and goal days (Null, shared-field null). | removed |
+| Shared model priors | yes | Agent × unit fixed effects absorb family style (Null). Round 1b repeats PR10 under bge and gte; the null holds in both. | removed |
+| Contemporaneous convergence | no | H33 is an agent-level response curve, not a coupling or influence claim. | n/a |
+
+**Inputs:** round 1b runs on corrected inputs: DQ4 work commits (automated streams excluded), `activity_bins_fixed`, both embeddings and `statement_flags` dedups. Context ledger, failures and leading-@ are not inputs. Round 1's secondary "clean writes" used artifact error flags; round 1b drops that outcome.
+
+**Two layers:** no folder has role `replication`. The common estimator runs on 17 period folders under role `exploratory` (12 eligible units in round 1b). Native tests: 3 (`G51` roles, mixed; `G39` own worlds and `G42` own videos, both support the null reading).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only. Its pipeline is "round 1 exactly": write turns as output and engaged minutes from the old `activity_bins`. **Re-freeze on work commits and `activity_bins_fixed` before any holdout run** (holdout.md item 8).
+
 ## Question
 Daily content diversity (participation ratio, self-repeats removed) vs output: too little (loops) and too much (unfocused) both underperform, with an optimum in between. *Check:* PR vs artifact output per agent-day across periods, with period fixed effects; locate the peak.
 

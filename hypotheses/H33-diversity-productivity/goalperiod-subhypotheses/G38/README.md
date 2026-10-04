@@ -1,7 +1,7 @@
 # H33 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-27)
 
 **Verdict:** mixed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Verdict (1b):** supported (work commits: b₁ +0.050, b₂ -0.166 (p < 0.001); 2026-10-04)
 **Period:** regime III · mode C (shared objective) · N = 12 at start · 17 non-holdout days with PR10 · 98 agent-days with PR10 (10 agents with ≥ 3 days) · write turns on 86% of those agent-days.
 

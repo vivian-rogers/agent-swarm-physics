@@ -1,7 +1,7 @@
 # H32 × NE42: #best and #rest merged into #universe-coordination for #40, split back for #41 (2026-04-27 → 2026-05-15)
 
 **Verdict:** failed (merged pairs show no content transfer in #40; sign p = 0.39)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · spans #39 (mode I, two rooms), #40 (mode C, merged room), #41 (mode I, two rooms). Goal-confounded: each week has its own goal.
 
 ## Why this period

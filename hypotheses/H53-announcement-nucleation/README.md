@@ -7,6 +7,24 @@
 **From:** HH168 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/10-potts/` (kinetic Potts with read-out-gated updates), `physics-models/03-contagion/` (field vs imitation; the shared-field pitfall)
 **Data inputs (shared tables first):** DQ1 `call_windows`, `context_ledger_items`, `context_ledger_turns`; `project_states` (deterministic H11 labels); `artifacts`, `artifact_mentions` (link messages, codes only); DQ2 `reply_graph`; DQ4 `work_commits`; DQ6 `ground_truth_labels` (#26 rounds); `kicks_classified`, `period_units`, `rooms_timeline`, `calendar`, `roster`. Read-only cross-checks: H27 `onsets_round1.parquet`, H31 `events_ep_w30.parquet`.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H53 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q5. The card tests whether an operator can size a pile-on by timing an announcement to the call clock. Q1 second: adoption is gated by reading the link.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Active-time horizons; RR_timely is seed-stratified with pre-seed call and talk controls and an agent fixed-effect variant (O4). The activity null W0 runs on the real call schedules. Late readers' deficit is explained by prior inactivity. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Seed-locked and pre-ramp field worlds simulated (WF0, WFpre); F1 step 22.5; F2 other-room ratio 0.12 on 301 multi-room seeds; `kick_near` flag. One-room periods cannot separate a seed-locked field from read-out triggering (Caveats). | partly |
+| Shared model priors | no | Project adoption with a status rival; no family or content claim. | n/a |
+| Contemporaneous convergence | yes | F3: 1.5% of adopters had no link to the project in context before adopting; F2 other-room agents adopt at 0.12×. Adoption without reading is rare. | removed |
+
+**Inputs:** round 1 uses the context ledger, shared deterministic `project_states`, DQ2 `reply_graph`, the DQ4 work ledger and DQ6 #26 rounds. It never reads `activity_bins` or `outages`. Still old: none of the listed inputs. Embeddings and failures are not inputs.
+
+**Two layers:** 26 replication folders (15 descriptive). Native tests: 4 (`G26` and `G31` mixed; `G30` and `G40` failed).
+
+**Confirm script:** `analysis/confirm.py` exists, frozen and dry-run, built on the corrected inputs (C1–C5). No re-freeze needed.
+
 ## Question
 Is the size of a herding wave set by the receptive fraction: the number of agents whose next model call falls within one cycle after the seeding link, rather than network position or the poster's status?
 

@@ -2,7 +2,7 @@
 
 **Verdict:** n/a
 **Verdict (1b):** n/a
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime III, #37–#51 (non-holdout days)
 
 ## Why this test

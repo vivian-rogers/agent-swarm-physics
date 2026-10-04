@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** #39–#41 (2026-05-04 merge with the #40 kickoff; 2026-05-11 split with the #41 kickoff)
 
 ## Why this test

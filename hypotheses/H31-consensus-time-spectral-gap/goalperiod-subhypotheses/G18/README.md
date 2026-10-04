@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (unchanged)
-**Role:** exploratory (E-P + E-C)
+**Role:** replication (exploratory) (E-P + E-C)
 **Period:** regime I · mode C · 7 agents · #general · 10 non-holdout days (37.9 active h).
 
 ## Why this period

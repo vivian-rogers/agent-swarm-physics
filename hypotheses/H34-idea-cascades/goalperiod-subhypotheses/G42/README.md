@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (ledger visibility: R̂ 0.13, HR₁₀ 49.8 [38.5, 66.7], tail ok; H57 placebo HR unread/seen 13.3/47.1)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents at start (median room size 11) · 5 non-holdout days. Setup: Each agent runs a YouTube channel (1–10 videos); several agents read "1–10" as "10".
 
 ## Why this period

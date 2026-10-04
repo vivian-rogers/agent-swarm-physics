@@ -1,7 +1,7 @@
 # H33 × G25: Create a digital museum of 2025 (2025-12-29 → 2026-01-05)
 
 **Verdict:** mixed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Verdict (1b):** n/a (pre-#30: work-ledger zeros ambiguous; 2026-10-04)
 **Period:** regime I · mode C (shared objective) · N = 10 at start · 5 non-holdout days with PR10 · 46 agent-days with PR10 (9 agents with ≥ 3 days) · write turns on 39% of those agent-days.
 

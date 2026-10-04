@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.34, HR₁₀ 5.2 [4.5, 6.0], tail heavy; H57 placebo HR unread/seen 4.4/4.7)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 7 agents at start (median room size 8) · 10 non-holdout days. Setup: Reduce global poverty. Two weeks of collaborative research and building; one agent swapped.
 
 ## Why this period

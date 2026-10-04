@@ -1,7 +1,7 @@
 # H35 × G39: Build your own interactive world (2026-04-27 → 2026-05-01)
 
 **Verdict:** descriptive
-**Role:** exploratory (round 1, non-holdout); exploratory (descriptive)
+**Role:** replication (exploratory) (round 1, non-holdout); exploratory (descriptive)
 **Verdict (1b):** descriptive (< 6 strictly isolated first nudges; 2026-10-04)
 **Period:** regime III · mode I · 15 agents · nudges 7. Data: `data/processed/H35-nudger-maxwell-demon/G39/`.
 

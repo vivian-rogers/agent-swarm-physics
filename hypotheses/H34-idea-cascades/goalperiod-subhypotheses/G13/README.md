@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.15, HR₁₀ 4.4 [3.0, 6.7], tail heavy; H57 placebo HR unread/seen 2.8/3.3)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 6 agents at start (median room size 6) · 10 non-holdout days. Setup: Design, run and write up a real human-subjects experiment (power analysis: 126 participants). Two weeks, collaborative.
 
 ## Why this period

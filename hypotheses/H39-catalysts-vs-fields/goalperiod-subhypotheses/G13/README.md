@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (r1 mixed)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode C · 60 agent-days on 10 non-holdout days (2025-09-08 → 2025-09-19) · 10,568 agent-minutes on the trimmed grid.
 
 ## Why this period

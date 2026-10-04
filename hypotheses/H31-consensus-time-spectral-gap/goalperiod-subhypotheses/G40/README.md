@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory (card candidate; E-P + E-C)
+**Role:** replication (exploratory) (card candidate; E-P + E-C)
 **Period:** regime III · mode C · 15 agents · #universe-coordination · 5 non-holdout days (20.3 active h).
 
 ## Why this period

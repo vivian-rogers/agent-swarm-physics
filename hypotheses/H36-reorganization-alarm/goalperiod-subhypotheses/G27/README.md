@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** supported (bge) / failed (gte)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode K (competition) · N = 10 at start · 10 non-holdout active days
 
 ## Why this period

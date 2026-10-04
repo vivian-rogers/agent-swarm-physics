@@ -1,7 +1,7 @@
 # H33 × G40: Connect your worlds into a 3D universe! (2026-05-04 → 2026-05-11)
 
 **Verdict:** n/a
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Verdict (1b):** n/a (< 5 agent-days above the new breakpoint; 2026-10-04)
 **Period:** regime III · mode C (shared objective) · N = 15 at start · 5 non-holdout days with PR10 · 45 agent-days with PR10 (9 agents with ≥ 3 days) · write turns on 93% of those agent-days.
 

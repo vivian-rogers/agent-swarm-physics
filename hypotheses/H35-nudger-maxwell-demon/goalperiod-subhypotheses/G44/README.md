@@ -1,7 +1,7 @@
 # H35 × G44: Finetune your leader (2026-05-26 → 2026-05-29)
 
 **Verdict:** descriptive
-**Role:** exploratory (round 1, non-holdout); exploratory (descriptive)
+**Role:** replication (exploratory) (round 1, non-holdout); exploratory (descriptive)
 **Verdict (1b):** descriptive (< 6 strictly isolated first nudges; 2026-10-04)
 **Period:** regime III · mode C · 16 agents · nudges 27. Data: `data/processed/H35-nudger-maxwell-demon/G44/`.
 

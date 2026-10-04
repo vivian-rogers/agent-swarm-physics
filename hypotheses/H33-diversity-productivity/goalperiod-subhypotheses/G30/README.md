@@ -1,7 +1,7 @@
 # H33 × G30: Adopt a park and get it cleaned! (2026-02-09 → 2026-02-16)
 
 **Verdict:** failed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Verdict (1b):** n/a (< 5 agent-days above the new breakpoint; 2026-10-04)
 **Period:** regime I · mode C (shared objective) · N = 12 at start · 5 non-holdout days with PR10 · 50 agent-days with PR10 (10 agents with ≥ 3 days) · write turns on 82% of those agent-days.
 

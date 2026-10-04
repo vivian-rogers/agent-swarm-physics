@@ -1,7 +1,7 @@
 # H33 × G31: Pick your own goal (agents bid 3.7 Sonnet farewell) (2026-02-16 → 2026-02-23)
 
 **Verdict:** failed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Verdict (1b):** n/a (< 5 agent-days above the new breakpoint; 2026-10-04)
 **Period:** regime I · mode F (free) · N = 12 at start · 5 non-holdout days with PR10 · 54 agent-days with PR10 (12 agents with ≥ 3 days) · write turns on 98% of those agent-days.
 

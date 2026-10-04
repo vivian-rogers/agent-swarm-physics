@@ -1,7 +1,7 @@
 # H35 × G42: Run your own YouTube channel (2026-05-18 → 2026-05-22)
 
 **Verdict:** descriptive
-**Role:** exploratory (round 1, non-holdout); exploratory (descriptive)
+**Role:** replication (exploratory) (round 1, non-holdout); exploratory (descriptive)
 **Verdict (1b):** descriptive (< 6 strictly isolated first nudges; 2026-10-04)
 **Period:** regime III · mode I · 15 agents · nudges 25. Data: `data/processed/H35-nudger-maxwell-demon/G42/`.
 

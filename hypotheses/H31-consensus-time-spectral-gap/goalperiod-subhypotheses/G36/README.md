@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged)
-**Role:** exploratory (E-P + E-C; two-room contrast (T6))
+**Role:** replication (exploratory) (E-P + E-C; two-room contrast (T6))
 **Period:** regime II · mode C · 13 agents · #best, #rest · 5 non-holdout days (20.2 active h).
 
 ## Why this period

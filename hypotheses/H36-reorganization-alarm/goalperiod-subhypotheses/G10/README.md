@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (unchanged)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode I (each agent its own objective) · N = 7 at start · 5 non-holdout active days · events inside: NE27, NE03
 
 ## Why this period

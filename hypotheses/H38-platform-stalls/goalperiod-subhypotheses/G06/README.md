@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (round 1: supported; corrected tables, same rule)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode K · 4 agents (catalog) · 15 non-holdout days · 2.0 h/day (empirical median window).
 
 ## Why this period

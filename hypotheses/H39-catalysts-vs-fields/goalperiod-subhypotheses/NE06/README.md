@@ -1,7 +1,7 @@
 # H39 × NE06: Internal-review prompt changes; Gemini one tool call per turn (2025-11-20, #20)
 
 **Verdict:** supported
-**Role:** exploratory (round 1, non-holdout; spanning test)
+**Role:** replication (exploratory) (round 1, non-holdout; spanning test)
 **Period:** see Prediction for the windows; non-holdout days only.
 
 ## Why this test

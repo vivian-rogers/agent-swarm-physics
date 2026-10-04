@@ -18,6 +18,24 @@
 - Active time: the shared-table convention in `infra/README.md`.
 - New terms, proposed for DEFINITIONS.md: **consensus event**, **consensus time**, **exposure spectral gap λ₂** (variants below), **time-respecting DeGroot gap γ_tr**.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. Every entry rests on this card and its round-1b section.*
+
+**Question served:** Q2. The card asks whether consensus time is set by the graph (coupling) or by the kickoff (field). Q1 second: λ₂ is a reading-graph coupling measure.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | τ is in active hours. λ₂ tracks message volume; the post hoc clock split (Results, Synthesis 1) shows message rate alone does not predict τ. No trim or block-shift null. | partly |
+| Exogenous field (kickoff/goal/operator) | yes | Model F and M0 (Null N0); T4 kick locking against block-and-day placebo windows (N1); kickoff-frozen events excluded from τ fits. E-C alignment is raw, with no `goal_fields` regression. | partly |
+| Shared model priors | partly | Not handled. E-C uses a regime-whitened cosine without `style_resid`. Close with `style_resid` on E-C (§1, row 3). | open |
+| Contemporaneous convergence | yes | Not handled. Gradual consensus may be agents reaching the same repo without reading. Close with an in-flight placebo: adoption after read vs posted-but-unread at matched lag (§1, row 4). | open |
+
+**Inputs:** round 1b uses the context ledger, shared deterministic project states, the DQ4 work ledger (#30 onward) and DQ6 ballots. Still old: E-C content uses one embedding model and no `style_resid` (round 1b: "content inputs did not change"); λ₂^ment uses `mentions_roster`, not the leading-@ target. Activity bins and failures are not inputs.
+
+**Two layers:** no folder has role `replication`. 26 period folders carry the round-1 common estimator under role `exploratory` (E-P on 20 periods, 28 blocks; E-C on 35 blocks). Native tests: 2 (`G26` per election round, supported; `NE42` merge A-B-A, mixed).
+
+**Confirm script:** `analysis/confirm_holdout.py` exists, dry-run only. Its pipeline is "identical to round 1": call-start visibility and H11's nondeterministic labels. Round 1b did not re-freeze `frozen_rule.json`. **Re-freeze on ledger visibility and shared labels before any holdout run** (holdout.md item 8).
+
 ## Question
 Does the time a swarm takes to reach consensus scale as 1/λ₂, where λ₂ is the algebraic connectivity of its exposure graph (HH68)? Rival scalings:
 - N^a, the voter-model scaling (a ≈ 1 on a complete graph);

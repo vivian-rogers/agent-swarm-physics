@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** mixed (round 1: supported; corrected tables, same rule)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime II · mode C · 13 agents (catalog) · 5 non-holdout days · 4.0 h/day (empirical median window). Splits inside the period: 2026-03-24 (regime II → III).
 
 ## Why this period

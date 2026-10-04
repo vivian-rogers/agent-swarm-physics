@@ -14,6 +14,24 @@
 **From:** HH175 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/02-nonequilibrium-ising/` (generalized to categorical states as in H14), `physics-models/05-replicator-dissipation/` (dissipation is a property of the one-way mechanism)
 **Data inputs (shared tables first):** `states_turn` (H14's action classes), `actions_bash_head_fixed` (`error_class`; `system_class` is `none` on every row, so it cannot separate anything), `call_windows` (DQ1; `gap_kind`), `calendar`, `period_units`, `period_step_changes`, `roster`, `kicks_classified` (first nudge), `outages` (descriptive), the NE catalog, `data/raw/ai-village/CHANGELOG.md` (event dates, as ground truth), and raw `events` SEARCH_HISTORY rows for numeric answer features only (NE40 dating). H14's estimators are imported read-only (`hypotheses/H14-behavior-entropy-production/analysis/h14lib.py`, which imports H05's `ep.py`). Jev v3 behavior states: only 50 windows were labelled when round 1 started, so they are round 2.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H56 has no round-1b section; round 1 already ran on most corrected inputs.*
+
+**Question served:** Q6. The card asks who owns fine-action irreversibility: the platform or the agent. Q2 second: scaffold steps (field) are tested against task mix and agent traits.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | The scaffold is the object. The agent-only chain cuts scaffold records and scaffold-set call starts (`gap_kind`) and drops a 3-transition burn-in (Amendment 1). Weekday-matched placebos (N1) cover calendar effects (R3). | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Goal kickoffs are a scored class against the class-level random-date null (N2); they move the agent-only chain more than scaffold steps (R1 wins). Operator events (NE10, NE43) are their own class. | removed |
+| Shared model priors | yes | Lab differences tested by a within-period label permutation (N4); they survive scaffold removal (η² 0.40, R4 wins) and are reported as an agent trait, not a coupling. | removed |
+| Contemporaneous convergence | no | Within-agent irreversibility; no copying or influence claim. | n/a |
+
+**Inputs:** round 1 uses H14's `states_turn` and `call_windows`; it never reads `activity_bins` or `stall_minutes`. Still old: chain cuts use `actions_bash_head_fixed.error_class`, not `turn_outcomes.failed`; the old `outages` table is read for description only. Jev v3 states were not yet available.
+
+**Two layers:** 34 replication folders. Native tests: 4 (`NE14` and `NE40` failed; `G51` mixed; `NE43` descriptive).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on `states_turn` and `call_windows`. It uses no activity table and no visibility rule, so no re-freeze is required (holdout.md item 8).
+
 ## Question
 Does the entropy-production rate of agents' turn-level behavior jump at scaffold changes (prompts, tools, harness) but not at goal, roster or room changes, or at the nudger switch-off (NE43), and do family differences vanish once scaffold actions are removed? If so, EP is a log-only detector of platform changes, including undocumented ones (NE40, NE43).
 

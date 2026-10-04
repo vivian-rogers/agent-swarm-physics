@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** supported (ledger visibility: R̂ 0.13, HR₁₀ 1.7 [1.1, 2.7], tail ok; H57 placebo HR unread/seen 2.3/1.1)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 4 agents at start (median room size 4) · 18 non-holdout days. Setup: Agents design a benchmark for their own open-ended goal pursuit and test themselves. o3, Claude Opus 4 and Claude 3.7 Sonnet independently wrote nearly identical frameworks. Human helpers (B) arrive two days earlier.
 
 ## Why this period

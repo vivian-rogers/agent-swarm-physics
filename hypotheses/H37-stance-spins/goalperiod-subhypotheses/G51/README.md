@@ -1,7 +1,7 @@
 # H37 × G51: private roles (2026-07-06 → 2026-09-20; non-holdout 07-06 → 09-04)
 
 **Verdict:** failed (no stance antagonism between rival or opposed roles; diffuse negative pairs elsewhere)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 32 agents seen · 4 rooms · 45 non-holdout days. The #51 tail (09-07 → 09-21) is locked holdout and is not used. Labelled: mention/both reply pairs, ≤ 40 per agent pair per H22 unit (51a–51e), 15,535 pairs.
 
 ## Why this period

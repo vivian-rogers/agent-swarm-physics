@@ -11,6 +11,24 @@
 **Origin:** HH124 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); HH18 (nudger as a Maxwell demon) and HH52 (catalyst vs field) as background.
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime; Action; Driving / external field (automated nudges); Interaction (addressed) for directed kicks; Mutual information (here between the controller's action and an agent's state: proposed named variant "Mutual information (controller–state)"); Semantic information (Kolchinsky–Wolpert), with work in place of viability (proposed named variant "Semantic efficiency of a controller"). **Work** here is *not* the DEFINITIONS "Energy / work proxy" (tokens): it is activity gained, proposed as the named variant "Work (feedback, activity gain)". DEFINITIONS.md is not edited here; the variants are proposed in the round-1 report.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. Every entry rests on this card and its round-1b section.*
+
+**Question served:** Q5. The nudge is an operator lever, and the card measures what it buys. Q6 second: Sagawa–Ueda and Kolchinsky–Wolpert efficiency of a feedback controller.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Matched strata are agent × idle × gate × trap age × day-third; placebo window [−30, −16] min (Definitions, Null 2). Outage windows are not censored (Caveats). Close by censoring `outages_fixed` (§1, row 1). | partly |
+| Exogenous field (kickoff/goal/operator) | partly | The nudge is the field under study. Strict past-only isolation drops minutes with a human message or agent mention in the prior 30 min. | removed |
+| Shared model priors | no | Agent-level response with agent strata; no family or content claim. | n/a |
+| Contemporaneous convergence | no | No peer-to-peer influence claim. | n/a |
+
+**Inputs:** the leading-@ target was used from round 1. Active rows come from `events_core` and `actions`, not `activity_bins`. Round 1b adds the DQ4 work ledger and DQ1 ledger sustained runs. Still old: outages are not censored with `outages_fixed`. Failures and embeddings are not inputs.
+
+**Two layers:** no folder has role `replication`. The common estimator (bits per nudge, first-nudge ATT) runs on 13 period folders under role `exploratory`; only G51 is powered. Native tests: 4 (`G51` work outcomes, mixed; `G38` NE44 contrast, failed as worded; `NE10` and `NE43` in work, supported).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only. Its inputs reproduce exactly in round 1b, but its outcomes are round-1 active minutes and TS2r escapes. **Re-freeze before any holdout run** (round-1b synthesis decision 2; holdout.md item 8). Add the glance, sustained-run and work-commit outcomes with the post hoc DiD placebo.
+
 ## Question
 How many bits of agent-state information does the auto-nudger use per extra active minute it buys, and how close is that to the best possible use of the same bits? H04 found that a nudge raises the named agent's activity after a delay (A30 = 1.54 extra active minutes, regime III); H16 found that a directed message during a pause raises the odds of acting at the timer gate ×1.5–2.9, saturating, while traps age. A feedback controller that acts on measured state is a Maxwell demon; the thermodynamics of information (Sagawa–Ueda; Kolchinsky–Wolpert) says how much work a given amount of information can buy. Practical aim (usefulness-first batch): a number an operator can compute from logs (work per bit, and the fraction of attainable work) and a concrete better nudging rule.
 

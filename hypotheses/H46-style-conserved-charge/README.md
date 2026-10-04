@@ -12,6 +12,24 @@
 **From:** HH170 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/04-semantic-information/`, `physics-models/11-vector-spins/`
 **Data inputs (shared tables first):** `text_features` (H13's 20 style features), `embeddings/statements` + DQ5 `statements_style_resid32_bge_small.npy` / `statements_white32_bge_small.npy` / `chat_bge_small.npy`, DQ5 `statement_flags` (`self_repeat`), `period_units`, NE catalog, DQ1 `context_ledger_turns` (`reset_forced`, `reset_consol`, `reset_session`), DQ4 `work_daily` (agent work), DQ6 `ground_truth_labels` (#51 roles, #12 teams and judges), `roster`, `rooms_timeline`.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H46 has no round-1b section; round 1 already ran on most corrected inputs.*
+
+**Question served:** Q2. The card separates the agent's substrate (style, a model prior) from its state (content). Q4 second: the Kolchinsky–Wolpert test asks what information style carries about output.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | Day-level displacement against the agent's own placebo transitions; no activity statistic. A post hoc gap-matched placebo removes the weekend gap. | n/a |
+| Exogenous field (kickoff/goal/operator) | yes | Goal switches are the intervention. The day-demeaned variant removes the goal/day field but is not used for verdicts (O1). The goal-switch style shift sits in topic-adjacent features (PH2). Close by residualizing style on `goal_fields` topic directions (§1, row 2). | partly |
+| Shared model priors | yes | The impostor is the object. Content uses DQ5 `style_resid`; the fingerprint is also tested within Anthropic agents (P7). Lab-dependent style susceptibility is post hoc (PH5). | removed |
+| Contemporaneous convergence | no | No copying or influence claim. | n/a |
+
+**Inputs:** round 1 uses DQ5 `style_resid` and `statement_flags`, ledger reset flags, the DQ4 work ledger and DQ6 ground truth. Activity, failures and leading-@ are not inputs. Still old: content uses bge only; gte was not run (axis F).
+
+**Two layers:** 37 replication folders (32 periods plus 5 class folders: NE34, NE42, NE43, NE32, NE14). Native tests: 4 (`G12`, `G51` and `NE41` failed; `G44` descriptive).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on the corrected inputs (C1–C7). No re-freeze needed. Adding gte as a sensitivity before the run would close the model-dependence gap.
+
 ## Question
 Is an agent's style vector invariant under every natural experiment (context erasure, room cuts and merges, goal switches, roster changes, scaffold steps, nudger off) while its content is not, so that style belongs to the substrate, carries no semantic information about viability, and works as an identity fingerprint?
 

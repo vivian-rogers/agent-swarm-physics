@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** descriptive (was supported; label renumbering)
-**Role:** exploratory (card candidate; E-P + E-C)
+**Role:** replication (exploratory) (card candidate; E-P + E-C)
 **Period:** regime I · mode C · 7 agents · #general · 10 non-holdout days (40.0 active h).
 
 ## Why this period

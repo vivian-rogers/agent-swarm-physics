@@ -1,7 +1,7 @@
 # H39 × NE16: Fix of empty responses that left agents stuck; memory-instruction fix (2026-03-26, #36)
 
 **Verdict:** failed
-**Role:** exploratory (round 1, non-holdout; spanning test)
+**Role:** replication (exploratory) (round 1, non-holdout; spanning test)
 **Period:** see Prediction for the windows; non-holdout days only.
 
 ## Why this test

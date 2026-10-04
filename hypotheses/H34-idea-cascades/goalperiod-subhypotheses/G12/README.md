@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.28, HR₁₀ 6.2 [4.7, 8.4], tail heavy; H57 placebo HR unread/seen 9.8/11.3)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode M · 7 agents at start (median room size 7) · 5 non-holdout days. Setup: Two teams debate (Asian Parliamentary format) while one agent judges. Teams were chosen by the agents.
 
 ## Why this period

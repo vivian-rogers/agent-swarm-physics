@@ -6,6 +6,24 @@
 **Origin:** HH52 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); related HH116 (operator susceptibility, H30), HH124 (nudger as Maxwell demon, H35), HH53 (traps, H16).
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime; Action; Agent state (categorical: action class), in H14's coarse scheme ("Action (turn-merged)" records, minute grid); Agent state (vector): the agent's 30-min embedding vector (`embeddings/agent_win30`); Interaction (broadcast) for room messages and Interaction (addressed) for mentions; Driving / external field (goals, human messages, nudges). New named terms proposed for DEFINITIONS.md (owner to add): **"field effect (occupancy shift)"**, **"catalytic effect (escape at fixed occupancy)"**, **"lever episode"** (defined below).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. Every entry rests on this card and its round-1b section.*
+
+**Question served:** Q5. The deliverable is a lever taxonomy (nudge, human message, mention, erasure, kickoff). Q2 second: each lever is split into an occupancy field and a rate (catalytic) part.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Agent-days trimmed to [first, last] record; matched strata include day third and other agents' activity level; round 1b adds the `lever_design` presence cut. Steps are judged against within-goal day-boundary placebos (N3). | removed |
+| Exogenous field (kickoff/goal/operator) | yes | A 30-min quiet period and next-kick cuts isolate one lever (Lever classes). Room steps are kickoff-confounded (NE42 inconclusive); the NE43 bookend stop is confounded with the #focus room. | partly |
+| Shared model priors | partly | Controls are the same agent, so agent style is held fixed in behavior and content drift. Content clusters partly track style (Caveats); no `style_resid`. Close with `style_resid` vectors for O5 and O6 (§1, row 3). | partly |
+| Contemporaneous convergence | yes | Not handled. Content drift toward a mentioning message may be convergence on the same room topic. Close with an in-flight placebo: drift toward messages posted but not yet read at matched lag (§1, row 4). | open |
+
+**Inputs:** round 1b uses the leading-@ nudge target, the DQ8 `lever_design` cut, Jev v3.1 states (V4) and a receiving-call (ledger) sensitivity. B4 states come from H14's grid, which never read `activity_bins`. Still old: content drift uses bge only, without `style_resid`; agent @-mentions use `chat_mentions_clean`. The work ledger and failures are not inputs.
+
+**Two layers:** no folder has role `replication`. The common estimator runs on 32 period folders and 10 step folders under role `exploratory`. Native tests: 3 (`NE43` mixed; `NE44` failed; `NE10` on V4, mixed).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, and uses round-1 nudge targets and windows. **Re-freeze on leading-@ targets, fixed bins and ledger visibility before any holdout run** (holdout.md items 8 and 12).
+
 ## Question
 Some interventions lower activation barriers without changing which states are favored: *catalysts* (the nudger, human helpers, the sign-in hand-off). Others tilt the landscape: *fields* (goals, prompt changes). Catalysts change rates but not stationary occupancies; fields change occupancies. *Check:* across the nudger switching on (NE10) and off/on (NE23), compare escape rates from idle states with the stationary idle fraction.
 

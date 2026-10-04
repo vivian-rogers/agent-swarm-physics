@@ -5,6 +5,24 @@
 **Origin:** HH126, merging HH65 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`). Related: H27 (herding early warning, HH109) and H25 (criticality dial), running in parallel; H38 (platform stalls) supplies the outage mask.
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population N(t), **day-present variant** (roster agents, Claude Code excluded, with ≥ 10 active minutes, `activity_bins.state ≥ 3`, on that PT day; H38 uses ≥ 1 minute); Regime (alarm baselines cross regime boundaries on purpose, because the boundary is a transition to detect; this is the card's named exception (c), transitions as the object); Agent state, **categorical variant = the 4-state activity class** of `activity_bins` (silent / idle / act / talk; the regime-invariant action class); Agent state, **vector variant = whitened statement mean per agent × 30-min window** (`embeddings/agent_win30`, regime whitener, n = 32, unit-normalized; H01's "whitened statement mean" at window instead of day resolution); Mutual information between agents. **New named variants proposed** (not edited into DEFINITIONS.md; outside this card's scope): *multi-information (Gaussian, activity spins)*, *multi-information (pairwise expansion, behavior states)*, *content multi-information (overlap)*, *heat-capacity analogue (alignment-energy variance)*, *joint silence / village-off gap* (H38's definitions, reused as the outage mask).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. Every entry rests on this card and its round-1b section.*
+
+**Question served:** Q5. The deliverable is an operator alarm with measured hit and false-alarm rates. Q3 second: multi-information and susceptibility peaks would be collective order at transitions.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Within-day circular-shift surrogates; stall mask from `outages_fixed`; round-1b DQ8 trim (`Z_act_trim`, AUC 0.50). Round-1 activity hits came from day-length and roster changes (PH3) and vanished on the fixed table. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Monday placebos (Null 3). Post hoc detrend (PH2): about 40% of the Z_cont signal is a within-day post-kickoff drift. No `goal_fields` regression. Close by regressing window vectors on `goal_fields` before Z_cont (§1, row 2). | partly |
+| Shared model priors | partly | Not handled. Z_cont and R1 use raw whitened vectors under both models, without `style_resid`. Close with `style_resid` vectors (§1, row 3). | open |
+| Contemporaneous convergence | no | The alarm makes no copying or influence claim. | n/a |
+
+**Inputs:** round 1b uses `activity_bins_fixed`, `outages_fixed`, both embeddings with `self_repeat` dedupe and the DQ8 trim. Context ledger, work, failures and leading-@ are not inputs. Still old: none of the listed inputs. "Behavior states" are the 4-state activity classes, not Jev labels.
+
+**Two layers:** no folder has role `replication`. The common estimator runs on 33 scored kickoffs (`NE34`, spanning #2–#51) and 33 G folders under role `exploratory`. Native tests: 4 (`NE40` and `NE45` silent as predicted, supported; `NE39` and `NE43` failed).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, and reads the old `activity_bins`. **Re-freeze on `activity_bins_fixed`, `outages_fixed` and the gte variant before any holdout run** (round-1b synthesis decision 2; holdout.md item 8).
+
 ## Question
 The total correlation among agents' states and the heat-capacity analogue (variance of the alignment energy) should spike when the swarm reorganizes: goal changes, room events, scaffold changes. One alarm for "something structural is happening" (merges HH65). *Check:* peak detection against known transitions; false-alarm rate on placebo days.
 

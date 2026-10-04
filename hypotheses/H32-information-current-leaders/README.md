@@ -6,6 +6,24 @@
 **Origin:** HH118 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`), which extends HH93 (influence lives in content, not timing).
 **Definitions used:** agent; regime (whitening basis = the majority regime of the goal period's days); goal period as the unit of analysis; driving / external field (goal text + kickoff per room, extended to a multi-direction field subspace, see Model); agent state, variant *vector (for model 11)*: per-regime whitened bge-small statement embeddings (`common.load_whitener`, n = 32), unit-normalized per message; interaction (broadcast): j is exposed to i's message if j's `rooms_timeline` room at the message time is the message's room (the rule `exposure.parquet` uses), and the message precedes j's message. Proposed named variants (not yet in DEFINITIONS.md; outside this card's edit scope): **content transfer (exposure-conditioned, cross-validated Gaussian)** and **outflow centralization Φ**, both defined under Observables.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. Every entry rests on this card and its round-1b section.*
+
+**Question served:** Q2. The card separates content coupling from fields and from convergence. Q5 second: it tests whether formal leaders are levers on content.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | The day×room field sits in the baseline (Model). Nulls are a cross-day circular shift (N1) and a within-day shift (N1w, A1c). The estimator uses content at message times, not activity. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | A K = 5 field subspace (goal, kickoffs, period mean, day×room directions) is projected out. Human and automated messages are drive terms in the baseline. The transfer count depends on K (25/18/7 of 32 periods at K = 1/5/10; Caveats). | partly |
+| Shared model priors | yes | Round 1b runs bge with `style_resid` (18/32 periods) and gte (23/32). Existence survives. Top-source identity changes in 10/32 under `style_resid` and in 15/32 across models. | partly |
+| Contemporaneous convergence | yes | Round 1b H57 placebo (read vs unread same-room messages). At τ = 60 s, read beats unread in 17/17 transfer periods; unread carries about a third. The headline T at τ = 15 min is not net of the unread term. | partly |
+
+**Inputs:** round 1b uses the context ledger (call-start exposure), both embeddings, `style_resid` and `statement_flags` dedupe, shared goal fields and DQ6 leader windows. Activity, work and failures are not inputs. Still old: the rival rankings in O10, i.e. mention in-degree from `chat_mentions_clean` (not the leading-@ target) and H02's round-1 timing influence.
+
+**Two layers:** no folder has role `replication`. The common estimator runs on 32 period folders under role `exploratory`, plus NE42. Native tests: 3 (`G26` elected leader, `G35` lead designers, `G44` installed leader), all failed as predicted.
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only. It is "identical to round 1's primary": posting-time exposure and bge alone. **Re-freeze on ledger exposure before any holdout run** (holdout.md items 8 and 15). Add the τ = 60 s unread placebo and gte as frozen clauses at re-freeze.
+
 ## Question
 Content transfer entropy out minus in per agent classifies sources and sinks. The swarm-level concentration of outflow is an order parameter: centralized vs distributed coordination. Content succeeds where activity timing failed (H02; extends HH93). *Check:* source ranking vs the elected leader (#26) and the installed leader (#45, holdout); concentration across modes.
 

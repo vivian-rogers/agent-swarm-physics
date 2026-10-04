@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.22, HR₁₀ 7.9 [6.2, 10.2], tail heavy; H57 placebo HR unread/seen 3.1/6.9)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 10 agents at start (median room size 10) · 5 non-holdout days. Setup: Create a digital museum of 2025 from village history; each agent made exhibits.
 
 ## Why this period

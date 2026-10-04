@@ -7,6 +7,24 @@
 **From:** HH172 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/11-vector-spins/`
 **Data inputs (shared tables first):** shared bge statement embeddings + regime whiteners (`embeddings/statements`, `chat_bge_small`, `intentions_bge_small`, `whitening_<regime>`), `embeddings/agent_day` (+ `agent_day_vec`), `rooms`, `rooms_timeline`, `period_units`, `goal_fields` (`embeddings/goals.parquet`, kind `goal`/`kickoff`/`kickoff_room`), `outages`/`stall_minutes` (village-off windows), `chat_core` + `chat_mentions_clean`, `kicks_classified` (room kickoff times), DQ6 `ground_truth_labels` (`room_assignment` vs `room_presence`), DQ5 style-residualized statement vectors (`statements_style_resid32_bge_small.npy`). DQ5's second embedding model (gte) does not exist yet → embedding swap is round 2.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H47 has no round-1b section; every entry rests on round 1.*
+
+**Question served:** Q1. The card asks whether rooms bound content coherence because they route reading (NE42). Q2 second: C_B cannot tell coupling from a room-level drive (Amendment 1a).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | The room-relabel null permutes labels within each slot and keeps room sizes (N1), so swarm-wide timing cancels in C_B. Village-off windows are dropped with the old `outages` table. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Goal, kickoff and per-room kickoff directions from `goal_fields` are projected out (L1). Room-specific task drives are not separable from coupling: C_B tracks topic separation (Spearman −0.83, post hoc). NE42 is goal-confounded. | partly |
+| Shared model priors | partly | DQ5 `style_resid` vectors as a sensitivity variant (\|ΔC_B\| ≤ 0.13). | removed |
+| Contemporaneous convergence | yes | Not handled. Within-room co-movement may be convergence on a shared room topic. Close with the read-out test: drift toward read vs unread room messages at matched age (R1; §1, row 4). | open |
+
+**Inputs:** still old: village-off masks from `outages` / `stall_minutes`, not `outages_fixed`; content on bge only (no gte); conversational tiers from `chat_mentions_clean`, not DQ2 replies; no context-ledger visibility. DQ5 `style_resid`, the self-repeat flag and DQ6 room assignments are used.
+
+**Two layers:** 5 replication folders. Native tests: 5 (`G38`, `G41`, `G44` supported; `NE42` mixed; `G51` failed).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only. It reads the old `outages` table and bge only. **Re-freeze on `outages_fixed` before any holdout run** (holdout.md item 8); add gte as a sensitivity.
+
 ## Question
 Does content correlation drop sharply at room boundaries (so the coherence length of the swarm's content field is the room), does a per-room topic-shift detector beat the swarm-level one on room events, and does one room shift first and lead the others at swarm-wide goal changes?
 

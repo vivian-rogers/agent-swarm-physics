@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.23, HR₁₀ 26.3 [23.9, 29.2], tail heavy; H57 placebo HR unread/seen 8.8/49.4)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 21 agents at start (median room size 25) · 45 non-holdout days. Setup: Standing goal: each agent maximizes a private assigned role (Table IV of the overview). 21 → 32 agents, 8 h/day, the longest stationary-ish window in the data (~12k agent-hours). Some roles are held by two agents (direct competition). Humans occasionally reassign roles.
 
 ## Why this period

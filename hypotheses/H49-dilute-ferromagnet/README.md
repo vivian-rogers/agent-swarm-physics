@@ -13,6 +13,24 @@
 **From:** HH159 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` (related: HH73) · **Models:** `physics-models/01-inverse-ising/`
 **Data inputs (shared tables first):** `activity_bins_fixed`, `outages_fixed/reasons`, `outages_fixed/stall_minutes` (Amendment 2; the original `activity_bins` / `reasons` / `stall_minutes` were used in a superseded first pass), `period_units`, `calendar`, `roster`, `ground_truth_labels`, `kicks_classified` (all `data/processed/shared/`). Read-only imports: H02 `h02lib.block_ids` (30-min blocks) and H38 `h38lib` (`MASK_SETS`, `impute`, `block_suff`, `cw`, used to verify that the conditioned covariance reproduces H38's `mask_scaffold` gain).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H49 has no round-1b section; round 1 was re-run on the fixed tables (Amendment 2).*
+
+**Question served:** Q2. The card asks whether the regime-III activity excess left after scheduler removal is pairwise coupling or a shared mode. Q3 second: there are no coupled clusters, only a uniform shift.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Conditioned pseudolikelihood (H38 `mask_scaffold`) on the fixed tables; joint block-shift null that recomputes every step (N1); synthetic size 0.054–0.062 at real schedules. Trimming removes 67% of regime-III bonds (P5). | removed |
+| Exogenous field (kickoff/goal/operator) | yes | A 30-min block field absorbs slower drives. Faster shared drives (human messages, nudges) cannot be told from dense coupling (Caveats); co-nudged pairs carry Δz +0.58. Close by regressing the residual mode on human messages, nudges and kickoffs (R2; §1, row 2). | partly |
+| Shared model priors | partly | Provider-field rival R2 tested: same-lab OR 0.50–0.62, no enrichment (N51b). | removed |
+| Contemporaneous convergence | no | Equal-time co-activation; no copying or influence claim. | n/a |
+
+**Inputs:** round 1 uses `activity_bins_fixed` and the `outages_fixed` sidecar. Still old: the `infra_err` silence reason comes from H38's error scan, not `turn_outcomes.failed`; the context ledger is not used (Notes). Embeddings, work and leading-@ are not inputs.
+
+**Two layers:** 24 replication folders. Native tests: 4 (`NE14` and `NE43` mixed; `G44` and `G51` failed).
+
+**Confirm script:** `analysis/confirm.py` exists, frozen and dry-run. Its loader still reads the buggy `activity_bins`, `reasons` and `stall_minutes`, not the fixed tables used in exploration. **Re-freeze on `activity_bins_fixed` and `outages_fixed` before any holdout run** (holdout.md item 8).
+
 ## Question
 Once day-edge co-activation is removed, is the remaining regime-III coupling concentrated in a few strong pairs, with a significant-bond graph below percolation: small coupled clusters in a paramagnet?
 

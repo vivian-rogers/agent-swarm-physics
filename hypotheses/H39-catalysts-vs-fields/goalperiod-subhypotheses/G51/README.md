@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (r1 mixed); nudge K +0.16 (n 242)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime III · mode I/K · 1192 agent-days on 45 non-holdout days (2026-07-06 → 2026-09-04) · 565,242 agent-minutes on the trimmed grid.
 
 ## Why this period

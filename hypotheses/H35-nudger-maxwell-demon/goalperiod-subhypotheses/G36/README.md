@@ -1,7 +1,7 @@
 # H35 × G36: Interact with agents outside the Village (2026-03-23 → 2026-03-27)
 
 **Verdict:** descriptive
-**Role:** exploratory (round 1, non-holdout); exploratory (descriptive)
+**Role:** replication (exploratory) (round 1, non-holdout); exploratory (descriptive)
 **Verdict (1b):** descriptive (< 6 strictly isolated first nudges; 2026-10-04)
 **Period:** regime II · mode C · 13 agents · nudges 6. Data: `data/processed/H35-nudger-maxwell-demon/G36/`.
 

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (transfer, standout p 0.10; P5 pass)
 **Verdict (1b):** supported (ledger exposure: T +0.037% p 0.024; gte p 0.048; style-resid p 0.048)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode K (competition) · 4 agents · 1 room with ≥ 20 agent messages · 15 days. No splits (one unit per goal period).
 
 ## Why this period

@@ -13,6 +13,24 @@
 **From:** HH167 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` (approved by Vivian 2026-10-04); folds in HH185–HH190 where the data allow · **Models:** `physics-models/02-nonequilibrium-ising/` (linear response, response function R_ij), `physics-models/01-inverse-ising/` (equal-time co-movement, susceptibility), `physics-models/09-hawkes/` (kernels and their pitfalls)
 **Data inputs (shared tables first):** `call_windows`, `context_ledger_turns`, `context_ledger_items` (DQ1), `kicks_classified`, `turn_errors`, `calendar`, `period_units`, `rooms_timeline`, `chat_core`, `chat_mentions_clean`, `embeddings/statements*` (content channel). No raw rescans.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H50 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q2. The card splits co-movement into field (zero relative lag) and coupling (lag quantized at the read-out call). Q1 second: talk coupling is gated at hop 1.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Schedule edges are measured inputs against a shifted-input null; an all-running (trim) window variant; series from `call_windows`, not `activity_bins`. Edges explain 0.62 / 0.67 of activity co-movement. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Human messages, nudges, bookends and platform errors enter as FIR fields (Part A). Goal kickoffs are named in the scope but not among the fitted inputs; about half of activity co-movement stays unexplained (f_0). Close by adding kickoffs and `goal_fields` directions as inputs (§1, row 2). | partly |
+| Shared model priors | no | The gate is a discontinuity at the read-out call; a family prior cannot create a step there. | n/a |
+| Contemporaneous convergence | yes | The read-out RD compares the call in flight with the read-out call, with shifted placebos (C2); κ ≈ 0.9–1.0, so the in-flight side is not elevated. Synthetic slow-drive worlds give J₁ ≈ 0. | removed |
+
+**Inputs:** round 1 uses the context ledger and `call_windows`; it never reads `activity_bins`, `outages` or `stall_minutes` (Amendment 8). Still old: the platform input uses `turn_errors` categories, not `turn_outcomes.failed`; the addressing split uses `chat_mentions_clean`, not the leading-@ target. The content channel (C3) is not done.
+
+**Two layers:** 33 replication folders. Native tests: 4 (`G38` supported; `G51`, `NE14` and `NE43` mixed).
+
+**Confirm script:** `analysis/confirm.py` exists, frozen (CP1–CP5) and dry-run, built on ledger inputs. No re-freeze needed.
+
 ## Question
 Can the swarm's collective co-movement be split into a **field** part (a common input moves every agent at its next model call: zero relative lag between agents, counted in call cycles) and a **coupling** part (agents move each other: the recipient responds only at the call that first reads the sender's message, so the lag is quantized in the recipient's call cycles), using impulse responses and lag structure?
 

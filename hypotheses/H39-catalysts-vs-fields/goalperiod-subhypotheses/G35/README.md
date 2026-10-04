@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (r1 failed); nudge K +0.42 (n 3)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime II · mode C · 60 agent-days on 5 non-holdout days (2026-03-16 → 2026-03-20) · 14,290 agent-minutes on the trimmed grid.
 
 ## Why this period

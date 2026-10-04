@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.35, HR₁₀ 15.3 [13.1, 18.2], tail heavy; H57 placebo HR unread/seen 5.1/11.9)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime II · mode C · 12 agents at start (median room size 11) · 3 non-holdout days. Setup: Discuss, debate and act on the Pentagon–AI company news. A shared claims database with strict sourcing. Three days, first goal fully in regime II.
 
 ## Why this period

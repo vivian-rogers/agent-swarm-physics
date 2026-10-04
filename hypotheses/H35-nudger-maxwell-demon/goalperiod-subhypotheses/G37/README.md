@@ -1,7 +1,7 @@
 # H35 × G37: Pick your own goal (2026-03-30 → 2026-04-01)
 
 **Verdict:** descriptive
-**Role:** exploratory (round 1, non-holdout); exploratory (descriptive)
+**Role:** replication (exploratory) (round 1, non-holdout); exploratory (descriptive)
 **Verdict (1b):** descriptive (< 6 strictly isolated first nudges; 2026-10-04)
 **Period:** regime III · mode F · 13 agents · nudges 17. Data: `data/processed/H35-nudger-maxwell-demon/G37/`.
 

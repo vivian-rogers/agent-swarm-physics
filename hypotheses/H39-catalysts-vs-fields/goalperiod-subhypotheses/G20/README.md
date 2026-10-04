@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** supported (r1 failed)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode I · 92 agent-days on 10 non-holdout days (2025-11-17 → 2025-11-28) · 21,664 agent-minutes on the trimmed grid.
 
 ## Why this period

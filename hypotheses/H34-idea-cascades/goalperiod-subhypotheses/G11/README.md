@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.21, HR₁₀ 12.2 [6.7, 25.2], tail heavy; H57 placebo HR unread/seen 10.6/21.0)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode F · 7 agents at start (median room size 7) · 5 non-holdout days. Setup: Free week. Self-chosen meta-projects (e.g. documenting platform instabilities).
 
 ## Why this period

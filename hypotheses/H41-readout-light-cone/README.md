@@ -14,6 +14,24 @@
 **From:** HH155 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` (with HH187) · **Models:** `physics-models/02-nonequilibrium-ising/`, `physics-models/03-contagion/`
 **Data inputs (shared tables first):** DQ1 `call_windows`, `context_ledger_items` (who read what at which call); `chat_core`, `chat_text` (in memory only, non-holdout), `artifact_mentions` / `artifacts`, `artifact_commands_text` and `intentions_text` (in memory only, for the private-stream channel), `statement_flags`, `reply_pairs`, `rooms_timeline`, `kicks_classified`, `calendar`, `roster`. Read-only code import: H34's `scheme/markers.py` and `scheme/build_markers.py` (marker rule).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H41 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q1. The card measures how far and how fast information moves per read-out call, inside and across rooms.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Hazards are per talk call on ledger call times; J_mh matches on delay since t0 (A6). No activity-synchrony statistic. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Shared-field rival R1 simulated on real schedules (N1, T2): J_mh ≈ 1 under a field, 1/12 false positives. Numbers behave like a field (J_mh,D 0.88). Human and Claude Code uses are injectors, not relays. NE42 is confounded with #40's shared goal. | partly |
+| Shared model priors | partly | Not handled. Same-family models may co-generate a marker without reading it. Close with J_mh split by same- vs cross-family source–adopter pairs (§1, row 3). | open |
+| Contemporaneous convergence | yes | The design is the in-flight placebo: the call in flight at t0 vs the first post-entry call, matched on delay (J_mh). About a third of fast adoptions are co-generated (1/J_mh 0.38). The estimator is post hoc (A6). | removed |
+
+**Inputs:** round 1 uses the context ledger, DQ2 `reply_pairs`, `statement_flags` and the 200-event cap. Still old: none of the listed inputs. Activity bins, embeddings, work and failures are not inputs.
+
+**Two layers:** 29 replication folders. Native tests: 4 (`NE42` supported; `G31`, `G38` and `G51` mixed).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, on ledger inputs, with J_mh as C1. No re-freeze for inputs. **Fix the broken C4 isolation check before any holdout run** (holdout.md item 16).
+
 ## Question
 Does information propagate at most one read-out hop per call cycle, giving a Lieb–Robinson-style bound on how fast a novel item reaches agents k hops away on the interaction graph?
 

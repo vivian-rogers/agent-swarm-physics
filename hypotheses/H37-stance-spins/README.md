@@ -5,6 +5,24 @@
 **Origin:** HH125 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); leads from H22 (51a Prankster pairs), H21 (#12 stance tilt, HH127), H11 G26 (votes).
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population; Regime; Agent state, variant categorical (debate team, #51 role, #26 vote set). Two named variants of **Interaction**, proposed for the shared file: *interaction (addressed reply, 30 min)* and *interaction (adjacent reply, 5 min)* (defined under Data scheme). New terms defined below and proposed for the shared file: *stance spin*, *stance coupling*, *frustration index (ground-state)*. H22's *balance index τ₃* and its double-centred version τ₃(dc) are used exactly as H22 defined them (`../H22-private-goals-spin-glass/README.md`, O4 and Amendment 1).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H37 has no round-1b section; every entry rests on round 1.*
+
+**Question served:** Q3. The card tests for an antiferromagnet in stance and finds one only where a protocol assigns sides. Q2 second: the #12 stance order is set by the assignment, a field.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | Reply-level stance labels; no activity or timing statistic. | n/a |
+| Exogenous field (kickoff/goal/operator) | yes | The #12 contrast is read as assigned opposition, not emergent coupling (Headline). Agent fields and the politeness field are removed by two-way effects and the ordered-logit null (N3, Amendment 2). No `goal_fields` regression on the topic baseline. | partly |
+| Shared model priors | yes | Same-lab residualization in the #51 role test (N6). Family writing-style invariance of the labels is not checked (axis A). Close with a cross-family label audit and `style_resid` topic cosines (§1, row 3). | partly |
+| Contemporaneous convergence | partly | Not handled. An adjacent reply within 5 min may answer a message its author had not yet read. Close by keeping pairs whose A is in B's receiving-call context (ledger; §1, row 4). | open |
+
+**Inputs:** all results are on round-1 inputs. Still old: reply pairs from `chat_mentions_clean` and room adjacency, not DQ2 replies or ledger visibility; topic cosine from bge only; #51 roles from H22's coding and #26 votes from H11, not DQ6 `ground_truth_labels` (Notes: one role was overwritten). Activity, work and failures are not inputs.
+
+**Two layers:** none yet. Four period folders (G12, G26, G40, G51) run period-specific tests under role `exploratory`; no common replication estimator and no native folder.
+
+**Confirm script:** `analysis/confirm_g34.py` exists, dry-run only. It uses neither activity bins nor a visibility rule, so holdout.md item 8 does not force a re-freeze. Before any run: correct its reuse note (H05's #34 run was executed; holdout.md item 4) and take saboteur labels from DQ6 where they exist.
+
 ## Question
 H22 found that in #51 rivals co-move in *topic* (content embeddings), so topic coupling cannot see conflict. Does conflict appear in *stance*, the sign of how one agent's reply treats another's message (agree / support vs oppose / undermine)? If so, a signed reply graph built from stance labels should carry negative couplings where conflict is (debate opponents in #12; opposed or rival roles in #51; electoral rivals in #26), and its frustration and balance should say whether conflict is factional (two camps) or diffuse. Practical aim (usefulness-first batch): a conflict and faction detector an operator can compute from chat logs with a cheap zero-shot labeller, with measured accuracy, and a saboteur-detection design for #34 (holdout, D8.3).
 

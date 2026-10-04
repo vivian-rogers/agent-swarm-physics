@@ -10,6 +10,24 @@
 **From:** HH173 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/11-vector-spins/` (O(32) content spins, DeGroot read-out averaging), `physics-models/10-potts/` (consensus-time scalings, weakest-link pitfall), `physics-models/03-contagion/` (coverage as an SI process on the read-out graph)
 **Data inputs (shared tables first):** DQ1 context ledger (`context_ledger_items`, `context_ledger_turns`, `call_windows`); `embeddings/statements` + `statements_white32_{bge_small,gte_modernbert}.npy`; `embeddings/goals.parquet` + `goal_vectors[_gte_modernbert].npy` (kickoff vectors); `embeddings/agent_win30` white32 vectors; `statement_flags` (DQ5); `calendar`, `period_units`, `rooms_timeline`, `roster`. Read-only imports: H20's per-period MQ fits (`data/processed/H20-content-aging/G<NN>/result*.json`) and `h20lib` estimator functions; H54's day-level remanence fits (`data/processed/H54-kickoff-quench-target/G<NN>/results.json`, `kickoffs.parquet`) and `h54est.exp_plateau_fit`; H31's published predictors (`predictors_period.parquet`) and `h31lib` λ₂ functions.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H48 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q2. The card asks whether post-kickoff settling runs on a read-out (coupling) clock or on a kickoff (field) clock. Q1 second: coverage and mixing on the ledger read-out graph.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Active-hour clock; own-call clock (FC) and day clock are named rivals. FC gives 0/30 false passes in the synthetic. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | The field clock (FD) and the constant M0 are the nulls; the kickoff excess subtracts decoy kickoffs (S1). Neither primary beats M0, and the test has ≈ 0 power at real noise, so field vs read-out is undecided. | partly |
+| Shared model priors | partly | Decoy kickoffs in the same basis remove generic alignment; S1 runs under bge and gte (ρ 0.80). No `style_resid`. Close with `style_resid` statement vectors (§1, row 3). | partly |
+| Contemporaneous convergence | yes | Not handled. Agents may converge on the kickoff target without reading each other. Close with message-level pull toward read vs unread messages at matched age (R1; §1, row 4). | open |
+
+**Inputs:** round 1 uses the context ledger, both embeddings (white32 bge and gte) and `statement_flags`. Activity bins, work and failures are not inputs. Still old: none of the listed inputs. S3 and some cross-checks import H20's and H54's round-1 fits.
+
+**Two layers:** 25 replication folders. Native tests: 4 (`NE42` mixed; `G38` and `G51` failed; `NE32` n/a, unpowered).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on ledger inputs and both embeddings (C2 freezes the post hoc depth-5 rule). No re-freeze needed.
+
 ## Question
 Is the post-kickoff content settling time set by how many call cycles it takes for every agent to have read every other agent's work (a bulk mixing time on the read-out graph), rather than by whole-graph λ₂ (a weakest-link statistic, H31)? If so, settling should scale with per-agent reading rate, read-out coverage and room structure.
 

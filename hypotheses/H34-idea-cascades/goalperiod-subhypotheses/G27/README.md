@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.40, HR₁₀ 5.2 [4.5, 5.9], tail heavy; H57 placebo HR unread/seen 3.2/3.8)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode K · 10 agents at start (median room size 10) · 10 non-holdout days. Setup: Two-week OWASP Juice Shop hacking competition, which turned from rivalry into collaboration.
 
 ## Why this period

@@ -7,6 +7,24 @@
 **From:** HH176 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` (with HH205, HH222–HH228 as the simulation-side programme) · **Models:** `physics-models/04-semantic-information/`
 **Data inputs (shared tables first):** DQ4 work ledger (`work_commits`, agent work only), DQ1 context ledger (`call_windows`, `context_ledger_turns`, `context_ledger_items`), DQ2 `reply_pairs`, DQ3 `behavior_states_v3`, DQ5 `agent_win30_style_resid_period_bge_small`, H34 idea markers (read-only), `artifact_mentions` (re-acquisition reads, intentions), `kicks_classified`, `rooms_timeline`, `ground_truth_labels`, `period_units`, `calendar`. **Not used:** `activity_bins` and `outages` (the activity_bins join bug, coordinator notice 2026-10-04).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H58 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q3. The card searches for a coordinated unit that beats agent + own artifact, and finds none where it has power. Q4 second: after an erasure the information that survives lives in the agent's own artifact.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | The gain g scores which artifact, not timing (F5a); L_sync uses H38's edge trim (F7). The unit-recovery dip (P7, β 3.6) is attributed to shared busy timing but not controlled. | partly |
+| Exogenous field (kickoff/goal/operator) | yes | Common-field world W_env; activity-matched outside reference and specificity criterion (A1b–A1d); size 0.5% under W_env. The Krakauer environment y omits scheduler, kickoff and prior fields (Erratum). Close by adding `goal_fields` and kickoff inputs to y (§1, row 2). | partly |
+| Shared model priors | partly | Labs are a baseline partition (communities beat labs in 0/9 units); the content state uses DQ5 `style_resid`. y omits prior fields (Erratum). | partly |
+| Contemporaneous convergence | yes | Same-bin co-allocation may be convergence (A2.6); the outside reference and specificity remove it from the decision rule. Re-acquisition sources have no matched not-yet-read placebo (F9 caveat); the null result does not need one. | partly |
+
+**Inputs:** round 1 uses the DQ4 work ledger, context ledger, DQ2 replies, DQ3 `behavior_states_v3`, DQ5 `style_resid` and H34's markers; it never reads `activity_bins` or `outages`. Still old: the content state uses bge only (no gte). Failures and leading-@ are not inputs.
+
+**Two layers:** 2 replication folders (G51, G38; scope reduced by A2.6). Native tests: 3 (`NE42` mixed by the letter; `G44` failed; `G51g` descriptive).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on the corrected inputs (C1–C4). No re-freeze needed. The Krakauer label swap (Erratum) affects names, not estimators.
+
 ## Question
 Which composite of agents and artifacts best predicts its own future (information-theoretic individuality and autonomy), and is it a set of behaviorally coordinated agents together with the artifact they work on?
 

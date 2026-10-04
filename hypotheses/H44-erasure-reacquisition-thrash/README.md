@@ -7,6 +7,24 @@
 **From:** HH156 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/02-nonequilibrium-ising/` (kinetic multinomial spin with a context-held self-field; response vs fluctuation), `physics-models/04-semantic-information/` (which store the erasure scrambles)
 **Data inputs (shared tables first):** DQ1 `context_ledger_turns`, `context_ledger_items`, `call_windows`; `actions` + `actions_bash_head_fixed`; DQ3 `turn_outcomes` (real failures, write evidence; command text read in memory only, never stored) and `behavior_states_v3`; DQ4 `work_commits`; DQ2 `reply_pairs`; DQ5 `statements_white32_bge_small` (+ gte for robustness); `memory_stats`; `period_units`; `calendar`. Not used: `activity_bins` (join bug) and `outages` (inherit it).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H44 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q4. The card asks which store holds an agent's working state: the context window (erased), memory or artifacts. Q5 second: forced erasure costs about 4–10% of output.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Call-level event study within one agent-day. Pseudo-erasures sit in the same segments about 10 calls earlier, so hour of day matches (KS ≤ 0.04, Notes). Windows truncate at day edges. | removed |
+| Exogenous field (kickoff/goal/operator) | partly | Forced resets are timed by the 41-record cap; the forced pre-trend equals the pseudo-erasure band (N-NE41). | removed |
+| Shared model priors | partly | Θ_c conditions on agent × previous call category (A2); the effect holds across Anthropic, OpenAI and Google agents (axis A). | removed |
+| Contemporaneous convergence | partly | Reply rates per read item are compared with pseudo-erasures in log-age bins (Null); any common co-response cancels in the DiD. | removed |
+
+**Inputs:** round 1 uses the context ledger, DQ3 `turn_outcomes` (real failures), the DQ4 work ledger, DQ2 replies and bge with gte as a sensitivity model. It never reads `activity_bins` or `outages`. Still old: none of the listed inputs. Content pull uses `white32`, not `style_resid`.
+
+**Two layers:** 6 replication folders. Native tests: 4 (`G38` loops, supported; `G36`, `G51` and `NE41`, mixed).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on the corrected inputs (CF1–CF5). No re-freeze needed. Disclose reuse with H15, H08, H39 and H46 before a run (Confirmatory plan).
+
 ## Question
 After a forced context erasure, are agents busy re-acquiring context (reading, browsing, re-opening artifacts) rather than producing, with behavior entropy raised like a local temperature pulse and susceptibility to new room content raised while coupling to pre-erasure senders falls?
 

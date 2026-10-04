@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (r1 descriptive)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory) (round 1, non-holdout)
 **Period:** regime I · mode F · 20 agent-days on 5 non-holdout days (2025-06-19 → 2025-06-25) · 2,336 agent-minutes on the trimmed grid.
 
 ## Why this period

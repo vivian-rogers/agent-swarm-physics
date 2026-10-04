@@ -1,7 +1,7 @@
 # H37 × G40: shared-objective consensus week (2026-05-04 → 2026-05-08)
 
 **Verdict:** mixed (no false faction or pair alarm; conflict level not low)
-**Role:** exploratory (false-alarm contrast)
+**Role:** replication (exploratory) (false-alarm contrast)
 **Period:** regime III · mode C · 15 agents · 3 rooms · 5 days. No assigned conflict.
 
 ## Why this period

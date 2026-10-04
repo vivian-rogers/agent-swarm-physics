@@ -13,6 +13,24 @@
 **From:** HH171 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/08-copying-vs-transformation/`, `physics-models/03-contagion/`
 **Data inputs (shared tables first):** DQ1 context ledger (`context_ledger_turns`, `context_ledger_items`), DQ5 (`statement_flags`, bge-small and gte-modernbert embeddings, regime whiteners), H34 hashed markers (read-only), DQ2 `reply_pairs` (`parent`, `n_pool`), `chat_mentions_clean`, `copy_info.py`, `period_units`, `goals` (kickoff vectors).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H57 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q2. The card separates copying through reading from contemporaneous convergence, and finds most near-duplication is convergence. Q1 second: verbatim reuse of read content is the real, small copying channel.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Within-period slopes with agent × unit fixed effects; day fixed effects and an early × log k term (rival a). No activity statistic. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Rival b (shared source): templated statements, kickoff-echo statements and common markers are dropped; the #18 positive turns negative when filtered. | removed |
+| Shared model priors | partly | Agent × unit fixed effects; both embedding models agree; family slopes in #51 are all small (axis A). | removed |
+| Contemporaneous convergence | yes | The impostor is the object. The mutually invisible (in-flight) set is the chance baseline; lag profiles compare read with unread pairs at matched lag (Amendment 2). The lag-matched estimator is post hoc. | removed |
+
+**Inputs:** round 1 uses the context ledger, DQ5 `statement_flags` and both embeddings, H34's markers and DQ2 (descriptive only). Activity bins, work and failures are not inputs. Still old: the `addressed` control uses `chat_mentions_clean`, not the leading-@ target.
+
+**Two layers:** 34 replication folders. Native tests: 3 (`G51`, `NE42` and `NE41`), all failed.
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on ledger inputs. It freezes the refutation and the post hoc bounds (C1 raw echo, C3 in-flight vs read at < 15 s, C4 lag-matched), not the invalid pre-registered estimator. No re-freeze needed.
+
 ## Question
 Does the copy-to-transformation information ratio between agents rise with backlog, so that agents echo rather than transform under load?
 

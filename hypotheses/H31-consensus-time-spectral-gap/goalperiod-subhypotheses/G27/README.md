@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory (E-C only)
+**Role:** replication (exploratory) (E-C only)
 **Period:** regime I · mode K · 10 agents · #general · 10 non-holdout days (40.1 active h).
 
 ## Why this period

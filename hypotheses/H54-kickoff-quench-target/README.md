@@ -12,6 +12,24 @@
 **From:** HH169 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md`, with variants HH179–HH184 · **Models:** `physics-models/11-vector-spins/`, `physics-models/10-potts/`
 **Data inputs (shared tables first):** `goal_fields` (shared goal/kickoff vectors; fixes H01's #38 swap), `project_states`, statement embeddings + per-regime whiteners, `statements_style_resid_period32` (DQ5), `artifact_mentions` / `artifacts`, `kicks_classified`, `text_features`, `context_ledger_items` / `call_windows`, `ground_truth_labels` (DQ6: #26 phases, #44 rooms, #51 roles), `period_units`, and H31's consensus events (read-only).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H54 has no round-1b section; every entry rests on round 1.*
+
+**Question served:** Q2. The card measures the kickoff field directly: day-1 content lands on the kickoff text. Q5 second: a kickoff is a steering instrument whose target is readable from its text.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | Day-level content centroids; no activity or timing statistic. | n/a |
+| Exogenous field (kickoff/goal/operator) | yes | The impostor is the object. The kickoff-swap null with a genericness correction, neighbour and within-regime decoys and the displacement test separate the target from genre (R2) and inertia (R1). | removed |
+| Shared model priors | yes | Rival R4: `style_resid` vectors keep top-1 at 0.52; lab effect on susceptibility p 0.66 (P7). | removed |
+| Contemporaneous convergence | partly | The main claim is a field claim. The first-plan centrality (P6) and human re-quench (P4) are influence claims with no read vs unread contrast. Close with the ledger tests in R2 and R3 (§1, row 4). | open |
+
+**Inputs:** round 1 uses shared `goal_fields`, deterministic `project_states`, DQ5 `style_resid`, the context ledger (receptive fraction) and DQ6 labels. Activity bins, work and failures are not inputs. Still old: content uses bge only (gte was not built; R5); H31's frozen events (read-only) use H11's original labels, though the own-rule check on shared labels agrees.
+
+**Two layers:** 30 replication folders (29 periods plus the `NE34` cross-kickoff folder). Native tests: 4 (`G51` supported; `G26` and `G44` mixed; `G38` failed).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only. It uses no activity table and no visibility rule, so no re-freeze is required (holdout.md item 8). A gte sensitivity before the run would close the one-model gap.
+
 ## Question
 Are the projects agents freeze onto at a kickoff the ones the goal text or kickoff names, and does the day-1 content centroid land on the kickoff embedding, with spread set by how specific the kickoff is?
 

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.28, HR₁₀ 8.3 [6.9, 10.2], tail heavy; H57 placebo HR unread/seen 3.6/6.4)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode I · 8 agents at start (median room size 10) · 10 non-holdout days. Setup: Each agent starts a Substack; niches formed (e.g. consciousness, telemetry). Roster churn: two in, two out.
 
 ## Why this period

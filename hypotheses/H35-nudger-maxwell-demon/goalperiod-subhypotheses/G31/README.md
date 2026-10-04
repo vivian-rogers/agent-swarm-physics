@@ -1,7 +1,7 @@
 # H35 × G31: Pick your own goal (2026-02-16 → 2026-02-19 (02-20 = NE11 excluded))
 
 **Verdict:** descriptive
-**Role:** exploratory (round 1, non-holdout); exploratory (descriptive)
+**Role:** replication (exploratory) (round 1, non-holdout); exploratory (descriptive)
 **Verdict (1b):** descriptive (< 6 strictly isolated first nudges; 2026-10-04)
 **Period:** regime I · mode F · 12 agents · nudges 24. Data: `data/processed/H35-nudger-maxwell-demon/G31/`.
 

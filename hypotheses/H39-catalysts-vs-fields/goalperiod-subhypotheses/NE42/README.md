@@ -1,7 +1,7 @@
 # H39 × NE42: #best and #rest merged (05-04) and split back (05-11)
 
 **Verdict:** mixed
-**Role:** exploratory (round 1, non-holdout; spanning test)
+**Role:** replication (exploratory) (round 1, non-holdout; spanning test)
 **Period:** see Prediction for the windows; non-holdout days only.
 
 ## Why this test

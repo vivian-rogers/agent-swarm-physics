@@ -10,6 +10,24 @@
 **Origin:** HH94 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Agent; Population N(t) (variants: *present population* (H02 rule, per chunk/unit) and *day-present population*, below); Regime; Driving / external field. **New named variants proposed for `physics-models/DEFINITIONS.md`** (not edited here; outside H38's scope): *joint silence*, *village-off gap*, *stall (explained joint silence)*, *silence reason*, defined under Data scheme.
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. Every entry rests on this card and its round-1b section.*
+
+**Question served:** Q2. The card measures how much activity co-activation is a scheduler field and how much is coupling.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | The impostor is the object. Scaffold conditioning (Amendment 2), then the DQ8 trim and block-shift null (round 1b). Regime III keeps a significant excess in 3/8 periods after trimming; NE43 places the edges in the runner's schedule. | removed |
+| Exogenous field (kickoff/goal/operator) | partly | A 30-min block field h_i(b) absorbs slow drives. Operator pause/resume messages define `scheduled`. NE14 is confounded with a goal change (Caveats). The #44 and #51 residuals are not tested against kickoff or operator messages. | partly |
+| Shared model priors | partly | Not handled. Lab-correlated (provider) silences are a named rival that was not tested (axis H; Caveats). Close with a per-provider silence test and a cross-family control (§1, row 3). | open |
+| Contemporaneous convergence | no | The card removes co-activation; it makes no copying or influence claim. | n/a |
+
+**Inputs:** round 1b uses `activity_bins_fixed` and `outages_fixed`. Still old: the `infra_err` reason comes from H38's own scan of error categories in `computer_use_turns`, not from `turn_outcomes.failed`. The context ledger is not used (H50 supplies the ledger-based cross-check). Embeddings, work and leading-@ are not inputs.
+
+**Two layers:** no folder has role `replication`. The common estimator runs on 35 period folders under role `exploratory`. Native tests: 3 (`NE14` supported; `NE43` failed; `G04` #4d failed).
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only. It reads the old table and lacks the trimmed variants (holdout.md item 8). **Re-freeze on `activity_bins_fixed` with `trim` and `trim_scaffold` before any holdout run.**
+
 ## Question
 H02's collective co-activation is partly everyone going quiet together. That is a common field (API outages, scaffold restarts), not coupling. *Check:* joint-silence bins vs simultaneous errors or latency spikes across agents in `actions`. Does Curie–Weiss βJ₀ vanish after conditioning on them?
 

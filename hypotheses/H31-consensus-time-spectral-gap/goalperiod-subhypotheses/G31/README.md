@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged)
-**Role:** exploratory (card candidate; E-P + E-C)
+**Role:** replication (exploratory) (card candidate; E-P + E-C)
 **Period:** regime I · mode F · 12 agents · #general · 5 non-holdout days (20.0 active h).
 
 ## Why this period

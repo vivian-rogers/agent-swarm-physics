@@ -7,6 +7,24 @@
 **From:** HH166 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/04-semantic-information/`, `physics-models/05-replicator-dissipation/` (as the import/degradation bookkeeping), plus a set-point controller defined below
 **Data inputs (shared tables first):** DQ1 context ledger (`call_windows`, `context_ledger_turns`, `context_ledger_items`), DQ2 `reply_pairs` (`pair_set = cand`, `parent`), `actions` / `events_core` token fields, `chat_core`, `roster`, `period_units`. Not used: `activity_bins` (join bug, 2026-10-04) and the ledger's `outage_s` / `outage_off` (derived from it).
 
+## Standards (2026-10-04)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. H45 has no round-1b section; round 1 already ran on the corrected inputs.*
+
+**Question served:** Q4. The card asks whether agents regulate how much of their context window holds room information.
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | The share is a per-call composition inside one agent's segment; no synchrony statistic. | n/a |
+| Exogenous field (kickoff/goal/operator) | partly | RI is a within-agent × period slope at fixed position. NE42 is goal-confounded (Caveats). The pooled γ_W < 0 is confounded with task phase. Close γ with DQ3 behavior-state controls (R1). | partly |
+| Shared model priors | partly | Lab share of set-point variance tested against a label permutation (P7: η² 0.14, p 0.41); agent fixed effects throughout. | removed |
+| Contemporaneous convergence | no | Engagement counts replies to items already read (pending set); no influence claim. | n/a |
+
+**Inputs:** round 1 uses the context ledger, DQ2 replies and measured prompt tokens. It never reads `activity_bins` or the ledger's `outage_*` columns. Still old: none of the listed inputs. Embeddings, work and failures are not inputs.
+
+**Two layers:** 31 replication folders. Native tests: 4 (`G51` N sweep, `NE41`, `NE42`, `NE03`), all failed.
+
+**Confirm script:** `analysis/confirm.py` exists, dry-run only, built on the corrected inputs (C1–C6). No re-freeze needed.
+
 ## Question
 Do agents regulate the share of their context taken by room messages around a set point, reading less per message when the room floods (the k^−0.6 dilution as a homeostat) and overshooting, then returning, after an erasure?
 

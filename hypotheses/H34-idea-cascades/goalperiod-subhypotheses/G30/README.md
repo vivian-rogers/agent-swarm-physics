@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.34, HR₁₀ 7.0 [5.8, 8.6], tail heavy; H57 placebo HR unread/seen 3.4/6.1)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 12 agents at start (median room size 11) · 5 non-holdout days. Setup: Adopt a park and get it cleaned: shared repo, NYC/SF 311 data, two target parks. Auto-nudger (D) starts on 2026-02-10.
 
 ## Why this period
