@@ -1,0 +1,184 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+
+% Numbered instructions: \ido{text}{sources}{p} (do) and \idont{text}{sources}{p} (don't).
+% p is the scoring-v2 credence of the first source's claim (hypotheses/H*/summary/meta.json, key v2).
+\newcounter{ins}
+\newcommand{\insline}[4]{\refstepcounter{ins}{\small\par\noindent\hangindent=3.0em\hangafter=1
+  \makebox[1.95em][l]{\textbf{\theins}}\makebox[1.1em][l]{#1}#2 {\scriptsize[#3; $p$\,#4]}\par}}
+\newcommand{\ido}[3]{\insline{$\checkmark$}{#1}{#2}{#3}}
+\newcommand{\idont}[3]{\insline{$\times$}{#1}{#2}{#3}}
+\renewcommand{\theins}{I\arabic{ins}}
+\newcommand{\what}[1]{\par\smallskip\noindent\textit{What it does.} #1\par\smallskip}
+\newcommand{\mon}[1]{\par\smallskip\noindent\textit{#1}}
+
+\begin{document}
+\title{Operator guide: steering and monitoring an LLM agent swarm}
+\author{Vivian Rogers, with Claude Opus 5.5}
+\affiliation{Agent-swarm physics project (AI Village data, AI Digest)}
+\date[]{2026-10-04. Exploratory: no instruction is holdout-confirmed yet.}
+\begin{abstract}
+This guide turns the AI Village measurements of rounds 1 and 1b into numbered instructions for an operator, a monitor or a scaffold builder. $\checkmark$ marks an instruction to do, $\times$ one to avoid. Each carries its source hypothesis and the scoring-v2 credence $p$ of that claim: the probability that it survives an independent confirmatory test. All numbers are exploratory, from non-holdout periods, mostly regime III (continuous computer use since 2026-03-24, a daily runner start and stop, a forced context erasure at 41 records) and the largest period, \#51. Treat an instruction with $p<0.5$ as a working default.
+\end{abstract}
+\maketitle
+
+\section{The swarm in one paragraph}
+An agent changes only at its model calls. A message acts at the recipient's first call whose context holds it: the \emph{read-out call} (H08, $p$\,0.91). The median read-out delay is 108--122\,s in \#51: about 15\,s for a busy agent and up to the pause length for a paused one. In the computer-use scaffold the reply hazard runs on the call clock ($\eta=-0.00\pm0.05$; H40):
+\begin{gather}
+J_{\text{hour}} = J_{\text{call}}\, r_{\text{call}},\\
+\Delta P_{\text{talk}}^{\text{named}} = 0.17,\qquad \Delta P_{\text{talk}}^{\text{unnamed}} = 0.004 .
+\end{gather}
+$J_{\text{call}}$ is a model-family trait and $r_{\text{call}}$ is the call rate; $\Delta P_{\text{talk}}$ is the talk jump at the read-out call (H50). A \emph{field} is a drive common to many agents: the runner's schedule, the kickoff and goal text, model priors. A \emph{coupling} is an agent-to-agent interaction through reading. Fields dominate: the schedule carries 70--80\% of regime-III co-activation (H38), and day-1 content lands on the kickoff target (H54). The coupling is small, subcritical and address-gated: one message causes 0.13 further messages through reading (H67), and an idea makes 0.22 new adopters per adopter (H34). Steer through fields and names, not through ambient traffic.
+
+\textit{Terms.} An \emph{idle gate} is the call at which a paused agent wakes from its own timer. A \emph{trap} is a chain of repeated pauses. A \emph{nudge} is an automated message with a leading @ to one agent. An \emph{active minute} has logged activity; it measures attention, not work. Regime I is the earlier scaffold with scheduled chat-mode calls.
+
+\section{Levers}
+
+\subsection{Kickoffs and goal text}
+\what{The kickoff text is the strongest field. Day-1 content lands on the target it names (top-1 in 18/33 periods, $p=3\times10^{-6}$; H54). A private goal text holds its agent on its target for weeks. A rewrite of one agent's goal moves that agent within a day and no bystander (NE38). A kickoff that names the artifact re-points the swarm in 0.25--0.5 active h, one switch per moved agent; a free-choice goal takes 4--10\,h and 5--15 switches per net move (H75, 4 periods). Text specificity (numbers, deadlines) does not tune how tightly agents cluster, and agent-written plans do not act as targets.}
+\ido{Name the target repository or deliverable in the kickoff text.}{H54, H75}{0.92}\label{i:kick}
+\ido{To move one agent, rewrite that agent's goal text.}{H54, H29}{0.92}\label{i:goal}
+\ido{Judge a kickoff by repository allocation after 30 active min.}{H75}{0.40}\label{i:judge}
+\idont{Do not add numbers and deadlines to tighten the swarm; specificity is not a dial.}{H54}{0.92}\label{i:spec}
+\idont{Do not expect an agent-written plan to act as a shared target.}{H54}{0.92}
+
+\subsection{Naming}
+\what{Naming is the content lever, and it acts in one hop. A named message carries $\times19$ the per-read talk jump of an unnamed one (H67). In \#51 it pulls the recipient's content by 0.05--0.08 per message; an unnamed one by about 0 (H29). An operator message to one agent does not relay to bystanders within 2\,h. Reply partners adopt an idea 1.9--2.7$\times$ more per edge than room-mates, but a shared thread field explains much of it (H62). Unaddressed messages couple only in regime I.}
+\ido{Name every agent that must act on a message.}{H50, H67}{0.85}\label{i:name}
+\ido{Seed an item into an active reply thread, not a room broadcast.}{H62}{0.49}\label{i:thread}
+\ido{Rank relays by net reply current (replies received minus given), not by volume or content pull.}{H29}{0.65}\label{i:relay}
+\idont{Do not expect a named agent to pass the content on to others.}{H29}{0.65}\label{i:nopass}
+
+\subsection{Nudges and idle agents}
+\what{A nudge acts on its target only, at the target's read-out call. A first nudge adds 1.16 [0.75, 1.57] active min per 30 min in \#51; a repeat adds about 0.4, CI including 0 (H04, H30). It buys a glance, not work: about 0.4\% of commits, and the nudger's switch-off (NE43) left swarm work unchanged (H35). A nudge read at an idle gate adds 7.2 [5.0, 9.8] active calls in 30 min. One nudge per trap at its second gate beats the logged nudger $\times1.55$ [1.25, 1.81]; random choice gives $\times1.46$; a fitted index adds nothing (H60). Two kicks read by one call count as about one (H43). Undirected chatter holds an idle agent at its gate: it acts at 65\% of gates, against 85\% with no news, and a mention restores the rate (OR 3.1; H09, H72). All logged nudges together bought 0.19\% of active calls.}
+\ido{Nudge each idle agent once, early, at its second idle gate.}{H60, H35}{0.42}\label{i:nudge}
+\ido{Use a nudge to buy attention; use a goal or task message to buy work.}{H35}{0.61}\label{i:attn}
+\ido{Release an idle agent by naming it at its gate.}{H72, H09}{0.76}\label{i:release}
+\ido{Merge messages that the same read-out call will receive.}{H43}{0.69}\label{i:merge}
+\ido{Keep the default pause short (5 min, not 12 h) so nudges are read (NE44).}{H39, H30}{0.67}
+\idont{Do not re-nudge agents in long pause chains; reset them or give a new task.}{H35, H72}{0.61}\label{i:renudge}
+\idont{Do not feed idle agents undirected chatter; it holds them idle.}{H72, H09}{0.76}\label{i:chatter}
+\idont{Do not build a scored index to choose nudge targets.}{H60}{0.42}\label{i:index}
+
+\subsection{Rooms}
+\what{A room is a read filter. With ledger read counts controlled, co-location adds nothing ($z$ 5.1 $\to$ 0.2; H05). Rooms couple talk and content, not activity: they reorganize conversation, not labor (H05, H26). Fixed rooms cage chat-borne spread: in 7/8 two-room periods 75--100\% of cross-room adoptions lie outside the logged light cone, and the NE42 merge multiplied cross-group pickup 82--863$\times$. Hopping agents leak (H41). Per-pair attention dilutes as $k^{-0.66\pm0.02}$ with $k$ pending senders (16/16 periods; H18).}
+\ido{To decouple two agents, stop them reading each other; separate rooms do this.}{H05}{0.88}\label{i:rooms}
+\ido{Split a large room to raise per-pair engagement by about (size ratio)$^{0.66}$.}{H18}{0.83}\label{i:split}
+\ido{Keep room membership fixed when you need a cage; hopping agents leak.}{H41}{0.70}
+\idont{Do not use rooms to divide labor; activity is not room-structured.}{H05}{0.88}
+\idont{Do not trace cross-room leaks from chat logs alone.}{H41}{0.70}\label{i:rooms2}
+
+\subsection{Context erasure}
+\what{Erasure is the only lever with a material output cost. A forced erasure cuts commits by 39\% [35, 42] for about 10 calls (H15); the 41-record cap costs 4--11\% of a period's output (H44). The agent recovers by re-reading its own files over 3--7 calls. Only the context window carries output value ($\kappa_C$ 5.2 commits per 20 calls per bit); artifacts and memory notes tell the agent where to work but add no output ($\kappa_A\approx0$; H70). Erasure breaks loops. A statement still in context is near-copied 3.4$\times$ [2.6, 4.5] more than an erased one, and an erasure raises loop exit $\times2.40$ [1.18, 4.88] (H69). Memory size returns to an agent set point and is not a lever (H71).}
+\ido{Set the context cap as a dial: about 10\% output cost against loop breaking.}{H44, H15}{0.88}\label{i:cap}
+\ido{Break a restatement loop by erasing or trimming the agent's context.}{H69}{0.83}\label{i:loop}
+\ido{Carry working state (task state, last tool outputs) across a reset. Untested remedy.}{H70, H15}{0.76}\label{i:carry}
+\idont{Do not send messages to break a loop; read nudges give exit $\times0.81$ [0.49, 1.34].}{H69}{0.83}\label{i:loopmsg}
+\idont{Do not expect memory notes or repository pointers to buy back lost output.}{H70, H44}{0.76}\label{i:notes}
+
+\subsection{Cadence}
+\what{In the computer-use scaffold, cadence is a coupling knob that needs no prompt change. Doubling the call rate raises 5-min reply coupling $\times$1.3--1.5, less at 30 min (H40). Regime-I chat loops run partly on the wall clock ($\eta$ 0.51). Cadence does not speed idea spread, which runs at one hop per 1.5--5 talk turns (H41). The clean cadence intervention (NE20) is in the holdout.}
+\ido{Shorten pause timers and tool calls to couple an agent; give it long batch jobs to decouple it.}{H40}{0.72}\label{i:cad}
+\idont{Do not expect faster cadence to speed idea spread per hop.}{H41}{0.70}
+\idont{Do not apply the call-clock rule to scheduler-driven chat loops.}{H40}{0.72}\label{i:cad2}
+
+\subsection{Human messages}
+\what{At equal naming, timing and novelty, humans get $+0.030$ [0.019, 0.042] in reply probability, about 2$\times$ the replies, and a small content pull (H52). This is a status premium, not deference: agent leaders get the same premium, and an off-role request gets $+0.007$ against $+0.037$ on-role. A human message is a field on content and moves the work rate by about 0 (H30, H04). Several messages read in one call act as one kick (H59).}
+\ido{Name the agent and frame the request in terms of its current objective.}{H52}{0.60}\label{i:hum}
+\ido{Space messages so that each one reaches a separate read-out call.}{H59, H43}{0.59}
+\idont{Do not read a reply premium as obedience; off-role requests lose it.}{H52}{0.60}
+\idont{Do not use human broadcasts to raise the work rate.}{H30, H04}{0.39}\label{i:hum2}
+
+\subsection{Leaders}
+\what{A designated leader is an attention hub: $+0.39$ to $+0.45$ replies per statement, but no content routing; attention does not align with content flow (H65, 46 units). The one elected leader (\#26) became a content source, an agenda field on the swarm.}
+\idont{Do not install a leader to collect or relay information; address the agents that must act.}{H65, H29}{0.70}\label{i:lead}
+\ido{Treat an elected leader's announcements as a field on the swarm.}{H65}{0.70}\label{i:lead2}
+
+\section{Monitoring}
+Each monitor runs on standard logs: record schemas, chat, per-call timestamps and a context ledger (what each call received). Each $z$ is a median-based score against the trailing 10 active days.
+
+\mon{Platform changes.} The schema diff hashes each record's type, field names and value types. It alarms on a signature that is new (${\ge}5$ records, ${\ge}2$ agents, absent for 10 days) or retired. It gave 0/34 false alarms, dated the regime boundary to the day, and found six provider API changes. It cannot see prompt-only changes.
+\ido{Run the schema diff daily; ignore signatures from an agent's first 3 active days.}{H74}{0.71}\label{i:schema}
+\ido{Count operator drives daily (bookends, nudges, hours, joint silence); alarm on $z\ge4$.}{H74}{0.71}\label{i:drive}
+\idont{Do not fuse heavy-tailed behavior statistics under one Gaussian threshold (18\% false alarms).}{H74}{0.71}
+
+\mon{Goal changes.} Topic shift is $D(d)=1-\cos(\bar m_d,\bar m_{d-1})$ on daily mean content vectors; AUC 0.89--0.95. The fluctuation alarm (AUC 0.66--0.68) does no better than random dates.
+\ido{Alarm on topic shift at $z\ge4$; do not use fluctuation statistics.}{H36, H74}{0.80}\label{i:topic}
+
+\mon{Distance to a talk cascade.} The read-out loop gain $g_{\text{lag}}$ counts the extra messages one message causes through reading at hop 1. Regime III: median 0.13; highest upper bound in 66 units 0.39; runaway at 1. Do not use the equal-time dial: it counts fields as feedback.
+\ido{Report $g_{\text{lag}}$ with its CI; investigate any upper bound above 0.39.}{H67}{0.81}\label{i:glag}
+
+\mon{Field gauge.} Taylor's $c$ and $b$ are not field gauges for clocked agents ($b\approx0.85$). The pair-covariance coefficient $c_\times=\sum_{i<j}\mathrm{Cov}(y_i,y_j)/\sum_{i<j}\mu_i\mu_j$ on 15-min counts is. Regime-III reference: 0.013 raw, 0.005 trimmed; shared variance share 0.04 (activity), 0.21 (talk).
+\ido{Report $c_\times$ raw and trimmed for every unit, not Taylor's $c$.}{H86}{0.68}\label{i:cx}
+
+\mon{Pile-ons and load.} A chat link to a project precedes 60\% of herding bursts, against 12\% of controls (OR 11.9 [9.2, 15.3]); deploys and commits follow the pile-on. Turnaround co-movement is about 0 at $N\le16$, 0.02--0.10 at $N$ 17--28, and 0.2 at $N=30$; it follows load, not drive.
+\ido{Watch chat links to a project to anticipate pile-ons.}{H63}{0.61}\label{i:links}
+\ido{Watch turnaround co-movement as a capacity signal above about 16 agents.}{H66}{0.68}
+\idont{Do not alert on joint silences as stalls; error logs do not predict them.}{H38}{0.90}
+
+\mon{Impostor checks before any claim of coordination.} Trimming removes about 80\% of regime-III co-activation (H38) and 81--100\% of excess behavioral irreversibility (H76). Below 15\,s, unread pairs are near-copies as often as read pairs (H57).
+\ido{Trim each day to the all-present window before any synchrony or irreversibility statistic.}{H38, H76}{0.90}\label{i:trim}
+\ido{Compare read with posted-but-unread messages at matched lag before you claim copying.}{H57}{0.57}\label{i:conv}
+
+\section{Pitfalls in swarm logs}
+These follow the four impostors and the input rules (\texttt{STANDARDS.md} \S1--2). Each one produced a false result in this project.
+\begin{enumerate}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.2em}
+\item \textbf{Scheduler synchrony is not coordination.} Agents start and stop together at the runner's day edges. Trim, then block-shift (H38, H50).
+\item \textbf{A kickoff field is not herding or leadership.} Regress on goal directions; use kickoff-matched placebos (H54, H24, H32).
+\item \textbf{Shared model priors are not conventions.} Family ``fields'' are style; use style residuals and cross-family controls (H13, H73).
+\item \textbf{Convergence is not copying.} A third to a half of apparent influence happens without reading (H32, H34, H57).
+\item \textbf{Stderr is not failure.} Use the turn outcome. Stderr flags produced H16's error-loop aging, which did not survive.
+\item \textbf{Active minutes are not work.} Count agent commits from a work ledger; separate the automated streams (H35).
+\item \textbf{Posting time is not exposure.} A message acts at the call that receives it; log what each call received (H08).
+\item \textbf{Check the event counts.} The old activity table dropped half the events and changed 15 of 39 headlines.
+\item \textbf{Use two embedding models and dedupe} self-repeats before a content claim. Reply parents are partly content-selected.
+\item \textbf{Agent narration is a claim, not ground truth.}
+\end{enumerate}
+
+\section{Limits}
+No instruction is holdout-confirmed; H05's one holdout run, on the old activity table, was inconclusive. Eight source headlines changed between data versions ($^\dagger$ in Table~\ref{tab:quickref}). No mechanism was shown outside this scaffold.
+
+\begin{table*}[p]
+\caption{Quick reference. $p$ is the scoring-v2 credence of the source claim (no holdout yet); $^\dagger$ marks a source headline that was fragile across data versions. ``Read-out'' is the recipient's next model call that receives the input. Instruction numbers refer to the text.}
+\label{tab:quickref}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{ruledtabular}
+\begin{tabular}{p{0.16\textwidth}p{0.38\textwidth}p{0.2\textwidth}p{0.1\textwidth}ll}
+\raggedright Lever or monitor & \raggedright Effect & \raggedright When & \raggedright Source & $p$ & Instr. \tabularnewline
+\colrule
+\raggedright Any message & \raggedright Acts at the recipient's read-out call; median delay 108--122\,s (\#51) & \raggedright 15\,s if busy; up to the pause if paused & \raggedright H08 & 0.91 & -- \tabularnewline
+\raggedright Kickoff names target & \raggedright Day-1 content lands on it (top-1 in 18/33 periods) & \raggedright Day 1; holds for weeks & \raggedright H54 & 0.92 & \ref{i:kick}, \ref{i:spec} \tabularnewline
+\raggedright Kickoff names artifact & \raggedright Re-points the swarm at the speed limit (slack 1.0--1.4) & \raggedright 0.25--0.5 active h (free choice 4--10\,h) & \raggedright H75 & 0.40 & \ref{i:kick}, \ref{i:judge} \tabularnewline
+\raggedright Goal rewrite, one agent & \raggedright Moves that agent only; no relay to bystanders & \raggedright Within a day & \raggedright H54, H29 & 0.92 & \ref{i:goal} \tabularnewline
+\raggedright Naming & \raggedright Talk jump 0.17 named vs 0.004 unnamed; $\times19$ per read & \raggedright At the read-out call & \raggedright H50, H67 & 0.85 & \ref{i:name}, \ref{i:nopass} \tabularnewline
+\raggedright Reply thread & \raggedright Idea adoption $\times$1.9--2.7 per edge vs room; partly a thread field & \raggedright Per first read & \raggedright H62 & 0.49 & \ref{i:thread} \tabularnewline
+\raggedright Relay choice & \raggedright Net reply current predicts spread, held-out $\rho\approx$ 0.1--0.2 & \raggedright Held-out days & \raggedright H29 & 0.65 & \ref{i:relay} \tabularnewline
+\raggedright First nudge & \raggedright $+1.16$ [0.75, 1.57] active min / 30 min; repeats $\approx0.4$ & \raggedright At the read-out call & \raggedright H04$^\dagger$, H30$^\dagger$ & 0.49 & \ref{i:nudge} \tabularnewline
+\raggedright Nudge policy & \raggedright Once per trap at the 2nd gate: $\times1.55$ [1.25, 1.81] vs logged nudger & \raggedright 2nd idle gate & \raggedright H60 & 0.42 & \ref{i:nudge}, \ref{i:index} \tabularnewline
+\raggedright Nudge and work & \raggedright $\approx0.4\%$ of commits; nudger off left work unchanged & \raggedright -- & \raggedright H35$^\dagger$ & 0.61 & \ref{i:attn}, \ref{i:renudge} \tabularnewline
+\raggedright Repeated kicks & \raggedright Same-call kicks count as one ($R$ 0.2--0.4) & \raggedright One read-out apart & \raggedright H43 & 0.69 & \ref{i:merge} \tabularnewline
+\raggedright Undirected chatter & \raggedright Holds idle agents: acts at 65\% vs 85\% of gates; mention OR 3.1 & \raggedright At idle gates & \raggedright H72, H09$^\dagger$ & 0.76 & \ref{i:release}, \ref{i:chatter} \tabularnewline
+\raggedright Rooms & \raggedright Couple talk only through reading ($z$ 5.1 $\to$ 0.2); cage chat spread & \raggedright While membership is fixed & \raggedright H05, H41$^\dagger$ & 0.88 & \ref{i:rooms}--\ref{i:rooms2} \tabularnewline
+\raggedright Room size & \raggedright Per-pair engagement $\propto k^{-0.66}$ & \raggedright Any period & \raggedright H18 & 0.83 & \ref{i:split} \tabularnewline
+\raggedright Context erasure & \raggedright Commits $-39\%$ for $\approx10$ calls; 4--11\% of output & \raggedright At each forced erasure & \raggedright H44, H15$^\dagger$ & 0.88 & \ref{i:cap}, \ref{i:carry} \tabularnewline
+\raggedright Erasure vs loops & \raggedright Loop exit $\times2.40$; messages $\times0.81$ & \raggedright At the erasure & \raggedright H69 & 0.83 & \ref{i:loop}, \ref{i:loopmsg} \tabularnewline
+\raggedright Memory notes, artifacts & \raggedright No output recovered ($\kappa_A\approx0$) & \raggedright After a wipe & \raggedright H70 & 0.76 & \ref{i:notes} \tabularnewline
+\raggedright Cadence & \raggedright $2\times$ call rate: 5-min coupling $\times$1.3--1.5 & \raggedright Computer-use scaffold only & \raggedright H40 & 0.72 & \ref{i:cad}--\ref{i:cad2} \tabularnewline
+\raggedright Human message & \raggedright $\approx2\times$ replies ($+0.030$); off-role $+0.007$; work rate $\approx0$ & \raggedright At the read-out call & \raggedright H52 & 0.60 & \ref{i:hum}--\ref{i:hum2} \tabularnewline
+\raggedright Designated leader & \raggedright $+0.4$ replies per statement; no content routing & \raggedright Whole period & \raggedright H65 & 0.70 & \ref{i:lead}, \ref{i:lead2} \tabularnewline
+\colrule
+\raggedright Schema diff & \raggedright 0/34 false alarms; dates platform changes; blind to prompts & \raggedright Daily & \raggedright H74 & 0.71 & \ref{i:schema}, \ref{i:drive} \tabularnewline
+\raggedright Topic shift & \raggedright Goal changes, AUC 0.89--0.95 & \raggedright Daily, $z\ge4$ & \raggedright H36$^\dagger$ & 0.80 & \ref{i:topic} \tabularnewline
+\raggedright $g_{\text{lag}}$ & \raggedright Regime III 0.13; maximum upper bound 0.39; runaway at 1 & \raggedright Per unit & \raggedright H67 & 0.81 & \ref{i:glag} \tabularnewline
+\raggedright $c_\times$ field gauge & \raggedright 0.013 raw $\to$ 0.005 trimmed (regime III) & \raggedright Per unit, raw and trimmed & \raggedright H86 & 0.68 & \ref{i:cx} \tabularnewline
+\raggedright Chat links & \raggedright Precede 60\% of pile-ons vs 12\% of controls & \raggedright Hour before a burst & \raggedright H63 & 0.61 & \ref{i:links} \tabularnewline
+\raggedright Schedule trim & \raggedright Removes $\approx80\%$ of co-activation, 81--100\% of excess irreversibility & \raggedright Before any synchrony statistic & \raggedright H38$^\dagger$, H76 & 0.90 & \ref{i:trim} \tabularnewline
+\raggedright Convergence check & \raggedright Unread pairs below 15\,s are near-copies as often as read pairs & \raggedright Before any copying claim & \raggedright H57 & 0.57 & \ref{i:conv} \tabularnewline
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+\end{document}
