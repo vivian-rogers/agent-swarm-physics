@@ -1,0 +1,34 @@
+\hwhat{HH337 asks whether H100's spontaneous \#best/\#rest content split is a true symmetry breaking or a hidden field. True symmetry breaking starts at zero on day 1 and grows, with a direction chosen by early fluctuations. A hidden field, such as the work each room inherits, gives a full split on day 1 along a direction the members' previous repos predict. H107 measures the day-1 split against the final one in 8 non-holdout two-room periods, with the inherited repo field as an explicit covariate. \textbf{Neither picture covers all four identical-kickoff weeks.} In \#37 and \#39 the split starts near zero and grows. In \#41 and \#42 it is at 70--90\% of final size on day 1, but the day-1 direction is only half kept. Inherited repos set the day-1 direction in \#42 only.}
+
+\hmodel{Model 11 (soft-spin O($n$), $n=32$ whitened dimensions), with the inherited work as a model-10 Potts field. $\mathbf{x}_{i,b}$ is agent $i$'s style-residualized content in time bin $b$, centred on the bin and minus its leave-period-out constant. $\boldsymbol{\Delta}$ is the room order parameter. $E(b)$ is its squared size in excess of random joint relabels. The inherited field $\mathbf{h}_r$ weights each repo's content vector $\mathbf{v}_\sigma$ by the members' pre-period commit shares $w_{i\sigma}$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\boldsymbol{\Delta}(b)=\bar{\mathbf{x}}_{\mathrm{best}}(b)-\bar{\mathbf{x}}_{\mathrm{rest}}(b),\quad C(b,b')=\boldsymbol{\Delta}(b)\!\cdot\!\boldsymbol{\Delta}(b')-\langle\cdot\rangle_{\pi}\\
+r_1=E(1)/E_F,\quad c_1=C(1,F)/\sqrt{E(1)E_F},\quad \pi_1=C(1,F)/E_F\\
+\mathbf{h}_r=\langle\textstyle\sum_\sigma w_{i\sigma}\mathbf{v}_\sigma\rangle_{i\in r},\quad f_\mathrm{repo}=(\boldsymbol{\Delta}^{(1)}\!\cdot\hat{\mathbf{u}})(\boldsymbol{\Delta}^{(2)}\!\cdot\hat{\mathbf{u}})/S
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/onset_by_period.pdf}{Onset ratio $r_1$ (left) and onset projection $\pi_1$ (right) per period; filled = bge with agent-bootstrap 95\% CI, open = gte. Dashed lines: the SSB (0.3) and kill (0.8) thresholds; the positive-control threshold 0.6. Identical kickoffs (blue) split two ways: \#37 and \#39 start near zero, \#41 and \#42 near full size. Room kickoffs (orange) and forks (green) give full-size day-1 splits, but only \#44 keeps its direction.}
+
+\htelos{For an operator, this mostly says what not to infer. The room difference you see on day 1 of a week with identical instructions is a poor guide to the week: in some weeks it is absent and grows, and where it exists its direction is only about half kept ($c_1\approx0.5$). The work the members bring in rarely sets it, which weakens the ``hidden field'' explanation of H100's residual without proving true symmetry breaking. Day resolution cannot separate a field present at $t=0$ from an instability that grows within two hours. This is a measurement of onset shape, not a lever.}
+
+\hbottom{The room content split has no single onset shape: it grows from zero in two identical-kickoff weeks and is nearly full on day 1 in two others, its day-1 direction is half kept, and inherited repos set it only on one week's first day.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 synthetic: size, step, SSB, repo power & $E_F$ size 0.02; kill 75\%, $\pi_1\ge0.6$ 100\% (step); SSB 76\% (slow); repo size 0.03--0.05, power 1.0 & passed\\
+P1 SSB clause $\ge3/4$; kill $\ge2/4$; median $\pi_1\ge0.5$ & 2/4 (\#37, \#39); 0/4; 0.33 (gte 0.32) & not met\\
+P2 first half-day $\le0.3$ in $\ge3/4$ & 2/4 (\#41 0.82, \#42 2.38) & not met\\
+P3 repo clause $\ge2/4$; $\kappa_w>0$ & period 0/4, day 1 1/4 (\#42: 0.34, $p$ 0.002); $\kappa_w>0$ 4/4 & not met; met\\
+P4 positive control $\pi_1\ge0.6$ & \#44 0.73; \#38 0.53 ($r_1$ 1.11) & failed (half)\\
+P5 forks $\pi_1\ge0.6$ & 0.43 (gte 0.62) & failed\\
+P6 \#39 inherits \#38 work & repo 0.00; carried content 0.01 (gte 0.22) & mixed\\
+P7 \#41 recalls \#39 & $z$ $-4.5$ (anti-aligned); \#40 repos n.s. & failed (reversed)\\
+HH337 & 2 supported, 1 failed, 1 mixed; P4 failed & mixed\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_rules.pdf}{Synthetic validation on the real statement skeletons (40 worlds, 7 periods): share of period runs in which the HH kill, the SSB clause and $\pi_1\ge0.6$ fire. Step worlds trigger the kill and $\pi_1$; slow growth triggers the SSB clause; an instability with a growth time of about one hour looks like a step at day resolution.}
+
+\hcaveats{Four identical-kickoff periods with 3--5 \#best agents; $r_1$ CIs span 1.0--1.9 in \#37, \#39 and \#42. A growth time below two active hours cannot be told from a field at $t=0$. The positive control is half met: \#38 has a full-size day-1 split whose direction is half kept, a day-1 transient (post hoc check at days 4--5: $\pi_1$ 0.56). Repo vectors need same-regime statements naming the repo before the period, so \#37's field rests on four days. The \#41 anti-alignment and the reshuffle reading of \#39 are post hoc.}
+
+\hnext{Hour-resolution onset on day 1 with hierarchical pooling across periods; the reshuffle onset on NE19 (\#45, confirm C4); what the day-1 transient follows (operator messages vs the first repos touched).}

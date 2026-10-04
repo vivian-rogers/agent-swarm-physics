@@ -313,6 +313,9 @@ Two builders and two libraries are now shared, and `semantic_kappa` is extended.
 
 ## Known issues
 
+- **Within-day split-half noise correction biases direction persistence low** (H108): it keeps agent-day deviations as signal. Use a joint-relabel excess. Agent-bootstrap CIs with duplicated agents shift relabel nulls (CIs sit low); the persistence relabel test is liberal (size up to 0.28) when directions regenerate under a strong room effect.
+- **A `|` inside a card table cell (e.g. |m|) breaks `build_summaries.py`'s scorecard parser** (H108). Write \|m\| or "norm of m".
+- **Room-split scheme and `rslib.py` now have four users** (H100, H102, H107, H108; H108's is a copy of H107's): move to `infra/shared/` next to `rooms_asof.py`.
 - **Held-out Jev labels live apart** (DQ10, input preparation for frozen confirm scripts; never merged into shared tables). They are in `data/processed/holdout_labels/`:
   - `behavior_states_v3_holdout.parquet`: the 3,313 #51-tail windows;
   - `opptype_holdout.parquet`: H55's opposes subtype, 1,968 pairs.

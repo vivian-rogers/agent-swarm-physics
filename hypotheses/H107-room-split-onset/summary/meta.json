@@ -1,0 +1,70 @@
+{
+ "complete": 45,
+ "faithfulness": 1.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; real-skeleton synthetic (six worlds; Amendment 1); replication on 4 identical-kickoff periods plus 4 natives (two kickoff-field controls, the fork week, the 04-27 reshuffle, the NE42 re-split) in two embedding models and three variants; inherited repo field from DQ4; 91 estimates rows; confirm.py frozen (SHA-256) with a dry run, not run. Missing: hour-resolution onset, holdout.",
+  "faithfulness": "The onset estimators are calibrated (size 0.02; step vs slow growth separated at real counts) and agree across models in sign. But the card-level verdict is mixed: two identical weeks grow from zero, two start near full size, and the positive control is half met (#38's day-1 direction is half kept). The repo clause hits one week's first day. Day resolution cannot separate a fast instability from a field. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I0.",
+  "usefulness": "A caution for operators: the first day's room difference is a poor guide to the week, and inherited work rarely sets it. No lever and no effect size to act on."
+ },
+ "one_line": "The #best/#rest content split has no single onset shape: it grows from zero in #37 and #39, is nearly full on day 1 in #41 and #42 with a half-kept direction, and inherited repos set it only on #42's first day.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "growth from zero in 2/4 weeks; day-1 direction half kept"
+  },
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "inherited repo field sets #42 day 1 only"
+  }
+ ],
+ "rated_by": "H107 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Room content splits do not have one onset shape: in #37 and #39 the split starts near zero and grows over the week (r₁ ≈ 0), while in #41 and #42 it is 70–90% formed on day 1 with only half its direction kept (c₁ 0.50–0.59); pre-period repos set the day-1 direction only in #42",
+  "scope": "4 identical-kickoff weeks; controls #38, #44; natives #35 forks, G39, G41",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.35,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic validation on the real skeleton",
+    "x": 1.5,
+    "evidence": "card §P0"
+   },
+   {
+    "factor": "both embedding models (partly)",
+    "x": 1.1,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: positive control half failed (#38 π₁ 0.53), so card-level onset clauses are inconclusive",
+    "x": 0.6,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: only four weeks",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 0.5,
+  "decision": "don't assume rooms start identical or start split; check day 1",
+  "magnitude": "small",
+  "generality": "multi-room LLM swarms",
+  "expected_usefulness": 0.17,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H107 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

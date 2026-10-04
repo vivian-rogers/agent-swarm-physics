@@ -1,0 +1,33 @@
+\hwhat{HH338 says that a spontaneously broken continuous symmetry has a soft direction. The room content difference of identical-kickoff weeks should then wander from day to day (a Goldstone mode), while room-specific instructions pin it. H108 measures the day-to-day persistence of the \#best/\#rest content direction in 8 non-holdout periods, corrected for sampling noise by joint relabels. \textbf{The pre-registered contrast passes, but it is fragile.} Directions persist inside a week (cosine 0.69--0.95 in 6/8 periods). The fielded weeks are more persistent (pooled 0.93 vs 0.70; ratio of decorrelation rates 4.7). The contrast rests on the one long fielded week, \#38, and it is confounded with split size. The fork week does not pin.}
+
+\hmodel{Model 11 (soft-spin O($n$), $n=32$). The room order parameter $\mathbf{m}(d)=\boldsymbol{\Delta}(d)$ is the daily \#best $-$ \#rest content difference (style-residualized, day-centred, agent constants removed). Without a field its direction $\hat{\mathbf{m}}$ diffuses on the sphere with $D\propto1/(N_\mathrm{eff}|\mathbf{m}|^2)$; a field $\mathbf{h}$ adds a restoring torque, so the angle is an Ornstein--Uhlenbeck process with a plateau. $C$ and $E$ are excess cross-products over joint relabels; $P(\ell)$ estimates the lag-$\ell$ cosine.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+d\hat{\mathbf{m}}=-\Gamma\chi(\mathbf{h}\!\cdot\!\hat{\mathbf{m}}_\perp)\,dt+\sqrt{2D}\,d\boldsymbol{\xi}_\perp,\quad D\simeq\sigma^2/(2N_\mathrm{eff}|\mathbf{m}|^2)\\
+P(\ell)=\frac{\sum_d C(d,d{+}\ell)}{\sqrt{\sum_d E(d)\sum_d E(d{+}\ell)}},\quad D_\theta=-\ln P(1)\\
+R_D=D_\theta^{\mathrm{identical}}/D_\theta^{\mathrm{fielded}}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/persistence_by_period.pdf}{Left: noise-corrected day-to-day persistence $P(1)$ per period (filled bge with agent-bootstrap 95\% CI, open gte); dashed lines are the pooled group values. Right: \#38's lag profile falls to a plateau near 0.85, the pinned signature. \#44, the other fielded week, sits with the identical weeks; the fork week \#35 has the least memory.}
+
+\htelos{For an operator, the useful fact is modest: inside a week the content difference between rooms keeps most of its direction (cosine about 0.7--0.9 a day), and one set of different room instructions held it nearly fixed for three weeks. Whether that is the instruction pinning the direction or simply a bigger split drifting more slowly (Goldstone predicts both) is not decided by seven periods. A work assignment alone (the forks) did not hold the content direction. Treat this as a description of room dynamics, not a lever.}
+
+\hbottom{The room content direction persists from day to day inside a week and persists most under room-specific instructions (pooled cosine 0.93 vs 0.70), but the contrast rests on one long week and cannot yet be told apart from slower drift of a larger split.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 synthetic: bias, recovery, contrast power & pinned $P(1)$ 0.97--1.08; planted cosines $\pm$0.05; contrast 100\%/0\%/0\% & passed\\
+P1 $R_D\ge2$, CI $>1$, both models & 4.7 [2.1, 5.9]; gte 5.2 [2.1, 6.4] & supported\\
+\quad robustness (post hoc) & without \#38: 1.4 (gte 3.0); field vs size not separable & fragile\\
+P2 $D_\theta$ rises with $1/(N|\mathbf{m}|^2)$ & Spearman 0.10 (bge, 5 pts), 0.40 (gte) & weak\\
+P3 persistence beats relabel $\ge5/8$ & 6/8 (gte 5/8) & met\\
+P4 \#38 plateau & slope $-0.019$/day, $P(6)$ 0.85 & met\\
+P5 forks pin & $P(1)$ 0.32; $\omega$ 0.68 vs 0.27 & failed\\
+HH338 & identical rotation $\ge2\times$ fielded & supported, fragile\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_recovery.pdf}{Synthetic validation on the real statement skeletons (40 worlds per setting): the relabel-excess estimator recovers the planted day-to-day cosine from 0 to 1; the within-day split-half correction named in the HH is biased low under pinning (it keeps each agent's day deviation as signal), so it is reported but not scored.}
+
+\hcaveats{Two fielded periods, one of them 17 days long; \#44 alone gives $R_D$ 1.4 in bge. Goldstone diffusion slows with split size, and the fielded rooms split most; a log--log fit over seven periods leaves the field coefficient at $-0.17\pm1.33$. Identical periods have 2--4 day pairs, and agent-bootstrap CIs sit below the point estimate where duplicated agents shift the null. Day 1 is a transient (H107) and enters the pairs. The leave-one-out and size checks are post hoc.}
+
+\hnext{Compare fielded and identical weeks at matched split size; drop the kickoff day; test transverse kicks (does one room's operator message rotate the direction more without a field?).}

@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **H107 and H108 (room split onset, Goldstone wandering), round 1.** **H107 mixed:** no single onset shape. #37 and #39 grow from zero (r₁ ≈ 0); #41 and #42 are 70–90% formed on day 1 with half the direction kept (c₁ 0.50–0.59); inherited repos set only #42's day 1. The kickoff-field positive control half failed (#38 π₁ 0.53), so card-level onset clauses are inconclusive. **H108 supported, fragile:** the room direction persists day to day (P(1) 0.69–0.95 in 6/8), more under room kickoffs (0.93 vs 0.70; R_D 4.7 / 5.2), but the contrast rests on #38 and split size confounds pinning; forks do not pin. v2 credence H107 0.35, H108 0.42. Constants r₁, D_θ; holdout item 44 (incl. a harmless H108 guard-test disclosure); model 11 pitfall; three known issues.
 - **DQ10 round 2 (authorized by Vivian): stance v2.1 passed its gate on a second confirmation sheet; `reply_stance_v2` shipped. Held-out labels prepared, kept apart. Spend $2.951 of $3.**
   - **Stance (Amendment 2):** two-phase sheet (129 pairs; pool of 10,576 labelled), new blind labeller. The flag `disagree` & confidence ≥ 0.6 has reweighted precision **0.67 [0.54, 0.80], n = 44** (gate pass); confidence ≥ 0.8: 0.81, n = 26; hard class 0.56 (fail). The first two failures stay in `stance_v2.md`.
     - Post hoc: replies to the idling nudge are the shaky part (0.61 without them). Use `disagree_validated_agent`.

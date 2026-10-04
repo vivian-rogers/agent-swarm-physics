@@ -1,0 +1,69 @@
+{
+ "complete": 45,
+ "faithfulness": 1.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; real-skeleton synthetic (pinned, Goldstone, regenerating and contrast worlds; Amendment 1); replication on 8 periods with two natives (#38 lag profile, #35 forks) in two models and three variants; 46 estimates rows; post hoc leave-one-out and split-size checks; confirm.py frozen (SHA-256) with a dry run, not run.",
+  "faithfulness": "The noise-corrected persistence estimator is unbiased in every synthetic world and the pre-registered contrast passes in both models (R_D 4.7, 5.2; CI lower bound 2.1). It rests on one long fielded week (without #38 R_D 1.4 in bge), Goldstone's own size dependence confounds the field reading, and the fork week fails. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I0.",
+  "usefulness": "Descriptive: room content directions keep most of their orientation day to day, and room-specific instructions held one fixed for three weeks. No lever with an effect size."
+ },
+ "one_line": "Inside a week the room content direction persists (cosine 0.69-0.95), more under room-specific instructions (pooled 0.93 vs 0.70, R_D 4.7), but the contrast rests on #38 and is confounded with split size.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "soft direction; pinning vs size-slowed Goldstone drift unresolved"
+  }
+ ],
+ "rated_by": "H108 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Within a goal period the room-difference content direction persists day to day (noise-corrected P(1) 0.69–0.95 in 6/8 periods), more so when rooms get room-specific kickoffs (pooled 0.93 vs 0.70; diffusion ratio R_D 4.7 [2.1, 5.9] bge, 5.2 gte)",
+  "scope": "8 periods; natives #38 lag profile, #35 forks",
+  "direction": "positive",
+  "original_verdict": "supported",
+  "credence": 0.42,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic validation (contrast rule 100% / 0% / 0%)",
+    "x": 1.5,
+    "evidence": "card §P0"
+   },
+   {
+    "factor": "both embedding models",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "replication 6/8 periods",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: the contrast rests on #38 (without it R_D 1.4 bge)",
+    "x": 0.6,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: split size confounds pinning (Goldstone diffusion ∝ 1/(N|m|²))",
+    "x": 0.7,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": true,
+  "value_if_true": 0.5,
+  "decision": "once rooms split, expect the split's direction to hold for the period",
+  "magnitude": "small",
+  "generality": "multi-room LLM swarms",
+  "expected_usefulness": 0.21,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H108 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
