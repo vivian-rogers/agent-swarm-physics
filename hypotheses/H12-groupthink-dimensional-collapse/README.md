@@ -1,6 +1,7 @@
 # H12: Groupthink is dimensional collapse: few collective modes, shrinking participation ratio at consensus
 
 **Status:** running. Exploratory round 1 done 2026-10-03: HH77 partially supported (one Curie–Weiss-like market mode, partly joint lulls); HH58 refuted in direction (kickoffs expand dimensionality; self-repetition, not consensus, collapses it). Confirmatory script written, not run.
+**Plain-language explainer:** [EXPLAINER.md](EXPLAINER.md) (for non-specialists).
 **Fields:** stat mech, info theory
 **Origin:** HH77 + HH58 (shortlist 2, item 3) (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Population N(t), variant *present population* (H02 rule, below); Regime (whitening is per regime); Agent state, variant *vector* (centered, whitened mean embedding of the agent's statements in a 30-min window); Driving / external field (goal kickoffs). Two new named variants are proposed for `DEFINITIONS.md` (not yet added; H12 may not edit it): **"collective eigenmode (random-matrix)"**, to avoid a clash with the "collective mode" of `statmech-primitives.md` (coordinating / executing / idling / reporting, HH56), and **"effective dimensionality (bias-corrected participation ratio)"**.
