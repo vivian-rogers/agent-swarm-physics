@@ -101,7 +101,9 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 ## New hypotheses H59–H74 (promoted 2026-10-04): launch plan
 | Status | Hypotheses |
 | --- | --- |
-| paused (compute) | H60, H61, H62, H63, H64, H65 (and H41, H58) |
+| done | H41 (round 1, 2026-10-04) |
+| running | H58 (resumed 2026-10-04) |
+| not started (compute) | H60, H61, H62, H63, H64, H65 |
 | ready | H67 (H42 done), H74 (H36 round 1b done) |
 | done | H59 (round 1, 2026-10-04: failed as posed) |
 | queued (inputs ready) | H66, H68, H69, H70, H71, H72, H73 |

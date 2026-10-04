@@ -1,0 +1,36 @@
+\hwhat{Can a novel item (a link, number, name or rare word) reach an agent before that agent's model calls could have read it? We traced 134k novel marker items (H34's rule; 45k adoptions) through the DQ1 context ledger in 32 non-holdout periods, building each item's logged light cone: the time-respecting read-out paths from its first use. Within a room the bound holds: adoptions outside the cone are rare (robust share 0--4\% per period, median 0.6\%). The pre-registered test of gating, the hazard at the first call that read the item over the call already in flight, passed in only 12/32 periods. Matched for time since the item appeared (post hoc), it passes in 22/32. Across rooms the logged cone is a cage: 75--100\% of cross-room adoptions lie outside it (7/8 two-room periods), and NE42's merge raised the cross-group hazard 80--860$\times$, falling back at the split. The front is paced by talk turns, not cadence. Holdout untouched.}
+
+\hmodel{Asynchronous kinetic updates (model 02) with contagion on a temporal graph (03). Agents update only at their model calls; a call reads the room messages posted since the previous call (the ledger). An item posted by source $s$ at $t_0$ can reach agent $i$ only along a time-respecting read-out path; $K_i$ is $i$'s entry call into this logged cone. Adoption hazard per talk call: a shared field $\varepsilon$, unlogged channels $\eta$, plus $q$ once $i$ has read the item. $J$ compares the hazard at the first entry call with the call in flight at $t_0$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+T_s=t_0,\quad T_i=\min\{t^{\rm call}_c:\ c\ \text{reads}\ m,\ t_m\ge T_{{\rm src}(m)}\}\\
+\lambda_i(c)=\varepsilon(t_c)+\eta_i(c)+q\,\mathbb{1}[c\ge K_i^{\rm item}]\\
+\text{acausal: } c_{\rm use}<K_i,\qquad J=\frac{h(c=K_i)}{h(c=K_i-1)}\Big|_{\text{same }t-t_0}\\
+v=1/\mathrm{median}\,(\text{calls from exposure to use})
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Jump $J$ per period: open circles are the pre-registered unmatched estimate (often $\le 1$ because adoption hazard decays with time since $t_0$, and in-flight calls all sit near $t_0$); filled are delay-matched (post hoc). Gray: shared-field synthetic. (b) Share of adoptions outside the logged cone: adopters in the source's room (dots, $\le$4\%) versus another room (squares, 0.05--1).}
+
+\htelos{For an operator the useful part is negative: you cannot trace how cross-room information leaked from chat logs. Nearly all cross-room adoptions bypass the logged chat channel, yet shared repos and websites are as common among in-cone adoptions as among the leaks, so they explain nothing. Only humans re-posting an item in several rooms stand out (27$\times$ enriched). Rooms work as cages for chat: merging two groups multiplies cross-group pickup about a hundredfold. Inside a room, gating is real but weak: about a third of fast adoptions are co-generated (a shared field), not read. Spread runs at one hop per 1.5--5 talk turns, so tuning call cadence buys nothing.}
+
+\hbottom{Novel items obey a logged light cone inside rooms and across the NE42 merge and split, but the pre-registered gating test mostly failed (it passes only after a post-hoc recency match), and cross-room leaks cannot be traced to any logged channel.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.45\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 $J_{\rm in}$ CI $>1$ ($\ge$70\% II/III, $\ge$50\% I) & 3/10 II/III, 8/19 I; matched (post hoc) 7/11, 15/21 & fail (post hoc pass)\\
+P2 $A_{\rm rob}\le$0.05 (II/III), 0.10 (I) & 29/32; the 3 misses are cross-room; within-room max 0.04 & mostly\\
+P3 early $A$ below time-shuffled null & 32/32, but a field also passes (synthetic) & non-specific\\
+P4 cross-room adopters unreachable on pre-item graph & $\ge$90\% in 5/8 two-room periods; \#35/36 bridged statically & partial\\
+P5 cycles per hop: I $\le$5, III $\ge$10; talk 1--2 & I 47 / 5 talk; III 16 / 1.5 talk & III yes, I no\\
+P6 cadence $b\in[0.5,1.5]$, $c>-0.2$ & $b>0$ (CI) in 3/25; $c$ often $<0$ or $>0$ & fail\\
+P7 $\ge$50\% of violations have a channel & 13/16, but controls 0.82 & non-specific\\
+P8 in-flight $\le$ entry/3 & 2/10 (matched 4/10) & fail\\
+NE42 merge $\ge3\times$ both ways; cage & $\times$82, $\times$860; cross acausal 1.0 / 0.02 / 1.0 & yes\\
+G38 cage, artifact leak & cage yes (ratio 0.001); artifact/web 0.19 vs 0.31 & mixed\\
+\end{tabular}}
+
+\hobsb{../figures/summary_obs2.pdf}{Synthetic validation on real call schedules (\#31, \#38, \#51; 4 replicates of 400 items). (a) The matched $J$ separates relay ($\infty$) from a shared field ($\approx$1); timing error attenuates it but keeps the sign. (b) The acausal share separates field from relay only where logged paths are long (two rooms).}
+
+\hcaveats{The headline gating result rests on a post-hoc estimator, chosen after the first real period and validated afterwards (8\% false positives under a field). Items are hashed markers, so co-generated names and numbers look like adoptions. Channel attribution is non-specific because shared work is ubiquitous. Visibility is the ledger's room rule; its timing is estimated for non-Gemini agents. The cadence test lacks leverage: regime-III call intervals barely vary. NE42 is confounded with \#40's shared goal. The first build mis-stored cone hop counts (fixed; all periods rebuilt). No multiplicity correction across 32 periods. Holdout not run.}
+
+\hnext{Pre-register the matched jump for the holdout. Time-stamp the unlogged channel with file-level git reads (DQ4) and web visits against matched controls. Test HH187's cycle-quantized lags on hop events. Use pause timers as exogenous cadence shifts.}

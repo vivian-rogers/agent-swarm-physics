@@ -1,13 +1,61 @@
 {
-  "complete": 45,
-  "faithfulness": 2.0,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 done: predictions and nulls written before any real-data run, synthetic validation (two runs, 132 configurations on real call schedules), 32 replication periods plus 4 native tests (G31, G38, G51, NE42), channel attribution with in-cone controls, scorecard, and a guarded confirmatory script dry-run on stand-ins (not run). Round 2 must pre-register the matched jump and time-stamp the unlogged channel.",
-    "faithfulness": "The logged light cone organizes the data where it binds: within-room adoptions almost never precede read-out (<= 4%, median 0.6%), 75-100% of cross-room adoptions fall outside the logged cone, and NE42's merge/split moves cross-group pickup 80-860x as predicted. But the pre-registered gating test failed (12/32); it passes (22/32) only with a post-hoc recency-matched estimator, about a third of fast adoptions look co-generated, the cadence and velocity predictions failed, and nothing is confirmed on the holdout.",
-    "usefulness": "A computable diagnostic: logged chat explains almost no cross-room spread, and shared artifacts cannot be blamed from logs (they are as common in in-cone adoptions); human cross-posts are the only enriched leak. Rooms are strong cages for chat (merging multiplies cross-group pickup ~100x). Spread runs at about one hop per 1.5-5 talk turns, independent of call cadence. No validated control knob."
-  },
-  "one_line": "Inside rooms novel items follow a logged light cone (acausal <=4%); gating passed only post hoc (22/32); cross-room leaks bypass chat and can't be traced",
-  "rated_by": "H41 agent (suggested)",
-  "updated": "2026-10-04"
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: predictions and nulls written before any real-data run, synthetic validation (two runs, 132 configurations on real call schedules), 32 replication periods plus 4 native tests (G31, G38, G51, NE42), channel attribution with in-cone controls, scorecard, and a guarded confirmatory script dry-run on stand-ins (not run). Round 2 must pre-register the matched jump and time-stamp the unlogged channel.",
+  "faithfulness": "The logged light cone organizes the data where it binds: within-room adoptions almost never precede read-out (<= 4%, median 0.6%), 75-100% of cross-room adoptions fall outside the logged cone, and NE42's merge/split moves cross-group pickup 80-860x as predicted. But the pre-registered gating test failed (12/32); it passes (22/32) only with a post-hoc recency-matched estimator, about a third of fast adoptions look co-generated, the cadence and velocity predictions failed, and nothing is confirmed on the holdout.",
+  "usefulness": "A computable diagnostic: logged chat explains almost no cross-room spread, and shared artifacts cannot be blamed from logs (they are as common in in-cone adoptions); human cross-posts are the only enriched leak. Rooms are strong cages for chat (merging multiplies cross-group pickup ~100x). Spread runs at about one hop per 1.5-5 talk turns, independent of call cadence. No validated control knob."
+ },
+ "one_line": "Inside rooms novel items follow a logged light cone (acausal <=4%); gating passed only post hoc (22/32); cross-room leaks bypass chat and can't be traced",
+ "rated_by": "H41 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Inside rooms, novel items follow the logged light cone (acausal ≤ 4%, median 0.6%) and rooms cage spread (NE42 moved cross-group pickup 80–860×); spread runs at ~1 hop per 1.5–5 talk calls; about a third of fast adoptions are co-generated, and cross-room leaks bypass logged chat",
+  "scope": "32 periods; natives NE42, G38, G31, G51",
+  "direction": "positive",
+  "original_verdict": "mixed (gating failed as pre-registered)",
+  "credence": 0.69,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (29/32 within-room bound)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "intervention consistent (NE42 merge/split)",
+    "x": 2,
+    "evidence": "native NE42"
+   },
+   {
+    "factor": "synthetic identification (132 configurations)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "penalty: within-room check weak (a shared field also gives ~2%)",
+    "x": 0.7,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: gating only post hoc; no multiplicity correction",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "monitoring: chat logs can't attribute cross-room leaks; rooms cage chat-borne spread",
+  "magnitude": "material",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 1.73,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H41 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
 }
