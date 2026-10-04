@@ -83,3 +83,5 @@ One orjson pass over raw `computer_use_turns` (scan 184 s, 2 processes; build 25
 - **Memory snapshots precede their consolidation event** by microseconds (found by H15): join a CONSOLIDATE event to its memory snapshot with a backward or nearest as-of join, never forward.
 - **Synchronized lulls** (≤ 1 active agent) cover 0–42% of minutes per period and drive much of the collective co-activation (H02, H12). Report lull-filtered variants of any collective statistic.
 - **Self-repetition:** in #38–#40, 16–60% of an agent's chat messages per day are near-copies of its own earlier text (H12). Dedupe within agent-day (cosine > 0.95) before content-diversity statistics.
+- **`exposure.lag_s` uses `events_core` turns only,** so in regime III (computer-use turns live in `actions`) it overstates the lag to an agent's next turn. Use `actions` together with events for turn times (H18).
+- **Mention-based "responses" are contaminated:** agents name senders whose message they could not yet have seen 3–10× more often than other room-mates (H18 placebo). Mentions partly reflect conversation state or co-addressing, not uptake of a specific message.

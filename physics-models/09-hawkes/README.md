@@ -54,6 +54,8 @@ $$\lambda_i(t) = \mu_i(t) + \sum_j \sum_{t_k^j < t} \phi_{ij}(t - t_k^j)$$
 
 ## Pitfalls
 
+- **Endogenous turn timing fakes attention dilution** (H18): with reactive turn timing and no attention budget, the per-message response rate still falls with the backlog (β̂ ≈ 0.78). Identify dilution from exogenous batch sizes (timer wakes), and count only messages visible in the agent's room.
+
 - **Nonstationarity fakes criticality.** If the true baseline varies (time of day, goal changes) but μ is fitted as constant, the fit attributes the variation to self-excitation and n is pushed toward 1 (Filimonov & Sornette 2015). Model the baseline seriously before believing any n near 1.
 - **Scheduler regularity.** If the scaffolding polls agents on a fixed cadence, event times inherit that clock. Check the inter-event-time distribution for spikes at fixed lags first.
 - **Small N, many parameters.** N² kernels for N ≈ 10–30 agents; regularize, or group agents by model family.

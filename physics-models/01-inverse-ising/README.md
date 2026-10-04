@@ -72,6 +72,8 @@ At N ≲ 30 with short windows, inferring every J_ij is data-hungry and fragile.
 
 ## Pitfalls
 
+- **Coupling scales as N^−0.6, not J/N** (H18, 2026-10-03): per-pair uptake falls sub-linearly with room size. Mean-field fits that assume J/N normalization will mis-scale across periods of different size.
+
 - This is an **equilibrium** model: it only sees equal-time correlations, which are symmetric. Directed influence (i talks, then j replies) is invisible here. That is what model 02 is for.
 - Small N and short windows give noisy J. Regularize (L1 or L2) and report uncertainty by bootstrapping over days.
 - A heat-capacity peak can be a finite-size or sampling artifact. Compare against the same analysis on shuffled data.

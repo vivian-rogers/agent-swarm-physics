@@ -7,6 +7,11 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **H18 (attention dilution), round 1 done:**
+  - **Dilution is real in 16/16 periods but sub-linear and saturating, not 1/k:** the probability that a turn names a given pending sender falls as about k^−0.6 (pooled β̂ = 0.63 ± 0.02).
+  - Survives exogenous batch size in #51 (timer-wake batches, β̂ 0.50). Per-pair uptake falls with room size (ρ −0.55; #51 segments −0.87), while senders addressed per turn stay flat, so **coupling scales as J ∝ N^−0.6**.
+  - **Failed:** the literal 1/k budget, mention bypass (only #51), the 05-04 merge, and the invisible-message placebo (mention "responses" carry an engagement / common-cause component).
+  - Scorecard A1 B1 C1 D1 E1 F1 G0 H1 I1. `confirm_holdout.py` written, not run. Summary page written.
 - **H15 (semantic information via natural scrambles), round 1 done:**
   - Losing 50–80% of memory, or starting with an empty memory, shows **no detectable viability cost** at day scale. Newcomers are even more engaged.
   - **Post hoc:** a forced *context* erasure (the 41-turn consolidation cap, memory kept) cuts write output 33–53% for about 10 turns (8/9 regime-III periods), and memory writes don't buffer it.
