@@ -1,0 +1,41 @@
+# H19 × G41: Perform novel research! (2026-05-11 → 2026-05-15)
+
+**Verdict:** supported
+**Role:** exploratory (round 1, non-holdout)
+**Period:** regime III · mode I · 15.0 agents (N_room 9.4) · 2 room(s) carrying ≥ 5% of agent messages · 5 non-holdout days · 4.0 h/day (empirical).
+
+## Why this period
+One point on every method's curve. Loop-gain estimates available here: H03 n̂ ALL (T2), H03 n̂ TALK (T1, primary), H03 fast n_x (T3), H04 K, weekly (E3), H04 n, weekly (T4), H05 two-block g, active (E5), H05 two-block g, talk (E4), g_eq active (E1, primary), g_eq talk (E2). Controls: x_att = 1.40 (rank 28/35), messages per village turn 0.60, attention load k̄ = 5.0 agent messages waiting per turn, 7.1 agent messages per agent-hour, human share of chat 0.3%.
+
+## Prediction
+*Written 2026-10-04 00:09 UTC, before H19 related any control parameter to any loop gain (the card's P1 applied here).*
+- Under the attention-dilution collapse (P1), every loop gain is affine-increasing in x_att. This period's x_att = 1.40 is **above** the cross-period median (0.96), so its estimates should sit **above** each method's cross-period median, and on the common curve.
+- **Per-period verdict rule** (fixed now): fit the primary collapse model (per-method affine in x_att) without this period (LOPO). **supported** if (i) both primary estimates (T1 n̂ TALK, E1 g_eq active) fall inside their 90% LOPO predictive intervals and (ii) the period's summed LOPO log density under the collapse model is ≥ that under the regime-only rival N1; **mixed** if exactly one of (i), (ii) holds; **failed** if neither.
+- Against it: estimates outside the intervals in the direction opposite to the x_att prediction, or N1 predicting the period better.
+
+## Result
+Primary collapse model (per-method affine in x_att), fitted without G41 (LOPO); shrunken = partial-pooling (BLUP) estimate under the collapse model fitted to all periods, shown beside the period's own estimate.
+
+| Method | Own estimate ± SE | LOPO prediction [90% PI] | z | inside | Shrunken | Regime-only N1 prediction |
+| --- | --- | --- | --- | --- | --- | --- |
+| H03 n̂ ALL (T2) | 0.203 ± 0.092 | 0.368 [0.017, 0.718] | -0.77 | yes | 0.234 | 0.254 |
+| H03 n̂ TALK (T1, primary) | 0.307 ± 0.068 | 0.359 [-0.010, 0.728] | -0.23 | yes | 0.312 | 0.248 |
+| H03 fast n_x (T3) | 0.040 ± 0.020 | 0.047 [-0.025, 0.119] | -0.17 | yes | 0.041 | 0.016 |
+| H04 K, weekly (E3) | 0.118 ± 0.110 | 0.171 [-0.046, 0.388] | -0.40 | yes | 0.155 | 0.225 |
+| H04 n, weekly (T4) | 0.379 ± 0.129 | 0.434 [0.082, 0.785] | -0.25 | yes | 0.400 | 0.351 |
+| H05 two-block g, active (E5) | 0.079 ± 0.082 | 0.144 [-0.084, 0.372] | -0.47 | yes | 0.105 | 0.160 |
+| H05 two-block g, talk (E4) | 0.132 ± 0.096 | 0.096 [-0.067, 0.258] | +0.36 | yes | 0.098 | 0.105 |
+| g_eq active (E1, primary) | 0.133 ± 0.069 | 0.157 [0.002, 0.312] | -0.25 | yes | 0.146 | 0.207 |
+| g_eq talk (E2) | 0.081 ± 0.032 | 0.136 [-0.010, 0.282] | -0.61 | yes | 0.089 | 0.096 |
+
+- (i) both primaries inside their 90% intervals: **True**; (ii) summed LOPO log density, collapse 9.69 vs regime-only 9.42: **True**.
+- Direction check (prediction: above median): primaries observed n_talk below, geq_active above.
+- Per-period figure: `figures/G41_residuals.png`. Data: `data/processed/H19-loop-gain-collapse/G41/residuals.parquet`.
+
+## Scorecard (period-specific axes)
+- **C** (adequacy vs. rivals, this period): collapse vs. regime-only log density +0.27 nats.
+- **D** (unfitted): the period's estimates are predicted out of sample (LOPO), not fitted.
+- E, G: not informed by a single period.
+
+## Notes
+- Inputs: `data/processed/H19-loop-gain-collapse/G41/inputs.json`.

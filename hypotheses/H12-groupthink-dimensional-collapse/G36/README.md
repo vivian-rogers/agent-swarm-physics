@@ -1,0 +1,57 @@
+# H12 × G36: Interact with other AI agents outside the Village! (2026-03-23 → 2026-03-27)
+
+**Verdict:** mixed
+**Role:** exploratory (round 1, non-holdout)
+**Period:** regime II/III · mode C (shared objective) · N = 13 at start (present: 12, 12) · rooms holding ≥ 3 present agents: 36a: 2, 36b: 2 · 5 non-holdout days. Splits: 36a (1 d, II), 36b (4 d, III) (H01 step changes).
+
+## Why this period
+Spans the regime boundary (03-24): 36a is one regime-II day (descriptive), 36b is regime III.
+
+## Prediction
+*Written 2026-10-03, before running on this period.* The card's predictions as they apply here (card: `../README.md`, incl. Amendment 1).
+
+- **P1 / P1′ (activity modes):** in 36b: k_cd ∈ {1, 2, 3}; also after the lull filter. Naive MP count ≥ k_cd + 1 likely.
+- **P2 (market mode = Curie–Weiss mode):** if k_cd ≥ 1, majority-sign share ≥ 0.8 and VR/λ₁ ≥ 0.7; the lull filter lowers λ₁/edge by ≥ 30% (H02: lulls drive much of the co-activation). Expect λ₁/edge above the regime-I median (regime III).
+- **P3 (talk):** k_cd(talk) ≤ k_cd(activity). Two-room unit(s) 36b: a signal talk eigenvector separates the rooms (p < 0.05).
+- **P4 (content):** k_cd(content) ≥ 1 (powered per Amendment 1). Mode C: λ₁/edge above the mode-I/F median of the regime.
+- **P5 (family mode):** descriptive only.
+- **P7 (re-expansion):** PRday(day 1) < median PRday(days 2+); within day 1, PR30 rises from the first to the last hour more than on other days.
+- **P6 (kickoff collapse):** transition #35 → #36 (2026-03-20 → 2026-03-23): ΔPR_kick = PR₁ₕ(day 1) − PR₁ₕ(last day of #35) < 0.
+
+**What would count against it here:** k_cd = 0 (no collective mode beyond the schedule) or ≥ 4; a localized top mode; PRday on day 1 above later days (consensus forming over the week rather than imposed at the kickoff); a positive kickoff contrast.
+**Period verdict rule (Amendment 1, item 9):** supported if every applicable headline check holds, failed if none does, mixed otherwise.
+
+## Result
+<!-- RESULT -->
+**Random-matrix arm** (cross-day edge, 200 surrogates; λ₁/edge > 1 means above the noise edge):
+
+| Unit | N | days | k_cd act | k after lull filter | k circ / MP / MP_eff | λ₁/edge (lull-filtered) | sign share · VR/λ₁ | k_cd talk (room p) | k_cd content (λ₁/edge) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 36b | 12 | 4 | 1 | 1 | 1 / 1 / 1 | 1.58 (1.13) | 1.00 · 0.99 | 0 (–) | 1 (1.21) |
+
+**Dimensionality arm** (chat, whitened d = 32):
+
+- Mean PRday 16.77 (6 agents × 15 statements; 5 of 5 days valid); mean spread TV 20.30; between-agent PR (noise-corrected) 3.36.
+- P7: PRday day 1 = 17.54 vs median of later days 17.33; within-day PR30 slope day 1 -0.651 vs other days – per window.
+- P6: first-hour PR 14.73 (last day of #35) → 16.83 (day 1): Δ = 2.10 (14%); placebo percentile 0.78; ΔTV -5.41.
+
+| Check | Holds |
+| --- | --- |
+| HH77 (k_cd ∈ 1–3, uniform top mode) | yes |
+| P7a (PRday day 1 < later) | no |
+| P6 (ΔPR_kick < 0) | no |
+
+Figure: `figures/G36_summary.pdf`. Data: `data/processed/H12-groupthink-dimensional-collapse/G36/`.
+<!-- /RESULT -->
+
+## Scorecard (period-specific axes)
+<!-- SCORE -->
+- **C (nulls):** activity modes beyond the cross-day null in 1/1 unit(s); after the lull filter in 1/1.
+- **D (Curie–Weiss shape):** sign share 1.00; VR/λ₁ 0.99.
+- **G (rooms):** talk-mode room separation p = – (– = no signal talk mode).
+- **E (NE34 kickoff):** ΔPR_kick = 2.10 (not negative).
+<!-- /SCORE -->
+
+## Notes
+- 2026-10-03: folder created and prediction written before running on this period.
+- 2026-10-03: results filled by `analysis/write_period_folders.py results` from `data/processed/H12-groupthink-dimensional-collapse/`.

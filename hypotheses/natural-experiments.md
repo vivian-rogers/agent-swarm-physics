@@ -86,3 +86,4 @@ Other single joins and retirements are listed per goal in `hypohypotheses/goal-p
 ## Undocumented step changes
 
 The list above covers *documented* changes only. Step changes could also be found directly in the data, using change-point detection on per-agent or per-room event rates, action mix, chat length or token use. That would find bugs, outages and unannounced changes, and date NE39 and NE40. It needs one pass over `events`; not run yet.
+| NE41 | regime III (from 2026-03-24) | Forced consolidation at the 41-turn cap: the context window is erased, memory kept, at a timing set by the scaffold, not the agent (~18.6k forced vs ~12.2k voluntary events, non-holdout) | context erasure (cut of the session channel) | turn-level event study; forced vs voluntary as quasi-random timing | found by H15 (2026-10-04); writes drop 33–53% for about 10 turns, then recover; supports H04/H08 (context is the coupling) |

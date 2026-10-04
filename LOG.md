@@ -7,6 +7,28 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **H15 (semantic information via natural scrambles), round 1 done:**
+  - Losing 50–80% of memory, or starting with an empty memory, shows **no detectable viability cost** at day scale. Newcomers are even more engaged.
+  - **Post hoc:** a forced *context* erasure (the 41-turn consolidation cap, memory kept) cuts write output 33–53% for about 10 turns (8/9 regime-III periods), and memory writes don't buffer it.
+  - Kolchinsky–Wolpert reading: η_mem ≈ 0 at 1–3 days; the semantic information lives in the session context, which supports H04/H08.
+  - P1/P4/P5 failed (P5 significantly the wrong way); D2.6 inconclusive. Scorecard A1 B1 C1 D0 E0 F1 G1 H1 I1.
+  - New **NE41** (forced erasure at the 41-turn cap). `confirm_ne30.py` written, not run.
+- **H19 (loop-gain collapse), round 1 done:** the pre-registered collapse on attention load **failed**.
+  - Slopes have opposite signs by spin channel: activity gains rise, talk gains fall. Regime-only wins out of sample by 11.5 nats.
+  - P3, the cross-method Hawkes → equal-time mapping, holds (ρ 0.44). P4: per-pair triggering ∝ 1/(N−1), a per-message budget.
+  - **Post hoc:** all 5 talk-channel gains collapse on k_llm (messages per LLM step), +25 nats over regime-only; frozen into the amended confirm script.
+  - Scorecard A1 B1 C0 D1 E0 F2 G1 H0 I0.
+- **H12 (groupthink as dimensional collapse), round 1 done:**
+  - **Exactly one collective "market mode"** beyond random-matrix noise and the cross-day null: activity 22/24, talk 20/24, content 24/24. It is Curie–Weiss-like and ranks like H02's βJ₀ (ρ 0.73), but is partly synchronized lulls.
+  - **HH58 refuted in direction:** kickoffs *raise* the participation ratio; day 1 is the most diverse; free weeks = shared weeks.
+  - **The lowest-dimensional periods (#38–#40) are agents looping on their own text** (16–60% self-near-copies), not groupthink (≤ 3% echo).
+  - Proposes a three-statistic monitor: collective-mode strength, cross-agent echo rate, self-repetition rate.
+  - Scorecard: random-matrix arm A1 B1 C1 D1 E0 F1 G0 H1 I0; participation-ratio arm A1 B1 C0 D0 E0 F1 G0 H0 I0.
+- **H11 (Potts, labor vs herding), round 1 done:**
+  - **Project choice herds (ferromagnetic) in 11/14 periods regardless of goal mode,** including all 5 predicted division-of-labor weeks (βJ_CW +2.0 to +5.0). Spread appears only as static ownership in own-artifact weeks (#39, #40, #42).
+  - **#26 election:** abrupt, persistent runoff jump (0.18 → 0.80 in about one 30-min window; winner DeepSeek-V3.2). Mean-field coupling sits at threshold (inconclusive).
+  - Scorecard A1 B1 C1 D0 E0 F1 G1 H1 I0. `confirm_holdout.py` (#22, #28, #45) written, not run.
+- **Summary pages and compendium** (Vivian's request): `infra/summaries/build_summaries.py` builds a one-page PDF per hypothesis (`summary/summary.pdf`: card header, ratings, generated goal-period diagram, model, math, observables figure, candid "so what") and `writeup/hypotheses-compendium.pdf` (color-coded TOC with completion / faithfulness / usefulness). Rubric: `writeup/hypothesis-pages/RUBRIC.md`. Three writer agents cover the finished hypotheses; running agents write their own as a final step; Claude calibrates ratings.
 - **H13 (family fields), exploratory round 1 done** (agent; regime III and #51 non-holdout, 10 goal periods):
   - **Each family carries a stable field in content space,** invariant across periods at family level (split-half cosine 0.84–0.93 vs 0.76 null, p = 0.008). Significant in 9/15 units (count rule needed 10).
   - **But it's writing style:** after residualizing on 20 style features it survives in 0/15 units. A gentler within-agent style control keeps about a third, so "mostly style", not proven "only style".
