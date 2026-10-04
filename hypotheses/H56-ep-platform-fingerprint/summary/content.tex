@@ -1,0 +1,34 @@
+\hwhat{Does the entropy production (EP) of agents' turn-level action chains jump at scaffold changes (prompts, tools, harness) but not at goal, roster or room changes, so that EP flags undocumented platform changes? A within-agent, count-matched EP change over 3+3 days was computed at 107 dated events (changelog, NE catalog, kickoffs, joins, rooms) and at every day for blind change-point detection, on all records and on an agent-only chain with scaffold records removed. Synthetic chains came first: the estimator is calibrated and detects $\pm$50\% changes. On real data, scaffold changes do not stand out (0/17 tool-change hits; class $p=0.23$), not even NE14b ($-28\%$, $t=-1.3$) or the oracle swap (NE40), dated here to 04-20 from answer style ($t=-0.2$). Goal kickoffs move the agent-only chain more ($p=0.007$). Family differences survive scaffold removal. Holdout not run.}
+
+\hmodel{Models 02/05: each agent is a Markov chain on H14's 11 action classes (or 6 coarse states). Its EP per transition is the pair-KL between forward and reversed transitions; the AIK bound on antisymmetric transition indicators $g_{ab}$ estimates it (Newton step, cross-fitted over days). H56 reads goal, roster and room changes as fields that move occupancy (potentials $U$), and scaffold changes as changes in the cycle forces $F$, so only the latter should change $\Sigma$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\Sigma=\sum_{a,b}\pi_aP_{ab}\ln\frac{\pi_aP_{ab}}{\pi_bP_{ba}},\qquad \ln\frac{P_{ab}}{P_{ba}}=F_{ab}+U_a-U_b\\
+\hat\Sigma_N=\tfrac{2}{k(k-1)}\textstyle\sum_{f\neq f'}\bar g_f^{\top}K^{-1}\bar g_{f'},\quad g_{ab}=\mathbb 1[a\!\to\! b]-\mathbb 1[b\!\to\! a]\\
+\Delta_i=\hat\Sigma_i(\text{post})-\hat\Sigma_i(\text{pre})\ \ \text{(both sides subsampled to }m_i=\min n\text{)}\\
+t=\bar\Delta/\mathrm{SE}(\Delta_i),\qquad f_+=\#\{\Delta_i>0\}/n
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{$|t|$ of the within-agent EP change at every eligible event, by class; filled = unconfounded window, open = another event in the window; dashed = 95th percentile over all days. (a) All records. (b) Agent-only chain with a 3-transition burn-in after every scaffold cut. Scaffold changes (blue) sit inside the same band as kickoffs, joins and room changes; NE14b (regime II$\to$III) and NE18/NE40 (the oracle swap) are ordinary.}
+
+\htelos{Mostly a useful negative. An operator who hoped to watch one thermodynamic number for silent platform changes should not: behavioral EP tracks what agents are working on (goal kickoffs move it more than tool changes do), and families differ in tool-use style, not in harness. The undocumented changes we did find (the answerer swap on 04-20, a search-tool schema change on 07-29, a two-day search malfunction, the end of the operator's bookends on 08-04) all came from plain log features: event-type mix, tool-output formatting, schema fields. That is the practical monitor, and it is cheap. EP stays a descriptor of how directed agents' tool workflows are. One post hoc lead is worth a holdout check: at scaffold changes, agents' EP moves in the same direction more often than on random days.}
+
+\hbottom{Entropy production of agents' action chains does not fingerprint the platform: scaffold changes, even the regime II$\to$III switch and an undocumented oracle swap, sit inside the day-to-day spread, which is set by the work agents do.}
+
+\hresults{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\ \hline
+P0 synthetic calibration & false alarms 0.03--0.05; power 0.78/0.89 at $\pm$50\% (fine), 0.13 (coarse) & met (fine)\\
+P1 scaffold changes jump & tool class $p=0.23$, 0/17 hits; prompts 0/15 & failed\\
+P2 no jump: goal, roster, room & roster 0/21, room 1/5; goal 3/28 ($p=0.08$), agent-only $p=0.007$ & mixed\\
+P3 scaffold $>$ goal & $\Delta|t|=-0.06$ ($p=0.60$) & failed (R1)\\
+P4 blind change-points near scaffold & $0.61\times$ chance ($p=0.87$); no candidate with $f_+\geq0.8$ & failed\\
+P6 family effect vanishes & $\eta^2$ 0.34$\to$0.40, $p=0.0005$ both & failed (R4)\\
+P7 NE43 no jump & $p\geq0.38$, 3 designs (non-diagnostic) & held\\
+P8 NE14b jumps & 8/12 agents fall, $t=-1.33$, $p=0.33$ & failed\\
+P9 NE40 dated, EP sees it & dated 04-20 (post hoc stylometry); $t=-0.18$ & failed\\
+P10 \#51 no roster/room enrichment & $0.69\times$ ($p=0.93$); trend $\rho=-0.40$ & mixed\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_validation.pdf}{Synthetic validation at village sampling (12 agents, 3+3 days). (a) Share of runs above the null 95th percentile: the cross-fitted Newton bound ignores occupancy, count, roster and single-agent changes and detects affinity changes; the plug-in and the cross-fitted exact dual do not ignore count changes. (b) A scaffold reset leaves a footprint on the cut agent-only chain; a 3-transition burn-in removes it.}
+
+\hcaveats{Power: changes under about 30\% of fine-chain EP are invisible, and coarse chains are blind; NE14b's $-28\%$ sits at the edge. The catalog is dense and confounded: only 1 tool change, 2 prompt changes and 5 kickoffs have clean windows. Changelog dates are merge dates. Providers can respond in opposite directions (NE14b), which the mean-change $t$ dilutes. Amendment 3 (a placebo pool too small to give $p<0.11$) was repaired after seeing data; no verdict depends on it. NE40's date came from post hoc stylometry. Values are lower bounds (non-Markov chains). Holdout not run.}

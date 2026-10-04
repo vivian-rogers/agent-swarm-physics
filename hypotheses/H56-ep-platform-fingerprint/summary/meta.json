@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 0.5,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1 done: dated predictions, synthetic validation (which found and fixed the scaffold-reset footprint on the agent-only chain), 107-event replication event study with two nulls, blind change-point scoring, family contrasts on 29 periods, 4 native tests (NE14b, NE43, NE40 dated by stylometry, G51), 34 replication folders, scorecard, confirm.py written and dry-run. Holdout not run; Jev v3 states not yet available.",
+    "faithfulness": "The core claim is refuted cleanly: scaffold changes (including NE14b and the dated NE40 swap) do not beat same-regime random days, goal kickoffs move the agent-only chain more than scaffold changes, and family differences survive scaffold removal. Only the 'no jump at roster/room/NE43' parts hold, and they are non-diagnostic. Scorecard A1 B1 C0 D0 E0 F1 G0 H0 I0.",
+    "usefulness": "A well-validated negative for operators (do not use behavioral EP as a platform-change monitor) plus practical side results: NE40 dated to 04-20 from tool-output stylometry, an undocumented 07-29 tool-schema change, a search malfunction and the NE43 timeline, all found with plain log features, which point to the monitor that works. The EP detector itself is not usable."
+  },
+  "one_line": "EP does not fingerprint the platform: scaffold changes (even NE14b, the 04-20 oracle swap) sit in the day-to-day spread; work and style set EP.",
+  "rated_by": "H56 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

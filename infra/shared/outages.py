@@ -202,12 +202,14 @@ def scheduled_flags(grid: pl.DataFrame, cal: pl.DataFrame) -> pl.DataFrame:
                       b.select("pt_date", "minute", "msg_sched", "scheduled")])
 
 
-def main(out_dir: Path = OUT, turn_errors: Path = TURN_ERRORS):
+def main(out_dir: Path = OUT, turn_errors: Path = TURN_ERRORS, bins: Path | None = None):
+    """`bins` overrides the activity_bins input (e.g. the DQ8 activity_bins_fixed sidecar)."""
     t0 = time.time()
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     cal = calendar()
-    ab = pl.read_parquet(SH / "activity_bins.parquet", columns=["pt_date", "minute", "agent", "state"]).with_columns(
+    ab = pl.read_parquet(Path(bins) if bins else SH / "activity_bins.parquet",
+                         columns=["pt_date", "minute", "agent", "state"]).with_columns(
         pl.col("minute").cast(pl.Int32))
     act = ab.filter(pl.col("state") >= 3)
     span = act.group_by("pt_date", "agent").agg(pl.col("minute").min().alias("first"), pl.col("minute").max().alias("last"))
@@ -368,5 +370,13 @@ def verify():
 if __name__ == "__main__":
     if "--verify" in sys.argv:
         verify()
+    elif "--fixed" in sys.argv:
+        # outages from the corrected activity bins (DQ8), written to a sidecar folder until DQ7 rebuilds activity_bins
+        fx = OUT / "outages_fixed"
+        main(out_dir=fx, bins=OUT / "activity_bins_fixed.parquet")
+        write_provenance("outages_fixed", ["activity_bins_fixed", "calendar", "events_core", "actions", "chat_core",
+                                           "chat_text", "turn_errors"],
+                         {"note": "outages/stall_minutes/reasons rebuilt from activity_bins_fixed (DQ8 join fix)",
+                          "out_dir": str(fx.relative_to(ROOT))})
     else:
         main()

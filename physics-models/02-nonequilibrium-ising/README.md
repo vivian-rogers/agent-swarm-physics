@@ -81,6 +81,7 @@ The fixed-order sweep is the subtle case. Each single-site update satisfies deta
 
 ## Pitfalls
 
+- **EP does not fingerprint the platform, and resets leave transients** (H56, 2026-10-04): turn-level entropy production did not jump at 32 documented scaffold changes or at NE14b (t −1.33, inside the spread of ordinary days); goal kickoffs and tool-use style move it more, and family differences survive scaffold removal. After every scaffold reset, drop a burn-in (3 transitions) or the relaxation transient reads as a change. Count matching by subsampling does not equalize the bias of the plug-in or cross-fitted estimators; the Newton bound is robust to count changes.
 - **Field vs catalyst is convention-dependent, and transients mislead** (H39, 2026-10-04): splitting a lever's rate change into an occupancy shift and a catalytic part depends on how the change is divided between forward and backward rates, and |K| < 0.10 is not interpretable. A pure catalyst lowers the 30-min idle share while the stationary share stays put (the transient fallacy): measure stationary occupancy, not short-window shares.
 - Nonstationarity within a window (new agents, goal changes) can masquerade as irreversibility. Use windows within one regime (`../DEFINITIONS.md`, Regime).
 - Bin width changes everything: too coarse merges cause and effect into the same bin and hides the arrow of time.

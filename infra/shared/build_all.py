@@ -102,6 +102,8 @@ STEPS = [
      "outputs": ["embeddings/agreement_gte_modernbert.parquet"]},
     {"name": "outages", "cmd": "py", "script": "outages.py",
      "outputs": ["outages.parquet", "stall_minutes.parquet", "reasons.parquet"]},
+    {"name": "outages_fixed", "cmd": "py", "script": "outages.py", "args": ["--fixed"],
+     "outputs": ["outages_fixed/outages.parquet", "outages_fixed/stall_minutes.parquet", "outages_fixed/reasons.parquet"]},
     {"name": "context_ledger", "cmd": "py", "script": "context_ledger.py",
      "outputs": ["call_starts_logged.parquet", "call_windows.parquet", "context_ledger_turns.parquet",
                  "context_ledger_items.parquet"]},

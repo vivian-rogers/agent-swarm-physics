@@ -251,3 +251,7 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Agent state (style, chat agent-day):** the 17 type-controlled H13 numeric style features (length, code and link shares controlled) averaged over an agent's chat messages in a day.
 - **Agent state (vector, chat agent-day, style-residualized):** DQ5's `style_resid_period` vectors.
 - **Boundary displacement percentile T:** the mean percentile of an agent's displacement across a boundary among its own placebo transitions (T = 0.5 under no change); T_s for style, T_c for content.
+
+### H56 named variants (2026-10-04; see `hypotheses/H56-ep-platform-fingerprint/README.md`)
+- **EP rate (count-matched, within-agent):** H14's Newton-bound entropy production of an agent's turn-level action chain over a window, subsampled to matched transition counts, compared within agent across a boundary (t statistic against the agent's own placebo windows). A lower bound: the chains are not Markov.
+- **Agent-only chain:** the turn-level chain with scaffold records (mirrors, consolidations, forced markers) removed and a 3-transition burn-in dropped after every scaffold reset.

@@ -25,6 +25,8 @@ Each DQ agent writes only new files in `infra/` and new tables in `data/processe
 - Work ledger: an outcome-resolved write flag (CI/deploy result, push success). `artifact_commands_text.error` means "stderr non-empty" and is set for 65% of pushes (H01 R2).
 - `period_units`: add splits at NE43's two steps (2026-08-05, 2026-08-21) and decide on the DQ9 candidate steps (#39 04-27 reshuffle, per-room goal overrides).
 - DQ6 `ground_truth_labels`: give #51 rival-pair rows time bounds (Opus 5 is listed as game-dev after its 07-29 reassignment; H54).
+- `actions_bash_head_fixed.system_class` is constant `none`: fix the classifier (H56).
+- Move `h56lib.newton_counts` / `cfx_counts` (H14's EP estimators from count matrices, ~100× faster) to `infra/shared/`.
 - `kicks_classified`: add `primary_target` (the nudge's leading @; 29% of nudges mention other agents too, H35).
 - DQ7 rebuild should also apply stall-adjusted (agent-state conditioned) variants of the collective statistics used by H02, H12 and H19.
 
@@ -63,4 +65,7 @@ Audit (2026-10-04): in ~15 of 34 hypotheses the period READMEs are near-identica
 | C | H44 (DQ1 + DQ3 + DQ4), H55 (DQ2 + DQ5), H57 (DQ1 + DQ5), H58 (DQ4 + H01 round 2) | their inputs land |
 | D | H51 (one dial) | after waves B–C and the re-evaluation wave |
 Slots are capped at 20 concurrent agents; queued work launches as slots free, data-quality and re-evaluation first.
+
+### Sidecars available now (2026-10-04), so the re-evaluation need not wait for DQ7
+- `activity_bins_fixed.parquet` (DQ8) and `outages_fixed/` (`outages.py --fixed`: joint silences 14.3% → 5.3% of non-holdout minutes; outage runs 3,590 → 682). Re-evaluation agents use these; DQ7 later swaps them into the main tables.
 
