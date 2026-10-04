@@ -46,6 +46,7 @@ LLM agents don't copy themselves. The replicators are **items that spread**: a c
 
 ## Pitfalls
 
+- **Fitness spread confounds growth order** (H78, 2026-10-04): first-order copying (p = 1) with repo fitness spread σ_A = 0.5–1.0 gives p̂ = 1.3–2.7, and a planted p = 0.5 reads as ≈ 1.0. Big repos are big because they are fit, which mimics autocatalysis. Read only p > 1 beyond fitness-spread null worlds as evidence; repo fixed effects bias p̂ down by 0.3–0.6.
 - n is at most ≈ 30, so the large-n approximations behind the formulas don't hold. Simulate the stated rules directly.
 - Token prices and scaffolding change over time (`CHANGELOG.md`), so cost is not comparable across regimes without normalization.
 

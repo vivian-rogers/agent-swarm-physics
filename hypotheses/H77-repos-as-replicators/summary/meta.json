@@ -10,6 +10,12 @@
  "one_line": "sigma* of the top repo from commit logs is an expiry-convention quantity inside a neutral copying band; the selection-resolution bound is untestable because winning repos are kickoff-formed.",
  "models": [
   {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "model folder created after round 1; the test was this model (coordinator, 2026-10-04)"
+  },
+  {
    "model": "05-replicator-dissipation",
    "role": "primary",
    "outcome": "refuted",

@@ -10,6 +10,12 @@
  "one_line": "A kickoff that names its target re-allocates the swarm at the Wasserstein speed limit (slack 1.0-1.4, within 0.5 active h); free-choice goals settle 5-40x slower through churn at the same switch rate. The bound itself is a counting identity; cadence effects untested (NE20 held out).",
  "models": [
   {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "model folder created after round 1; the test was this model (coordinator, 2026-10-04)"
+  },
+  {
    "model": "02-nonequilibrium-ising",
    "role": "primary",
    "outcome": "mixed",

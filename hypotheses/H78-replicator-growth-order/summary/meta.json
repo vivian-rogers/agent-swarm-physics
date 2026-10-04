@@ -10,6 +10,12 @@
  "one_line": "Repo growth order is not identifiable from commit logs: first-order copying plus repo fitness spread explains every p-hat (0.7-1.9), and herding sits on kickoff-named repos.",
  "models": [
   {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "model folder created after round 1; the test was this model (coordinator, 2026-10-04)"
+  },
+  {
    "model": "05-replicator-dissipation",
    "role": "primary",
    "outcome": "refuted",

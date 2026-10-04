@@ -67,7 +67,7 @@ Each unit is a point on the (h_μ, E) plane. Periodic sequences sit at h_μ = 0,
 
 - **Superlinear output would be the first collective benefit.** H58 found the persistent unit is agent + own artifact, which predicts β = 1 for committed work. β > 1.1 would mean interaction adds output.
 - **Size laws link measured constants.** H18's per-pair dilution (β_d ≈ 0.66) predicts replies scale as N^{1.34}. H34's per-pair branching falls as (N−1)^{−0.55}. H25's per-pair content correlation is flat in N (ρ̄ ≈ 0.28). A cross-period scaling test checks whether these aggregate.
-- **Taylor's c is a one-number field gauge.** Raw activity should give b ≈ 2 from the scheduler. Trimming to the all-present window should drop b toward 1–1.3.
+- **Taylor's c_T (not a field gauge for clocked agents; use c_×, H86) is a one-number field gauge.** Raw activity should give b ≈ 2 from the scheduler. Trimming to the all-present window should drop b toward 1–1.3.
 - **α̃ cannot separate a field from a fixed point.** The field-only null gives α̃ = 1.78, inside the range of real mice (1.4–1.73). β̃, the log-variance curvature at the field scale and τ_c scaling are the discriminating tests (HH317 refinement).
 - **Storage only the collective has.** E_village > Σ_i E_i after field removal would be collective storage. For the joint process of independent parts, excess entropy is additive, so the sum is the no-interaction reference†. A coarse village sequence (e.g. the dominant repo) can lose storage, so compare joint and coarse versions.
 - **Equilibrium-looking speeds are not equilibrium.** Maxwell–Boltzmann velocities are the CLT null. Heavy tails mark structure (jumps at erasures and kickoffs).
@@ -122,6 +122,8 @@ Each unit is a point on the (h_μ, E) plane. Periodic sequences sit at h_μ = 0,
 
 ## Pitfalls
 
+- **H86 correction (2026-10-04):** Taylor's c_T and b are not field gauges for clocked agents (b ≈ 0.85 < 1). The shared-field gauge is the pair-covariance c_× with shared share φ. The design SE for scaling exponents is about 0.25 with regime intercepts and goal clusters, not 0.10.
+
 **The four impostors** (`../../STANDARDS.md` §1):
 - **Scheduler field.** It is the textbook multiplicative field: b ≈ 2 and large c on untrimmed activity. 70–80% of regime-III co-activation is the schedule (H38). Velocities jump at day edges. Trim first; never use cross-day surrogates on untrimmed activity.
 - **Exogenous field.** Kickoffs seed many terms at once, which gives near-power laws over a limited range and a kink at K_c ≈ the number of terms one kickoff seeds. A common drift toward the goal gives φ > 0 without alignment; fit α net of the `goal_fields` direction.
@@ -149,4 +151,4 @@ Each unit is a point on the (h_μ, E) plane. Periodic sequences sit at h_μ = 0,
 - **A hot pit cools in calls** (Silverberg notes): T(t) after each kickoff decays per own call, not per minute.
 - **Giant number fluctuations in repo occupancy:** ΔN ∝ ⟨N⟩^{a} with a > 1/2 in herding weeks only (H11).
 
-**Hypotheses that use this model:** H18 (J ∝ N^−β_d), H34 (per-pair branching vs N), H25 (per-pair correlation flat in N), H29 (steering-cost scaling with N), H68 (dilution exponent as a composition variable), H09 (reads per call ∝ N^1.9), H38 (the scheduler field that Taylor's c measures), H12 (spectra and effective dimension), H47 (coherence length of content), H76 (cites Taylor c as a companion gauge).
+**Hypotheses that use this model:** H18 (J ∝ N^−β_d), H34 (per-pair branching vs N), H25 (per-pair correlation flat in N), H29 (steering-cost scaling with N), H68 (dilution exponent as a composition variable), H09 (reads per call ∝ N^1.9), H38 (the scheduler field that Taylor's c_T (not a field gauge for clocked agents; use c_×, H86) measures), H12 (spectra and effective dimension), H47 (coherence length of content), H76 (cites Taylor c as a companion gauge).

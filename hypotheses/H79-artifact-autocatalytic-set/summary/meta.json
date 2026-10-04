@@ -10,6 +10,12 @@
  "one_line": "No artifact-only autocatalytic set: catalysis is first order (self 85-99%, no supported cycles), and executions follow writes rather than cause them",
  "models": [
   {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "model folder created after round 1; the test was this model (coordinator, 2026-10-04)"
+  },
+  {
    "model": "05-replicator-dissipation",
    "role": "primary",
    "outcome": "mixed",

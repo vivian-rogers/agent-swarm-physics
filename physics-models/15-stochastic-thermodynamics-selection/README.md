@@ -175,6 +175,7 @@ Units have N = 4–32 agents; 71 non-holdout units span 283 days. The round-1 sy
 - **The village is open.** Operators re-inject hosts, compute and goals (NE43). "Self-sustaining" means within a period with F fixed, and at best an egregore is a symbiont of operator-supplied hosts (HH305).
 - **Mutation.** Projects fork and edit (H07). The selection theory excludes mutation, which is expected to raise costs.
 - **The error threshold never binds.** Git copies exactly (q ≈ 1); chat-borne ideas die for lack of reproduction (H34 R̂ ≈ 0.2), not from copying error.
+- **Fitness spread confounds growth order** (H78, 2026-10-04): first-order copying with repo fitness spread reproduces every observed p̂ (0.7–1.9) and reads a planted p = 0.5 as ≈ 1.0. Test p against fitness-spread null worlds on the real call schedule (see "Identifiability at village sizes").
 
 ## Hypothesis seeds
 

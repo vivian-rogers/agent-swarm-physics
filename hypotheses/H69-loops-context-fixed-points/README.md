@@ -191,6 +191,7 @@ Readings:
 Frozen C1–C6 on #43, #45–#47, #49, #50 and the #51 tail (scored at ≥ 30 episodes): enrichment ≥ 1.5 with CI > 1; forced-erasure exit > 1; post-erasure onset < 1; b_K CI includes 0 or above; b_O > 0; novel-read exit CI includes 0. The dry run (G38, G41, G51 stand-ins, built in memory through the same scheme) reproduces G38's enrichment exactly. The scheme's holdout switch (`ALLOW_HOLDOUT`) is set only by `confirm.py`.
 
 ## Notes
+- **Recheck (coordinator, 2026-10-04, definitions consolidation):** this scheme cuts context segments at `first_of_day` as well as at `reset_consol | reset_session`. The infra rule cuts only at resets (in regime III, `ctx_pos` carries over the night). Recheck the in-context enrichment with the infra segmentation in round 2.
 - 2026-10-04 19:25 UTC: card, predictions and nulls written before any H69 statistic.
 - 2026-10-04 ~19:50–20:45 UTC: synthetic validation; amendments A1–A5.
 - 2026-10-04 ~20:50 UTC: real-data run; rerun ~21:00 with a quasi-separation guard (G44's exit model and G51's in-flight human coefficient were not estimable; no scorable-period number changed). Period READMEs, figures, estimates rows (61).

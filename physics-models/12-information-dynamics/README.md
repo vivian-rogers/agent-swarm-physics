@@ -151,6 +151,7 @@ Units have N = 4–32 agents. There are 71 non-holdout units over 283 days, abou
 - **Copy information on whole messages is fragile.** One changed token zeroes D^copy under 0–1 loss. Use per-item or vector-valued losses. Chains must be defined by reads, because re-reading the original restores copy information.
 - **Granger, not Pearl.** All quantities are predictive on observational data. Hidden drivers (operator, platform) create unique information. Natural experiments are the nearest thing to interventions.
 - **Never pool periods.** Pairwise synergy matrices invite pooling. Compare per-unit summaries.
+- **Restatement loops are context copies** (H69, 2026-10-04): self-repeats need the source in the context window (in-context enrichment OR 3.4× [2.6, 4.5]; pseudo-erasure 1.13). An agent's own-past predictability inside a segment is therefore partly a copy from context, not stored state. Split active storage by whether the source is still in context (`reset_consol | reset_session` segments).
 
 ## Hypothesis seeds
 

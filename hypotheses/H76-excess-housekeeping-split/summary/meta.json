@@ -10,6 +10,12 @@
  "one_line": "Kolchinsky's excess/housekeeping split of Jev v3 behavior fluxes: the swarm's excess irreversibility is the scheduler's day end (edge share 0.80-1.00, final block 72-100%), removed by DQ8 trimming (81-100%); kickoffs and the housekeeping work cycle are below the detection floor at N 12-27 with soft labels.",
  "models": [
   {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "model folder created after round 1; the test was this model (coordinator, 2026-10-04)"
+  },
+  {
    "model": "02-nonequilibrium-ising",
    "role": "primary",
    "outcome": "mixed",
