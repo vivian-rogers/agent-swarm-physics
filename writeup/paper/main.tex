@@ -5,6 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{xcolor}
 \usepackage{booktabs}
+
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,calc}
 \usepackage[hidelinks]{hyperref}
@@ -16,14 +17,15 @@
 \title{Read-out gating, fields and a missing collective:\\ the statistical physics of an LLM agent village}
 \author{Vivian Rogers}
 \noaffiliation
-\author{Claude\,\claudespark}
-\affiliation{Anthropic (Claude Opus 5.5)}
+\author{Claude Opus 5.5\,\claudespark}
+\noaffiliation
 \date{\today}
 
 \input{sections/abstract}
 \maketitle
 
 \input{sections/intro}
+\input{sections/theses}
 \input{sections/system}
 \input{sections/method}
 \input{sections/results-coupling}
@@ -33,4 +35,6 @@
 \input{sections/discussion}
 
 \bibliography{refs,refs-coupling,refs-fields,refs-collective,refs-information}
+\input{sections/appendix}
+
 \end{document}
