@@ -301,3 +301,10 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 ### RE-B1 named variants (2026-10-04; see H17, H16, H14 round-1b sections)
 - **MSM (soft, shifted estimator):** a Markov state model on Jev v3 probability vectors (soft occupancies) with the noise-cancelling shifted count estimator; implied timescales t2* and PCCA+ macro states. Needs ≥ ~15k windows per period; per-period verdicts are descriptive below that.
 - **Shell sub-classes:** fine action classes splitting bash turns into vcs / net / run / read / write / wait / other from `bash_head_fixed` plus change evidence (`hypotheses/H14-behavior-entropy-production/analysis/build_r1b.py: head_class`).
+
+### H45 named variants (2026-10-04; see `hypotheses/H45-context-homeostasis/README.md`)
+- **Context segment:** the calls between two context resets (forced at the 41-call cap, voluntary consolidations, session starts).
+- **Room tokens (calibrated):** ≈ 50 tokens per room message + 0.3 per character + 116–163 per non-chat room event, received since the last reset (fitted on Anthropic and Google prompt sizes; they agree).
+- **Context share (room, token-calibrated):** room tokens ÷ measured prompt tokens per call. **Own content:** the agent's own messages and actions in the segment.
+- **Regulation index RI:** 1 − the elasticity of the room share to room inflow (RI ≈ 0 passive, ≈ 0.4–0.5 for a synthetic set-point controller).
+- **Engagement (reply parent, pending):** whether a talk call replies (DQ2 parent) to a pending message.

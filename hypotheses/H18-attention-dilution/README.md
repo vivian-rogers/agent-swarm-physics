@@ -6,6 +6,7 @@
 - **Across periods the per-turn budget is roughly conserved while per-pair uptake falls with room size.** p̄ vs. N_room: ρ = −0.55 (#51 segments: −0.87); B̂ vs. N_room: ρ = −0.03. This is the J ∝ N^−β normalization behind H03's falling per-pair triggering and part of H05's within-room rise.
 - **Failed:** literal 1/k (P2); mention bypass (P4); the 05-04 merge (P7); the room-size contrast in half the two-room periods (P6); and the invisible-message placebo (P10) everywhere. Mentions partly mark ongoing exchanges, not responses to a specific message.
 - Per-period verdicts: 3 supported, 13 mixed, 0 failed. Not promoted.
+- **Round 1b (2026-10-04, improved data; section "Round 1b" below):** on context-ledger pending sets (`k_since_talk`) the exponent is unchanged (pooled **0.66 ± 0.02**, 16/16), the shape is still saturating or recency-led, and the placebo failure mostly goes away (invisible senders addressed at 0.49× the pending rate, was 0.85×; 3/16 pass, was 0/16). On DQ2 reply labels the exponent rises to 0.85 and recency wins 14/16, but a message has one reply parent, so that exponent has a budget built in. Verdicts (1b): 4 supported (G39 added), 12 mixed; natives NE42 failed, G51 N sweep mixed, NE03 failed. Scorecard G 0 → 1.
 **Fields:** stat mech, sociophysics, dynamics
 **Origin:** HH99 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Regime; Population N(t); Action; Interaction, variant *addressed* (i's message names j, from `chat_mentions_clean.mentions_roster`). New operational terms are defined under "Operational definitions" below and proposed for DEFINITIONS.md as **"talk turn"**, **"pending set (talk-turn backlog)"** and **"Interaction (addressed, pending-sender)"**.
@@ -104,7 +105,7 @@ Scores for round 1 (exploratory, non-holdout; mapping = mention-addressed respon
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | **Passed:** P9 (cross-period p̄ falls with N while B̂ does not); G35's same-day room ratio (p̄ ratio 2.05 vs. 3.6^0.75 ≈ 2.6 predicted from β̂). **Partial:** content-reply excess falls with k in 11/11 periods with signal, but more shallowly (slopes −0.16 to −0.44). **Failed:** P6 in half the two-room periods. |
 | E interventional | predicts the change across a natural experiment | 1 | **NE15 side (#35):** k absorbs the small-room uptake advantage (log effect 0.95 → −0.14). **Merge 05-04:** failed (k̄ ×1.45, per-pair uptake not down on both sides; goal-confounded). No holdout used. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | **Recovery:** β̂ recovered without bias at village sampling (1/k → 1.00 ± 0.03, constant → 0.00 ± 0.04, k^−0.5 → 0.50), and the model family is selected correctly under exogenous timing. **Not identified in D1:** under reactive timing D1 confuses no budget with dilution, and recency truth also gives β̂ ≈ 0.85. D2 is unbiased but attenuated (≈ 0.6×) and noisy. Room-blind k and talk-time windows bias β̂ down (quantified). |
-| G ground truth | agrees with known structure | 0 | **The invisible-message placebo fails in 16/16.** Senders whose messages arrived during the talk's own model call are mentioned 3–10× above other room-mates even when not engaged, and in regime I and #51 above pending senders. The response proxy is contaminated. |
+| G ground truth | agrees with known structure | 1 | **Round 1b (2026-10-04): 0 → 1.** On strict context-ledger visibility the placebo passes in 3/16 and invisible senders are addressed at 0.49× the pending rate (was 0.85×); the residual 1.8× over non-pending room-mates is conversation state (H08), and DQ2's reply labels show the same thread-membership component. Round 1: **The invisible-message placebo fails in 16/16.** Senders whose messages arrived during the talk's own model call are mentioned 3–10× above other room-mates even when not engaged, and in regime I and #51 above pending senders. The response proxy is contaminated. |
 | H comparative | beats the named rivals | 1 | **Shape:** a near-literal budget is best in 5/16, saturating in 6, recency-only in 5, constant in 0. 1/k never beats recency-only (CI); recency beats 1/k in 8/16. **Post hoc:** k adds held-out value at fixed rank in 5/16. |
 | I transfer | holds in other same-mode periods, including the holdout | 1 | β̂ > 0 in every period, mode and regime (0.46–0.78). The shape and the magnitude are heterogeneous (I² = 0.92). No holdout run. |
 
@@ -298,6 +299,68 @@ Verdicts: **3 supported (G27, G36, G44), 13 mixed, 0 failed.**
 - Per period: `G<NN>/figures/curves.pdf`.
 - Spanning: `NE15/figures/rooms.pdf`, `NE42/figures/merge.pdf`.
 
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation on the corrected shared tables (Vivian's priority 2; RE wave). Predictions and the per-period verdict rule are the pre-registered ones, unchanged. Round-1 outputs stay in `data/processed/H18-attention-dilution/G<NN>/`; round-1b outputs are in `.../r1b/`. Holdout untouched; `confirm_holdout.py` still builds round-1 inputs and must be switched to the ledger before any confirmatory run.*
+
+### What changed
+| Input | Round 1 | Round 1b |
+| --- | --- | --- |
+| talk turns, call starts | `AGENT_TALK` messages; call start = the agent's previous logged record | ledger talk calls (`call_windows`; message → call via its AGENT_TALK event, as DQ2) with `t_call` |
+| pending set P(τ), k | room messages with s(τ_prev) ≤ t < s(τ) under the call-start rule (mislabels 65–70% of "invisible" messages: pauses, scheduled chat calls) | the ledger items of the recipient's calls since its previous talk call (= `context_ledger_turns.k_since_talk`; equal at 98% of talks) |
+| response | @-mention of the sender | mention (pre-registered, kept for like-for-like comparison) **and** the DQ2 reply response: one of the sender's pending messages is the talk's `reply_pairs.parent` (`pair_set = cand`) |
+| invisible placebo | messages during the talk's call under the call-start rule | strictly ledger-invisible messages (t_call ≤ t_m < t_talk); reply version from DQ2's labelled invisible pairs (`vis_uncertain` excluded), matched on naming × cosine decile |
+| D2 timer wakes | PAUSEs ending at their timer, batch from the pause call | ledger calls with `gap_kind = pause` (not early wakes); batch = that call's items |
+| code | `scheme/build.py`, `analysis/fit_periods.py` (unchanged default path) | `scheme/build_ledger.py`; `fit_periods.py --dir .../r1b --resp resp|resp_reply --tag …`; `r1b_placebo.py`, `r1b_native.py`, `r1b_summarize.py` |
+
+### Old vs new, per period
+β̂ = M_pow exponent with agent×day propensities (day bootstrap; B = 100, #51 40); CV = within-day-block effective winner; verdict by the G cards' rule (supported = β̂ CI > 0, budget-like winner, no D2 contradiction).
+
+| G | regime | Round 1 β̂ · CV · verdict | **Ledger k, mention** β̂ · CV · verdict | Ledger k, reply parent β̂ · CV |
+| --- | --- | --- | --- | --- |
+| G24 | I | 0.56 [0.52, 0.66] · sat · mixed | 0.54 [0.48, 0.77] · sat · mixed | 0.72 [0.63, 0.86] · sat~inv |
+| G25 | I | 0.59 [0.56, 0.62] · sat · mixed | 0.64 [0.62, 0.69] · sat · mixed | 0.75 [0.70, 0.80] · rec |
+| G26 | I | 0.50 [0.44, 0.53] · sat · mixed | 0.56 [0.52, 0.58] · sat · mixed | 0.66 [0.60, 0.72] · rec |
+| G27 | I | 0.69 [0.56, 0.80] · sat~inv · supported | 0.72 [0.61, 0.81] · sat~inv · supported | 0.78 [0.72, 0.84] · rec |
+| G30 | I | 0.55 [0.52, 0.58] · rec · mixed | 0.65 [0.64, 0.67] · sat · mixed | 0.85 [0.80, 0.89] · rec |
+| G31 | I | 0.46 [0.41, 0.50] · rec · mixed | 0.52 [0.44, 0.59] · rec · mixed | 0.74 [0.69, 0.78] · rec |
+| G35 | II | 0.75 [0.63, 0.82] · rec · mixed | 0.77 [0.69, 0.82] · rec · mixed | 0.97 [0.85, 1.06] · rec |
+| G36 | II/III | 0.78 [0.74, 0.82] · sat~inv · supported | 0.80 [0.76, 0.84] · sat~inv · supported | 1.08 [0.95, 1.23] · rec |
+| G37 | III | 0.75 [0.52, 0.98] · rec · mixed | 0.72 [0.53, 0.91] · rec · mixed | 1.05 [1.00, 1.19] · inv |
+| G38 | III | 0.69 [0.62, 0.80] · sat~inv · mixed (D2) | 0.69 [0.62, 0.80] · sat~inv · mixed (D2 −0.02) | 0.99 [0.94, 1.06] · rec |
+| G39 | III | 0.62 [0.45, 0.78] · sat · mixed | 0.63 [0.47, 0.77] · sat~inv · **supported** | 1.00 [0.91, 1.15] · rec |
+| G40 | III | 0.60 [0.51, 0.71] · sat · mixed | 0.60 [0.51, 0.73] · sat · mixed | 0.83 [0.77, 0.94] · rec |
+| G41 | III | 0.65 [0.55, 0.74] · sat~inv · mixed (D2) | 0.65 [0.52, 0.76] · sat~inv · mixed (D2 0.14) | 0.91 [0.84, 0.99] · rec |
+| G42 | III | 0.72 [0.69, 0.86] · rec · mixed | 0.72 [0.68, 0.90] · rec · mixed | 0.94 [0.85, 1.06] · rec |
+| G44 | III | 0.72 [0.69, 0.76] · sat~inv · supported | 0.70 [0.68, 0.73] · sat~inv · supported | 0.78 [0.72, 0.86] · rec |
+| G51 | III | 0.61 [0.58, 0.63] · sat · mixed | 0.61 [0.58, 0.62] · sat · mixed | 0.72 [0.69, 0.75] · rec |
+
+### Predictions re-scored
+| # | Round 1 | Round 1b (ledger k; mention unless stated) | Outcome (1b) |
+| --- | --- | --- | --- |
+| P1 β̂ > 0 in ≥ 70%; pooled in [0.5, 1.2] | 16/16; 0.63 ± 0.02 | 16/16; **0.66 ± 0.02** (I² 0.89); regime I 0.61, III 0.68. Replies: 16/16, 0.85 ± 0.03 | supported (unchanged) |
+| P2 budget-like winner in ≥ 70% | 5/16 (sat 6, rec 5) | 6/16 (sat 6, rec 4). Replies: recency 14/16 | not supported (unchanged) |
+| P3 ε_S ∈ [−0.2, 0.5] | 16/16 (uninformative) | 16/16 (0.16–0.45) | by the letter (unchanged) |
+| P4 mention bypass | 1/16 | 1/16 (e^γ median 2.2; β_M − β median −0.11) | not supported |
+| P5 D2 timer wakes | CI > 0 in 3/6 powered; G38 −0.13 | 3/6 (G37 0.77, G44 0.53, G51 0.45 [0.41, 0.50]); G38 −0.02 [−0.29, 0.19]. Replies: 5/6 (G38 0.55, G41 0.86, G51 0.62) | supported by the letter, #51 convincing (unchanged) |
+| P6 room size absorbed by k | 3–4/8 | same pattern: absorbed in G35, G37, G41, G42; survives in G38, G39; no small-room advantage in G36, G44 | mixed (unchanged) |
+| P7 05-04 merge | failed | NE42 native: k ×1.48/×1.44, raw p̄ not lower than #39; but in a joint fit k absorbs 86% (replies) / 53% (mentions) of the #40 contrast | failed (N2c new, positive) |
+| P8 regime invariance | Δ −0.14 | Δ −0.07 | supported |
+| P9 p̄ falls with N, B̂ does not | ρ −0.55 / −0.03 | ρ −0.57 / −0.02; CV 0.42 vs 0.25. #51 N sweep (native): p̄ ρ −0.73 (mentions), −0.80 (replies); B̂ ρ −0.28 (mentions), −0.64 (replies) | supported on mentions; on replies the per-turn budget falls too |
+| P10 invisible placebo | 0/16; invisible ≈ 0.85× the pending rate, 3.4× non-pending | **3/16** (G31, G35, G38); invisible **0.49×** the pending rate, 1.8× non-pending. Replies (DQ2 labelled pairs): invisible/visible p_reply 0.80 (I), 0.58 (II), 0.72 (III); threshold 0.5 | **mostly explained by visibility; residual = conversation state** (still fails by the letter) |
+| P11 content reply | 7/11 partial | not re-run (no content term in the ledger scheme) | — |
+
+### Reading
+- **The dilution law survives the visibility fix.** Re-counting k with the ledger changes it for 2–30% of talks (most in regime I) but moves the exponent by ≤ 0.1 in every period; pooled 0.63 → 0.66. The saturating shape and the recency competition are unchanged. Round 1's conclusions about the law stand; the regime-I values rise slightly (0.55 → 0.61) as the call-start rule's mislabelled windows are removed.
+- **The placebo failure was mostly the visibility rule.** With strictly invisible messages, senders are addressed at about half their pending rate (round 1: 85%), and the remaining excess over non-pending room-mates (1.8×) is the mid-exchange effect H08 found. The reply labels say the same: invisible pairs keep 0.6–0.8 of a visible pair's reply score (DQ2: p_reply partly encodes thread membership).
+- **Reply labels cannot measure the exponent as posed.** A talk message has at most one reply parent and DQ2 labelled mostly the top candidate, so β̂ on replies ≈ 1 − (elasticity of "replies to someone pending" in k). That elasticity is 0.0–0.1 in regime III and 0.1–0.35 in regime I (independent uptake would give ≈ 0.7), which looks like a fixed one-reply budget but is partly the labelling. What replies *do* show: **which** pending message gets the reply is decided by recency (M_rec wins 14/16).
+- **Natives:** NE42 fails on raw rates but k explains the merged week's contrast in a joint fit; the #51 N sweep shows per-pair uptake falling with room size (ρ ≈ −0.8); NE03 shows no fetch-cap signature (uptake falls at every depth after 08-20).
+
+### Scorecard changes (round 1b)
+- **G 0 → 1:** the placebo now passes in 3/16 periods and the invisible/pending ratio halves under strict ledger visibility; the residual is explained (conversation state), not unexplained contamination.
+- **A 1** (unchanged): k is now ledger-defined in every regime, but the mention response still mixes uptake and conversation state, and the reply response imposes a one-parent budget.
+- **E 1** (unchanged): NE42's joint-fit contrast is absorbed by k, but the pre-registered raw comparison fails again.
+- Others unchanged. Suggested ratings: faithfulness 2.0 → 2.5, usefulness 2.0 (meta.json).
+
 ## Confirmatory predictions (written 2026-10-03 after round 1, before any holdout use; `analysis/confirm_holdout.py`, not run)
 Run only after this card and the script are committed and Vivian signs off. The script refuses without `--confirm --i-understand-this-uses-the-locked-holdout`; `--dry-run` uses non-holdout stand-ins.
 
@@ -327,6 +390,7 @@ Holdout reuse under the 2026-10-03 policy: H18's statistic (mention responses vs
 6. Feed β̂ into H03 and H05 as the per-pair normalization J ∝ N^−β, and test whether it closes H03's n̂-vs-N trend.
 
 ## Notes
+- **From H45 (2026-10-04):** a reply-based (DQ2 parent) dilution exponent on ledger backlog is β 0.82 pooled (regime I 0.73, regime III 0.98), correlating with this card's per-period β at ρ 0.71 but 0.28 steeper (DQ2 keeps one reply parent per message).
 - **From DQ1 + DQ2 (2026-10-04): the failed placebo is mostly the visibility rule.** Under the context ledger, about 30% of this card's "invisible" pairs were in fact visible, and strictly invisible pairs score p_reply 0.24 vs 0.32 for matched visible pairs (0.21 vs 0.59 in regime III). The pre-registered threshold (< 0.227) missed narrowly (0.239). Re-run P10 and the k exponent on `context_ledger_turns.k_since_talk` and `reply_pairs.parent` in the re-evaluation wave.
 - **From H29 (2026-10-04):** the call-start visibility rule labels messages that arrive during a PAUSE or long tool call as invisible, but the next call sees them (39–70% of regime-III invisible rows). Content similarity also falls 5–23× with message age. Together with H08's mid-exchange explanation, this accounts for the failed placebo. Re-run on the context ledger's visibility.
 - 2026-10-03: promoted from HH99.

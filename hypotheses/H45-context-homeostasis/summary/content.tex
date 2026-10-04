@@ -1,0 +1,34 @@
+\hwhat{HH166 claimed each agent holds the room-message share of its context near a set point: reading less per message when the room floods ($k^{-0.6}$ dilution as the homeostat), and overshooting, then relaxing, after an erasure. With DQ1's context ledger and measured prompt tokens we computed the share per model call on 32 non-holdout goal periods (\#4--\#51), plus four native tests: NE41's 21k forced erasures, the NE42 merge, \#51's roster growth and NE03's chat fetch limit. Synthetic controller, passive and scaffold-capped agents on real call schedules came first. \textbf{Refuted.} The share follows inflow as passive accumulation predicts (regulation index $\le0.22$ in 32/32 periods, pooled 0.02); floods move set points at $1.06$ (NE42) and $0.90$ (\#51) times the passive slope. After an erasure agents talk \emph{less} (0.74) and reply more per talk, with replies per call unchanged. Holdout script written, not run.}
+
+\hmodel{A set-point controller against passive accumulation (models 04, 05). In one context segment between resets, room content $R_j$ (calibrated tokens of the new room items) and own content $W_j$ (the rest of the prompt $P_j$) accumulate; the share is $s_j=R_j/P_j$. A controller would raise $W$ or reset sooner when the share is high, and engage more when it is low. $\lambda$: room tokens per call; $\varepsilon$: elasticity of the segment share to $\lambda$; $\eta_W$: own content's.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+s_j=\frac{R_j}{R_j+W_j},\qquad R_j=\sum_{i\le j}\big(a\,k_i+b\,c_i+e\,o_i\big)\\
+\text{passive: } s_j=\frac{\lambda j}{W_j+\lambda j},\quad W_j\ \text{independent of}\ \lambda\\
+\varepsilon=\frac{\partial\ln \bar s}{\partial\ln\lambda}\Big|_j=(1-\bar s)(1-\eta_W),\qquad \mathrm{RI}=1-\frac{\varepsilon}{1-\bar s}=\eta_W\\
+P(\text{reply})=1-\exp\!\big(-\theta_{\rm agent\cdot day}\,k^{1-\beta}\big)
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Regulation index per goal period (day-bootstrap CI; regime I gray, II aqua, III blue). Passive accumulation gives 0; the synthetic controller on the same schedules gives 0.42; the prediction needed $\ge0.5$. Every period sits near passive. (b) NE41: after a forced erasure (41-call cap), k-adjusted talk propensity dips about 26\% and recovers over about ten calls, while the share of talks that reply to pending messages rises. Replies per call stay flat (0.92).}
+
+\htelos{Mostly a useful negative. Agents do not protect their context from a flooding room and do not ``refill'' it after an erasure. The share of a context window spent on chat is set by room traffic per call, the agent's own tool output and the scaffold's resets, so an operator who wants less chat in context must change the room (size, merges) or the scaffold (cadence, caps), not hope agents ration it. Merging rooms doubled the share. The 200-event cap almost never binds (0.05\% of calls). Erasures cost about ten calls of reduced talk, not a catch-up burst. The engagement side is closer to context competition: replies fall as the agent's own work fills the context. Nothing here is a lever on the agents themselves; it is a design rule about where context composition is decided.}
+
+\hbottom{The room share of an agent's context is not regulated; it follows room traffic as passive accumulation predicts, and the scaffold's resets and windows, not the agents, bound it.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 RI $\ge0.5$ in $\ge2/3$ & 0/32; CI upper $<0.5$ in 32/32; pooled 0.02 & failed\\
+P3 share band (CV ratio $\le0.5$) & 0.84--1.32, median 0.99 & failed\\
+P2 reset sooner when flooded & 3/9 regime III; \#51 $-0.04$ (controller $-0.10$) & failed (weak)\\
+P4 dilution $\beta\in[0.4,0.9]$ & 21/32; pooled 0.82 (III 0.98); H18 $\rho$ 0.71 & narrowly failed\\
+P5 $\gamma_R<0$, $\gamma_W>0$ (pooled III) & $\gamma_R$ +0.08, $\gamma_W$ $-0.10$ (42k talks) & failed\\
+P6 post-erasure overshoot & 0/9; pooled talk 0.74 [0.69, 0.80] & reversed\\
+P7 lab sets the set point & lab $\eta^2$ 0.14, $p$ 0.41 & failed\\
+P8/P9 no truncation; cap rare & P doubles in-segment; cap 0.05\% & passed\\
+NE42 / \#51 leak $\le0.3$ & 1.06 [0.95, 1.11] / 0.90 [0.77, 0.99] & failed\\
+NE03 chat ceiling appears & flat before and after (8--10k tokens) & failed\\
+\end{tabular}}
+
+\hobsb{../figures/summary_obs2.pdf}{Synthetic validation on real schedules (6 units, 20 replicates; dots) with the village (diamonds: per-period estimates; orange bar: pooled NE41). The regulation index separates a controller from passive, scaffold and competition agents at village counts. The village falls in the passive column. After erasures it talks less than any synthetic class.}
+
+\hcaveats{Room content $R$ is a lower bound (\texttt{search\_history} results uncounted; reset snapshot $\approx0$). Shared error in $R$ pulls $\varepsilon$ toward passive, so a weak controller (RI $<0.15$) would be hard to see. Dense prompt tokens exist only for Anthropic and Google. One DQ2 reply parent per message steepens $\beta$. The engagement-on-context test is not identified per period and is confounded with task phase. NE42 is goal-confounded. Holdout not used.}

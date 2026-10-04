@@ -37,6 +37,7 @@ Each DQ agent writes only new files in `infra/` and new tables in `data/processe
 - `per_period_estimates`: add a `data_version` column and mark the backfilled round-1 activity rows of H02, H19 (and other activity_bins users) as superseded; the round-1b rows say they supersede them.
 - Add an event-time agent-shift row to the DQ8 null size table (RE-A2).
 - `actions_bash_head_fixed`: add a shell sub-class column (`head_class`: vcs/net/run/read/write/wait/other; H14's `build_r1b.py`).
+- Context ledger: add a per-call prompt-token column (H45's `calls.parquet`; Anthropic from `actions` cache fields).
 - `kicks_classified`: add `primary_target` (the nudge's leading @; 29% of nudges mention other agents too, H35).
 - DQ7 rebuild should also apply stall-adjusted (agent-state conditioned) variants of the collective statistics used by H02, H12 and H19.
 

@@ -100,4 +100,5 @@ The list above covers *documented* changes only. Step changes could also be foun
 - **#51's return to a single room** (date to be set from `rooms_timeline`).
 - **Room kickoffs (H47, 2026-10-04):** rooms received identical kickoff text in #36, #37, #39, #40 and #42; only #38 and #44 got room-specific instructions. #focus empties by about 08-24 (matches `period_units`).
 - **#38 pause bookends (H50, 2026-10-04):** the daily pause message arrives as the scaffold halts agents (94% make no call after it), so it is an announcement, not an input. After NE43's bookend stop (08-04), agents still start within ~22 s and the day-start step keeps its size: the scaffold starts agents, not the message.
+- **H45 notes (2026-10-04):** NE03 leaves no visible change (chat-mode prompts were already bounded at ~8–10k tokens); NE41 brings a talk dip (0.74 [0.69, 0.80] of baseline after forced resets, recovering in ~10 calls) with talks more often replies to pending messages (×1.21); NE22's 200-event cap binds in 0.048% of #51 calls, mostly after timer pauses.
 

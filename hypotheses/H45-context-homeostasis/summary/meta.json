@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 0.5,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Round 1 done: dated predictions, nulls and rivals before data; synthetic validation of four agent classes on real schedules (6 units x 20 reps) with five dated amendments before real data; replication on all 32 eligible periods; 4 native tests (NE41, NE42, G51 N sweep, NE03); 7 preprocessing variants; 3 labelled post hoc checks; confirm script frozen with a passing dry run (not run). Missing: holdout run, task-phase control (DQ3), cadence lever.",
+    "faithfulness": "The core claim is refuted outright and consistently: RI <= 0.22 with CI upper < 0.5 in 32/32 periods, the share band is absent (CV ratio ~1), floods move set points at ~1x the passive slope (NE42 1.06, #51 0.90), the engagement pattern is the opposite of a share controller, and erasures produce a talk dip, not an import overshoot. The scorecard's 1s (A, B, F, G) are on the instrument, not the model: A1 B1 C0 D0 E0 F1 G1 H0 I0.",
+    "usefulness": "A validated design rule with clear evidence: context composition is decided by room traffic per call, own tool output and the scaffold (resets, chat windows, caps), not regulated by agents, so it must be managed through room design and scaffold settings. Smaller operational facts: merging rooms doubles the chat share of context; the 200-event cap binds in 0.05% of calls; erasures cost ~10 calls of reduced talk without a catch-up burst. No lever on the agents themselves."
+  },
+  "one_line": "The room share of an agent's context is not regulated: it follows room traffic as passive accumulation predicts (RI <= 0.22 in 32/32 periods), and erasures bring a talk dip, not an import overshoot",
+  "rated_by": "H45 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}
