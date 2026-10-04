@@ -1,6 +1,6 @@
-\hwhat{Is agent behavior a Markov state model (MSM) with a few slow metastable sets, and is its slowest timescale $t_2^*$ a per-period order parameter, slowest in stuck periods? Round 1 fitted MSMs on 6 action classes per active minute in 27 non-holdout periods: CK fails 27/27, $t_2^*$ (5--24 min) barely beats a sojourn null, does not track errors, and regime III is slower than regime I. Verdicts: 13 mixed, 14 failed. Round 1b (improved data) re-ran it on Jev v3.1 behavior states (soft vectors, a noise-cancelling estimator) with real failures instead of stderr. The semantic slowest mode is hours long (agent-day scale), the slow set is still acting vs.\ waiting, and higher $p_{\rm blocked}$ goes with \emph{shorter} $t_2^*$. Native tests (forced erasures, nudger switch-off, \#27's spontaneous shift) failed. Holdout not run.}
+\hwhat{Is agent behavior a Markov state model (MSM) with a few slow metastable sets? Is its slowest timescale $t_2^*$ a per-period order parameter, longest in stuck periods? Round 1 fits MSMs on 6 action classes per active minute in 27 non-holdout periods. The Chapman--Kolmogorov (CK) test fails in 27/27. $t_2^*$ (5--24 min) beats a sojourn null by a small margin and does not track errors. Regime III is slower than regime I. Verdicts: 13 mixed, 14 failed. Round 1b repeats the fit on Jev v3.1 behavior states (soft vectors, a noise-cancelling estimator) and counts real failures instead of stderr. The semantic slowest mode lasts hours (agent-day scale). The slow set is still acting vs waiting. Higher $p_{\rm blocked}$ goes with \emph{shorter} $t_2^*$. The native tests (forced erasures, nudger switch-off, \#27's spontaneous shift) fail. The holdout is not run.}
 
-\hmodel{Kinetic Potts / non-equilibrium Markov chain (models 02, 10). State $x_t\in\{$browse, type, shell, chat, idle, consolidate$\}$ per agent-minute (H14 scheme); $C(\tau)$: lagged pair counts within agent-days; $T(\tau)$: non-reversible MLE; $t_k$: implied timescales from eigenvalues $\lambda_k$; $\chi$: PCCA+ memberships (Röblitz--Weber) of $m$ metastable sets; $q^\pm$: forward/backward committors, $\delta=0$ under detailed balance; $p_t$: soft (Jev) posteriors.}
+\hmodel{Kinetic Potts chain out of equilibrium (models 10, 02). The state $x_t\in\{$browse, type, shell, chat, idle, consolidate$\}$ is one per agent-minute (H14 scheme). $C(\tau)$ counts lagged pairs within agent-days. $T(\tau)$ is the non-reversible MLE. $t_k$ are implied timescales from eigenvalues $\lambda_k$. $\chi$ holds the PCCA+ memberships (Röblitz--Weber) of $m$ metastable sets. $q^\pm$ are forward and backward committors, with $\delta=0$ under detailed balance. $p_t$ are soft Jev posteriors.}
 
 \hmath{\vspace{-5pt}\footnotesize\setlength{\jot}{1pt}
 \begin{gather*}
@@ -11,11 +11,11 @@ T_{\rm cg}=(\chi^{\top}\Pi\chi)^{-1}\chi^{\top}\Pi T\chi,\quad \delta_i=q^+_i-(1
 \lambda_k^{\tau}=\mathrm{eig}\big[C(1)^{-1}C(1{+}\tau)\big],\quad C(\tau)=\textstyle\sum_t p_t\,p_{t+\tau}^{\top}
 \end{gather*}\vspace{-7pt}}
 
-\hobs{../figures/summary_obs.pdf}{Slowest implied timescale per goal period at $\tau_c=5$ min. Filled: pooled MSM (95\% agent-day CI). Bars: sojourn-null median (keeps each state's dwell times, shuffles their order). Open: median per-agent $t_2$. The pooled MSM beats the sojourn null in every period, but only modestly, and it sits above the typical agent (agent-mixture inflation). Regime III (red) is slower than regime I (blue). \#37's peak is agents idling before their first and after their last action of the day.}
+\hobs{../figures/summary_obs.pdf}{Slowest implied timescale per goal period at $\tau_c=5$ min. Filled: pooled MSM (95\% agent-day CI). Bars: sojourn-null median (dwell times kept, order shuffled). Open: median per-agent $t_2$. The pooled MSM beats the sojourn null in every period by a small margin. The agent mixture lifts it above the typical agent. Regime III (red) is slower than regime I (blue). The \#37 peak is agents idle before their first and after their last action of the day.}
 
-\htelos{Candidly: a curiosity with one methodological payoff. The ``metastable sets'' are tool modality (GUI vs.\ shell) and idling, which any log viewer could tell you. Part of the GUI-vs-shell split is GUI-heavy vs.\ shell-heavy agents. $t_2^*$ is a stable, cheap period statistic, but it does not detect stuck periods (no link to error share or output), so an operator gains no monitor. The useful part is negative and transferable: minute-scale agent behavior is strongly non-Markov, pooled MSMs over heterogeneous agents manufacture slow modes, and noisy LLM labels need a noise-cancelling estimator and $\gtrsim$15k windows before any timescale means anything. The semantic (Jev) states, the content-level test, show no ``stuck'' attractor either: waiting is the only slow set.}
+\htelos{Nothing changes in practice for an operator: $t_2^*$ does not detect stuck periods. The ``metastable sets'' are tool modality (GUI vs shell) and idle time, which any log viewer shows. Part of the GUI-vs-shell split is a difference between GUI-heavy and shell-heavy agents. The transferable result is negative and is for analysts. Minute-scale agent behavior is non-Markov, so run the CK test before you quote a timescale. A pooled MSM over different agents makes false slow modes (pooled $t_2^*$ $\times$1.28 the per-agent median). Soft LLM labels need a noise-cancelling estimator and $\gtrsim$15k windows per period. On Jev states, waiting is the only slow set.}
 
-\hbottom{On action classes and on semantic Jev states alike, behavior's slowest mode is acting vs.\ waiting plus agent heterogeneity, and its timescale does not order periods by stuckness.}
+\hbottom{On action classes and Jev states, the slowest behavior mode is acting vs waiting plus agent differences, and $t_2^*$ does not order periods by stuckness.}
 
 \hresults{\footnotesize\begin{tabular}{@{}p{0.33\columnwidth}p{0.45\columnwidth}l@{}}
 \hline
@@ -25,16 +25,16 @@ P4b within periods & meta $\rho=-0.28$, $p$ 0.03 (79 agents) & failed (sign)\\
 P4b action $t_2^*$ vs real failures & $\rho=-0.19$ (stderr: $-0.43$) & failed\\
 $p_{\rm blocked}$ flags stuck periods & all: $\rho$(fail) $-0.64$; III: $\rho$(output) $-0.71$ & mixed\\
 P4c regime I slower & 40 vs 205 min, $p$ 0.013 & reversed\\
-P3d \emph{wait} is its own set & 5/8 regime III; G51: idle+absent & holds\\
+P3d \emph{wait} is its own set & 5/8 regime III; \#51: idle+absent & holds\\
 P8 argmax MSM beats R1 & 9/27 & failed\\
-N1 NE41 relaxation $\approx t_2^*$ & $\tau\approx21$ min vs 263 (G51) & failed\\
+N1 NE41 relaxation $\approx t_2^*$ & $\tau\approx21$ min vs 263 (\#51) & failed\\
 N2 NE43 slower without drive & block-to-block swings $\times$6--7 & failed\\
 N3 \#27 change point & $p$ 0.31 & failed\\
 \hline
 \end{tabular}}
 
-\hobsb{../figures/r1b_summary.pdf}{(a) Semantic $t_2^*$ (equal sample size) against the period's mean $p_{\rm blocked}$: bimodal (tens of minutes or a day length) and, if anything, shorter where agents are more blocked. (b) After forced erasures (G51) the state deviation decays in $\sim$20 min; the MSM's $t_2^*$ predicts the dashed line. The control rises because of censoring selection.}
+\hobsb{../figures/r1b_summary.pdf}{(a) Semantic $t_2^*$ (equal sample size) vs the period's mean $p_{\rm blocked}$. It is bimodal (tens of minutes or a day length) and tends to be shorter where agents are more blocked. (b) After forced erasures (\#51), the state deviation decays in $\sim$20 min. The MSM's $t_2^*$ predicts the dashed line. The control rises because of censoring selection.}
 
-\hcaveats{Synthetic checks (round 1b) show the soft-state shifted estimator is biased $\times$1.6--2.7 at a 4-h period's 3,600 windows and breaks down at 12 states below $\sim$15k windows; the soft CK has no power and a sojourn null on noisy argmax runs is invalid, so v3 per-period verdicts are descriptive. $t_2^*$ comparisons therefore use equal-size subsamples. The NE41 control anchors are selected (active, censored). $p_{\rm blocked}$ means ``waiting on others'' in regime I and ``failing/looping'' in regime III. Pooled MSMs mix agents (R2).}
+\hcaveats{Round-1b synthetic checks show a bias of $\times$1.6--2.7 in the soft-state shifted estimator at a 4-h period's 3,600 windows. The estimator breaks down at 12 states below $\sim$15k windows. The soft CK test has no power, and a sojourn null on noisy argmax runs is invalid. The v3 per-period verdicts are therefore descriptive, and $t_2^*$ comparisons use equal-size subsamples. The NE41 control anchors are selected (active, censored). $p_{\rm blocked}$ means ``waiting on others'' in regime I and ``failing or looping'' in regime III. Pooled MSMs mix agents (rival R2).}
 
-\hnext{A hidden-Markov model with agent-day random effects (separates the mixture from switching); content-level states for spirals (\#45 is held out).}
+\hnext{Fit a hidden-Markov model with agent-day random effects, to separate the agent mixture from switching. Use content-level states for spirals (\#45 is held out).}

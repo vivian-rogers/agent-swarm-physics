@@ -1,6 +1,6 @@
-\hwhat{Trap types (inactive spells, timer-pause chains, error loops, repeated-command loops) were tested in 11 non-holdout goal periods. Kramers predicts memoryless escape; instead traps \emph{age}: within agent the escape hazard falls roughly as $t^{-0.8}$ (G51 $\beta=-0.77$; G38 $-1.71$), and each re-pause lowers the odds of acting at the next timer expiry (G51 $-0.38$). One directed message during a pause raises those odds $\times$1.5--2.9 (5/7 periods); more add little. Round 1b (improved data) counted real failures instead of stderr, used the leading-@ nudge target and added Jev blocked and loop spells. ``Error loops age'' was largely a stderr artifact (rows $-51\%$; aging only in \#51, $-0.57$). Jev blocked spells age in \#51 and \#27; kick results are unchanged; with the nudger off (NE43) aging is unchanged. $\beta J_0=0.09$--$0.41$, no bistability. Holdout not run.}
+\hwhat{The units are per-agent trap spells: inactive spells, timer-pause chains, error loops and repeated-command loops. We test them in 11 non-holdout goal periods. Kramers escape predicts a constant escape hazard. Instead, traps \emph{age}: within an agent, the hazard falls as about $t^{-0.8}$ (\#51 $\beta=-0.77$, \#38 $-1.71$). Each re-pause lowers the odds of action at the next timer expiry (\#51 $-0.38$). One directed message during a pause raises those odds $\times$1.5--2.9 (5/7 periods); more messages add little. Round 1b counts real failures instead of stderr, takes the leading-@ nudge target and adds Jev blocked and loop spells. Error-loop aging was mostly a stderr artifact: loop rows fall 51\%, and aging survives only in \#51 ($-0.57$). Jev blocked spells age in \#51 and \#27. The kick results do not change. With the nudger off (NE43), aging does not change. Mean-field $\beta J_0=0.09$--$0.41$ gives no bistability. The holdout is not run.}
 
-\hmodel{Models 01/02 (mean field) plus Kramers escape. Agent activity $x$ moves in a double well $U(x)$ (idle and active basins) at temperature $T$. A trap is a stay in the idle basin, escaped at rate $k$ over barrier $\Delta U$ (attempt rate $\nu$). A kick (a message reaching the agent) adds force $f$. Swarm: Curie--Weiss coupling $J_0$, field $h$, active fraction $m$. Fitted: hazard $h_{it}$ with agent effects $\alpha_i$, aging slope $\beta$, dose effects $\gamma_n$.}
+\hmodel{Models 01/02 (mean field) with Kramers escape. The activity $x$ of an agent moves in a double well $U(x)$ (idle and active basins) at temperature $T$. A trap is a stay in the idle basin. Escape has rate $k$ over barrier $\Delta U$, with attempt rate $\nu$. A kick (a message that reaches the agent) adds a force $f$. Swarm: Curie--Weiss coupling $J_0$, field $h$, active fraction $m$. Fit: hazard $h_{it}$, agent effects $\alpha_i$, aging slope $\beta$, dose effects $\gamma_n$.}
 
 \hmath{\vspace{-5pt}\begin{gather*}
 k=\nu\,e^{-\Delta U/T},\qquad G(x)=-\ln P(x)=U(x)/T+\text{const}\\
@@ -9,19 +9,19 @@ k(n)=k_0\,e^{nf/T}\ \text{(Kramers)}\quad\text{vs}\quad k(n)=k_0(1+c\,n)\ \text{
 f(m)=-\tfrac{1}{2}J_0m^2-hm-Ts(m);\ \text{bistable iff }\beta J_0(1-m^2)>1
 \end{gather*}\vspace{-7pt}}
 
-\hobs{../figures/summary_obs.pdf}{(a) Escape hazard from inactive spells vs.\ time in the spell (robust spells, ignoring single stray actions) in the two best-powered periods. Kramers predicts the flat dashed line once the first minutes (grey) have passed; instead the hazard falls, so traps age. (b) G51 hazard and odds ratios by number of kicks. Dotted lines extrapolate Kramers (exponential in dose) from one kick. The observed curves flatten: one message is what matters.}
+\hobs{../figures/summary_obs.pdf}{(a) Escape hazard from inactive spells vs time in the spell, in the two periods with the most power. A spell ignores single stray actions. After the first minutes (grey), Kramers predicts the flat dashed line. The measured hazard falls, so traps age. (b) \#51 hazard and odds ratios vs the number of kicks. Dotted lines extrapolate Kramers (exponential in dose) from one kick. The measured curves flatten: the first message carries the effect.}
 
-\htelos{Modestly useful, mostly as a correction. A stuck agent gets stickier the longer it sits, and switching the nudger off does not change that, so the deepening is the agent's own loop: intervene early. The lever that works is one directed message landing during a pause, read at the next timer expiry; repeats and room chatter add little, and under today's 5-min pause default a kick barely helps an agent deep in a pause chain. Messages never break failure loops; those need tooling or a reset. Real failure loops are rarer and shorter than stderr suggested. The physics added little: ``Kramers'' failed and ``aging plus saturating triggers'' is ordinary survival analysis.}
+\htelos{Kick a stuck agent early: its escape hazard falls as about $t^{-0.8}$ with time in the trap. Send one directed message during a pause. It raises the odds of action at the next timer expiry $\times$1.5--2.9; repeats and room messages add little. Under the 5-min pause default (after NE44), a kick lifts escape from deep pause chains only from 0.17 to 0.25. Messages do not break real failure loops (9/9 periods), so use tooling or a reset there. The aging is the agent's own: it does not change with the nudger off. The physics adds little, because Kramers fails and aging with saturating triggers is ordinary survival analysis.}
 
-\hbottom{Agent traps are real and individual and they age by themselves (unchanged when the nudger stops), not by Kramers escape; kicks act as saturating triggers at timer gates, and real failure loops age only in the long \#51 window.}
+\hbottom{Traps age by themselves, not by Kramers escape; one directed kick at a pause gate helps, and real failure loops age only in \#51.}
 
 \hresults{\footnotesize\begin{tabular}{@{}p{0.34\columnwidth}p{0.44\columnwidth}l@{}}
 \hline
 prediction (round 1b) & observed & verdict\\\hline
-real-failure loops age (majority) & 3/10 point, 0/10 CI; G51 $-0.57$ & failed\\
+real-failure loops age (majority) & 3/10 point, 0/10 CI; \#51 $-0.57$ & failed\\
 messages do not break them & 9/9 periods & holds\\
-Jev blocked spells age (G51, G38, $\ge$half) & G51 $-0.39$, G27 $-1.24$; G38 flat; timer-like in 3 & failed\\
-Jev loop spells age (G51) & $-0.46$ [$-0.55,-0.18$] & partial\\
+Jev blocked spells age (\#51, \#38, $\ge$half) & \#51 $-0.39$, \#27 $-1.24$; \#38 flat; timer-like in 3 & failed\\
+Jev loop spells age (\#51) & $-0.46$ [$-0.55,-0.18$] & partial\\
 gate kick OR $\ge1.5$ (leading @) & 5/7 (1.5--2.9) & holds\\
 room kicks above null & 6/8 & holds\\
 NE44 kick$\times\ln k$: 0 then $<0$ & $+0.57$ before, $+0.06$ after & failed\\
@@ -31,8 +31,8 @@ NE43 gate escape drops & $+0.006$ [$-0.09,0.10$] & failed\\
 \hline
 \end{tabular}}
 
-\hobsb{../figures/r1b_summary.pdf}{(a) Loop aging slope per period: error loops on stderr (round 1) vs real failures (round 1b), and Jev blocked spells; the gray band is memoryless. Only \#51 keeps a clear negative slope on real failures. (b) Gate escape by pause-chain depth: before NE44 a directed kick rescues agents at any depth; after it, deep chains barely respond.}
+\hobsb{../figures/r1b_summary.pdf}{(a) Loop aging slope per period: error loops on stderr (round 1), real failures (round 1b) and Jev blocked spells. The gray band is memoryless. Only \#51 keeps a clear negative slope on real failures. (b) Gate escape vs pause-chain depth. Before NE44, a directed kick rescues agents at any depth. After NE44, deep chains barely respond.}
 
-\hcaveats{The NE44 contrast is between periods (the change sits inside the locked holdout window), confounded with 4 h vs 8 h days, roster and goals. Jev \texttt{p\_blocked} means ``waiting on others'' in regime I and ``failing or looping'' in regime III, and window spells are short in 4-h periods. Kick labels are temporal coincidences. Several 3--5-day periods have unstable day-bootstrap CIs (Wald reported alongside). The landscape and swarm blocks were not re-run (inputs unchanged).}
+\hcaveats{The NE44 contrast compares periods, because the change sits inside the locked holdout window. Day length (4 h vs 8 h), roster and goals confound it. Jev \texttt{p\_blocked} means ``waiting on others'' in regime I and ``failing or looping'' in regime III. Window spells are short in 4-h periods. Kick labels are temporal coincidences. Several 3--5-day periods have unstable day-bootstrap CIs; we report Wald CIs alongside. We did not re-run the barrier-inversion and swarm blocks, because their inputs did not change.}
 
-\hnext{Pólya-urn test of self-reinforcement from the context ledger (own-output share vs aging); content-level spirals on the holdout (\#45).}
+\hnext{Test self-reinforcement with a Pólya urn on the context ledger: own-output share vs the aging slope. Test content-level spirals on the holdout (\#45).}

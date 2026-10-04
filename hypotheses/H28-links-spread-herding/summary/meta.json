@@ -7,7 +7,27 @@
   "faithfulness": "The core claim (links drive switches) fails its primary timing test (3/11 herding periods beat the link time-shift null) and its signature: future links predict switches better than past links (pooled -1.17 +- 0.30), naive agents show a 3.3x pre-trend, NE09 failed. What survives is a strong, well-calibrated association (pooled HR 2.3), simple rather than complex contagion, and directed recruitment only in own-artifact weeks. Round 1b: pre-NE09 weeks were mismeasured (5/11 now beat the shift null, card-level P1 mixed), but lead > lag persists (-1.04 +- 0.24) and switches are elevated before the link can be read (6.5x vs 3.5x after), so links mark bursts; NE09's premise is void; work switches repeat the pattern.",
   "usefulness": "It answers an operator question with numbers: throttling link-sharing would trim peak pile-ons by at most ~20% (upper bound), so act on ownership or burst triggers instead. The lead/lag diagnostic and the lambda / R_link bounds are cheap to compute from any swarm's logs. But the counterfactual is model-based (+-0.1) and not interventionally validated."
  },
- "one_line": "Links co-move with project switches (HR 2.6 on ledger visibility) but recipients switch even before they can read the link: links mark attention and work bursts, and throttling them would trim pile-ons by at most ~20-30%.",
+ "one_line": "Links co-move with project switches (HR 2.6), but recipients switch before they can read them: links mark bursts; removal trims peaks at most 30%.",
+ "models": [
+  {
+   "model": "03-contagion",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Herding-week links mark bursts; switches precede reading"
+  },
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "Occupancy coupling J > 0 in only 3/11 weeks"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Branching-ratio identity gives the link share R_link"
+  }
+ ],
  "rated_by": "H28 agent (suggested); round 1b RE-D1 (suggested)",
  "updated": "2026-10-04 (round 1b)",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",

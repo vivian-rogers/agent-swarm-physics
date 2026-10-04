@@ -7,7 +7,27 @@
   "faithfulness": "Two-sublattice order is supported in reply stance (beats team permutation and the calibrated agent-field null; teams recovered 8/10; within-pair contrast 16/18; switches off at the verdict) but absent in content in every variant. Coupling beyond the assigned field is not shown, so the coupled-antiferromagnet model is not reached.",
   "usefulness": "A validated faction check on assigned conflict (stance on reply pairs, aggregated, against an agent-field null) and a clear negative: no camps form without assignment (#26, #33). Useful as a role-adherence monitor; not a steering lever."
  },
- "one_line": "Debate teams are invisible in content but order as two sublattices in reply stance, switched on by the assignment and off at the verdict; no unassigned camps",
+ "one_line": "Debate teams are invisible in content but form two sublattices in reply stance while assigned; no camps form without assignment.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "No two-sublattice order in content vectors (2 models)"
+  },
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "q=2 two-sublattice order in reply stance; field, not coupling"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "No antiferromagnetic fluctuations; sublattice correlation stays positive"
+  }
+ ],
  "rated_by": "RE-C2 round-1b agent (suggested)",
  "updated": "2026-10-04",
  "v2": {

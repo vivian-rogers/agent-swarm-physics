@@ -7,7 +7,27 @@
   "faithfulness": "Mixed: the vocabulary-copy prediction beats the same-room and base-field nulls (C = 1) and plans were clearly not copied, but the headline 'transforms plans' failed (not transmitted), the leader is not closer to the corpus than to its base in embeddings, and neither rival is rejected; 16 messages, a moderate coder. Round 1b: shared copy_info and DQ6 checkpoints change nothing; P3a fails in both embedding models (gte erases bge's p 0.08 leader>Kimi hint).",
   "usefulness": "A diagnostic anyone distilling agents could compute (corpus-marker rate vs untrained speakers, plan copy vs a perfect-copy reference), and a cautionary pipeline finding, but the practical lesson (scenario coverage limits what SFT transmits) is standard ML knowledge."
  },
- "one_line": "Distilled leader kept a trace of its corpus style but none of its plans; its corpus was Kimi talking to itself",
+ "one_line": "The distilled leader kept a trace of its corpus's style and none of its plans; its corpus was base Kimi talking to itself.",
+ "models": [
+  {
+   "model": "08-copying-vs-transformation",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Vocabulary trace copied; plans not transmitted, not transformed"
+  },
+  {
+   "model": "04-semantic-information",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Listed source; no semantic-information estimate"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Embedding proximity to corpus vs base field"
+  }
+ ],
  "rated_by": "calibrated by coordinator 2026-10-04 (from H23 agent (suggested))",
  "updated": "2026-10-04",
  "v2": {

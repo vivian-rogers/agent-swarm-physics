@@ -7,7 +7,27 @@
     "faithfulness": "The pre-registered collapse P1 failed again (regime-only wins, no common positive slope on x_att) and the dilution exponent P4 failed; only the unfitted mapping P3 and P5 hold. The natural-experiment tests split (NE43 held, NE42 and the #51 dilution test failed).",
     "usefulness": "Corrects a misleading round-1 lesson (opposite channels) into a concrete one: trim day edges before reading any equal-time gain. The post-hoc k_llm curve now spans all six methods, a candidate knob worth pre-registering, though it fails within #51."
   },
-  "one_line": "No x_att collapse; the round-1 channel split was day edges, and adjusted gains all rise with messages per LLM step (post hoc)",
+  "one_line": "Loop gains do not collapse onto x_att; the round-1 channel split was day edges; trimmed gains rise with messages per LLM step (post hoc).",
+  "models": [
+    {
+      "model": "01-inverse-ising",
+      "role": "primary",
+      "outcome": "refuted",
+      "note": "Equal-time loop gains do not collapse; regime step wins"
+    },
+    {
+      "model": "09-hawkes",
+      "role": "secondary",
+      "outcome": "supported",
+      "note": "Unfitted Hawkes-to-Ising gain mapping holds (P3)"
+    },
+    {
+      "model": "02-nonequilibrium-ising",
+      "role": "secondary",
+      "outcome": "untested",
+      "note": "Listed source; no separate kinetic fit"
+    }
+  ],
   "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",

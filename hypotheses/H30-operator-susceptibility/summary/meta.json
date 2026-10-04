@@ -7,7 +7,21 @@
   "faithfulness": "Nudge->activity now resolved in G51 and G38 (P1, P2, P5, P11 pass) and agrees with RE-V1's corrected H04 A30; human->content robust across models. Daily-state claim (HH116) still unsupported; P3, P8 and all three natives fail (NE44 reversed). Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I1.",
   "usefulness": "Rules sharpened and one reversed: one nudge ~1 min, first ~1.2, repeats ~0.4; nudging into lulls works; short pause defaults make nudges more effective; name the agent to steer content. No usable daily gauge."
  },
- "one_line": "A period-level chi_op exists: ~1 extra active minute per nudge once dropped events are restored (G51 and G38), human messages steer content +0.02-0.04; no trackable daily gauge; lull nudges work.",
+ "one_line": "A period-level susceptibility exists: about one extra active minute per nudge (#51, #38), human content pull +0.02 to +0.04; no trackable daily gauge.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Period-level susceptibility about 1 min per nudge; no daily state"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "Human messages pull content +0.024 / +0.041, two models"
+  }
+ ],
  "rated_by": "H30 round-1b agent (suggested)",
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",

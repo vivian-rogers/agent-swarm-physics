@@ -7,7 +7,21 @@
     "faithfulness": "The action-class MSM beats occupancy-only and sticky-only rivals on held-out days, but every core claim failed on both state spaces: non-Markov, slow sets are acting vs waiting (R4) plus agent mixture (R2), t2* does not track stuckness (wrong sign on v3), the regime contrast is reversed, and the unfitted relaxation after forced erasures misses by x12. Scorecard A1 B0 C1 D0 E0 F1 G1 H1 I0.",
     "usefulness": "Cheap diagnostics (t2*, the slow-set map) flag tool modality and waiting, not stuck agents. Transferable lessons: minute-scale behavior is non-Markov; pooled MSMs manufacture slow modes; soft LLM labels need >= 15k windows for timescales, and argmax-run sojourn nulls are invalid on noisy labels. p_blocked marks low-output weeks inside regime III only."
   },
-  "one_line": "Behavior's slow mode is acting vs waiting plus agent heterogeneity, on action classes and Jev states; t2* doesn't flag stuck periods",
+  "one_line": "Behavior's slowest mode is acting vs waiting plus agent differences, on action classes and Jev states; t2* does not flag stuck periods.",
+  "models": [
+    {
+      "model": "10-potts",
+      "role": "primary",
+      "outcome": "refuted",
+      "note": "Kinetic Potts MSM: non-Markov; t2* not a stuckness order parameter"
+    },
+    {
+      "model": "02-nonequilibrium-ising",
+      "role": "secondary",
+      "outcome": "mixed",
+      "note": "Currents inside sets; set-level dynamics near detailed balance"
+    }
+  ],
   "rated_by": "H17 re-evaluation agent RE-B1 (suggested; round-1 values were coordinator-calibrated)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",

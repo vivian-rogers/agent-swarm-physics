@@ -7,7 +7,27 @@
   "faithfulness": "Failed robustly: rivals co-move positively in every content variant and are friendly in stance; no conflict-coded negative couplings anywhere, including Opus 5's role change and chess opponents. The stance channel's unbalanced residuals fit the glass side of tau3(dc) but are non-specific (SK vs heterogeneous ferro) and unrelated to conflict.",
   "usefulness": "A clean negative for mixed-motive swarms: conflicting incentives do not produce conflict couplings, in topic or stance; assigned roles pin topics and same-objective agents converge. The rival contrast, tau3(dc) and the calibrated stance null port to other logs."
  },
- "one_line": "#51 is no spin glass: roles pin positions, couplings are positive in topic and stance, rivals co-move, no collective states",
+ "one_line": "#51 is no spin glass: roles pin positions, couplings are positive in topic and stance, rivals co-move, and no collective states form.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "SK spin glass: couplings mostly positive, rivals co-move"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "Random-field O(n) ferromagnet: roles pin, weak positive coupling"
+  },
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Listed source; no categorical fit"
+  }
+ ],
  "rated_by": "RE-C2 round-1b agent (suggested; faithfulness and usefulness unchanged from the coordinator's calibration)",
  "updated": "2026-10-04",
  "v2": {
