@@ -12,7 +12,7 @@
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (round 1b; usefulness kept at 2.5, parity with H30/H35/H43 lever results)",
  "v2": {
-  "claim": "A first nudge adds ~1.4 active min to its named target (#51); repeats less",
+  "claim": "A first nudge adds ~1.2 active minutes per 30 (A30 1.16 [0.75, 1.57]) to its named target only, starting at the receiving call; repeats add less",
   "original_verdict": "mixed",
   "credence": 0.48,
   "ladder": [
@@ -98,6 +98,7 @@
      }
     ]
    }
-  ]
+  ],
+  "scope": "#51 (powered); other periods scattered"
  }
 }

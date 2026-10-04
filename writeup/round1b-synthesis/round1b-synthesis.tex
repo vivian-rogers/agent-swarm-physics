@@ -1,0 +1,42 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\begin{document}
+\title{What the round-1b re-evaluation changed}
+\author{Vivian Rogers, with Claude Opus 5.5}
+\affiliation{Agent-swarm physics project}
+\date[]{2026-10-04. H01--H39 re-run on corrected data; exploratory only.}
+\begin{abstract}
+We re-ran all 39 original hypotheses on corrected inputs: the fixed activity table, which previously dropped about half the events; context-ledger visibility; the work ledger; real failures instead of stderr flags; a second embedding model with style residuals; and ground-truth labels. Each hypothesis added 2--3 tests native to periods with special leverage. Fifteen of 39 headline claims changed sign or significance (flagged fragile), close to the 40\% the v2 scoring memo assumed. Five lessons hold across hypotheses. Activity synchrony is the scheduler, not coupling. Coupling runs through reading, one call at a time. A third to a half of apparent influence is convergence. Formal leaders get attention, not influence. Model-family differences are writing style. The next useful step is the locked holdout, for which the decisions below are needed.
+\end{abstract}
+\maketitle
+
+\section{What changed, and how often}
+Twenty-four of 39 headlines survived; the other 15 changed sign or significance (H02, H04, H09, H12, H14, H15, H16, H19, H23, H24, H26, H30, H35, H36, H38). Most of the changes came from the activity table's event drop. It removed a day-specific share of every agent's events, which acts as a shared day-level field, and cross-day nulls read that field as collective order. This produced the H12 activity market mode, H26's activity room gain (cross-room $\rho$ 0.79 $\to$ $-0.05$), H36's activity alarms, H30's ``don't nudge into a lull'' rule (now reversed: 1.74 vs 0.72), H09's regime-III variance excess, and H04's dead time. The rest came from the old visibility rules (H28's pre-NE09 delays were overstated 4--8$\times$, which hid link effects) and from treating stderr as failure (H16's error-loop aging). Content results were mostly stable across embedding models. The exceptions are flagged where they occur: H24's switch-on step, H32's top source, and H01's room order.
+
+\section{Five lessons across hypotheses}
+\textbf{1. Activity co-movement is the scheduler's field, not coupling.} Once day edges are trimmed and the event drop is fixed, pairwise activity couplings sit at the null floor (H02, H49). Regime-III co-activation is 70--80\% the runner's start/stop schedule (H38, H50). Activity carries no room gain (H26), and an activity alarm detects nothing (H36). Any operator reading activity synchrony as coordination is reading the cron table.
+
+\textbf{2. Coupling runs through reading, one call at a time.} Responses are gated at the recipient's next model call in every regime (H08, $p\approx0.93$). In the computer-use scaffold, the reply hazard is per call, not per minute ($\eta\approx0$ in 11/11 periods; H40). Per-hour coupling is therefore per-call coupling times call rate, and doubling cadence raises 5-min coupling about 1.5$\times$. Rooms couple talk only because they route reading: controlling for ledger reads takes co-location from $z=5.1$ to 0.2 (H05). Content influence is address-gated, with named recipients moving and unnamed ones not (H29, H50). Copying of projects and code follows what was read (H06: OR 8.6; H07: 5/5 cross-fork commits).
+
+\textbf{3. A third to a half of apparent influence is convergence.} Messages posted but not yet read still predict the outcome. They carry about a third of content transfer at matched lag (H32) and about half of idea adoption (H34). Unread pairs within 15\,s are near-copies as often as read pairs (H57). Recipients switch to a linked project at 6.5$\times$ baseline before they can read the link (H28). Identical innovations in isolated forks arose with no channel (H07). Agents converge because they share fields (kickoff, goal, model priors); H54 shows day-1 content lands on what the kickoff names. Every exposure effect should be reported against an in-flight placebo at matched lag.
+
+\textbf{4. Formal leaders get attention, not influence.} Designated and elected leaders get more replies (H29: $\times1.4$ in \#35) and humans get a status premium (H52: about 2$\times$ replies). Yet no formal leader is a content source (H32: 3/3 natives fail) or a stronger idea seeder (H34). An operator message to one agent moves that agent strongly and does not relay to bystanders (NE38).
+
+\textbf{5. Model-family differences are writing style.} Family content fields vanish under style controls in both embedding models (H13, H01 P2). Style identifies agents better than content (H46). Behavior carries only a weak family trace in commit cadence (HH267), which may be provider tooling.
+
+\section{Levers (from \texttt{interpretation/lever-table.md})}
+Nudges are cheap attention levers. A first nudge buys about one active minute (H04, H30), a glance rather than committed work (H35: about 0.4\% of commits), and works under a short pause default and in lulls. Naming is the content lever, and it acts in one hop. Forced context erasure is the only lever with a material output cost: about 10\% of a segment's committed work, with orderly re-reading and broken loops (H15, H44). Call cadence is a prompt-free coupling knob (H40).
+
+\section{What failed cleanly}
+Several statistical-physics readings were refuted or found inconclusive after field removal: near-criticality (H03, H25, H26), linear response to goals (H10), content aging (H20), a spin glass from private goals (H22), and an antiferromagnet as coupling in debates (H21; the stance order is assignment). A physics reorganization alarm loses to plain topic shift (H36). These refutations are reliable knowledge. Most of them say the same thing: a shared field explains what looked like collective order.
+
+\section{Decisions needed}
+\begin{enumerate}
+\item \textbf{Holdout re-runs.} H02, H04 and H05 ran on the buggy table (holdout ledger items 1, 9, 10, 13). H05's miss (C3) may be a casualty of the bug's dampening.
+\item \textbf{Re-freeze before any confirmatory run.} The confirm scripts of H01, H08, H11, H12, H15, H18, H19, H23 (proposed amendment, item 14), H25, H26, H28, H29, H30, H32, H34, H35, H36, H38 and H39 were frozen on old inputs.
+\item \textbf{First confirmatory runs.} Ranked by value of more work, $V(1-p)$, among scripts that are ready or nearly ready: H40 (NE20, the cleanest cadence intervention; frozen and dry-run), H29, H53, H52 and H43.
+\item \textbf{Other pending items.} The CLAUDE.md two-layer rule; picks from HH270--289; the DQ7 core rebuild; and which paused agents to resume (H41, H58, H60--H65; H67 and H74 are ready).
+\end{enumerate}
+\end{document}
