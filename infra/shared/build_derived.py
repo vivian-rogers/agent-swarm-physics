@@ -108,7 +108,10 @@ def build_activity_bins(ev: pl.DataFrame, acts: pl.DataFrame, cal: pl.DataFrame,
         pl.col("action_type").is_in(["WAIT", "PAUSE"]).cast(pl.Int16).alias("idle"),
         (pl.col("action_type") == "CONSOLIDATE").cast(pl.Int16).alias("consolidate"),
         (~pl.col("action_type").is_in(["AGENT_TALK", "WAIT", "PAUSE", "CONSOLIDATE"])).cast(pl.Int16).alias("other_event"))
-    e = e.group_by("pt_date", "minute", "active_min", "agent").agg(
+    # Join key is (pt_date, minute, agent); active_min comes from the grid only. Computing it per event as
+    # (offset + dt)//60 disagreed with the grid's offset//60 + minute whenever offset%60 + seconds >= 60, which
+    # silently dropped ~half of all events (found by DQ8, 2026-10-04; see infra/README Known issues).
+    e = e.group_by("pt_date", "minute", "agent").agg(
         pl.col("talk").sum(), pl.col("idle").sum(), pl.col("consolidate").sum(), pl.col("other_event").sum())
     # PAUSE declares a duration; the agent is idle until min(t + seconds, its next event)
     ag = ev.filter((pl.col("actor_kind") == "agent") & pl.col("agent").is_not_null()).select("agent", "t", "action_type", "pause_s").sort("agent", "t")
@@ -118,10 +121,10 @@ def build_activity_bins(ev: pl.DataFrame, acts: pl.DataFrame, cal: pl.DataFrame,
     pz = binned(pz.select("agent", "t", "t_end"))
     pz = pz.with_columns((pl.col("minute") + ((pl.col("t_end") - pl.col("t")).dt.total_seconds() // 60).cast(pl.Int32)).alias("m_end"))
     pz = (pz.with_columns(pl.int_ranges(pl.col("minute"), pl.col("m_end") + 1).alias("mm")).explode("mm")
-          .with_columns((pl.col("active_min") + pl.col("mm") - pl.col("minute")).alias("active_min"), pl.col("mm").alias("minute"))
-          .group_by("pt_date", "minute", "active_min", "agent").agg(pl.len().cast(pl.Int16).alias("paused")))
+          .with_columns(pl.col("mm").alias("minute"))
+          .group_by("pt_date", "minute", "agent").agg(pl.len().cast(pl.Int16).alias("paused")))
     c = binned(acts.filter(pl.col("agent").is_not_null()).select("t", "agent"))
-    c = c.group_by("pt_date", "minute", "active_min", "agent").agg(pl.len().cast(pl.Int16).alias("turns"))
+    c = c.group_by("pt_date", "minute", "agent").agg(pl.len().cast(pl.Int16).alias("turns"))
     # dense grid: every minute of every day's window x every agent on the roster that day
     grid = (cal.select("pt_date", "window_s", "active_offset_s")
             .with_columns(pl.int_ranges(0, (pl.col("window_s") // 60 + 1).cast(pl.Int32)).alias("minute"))
@@ -132,9 +135,10 @@ def build_activity_bins(ev: pl.DataFrame, acts: pl.DataFrame, cal: pl.DataFrame,
     grid = grid.join(ros, how="cross").filter(
         (pl.col("pt_date") >= pl.col("joined")) & (pl.col("left").is_null() | (pl.col("pt_date") < pl.col("left")))
     ).drop("joined", "left")
-    out = (grid.join(e, on=["pt_date", "minute", "active_min", "agent"], how="left")
-           .join(c, on=["pt_date", "minute", "active_min", "agent"], how="left")
-           .join(pz, on=["pt_date", "minute", "active_min", "agent"], how="left")
+    key = ["pt_date", "minute", "agent"]
+    out = (grid.join(e, on=key, how="left")
+           .join(c, on=key, how="left")
+           .join(pz, on=key, how="left")
            .with_columns(*[pl.col(k).fill_null(0).cast(pl.Int16) for k in ("talk", "idle", "consolidate", "other_event", "turns", "paused")]))
     out = out.with_columns(
         pl.when(pl.col("talk") > 0).then(STATE["talk"])

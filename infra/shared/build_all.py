@@ -24,6 +24,9 @@ Steps (outputs in data/processed/shared/):
   work_ledger          work_repos, work_commits, work_api_writes, work_daily, work_outcomes (offline; `work_ledger.py refresh` refetches)
   ground_truth         ground_truth_labels (one gzip+grep pass over raw computer_use_turns)
   period_affordances   period_affordances (DQ9 catalog; event columns null on holdout units)
+  activity_bins_fixed  sidecar check: activity_bins rebuilt with the (pt_date, minute, agent) join (build_derived now does this itself)
+  null_sizes           DQ8 null size table (expensive, ~4 min)
+  per_period_estimates DQ8 per-period estimates backfill
   reply_*              reply_pairs, reply_graph (DQ2: candidates, ledger candidates, validate, compile; no API calls)
 Tests (--tests): infra/shared/tests/test_*.py
 
@@ -61,6 +64,7 @@ STEPS = [
                  "chat_core.parquet", "chat_text.parquet", "actions.parquet", "memory_stats.parquet"]},
     {"name": "build_derived", "cmd": "py", "script": "build_derived.py",
      "outputs": ["calendar.parquet", "rooms_timeline.parquet", "exposure.parquet", "activity_bins.parquet", "kicks.parquet"]},
+    {"name": "activity_bins_fixed", "cmd": "py", "script": "activity_bins_fixed.py", "outputs": ["activity_bins_fixed.parquet"]},
     {"name": "build_embeddings", "cmd": "st", "script": "build_embeddings.py", "expensive": True,
      "outputs": ["embeddings/chat_bge_small.npy", "embeddings/chat_index.parquet", "embeddings/intentions_bge_small.npy",
                  "embeddings/intentions_index.parquet"]},
@@ -110,6 +114,10 @@ STEPS = [
     {"name": "reply_validate", "cmd": "py", "script": "reply_threading.py", "args": ["validate"], "outputs": []},
     {"name": "reply_compile", "cmd": "py", "script": "reply_threading.py", "args": ["compile"],
      "outputs": ["reply_pairs.parquet", "reply_graph.parquet"]},
+    {"name": "null_sizes", "cmd": "py", "script": "nulls.py", "args": ["--calibrate", "--reps", "100", "--surr", "49", "--workers", "2"],
+     "expensive": True, "outputs": ["null_sizes.parquet"]},
+    {"name": "per_period_estimates", "cmd": "py", "script": "estimates.py", "args": ["--backfill"],
+     "outputs": ["per_period_estimates.parquet"]},
 ]
 NAMES = [s["name"] for s in STEPS]
 

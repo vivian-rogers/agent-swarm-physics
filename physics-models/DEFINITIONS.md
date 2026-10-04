@@ -238,3 +238,11 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Conversational tier ratio G:** within-room correlation of pairs that never mention each other ÷ that of pairs that do. G ≈ 1 = broadcast coupling; G < 1 = pairwise (conversation-following) coupling.
 - **Room-localized shift R1_loc / per-room R1:** H36's day-to-day content centroid shift computed per room (R1_loc: localized to the room's own deviation from the swarm).
 - **Room lead index L:** the lag at which one room's content shift leads another's after a swarm-wide event (goal change), with a pooled Stouffer test.
+
+### H54 named variants (2026-10-04; see `hypotheses/H54-kickoff-quench-target/README.md`)
+- **Quench target t̂_p:** the content state a goal period's kickoff drives the swarm toward; H54's claim is that it is readable from the kickoff text, t̂_p ≈ k̂_p (the kickoff message embedding in the same whitened basis).
+- **Own-target percentile π_p:** the share of decoy kickoffs q ≠ p (the other 32 eligible kickoffs; within-regime and adjacent-period variants) whose similarity to the day-1 centroid is below the own kickoff's.
+- **Quench depth D_p:** mean_i cos(v_i, k̂_p) − mean_{q≠p} mean_i cos(v_i, k̂_q) (excess over decoys). **Jump J_p:** cos(day-1 centroid, k̂_p) − cos(previous period's last-day centroid, k̂_p).
+- **Kickoff specificity:** S_text (mean z of log counts per 100 words of numbers, named entities, artifacts/URLs, agent/role/room names, deadline terms), S_count (absolute counts), S_emb = 1 − mean_q cos(k̂_p, k̂_q) (distinctiveness).
+- **Re-quench amplitude (HH180):** a_m = cos(centroid after m, ê_m) − cos(centroid before m, ê_m) over 60-min windows for a mid-period human message m, minus length-matched decoy messages.
+- **Kickoff remanence (HH182):** daily kickoff excess A_ex(d) fitted as A_∞ + (A_1 − A_∞) e^{−(d−1)/τ_K}.

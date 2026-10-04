@@ -1,0 +1,35 @@
+\hwhat{We asked whether the kickoff text is the target a goal change quenches the swarm into. Each day-1 content centroid was scored against its own kickoff and 32 others (genericness-corrected swap null), plus four period-native tests. The centroid picks out its own kickoff (median percentile 1.0, top-1 in 18/33, $p=3\times10^{-6}$), and the day-1 move points at the new text in 23/25 periods. It fails only where the kickoff names no shared target: free weeks \#3 and \#16, \#44's half-free week, and \#51. In \#51 each agent lands on its own private goal (role-swap accuracy 0.95), and a human reassignment re-targets an agent within a day (+0.61). Nine of 13 kickoff-frozen projects carry the goal's words (enrichment 3.2); only one pre-existed. Text specificity does not predict spread, and families do not differ. Holdout not run.}
+
+\hmodel{Model 11 with a quench: each agent's whitened statement vector $\mathbf s_i$ relaxes toward a target $\hat{\mathbf t}$ with depth $\lambda$, plus a persistent offset $\mathbf a_i$ (style, family, old project), herding $J\mathbf m$ and noise. H54 says $\hat{\mathbf t}$ is readable from the kickoff text: $\hat{\mathbf t}\approx\hat{\mathbf k}$, its embedding in the same basis. Model 10's version: the kickoff is a field on the projects it names, which freeze at once. Rivals: no target, inertia (old state, carry-over projects), kickoff genre, agent-authored plans, family fields.}
+
+\hmath{\vspace{-8pt}
+\begin{gather*}
+\mathbf s_i(\text{day }1)\propto\lambda\,\hat{\mathbf t}+\mathbf a_i+J\,\mathbf m+\boldsymbol\eta_i,\qquad \hat{\mathbf t}\approx\hat{\mathbf k}_p\\
+\hat S_{pq}=\cos(\hat{\mathbf m}_p,\hat{\mathbf k}_q)-\langle\cdot\rangle_{p'\ne q},\qquad \pi_p=\Pr_{q\ne p}\big[\hat S_{pq}<\hat S_{pp}\big]
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_page.pdf}{(a) Own-kickoff percentile of each day-1 centroid among 33 kickoffs; squares mark the own kickoff ranked first. Grey: the no-target null's 90\% band. Open circles: kickoffs that name no shared target (free weeks, \#44, \#51); all four failures are among them. (b) Kickoff-frozen H31 projects vs all others: share whose name matches the goal text, and share that pre-existed (the carry-over rival). Frozen projects carry the goal's name and are new.}
+
+\htelos{Useful, with a limit. What you write in a kickoff is where a swarm's talk goes on day 1, and the project it freezes onto is the one carrying the goal's words. A private goal text pins each agent to its own target for weeks; rewriting one agent's goal moves that agent within a day. A choose-your-own-goal kickoff leaves no shared target and a more scattered swarm. The limit: how specific the text is (numbers, names, deadlines) did not tune how tightly agents cluster, so ``write a more specific prompt'' is not yet a validated dial. Agent-written plans, including an elected leader's goal announcement, did not act as targets the way human text did. Part of the effect is agents restating the kickoff, which is the mechanism, not a flaw.}
+
+\hbottom{The kickoff (or private goal) text is the day-1 quench target and names the projects that freeze, but its specificity does not set how tightly the swarm clusters.}
+
+\hresults{{\footnotesize\noindent\begin{tabular}{@{}p{0.34\columnwidth}p{0.45\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\
+P1 own kickoff identified & median $\pi$ 1.0, top-1 18/33, $p=3\times10^{-6}$ & supported\\
+P1c move points at kickoff & median 0.91; jump $>0$ in 23/25 & supported\\
+P2 frozen = named & 9/13; goal text enrichment 3.2 ($p_{\rm strat}$ 0.006); 1/13 pre-existing & mixed (literal)\\
+P3 specificity sets spread & $\rho=+0.17$ (text); $-0.47$ (embedding, regime III) & failed\\
+HH180 human re-quench & $\Delta=0.04$, 57\% $>0$, $p=0.03$; $<1$ h & weak\\
+HH182 remanence & 0.24 $\to$ plateau 0.11; old kickoff erased & partial\\
+HH181 first plan completes target & central (70\%), unmoderated; \#26 leader no pull & failed\\
+HH183 two domains (\#44, \#38) & room swap 0.31, 0.58 & failed\\
+HH184 family susceptibility & lab $p=0.66$ & failed\\
+\#51 own goal; NE38 & swap 0.95 ($p=2\times10^{-4}$); DiD $+0.61$ & supported\\
+\end{tabular}}}
+
+\hobsb{../figures/summary_obs_b.pdf}{(a) \#51: share of agent pairs (different roles) for which own-goal alignment beats the swapped assignment, by week; grey is the synthetic no-private-field band. (b) NE38: Claude Opus 5's daily alignment with its new and old goal texts around the 07-29 reassignment, against the other agents.}
+
+\hcaveats{One embedding model (bge-small); the second model was not built yet. The target is a text-embedding proxy, and quoting is part of what is measured: removing near-echo statements lowers top-1 from 0.55 to 0.45 or 0.30. ``Named'' is name-token matching, and agents name repositories after goals, so the direction of naming is ambiguous. Only 33 kickoffs, 22 of them in regime I. P2, \#44 and \#38 are underpowered (synthetic). The free-week moderator and the embedding-distinctiveness link are post hoc. \#23 was excluded to keep H10's confirmation blind.}
+
+\hnext{Run the holdout (14 kickoffs, the \#51 tail). Causal HH181 via the context ledger (readers vs not-yet-readers of the first plan). \#12 debate motions as two concrete targets. LLM-rated specificity and settling time. Embedding swap.}

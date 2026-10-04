@@ -37,3 +37,15 @@ Set by Claude when H23 needed #45, which H02 had already used for its confirmato
 3. the reuse is disclosed in both cards and in `LOG.md`.
 
 Exploratory work still never touches held-out periods.
+
+## Holdout ledger (DQ8, 2026-10-04)
+Machine-readable ledger: `infra/data-quality/holdout_ledger.json`, built by `infra/shared/holdout_ledger.py` (`check()` before any confirmatory run, `record_run()` after). 269 planned or executed uses across 39 hypotheses. **Executed runs: three** (H02 on #45, failed; H04 on NE21+NE23 #46–#50 plus #45, falsified in reverse; H05 on NE12 #32 + #34 days 03-05..03-13, inconclusive).
+
+Findings needing a decision:
+1. **All three executed runs read the buggy `activity_bins`** (about half of events dropped; see `infra/README.md` Known issues). Whether to re-run them on the fixed table (a correction of a broken run, not a new test) is Vivian's call; until then their verdicts are provisional.
+2. **#45 was used twice for activity timing** (H02 and H04) without mutual disclosure. H03's and H19's planned #45 Hawkes estimate duplicates H04's, so it is blocked under the reuse policy; the Curie–Weiss family (H01, H12, H16, H38) collides with H02; kick responses (H12, H16, H30, H35, H36, H39) collide with H04. #45 content has 11 planned users: whoever runs first makes all the others second users.
+3. **NE21+NE23 (#46–#50):** H04's run collides with planned activity-gain tests (H01, H12, H26, H38) and kick-response tests (H09, H12, H30, H35, H36, H39).
+4. **#32 and #34:** H05's run collides with H12's and H19's Curie–Weiss tests and same-modality plans (H15, H16, H35, H38). H21, H33, H36, H37 and H01's `confirm_r2.py` wrongly call H05's #34 script unrun; H10's card wrongly says #32 is unused.
+5. **H19 and H38 plan the same equal-time gain statistic** on 9 held-out periods.
+6. Stale status lines (H02, H04, H05 cards), uncommitted confirm scripts, and cards without a confirmatory section are listed in the ledger JSON. The estimator-family tags are regex-based and need a human pass.
+
