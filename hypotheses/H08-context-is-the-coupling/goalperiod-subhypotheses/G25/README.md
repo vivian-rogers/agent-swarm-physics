@@ -1,6 +1,7 @@
 # H08 × G25: Create a digital museum of 2025 (2025-12-29 → 2026-01-02)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1b, 2026-10-04, context-ledger read-out; C9 talk and addressing clause CI includes 0; round-1 verdict kept above)
 **Role:** exploratory
 **Period:** regime I · mode C · N ≈ 10 · #general · 5 non-holdout days.
 
@@ -30,6 +31,21 @@ Read-out pairs: 22602 own-room (+ 0 other-room); in-flight share 98%, wake share
 | read-out delay, active recipients (descriptive) | median 56 s (IQR 29–114) | | — |
 
 **Tests:** T_C9 = fail → **failed**.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the DQ1 context ledger (`scheme/build_turns_ledger.py`, `analysis/visibility_ledger.py`, `analysis/erasure_ledger.py`): turns are ledger calls, o = 1 is the call that received the message (exact by construction), in-flight = the previous call's first record came after the message. Responses: mention (the pre-registered measure), the DQ2 reply-parent author, and the content cosine of the talk with the message (non-mention). Predictions and the verdict rule unchanged. Data: `data/processed/H08-context-is-the-coupling/r1b/G25/` (`c9.json`, `c3.json`). D in percentage points (cosine ×100), day-bootstrap 95% CIs.*
+
+| Statistic | Round 1 (H08 call-start rule) | Round 1b (ledger) | Note |
+| --- | --- | --- | --- |
+| D_talk | -0.10 [-0.74, +0.43] | +0.26 [-0.24, +1.04] | pre-registered clause |
+| D_addr (mention) | -0.63 [-1.08, +0.04] | +0.52 [-0.02, +0.83] | pre-registered clause |
+| D_addr, clean recipients (post hoc) | +0.56 [+0.16, +0.99] | +0.44 [+0.04, +0.71] | no talk at o = −2, −1 |
+| D, reply author (new) | — | +0.76 [+0.30, +1.06] | DQ2 `reply_pairs.parent` |
+| D, content cosine (new, ×100) | — | -0.85 [-1.44, +0.12] | non-mention response |
+| other-room placebo D_addr | — | — | two-room periods only |
+| read-out delay of in-flight recipients, median | — | first record 41 s; context assembly 16 s | C9-V5 band 10–40 s |
+
+**Verdict (1b): failed** (round 1: failed).
 
 ## Scorecard (period-specific axes)
 | Axis | This period |

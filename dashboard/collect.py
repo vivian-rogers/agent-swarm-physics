@@ -144,8 +144,10 @@ def period_folders(hdir: Path) -> list[dict]:
     for d in cands:
         if d.is_dir() and PERIOD_RE.match(d.name) and (d / "README.md").exists():
             t = (d / "README.md").read_text(errors="replace")
-            v, role = field(t, "Verdict"), field(t, "Role")
+            v1b = field(t, "Verdict (1b)")
+            v, role = v1b or field(t, "Verdict"), field(t, "Role")
             out.append({"period": d.name, "verdict": verdict_key(v), "verdict_text": strip_md(v)[:240],
+                        "round": "1b" if v1b else "1",
                         "scope": strip_md(role + " " + field(t, "Period")),
                         "role": "confirmatory" if role.lower().startswith("confirm") else "exploratory",
                         "path": str((d / "README.md").relative_to(ROOT)),

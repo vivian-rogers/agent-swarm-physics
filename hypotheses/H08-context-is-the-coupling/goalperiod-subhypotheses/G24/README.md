@@ -1,6 +1,7 @@
 # H08 × G24: Do random acts of kindness! (2025-12-22 → 2025-12-26)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1b, 2026-10-04, context-ledger read-out; C9 talk clause CI includes 0; round-1 verdict kept above)
 **Role:** exploratory
 **Period:** regime I · mode C · N ≈ 10 · #general · 5 non-holdout days.
 
@@ -30,6 +31,21 @@ Read-out pairs: 14424 own-room (+ 0 other-room); in-flight share 96%, wake share
 | read-out delay, active recipients (descriptive) | median 37 s (IQR 23–73) | | — |
 
 **Tests:** T_C9 = fail → **failed**.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the DQ1 context ledger (`scheme/build_turns_ledger.py`, `analysis/visibility_ledger.py`, `analysis/erasure_ledger.py`): turns are ledger calls, o = 1 is the call that received the message (exact by construction), in-flight = the previous call's first record came after the message. Responses: mention (the pre-registered measure), the DQ2 reply-parent author, and the content cosine of the talk with the message (non-mention). Predictions and the verdict rule unchanged. Data: `data/processed/H08-context-is-the-coupling/r1b/G24/` (`c9.json`, `c3.json`). D in percentage points (cosine ×100), day-bootstrap 95% CIs.*
+
+| Statistic | Round 1 (H08 call-start rule) | Round 1b (ledger) | Note |
+| --- | --- | --- | --- |
+| D_talk | -0.17 [-0.41, +0.16] | +0.30 [-0.30, +0.97] | pre-registered clause |
+| D_addr (mention) | +0.18 [+0.04, +0.26] | +0.53 [+0.09, +1.20] | pre-registered clause |
+| D_addr, clean recipients (post hoc) | +0.52 [+0.33, +0.71] | +0.57 [+0.07, +1.36] | no talk at o = −2, −1 |
+| D, reply author (new) | — | +0.62 [+0.28, +1.01] | DQ2 `reply_pairs.parent` |
+| D, content cosine (new, ×100) | — | -0.49 [-1.92, +0.66] | non-mention response |
+| other-room placebo D_addr | — | — | two-room periods only |
+| read-out delay of in-flight recipients, median | — | first record 31 s; context assembly 12 s | C9-V5 band 10–40 s |
+
+**Verdict (1b): failed** (round 1: failed).
 
 ## Scorecard (period-specific axes)
 | Axis | This period |

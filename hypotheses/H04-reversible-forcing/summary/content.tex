@@ -1,16 +1,36 @@
-\hwhat{Exploratory (non-holdout): a nudge adds 1.54 [0.80, 2.29] active minutes to its named target over 30 min, but only after a 4-min delay; bystanders show nothing. Mentioned agents respond at once to human messages. Goal kickoffs leave activity unchanged. No kick type passes as a linear propagator (dose untestable; superposition confounded by the nudger re-firing). FDT fails in shape: responses come after 5 min, while autocorrelation decays within 1. Kicked activations persist longer than spontaneous ones ($T_{\text{eff}}\approx0.65$), and mean-field Glauber underpredicts decay times 5--26$\times$. Hawkes beats Poisson ($n=0.59$ in regime I, 0.72 in III). \textbf{Locked holdout NE21} (hours $4\to8\to4\to8$ h): \textbf{C1 falsified in the opposite direction}, with $n$ \emph{higher} on 8 h days at 3/3 switches (0.31, 0.67, 0.46, 0.89; ABAB $-0.39$ vs noise 0.42). The NE23 nudger-off manipulation check failed; C2 was inconclusive, C3 untestable.}
+\hwhat{Exploratory round 1b (non-holdout, corrected activity table, leading-@ targets, no future-kick isolation, day fixed effect): a nudge adds 1.16 [0.75, 1.57] active minutes to its named target over 30 min in \#51 (first nudges 1.38, repeats 0.90; regime-III 4 h days 0.93), bystanders $\approx0$. The response starts at the target's next model call (median read-out 108 s; read-out-aligned onset 1 min): round 1's 4-min dead time was dropped events plus the isolation rule. Human messages no longer move activity. FDT fails in shape; kicked activations persist ($X\approx1.9$); mean-field Glauber underpredicts decay times. Nudger off (NE43): $n$ unchanged, traps not longer. \textbf{Locked holdout NE21} (hours $4\to8\to4\to8$ h): \textbf{C1 falsified in reverse} ($n$ 0.31, 0.67, 0.46, 0.89); C1 does not use the corrected table and stands.}
 
-\hmodel{Models 02 (linear response, fluctuation--dissipation) and 09 (Hawkes). $n_i(m)\in\{0,1\}$: agent $i$ active in minute $m$. A kick (nudge, human message, kickoff) at $m_0$ is a field pulse; $G$: matched response; $C$: activity autocorrelation; $\chi$: integrated $G$; $X$: FD ratio ($X=1$ at equilibrium). Hawkes: $\mu_d b(t)$ daily baseline, $\phi$ talk-triggered kernel, $\eta_c$ messages triggered per class-$c$ kick, $n$ branching ratio. Mean field: loop gain $K$, agent time $\tau_0$, variance ratio VR.}
+\hmodel{Models 02 (linear response, fluctuation--dissipation) and 09 (Hawkes). $n_i(m)\in\{0,1\}$: agent $i$ active in minute $m$. A kick (nudge, human message) at $m_0$ is a field pulse; $G$: matched response; $r$: read-out delay to the target's next model call; $C$: activity autocorrelation; $\chi$: integrated $G$; $X$: FD ratio. Hawkes: $\mu_d b(t)$ daily baseline, $\phi$ talk-triggered kernel, $\eta_c$ messages triggered per class-$c$ kick, $n$ branching ratio. Mean field: loop gain $K$, agent time $\tau_0$.}
 
 \hmath{\vspace{-5pt}\begin{gather*}
-G(\tau)=\mathbb E[n_i(m_0{+}\tau)\mid\text{kick}]-\mathbb E[n_i(m_0{+}\tau)\mid\text{control}]\\
-\text{FDT: }\chi(\tau)=X\,[C(0)-C(\tau)],\qquad T_{\text{eff}}=1/X\\
+G(\tau)=\mathbb E[n_i(m_0{+}\tau)\mid\text{kick}]-\mathbb E[n_i(m_0{+}\tau)\mid\text{control}]-\delta_d(\tau)\\
+G(\tau)\approx\textstyle\sum_r p(r)\,\Delta R(\tau-r),\qquad \text{FDT: }\chi(\tau)=X\,[C(0)-C(\tau)]\\
 \lambda(t)=\mu_d b(t)+\textstyle\sum_k\phi(t-t_k)+\sum_c\eta_c\sum_j\gamma_c e^{-\gamma_c(t-t_j)}\\
-n=\textstyle\int_0^\infty\phi(\tau)\,d\tau,\qquad \tau=\tau_0/(1-K),\quad K=1-1/\mathrm{VR}
+n=\textstyle\int_0^\infty\phi(\tau)\,d\tau,\qquad \tau=\tau_0/(1-K)
 \end{gather*}\vspace{-7pt}}
 
-\hobs{../figures/summary_obs.pdf}{(a) A nudged agent's activity against matched no-kick controls (95\% day-block band): nothing for four minutes, then a plateau from about 10 to 30 min. The delay is why a field-on-activity reading and FDT fail: the nudge enters the agent's context and is read at its next turn. (b) Branching ratio per hours segment on the holdout; dashed arrows mark the predicted 8 h drop. Every switch went the other way, by about the size of week-to-week noise.}
+\hobs{../figures/r1b_summary_obs.pdf}{(a) A nudged agent's activity against matched controls (corrected design, 95\% day-block band), aligned on the nudge and on the target's receiving call. Realigned, the response is immediate: the delay seen from the nudge is the wait until the target's next call. (b) Branching ratio per hours segment on the holdout; every switch went the other way, at the edge of week-to-week noise.}
 
-\htelos{The useful part is the plainest. A nudge works, on the agent it names and nobody else, after a lag of minutes, because it lands in a context the agent reads on its next turn. So target nudges and expect the lag, as any scaffold operator might guess. The physics vocabulary (Green's functions, FDT, effective temperature) mostly shows that a field-on-activity model is wrong; it does not supply a better one. The one intervention test, longer days lowering self-excitation, failed in the opposite direction at the edge of weekly noise. If real, longer sessions breed more triggered activity: a sizing hint at best. Goal changes alter what agents do, not how much.}
+\htelos{The useful part is plain and now sharper. A nudge works on the agent it names and nobody else, at that agent's next model call, so its lag is the target's pause schedule: a nudge to an agent paused for 10 minutes does nothing until it wakes. A first nudge buys about 1.4 active minutes, a repeat less. Human messages change what agents say, not how much they work. The physics vocabulary (Green's functions, FDT, effective temperature) mostly shows that a field-on-activity model is wrong. The one reversal test, longer days lowering self-excitation, failed in the opposite direction; switching the nudger off left self-excitation unchanged.}
 
-\hbottom{Nudges and mentions have real, delayed, target-only effects that no linear-field or FDT picture captures, and the one reversal test of how working hours reshape self-excitation was falsified in the opposite direction.}
+\hbottom{A nudge acts only on its target, at the target's next model call (the apparent minutes-long dead time was a measurement artifact), and no hours or nudger switch lowered the swarm's self-excitation as predicted.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.47\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b} & \textbf{Verdict (1b)}\\\hline
+P1 nudge: A60 $>0$, peak $\le$5 min & peak $\sim$15 min $\to$ \#51 peak 4, A60 1.65 [0.79, 2.52] & yes (\#51, 4 h)\\
+Nudge A30 (isolated $\to$ all nudges) & 1.54 $\to$ 1.16 (\#51), 0.93 (4 h); isolation inflates $\times$1.3--1.9 & corrected\\
+First vs repeat nudge (\#51) & -- $\to$ 1.38 vs 0.90 & sub-additive\\
+P2 bystanders $\le$0.2 of target & yes $\to$ 0.03 (\#51) & yes\\
+P3 human messages move activity & mentioned 5.6 $\to$ 0.6 (n.s.); room $\approx0$ & no\\
+P6 FDT violated, nudge $X<1$ & violated, $X$ 1.54 $\to$ 1.88 & violated; dir.\ no\\
+MF-P1/P3 ($K$ subcritical, self-consistent) & $K$ III 0.26 $\to$ 0.32 & yes\\
+NE43 nudger off: $n$ same, traps longer & $\Delta n$ +0.06; inactive runs +0.5\% & mixed\\
+NE44 read-out moves with pause default & 43 s vs 108 s; onset lag equal from read-out & mixed\\
+C1 (holdout) $n$ lower on 8 h days & 0/3 switches; not affected by 1b & falsified\\
+\end{tabular}}
+
+\hobsb{../figures/r1b_summary_obs2.pdf}{(a) Cumulative response of \#51 nudge targets by how long the nudge waited to be read: read within 3 min, the response starts at once; read after 10 min (long pauses), the target stays below its controls. (b) NE43: Hawkes $n$ with the daily bookends and nudges, with nudges only, and with neither.}
+
+\hcaveats{The \#51 pre-window placebo is +0.25 [0.05, 0.46]: some selection by the nudger's text trigger remains, so the level may be up to a quarter too high. Long pauses are not in the matching strata. Regime-I nudges (NE10) fail the placebo. Hawkes $n$ may absorb within-day nonstationarity. The holdout's C2, C4 and MF-C used the buggy activity table and the isolation rule; re-running them is Vivian's call.}
+
+\hnext{Add pause state to the matching strata; fit a read-out + transient kernel.}

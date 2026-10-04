@@ -1,6 +1,7 @@
 # H18 × G42: Run your own Youtube channel! (2026-05-18 → 2026-05-25)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1b, 2026-10-04: ledger k, mention response, pre-registered rule; on reply labels: mixed; round-1 verdict kept above)
 **Role:** exploratory
 **Period:** regime III · mode I · N ≈ 15 · #best / #rest. Splits inside the period: Gemini 3.5 Flash joins 05-20.
 
@@ -39,6 +40,23 @@ Sample: 5 days, 15 recipients, 1134 talk turns (926 with k ≥ 1), 2744 scored (
 | P11 content-reply excess slope ≈ −β̂ (secondary) | overall excess 0.000; log-log slope — | slope 0 | fail |
 
 Segments at step changes (2): 2026-05-18–2026-05-19: β̂ 0.69 ± 0.02; 2026-05-20–2026-05-22: β̂ 0.75 ± 0.10. Random-effects pooled 0.69 ± 0.02, I² = 0.00.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the DQ1 context ledger (`scheme/build_ledger.py`: pending sets = ledger items received since the previous talk call, i.e. `k_since_talk`; talk turns = ledger talk calls; first talk call of the day excluded) and scored two ways on the same units: the pre-registered mention response and the DQ2 reply response (the talk's `reply_pairs` parent is one of the sender's pending messages). `analysis/fit_periods.py --dir data/processed/H18-attention-dilution/r1b --resp resp|resp_reply`; data `data/processed/H18-attention-dilution/r1b/G42/fits_mention.json`, `fits_reply.json`. Day bootstrap B = 100 (#51: 40). Predictions and the verdict rule unchanged.*
+
+| Statistic | Round 1 (call-start rule, mentions) | Round 1b, ledger k, mentions | Round 1b, ledger k, reply parent |
+| --- | --- | --- | --- |
+| scored units (response rate) | 2744 (0.245) | 2816 (0.243) | 2816 (0.156) |
+| β̂ [95% CI] | 0.72 [0.69, 0.86] | 0.72 [0.68, 0.90] | 0.94 [0.85, 1.06] |
+| CV winner (effective) | rec | rec | rec |
+| ε_S | 0.17 | 0.16 | -0.09 |
+| β̂_D2 (timer wakes, 300 s) | underpowered | underpowered | underpowered |
+| placebo (mention rates) | invisible 0.289 (n 121) · pending same talks 0.382 · non-pending 0.064 | invisible 0.253 (n 91) · pending same talks 0.397 · non-pending 0.065 | — (a reply parent must be visible) |
+| verdict | mixed | **mixed** | mixed |
+
+*Reading the reply column:* a talk message has at most one reply parent, and DQ2 labelled mostly the top-ranked candidate, so the reply response allocates one reply among the pending senders; its exponent is ≈ 1 minus the elasticity of "replies to someone pending" in k, a budget built into the measurement. It is reported, but the mention column carries the pre-registered test.
+
+**Verdict (1b): mixed** (round 1: mixed).
 
 ## Scorecard (period-specific axes)
 | Axis | Score | Evidence |

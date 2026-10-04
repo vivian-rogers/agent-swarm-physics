@@ -438,13 +438,28 @@ def segment_S(U: Units, talks, segs_res):
 
 
 # ------------------------------------------------------------------------------------------- main
-def run(gp: str, boot_B: int, seed: int = 18, base: Path | None = None, two_room: bool | None = None):
+def select_response(D: dict, resp: str) -> dict:
+    """Round-1b switch: score the units with another response column of the ledger scheme (resp_reply, resp_auth,
+    p_reply). Round-1 files have only `resp` (mention), which stays the default."""
+    if resp == "resp":
+        return D
+    D = dict(D)
+    D["pending"] = D["pending"].with_columns(pl.col(resp).cast(pl.Boolean) if resp != "p_reply" else (pl.col(resp) >= 0.5),
+                                             ).with_columns(pl.col(resp if resp != "p_reply" else "p_reply").alias("resp")
+                                                            if resp != "p_reply" else (pl.col("p_reply") >= 0.5).alias("resp"))
+    if D.get("wake_pending") is not None and "resp_reply" in D["wake_pending"].columns:
+        D["wake_pending"] = D["wake_pending"].with_columns(pl.col("resp_reply").alias("resp"), pl.col("resp_reply5").alias("resp5"))
+    return D
+
+
+def run(gp: str, boot_B: int, seed: int = 18, base: Path | None = None, two_room: bool | None = None,
+        resp: str = "resp", tag: str | None = None):
     t0 = time.time()
     rng = np.random.default_rng(seed)
     g = int(gp[1:]) if gp[1:].isdigit() else None
-    D = load(gp, base)
+    D = select_response(load(gp, base), resp)
     talks, pend = D["talks"], D["pending"]
-    out = {"period": gp, "meta": PERIODS.get(g), "d2_window_s": D2_WINDOW}
+    out = {"period": gp, "meta": PERIODS.get(g), "d2_window_s": D2_WINDOW, "response": resp}
     U = Units(talks, pend, "talk_id")
     out["n_talks"] = talks.height
     out["n_talks_k1"] = talks.filter(pl.col("k") >= 1).height
@@ -499,7 +514,7 @@ def run(gp: str, boot_B: int, seed: int = 18, base: Path | None = None, two_room
     out["segments"] = segs
     out["segment_S"] = segment_S(U, talks, segs)
     out["secs"] = round(time.time() - t0, 1)
-    ((base or DATA) / gp / "fits.json").write_text(json.dumps(out, indent=1, default=float))
+    ((base or DATA) / gp / (f"fits_{tag}.json" if tag else "fits.json")).write_text(json.dumps(out, indent=1, default=float))
     print(f"{gp} done in {out['secs']}s", flush=True)
     return out
 
@@ -512,10 +527,24 @@ if __name__ == "__main__":
     ap.add_argument("--skip", default="")
     ap.add_argument("--dir", default=None, help="run on a folder of scheme outputs (e.g. synthetic stand-ins)")
     ap.add_argument("--two-room", action="store_true")
+    ap.add_argument("--resp", default="resp", help="round 1b: resp (mention), resp_reply, resp_auth or p_reply")
+    ap.add_argument("--tag", default=None, help="round 1b: write fits_<tag>.json instead of fits.json")
+    ap.add_argument("--only", default=None, help="comma-separated periods for --dir --all")
     a = ap.parse_args()
-    if a.dir:
+    if a.dir and not a.all:
         base = Path(a.dir)
-        run(a.period, a.boot, base=base, two_room=a.two_room)
+        run(a.period, a.boot, base=base, two_room=a.two_room, resp=a.resp, tag=a.tag)
+        raise SystemExit
+    if a.dir and a.all:   # round 1b: every period folder under --dir
+        base = Path(a.dir)
+        gps = sorted(p.name for p in base.iterdir() if p.is_dir() and (p / "pending.parquet").exists())
+        if a.only:
+            gps = [x for x in gps if x in set(a.only.split(","))]
+        skip = set(a.skip.split(",")) if a.skip else set()
+        for gp in gps:
+            if gp in skip:
+                continue
+            run(gp, a.boot if gp != "G51" else min(a.boot, 40), base=base, resp=a.resp, tag=a.tag)
         raise SystemExit
     gps = [gname(g) for g in PERIODS] if a.all else [a.period]
     skip = set(a.skip.split(",")) if a.skip else set()

@@ -1,6 +1,7 @@
 # H08 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
 **Verdict:** supported
+**Verdict (1b):** supported (round 1b, 2026-10-04, context-ledger read-out; C9 talk and addressing jumps both pass on the ledger; round-1 verdict kept above)
 **Role:** exploratory
 **Period:** regime III · mode C · N ≈ 12 · #best / #rest · 17 non-holdout days.
 
@@ -53,6 +54,22 @@ Read-out pairs: 25198 own-room (+ 28649 other-room); in-flight share 91%, wake s
 | C10-L2 Hawkes n̂ second − first half | 0.142 − 0.190 = -0.048 [-0.180, 0.092] | > 0 | fail |
 
 **Tests:** T_C9 = pass, T_C8 = n/a, T_C3 = inconclusive → **supported**.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the DQ1 context ledger (`scheme/build_turns_ledger.py`, `analysis/visibility_ledger.py`, `analysis/erasure_ledger.py`): turns are ledger calls, o = 1 is the call that received the message (exact by construction), in-flight = the previous call's first record came after the message. Responses: mention (the pre-registered measure), the DQ2 reply-parent author, and the content cosine of the talk with the message (non-mention). Predictions and the verdict rule unchanged. Data: `data/processed/H08-context-is-the-coupling/r1b/G38/` (`c9.json`, `c3.json`). D in percentage points (cosine ×100), day-bootstrap 95% CIs.*
+
+| Statistic | Round 1 (H08 call-start rule) | Round 1b (ledger) | Note |
+| --- | --- | --- | --- |
+| D_talk | +0.85 [+0.29, +1.46] | +1.60 [+0.93, +2.22] | pre-registered clause |
+| D_addr (mention) | +0.88 [+0.62, +1.11] | +1.14 [+0.80, +1.41] | pre-registered clause |
+| D_addr, clean recipients (post hoc) | +0.83 [+0.58, +1.06] | +1.03 [+0.70, +1.31] | no talk at o = −2, −1 |
+| D, reply author (new) | — | +1.69 [+1.39, +1.95] | DQ2 `reply_pairs.parent` |
+| D, content cosine (new, ×100) | — | +2.00 [+0.14, +3.69] | non-mention response |
+| other-room placebo D_addr | — | +0.01 [+0.00, +0.02] | two-room periods only |
+| read-out delay of in-flight recipients, median | — | first record 29 s; context assembly 11 s | C9-V5 band 10–40 s |
+| C3 / NE41 β_F, forced erasure (pp) | -0.98 [-2.39, +1.22] (mention, H15 catalog) | mention +0.50 [-0.76, +2.12]; **reply author -1.29 [-2.69, +0.10]** (relative -9% [-18, +1]; 4106 forced-erased units) | ledger `reset_forced` |
+
+**Verdict (1b): supported** (round 1: supported).
 
 ## Scorecard (period-specific axes)
 | Axis | This period |

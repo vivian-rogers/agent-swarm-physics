@@ -1,6 +1,7 @@
 # H08 × G39: Build your own interactive world! (2026-04-27 → 2026-05-01)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1b, 2026-10-04, context-ledger read-out; C9 talk and addressing clause CI includes 0; round-1 verdict kept above)
 **Role:** exploratory
 **Period:** regime III · mode I · N ≈ 15 · #best / #rest · 5 non-holdout days.
 
@@ -45,6 +46,22 @@ Read-out pairs: 7860 own-room (+ 4542 other-room); in-flight share 96%, wake sha
 | C10-L1 slope of log(1 + k) per session hour / ρ | 0.038 [-0.025, 0.112] / +0.022 | > 0 | fail |
 
 **Tests:** T_C9 = fail, T_C8 = n/a, T_C3 = pass → **failed**.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the DQ1 context ledger (`scheme/build_turns_ledger.py`, `analysis/visibility_ledger.py`, `analysis/erasure_ledger.py`): turns are ledger calls, o = 1 is the call that received the message (exact by construction), in-flight = the previous call's first record came after the message. Responses: mention (the pre-registered measure), the DQ2 reply-parent author, and the content cosine of the talk with the message (non-mention). Predictions and the verdict rule unchanged. Data: `data/processed/H08-context-is-the-coupling/r1b/G39/` (`c9.json`, `c3.json`). D in percentage points (cosine ×100), day-bootstrap 95% CIs.*
+
+| Statistic | Round 1 (H08 call-start rule) | Round 1b (ledger) | Note |
+| --- | --- | --- | --- |
+| D_talk | +0.39 [-0.29, +0.97] | +0.38 [-0.21, +1.18] | pre-registered clause |
+| D_addr (mention) | +0.43 [+0.33, +0.61] | +0.26 [-0.22, +0.48] | pre-registered clause |
+| D_addr, clean recipients (post hoc) | +0.26 [+0.08, +0.57] | +0.07 [-0.42, +0.37] | no talk at o = −2, −1 |
+| D, reply author (new) | — | +0.60 [+0.34, +0.83] | DQ2 `reply_pairs.parent` |
+| D, content cosine (new, ×100) | — | +3.15 [+1.41, +6.62] | non-mention response |
+| other-room placebo D_addr | — | +0.04 [+0.00, +0.12] | two-room periods only |
+| read-out delay of in-flight recipients, median | — | first record 37 s; context assembly 16 s | C9-V5 band 10–40 s |
+| C3 / NE41 β_F, forced erasure (pp) | -2.22 [-9.76, -0.11] (mention, H15 catalog) | mention -1.47 [-7.48, +0.34]; **reply author -0.98 [-2.92, -0.21]** (relative -31% [-92, -7]; 1516 forced-erased units) | ledger `reset_forced` |
+
+**Verdict (1b): failed** (round 1: failed).
 
 ## Scorecard (period-specific axes)
 | Axis | This period |

@@ -44,6 +44,9 @@ N_LOCAL = 4 * 4 * 3 * 3  # state(m-1) x act bin x idle bin x day-third
 NB_BIN = np.array([0, 1, 1] + [2] * 200)  # bystander exposures in [m-30, m+60]: 0, 1-2, 3+
 N_STRATA_LOCAL = N_LOCAL * 3
 RNG_SEED = 20261003
+# Round-1b switch (2026-10-04): which activity table load_days reads. Default = the round-1 table, so the round-1 scripts
+# reproduce their numbers; round-1b scripts set H04_ACTIVITY_TABLE=activity_bins_fixed.parquet (DQ8 event-drop fix).
+ACTIVITY_TABLE = os.environ.get("H04_ACTIVITY_TABLE", "activity_bins.parquet")
 
 
 # ----------------------------------------------------------------------------- days and holdout
@@ -107,7 +110,7 @@ class Day:
 
 def load_days(days: list[str]) -> list[Day]:
     cal = calendar().filter(pl.col("pt_date").is_in(days))
-    ab = (pl.scan_parquet(S / "activity_bins.parquet").filter(pl.col("pt_date").is_in(days))
+    ab = (pl.scan_parquet(S / ACTIVITY_TABLE).filter(pl.col("pt_date").is_in(days))
           .select("pt_date", "minute", "agent", "state").collect().sort("pt_date", "agent", "minute"))
     meta = {r["pt_date"]: r for r in cal.iter_rows(named=True)}
     out = []

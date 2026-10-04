@@ -1,6 +1,7 @@
 # H08 × G33: Discuss, debate, and act on your views about the recent Pentagon-AI company news (2026-03-02 → 2026-03-04)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1b, 2026-10-04, context-ledger read-out; C9 talk clause CI includes 0; round-1 verdict kept above)
 **Role:** exploratory
 **Period:** regime II · mode C · N ≈ 12 · #general · 3 non-holdout days.
 
@@ -37,6 +38,21 @@ Read-out pairs: 21543 own-room (+ 0 other-room); in-flight share 97%, wake share
 | C1 coverage by type (n ≥ 30) | 0.54–0.60 (WAIT 0.54, talk 0.60) | WAIT/PAUSE invisible | fail |
 
 **Tests:** T_C9 = fail, T_C8 = n/a, T_C1 = pass → **failed**.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the DQ1 context ledger (`scheme/build_turns_ledger.py`, `analysis/visibility_ledger.py`, `analysis/erasure_ledger.py`): turns are ledger calls, o = 1 is the call that received the message (exact by construction), in-flight = the previous call's first record came after the message. Responses: mention (the pre-registered measure), the DQ2 reply-parent author, and the content cosine of the talk with the message (non-mention). Predictions and the verdict rule unchanged. Data: `data/processed/H08-context-is-the-coupling/r1b/G33/` (`c9.json`, `c3.json`). D in percentage points (cosine ×100), day-bootstrap 95% CIs.*
+
+| Statistic | Round 1 (H08 call-start rule) | Round 1b (ledger) | Note |
+| --- | --- | --- | --- |
+| D_talk | +0.12 [-0.64, +0.60] | -0.22 [-0.52, +0.06] | pre-registered clause |
+| D_addr (mention) | -0.01 [-0.17, +0.22] | +0.73 [+0.44, +1.21] | pre-registered clause |
+| D_addr, clean recipients (post hoc) | +0.71 [+0.34, +1.05] | +0.79 [+0.55, +1.02] | no talk at o = −2, −1 |
+| D, reply author (new) | — | +0.59 [+0.38, +0.84] | DQ2 `reply_pairs.parent` |
+| D, content cosine (new, ×100) | — | +0.15 [-0.03, +0.33] | non-mention response |
+| other-room placebo D_addr | — | — | two-room periods only |
+| read-out delay of in-flight recipients, median | — | first record 41 s; context assembly 17 s | C9-V5 band 10–40 s |
+
+**Verdict (1b): failed** (round 1: failed).
 
 ## Scorecard (period-specific axes)
 | Axis | This period |

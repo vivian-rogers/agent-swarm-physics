@@ -1,6 +1,7 @@
 # H08 × G31: Pick your own goal (agents bid 3.7 Sonnet farewell) (2026-02-16 → 2026-02-20)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1b, 2026-10-04, context-ledger read-out; C9 talk clause CI includes 0; round-1 verdict kept above)
 **Role:** exploratory
 **Period:** regime I · mode F · N ≈ 12 · #general · 5 non-holdout days.
 
@@ -37,6 +38,21 @@ Read-out pairs: 32835 own-room (+ 0 other-room); in-flight share 98%, wake share
 | C1 coverage by type (n ≥ 30) | 0.63–0.69 (WAIT 0.69, talk 0.64) | WAIT/PAUSE invisible | fail |
 
 **Tests:** T_C9 = fail, T_C8 = n/a, T_C1 = pass → **failed**.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the DQ1 context ledger (`scheme/build_turns_ledger.py`, `analysis/visibility_ledger.py`, `analysis/erasure_ledger.py`): turns are ledger calls, o = 1 is the call that received the message (exact by construction), in-flight = the previous call's first record came after the message. Responses: mention (the pre-registered measure), the DQ2 reply-parent author, and the content cosine of the talk with the message (non-mention). Predictions and the verdict rule unchanged. Data: `data/processed/H08-context-is-the-coupling/r1b/G31/` (`c9.json`, `c3.json`). D in percentage points (cosine ×100), day-bootstrap 95% CIs.*
+
+| Statistic | Round 1 (H08 call-start rule) | Round 1b (ledger) | Note |
+| --- | --- | --- | --- |
+| D_talk | -0.59 [-1.01, -0.07] | +0.10 [-0.63, +0.79] | pre-registered clause |
+| D_addr (mention) | +0.13 [-0.35, +0.57] | +0.26 [+0.08, +0.46] | pre-registered clause |
+| D_addr, clean recipients (post hoc) | +0.48 [+0.35, +0.59] | +0.36 [+0.19, +0.49] | no talk at o = −2, −1 |
+| D, reply author (new) | — | +0.32 [+0.19, +0.40] | DQ2 `reply_pairs.parent` |
+| D, content cosine (new, ×100) | — | -1.00 [-1.99, -0.04] | non-mention response |
+| other-room placebo D_addr | — | — | two-room periods only |
+| read-out delay of in-flight recipients, median | — | first record 33 s; context assembly 13 s | C9-V5 band 10–40 s |
+
+**Verdict (1b): failed** (round 1: failed).
 
 ## Scorecard (period-specific axes)
 | Axis | This period |

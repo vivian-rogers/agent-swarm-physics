@@ -308,3 +308,7 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Context share (room, token-calibrated):** room tokens ÷ measured prompt tokens per call. **Own content:** the agent's own messages and actions in the segment.
 - **Regulation index RI:** 1 − the elasticity of the room share to room inflow (RI ≈ 0 passive, ≈ 0.4–0.5 for a synthetic set-point controller).
 - **Engagement (reply parent, pending):** whether a talk call replies (DQ2 parent) to a pending message.
+
+### RE-V1 named variants (2026-10-04; see H18, H08, H04 round-1b sections)
+- **Exposure (ledger receiving call):** a message is exposed to a recipient at its receiving call (the first call whose context contains it, `context_ledger_items`); replaces "Exposure (turn read-out)" timing with ledger t_call.
+- **Talk turn / pending set (ledger):** a talk turn is a call that posts chat; its pending set is the senders whose messages entered the recipient's context since its last talk turn (`context_ledger_turns.k_since_talk` counts them).

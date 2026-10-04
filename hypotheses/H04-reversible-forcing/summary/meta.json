@@ -1,13 +1,14 @@
 {
- "complete": 60,
- "faithfulness": 1.0,
- "usefulness": 2.5,
- "rationale": {
-  "complete": "Round 1 (kernels, linearity, FD, Hawkes, mean field) and the pre-registered NE21/NE23 holdout run are done; per-period kernels, a hidden-state (unread-context) model and the H08 follow-up remain.",
-  "faithfulness": "Kernels and Hawkes beat their nulls (C = 1), but no kick type is a validated linear propagator, the field/FDT mapping fails, the mean-field decay prediction fails, and the primary holdout prediction (C1) was falsified in the opposite direction.",
-  "usefulness": "Nudges act only on the named agent after a lag of minutes, mentions act at once, and kickoffs don't change activity level: a near design rule for targeting nudges, with modest non-holdout evidence."
- },
- "one_line": "Nudges act only on their target, after minutes of delay; the hours-reversal holdout was falsified in reverse",
- "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
- "updated": "2026-10-04"
+  "complete": 65,
+  "faithfulness": 1.5,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1, the NE21/NE23 holdout run, and round 1b on the improved data: per-period kernels on the corrected activity table without the isolation rule (4 replication periods), the dead time measured from the receiving call, and three native tests (NE10, NE43, NE44). A hidden-state kernel fit and the holdout corrections (Vivian's call) remain.",
+    "faithfulness": "The corrected nudge kernel beats its nulls and now meets P1 (prompt response) in #51 and pooled 4 h days; NE43 confirms the field reading (n unchanged when the nudger stops). But the FDT and mean-field mappings fail, human-message kernels vanish on corrected data, NE43's trap prediction and NE10 fail, and the primary holdout prediction (C1) was falsified in reverse.",
+    "usefulness": "A design rule with evidence from three hypotheses (H30, H35, H43): a nudge acts only on its named target at that agent's next model call, so its lag is the target's pause schedule; first nudges buy about 1.4 active minutes, repeats less; nudges to long-paused agents do nothing until they wake; human messages steer content, not activity."
+  },
+  "one_line": "A nudge acts only on its target, at the target's next call (no real dead time); the hours-reversal holdout was falsified in reverse",
+  "rated_by": "H04 re-evaluation agent RE-V1 (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (round 1b; usefulness kept at 2.5, parity with H30/H35/H43 lever results)"
 }

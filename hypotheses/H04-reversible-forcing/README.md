@@ -1,6 +1,7 @@
 # H04: External forcing reshapes the response kernel, reversibly
 
 **Status:** **confirmatory run on the locked holdout (2026-10-03): C1 FALSIFIED, in the opposite direction.** The branching ratio n is *higher* on 8 h days at all three hours switches; the ABAB contrast is at the edge of week-to-week noise. C2 is inconclusive, C3 untestable, C4 (NE23) partial with a failed manipulation check, and MF-C indistinguishable from week-to-week variation. Exploratory round 1 (non-holdout) found real but delayed nudge responses (Results). See [NE21/README.md](goalperiod-subhypotheses/NE21/README.md).
+**Round 1b (improved data, 2026-10-04):** on the corrected activity table, with leading-@ targets and without the future-kick isolation rule, a nudge adds **1.16 [0.75, 1.57]** active minutes to its target in #51 (first nudges 1.38, repeats 0.90; pooled 4 h regime III 0.93) and the response **starts at the target's receiving call** (median read-out 108 s; read-out-aligned onset 1 min). Round 1's "4-min dead time, plateau at 10–30 min" came from the dropped events and the isolation rule; P1 (prompt response) now passes in #51. Mentioned-agent responses to humans are no longer significant. Natives NE10, NE43 (nudger off: n unchanged, traps not longer) and NE44 (read-out moves with the pause default) are mixed. The executed holdout's C1 is unaffected by the corrections; C2, C4 and MF-C read the buggy table (see NE21). Scorecard E 0 → 1, I 0 → 1.
 **Fields:** dynamics, stat mech, sociophysics
 **Literature:** none of the notes in `literature/` covers linear response; the references are in the model folders: Cugliandolo, Kurchan & Peliti, *PRE* 55, 3898 (1997)† (`physics-models/02-nonequilibrium-ising`, effective temperature); Crane & Sornette 2008† and Filimonov & Sornette 2015† (`physics-models/09-hawkes`).
 **Definitions used:** Regime; Driving / external field; Activity time (here: minutes since the day's empirical window start); Action; Interaction (broadcast) for bystanders; Population N(t). New operational terms are defined below (activity n, kick, Green's function G, FD ratio X).
@@ -62,11 +63,11 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Hawkes time-rescaling KS 0.008–0.020 vs. Poisson 0.037–0.071 (improved, still formally rejected at N ≈ 10⁴–10⁵). Time translation: weak pass for nudges. The one-step (Markov) field assumption fails; week-to-week nonstationarity of n is large (placebo \|Δn\| median 0.12) |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Hawkes beats the time-varying-field Poisson null in day-blocked 5-fold CV (I: +0.050, III: +0.066 nats/event, 5/5 folds). Matched G beats the no-kick null for nudges (III) and human messages (I) with clean placebo windows. Family-field and autocorrelation-preserving nulls not run |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | MF forward prediction of the kernel decay **fails** (5–26×); FDT signature absent. MF self-consistency (τ_m vs. τ₀/(1−K)) holds. Hawkes η_nudge decay (~12 min) independently matches the delayed G |
-| E interventional | predicts the change across a natural experiment | 0 | NE10 exploratory: thin, not supported. **NE21 holdout (2026-10-03): predicted sign falsified** (n higher on 8 h days at 3/3 switches); NE23 manipulation check failed |
+| E interventional | predicts the change across a natural experiment | 1 | NE10 exploratory: thin, not supported. **NE21 holdout (2026-10-03): predicted sign falsified** (n higher on 8 h days at 3/3 switches); NE23 manipulation check failed. **Round 1b (2026-10-04):** NE43 (nudger off, non-holdout) n unchanged as predicted (Δ +0.06) but traps not longer; NE44 read-out shift as predicted; NE10 mixed. 0 → 1 (partial) |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Hawkes recovery: n biased low by 0.03–0.06, η_nudge wide. G robust to isolation window, strict isolation and matching fallback (nudge A30 0.97–1.54, all > 0). K is detrending-sensitive (×2) |
-| G ground truth | agrees with known structure | 1 | Nudge responses sit on the named target, not on bystanders; mentioned agents respond immediately. The first non-holdout nudge is on 02-13, three days after the CHANGELOG's 02-10 |
+| G ground truth | agrees with known structure | 1 | Nudge responses sit on the named target, not on bystanders; mentioned agents respond immediately. The first non-holdout nudge is on 02-13, three days after the CHANGELOG's 02-10. **Round 1b:** the target-only response holds with leading-@ targets; the mentioned-agent response is no longer significant on the corrected table |
 | H comparative | beats the named rivals | 1 | Beats rivals (a) no-kernel field and (b) n = 0. Does **not** beat (c) state-reset / hidden-state: delayed responses and Onsager X > 1 favor (c) over a field |
-| I transfer | holds in other same-mode periods, including the holdout | 0 | Holdout used for NE21/NE23: kernel comparisons inconclusive (wide CIs); T_eff untestable |
+| I transfer | holds in other same-mode periods, including the holdout | 1 | Holdout used for NE21/NE23: kernel comparisons inconclusive (wide CIs); T_eff untestable. **Round 1b:** the corrected nudge kernel replicates per period in #51 and pooled 4 h regime III (#41, #30–#31 in point), not in #38. 0 → 1 |
 
 ## Prediction
 *Written 2026-10-03, before any response, kernel, autocorrelation or Hawkes fit was computed on real data.* What had been looked at: kick counts by kind/regime/holdout, the template of non-holdout automated messages (8 nudge texts read in full to check the target mapping; one of them says the agent "took one action but then settled back into low-noise mode", which nudges my prior toward transient nudge responses), roster dates, and calendar metadata (dates, documented hours, goal numbers) for the NE21/NE23 design.
@@ -128,7 +129,9 @@ Added 2026-10-03 at the user's request (via the coordinator), after exploratory 
 - **Confirmatory (in `confirm_ne21_ne23.py`, not run).** K, τ₀, τ_pred and τ_G per NE21 segment; the sign of ΔK flips at each switch (lower on 8 h segments), and MF-P2's gap persists in every segment.
 
 ## Results by goal period
-One folder per goal period (`G<NN>/`) or spanning natural experiment (`NE<NN>/`), each with its verdict; the cross-hypothesis table is [../OVERVIEW.md](../OVERVIEW.md). Round 1 pooled by regime; per-period kernels and n are a round-2 task (per-goal-period rule). NE21 is the confirmatory test.
+One folder per goal period (`G<NN>/`) or spanning natural experiment (`NE<NN>/`), each with its verdict; the cross-hypothesis table is [../OVERVIEW.md](../OVERVIEW.md). Round 1 pooled by regime. NE21 is the confirmatory test.
+
+**Round 1b (2026-10-04):** replication folders [G38](goalperiod-subhypotheses/G38/README.md) (failed), [G41](goalperiod-subhypotheses/G41/README.md) (mixed), [G44](goalperiod-subhypotheses/G44/README.md) (descriptive), [G51](goalperiod-subhypotheses/G51/README.md) (supported); native folders [NE10](goalperiod-subhypotheses/NE10/README.md), [NE43](goalperiod-subhypotheses/NE43/README.md), [NE44](goalperiod-subhypotheses/NE44/README.md) (all mixed); [NE21](goalperiod-subhypotheses/NE21/README.md) not re-run.
 
 ## Results
 ### Exploratory round 1 (2026-10-03; non-holdout days only; EXPLORATORY, not confirmation)
@@ -271,6 +274,66 @@ Code: `analysis/h04lib.py` (machinery), `analysis/explore.py` (G, linearity, FD,
 - Longer days come with *more* self-excitation, reversibly at each switch. This is what exploration had hinted at ("n and K slightly higher on 8 h days, era-confounded").
 - The size is at the 95th percentile of the non-holdout week-to-week placebo, so the reverse effect is suggestive, not established.
 - A possible mechanism: longer sessions leave agents more unread context to react to (H08), so more activity is triggered by other activity. Recorded as a new idea, not a finding.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation on the corrected shared tables (Vivian's priority 2; RE wave). Predictions unchanged; the executed holdout run (NE21+NE23) is **not** re-run (Vivian's call; implications in [NE21](goalperiod-subhypotheses/NE21/README.md)). Round-1 outputs (`explore_*.json`) are untouched; round-1b outputs are in `data/processed/H04-reversible-forcing/r1b/`.*
+
+### What changed
+| Input | Round 1 | Round 1b |
+| --- | --- | --- |
+| activity | `activity_bins` (dropped about half of all events; DQ8) | `activity_bins_fixed` (switch: `h04lib.ACTIVITY_TABLE`, default still the round-1 table so round-1 scripts reproduce) |
+| nudge target | every valid @-mention | the **leading @** (H35); 213 of #51's 729 nudges name more than one agent, the others become bystanders |
+| treated set | nudges with no other direct kick in [m − 30, m + 60] (future-kick isolation) | **every nudge**; first = no direct kick in [m − 30, m − 1]; repeat = nudged in [m − 60, m − 1] (H30) |
+| controls | no direct kick in [m − 30, m + 60] | past information only (no direct kick or bystander nudge at m); minutes since the last direct kick and since the last active minute are strata; future kicks allowed in both arms; presence mask (DQ8 `lever_design` rules) |
+| day effects | none | additive **day fixed effect** (each day's mean control residual subtracted) |
+| dead time | kick-aligned kernel | also aligned on the target's **receiving call** (ledger `age_s`), and kernels by read-out-delay bin |
+| periods | regimes pooled | per period (G38, G41, G44, G51; replication folders) plus pooled 4 h regime III (#36–#44, exception d) |
+| code | `explore.py` (unchanged) | `analysis/r1b.py`; `r1b_r1design.py` (the round-1 design on the fixed table only, to separate the two fixes); `r1b_native.py` (NE43) |
+
+### Old vs new numbers
+| Statistic | Round 1 | Round-1 design, fixed table | **Round 1b design** |
+| --- | --- | --- | --- |
+| nudge → target A30 (extra active min / 30 min) | III pooled 1.54 [0.80, 2.29] (isolated, n 381) | isolated 1.82 [1.22, 2.46]; all nudges 1.56 [1.22, 1.93] | **#51 1.16 [0.75, 1.57]** (n 697); pooled 4 h 0.93 [0.25, 1.67]; #44 2.11; #41 1.59 [−0.17, 3.38]; #38 0.38 [−0.53, 1.29] |
+| first / repeat nudges (#51) | — | — | **1.38 [0.92, 1.83] / 0.90 [0.31, 1.53]**; 4 h: 1.32 / 0.23 |
+| round-1 isolation rule inside the round-1b estimator | — | — | #51 1.48; 4 h 1.78 (the rule inflates by ×1.3–1.9) |
+| response in the first 5 min (A5) | ≈ 0 ("nothing for 4 min") | isolated 0.06; all 0.24 | **#51 0.23 [0.12, 0.33]** |
+| peak lag · onset t₂₅ | ~15 min · — | 15 min (isolated) | **4 min · 7 min** (#51); 4 min · 8 min (4 h) |
+| aligned on the receiving call | — | — | **t₂₅ 1 min** [1, 3], A5 0.52 [0.40, 0.65] (#51); 2 min (4 h) |
+| read-out delay to the receiving call, median | — | — | 108 s (#51), 43 s (4 h pre-NE44), 31 s (#30–#31) |
+| bystanders A30 | III −0.06 [−0.47, 0.38] | +0.01 | #51 +0.05 [−0.02, 0.13] |
+| human → mentioned agent A30 | I 6.68, III 5.59 [1.84, 9.39] | I 6.82, III 2.44 [−0.41, 5.76] | #51 0.57 [−2.14, 2.49]; regime I (from 12-20) 2.11 [−2.24, 9.87] |
+| human → room occupants A30 | I 1.85 [0.51, 3.23]; III 1.14 | I 1.06 [0.12, 2.09]; III 0.23 | #51 −0.16; regime I 0.20 [−0.30, 0.73] |
+| Onsager X(30), nudges III | 1.54 [1.19, 1.93] | 1.88 [1.58, 2.17] | — |
+| FDT shape: share of A30 after 5 min (correlation-drop share 0.03) | 0.99 | 0.96 (isolated) | 0.80 (#51, all nudges) |
+| MF loop gain K, I / III | 0.11 / 0.26 | 0.18 / 0.32 | — |
+| MF-P3 ratio, III · MF-P4 K 8 h vs 4 h | 1.06 · 0.28 vs 0.21 | 1.13 · 0.33 vs 0.30 | — |
+| Hawkes n, I / III | 0.59 / 0.72 | unchanged (built from `chat_core`, not `activity_bins`) | #51 NE43 windows 0.71 / 0.55 / 0.61 |
+| goal-kickoff day vs matched days, first hour · whole day | I −0.5% [−16, +14] · −0.1%; III −9% [−37, +19] · −10% | **I +3.8% [+0.2, +7.6] · +5.7% [+2.5, +8.9]; III +6.6% [+0.2, +14.3] · +5.9% [−1.8, +15.5]** | — |
+
+### Predictions re-scored
+| # | Round 1 | Round 1b |
+| --- | --- | --- |
+| P1 nudge → target: A60 CI > 0, peak ≤ 5 min, relax 3–30 min | partly (real but delayed, peak ~15 min) | **supported** in #51 (A60 1.65 [0.79, 2.52], peak 4, relax 29) and pooled 4 h (1.61 [0.14, 3.32], peak 4, relax 13); #41 mixed, #38 failed, #44 descriptive |
+| P2 bystanders ≤ 0.2 of target | supported | supported (#51 0.03, 4 h 0.07) |
+| P3 human messages: A60 > 0; mentioned ≥ 2× unmentioned; I > III | mostly supported | **not supported**: no human-message kernel is significant under the corrected design; the mentioned-agent effect shrinks from 5.6 to 0.6 (#51) and 2.4 (round-1 design, fixed table) |
+| P4 kickoff: ≥ +10% first hour, nothing after 2 h | not supported (−0.5%, −9%) | not supported, but changed: kickoff days now run about 6% more active **all day** (regime I CI excludes 0), not a first-hour transient |
+| P5 linearity (superposition sub-additive for repeat nudges) | untested / confounded | repeat/first ≈ 0.65 (#51), 0.17 (4 h): sub-additive, as predicted (not a formal superposition test) |
+| P6 FDT violated; nudge X < 1 | violated; X > 1 | violated (shape share 0.80 vs 0.03); X 1.88 > 1 (direction still refuted) |
+| P7 Hawkes; P8 hours proxy | unchanged | unchanged (no activity input) |
+| MF-P1 / P2 / P3 / P4 | yes / direction yes / yes / no | yes (0.18 vs 0.32) / yes (nudge ratio 21×) / yes (1.13) / no (0.33 vs 0.30) |
+| Natives (new): NE10 · NE43 · NE44 | — | mixed · mixed · mixed (folders) |
+
+### Reading
+- **The dead time was mostly a measurement artifact.** On the corrected table the isolated subset still shows a flat first 5 minutes, but all nudges respond within minutes, and aligned on the receiving call the response is immediate (t₂₅ 1 min). The kick-aligned onset is the read-out delay (median 108 s in #51) plus targets that are mid-pause, whose response comes late and weak (read-out 3–10 min: A30 0.31; > 10 min: below controls, because long pauses are not in the strata). This agrees with H43 (78–96% of idle escapes start at the receiving call; nudges wait a median 122 s to be read) and overturns H08's round-1 "half of the dead time is something slower after read-out".
+- **Glance vs work (H43):** most of the response is in minutes 6–30 (A6–30 0.93 of A30 1.16), so it is not only a glance at the receiving call; but the read-out-aligned kernel peaks at 2 min and decays (Φ(1,5) 1.76): a transient on top of a smaller sustained part.
+- **H30's correction holds, with a smaller inflation:** with a day fixed effect and finer past-only strata the all-nudge level is 1.16 (H30: 0.59 without, 1.04 with a day effect); the isolation rule inflates it ×1.28 here (H30: ×2.7). The pre-window placebo in #51 is +0.25 [0.05, 0.46] (H30: 0.31 with day FE), so about a quarter of the level may be residual selection by the nudger's text trigger.
+- **Human messages do not move activity** once the event-drop bug is fixed (H30 found the same: they move content).
+
+### Scorecard changes (round 1b)
+- **E 0 → 1:** NE43 confirmed the field reading (n unchanged when the nudger stops) but not the trap prediction; NE44 confirmed the read-out shift; NE10 mixed. The NE21 holdout falsification stands (C1 is unaffected).
+- **I 0 → 1:** the corrected nudge kernel replicates in #51, pooled 4 h, #41 (point) and #30–#31 (point), not in #38.
+- **G 1** (unchanged), but "mentioned agents respond immediately" no longer holds; target-only responses and the 02-13 first nudge do.
+- Others unchanged. Suggested ratings: faithfulness 1.0 → 1.5, usefulness 2.5 → 3.0 (meta.json).
 
 ## Notes
 - **From H30 (2026-10-04): this card's nudge A30 (1.54–1.66 min) is inflated by its isolation rule.** Dropping nudges followed by another directed kick within 60 min is a post-treatment selection: the nudger re-fires on agents that stay idle (52% of G51 nudges), so the rule discards the nudges that didn't work. H30 reproduces 1.66 with this card's code. Over all G51 nudges the effect is 0.59 [0.24, 0.93] (1.04 with a day fixed effect); first nudges of an episode give 1.36, repeats 0.26. In synthetics the isolated design gives −1.6 at zero effect, with sign depending on the nudger's policy. The "nudges act only on the named agent" conclusion stands (room-mates ≈ 0).

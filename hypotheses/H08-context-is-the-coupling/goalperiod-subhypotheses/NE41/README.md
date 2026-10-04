@@ -1,7 +1,8 @@
 # H08 × NE41: forced context erasure at the 41-turn consolidation cap (regime III, #36 from 03-24 → #51)
 
 **Verdict:** mixed
-**Role:** exploratory
+**Verdict (1b):** mixed (round 1b, 2026-10-04: forced erasure cuts the reply coupling in 8/9 periods, pooled −21% ± 7%, below the predicted 30%; round-1 verdict kept above)
+**Role:** native (round 1b, non-holdout; transition exception c; round 1 ran it as exploratory)
 **Period:** spans #36 (from 2026-03-24), #37–#42, #44, #51 (non-holdout days only). Natural experiment NE41 (found by H15).
 
 ## Why this test
@@ -53,6 +54,42 @@ holds in sign but the relative drop is < 30%.
 | --- | --- |
 | E interventional | forced erasures at the scaffold's 41-turn cap: exogenous timing; pooled β_F -2.53 pp |
 | H comparative | memory-mediated coupling (β_F ≈ 0) rejected; restart overhead absorbed by PC and the new-sender contrast |
+
+## Round 1b prediction (native, improved data)
+*Written 2026-10-04 06:40 UTC, before the round-1b run.* Same design, rebuilt on the DQ1 context ledger: talk turns are ledger talk calls; "read" = the message's receiving call (`context_ledger_items`); an erasure separates read-out from the talk turn iff a call in (receiving call, talk call] carries `reset_forced` (forced, the 41-turn cap) or `reset_consol & ~reset_forced` (voluntary). The H15 catalog is no longer used. Responses: mention (as round 1) and **reply** (the talk's `reply_pairs` parent was written by the sender; new primary, since mentions are superseded).
+- **E1b:** pooled β_F < 0 (CI excludes 0) for the reply response, and for the mention response; relative drop ≥ 30% (as pre-registered).
+- **E2b:** β_V within ±50% of β_F.
+- **Prior credence (Claude, 2026-10-04):** sign 0.75, size ≥ 30% 0.3 (round 1: −18% ± 6%).
+
+**Verdict rule (fixed now, as round 1):** supported if E1b holds for the reply response; failed if its pooled β_F CI includes 0 or is positive; mixed if the sign holds but the drop is < 30%.
+
+## Round 1b result (2026-10-04)
+*Run `analysis/erasure_ledger.py` (ledger reset flags, ledger read-out calls; responses mention and reply author). Data: `data/processed/H08-context-is-the-coupling/r1b/ne41_pooled.json`, `r1b/G<NN>/c3.json`. β in percentage points; day-bootstrap CIs; DerSimonian–Laird pooling over 9 periods.*
+
+| Period | forced-erased units | β_F mention | **β_F reply author** | relative (reply) | β_V reply |
+| --- | --- | --- | --- | --- | --- |
+| G36 | 834 | -2.78 [-7.28, +1.10] | -2.36 [-3.54, -1.91] | -16% [-24, -13] | -2.01 [-3.52, -0.91] |
+| G37 | 539 | -10.44 [-13.60, -7.49] | -7.99 [-12.37, -6.46] | -30% [-47, -24] | -8.10 [-15.10, -5.46] |
+| G38 | 4106 | +0.50 [-0.76, +2.12] | -1.29 [-2.69, +0.10] | -9% [-18, +1] | -1.15 [-2.44, +0.26] |
+| G39 | 1516 | -1.47 [-7.48, +0.34] | -0.98 [-2.92, -0.21] | -31% [-92, -7] | -0.24 [-1.22, +1.88] |
+| G40 | 3693 | -1.13 [-2.16, -0.10] | -0.78 [-1.26, -0.15] | -18% [-29, -3] | -0.09 [-1.41, +1.45] |
+| G41 | 2448 | -1.30 [-4.23, +1.59] | -1.48 [-3.16, -0.76] | -16% [-34, -8] | -2.78 [-3.57, -1.70] |
+| G42 | 1365 | -3.07 [-7.18, -0.19] | -3.08 [-4.31, -2.27] | -29% [-41, -22] | -2.04 [-2.79, -1.09] |
+| G44 | 1296 | -4.48 [-6.83, -1.81] | -2.22 [-3.18, -0.73] | -16% [-23, -5] | -2.15 [-2.83, -1.56] |
+| G51 | 91862 | -1.60 [-1.87, -1.34] | -1.69 [-1.94, -1.42] | -33% [-37, -27] | -1.39 [-1.67, -1.08] |
+
+| Pooled | mention | reply author |
+| --- | --- | --- |
+| β_F (pp) | -2.52 ± 1.36 | -1.97 ± 0.64 |
+| β_V (pp) | -1.61 ± 1.38 | -1.70 ± 0.59 |
+| relative drop, forced | -16% ± 8 | -21% ± 7 |
+| relative drop, voluntary | -10% ± 9 | -19% ± 6 |
+
+- **E1b:** sign holds for both responses (reply: CI excluding 0 in 8/9 periods; G38 touches 0); size fails (−21% vs ≥ 30%). Round 1 (mention, H15 catalog): −2.5 pp, −18% ± 6%.
+- **E2b:** β_V within ±50% of β_F for the reply response (−1.70 vs −1.97 pp): holds.
+- **Reading:** the result is robust to the erasure catalog (ledger flags instead of H15's segment rule) and to the response measure (reply labels instead of mentions). #51 shows the largest relative cut on replies (−33%).
+
+**Verdict (1b): mixed** (unchanged).
 
 ## Notes
 - Card: [`../../README.md`](../../README.md). Data: `data/processed/H08-context-is-the-coupling/ne41_pooled.json`, `G<NN>/c3.json`.

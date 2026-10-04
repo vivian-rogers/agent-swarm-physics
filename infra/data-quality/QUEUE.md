@@ -88,7 +88,7 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | RE-O1 | H15, H33, H35 | running (2026-10-04): work-ledger viability/productivity, real failures, both embedding models |
 | RE-V2 | H29, H30, H39 | running (2026-10-04): ledger visibility, fixed bins, leading-@ targets, lever_design, v3 states |
 | RE-A2 | H02, H19, H03 | **done** (2026-10-04) |
-| RE-V1 | H18, H08, H04 | running (2026-10-04) |
+| RE-V1 | H18, H08, H04 | **done** (2026-10-04) |
 | RE-B1 | H17, H16, H14 | **done** (2026-10-04) |
 | RE-C1 | H10, H20, H24 | running (2026-10-04): shared goal vectors, both embedding models, dedupe flags |
 | RE-C2 | H13, H21, H22 | running (2026-10-04): DQ6 ground truth (Opus 5 role), stance channel with calibrated null, style residuals, behavioral family test |

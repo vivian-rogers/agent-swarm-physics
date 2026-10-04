@@ -1,6 +1,7 @@
 # H08 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-20)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1b, 2026-10-04, context-ledger read-out; C9 talk clause CI includes 0; round-1 verdict kept above)
 **Role:** exploratory
 **Period:** regime II · mode C · N ≈ 13 · #best (3) / #rest (10) from 03-16 · 5 non-holdout days.
 
@@ -40,6 +41,21 @@ Read-out pairs: 14570 own-room (+ 10621 other-room); in-flight share 98%, wake s
 | C1 coverage by type (n ≥ 30) | 0.14–0.19 (WAIT 0.19, talk 0.15) | WAIT/PAUSE invisible | pass |
 
 **Tests:** T_C9 = fail, T_C8 = n/a, T_C1 = fail → **failed**.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the DQ1 context ledger (`scheme/build_turns_ledger.py`, `analysis/visibility_ledger.py`, `analysis/erasure_ledger.py`): turns are ledger calls, o = 1 is the call that received the message (exact by construction), in-flight = the previous call's first record came after the message. Responses: mention (the pre-registered measure), the DQ2 reply-parent author, and the content cosine of the talk with the message (non-mention). Predictions and the verdict rule unchanged. Data: `data/processed/H08-context-is-the-coupling/r1b/G35/` (`c9.json`, `c3.json`). D in percentage points (cosine ×100), day-bootstrap 95% CIs.*
+
+| Statistic | Round 1 (H08 call-start rule) | Round 1b (ledger) | Note |
+| --- | --- | --- | --- |
+| D_talk | -0.72 [-1.20, -0.21] | +0.75 [-0.08, +1.25] | pre-registered clause |
+| D_addr (mention) | +0.61 [+0.43, +0.82] | +0.48 [+0.17, +0.71] | pre-registered clause |
+| D_addr, clean recipients (post hoc) | +0.77 [+0.40, +1.07] | +0.47 [+0.11, +0.80] | no talk at o = −2, −1 |
+| D, reply author (new) | — | +1.03 [+0.84, +1.19] | DQ2 `reply_pairs.parent` |
+| D, content cosine (new, ×100) | — | -0.33 [-0.90, +0.57] | non-mention response |
+| other-room placebo D_addr | — | +0.00 [-0.10, +0.09] | two-room periods only |
+| read-out delay of in-flight recipients, median | — | first record 27 s; context assembly 10 s | C9-V5 band 10–40 s |
+
+**Verdict (1b): failed** (round 1: failed).
 
 ## Scorecard (period-specific axes)
 | Axis | This period |

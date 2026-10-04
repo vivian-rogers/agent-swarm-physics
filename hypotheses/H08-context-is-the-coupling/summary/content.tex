@@ -1,36 +1,36 @@
-\hwhat{Do agents couple only through what enters their model calls? We tested this in 17 non-holdout goal periods. (1) After a room message, the recipient's chance of addressing the sender jumps at its first call that started after the message, with no jump at the call already running. This held in 10/11 regime-II/III periods (16/17 post hoc, for recipients not mid-exchange); regime I fails. (2) HH92 fails for nudges: \#51 targets read the nudge in 1.7 min (median) but start working at $\approx$5 min, and a constant delay fits as well. (3) Forced context erasure (NE41) cuts addressing of senders read before it by 18\% (9/9 periods; predicted 30\%). (4) The Claude Code agent's fetches match a room rule (recall 0.97--1.00) until 2026-03-17, when its feed began replaying April 2025. Holdout script written, not run.}
+\hwhat{Do agents couple only through what enters their model calls? 17 non-holdout goal periods, re-run in round 1b on the context ledger (which call received which message) with reply labels. (1) A recipient's chance of addressing the sender jumps at the call that received the message, not at the call already running: 14/17 periods (round 1: 11/17), now including regime I, whose round-1 failure was the call-start rule; on reply labels 17/17. (2) A nudge's activity response starts at the target's receiving call (median read-out 108 s); round 1's extra 3-min lag came from dropped events and H04's isolation rule. (3) Forced erasure (NE41) cuts reply coupling to senders read before it by 21\% (8/9 periods; predicted 30\%). (4) Newcomers name an old-timer only after receiving its message (NE32, 35/35 pairs). (5) The Claude Code agent's feed replayed April 2025 from 2026-03-17. Holdout not run.}
 
-\hmodel{Two-variable kinetic Ising model (02) with Hawkes kernels (09). Each agent has a visible spin $n_i$ (active per minute) and a hidden field $c_i$: the room events unread since its last model call. Calls start on the scaffold's schedule $s_{i,k}$ (after the previous action, or when a pause timer expires). At each call start the field is read and reset, and couplings $J_{ij}$ act only then. $W$: read-out delay; $h(u)$: post-read-out headroom; $o$: turn offset; $\beta_F$: coupling change after erasure.}
+\hmodel{Two-variable kinetic Ising model (02) with Hawkes kernels (09). Each agent has a visible spin $n_i$ (active per minute) and a hidden field $c_i$: the room messages that arrived since its last model call. Calls start on the scaffold's schedule (context assembled at $t_{\rm call}$). At each call the field is read and reset, and couplings $J_{ij}$ act only then. $W$: read-out delay; $o$: call offset (1 = the receiving call); $\beta_F$: coupling change after a forced erasure.}
 
 \hmath{\vspace{-5pt}\begin{gather*}
-c_i(t)=\{e:\ \mathrm{room}(e)=r_i,\ s_i^{-}<t_e\le t\}\\
-P(a_i\mid s_{i,k})\propto \exp\big[a\,\big(h_i+\textstyle\sum_{e\in c_i(s_{i,k})}J_{i,\mathrm{src}(e)}\big)\big]\\
-G(\tau)=A\textstyle\sum_w p(w)\,\Theta(\tau-w)\,h(\tau-w)\\
-D=G_{\mathrm{addr}}(o{=}1)-G_{\mathrm{addr}}(o{=}0)
+c_i(t)=\{m:\ \mathrm{room}(m)=r_i,\ t_{\rm call}^{-}\le t_m< t\}\\
+P(a_i\mid \text{call } k)\propto \exp\big[a\,\big(h_i+\textstyle\sum_{m\in c_i(t_{{\rm call},k})}J_{i,\mathrm{src}(m)}\big)\big]\\
+G(\tau)=\textstyle\sum_w p(w)\,\Delta R(\tau-w)\\
+D=G(o{=}1)-G(o{=}0)
 \end{gather*}\vspace{-7pt}}
 
-\hobs{../figures/summary_obs.pdf}{Excess chance that a recipient's turn addresses the sender, by turn offset. Offset 0 is the call already running when the message arrived; offset 1 is the first call that started after it. Recipients not mid-exchange (post hoc); thin lines are periods, bold lines regime medians. The response appears only from the first call that can see the message, in every regime.}
+\hobs{../figures/r1b_summary_obs.pdf}{Excess chance that a recipient's call responds to the sender, by call offset, on the context ledger. Offset 0 is the call already running when the message arrived; offset 1 is the call that received it. Recipients not mid-exchange; thin lines are periods, bold lines regime medians (mentions), dashed the median for reply labels. The response appears only at the receiving call, in every regime.}
 
-\htelos{An agent cannot react until its next model call starts, so the swarm's coupling delay is its call cadence: tens of seconds when busy, minutes when paused. That follows from how the scaffold is built, so the news is modest; the value is quantitative and diagnostic. Compaction cuts about a fifth of the conversational coupling. A nudge takes about 5 min to show, so don't expect instant effects. And the replay bug shows exposure can silently come loose from the room, so log what each agent actually fetched. HH92 failed; the gating result rests on mentions.}
+\htelos{An agent cannot react until a model call has the message in its context, so the swarm's coupling delay is its call cadence: about 15 s to context assembly when busy, minutes when paused. That follows from the scaffold, so the news is modest; the value is quantitative and diagnostic. A nudge acts at the target's next call, not minutes later, so its lag is the target's pause schedule. Compaction cuts about a fifth of conversational coupling. Newcomers couple only to what they have been shown. And exposure can silently come loose from the room (the replay bug), so log what each agent was actually shown. The response kernel is a brief transient at read-out, not a step.}
 
-\hbottom{Agents respond only from the first model call after a message arrives, and erasing context cuts the coupling, but the nudge kernel is more than the read-out delay: ``context is the coupling'' fixes where responses land, not their full timing.}
+\hbottom{On the context ledger, every response we can measure (addressing, replies, nudged activity, newcomers' first contacts) starts at the first model call whose context contains the message, and erasing that context cuts the coupling by about a fifth.}
 
-\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.44\columnwidth}p{0.17\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
-C9 talk jumps at read-out ($\ge$70\% of periods) & 6/17 (6/9 regime III, 0/8 regime I/II) & partly\\
-C9 addressing jumps at read-out & 11/17 (10/11 regime II/III); clean subset 16/17 & partly\\
-C9 other-room messages give no jump & 6/8 two-room periods & yes\\
-C8 nudge onset = read-out CDF & \#51: $\Phi(1,5)$ 0.03 measured vs 0.52 predicted & no\\
-C8 context beats rivals in CV & beats immediate (0.77), Hawkes (0.80), not a 5-min delay (0.41) & no\\
-C8 non-paused targets respond sooner & $-0.02$ [$-0.09$, 0.05] & no\\
-NE41 erasure cuts coupling $\ge$30\% & $-18\%\pm6\%$; negative in 9/9 periods & sign only\\
-C1 room rule recall $\ge$0.9 & 0.97--1.00; 0.31 and 0.00 after the replay & until replay\\
-C1 types differ, delay minutes & uniform coverage (WAITs too); 14--23 s & refuted\\
-HH91: later half-day hotter (\#51) & $\hat n$ 0.70 vs 0.50, $\Delta$ +0.20 [0.10, 0.29] & yes\\
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.46\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b} & \textbf{Verdict (1b)}\\\hline
+C9 talk jumps at read-out ($\ge$70\%) & 6/17 $\to$ 6/17 (none in regime I/II) & no\\
+C9 addressing jumps at read-out & 11/17 $\to$ 14/17 (regime I 1/6 $\to$ 4/6); replies 17/17 & yes\\
+C9 other-room messages: no jump & 6/8 $\to$ 8/8 two-room periods & yes\\
+C9-V5 active read-out delay 10--40 s & 32--49 s $\to$ 29--41 s (8/9 regime III) & yes\\
+Content jump (non-mention, new) & D$_{\cos}>0$ in 6/9 regime III; negative in regime I & partly\\
+C8 nudge onset = read-out & \#51 lag $\approx$3 min $\to$ onset at the receiving call ($t_{25}$ 1 min); transient, not a step & onset yes, shape no\\
+C8 beats a constant delay & no $\to$ yes: onset follows read-out (4, 4, 15 min) & yes\\
+NE41 erasure cuts coupling $\ge$30\% & $-18\%$ (mentions) $\to$ $-21\%\pm7\%$ (replies), 8/9 & sign only\\
+NE32 newcomers respond only after receipt & new: 35/35 pairs & yes\\
+C1 room-rule recall $\ge$0.9 & 0.97--1.00 until the replay (unchanged) & until replay\\
 \end{tabular}}
 
-\hobsb{../figures/summary_obs2.pdf}{(a) \#51 nudge kernel (95\% band) with the zero-parameter read-out prediction and the best constant delay. The median read-out is 1.7 min, but the response starts at about 5 min. (b) NE41: change in the chance of addressing a sender read before a forced erasure, relative to one read after it (same turns, equal age), per period and pooled.}
+\hobsb{../figures/r1b_summary_obs2.pdf}{(a) \#51 nudge response (H04 round 1b design, corrected activity) aligned on the nudge and on the target's receiving call: realigned, the response is a sharp transient in the first two minutes. (b) NE41: change in the chance of replying to a sender read before a forced erasure, relative to one read after it (same calls, equal age), per period and pooled.}
 
-\hcaveats{Responses are @-mentions; the discontinuity removes common causes, not the proxy. The regime-I call rule is doubtful (addressing peaks at turns classed in flight), so its failures may be logging, not absent coupling. C8 rests on one powered period (\#51, 303 nudges). Synthetic runs show the CV picks the right mechanism only about 2/3 of the time at this signal, and H04's matching leaves a pre-kick imbalance. Ground truth covers one agent with a different scaffold. The HH91 half-day effect may be within-day nonstationarity. No multiplicity correction; the C9 addressing and NE41 signs would survive one. Nothing confirmed on the holdout.}
+\hcaveats{Ledger call starts are measured only for Gemini (19\% of calls); about 10\% of items may sit one call off. Reply labels keep a thread-membership component, and a reply parent must be visible by construction. The content jump runs against recency in regime I. C8 rests on \#51 (pre-window placebo +0.25). NE32 is four agents, one event. Nothing confirmed on the holdout.}
 
-\hnext{Decompose the nudge lag into read-out plus a k-turn post-read-out lag, using talk and action turns. Swap mentions for a content-based reply measure. Fix the regime-I call rule. Test whether saving a sender to memory protects the thread across an erasure. Run the holdout script.}
+\hnext{Switch the holdout script to the ledger before running it. Fit a two-parameter read-out + transient kernel.}

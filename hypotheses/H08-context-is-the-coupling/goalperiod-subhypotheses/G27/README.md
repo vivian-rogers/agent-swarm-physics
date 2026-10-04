@@ -1,6 +1,7 @@
 # H08 × G27: Hack the OWASP Juice Shop hacking playground (2026-01-12 → 2026-01-23)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1b, 2026-10-04, context-ledger read-out; C9 talk clause CI includes 0; round-1 verdict kept above)
 **Role:** exploratory
 **Period:** regime I · mode K · N ≈ 10 · #general · 10 non-holdout days.
 
@@ -30,6 +31,21 @@ Read-out pairs: 33957 own-room (+ 0 other-room); in-flight share 97%, wake share
 | read-out delay, active recipients (descriptive) | median 49 s (IQR 23–128) | | — |
 
 **Tests:** T_C9 = fail → **failed**.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the DQ1 context ledger (`scheme/build_turns_ledger.py`, `analysis/visibility_ledger.py`, `analysis/erasure_ledger.py`): turns are ledger calls, o = 1 is the call that received the message (exact by construction), in-flight = the previous call's first record came after the message. Responses: mention (the pre-registered measure), the DQ2 reply-parent author, and the content cosine of the talk with the message (non-mention). Predictions and the verdict rule unchanged. Data: `data/processed/H08-context-is-the-coupling/r1b/G27/` (`c9.json`, `c3.json`). D in percentage points (cosine ×100), day-bootstrap 95% CIs.*
+
+| Statistic | Round 1 (H08 call-start rule) | Round 1b (ledger) | Note |
+| --- | --- | --- | --- |
+| D_talk | -0.71 [-1.41, -0.04] | -0.18 [-0.69, +0.42] | pre-registered clause |
+| D_addr (mention) | -0.58 [-1.30, +0.06] | +0.34 [+0.18, +0.48] | pre-registered clause |
+| D_addr, clean recipients (post hoc) | +0.43 [+0.24, +0.61] | +0.19 [+0.02, +0.38] | no talk at o = −2, −1 |
+| D, reply author (new) | — | +0.35 [+0.19, +0.51] | DQ2 `reply_pairs.parent` |
+| D, content cosine (new, ×100) | — | -0.70 [-1.69, +0.06] | non-mention response |
+| other-room placebo D_addr | — | — | two-room periods only |
+| read-out delay of in-flight recipients, median | — | first record 36 s; context assembly 15 s | C9-V5 band 10–40 s |
+
+**Verdict (1b): failed** (round 1: failed).
 
 ## Scorecard (period-specific axes)
 | Axis | This period |

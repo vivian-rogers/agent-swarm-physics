@@ -1,7 +1,7 @@
 """Build hypotheses/OVERVIEW.md: the goal-period x hypothesis table of verdicts.
 
 Scans hypotheses/H*/goalperiod-subhypotheses/{G<NN>[a-z],NE<NN>}/README.md for their
-`**Verdict:**` and `**Role:**` lines. Never edit OVERVIEW.md by hand; rerun this instead.
+`**Verdict (1b):**` (preferred, round 1b on improved data) or `**Verdict:**`, and `**Role:**` lines. Never edit OVERVIEW.md by hand; rerun this instead.
 
 Usage: uv run python infra/overview/build_overview.py
 """
@@ -23,7 +23,7 @@ SYMBOL = {"supported": "✓", "failed": "✗", "mixed": "~", "descriptive": "d",
 
 
 def field(text: str, name: str) -> str:
-    m = re.search(rf"^\*\*{name}:\*\*\s*(.+)$", text, re.M)
+    m = re.search(rf"^\*\*{re.escape(name)}:\*\*\s*(.+)$", text, re.M)
     return m.group(1).strip() if m else ""
 
 
@@ -42,7 +42,8 @@ def main():
         for d in cands:
             if d.is_dir() and PERIOD_RE.match(d.name) and (d / "README.md").exists():
                 t = (d / "README.md").read_text()
-                v, role = field(t, "Verdict"), field(t, "Role")
+                # prefer the round-1b (improved data) verdict when a period README has one
+                v, role = field(t, "Verdict (1b)") or field(t, "Verdict"), field(t, "Role")
                 sym = verdict_symbol(v)
                 if role.lower().startswith("confirm"):
                     sym = f"**{sym}**"

@@ -1,6 +1,7 @@
 # H18 × G41: Perform novel research! (2026-05-11 → 2026-05-18)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1b, 2026-10-04: ledger k, mention response, pre-registered rule; on reply labels: mixed; round-1 verdict kept above)
 **Role:** exploratory
 **Period:** regime III · mode I · N ≈ 15 · #best / #rest (split back 05-11). Splits inside the period: split on the first day.
 
@@ -38,6 +39,23 @@ Sample: 5 days, 14 recipients, 2071 talk turns (1789 with k ≥ 1), 5976 scored 
 | P5 D2 β̂ > 0, within ±0.4 of D1 | β̂_D2 = 0.14 [-0.83, 0.62] (617 units, 113 resp.; wakes talking within 300 s: 0.49); 60 s: 0.31, stint: 0.20 | reactive-constant agents: ≈ 0 | contradicts |
 | P6 room size (same days) | k̄ ratio large/small 2.45, p̄ ratio small/large 1.50, S ratio 0.78; room log-effect 0.72 [0.52, 0.89] without k → 0.07 [-0.14, 0.30] with k (5 days) | room effect survives k | pass |
 | P11 content-reply excess slope ≈ −β̂ (secondary) | overall excess 0.254; log-log slope -0.44 | slope 0 | pass |
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the DQ1 context ledger (`scheme/build_ledger.py`: pending sets = ledger items received since the previous talk call, i.e. `k_since_talk`; talk turns = ledger talk calls; first talk call of the day excluded) and scored two ways on the same units: the pre-registered mention response and the DQ2 reply response (the talk's `reply_pairs` parent is one of the sender's pending messages). `analysis/fit_periods.py --dir data/processed/H18-attention-dilution/r1b --resp resp|resp_reply`; data `data/processed/H18-attention-dilution/r1b/G41/fits_mention.json`, `fits_reply.json`. Day bootstrap B = 100 (#51: 40). Predictions and the verdict rule unchanged.*
+
+| Statistic | Round 1 (call-start rule, mentions) | Round 1b, ledger k, mentions | Round 1b, ledger k, reply parent |
+| --- | --- | --- | --- |
+| scored units (response rate) | 5976 (0.232) | 6004 (0.234) | 6004 (0.143) |
+| β̂ [95% CI] | 0.65 [0.55, 0.74] | 0.65 [0.52, 0.76] | 0.91 [0.84, 0.99] |
+| CV winner (effective) | sat~inv | sat~inv | rec |
+| ε_S | 0.34 | 0.34 | 0.04 |
+| β̂_D2 (timer wakes, 300 s) | 0.14 [-0.83, 0.62] (617 units) | 0.14 [-0.78, 0.67] (600 units) | 0.86 [0.70, 2.14] (600 units) |
+| placebo (mention rates) | invisible 0.218 (n 362) · pending same talks 0.318 · non-pending 0.102 | invisible 0.177 (n 260) · pending same talks 0.310 · non-pending 0.102 | — (a reply parent must be visible) |
+| verdict | mixed | **mixed** | mixed |
+
+*Reading the reply column:* a talk message has at most one reply parent, and DQ2 labelled mostly the top-ranked candidate, so the reply response allocates one reply among the pending senders; its exponent is ≈ 1 minus the elasticity of "replies to someone pending" in k, a budget built into the measurement. It is reported, but the mention column carries the pre-registered test.
+
+**Verdict (1b): mixed** (round 1: mixed).
 
 ## Scorecard (period-specific axes)
 | Axis | Score | Evidence |
