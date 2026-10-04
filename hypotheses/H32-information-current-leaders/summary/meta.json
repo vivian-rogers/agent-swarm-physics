@@ -7,7 +7,21 @@
   "faithfulness": "The leader claim failed by its own pre-registered rules: humans as a known source rank above the median agent in only 4/16 periods, the elected #26 leader ranks 7/10 after the vote, the #44 operator 5/7. A source stands out in 2/18 periods, and NE42 shows no switch-on. What holds is narrower: transfer beats the cross-day shift null in 18/32 periods (15/32 within-day too), depends on exposure (7/8 multi-room weeks), and the outflow ranking replicates across halves (23/26). The level is sensitive to field removal, and the top-source identity is not robust. Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I0. Round 1b: replicates on ledger exposure; existence robust across embedding models but the top source's identity is not (17/32); at matched short lag read > in-flight in 17/17 but in-flight carries about a third; all leader natives fail as predicted. Axes unchanged.",
   "usefulness": "A computable diagnostic from chat logs: total content transfer T, a reproducible outflow ranking, and a 'does any source stand out' test, with measured synthetic accuracy and a known confound (fast responders). The actionable lesson is negative but relevant for steering: installed or elected leaders do not become content sources, and an installed fine-tuned leader was the most-influenced agent in its room. It does not tell an operator where to intervene."
  },
- "one_line": "Content transfer between agents is real (17-23/32 periods, read > in-flight at matched lag 17/17) but model-dependent in who leads, and elected, designated, installed and operator leaders are not content sources",
+ "one_line": "Exposure-gated content transfer exists in about half the periods and needs reading, but the outflow ranking does not find elected, installed or operator leaders.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "transfer exists in half the periods; leaders not identified"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "net current does not single out known leaders"
+  }
+ ],
  "rated_by": "H32 agent (suggested); round 1b RE-D1 (suggested)",
  "updated": "2026-10-04 (round 1b)",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",

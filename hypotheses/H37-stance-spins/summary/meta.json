@@ -7,7 +7,21 @@
     "faithfulness": "Clear but partial: the positive control passes strongly (beats team permutation, agent fields and topic; teams recovered 7/10), but the hypothesis' general claim fails where conflict is not assigned (#51 roles, #26 ballots), and the per-pair and faction nulls needed post-hoc calibration.",
     "usefulness": "A cheap detector of assigned or explicit sides with measured accuracy and a calibrated false-alarm rate that an operator can run on chat logs. Payoff is limited because LLM swarms rarely produce stance conflict, Jev's negative calls are imprecise, and the saboteur use case is untested (holdout)."
   },
-  "one_line": "Stance labels recover assigned debate teams that topic cannot (7/10 exact), but rival, opposed and voting agents show no stance conflict",
+  "one_line": "Stance labels recover assigned debate teams that topic misses (7/10 exact), but rivals, opposed roles and voters show no stance conflict.",
+  "models": [
+    {
+      "model": "01-inverse-ising",
+      "role": "primary",
+      "outcome": "mixed",
+      "note": "antiferromagnetic stance only in assigned #12 debates"
+    },
+    {
+      "model": "10-potts",
+      "role": "secondary",
+      "outcome": "mixed",
+      "note": "camps recovered in #12 debates; none in #51, #26"
+    }
+  ],
   "rated_by": "H37 agent (suggested)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",

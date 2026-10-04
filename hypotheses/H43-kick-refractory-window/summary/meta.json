@@ -7,7 +7,21 @@
     "faithfulness": "The core claim is refuted: no refractory window, the window does not track the launched episode, and the episode-lock signature (recoverable in the synthetic) is absent; R stays 0.8-1.3 at all spacings. Only the mechanical same-call absorption (P4) and the cross-NE43 invariance (P7) hold. Scorecard A1 B1 C1 D0 E1 F1 G1 H1 I1; no holdout.",
     "usefulness": "A clear, validated-in-sample negative design rule an operator can act on: re-kick after one read-out, not after a task episode; never stack kicks before the recipient's next model call; the nudger's 15-min floor is already past refractoriness, and its real limit is that nudges buy glances rather than sustained work. Evidence is strongest for mentions (G51, 15-period pool) and weaker for humans and nudges."
   },
-  "one_line": "No refractory window: a second kick read by a later model call keeps 80-130% of the first kick's effect at any spacing; only kicks absorbed into the same read are wasted.",
+  "one_line": "Kicks leave no refractory window: a second kick read by a later model call keeps 80-130% of the first's effect; same-read kicks are wasted.",
+  "models": [
+    {
+      "model": "09-hawkes",
+      "role": "primary",
+      "outcome": "refuted",
+      "note": "no refractory recovery function; R 0.8-1.3 at all spacings"
+    },
+    {
+      "model": "03-contagion",
+      "role": "secondary",
+      "outcome": "refuted",
+      "note": "SIRS-like refractory compartment absent; no episode lock"
+    }
+  ],
   "rated_by": "H43 agent (suggested)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",

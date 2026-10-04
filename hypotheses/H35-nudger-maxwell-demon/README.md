@@ -279,7 +279,7 @@ Verdict rules are in each folder; small periods are descriptive (P1 scored only 
 ## Round 1b (improved data, 2026-10-04)
 
 ### What changed
-- **Inputs:** H35 already used the leading-@ target and never read `activity_bins` (active rows come from `events_core` + `actions` via `h16lib`), so the round-1 grids, information and A30 numbers reproduce exactly (bits per nudge 1.42; first-nudge A30 +1.45 [0.73, 2.30]). No round-1 primary statistic changes.
+- **Inputs:** H35 already used the leading-@ target and never read `activity_bins` (active rows come from `events_core` + `actions` via `h16lib`), so the round-1 grids, information and A30 numbers reproduce exactly (bits per nudge 1.42; first-nudge A30 +1.45 [0.72, 2.20]). No round-1 primary statistic changes.
 - **New outcomes** (`analysis/r1b_outcomes.py`; outputs `data/processed/H35-nudger-maxwell-demon/<period>/r1b/`, `r1b/r1b_summary.json`): **glance** (any active row in 30 min), **sustained** (a run of ≥ 3 consecutive active DQ1 ledger calls starts within 30 min; H43's definition), **work** (DQ4 agent work commits in 30/60 min, automated commits excluded). Same past-only matched design, strata, trap-age bins and frontier code; gate model refit on a sustained run within 15 min of the pause expiry.
 - **Post hoc (`--did`):** the matched design fails its placebo window for sustained runs (+0.058) and work commits (−0.35): nudged agents had just finished a burst. A rate difference-in-differences (post rate − placebo rate) is reported next to the matched ATT, labelled post hoc.
 
@@ -287,7 +287,7 @@ Verdict rules are in each folder; small periods are descriptive (P1 scored only 
 | Quantity | Round 1 (active minutes) | Round 1b |
 | --- | --- | --- |
 | bits per nudge | 1.42 | 1.42 (unchanged) |
-| work per first nudge | +1.45 active min [0.73, 2.20] | glance +0.082 [+0.035, +0.132] (placebo clean); sustained runs +0.29/h [−0.16, +0.70] (DiD); work commits **+0.22/h [−0.29, +0.82]** (DiD; matched −1.16, placebo not clean) |
+| work per first nudge | +1.45 active min [0.72, 2.20] | glance +0.082 [+0.035, +0.132] (placebo clean); sustained runs +0.29/h [−0.16, +0.70] (DiD); work commits **+0.22/h [−0.29, +0.82]** (DiD; matched −1.16, placebo not clean) |
 | η_SU / η_KW (trap-age space) | 0.38 [−0.08, 0.68] / 0.15 | glance 0.88 [0.26, 0.97] / 0.79; sustained: flat response, η undefined (ΔV = 0); work (DiD) 0.19 [−1.39, 0.70] / 0.05 [0, 0.43] |
 | κ | 0.49 active min per bit per nudge | glance 0.033 per bit; work 0.006 commits/h per bit (n.s.) |
 | once-early (k = 2–3) / logged | ×2.30 [1.71, 4.75] | active min ×2.30 (same); glance ×0.92; work ×1.29 (CI spans 0); gate sustained ×1.03 |

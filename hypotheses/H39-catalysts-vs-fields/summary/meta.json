@@ -7,7 +7,27 @@
   "faithfulness": "Nudge 'both' verdict replicates and strengthens across state spaces (V4 passes all P1 clauses; B4 idle-share CI now excludes 0); the NE43 nudger stop behaves as a catalytic loss in both families. P2-P4 still fail; erasure catalysis is state-space dependent; NE44 failed. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I1.",
   "usefulness": "Operator taxonomy holds on independent states: nudge to unstick (and tilt) idle agents; use human requests/goals to change what agents do; mentions steer content; resets push toward work. Single-period nudge support remains."
  },
- "one_line": "No lever is a pure catalyst: nudges unstick and tilt idle agents in two state spaces (B4 and Jev v3.1); switching the nudger off removes catalysis, not a field; mentions steer content, not activity.",
+ "one_line": "No operator lever is a pure catalyst: nudges both unstick and tilt agents in two state spaces; other levers act as fields.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "field/catalyst split works; nudges both; pure-catalyst claim rejected"
+  },
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "kinetic Potts state space; human, erasure predictions fail"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "point-process kick timing only"
+  }
+ ],
  "rated_by": "H39 round-1b agent (suggested)",
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",

@@ -7,7 +7,21 @@
   "faithfulness": "Clean, well-identified result in regimes II-III (eta ~ 0 in 11/11 periods, G51 units 9/9, exogenous pause-timer dose, s ~ 0 with family controls), with synthetic recovery passing every criterion. But the pre-registered pooled P1 failed because regime I (22 periods) sits between the clocks, two natives failed (G18, NE14), collapse failed, no holdout. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I1.",
   "usefulness": "A quantitative operator statement: in computer-use agent loops per-hour coupling = per-call coupling (family trait) x call rate; doubling call rate raises 5-min coupling by ~50% (G51 32%) with CIs; slow agents are heavy spins (8x less wall-time coupling). Cadence (pause timers, tool-call length) is a prompt-free knob. Mostly observational plus one quasi-intervention; regime-specific; the clean intervention (NE20) is untested."
  },
- "one_line": "In computer-use agent loops coupling runs on the call clock (eta ~ 0): per-hour coupling = per-call coupling (a family trait) x call rate, so slow agents are heavy spins and doubling cadence raises 5-min coupling ~1.5x; the regime-I chat scaffold breaks this (eta ~ 0.5).",
+ "one_line": "In the computer-use scaffold agents couple per model call, not per minute; per-hour coupling is a family trait times call rate. Regime I breaks this.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Glauber call clock holds in regimes II-III, fails in I"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "response kernel decays per call in II-III, not per minute"
+  }
+ ],
  "rated_by": "H40 agent (suggested 2.5/3.0); coordinator calibrated faithfulness to 2.0 (pooled P1 failed, two natives failed)",
  "updated": "2026-10-04",
  "v2": {

@@ -7,7 +7,15 @@
     "faithfulness": "The core prediction (tau proportional to 1/lambda2) failed again on improved data (slope 0.38 [0.05, 0.60]; the slope-1 rule loses to a constant), and the sub-linear lead weakens under controls. Votes settle at the read-out timescale, which supports the herding-wave rival, not the lambda2 law. G 1 -> 2 (ground-truth vote instants); other axes unchanged; no holdout.",
     "usefulness": "Two calibrated base rates an operator can use: project majorities about 4.5 active h after first appearance (80%: 1-13.5 h), in attention and in work commits alike; deadline-bound votes within 2-3 read-out cycles (tens of seconds), so vote windows should be sized to read-out delays. Plus the caution that room spectral gaps mostly measure message volume."
   },
-  "one_line": "Consensus time does not follow 1/lambda2: a constant ~4.5 h forecast wins for projects (in work too), half of consensus is kickoff-set or one-window waves, and votes settle at read-out speed",
+  "one_line": "Consensus time does not follow 1/lambda2. A constant 4.5 active h forecast serves projects, and deadline-bound votes settle at read-out speed.",
+  "models": [
+    {
+      "model": "10-potts",
+      "role": "primary",
+      "outcome": "refuted",
+      "note": "diffusion 1/lambda2 law fails; slope 0.38; constant forecast ties"
+    }
+  ],
   "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.0 / 2.0)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",

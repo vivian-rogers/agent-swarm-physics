@@ -7,7 +7,21 @@
   "faithfulness": "The core prediction failed. No inverted U (both slopes n.s.); PR10 does not beat FE + controls in day-blocked CV (C = 0); 0/14 periods supported, and the meta right slope has the wrong sign. The test had about 80% power for a 0.4-SD inverted U, so this is a fairly well-understood null, not just an untested one.",
   "usefulness": "A negative result about a plausible operator metric: within-agent daily content diversity is not a lever or monitor for output, with a computed bound (at most about 9% fewer write turns at the 90th percentile vs the best). It retires a dashboard idea but offers no knob."
  },
- "one_line": "No diversity-productivity optimum, in write turns or in work commits that landed; the only right-side drop is a #51 tail effect seen by one embedding model.",
+ "one_line": "Agent-day content diversity has no output optimum: no inverted U in write turns or landed commits, and curvature hurts out of sample.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "no inverted U in PR10 vs output; null wins"
+  },
+  {
+   "model": "06-neutral-cooperative-dynamics",
+   "role": "secondary",
+   "outcome": "n/a",
+   "note": "names the swarm-day test only; no dynamics fitted"
+  }
+ ],
  "rated_by": "H33 round-1b agent (suggested)",
  "updated": "2026-10-04",
  "v2": {

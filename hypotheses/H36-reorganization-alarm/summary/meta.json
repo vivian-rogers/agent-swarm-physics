@@ -8,7 +8,21 @@
   "usefulness": "There are now measured operating characteristics for a computable swarm alarm, and a clear message: use a topic-shift detector, not susceptibility. A post hoc combination (R1>=3 or content-fluctuation z>=2) gives 58% of goal changes at 2% window false alarms, with the physics score acting as a false-alarm filter. It is in-sample and frozen for the holdout. It does not see scaffold changes.",
   "r1b": "Round 1b (2026-10-04, RE-C3 agent): fixed activity table + outage mask, both embedding models, restatement dedupe, DQ8 trim, corrected NE catalog, four native tests. Physics alarm random-date p 0.03 -> 0.08 (bge) / 0.21 (gte); content and R1 robust; NE40/NE45 not detected blind; NE43b unpredicted activity alarm. Scorecard A1 B1 C1 D0 E1 F1 G1 H0 I0. Suggested: complete 40 -> 50, faithfulness 1.5 -> 1.0, usefulness 2.5 kept (C3 rule and the negative stand)."
  },
- "one_line": "A susceptibility / multi-information alarm catches a quarter of goal changes, all through content, at the random-date boundary on corrected data; a plain topic-shift detector does far better (AUC 0.95-0.97 vs 0.66-0.68)",
+ "one_line": "Fluctuation statistics barely flag swarm reorganizations: a quarter of goal changes, all via content, at the random-date boundary; a topic-shift detector does far better.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "activity susceptibility and multi-information at chance at transitions"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "content fluctuations flag goal changes weakly; first moment wins"
+  }
+ ],
  "rated_by": "H36 agent (suggested)",
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",

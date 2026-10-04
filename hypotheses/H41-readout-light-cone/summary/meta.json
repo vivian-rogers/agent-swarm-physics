@@ -7,7 +7,21 @@
   "faithfulness": "The logged light cone organizes the data where it binds: within-room adoptions almost never precede read-out (<= 4%, median 0.6%), 75-100% of cross-room adoptions fall outside the logged cone, and NE42's merge/split moves cross-group pickup 80-860x as predicted. But the pre-registered gating test failed (12/32); it passes (22/32) only with a post-hoc recency-matched estimator, about a third of fast adoptions look co-generated, the cadence and velocity predictions failed, and nothing is confirmed on the holdout.",
   "usefulness": "A computable diagnostic: logged chat explains almost no cross-room spread, and shared artifacts cannot be blamed from logs (they are as common in in-cone adoptions); human cross-posts are the only enriched leak. Rooms are strong cages for chat (merging multiplies cross-group pickup ~100x). Spread runs at about one hop per 1.5-5 talk turns, independent of call cadence. No validated control knob."
  },
- "one_line": "Inside rooms novel items follow a logged light cone (acausal <=4%); gating passed only post hoc (22/32); cross-room leaks bypass chat and can't be traced",
+ "one_line": "Novel items obey a logged read-out light cone in rooms and across NE42; the gating jump passes only post hoc; cross-room leaks stay untraceable.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "light cone holds in rooms; gating test passes only post hoc"
+  },
+  {
+   "model": "03-contagion",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "a third of fast adoptions are shared field, not contagion"
+  }
+ ],
  "rated_by": "H41 agent (suggested)",
  "updated": "2026-10-04",
  "v2": {

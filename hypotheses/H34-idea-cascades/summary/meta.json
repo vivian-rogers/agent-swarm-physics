@@ -7,7 +7,21 @@
   "faithfulness": "The subcritical, exposure-driven branching description holds everywhere (32/32 subcritical; HR10 beats the validated field null in 27/32), so C, D, F, G, H and I are each 1. The literal claim (a power law whose exponent reads criticality, tied to activity loop gains) failed. There is no s^-3/2, tau_app is just R-hat, P4 gave rho = 0.06, tails are heavier than one branching law, and the pre-registered forecast was overconfident. E = 0. Round 1b: HR10 now passes 32/32 (regime I was mismeasured), but not-yet-read uses predict adoption at about half the strength of read ones, so part of the exposure lock is convergence; known leaders are not idea sources. Axes unchanged.",
   "usefulness": "A computable rule: R-hat from two days of logs gives next-day reach probabilities for new ideas or claims, and the post-hoc version is roughly calibrated (70-84% at 90%). The practical negative results also help: activity gains don't proxy idea spread, and exposure ordering can't separate copying from independent invention in a shared room. The calibration evidence is post hoc and the rule is unconfirmed, hence between a diagnostic (2) and a validated monitor (3)."
  },
- "one_line": "Idea cascades are strongly subcritical (R-hat 0.09-0.40, 32/32) and exposure-locked in 32/32 on ledger visibility, though about half the lock is contemporaneous convergence; no s^-3/2",
+ "one_line": "Idea cascades are strongly subcritical (R about 0.2) and heavy-tailed, not power-law; about half the exposure lock is convergence, not copying.",
+ "models": [
+  {
+   "model": "03-contagion",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "subcritical contagion holds; no power law; half is convergence"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "branching picture fits; activity loop gain does not predict R"
+  }
+ ],
  "rated_by": "H34 agent (suggested); round 1b RE-D1 (suggested)",
  "updated": "2026-10-04 (round 1b)",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",

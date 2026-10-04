@@ -7,7 +7,21 @@
     "faithfulness": "The literal hypothesis still fails (P1, P3, P4 as written, P8; NE43 refutes the operator-message version of the day-edge mechanism; the #4d stop leaves no trace). The partial result is sharper on corrected data: regime-III co-activation is 70-80% day-edge synchrony (f_scaffold 0.72, f_trim 0.83; only #44, #51 and marginally #37 survive the calibrated null), P5, P6 and NE14 pass. C = 1, D = 1, E = 1.",
     "usefulness": "A log-only preprocessing rule with a calibrated null behind it: trim each day to the all-present window before drawing surrogates (DQ8: 28-34% false positives without it, 2-4% with it). NE43 shows the edges come from the runner, so the rule needs runner start/stop times or agent spans, not operator messages. Defensive payoff; blind to API outages."
   },
-  "one_line": "Joint silences are rare and operator-scheduled; 70-80% of regime-III co-activation is the runner starting and stopping everyone together.",
+  "one_line": "Joint silences are rare and operator-scheduled, not platform stalls; in the always-on regime 70-80% of co-activation is the runner's daily start and stop.",
+  "models": [
+    {
+      "model": "01-inverse-ising",
+      "role": "primary",
+      "outcome": "mixed",
+      "note": "stall field fails; scheduler field explains regime-III coupling"
+    },
+    {
+      "model": "09-hawkes",
+      "role": "rival",
+      "outcome": "mixed",
+      "note": "common shutdown fits regime-III edges; regime I keeps coupling"
+    }
+  ],
   "rated_by": "H38 round-1b agent (suggested)",
   "updated": "2026-10-04",
   "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
