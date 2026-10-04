@@ -1,6 +1,7 @@
 # H37 × G40: shared-objective consensus week (2026-05-04 → 2026-05-08)
 
 **Verdict:** mixed (no false faction or pair alarm; conflict level not low)
+**Verdict (1c):** supported (no false alarm: true disagreement rate 0.05× the #12 opposite-team rate; no excess pair)
 **Role:** replication (exploratory) (false-alarm contrast)
 **Period:** regime III · mode C · 15 agents · 3 rooms · 5 days. No assigned conflict.
 
@@ -21,6 +22,9 @@ A detector is useful only if it stays quiet where nothing is going on. #40 is a 
 | P12c faction score not significant | sign-shuffle p = 0.25; calibrated p = 0.73 | | pass |
 
 **Reading.** The structural parts of the detector (negative pairs, camps) stay quiet in a cooperative week. The raw conflict level does not: Jev labels 20% of #40 replies "oppose". #40 (the 3D-universe week) was full of task corrections (duplicate data, merge conflicts, broken builds), and Jev's "negative" calls are only 30% precise against blind labels (validation). So f_neg measures correction friction plus label noise, not factional conflict, and must not be used alone as an alarm.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*P12c written 2026-10-04 22:10 UTC in the card; real run afterwards (`analysis/r1c.py`).* 599 DQ2 ledger-visible agent replies with 17 flags (2.8%). The true disagreement rate is 0.042 [0, 0.078], or 0.05× [0, 0.14] the #12 opposite-team rate. There are 0 excess-disagreement pairs (null mean 0.07). DQ2 calls 23% of the same replies "opposes"; round 1's stance-v1 called 20% "oppose". The round-1 rate failure was correction friction, not conflict. **P12c passes.**
 
 ## Scorecard (period-specific axes)
 | Axis | Score | Evidence |

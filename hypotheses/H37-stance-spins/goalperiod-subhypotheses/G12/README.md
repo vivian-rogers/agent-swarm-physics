@@ -1,6 +1,7 @@
 # H37 × G12: Form two teams and debate each other, while one agent judges (2025-09-01 → 2025-09-08)
 
 **Verdict:** supported (positive control passes P1–P5)
+**Verdict (1c):** supported (validated disagreement flag: P1c, P2c, P3c, P5c pass)
 **Role:** replication (exploratory) (positive control)
 **Period:** regime I · mode M · 7 agents · one room (#general) · 5 days (debates 09-01 → 09-04). Ten Asian-Parliamentary debates with re-drafted teams and rotating judges (H21's verified labels, `../../../H21-debate-antiferromagnet/scheme/labels/g12_debates.json`).
 
@@ -33,6 +34,17 @@ Replies with B inside a debate's speech window [first speech, verdict), both aut
 **Whole-period detector (all 5,818 relevant replies, teams not used).** Oppose/undermine share 9.7% [8.7, 10.7]; 3 of 21 agent pairs significantly negative after agent fields (Claude 3.7 Sonnet–Claude Opus 4, Gemini 2.5 Pro–GPT-5, Claude Opus 4.1–Grok 4); faction score sign-shuffle p = 0.005 (see Amendment 2 calibration in the card: this null is anti-conservative).
 
 **Reading.** Zero-shot stance labels see assigned conflict that topic embeddings cannot (H21 found no team order in content): the same reply pairs are equally similar in topic across and within teams (cosine 0.53 vs 0.54), but opposite in sign. The conflict switches off within the 10-min post-verdict window: opponents turn as positive as teammates. HH127's "negative remanence" (a flip) is not seen in stance; relaxation is.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Predictions P1c–P5c written 2026-10-04 22:10 UTC in the card ("Round 1c"); synthetic validation and Amendment 1c-1 at 22:23 UTC; real run afterwards (`analysis/r1c.py`, `r1c/r1c.json`).*
+Pairs: DQ2 candidate pairs in the v2 population (p_reply ≥ 0.5), debater to debater, debate phase: 134 (60 within, 74 across). Teams and phases from DQ6.
+
+| Prediction | Round 1 (stance-v1, H37 pairs) | Round 1c (validated flag) | Verdict |
+| --- | --- | --- | --- |
+| P1c assigned conflict | soft stance +0.32 vs −0.13; γ̂ 0.42 (p 0.0002) | flags 0/60 within vs 33/74 across; γ_f 0.40; stress null p 0.001 (expected 0.011); agent-field null p 0.001; true rate across 0.75 (population noise) | **pass** |
+| P2c beyond topic | AUC 0.74 vs topic 0.48 | γ_f with topic covariate 0.39 (stress p 0.001); topic AUC 0.48; `s2_soft` AUC 0.81 | **pass** |
+| P3c camps | accuracy 0.89, exact 7/10 | flag graph 0.81 (chance 0.66, p 0.001), exact 4/10; `s2_soft` 0.76 (p 0.03), exact 5/10 | **pass** (at the 0.80 line) |
+| P5c after the verdict | γ̂ 0.42 → 0.03 | 0 flags in 90 post-window replies; γ_f 0.40 → 0 | **pass** |
 
 ## Scorecard (period-specific axes)
 | Axis | Score | Evidence |

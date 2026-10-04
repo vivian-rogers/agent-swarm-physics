@@ -1,6 +1,7 @@
 # H37 × G51: private roles (2026-07-06 → 2026-09-20; non-holdout 07-06 → 09-04)
 
 **Verdict:** failed (no stance antagonism between rival or opposed roles; diffuse negative pairs elsewhere)
+**Verdict (1c):** failed (stance v2.1: no excess disagreement for rivals or opposed roles; rivals excluded at ≥ +2 log-odds, opposed at ≥ +3; the governance-friction lead does not replicate)
 **Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 32 agents seen · 4 rooms · 45 non-holdout days. The #51 tail (09-07 → 09-21) is locked holdout and is not used. Labelled: mention/both reply pairs, ≤ 40 per agent pair per H22 unit (51a–51e), 15,535 pairs.
 
@@ -33,6 +34,15 @@ Pair-level stance couplings J_ij (mean soft stance, ≥ 3 replies), H22's role c
 **Post hoc (not pre-registered; a lead).** 10 of the 13 negative pairs involve a norm-enforcing role (Psychologist, Ethicist, Diplomat, village helper, performance coach) vs 44% of tested pairs (OR 4.4, Fisher p = 0.016; one grouping among several possible). DeepSeek-V3.2 (Diplomat, ex-leader) is in 4. Reading: in #51, negative stance tracks governance friction (corrections, guardrail enforcement), not competition between rival roles.
 
 **Reading.** Conflict does not live in stance here either: rivals and opposed roles are as friendly, or friendlier, than unrelated pairs. What negativity exists is diffuse (pairwise, not factional) and sits on oversight roles.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Predictions P6c, P7c, P9c written 2026-10-04 22:10 UTC in the card; synthetic power at 22:27 UTC; real run afterwards (`analysis/r1c.py`). Roles per day from DQ6 (`ground_truth_labels`), majority role per agent; H22's class rule.*
+- **Pairs:** 23,670 DQ2 ledger-visible replies among 32 role holders (non-holdout); 201 flags (0.85%).
+- **P6c (OP) fail:** 0 flags in 55 replies (2 pairs); true-scale β −2.0 [−3.4, −0.6].
+- **P7c (SR) fail:** 6 flags in 400 replies (1.5% vs 1.0% unrelated), in 2 of 6 pairs; LP β +0.0035 (role permutation p 0.33); true-scale β +0.46 [−1.46, 1.37]. Power 0.37 at +1, 1.0 at +2.
+- **P9c fail:** 3 excess-disagreement pairs (null 0.8, p 0.05), 1 in a conflict class (NC); Fisher p 0.21. None involves a norm-enforcing role (41% of tested pairs do).
+- **Support roles** disagree less (true-scale β −1.4 [−3.4, −0.3]).
+- **Post hoc lead:** media-niche competitors (NC) carry 14 of 299 replies flagged (role permutation p 0.006). 8 of these come from one pair.
 
 ## Scorecard (period-specific axes)
 | Axis | Score | Evidence |

@@ -2,6 +2,7 @@
 
 **Verdict:** failed (coupled two-sublattice antiferromagnet); descriptive: weak one-dimensional staggered moment along the motion's stance axis, and a uniform topic field that switches off at the verdict
 **Verdict (1b):** supported in stance (two-sublattice order; content still failed; native: supported)
+**Verdict (1c):** supported in disagreement on the merits (stance v2.1 validated flag; native within-pair: supported)
 **Role:** native (was: exploratory (round 1, not held out); native (round 1b: re-drafting as a within-pair design))
 **Period:** regime I · mode M (teams) · 7 agents · one room (#general) · 5 days (debates on 4). Labs: Anthropic ×3 (Claude 3.7 Sonnet, Claude Opus 4, Claude Opus 4.1), OpenAI ×2 (o3, GPT-5), Google (Gemini 2.5 Pro), xAI (Grok 4). Splits inside the period: 09-03 (village day number added to the prompt) and 09-05 (history search tool, chain-of-thought memory). No debate was held on 09-05, so the second change touches no debate.
 
@@ -119,6 +120,15 @@ Figures in `figures/`:
 - **DQ6:** H21's labels equal the shared ground truth exactly (teams, judges, winners; phase boundaries to the second).
 - **Content channel (P1–P7), every variant fails P1:** Δ̄ = +0.028 (bge, masked; p 0.34), −0.028 (gte, masked; p 0.63), −0.046 to +0.019 for unmasked, DQ5 style-residualized and deduplicated inputs; teams recovered 0–1/10. The a-priori stance-axis tilt holds in bge (σ 0.092, p 0.002, 9/10) and weakens in gte (0.055, p 0.065, 8/10); the post-verdict reversal holds (statement level 7/9 debates negative in bge, 6/9 in gte). Topic order on → off at the verdict in both models (0.42 → 0.01; gte 0.55 → 0.10).
 - **Stance channel (DQ2, new):** 478 debater-to-debater replies in debate phases; soft stance +0.41 within teams vs −0.32 across ('opposes' 6% vs 36%). Δ_stance = 0.72, positive in 10/10 debates (team permutation p < 10⁻⁴); hard-label Δ 0.50 vs the calibrated agent-field null (mean 0.05, 95th percentile 0.18; p 0.002). Teams recovered exactly in **8/10** debates from the stance graph (chance 1.0, p 4×10⁻⁷). After the verdict Δ = −0.01 (switched off). AUC stance 0.75 (agent-adjusted) vs content 0.57 (bge) / 0.54 (gte).
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Prediction written 2026-10-04 22:10 UTC in the card ("Round 1c", S1c–S3c, within-pair), before any round-1c statistic; synthetic validation and Amendment 1c-1 at about 22:15 UTC, before the real run. Details: card section "Round 1c".*
+- **Input:** DQ10 `disagree_validated_agent` on v2 replies (p_reply ≥ 0.5): 134 debater-to-debater replies in debate phases (60 within, 74 across).
+- **S1c pass:** 33 of 74 opposite-team replies flagged (45%), 0 of 60 same-team. Δf 0.54, positive in 9/10 debates. Stress null p 0.001, noise-aware agent-field null p 0.001. True rates: opponents 0.52–0.76, teammates ≤ 0.08 (95% upper bound).
+- **S2c pass (flag graph):** teams 5.8/10 (chance 1.0, p 0.0002). `s2_soft` 4.5/10.
+- **S3c pass:** 0 flags in 90 post-window replies. If the debate rates persisted, 18–25 flags were expected (power 0.90–0.99).
+- **Within-pair (native) pass:** of 14 re-drafted pairs, opponents were flagged more in 10 and less in none (sign-flip p 0.001).
+- Round 1b's cross-team DQ2 "opposes" was mostly real disagreement here (85% carry the validated flag); its same-team "opposes" was not (0%).
 
 ## Scorecard (period-specific axes)
 | Axis | Score | Why |

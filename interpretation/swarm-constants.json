@@ -731,6 +731,16 @@
    "model": "02",
    "source": "H99 r2",
    "meaning": "Unreadable messages near a call lower talk (turn-taking or API contention); in-flight-gated gains overstate coupling ~×2."
+  },
+  {
+   "symbol": "f_dis",
+   "name": "true disagreement rate on the merits (validated stance flag)",
+   "value": "#12 opposite teams 0.52 [0.33, 0.82] (#12 noise) to 0.76 [0.47, 1.0] (population noise); teammates ≤ 0.05–0.08; unassigned #33 0.019, #26 0.007, #40 0.042; post-verdict 0 flags in 90 replies; #51 flag rate 0.85% (rivals +0.46 [−1.46, 1.37] log-odds vs unrelated)",
+   "kind": "stance",
+   "scope": "stance v2.1, noise-corrected (q 0.0106, φ ≈ 0.004)",
+   "model": "01",
+   "source": "H21, H37 r1c",
+   "meaning": "Real disagreement needs assigned sides and ends at the verdict; without sides it stays at 1–2%."
   }
  ]
 }

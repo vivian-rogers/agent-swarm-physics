@@ -313,6 +313,10 @@ Two builders and two libraries are now shared, and `semantic_kappa` is extended.
 
 ## Known issues
 
+- **With sparse stance flags, the fixed-effects team permutation is liberal** (size 0.09–0.12) under differential false positives (H21/H37 r1c): use a label-confusion stress null. Noise-aware logistic intervals under-cover (0.71–0.84) and separate when one group has zero flags.
+- **DQ2 "opposes" composition depends on context** (H21 r1c): 85% real disagreement across #12 debate teams vs 12% village-wide.
+- **`labelnoise.py` is duplicated in H21 and H37, and H22's role-class rule is re-implemented in H37's `r1c.py`**: move `labelnoise` and `role_relations` to `infra/shared/`.
+- **H94's stored bootstrap CI for #42a ([13.3, 16.1]) excludes its point estimate (17.5, near the λ cap)** (found by the visuals agent); cap-hitting fits need a bounded bootstrap.
 - **Minute-grid synchrony and memory statistics need a per-unit W0 reference** (independent talk at the unit's real calls; H99 r2): block centring biases lag-1 autocorrelations by about −1/30, re-centring inside masked or fragmented blocks fakes negative memory (down to −0.19), and occupancy-cell centring fakes −0.05.
 - **A room partition does not exclude a room-local drive** (H99 r2): pair it with an in-flight contrast. In regime III, unreadable messages near a call carry a negative talk association (−0.005 to −0.008 per message), so in-flight-gated gains overstate coupling ~×2; prefer cross-room-gated gains.
 - **A swarm-wide 15-min mask after every nudge removes 60–75% of #51 minutes** (H99 r2); use 5 min.

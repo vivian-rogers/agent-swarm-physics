@@ -27,3 +27,5 @@ DQ9 lists #33 as the period for stance polarization on an external political top
 | content for the best stance split (descriptive) | within − cross cosine −0.066 (bge), −0.028 (gte); the split is not lab-sorted | — | — |
 
 **Native verdict: failed for H21 (no spontaneous two-sublattice order), as predicted.** A period framed as "debate" but with no assigned sides is ferromagnetic in stance, with no factions beyond agent fields. Together with #12 and #26 this supports H21-R2: disagreement appears where a protocol assigns it.
+
+**Round 1c (stance v2.1, 2026-10-04; prediction in the card, 22:10 UTC):** the true disagreement rate between agents is 0.019 [0, 0.049] (14 flags in 938 agent-to-agent replies), against 0.75 [0.50, 1.0] for #12 opponents. The flag graph forms no camps beyond the noise-aware agent-field null (camp score 0.79, null 95th percentile 0.82, p 0.32). Verdict unchanged: failed, as predicted.

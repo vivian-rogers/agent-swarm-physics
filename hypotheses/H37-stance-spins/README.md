@@ -1,6 +1,7 @@
 # H37: Conflict lives in stance, not topic: stance spins are antiferromagnetic
 
 **Status:** exploratory round 1 **done (2026-10-04): detector validated on assigned conflict; the generalization failed.** Zero-shot stance labels see the #12 debate teams that topic embeddings cannot (AUC 0.74 vs 0.48; teams recovered exactly in 7/10 debates), but find no stance antagonism between rival or opposed roles in #51 or between voting blocs in #26. Observables, nulls and predictions written 2026-10-04 01:35 UTC, before any stance label of an analysed pair was looked at or any outcome statistic computed. `analysis/confirm_g34.py` (#34 saboteurs) written and dry-run, **not run**.
+**Round 1c (2026-10-04, stance v2.1, section below): verdict unchanged, now on validated disagreement.** On DQ2 ledger-visible replies with DQ10's validated flag (labeller noise built into the nulls), #12 opponents disagree in 33/74 replies and teammates in 0/60 (stress null p 0.001; topic AUC 0.48). #40 raises no false alarm (mixed → supported). #51 rivals and opposed roles show no excess disagreement (rivals excluded at +2 log-odds, opposed at +3; +1 inconclusive). #26 is untestable. The governance-friction lead does not replicate. A re-freeze of the #34 script on held-out v2.1 labels is proposed (needs sign-off).
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH125 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); leads from H22 (51a Prankster pairs), H21 (#12 stance tilt, HH127), H11 G26 (votes).
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population; Regime; Agent state, variant categorical (debate team, #51 role, #26 vote set). Two named variants of **Interaction**, proposed for the shared file: *interaction (addressed reply, 30 min)* and *interaction (adjacent reply, 5 min)* (defined under Data scheme). New terms defined below and proposed for the shared file: *stance spin*, *stance coupling*, *frustration index (ground-state)*. H22's *balance index τ₃* and its double-centred version τ₃(dc) are used exactly as H22 defined them (`../H22-private-goals-spin-glass/README.md`, O4 and Amendment 1).
@@ -17,11 +18,11 @@
 | Shared model priors | yes | Same-lab residualization in the #51 role test (N6). Family writing-style invariance of the labels is not checked (axis A). Close with a cross-family label audit and `style_resid` topic cosines (§1, row 3). | partly |
 | Contemporaneous convergence | partly | Not handled. An adjacent reply within 5 min may answer a message its author had not yet read. Close by keeping pairs whose A is in B's receiving-call context (ledger; §1, row 4). | open |
 
-**Inputs:** all results are on round-1 inputs. Still old: reply pairs from `chat_mentions_clean` and room adjacency, not DQ2 replies or ledger visibility; topic cosine from bge only; #51 roles from H22's coding and #26 votes from H11, not DQ6 `ground_truth_labels` (Notes: one role was overwritten). Activity, work and failures are not inputs.
+**Inputs:** round 1c (section below) moves to current inputs: DQ2 ledger-visible reply pairs, DQ10 `reply_stance_v2` (validated flag), DQ6 `ground_truth_labels` (#12 teams and phases, #51 roles per day, #26 ballots) and DQ2's `cos` as topic. Round-1 results below stay on round-1 inputs. Still old: reply pairs from `chat_mentions_clean` and room adjacency, not DQ2 replies or ledger visibility; topic cosine from bge only; #51 roles from H22's coding and #26 votes from H11, not DQ6 `ground_truth_labels` (Notes: one role was overwritten). Activity, work and failures are not inputs.
 
 **Two layers:** none yet. Four period folders (G12, G26, G40, G51) run period-specific tests under role `exploratory`; no common replication estimator and no native folder.
 
-**Confirm script:** `analysis/confirm_g34.py` exists, dry-run only. It uses neither activity bins nor a visibility rule, so holdout.md item 8 does not force a re-freeze. Before any run: correct its reuse note (H05's #34 run was executed; holdout.md item 4) and take saboteur labels from DQ6 where they exist.
+**Confirm script:** `analysis/confirm_g34.py` exists, dry-run only. Round 1c proposes a re-freeze on held-out v2.1 labels (section "Proposed re-freeze"); it needs Vivian's sign-off, and the frozen script is untouched. It uses neither activity bins nor a visibility rule, so holdout.md item 8 does not force a re-freeze. Before any run: correct its reuse note (H05's #34 run was executed; holdout.md item 4) and take saboteur labels from DQ6 where they exist.
 
 ## Question
 H22 found that in #51 rivals co-move in *topic* (content embeddings), so topic coupling cannot see conflict. Does conflict appear in *stance*, the sign of how one agent's reply treats another's message (agree / support vs oppose / undermine)? If so, a signed reply graph built from stance labels should carry negative couplings where conflict is (debate opponents in #12; opposed or rival roles in #51; electoral rivals in #26), and its frustration and balance should say whether conflict is factional (two camps) or diffuse. Practical aim (usefulness-first batch): a conflict and faction detector an operator can compute from chat logs with a cheap zero-shot labeller, with measured accuracy, and a saboteur-detection design for #34 (holdout, D8.3).
@@ -162,6 +163,10 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | [G12](goalperiod-subhypotheses/G12/README.md) | exploratory (positive control) | supported | debate replies: stance same +0.32 vs opposite −0.13, γ̂ 0.42 (p 0.0002); AUC 0.74 (stance) vs 0.48 (topic); team recovery 0.89, exact 7/10 (topic 0.71, chance 0.70); contrast gone after the verdict (γ̂ 0.03) |
 | [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | failed | T_SR(stance) +0.085 (p_less 0.81; topic +0.078), T_OP +0.02 (2 pairs, both positive); 10 negative pairs vs 0.33 expected (calibrated p 0.005), none in conflict classes; camps not beyond agent fields (p 0.36); post hoc: 10/13 negative pairs involve norm-enforcing roles |
 | [G26](goalperiod-subhypotheses/G26/README.md) | exploratory | failed | stance vs ballot similarity r = 0.01 (p 0.47; power 0.25–0.42 at 1–2 logit); rival-candidate test untestable; no negative pairs, no camps (p 0.91) |
+| [G12](goalperiod-subhypotheses/G12/README.md) round 1c | exploratory (positive control) | supported (validated flag) | flags 0/60 within vs 33/74 across; γ_f 0.40 (stress p 0.001); topic AUC 0.48; camps 0.81 (p 0.001); 0 flags in 90 post-verdict replies |
+| [G51](goalperiod-subhypotheses/G51/README.md) round 1c | exploratory | failed (rivals excluded ≥ +2, opposed ≥ +3 log-odds) | SR 6/400 flags, β +0.46 [−1.46, 1.37], p 0.33; OP 0/55, β −2.0; 3 excess pairs (null 0.8), 1 in a conflict class; 0/3 norm-enforcing; NC 14/299 (post hoc, one pair) |
+| [G26](goalperiod-subhypotheses/G26/README.md) round 1c | exploratory | n/a (untestable) | 7 flags; Mantel r −0.30 (p 0.95); power 0.05 at +1 log-odds |
+| [G40](goalperiod-subhypotheses/G40/README.md) round 1c | exploratory (contrast) | supported (no false alarm) | true disagreement rate 0.042 [0, 0.078] = 0.05× #12 opponents; 0 excess pairs |
 | [G40](goalperiod-subhypotheses/G40/README.md) | exploratory (contrast) | mixed | no negative pairs, no camps (calibrated p 0.73): no structural false alarm; but 20% of replies labelled "oppose" (task corrections plus label noise), so P12's conflict-level clause fails |
 
 ## Results
@@ -237,6 +242,157 @@ The detector's camp and negative-pair statistics are compared with a **parametri
 - **C2:** suspicion from *given* stance, AUC > 0.5, p < 0.05. Credence 0.15. **C3:** combined AUC ≥ 0.60. Credence 0.25. **C4 (descriptive):** saboteurs in the daily minority camp.
 - **Decision:** supported if C1 passes; failed if AUC < 0.55 or p > 0.20; else mixed.
 - **Reuse policy:** different modality from every earlier #34 script; commit before running; disclose in H21's card and LOG.md.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Re-test of round 1 with the validated conflict flag of DQ10 (`infra/data-quality/stance_v2.md`). Round 1 used H37's own Jev stance-v1 labels, whose "oppose" was 30% precise (6/20 on the enriched sheet) and mixed task corrections, declines and status contradictions with conflict. DQ10 found the same for DQ2's `opposes`: only 12% dispute A on the merits. Round 1c asks whether the round-1 pattern (assigned conflict seen; no conflict elsewhere) holds for disagreement on the merits.*
+
+### Pre-registration (written 2026-10-04 22:10 UTC, before any round-1c statistic)
+**Seen before writing.**
+- Round 1 results (above); H21 rounds 1 and 1b; DQ10's validation (all rounds).
+- Marginal flag counts per goal period (`disagree_validated_agent`): #12 44 of 1,325 pairs; #26 8 of 1,037; #40 17 of 616; #51 202 of 24,143 (non-holdout). No count split by team, role, ballot or pair.
+- Structural counts of #12 debater-to-debater pairs (debate phase 134; 60 within team, 74 across; post 90).
+- DQ10 per-stratum flag precision: #12 stratum 10/10 flagged pairs were reference `disagree`.
+- DQ6 #51 role labels (role names per agent), to code pair classes. No stance statistic by class.
+
+**What changes from round 1.**
+- **Pairs:** DQ2 candidate pairs (ledger visibility, p_reply ≥ 0.5, agent parents, B ≠ A, non-holdout), the v2 population, instead of H37's mention/adjacency pairs. This also closes the round-1 "old inputs" gap.
+- **Stance:** the flag `disagree_validated_agent` (primary). Secondary, unvalidated, aggregate only: `s2_soft` and `p_disagree`.
+- **Ground truth:** DQ6 `ground_truth_labels` for #12 teams and phases, #51 roles (per day; corrects the overwritten Claude Opus 5 role, Notes) and #26 ballots. Pair classes follow H22's coding rule (SR, OP, SY, NC, U), re-implemented in H37's own code, not imported.
+- **Topic:** the DQ2 pair feature `cos` (bge-small cosine of A and B).
+
+**Label-noise model (built into every null).** Identical to H21's round 1c (`analysis/labelnoise.py`):
+- True disagreement d_e is flagged with probability R (recall), a non-disagreement with probability φ: P(f = 1) = φ + (R − φ)·π_e.
+- K = 40 draws of precision ~ Beta(mean 0.64, sd 0.065) and R ~ Beta(mean 0.60, sd 0.08); φ = q(1 − PPV)/(1 − qPPV/R) with q = 0.0106.
+- **Noise-aware agent-field model:** logit π_e = μ + a_speaker + b_target + Σ_k β_k x_k (relation or role-class indicators, same-lab covariate in #51), fitted through the noise map (L2 0.1 on fields). β̂ are true-scale log-odds.
+- **Noise-aware agent-field null:** β = 0, fitted to the observed flags, simulated on the real reply structure. It replaces round 1's ordered-logit null for flags.
+- **Label-confusion stress null:** false-positive rate per group proportional to its share of Jev `correct` + `inform` labels.
+- Rogan–Gladen corrected rates per group. Sensitivity: #12-specific noise (precision Beta(11, 1), recall 0.9).
+
+**Synthetic validation first** (`analysis/r1c_synthetic.py`). On the real reply structures of #12 (debate phase) and #51 (role holders), simulate null worlds (agent fields only; plus differential false positives) and planted worlds: #12 opponents Δ = 0.7, 1.5, 2.5 log-odds; #51 rivals (SR) and opposed roles (OP) at +1, +2 log-odds. Report expected observed rates, test size, power and the bias of β̂. Tests with size > 0.08 are replaced by their stress-null version before the real run.
+
+**Predictions (credences in brackets).**
+- **P1c (#12, re-tests P1).** Agent-adjusted contrast γ_f (two-way fixed-effects linear probability of the flag, opposite minus same team, debate phase) > 0, team-permutation p < 0.01, above the noise-aware agent-field null's 95th percentile; β̂_opp > 0 with interval excluding 0. [0.75]
+- **P2c (#12, re-tests P2).** γ_f keeps p < 0.01 with topic cosine as a covariate, and topic cosine does not separate the teams (agent-adjusted AUC in [0.40, 0.60]). [0.7]
+- **P3c (#12, re-tests P3).** Camp recovery from the per-debate flag graph: mean accuracy ≥ 0.80 above random balanced partitions (p < 0.05). [0.4] Secondary on `s2_soft`. [0.65]
+- **P5c (#12, re-tests P5).** γ_f(post-verdict) < γ_f(debate). [0.7]
+- **P6c (#51 opposed roles, re-tests P6).** β̂_OP > 0 (more disagreement), role-permutation p < 0.05. [0.15]
+- **P7c (#51 rivals, re-tests P7).** β̂_SR > 0, role-permutation p < 0.05. [0.15]
+- **P9c (#51, re-tests P9).** Pairs with excess disagreement (≥ 2 flagged replies on ≥ 2 distinct days, upper-tail p < 0.01 under the noise-aware agent-field model) are enriched in SR ∪ OP ∪ NC (odds ratio ≥ 2, Fisher p < 0.05). [0.15] Descriptive: the round-1 governance-friction lead (norm-enforcing roles), read with H55's activity caveat.
+- **P10c (#26, re-tests P10).** Pair disagreement rises with ballot dissimilarity (Mantel r > 0, p < 0.05). [0.15] Untestable if the synthetic power at +1 log-odds per unit dissimilarity is < 0.3.
+- **P12c (#40, re-tests P12).** The noise-corrected disagreement rate in #40 is ≤ ½ of the #12 opposite-team rate, and no excess-disagreement pair beyond the null. [0.8] Round 1 failed the rate clause on correction friction; the validated flag should not.
+
+**Kill rules.**
+- **K1.** P1c fails: the round-1 detector claim ("stance sees assigned conflict") is withdrawn for disagreement on the merits and rescoped to pushback (corrections, declines).
+- **K2.** The stress null's expected #12 contrast is ≥ half the observed: P1c is not separable from label confusion.
+- **K3.** The generalization claim changes only on a pass: any of P6c, P7c, P10c passing reverses "generalization failed". If none pass, the failure is called *powered* only where the synthetic power at +1 log-odds (true scale) is ≥ 0.8; otherwise *inconclusive at +1, excluded at the largest effect with power ≥ 0.8*.
+
+**Verdict rule (unchanged in form).** Supported: P1c and P2c, and at least one of P6c, P7c, P10c. Detector validated, generalization not shown: P1c and P2c, none of the three. Failed: P1c fails. Holm across the primary tests (P1c, P2c, P3c, P6c, P7c, P10c).
+
+**Code and outputs.** `analysis/labelnoise.py`, `analysis/r1c_synthetic.py`, `analysis/r1c.py`, `analysis/r1c_estimates.py`; outputs in `data/processed/H37-stance-spins/r1c/`. Round-1 code is unchanged, so round 1 reproduces.
+
+### Synthetic validation, #12 part, and Amendment 1c-1 (2026-10-04 22:23 UTC, before the real #12 run)
+`r1c/synthetic.json`; 100 worlds per row on the real #12 structure (134 debate-phase debater pairs; 74 across, 60 within; 7 agents; 10 debates).
+
+| World | Expected observed flag rate, same / opposite | Team permutation p < 0.05 (< 0.01) | Noise-aware null p < 0.05 (< 0.01) | Stress null p < 0.05 (< 0.01) | β̂ median; CI coverage; CI excludes 0 |
+| --- | --- | --- | --- | --- | --- |
+| null, fields sd 0.5 | 3.2% / 3.7% | **0.09** (0.02) | 0.06 (0.00) | 0.05 (0.00) | 0.30; 0.80; 0.09 |
+| null, fields sd 1.0 | 5.6% / 4.9% | 0.06 (0.02) | 0.05 (0.00) | 0.04 (0.00) | −0.17; 0.84; 0.04 |
+| null, false positives ×2 across | 3.0% / 2.8% | **0.12** (0.04) | 0.05 (0.00) | 0.03 (0.00) | −0.01; 0.74; 0.05 |
+| null, false positives ×4 across | 3.2% / 3.8% | **0.11** (0.04) | 0.05 (0.00) | 0.03 (0.00) | 0.04; 0.81; 0.07 |
+| AF Δ = 0.7 (true 5.3% / 9.8%) | 3.7% / 6.4% | 0.18 (0.07) | 0.16 (0.03) | 0.14 (0.01) | 0.74; 0.84; 0.16 |
+| AF Δ = 1.5 (true 4.7% / 17%) | 3.3% / 9.9% | 0.34 (0.21) | 0.35 (0.14) | 0.36 (0.09) | 1.50; 0.77; 0.44 |
+| AF Δ = 2.5 (true 5.5% / 35%) | 3.7% / 21.7% | 0.88 (0.64) | 0.85 (0.59) | 0.87 (0.50) | 2.68; 0.75; 0.87 |
+
+**Amendment 1c-1 (pre-specified rule: size > 0.08 → stress-null version).**
+- The FE linear-probability team permutation is liberal (size 0.09–0.12). **P1c's decision now uses the stress-null p < 0.01** in its place, plus the noise-aware null's 95th percentile. **P2c's topic-covariate test likewise uses its stress-null p** (same simulated flag sets, γ refitted with topic cosine).
+- **β̂'s interval under-covers** (0.74–0.84); its clause is dropped from P1c. β̂ is reported as an estimate.
+- **Power at p < 0.01 is about 0.5 at Δ = 2.5 and about 0.1 at Δ = 1.5.** A P1c failure would exclude only very strong assigned conflict.
+- The #51 and #26 parts follow below, before their real runs.
+
+### Synthetic validation, #51 and #26 parts (2026-10-04 22:27 UTC, before the real #51, #26 and #40 runs)
+**#51 structure (role holders, non-holdout):** 23,670 replies among 32 agents. Class rows: U 15,434; SY 7,482; SR 400; NC 299; OP 55. Thirty worlds per row; agent fields sd 0.7; true base rate 1.2%; role permutation 300.
+
+| World (true log-odds vs U) | Expected observed flag rate U / SR / OP | Role-permutation power p < 0.05, SR / OP | Noise-aware β̂ median, SR / OP |
+| --- | --- | --- | --- |
+| null | 1.7% / 1.5% / 1.8% | 0.00 / 0.00 | 0.01 / 0.06 |
+| SR +1 | 1.7% / 3.7% / 1.3% | 0.37 / 0.00 | 0.99 / — |
+| SR +2 | 1.6% / 8.2% / 1.0% | **1.00** / 0.03 | 2.07 / — |
+| OP +1 | 1.5% / 1.5% / 3.9% | 0.03 / 0.20 | — / 1.30 |
+| OP +2 | 1.6% / 1.7% / 6.7% | 0.00 / 0.57 | — / 1.93 |
+| OP +3 | 1.5% / 1.5% / 15.5% | 0.00 / **0.97** | — / 3.03 |
+
+**#26 (9 voters, 937 replies):** Mantel power 0.05 / 0.18 / 0.71 at +1 / +2 / +4 log-odds per unit of ballot dissimilarity (size 0.035; 200 worlds).
+
+**Consequences (pre-registered rules, no new choices).**
+- The role-permutation tests are conservative (size 0.00 in 30 null worlds) and the true-scale β̂ is close to unbiased.
+- **K3 thresholds:** power at +1 log-odds is 0.37 (SR) and 0.20 (OP), below 0.8. A failure of P7c is therefore "inconclusive at +1, excluded at +2". A failure of P6c is "inconclusive at +1 and +2, excluded at +3".
+- **P10c is untestable:** power at +1 is 0.05, below the registered 0.3. It is still computed and reported as descriptive.
+
+### Results (2026-10-04, `analysis/r1c.py`; data `r1c/r1c.json`)
+**What changed under the result.** Both the pairs (DQ2 ledger-visible replies in place of H37's mention/adjacency pairs) and the labels (validated v2.1 flag in place of stance-v1) are new. Round 1's numbers are kept above.
+
+**#12: the detector still sees assigned conflict, now as disagreement on the merits.**
+- 33 of 74 opposite-team debate replies are flagged, and 0 of 60 same-team replies. Agent-adjusted γ_f = 0.40.
+- γ_f beats the stress null (expected 0.011; p 0.001), the noise-aware agent-field null (95th percentile 0.13; p 0.001) and team re-draw (p 10⁻⁴). The #12-specific noise gives the same p.
+- Topic does not separate the teams (agent-adjusted AUC 0.48), and γ_f keeps its size with topic as a covariate (0.39; stress p 0.001).
+- The flag graph recovers the camps with mean accuracy 0.81 (chance 0.66; p 0.001; exact 4/10). This is just over the 0.80 line; round 1's stance-v1 graph had 0.89.
+- After the verdict: 0 flags in 90 post-window replies.
+- Opposite-team true disagreement rate ≈ 0.75 (population noise). β̂_opp sits at the separation bound (no teammate flag) and is not used.
+
+**#51: no excess disagreement between rivals or opposed roles.** 23,670 replies among 32 role holders; 201 flags (0.85%).
+- **Opposed roles (P6c):** 0 flags in 55 replies (2 pairs). LP β −0.012 (role permutation p_upper 0.75). True-scale β −2.0 [−3.4, −0.6]: if anything, *less* disagreement.
+- **Same-role rivals (P7c):** 6 flags in 400 replies (1.5%; unrelated pairs 1.0%), all in 2 of the 6 rival pairs. LP β +0.0035 (p 0.33). True-scale β +0.46 [−1.46, 1.37].
+- **Support roles (SY):** less disagreement than unrelated pairs (true-scale β −1.4 [−3.4, −0.3]).
+- **Topic (round-1 P7 clause):** rivals are not closer in topic on these pairs (β +0.005, p 0.25).
+- **Excess-disagreement pairs (P9c):** 3, against 0.8 under the noise-aware null (p 0.05). One is in a conflict class (NC); Fisher p 0.21, so **fail**. None involves a norm-enforcing role (41% of tested pairs do), so **the round-1 governance-friction lead does not replicate** with the validated flag.
+- **Post hoc (not pre-registered as a primary): media-niche competitors (NC)** carry more flags: 14 of 299 replies (4.7%), role permutation p 0.006, stress p 0.04. But 8 of the 14 come from one pair on 2 days, and only 5 of 19 NC pairs have any flag. It is a lead, not a result.
+
+**#26: untestable.** 7 flags among 937 voter-to-voter replies. Mantel r = −0.30 (p_greater 0.95); power at +1 log-odds is 0.05.
+
+**#40: no false alarm (P12c passes).** True disagreement rate 0.042 [0, 0.078] (17 flags in 599 replies), 0.05× [0, 0.14] the #12 opposite-team rate. No excess-disagreement pair (null mean 0.07). Round 1 failed the rate clause because 20% of #40 replies were labelled "oppose". DQ2 calls 23% of these replies "opposes"; the validated flag calls 2.8%.
+
+**Old vs new.**
+
+| Prediction | Round 1 (stance-v1, H37 pairs) | Round 1c (validated flag, DQ2 pairs) | Verdict 1 → 1c |
+| --- | --- | --- | --- |
+| P1 #12 assigned conflict | +0.32 vs −0.13; γ̂ 0.42 (p 0.0002) | flags 0/60 vs 33/74; γ_f 0.40; stress p 0.001 | pass → **pass** |
+| P2 #12 beyond topic | AUC 0.74 vs topic 0.48 | topic-covariate γ_f 0.39 (stress p 0.001); topic AUC 0.48 | pass → **pass** |
+| P3 #12 camps | 0.89; exact 7/10 | 0.81 (p 0.001); exact 4/10 | pass → **pass** (at the line) |
+| P5 #12 after the verdict | γ̂ 0.42 → 0.03 | 0 flags in 90 replies | pass → **pass** |
+| P6 #51 opposed roles | T_OP +0.02 (2 pairs) | 0/55 replies; β −2.0 [−3.4, −0.6] | fail → **fail** (excluded at ≥ +3 log-odds) |
+| P7 #51 rivals | T_SR +0.085 (homophily) | 6/400 vs 1.0% baseline; β +0.46 [−1.46, 1.37]; p 0.33 | fail → **fail** (inconclusive at +1, excluded at +2) |
+| P9 #51 negative pairs in conflict classes | 0 of 13; post hoc 10/13 norm-enforcing | 1 of 3 (NC); Fisher p 0.21; 0/3 norm-enforcing | fail → **fail**; governance lead not replicated |
+| P10 #26 ballots | r 0.01 (p 0.47) | r −0.30 (p 0.95); 7 flags | fail → **untestable** (power 0.05) |
+| P12 #40 false alarm | no pairs; f_neg 0.20 > ½ × 0.26 (mixed) | true rate 0.05× #12 opponents; 0 excess pairs | mixed → **pass** |
+
+**Holm** (P1c, P2c, P3c, P6c, P7c, P10c): 0.006, 0.006, 0.006, 1, 0.99, 1.
+
+**Verdict by the card's rule:** P1c and P2c pass, and none of P6c, P7c, P10c does. The verdict is unchanged: **detector validated, generalization not shown.**
+
+**Which verdicts change.**
+- **G40: mixed → supported.** The rate clause failed in round 1 only because the labeller counted correction friction as conflict.
+- **G26: failed → untestable** for round 1c. Too few flags; the round-1 failure was also low-powered.
+- **G12 and G51 stay supported and failed.** G12 now rests on disagreement on the merits. In G51 the failure now has a stated reach (rivals ≥ +2, opposed ≥ +3 log-odds excluded) and loses the governance-friction lead.
+- **Operator spec:** the validated flag replaces stance-v1's "oppose". The "subtract the 0.065 noise floor" rule is replaced by the Rogan–Gladen correction with precision ≈ 0.64 and recall ≈ 0.6.
+
+**Scorecard (1c notes, for the v2 rater).**
+- A: the label is validated (precision 0.61–0.67; #12 stratum 10/10); the pairs use ledger visibility; DQ6 roles. Family invariance of the label is still unchecked.
+- C: unchanged. The #12 contrast beats a stress null built from the labeller's confusion; nothing elsewhere beats its null.
+- F: the synthetic now uses the validated noise on the real structures, with power tables for every test.
+- I: still 0 (#34 not run).
+
+**Estimates:** 11 rows in `per_period_estimates`, status "round 1c, stance v2.1".
+
+### Proposed re-freeze of `confirm_g34.py` (needs Vivian's sign-off; the frozen script is not edited)
+The frozen #34 script labels new #34 pairs with stance-v1 (negative precision 0.30) through the Jev API. Round 1c shows the validated v2.1 flag carries assigned conflict cleanly. Held-out v2.1 labels for the locked holdout already exist (`data/processed/holdout_labels/reply_stance_v2_holdout.parquet`, prepared by DQ10; no statistic computed; not opened here). Proposal for a new frozen script (`confirm_g34_v2.py`), to be written and dry-run only after sign-off:
+1. **Pairs and labels:** #34 DQ2 candidate pairs (`pair_set = cand`, p_reply ≥ 0.5) joined to the held-out v2.1 labels. Flag = `stance2 == "disagree"` and `stance2_conf ≥ 0.6`, agent parents (`a_kind = 0`). No API call, no spend.
+2. **Primary (C1-v2):** suspicion from *received* disagreement. This is the agent-day target effect of the noise-aware agent-field logistic, z-scored within day. AUC (saboteur > villager) against a within-day label permutation. The decision thresholds are unchanged (supported if AUC ≥ 0.60 and p < 0.05; failed if AUC < 0.55 or p > 0.20).
+3. **Secondary:** given disagreement (C2-v2); received `s2_soft` (unvalidated, aggregate); the stance-v1 primary is dropped.
+4. **Ground truth:** H21's self-identification rule as frozen, or DQ6 saboteur labels where they exist (checked at freeze time).
+5. **Before freezing:** a synthetic power check on the #33 and #26 stand-in structures, with planted received disagreement at +1 and +2 log-odds. At the village flag rate (≈ 1%), #34 may hold too few flags. If the power at +2 is below 0.5, the test should stay on stance-v1 or be dropped, not re-frozen.
+6. **Disclosure:** this is the first read of the held-out v2.1 labels for #34. Holdout ledger and LOG.md entries are needed.
+
+**Claim that stands:** A validated zero-shot disagreement flag on reply pairs separates assigned debate opponents from teammates in #12 (33/74 vs 0/60 replies; beyond a stress null built from the labeller's confusion, p 0.001; topic AUC 0.48). It stays quiet in a consensus week (#40: true rate 0.05× the debate rate, no excess pair), and rival and opposed roles in #51 show no excess disagreement (rivals +0.46 log-odds [−1.5, 1.4]; opposed roles 0 of 55 replies). Excluded: generalization beyond assigned conflict (inconclusive at +1 log-odds; excluded at +2 for rivals and +3 for opposed roles); #26 ballots (untestable, power 0.05); the media-niche excess (post hoc, one pair); the governance-friction lead (not replicated).
 
 ## Round 2 redirects
 - **What the direction is really after:** a cheap, calibrated sensor for adversarial or factional behaviour in agent swarms, and its detection limits.

@@ -1,4 +1,4 @@
-\hwhat{H22 finds that rival agents in \#51 co-move in \emph{topic}, so topic cannot show conflict. H37 tests whether \emph{stance} shows it. A zero-shot labeller (Jev) marks 30k reply pairs in \#12, \#26, \#40 and \#51 (B to A: agree, support, neutral, oppose, undermine; \$1.12). Blind validation gives $\kappa_{\rm sign}=0.67$ (random) and 0.37 (enriched). In the \#12 debates, stance separates opponents from teammates (AUC 0.74 after agent effects), and topic does not (0.48). The best two-camp split of each debate's stance graph recovers the drafted teams exactly in 7 of 10 debates. The contrast vanishes within 10 min of the verdict. Elsewhere there is little to find. \#51 rivals and opposed roles are as friendly as anyone, and \#26 stance ignores ballots. \#51's 10 antagonistic pairs (vs 0.33 expected) sit on norm-enforcing roles (post hoc). The \#34 saboteur test is written, \textbf{not run}.}
+\hwhat{H22 finds that rival agents in \#51 co-move in \emph{topic}, so topic cannot show conflict. H37 tests whether \emph{stance} shows it. A zero-shot labeller (Jev) marks 30k reply pairs in \#12, \#26, \#40 and \#51. In the \#12 debates, stance separates opponents from teammates (AUC 0.74 after agent effects), and topic does not (0.48). Stance recovers the drafted teams exactly in 7 of 10 debates, and the contrast vanishes after the verdict. \#51 rivals and opposed roles are as friendly as anyone, and \#26 stance ignores ballots. \textbf{Round 1c} re-tests this on ledger-visible DQ2 replies with DQ10's validated disagreement flag (precision 0.61--0.67, recall $\approx0.6$). with its noise in every null. \#12 opponents disagree in 33 of 74 replies and teammates in 0 of 60 (stress null $p=0.001$). \#40 now raises no false alarm. \#51 rivals and opposed roles show no excess disagreement. The \#34 saboteur test is \textbf{not run}; a re-freeze on held-out v2.1 labels is proposed.}
 
 \hmodel{Models 01 (signed Ising) and 10 (Potts communities). The spin is a bond: the stance $s_e\in[-1,1]$ of reply $e$ from $j$ to $i$, from Jev probabilities. $a_j$ and $b_i$ are agent fields (agreeableness, likability) of an ordered logit with cut points $c_k$. $\Delta$ is the camp coupling. $J_{ij}$ is the residual pair stance after the fields, and $\xi_i=\pm1$ is the camp. Factions are the ground state of $H(\xi)$; frustration $f$ is the weight it leaves unsatisfied. $\gamma$ is same-team ($\delta^{\rm team}_{ij}=1$) minus opposite-team stance, with fields absorbed.}
 
@@ -12,25 +12,23 @@ f=\tfrac12\Big(1-\max_{\boldsymbol\xi}\big[-H(\boldsymbol\xi)\big]\big/\textstyl
 
 \hobs{../figures/summary_obs.pdf}{(a) \#12: AUC for same-team against opposite-team replies, with agent effects removed. Stance (blue) separates the teams only while they debate. Topic similarity of the same reply pairs (orange) never does. (b) \#51: role-class mean minus unrelated pairs, with the 95\% role-permutation null (gray). Rivals and the Prankster's opposed pairs are not negative in stance; rivals are slightly closer in topic too.}
 
-\htelos{To find assigned sides or a scapegoated agent, run a stance labeller on replies. It costs about \$1.12 per 30k reply pairs and recovers debate teams exactly in 7/10 debates. Check every camp alarm against the agent-field (ordered-logit) null, which holds 4\% false alarms; the sign-shuffle null fires falsely in 28--100\%. In cooperative weeks the detector stays quiet. LLM agents almost never take sides unless a protocol tells them to: rivalry, opposed incentives and elections all come out polite. So the detector mostly confirms that nothing happens. Whether it catches covert sabotage is the open \#34 question. Do not monitor the raw ``negative reply'' rate alone: it is mostly correction friction plus label noise.}
+\htelos{To find assigned sides or a scapegoated agent, run a stance labeller on replies. It costs about \$1.12 per 30k reply pairs and recovers debate teams exactly in 7/10 debates. Check every camp alarm against the agent-field (ordered-logit) null, which holds 4\% false alarms; the sign-shuffle null fires falsely in 28--100\%. LLM agents almost never take sides unless a protocol tells them to, so the detector mostly confirms that nothing happens. Whether it catches covert sabotage is the open \#34 question. Do not monitor the raw ``negative reply'' rate: it is mostly correction friction. Use the validated disagreement flag, corrected for precision $\approx0.64$ and recall $\approx0.6$.}
 
-\hbottom{Stance labels see the conflict a debate assigns (teams 7/10, topic blind), but rival, opposed and voting agents show none: conflict lives in stance only where imposed.}
+\hbottom{A validated disagreement flag sees the conflict a debate assigns (45\% vs 0\% of replies; topic blind), and rival and opposed agents show none: disagreement lives only where imposed.}
 
-\hresults{\footnotesize\noindent\begin{tabular}{@{}p{0.30\columnwidth}p{0.52\columnwidth}p{0.12\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\
-P1 \#12 teams in stance & teammates $+0.32$, opponents $-0.13$; $\gamma=0.42$, $p=0.0002$ & held\\
-P2 \#12 not in topic & AUC 0.74 (stance) vs 0.48 (topic); $p=0.0002$ with topic covariate & held\\
-P3 \#12 camps $\ge0.80$ & 0.89 ($p<10^{-4}$), exact 7/10; topic graph 0.71 & held\\
-P5 \#12 after verdict & $\gamma$ 0.42 $\to$ 0.03; relaxation, no sign flip & held\\
-P6 \#51 Prankster pairs & $T_{\rm OP}=+0.02$ (2 pairs, both positive) & failed\\
-P7 \#51 rivals & $T_{\rm SR}=+0.085$ in stance, $+0.078$ in topic & failed\\
-P9 \#51 negative pairs & 0 of 13 in conflict roles (post hoc: 10/13 norm-enforcing) & failed\\
-P10 \#26 ballots & Mantel $r=0.01$, $p=0.47$ (power $\le0.42$) & failed\\
-P12 \#40 false alarm & no pairs, no camps; but 20\% labelled ``oppose'' & mixed
+\hresults{\footnotesize\noindent\begin{tabular}{@{}p{0.22\columnwidth}p{0.60\columnwidth}p{0.12\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 $\to$ round 1c (validated flag)} & \textbf{Verdict}\\
+P1 \#12 teams & $\gamma$ 0.42 $\to$ flags 33/74 across vs 0/60 within; stress $p$ 0.001 & held\\
+P2 not topic & AUC 0.74 vs 0.48 $\to$ topic AUC 0.48; holds with topic covariate & held\\
+P5 verdict & $\gamma$ 0.42$\to$0.03 $\to$ 0 flags in 90 replies & held\\
+P6 \#51 opposed & $T_{\rm OP}$ $+0.02$ $\to$ 0/55 replies, $\beta=-2.0$ & failed\\
+P7 \#51 rivals & $T_{\rm SR}$ $+0.085$ $\to$ $\beta=+0.46$ $[-1.5,1.4]$ & failed\\
+P10 \#26 ballots & $r$ 0.01 $\to$ 7 flags, power 0.05 & untestable\\
+P12 \#40 & 20\% ``oppose'' $\to$ true rate $0.05\times$ debate; 0 pairs & mixed$\to$held
 \end{tabular}}
 
 \hobsb{../figures/summary_obsb.pdf}{(a) Synthetic \#12 on the real reply graph. With Jev's measured noise, the team contrast is detectable from $\Delta\approx0.5$ logit; real \#12 matches $\Delta\gtrsim1$. (b) Camp alarms under agent fields only. The sign-shuffle null fires falsely (28\% at \#40, 100\% at \#51); the calibrated ordered-logit null holds 4\%.}
 
-\hcaveats{The test has one labeller and one rater. The analyst's blind labels define truth, and Jev's ``oppose'' is only 30\% precise. Debate rebuttals often address the other team, not a named agent, so the reply graph undersamples them. Graphs outside \#51 are small (7--14 agents). Balance indices are unstable and are not used. \#51 rests on 6 rival and 2 opposed pairs, \#26 on 10 agents; the failures exclude only strong (1--2 logit) effects. The calibrated null (Amendment 2) and the governance-friction reading come after the data. The topic baseline uses one embedding model.}
+\hcaveats{Round 1 used one labeller and one rater, and Jev's ``oppose'' was only 30\% precise. Round 1c's flag is validated (precision 0.61--0.67) but rare (0.85\% in \#51). Rival tests are therefore inconclusive at $+1$ log-odds. \#51 rests on 6 rival and 2 opposed pairs; \#26 has 9 voters. The calibrated null (Amendment 2) came after the data. The topic baseline uses one embedding model.}
 
 \hnext{Add a second labeller and a human rater. Run the calibrated detector on contested periods (\#19, \#31) and, pre-registered, on the \#51 tail. Test signed reply dynamics: measure whether a negative reply begets another. Run the \#34 saboteur confirmation after sign-off.}

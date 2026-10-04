@@ -1,13 +1,13 @@
 {
- "complete": 40,
+ "complete": 55,
  "faithfulness": 2.0,
  "usefulness": 2.5,
  "rationale": {
-  "complete": "Round 1 done: pre-registered predictions, 30k Jev labels with two blind validation sets, synthetic validation at the real reply graphs (S1-S6), four periods with verdicts, a calibrated null for the detector, and a #34 confirmatory script with dry run. Not done: a second labeller or rater, the holdout run, contested periods, signed reply dynamics.",
-  "faithfulness": "Clear but partial: the positive control passes strongly (beats team permutation, agent fields and topic; teams recovered 7/10), but the hypothesis' general claim fails where conflict is not assigned (#51 roles, #26 ballots), and the per-pair and faction nulls needed post-hoc calibration.",
+  "complete": "Round 1 done: pre-registered predictions, 30k Jev labels with two blind validation sets, synthetic validation at the real reply graphs (S1-S6), four periods with verdicts, a calibrated null for the detector, and a #34 confirmatory script with dry run. Not done: a second labeller or rater, the holdout run, contested periods, signed reply dynamics. Round 1c (2026-10-04): DQ2 ledger-visible pairs, DQ10 validated disagreement flag with the labeller's precision and recall in every null, DQ6 ground truth, synthetic power on the real structures, all primary predictions re-tested; #34 re-freeze proposed.",
+  "faithfulness": "Clear but partial: the positive control passes strongly (beats team permutation, agent fields and topic; teams recovered 7/10), but the hypothesis' general claim fails where conflict is not assigned (#51 roles, #26 ballots), and the per-pair and faction nulls needed post-hoc calibration. Round 1c: #12 contrast holds as disagreement on the merits (33/74 vs 0/60; stress null p 0.001); #40 false-alarm clause now passes; #51 failure now has a stated reach (rivals excluded at +2, opposed at +3 log-odds); governance-friction lead not replicated.",
   "usefulness": "A cheap detector of assigned or explicit sides with measured accuracy and a calibrated false-alarm rate that an operator can run on chat logs. Payoff is limited because LLM swarms rarely produce stance conflict, Jev's negative calls are imprecise, and the saboteur use case is untested (holdout)."
  },
- "one_line": "Stance labels recover assigned debate teams that topic misses (7/10 exact), but rivals, opposed roles and voters show no stance conflict.",
+ "one_line": "A validated disagreement flag recovers assigned debate conflict that topic misses (33/74 vs 0/60 replies) and stays quiet elsewhere; rivals, opposed roles and voters show no excess disagreement.",
  "models": [
   {
    "model": "01-inverse-ising",
@@ -26,87 +26,67 @@
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
  "v2": {
-  "claim": "Stance recovers assigned debate teams; no stance conflict without assignment",
+  "claim": "A validated zero-shot disagreement flag separates assigned debate opponents from teammates in #12 (33/74 vs 0/60; stress null p 0.001; topic AUC 0.48) and stays quiet in a consensus week (#40: 0.05× the debate rate); #51 rival and opposed roles show no excess disagreement (excluded at +2 and +3 log-odds)",
+  "scope": "#12, #40, #51 (#26 untestable)",
+  "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.64,
+  "credence": 0.65,
   "ladder": [
    {
     "factor": "base (pre)",
     "x": 0.4
    },
    {
-    "factor": "ground truth agrees",
-    "x": 1.5
+    "factor": "calibrated label-confusion stress null",
+    "x": 2.0,
+    "evidence": "card §Round 1c"
    },
    {
-    "factor": "replication",
-    "x": 2
+    "factor": "ground truth agrees (DQ6)",
+    "x": 1.5,
+    "evidence": "card §Round 1c"
    },
    {
     "factor": "synthetic identification",
-    "x": 1.5
+    "x": 1.5,
+    "evidence": "card §Amendment 1c-1"
    },
    {
-    "factor": "penalty (labeller/visibility)",
-    "x": 0.8
+    "factor": "false-alarm control passes (#40)",
+    "x": 1.2,
+    "evidence": "card §Round 1c"
+   },
+   {
+    "factor": "penalty: positive result in one period",
+    "x": 0.6,
+    "evidence": "card §Round 1c"
+   },
+   {
+    "factor": "penalty: validated LLM labels, precision ~0.64",
+    "x": 0.85,
+    "evidence": "stance_v2.md"
    }
   ],
-  "mechanism_level": "M1",
+  "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 2.75,
-  "decision": "conflict monitoring",
-  "magnitude": "material",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 1.76,
-  "scientific_value": 3.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
-  "raters": [
-   {
-    "rater": "coordinator",
-    "credence": 0.71,
-    "value_if_true": 2.5,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Scope: #12 assigned debates (plus null results in #51, #26). Stance labels, not topic, separate assigned debate teams (AUC 0.74 vs 0.48; exact two-camp recovery in 7/10 debates; relaxes within 10 min of the verdict); rivals, opposed roles and voters show no stance conflict.",
-    "credence": 0.56,
-    "value_if_true": 3.0,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3,
-    "ladder": [
-     {
-      "factor": "partial replication: 10 debates within one period, 7/10 exact",
-      "x": 1.5,
-      "evidence": "summary hwhat"
-     },
-     {
-      "factor": "identified: synthetic on the real reply graph detects Delta ~0.5 logit; real Delta >~1",
-      "x": 1.5,
-      "evidence": "summary hobsb"
-     },
-     {
-      "factor": "ground truth agrees: drafted teams are known structure",
-      "x": 1.5,
-      "evidence": "summary hresults P3"
-     },
-     {
-      "factor": "penalty: LLM stance labels with modest validation (kappa 0.37-0.67; 'oppose' 30% precise), one labeller",
-      "x": 0.7,
-      "evidence": "summary hcaveats"
-     },
-     {
-      "factor": "penalty: old inputs (reply pairs from chat_mentions_clean, no ledger, one embedding; no round 1b)",
-      "x": 0.8,
-      "evidence": "card Standards Inputs"
-     }
-    ]
-   }
-  ],
-  "adjudicate": false
- }
+  "value_if_true": 1.5,
+  "decision": "use the validated disagreement flag as a conflict sensor; don't expect role rivalry alone to produce disagreement",
+  "magnitude": "small",
+  "generality": "LLM swarms",
+  "expected_usefulness": 0.97,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H37 round 1c); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "Stance recovers assigned debate teams; no stance conflict without assignment",
+   "credence": 0.64,
+   "fragile": false,
+   "value_if_true": 2.75,
+   "expected_usefulness": 1.76,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04"
+  }
+ ]
 }

@@ -1,6 +1,7 @@
 # H37 × G26: Elect a village leader (2026-01-05 → 2026-01-12)
 
 **Verdict:** failed (stance does not track ballots; no factions)
+**Verdict (1c):** n/a (untestable: 7 flags; power 0.05 at +1 log-odds)
 **Role:** replication (exploratory)
 **Period:** regime I · mode C · 10 agents · one room · 5 days. Approval voting over several candidates, then a runoff won by DeepSeek-V3.2 (H11 G26: abrupt jump 0.18 → 0.80).
 
@@ -28,6 +29,9 @@ An election is the one non-debate period with an explicit, recorded partisan str
 **Descriptive.** Stance toward the eventual winner (DeepSeek-V3.2) dips on the runoff day (01-09: +0.21 vs +0.30–0.52 earlier), the only sign of contention.
 
 **Reading.** The election was cooperative in stance: approval voting among LLM agents did not create stance factions that the labeller can see.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*P10c written 2026-10-04 22:10 UTC in the card; synthetic power at 22:27 UTC (0.05 / 0.18 / 0.71 at +1 / +2 / +4 log-odds per unit of ballot dissimilarity), below the registered 0.3, so the test is untestable. Descriptive: 9 voters (DQ6 approval ballots), 937 voter-to-voter replies, 7 flags; Mantel r = −0.30 (p_greater 0.95).
 
 ## Scorecard (period-specific axes)
 | Axis | Score | Evidence |

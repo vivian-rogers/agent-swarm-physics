@@ -1,13 +1,13 @@
 {
- "complete": 50,
+ "complete": 60,
  "faithfulness": 2.0,
  "usefulness": 2.0,
  "rationale": {
-  "complete": "Round 1 plus round 1b: DQ6 check, second embedding model on masked text, style-residualized and deduplicated inputs, DQ2 stance channel with the calibrated agent-field null, three native tests (G12 re-drafting, G26 ballots, G33 unassigned debate). #34 not run.",
-  "faithfulness": "Two-sublattice order is supported in reply stance (beats team permutation and the calibrated agent-field null; teams recovered 8/10; within-pair contrast 16/18; switches off at the verdict) but absent in content in every variant. Coupling beyond the assigned field is not shown, so the coupled-antiferromagnet model is not reached.",
+  "complete": "Round 1 plus round 1b: DQ6 check, second embedding model on masked text, style-residualized and deduplicated inputs, DQ2 stance channel with the calibrated agent-field null, three native tests (G12 re-drafting, G26 ballots, G33 unassigned debate). #34 not run. Round 1c (2026-10-04): DQ10 validated disagreement flag with the labeller's precision and recall built into the nulls, synthetic validation on the real reply structure, S1c-S3c, within-pair and #26/#33 controls re-tested.",
+  "faithfulness": "Two-sublattice order is supported in reply stance (beats team permutation and the calibrated agent-field null; teams recovered 8/10; within-pair contrast 16/18; switches off at the verdict) but absent in content in every variant. Coupling beyond the assigned field is not shown, so the coupled-antiferromagnet model is not reached. Round 1c: the cross-team order is disagreement on the merits (33/74 vs 0/60 flags; stress null p 0.001); switch-off at the verdict now powered (0 flags in 90 replies).",
   "usefulness": "A validated faction check on assigned conflict (stance on reply pairs, aggregated, against an agent-field null) and a clear negative: no camps form without assignment (#26, #33). Useful as a role-adherence monitor; not a steering lever."
  },
- "one_line": "Debate teams are invisible in content but form two sublattices in reply stance while assigned; no camps form without assignment.",
+ "one_line": "Debate teams are invisible in content; drafted opponents disagree on the merits in 45% of replies and teammates never, only while sides are assigned.",
  "models": [
   {
    "model": "11-vector-spins",
@@ -31,104 +31,62 @@
  "rated_by": "RE-C2 round-1b agent (suggested)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Assigned debate sides show two-sublattice order in stance (replies), not in content; assignment alone explains it",
-  "scope": "10 debates; G12 re-drafting; G26, G33 as negative controls",
+  "claim": "In #12's ten debates, drafted opponents disagree on the merits in 45% of their replies (true rate 0.52–0.76) and teammates in none of 60 (Δf 0.54, 9/10 debates, label-confusion stress null p 0.001); the disagreement stops at the verdict (0 flags in 90 replies, power ≥ 0.9) and stays at 1–2% without assigned sides (#26, #33)",
+  "scope": "#12 (10 debates, 7 agents); controls #26, #33",
   "direction": "positive",
-  "original_verdict": "failed (antiferromagnet)",
-  "credence": 0.8,
+  "original_verdict": "supported",
+  "credence": 0.7,
   "ladder": [
    {
-    "factor": "base (sec)",
-    "x": 0.3
+    "factor": "base (pre)",
+    "x": 0.4
    },
    {
-    "factor": "calibrated null (agent-field)",
-    "x": 2,
-    "evidence": "card §Round 1b"
+    "factor": "calibrated label-confusion stress null",
+    "x": 2.0,
+    "evidence": "card §Round 1c"
    },
    {
-    "factor": "replication (10/10 debates; 16/18 pairs in G12)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "robust (content null in every variant)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "ground truth agrees (DQ6)",
+    "factor": "ground truth agrees (DQ6 teams; graph recovers 5.8/10)",
     "x": 1.5,
-    "evidence": "card §Round 1b"
+    "evidence": "card §Round 1c"
    },
    {
-    "factor": "rival beaten (stance AUC 0.75 vs content 0.55)",
+    "factor": "synthetic identification on the real pair structure",
     "x": 1.5,
-    "evidence": "card §Round 1b"
+    "evidence": "card §Amendment 1c-1"
    },
    {
-    "factor": "penalty: LLM stance labels",
-    "x": 0.8,
-    "evidence": "DQ2"
+    "factor": "partial replication across debates and pairs (9/10; 10/14 pairs)",
+    "x": 1.3,
+    "evidence": "card §Round 1c"
+   },
+   {
+    "factor": "powered null after the verdict",
+    "x": 1.2,
+    "evidence": "card §Round 1c"
+   },
+   {
+    "factor": "penalty: one period, 7 agents",
+    "x": 0.6,
+    "evidence": "card §Round 1c"
+   },
+   {
+    "factor": "penalty: validated LLM labels, precision ~0.64",
+    "x": 0.85,
+    "evidence": "stance_v2.md"
    }
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.0,
-  "decision": "read debate roles from stance, not topic",
+  "value_if_true": 1.5,
+  "decision": "assigned sides produce real disagreement that ends with the verdict; without sides, expect ~1–2%",
   "magnitude": "small",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 1.6,
-  "scientific_value": 3.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
-  "raters": [
-   {
-    "rater": "coordinator",
-    "credence": 0.86,
-    "value_if_true": 1.5,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "In #12 debates, reply stance (not content embeddings) shows two-sublattice team order only while sides are assigned: teammates +0.41 vs opponents -0.32 (10/10 debates, beyond the agent-field null), teams recovered 8/10, gone after the verdict; no camps form without assignment (#26, #33).",
-    "credence": 0.73,
-    "value_if_true": 2.5,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3,
-    "ladder": [
-     {
-      "factor": "calibrated null passed",
-      "x": 2,
-      "evidence": "agent-field null, 500 sims, p=0.002"
-     },
-     {
-      "factor": "partial replication",
-      "x": 1.5,
-      "evidence": "10/10 debates, but one period, seven agents"
-     },
-     {
-      "factor": "robust to instruments",
-      "x": 2,
-      "evidence": "H37's own Jev stance labels agree (7/10 teams); content null holds in both models"
-     },
-     {
-      "factor": "ground truth agrees",
-      "x": 1.5,
-      "evidence": "DQ6 team labels recovered 8/10"
-     },
-     {
-      "factor": "penalty: unvalidated LLM labels",
-      "x": 0.7,
-      "evidence": "zero-shot stance; pair-level opposes precision 0.08"
-     }
-    ]
-   }
-  ],
-  "adjudicate": false
+  "generality": "LLM swarms with assigned roles",
+  "expected_usefulness": 1.06,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H21 round 1c); independent rater pending",
+  "rated_at": "2026-10-04"
  },
  "v2_history": [
   {
@@ -138,6 +96,15 @@
    "value_if_true": 1,
    "expected_usefulness": 0.67,
    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
+  },
+  {
+   "claim": "Assigned debate sides show two-sublattice order in stance (replies), not in content; assignment alone explains it",
+   "credence": 0.8,
+   "fragile": false,
+   "value_if_true": 2.0,
+   "expected_usefulness": 1.6,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
    "rated_at": "2026-10-04"
   }
  ]

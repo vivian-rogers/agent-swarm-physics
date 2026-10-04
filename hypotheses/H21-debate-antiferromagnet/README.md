@@ -2,6 +2,7 @@
 
 **Status:** running. Exploratory round 1 done 2026-10-03: **primary prediction failed.** There is no full-vector two-sublattice order, but a weak staggered moment along the motion's a-priori stance axis. #34 confirm script written, not run. Promoted 2026-10-03 by Vivian from HH103.
 **Round 1b (2026-10-04, section below): two-sublattice order is supported in reply stance, not in content.** The content null holds in both embedding models and every input variant. In DQ2 reply stance the drafted teams order as two sublattices (Δ_stance 0.72, 10/10 debates, beyond the calibrated agent-field null; teams recovered 8/10), the same agent pair turns hostile only when drafted onto opposite sides (16/18 pairs), and the order switches off at the verdict. Where nobody assigns sides (#26 vote, #33 news debate) no camps form. A coupling beyond the assigned field is still not shown.
+**Round 1c (2026-10-04, stance v2.1, section below): the stance order is disagreement on the merits.** With DQ10's validated flag, all 33 debate-phase flags fall across teams (45% of opponents' replies, 0 of 60 teammates'), beyond a stress null built from the labeller's confusion (p 0.001). It stops at the verdict (0 flags in 90 post-window replies; power ≥ 0.9). Unassigned periods stay at 1–2%. Coupling beyond the assigned field: still not shown.
 **Fields:** stat mech, sociophysics
 **Origin:** HH103 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Agent (roster agent), Regime (I), Agent state, **variant vector** (`physics-models/DEFINITIONS.md`), here the sub-variant *"agent state (vector, masked window mean)"* defined below (proposed for DEFINITIONS.md; not added there, edit scope). Agent state, **variant categorical** for the team label (σ_i ∈ {Gov, Opp, judge, bench} per debate). Driving / external field (goal and motion text; the verdict).
@@ -16,11 +17,11 @@
 | Shared model priors | yes | Agent centring, lab-partition placebo (N3) and `style_resid_period` in both models. | removed |
 | Contemporaneous convergence | partly | Not handled for P7's fluctuation co-movement (read as common drive). Close with the in-flight placebo (§1). | open |
 
-**Inputs:** all current: gte, `style_resid_period`, DQ5 dedupe, DQ2 stance, DQ6 labels. Activity does not apply.
+**Inputs:** all current: gte, `style_resid_period`, DQ5 dedupe, DQ2 stance, DQ6 labels. Activity does not apply. Round 1c adds DQ10 `reply_stance_v2` (`disagree_validated_agent`) with the labeller's noise built into the nulls.
 
 **Two layers:** 1 replication period (G12). Natives: 3 in the card (G12 re-drafting supported, G26 failed, G33 failed); 2 folders carry `**Role:** native`.
 
-**Confirm script:** `confirm_g34.py` (#34), written, not run. Re-freeze: no; its inputs are unaffected. Its reuse note calls H05's #34 script unrun, but H05 ran on #34 days (holdout item 4).
+**Confirm script:** `confirm_g34.py` (#34), written, not run. Re-freeze: no; its inputs are unaffected. Round 1c: no switch to stance v2.1 is proposed, because the #34 test scores content vectors, not stance; H37's #34 script carries the stance design. Its reuse note calls H05's #34 script unrun, but H05 ran on #34 days (holdout item 4).
 
 ## Question
 In #12 the agents formed two teams to debate, with one agent judging. In content space, do the teams order as two sublattices: aligned within a team, anti-aligned across teams along the debate axis? Is the staggered magnetization m_A − m_B the order parameter? Does the judge act as an external field that is zero during the debate and switched on at the verdict, collapsing or flipping the order? Practical payoff: detecting factions or teams from content alone, which links to finding hidden teams (D8.3).
@@ -222,8 +223,9 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | --- | --- | --- | --- |
 | [G12](goalperiod-subhypotheses/G12/README.md) | exploratory | **failed** (AF); descriptive: weak 1-D staggered moment | Δ̄ = 0.028 [−0.10, 0.17], p = 0.34; teams recovered 1/10 (chance 1.5); text-axis σ = 0.092, p = 0.002 (9/10); post-verdict flip −0.36 (post hoc, 7/9); topic order on/off 0.42 → 0.01 |
 | [G12](goalperiod-subhypotheses/G12/README.md) round 1b | exploratory + native | **supported in stance** | Δ_stance 0.72 (10/10; agent-field p 0.002); teams 8/10 (chance 1.0); within-pair −0.68 (16/18); post-verdict −0.01; content Δ̄ +0.028 (bge) / −0.028 (gte) |
+| [G12](goalperiod-subhypotheses/G12/README.md) round 1c | exploratory + native | **supported in disagreement** (stance v2.1) | flags 33/74 across vs 0/60 within; Δf 0.54 (9/10; stress p 0.001); true rate 0.52–0.76 vs ≤ 0.08; flag-graph teams 5.8/10; within-pair 10/14 (0 against); post-verdict 0 flags in 90 (power ≥ 0.9) |
 | [G26](goalperiod-subhypotheses/G26/README.md) | native (1b) | failed (as predicted) | ballot camps vs stance r 0.000 (p 0.51); content −0.07 / +0.08 |
-| [G33](goalperiod-subhypotheses/G33/README.md) | native (1b) | failed (as predicted) | mean stance +0.50; camps p 0.10 vs agent-field null; 1 negative pair (null 1.2) |
+| [G33](goalperiod-subhypotheses/G33/README.md) | native (1b) | failed (as predicted) | mean stance +0.50; camps p 0.10 vs agent-field null; 1 negative pair (null 1.2). Round 1c: true disagreement rate 0.019 [0, 0.049]; flag-graph camps p 0.32; #26: 0.007 [0, 0.023] |
 | #34 🔒 | confirmatory (planned) | not run | `analysis/confirm_g34.py`; dry run OK on #33 / #12 stand-ins |
 
 ## Results
@@ -343,6 +345,114 @@ Unmasked inputs give the same picture (Δ̄ 0.017 bge, −0.046 gte). **The cont
 
 **Scorecard after 1b** (now scored on the stance mapping, content kept as the failed mapping): C 1 → 2 (stance order beats team permutation and the calibrated agent-field null, per debate), D 0 → 1 (teams recovered 8/10, unfitted; no AF fluctuation signature), E 0 → 1 (ten field switch-offs at known verdict instants: stance order off within 10 min), F 1 → 2 (content null robust across two lineages and five input variants; stance null calibrated, H37 size 0.04), G 1 → 2 (drafted teams recovered; within-pair contrast), H 0 → 1 (stance beats topic and pair affinity; the staggered paramagnet is still not separated from coupling). A 1, B 0, I 0 unchanged (#34 not run; no non-holdout period with assigned teams).
 **Figure:** `figures/r1b_stance_vs_content.pdf`. **Estimates:** 28 rows in `per_period_estimates`.
+
+## Round 1c (stance v2.1, 2026-10-04)
+*Re-test of the round-1b stance clauses with the validated conflict flag of DQ10 (`infra/data-quality/stance_v2.md`). Round 1b read DQ2 `opposes` in aggregate only (pair-level precision 0.08; Limits 1 of `reply_threading.md`). DQ10 found that only 12% of DQ2 `opposes` pairs dispute A on the merits; the rest are corrections, declines, coordination and information. So round 1b's "hostility" could be task pushback, not disagreement. Round 1c asks whether the drafted teams disagree on the merits.*
+
+### Pre-registration (written 2026-10-04 22:10 UTC, before any round-1c statistic)
+**Seen before writing.**
+- Round 1 and 1b results (above); H37 round 1; DQ10's validation (stance_v2.md, all rounds).
+- Marginal flag counts per goal period (`disagree_validated_agent`): #12 44 of 1,325 pairs; #26 8 of 1,037; #33 14 of 962. No count split by team, phase or pair.
+- Structural counts of #12 debater-to-debater pairs in the v2 population (p_reply ≥ 0.5, agent parents): debate phase 134 (60 within team, 74 across), post 90, pre 38; 3–27 per debate.
+- Per-stratum flag precision on DQ10's two test sheets: in the #12 stratum, 10 of 10 flagged pairs were reference `disagree` (fresh sheet 3/3, confirm2 7/7). This is labeller quality, not a team statistic.
+
+**Input.** `data/processed/shared/reply_stance_v2.parquet`, column `disagree_validated_agent` (Jev v2.1 `disagree` with confidence ≥ 0.6, agent or human parent). Rows: goal period, `a_kind = 0` (agent parent), B ≠ A, `holdout = false` (and `holdout_mask` re-applied). The population is DQ2 candidate pairs with p_reply ≥ 0.5, so round 1b's soft p_reply weighting is replaced by this hard reply filter. Phases and teams: H21's labels (equal to DQ6 `ground_truth_labels`, re-checked by `gt_check`). Debater-to-debater pairs inside a phase, as in 1b.
+- **Primary observable:** the flag f_e ∈ {0, 1} per reply. **Secondary (not validated, aggregate only):** `s2_soft` = p_agree − p_disagree and `p_disagree`.
+- **Validated noise (DQ10):** precision 0.61–0.67 (CI lower bound ≈ 0.54), recall ≈ 0.6, population flag rate q = 0.0106 (agent parents).
+
+**Label-noise model (built into the nulls).** True disagreement d_e ∈ {0, 1}. The labeller flags a true disagreement with probability R (recall) and a non-disagreement with probability φ. So P(f_e = 1) = φ + (R − φ)·π_e.
+- **Draws:** each null or fit uses K = 40 draws of precision PPV ~ Beta(mean 0.64, sd 0.065) and R ~ Beta(mean 0.60, sd 0.08). φ follows from the population: π = q·PPV/R, φ = q(1 − PPV)/(1 − π) (≈ 0.004).
+- **Noise-aware agent-field model:** logit π_e = μ + a_speaker + b_target + Δ·1[opposite team], fitted by maximum likelihood through the noise map (L2 penalty 0.1 on the fields, as H37's ordered logit). Δ̂ is the *true* log-odds of disagreement, opponents vs teammates. Its interval combines the K noise draws with a debate bootstrap.
+- **Noise-aware agent-field null:** the same model with Δ = 0, fitted to the observed flags, simulated on the real reply structure (K × 25 = 1,000 replicate flag sets), passed through the noise map.
+- **Label-confusion stress null:** the same, but the false-positive rate differs by group in proportion to the group's share of Jev `correct` + `inform` labels (21 of 28 false `disagree` calls on confirm2 came from these classes). This is the world where opponents only *correct and inform* more, with equal true disagreement.
+- **Corrected rates:** Rogan–Gladen π̂_g = (r_g − φ)/(R − φ) per group, over the noise draws.
+- **Sensitivity:** the #12-specific noise (precision 10/10 → Beta(11, 1); recall ≈ 0.9) in place of the population noise.
+- A constant false-positive rate cannot create a team contrast, so the team-permutation null stays valid under label noise. The noise model matters for the stress null, for true-scale effect sizes and for power.
+
+**Synthetic validation first** (`analysis/r1c_synthetic.py`, before the real run). On the real #12 reply structure (speakers, targets, debates, teams, phases), simulate worlds: null (Δ = 0, agent fields sd 0.5 and 1.0), null with differential false positives (φ_opp/φ_same = 2 and 4), and antiferromagnets with Δ = 0.7, 1.5, 2.5 (true teammate rate 3–5%). Report each world's expected *observed* flag rates per group, the size and power of every test below, and the bias and coverage of Δ̂. A test whose size exceeds 0.08 is replaced by its stress-null version before the real run.
+
+**Predictions (#12 unless stated; credences in brackets).**
+- **S1c (re-tests S1).** The observed flag rate is higher across teams than within: Δf = r_opp − r_same > 0, equal weight per debate, with team-permutation p < 0.01 **and** above the 95th percentile of the noise-aware agent-field null. Noise-corrected true rates: opponents 15–35%, teammates 0–5%; Δ̂ > 0 with its interval excluding 0. [0.75]
+- **S1c-stress.** The label-confusion stress null's expected contrast is below half the observed Δf. [0.8]
+- **S2c (re-tests S2).** The best two-camp split of each debate's flag graph (per-pair flag rate, true block sizes, exact enumeration) equals the drafted teams in ≥ 4/10 debates (Poisson-binomial p < 0.01). [0.4; the flag graph is sparse] Secondary on `s2_soft`: ≥ 6/10. [0.7]
+- **S3c (re-tests S3; antagonism after the verdict).** In the 10-min post window, Δf_post < ½ Δf_deb. [0.7] Antagonism persists (Δf_post > 0 with team-permutation p < 0.05): [0.15].
+- **S3c-carry (new, descriptive).** Outside debate phases, replies between the previous debate's opponents carry no more flags than between its teammates (p > 0.05). [0.75]
+- **Native G12 within-pair (re-test).** The same agent pair is flagged more as opponents than as teammates: mean pair contrast > 0, sign-flip p < 0.05. [0.55]
+- **Negative controls (#26, #33; re-test of the natives).** The noise-corrected disagreement rate between agents in #33 (unassigned debate) and in #26 (vote) is below the #12 opposite-team rate (interval of the difference excludes 0). [0.8] #33 forms no camps in the flag graph beyond the noise-aware agent-field null (p > 0.05). [0.85]
+
+**Kill rules.**
+- **K1.** If S1c fails (Δf ≤ 0, or team-permutation p ≥ 0.05, or the Δ̂ interval includes 0), round 1b's two-sublattice order in stance is reclassified as task pushback, not disagreement. The G12 stance verdict drops to *failed* (Δf ≤ 0) or *mixed* (positive but not significant).
+- **K2.** If the stress null's expected contrast is ≥ half the observed Δf, the stance order is *not separable from label confusion*, and the claim is scoped to "pushback", not "disagreement".
+- **K3 (persistence).** If Δf_post > 0 with p < 0.05, "the order switches off at the verdict" is withdrawn. If the synthetic power of the post-window test at the observed debate-phase Δ is < 0.5, S3c is reported as *inconclusive*, not as switching off.
+- **K4.** A negative control with a corrected disagreement rate at or above the #12 opposite-team rate withdraws "no camps without assignment" for that period.
+
+**Verdict rule for 1c.** "Two-sublattice order in disagreement: supported (exploratory)" needs S1c and S1c-stress, plus S2c (flag or soft) or the within-pair test. "Coupled antiferromagnet" still needs a coupling signature beyond the assigned field. Round-1c tests use reply stance only and cannot supply one; that verdict stays *not shown*.
+
+**Code and outputs.** `analysis/labelnoise.py` (noise model; identical copy in H37, proposed for `infra/shared/`), `analysis/r1c_synthetic.py`, `analysis/r1c.py`, `analysis/r1c_estimates.py`. Outputs in `data/processed/H21-debate-antiferromagnet/r1c/`. Round-1b code is unchanged, so round 1b reproduces.
+
+### Synthetic validation and Amendment 1c-1 (2026-10-04, about 22:15 UTC, before the real run)
+`r1c/synthetic.json`; 100 worlds per row, on the real #12 structure (134 debate-phase pairs: 60 within, 74 across; 7 agents; 10 debates; 90 post-window pairs). True teammate rate 4–5%.
+
+| World | Expected observed flag rate, same / opposite | Team permutation p < 0.05 (< 0.01) | Noise-aware null p < 0.05 | Stress null p < 0.05 | Δ̂ median; CI coverage; CI excludes 0 | Teams ≥ 4/10 (flag graph) | Post-window test p < 0.05 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| null, fields sd 0.5 | 3.0% / 3.4% | 0.05 (0.02) | 0.05 | 0.05 | 0.26; 0.75; 0.09 | 0.00 | 0.00 |
+| null, fields sd 1.0 | 5.2% / 5.2% | 0.01 (0.00) | 0.04 | 0.04 | 0.13; 0.76; 0.08 | 0.00 | 0.00 |
+| null, false positives ×2 across | 3.5% / 4.3% | 0.06 (0.00) | 0.06 | 0.07 | 0.25; 0.82; 0.12 | 0.00 | 0.01 |
+| null, false positives ×4 across | 2.8% / 3.6% | **0.10** (0.01) | 0.01 | 0.01 | 0.26; 0.75; 0.14 | 0.00 | 0.01 |
+| AF Δ = 0.7 (true 4.8% / 8.7%) | 3.1% / 5.7% | 0.17 (0.06) | 0.07 | 0.08 | 0.95; 0.74; 0.29 | 0.00 | 0.01 |
+| AF Δ = 1.5 (true 5.1% / 18%) | 3.4% / 11.5% | 0.37 (0.12) | 0.34 | 0.38 | 1.76; 0.71; 0.53 | 0.01 | 0.15 |
+| AF Δ = 2.5 (true 4.3% / 34%) | 3.2% / 20.5% | 0.79 (0.56) | 0.73 | 0.74 | 2.85; 0.82; 0.88 | 0.11 | 0.44 |
+
+**What it shows.**
+- The noise-aware agent-field null and the stress null are calibrated (size 0.01–0.07).
+- The team-permutation test reaches size 0.10 when false positives are 4× more frequent across teams. Under the pre-registered rule (size > 0.08), its role in S1c passes to the stress null: **S1c now needs stress-null p < 0.01**, plus the noise-aware null's 95th percentile. The team-permutation p is still reported.
+- **Δ̂'s percentile interval under-covers** (0.71–0.82) and excludes 0 in 8–14% of null worlds. The interval clause is dropped from the S1c decision. Δ̂ and the corrected rates are reported as estimates, with this coverage stated.
+- **Power is limited at 134 pairs.** At p < 0.01 the test detects Δ = 2.5 (true 34% vs 4%) in about half of worlds, and Δ = 1.5 in about 1 in 8. A failure of S1c therefore excludes only Δ ≳ 2.5.
+- **S2c (flag graph) is unpowered:** ≥ 4/10 teams in 11% of worlds even at Δ = 2.5. It is reported but cannot carry the verdict; the verdict rule falls back on the within-pair test.
+- **S3c post-window power** is 0.44 at Δ = 2.5 and 0.15 at Δ = 1.5. Under K3, "switches off" needs the power at the observed debate-phase Δ̂ to be ≥ 0.5; otherwise S3c is *inconclusive*.
+
+### Results (2026-10-04, `analysis/r1c.py`; data `r1c/r1c.json`)
+**Inputs.** DQ6 check: H21's teams, judges and winners equal `ground_truth_labels` (10/10). #12 has 1,311 agent-to-agent v2 replies with 44 flags. The debate phase holds 134 debater-to-debater replies: 60 within a team, 74 across.
+
+**The drafted teams disagree on the merits, and only across the team line.**
+- **All 33 debate-phase flags fall across teams:** 33 of 74 opposite-team replies (45%) and 0 of 60 same-team replies.
+- The contrast Δf = 0.54 is positive in 9 of 10 debates (#3 has no flag).
+- It beats the stress null (expected 0.12, 95th percentile 0.28; p = 0.001, the resolution limit), the noise-aware agent-field null (95th percentile 0.27; p = 0.001) and team re-partition (p < 10⁻⁴).
+- **True rates after the labeller's noise:** opponents 0.76 [0.47, 1.0] under the population noise and 0.52 [0.33, 0.82] under the #12-specific noise. Teammates 0; with 0 flags in 60 replies the 95% upper bound is ≈ 0.08 (population noise) or 0.05 (#12 noise).
+- Δ̂ sits at the separation bound (6.4–6.9 log-odds), because teammates carry no flag. It is not an informative effect size; the corrected rates are.
+- **Label confusion does not explain it.** Opponents' replies carry more Jev `correct` + `inform` (55% vs 23%). A false-positive rate scaled by that share would produce 0.12, 23% of the observed contrast (K2 threshold 50%).
+
+**What round 1b's DQ2 "opposes" was, on these rows.**
+- DQ2 calls 53% of opposite-team and 10% of same-team replies "opposes".
+- Across teams, 85% of DQ2-opposes replies carry the validated flag. Within teams, none do.
+- So in the debates, DQ2's cross-team "opposes" was mostly real disagreement. Its same-team "opposes" was pushback (corrections, declines). That is the reverse of the village-wide picture (12% of DQ2 opposes are disagreement), because debates are where disagreement on the merits lives.
+
+**Old vs new (clause by clause).**
+
+| Clause | Round 1b (DQ2 stance, 478 replies, p_reply-weighted) | Round 1c (validated flag, 134 replies, p_reply ≥ 0.5) | Verdict 1c |
+| --- | --- | --- | --- |
+| S1 order across teams | soft Δ 0.72; "opposes" 36% vs 6%; agent-field p 0.002 | flags 45% vs 0%; Δf 0.54 (9/10 debates); stress p 0.001, agent-field p 0.001; true rates 0.52–0.76 vs ≤ 0.08 | **pass** (S1c and S1c-stress) |
+| S2 teams from the graph | 8/10 (chance 1.0) | flag graph 5.8/10 (ties share credit; p 0.0002); `s2_soft` 4.5/10 (p 0.002; secondary target 6/10 missed) | **pass** (flag); soft below target |
+| S3 off after the verdict | post Δ −0.01 vs 0.67 | 0 flags in 90 post-window replies (57 across teams). If the debate rates persisted: 18–25 flags expected, test power 0.90–0.99, P(0 flags) = 2×10⁻¹⁵ | **pass** (switches off; powered) |
+| S3c-carry (new) | — | outside debate phases, previous opponents vs teammates: 1 flag in 410 replies; Δf 0.002 (p 0.50) | as predicted (no carry-over) |
+| Pre-phase (descriptive) | Δ 0.44 | 1 flag in 38 replies | order starts with the speeches |
+| Native within-pair | −0.68 (16/18 pairs negative) | 14 pairs: opponents flagged more in 10, never less, 4 ties; mean +0.43; sign-flip p 0.001, agent-field p 0.002 | **pass** |
+| #33, #26 controls | no camps; ballots do not predict stance | true disagreement rate #33 0.019 [0, 0.049], #26 0.007 [0, 0.023], vs #12 opponents 0.75 [0.50, 1.0]; #33 camps p 0.32 | **pass** (as predicted) |
+
+**Which verdicts change.**
+- **G12 (stance): supported, now in disagreement on the merits.** Round 1b could not exclude that cross-team "hostility" was task pushback. The validated flag shows it is disagreement: about half or more of opponents' replies dispute the other side, and teammates never do.
+- **The verdict-time switch-off is now powered:** the post-window silence would be a 10⁻¹⁵ event if the debate rates persisted.
+- **G26 and G33 stay failed, as predicted.** Unassigned disagreement runs at 1–2%, the village floor.
+- **"Coupled antiferromagnet" stays not shown.** The assigned sides predict this order on their own.
+- **Caveats:** one period, 7 agents, 33 flags. The flag graph has 4–11 observed pairs per debate. Teammates' 0/60 makes Δ̂ uninformative. Disagreement here is the debate format doing its job.
+
+**Code note (after the first run, disclosed).** The post-window power function first refitted agent fields on the post window. With 0 post flags these fields went to the bound, which returned power 0. It now uses the debate-phase fit (the pre-registered "power at the observed debate-phase Δ̂"), plus a rate-persistence variant. No statistic other than this power changed.
+
+**Scorecard (1c notes, for the v2 rater).** C stays 2: the validated flag beats a stress null built from the labeller's confusion. G stays 2: drafted teams are recovered by disagreement. E stays 1: the switch-off is now powered, but it is still one design. A rises from "zero-shot stance" to a validated observable (precision 0.61–0.67, #12 stratum 10/10). The fragility flag stays off; the effect is large (45% vs 0%).
+
+**Estimates:** 8 rows in `per_period_estimates`, status "round 1c, stance v2.1".
+
+**Claim that stands:** In #12's ten debates, drafted opponents disagree on the merits in 45% of their replies (true rate 0.52–0.76), and teammates in none of 60 (Δf 0.54, 9/10 debates, beyond a stress null built from the labeller's confusion, p 0.001). The disagreement stops at the verdict (0 flags in 90 replies, power ≥ 0.9). Without assigned sides (#26, #33) it stays at 1–2%. Excluded: coupling beyond the assigned field (not shown); the soft-stance team recovery (4.5/10, below its target); Δ̂ (at the separation bound).
 
 ## Notes
 - **Correction (coordinator, 2026-10-04):** H05's #34 script was run (holdout ledger item 4). The earlier note calling it unrun is wrong.

@@ -27,3 +27,5 @@ DQ9: ballots are known camps, per election round. H21's question is whether assi
 | re-election day (01-09) | 688 (35) | +0.079 (0.30) | +0.152 (0.16) | +0.103 (0.23) |
 
 **Native verdict: failed (as predicted).** Voters with different ballots neither oppose each other in replies nor separate in content during the contest; mean stance stays positive (0.57). Chosen sides in a cooperative vote form no sublattices. Power is low (9 voters; ballots differ only on minor candidates).
+
+**Round 1c (stance v2.1, 2026-10-04; prediction in the card, 22:10 UTC):** the true disagreement rate between agents is 0.007 [0, 0.023] (8 flags in 1,023 agent-to-agent replies), against 0.75 [0.50, 1.0] for #12 opponents. Too few flags for a ballot-camp test; H37's round 1c reports its power. Verdict unchanged: failed, as predicted.
