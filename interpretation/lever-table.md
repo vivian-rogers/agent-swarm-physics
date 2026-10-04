@@ -26,5 +26,6 @@ Reconciles the round-1b results of H29, H30, H35, H39, H43, H50 and H04 (RE-V1).
 - Nudges are cheap attention levers (a glance and about one active minute) that barely move committed work.
 - Naming is the content lever, and it acts in one hop: it reaches the named agent and does not spread to bystanders.
 - Erasure is the only lever with a material output cost.
+- No single lever triple transfers between input classes (H59). At the read-out call they look alike; beyond it each class needs its own model.
 
 None of this is holdout-confirmed.
