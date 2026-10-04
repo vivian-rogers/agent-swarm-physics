@@ -7,6 +7,12 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **H13 (family fields), exploratory round 1 done** (agent; regime III and #51 non-holdout, 10 goal periods):
+  - **Each family carries a stable field in content space,** invariant across periods at family level (split-half cosine 0.84–0.93 vs 0.76 null, p = 0.008). Significant in 9/15 units (count rule needed 10).
+  - **But it's writing style:** after residualizing on 20 style features it survives in 0/15 units. A gentler within-agent style control keeps about a third, so "mostly style", not proven "only style".
+  - **No family homophily in coupling** (talk timing Δ 0.002; content co-movement −0.002). **Rooms carry the coupling** (room > family in 8/10 talk, 9/10 content units). Reading: vendor *style* bias, no vendor *homophily*.
+  - HH89/HH75 and H01 D1.1.b not supported; D9.2 holds for fields (style), D9.2′ for couplings.
+  - Scorecard A1 B1 C1 D1 E0 F1 G1 H0 I1. `confirm.py` written (held-out #45–#50, #51 tail); not run.
 - **H01 exploratory round 1 (D3.1.a, D3.2) done** (agent; non-holdout; one folder per goal period):
   - **Rooms are more ordered than random groups on 96% of days, but the median ΔH −0.098 misses the locked −0.1.** Order is largest where rooms got different instructions (#38 −0.34 to −0.38, i.e. a room field). The exception is #41 (−0.19), same task in both rooms.
   - **Exposure-coupling residual** +0.013 per e-fold: rotation-null p = 0.005, but random-effects p = 0.019 misses p < 0.01, and it depends on the representation.

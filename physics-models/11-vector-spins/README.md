@@ -65,6 +65,8 @@ HH85.
 
 ## Pitfalls
 
+- **Family alignment is mostly style** (H13, 2026-10-03). In bge embeddings, agents of the same lab align beyond the goal field, but the alignment vanishes after controlling for 20 numeric style features. Residualize on style before reading family or agent fields as positions.
+
 - Anisotropy and topic-vs-style confounds: two agents can align because they write alike, not because they are thinking about the same thing.
 - Embedding vectors aren't physical spins. Their norm is arbitrary, and the geometry depends on the embedding model.
 - Few agents (N ≲ 30) against high n: reduce the dimension before fitting couplings.
