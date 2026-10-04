@@ -1,0 +1,76 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before real data; synthetic validation at N 4-32 (Amendment 1, scope only, before real data); replication on 34 periods in content (both models), talk and activity; two natives (G51, G38); style-resid variant and training-window variant; scorecard; frozen, guarded confirm script dry-run, not run.",
+  "faithfulness": "Clipping beats raw out of sample in 26-27/32 periods with a CI above zero, and the gain follows the random-matrix signature (grows with N/T, falls with training length; unfitted). The HH's stronger claim fails: clipping ties Ledoit-Wolf constant-correlation shrinkage (17/32 vs the best shrinkage). Talk room structure is erased by cleaning. Scorecard A1 B1 C1 D2 E0 F1 G1 H1 I0.",
+  "usefulness": "A computable monitor rule from standard logs: forecast tomorrow's pair co-movement from a cleaned or shrunk matrix, not raw (about 10% lower error; 30% skill over a no-correlation forecast in content, ~0 in talk). It also tells an operator that pair-level content structure beyond one uniform mode is not persistent day to day. No lever."
+ },
+ "one_line": "RMT clipping forecasts tomorrow's agent content correlations 10% better than raw (26-27/32 periods; gain grows with N/T) but only ties constant-correlation shrinkage; talk pairs are not forecastable.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Clipped C beats raw, ties Ledoit-Wolf shrinkage"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "Cleaning gain grows with q = N/T, falls with T"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Content spins: day-centered window vectors"
+  }
+ ],
+ "rated_by": "H92 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Clipping eigenvalues at a calibrated edge forecasts tomorrow's agent content correlations better than the raw matrix (26–27/32 periods, gain 0.10), with the unfitted random-matrix signature (gain rises with N/T), but it only ties constant-correlation shrinkage: the persistent structure is one uniform mode",
+  "scope": "32 periods; natives G51, G38",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.68,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (26–27/32, both models)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "unfitted signature (gain vs q, Spearman 0.45–0.65)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "penalty: does not beat shrinkage (rival not beaten)",
+    "x": 0.7,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "forecast agent alignment with shrinkage; expect one uniform mode",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.02,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H92 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

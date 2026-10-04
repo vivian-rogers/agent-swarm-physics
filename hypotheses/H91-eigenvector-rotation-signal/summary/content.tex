@@ -1,0 +1,35 @@
+\hwhat{The test asks whether the collective modes of the agent content matrix turn at reorganizations. For each pair of consecutive active days it measures how far the top two eigenvectors rotate, relative to the finite-sample noise of each day. It runs on 258 non-holdout day pairs in content (both embedding models) and 237 in talk. The rotation alarm does not flag goal kickoffs: AUC 0.56 [0.40, 0.71] on 23 kickoffs, against 0.96 for H36's centroid shift R1. It catches none of R1's 13 misses. Between events the content modes stay within the noise on 86\% of quiet pairs. But every day rotates about one standard deviation more than a stationary swarm, with no spike at events. The NE42 room merge is the one event where talk and content both rotate ($p\le0.01$). The holdout script exists and is not run.}
+
+\hmodel{Inverse Ising and vector spins (models 01, 11) with random-matrix theory. A content spin is an agent's 30-min window vector, centered on its own day. The day overlap matrix $Q_d$ has eigenvectors $v_k$: its collective modes. $v_1$ is the uniform mode. The rotation $\delta_2$ is the subspace distance between two days' top-2 modes. The null is finite-$T$ eigenvector diffusion (the Dyson picture), estimated by block-bootstrapping each day. $A$ is a trailing alarm in units of the recent spread.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+Q_{ij}(d)=\frac{1}{W_d\,D}\sum_{w}\mathbf z_i(w)\cdot\mathbf z_j(w),\qquad Q\,v_k=\lambda_k v_k\\
+\delta_2(a,b)=\Big[1-\tfrac12\big\lVert V_a^{\top}V_b\big\rVert_F^{2}\Big]^{1/2},\qquad
+z=\frac{\delta_2-\langle\delta_2\rangle_{\rm boot}}{\sigma_{\rm boot}}\\
+\langle\sin^2\theta_1\rangle_{\rm Dyson}\approx\frac{2}{T}\sum_{j>1}\frac{\lambda_1\lambda_j}{(\lambda_1-\lambda_j)^2},\qquad A(d)=\frac{z(d)-\mathrm{med}_{10}\,z}{\mathrm{sd}_{10}\,z}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Alarm scores on day 0 of 23--24 goal kickoffs (color) and on 51 placebo days (gray). The rotation alarm overlaps the placebos; R1 separates them. (b) Rotation excess $z$ for every scored day pair in time order. It sits near 1 throughout, above the band of stationary synthetic swarms (gray). Kickoffs (orange) do not stand out. The NE42 merge is the largest content excess among room events.}
+
+\htelos{Do not use eigenvector rotation as a reorganization alarm. For goal changes, run R1 (the day-centroid shift, AUC 0.96): it is cheaper and much better. Rotation is nearly independent of R1 (Spearman 0.21), but combining them gains nothing ($\Delta$AUC $-0.05$). The useful fact is a negative one for monitors. The swarm's co-movement pattern drifts about 1 SD beyond sampling noise every day. A rotation alarm therefore needs its own trailing baseline, and a single-day rotation means little. At the median day ($N\approx10$, 8 windows) a real regrouping of half the agents is detected only 20--40\% of the time.}
+
+\hbottom{Collective-mode rotation does not mark goal changes; the content modes drift slowly every day, and only a room merge moves them beyond noise.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P0 synthetic size and power & \raggedright size $\le0.05$; power 0.2--0.4 at $N$ 8--16, $W$ 8; $\ge0.85$ at $W$ 16 & \raggedright partial\tabularnewline
+\raggedright P1 kickoff AUC $\ge0.70$, not worse than R1 & \raggedright 0.56 [0.40, 0.71]; R1 0.96; $\Delta$ $-0.41$ [$-0.56$, $-0.27$] & \raggedright fail\tabularnewline
+\raggedright P2 Dyson between events, $s_{\rm sig}\le0.15$ & \raggedright content 0.14 (bge 0.20, gte 0.08); talk 0.17 ($n$ 6) & \raggedright content pass\tabularnewline
+\raggedright P3 talk $z\ge2$ at NE42 & \raggedright merge 1.97 ($p$ 0.005); split 1.47 ($p$ 0.025) & \raggedright fail (threshold)\tabularnewline
+\raggedright P4 complement, $\rho(A,{\rm R1})<0.3$ & \raggedright 0.21 & \raggedright pass\tabularnewline
+\raggedright P5 model robustness & \raggedright bge--gte $\rho$ 0.33; style variant AUC $+0.09$ & \raggedright fail\tabularnewline
+\raggedright P6 not composition & \raggedright $\rho(z,|\Delta N|)$ 0.01--0.05 & \raggedright pass\tabularnewline
+\raggedright N1 NE42 A-B-A & \raggedright merge rotates talk and content; split weaker & \raggedright mixed\tabularnewline
+\raggedright N2 \#51 baseline, \#focus & \raggedright content within noise (0.13); talk 0.40; \#focus silent & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{Synthetic validation at village counts: a regrouping of half the agents (two rooms, loading 0.4, window persistence 0.5). (a) AUC against stationary days for the same-day bootstrap null (solid) and the pooled-split null (dashed). The split null loses power because it mixes the two days. (b) Trailing-alarm hit rate (solid) and false-alarm rate (dotted). The orange line marks the median real day.}
+
+\hcaveats{Most kickoff pairs are small ($N\approx10$, 8 windows), where a strong regrouping is caught only 20--40\% of the time. No kickoff fell in the powered range, so P1 cannot rule out rotation at strong regroupings. The null was changed once, after the synthetic study and before real data. Per-day rotation agrees only weakly between embedding models. The talk null is anti-conservative at $N\le8$. 27 of 35 periods have too few quiet pairs for a per-period verdict.}
+
+\hnext{Test rotation at operator room assignments and in 8-h, $N\ge16$ periods (held-out \#45--\#50). Fit the daily drift as a rotational diffusion constant per period and place it on the phase diagram.}

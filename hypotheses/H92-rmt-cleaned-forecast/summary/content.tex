@@ -1,0 +1,35 @@
+\hwhat{The test asks which estimate of today's agent correlation matrix best forecasts tomorrow's. It compares the raw matrix, two Ledoit--Wolf shrinkages, a mean-field matrix and random-matrix clipping, which keeps only eigenmodes above a calibrated noise edge. Forecasts run inside 34 non-holdout goal periods (205 target days in content, both embedding models; talk and activity too). Clipping beats the raw matrix in 26/32 and 27/32 periods (mean gain 0.10 [0.03, 0.16]). The gain grows with $q=N/T$, as random-matrix theory predicts. Clipping does not beat shrinkage: it ties Ledoit--Wolf constant correlation within 2\%. Talk pair structure is not forecastable beyond its mean. Cleaning erases the \#38 talk room block. The holdout script exists and is not run.}
+
+\hmodel{Inverse Ising (model 01) with random-matrix cleaning. A spin is an agent's day-centered 30-min content vector, or its talk or activity state per minute in the all-present window. $S$ is the training correlation matrix over all earlier days of the unit, with $N$ agents and $T$ samples. $\lambda_+$ is the 95th percentile of the top eigenvalue when agents' series are shifted against each other. Clipping replaces every eigenvalue below $\lambda_+$ by their mean. The target is the next day's realized matrix $Q$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\hat C_{\rm clip}=\sum_{\lambda_k>\lambda_+}\lambda_k v_kv_k^{\top}+\bar\lambda_{\rm bulk}\!\!\sum_{\lambda_k\le\lambda_+}\!\! v_kv_k^{\top},\qquad
+\hat C_{\rm LW}=(1-\alpha)S+\alpha F\\
+\mathrm{MSE}=\big\langle(\hat C_{ij}-Q_{ij}(t{+}1))^2\big\rangle_{i<j},\qquad r=1-\frac{\mathrm{MSE}_{\rm clip}}{\mathrm{MSE}_{\rm rival}}\\
+\mathrm{Var}(S_{ij})\approx\frac{(1-\rho_{ij}^2)^2}{T},\qquad \lambda_+^{\rm MP}=\big(1+\sqrt{N/T}\big)^2
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Gain of clipping over each rival, per goal period (content, gte). It is positive against raw (blue) in 27/32 periods and against mean field (green) in 23/32, and it scatters around zero against constant-correlation shrinkage (orange). (b) Gain over raw for every forecast against $q=N/T$ of the training window. The gain grows with $q$ in content, talk and activity.}
+
+\htelos{To track who will co-move with whom tomorrow, do not use the raw pair correlations. Clip them at the noise edge or shrink them toward the mean correlation: either removes about a tenth of the error, and more when the window is short. Constant-correlation shrinkage is the simpler choice and does as well. Expect little: the best forecast cuts the error of ``no correlation'' by only 30\% in content. In talk the gain is 5\% or less. Do not clip talk if room structure matters: in \#38 clipping deleted the room block.}
+
+\hbottom{Random-matrix cleaning removes sampling noise from agent correlations as theory predicts, but the persistent structure is one uniform mode, so plain shrinkage does as well.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P0 synthetic edge and ordering & \raggedright spurious modes 3--17\%; two-room advantage only at $N\ge16$, $W\ge8$ & \raggedright partial\tabularnewline
+\raggedright P1 clip beats raw (content) & \raggedright 26/32, 27/32 periods; 0.10 [0.03, 0.16], 0.11 [0.04, 0.16] & \raggedright pass\tabularnewline
+\raggedright P2 clip beats best shrinkage & \raggedright 17/32 both models; vs const.\ corr.\ $-0.020$, $-0.008$ & \raggedright fail (tie)\tabularnewline
+\raggedright P3 channels & \raggedright talk gain $>0$ in 27/30, beats LW-CC 10/30; activity skill 0, raw $-0.39$ & \raggedright mixed\tabularnewline
+\raggedright P4 gain grows with $q$ & \raggedright Spearman 0.45--0.65, every channel & \raggedright pass\tabularnewline
+\raggedright P5 calibrated edge beats MP edge & \raggedright $k_{\rm MP}>k_{\rm cal}$ in 20\%; gain $-0.015$, $0.000$ & \raggedright fail\tabularnewline
+\raggedright P6 longer training & \raggedright helps raw (79--92\%); hurts clip ($-8\%$) & \raggedright pass\tabularnewline
+\raggedright N1 \#51 gain falls with $T$ & \raggedright Spearman $-0.69$, $-0.90$; beats LW-CC 4/7, 5/7 units & \raggedright mixed\tabularnewline
+\raggedright N2 \#38 rooms kept & \raggedright talk: kept on 2/10 days; content: 0.069 vs real 0.067 & \raggedright fail\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) \#51: the gain of clipping over raw falls as the training window grows from 1 to 12 days, as the $1/T$ noise law predicts. (b) \#38: next-day room contrast (within minus between rooms). In talk, clipping deletes it. In content, clipping keeps it and is closer to the realized value than raw.}
+
+\hcaveats{The target is itself a noisy one-day matrix, so all estimators share a large error floor; only differences are meaningful. The calibrated edge keeps a spurious mode in up to 17\% of noise fits. Most periods have $N<16$, where a real second mode is cut, so P2 is powered only in \#42 and \#51. Training matrices zero-fill absent agent-days. No natural experiment was tested.}
+
+\hnext{Add the rotationally invariant estimator and a one-mode-plus-rooms factor model. Use an exponentially weighted training window, since cleaned structure drifts. Report the cleaned top mode per period on the phase diagram.}

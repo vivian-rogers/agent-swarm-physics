@@ -1,0 +1,76 @@
+{
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before real data; synthetic validation at N 4-32 found two null flaws, fixed as Amendment 1 before real data; replication on 35 periods (8 scorable); two natives (NE42, G51); variants (both embedding models, style-resid, restatement dedupe, k = 1/3, pooled-split null); scorecard; frozen, guarded confirm script dry-run, not run.",
+  "faithfulness": "The primary prediction failed: the rotation alarm does not separate kickoffs from placebo days (AUC 0.56 [0.40, 0.71]) and loses to R1 by 0.41. The finite-T null holds for content between events only narrowly (0.14, model-dependent) and fails for talk; every day rotates ~1 SD above stationary noise. The NE42 merge is the one positive (p <= 0.01, below the z >= 2 rule). Power at real counts is 0.2-0.4, so strong regroupings at kickoffs are not ruled out. Scorecard A1 B1 C0 D1 E1 F1 G1 H0 I0.",
+  "usefulness": "Mostly a negative operator result: do not build a reorganization alarm on eigenvector rotation; use R1. The measured daily drift (z ~ 1) tells a monitor builder that single-day rotations need a trailing baseline. No lever."
+ },
+ "one_line": "Collective-mode rotation does not flag goal changes (AUC 0.56 vs R1 0.96); content modes drift ~1 SD above noise every day; only the NE42 room merge rotates beyond noise.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Mode rotation does not mark kickoffs; drifts daily"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "null",
+   "outcome": "mixed",
+   "note": "Finite-T null holds for content between events, not talk"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Content spins: day-centered window vectors"
+  }
+ ],
+ "rated_by": "H91 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Day-to-day rotation of the top content eigenvectors does not flag goal kickoffs (AUC 0.56 vs topic shift 0.96, 23 kickoffs); content modes drift slowly every day (median z_boot 1.0) without event spikes, except at the NE42 merge. Excluded: strong regroupings beyond the powered range",
+  "scope": "23 kickoffs, 258 day pairs; natives NE42, G51",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.42,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "rival beaten (topic shift R1 by 0.41 AUC)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic identification (bootstrap size ≤ 0.05)",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "penalty: power 0.2–0.4 at real counts",
+    "x": 0.6,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "penalty: bge–gte agreement weak (ρ 0.33)",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "don't use eigenvector rotation as a reorganization alarm; use topic shift",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 0.42,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H91 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

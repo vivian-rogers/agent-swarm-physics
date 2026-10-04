@@ -1,0 +1,30 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\input{../../../writeup/hypothesis-pages/hpage.tex}
+\def\hID{H92}
+\def\hTitle{RMT-cleaned matrices forecast tomorrow's alignment}
+\def\hStatus{round 1 done (2026-10-04): mixed. RMT clipping at a calibrated edge forecasts tomorrow's agent content correlation matrix better than the raw matrix in 26/32 (bge) and 27/32 (gte) periods (mean gain 0.10 [0.03, 0.16] / 0.11 [0.04, 0.16]), and the gain grows...}
+\def\hStage{level: hypothesis  $\cdot$  pipeline checks 100\%  $\cdot$  updated 2026-10-04}
+\def\hBadges{\hbadge{Complete}{45\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{2/5}{f5bcbb}{0b0b0b}\ \hbadge{Usefulness}{2/5}{f5bcbb}{0b0b0b}}
+\def\hPeriodSummary{13 supported, 4 failed, 15 mixed, 2 descriptive}
+\def\hDate{Updated 2026-10-04}
+\def\hFooter{H92-rmt-cleaned-forecast $\cdot$ generated 2026-10-04 13:50 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H92-rmt-cleaned-forecast/README.md $\cdot$ ratings: H92 agent (suggested)}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G03 & $\sim$ & mixed \\
+G04 & $\checkmark$ & supported \\
+G05 & $\sim$ & mixed \\
+G06 & $\checkmark$ & supported \\
+G07 & d & descriptive \\
+G08 & $\sim$ & mixed \\
+G10 & $\sim$ & mixed \\
+G11 & $\sim$ & mixed \\
+G12 & $\times$ & failed \\
+G13 & $\sim$ & mixed \\\multicolumn{3}{l}{\textit{+24 more periods: see the card.}} \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 1 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 1 & H comparative & 1 \\
+D unfitted predictions & 2 & I transfer & 0 \\
+E interventional & 0 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} how many persistent collective modes the swarm has once sampling noise is removed; the tie with constant-correlation shrinkage says one.\item \textbf{H92-R1} Add the rotationally invariant estimator (Ledoit–Péché / Bun–Bouchaud–Potters) and a one-mode-plus-rooms factor model.\item \textbf{H92-R2} Forecast with an exponentially weighted training window: cleaned structure drifts, so recency should beat the expanding window.\item \textbf{H92-R3} Use the cleaned top mode as the per-period coupling coordinate on the phase diagram.\end{itemize}}
+\input{content.tex}
+\begin{document}
+\makehpage
+\end{document}

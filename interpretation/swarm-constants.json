@@ -391,6 +391,16 @@
    "model": "11",
    "source": "H82",
    "meaning": "Agents carry their own old content into a new goal; the village record adds nothing beyond that."
+  },
+  {
+   "symbol": "z_rot",
+   "name": "daily rotation of content collective modes",
+   "value": "median z_boot 1.0 (stationary null 0.1–0.75); clip forecast gain 0.10 [0.03, 0.16]; forecastable share content ≈ 0.30, talk ≤ 0.05, activity ≈ 0",
+   "kind": "drift",
+   "scope": "258 day pairs; 32 periods",
+   "model": "01",
+   "source": "H91, H92",
+   "meaning": "Collective content modes drift slowly every day; the persistent structure is one uniform mode."
   }
  ]
 }
