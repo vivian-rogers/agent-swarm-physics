@@ -1,7 +1,8 @@
 """Collect the lab's state from the repo for the dashboard.
 
-Reads only cards, folder structure, file metadata, provenance JSON, LOG.md, git, ps, and the Claude Code
-subagent transcripts under ~/.claude/projects/<project>/. It never opens the gated text tables in data/.
+Reads only cards, folder structure, file metadata, provenance JSON, LOG.md, git, ps, the Claude Code
+subagent transcripts under ~/.claude/projects/<project>/, and two numeric shared tables for the phase diagram
+(per_period_estimates.parquet, period_units.parquet). It never opens the gated text tables in data/.
 Everything is cached with short TTLs so the page can poll every few seconds.
 """
 from __future__ import annotations
@@ -190,6 +191,40 @@ def physics_models() -> list[dict]:
                         "name": m.group(3).strip(), "fields": m.group(4).strip(), "variable": m.group(5).strip(),
                         "signature": m.group(6).strip()})
     return out
+
+
+VET = ROOT / "hypotheses/hypohypotheses/vetting.json"
+VET_LOG = ROOT / "hypotheses/hypohypotheses/vetting_decisions.jsonl"
+VET_DECISIONS = {"approved", "declined", "later", "undo"}
+
+
+def vetting() -> dict:
+    try:
+        v = json.loads(VET.read_text()) if VET.exists() else {"items": []}
+    except ValueError:
+        v = {"items": []}
+    return v
+
+
+def record_vet(hh: str, decision: str, note: str = "") -> dict:
+    """Record a vetting click: update vetting.json and append to vetting_decisions.jsonl (the coordinator watches it)."""
+    if decision not in VET_DECISIONS:
+        return {"error": "bad decision"}
+    v = vetting()
+    item = next((x for x in v.get("items", []) if x.get("id") == hh), None)
+    if item is None:
+        return {"error": "unknown HH"}
+    now = iso(time.time())
+    if decision == "undo":
+        item.pop("decision", None); item.pop("decided_at", None); item.pop("vet_note", None)
+    else:
+        item["decision"], item["decided_at"] = decision, now
+        if note:
+            item["vet_note"] = note
+    VET.write_text(json.dumps(v, indent=1, ensure_ascii=False) + "\n")
+    with VET_LOG.open("a") as f:
+        f.write(json.dumps({"id": hh, "decision": decision, "note": note, "at": now}, ensure_ascii=False) + "\n")
+    return {"ok": True, "id": hh, "decision": decision}
 
 
 def constants() -> dict:
@@ -489,6 +524,121 @@ def grid(hs: list[dict]) -> dict:
     return {"hypotheses": [x["id"] for x in hs], "rows": rows}
 
 
+# --------------------------------------------------------------------------------------------- phase diagram
+
+EST_PATH = PROC / "shared/per_period_estimates.parquet"
+UNITS_PATH = PROC / "shared/period_units.parquet"
+
+
+def estimates_mtime() -> float | None:
+    try:
+        return max(EST_PATH.stat().st_mtime, UNITS_PATH.stat().st_mtime)
+    except OSError:
+        return None
+
+
+def _num(v):
+    """JSON-safe float: NaN and inf become null (JSON.parse rejects NaN)."""
+    if v is None:
+        return None
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return None
+    return float(f"{f:.6g}") if f == f and abs(f) != float("inf") else None
+
+
+def unit_key(raw: str | None, goal) -> str | None:
+    """Canonical unit key. 'G38' and bare '38' are the whole goal period -> 'G38'. A split unit keeps its id ('38a').
+    Hypothesis-local windows keep the raw label ('local:...'). An empty label has no key (goal fallback only)."""
+    if not raw:
+        return None
+    if raw.startswith("local:"):
+        return raw
+    m = re.fullmatch(r"G?(\d{1,2})", raw)
+    if m:
+        return f"G{int(m.group(1))}"
+    return raw
+
+
+def _build_estimates() -> dict:
+    import polars as pl
+    e = pl.read_parquet(EST_PATH)
+    u = pl.read_parquet(UNITS_PATH)
+    held_goals = set(json.loads((HYP / "holdout.json").read_text()).get("goal_periods_held_out", []))
+
+    units = {}
+    for r in u.iter_rows(named=True):
+        units[r["unit_id"]] = {"key": r["unit_id"], "goal": r["goal_no"], "n_agents": r["n_agents"], "n_days": r["n_days"],
+                               "n_rooms": len(r["rooms"] or []), "regime": r["regime"], "holdout": bool(r["holdout"]),
+                               "first_day": r["first_day"], "last_day": r["last_day"], "reason": r["reason"], "split": True}
+    by_goal: dict[int, list] = {}
+    rooms_by_goal: dict[int, set] = {}
+    for r in u.iter_rows(named=True):
+        by_goal.setdefault(r["goal_no"], []).append(units[r["unit_id"]])
+        rooms_by_goal.setdefault(r["goal_no"], set()).update(r["rooms"] or [])
+    for g, us in by_goal.items():
+        regs = sorted({x["regime"] for x in us if x["regime"]}, key=lambda s: ("I", "II", "III").index(s) if s in ("I", "II", "III") else 9)
+        units[f"G{g}"] = {"key": f"G{g}", "goal": g, "n_agents": max(x["n_agents"] for x in us),
+                          "n_days": sum(x["n_days"] for x in us), "n_rooms": len(rooms_by_goal[g]),
+                          "regime": "/".join(regs) or None, "holdout": all(x["holdout"] for x in us) or g in held_goals,
+                          "holdout_part": any(x["holdout"] for x in us) and not all(x["holdout"] for x in us),
+                          "first_day": min(x["first_day"] for x in us), "last_day": max(x["last_day"] for x in us),
+                          "n_split": len(us), "split": False}
+        if len(us) == 1:  # a goal with one unit: the unit is the whole goal
+            units.pop(us[0]["key"], None)
+
+    slugs = {d.name.split("-")[0]: d.name for d in HYP.iterdir() if d.is_dir() and re.match(r"^H\d{2}-", d.name)}
+    e = e.with_columns(pl.col("channel").fill_null(""), pl.col("method").fill_null(""))
+    skeys = e.select("hypothesis", "statistic", "channel", "method").unique(maintain_order=True)
+    sidx = {tuple(r): i for i, r in enumerate(skeys.iter_rows())}
+    cols = {k: [] for k in ("s", "u", "k", "g", "est", "lo", "hi", "n", "role", "regime", "hold", "ci_kind", "ci_level",
+                            "n_kind", "status", "post_hoc")}
+    for r in e.iter_rows(named=True):
+        cols["s"].append(sidx[(r["hypothesis"], r["statistic"], r["channel"], r["method"])])
+        cols["u"].append(r["period_unit"] or "")
+        cols["k"].append(unit_key(r["period_unit"], r["goal_no"]))
+        cols["g"].append(r["goal_no"])
+        cols["est"].append(_num(r["estimate"]))
+        cols["lo"].append(_num(r["ci_lo"]))
+        cols["hi"].append(_num(r["ci_hi"]))
+        cols["n"].append(_num(r["n"]))
+        cols["role"].append(r["role"])
+        cols["regime"].append(r["regime"])
+        cols["hold"].append(bool(r["holdout"]))
+        cols["ci_kind"].append(r["ci_kind"])
+        cols["ci_level"].append(_num(r["ci_level"]))
+        cols["n_kind"].append(r["n_kind"])
+        cols["status"].append(r["status"])
+        cols["post_hoc"].append(r["post_hoc"])
+    series = []
+    for (h, st, ch, me), i in sidx.items():
+        series.append({"i": i, "h": h, "slug": slugs.get(h), "stat": st, "channel": ch, "method": me})
+    for i, s in enumerate(cols["s"]):  # per-series counts for the picker
+        x = series[s]
+        x.setdefault("_u", set()).add(cols["k"][i] or cols["u"][i])
+        x["n_rows"] = x.get("n_rows", 0) + 1
+        x["n_ci"] = x.get("n_ci", 0) + (cols["lo"][i] is not None and cols["hi"][i] is not None)
+    for x in series:
+        x["n_units"] = len(x.pop("_u"))
+    titles = {g: m.get("title", "") for g, m in calendar_meta().items()}
+    return {"mtime": iso(estimates_mtime()), "n_rows": e.height, "series": series, "rows": cols,
+            "units": list(units.values()), "goal_titles": titles, "held_goals": sorted(held_goals)}
+
+
+def estimates() -> dict:
+    """Per-period estimates and unit covariates for the phase-diagram view. Rebuilt only when either parquet changes."""
+    mt = estimates_mtime()
+    if mt is None:
+        return {"error": "per_period_estimates.parquet or period_units.parquet is missing"}
+    hit = _cache.get("estimates")
+    if hit and hit[0] == mt:
+        return hit[1]
+    val = _build_estimates()
+    _cache["estimates"] = (mt, val)
+    return val
+
+
 # --------------------------------------------------------------------------------------------- log, git, ps, budget
 
 def log_feed(n: int = 30) -> list[dict]:
@@ -582,9 +732,10 @@ def state() -> dict:
     hs = cached("hyp", 8, hypotheses)
     out = {
         "generated_at": iso(time.time()), "root": str(ROOT),
-        "hypotheses": hs, "grid": grid(hs), "holdout": holdout(hs), "models": cached("models", 60, physics_models), "constants": cached("constants", 30, constants),
+        "hypotheses": hs, "grid": grid(hs), "holdout": holdout(hs), "models": cached("models", 60, physics_models), "constants": cached("constants", 30, constants), "vetting": vetting(),
         "agents": cached("agents", 5, agents), "pipelines": cached("pipelines", 30, pipelines),
         "log": cached("log", 10, log_feed), "git": git_state(), "processes": processes(), "budget": budget(),
+        "estimates_mtime": iso(estimates_mtime()),
     }
     out["collect_ms"] = round(1000 * (time.time() - t0))
     return out

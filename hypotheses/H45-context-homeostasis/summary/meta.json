@@ -1,61 +1,108 @@
 {
-  "complete": 40,
-  "faithfulness": 0.5,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 done: dated predictions, nulls and rivals before data; synthetic validation of four agent classes on real schedules (6 units x 20 reps) with five dated amendments before real data; replication on all 32 eligible periods; 4 native tests (NE41, NE42, G51 N sweep, NE03); 7 preprocessing variants; 3 labelled post hoc checks; confirm script frozen with a passing dry run (not run). Missing: holdout run, task-phase control (DQ3), cadence lever.",
-    "faithfulness": "The core claim is refuted outright and consistently: RI <= 0.22 with CI upper < 0.5 in 32/32 periods, the share band is absent (CV ratio ~1), floods move set points at ~1x the passive slope (NE42 1.06, #51 0.90), the engagement pattern is the opposite of a share controller, and erasures produce a talk dip, not an import overshoot. The scorecard's 1s (A, B, F, G) are on the instrument, not the model: A1 B1 C0 D0 E0 F1 G1 H0 I0.",
-    "usefulness": "A validated design rule with clear evidence: context composition is decided by room traffic per call, own tool output and the scaffold (resets, chat windows, caps), not regulated by agents, so it must be managed through room design and scaffold settings. Smaller operational facts: merging rooms doubles the chat share of context; the 200-event cap binds in 0.05% of calls; erasures cost ~10 calls of reduced talk without a catch-up burst. No lever on the agents themselves."
+ "complete": 40,
+ "faithfulness": 0.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions, nulls and rivals before data; synthetic validation of four agent classes on real schedules (6 units x 20 reps) with five dated amendments before real data; replication on all 32 eligible periods; 4 native tests (NE41, NE42, G51 N sweep, NE03); 7 preprocessing variants; 3 labelled post hoc checks; confirm script frozen with a passing dry run (not run). Missing: holdout run, task-phase control (DQ3), cadence lever.",
+  "faithfulness": "The core claim is refuted outright and consistently: RI <= 0.22 with CI upper < 0.5 in 32/32 periods, the share band is absent (CV ratio ~1), floods move set points at ~1x the passive slope (NE42 1.06, #51 0.90), the engagement pattern is the opposite of a share controller, and erasures produce a talk dip, not an import overshoot. The scorecard's 1s (A, B, F, G) are on the instrument, not the model: A1 B1 C0 D0 E0 F1 G1 H0 I0.",
+  "usefulness": "A validated design rule with clear evidence: context composition is decided by room traffic per call, own tool output and the scaffold (resets, chat windows, caps), not regulated by agents, so it must be managed through room design and scaffold settings. Smaller operational facts: merging rooms doubles the chat share of context; the 200-event cap binds in 0.05% of calls; erasures cost ~10 calls of reduced talk without a catch-up burst. No lever on the agents themselves."
+ },
+ "one_line": "Agents do not regulate the room share of their context: it follows room traffic as passive accumulation predicts, bounded by scaffold resets.",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "no regulated import; regulation index 0.02 pooled"
   },
-  "one_line": "Agents do not regulate the room share of their context: it follows room traffic as passive accumulation predicts, bounded by scaffold resets.",
-  "models": [
-    {
-      "model": "04-semantic-information",
-      "role": "primary",
-      "outcome": "refuted",
-      "note": "no regulated import; regulation index 0.02 pooled"
-    },
-    {
-      "model": "05-replicator-dissipation",
-      "role": "null",
-      "outcome": "supported",
-      "note": "passive import and reset degradation explain the share"
-    }
+  {
+   "model": "05-replicator-dissipation",
+   "role": "null",
+   "outcome": "supported",
+   "note": "passive import and reset degradation explain the share"
+  }
+ ],
+ "rated_by": "H45 agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+ "v2": {
+  "claim": "Room share of context is passive; the scaffold bounds context",
+  "original_verdict": "refuted",
+  "credence": 0.82,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "intervention consistent",
+    "x": 2
+   }
   ],
-  "rated_by": "H45 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
-  "v2": {
-    "claim": "Room share of context is passive; the scaffold bounds context",
-    "original_verdict": "refuted",
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.0,
+  "decision": "context budgeting is the scaffold's job",
+  "magnitude": "small",
+  "generality": "agents with context resets",
+  "expected_usefulness": 1.64,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.8,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "intervention consistent",
-        "x": 2
-      }
-    ],
+    "value_if_true": 2,
     "mechanism_level": "M1",
     "fragile": false,
-    "value_if_true": 2,
-    "decision": "context budgeting is the scaffold's job",
-    "magnitude": "small",
-    "generality": "agents with context resets",
-    "expected_usefulness": 1.6,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 32 non-holdout periods plus NE41/NE42/#51/NE03. Agents do not regulate the room-message share of their context: it follows passive accumulation (regulation index <=0.22 in 32/32, pooled 0.02; floods move set points at ~1x the passive slope), and erasures are followed by less talk, not overshoot.",
+    "credence": 0.83,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
     "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "ladder": [
+     {
+      "factor": "replication 32/32 periods",
+      "x": 2,
+      "evidence": "summary hresults P1"
+     },
+     {
+      "factor": "identified / powered: synthetic controller on real schedules gives RI 0.42, separable from passive",
+      "x": 1.5,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "intervention consistent: NE42 merge (1.06x passive) and #51 roster growth (0.90x)",
+      "x": 2,
+      "evidence": "summary hresults"
+     },
+     {
+      "factor": "partly robust: robustness.json variants; single data version",
+      "x": 1.5,
+      "evidence": "card Robustness"
+     },
+     {
+      "factor": "penalty: shared error in room tokens pulls toward passive; weak controllers (RI<0.15) hard to see",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

@@ -20,6 +20,12 @@
    "role": "secondary",
    "outcome": "supported",
    "note": "Address-gated content pull: named 0.04-0.08, unnamed near 0"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H29 round-1b agent (suggested)",
@@ -64,13 +70,13 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3.0,
+  "value_if_true": 3.17,
   "decision": "to move an agent, name it; relay through high net-reply-current agents",
   "magnitude": "material",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.95,
+  "expected_usefulness": 2.06,
   "scientific_value": 3.0,
-  "rater": "coordinator + independent blind rater (log-odds mean of credences; mean V); no disagreement beyond thresholds",
+  "rater": "3 raters (coordinator + blind); log-odds mean credence, mean V",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -121,8 +127,40 @@
       "evidence": "Caveats: like-for-like shrinks effect by ~1/4"
      }
     ]
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Content influence is real and address-gated on context-ledger visibility: named recipients move 0.04-0.08 of the gap per seen message in every #51 segment, unnamed 0.00-0.013 (named >=2x unnamed in 7/9 units).",
+    "credence": 0.64,
+    "value_if_true": 3.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "named>=2x unnamed 7/9 (bge), 8/9 (gte); every #51 segment"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "round 1 -> ledger; bge and gte"
+     },
+     {
+      "factor": "penalty: post hoc estimator / conversational mode",
+      "x": 0.7,
+      "evidence": "matched-age jump is Amendment 2 (post hoc); named effect may be conversation state; reply parents content-selected"
+     },
+     {
+      "factor": "intervention partly consistent",
+      "x": 1.5,
+      "evidence": "NE38: operator reassignment moved the named agent, no relay (single event)"
+     }
+    ]
    }
-  ]
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

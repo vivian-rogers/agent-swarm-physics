@@ -20,6 +20,12 @@
    "role": "secondary",
    "outcome": "refuted",
    "note": "net current does not single out known leaders"
+  },
+  {
+   "model": "12-information-dynamics",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H32 agent (suggested); round 1b RE-D1 (suggested)",
@@ -30,7 +36,7 @@
   "scope": "32 periods; natives #26, #35, #44",
   "direction": "positive",
   "original_verdict": "failed (leaders)",
-  "credence": 0.87,
+  "credence": 0.78,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -64,14 +70,61 @@
   ],
   "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 2.25,
   "decision": "don't equate leadership with influence",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.74,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-D1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.76,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.87,
+    "value_if_true": 2,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 32 non-holdout periods (#3-#44), message-level content VAR. Content transfer between agents exists in about half of periods and is exposure-gated (seen > unseen 7/8 multi-room weeks; read > in-flight at matched lag 17/17), but elected, installed and operator leaders are not top content sources.",
+    "credence": 0.66,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "partial replication (17-18/32 significant; not >=2/3)",
+      "x": 1.5,
+      "evidence": "summary hresults P1; Round 1b"
+     },
+     {
+      "factor": "robust to data versions and instruments (round 1b, bge+style_resid 17/32, gte 23/32)",
+      "x": 2,
+      "evidence": "card Round 1b; Standards"
+     },
+     {
+      "factor": "identified / calibrated: synthetic planted-leader recovery, false calls 0-10% (one design, credited once)",
+      "x": 1.5,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "penalty: uncorrected multiplicity (13 predictions x 32 periods)",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "penalty: transfer count depends on number of field directions removed (25/18/7)",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

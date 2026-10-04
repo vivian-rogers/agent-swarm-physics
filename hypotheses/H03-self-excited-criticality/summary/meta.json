@@ -28,7 +28,7 @@
  "v2": {
   "claim": "Activity is subcritical everywhere (n ≈ 0.2–0.4)",
   "original_verdict": "failed (criticality)",
-  "credence": 0.89,
+  "credence": 0.86,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -53,13 +53,55 @@
   ],
   "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 1.5,
+  "value_if_true": 2.0,
   "decision": "diagnostic: no runaway cascades to manage",
   "magnitude": "small",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.33,
-  "scientific_value": 2,
-  "rater": "coordinator first pass (from integrated reports); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.72,
+  "scientific_value": 2.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.89,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Agent talk is subcritical in every non-holdout goal period (schedule-baseline Hawkes n-hat ~0.2-0.4, median 0.36), with shared-objective weeks no higher than free weeks; only a small fast cross-trigger (n_x ~0.07 at 10-30 s) beats the trimmed agent-shift null.",
+    "credence": 0.82,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "identified: synthetic recovery",
+      "x": 1.5,
+      "evidence": "n=0/0.6/0.9 recovered at real windows; B0 bias reproduced"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "35 periods, all subcritical; P2/P3 fail identically"
+     },
+     {
+      "factor": "partly robust",
+      "x": 1.5,
+      "evidence": "round 1b unchanged in all 35 periods, but n-hat brackets 0.16-0.61 across baselines"
+     },
+     {
+      "factor": "intervention partly consistent",
+      "x": 1.5,
+      "evidence": "NE43 drive withdrawal: n-hat unchanged as predicted; NE14 mixed"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

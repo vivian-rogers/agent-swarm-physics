@@ -1,0 +1,33 @@
+\hwhat{H78 treats each repo as a replicator and fits its growth order $p$ on the swarm call clock. Herding weeks should give $p=1.2$--$1.5$ and own-artifact weeks $p\le0.7$. The data are DQ4 work commits in three herding weeks (\#31, \#33, \#41), three own-artifact points (\#39, \#42, \#51) and two natives (\#40, \#44). Field-made arrivals are removed: births, kickoff-named repos (H54) and the H28 blind window. The herding weeks give $\hat p=0.73$ [$-0.08$, 1.54] and 1.05 [0.00, 2.09]. \#51 gives 1.94 [1.22, 2.67] from 271 recruitments, which is the wrong sign. First-order copying ($p=1$) with a spread of repo fitness reproduces every value. Formation makes 76--100\% of arrivals. The holdout is not run.}
+
+\hmodel{Model 05 (replicators) with model 06 as the null. A replicator is a repo $j$. Its copy number $n_j$ is the count of agents whose current work label is $j$. A recruitment moves an agent's label into a repo that already has hosts. $C^{\rm free}$ counts the calls of agents who do not host $j$. $\kappa_j$ is formation by a field (births, kickoff naming). $A_j$ is a repo's fitness (attractiveness). The clock $\tau$ counts swarm calls (H40). $p=1$ is neutral copying, $p>1$ conformist, $p<1$ parabolic.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\frac{dn_j^+}{d\tau}=\kappa_j+c\,A_j\,\frac{C^{\rm free}_j}{C}\,n_j^{\,p}\\
+R_{jb}\sim\mathrm{Pois}\!\big(C^{\rm free}_{jb}\,e^{\alpha+p\log n_{jb}}\big),\quad n_{jb}\ge1\\
+A_j\sim\mathrm{LogN}(0,\sigma_A^2)\ \Rightarrow\ \hat p>p\ \text{(pooled over repos)}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{The growth order $\hat p$ per period (95\% CI, formation-free recruitments, host expiry $E=100$). The blue band is the herding prediction and the red band the parabolic prediction. Orange bars show the median $\hat p$ of simulated worlds on the same call schedule with $p=1$ and repo fitness spread $\sigma_A=0.5$ and 1.0. Every testable estimate lies near a $p=1$ world. The gray square is the \#40 hub, a kickoff-named repo, which also grows superlinearly.}
+
+\htelos{A monitor cannot read ``winner-take-all dynamics'' from how fast big repos recruit. Fitness differences between repos produce the same superlinear signal. Herding in these weeks is a repo that the kickoff names, and it takes every arrival. To prevent duplicated effort, an operator should control what the kickoff names. Watching the recruitment law does not help. The blind window is negligible in commit data (0.7\% of recruitments). Most recruitments (66\%) are returns to a repo the agent worked on before. This mostly restates H54 and H58 in replicator terms.}
+
+\hbottom{Repo growth order is not identifiable from commit logs: first-order copying plus fitness spread explains every $\hat p$, and herding sits on kickoff-named repos.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.46\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 $\hat p\in[1.2,1.5]$, herding & \raggedright \#31 0.73, \#41 1.05; \#33 9 events & \raggedright failed\tabularnewline
+\raggedright P2 $\hat p\le0.7$, own & \raggedright \#51 1.94 [1.22, 2.67]; \#39, \#42 untestable & \raggedright failed\tabularnewline
+\raggedright P3 $\Delta p>0$ & \raggedright $-1.05$ & \raggedright failed\tabularnewline
+\raggedright P4 impostors shift $<0.2$ & \raggedright \#31 0.81, \#33 0.33, \#41 0.05 & \raggedright failed\tabularnewline
+\raggedright P5 cross-lab within 0.3 & \raggedright \#31 0.42, \#41 $-0.72$, \#51 2.43 & \raggedright failed\tabularnewline
+\raggedright P7 recovery $p\in\{0.5,1,1.5\}$ & \raggedright $p=1$, 1.4 recovered; 0.5 reads $\approx1.0$ & \raggedright failed\tabularnewline
+\raggedright N \#40 named hub $\hat p\le0.5$ & \raggedright 1.62 [1.10, 2.13]; all 48 into the hub & \raggedright mixed\tabularnewline
+\raggedright A0 step from the field & \raggedright calibrated in 2/6 (\#41, \#51); burst $3.9\times$ & \raggedright failed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic recovery on the real schedules, 40 runs per world (10 for \#51), measured through the same label builder. Planted $p=1$ and $p=1.4$ are recovered. A planted $p=0.5$ and a field-only world ($p=0$) read near 1. Worlds with $p=1$ and repo fitness spread (orange) read 1.2--2.7.}
+
+\hcaveats{The host expiry $E$ sets which losses count. $E=300$ inflated $\hat p$ through idle ``ghost'' hosts, so $E=100$ was fixed before the real run (A1). The H54 naming rule tags 46--100\% of recruitments. Agents name repos after the goal, so ``named'' is partly agent-made. The fitness worlds, the touch-based impostor class and the AR(1) step null were added after the first real run (A2). \#33, \#42 and \#44 have under 15 formation-free recruitments. Commits are attempts.}
+
+\hnext{Within-repo dynamic-panel estimators validated on the fitness worlds; repo covariates as fitness; an explicit return term.}

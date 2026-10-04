@@ -31,7 +31,7 @@
   "scope": "10 units at 30 min (day level CI touches 0); natives NE42 pseudo-rooms, G12 motion field",
   "direction": "positive",
   "original_verdict": "failed (R2) → unresolved",
-  "credence": 0.89,
+  "credence": 0.84,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -70,14 +70,61 @@
   ],
   "mechanism_level": "M1",
   "fragile": true,
-  "value_if_true": 2,
+  "value_if_true": 1.75,
   "decision": "read room coupling from content or talk, not activity synchrony",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.79,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-C3); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.47,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.89,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": true,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "H01's near-critical content gain (0.74) is mostly drives; after nested field removal, content and talk co-move within rooms at gain ~0.5 while activity barely does (0.12 at 30 min), and no channel is near-critical.",
+    "credence": 0.78,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": true,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "identified: synthetic recovery",
+      "x": 1.5,
+      "evidence": "drives alone give 0.57-0.74 on H01's estimator; L3 tracks realized gain"
+     },
+     {
+      "factor": "partial replication",
+      "x": 1.5,
+      "evidence": "10 two-room units; content >=0.5 in 4-5/10"
+     },
+     {
+      "factor": "robust to instruments (content)",
+      "x": 2,
+      "evidence": "bge and gte agree"
+     },
+     {
+      "factor": "intervention partly consistent",
+      "x": 1.5,
+      "evidence": "NE42 pseudo-rooms collapse and return"
+     },
+     {
+      "factor": "penalty: drive leakage",
+      "x": 0.8,
+      "evidence": "L3 reads unmeasured room drives as coupling; activity side changed under data fix"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

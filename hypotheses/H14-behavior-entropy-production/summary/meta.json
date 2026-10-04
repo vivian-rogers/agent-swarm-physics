@@ -20,6 +20,12 @@
    "role": "secondary",
    "outcome": "mixed",
    "note": "Kinetic Potts states: per-agent cycles real; no cross-agent coupling term"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H14 re-evaluation agent RE-B1 (suggested; round-1 values were coordinator-calibrated)",
@@ -28,7 +34,7 @@
  "v2": {
   "claim": "Fine-action irreversibility is real for every agent and survives scaffold removal; the regime contrast was scaffold",
   "original_verdict": "mixed",
-  "credence": 0.72,
+  "credence": 0.82,
   "ladder": [
    {
     "factor": "base (sec)",
@@ -49,13 +55,55 @@
   ],
   "mechanism_level": "M0",
   "fragile": true,
-  "value_if_true": 1,
+  "value_if_true": 0.75,
   "decision": "none",
   "magnitude": "small",
   "generality": "this scaffold",
-  "expected_usefulness": 0.72,
-  "scientific_value": 3,
-  "rater": "coordinator first pass (from integrated reports); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.61,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.72,
+    "value_if_true": 1,
+    "mechanism_level": "M0",
+    "fragile": true,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Every agent's fine tool workflow (shell sub-classes) is irreversible beyond a detailed-balance null in 9/9 periods and survives scaffold removal (41-104% kept); the coarse arrow and the regime I/III contrast are scaffold.",
+    "credence": 0.89,
+    "value_if_true": 0.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "calibrated null passed",
+      "x": 2,
+      "evidence": "detailed-balance surrogate, size 0.03-0.07"
+     },
+     {
+      "factor": "identified: synthetic recovery",
+      "x": 1.5,
+      "evidence": "round-1b synthetic checks before real-data statistics"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "100% of agents in 9/9 periods"
+     },
+     {
+      "factor": "robust to data versions",
+      "x": 2,
+      "evidence": "fine classes irreversible in round 1 and on fixed bash_head in 1b"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

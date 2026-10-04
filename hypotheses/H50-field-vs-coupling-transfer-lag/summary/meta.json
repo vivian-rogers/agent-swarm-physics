@@ -1,71 +1,123 @@
 {
-  "complete": 45,
-  "faithfulness": 2.5,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 done: dated predictions and nulls; three-iteration synthetic validation (15 scenarios x 5 seeds) with pre-data amendments; 71 non-holdout units in 35 period folders (replication) plus 4 native tests (NE43, G51, NE14, G38) with their own predictions; robustness check on logged-start recipients; confirmatory script frozen, guarded and dry-run, not run. Missing: content channel (C3), regime-I kernel validation beyond hop 2, HH188 T_eff(omega), holdout run.",
-    "faithfulness": "The gated-coupling model is identified and beats its rivals: read-out jump > 0 in 45/71 units and < 0 in none, onset exactly at hop 1, ungated coupling rejected, pure field rejected for talk, HH167's regime split rejected. The activity collective mode is shown to be a schedule field (edges explain ~0.6 beyond a shifted-input null; synchronous halts in #38). Not higher because the holdout is not run, the kernel shape was not predicted (plateau in III, rise in I), several numeric predictions failed (nudge onset, regime-I field share, corner frequency), and decomposition shares are model-based and non-additive. Scorecard A1 B1 C1 D1 E1 F1 G1 H2 I1.",
-    "usefulness": "A clean mechanistic decomposition operators can use: activity synchrony is the scheduler (stagger or trim before reading it as coordination); talk spreads one read-out call at a time, and in regime III only to named recipients. A diagnostic and design rule rather than a validated lever; calibrated 3.0 -> 2.5."
+ "complete": 45,
+ "faithfulness": 2.5,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions and nulls; three-iteration synthetic validation (15 scenarios x 5 seeds) with pre-data amendments; 71 non-holdout units in 35 period folders (replication) plus 4 native tests (NE43, G51, NE14, G38) with their own predictions; robustness check on logged-start recipients; confirmatory script frozen, guarded and dry-run, not run. Missing: content channel (C3), regime-I kernel validation beyond hop 2, HH188 T_eff(omega), holdout run.",
+  "faithfulness": "The gated-coupling model is identified and beats its rivals: read-out jump > 0 in 45/71 units and < 0 in none, onset exactly at hop 1, ungated coupling rejected, pure field rejected for talk, HH167's regime split rejected. The activity collective mode is shown to be a schedule field (edges explain ~0.6 beyond a shifted-input null; synchronous halts in #38). Not higher because the holdout is not run, the kernel shape was not predicted (plateau in III, rise in I), several numeric predictions failed (nudge onset, regime-I field share, corner frequency), and decomposition shares are model-based and non-additive. Scorecard A1 B1 C1 D1 E1 F1 G1 H2 I1.",
+  "usefulness": "A clean mechanistic decomposition operators can use: activity synchrony is the scheduler (stagger or trim before reading it as coordination); talk spreads one read-out call at a time, and in regime III only to named recipients. A diagnostic and design rule rather than a validated lever; calibrated 3.0 -> 2.5."
+ },
+ "one_line": "Activity co-movement is the scheduler's field; talk spreads by a coupling gated at one read-out call (45/71 units, onset hop 1, none negative).",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "supported",
+   "note": "Gated response: talk coupling steps up at hop 1, activity is field"
   },
-  "one_line": "Activity co-movement is the scheduler's field; talk spreads by a coupling gated at one read-out call (45/71 units, onset hop 1, none negative).",
-  "models": [
-    {
-      "model": "02-nonequilibrium-ising",
-      "role": "primary",
-      "outcome": "supported",
-      "note": "Gated response: talk coupling steps up at hop 1, activity is field"
-    },
-    {
-      "model": "01-inverse-ising",
-      "role": "tool",
-      "outcome": "n/a",
-      "note": "Equal-time co-movement S that the split decomposes"
-    },
-    {
-      "model": "09-hawkes",
-      "role": "tool",
-      "outcome": "n/a",
-      "note": "Input impulse-response kernels and their nonstationarity pitfalls"
-    }
+  {
+   "model": "01-inverse-ising",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Equal-time co-movement S that the split decomposes"
+  },
+  {
+   "model": "09-hawkes",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Input impulse-response kernels and their nonstationarity pitfalls"
+  }
+ ],
+ "rated_by": "H50 agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 -> 2.5; others kept)",
+ "v2": {
+  "claim": "Activity co-movement is the scheduler's field; talk is a coupling gated at hop 1",
+  "original_verdict": "mixed (regime split rejected)",
+  "credence": 0.85,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5
+   },
+   {
+    "factor": "rival beaten",
+    "x": 1.5
+   }
   ],
-  "rated_by": "H50 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 -> 2.5; others kept)",
-  "v2": {
-    "claim": "Activity co-movement is the scheduler's field; talk is a coupling gated at hop 1",
-    "original_verdict": "mixed (regime split rejected)",
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 3.5,
+  "decision": "separate scheduler synchrony from real coupling",
+  "magnitude": "material",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 2.98,
+  "scientific_value": 4.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.86,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      },
-      {
-        "factor": "rival beaten",
-        "x": 1.5
-      }
-    ],
+    "value_if_true": 3,
     "mechanism_level": "M1",
     "fragile": false,
-    "value_if_true": 3,
-    "decision": "separate scheduler synchrony from real coupling",
-    "magnitude": "material",
-    "generality": "read-out-gated swarms",
-    "expected_usefulness": 2.57,
+    "scientific_value": 4
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 71 non-holdout units (35 periods), ledger call times. Activity co-movement is mostly a scheduler field (daily start/stop explains ~0.6 of it), while talk co-movement is a coupling gated at the recipient's first read-out call (J1 > 0 in 45/71 units, none negative; onset at hop 1; zero at the in-flight call).",
+    "credence": 0.84,
+    "value_if_true": 4.0,
+    "mechanism_level": "M2",
+    "fragile": false,
     "scientific_value": 4,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "ladder": [
+     {
+      "factor": "replication: J1 > 0 in 45/71 units, 0 negative",
+      "x": 2,
+      "evidence": "summary hresults P5"
+     },
+     {
+      "factor": "identified: synthetic swarms recover planted coupling, read zero for fields and drives",
+      "x": 1.5,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "penalty: per-unit CIs mildly anti-conservative (~9% synthetic FP)",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "intervention partly consistent: NE43 nudge path gone, edge field persists",
+      "x": 1.5,
+      "evidence": "summary hresults NE43"
+     },
+     {
+      "factor": "partly robust: jump survives on logged-start recipients; early regime I unchecked",
+      "x": 1.5,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "cross-method agreement: H38 trimmed-null finds the same activity field",
+      "x": 1.5,
+      "evidence": "H38 card corroboration"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

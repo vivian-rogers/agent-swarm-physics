@@ -1,57 +1,99 @@
 {
-  "complete": 40,
-  "faithfulness": 1.0,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 done: synthetic validation first (it broke and then fixed the estimator before real data), dated predictions, 33 replication folders plus 3 native tests (NE43, G38, G04), operator rule with split-half and bootstrap reliability, scorecard. Confirmatory script written and dry-run on stand-ins; holdout not run. Nudge and human curves are underpowered.",
-    "faithfulness": "The core claim is refuted: no refractory window, the window does not track the launched episode, and the episode-lock signature (recoverable in the synthetic) is absent; R stays 0.8-1.3 at all spacings. Only the mechanical same-call absorption (P4) and the cross-NE43 invariance (P7) hold. Scorecard A1 B1 C1 D0 E1 F1 G1 H1 I1; no holdout.",
-    "usefulness": "A clear, validated-in-sample negative design rule an operator can act on: re-kick after one read-out, not after a task episode; never stack kicks before the recipient's next model call; the nudger's 15-min floor is already past refractoriness, and its real limit is that nudges buy glances rather than sustained work. Evidence is strongest for mentions (G51, 15-period pool) and weaker for humans and nudges."
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: synthetic validation first (it broke and then fixed the estimator before real data), dated predictions, 33 replication folders plus 3 native tests (NE43, G38, G04), operator rule with split-half and bootstrap reliability, scorecard. Confirmatory script written and dry-run on stand-ins; holdout not run. Nudge and human curves are underpowered.",
+  "faithfulness": "The core claim is refuted: no refractory window, the window does not track the launched episode, and the episode-lock signature (recoverable in the synthetic) is absent; R stays 0.8-1.3 at all spacings. Only the mechanical same-call absorption (P4) and the cross-NE43 invariance (P7) hold. Scorecard A1 B1 C1 D0 E1 F1 G1 H1 I1; no holdout.",
+  "usefulness": "A clear, validated-in-sample negative design rule an operator can act on: re-kick after one read-out, not after a task episode; never stack kicks before the recipient's next model call; the nudger's 15-min floor is already past refractoriness, and its real limit is that nudges buy glances rather than sustained work. Evidence is strongest for mentions (G51, 15-period pool) and weaker for humans and nudges."
+ },
+ "one_line": "Kicks leave no refractory window: a second kick read by a later model call keeps 80-130% of the first's effect; same-read kicks are wasted.",
+ "models": [
+  {
+   "model": "09-hawkes",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "no refractory recovery function; R 0.8-1.3 at all spacings"
   },
-  "one_line": "Kicks leave no refractory window: a second kick read by a later model call keeps 80-130% of the first's effect; same-read kicks are wasted.",
-  "models": [
-    {
-      "model": "09-hawkes",
-      "role": "primary",
-      "outcome": "refuted",
-      "note": "no refractory recovery function; R 0.8-1.3 at all spacings"
-    },
-    {
-      "model": "03-contagion",
-      "role": "secondary",
-      "outcome": "refuted",
-      "note": "SIRS-like refractory compartment absent; no episode lock"
-    }
+  {
+   "model": "03-contagion",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "SIRS-like refractory compartment absent; no episode lock"
+  }
+ ],
+ "rated_by": "H43 agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+ "v2": {
+  "claim": "No refractory window beyond one read-out; only same-call kicks are wasted",
+  "original_verdict": "refuted",
+  "credence": 0.69,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   }
   ],
-  "rated_by": "H43 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
-  "v2": {
-    "claim": "No refractory window beyond one read-out; only same-call kicks are wasted",
-    "original_verdict": "refuted",
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.75,
+  "decision": "kick spacing: one read-out",
+  "magnitude": "material",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 1.9,
+  "scientific_value": 2.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.67,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      }
-    ],
+    "value_if_true": 3,
     "mechanism_level": "M1",
     "fragile": false,
-    "value_if_true": 3,
-    "decision": "kick spacing: one read-out",
-    "magnitude": "material",
-    "generality": "read-out-gated swarms",
-    "expected_usefulness": 2.0,
-    "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 35 non-holdout periods (mentions identifiable at G51 scale; humans in G04; nudges marginal). Kicks leave no refractory window: a second kick read at a later model call keeps ~80-130% of a first kick's effect at every spacing from 1 min to 4 h; only kicks read in the same call are discounted (R 0.2-0.4).",
+    "credence": 0.71,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "calibrated null and identified: synthetic null near 1, planted 30-min habituation recovered; rule reliable 98-100% (one design, credited once)",
+      "x": 2,
+      "evidence": "summary hobsb; hresults P10"
+     },
+     {
+      "factor": "partial replication: mentions pooled over 15 periods R 0.78; humans G04; nudges G51",
+      "x": 1.5,
+      "evidence": "summary hwhat"
+     },
+     {
+      "factor": "intervention partly consistent: mention R invariant across NE43",
+      "x": 1.5,
+      "evidence": "summary hresults P7"
+     },
+     {
+      "factor": "penalty: estimated call starts misclassify same/next-call pairs; nudge R on a post hoc outcome",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

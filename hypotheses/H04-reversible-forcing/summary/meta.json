@@ -28,7 +28,7 @@
  "v2": {
   "claim": "A first nudge adds ~1.2 active minutes per 30 (A30 1.16 [0.75, 1.57]) to its named target only, starting at the receiving call; repeats add less",
   "original_verdict": "mixed",
-  "credence": 0.48,
+  "credence": 0.49,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -49,13 +49,13 @@
   ],
   "mechanism_level": "M1",
   "fragile": true,
-  "value_if_true": 1.5,
+  "value_if_true": 1.83,
   "decision": "nudge targeting",
   "magnitude": "negligible",
   "generality": "this scaffold",
-  "expected_usefulness": 0.72,
-  "scientific_value": 2.5,
-  "rater": "coordinator + independent blind rater (log-odds mean of credences; mean V); no disagreement beyond thresholds",
+  "expected_usefulness": 0.9,
+  "scientific_value": 2.7,
+  "rater": "3 raters (coordinator + blind); log-odds mean credence, mean V",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -111,8 +111,40 @@
       "evidence": "Round 1b / H08 1b: onset follows read-out-delay bin (t25 4, 4, 15 min), constant-delay rival rejected"
      }
     ]
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "In regime III (#51, 4-h days), an operator nudge raises its leading-@ target's activity by ~1.2 active minutes over 30 min (first 1.4, repeat 0.9), starting at the target's next model call; bystanders gain ~0.",
+    "credence": 0.5,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "partial replication",
+      "x": 1.5,
+      "evidence": "#51 and pooled 4-h days; H30 independently gets ~1 min in #51 and #38"
+     },
+     {
+      "factor": "partly robust",
+      "x": 1.5,
+      "evidence": "sign survives round 1b and estimator variants; level moved 1.54->1.16"
+     },
+     {
+      "factor": "calibrated null mis-sized",
+      "x": 0.7,
+      "evidence": "#51 pre-window placebo +0.25 (nudger trigger selection); pause state not in strata"
+     },
+     {
+      "factor": "rival beaten (constant delay)",
+      "x": 1.5,
+      "evidence": "H08 C8: onset tracks read-out, not a fixed delay"
+     }
+    ]
    }
   ],
-  "scope": "#51 (powered); other periods scattered"
+  "scope": "#51 (powered); other periods scattered",
+  "adjudicate": false
  }
 }

@@ -14,6 +14,18 @@
    "role": "primary",
    "outcome": "refuted",
    "note": "No coordinated unit beats agent + own artifact where powered"
+  },
+  {
+   "model": "12-information-dynamics",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  },
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H58 round-1 agent (suggested)",
@@ -23,7 +35,7 @@
   "scope": "#51b–d (powered), G38; natives NE42, #44, #focus",
   "direction": "negative",
   "original_verdict": "failed (superagents)",
-  "credence": 0.76,
+  "credence": 0.61,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -61,9 +73,41 @@
   "decision": "builders: treat agent + own artifact as the unit; re-reading the artifact is how agents recover",
   "magnitude": "material",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.9,
-  "scientific_value": 4,
-  "rater": "coordinator, updated after round 1b (H58 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.52,
+  "scientific_value": 3.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.76,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 4
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: G51 (#51b-d powered) and G38, plus NE42, #44, #focus. No coordinated group of agents plus artifacts predicts members' next artifact better than agent + own artifact where the method has power; group co-allocation behaves as a shared field, and after erasures agents return to their own artifact.",
+    "credence": 0.44,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "calibrated null (size 0.5%)",
+      "x": 2,
+      "evidence": "summary hresults S0"
+     },
+     {
+      "factor": "underpowered for the negative: power 0.60-0.75 only in #51b-d (<0.8)",
+      "x": 0.6,
+      "evidence": "summary hresults S0; hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": true
  }
 }

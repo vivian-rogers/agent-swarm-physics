@@ -20,6 +20,12 @@
    "role": "primary",
    "outcome": "mixed",
    "note": "Content modes real; no kickoff collapse; motion field compresses PR"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H12 round-1b agent (suggested)",
@@ -28,7 +34,7 @@
  "v2": {
   "claim": "Talk and content collective modes are real; the activity market mode was an artifact; low-PR weeks are restatement loops",
   "original_verdict": "failed (collapse)",
-  "credence": 0.81,
+  "credence": 0.77,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -53,9 +59,9 @@
   "decision": "monitoring (mode strength, restatement rate)",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.62,
-  "scientific_value": 4.0,
-  "rater": "coordinator + independent blind rater (log-odds mean of credences; mean V); no disagreement beyond thresholds",
+  "expected_usefulness": 1.54,
+  "scientific_value": 3.8,
+  "rater": "3 raters (coordinator + blind); log-odds mean credence, mean V",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -106,7 +112,39 @@
       "evidence": "Round 1b 'Which verdicts change'"
      }
     ]
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Under the calibrated (trimmed block-shift) null, the activity market mode is mostly artifact (7/24 units), while talk modes (21/24) and content modes (24/24, both embedding models) are real collective modes.",
+    "credence": 0.67,
+    "value_if_true": 2.0,
+    "mechanism_level": "M0",
+    "fragile": true,
+    "scientific_value": 3.5,
+    "ladder": [
+     {
+      "factor": "calibrated null passed",
+      "x": 2,
+      "evidence": "DQ8 trimmed block-shift edge"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "talk 21/24, content 24/24"
+     },
+     {
+      "factor": "partly robust",
+      "x": 1.5,
+      "evidence": "content in both models; talk new on fixed table; activity headline collapsed under the data fix"
+     },
+     {
+      "factor": "penalty: exogenous field impostor",
+      "x": 0.8,
+      "evidence": "content modes may be shared goal fields; k_talk > k_act often"
+     }
+    ]
    }
-  ]
+  ],
+  "adjudicate": false
  }
 }

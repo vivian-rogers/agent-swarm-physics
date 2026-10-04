@@ -1,57 +1,105 @@
 {
-  "complete": 40,
-  "faithfulness": 0.5,
-  "usefulness": 1.5,
-  "rationale": {
-    "complete": "Round 1 done: dated predictions, synthetic validation (which found and fixed the scaffold-reset footprint on the agent-only chain), 107-event replication event study with two nulls, blind change-point scoring, family contrasts on 29 periods, 4 native tests (NE14b, NE43, NE40 dated by stylometry, G51), 34 replication folders, scorecard, confirm.py written and dry-run. Holdout not run; Jev v3 states not yet available.",
-    "faithfulness": "The core claim is refuted cleanly: scaffold changes (including NE14b and the dated NE40 swap) do not beat same-regime random days, goal kickoffs move the agent-only chain more than scaffold changes, and family differences survive scaffold removal. Only the 'no jump at roster/room/NE43' parts hold, and they are non-diagnostic. Scorecard A1 B1 C0 D0 E0 F1 G0 H0 I0.",
-    "usefulness": "A well-validated negative for operators (do not use behavioral EP as a platform-change monitor) plus practical side results: NE40 dated to 04-20 from tool-output stylometry, an undocumented 07-29 tool-schema change, a search malfunction and the NE43 timeline, all found with plain log features, which point to the monitor that works. The EP detector itself is not usable."
+ "complete": 40,
+ "faithfulness": 0.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions, synthetic validation (which found and fixed the scaffold-reset footprint on the agent-only chain), 107-event replication event study with two nulls, blind change-point scoring, family contrasts on 29 periods, 4 native tests (NE14b, NE43, NE40 dated by stylometry, G51), 34 replication folders, scorecard, confirm.py written and dry-run. Holdout not run; Jev v3 states not yet available.",
+  "faithfulness": "The core claim is refuted cleanly: scaffold changes (including NE14b and the dated NE40 swap) do not beat same-regime random days, goal kickoffs move the agent-only chain more than scaffold changes, and family differences survive scaffold removal. Only the 'no jump at roster/room/NE43' parts hold, and they are non-diagnostic. Scorecard A1 B1 C0 D0 E0 F1 G0 H0 I0.",
+  "usefulness": "A well-validated negative for operators (do not use behavioral EP as a platform-change monitor) plus practical side results: NE40 dated to 04-20 from tool-output stylometry, an undocumented 07-29 tool-schema change, a search malfunction and the NE43 timeline, all found with plain log features, which point to the monitor that works. The EP detector itself is not usable."
+ },
+ "one_line": "EP does not fingerprint the platform: scaffold changes, including NE14b and the 04-20 oracle swap, sit in the day-to-day spread; work and style set EP.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Scaffold changes do not move EP; goal kickoffs move it more"
   },
-  "one_line": "EP does not fingerprint the platform: scaffold changes, including NE14b and the 04-20 oracle swap, sit in the day-to-day spread; work and style set EP.",
-  "models": [
-    {
-      "model": "02-nonequilibrium-ising",
-      "role": "primary",
-      "outcome": "refuted",
-      "note": "Scaffold changes do not move EP; goal kickoffs move it more"
-    },
-    {
-      "model": "05-replicator-dissipation",
-      "role": "secondary",
-      "outcome": "refuted",
-      "note": "Platform does not own the irreversibility; family differences survive scaffold removal"
-    }
+  {
+   "model": "05-replicator-dissipation",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "Platform does not own the irreversibility; family differences survive scaffold removal"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  }
+ ],
+ "rated_by": "H56 agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+ "v2": {
+  "claim": "Turn-level EP does not detect platform changes; log features do",
+  "original_verdict": "refuted",
+  "credence": 0.69,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   }
   ],
-  "rated_by": "H56 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
-  "v2": {
-    "claim": "Turn-level EP does not detect platform changes; log features do",
-    "original_verdict": "refuted",
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 2.25,
+  "decision": "change detection via log features",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.55,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.67,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      }
-    ],
+    "value_if_true": 2,
     "mechanism_level": "M0",
     "fragile": false,
-    "value_if_true": 2,
-    "decision": "change detection via log features",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 1.33,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 107 dated events and every day, non-holdout. Action-chain entropy production does not jump at scaffold changes beyond the work-driven day-to-day spread (0/17 tool changes, class p 0.23; NE14b and NE40 ordinary); goal kickoffs move it more.",
+    "credence": 0.71,
+    "value_if_true": 2.5,
+    "mechanism_level": "M0",
+    "fragile": false,
     "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "ladder": [
+     {
+      "factor": "calibrated null and power: false alarms 0.03-0.05, power 0.78/0.89 at +-50% on fine chains (one design, credited once)",
+      "x": 2,
+      "evidence": "summary hresults P0"
+     },
+     {
+      "factor": "partial replication: tool and prompt classes 0/17 and 0/15, but few clean windows",
+      "x": 1.5,
+      "evidence": "summary hresults; hcaveats"
+     },
+     {
+      "factor": "partly robust: agent-only chain with burn-in agrees",
+      "x": 1.5,
+      "evidence": "summary hwhat"
+     },
+     {
+      "factor": "penalty: changes <30% invisible (NE14b -28% at the edge); post hoc placebo-pool repair",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

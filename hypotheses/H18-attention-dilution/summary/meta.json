@@ -1,71 +1,119 @@
 {
-  "complete": 48,
-  "faithfulness": 2.5,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 plus round 1b on the improved data: pending sets re-counted on the context ledger in 16 periods, responses scored with mentions and DQ2 reply labels, the placebo redone on strict visibility and on labelled reply pairs, and three native tests (NE42, the #51 N sweep, NE03). The holdout script still builds round-1 inputs and is not run; a reply measure with several labelled parents per message would be needed to test the budget directly.",
-    "faithfulness": "Dilution beats the no-budget null in 16/16 periods on corrected visibility (pooled 0.66), survives exogenous k in #51, and the round-1 ground-truth failure is mostly explained (placebo 0/16 -> 3/16, invisible/pending 0.85 -> 0.49; G = 1). But the literal budget, mention bypass, the merge and the fetch-limit tests fail, recency competes with the budget, and reply labels cannot identify the exponent.",
-    "usefulness": "A computable scaling rule (per-pair engagement ~ N^-0.6, per-turn output roughly conserved; replies go to the newest messages) an operator could check on their own logs when sizing channels; no validated intervention."
+ "complete": 48,
+ "faithfulness": 2.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 plus round 1b on the improved data: pending sets re-counted on the context ledger in 16 periods, responses scored with mentions and DQ2 reply labels, the placebo redone on strict visibility and on labelled reply pairs, and three native tests (NE42, the #51 N sweep, NE03). The holdout script still builds round-1 inputs and is not run; a reply measure with several labelled parents per message would be needed to test the budget directly.",
+  "faithfulness": "Dilution beats the no-budget null in 16/16 periods on corrected visibility (pooled 0.66), survives exogenous k in #51, and the round-1 ground-truth failure is mostly explained (placebo 0/16 -> 3/16, invisible/pending 0.85 -> 0.49; G = 1). But the literal budget, mention bypass, the merge and the fetch-limit tests fail, recency competes with the budget, and reply labels cannot identify the exponent.",
+  "usefulness": "A computable scaling rule (per-pair engagement ~ N^-0.6, per-turn output roughly conserved; replies go to the newest messages) an operator could check on their own logs when sizing channels; no validated intervention."
+ },
+ "one_line": "Attention dilutes as about k^-0.66 on ledger visibility (16/16); replies go to the newest messages; the placebo failure was mostly visibility.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Coupling dilutes as N^-0.6, not the literal mean-field J/N"
   },
-  "one_line": "Attention dilutes as about k^-0.66 on ledger visibility (16/16); replies go to the newest messages; the placebo failure was mostly visibility.",
-  "models": [
-    {
-      "model": "01-inverse-ising",
-      "role": "primary",
-      "outcome": "mixed",
-      "note": "Coupling dilutes as N^-0.6, not the literal mean-field J/N"
-    },
-    {
-      "model": "09-hawkes",
-      "role": "secondary",
-      "outcome": "supported",
-      "note": "Per-pair cross-excitation uptake hazard; falls with pending k"
-    },
-    {
-      "model": "02-nonequilibrium-ising",
-      "role": "secondary",
-      "outcome": "untested",
-      "note": "Listed source; no separate kinetic fit"
-    }
+  {
+   "model": "09-hawkes",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "Per-pair cross-excitation uptake hazard; falls with pending k"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Listed source; no separate kinetic fit"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  }
+ ],
+ "rated_by": "H18 re-evaluation agent RE-V1 (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
+ "v2": {
+  "claim": "Per-pair attention dilutes as k^-0.66 in every period",
+  "original_verdict": "supported (not 1/k)",
+  "credence": 0.83,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "robust to data/instruments",
+    "x": 2
+   },
+   {
+    "factor": "rival beaten",
+    "x": 1.5
+   }
   ],
-  "rated_by": "H18 re-evaluation agent RE-V1 (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
-  "v2": {
-    "claim": "Per-pair attention dilutes as k^-0.66 in every period",
-    "original_verdict": "supported (not 1/k)",
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.75,
+  "decision": "room/channel sizing",
+  "magnitude": "material",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 2.28,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.89,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      },
-      {
-        "factor": "rival beaten",
-        "x": 1.5
-      }
-    ],
+    "value_if_true": 2.5,
     "mechanism_level": "M1",
     "fragile": false,
-    "value_if_true": 2.5,
-    "decision": "room/channel sizing",
-    "magnitude": "material",
-    "generality": "read-out-gated swarms",
-    "expected_usefulness": 2.22,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Per-sender response falls sub-linearly with the number of pending messages (beta-hat 0.66+/-0.02 on ledger visibility, 16/16 periods), so per-pair coupling scales as ~N^-0.6, and per-pair uptake falls with room size (rho -0.57).",
+    "credence": 0.74,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": false,
     "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "ladder": [
+     {
+      "factor": "calibrated null mis-sized",
+      "x": 0.7,
+      "evidence": "invisible-sender placebo still 0.49x pending; conversation state contaminates mentions"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "16/16 periods"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "round 1 0.63 -> ledger 0.66; reply labels 0.85"
+     },
+     {
+      "factor": "intervention partly consistent",
+      "x": 1.5,
+      "evidence": "#51 exogenous-k timer-wake batches beta 0.45; #35 split k absorbs uptake"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

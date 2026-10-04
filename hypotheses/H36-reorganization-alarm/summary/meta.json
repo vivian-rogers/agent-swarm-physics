@@ -31,7 +31,7 @@
   "scope": "goal changes in non-holdout periods; natives NE38/39/40/43/45",
   "direction": "positive",
   "original_verdict": "mixed (bge) / failed (gte)",
-  "credence": 0.86,
+  "credence": 0.8,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -60,14 +60,56 @@
   ],
   "mechanism_level": "M0",
   "fragile": true,
-  "value_if_true": 2.5,
+  "value_if_true": 2.75,
   "decision": "reorganization monitor: use topic shift, add log features for platform steps",
   "magnitude": "material",
   "generality": "any LLM swarm",
-  "expected_usefulness": 2.14,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (RE-C3); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 2.2,
+  "scientific_value": 2.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.86,
+    "value_if_true": 2.5,
+    "mechanism_level": "M0",
+    "fragile": true,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 33 goal kickoffs, daily resolution. Fluctuation statistics (multi-information, susceptibility, heat capacity) are weak reorganization alarms (~1/4 of goal changes, random-date p at the failure boundary, all signal from content), and a first-moment topic-shift detector dominates (AUC 0.95-0.97 vs 0.66-0.68).",
+    "credence": 0.71,
+    "value_if_true": 3.0,
+    "mechanism_level": "M0",
+    "fragile": true,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "robust: R1 dominance and content-only signal survive round 1b in both embedding models",
+      "x": 2,
+      "evidence": "card Round 1b table"
+     },
+     {
+      "factor": "calibrated against placebo windows and random dates (not DQ8-sized)",
+      "x": 1.5,
+      "evidence": "summary hwhat"
+     },
+     {
+      "factor": "identified: synthetic shows fluctuation stats blind to field steps, R1 sees them",
+      "x": 1.5,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "penalty: kickoffs mostly on Mondays, 55 placebo days, none in regime II",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

@@ -20,6 +20,12 @@
    "role": "secondary",
    "outcome": "supported",
    "note": "artifacts, not memory, restore output (observational)"
+  },
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H44 agent (suggested)",
@@ -28,7 +34,7 @@
  "v2": {
   "claim": "Forced erasure triggers orderly re-reading, costs 4–11% of output, breaks loops",
   "original_verdict": "mixed (no thrash)",
-  "credence": 0.91,
+  "credence": 0.88,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -53,13 +59,13 @@
   ],
   "mechanism_level": "M2",
   "fragile": false,
-  "value_if_true": 3.5,
+  "value_if_true": 3.67,
   "decision": "context-cap length",
   "magnitude": "material",
   "generality": "agents with context resets",
-  "expected_usefulness": 3.19,
-  "scientific_value": 3.0,
-  "rater": "coordinator + independent blind rater (log-odds mean of credences; mean V); no disagreement beyond thresholds",
+  "expected_usefulness": 3.23,
+  "scientific_value": 3.2,
+  "rater": "3 raters (coordinator + blind); log-odds mean credence, mean V",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -120,7 +126,49 @@
       "evidence": "Caveats 'Categories are heuristics'; R2 redirect H44-R1"
      }
     ]
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: nine regime-III non-holdout periods, 21k forced resets. A forced context wipe triggers orderly re-reading (read share of non-write calls up, Theta_c +0.079, 9/9 periods; ~7-call tail) and a ~26% write dip (-38% commits), costing 4-11% of output, with no temperature pulse and no added susceptibility to new room items.",
+    "credence": 0.79,
+    "value_if_true": 4.0,
+    "mechanism_level": "M2",
+    "fragile": false,
+    "scientific_value": 3.5,
+    "ladder": [
+     {
+      "factor": "replication 9/9 periods (write dip 8/9)",
+      "x": 2,
+      "evidence": "summary hresults P1, P3"
+     },
+     {
+      "factor": "intervention consistent: forced resets timed by the 41-record cap; forced pre-trend equals pseudo-erasure band",
+      "x": 2,
+      "evidence": "card Standards; summary hresults P5"
+     },
+     {
+      "factor": "identified: synthetic 100% correct at G51 counts, no false thrash",
+      "x": 1.5,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "partly robust: gte robustness model, estimator variants; single data version",
+      "x": 1.5,
+      "evidence": "card Standards Inputs"
+     },
+     {
+      "factor": "penalty: unvalidated regex call classifier",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "penalty: ~12 statistics x 9 periods uncorrected; dip size depends on reference window",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
    }
-  ]
+  ],
+  "adjudicate": false
  }
 }

@@ -26,6 +26,12 @@
    "role": "tool",
    "outcome": "n/a",
    "note": "Branching-ratio identity gives the link share R_link"
+  },
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H28 agent (suggested); round 1b RE-D1 (suggested)",
@@ -36,7 +42,7 @@
   "scope": "11 herding periods + 5 shared weeks (work); natives NE09, #31",
   "direction": "positive",
   "original_verdict": "not supported (contagion)",
-  "credence": 0.8,
+  "credence": 0.81,
   "ladder": [
    {
     "factor": "base (sec)",
@@ -70,14 +76,56 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 2.5,
   "decision": "watch, don't throttle links",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.61,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-D1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 2.03,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.8,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Chat links to a project co-move with switches to it (HR ~2.6) but do not lead them in herding weeks: future links predict switches as well or better (9/11), and recipients switch at 6.5x baseline in the blind window before they can read the link.",
+    "credence": 0.82,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "identified: synthetic",
+      "x": 1.5,
+      "evidence": "future>past typical of drive worlds (88-100%), rare under contagion (8-16%)"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "10/11 (round 1), 9/11 (1b) herding weeks"
+     },
+     {
+      "factor": "partly robust",
+      "x": 1.5,
+      "evidence": "ledger visibility and work commits keep the pattern; primary P1 moved 3/11->5/11"
+     },
+     {
+      "factor": "contemporaneous-convergence placebo",
+      "x": 1.5,
+      "evidence": "blind-window design on the context ledger (114 switches)"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

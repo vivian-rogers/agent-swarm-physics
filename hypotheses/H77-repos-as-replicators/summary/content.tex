@@ -1,0 +1,34 @@
+\hwhat{H77 treats each repo as a replicator and measures the affinity $\sigma^*$ of the top repo on its plateau. $\sigma^*$ is the log ratio of recruitments to switch-outs. It then tests Kolchinsky's selection-resolution bound on rivals that die. Herding weeks should give $\sigma^*\ge1$ nat and own-artifact weeks $\le0.3$. The data are DQ4 work commits in \#31, \#33, \#41 (herding), \#39, \#42, \#51 (own artifacts) and natives \#44 and NE42. The herding weeks give 0.89, 1.58 and 1.00 nats, and \#42 gives 0.55. The difference is $0.61\pm1.23$, so HH325's kill condition is met. A neutral copying world on the same schedule gives the same values. The bound cannot be tested. The holdout is not run.}
+
+\hmodel{Model 05 (Kolchinsky 2025, replicators in a flow reactor), with model 06 as the neutral null. A replicator is a repo $j$. Its copy number $n_j$ counts the agents whose current work label is $j$. $J^+$ counts recruitments (copy steps). $J^-$ counts switch-outs to another repo (the reverse step, uncopying). Dilution $\phi$ is a label that expires after $E$ own calls without a commit. $f$ is the rare-phase fitness: recruitments per host per 1,000 free calls while $n\le2$. $s$ is a rival's selection coefficient. $q$ is the order of uncopying.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\sigma^*=\ln\frac{J^+_T+\tfrac12}{J^-_T+\tfrac12}\ \ \text{(top repo $T$, plateau)}\\
+s_k=1-f_k/f_T,\qquad k\ \text{extinct}\ \Rightarrow\ s_k\ge e^{-\sigma^*}\\
+J^-_j\propto C^{\rm host}_j\,n_j^{\,q-1}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{The affinity $\hat\sigma^*$ of the top repo per period, with a Poisson log-ratio 95\% CI and host expiry $E=100$. The dashed lines mark the predicted thresholds: $\ge1$ nat for herding (blue) and $\le0.3$ for own artifacts (red). Gray bars show the 95th percentile of a neutral copying world on the same call schedule. No testable period exceeds its neutral bar. \#40 (NE42 merge) is highest, but its hub is kickoff-named and every arrival into it is field-tagged.}
+
+\htelos{For an operator this result changes nothing. A recruitment/departure ratio from commit logs does not say whether a swarm selects among projects or only drifts. The ratio depends on how idle hosts are counted, and a neutral world on the same schedule reproduces it. The winning repo in herding weeks is the one the kickoff names, so the lever is the kickoff text (H54). One signature may be usable after confirmation. The per-host departure rate falls with repo size where repos are shared ($q<1$). It rises with size in the private-role era ($q=1.46$ [1.22, 1.70]).}
+
+\hbottom{$\sigma^*$ from commit logs is a bookkeeping convention inside a neutral band, and the resolution bound cannot be tested because winning repos are formed by the kickoff field.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.32\columnwidth}p{0.48\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 $\sigma^*\ge1$, herding & \raggedright 0.89, 1.58, 1.00 (1/3) & \raggedright failed\tabularnewline
+\raggedright P2 $\sigma^*\le0.3$, own & \raggedright \#42 0.55; \#39, \#51 untestable & \raggedright failed\tabularnewline
+\raggedright P3 contrast $>0.3$, CI$>0$ & \raggedright $0.61\pm1.23$ & \raggedright kill met\tabularnewline
+\raggedright P4 bound on extinct rivals & \raggedright $f_T=0$ in herding weeks; \#51 0/7 & \raggedright not ident.\tabularnewline
+\raggedright P6 $|q-1|<0.3$ & \raggedright 0.09--0.59 herding; 1.46, 1.90 own & \raggedright failed\tabularnewline
+\raggedright P7 above neutral 95\% & \raggedright 0/3 herding weeks & \raggedright failed\tabularnewline
+\raggedright P8 synthetic bias $\le0.3$ & \raggedright $-1.2$ to $+0.4$; test power 0 & \raggedright failed\tabularnewline
+\raggedright NE42 $\sigma^*$(\#40) highest & \raggedright 1.64 vs \#41 1.00; hub field-made & \raggedright supported\tabularnewline
+\raggedright A0 frustrated herd & \raggedright \#31: 3 repos reached $\ge3$ hosts, died & \raggedright supported\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Measured $\hat\sigma^*$ (labels, $E=100$) against the true $\sigma^*$ of the simulated events in six worlds on the real schedules. The estimator tracks the truth only roughly, and conformist worlds read low by about 1 nat. With $E=300$ or $E=50$ the bias reaches $\pm2$ nats.}
+
+\hcaveats{The theory defines $\sigma$ by microscopic reversibility. Commit logs do not show it. Whether a host's loss counts as uncopying or dilution depends on the expiry $E$. Between $E=50$ and 300, $\sigma^*$ moves by 2.0--3.7 nats in 4/5 periods and changes sign in \#31 and \#41. $E=100$ was fixed from the synthetic before the real run (A1). The H54 naming rule tags most herding arrivals, partly because agents name repos after the goal. Plateaus are short; \#51 has none with flux.}
+
+\hnext{Observe reversibility directly from agent traces (move vs idle vs erasure); extend the bound to replicators with a formation term; test $q<1$ vs $q>1$ on the holdout.}

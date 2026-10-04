@@ -35,7 +35,7 @@
   "scope": "10 debates; G12 re-drafting; G26, G33 as negative controls",
   "direction": "positive",
   "original_verdict": "failed (antiferromagnet)",
-  "credence": 0.86,
+  "credence": 0.8,
   "ladder": [
    {
     "factor": "base (sec)",
@@ -74,14 +74,61 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 1.5,
+  "value_if_true": 2.0,
   "decision": "read debate roles from stance, not topic",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.29,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-C2); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.6,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.86,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "In #12 debates, reply stance (not content embeddings) shows two-sublattice team order only while sides are assigned: teammates +0.41 vs opponents -0.32 (10/10 debates, beyond the agent-field null), teams recovered 8/10, gone after the verdict; no camps form without assignment (#26, #33).",
+    "credence": 0.73,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "calibrated null passed",
+      "x": 2,
+      "evidence": "agent-field null, 500 sims, p=0.002"
+     },
+     {
+      "factor": "partial replication",
+      "x": 1.5,
+      "evidence": "10/10 debates, but one period, seven agents"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "H37's own Jev stance labels agree (7/10 teams); content null holds in both models"
+     },
+     {
+      "factor": "ground truth agrees",
+      "x": 1.5,
+      "evidence": "DQ6 team labels recovered 8/10"
+     },
+     {
+      "factor": "penalty: unvalidated LLM labels",
+      "x": 0.7,
+      "evidence": "zero-shot stance; pair-level opposes precision 0.08"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

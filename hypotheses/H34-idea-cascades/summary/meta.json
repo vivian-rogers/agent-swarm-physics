@@ -20,6 +20,18 @@
    "role": "secondary",
    "outcome": "mixed",
    "note": "branching picture fits; activity loop gain does not predict R"
+  },
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H34 agent (suggested); round 1b RE-D1 (suggested)",
@@ -30,7 +42,7 @@
   "scope": "32 periods; natives #35, #26",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.89,
+  "credence": 0.84,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -69,14 +81,56 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 2.25,
   "decision": "forecast idea spread; expect ~half of apparent spread to be convergence",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.79,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-D1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.89,
+  "scientific_value": 3.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.89,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 32 non-holdout periods, hashed novel markers. Idea cascades are strongly subcritical in every period (R-hat 0.09-0.40, every CI < 1), exposure-driven beyond a common field, and heavier-tailed than one branching law; not critical s^-3/2.",
+    "credence": 0.76,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.5,
+    "ladder": [
+     {
+      "factor": "replication 32/32 periods, 113/113 class cells",
+      "x": 2,
+      "evidence": "summary hresults P1"
+     },
+     {
+      "factor": "robust: survived round 1b ledger visibility (0.06-0.39 -> 0.09-0.40)",
+      "x": 2,
+      "evidence": "card Round 1b"
+     },
+     {
+      "factor": "identified: synthetic shows a common field inflates R-hat, R_c recovers contagion (bias is toward criticality)",
+      "x": 1.5,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "penalty: 'idea' is a hashed marker rule; R-hat depends on the rule",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

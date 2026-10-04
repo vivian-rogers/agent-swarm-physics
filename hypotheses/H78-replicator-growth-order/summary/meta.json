@@ -1,0 +1,65 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done on the requested scope: card and dated predictions, Mathis A0 secondary test, synthetic validation on real call schedules (6 worlds + 3 post hoc fitness worlds, expiry sweep), 6 replication periods and 2 natives with per-period verdicts, variants (expiry, bin size, clock, choice form, cross-lab, first-time, touch class), estimates rows and a frozen, guarded confirm script (dry-run on stand-ins only).",
+  "faithfulness": "Every directional prediction failed (herding 0.73 and 1.05 vs band 1.2-1.5; own-artifact #51 1.94, CI above 0.7; contrast has the wrong sign), and the synthetic shows the order is not identifiable once repos differ in fitness: p = 1 with fitness spread reproduces all estimates, and p = 0.5 reads as 1. C = 0, D = 0, H = 0; F = 1 for honest identification work.",
+  "usefulness": "Mostly a negative instrument result: an operator cannot read winner-take-all dynamics from recruitment-vs-size slopes. The practical content (herding sits on kickoff-named repos; blind-window adoption is negligible at commit level; most recruitments are returns) restates H54 and H58."
+ },
+ "one_line": "Repo growth order is not identifiable from commit logs: first-order copying plus repo fitness spread explains every p-hat (0.7-1.9), and herding sits on kickoff-named repos.",
+ "models": [
+  {
+   "model": "05-replicator-dissipation",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Order not identified; predicted herding/own contrast has wrong sign"
+  },
+  {
+   "model": "06-neutral-cooperative-dynamics",
+   "role": "null",
+   "outcome": "supported",
+   "note": "p = 1 copying with fitness spread reproduces all estimates"
+  }
+ ],
+ "rated_by": "H78 round-1 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Replicator growth order p is not identifiable from commit logs: first-order copying plus fitness spread reproduces every estimate (#51 p̂ 1.94); herding sits on kickoff-named repos",
+  "scope": "#31, #41, #51 (271 recruitments); natives G40, G44",
+  "direction": "negative",
+  "original_verdict": "failed (growth order)",
+  "credence": 0.55,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification shows the confound (p = 1 plus fitness spread gives p̂ 1.2–2.7)",
+    "x": 1.5,
+    "evidence": "card §A2"
+   },
+   {
+    "factor": "replication (field-made arrivals 76–100%)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: confound amendment post hoc",
+    "x": 0.8,
+    "evidence": "card §A2"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "report fitness spread before any preferential-attachment exponent",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 0.82,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H78 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

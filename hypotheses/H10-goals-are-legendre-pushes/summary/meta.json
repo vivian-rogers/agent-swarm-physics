@@ -29,7 +29,7 @@
   "scope": "regime changes #11→12, #16→17, #37→38; 19 kickoffs; natives G26, NE38, G44",
   "direction": "negative",
   "original_verdict": "failed (Legendre)",
-  "credence": 0.82,
+  "credence": 0.79,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -58,14 +58,51 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 1.75,
   "decision": "kickoff design (with H54)",
   "magnitude": "material",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.64,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-C1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.38,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.82,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Free-week fluctuations along the goal direction do not predict which agents move toward an assigned goal (P1 r -0.37,-0.69,+0.20; fails in 8/8 input configurations, both embedding models); goals act as quenches toward a common target.",
+    "credence": 0.75,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "identified: synthetic power for the negative",
+      "x": 1.5,
+      "evidence": "P1 combined power 0.95 at the observed pushes (eps>=1.5); false-failure 0-8%"
+     },
+     {
+      "factor": "partial replication",
+      "x": 1.5,
+      "evidence": "3 pairs + 19-kickoff cross-transition (Spearman -0.56) + G26 native"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "bge/gte, dedupe, style residuals: 8/8 fail"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

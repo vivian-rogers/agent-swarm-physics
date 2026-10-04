@@ -5,8 +5,10 @@
 
 Endpoints: /            the page (dashboard/index.html)
            /api/state   everything the page shows (collect.state(), cached with short TTLs)
+           /api/estimates  per-period estimates + unit covariates for the phase diagram (cached until the parquet changes)
            /api/file    read-only view of a repo text file (cards, period READMEs, code); never data/ or secrets
            /api/agent   a subagent's hand-back report (or latest text while running)
+           POST /api/vet  record Vivian's vetting decision for a proposed HH (hypotheses/hypohypotheses/vetting.json)
 Binds to 127.0.0.1 only.
 """
 from __future__ import annotations
@@ -57,6 +59,8 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(200, (HERE / "index.html").read_bytes(), "text/html; charset=utf-8")
             elif u.path == "/api/state":
                 self._json(collect.state())
+            elif u.path == "/api/estimates":
+                self._json(collect.estimates())
             elif u.path == "/api/file":
                 p = safe_path(q.get("path", [""])[0])
                 if p is None:
@@ -68,6 +72,19 @@ class Handler(BaseHTTPRequestHandler):
             else:
                 self._json({"error": "not found"}, 404)
         except Exception as e:  # keep serving; show the error in the page
+            self._json({"error": f"{type(e).__name__}: {e}"}, 500)
+
+    def do_POST(self):  # noqa: N802
+        u = urlparse(self.path)
+        try:
+            if u.path != "/api/vet":
+                self._json({"error": "not found"}, 404); return
+            n = int(self.headers.get("Content-Length") or 0)
+            if n <= 0 or n > 4000:
+                self._json({"error": "bad request"}, 400); return
+            body = json.loads(self.rfile.read(n) or b"{}")
+            self._json(collect.record_vet(str(body.get("id", "")), str(body.get("decision", "")), str(body.get("note", ""))[:500]))
+        except Exception as e:
             self._json({"error": f"{type(e).__name__}: {e}"}, 500)
 
     def log_message(self, fmt, *args):

@@ -28,7 +28,7 @@
  "v2": {
   "claim": "Activity-timing pairwise couplings sit at the null floor; regime-III 'collective coupling' was day edges",
   "original_verdict": "failed",
-  "credence": 0.95,
+  "credence": 0.94,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -61,9 +61,56 @@
   "decision": "monitoring: don't read activity synchrony as coordination",
   "magnitude": "material",
   "generality": "scheduled swarms",
-  "expected_usefulness": 2.38,
-  "scientific_value": 3,
-  "rater": "coordinator first pass (from integrated reports); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 2.35,
+  "scientific_value": 3.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.95,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": true,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Activity-timing (1-min) kinetic-Ising couplings do not measure influence in this village: pairwise J sit at the null floor in all 21 chunks, installed or elected leaders are missed (#45 holdout, #44b, #26, #12 teams), and the regime-III collective term is day edges.",
+    "credence": 0.92,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.5,
+    "ladder": [
+     {
+      "factor": "identified: synthetic recovery at real counts (power for the negative)",
+      "x": 1.5,
+      "evidence": "harness: leader top-1 1.00 at J_L>=0.3; thinning check keeps power 0.70-0.83"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "null-floor pairwise J in 21/21 chunks, both nulls"
+     },
+     {
+      "factor": "robust to data versions",
+      "x": 2,
+      "evidence": "round 1b fixed table + corrected null: pairwise result unchanged"
+     },
+     {
+      "factor": "ground truth agrees",
+      "x": 1.5,
+      "evidence": "DQ6 known leaders/teams (#12, #26, #44b) not recovered, as the negative claims"
+     },
+     {
+      "factor": "holdout passed (partial: buggy table)",
+      "x": 2,
+      "evidence": "#45 locked rule failed as the negative predicts; run on the buggy table, not re-run"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

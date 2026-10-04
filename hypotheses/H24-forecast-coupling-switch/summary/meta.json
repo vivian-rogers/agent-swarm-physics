@@ -29,7 +29,7 @@
   "scope": "G21 (pair DiD), G41",
   "direction": "positive",
   "original_verdict": "failed (switch-on)",
-  "credence": 0.35,
+  "credence": 0.42,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -58,14 +58,56 @@
   ],
   "mechanism_level": "M1",
   "fragile": true,
-  "value_if_true": 2,
+  "value_if_true": 2.0,
   "decision": "share documents to align teams",
   "magnitude": "small",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 0.71,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (RE-C1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.84,
+  "scientific_value": 2.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.35,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": true,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "In #21, the first reading of teammates' forecasts did not step up swarm content alignment beyond ordinary kickoff days (13/13 configurations fail); content was already aligned before any reading (A_res ~0.33 vs rotation null 0.03).",
+    "credence": 0.49,
+    "value_if_true": 2.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2,
+    "ladder": [
+     {
+      "factor": "calibrated null passed (empirical)",
+      "x": 1.5,
+      "evidence": "23 kickoff-day and within-week placebos"
+     },
+     {
+      "factor": "single unit",
+      "x": 0.6,
+      "evidence": "one week, N=7"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "13 configurations, both embedding models"
+     },
+     {
+      "factor": "inconclusive negative (power <0.8)",
+      "x": 0.8,
+      "evidence": "synthetic power 0.38-0.59 at beta J0/n 0.35"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

@@ -1,61 +1,98 @@
 {
-  "complete": 45,
-  "faithfulness": 1.0,
-  "usefulness": 1.5,
-  "rationale": {
-    "complete": "Round 1 (action classes) and round 1b (Jev v3.1 soft states, real failures, synthetic checks of the soft-state tools, 3 native tests) are done. Still open: the holdout run, an HMM with agent-day random effects, and content-level states for theory spirals.",
-    "faithfulness": "The action-class MSM beats occupancy-only and sticky-only rivals on held-out days, but every core claim failed on both state spaces: non-Markov, slow sets are acting vs waiting (R4) plus agent mixture (R2), t2* does not track stuckness (wrong sign on v3), the regime contrast is reversed, and the unfitted relaxation after forced erasures misses by x12. Scorecard A1 B0 C1 D0 E0 F1 G1 H1 I0.",
-    "usefulness": "Cheap diagnostics (t2*, the slow-set map) flag tool modality and waiting, not stuck agents. Transferable lessons: minute-scale behavior is non-Markov; pooled MSMs manufacture slow modes; soft LLM labels need >= 15k windows for timescales, and argmax-run sojourn nulls are invalid on noisy labels. p_blocked marks low-output weeks inside regime III only."
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 (action classes) and round 1b (Jev v3.1 soft states, real failures, synthetic checks of the soft-state tools, 3 native tests) are done. Still open: the holdout run, an HMM with agent-day random effects, and content-level states for theory spirals.",
+  "faithfulness": "The action-class MSM beats occupancy-only and sticky-only rivals on held-out days, but every core claim failed on both state spaces: non-Markov, slow sets are acting vs waiting (R4) plus agent mixture (R2), t2* does not track stuckness (wrong sign on v3), the regime contrast is reversed, and the unfitted relaxation after forced erasures misses by x12. Scorecard A1 B0 C1 D0 E0 F1 G1 H1 I0.",
+  "usefulness": "Cheap diagnostics (t2*, the slow-set map) flag tool modality and waiting, not stuck agents. Transferable lessons: minute-scale behavior is non-Markov; pooled MSMs manufacture slow modes; soft LLM labels need >= 15k windows for timescales, and argmax-run sojourn nulls are invalid on noisy labels. p_blocked marks low-output weeks inside regime III only."
+ },
+ "one_line": "Behavior's slowest mode is acting vs waiting plus agent differences, on action classes and Jev states; t2* does not flag stuck periods.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Kinetic Potts MSM: non-Markov; t2* not a stuckness order parameter"
   },
-  "one_line": "Behavior's slowest mode is acting vs waiting plus agent differences, on action classes and Jev states; t2* does not flag stuck periods.",
-  "models": [
-    {
-      "model": "10-potts",
-      "role": "primary",
-      "outcome": "refuted",
-      "note": "Kinetic Potts MSM: non-Markov; t2* not a stuckness order parameter"
-    },
-    {
-      "model": "02-nonequilibrium-ising",
-      "role": "secondary",
-      "outcome": "mixed",
-      "note": "Currents inside sets; set-level dynamics near detailed balance"
-    }
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Currents inside sets; set-level dynamics near detailed balance"
+  }
+ ],
+ "rated_by": "H17 re-evaluation agent RE-B1 (suggested; round-1 values were coordinator-calibrated)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
+ "v2": {
+  "claim": "Behavior is non-Markov; the slow split is acting vs waiting; no metastable stuck states",
+  "original_verdict": "refuted (HH97)",
+  "credence": 0.61,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "robust to data/instruments",
+    "x": 2
+   },
+   {
+    "factor": "not identifiable / underpowered",
+    "x": 0.5
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   }
   ],
-  "rated_by": "H17 re-evaluation agent RE-B1 (suggested; round-1 values were coordinator-calibrated)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
-  "v2": {
-    "claim": "Behavior is non-Markov; the slow split is acting vs waiting; no metastable stuck states",
-    "original_verdict": "refuted (HH97)",
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "none",
+  "magnitude": "negligible",
+  "generality": "this scaffold",
+  "expected_usefulness": 0.61,
+  "scientific_value": 2.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.57,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      },
-      {
-        "factor": "not identifiable / underpowered",
-        "x": 0.5
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      }
-    ],
+    "value_if_true": 1,
     "mechanism_level": "M0",
     "fragile": false,
-    "value_if_true": 1,
-    "decision": "none",
-    "magnitude": "negligible",
-    "generality": "this scaffold",
-    "expected_usefulness": 0.57,
-    "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "The slowest behavior timescale t2* is not an order parameter of stuckness: it does not order periods by blocked/failure state (rho -0.69 on Jev states, wrong sign; -0.19 vs real failures), and minute-scale behavior fails Chapman-Kolmogorov in 27/27 periods.",
+    "credence": 0.65,
+    "value_if_true": 1.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "27 periods; within-period meta rho -0.28"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "action classes and Jev v3 states both fail"
+     },
+     {
+      "factor": "penalty: unvalidated LLM labels",
+      "x": 0.7,
+      "evidence": "Jev p_blocked meaning differs by regime; soft-state estimator bias x1.6-2.7"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

@@ -26,6 +26,12 @@
    "role": "tool",
    "outcome": "n/a",
    "note": "Embedding proximity to corpus vs base field"
+  },
+  {
+   "model": "12-information-dynamics",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "calibrated by coordinator 2026-10-04 (from H23 agent (suggested))",
@@ -35,7 +41,7 @@
   "scope": "G44 (single unit)",
   "direction": "negative",
   "original_verdict": "mixed",
-  "credence": 0.57,
+  "credence": 0.35,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -64,14 +70,51 @@
   ],
   "mechanism_level": "M0",
   "fragile": true,
-  "value_if_true": 1.5,
+  "value_if_true": 1.25,
   "decision": "leader distillation",
   "magnitude": "small",
   "generality": "fine-tuned agents",
-  "expected_usefulness": 0.86,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (RE-R1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.44,
+  "scientific_value": 1.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.57,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": true,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "The #44 fine-tuned leader carried a trace of its corpus's addressing style (14.2 vs 10.0 corpus-distinctive tokens per 100) and none of its directive plans.",
+    "credence": 0.18,
+    "value_if_true": 1.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 1.5,
+    "ladder": [
+     {
+      "factor": "single unit",
+      "x": 0.6,
+      "evidence": "16 messages, one afternoon"
+     },
+     {
+      "factor": "penalty: not blind, coder reliability",
+      "x": 0.7,
+      "evidence": "plan coder kappa ~0.45; exploratory, not blind"
+     },
+     {
+      "factor": "penalty: multiplicity",
+      "x": 0.8,
+      "evidence": "several channels tested; marker power 0.3-0.5 at n=16"
+     }
+    ]
+   }
+  ],
+  "adjudicate": true
  },
  "v2_history": [
   {

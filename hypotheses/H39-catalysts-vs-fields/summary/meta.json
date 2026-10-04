@@ -36,7 +36,7 @@
   "scope": "G51 (powered) + 5 period changes; natives NE43, NE44, NE10",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.74,
+  "credence": 0.67,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -79,10 +79,67 @@
   "decision": "lever choice (see interpretation/lever-table.md)",
   "magnitude": "small",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.86,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-V2); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.68,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.74,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: G51 nudges (G38 same sign, n.s.). A directed nudge acts as both a catalyst and a field: it raises escape from idle/wait (K +0.13 B4, +0.25 V4) and lowers the idle/wait share (-0.05 / -0.08), in two state spaces; human messages act as fields.",
+    "credence": 0.6,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "robust: survived round 1b and holds in a second state space (Jev v3.1 V4)",
+      "x": 2,
+      "evidence": "card Round 1b table"
+     },
+     {
+      "factor": "single powered unit (G51)",
+      "x": 0.6,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "calibrated: placebo-corrected field index, matched windows",
+      "x": 1.5,
+      "evidence": "card Null / baseline"
+     },
+     {
+      "factor": "identified: synthetic validation before real data",
+      "x": 1.5,
+      "evidence": "card Synthetic validation"
+     },
+     {
+      "factor": "intervention partly consistent: nudger switch-off is a catalytic loss (NE43); NE44 reversed",
+      "x": 1.5,
+      "evidence": "card Round 1b natives"
+     },
+     {
+      "factor": "penalty: multiplicity (nudge field does not survive Bonferroni over 28 tests)",
+      "x": 0.7,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "penalty: field/catalyst split depends on a load convention; V4 states are LLM labels",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

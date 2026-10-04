@@ -21,6 +21,12 @@
    "role": "secondary",
    "outcome": "mixed",
    "note": "Round 1: rooms order content; coupling residual instrument-dependent"
+  },
+  {
+   "model": "12-information-dynamics",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H01 round-2 agent (suggested)",
@@ -31,7 +37,7 @@
   "scope": "round 2 (R4–R8); round-1 basis re-checked in 1b",
   "direction": "negative",
   "original_verdict": "refuted (R4-R8)",
-  "credence": 0.61,
+  "credence": 0.62,
   "ladder": [
    {
     "factor": "base (sec)",
@@ -65,14 +71,51 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.5,
+  "value_if_true": 2.25,
   "decision": "builders: treat agent+repo as the unit; don't expect emergent group agency",
   "magnitude": "material",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.52,
-  "scientific_value": 4,
-  "rater": "coordinator, updated after round 1b (RE-C3); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.4,
+  "scientific_value": 3.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.61,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 4
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Within non-holdout work-ledger units (#30-#51), no multi-agent coarse-graining is an effective superagent: the persistent unit is a single agent plus its own artifact (single agents out-persist crews in 15/18 units; crews never beat random groups on individuality, carry no KW semantic information, show no repair).",
+    "credence": 0.62,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "identified: synthetic recovery at real counts",
+      "x": 1.5,
+      "evidence": "Amendment A1: night continuity and memory-loss continuity separate W_super/W_ind/W_env (93-100%)"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "R4d single agents > crews in 15/18 units; R4c/R5 null in 19 units"
+     },
+     {
+      "factor": "penalty: known-problem input",
+      "x": 0.8,
+      "evidence": "work ledger counts attempts, not outcomes (F9); timing-individuality power <=7% so part of the negative is unpowered"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

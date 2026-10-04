@@ -1,65 +1,112 @@
 {
-  "complete": 40,
-  "faithfulness": 2.0,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 done: pre-registered predictions, 30k Jev labels with two blind validation sets, synthetic validation at the real reply graphs (S1-S6), four periods with verdicts, a calibrated null for the detector, and a #34 confirmatory script with dry run. Not done: a second labeller or rater, the holdout run, contested periods, signed reply dynamics.",
-    "faithfulness": "Clear but partial: the positive control passes strongly (beats team permutation, agent fields and topic; teams recovered 7/10), but the hypothesis' general claim fails where conflict is not assigned (#51 roles, #26 ballots), and the per-pair and faction nulls needed post-hoc calibration.",
-    "usefulness": "A cheap detector of assigned or explicit sides with measured accuracy and a calibrated false-alarm rate that an operator can run on chat logs. Payoff is limited because LLM swarms rarely produce stance conflict, Jev's negative calls are imprecise, and the saboteur use case is untested (holdout)."
+ "complete": 40,
+ "faithfulness": 2.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: pre-registered predictions, 30k Jev labels with two blind validation sets, synthetic validation at the real reply graphs (S1-S6), four periods with verdicts, a calibrated null for the detector, and a #34 confirmatory script with dry run. Not done: a second labeller or rater, the holdout run, contested periods, signed reply dynamics.",
+  "faithfulness": "Clear but partial: the positive control passes strongly (beats team permutation, agent fields and topic; teams recovered 7/10), but the hypothesis' general claim fails where conflict is not assigned (#51 roles, #26 ballots), and the per-pair and faction nulls needed post-hoc calibration.",
+  "usefulness": "A cheap detector of assigned or explicit sides with measured accuracy and a calibrated false-alarm rate that an operator can run on chat logs. Payoff is limited because LLM swarms rarely produce stance conflict, Jev's negative calls are imprecise, and the saboteur use case is untested (holdout)."
+ },
+ "one_line": "Stance labels recover assigned debate teams that topic misses (7/10 exact), but rivals, opposed roles and voters show no stance conflict.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "antiferromagnetic stance only in assigned #12 debates"
   },
-  "one_line": "Stance labels recover assigned debate teams that topic misses (7/10 exact), but rivals, opposed roles and voters show no stance conflict.",
-  "models": [
-    {
-      "model": "01-inverse-ising",
-      "role": "primary",
-      "outcome": "mixed",
-      "note": "antiferromagnetic stance only in assigned #12 debates"
-    },
-    {
-      "model": "10-potts",
-      "role": "secondary",
-      "outcome": "mixed",
-      "note": "camps recovered in #12 debates; none in #51, #26"
-    }
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "camps recovered in #12 debates; none in #51, #26"
+  }
+ ],
+ "rated_by": "H37 agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+ "v2": {
+  "claim": "Stance recovers assigned debate teams; no stance conflict without assignment",
+  "original_verdict": "mixed",
+  "credence": 0.64,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "ground truth agrees",
+    "x": 1.5
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5
+   },
+   {
+    "factor": "penalty (labeller/visibility)",
+    "x": 0.8
+   }
   ],
-  "rated_by": "H37 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
-  "v2": {
-    "claim": "Stance recovers assigned debate teams; no stance conflict without assignment",
-    "original_verdict": "mixed",
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.75,
+  "decision": "conflict monitoring",
+  "magnitude": "material",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.76,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.71,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "ground truth agrees",
-        "x": 1.5
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      },
-      {
-        "factor": "penalty (labeller/visibility)",
-        "x": 0.8
-      }
-    ],
+    "value_if_true": 2.5,
     "mechanism_level": "M1",
     "fragile": false,
-    "value_if_true": 2.5,
-    "decision": "conflict monitoring",
-    "magnitude": "material",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 1.76,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: #12 assigned debates (plus null results in #51, #26). Stance labels, not topic, separate assigned debate teams (AUC 0.74 vs 0.48; exact two-camp recovery in 7/10 debates; relaxes within 10 min of the verdict); rivals, opposed roles and voters show no stance conflict.",
+    "credence": 0.56,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": false,
     "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "ladder": [
+     {
+      "factor": "partial replication: 10 debates within one period, 7/10 exact",
+      "x": 1.5,
+      "evidence": "summary hwhat"
+     },
+     {
+      "factor": "identified: synthetic on the real reply graph detects Delta ~0.5 logit; real Delta >~1",
+      "x": 1.5,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "ground truth agrees: drafted teams are known structure",
+      "x": 1.5,
+      "evidence": "summary hresults P3"
+     },
+     {
+      "factor": "penalty: LLM stance labels with modest validation (kappa 0.37-0.67; 'oppose' 30% precise), one labeller",
+      "x": 0.7,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "penalty: old inputs (reply pairs from chat_mentions_clean, no ledger, one embedding; no round 1b)",
+      "x": 0.8,
+      "evidence": "card Standards Inputs"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

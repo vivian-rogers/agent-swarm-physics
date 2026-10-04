@@ -20,6 +20,18 @@
    "role": "rival",
    "outcome": "refuted",
    "note": "Herding (conformist) rival also inadequate on stated goals"
+  },
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "RE-D2 round 1b (suggested); round 1 by H06 agent, calibrated by coordinator",
@@ -30,7 +42,7 @@
   "scope": "5 free weeks + work-label periods; natives G35, G51, G44",
   "direction": "positive",
   "original_verdict": "refuted",
-  "credence": 0.84,
+  "credence": 0.8,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -69,14 +81,56 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 1.75,
   "decision": "what agents read sets what they work on; count projects from work, not stated goals",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.69,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-D2); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.4,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.84,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Neutral cooperative dynamics does not describe project choice in free weeks: on stated-goal clusters NCD (and Hubbell, herding) is rejected by the joint check in 5/5 free weeks, with 72-91% singleton goal clusters, in both embedding models.",
+    "credence": 0.76,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "identified: synthetic power for the negative",
+      "x": 1.5,
+      "evidence": "P1 rule power ~0.9 at N>=12 (weaker at N=7)"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "failure pattern in all 12 non-holdout periods, 5/5 free weeks"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "round 1b gte + style removal; work labels also inadequate 4/5"
+     },
+     {
+      "factor": "penalty: instrument validity",
+      "x": 0.8,
+      "evidence": "goal clusters measure sub-tasks, not projects"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

@@ -23,7 +23,7 @@
   "scope": "9 periods (wipe dip); NE41, NE16, NE29",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.86,
+  "credence": 0.78,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -57,14 +57,51 @@
   ],
   "mechanism_level": "M1",
   "fragile": true,
-  "value_if_true": 3,
+  "value_if_true": 3.5,
   "decision": "context-cap and memory design",
   "magnitude": "material",
   "generality": "agents with context resets",
-  "expected_usefulness": 2.59,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-O1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 2.73,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.86,
+    "value_if_true": 3,
+    "mechanism_level": "M1",
+    "fragile": true,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "A forced context wipe (41-turn consolidation cap) cuts an agent's committed work by ~39% for about ten calls (7/9 periods), independent of how much the agent saves to memory.",
+    "credence": 0.67,
+    "value_if_true": 4.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "7/9 periods; NE41 dated prediction"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "write rate (round 1, -44%, 8/9) and DQ4 work commits (1b, -39%)"
+     },
+     {
+      "factor": "intervention consistent (quasi-random timing)",
+      "x": 2,
+      "evidence": "forced consolidations fire on a turn cap, independent of task state; memory dose rho 0.01"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

@@ -20,6 +20,12 @@
    "role": "secondary",
    "outcome": "mixed",
    "note": "Frozen projects are goal-named (9/13); literal enrichment rule mixed"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H54 agent (suggested)",
@@ -28,7 +34,7 @@
  "v2": {
   "claim": "Day-1 content lands on what the kickoff names; agents land on private goals",
   "original_verdict": "supported",
-  "credence": 0.94,
+  "credence": 0.92,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -61,13 +67,13 @@
   ],
   "mechanism_level": "M2",
   "fragile": false,
-  "value_if_true": 2.75,
+  "value_if_true": 2.83,
   "decision": "kickoff design",
   "magnitude": "large",
   "generality": "any LLM swarm",
-  "expected_usefulness": 2.58,
-  "scientific_value": 3.0,
-  "rater": "coordinator + independent blind rater (log-odds mean of credences; mean V); no disagreement beyond thresholds",
+  "expected_usefulness": 2.6,
+  "scientific_value": 2.8,
+  "rater": "3 raters (coordinator + blind); log-odds mean credence, mean V",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -128,7 +134,44 @@
       "evidence": "Synthesis 1 (echo removal top-1 0.55->0.30); Synthetic genericness artifact"
      }
     ]
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 33 non-holdout kickoffs plus #51 and NE38. The kickoff (or private goal) text is the day-1 content quench target: each day-1 centroid picks out its own kickoff (median percentile 1.0, top-1 18/33, p 3e-6; move toward kickoff 23/25), failing only where the kickoff names no shared target.",
+    "credence": 0.85,
+    "value_if_true": 3.0,
+    "mechanism_level": "M2",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "replication: 23/25 periods move toward the new kickoff",
+      "x": 2,
+      "evidence": "summary hresults P1c"
+     },
+     {
+      "factor": "calibrated null: genericness-corrected swap null",
+      "x": 2,
+      "evidence": "summary hwhat"
+     },
+     {
+      "factor": "intervention consistent: NE38 human reassignment re-targets one agent within a day (DiD +0.61)",
+      "x": 2,
+      "evidence": "summary hresults"
+     },
+     {
+      "factor": "ground truth agrees: #51 private goals, role-swap accuracy 0.95",
+      "x": 1.5,
+      "evidence": "summary hresults"
+     },
+     {
+      "factor": "changed under a variant: near-echo removal lowers top-1 0.55 -> 0.30-0.45; one embedding model",
+      "x": 0.7,
+      "evidence": "summary hcaveats"
+     }
+    ]
    }
-  ]
+  ],
+  "adjudicate": false
  }
 }

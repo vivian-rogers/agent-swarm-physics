@@ -35,7 +35,7 @@
   "scope": "#51 units a–c; NE38; G23",
   "direction": "negative",
   "original_verdict": "refuted",
-  "credence": 0.68,
+  "credence": 0.63,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -68,10 +68,47 @@
   "decision": "assigned rivalries don't create conflict",
   "magnitude": "small",
   "generality": "role-play swarms",
-  "expected_usefulness": 1.02,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (RE-C2); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.95,
+  "scientific_value": 2.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.68,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "#51's private roles do not produce spin-glass order: same-role rivals co-move more than unrelated pairs (T_SR +0.04 to +0.06 in every variant), couplings are mostly positive, and the swarm never switches collectively (W~1).",
+    "credence": 0.58,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "partial replication",
+      "x": 1.5,
+      "evidence": "units 51a-e, 3-5 rival pairs each"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "bge/gte, style residuals, dedupe, DQ2 stance"
+     },
+     {
+      "factor": "penalty: not identifiable",
+      "x": 0.7,
+      "evidence": "SK vs heterogeneous ferromagnet and kappa under common drive not identifiable; shared role prompts as fields"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

@@ -1,57 +1,105 @@
 {
-  "complete": 40,
-  "faithfulness": 0.5,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 done: dated predictions, three pre-real amendments from synthetic validation (196 runs on three real schedules, with and without contemporaneous convergence), 34 replication folders and 3 native tests (NE42, NE41, #51) with dated predictions and verdicts, rivals (phase, shared sources) and both embedding models, a labelled post hoc amendment after the real data, and a confirm script dry-run on stand-ins (not run). Missing: holdout run, a lag-resolved chance model, and validation of the post hoc estimator beyond stylised worlds.",
-    "faithfulness": "The core prediction is refuted: no rise of echo with backlog in any period (raw upper bound +0.0016 per doubling, about 5% of the synthetic effect), a message-level copy share of about 0 at every backlog, and no response to NE42's backlog jump or NE41's erasures. The pre-registered estimator itself proved invalid on real data (contemporaneous convergence), so the refutation rests on the post hoc bound and lag profiles. Scorecard A1 B1 C0 D0 E0 F1 G1 H0 I0.",
-    "usefulness": "A diagnostic any operator can compute: compare near-duplicates between read messages and unread messages at the same lag before calling anything copying. In the village, simultaneous convergence accounts for the semantic near-duplication, and load does not make agents parrot. It corrects shared instruments (2-h echo flags) and readings in H12 and H07, but gives no lever."
+ "complete": 40,
+ "faithfulness": 0.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions, three pre-real amendments from synthetic validation (196 runs on three real schedules, with and without contemporaneous convergence), 34 replication folders and 3 native tests (NE42, NE41, #51) with dated predictions and verdicts, rivals (phase, shared sources) and both embedding models, a labelled post hoc amendment after the real data, and a confirm script dry-run on stand-ins (not run). Missing: holdout run, a lag-resolved chance model, and validation of the post hoc estimator beyond stylised worlds.",
+  "faithfulness": "The core prediction is refuted: no rise of echo with backlog in any period (raw upper bound +0.0016 per doubling, about 5% of the synthetic effect), a message-level copy share of about 0 at every backlog, and no response to NE42's backlog jump or NE41's erasures. The pre-registered estimator itself proved invalid on real data (contemporaneous convergence), so the refutation rests on the post hoc bound and lag profiles. Scorecard A1 B1 C0 D0 E0 F1 G1 H0 I0.",
+  "usefulness": "A diagnostic any operator can compute: compare near-duplicates between read messages and unread messages at the same lag before calling anything copying. In the village, simultaneous convergence accounts for the semantic near-duplication, and load does not make agents parrot. It corrects shared instruments (2-h echo flags) and readings in H12 and H07, but gives no lever."
+ },
+ "one_line": "Backlog does not make agents echo (raw upper bound +0.0016 per doubling, ~5% of the H57 effect); most near-duplication is simultaneous convergence, not copying.",
+ "models": [
+  {
+   "model": "08-copying-vs-transformation",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Copy share ≈ 0 at every backlog; no rise with load"
   },
-  "one_line": "Backlog does not make agents echo (raw upper bound +0.0016 per doubling, ~5% of the H57 effect); most near-duplication is simultaneous convergence, not copying.",
-  "models": [
-    {
-      "model": "08-copying-vs-transformation",
-      "role": "primary",
-      "outcome": "refuted",
-      "note": "Copy share \u2248 0 at every backlog; no rise with load"
-    },
-    {
-      "model": "03-contagion",
-      "role": "secondary",
-      "outcome": "refuted",
-      "note": "No load-dependent copy transmission over read sets"
-    }
+  {
+   "model": "03-contagion",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "No load-dependent copy transmission over read sets"
+  },
+  {
+   "model": "12-information-dynamics",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  }
+ ],
+ "rated_by": "H57 agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
+ "v2": {
+  "claim": "Backlog doesn't raise echo; near-duplication is mostly contemporaneous convergence",
+  "original_verdict": "refuted",
+  "credence": 0.55,
+  "ladder": [
+   {
+    "factor": "base (sec)",
+    "x": 0.3
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   }
   ],
-  "rated_by": "H57 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
-  "v2": {
-    "claim": "Backlog doesn't raise echo; near-duplication is mostly contemporaneous convergence",
-    "original_verdict": "refuted",
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 2.75,
+  "decision": "echo monitoring baselines",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.51,
+  "scientific_value": 3.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.56,
-    "ladder": [
-      {
-        "factor": "base (sec)",
-        "x": 0.3
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      }
-    ],
+    "value_if_true": 1.5,
     "mechanism_level": "M0",
     "fragile": false,
-    "value_if_true": 1.5,
-    "decision": "echo monitoring baselines",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 0.84,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 34 non-holdout periods plus NE42, NE41, #51. A large read backlog does not make agents copy: raw read-set echo rises at most +0.0016 per doubling of backlog (<=5% of the synthetic H57 effect); most near-duplication is simultaneous convergence (unread pairs match read ones below 15 s).",
+    "credence": 0.54,
+    "value_if_true": 4.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 4,
+    "ladder": [
+     {
+      "factor": "identified: raw echo and lag-matched count recover the planted slope on real schedules",
+      "x": 1.5,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "partly robust: both encoders agree (bge +0.0016, gte +0.0012); pre-registered estimator invalid",
+      "x": 1.5,
+      "evidence": "summary hresults"
+     },
+     {
+      "factor": "intervention partly consistent: NE42 merge/split, NE41 erasures and #51 N sweep show no copying",
+      "x": 1.5,
+      "evidence": "summary hresults"
+     },
+     {
+      "factor": "penalty: verdict rests on a post hoc upper bound",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": true
+ }
 }

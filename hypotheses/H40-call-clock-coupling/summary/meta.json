@@ -29,7 +29,7 @@
   "scope": "11 regime-II/III periods (G51 9/9 units); 22 regime-I periods; natives G51, NE41, G18, NE14",
   "direction": "positive",
   "original_verdict": "failed (pooled P1) / supported in II–III",
-  "credence": 0.65,
+  "credence": 0.72,
   "ladder": [
    {
     "factor": "base (sec)",
@@ -68,13 +68,65 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3,
+  "value_if_true": 3.5,
   "decision": "cadence (pause timers, tool-call length) as a prompt-free coupling knob",
   "magnitude": "material",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.95,
-  "scientific_value": 4,
-  "rater": "coordinator, updated after round 1b (H40 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 2.52,
+  "scientific_value": 3.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.65,
+    "value_if_true": 3,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 4
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: computer-use scaffold, regimes II-III (11 periods, G51 strongest). Reply coupling runs on the recipient's call clock: per-call reply hazard does not grow with call wall-time span (eta ~0; G51 -0.03 at pre-set pause wakes); per-hour coupling = per-call (family) coupling x call rate.",
+    "credence": 0.78,
+    "value_if_true": 4.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.5,
+    "ladder": [
+     {
+      "factor": "replication: II -0.01, III -0.16 pooled; P2 6/8; 9/9 G51 units",
+      "x": 2,
+      "evidence": "card Results P1, P2, N1"
+     },
+     {
+      "factor": "identified: synthetic recovers eta 0/0.5/1 on real schedules (bias <=0.05)",
+      "x": 1.5,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "rival beaten on held-out days: call-clock > wall-clock in 33/33",
+      "x": 1.5,
+      "evidence": "card Results P4"
+     },
+     {
+      "factor": "intervention partly consistent: pause-timer dose (quasi-exogenous) eta -0.03; clean NE20 is in the holdout",
+      "x": 1.5,
+      "evidence": "card N1"
+     },
+     {
+      "factor": "partly robust: estimator variants (logged starts, short spans), single data version",
+      "x": 1.5,
+      "evidence": "card What it means 1"
+     },
+     {
+      "factor": "penalty: DQ2 parents partly content-selected; agents partly choose cadence",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

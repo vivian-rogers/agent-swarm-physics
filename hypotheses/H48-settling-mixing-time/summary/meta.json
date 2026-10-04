@@ -1,59 +1,107 @@
 {
-  "complete": 40,
-  "faithfulness": 1.0,
-  "usefulness": 1.5,
-  "rationale": {
-    "complete": "Round 1 done: dated predictions, nulls and four native designs before any content was read; synthetic validation on the real ledger schedules (4 truths x 30 datasets) with a pre-data Amendment 1; a post-hoc noise-calibrated power check; 27 replication + 4 native folders with verdicts; both embedding models; DQ5 robustness; confirm.py frozen and dry-run (not run). Missing: holdout run, a settling estimator with power, the message-level alpha test.",
-    "faithfulness": "The literal claim (settling = time for everyone to read everyone once) fails on magnitude: tau is ~10x the coverage time and ~80x the read-out chain's mixing time. The scaling claim is untested in practice: primaries lose to the constant in both models, but settling is detectable in only 11/27 periods and the real-like synthetic has ~0 power. Natives lean against read-out as the driver (#38, #51) with one weak positive (NE42, gte only). Scorecard A1 B1 C0 D0 E0 F1 G1 H0 I0.",
-    "usefulness": "A diagnostic with a negative design implication: in broadcast rooms read-out coverage completes in minutes, so convergence on a new goal is not limited by who has read whom, and room merges or faster calls will not speed it via reading. Ledger coverage times are computable but weakest-link (one silent agent). No lever."
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions, nulls and four native designs before any content was read; synthetic validation on the real ledger schedules (4 truths x 30 datasets) with a pre-data Amendment 1; a post-hoc noise-calibrated power check; 27 replication + 4 native folders with verdicts; both embedding models; DQ5 robustness; confirm.py frozen and dry-run (not run). Missing: holdout run, a settling estimator with power, the message-level alpha test.",
+  "faithfulness": "The literal claim (settling = time for everyone to read everyone once) fails on magnitude: tau is ~10x the coverage time and ~80x the read-out chain's mixing time. The scaling claim is untested in practice: primaries lose to the constant in both models, but settling is detectable in only 11/27 periods and the real-like synthetic has ~0 power. Natives lean against read-out as the driver (#38, #51) with one weak positive (NE42, gte only). Scorecard A1 B1 C0 D0 E0 F1 G1 H0 I0.",
+  "usefulness": "A diagnostic with a negative design implication: in broadcast rooms read-out coverage completes in minutes, so convergence on a new goal is not limited by who has read whom, and room merges or faster calls will not speed it via reading. Ledger coverage times are computable but weakest-link (one silent agent). No lever."
+ },
+ "one_line": "Agents read each other within minutes but content settles over hours (τ ≈ 10× coverage time); the scaling test has no power at real noise.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Shallow-coverage settling refuted on magnitude; small-α read-out averaging untested"
   },
-  "one_line": "Agents read each other within minutes but content settles over hours (\u03c4 \u2248 10\u00d7 coverage time); the scaling test has no power at real noise.",
-  "models": [
-    {
-      "model": "11-vector-spins",
-      "role": "primary",
-      "outcome": "mixed",
-      "note": "Shallow-coverage settling refuted on magnitude; small-\u03b1 read-out averaging untested"
-    },
-    {
-      "model": "10-potts",
-      "role": "rival",
-      "outcome": "untested",
-      "note": "No \u03bb\u2082 variant beats a constant; test lacks power"
-    },
-    {
-      "model": "03-contagion",
-      "role": "tool",
-      "outcome": "n/a",
-      "note": "Read-out coverage as an SI process on the ledger"
-    }
+  {
+   "model": "10-potts",
+   "role": "rival",
+   "outcome": "untested",
+   "note": "No λ₂ variant beats a constant; test lacks power"
+  },
+  {
+   "model": "03-contagion",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Read-out coverage as an SI process on the ledger"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  }
+ ],
+ "rated_by": "H48 agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+ "v2": {
+  "claim": "Coverage takes minutes, settling hours; the scaling test is unpowered",
+  "original_verdict": "inconclusive",
+  "credence": 0.3,
+  "ladder": [
+   {
+    "factor": "base (sec)",
+    "x": 0.3
+   },
+   {
+    "factor": "not identifiable / underpowered",
+    "x": 0.5
+   }
   ],
-  "rated_by": "H48 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
-  "v2": {
-    "claim": "Coverage takes minutes, settling hours; the scaling test is unpowered",
-    "original_verdict": "inconclusive",
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "none",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 0.45,
+  "scientific_value": 2.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.18,
-    "ladder": [
-      {
-        "factor": "base (sec)",
-        "x": 0.3
-      },
-      {
-        "factor": "not identifiable / underpowered",
-        "x": 0.5
-      }
-    ],
+    "value_if_true": 1,
     "mechanism_level": "M0",
     "fragile": false,
-    "value_if_true": 1,
-    "decision": "none",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 0.18,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 27 non-holdout periods (settling detected in 11). Read-out coverage is not the settling bottleneck: 90% of room-mate pairs read each other within ~0.24 active h, while content settles over ~4.5 h (tau/T90 ~10, gte 4.5, outside the predicted [1/3,3]); scaling with coverage or mixing time is untestable at real noise.",
+    "credence": 0.46,
+    "value_if_true": 2.0,
+    "mechanism_level": "M0",
+    "fragile": false,
     "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "ladder": [
+     {
+      "factor": "partial replication: 11 detected periods, ratio IQR 2.9-18.6",
+      "x": 1.5,
+      "evidence": "summary hresults P2"
+     },
+     {
+      "factor": "partly robust: both embedding models put the ratio above 3 (10.1 / 4.5)",
+      "x": 1.5,
+      "evidence": "summary hresults P2"
+     },
+     {
+      "factor": "penalty: fragile settling estimator (single exponential fits about half the periods); real-noise synthetic has no power",
+      "x": 0.7,
+      "evidence": "summary hcaveats; hobsb"
+     },
+     {
+      "factor": "penalty: 19 predictors x 2 models, multiplicity only on P1",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": true
+ }
 }

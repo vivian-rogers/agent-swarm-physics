@@ -1,69 +1,122 @@
 {
-  "complete": 50,
-  "faithfulness": 2.0,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 plus round 1b: all 35 non-holdout periods and NE14 re-run on the corrected activity and outage tables, DQ8-calibrated null added (trim before surrogates; trimmed block-shift edge for lambda_1), three period-native tests (NE43 bookend stop, #4d restart, NE14/#36 with the corrected null). Holdout not run; API outages untested.",
-    "faithfulness": "The literal hypothesis still fails (P1, P3, P4 as written, P8; NE43 refutes the operator-message version of the day-edge mechanism; the #4d stop leaves no trace). The partial result is sharper on corrected data: regime-III co-activation is 70-80% day-edge synchrony (f_scaffold 0.72, f_trim 0.83; only #44, #51 and marginally #37 survive the calibrated null), P5, P6 and NE14 pass. C = 1, D = 1, E = 1.",
-    "usefulness": "A log-only preprocessing rule with a calibrated null behind it: trim each day to the all-present window before drawing surrogates (DQ8: 28-34% false positives without it, 2-4% with it). NE43 shows the edges come from the runner, so the rule needs runner start/stop times or agent spans, not operator messages. Defensive payoff; blind to API outages."
+ "complete": 50,
+ "faithfulness": 2.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 plus round 1b: all 35 non-holdout periods and NE14 re-run on the corrected activity and outage tables, DQ8-calibrated null added (trim before surrogates; trimmed block-shift edge for lambda_1), three period-native tests (NE43 bookend stop, #4d restart, NE14/#36 with the corrected null). Holdout not run; API outages untested.",
+  "faithfulness": "The literal hypothesis still fails (P1, P3, P4 as written, P8; NE43 refutes the operator-message version of the day-edge mechanism; the #4d stop leaves no trace). The partial result is sharper on corrected data: regime-III co-activation is 70-80% day-edge synchrony (f_scaffold 0.72, f_trim 0.83; only #44, #51 and marginally #37 survive the calibrated null), P5, P6 and NE14 pass. C = 1, D = 1, E = 1.",
+  "usefulness": "A log-only preprocessing rule with a calibrated null behind it: trim each day to the all-present window before drawing surrogates (DQ8: 28-34% false positives without it, 2-4% with it). NE43 shows the edges come from the runner, so the rule needs runner start/stop times or agent spans, not operator messages. Defensive payoff; blind to API outages."
+ },
+ "one_line": "Joint silences are rare and operator-scheduled, not platform stalls; in the always-on regime 70-80% of co-activation is the runner's daily start and stop.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "stall field fails; scheduler field explains regime-III coupling"
   },
-  "one_line": "Joint silences are rare and operator-scheduled, not platform stalls; in the always-on regime 70-80% of co-activation is the runner's daily start and stop.",
-  "models": [
-    {
-      "model": "01-inverse-ising",
-      "role": "primary",
-      "outcome": "mixed",
-      "note": "stall field fails; scheduler field explains regime-III coupling"
-    },
-    {
-      "model": "09-hawkes",
-      "role": "rival",
-      "outcome": "mixed",
-      "note": "common shutdown fits regime-III edges; regime I keeps coupling"
-    }
+  {
+   "model": "09-hawkes",
+   "role": "rival",
+   "outcome": "mixed",
+   "note": "common shutdown fits regime-III edges; regime I keeps coupling"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  }
+ ],
+ "rated_by": "H38 round-1b agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
+ "v2": {
+  "claim": "Regime-III co-activation is 70–80% the runner's start/stop schedule",
+  "original_verdict": "refuted (stalls) / supported (edges)",
+  "credence": 0.9,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "robust to data/instruments",
+    "x": 2
+   },
+   {
+    "factor": "intervention consistent",
+    "x": 2
+   },
+   {
+    "factor": "rival beaten",
+    "x": 1.5
+   }
   ],
-  "rated_by": "H38 round-1b agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
-  "v2": {
-    "claim": "Regime-III co-activation is 70\u201380% the runner's start/stop schedule",
-    "original_verdict": "refuted (stalls) / supported (edges)",
+  "mechanism_level": "M2",
+  "fragile": true,
+  "value_if_true": 3.25,
+  "decision": "trim to the all-running window before reading synchrony",
+  "magnitude": "large",
+  "generality": "scheduled swarms",
+  "expected_usefulness": 2.93,
+  "scientific_value": 4.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.94,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      },
-      {
-        "factor": "intervention consistent",
-        "x": 2
-      },
-      {
-        "factor": "rival beaten",
-        "x": 1.5
-      }
-    ],
+    "value_if_true": 3,
     "mechanism_level": "M2",
     "fragile": true,
-    "value_if_true": 3,
-    "decision": "trim to the all-running window before reading synchrony",
-    "magnitude": "large",
-    "generality": "scheduled swarms",
-    "expected_usefulness": 2.82,
+    "scientific_value": 4
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 35 non-holdout periods, corrected activity tables. Joint silences are rare (~5% of minutes) and operator-scheduled, not platform stalls; in always-on regime III, 70-80% of apparent co-activation is day-edge runner synchrony (trimmed excess survives only in #44, #51 and marginally #37), while regime I keeps its excess.",
+    "credence": 0.85,
+    "value_if_true": 3.5,
+    "mechanism_level": "M1",
+    "fragile": false,
     "scientific_value": 4,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "ladder": [
+     {
+      "factor": "calibrated null: DQ8 trim-first block-shift null (size 2-4%)",
+      "x": 2,
+      "evidence": "card Round 1b Null sizes"
+     },
+     {
+      "factor": "partial replication: regime III 5/8 lose the excess after trimming",
+      "x": 1.5,
+      "evidence": "card Round 1b"
+     },
+     {
+      "factor": "robust: survived round 1b; headline sharpened",
+      "x": 2,
+      "evidence": "card Round 1b Which verdicts change"
+     },
+     {
+      "factor": "intervention partly consistent: NE43 edges persist after bookends stop (runner mechanism); NE14 supported",
+      "x": 1.5,
+      "evidence": "card Round 1b natives"
+     },
+     {
+      "factor": "cross-method agreement: H50 call-window measurement finds the same scheduler field",
+      "x": 1.5,
+      "evidence": "card Cross-hypothesis corroboration"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

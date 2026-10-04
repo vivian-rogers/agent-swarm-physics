@@ -1,55 +1,103 @@
 {
-  "complete": 50,
-  "faithfulness": 1.0,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 done; round 1b re-evaluation on context-ledger visibility, deterministic labels, the DQ4 work ledger and DQ6 ballots done, with a native layer (#26 per election round with read-out times; NE42 merge A-B-A). Holdout not run; the agent-level mechanism test is not started.",
-    "faithfulness": "The core prediction (tau proportional to 1/lambda2) failed again on improved data (slope 0.38 [0.05, 0.60]; the slope-1 rule loses to a constant), and the sub-linear lead weakens under controls. Votes settle at the read-out timescale, which supports the herding-wave rival, not the lambda2 law. G 1 -> 2 (ground-truth vote instants); other axes unchanged; no holdout.",
-    "usefulness": "Two calibrated base rates an operator can use: project majorities about 4.5 active h after first appearance (80%: 1-13.5 h), in attention and in work commits alike; deadline-bound votes within 2-3 read-out cycles (tens of seconds), so vote windows should be sized to read-out delays. Plus the caution that room spectral gaps mostly measure message volume."
+ "complete": 50,
+ "faithfulness": 1.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done; round 1b re-evaluation on context-ledger visibility, deterministic labels, the DQ4 work ledger and DQ6 ballots done, with a native layer (#26 per election round with read-out times; NE42 merge A-B-A). Holdout not run; the agent-level mechanism test is not started.",
+  "faithfulness": "The core prediction (tau proportional to 1/lambda2) failed again on improved data (slope 0.38 [0.05, 0.60]; the slope-1 rule loses to a constant), and the sub-linear lead weakens under controls. Votes settle at the read-out timescale, which supports the herding-wave rival, not the lambda2 law. G 1 -> 2 (ground-truth vote instants); other axes unchanged; no holdout.",
+  "usefulness": "Two calibrated base rates an operator can use: project majorities about 4.5 active h after first appearance (80%: 1-13.5 h), in attention and in work commits alike; deadline-bound votes within 2-3 read-out cycles (tens of seconds), so vote windows should be sized to read-out delays. Plus the caution that room spectral gaps mostly measure message volume."
+ },
+ "one_line": "Consensus time does not follow 1/lambda2. A constant 4.5 active h forecast serves projects, and deadline-bound votes settle at read-out speed.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "diffusion 1/lambda2 law fails; slope 0.38; constant forecast ties"
   },
-  "one_line": "Consensus time does not follow 1/lambda2. A constant 4.5 active h forecast serves projects, and deadline-bound votes settle at read-out speed.",
-  "models": [
-    {
-      "model": "10-potts",
-      "role": "primary",
-      "outcome": "refuted",
-      "note": "diffusion 1/lambda2 law fails; slope 0.38; constant forecast ties"
-    }
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "rival",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  }
+ ],
+ "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.0 / 2.0)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
+ "v2": {
+  "claim": "Consensus time doesn't follow 1/λ₂ (constant ~4 h forecast); deadline votes settle at read-out speed",
+  "original_verdict": "failed",
+  "credence": 0.55,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "robust to data/instruments",
+    "x": 2
+   },
+   {
+    "factor": "weak power",
+    "x": 0.7
+   }
   ],
-  "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.0 / 2.0)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
-  "v2": {
-    "claim": "Consensus time doesn't follow 1/\u03bb\u2082 (constant ~4 h forecast); deadline votes settle at read-out speed",
-    "original_verdict": "failed",
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "consensus forecasting; vote windows",
+  "magnitude": "material",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.38,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.65,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      },
-      {
-        "factor": "weak power",
-        "x": 0.7
-      }
-    ],
+    "value_if_true": 2.5,
     "mechanism_level": "M0",
     "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: non-holdout periods #10-#44, gradual project-share consensus events. Consensus time does not scale as 1/lambda2 of the exposure graph: the free slope is sub-linear (b=0.38 [0.05,0.60], excludes 1) and the slope-1 law does not beat a constant forecast (~4.5 active h) out of sample.",
+    "credence": 0.44,
     "value_if_true": 2.5,
-    "decision": "consensus forecasting; vote windows",
-    "magnitude": "material",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 1.63,
+    "mechanism_level": "M0",
+    "fragile": false,
     "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "ladder": [
+     {
+      "factor": "robust to data versions (round 1b ledger visibility, deterministic labels, work-commit variant; numbers move <=0.1)",
+      "x": 2,
+      "evidence": "card Round 1b; summary hresults"
+     },
+     {
+      "factor": "partial replication (31 gradual events, 13 periods; attention and work commits agree)",
+      "x": 1.5,
+      "evidence": "summary hwhat/hcaveats"
+     },
+     {
+      "factor": "not identifiable: synthetic power 0.13 for slope-1 vs constant",
+      "x": 0.5,
+      "evidence": "P8; summary hwhat"
+     },
+     {
+      "factor": "penalty: lambda2, message volume, N and regime co-vary; sub-linear CI touches 0 under controls",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

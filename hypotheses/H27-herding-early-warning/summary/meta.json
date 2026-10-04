@@ -1,61 +1,98 @@
 {
-  "complete": 50,
-  "faithfulness": 1.0,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 done; round 1b re-evaluation on deterministic labels and the DQ4 work ledger done (same onsets and AUC; work onsets coincide with attention onsets), with a native layer (#31 wave in work; #40 hub at the minute clock). Holdout and the per-turn onset rule are not run.",
-    "faithfulness": "The critical-slowing-down signature is absent on improved data too (autocorrelation AUC 0.41; composite 0.62, mixed by rule). The alarm's timing edge over a rate-matched shift is borderline (p 0.038-0.07). Rivals fit better: pile-ons are fast, link-marked bursts (#40 reaches half the room in minutes). Scorecard unchanged.",
-    "usefulness": "A clear negative an operator can act on (no CSD dashboards for 10-15-agent swarms), measured operating characteristics, a rate-matched-shift check for any alarm, and now the timescale of a pile-on in commits (minutes after a link), which says responses must be sized to minutes."
+ "complete": 50,
+ "faithfulness": 1.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done; round 1b re-evaluation on deterministic labels and the DQ4 work ledger done (same onsets and AUC; work onsets coincide with attention onsets), with a native layer (#31 wave in work; #40 hub at the minute clock). Holdout and the per-turn onset rule are not run.",
+  "faithfulness": "The critical-slowing-down signature is absent on improved data too (autocorrelation AUC 0.41; composite 0.62, mixed by rule). The alarm's timing edge over a rate-matched shift is borderline (p 0.038-0.07). Rivals fit better: pile-ons are fast, link-marked bursts (#40 reaches half the room in minutes). Scorecard unchanged.",
+  "usefulness": "A clear negative an operator can act on (no CSD dashboards for 10-15-agent swarms), measured operating characteristics, a rate-matched-shift check for any alarm, and now the timescale of a pile-on in commits (minutes after a link), which says responses must be sized to minutes."
+ },
+ "one_line": "Critical slowing down does not warn of LLM-swarm pile-ons: autocorrelation never rises, and pile-ons often arrive within minutes of a link.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Kinetic Potts fold: no critical slowing down before onsets"
   },
-  "one_line": "Critical slowing down does not warn of LLM-swarm pile-ons: autocorrelation never rises, and pile-ons often arrive within minutes of a link.",
-  "models": [
-    {
-      "model": "10-potts",
-      "role": "primary",
-      "outcome": "refuted",
-      "note": "Kinetic Potts fold: no critical slowing down before onsets"
-    },
-    {
-      "model": "01-inverse-ising",
-      "role": "secondary",
-      "outcome": "mixed",
-      "note": "Variance rises weakly at 15 min; autocorrelation never"
-    }
+  {
+   "model": "01-inverse-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Variance rises weakly at 15 min; autocorrelation never"
+  }
+ ],
+ "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.0 / 2.0)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
+ "v2": {
+  "claim": "Critical slowing down does not warn of herding onsets",
+  "original_verdict": "failed",
+  "credence": 0.43,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "weak power",
+    "x": 0.7
+   },
+   {
+    "factor": "single powered unit",
+    "x": 0.6
+   },
+   {
+    "factor": "robust to data/instruments",
+    "x": 2
+   }
   ],
-  "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.0 / 2.0)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
-  "v2": {
-    "claim": "Critical slowing down does not warn of herding onsets",
-    "original_verdict": "failed",
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.75,
+  "decision": "don't deploy CSD alarms",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 0.75,
+  "scientific_value": 2.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.36,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "weak power",
-        "x": 0.7
-      },
-      {
-        "factor": "single powered unit",
-        "x": 0.6
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      }
-    ],
+    "value_if_true": 1.5,
     "mechanism_level": "M0",
     "fragile": false,
-    "value_if_true": 1.5,
-    "decision": "don't deploy CSD alarms",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 0.54,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Critical-slowing-down indicators do not usefully warn of herding onsets at village size: lag-1 autocorrelation never rises (AUC 0.41), the composite reaches AUC 0.62 only at 15 min, and a naive share alarm matches it.",
+    "credence": 0.5,
+    "value_if_true": 2.0,
+    "mechanism_level": "M0",
+    "fragile": false,
     "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "ladder": [
+     {
+      "factor": "robust to data versions",
+      "x": 2,
+      "evidence": "round 1b same onsets, same AUC"
+     },
+     {
+      "factor": "inconclusive negative (not identifiable at N~12)",
+      "x": 0.5,
+      "evidence": "synthetic true fold at N=12 gives AUC 0.58-0.62"
+     },
+     {
+      "factor": "calibrated null passed",
+      "x": 1.5,
+      "evidence": "rate-matched time-shift null; p crosses 0.05 between draws"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

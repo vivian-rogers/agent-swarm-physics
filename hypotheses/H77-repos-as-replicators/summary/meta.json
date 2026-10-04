@@ -1,0 +1,65 @@
+{
+ "complete": 40,
+ "faithfulness": 0.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done on the requested scope: card and dated predictions, Mathis A0 signatures, synthetic validation of sigma* and of the resolution test on real call schedules (with an expiry sweep that set E before real data), 6 replication periods and 2 natives (G44 arms, NE42) with verdicts, expiry/bin variants, the uncopying order q, estimates rows and a frozen, guarded confirm script (dry-run on stand-ins only).",
+  "faithfulness": "HH325's kill condition is met (herding minus own 0.61 +- 1.23 nats), every sigma* lies inside the neutral copying band, sigma* changes by 2-3.7 nats (and sign in 2/5 periods) with the host-expiry convention, and the bound is untestable (winning repos are field-formed; permutation test has size 0 and power 0). Only the NE42 ordering and q contrast are positive, both weak or post hoc.",
+  "usefulness": "Little to act on: the thermodynamic affinity from commit logs is a bookkeeping convention, and the practical lever (kickoff naming) was already H54's. The q < 1 (shared) vs q > 1 (private) departure-order contrast is a candidate monitor if it survives the holdout."
+ },
+ "one_line": "sigma* of the top repo from commit logs is an expiry-convention quantity inside a neutral copying band; the selection-resolution bound is untestable because winning repos are kickoff-formed.",
+ "models": [
+  {
+   "model": "05-replicator-dissipation",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "sigma* convention-dependent, inside neutral band; bound untestable"
+  },
+  {
+   "model": "06-neutral-cooperative-dynamics",
+   "role": "null",
+   "outcome": "supported",
+   "note": "Neutral copying on real schedules reproduces every sigma*"
+  }
+ ],
+ "rated_by": "H77 round-1 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Repo recruitment flux (σ*) in herding and own-artifact weeks stays inside the band neutral copying produces on the same call schedule; the selection-resolution bound cannot be tested from commit logs",
+  "scope": "6 testable periods; natives NE42, G44",
+  "direction": "negative",
+  "original_verdict": "failed (selection resolution)",
+  "credence": 0.5,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null (neutral copying on real schedules)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "replication (0/6 beyond neutral)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "not identifiable (σ* moves 2–3.7 nats with label expiry; bound test has no power)",
+    "x": 0.5,
+    "evidence": "card §Synthetic"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "don't read repo recruitment as selection",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 0.75,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H77 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

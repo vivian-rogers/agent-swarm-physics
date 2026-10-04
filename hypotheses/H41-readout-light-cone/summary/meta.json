@@ -20,6 +20,12 @@
    "role": "secondary",
    "outcome": "mixed",
    "note": "a third of fast adoptions are shared field, not contagion"
+  },
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "H41 agent (suggested)",
@@ -29,7 +35,7 @@
   "scope": "32 periods; natives NE42, G38, G31, G51",
   "direction": "positive",
   "original_verdict": "mixed (gating failed as pre-registered)",
-  "credence": 0.69,
+  "credence": 0.71,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -63,13 +69,60 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.5,
+  "value_if_true": 2.75,
   "decision": "monitoring: chat logs can't attribute cross-room leaks; rooms cage chat-borne spread",
   "magnitude": "material",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.73,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H41 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.95,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.69,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 32 non-holdout periods, 134k novel markers. Within rooms, adoptions of novel items stay inside the logged read-out light cone (acausal share median 0.6%, max 4%), and the NE42 merge/split switches cross-group pickup on (x80-860) and off; cross-room leaks bypass the logged chat channel.",
+    "credence": 0.72,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "replication: P2 holds in 29/32 (misses are cross-room)",
+      "x": 2,
+      "evidence": "summary hresults P2"
+     },
+     {
+      "factor": "intervention consistent: NE42 merge and split (A-B-A), goal-confounded",
+      "x": 2,
+      "evidence": "summary hresults NE42"
+     },
+     {
+      "factor": "partly robust: cone rebuilt after hop-count bug; single data version",
+      "x": 1.5,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "penalty: hashed markers count co-generation as adoption",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "penalty: no multiplicity correction across 32 periods",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

@@ -67,8 +67,8 @@ tr.changed td { animation: flash 1.6s ease-out; }
 td.num { text-align: right; white-space: nowrap; }
 .muted { color: var(--text-muted); }
 .sec { color: var(--text-secondary); }
-.status-line { color: var(--text-muted); font-size: 12px; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.title { font-weight: 550; max-width: 300px; }
+.status-line { color: var(--text-muted); font-size: 12px; max-width: 230px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.title { font-weight: 550; max-width: 230px; }
 
 .pips { white-space: nowrap; letter-spacing: 1px; font-size: 11px; color: var(--text-primary); }
 .pips .e { color: var(--text-muted); }
@@ -137,6 +137,18 @@ td.num { text-align: right; white-space: nowrap; }
 
 #tip { position: fixed; z-index: 30; pointer-events: none; background: var(--text-primary); color: var(--surface-1); padding: 5px 8px; border-radius: 4px; font-size: 12px; max-width: 420px; display: none; white-space: pre-wrap; }
 .err { color: var(--critical); padding: 8px 16px; }
+.vet { border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; margin: 0 0 6px; background: var(--surface-2); }
+.vet .hd { display: flex; gap: 6px; align-items: baseline; }
+.vet .hd b { font-family: ui-monospace, monospace; }
+.vet .why { color: var(--text-secondary); font-size: 12px; margin: 2px 0 4px; }
+.vet .tags { display: flex; gap: 4px; flex-wrap: wrap; font-size: 10px; color: var(--text-muted); }
+.vet .tags span { border: 1px solid var(--border); border-radius: 3px; padding: 0 4px; }
+.vet .btns { display: flex; gap: 4px; margin-left: auto; }
+.vet .btns button { padding: 0 7px; font-size: 12px; }
+.vet.approved { border-color: var(--good); } .vet.declined { opacity: .55; } .vet.later { border-style: dashed; }
+.vet .state { font-size: 11px; font-weight: 600; }
+.vet.approved .state { color: var(--good); } .vet.declined .state { color: var(--critical); }
+
 .tabs { display: inline-flex; gap: 2px; margin-left: 8px; }
 .tabs button { font-size: 11px; text-transform: none; letter-spacing: 0; padding: 1px 8px; }
 .tabs button.on { background: var(--text-primary); color: var(--surface-1); border-color: var(--text-primary); }
@@ -155,6 +167,46 @@ td.num { text-align: right; white-space: nowrap; }
 .tally .bar { display: flex; flex-direction: column-reverse; width: 14px; height: 40px; gap: 1px; }
 .tally .bar span { display: block; width: 100%; }
 .small { font-size: 11px; }
+
+/* phase diagram */
+.ph-controls { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin: 2px 0 6px; font-size: 12px; color: var(--text-secondary); }
+.ph-controls label { display: inline-flex; gap: 4px; align-items: center; white-space: nowrap; }
+.ph-controls select { font: inherit; color: inherit; background: var(--surface-1); border: 1px solid var(--border); border-radius: 4px; padding: 2px 4px; }
+.ph-controls input[type=checkbox] { width: auto; margin: 0; }
+.picker { position: relative; display: inline-block; }
+.picker input { width: 300px; max-width: 42vw; }
+.pk-list { position: absolute; z-index: 15; top: calc(100% + 2px); left: 0; width: min(560px, 90vw); max-height: 360px; overflow: auto; background: var(--surface-1); border: 1px solid var(--border); border-radius: 4px; box-shadow: 0 6px 18px rgba(0,0,0,.14); }
+.pk-item { padding: 4px 8px; cursor: pointer; border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent); color: var(--text-primary); }
+.pk-item.on, .pk-item:hover { background: var(--surface-2); }
+.pk-item .pk-n { float: right; color: var(--text-muted); font: 11px ui-monospace, monospace; margin-left: 8px; }
+.pk-item .pk-m { color: var(--text-muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pk-head { padding: 4px 8px; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); background: var(--surface-2); position: sticky; top: 0; }
+.pk-empty { padding: 6px 8px; color: var(--text-muted); }
+.ph-presets { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-bottom: 6px; font-size: 11px; color: var(--text-muted); }
+.ph-presets button { font-size: 11px; }
+.ph-presets button.on { background: var(--text-primary); color: var(--surface-1); border-color: var(--text-primary); }
+.ph-sub { font-size: 12px; color: var(--text-secondary); margin: 2px 0 4px; }
+#ph-plot svg { display: block; width: 100%; height: auto; overflow: visible; }
+#ph-plot .ax text { fill: var(--text-muted); font: 10px ui-monospace, "SF Mono", Menlo, monospace; }
+#ph-plot .ax line, #ph-plot .ax path { stroke: var(--border); }
+#ph-plot .zero { stroke: var(--text-muted); stroke-dasharray: 3 3; stroke-width: 1; }
+#ph-plot .alabel { fill: var(--text-secondary); font: 11px system-ui, sans-serif; }
+#ph-plot .pt { cursor: pointer; }
+#ph-plot .pt .mk { stroke: var(--surface-1); stroke-width: 1.5; }
+#ph-plot .pt:hover .mk { stroke: var(--text-primary); stroke-width: 1.5; }
+#ph-plot .pt .wh { stroke-width: 1; opacity: .5; }
+#ph-plot .pt:hover .wh { opacity: 1; }
+#ph-plot .pt.held .mk { stroke: var(--text-primary); stroke-dasharray: 2 1.5; }
+.ph-empty { padding: 40px 0; text-align: center; color: var(--text-muted); border: 1px dashed var(--border); border-radius: 4px; }
+.lg-sym { display: inline-block; vertical-align: -2px; margin-right: 4px; }
+
+/* model card (drawer) */
+.mcard dl { display: grid; grid-template-columns: 120px 1fr; gap: 4px 12px; margin: 8px 0 14px; }
+.mcard dt { color: var(--text-muted); font-size: 12px; }
+.mcard dd { margin: 0; }
+.mcard h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-secondary); margin: 16px 0 4px; }
+.mcard table td { border: none !important; border-bottom: 1px solid var(--border) !important; }
+.mcard .rolehead td { background: var(--surface-2); font-size: 11px; color: var(--text-secondary); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -162,48 +214,66 @@ td.num { text-align: right; white-space: nowrap; }
   <h1>Agent-swarm physics · lab status</h1>
   <div class="facts" id="facts"></div>
   <div class="live"><span id="livedot" class="dot"></span><span id="updated">loading…</span>
-    <button id="pause" title="Pause auto-refresh">pause</button>
-    <button id="theme" title="Toggle light/dark">◐</button></div>
+    <button id="pause" data-tip="Stop the 6 s refresh. Click again to start it.">pause</button>
+    <button id="theme" data-tip="Change between light and dark.">◐</button></div>
 </header>
 <div id="error" class="err" hidden></div>
 <main>
   <div>
     <section id="s-hyp">
       <h2>Hypotheses <span class="sub" id="hyp-sub"></span>
-        <span style="margin-left:auto"><input id="filter" placeholder="filter: H1, running, mixed, holdout…"></span></h2>
+        <span style="margin-left:auto"><input id="filter" placeholder="filter: H18, running, mixed, holdout…"></span></h2>
       <div class="scroll"><table id="hyp"></table></div>
       <div class="legend small" style="margin-top:8px">
-        <span>Progress pips, in order: card, predictions, synthetic check, period verdicts, scorecard, confirm script, holdout run. ● done. ◐ partial. ○ not done.</span>
-        <span><b>Credence</b>: the probability that the stated claim survives an independent test. An evidence ladder gives it (writeup/scoring/scoring-v2.pdf). <b>EU</b>: credence × value if true (0–5). ⚠ marks a claim that changed between data versions. Hover a chip to see the claim, the mechanism level M0–M2, V and S. Red is low, gray is middle, blue is high.</span>
-        <span>Scorecard axes A–I: <i style="background:var(--ord-0)"></i>0 failed or not done <i style="background:var(--ord-1)"></i>1 partial <i style="background:var(--ord-2)"></i>2 passed. A dashed cell is not scored.</span>
+        <span>Progress pips, in this order: card, predictions, synthetic check, period verdicts, scorecard, confirm script, holdout run. ● done. ◐ part done. ○ not done.</span>
+        <span><b>Credence</b>: the probability that the claim survives an independent test. The evidence ladder in writeup/scoring/scoring-v2.pdf sets it. <b>EU</b>: credence × value if true (0–5). ⚠ marks a claim that changed between data versions. Hover a chip for the claim, the mechanism level (M0–M2), V and S. Red is low, gray is middle, blue is high.</span>
+        <span>Scorecard axes A–I: <i style="background:var(--ord-0)"></i>0 failed or not done <i style="background:var(--ord-1)"></i>1 part passed <i style="background:var(--ord-2)"></i>2 passed. A dashed cell has no score.</span>
       </div>
     </section>
     <section id="s-grid">
-      <h2><span id="grid-title">Physics models × hypotheses</span><span class="tabs"><button data-v="models">models</button><button data-v="periods">goal periods</button></span>
+      <h2><span id="grid-title">Physics models × hypotheses</span><span class="tabs"><button data-v="models">models</button><button data-v="periods">goal periods</button><button data-v="phase">phase diagram</button></span>
         <span class="sub" id="grid-sub"></span></h2>
       <div class="scroll" id="mx-wrap"><table class="mx" id="mx"></table></div>
       <div class="scroll" id="grid-wrap" hidden><table class="grid" id="grid"></table></div>
-      <div class="legend small" id="mx-legend">
-        <span>The glyph gives the role of the model in the hypothesis. <b>●</b> primary model. <b>◑</b> second model fitted. <b>⇄</b> rival that the test compares against. <b>∅</b> the model is the null. <b>⚙</b> estimator only. <b>·</b> mentioned in the card.</span>
-        <span>The color gives the outcome for the model after round 1b: <i style="background:var(--good)"></i>held <i style="background:var(--critical)"></i>refuted <i style="background:var(--warning)"></i>mixed <i style="background:var(--surface-3)"></i>not yet tested. A faded, dashed cell is a guess from the card text; the summary agent has not set it yet.</span>
-        <span>The footer gives, for each model, the outcomes where the model is primary or second. Click a column head to open the model. Click a row to open the card.</span>
+      <div id="ph-wrap" hidden>
+        <div class="ph-controls">
+          <label>X <span class="picker" id="pk-x"><input autocomplete="off" spellcheck="false" placeholder="search: N agents, H18, beta…"><div class="pk-list" hidden></div></span></label>
+          <button id="ph-swap" data-tip="Swap the X and Y axes.">⇄</button>
+          <label>Y <span class="picker" id="pk-y"><input autocomplete="off" spellcheck="false" placeholder="search: H40, eta, loop gain…"><div class="pk-list" hidden></div></span></label>
+          <label data-tip="Log scale on X. Points with a value ≤ 0 leave the plot."><input type="checkbox" id="ph-logx">log X</label>
+          <label data-tip="Log scale on Y. Points with a value ≤ 0 leave the plot."><input type="checkbox" id="ph-logy">log Y</label>
+          <label>color <select id="ph-color"><option value="regime">regime</option><option value="role">role</option><option value="holdout">holdout</option></select></label>
+          <label data-tip="Held-out units are locked for confirmation (hypotheses/holdout.md). Exploratory views do not show them. Turn this on only to check coverage."><input type="checkbox" id="ph-hold">🔒 show held-out units</label>
+        </div>
+        <div class="ph-presets" id="ph-presets"></div>
+        <div class="ph-sub" id="ph-sub"></div>
+        <div id="ph-plot"></div>
+        <div class="legend small" id="ph-legend"></div>
       </div>
-      <div class="legend small" id="grid-legend" hidden><span>✓ supported · ✗ failed · ~ mixed · d descriptive · … pending · – n/a · outlined = confirmatory run · 🔒 held-out period</span></div>
+      <div class="legend small" id="mx-legend">
+        <span>The glyph gives the role of the model in the hypothesis. <b>●</b> primary model. <b>◑</b> second model. <b>⇄</b> rival that the test compares against. <b>∅</b> the model is the null. <b>⚙</b> estimator only. <b>·</b> the card names the model.</span>
+        <span>The color gives the outcome for the model after round 1b: <i style="background:var(--good)"></i>held <i style="background:var(--critical)"></i>refuted <i style="background:var(--warning)"></i>mixed <i style="background:var(--surface-3)"></i>not tested. A faded, dashed cell is a guess from the card text. The summary agent did not set it.</span>
+        <span>The footer counts the outcomes where the model is primary or second. Click a column head to open the model card. Click a row to open the hypothesis card.</span>
+      </div>
+      <div class="legend small" id="grid-legend" hidden><span>✓ supported · ✗ failed · ~ mixed · d descriptive · … pending · – n/a. An outlined cell is a confirmatory run. 🔒 marks a held-out period. Click a cell to open the period README.</span></div>
+      <div class="legend small" id="ph-help" hidden><span>Each point is one unit: a goal period, or a part of one that a step change splits off. A point gives the fitted parameters of that unit. Whiskers give the CI from the source table. Absent whiskers mean the source gives no CI. Pick a control parameter for X (N agents, days, rooms, goal number) and a fitted parameter for Y. Hover a point for its values. Click a point to open the period README. Source: data/processed/shared/per_period_estimates.parquet and period_units.parquet.</span></div>
     </section>
   </div>
   <div>
-    <section><h2>Measured swarm constants <span class="sub">exploratory · round 1b · not holdout-confirmed</span></h2><table id="consts"></table>
-      <div class="legend small">Each row gives a measured parameter of the swarm, with its uncertainty and source. Hover a row for its meaning. Click to open the source card. File: interpretation/swarm-constants.json.</div></section>
+    <section id="s-vet"><h2>HHs to vet <span class="sub" id="vet-sub"></span></h2><div id="vet"></div>
+      <div class="legend small">The coordinator proposes these hypothesis ideas. ✓ sends an HH to the H queue. ✕ declines it. ⏸ defers it. ↺ undoes a click. Each click is saved in hypotheses/hypohypotheses/vetting_decisions.jsonl, and the coordinator sees it.</div></section>
+    <section><h2>Measured swarm constants <span class="sub">round 1b · exploratory · no holdout test</span></h2><table id="consts"></table>
+      <div class="legend small">Each row gives one measured parameter of the swarm, its uncertainty and its source hypothesis. Hover a row for its meaning. Click a row to open the source card. File: interpretation/swarm-constants.json.</div></section>
     <section><h2>Agents <span class="sub" id="ag-sub"></span></h2><table id="agents"></table></section>
     <section><h2>Holdout ledger <span class="sub" id="ho-sub"></span></h2><div id="holdout"></div></section>
-    <section><h2>Lab notebook <span class="sub">latest LOG.md entries</span></h2><div id="log"></div></section>
+    <section><h2>Lab notebook <span class="sub">newest LOG.md entries</span></h2><div id="log"></div></section>
     <section><h2>Shared pipelines <span class="sub" id="pl-sub"></span></h2><div class="scroll"><table id="pipes"></table></div></section>
     <section><h2>Storage <span class="sub" id="st-sub"></span></h2><div id="storage"></div></section>
-    <section><h2>Local processes <span class="sub">python under this project</span></h2><table id="procs"></table></section>
+    <section><h2>Local processes <span class="sub">Python processes of this project</span></h2><table id="procs"></table></section>
     <section><h2>Git</h2><div id="git"></div></section>
   </div>
 </main>
-<aside id="drawer"><div class="bar"><span class="path" id="dpath"></span><button id="dclose">close ✕</button></div><div class="body" id="dbody"></div></aside>
+<aside id="drawer"><div class="bar"><span class="path" id="dpath"></span><button id="dopen" hidden>open README</button><button id="dclose">close ✕</button></div><div class="body" id="dbody"></div></aside>
 <div id="tip"></div>
 
 <script>
@@ -233,7 +303,7 @@ function v2Chip(h, which) {
   const v2 = h.rating?.v2;
   if (!v2) {  // fall back to the faded v1 number
     const v1 = which === "cred" ? h.rating?.faithfulness : h.rating?.usefulness;
-    return v1 == null ? `<span class="muted small">—</span>` : `<span class="muted small" data-tip="v1 rating (not yet rescored in v2)">${v1}</span>`;
+    return v1 == null ? `<span class="muted small">—</span>` : `<span class="muted small" data-tip="v1 rating. Not rescored in v2 yet.">${v1}</span>`;
   }
   const val = which === "cred" ? v2.credence : v2.expected_usefulness;
   if (val == null) return `<span class="muted small">—</span>`;
@@ -241,11 +311,11 @@ function v2Chip(h, which) {
   const [, bg, fg] = DIV.reduce((a, b) => Math.abs(b[0] - scale) < Math.abs(a[0] - scale) ? b : a);
   const label = which === "cred" ? Math.round(val * 100) + "%" : val.toFixed(1);
   const flag = v2.fragile ? " ⚠" : "";
-  const tipTxt = `${v2.claim || ""}\ncredence ${Math.round((v2.credence ?? 0) * 100)}% · ${v2.mechanism_level || ""}${v2.fragile ? " · FRAGILE" : ""}\nvalue if true V ${v2.value_if_true ?? "?"} · EU ${v2.expected_usefulness ?? "?"} · science S ${v2.scientific_value ?? "?"}\ndecision: ${v2.decision || "none"}\nrated by: ${v2.rater || "?"}`;
+  const tipTxt = `${v2.claim || ""}\ncredence ${Math.round((v2.credence ?? 0) * 100)}% · ${v2.mechanism_level || ""}${v2.fragile ? " · ⚠ claim changed between data versions" : ""}\nvalue if true V ${v2.value_if_true ?? "?"} · EU ${v2.expected_usefulness ?? "?"} · science S ${v2.scientific_value ?? "?"}\ndecision: ${v2.decision || "none"}\nrated by: ${v2.rater || "?"}`;
   return `<span class="rchip" style="background:${bg};color:${fg}" data-tip="${esc(tipTxt)}">${label}${which === "cred" ? flag : ""}</span>`;
 }
 function ratingChip(v, why, who) {
-  if (v == null) return `<span class="muted small" data-tip="not rated yet: summary page pending">—</span>`;
+  if (v == null) return `<span class="muted small" data-tip="No rating. The summary page is not written.">—</span>`;
   const [, bg, fg] = DIV.reduce((a, b) => Math.abs(b[0] - v) < Math.abs(a[0] - v) ? b : a);
   return `<span class="rchip" style="background:${bg};color:${fg}" data-tip="${esc(v + "/5 — " + (why || "") + (who ? "\nrated by: " + who : ""))}">${v}</span>`;
 }
@@ -265,20 +335,20 @@ document.addEventListener("mousemove", e => {
 // ---------------------------------------------------------------- drawer
 let drawerPath = null;
 async function openFile(path) {
-  drawerPath = path;
+  drawerPath = path; $("#dopen").hidden = true;
   $("#dpath").textContent = path; $("#dbody").innerHTML = '<p class="muted">loading…</p>'; $("#drawer").classList.add("open");
   const r = await fetch("/api/file?path=" + encodeURIComponent(path)).then(r => r.json());
   if (r.error) { $("#dbody").innerHTML = `<p class="err">${esc(r.error)}</p>`; return; }
   $("#dbody").innerHTML = path.endsWith(".md") && window.marked ? marked.parse(r.text) : `<pre>${esc(r.text)}</pre>`;
 }
 async function openAgent(id, desc) {
-  drawerPath = null;
+  drawerPath = null; $("#dopen").hidden = true;
   $("#dpath").textContent = "agent · " + desc; $("#dbody").innerHTML = '<p class="muted">loading…</p>'; $("#drawer").classList.add("open");
   const r = await fetch("/api/agent?id=" + encodeURIComponent(id)).then(r => r.json());
   const a = (S?.agents || []).find(x => x.id === id);
   let html = "";
   if (r.report) html += `<h2>Hand-back report</h2>` + (window.marked ? marked.parse(r.report) : `<pre>${esc(r.report)}</pre>`);
-  else html += `<p class="muted">No report yet${a ? " · " + a.state : ""}.</p>` + (r.latest_text ? `<h2>Latest message</h2>` + (window.marked ? marked.parse(r.latest_text) : `<pre>${esc(r.latest_text)}</pre>`) : "");
+  else html += `<p class="muted">No hand-back report yet${a ? ". State: " + a.state : ""}.</p>` + (r.latest_text ? `<h2>Latest message</h2>` + (window.marked ? marked.parse(r.latest_text) : `<pre>${esc(r.latest_text)}</pre>`) : "");
   if (a?.last_tools?.length) html += `<h2>Recent tool calls</h2><table>` + a.last_tools.map(t => `<tr><td class="mono">${esc(t.tool)}</td><td>${esc(t.what)}</td><td class="muted">${ago(t.t)}</td></tr>`).join("") + `</table>`;
   $("#dbody").innerHTML = html;
 }
@@ -308,13 +378,13 @@ function renderFacts() {
     `<span><b>${run}</b> agents running${st ? ` · <b class="warn">${st}</b> stalled` : ""}</span>`,
     `<span>holdout <b>${used.size}</b>/${totalHo} used</span>`,
     `<span>storage <b>${gb(repoParts)}</b>/${b.limit_gb} GB <span class="muted">(+${gb((b.parts["uv cache (shared)"] || 0) + (b.parts["HF cache"] || 0))} caches)</span></span>`,
-    `<span><b>${S.git.uncommitted}</b> uncommitted</span>`,
+    `<span><b>${S.git.uncommitted}</b> uncommitted paths</span>`,
     `<span>Jev <b>$${(b.jev_usd || 0).toFixed(3)}</b></span>`,
   ].join("");
 }
 
 function pips(st) {
-  return STAGES.map(k => { const v = st[k] || 0; return `<span class="${v === 0 ? "e" : ""}" data-tip="${k}: ${v === 1 ? "done" : v === 0 ? "not yet" : Math.round(v * 100) + "%"}">${v >= 1 ? "●" : v > 0 ? "◐" : "○"}</span>`; }).join("");
+  return STAGES.map(k => { const v = st[k] || 0; return `<span class="${v === 0 ? "e" : ""}" data-tip="${k}: ${v === 1 ? "done" : v === 0 ? "not done" : Math.round(v * 100) + "% done"}">${v >= 1 ? "●" : v > 0 ? "◐" : "○"}</span>`; }).join("");
 }
 function scoreCells(sc) {
   const names = { A: "mapping", B: "assumptions", C: "adequacy", D: "unfitted predictions", E: "interventional", F: "identifiability", G: "ground truth", H: "comparative", I: "transfer" };
@@ -323,7 +393,7 @@ function scoreCells(sc) {
 }
 function vbar(c) {
   const order = ["supported", "failed", "mixed", "descriptive", "pending"]; const tot = order.reduce((s, k) => s + (c[k] || 0), 0);
-  if (!tot) return `<span class="muted small">no period folders</span>`;
+  if (!tot) return `<span class="muted small">no period folder</span>`;
   const segs = order.filter(k => c[k]).map(k => `<span class="v-${k}" style="flex:${c[k]}" data-tip="${c[k]} ${k}"></span>`).join("");
   const txt = order.filter(k => c[k]).map(k => `${c[k]}${SYM[k]}`).join(" ");
   return `<div class="vbar">${segs}</div><div class="vcount">${txt}</div>`;
@@ -334,8 +404,8 @@ function agentFor(hid) {
 }
 function holdoutCell(h) {
   if (h.confirm_verdicts.length) return h.confirm_verdicts.map(c => `<span class="cell ${c.verdict} conf" data-tip="${esc(c.period)}: ${esc(c.text)}">${SYM[c.verdict] || "?"}</span> <span class="small mono">${esc(c.period)}</span>`).join("<br>");
-  if (h.confirm_runs.length) return `<span class="small">run: ${esc(h.confirm_runs.join(", "))}</span>`;
-  if (h.confirm_scripts.length) return `<span class="small sec" data-tip="${esc(h.confirm_scripts.join(", "))}">script ready</span>`;
+  if (h.confirm_runs.length) return `<span class="small">ran on ${esc(h.confirm_runs.join(", "))}</span>`;
+  if (h.confirm_scripts.length) return `<span class="small sec" data-tip="${esc("Confirm script exists. It did not run yet: " + h.confirm_scripts.join(", "))}">script ready</span>`;
   return `<span class="muted">—</span>`;
 }
 
@@ -382,18 +452,23 @@ function renderGrid() {
 
 
 // ---------------------------------------------------------------- physics models × hypotheses
-const MSHORT = { "01": "Inverse Ising", "02": "Noneq. Ising", "03": "Contagion", "04": "Semantic info", "05": "Replicator dissipation", "06": "Neutral coop. dynamics", "07": "Fluctuating replicators", "08": "Copy vs transform", "09": "Hawkes", "10": "Potts", "11": "Vector spins" };
+const MSHORT = { "01": "Inverse Ising", "02": "Noneq. Ising", "03": "Contagion", "04": "Semantic info", "05": "Replicator dissipation", "06": "Neutral coop. dynamics", "07": "Fluctuating replicators", "08": "Copy vs transform", "09": "Hawkes", "10": "Potts", "11": "Vector spins", "12": "Information dynamics", "13": "Cultural evolution", "14": "Scaling & fluctuations", "15": "Stoch. thermo & selection" };
 const ROLE = { primary: "●", secondary: "◑", rival: "⇄", null: "∅", tool: "⚙", mentioned: "·" };
-const ROLE_TXT = { primary: "primary model", secondary: "second model", rival: "rival compared against", null: "model used as the null", tool: "estimator only", mentioned: "mentioned in the card" };
-const OUT_TXT = { supported: "the model held", refuted: "the model was refuted", mixed: "mixed result", untested: "not yet tested", "n/a": "not applicable" };
-let gridView = store.get("gridView", "models"), mSortKey = store.get("msort", "cred"), mSortDir = store.get("mdir", -1);
-function renderGridOrModels() {
+const ROLE_TXT = { primary: "primary model", secondary: "second model", rival: "rival compared against", null: "model used as the null", tool: "estimator only", mentioned: "the card names it" };
+const OUT_TXT = { supported: "the model held", refuted: "the model was refuted", mixed: "mixed result", untested: "not tested", "n/a": "not applicable" };
+let gridView = "models",  // the physics-model matrix is the default view on every load (Vivian)
+   _unused = store.get("gridView", "models"), mSortKey = store.get("msort", "cred"), mSortDir = store.get("mdir", -1);
+{ const v = new URLSearchParams(location.search).get("view"); if (["models", "periods", "phase"].includes(v)) gridView = v; }
+function renderGridOrModels(fromPoll) {
   $("#mx-wrap").hidden = gridView !== "models"; $("#mx-legend").hidden = gridView !== "models";
   $("#grid-wrap").hidden = gridView !== "periods"; $("#grid-legend").hidden = gridView !== "periods";
-  $("#grid-title").textContent = gridView === "models" ? "Physics models × hypotheses" : "Goal periods × hypotheses";
+  $("#ph-wrap").hidden = gridView !== "phase"; $("#ph-help").hidden = gridView !== "phase";
+  $("#grid-title").textContent = { models: "Physics models × hypotheses", periods: "Goal periods × hypotheses", phase: "Phase diagram: one point per unit" }[gridView];
   document.querySelectorAll("#s-grid .tabs button").forEach(b => { b.classList.toggle("on", b.dataset.v === gridView);
     b.onclick = () => { gridView = b.dataset.v; store.set("gridView", gridView); renderGridOrModels(); }; });
-  if (gridView === "models") renderModels(); else { $("#grid-sub").textContent = ""; renderGrid(); }
+  if (gridView === "models") renderModels();
+  else if (gridView === "periods") { $("#grid-sub").textContent = ""; renderGrid(); }
+  else phaseShow(fromPoll);
 }
 function renderModels() {
   const M = S.models || []; const f = ($("#filter").value || "").toLowerCase().trim();
@@ -404,7 +479,7 @@ function renderModels() {
   hs.sort((a, b) => (key(a) > key(b) ? 1 : key(a) < key(b) ? -1 : 0) * mSortDir);
   const th = (k, label) => `<th class="sort" data-mk="${k}">${label}${mSortKey === k ? (mSortDir > 0 ? " ▲" : " ▼") : ""}</th>`;
   const head = `<thead><tr>${th("id", "ID")}<th>Hypothesis</th>${th("cred", "Credence")}${th("eu", "EU")}` +
-    M.map(m => `<th class="mcol" data-path="${esc(m.path)}" data-tip="${esc(m.id + " " + m.name + "\nVariable: " + m.variable + "\nSignature: " + m.signature)}">${m.id} ${esc(MSHORT[m.id] || m.name.split(" (")[0].split(":")[0])}</th>`).join("") + `</tr></thead>`;
+    M.map(m => `<th class="mcol" data-id="${esc(m.id)}" data-tip="${esc(m.id + " " + m.name + "\nSwarm variable: " + m.variable + "\nSignature: " + m.signature + "\nClick for the model card.")}">${m.id} ${esc(MSHORT[m.id] || m.name.split(" (")[0].split(":")[0])}</th>`).join("") + `</tr></thead>`;
   const body = hs.map(h => {
     const by = {}; (h.models || []).forEach(m => { const cur = by[m.model]; const rank = r => ["primary", "secondary", "rival", "null", "tool", "mentioned"].indexOf(r);
       if (!cur || rank(m.role) < rank(cur.role)) by[m.model] = m; });
@@ -412,7 +487,7 @@ function renderModels() {
       <td>${v2Chip(h, "cred")}</td><td>${v2Chip(h, "eu")}</td>` +
       M.map(m => { const c = by[m.id]; if (!c) return "<td></td>";
         const out = c.outcome === "n/a" ? "na" : (c.outcome || "untested");
-        const tipTxt = `${h.id} × ${m.id} ${m.name}\nRole: ${ROLE_TXT[c.role] || c.role}\nOutcome: ${OUT_TXT[c.outcome] || c.outcome}${c.note ? "\n" + c.note : ""}${c.source === "card" ? "\n(guess from the card text)" : ""}`;
+        const tipTxt = `${h.id} × ${m.id} ${m.name}\nRole: ${ROLE_TXT[c.role] || c.role}\nOutcome: ${OUT_TXT[c.outcome] || c.outcome}${c.note ? "\n" + c.note : ""}${c.source === "card" ? "\nGuess from the card text. meta.json does not set it." : ""}`;
         return `<td><span class="mcell ${out} ${c.source === "card" ? "guess" : ""}" data-tip="${esc(tipTxt)}">${ROLE[c.role] || "?"}</span></td>`; }).join("") + `</tr>`; }).join("");
   const tally = M.map(m => { const c = { supported: 0, mixed: 0, refuted: 0, untested: 0 };
     hs.forEach(h => (h.models || []).filter(x => x.model === m.id && (x.role === "primary" || x.role === "secondary")).forEach(x => { c[x.outcome in c ? x.outcome : "untested"]++; }));
@@ -420,12 +495,414 @@ function renderModels() {
     const seg = (k, v) => c[k] ? `<span style="flex:${c[k]};background:var(${v})"></span>` : "";
     return `<td><div class="tally" data-tip="${esc(m.id + " " + m.name + ": as primary or second model\nheld " + c.supported + " · mixed " + c.mixed + " · refuted " + c.refuted + " · untested " + c.untested)}">
       <div class="bar">${seg("supported", "--good")}${seg("mixed", "--warning")}${seg("refuted", "--critical")}${seg("untested", "--surface-3")}</div><span>${tot}</span></div></td>`; }).join("");
-  $("#mx").innerHTML = head + `<tbody>${body}</tbody><tfoot><tr><td></td><td class="small sec">models as primary or second: outcome counts</td><td></td><td></td>${tally}</tr></tfoot>`;
+  $("#mx").innerHTML = head + `<tbody>${body}</tbody><tfoot><tr><td></td><td class="small sec">outcomes where the model is primary or second</td><td></td><td></td>${tally}</tr></tfoot>`;
   const fromMeta = S.hypotheses.filter(h => (h.models || []).some(m => m.source === "meta")).length;
-  $("#grid-sub").textContent = `${hs.length} hypotheses · ${M.length} models · ${fromMeta} with roles set in meta.json`;
+  $("#grid-sub").textContent = `${hs.length} hypotheses · ${M.length} models · ${fromMeta} set roles in meta.json`;
   $("#mx").querySelectorAll("th[data-mk]").forEach(t => t.onclick = () => { const k = t.dataset.mk; mSortDir = mSortKey === k ? -mSortDir : (k === "id" ? 1 : -1); mSortKey = k; store.set("msort", mSortKey); store.set("mdir", mSortDir); renderModels(); });
-  $("#mx").querySelectorAll("th.mcol").forEach(t => t.onclick = () => openFile(t.dataset.path));
+  $("#mx").querySelectorAll("th.mcol").forEach(t => t.onclick = () => openModel(t.dataset.id));
   $("#mx").querySelectorAll("tr[data-card]").forEach(r => r.onclick = () => r.dataset.card && openFile(r.dataset.card));
+}
+
+// ---------------------------------------------------------------- model card (drawer)
+const OUT_SHORT = { supported: "held", refuted: "refuted", mixed: "mixed", untested: "not tested", "n/a": "n/a" };
+const OUT_CLS = o => o === "n/a" ? "na" : (o || "untested");
+function openModel(id) {
+  const m = (S.models || []).find(x => x.id === id); if (!m) return;
+  drawerPath = null;
+  $("#dpath").textContent = `model ${m.id} · ${m.name}`; $("#drawer").classList.add("open");
+  const ob = $("#dopen"); ob.hidden = false; ob.onclick = () => { ob.hidden = true; openFile(m.path); };
+  const roles = ["primary", "secondary", "rival", "null", "tool", "mentioned"];
+  const uses = [];
+  S.hypotheses.forEach(h => (h.models || []).filter(x => x.model === id).forEach(x => uses.push({ h, ...x })));
+  const best = {};  // one row per hypothesis: its strongest role
+  uses.forEach(u => { const c = best[u.h.id]; if (!c || roles.indexOf(u.role) < roles.indexOf(c.role)) best[u.h.id] = u; });
+  const rows = Object.values(best);
+  const tally = { supported: 0, mixed: 0, refuted: 0, untested: 0 };
+  rows.filter(u => u.role === "primary" || u.role === "secondary").forEach(u => tally[u.outcome in tally ? u.outcome : "untested"]++);
+  const body = roles.map(r => { const rs = rows.filter(u => u.role === r).sort((a, b) => (b.h.rating?.v2?.credence ?? -1) - (a.h.rating?.v2?.credence ?? -1));
+    if (!rs.length) return "";
+    return `<tr class="rolehead"><td colspan="4">${ROLE[r]} ${esc(ROLE_TXT[r])} (${rs.length})</td></tr>` + rs.map(u =>
+      `<tr class="click" data-card="${esc(u.h.card || "")}"><td class="id">${u.h.id}</td>
+        <td><span class="mcell ${OUT_CLS(u.outcome)} ${u.source === "card" ? "guess" : ""}" style="width:auto;padding:0 6px;font:600 11px/20px system-ui;white-space:nowrap" data-tip="${esc((OUT_TXT[u.outcome] || u.outcome) + (u.source === "card" ? "\nGuess from the card text. meta.json does not set it." : ""))}">${esc(OUT_SHORT[u.outcome] || u.outcome)}</span></td>
+        <td>${v2Chip(u.h, "cred")}</td>
+        <td><div>${esc(u.h.title)}</div>${u.note ? `<div class="small muted">${esc(u.note)}</div>` : ""}</td></tr>`).join(""); }).join("");
+  const consts = (S.constants?.constants || []).filter(c => String(c.model).split(/[ ,]+/).includes(id));
+  const ctab = consts.length ? `<table><tr><th>Symbol</th><th>Quantity</th><th>Value</th><th>Source</th></tr>` + consts.map(c =>
+      `<tr data-tip="${esc(c.meaning + "\nScope: " + c.scope)}"><td class="mono">${esc(c.symbol)}</td><td>${esc(c.name)}</td><td class="mono small">${esc(c.value)}</td><td class="mono small">${esc(c.source)}</td></tr>`).join("") + `</table>`
+    : `<p class="muted small">No measured constant has this model tag.</p>`;
+  $("#dbody").innerHTML = `<div class="mcard"><h1>${esc(m.id)} ${esc(m.name)}</h1>
+    <dl><dt>Swarm variable</dt><dd>${esc(m.variable)}</dd><dt>Signature</dt><dd>${esc(m.signature)}</dd>${m.fields ? `<dt>Fields of physics</dt><dd>${esc(m.fields)}</dd>` : ""}
+      <dt>Outcomes</dt><dd>as primary or second model: held ${tally.supported} · mixed ${tally.mixed} · refuted ${tally.refuted} · not tested ${tally.untested}</dd></dl>
+    <h3>Hypotheses that use the model (${rows.length})</h3>
+    ${rows.length ? `<table>${body}</table>` : `<p class="muted small">No hypothesis names this model.</p>`}
+    <h3>Measured constants with this model tag (${consts.length})</h3>${ctab}
+    <p style="margin-top:16px"><button id="mc-readme">Open the model README</button> <span class="mono small muted">${esc(m.path)}</span></p></div>`;
+  $("#mc-readme").onclick = () => { ob.hidden = true; openFile(m.path); };
+  $("#dbody").querySelectorAll("tr[data-card]").forEach(r => r.onclick = () => { if (r.dataset.card) { ob.hidden = true; openFile(r.dataset.card); } });
+}
+
+// ---------------------------------------------------------------- phase diagram
+// One point per unit. X and Y are period covariates or fitted parameters from per_period_estimates.parquet.
+const COV = {
+  n_agents: { label: "N agents (peak roster in the unit)", short: "N agents" },
+  n_days: { label: "days in the unit", short: "days" },
+  n_rooms: { label: "number of rooms", short: "rooms" },
+  goal: { label: "goal number (time order)", short: "goal number" },
+};
+const CATS = {
+  regime: { title: "regime", order: ["I", "II", "III", "II/III"], name: k => "regime " + k },
+  role: { title: "role", order: ["replication", "native"], name: k => k === "native" ? "native test" : "replication" },
+  holdout: { title: "holdout", order: ["open", "held"], name: k => k === "held" ? "held out 🔒" : "not held out" },
+};
+const CAT_COLOR = ["--seg-1", "--seg-2", "--seg-3", "--seg-4"];   // fixed order; validated for CVD (seg-4/seg-3 ΔE 9.1 protan)
+const CAT_SHAPE = ["circle", "square", "triangle", "diamond"];     // second encoding next to color
+const PRESETS = [
+  { name: "β vs N", why: "Attention dilution exponent β (H18) against system size. A constant β means the read-out call sets the dilution, not N.",
+    x: "cov:n_agents", y: { h: "H18", stat: "dilution_exponent_beta", ch: "addressing (mention), ledger k" } },
+  { name: "room gain vs N", why: "Drive-removed room loop gain (H26, talk) against N. A rise toward 1 marks a room near its instability.",
+    x: "cov:n_agents", y: { h: "H26", stat: "room_excess_gain_day", ch: "talk", m: "drive-removed" } },
+  { name: "η vs goal number", why: "Exposure-time elasticity η (H40). 0: the coupling runs on the call clock. 1: on the wall clock. Color by regime shows the step at the scaffold changes.",
+    x: "cov:goal", y: { h: "H40", stat: "eta_exposure_elasticity", ch: "talk" } },
+  { name: "R̂ vs N", why: "Idea branching ratio (H34) against N. R̂ < 1 is subcritical. A drift toward 1 with N would mark an approach to criticality.",
+    x: "cov:n_agents", y: { h: "H34", stat: "branching_ratio_R", ch: "ideas" } },
+  { name: "f_sched vs goal number", why: "Share of the loop gain that the scheduler field explains (H38). Color by regime: the scaffold changes the field, not the coupling.",
+    x: "cov:goal", y: { h: "H38", stat: "f_scaffold", ch: "activity", m: s => !s.includes("significant") } },
+  { name: "loop gain g vs N", why: "Curie-Weiss loop gain g = 1 − 1/VR (H19, talk, whole-day grid) against N. Mean-field coupling predicts g at fixed J·N.",
+    x: "cov:n_agents", y: { h: "H19", stat: "loop_gain_g_eq", ch: "talk", m: "whole-day grid" } },
+  { name: "Hawkes n vs loop gain g", why: "Two estimators of self-excitation on the same units: Hawkes branching ratio n (H03) and loop gain g (H19). Agreement checks the estimators.",
+    x: { h: "H19", stat: "loop_gain_g_eq", ch: "talk", m: "whole-day grid" }, y: { h: "H03", stat: "hawkes_branching_n", ch: "TALK", m: "B = 50" } },
+  { name: "t₂ vs N (log)", why: "Slowest relaxation time t₂ of the behavior Markov model (H17, minutes) against N. A rise with N would mark critical slowing down.",
+    x: "cov:n_agents", y: { h: "H17", stat: "msm_t2_star_v3", ch: "behavior (Jev v3)" }, logy: true },
+];
+let E = null, Eload = null, PH = Object.assign({ x: null, y: null, logx: false, logy: false, color: "regime", hold: false, preset: 0 }, store.get("phase", {}));
+{ const q = new URLSearchParams(location.search), p = q.get("preset");
+  if (p != null && PRESETS[+p]) PH.preset = +p, PH.x = null, PH.y = null;
+  if (q.get("x") && q.get("y")) Object.assign(PH, { x: q.get("x"), y: q.get("y"), preset: -1 });   // e.g. ?view=phase&x=cov:goal&y=cov:n_agents
+  if (q.has("hold")) PH.hold = q.get("hold") === "1"; }
+const phSave = () => store.set("phase", PH);
+const pad2 = g => String(g).padStart(2, "0");
+const unitLabel = (k, g) => !k ? (g != null ? `G${pad2(g)}` : "?") : k.startsWith("G") ? `G${pad2(k.slice(1))}` : k.startsWith("local:") ? k : `G${pad2(parseInt(k))}${k.replace(/^\d+/, "")}`;
+
+async function loadEstimates() {
+  if (Eload) return Eload;
+  Eload = (async () => {
+    $("#ph-sub").textContent = "Loading the estimates table…";
+    const j = await fetch("/api/estimates").then(r => r.json());
+    if (j.error) throw new Error(j.error);
+    const R = j.rows, n = R.s.length;
+    j.unitBy = new Map(j.units.map(u => [u.key, u]));
+    j.goalUnit = new Map(j.units.filter(u => !u.split).map(u => [u.goal, u]));
+    j.heldGoals = new Set(j.held_goals);
+    j.bySeries = j.series.map(() => []);
+    for (let i = 0; i < n; i++) j.bySeries[R.s[i]].push(i);
+    const nm = {}; j.series.forEach(s => { const k = s.h + "|" + s.stat + "|" + s.channel; nm[k] = (nm[k] || 0) + 1; });
+    j.series.forEach(s => {
+      s.key = "s:" + [s.h, s.stat, s.channel, s.method].join("|");
+      s.nMethods = nm[s.h + "|" + s.stat + "|" + s.channel];
+      s.search = [s.h, s.stat, s.channel, s.method, s.slug].join(" ").toLowerCase();
+    });
+    j.seriesByKey = new Map(j.series.map(s => [s.key, s]));
+    E = j; return j;
+  })();
+  try { return await Eload; } catch (e) { Eload = null; throw e; }
+}
+
+function resolveAxis(a) {   // preset spec -> axis id
+  if (typeof a === "string") return a;
+  const c = E.series.filter(s => s.h === a.h && s.stat === a.stat && s.channel === a.ch &&
+    (!a.m || (typeof a.m === "function" ? a.m(s.method) : s.method.includes(a.m))));
+  c.sort((p, q) => q.n_units - p.n_units);
+  return c[0]?.key || null;
+}
+const axisSeries = id => id && id.startsWith("s:") ? E.seriesByKey.get(id) : null;
+function axisLabel(id, short) {
+  if (!id) return "";
+  if (id.startsWith("cov:")) return short ? COV[id.slice(4)].short : COV[id.slice(4)].label;
+  const s = axisSeries(id); if (!s) return "(series not in the table)";
+  return `${s.h} ${s.stat}${s.channel ? " · " + s.channel : ""}`;
+}
+const shortMethod = m => m.length > 70 ? m.slice(0, 68) + "…" : m;
+
+// ----- picker
+function axisOptions(q) {
+  const t = q.toLowerCase().split(/\s+/).filter(Boolean);
+  const cov = Object.entries(COV).map(([k, c]) => ({ id: "cov:" + k, search: ("covariate " + k + " " + c.label).toLowerCase(),
+    html: `${esc(c.label)}<span class="pk-n">period covariate</span>` })).filter(o => t.every(w => o.search.includes(w)));
+  const ser = E.series.filter(s => t.every(w => s.search.includes(w))).sort((a, b) => a.h.localeCompare(b.h) || a.stat.localeCompare(b.stat) || b.n_units - a.n_units)
+    .slice(0, 150).map(s => ({ id: s.key,
+      html: `<span class="pk-n">${s.n_units} units · CI ${s.n_ci}/${s.n_rows}</span><b>${esc(s.h)}</b> ${esc(s.stat)}${s.channel ? ` <span class="muted">· ${esc(s.channel)}</span>` : ""}` +
+        (s.nMethods > 1 ? `<div class="pk-m" title="${esc(s.method)}">method: ${esc(shortMethod(s.method))}</div>` : "") }));
+  return { cov, ser, total: E.series.filter(s => t.every(w => s.search.includes(w))).length };
+}
+function makePicker(which) {
+  const el = $("#pk-" + which), inp = el.querySelector("input"), list = el.querySelector(".pk-list");
+  let items = [], act = -1;
+  const show = q => {
+    const o = axisOptions(q); items = [...o.cov, ...o.ser]; act = -1;
+    list.innerHTML = (o.cov.length ? `<div class="pk-head">period covariates</div>` + o.cov.map((x, i) => `<div class="pk-item" data-i="${i}">${x.html}</div>`).join("") : "") +
+      (o.ser.length ? `<div class="pk-head">fitted parameters: hypothesis · statistic · channel (${o.total}${o.total > o.ser.length ? ", first " + o.ser.length + " shown" : ""})</div>` +
+        o.ser.map((x, i) => `<div class="pk-item" data-i="${i + o.cov.length}">${x.html}</div>`).join("") : "") +
+      (items.length ? "" : `<div class="pk-empty">No covariate or statistic matches “${esc(q)}”.</div>`);
+    list.hidden = false;
+  };
+  const choose = it => { PH[which] = it.id; PH.preset = -1; phSave(); list.hidden = true; inp.blur(); renderPhase(); };
+  inp.onfocus = () => { inp.value = ""; show(""); };
+  inp.oninput = () => show(inp.value);
+  inp.onkeydown = e => {
+    const els = list.querySelectorAll(".pk-item");
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); act = Math.max(0, Math.min(els.length - 1, act + (e.key === "ArrowDown" ? 1 : -1)));
+      els.forEach((x, i) => x.classList.toggle("on", i === act)); els[act]?.scrollIntoView({ block: "nearest" }); }
+    else if (e.key === "Enter" && items.length) { e.preventDefault(); choose(items[act >= 0 ? act : 0]); }
+    else if (e.key === "Escape") { inp.blur(); }
+  };
+  list.onmousedown = e => { const it = e.target.closest(".pk-item"); e.preventDefault(); if (it) choose(items[+it.dataset.i]); };
+  inp.onblur = () => setTimeout(() => { list.hidden = true; inp.value = axisLabel(PH[which]); }, 100);
+}
+
+// ----- data join
+function seriesRows(s) {   // one row per unit key; a duplicate keeps the row with a CI
+  const R = E.rows, out = new Map(); let dup = 0;
+  for (const i of E.bySeries[s.i]) {
+    if (R.est[i] == null) continue;
+    const k = R.k[i] || "~" + i;
+    const prev = out.get(k);
+    if (prev != null) { dup++; if (R.lo[prev] != null) continue; }
+    out.set(k, i);
+  }
+  return { rows: [...out.values()], dup };
+}
+const rowVal = i => ({ v: E.rows.est[i], lo: E.rows.lo[i], hi: E.rows.hi[i], row: i });
+const covVal = (c, u) => u == null ? null : c === "goal" ? u.goal : u[c];
+function unitOf(k, g) {   // [unit, joined-by-goal?, local label matched a unit?]
+  if (k && !k.startsWith("local:") && E.unitBy.has(k)) return [E.unitBy.get(k), false];
+  const m = k && k.match(/^local:(?:H\d{2}-)?G?(\d{1,2}[a-z])$/);   // local:51a, local:G51a, local:H01-51c name a shared unit
+  if (m && E.unitBy.has(m[1])) return [E.unitBy.get(m[1]), false, true];
+  const u = E.goalUnit.get(g); return [u || null, true];
+}
+function buildPoints(xid, yid) {
+  const R = E.rows, xs = axisSeries(xid), ys = axisSeries(yid), info = { exact: 0, viaGoal: 0, noGoal: 0, ambiguous: 0, dup: 0, local: 0 };
+  const pts = [];
+  const mk = (key, goal, X, Y, viaGoal, labels) => {
+    const [u] = unitOf(key, goal);
+    const rr = [Y?.row, X?.row].filter(r => r != null);
+    pts.push({ key, goal, x: X, y: Y, viaGoal, labels, unit: u,
+      regime: rr.map(r => R.regime[r]).find(Boolean) || u?.regime || null,
+      role: rr.map(r => R.role[r]).find(Boolean) || null,
+      held: rr.some(r => R.hold[r]) || !!u?.holdout || (goal != null && E.heldGoals.has(goal) && (!key || key.startsWith("local:") || key.startsWith("G"))) });
+  };
+  if (!xs && !ys) {   // covariate vs covariate: one point per goal period
+    const cx = xid.slice(4), cy = yid.slice(4);
+    E.units.filter(u => !u.split).forEach(u => mk("G" + u.goal, u.goal, { v: covVal(cx, u) }, { v: covVal(cy, u) }, false));
+    info.exact = pts.length;
+  } else if (!xs || !ys) {   // one series, one covariate
+    const s = xs || ys, c = (xs ? yid : xid).slice(4), r = seriesRows(s); info.dup = r.dup;
+    for (const i of r.rows) {
+      const [u, via, loc] = unitOf(R.k[i], R.g[i]);
+      if (!u) { info.noGoal++; continue; }
+      const C = { v: covVal(c, u) }, V = rowVal(i);
+      via ? info.viaGoal++ : info.exact++; if (loc) info.local++;
+      mk(R.k[i], R.g[i], xs ? V : C, xs ? C : V, via, { s: R.u[i] || "(empty label)", c: u.key });
+    }
+  } else {   // two series: join on the unit label, then on the goal number
+    const a = seriesRows(xs), b = seriesRows(ys); info.dup = a.dup + b.dup;
+    const bByKey = new Map(b.rows.filter(i => R.k[i]).map(i => [R.k[i], i]));
+    const done = new Set(), usedB = new Set();
+    for (const i of a.rows) { const j = R.k[i] ? bByKey.get(R.k[i]) : undefined;
+      if (j != null) { mk(R.k[i], R.g[i], rowVal(i), rowVal(j), false); info.exact++; done.add(R.g[i]); usedB.add(j); } }
+    const byGoal = rows => { const m = new Map(); rows.forEach(i => { if (R.g[i] != null) (m.get(R.g[i]) || m.set(R.g[i], []).get(R.g[i])).push(i); }); return m; };
+    const ga = byGoal(a.rows.filter(i => !done.has(R.g[i]))), gb = byGoal(b.rows.filter(i => !usedB.has(i)));
+    const rep = (rows, g) => rows.find(i => R.k[i] === "G" + g) ?? (rows.length === 1 ? rows[0] : null);
+    for (const [g, ra] of ga) { const rb = gb.get(g); if (!rb) continue;
+      const i = rep(ra, g), j = rep(rb, g);
+      if (i == null || j == null) { info.ambiguous++; continue; }
+      mk("G" + g, g, rowVal(i), rowVal(j), true, { x: R.u[i] || "(empty label)", y: R.u[j] || "(empty label)" }); info.viaGoal++; }
+  }
+  return { pts, info };
+}
+
+// ----- scales
+function niceTicks(lo, hi, n = 6) {
+  const span = hi - lo || Math.abs(hi) || 1, step0 = span / n, mag = 10 ** Math.floor(Math.log10(step0));
+  const step = [1, 2, 2.5, 5, 10].map(f => f * mag).find(s => span / s <= n) || 10 * mag;
+  const out = []; for (let v = Math.ceil(lo / step) * step; v <= hi + step * 1e-9; v += step) out.push(+v.toPrecision(12));
+  return out;
+}
+function logTicks(lo, hi) {
+  const out = [], a = Math.floor(Math.log10(lo)), b = Math.ceil(Math.log10(hi)), mult = b - a <= 2 ? [1, 2, 5] : [1];
+  for (let e = a; e <= b; e++) for (const m of mult) { const v = m * 10 ** e; if (v >= lo * 0.999 && v <= hi * 1.001) out.push(v); }
+  return out;
+}
+const fmt = v => v == null ? "—" : Math.abs(v) >= 1000 ? Math.round(v).toLocaleString() : Math.abs(v) >= 100 ? v.toFixed(0) : Math.abs(v) >= 10 ? String(+v.toFixed(1)) : v === 0 ? "0" : Math.abs(v) < 1e-3 ? v.toExponential(1) : (+v.toPrecision(3)).toString();
+function scale(vals, log, lo0, hi0) {
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  if (lo0 != null) { const span = (hi - lo) || Math.abs(hi) || 1; lo = Math.max(Math.min(lo, lo0), lo - span * 0.5); hi = Math.min(Math.max(hi, hi0), hi + span * 0.5); }
+  if (log) { lo = Math.log10(lo); hi = Math.log10(hi); const p = (hi - lo || 1) * 0.06; return { log, lo: 10 ** (lo - p), hi: 10 ** (hi + p) }; }
+  const p = (hi - lo || Math.abs(hi) || 1) * 0.06; return { log, lo: lo - p, hi: hi + p };
+}
+const proj = (sc, v, a, b) => { const t = sc.log ? (Math.log10(v) - Math.log10(sc.lo)) / (Math.log10(sc.hi) - Math.log10(sc.lo)) : (v - sc.lo) / (sc.hi - sc.lo); return a + t * (b - a); };
+function spearman(xs, ys) {
+  const rank = v => { const o = v.map((x, i) => [x, i]).sort((p, q) => p[0] - q[0]), r = Array(v.length);
+    for (let i = 0; i < o.length;) { let j = i; while (j + 1 < o.length && o[j + 1][0] === o[i][0]) j++; for (let k = i; k <= j; k++) r[o[k][1]] = (i + j) / 2; i = j + 1; } return r; };
+  const a = rank(xs), b = rank(ys), n = a.length, ma = (n - 1) / 2;
+  let sab = 0, saa = 0, sbb = 0; for (let i = 0; i < n; i++) { sab += (a[i] - ma) * (b[i] - ma); saa += (a[i] - ma) ** 2; sbb += (b[i] - ma) ** 2; }
+  return saa && sbb ? sab / Math.sqrt(saa * sbb) : null;
+}
+const fmtTick = v => Math.abs(v) >= 1e4 || (v !== 0 && Math.abs(v) < 1e-3) ? v.toExponential(0) : String(+v.toPrecision(6));
+const clipText = (t, px) => { const n = Math.max(12, Math.floor(px / 6.3)); return t.length > n ? t.slice(0, n - 1) + "…" : t; };
+function symbol(shape, x, y, r) {
+  if (shape === "square") { const s = r * 0.9; return `<rect class="mk" x="${x - s}" y="${y - s}" width="${2 * s}" height="${2 * s}" rx="1.5"`; }
+  if (shape === "triangle") { const s = r * 1.2; return `<path class="mk" d="M${x},${y - s}L${x + s * 0.95},${y + s * 0.7}L${x - s * 0.95},${y + s * 0.7}Z"`; }
+  if (shape === "diamond") { const s = r * 1.25; return `<path class="mk" d="M${x},${y - s}L${x + s},${y}L${x},${y + s}L${x - s},${y}Z"`; }
+  return `<circle class="mk" cx="${x}" cy="${y}" r="${r}"`;
+}
+const symSwatch = (shape, color) => `<svg class="lg-sym" width="12" height="12" viewBox="0 0 12 12">${symbol(shape, 6, 6, 4.2)} fill="var(${color})" stroke="none"/></svg>`;
+
+// ----- render
+function periodPath(hid, key, goal) {
+  const h = S.hypotheses.find(x => x.id === hid); if (!h) return [null, null];
+  const c = []; if (key && /^\d+[a-z]$/.test(key)) c.push(`G${pad2(parseInt(key))}${key.replace(/^\d+/, "")}`);
+  if (goal != null) c.push(`G${pad2(goal)}`);
+  for (const name of c) { const p = h.periods.find(q => q.period === name); if (p) return [p.path, `${hid} ${name} README`]; }
+  return [h.card, `${hid} card (no ${c[c.length - 1] || "period"} folder)`];
+}
+function phaseControls() {
+  if ($("#ph-wrap").dataset.ready) return;
+  $("#ph-wrap").dataset.ready = 1;
+  makePicker("x"); makePicker("y");
+  $("#ph-swap").onclick = () => { [PH.x, PH.y] = [PH.y, PH.x]; [PH.logx, PH.logy] = [PH.logy, PH.logx]; PH.preset = -1; phSave(); renderPhase(); };
+  for (const k of ["logx", "logy", "hold"]) $("#ph-" + k).onchange = e => { PH[k] = e.target.checked; phSave(); renderPhase(); };
+  $("#ph-color").onchange = e => { PH.color = e.target.value; phSave(); renderPhase(); };
+  let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => gridView === "phase" && E && renderPhase(), 150); });
+}
+function applyPreset(i) {
+  const p = PRESETS[i]; const x = resolveAxis(p.x), y = resolveAxis(p.y);
+  if (!x || !y) return false;
+  Object.assign(PH, { x, y, logx: !!p.logx, logy: !!p.logy, preset: i }); phSave(); return true;
+}
+async function phaseShow(fromPoll) {
+  phaseControls();
+  try {
+    if (E && S.estimates_mtime && E.mtime !== S.estimates_mtime) { E = null; Eload = null; fromPoll = false; }
+    if (!E) { await loadEstimates(); fromPoll = false; }
+  } catch (e) { $("#ph-sub").innerHTML = `<span class="err">The estimates table did not load: ${esc(e.message)}</span>`; return; }
+  if (fromPoll && $("#ph-plot").innerHTML) return;   // the 6 s poll does not redraw the plot
+  renderPhase();
+}
+function renderPhase() {
+  if (!E) return;
+  if (PH.preset >= 0 && (!PH.x || !PH.y)) applyPreset(PH.preset);
+  if (!PH.x || !axisSeries(PH.x) && !PH.x.startsWith("cov:")) applyPreset(0) || (PH.x = "cov:n_agents");
+  if (!PH.y || !axisSeries(PH.y) && !PH.y.startsWith("cov:")) applyPreset(0) || (PH.y = "cov:goal");
+  $("#pk-x input").value = axisLabel(PH.x); $("#pk-y input").value = axisLabel(PH.y);
+  $("#ph-logx").checked = PH.logx; $("#ph-logy").checked = PH.logy; $("#ph-hold").checked = PH.hold; $("#ph-color").value = PH.color;
+  $("#ph-presets").innerHTML = `<span>presets:</span>` + PRESETS.map((p, i) => resolveAxis(p.x) && resolveAxis(p.y)
+    ? `<button data-i="${i}" class="${PH.preset === i ? "on" : ""}" data-tip="${esc(p.why)}">${esc(p.name)}</button>` : "").join("");
+  $("#ph-presets").querySelectorAll("button").forEach(b => b.onclick = () => { applyPreset(+b.dataset.i); renderPhase(); });
+
+  const { pts, info } = buildPoints(PH.x, PH.y);
+  const nHeld = pts.filter(p => p.held).length;
+  let shown = pts.filter(p => p.x.v != null && p.y.v != null && (PH.hold || !p.held));
+  const nonpos = shown.filter(p => (PH.logx && p.x.v <= 0) || (PH.logy && p.y.v <= 0)).length;
+  shown = shown.filter(p => !((PH.logx && p.x.v <= 0) || (PH.logy && p.y.v <= 0)));
+  const xs = axisSeries(PH.x), ys = axisSeries(PH.y);
+  const src = s => s ? `${s.h} (${s.n_units} units${s.nMethods > 1 ? ", method " + shortMethod(s.method) : ""})` : "period covariate";
+  const sub = [`<b>${shown.length}</b> points`];
+  if (info.viaGoal) sub.push(`<span class="warn">${info.viaGoal} joined on the goal number, because the unit labels differ (for example G51 and 51a)</span>`);
+  if (info.local) sub.push(`${info.local} hypothesis-local labels matched to a shared unit (for example local:51a to 51a)`);
+  if (info.ambiguous) sub.push(`${info.ambiguous} goals dropped: more than one unit per goal on both axes`);
+  if (info.noGoal) sub.push(`${info.noGoal} rows dropped: no goal number`);
+  if (info.dup) sub.push(`${info.dup} duplicate rows dropped`);
+  if (nonpos) sub.push(`${nonpos} points with a value ≤ 0 are off the log axis`);
+  if (nHeld && !PH.hold) sub.push(`🔒 ${nHeld} held-out points hidden`);
+  if (nHeld && PH.hold) sub.push(`<span class="warn">🔒 ${nHeld} held-out points shown. Do not use them for exploration.</span>`);
+  if (!nHeld) sub.push(`no held-out unit in this pair`);
+  if (shown.length >= 5) { const r = spearman(shown.map(p => p.x.v), shown.map(p => p.y.v)); if (r != null) sub.push(`Spearman ρ = ${r.toFixed(2)} (n = ${shown.length}, descriptive)`); }
+  $("#ph-sub").innerHTML = sub.join(" · ") + `<div class="small muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis" data-tip="${esc("X: " + (xs ? xs.h + " · " + xs.method : "period covariate") + "\nY: " + (ys ? ys.h + " · " + ys.method : "period covariate"))}">X: ${esc(src(xs))} · Y: ${esc(src(ys))}</div>`;
+  $("#grid-sub").textContent = "";
+
+  const plot = $("#ph-plot");
+  if (!shown.length) { plot.innerHTML = `<div class="ph-empty">No unit has a value on both axes. Pick another pair, or switch off a log axis.</div>`; $("#ph-legend").innerHTML = ""; return; }
+  const W = Math.max(320, plot.clientWidth || 800), H = Math.round(Math.min(460, Math.max(300, W * 0.5)));
+  const M = { l: 58, r: 14, t: 10, b: 42 }, x0 = M.l, x1 = W - M.r, y0 = H - M.b, y1 = M.t;
+  const ciLo = (a, k) => { const v = shown.map(p => p[a][k]).filter(v => v != null && (!PH["log" + a] || v > 0)); return v.length ? (k === "lo" ? Math.min(...v) : Math.max(...v)) : null; };
+  const sx = scale(shown.map(p => p.x.v), PH.logx, ciLo("x", "lo"), ciLo("x", "hi")), sy = scale(shown.map(p => p.y.v), PH.logy, ciLo("y", "lo"), ciLo("y", "hi"));
+  if (!xs && !PH.logx) sx.lo = Math.max(0, sx.lo); if (!ys && !PH.logy) sy.lo = Math.max(0, sy.lo);   // covariates are counts
+  const X = v => proj(sx, v, x0, x1), Y = v => proj(sy, v, y0, y1);
+  const tx = PH.logx ? logTicks(sx.lo, sx.hi) : niceTicks(sx.lo, sx.hi, Math.max(3, Math.round(W / 110)));
+  const ty = PH.logy ? logTicks(sy.lo, sy.hi) : niceTicks(sy.lo, sy.hi, 6);
+  let g = `<g class="ax">` + tx.map(v => `<line x1="${X(v)}" x2="${X(v)}" y1="${y1}" y2="${y0}" stroke-opacity=".6"/><text x="${X(v)}" y="${y0 + 14}" text-anchor="middle">${fmtTick(v)}</text>`).join("") +
+    ty.map(v => `<line x1="${x0}" x2="${x1}" y1="${Y(v)}" y2="${Y(v)}" stroke-opacity=".6"/><text x="${x0 - 6}" y="${Y(v) + 3}" text-anchor="end">${fmtTick(v)}</text>`).join("") +
+    `<path d="M${x0},${y1}V${y0}H${x1}" fill="none"/></g>`;
+  if (xs && !PH.logx && sx.lo < 0 && sx.hi > 0) g += `<line class="zero" x1="${X(0)}" x2="${X(0)}" y1="${y1}" y2="${y0}"/>`;
+  if (ys && !PH.logy && sy.lo < 0 && sy.hi > 0) g += `<line class="zero" x1="${x0}" x2="${x1}" y1="${Y(0)}" y2="${Y(0)}"/>`;
+  g += `<text class="alabel" x="${(x0 + x1) / 2}" y="${H - 6}" text-anchor="middle">${esc(clipText(axisLabel(PH.x) + (PH.logx ? " (log)" : ""), x1 - x0))}</text>`;
+  g += `<text class="alabel" transform="translate(13 ${(y0 + y1) / 2}) rotate(-90)" text-anchor="middle">${esc(clipText(axisLabel(PH.y) + (PH.logy ? " (log)" : ""), y0 - y1))}</text>`;
+
+  const cat = CATS[PH.color];
+  const catOf = p => PH.color === "regime" ? p.regime : PH.color === "role" ? p.role : (p.held ? "held" : "open");
+  const style = k => { const i = cat.order.indexOf(k); return i < 0 ? { color: "--text-muted", shape: "circle", unknown: true } : { color: CAT_COLOR[i], shape: CAT_SHAPE[i] }; };
+  const R = E.rows, clipX = v => Math.max(x0, Math.min(x1, v)), clipY = v => Math.max(y1, Math.min(y0, v));
+  const desc = (id, a) => { const s = axisSeries(id);
+    if (!s) return `${COV[id.slice(4)].short}: ${a.v}`;
+    const i = a.row, ci = a.lo != null && a.hi != null ? ` [${fmt(a.lo)}, ${fmt(a.hi)}]${R.ci_level[i] ? " " + Math.round(R.ci_level[i] * 100) + "%" : ""}${R.ci_kind[i] && R.ci_kind[i] !== "none" ? " " + R.ci_kind[i] : ""}` : " (no CI)";
+    return `${s.h} ${s.stat}${s.channel ? " · " + s.channel : ""}: ${fmt(a.v)}${ci}` + (R.n[i] != null ? `\n   n = ${fmt(R.n[i])}${R.n_kind[i] ? " " + R.n_kind[i] : ""} · ${R.role[i] || ""}${R.status[i] ? " · " + R.status[i] : ""}` : "");
+  };
+  const hid = ys?.h || xs?.h;
+  // draw larger symbols first is not needed (one size); draw held points last so the dashed ring stays visible
+  shown.sort((a, b) => a.held - b.held);
+  const marks = shown.map((p, n) => {
+    const st = style(catOf(p)), cx = X(p.x.v), cy = Y(p.y.v), col = `var(${st.color})`;
+    let w = "";
+    if (p.x.lo != null && p.x.hi != null) { const a = clipX(PH.logx && p.x.lo <= 0 ? x0 : X(p.x.lo)), b = clipX(X(p.x.hi)); w += `<line class="wh" x1="${a}" x2="${b}" y1="${cy}" y2="${cy}" stroke="${col}"/>`; }
+    if (p.y.lo != null && p.y.hi != null) { const a = clipY(PH.logy && p.y.lo <= 0 ? y0 : Y(p.y.lo)), b = clipY(Y(p.y.hi)); w += `<line class="wh" x1="${cx}" x2="${cx}" y1="${a}" y2="${b}" stroke="${col}"/>`; }
+    const u = p.unit, lab = unitLabel(p.key, p.goal), title = E.goal_titles[p.goal] || "";
+    const [path, what] = hid ? periodPath(hid, p.key, p.goal) : [null, null];
+    const tipTxt = `${lab}${title ? " · " + title : ""}${p.regime ? " · regime " + p.regime : ""}${p.held ? " · 🔒 held out" : u?.holdout_part ? " · part held out" : ""}` +
+      (u ? `\nN ${u.n_agents} agents · ${u.n_days} days · ${u.n_rooms} room${u.n_rooms === 1 ? "" : "s"}` : "") +
+      `\nX  ${desc(PH.x, p.x)}\nY  ${desc(PH.y, p.y)}` +
+      (p.viaGoal ? `\nJoined on goal ${p.goal}: unit labels ${p.labels ? Object.values(p.labels).join(" and ") : "differ"}.` : "") +
+      (path ? `\nClick to open the ${what}.` : "");
+    return `<g class="pt${p.held ? " held" : ""}" data-n="${n}" ${path ? `data-path="${esc(path)}"` : ""} data-tip="${esc(tipTxt)}">${w}${symbol(st.shape, cx, cy, 4.5)} fill="${col}"/><circle cx="${cx}" cy="${cy}" r="10" fill="transparent"/></g>`;
+  }).join("");
+  plot.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(axisLabel(PH.y) + " against " + axisLabel(PH.x))}">${g}${marks}</svg>`;
+  plot.querySelectorAll(".pt[data-path]").forEach(el => el.onclick = () => openFile(el.dataset.path));
+
+  const counts = {}; shown.forEach(p => { const k = catOf(p) || "unknown"; counts[k] = (counts[k] || 0) + 1; });
+  const keys = [...cat.order.filter(k => counts[k]), ...Object.keys(counts).filter(k => !cat.order.includes(k))];
+  const anyCI = shown.some(p => (p.x.lo != null && p.x.hi != null) || (p.y.lo != null && p.y.hi != null));
+  $("#ph-legend").innerHTML = `<span>color: ${cat.title}</span>` + keys.map(k => { const st = style(k);
+      return `<span>${symSwatch(st.shape, st.color)}${esc(st.unknown ? (k === "unknown" ? "no " + cat.title + " in the table" : k) : cat.name(k))} (${counts[k]})</span>`; }).join("") +
+    (anyCI ? `<span><svg class="lg-sym" width="14" height="10"><line x1="1" x2="13" y1="5" y2="5" stroke="var(--text-muted)"/></svg>CI from the source</span>` : `<span>No point has a CI in the source.</span>`) +
+    (PH.hold && nHeld ? `<span>dashed ring: held-out unit 🔒</span>` : "");
+}
+
+
+// ---------------------------------------------------------------- HH vetting
+async function vet(id, decision) {
+  const note = decision === "approved" || decision === "declined" ? "" : "";
+  try {
+    const r = await fetch("/api/vet", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, decision, note }) }).then(r => r.json());
+    if (r.error) throw new Error(r.error);
+    const it = (S.vetting?.items || []).find(x => x.id === id);
+    if (it) { if (decision === "undo") { delete it.decision; } else { it.decision = decision; } }
+    renderVetting();
+  } catch (e) { alert("Vetting click failed: " + e.message); }
+}
+function renderVetting() {
+  const items = S.vetting?.items || [];
+  const open = items.filter(x => !x.decision && !x.promoted_to), done = items.filter(x => x.decision || x.promoted_to);
+  const n = k => items.filter(x => x.decision === k).length;
+  $("#vet-sub").textContent = `${open.length} open · ${n("approved")} approved · ${n("declined")} declined · ${n("later")} later`;
+  const card = x => {
+    const st = x.promoted_to ? `→ ${x.promoted_to}` : x.decision === "approved" ? "approved → H queue" : x.decision === "declined" ? "declined" : x.decision === "later" ? "later" : "";
+    const btns = x.promoted_to ? "" : x.decision
+      ? `<button data-vet="${esc(x.id)}" data-d="undo" data-tip="undo this click">↺</button>`
+      : `<button data-vet="${esc(x.id)}" data-d="approved" data-tip="approve: send to the H queue">✓</button><button data-vet="${esc(x.id)}" data-d="declined" data-tip="decline">✕</button><button data-vet="${esc(x.id)}" data-d="later" data-tip="decide later">⏸</button>`;
+    return `<div class="vet ${x.decision || ""}"><div class="hd"><b>${esc(x.id)}</b><span>${esc(x.title)}</span><span class="btns">${st ? `<span class="state">${esc(st)}</span>` : ""}${btns}</span></div>
+      <div class="why">${esc(x.why || "")}</div><div class="tags"><span>${esc(x.family || "")}</span><span>${esc(x.q || "")}</span><span>cost ${esc(x.cost || "?")}</span></div></div>`; };
+  $("#vet").innerHTML = (open.length ? open.map(card).join("") : `<div class="muted small">No open HHs. The coordinator adds more here.</div>`) +
+    (done.length ? `<details style="margin-top:4px"><summary class="small sec">decided (${done.length})</summary>${done.map(card).join("")}</details>` : "");
+  $("#vet").querySelectorAll("button[data-vet]").forEach(b => b.onclick = () => vet(b.dataset.vet, b.dataset.d));
 }
 
 function renderConstants() {
@@ -440,7 +917,7 @@ function renderConstants() {
 
 function renderAgents() {
   const ag = S.agents; const n = s => ag.filter(a => a.state === s).length;
-  $("#ag-sub").textContent = `${n("running")} running · ${n("stalled")} stalled · ${n("finished")} finished (48 h)`;
+  $("#ag-sub").textContent = `last 48 h: ${n("running")} running · ${n("stalled")} stalled · ${n("finished")} finished`;
   $("#agents").innerHTML = `<thead><tr><th>State</th><th>Task</th><th class="num">Tools</th><th class="num">Ran</th><th>Last</th></tr></thead><tbody>` +
     ag.map(a => `<tr class="click" data-id="${esc(a.id)}" data-desc="${esc(a.description)}">
       <td><span class="state ${a.state}">${a.state === "running" ? '<span class="dot"></span> ' : ""}${a.state}</span></td>
@@ -452,13 +929,13 @@ function renderAgents() {
 function renderHoldout() {
   const H = S.holdout;
   const isUsed = uses => uses.some(u => !u.planned);
-  const chip = (label, uses, extra = "") => `<span class="chip ${isUsed(uses) ? "used" : ""}" data-tip="${esc(extra || label)}${uses.length ? "\n" + uses.map(u => u.h + (u.planned ? " plans to use it (" + u.via + ", not run)" : " used it via " + u.via + " → " + u.verdict)).join("\n") : "\nunused"}">
+  const chip = (label, uses, extra = "") => `<span class="chip ${isUsed(uses) ? "used" : ""}" data-tip="${esc(extra || label)}${uses.length ? "\n" + uses.map(u => u.h + (u.planned ? " plans to use it via " + u.via + ". Not run." : " used it via " + u.via + ": " + u.verdict)).join("\n") : "\nnot used"}">
     <span class="mono">${esc(label)}</span>${uses.map(u => `<span class="cell ${u.planned ? "pending" : (u.verdict === "n/a" ? "na" : u.verdict)} ${u.planned ? "" : "conf"}" style="width:16px;height:15px;line-height:15px;font-size:10px" data-path="${esc(u.path)}">${u.planned ? "…" : (SYM[u.verdict] || "?")}</span><span class="small">${u.h}</span>`).join("")}</span>`;
   const usedN = H.goals.filter(g => isUsed(g.uses)).length + H.windows.filter(w => isUsed(w.uses)).length;
   $("#ho-sub").textContent = `${usedN} of ${H.goals.length + H.windows.length} held-out periods used`;
   $("#holdout").innerHTML = `<div>${H.goals.map(g => chip(g.period, g.uses, g.period + " · " + g.title)).join("")}</div>
     <div style="margin-top:4px">${H.windows.map(w => chip(w.id, w.uses, `${w.id} · ${w.start} → ${w.end} · ${w.why}`)).join("")}</div>
-    ${H.pending_confirm.length ? `<div class="small sec" style="margin-top:6px">Confirm scripts written, not run: ${H.pending_confirm.map(p => `<span class="mono">${p.h}</span>`).join(", ")}</div>` : ""}`;
+    ${H.pending_confirm.length ? `<div class="small sec" style="margin-top:6px">Confirm scripts that did not run yet: ${H.pending_confirm.map(p => `<span class="mono">${p.h}</span>`).join(", ")}</div>` : ""}`;
   $("#holdout").querySelectorAll("[data-path]").forEach(c => c.onclick = () => openFile(c.dataset.path));
 }
 
@@ -471,10 +948,10 @@ function renderLog() {
 
 function renderPipes() {
   const P = S.pipelines; const stale = P.provenance.filter(p => p.code_changed_since);
-  $("#pl-sub").innerHTML = `${P.tables.length} shared tables${stale.length ? ` · <span class="warn">${stale.length} built before their code last changed</span>` : ""}`;
+  $("#pl-sub").innerHTML = `${P.tables.length} shared tables${stale.length ? ` · <span class="warn">${stale.length} older than their builder code</span>` : ""}`;
   $("#pipes").innerHTML = `<thead><tr><th>Builder</th><th>Built</th><th>Commit</th><th></th></tr></thead><tbody>` +
     P.provenance.map(p => `<tr class="${p.script ? "click" : ""}" data-script="${esc(p.script || "")}"><td class="mono small">${esc(p.name)}</td><td class="small muted">${ago(p.built_at)}</td><td class="mono small muted" data-tip="${esc(p.git_commit || "")}">${esc((p.git_commit || "").slice(0, 7))}${(p.git_commit || "").includes("uncommitted") ? "*" : ""}</td>
-      <td class="small">${p.code_changed_since ? '<span class="warn" data-tip="the builder script changed after this table was built: rebuild?">⚠ code changed</span>' : ""}</td></tr>`).join("") +
+      <td class="small">${p.code_changed_since ? '<span class="warn" data-tip="The builder script changed after the build. Rebuild the table.">⚠ code changed</span>' : ""}</td></tr>`).join("") +
     `</tbody><thead><tr><th>Table</th><th class="num">Rows</th><th class="num">Size</th><th>Updated</th></tr></thead><tbody>` +
     P.tables.map(t => `<tr><td class="mono small">${esc(t.name)}</td><td class="num small">${t.rows == null ? "" : typeof t.rows === "number" ? t.rows.toLocaleString() : esc(t.rows)}</td><td class="num small">${mb(t.bytes)}</td><td class="small muted">${ago(t.mtime)}</td></tr>`).join("") + `</tbody>`;
   $("#pipes").querySelectorAll("tr[data-script]").forEach(r => r.onclick = () => r.dataset.script && openFile(r.dataset.script));
@@ -499,7 +976,7 @@ function renderStorage() {
 function renderProcs() {
   $("#procs").innerHTML = S.processes.length ? `<thead><tr><th>PID</th><th>Script</th><th class="num">CPU</th><th class="num">Elapsed</th></tr></thead><tbody>` +
     S.processes.map(p => `<tr><td class="mono small">${p.pid}</td><td class="mono small" data-tip="${esc(p.script + " " + p.args)}">${esc(p.script)}</td><td class="num small">${p.cpu.toFixed(0)}%</td><td class="num small">${esc(p.elapsed)}</td></tr>`).join("") + `</tbody>`
-    : `<tr><td class="muted">none</td></tr>`;
+    : `<tr><td class="muted">No project Python process runs now.</td></tr>`;
 }
 
 function renderGit() {
@@ -509,7 +986,7 @@ function renderGit() {
 }
 
 function render() {
-  for (const f of [renderFacts, renderHyp, renderGridOrModels, renderConstants, renderAgents, renderHoldout, renderLog, renderPipes, renderStorage, renderProcs, renderGit]) {
+  for (const f of [renderFacts, renderHyp, function renderGridPoll() { renderGridOrModels(true); }, renderVetting, renderConstants, renderAgents, renderHoldout, renderLog, renderPipes, renderStorage, renderProcs, renderGit]) {
     try { f(); } catch (e) { console.error(f.name, e); }
   }
 }
@@ -519,7 +996,9 @@ async function refresh() {
     const r = await fetch("/api/state"); const j = await r.json();
     if (j.error) throw new Error(j.error);
     S = j; $("#error").hidden = true; render(); tick();
-  } catch (e) { $("#error").hidden = false; $("#error").textContent = "Refresh failed: " + e.message; }
+    if (!refresh.once) { refresh.once = true; const q = new URLSearchParams(location.search), m = q.get("model"); if (m) openModel(m);
+      if (q.get("view") && !q.has("noscroll")) setTimeout(() => $("#s-grid").scrollIntoView(), 50); }
+  } catch (e) { $("#error").hidden = false; $("#error").textContent = "The refresh failed: " + e.message; }
 }
 function tick() { if (S) $("#updated").textContent = `updated ${ago(S.generated_at)} · ${S.collect_ms} ms`; }
 setInterval(() => { if (!paused && !document.hidden) refresh(); }, 6000);

@@ -14,6 +14,18 @@
    "role": "primary",
    "outcome": "refuted",
    "note": "Coupling sign ignores goal mode: herding (βJ > 0) in 11/14 weeks"
+  },
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.5 / 2.0)",
@@ -22,7 +34,7 @@
  "v2": {
   "claim": "Agents herd onto shared projects in attention and work; ownership disperses",
   "original_verdict": "mixed",
-  "credence": 0.84,
+  "credence": 0.75,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -43,13 +55,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.5,
+  "value_if_true": 2.75,
   "decision": "anticipate pile-ons and duplicated work",
   "magnitude": "material",
   "generality": "any LLM swarm",
-  "expected_usefulness": 2.11,
-  "scientific_value": 3,
-  "rater": "coordinator first pass (from integrated reports); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 2.06,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.84,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "In shared-artifact weeks, agents herd onto the same project beyond their own stable preferences (beta J_CW > 0 in 11/14 weeks regardless of goal mode; coupling-beyond-fields z>=2 in 10/11 shared weeks), and their work commits herd too (4/6); spread appears only with own-artifact or private-role tasks.",
+    "credence": 0.64,
+    "value_if_true": 3.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "calibrated null partly",
+      "x": 1.5,
+      "evidence": "circular-shift and day nulls; z near 2 moves by 0.5 between draws"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "11/14 weeks; 10/11 shared weeks"
+     },
+     {
+      "factor": "robust to data versions",
+      "x": 2,
+      "evidence": "round 1b deterministic labels + DQ4 work ledger: no verdict change"
+     },
+     {
+      "factor": "penalty: drive vs coupling not separable",
+      "x": 0.7,
+      "evidence": "herding is an effective coupling (exogenous field impostor); #35 z=-2.5 counterexample"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

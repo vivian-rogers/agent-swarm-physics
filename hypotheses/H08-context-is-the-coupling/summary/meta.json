@@ -34,7 +34,7 @@
  "v2": {
   "claim": "Responses are gated at the recipient's next model call (read-out)",
   "original_verdict": "supported",
-  "credence": 0.93,
+  "credence": 0.91,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -67,13 +67,13 @@
   ],
   "mechanism_level": "M2",
   "fragile": false,
-  "value_if_true": 3.0,
+  "value_if_true": 3.17,
   "decision": "design: coupling delay = call cadence; message timing",
   "magnitude": "large",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 2.79,
+  "expected_usefulness": 2.88,
   "scientific_value": 4.0,
-  "rater": "coordinator + independent blind rater (log-odds mean of credences; mean V); no disagreement beyond thresholds",
+  "rater": "3 raters (coordinator + blind); log-odds mean credence, mean V",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -129,7 +129,49 @@
       "evidence": "Caveats 'Mentions as responses'; Round 1b responses row"
      }
     ]
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Agents couple only through what enters their model calls: the recipient's addressing/reply response jumps at the call that receives a message (14/17 periods mentions, 17/17 replies; 0 for other-room messages 8/8), nudge onset aligns with the receiving call, and a forced context erasure cuts reply coupling by 21+/-7% (8/9).",
+    "credence": 0.86,
+    "value_if_true": 3.5,
+    "mechanism_level": "M2",
+    "fragile": false,
+    "scientific_value": 4,
+    "ladder": [
+     {
+      "factor": "identified: synthetic recovery",
+      "x": 1.5,
+      "evidence": "axis F validation run before any real-data fit"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "14/17 periods (17/17 on replies)"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "call-start rule -> context ledger (11->14/17); mentions and reply labels agree"
+     },
+     {
+      "factor": "intervention consistent",
+      "x": 2,
+      "evidence": "NE41 forced erasure (sign, 8/9), NE32 newcomers 35/35"
+     },
+     {
+      "factor": "rival beaten",
+      "x": 1.5,
+      "evidence": "C8: read-out alignment beats constant delay"
+     },
+     {
+      "factor": "penalty: known-problem input",
+      "x": 0.8,
+      "evidence": "call starts measured only for Gemini; ~10% of items one call off; reply parents visible by construction"
+     }
+    ]
    }
-  ]
+  ],
+  "adjudicate": false
  }
 }

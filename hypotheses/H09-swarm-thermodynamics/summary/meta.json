@@ -32,6 +32,18 @@
    "role": "tool",
    "outcome": "n/a",
    "note": "Occupancy and transitions over action-class states"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "RE-R1 agent (suggested, round 1b); coordinator calibration pending",
@@ -41,7 +53,7 @@
   "scope": "regime III gate test; NE43; #51 roster sweep",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.47,
+  "credence": 0.56,
   "ladder": [
    {
     "factor": "base (sec)",
@@ -65,14 +77,56 @@
   ],
   "mechanism_level": "M1",
   "fragile": true,
-  "value_if_true": 2,
+  "value_if_true": 2.25,
   "decision": "release stuck agents by naming them, not by broadcasting",
   "magnitude": "small",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 0.95,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (RE-R1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.26,
+  "scientific_value": 2.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.47,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": true,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "In regime III, a timer-paused agent's gate reads its context: a new @-mention raises the odds of acting at the gate (OR 3.1 [1.9,4.5]) while unaddressed chatter lowers it (OR 0.50; 0.65 vs 0.85).",
+    "credence": 0.64,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2,
+    "ladder": [
+     {
+      "factor": "partial replication",
+      "x": 1.5,
+      "evidence": "pooled regime-III gates; H16 gate-kick OR 1.5-2.9 in 5/7 periods"
+     },
+     {
+      "factor": "partly robust",
+      "x": 1.5,
+      "evidence": "E6c mention HR identical round 1->1b; ledger version agrees"
+     },
+     {
+      "factor": "penalty: confounded contrast",
+      "x": 0.8,
+      "evidence": "within-agent but not randomized: chatter arrives when others are busy; G1b (chatter neutral) failed, so its sign is post hoc"
+     },
+     {
+      "factor": "intervention partly consistent",
+      "x": 1.5,
+      "evidence": "NE43 steps leave the gate stable as predicted"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

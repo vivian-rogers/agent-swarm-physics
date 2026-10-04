@@ -30,7 +30,7 @@
   "scope": "G51, G38 (powered); natives #5, NE44, NE10",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.64,
+  "credence": 0.48,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -64,14 +64,51 @@
   ],
   "mechanism_level": "M1",
   "fragile": true,
-  "value_if_true": 2,
+  "value_if_true": 2.25,
   "decision": "nudge targeting and timing (lulls are fine)",
   "magnitude": "negligible",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.29,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (RE-V2); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.08,
+  "scientific_value": 2.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.64,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": true,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Operator nudges have a period-level susceptibility of about one extra active minute per nudge for the target (#51 0.98 [0.63,1.37], #38 0.95), bystanders ~0, and daily steerability is not a persistent trackable state.",
+    "credence": 0.33,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": true,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "identified: synthetic recovery",
+      "x": 1.5,
+      "evidence": "three biases found and fixed on synthetic data at village sampling"
+     },
+     {
+      "factor": "partial replication",
+      "x": 1.5,
+      "evidence": "#51 and #38; small periods 5/10 > 0; H04 independent design ~1.2 min"
+     },
+     {
+      "factor": "changed under a data fix (partial)",
+      "x": 0.5,
+      "evidence": "#38 -0.08 -> 0.95; level 0.98 vs 1.56 depending on future-kick adjustment"
+     }
+    ]
+   }
+  ],
+  "adjudicate": true
  },
  "v2_history": [
   {

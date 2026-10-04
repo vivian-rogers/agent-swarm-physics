@@ -29,7 +29,7 @@
   "scope": "12 periods, 1,290 agent-days; natives G51, G39, G42",
   "direction": "negative",
   "original_verdict": "failed",
-  "credence": 0.57,
+  "credence": 0.7,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -62,10 +62,52 @@
   "decision": "none",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 0.85,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (RE-O1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.05,
+  "scientific_value": 2.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.57,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: agent-days in 17 (round 1) / 12 (round 1b, #30+) non-holdout periods. Agent-day content diversity (PR10) has no interior output optimum: no inverted U in write turns or landed work commits, and curvature worsens day-blocked CV.",
+    "credence": 0.81,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "calibrated null and power on the real design (FP 0-7%, power 0.82 at 0.4 SD; one design, credited once)",
+      "x": 2,
+      "evidence": "summary hwhat; card Results"
+     },
+     {
+      "factor": "robust: survived round 1b (work commits, both embeddings, 13 specs)",
+      "x": 2,
+      "evidence": "card Round 1b robustness"
+     },
+     {
+      "factor": "replication: per-period 0 supported in round 1, meta right slope wrong sign in both rounds",
+      "x": 2,
+      "evidence": "card Round 1 vs 1b P2"
+     },
+     {
+      "factor": "penalty: PR10 reliability 0.55 attenuates curvature; #51-tail right-side drop in some bge specs",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

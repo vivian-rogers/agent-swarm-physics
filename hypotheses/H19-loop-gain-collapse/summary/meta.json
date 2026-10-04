@@ -1,59 +1,101 @@
 {
-  "complete": 50,
-  "faithfulness": 1.0,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 plus round 1b: re-estimation on the corrected grid with DQ8-trimmed and H38-conditioned gains, NE14 with and without the adjustment, and three period-native tests (#51 N sweep, NE42, NE43). Open: H04/H05 re-runs, a re-frozen confirmatory model, the holdout run, H10-H18 estimates.",
-    "faithfulness": "The pre-registered collapse P1 failed again (regime-only wins, no common positive slope on x_att) and the dilution exponent P4 failed; only the unfitted mapping P3 and P5 hold. The natural-experiment tests split (NE43 held, NE42 and the #51 dilution test failed).",
-    "usefulness": "Corrects a misleading round-1 lesson (opposite channels) into a concrete one: trim day edges before reading any equal-time gain. The post-hoc k_llm curve now spans all six methods, a candidate knob worth pre-registering, though it fails within #51."
+ "complete": 50,
+ "faithfulness": 1.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 plus round 1b: re-estimation on the corrected grid with DQ8-trimmed and H38-conditioned gains, NE14 with and without the adjustment, and three period-native tests (#51 N sweep, NE42, NE43). Open: H04/H05 re-runs, a re-frozen confirmatory model, the holdout run, H10-H18 estimates.",
+  "faithfulness": "The pre-registered collapse P1 failed again (regime-only wins, no common positive slope on x_att) and the dilution exponent P4 failed; only the unfitted mapping P3 and P5 hold. The natural-experiment tests split (NE43 held, NE42 and the #51 dilution test failed).",
+  "usefulness": "Corrects a misleading round-1 lesson (opposite channels) into a concrete one: trim day edges before reading any equal-time gain. The post-hoc k_llm curve now spans all six methods, a candidate knob worth pre-registering, though it fails within #51."
+ },
+ "one_line": "Loop gains do not collapse onto x_att; the round-1 channel split was day edges; trimmed gains rise with messages per LLM step (post hoc).",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Equal-time loop gains do not collapse; regime step wins"
   },
-  "one_line": "Loop gains do not collapse onto x_att; the round-1 channel split was day edges; trimmed gains rise with messages per LLM step (post hoc).",
-  "models": [
-    {
-      "model": "01-inverse-ising",
-      "role": "primary",
-      "outcome": "refuted",
-      "note": "Equal-time loop gains do not collapse; regime step wins"
-    },
-    {
-      "model": "09-hawkes",
-      "role": "secondary",
-      "outcome": "supported",
-      "note": "Unfitted Hawkes-to-Ising gain mapping holds (P3)"
-    },
-    {
-      "model": "02-nonequilibrium-ising",
-      "role": "secondary",
-      "outcome": "untested",
-      "note": "Listed source; no separate kinetic fit"
-    }
+  {
+   "model": "09-hawkes",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "Unfitted Hawkes-to-Ising gain mapping holds (P3)"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Listed source; no separate kinetic fit"
+  }
+ ],
+ "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
+ "v2": {
+  "claim": "No common loop-gain curve; trimmed activity gains track Hawkes gains; the channel split was day edges",
+  "original_verdict": "failed",
+  "credence": 0.56,
+  "ladder": [
+   {
+    "factor": "base (post)",
+    "x": 0.2
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   }
   ],
-  "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
-  "v2": {
-    "claim": "No common loop-gain curve; trimmed activity gains track Hawkes gains; the channel split was day edges",
-    "original_verdict": "failed",
+  "mechanism_level": "M0",
+  "fragile": true,
+  "value_if_true": 1.25,
+  "decision": "none",
+  "magnitude": "small",
+  "generality": "this scaffold",
+  "expected_usefulness": 0.7,
+  "scientific_value": 2.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.33,
-    "ladder": [
-      {
-        "factor": "base (post)",
-        "x": 0.2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      }
-    ],
+    "value_if_true": 1,
     "mechanism_level": "M0",
     "fragile": true,
-    "value_if_true": 1,
-    "decision": "none",
-    "magnitude": "small",
-    "generality": "this scaffold",
-    "expected_usefulness": 0.33,
-    "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Per-period loop gains from different methods do not collapse onto one curve of attended partners per attention (x_att); a regime-only model wins out of sample, and after day-edge trimming activity and talk gains move together.",
+    "credence": 0.76,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "identified: synthetic power for the negative",
+      "x": 1.5,
+      "evidence": "P1 rule power 0.87 at R^2=0.5, false support <=0.01"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "35 periods, six methods"
+     },
+     {
+      "factor": "robust to data versions",
+      "x": 2,
+      "evidence": "collapse fails in round 1 and round 1b (raw and trimmed)"
+     },
+     {
+      "factor": "penalty: shared events / multiplicity",
+      "x": 0.8,
+      "evidence": "methods share raw events; summed ELPD over-counts"
+     }
+    ]
+   }
+  ],
+  "adjudicate": true
+ }
 }

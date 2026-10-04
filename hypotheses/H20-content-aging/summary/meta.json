@@ -29,7 +29,7 @@
   "scope": "35 periods (random effects); #38, #51 detail",
   "direction": "negative",
   "original_verdict": "mixed, leaning refuted",
-  "credence": 0.48,
+  "credence": 0.62,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -58,14 +58,56 @@
   ],
   "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 1.5,
+  "value_if_true": 1.25,
   "decision": "monitoring cadence",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 0.72,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (RE-C1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.78,
+  "scientific_value": 2.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.48,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Swarm content does not age at day resolution: random-effects aging slope A=+0.02+/-0.02 over long and medium goals, and mu=0.5 aging is rejected in #51 (power >=0.98), in all 7 input configurations.",
+    "credence": 0.74,
+    "value_if_true": 1.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2,
+    "ladder": [
+     {
+      "factor": "calibrated null (chosen after data)",
+      "x": 1.5,
+      "evidence": "fitted-shape null, robust z-SD 1.07/0.91; isotropic null 2-3x too narrow"
+     },
+     {
+      "factor": "identified: synthetic power (#51)",
+      "x": 1.5,
+      "evidence": "mu=0.5 rejection power >=0.98 in #51; 0.37-0.42 per short period"
+     },
+     {
+      "factor": "partial replication",
+      "x": 1.5,
+      "evidence": "3/4 long goals flat; #38 kickoff relaxation"
+     },
+     {
+      "factor": "robust to instruments",
+      "x": 2,
+      "evidence": "bge/gte, dedupe, style residuals"
+     }
+    ]
+   }
+  ],
+  "adjudicate": true
  },
  "v2_history": [
   {

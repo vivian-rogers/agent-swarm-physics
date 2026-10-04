@@ -1,57 +1,106 @@
 {
-  "complete": 42,
-  "faithfulness": 1.5,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 done: dated predictions plus three disclosed amendments; synthetic validation on the real call schedules (6 worlds x 2 base rates x 20 runs, frozen decision rule); 30 period folders (23 replication incl. 4 native tests, 7 descriptive) with predictions written before each run; scorecard; operator rules; confirm.py frozen and dry-run on stand-ins. Holdout not run; deadline-bound calls tested only in #26.",
-    "faithfulness": "The core claim (wave size set by the receptive fraction at the call-cycle scale) is refuted: RR_timely 1.06 [0.93, 1.22], R adds nothing out of sample, current share wins. Card rule: failed. The announcement-seeded part holds at a descriptive level (step at the link, room-bounded, read-out gated), and the #26 runoff shows wave = receptive count for a deadline-bound call. Scorecard A1 B1 C0 D1 E1 F1 G1 H0 I0.",
-    "usefulness": "Two operator rules with evidence: announce projects (a first link seeds a ~20x wave; timing to the call clock adds <=9%), and for votes/polls size the window to read-out delays (a 2-min window disenfranchises ~1/3 of a regime-III swarm; >=15 min reaches ~90%). Calibrated 2.0 -> 2.5."
+ "complete": 42,
+ "faithfulness": 1.5,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions plus three disclosed amendments; synthetic validation on the real call schedules (6 worlds x 2 base rates x 20 runs, frozen decision rule); 30 period folders (23 replication incl. 4 native tests, 7 descriptive) with predictions written before each run; scorecard; operator rules; confirm.py frozen and dry-run on stand-ins. Holdout not run; deadline-bound calls tested only in #26.",
+  "faithfulness": "The core claim (wave size set by the receptive fraction at the call-cycle scale) is refuted: RR_timely 1.06 [0.93, 1.22], R adds nothing out of sample, current share wins. Card rule: failed. The announcement-seeded part holds at a descriptive level (step at the link, room-bounded, read-out gated), and the #26 runoff shows wave = receptive count for a deadline-bound call. Scorecard A1 B1 C0 D1 E1 F1 G1 H0 I0.",
+  "usefulness": "Two operator rules with evidence: announce projects (a first link seeds a ~20x wave; timing to the call clock adds <=9%), and for votes/polls size the window to read-out delays (a 2-min window disenfranchises ~1/3 of a regime-III swarm; >=15 min reaches ~90%). Calibrated 2.0 -> 2.5."
+ },
+ "one_line": "Announcements seed herding (adoptions jump ~20× at a first link, stay in-room), but read-out timing does not set wave size (RR 1.06); current share does.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Read-out-clock nucleation fails; occupancy (current share) predicts waves"
   },
-  "one_line": "Announcements seed herding (adoptions jump ~20\u00d7 at a first link, stay in-room), but read-out timing does not set wave size (RR 1.06); current share does.",
-  "models": [
-    {
-      "model": "10-potts",
-      "role": "primary",
-      "outcome": "mixed",
-      "note": "Read-out-clock nucleation fails; occupancy (current share) predicts waves"
-    },
-    {
-      "model": "03-contagion",
-      "role": "secondary",
-      "outcome": "supported",
-      "note": "Seed-locked, room-bounded adoption; shared-field rival rejected"
-    }
+  {
+   "model": "03-contagion",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "Seed-locked, room-bounded adoption; shared-field rival rejected"
+  },
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  }
+ ],
+ "rated_by": "H53 agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (usefulness 2.0 -> 2.5)",
+ "v2": {
+  "claim": "Herding is seeded by a project's first chat link; deadline votes are read-out-bound",
+  "original_verdict": "failed as posed",
+  "credence": 0.59,
+  "ladder": [
+   {
+    "factor": "base (sec)",
+    "x": 0.3
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5
+   }
   ],
-  "rated_by": "H53 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (usefulness 2.0 -> 2.5)",
-  "v2": {
-    "claim": "Herding is seeded by a project's first chat link; deadline votes are read-out-bound",
-    "original_verdict": "failed as posed",
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.75,
+  "decision": "announce projects; size vote windows",
+  "magnitude": "material",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.62,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.56,
-    "ladder": [
-      {
-        "factor": "base (sec)",
-        "x": 0.3
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      }
-    ],
+    "value_if_true": 3,
     "mechanism_level": "M1",
     "fragile": false,
-    "value_if_true": 3,
-    "decision": "announce projects; size vote windows",
-    "magnitude": "material",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 1.69,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: 928 seeds in 23 non-holdout periods. Announcement links seed herding waves (~20x adoption step at the first link; other-room ratio 0.12; 1.5% adopt without the link in context), but read-out timing does not size them (RR_timely 1.06 [0.93, 1.22], excludes the predicted 1.5); the project's current share predicts wave size.",
+    "credence": 0.62,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "calibrated: frozen decision rule gives no false nucleation in 120 non-nucleation synthetic runs (credited once with recovery)",
+      "x": 2,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "partly robust: action-only labels agree",
+      "x": 1.5,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "penalty: 'uncommitted' is a crude proxy; step is partly mechanical for brand-new projects",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
+ }
 }

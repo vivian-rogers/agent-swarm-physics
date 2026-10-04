@@ -26,6 +26,12 @@
    "role": "rival",
    "outcome": "untested",
    "note": "Named as rival or complement; not fitted"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
  "rated_by": "RE-R1 agent (suggested, round 1b); coordinator calibration pending",
@@ -35,7 +41,7 @@
   "scope": "6 windows (talk spins); natives #focus (G51), NE42; holdout run inconclusive",
   "direction": "positive",
   "original_verdict": "inconclusive (holdout DiD passed, C3 missed)",
-  "credence": 0.86,
+  "credence": 0.88,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -69,14 +75,56 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3,
+  "value_if_true": 2.5,
   "decision": "room layout: rooms couple talk because they route reading",
   "magnitude": "material",
   "generality": "any LLM swarm",
-  "expected_usefulness": 2.59,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-R1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 2.2,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.86,
+    "value_if_true": 3,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "In regime-III two-room windows, talk-spin coupling is room-structured (within > cross in 6/6 windows, TWFE z 4.1) and cutting the channel lowers cross-room talk coupling (NE15 pair DiD); activity spins are not room-structured.",
+    "credence": 0.89,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "calibrated null passed",
+      "x": 2,
+      "evidence": "day-edge-trimmed nulls; result unchanged under trim"
+     },
+     {
+      "factor": "replication",
+      "x": 2,
+      "evidence": "6/6 two-room windows; 4 periods pass individually"
+     },
+     {
+      "factor": "robust to data versions",
+      "x": 1.5,
+      "evidence": "survived round 1b (5/6->6/6); one channel, estimator variants (MF, TWFE, pair DiD)"
+     },
+     {
+      "factor": "intervention consistent",
+      "x": 2,
+      "evidence": "NE15 holdout primary DiD passed (buggy table), NE42 merge-split, 05-11 split DiD"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

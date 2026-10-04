@@ -35,7 +35,7 @@
   "scope": "NE15 (RPG forks), G36 agent-papers forks, G35",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.84,
+  "credence": 0.61,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -74,14 +74,51 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 1.25,
   "decision": "leakage detection: identity beyond the independence bound flags a channel",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.69,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-D2); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.76,
+  "scientific_value": 2.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.84,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "After the 03-16 split, the two RPG forks diverge gradually by copying (69%/81% of ancestor files identical at end of #35, no commit >10% of change), with fork identity at the independent-lineage bound (no readable cross-team leakage; 3 shared innovations are convergent).",
+    "credence": 0.32,
+    "value_if_true": 0.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 1.5,
+    "ladder": [
+     {
+      "factor": "single unit",
+      "x": 0.6,
+      "evidence": "one split, n=2 forks"
+     },
+     {
+      "factor": "partly robust",
+      "x": 1.5,
+      "evidence": "round 1b ledger reads and DQ4 commits change no verdict"
+     },
+     {
+      "factor": "penalty: unverified decomposition",
+      "x": 0.8,
+      "evidence": "copy/transform split uses an unverified reading of Kolchinsky & Corominas-Murtra; no synthetic (F=0)"
+     }
+    ]
+   }
+  ],
+  "adjudicate": true
  },
  "v2_history": [
   {

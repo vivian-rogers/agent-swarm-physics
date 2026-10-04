@@ -30,7 +30,7 @@
   "scope": "G51 (powered), G38; NE10, NE43",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.63,
+  "credence": 0.61,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -64,14 +64,66 @@
   ],
   "mechanism_level": "M1",
   "fragile": true,
-  "value_if_true": 1.5,
+  "value_if_true": 1.75,
   "decision": "nudge policy: an attention lever, not a production lever",
   "magnitude": "negligible",
   "generality": "scheduled nudgers",
-  "expected_usefulness": 0.94,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-O1); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.07,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.63,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": true,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: G51 (only powered period). A first auto-nudge buys a small activity response (+1.45 active min, glance +0.08, placebo clean) at well below its information frontier (eta_SU ~0.38; once-early nudging x2.3 active minutes), and no detectable committed work.",
+    "credence": 0.58,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "calibrated null: clean placebo window for activity/glance",
+      "x": 2,
+      "evidence": "card Round 1b table; summary hobsb"
+     },
+     {
+      "factor": "single powered unit (G51)",
+      "x": 0.6,
+      "evidence": "summary hcaveats"
+     },
+     {
+      "factor": "partly robust: round-1 numbers reproduce exactly, but work outcomes need a post hoc DiD after placebo failure",
+      "x": 1.5,
+      "evidence": "card Round 1b"
+     },
+     {
+      "factor": "identified: synthetic recovery checked first",
+      "x": 1.5,
+      "evidence": "card Synthetic validation"
+     },
+     {
+      "factor": "partly consistent interventions (NE10 switch-on, NE43 switch-off invisible, as accounting predicts)",
+      "x": 1.5,
+      "evidence": "card Round 1b natives"
+     },
+     {
+      "factor": "penalty: post hoc amendments A1-A3 and post hoc DiD",
+      "x": 0.8,
+      "evidence": "card Amendments"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  },
  "v2_history": [
   {

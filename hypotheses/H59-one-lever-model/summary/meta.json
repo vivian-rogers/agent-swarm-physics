@@ -29,7 +29,7 @@
   "scope": "G51, G38, G04 (replication); natives G05, NE43, NE38",
   "direction": "negative",
   "original_verdict": "failed (one lever)",
-  "credence": 0.63,
+  "credence": 0.59,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -63,13 +63,50 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 2.0,
   "decision": "model each input class separately beyond the read-out call; one read = one kick",
   "magnitude": "small",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.25,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H59 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.18,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.63,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 2 (blind, 2026-10-04)",
+    "claim": "Scope: G51, G38, G04 plus natives. One (field, catalyst, delay) triple per input class does not predict a held-out class (LOCO skill 0.47/0.72 of class-specific in G51; G38, G04 fail); classes share only the response at the read-out call (0-2 calls) and differ in their tails.",
+    "credence": 0.55,
+    "value_if_true": 2.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "identified: synthetic one-lever world passes at G51 counts (test has power there)",
+      "x": 1.5,
+      "evidence": "summary hobsb"
+     },
+     {
+      "factor": "partial replication: 3 periods, all fail",
+      "x": 1.5,
+      "evidence": "summary hresults P1, P6"
+     },
+     {
+      "factor": "penalty: nudge tail may be nudger targeting (selection), not a lever difference",
+      "x": 0.8,
+      "evidence": "summary hcaveats"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

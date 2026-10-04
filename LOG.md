@@ -7,6 +7,14 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **H77 and H78 (replicators), round 1: both fail as posed; the metrics are not identifiable from commit logs.** H77: σ* stays inside the neutral-copying band on real schedules in 6/6 testable periods; it moves 2–3.7 nats with the host-expiry convention; the selection-resolution bound is untestable (kickoff-named winners have zero non-field recruitment). H78: first-order copying plus fitness spread reproduces every p̂ (#51 1.94); herding sits on kickoff-named repos (field-made arrivals 76–100%). Mathis-style step away from the kickoff field: 2/6 periods beyond an AR(1) null. New shared modules: `infra/shared/replicator_{hosts,fit,sim}.py`. v2 credence H77 0.43, H78 0.53.
+- **Physics models 12–15 added** (information dynamics; cultural evolution and conventions; scaling and fluctuations; stochastic thermodynamics and selection) with index rows. The matrix shows them as columns; 30 suggested role entries were added to `meta.json` `models` with outcome "untested" or "n/a".
+- **Blind v2 raters covered H01–H59.** Agreement with the coordinator over 58: mean |Δp| 0.13, Spearman 0.62 on p and 0.71 on EU. Eleven hypotheses cross the adjudication thresholds, mostly because the raters scored different claims; an adjudicator agent is resolving them. Credence and V are now log-odds and arithmetic means over all raters.
+- **Dashboard:**
+  - "HHs to vet" panel (`hypotheses/hypohypotheses/vetting.json`): Vivian clicks ✓/✕/⏸; clicks go to `vetting_decisions.jsonl`, which the coordinator watches.
+  - Phase-diagram tab with 8 presets.
+  - Model cards in the drawer.
+  - The physics-model matrix is the default view on every load.
 - **Standards pass done for all 59 cards.** Each card has a "Standards (2026-10-04)" section: question served, impostor table, inputs, two layers and confirm status. The most common open impostors are convergence (19 cards) and shared priors (13); the exogenous field is partly handled almost everywhere. These are now listed in `STANDARDS.md` §1. Period role tags normalized: 649 replication folders (H01–H39), and named natives tagged `native`. Holdout items 17–18: nine more confirm scripts need re-freezing (H31, H33, H43, H47, H49, then H06, H13, H16, H24, H27), handled by re-freeze batches C and D. Stale holdout notes in H10 and H21 corrected.
 - **Scaled out to the 20-agent cap (Vivian: "run even more agents"; rate limits not a concern).** In addition to H60–H80 round 1, the dashboard upgrade and the two card standards passes, six agents now run:
   - two prepare re-frozen confirm scripts (`analysis/confirm_r1b.py` + `CONFIRM_R1B.md` beside the untouched originals, dry-run on non-holdout stand-ins only; nothing runs on the holdout without Vivian);
