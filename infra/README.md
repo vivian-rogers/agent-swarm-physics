@@ -313,6 +313,9 @@ Two builders and two libraries are now shared, and `semantic_kappa` is extended.
 
 ## Known issues
 
+- **In one-room regime I, the ledger's posted-but-unread partition is empty** (4 of 271 agent-blocks; H81 r2): read vs posted-but-unread contrasts need rooms or matched-lag in-flight designs.
+- **Regime-I old-artifact traffic is too sparse to carry week-scale content** (188 chat mentions in 9 months; H81 r2).
+- **Calendar, documented-hours and goal-count clocks are not identifiable for regime-I block profiles** (synthetic accuracy ≤ 0.64–0.82; H81 r2). Ratio-type mediation statistics with a near-zero denominator are unstable.
 - **Cosine decay times on unit statement vectors depend on the decaying component's amplitude** (H96): τ biased to ≈ 0.35× the planted value, and an order-vs-timescale correlation rejects in 35–57% of null worlds. Use ratio estimators (ln old/new projection). Bears on H20, H36, H48 and H54's τ_K. (Same family as H97's normalization issue.)
 - **Two-time pair regressions with additive slot effects and coarse lag bins fake night steps** (H103: β_N −0.07 to −0.14 under null truths). Use slot-pair fixed effects and 0.5-h lag bins.
 - **Old-state / previous-centroid builder is duplicated** (H96 `h96lib.projections`, H103 `o2`; H82 specifies the same). Candidate for `infra/shared/` with an active-hour clock helper.
