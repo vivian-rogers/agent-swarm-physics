@@ -1,6 +1,7 @@
 # H36 × G25: Create a digital museum of 2025 (2025-12-29 → 2026-01-05)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 10 at start · 5 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys 0.61.
 
 Data: `data/processed/H36-reorganization-alarm/G25/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 1.00 / 0.58 / 1.17 | 1.01 / 1.04 / 1.86 | 1.07 / 0.74 / 1.99 |
+| Z_act | 0.12 / -0.36 / 0.99 | 0.08 / 0.21 / 2.23 | 0.08 / 0.21 / 2.23 |
+| Z_cont | 2.34 / 2.00 / 1.51 | 2.37 / 2.30 / 1.44 | 2.43 / 1.61 / 1.78 |
+| R1 | 3.48 / 3.16 / 0.24 | 4.12 / 3.20 / 0.23 | 4.14 / 2.89 / 0.27 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

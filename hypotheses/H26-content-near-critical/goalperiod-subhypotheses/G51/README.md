@@ -1,6 +1,7 @@
 # H26 × G51: Private roles, one big room (#51a–e) (2026-07-06 → 2026-09-07 (non-holdout; tail held out))
 
 **Verdict:** mixed: one big room: activity 0.92 to 0.95 far above content 0.25 to 0.65 (L2 upper bounds); #focus content 0.54 (N2 p 0.18)
+**Verdict (1b):** unchanged (51c mixed; single-room sub-units descriptive)
 **Role:** exploratory
 **Period:** regime III · mode P (I/K) · 21 agents · one room (#general), plus the #focus room in 51c · 45 days. H01 units used: 51a, 51b, 51c, 51d, 51e.
 
@@ -33,3 +34,33 @@ Values are loop gains g = 1 − 1/VR (clipped at −1), deduped content, outage 
 ## Notes
 - 2026-10-04: prediction written before the H26 estimators touched this period.
 - 2026-10-04: results filled from `analysis/summarize.py` (joint bootstrap) and `analysis/explore.py`.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Fixed activity table (DQ8), DQ5 restatement dedupe, shared goal fields, both embedding models (card: Round 1b). Gains g = 1 − 1/VR; two-room units L3 room excess, one-room units L2 (upper bound).
+
+| unit | run | content day | activity day | talk day | content w30 | activity w30 | talk w30 | Δg_ca w30 | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 51c | round 1 | 0.54 | < −1 | 0.67 | 0.42 | < −1 | 0.27 | 1.42 | mixed |
+| 51c | 1b bge | 0.50 | < −1 | 0.28 | 0.40 | -0.09 | 0.72 | 0.49 | mixed |
+| 51c | 1b gte | 0.14 | < −1 | 0.28 | 0.45 | -0.09 | 0.72 | 0.54 | mixed |
+| 51c | 1b bge, trimmed activity | 0.50 | < −1 | 0.01 | 0.40 | 0.24 | 0.70 | 0.16 | mixed |
+| 51a | round 1 | 0.65 | 0.92 | 0.95 | 0.61 | 0.78 | 0.82 | -0.16 | descriptive |
+| 51a | 1b bge | 0.65 | 0.86 | 0.93 | 0.61 | 0.72 | 0.76 | -0.10 | descriptive |
+| 51a | 1b gte | 0.65 | 0.86 | 0.93 | 0.62 | 0.72 | 0.76 | -0.10 | descriptive |
+| 51a | 1b bge, trimmed activity | 0.65 | 0.90 | 0.95 | 0.61 | 0.49 | 0.79 | 0.12 | descriptive |
+| 51b | round 1 | 0.53 | 0.93 | 0.93 | 0.53 | 0.90 | 0.90 | -0.36 | descriptive |
+| 51b | 1b bge | 0.53 | 0.72 | 0.58 | 0.53 | 0.73 | 0.74 | -0.19 | descriptive |
+| 51b | 1b gte | 0.53 | 0.72 | 0.58 | 0.59 | 0.73 | 0.74 | -0.14 | descriptive |
+| 51b | 1b bge, trimmed activity | 0.53 | 0.76 | 0.59 | 0.53 | 0.67 | 0.71 | -0.13 | descriptive |
+| 51d | round 1 | 0.46 | 0.95 | 0.95 | 0.40 | 0.93 | 0.93 | -0.52 | descriptive |
+| 51d | 1b bge | 0.44 | 0.13 | < −1 | 0.40 | 0.68 | 0.75 | -0.28 | descriptive |
+| 51d | 1b gte | 0.32 | 0.13 | < −1 | 0.40 | 0.68 | 0.75 | -0.28 | descriptive |
+| 51d | 1b bge, trimmed activity | 0.44 | 0.08 | 0.35 | 0.40 | 0.53 | 0.70 | -0.12 | descriptive |
+| 51e | round 1 | 0.25 | < −1 | 0.93 | 0.61 | 0.62 | 0.90 | -0.01 | descriptive |
+| 51e | 1b bge | 0.25 | 0.81 | 0.83 | 0.61 | 0.69 | 0.89 | -0.08 | descriptive |
+| 51e | 1b gte | 0.10 | 0.81 | 0.83 | 0.64 | 0.69 | 0.89 | -0.05 | descriptive |
+| 51e | 1b bge, trimmed activity | 0.25 | – | – | 0.61 | 0.28 | 0.95 | 0.34 | descriptive |
+
+Data: `data/processed/H26-content-near-critical/r1b/<run>/G51/`.
+<!-- /R1B -->

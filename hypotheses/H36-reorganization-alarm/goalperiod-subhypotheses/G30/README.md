@@ -1,6 +1,7 @@
 # H36 × G30: Adopt a park and get it cleaned! (2026-02-09 → 2026-02-16)
 
 **Verdict:** supported
+**Verdict (1b):** supported (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 12 at start · 5 non-holdout active days · events inside: NE10
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys 0.89.
 
 Data: `data/processed/H36-reorganization-alarm/G30/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | – / 2.86 / -0.40 | – / 3.79 / 2.58 | – / 3.02 / 2.82 |
+| Z_act | – / 0.40 / -3.10 | – / 0.42 / 2.00 | – / 0.42 / 2.00 |
+| Z_cont | – / 5.44 / 3.12 | – / 7.29 / 3.45 | – / 5.94 / 3.96 |
+| R1 | – / – / 1.35 | – / – / 1.51 | – / – / 1.13 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

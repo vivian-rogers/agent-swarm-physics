@@ -1,6 +1,7 @@
 # H26 × G42: Individual tasks (contagion candidate) (2026-05-18 → 2026-05-25)
 
 **Verdict:** failed: content co-fluctuation is global (within-room 0.14, cross-room 0.12): L3 0.13; activity excess higher
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents · two rooms · 5 days. H01 units used: 42.
 
@@ -29,3 +30,17 @@ Values are loop gains g = 1 − 1/VR (clipped at −1), deduped content, outage 
 ## Notes
 - 2026-10-04: prediction written before the H26 estimators touched this period.
 - 2026-10-04: results filled from `analysis/summarize.py` (joint bootstrap) and `analysis/explore.py`.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Fixed activity table (DQ8), DQ5 restatement dedupe, shared goal fields, both embedding models (card: Round 1b). Gains g = 1 − 1/VR; two-room units L3 room excess, one-room units L2 (upper bound).
+
+| unit | run | content day | activity day | talk day | content w30 | activity w30 | talk w30 | Δg_ca w30 | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 42 | round 1 | 0.13 | 0.53 | -0.48 | 0.28 | 0.60 | < −1 | -0.32 | failed |
+| 42 | 1b bge | 0.13 | 0.47 | -0.18 | 0.28 | 0.12 | -0.58 | 0.16 | failed |
+| 42 | 1b gte | 0.27 | 0.47 | -0.18 | 0.36 | 0.12 | -0.58 | 0.24 | failed |
+| 42 | 1b bge, trimmed activity | 0.13 | 0.59 | 0.73 | 0.28 | -0.18 | < −1 | 0.46 | failed |
+
+Data: `data/processed/H26-content-near-critical/r1b/<run>/G42/`.
+<!-- /R1B -->

@@ -1,6 +1,7 @@
 # H01 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 04-27)
 
 **Verdict:** mixed (round 2: continuity, partial agency; round 1: mixed)
+**Verdict (1b):** mixed (unchanged; corrected room fields move within−cross by < 0.03)
 **Role:** exploratory
 **Period:** regime III · mode C · 12–14 agents · #best/#rest with different instructions (charity overrides vs. free) · 17 days, split at NE17 (04-14) and NE18 (04-20) into 38a/38b/38c.
 
@@ -30,3 +31,31 @@ Units: 38a, 38b, 38c. Data: `data/processed/H01-emergent-superagents-exist/G38/r
 
 ## Round 2 (2026-10-04)
 Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **mixed**: continuity, partial agency.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round-1 statistics re-run on the corrected inputs (card: Round 1b): shared goal vectors, restatements removed (each model's own DQ5 flag, chat only), bge-small and gte-modernbert, and DQ5's style-residualized vectors (identity claims).
+
+| unit | statistic | round 1 | 1b bge | 1b gte | 1b bge style-resid | 1b gte style-resid |
+| --- | --- | --- | --- | --- | --- | --- |
+| 38a | P1 room ΔH (median) | -0.336 | -0.336 | -0.355 | -0.199 | -0.171 |
+| 38a | P5 field R² | 0.35 | 0.36 | 0.45 | 0.17 | 0.24 |
+| 38a | P6 exposure slope | +0.091 ± 0.067 | +0.091 ± 0.069 | +0.097 ± 0.052 | +0.085 ± 0.060 | +0.087 ± 0.048 |
+| 38a | P6 within − cross | 0.329 | 0.313 | 0.403 | 0.281 | 0.329 |
+| 38a | within − cross, room fields removed | 0.332 | 0.319 | 0.402 | 0.285 | 0.326 |
+| 38a | P9 βJ₀/n (upper bound) | 0.74 | 0.75 | 0.73 | – | – |
+| 38b | P1 room ΔH (median) | -0.382 | -0.374 | -0.356 | -0.167 | -0.137 |
+| 38b | P5 field R² | 0.96 | 0.95 | 0.97 | 0.69 | 0.87 |
+| 38b | P6 exposure slope | -0.056 ± 0.060 | -0.035 ± 0.057 | +0.091 ± 0.065 | -0.051 ± 0.056 | +0.085 ± 0.068 |
+| 38b | P6 within − cross | 0.076 | 0.138 | 0.114 | 0.080 | 0.044 |
+| 38b | within − cross, room fields removed | 0.091 | 0.157 | 0.117 | 0.095 | 0.049 |
+| 38b | P9 βJ₀/n (upper bound) | 0.55 | 0.55 | 0.60 | – | – |
+| 38c | P1 room ΔH (median) | -0.376 | -0.360 | -0.416 | -0.161 | -0.138 |
+| 38c | P5 field R² | 0.92 | 0.92 | 0.93 | 0.63 | 0.63 |
+| 38c | P6 exposure slope | +0.007 ± 0.038 | -0.009 ± 0.041 | -0.080 ± 0.045 | +0.005 ± 0.044 | -0.036 ± 0.033 |
+| 38c | P6 within − cross | 0.118 | 0.126 | 0.234 | 0.079 | 0.124 |
+| 38c | within − cross, room fields removed | 0.102 | 0.105 | 0.227 | 0.072 | 0.122 |
+| 38c | P9 βJ₀/n (upper bound) | 0.48 | 0.49 | 0.57 | – | – |
+
+Style-residualized runs report P1/P2/P5–P7 only (goal fields are not defined in that space). Data: `data/processed/H01-emergent-superagents-exist/r1b/<instrument>/explore.json`, `r1b/compare.json`.
+<!-- /R1B -->

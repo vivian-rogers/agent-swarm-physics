@@ -25,7 +25,7 @@ import numpy as np  # noqa: E402
 import polars as pl  # noqa: E402
 
 ROOT = HERE.parents[2]
-D = ROOT / "data/processed/H26-content-near-critical"
+D = EX.D   # round 1b: --r1b TAG (see explore.py)
 B = 400
 REG3_TWO = ["36b", "37", "38a", "38b", "38c", "39", "41", "42", "44", "51c"]
 EXTRA_TWO = ["35"]

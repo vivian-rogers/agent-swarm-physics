@@ -1,6 +1,6 @@
 # H01: Emergent superagents exist
 
-**Status:** running. **Round 2 (2026-10-04, non-holdout only): no effective superagents found.** Candidate multi-agent units (artifact crews, behavior-synchrony, co-allocation and reply communities; rooms and labs as baselines) are not individuality maxima, carry no measurable Kolchinsky–Wolpert semantic information about their activity environment, show no group-level repair, and are out-persisted by single agents with their own artifacts; their work allocation survives nightly context erasure and memory loss (stigmergic, artifact-held) and their rate is set by the operator's goal. Timing-individuality tests had ≤ 7% validated power, so R4's null is weak. Confirmatory `analysis/confirm_r2.py` (NE30, NE24, holdout units) written and dry-run, **not run**. Round 1 (D3.1.a/D3.2) below, with a 2026-10-04 correction (#38 room kickoffs) and H26's note on P9. Level: hypothesis. (Proposed 2026-10-03 by Vivian Rogers.)
+**Status:** running. **Round 2 (2026-10-04, non-holdout only): no effective superagents found.** Candidate multi-agent units (artifact crews, behavior-synchrony, co-allocation and reply communities; rooms and labs as baselines) are not individuality maxima, carry no measurable Kolchinsky–Wolpert semantic information about their activity environment, show no group-level repair, and are out-persisted by single agents with their own artifacts; their work allocation survives nightly context erasure and memory loss (stigmergic, artifact-held) and their rate is set by the operator's goal. Timing-individuality tests had ≤ 7% validated power, so R4's null is weak. Confirmatory `analysis/confirm_r2.py` (NE30, NE24, holdout units) written and dry-run, **not run**. Round 1 (D3.1.a/D3.2) below, with a 2026-10-04 correction (#38 room kickoffs), H26's note on P9 and a **round 1b re-run on improved data (2026-10-04)**: room order replicates in both embedding models and survives style removal, lab order is style (P2 now supported), the coupling residual is stable but its p < 0.01 criterion instrument-dependent, the merge DiD is partly style; natives: NE42 A-B-A supports channel-borne room order, #12 drafted teams are not units. Level: hypothesis. (Proposed 2026-10-03 by Vivian Rogers.)
 **Fields:** info theory, stat mech, thermodynamics, sociophysics
 **Literature:** [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md); [Sowinski et al. 2023](../../literature/sowinski-2023-semantic-information-resource-gathering-agents.md); [Bartlett et al. 2025](../../literature/bartlett-2025-physics-of-life-information-roadmap.md); [arXiv:2608.16578](../../literature/arxiv-2608.16578-physics-of-agents.md) (not yet read). Further reading: [architecture.md](architecture.md#reading-list-from-the-transcript-citations-to-verify).
 **Definitions used:** *superagent*, *ideology*, *semantic information*, *semantic entropy (meaning clusters)*: drafts in `physics-models/DEFINITIONS.md`. Round 2 also uses *semantic information (natural-scramble variant)* (H15) and proposes the named variants *superagent (effective, Kolchinsky–Wolpert)*, *unit macro-state (work ledger)* and *allocation continuity (ΔC)*, defined in "Round 2 formal setup". They are not yet in DEFINITIONS.md; the text is in the round-2 report.
@@ -286,10 +286,86 @@ P1's direction survives every variant; its size criterion is met only at k = 80 
 | [G42](goalperiod-subhypotheses/G42/README.md) | 42 | mixed | field-dominated: goal-only R² 0.54, little room effect |
 | [G44](goalperiod-subhypotheses/G44/README.md) | 44 | mixed | rooms ordered (−0.11) and within +0.24, but per-room goal override |
 | [G51](goalperiod-subhypotheses/G51/README.md) | 51a–e | mixed | small positive slopes in the big single room; #focus ordered (−0.07) |
+| [G12](goalperiod-subhypotheses/G12/README.md) | 12a | failed (native, 1b) | drafted debate teams are not content units beyond a re-partition null (both models) |
+| [NE42](goalperiod-subhypotheses/NE42/README.md) | 39, 40, 41 | supported (native, 1b) | the #39 partition loses its order in the merged week and regains it at the split (both models) |
 | [NE32](goalperiod-subhypotheses/NE32/README.md) | 51b | n/a | triplet wrote nothing while isolated |
 | [NE15](goalperiod-subhypotheses/NE15/README.md) | holdout | pending | confirmatory test (not run) |
 
 P9 for the remaining 26 non-holdout units (regime I and #33) is in `figures/p9_meanfield.pdf` and `data/processed/H01-emergent-superagents-exist/G##/results.json`; those periods have no period-specific prediction beyond P9 and get no folder.
+
+### Round 1b (improved data, 2026-10-04): D3.1.a / D3.2 re-run
+*A re-evaluation of round 1 only. Round 2 (below) used no embeddings and is untouched. P1–P9 and the verdict rules are unchanged. The two native tests (G12, NE42) had their predictions written in their folders at 07:45 UTC, before they were run.*
+
+**What changed.**
+- **Goal fields:** the shared goal table (`embeddings/goals.parquet` + `goal_vectors[_gte_modernbert].npy`).
+  - Per-room kickoffs agree with H01's own vectors at cos ≥ 0.9999 in every unit except #38, where the two room rows were swapped (cos 0.861 = the two rooms' mutual similarity; 30° per room field).
+  - **H01's ĝ moves by < 0.02° in every unit.** The 15–56° kickoff-span differences reported by H32 are not differences in these raw vectors. They must come from a different span or whitening construction (flagged for `infra/README.md`).
+- **Two embedding models:** bge-small and gte-modernbert (DQ5), each with H01's own per-regime whitening and k = 40 rulers. The bge path reproduces round 1 bit for bit.
+- **Restatements removed:** chat statements carrying the model's own DQ5 self-repeat flag (bge 15,842 / gte 15,677 of 128k chat). A copies-only variant uses `self_repeat_both` (12,596).
+- **Style-residualized variant:** `style_resid_period` statement vectors, for the identity claims (P2 labs; P1 rooms vs style).
+- **Ledger exposure variant for P6:** messages that entered a call's context, from the DQ1 context ledger.
+- **Code and outputs:** `scheme/build_r1b.py`; `analysis/explore.py --r1b TAG` (the old path is unchanged); `analysis/r1b_compare.py`, `r1b_native.py`, `r1b_period_folders.py`, `r1b_estimates.py`. Outputs in `data/processed/H01-emergent-superagents-exist/r1b/<instrument>/`; side by side in `r1b/compare.json`.
+
+**Old vs new (round-1 primary statistics; 1b = shared goals + restatements removed).**
+
+| Statistic (criterion) | Round 1 | 1b bge | 1b gte | bge style-resid | gte style-resid |
+| --- | --- | --- | --- | --- | --- |
+| P1 rooms vs random: median ΔH (≤ −0.1) · days < 0 · units meeting both | −0.098 · 96% · 5/9 | −0.099 · 96% · 5/9 | **−0.136 · 100% · 6/9** | −0.063 · 93% · 3/9 | −0.092 · 93% · 6/9 |
+| P2 labs: median ΔH · lab shrink (≥ 0.5) · room shrink (< 0.5) | −0.073 · 0.13 · 0.33 | −0.064 · 0.18 · 0.23 | −0.106 · **0.65** · 0.38 | **−0.022** · – · – | **−0.026** · – · – |
+| P3 room JSD below null q05 (≥ 60%) · goal-change jump (across vs within) | 14% · 0.62 vs 0.37 | 14% · 0.62 vs 0.37 | 15% · 0.66 vs 0.35 | 12% · 0.64 vs 0.38 | 12% · 0.67 vs 0.34 |
+| P4 #8 vs #21 polarization along ĝ | 0.267 vs 0.268 | 0.267 vs 0.303 | 0.311 vs 0.315 | – | – |
+| P5 units with R² ≥ 0.6 · median R² (rotation null) | 12/16 · 0.76 (0.75) | 12/16 · 0.76 (0.74) | 13/16 · 0.77 (0.80) | 11/16 · 0.65 (0.69) | 10/16 · 0.69 (0.74) |
+| P6 RE exposure slope ± SE (p; p < 0.01 needed) · units > 0 | +0.013 ± 0.006 (0.019) · 12/15 | **+0.013 ± 0.004 (0.003)** · 11/15 | +0.015 ± 0.007 (0.038) · 12/15 | +0.010 (0.024) | +0.007 (0.20) |
+| P6 rotation / day-shuffle null p · I² | 0.005 / 0.025 · 0.32 | 0.005 / 0.010 · 0.15 | 0.005 / 0.005 · 0.53 | 0.005 / 0.045 | 0.010 / 0.040 |
+| P6 within − cross > 0 (two-room units) · agent-perm p < 0.05 | 12/12 · 8 | 12/12 · 8 | 12/12 · 7 | 11/12 · 7 | 10/12 · 7 |
+| P7 merge DiD (perm p) | +0.18 (0.004) | +0.17 (0.002) | +0.10 (0.030) | **+0.06 (0.09)** | **+0.01 (0.44)** |
+| P9 median βJ₀/n (≥ 0.5 in) | 0.74 (34/41) | 0.75 (35/41) | 0.76 (38/41) | – | – |
+
+Further variants:
+- **Goal vectors only** (bge, no dedupe): identical to round 1 except the #38 room-field variant of within − cross. Corrected: 38a +0.319, 38b +0.157, 38c +0.106 (bge restate) against the swapped +0.332 / +0.091 / +0.102. Removing room fields still moves the excess by < 0.03.
+- **Copies-only dedupe:** P6 p 0.011 (bge) / 0.030 (gte).
+- **Ledger exposure:** P6 +0.011, p 0.014; P7 +0.17.
+- Per-unit values are in the G folders.
+
+**Which verdicts change.**
+- **P1, "not met" → model-dependent.** gte meets both criteria (−0.136, 6/9 units). bge stays 0.002 short. The direction is unanimous.
+  - Statement-level clusters are model-dependent (DQ5: 10-NN overlap 0.26), so neither model is privileged.
+  - After style residualization room order shrinks (−0.06 / −0.09) but stays negative on 93% of days.
+- **P2 (lab order is style), failed → supported in substance.**
+  - With gte, removing the first-day agent field shrinks lab order by 65% and room order by 38%: the criterion is met.
+  - In both models, DQ5's period-wise style residualization removes most of the lab (family) order (median −0.022 / −0.026 vs −0.064 / −0.106), while rooms keep most of theirs.
+  - Agrees with H13 and DQ5: family "order" in content is writing style.
+- **P6, not met → met in one instrument only.** bge with restatements removed gives p 0.003; P6's three criteria (slope, both directions, room) pass. It is not met with gte (p 0.038), copies-only (0.011) or style-residualized vectors (0.02 / 0.20).
+  - The coupling residual is a stable +0.01 to +0.015 residual cosine per e-fold of exposure in every instrument, beating rotation and day-shuffle nulls everywhere.
+  - Its p < 0.01 criterion is instrument-sensitive: **not robust**.
+- **P7 (merge DiD) weakens with gte (+0.10, p 0.03) and disappears after style residualization (+0.01 to +0.06).**
+  - Part of the round-1 merge effect is agents' writing style converging when rooms merge.
+  - Caveat: the residualization is fit per goal period, so #39 and #40 are residualized separately.
+- **P3, P4, P5, P9 unchanged.** P9 stays an uninformative upper bound (H26).
+
+**Native tests (Role: native).**
+
+| Test | Prediction | Outcome (bge / gte) | Verdict (1b) |
+| --- | --- | --- | --- |
+| [G12](goalperiod-subhypotheses/G12/README.md): #12 drafted teams as known units (10 debates, re-drafted sides) | team excess T > 0 at p < 0.05 in ≥ 3/4 instruments [0.5]; ≥ 6/10 debates > 0 (style bge) [0.55] | T = +0.043 / +0.027 (p 0.13 / 0.16); style-resid +0.037 / +0.023 (p 0.07 / 0.10); 5–7/10 debates > 0 | failed: no team unit beyond the re-partition null |
+| [NE42](goalperiod-subhypotheses/NE42/README.md): #39 partition across merge and split | the old partition loses order in #40 and regains it in #41 (ΔH [0.65], within − cross [0.6]) | ΔH −0.036 → +0.010 → −0.205 / −0.078 → −0.019 → −0.266; within − cross +0.11 → −0.03 → +0.22 / +0.08 → −0.05 → +0.25 (perm p 0.01 → 0.7 → 0.0005) | supported (both models; goal-confounded; not blind, H47 seen) |
+
+**Scorecard (round-1 mapping) after 1b.**
+- A 1: two models, style-residualized; agent field still unstable.
+- B 1, C 1, D 1.
+- E 1, strengthened: NE42's A-B-A passes in both models, but it is goal-confounded and not blind.
+- F 1: P1 direction, P6 sign and P9 are robust; P1 size, P2, P6's p and P7 are instrument-dependent.
+- G 1: rooms recovered; known #12 teams not.
+- H 0, I 1.
+
+**Reading.**
+- Rooms are content units in both models and after style removal, and the NE42 A-B-A shows that room order follows the channel.
+- Labs are not units: their order is style.
+- Drafted teams inside one room are not units.
+- The coupling residual is small, consistent and only marginally significant.
+
+This supports round 2's conclusion that grouping adds no detectable agency beyond the room channel, with the room as the only grouping that orders content.
+
 
 ## Notes
 - **From H32 (2026-10-04):** H01's kickoff field spans differ from the shared `goal_fields` spans by 15–56° (principal angle) in #36, #37, #39, #40 and #42, beyond the #38 swap. Recheck the round-1 room-field results on the shared vectors in the re-evaluation.

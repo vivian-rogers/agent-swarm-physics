@@ -85,7 +85,7 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | Agent | Hypotheses | Status |
 | --- | --- | --- |
 | RE-A1 | H38, H12, H25 | **done** (2026-10-04) |
-| RE-C3 | H01 (round 1), H26, H36 | running (2026-10-04): shared goal vectors, both models, fixed bins, trimmed nulls, NE40/NE45 as detection targets |
+| RE-C3 | H01 (round 1), H26, H36| **done** (2026-10-04) |
 | RE-O1 | H15, H33, H35| **done** (2026-10-04) |
 | RE-V2 | H29, H30, H39| **done** (2026-10-04) |
 | RE-A2 | H02, H19, H03 | **done** (2026-10-04) |
@@ -96,13 +96,13 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | RE-C2 | H13, H21, H22| **done** (2026-10-04) |
 | RE-P1 | H11, H31, H27 | **done** (2026-10-04) |
 | RE-D1 | H28, H32, H34 | running (2026-10-04): ledger visibility/exposure, shared project states, convergence-aware copying (H57), both models |
-| next | H06, H07 | queued until RE-C3 finishes |
+| RE-D2 | H06, H07 | running (2026-10-04): copy_info/convergence (H57), work ledger, fixed bins, both models |
 
 ## New hypotheses H59–H74 (promoted 2026-10-04): launch plan
 | Status | Hypotheses |
 | --- | --- |
 | paused (compute) | H60, H61, H62, H63, H64, H65 (and H41, H58) |
-| waits for a running agent | H67 (H42 done; ready), H74 (H36 round 1b) |
+| ready | H67 (H42 done), H74 (H36 round 1b done) |
 | ready (lever table landed 2026-10-04) | H59 |
 | queued (inputs ready) | H66, H68, H69, H70, H71, H72, H73 |
 

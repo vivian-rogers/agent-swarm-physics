@@ -1,6 +1,7 @@
 # H36 × NE18: history search returns verbatim segments (2026-04-20, inside #38)
 
 **Verdict:** failed
+**Verdict (1b):** failed
 **Role:** exploratory (round 1, non-holdout)
 **Period:** inside #38 (2026-04-02 → 04-27)
 
@@ -20,3 +21,18 @@ A memory-access change for searchers; mid-goal, no confound.
 
 **Prediction check:** no alarm, as predicted (Z_phys 0.73 on day 0). As for NE17, the miss is expected.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round 1b tables (bge-small, restatements removed, fixed activity table):
+
+| Event | day 0 | Z_phys −1 / 0 / +1 / +2 / +3 | Z_I d0 | Z_χ d0 | Z_C d0 | Z_act d0 | Z_cont d0 | R1 d0 | alarm |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NE18 (NE18) | 2026-04-20 | -0.33 / 0.36 / -0.80 / 0.74 / 0.25 | 1.12 | -0.53 | 0.48 | 1.32 | -0.67 | -0.70 | no |
+
+gte-modernbert:
+
+| Event | day 0 | Z_phys −1 / 0 / +1 / +2 / +3 | Z_I d0 | Z_χ d0 | Z_C d0 | Z_act d0 | Z_cont d0 | R1 d0 | alarm |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NE18 (NE18) | 2026-04-20 | -0.49 / 0.11 / -1.04 / 0.48 / -0.28 | 0.89 | -1.06 | 0.49 | 1.32 | -1.24 | -0.44 | no |
+<!-- /R1B -->

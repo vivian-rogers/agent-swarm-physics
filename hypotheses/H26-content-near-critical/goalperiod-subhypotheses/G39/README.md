@@ -1,6 +1,7 @@
 # H26 × G39: Individual tasks, pre-merge (2026-04-27 → 2026-05-04)
 
 **Verdict:** mixed: content 0.45; activity room excess negative (cross-room above within), which inflates the gap; talk above content
+**Verdict (1b):** mixed (unchanged)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents · two rooms · 5 days. H01 units used: 39.
 
@@ -29,3 +30,17 @@ Values are loop gains g = 1 − 1/VR (clipped at −1), deduped content, outage 
 ## Notes
 - 2026-10-04: prediction written before the H26 estimators touched this period.
 - 2026-10-04: results filled from `analysis/summarize.py` (joint bootstrap) and `analysis/explore.py`.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Fixed activity table (DQ8), DQ5 restatement dedupe, shared goal fields, both embedding models (card: Round 1b). Gains g = 1 − 1/VR; two-room units L3 room excess, one-room units L2 (upper bound).
+
+| unit | run | content day | activity day | talk day | content w30 | activity w30 | talk w30 | Δg_ca w30 | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 39 | round 1 | 0.45 | < −1 | 0.83 | 0.29 | < −1 | 0.80 | 1.29 | mixed |
+| 39 | 1b bge | 0.45 | < −1 | 0.86 | 0.29 | < −1 | 0.83 | 1.29 | mixed |
+| 39 | 1b gte | 0.41 | < −1 | 0.86 | 0.34 | < −1 | 0.83 | 1.34 | mixed |
+| 39 | 1b bge, trimmed activity | 0.45 | < −1 | 0.86 | 0.29 | < −1 | 0.80 | 1.29 | mixed |
+
+Data: `data/processed/H26-content-near-critical/r1b/<run>/G39/`.
+<!-- /R1B -->

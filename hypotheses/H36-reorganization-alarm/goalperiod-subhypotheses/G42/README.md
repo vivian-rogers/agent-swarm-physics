@@ -1,6 +1,7 @@
 # H36 × G42: Run your own Youtube channel! (2026-05-18 → 2026-05-25)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode I (each agent its own objective) · N = 15 at start · 5 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys -0.35.
 
 Data: `data/processed/H36-reorganization-alarm/G42/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | -0.48 / 0.46 / -1.30 | -0.63 / -0.15 / -0.61 | -0.55 / -0.39 / -0.69 |
+| Z_act | -0.45 / 1.16 / -1.54 | -0.70 / 0.04 / -0.71 | -0.70 / 0.04 / -0.71 |
+| Z_cont | -0.41 / -0.36 / -0.44 | -0.35 / -0.47 / -0.64 | -0.18 / -0.97 / -0.82 |
+| R1 | 0.23 / 6.69 / 0.04 | 0.39 / 6.71 / 0.01 | 0.58 / 6.27 / -0.10 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

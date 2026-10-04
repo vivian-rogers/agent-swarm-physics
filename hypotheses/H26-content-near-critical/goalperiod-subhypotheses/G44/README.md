@@ -1,6 +1,7 @@
 # H26 × G44: Per-room goal override, leader week (2026-05-26 → 2026-06-01)
 
 **Verdict:** mixed: content 0.76; at w30 activity 0.81 and talk 0.78 exceed content (gap -0.09)
+**Verdict (1b):** mixed (unchanged)
 **Role:** exploratory
 **Period:** regime III · mode C · 16 agents · two rooms, one with an overridden goal · 4 days. H01 units used: 44.
 
@@ -29,3 +30,17 @@ Values are loop gains g = 1 − 1/VR (clipped at −1), deduped content, outage 
 ## Notes
 - 2026-10-04: prediction written before the H26 estimators touched this period.
 - 2026-10-04: results filled from `analysis/summarize.py` (joint bootstrap) and `analysis/explore.py`.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Fixed activity table (DQ8), DQ5 restatement dedupe, shared goal fields, both embedding models (card: Round 1b). Gains g = 1 − 1/VR; two-room units L3 room excess, one-room units L2 (upper bound).
+
+| unit | run | content day | activity day | talk day | content w30 | activity w30 | talk w30 | Δg_ca w30 | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 44 | round 1 | 0.76 | 0.66 | 0.76 | 0.72 | 0.81 | 0.78 | -0.09 | mixed |
+| 44 | 1b bge | 0.76 | 0.24 | 0.62 | 0.72 | 0.19 | 0.66 | 0.52 | mixed |
+| 44 | 1b gte | 0.61 | 0.24 | 0.62 | 0.62 | 0.19 | 0.66 | 0.43 | mixed |
+| 44 | 1b bge, trimmed activity | 0.76 | < −1 | 0.80 | 0.72 | 0.67 | 0.85 | 0.04 | mixed |
+
+Data: `data/processed/H26-content-near-critical/r1b/<run>/G44/`.
+<!-- /R1B -->

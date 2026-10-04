@@ -1,6 +1,7 @@
 # H36 × G19: Create a popular daily puzzle game like Wordle (2025-11-03 → 2025-11-17)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 7 at start · 10 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 10 of 10; mean Z_phys 0.06.
 
 Data: `data/processed/H36-reorganization-alarm/G19/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 0.17 / -0.10 / 0.68 | 0.12 / -0.11 / 0.34 | 0.09 / -0.00 / 0.35 |
+| Z_act | 0.24 / -0.79 / 0.56 | 0.22 / -0.79 / -0.02 | 0.22 / -0.79 / -0.02 |
+| Z_cont | 0.09 / 0.90 / 0.91 | 0.18 / 0.80 / 1.05 | 0.11 / 1.06 / 1.08 |
+| R1 | -0.33 / 0.56 / -0.08 | -0.12 / 0.87 / 0.68 | 0.33 / 1.01 / 0.38 |
+
+Placebo days: 4 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

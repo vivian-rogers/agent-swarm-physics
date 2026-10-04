@@ -18,6 +18,18 @@ Outputs
   _provenance.json
 
 Usage: uv run python hypotheses/H26-content-near-critical/scheme/build.py
+
+Round 1b (improved data, 2026-10-04): switches that keep the round-1 path (no flags) unchanged:
+  --r1b TAG            write to data/processed/H26-content-near-critical/r1b/<TAG>/
+  --h01 H01TAG         read statements, whitened vectors, bases and goal fields from H01's round-1b scheme folder
+                       r1b/<H01TAG>/ (scheme/build_r1b.py; use a *_none folder so that every statement is present):
+                       shared goal vectors (fixes the #38 kickoff swap and span differences), bge or gte vectors
+  --model bge_small | gte_modernbert   raw embeddings for the exogenous message directions (must match H01TAG)
+  --dedupe restate | copies | h26      dup flag: restate = DQ5's own-model self-repeat flag (bge self_repeat, gte
+                       self_repeat_gte), copies = self_repeat_both, h26 = round 1's own rule; chat only, as in round 1
+  --data-version fixed activity from activity_bins_fixed (DQ8 event-drop fix); the outage proxy is recomputed on it
+  --trim               activity minutes restricted to each day's all-present window (DQ8: every present agent between
+                       its first and last record) before windows and split halves are formed
 """
 from __future__ import annotations
 
@@ -51,7 +63,26 @@ SEED = 20261004
 NSPLIT = 3
 
 
+def args():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--r1b", default=None)
+    ap.add_argument("--h01", default=None)
+    ap.add_argument("--model", default="bge_small", choices=["bge_small", "gte_modernbert"])
+    ap.add_argument("--dedupe", default="h26", choices=["h26", "restate", "copies"])
+    ap.add_argument("--data-version", default="old", choices=["old", "fixed"])
+    ap.add_argument("--trim", action="store_true")
+    return ap.parse_args()
+
+
 def main():
+    global OUT, H01
+    a = args()
+    if a.r1b:
+        OUT = OUT / "r1b" / a.r1b
+    if a.h01:
+        H01 = H01 / "r1b" / a.h01
+    EMBF = {"bge_small": "chat_bge_small.npy", "gte_modernbert": "chat_gte_modernbert.npy"}[a.model]
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
     units = {u["unit"]: u for u in json.loads((H01 / "units.json").read_text()) if u["unit"] in UNITS}
@@ -75,17 +106,28 @@ def main():
     Z = np.load(H01 / "vectors_w64.npy", mmap_mode="r")
     V = unit(np.asarray(Z[st["h01_row"].to_numpy()][:, :32], dtype=np.float32)).astype(np.float32)
     # self-repeat dedupe (H12 rule): chat statement with raw cosine > 0.95 to an earlier chat statement, same agent-day
-    E = np.load(SH / "embeddings/chat_bge_small.npy", mmap_mode="r")
+    E = np.load(SH / "embeddings" / EMBF, mmap_mode="r")
     st = st.with_row_index("i")
     dup = np.zeros(st.height, bool)
-    ch = st.filter(pl.col("kind") == 0).sort("t")
-    for (_a, _d), g in ch.group_by(["agent", "pt_date"]):
-        if g.height < 2:
-            continue
-        g = g.sort("t")
-        X = np.asarray(E[g["emb_row"].to_numpy()], dtype=np.float32)
-        S = np.tril(X @ X.T, -1)
-        dup[g["i"].to_numpy()[S.max(1) > 0.95]] = True
+    if a.dedupe == "h26":
+        Eb = np.load(SH / "embeddings/chat_bge_small.npy", mmap_mode="r")
+        ch = st.filter(pl.col("kind") == 0).sort("t")
+        for (_a, _d), g in ch.group_by(["agent", "pt_date"]):
+            if g.height < 2:
+                continue
+            g = g.sort("t")
+            X = np.asarray(Eb[g["emb_row"].to_numpy()], dtype=np.float32)
+            S = np.tril(X @ X.T, -1)
+            dup[g["i"].to_numpy()[S.max(1) > 0.95]] = True
+    else:   # round 1b: DQ5 statement_flags (chat only, as round 1)
+        col = "self_repeat_both" if a.dedupe == "copies" else {"bge_small": "self_repeat", "gte_modernbert": "self_repeat_gte"}[a.model]
+        ss = (pl.read_parquet(SH / "embeddings/statements.parquet").with_row_index("srow")
+              .with_columns(pl.when(pl.col("kind") == "chat").then(0).otherwise(1).cast(pl.Int8).alias("k")))
+        fl = pl.read_parquet(SH / "statement_flags.parquet", columns=["srow", col])
+        m = (st.select("i", "kind", "emb_row").join(ss.select("srow", "k", "src_row"), left_on=["kind", "emb_row"],
+                                                   right_on=["k", "src_row"], how="left").join(fl, on="srow", how="left").sort("i"))
+        assert m["srow"].null_count() == 0
+        dup = (m[col].fill_null(False).to_numpy() & (m["kind"].to_numpy() == 0))
     st = st.with_columns(pl.Series("dup", dup))
     print(f"statements {st.height} (dup {dup.sum()}, {dup.sum() / max(1, (st['kind'] == 0).sum()):.3f} of chat)", flush=True)
     st.select("h01_row", "unit", "agent", "pt_date", "day", "t", "win30", "n_win", "kind", "n_chars", "dup") \
@@ -93,14 +135,24 @@ def main():
     np.save(OUT / "vec32.npy", V)
 
     # ------------------------------------------------------------------ activity minutes
-    ab = (pl.scan_parquet(SH / "activity_bins.parquet").filter(pl.col("pt_date").is_in(all_days))
-          .select("pt_date", "minute", "agent", "state").collect())
+    abt = "activity_bins_fixed.parquet" if a.data_version == "fixed" else "activity_bins.parquet"
+    ab = (pl.scan_parquet(SH / abt).filter(pl.col("pt_date").is_in(all_days))
+          .select("pt_date", "minute", "agent", "state", pl.col("talk").alias("r_talk"), pl.col("idle").alias("r_idle"),
+                  pl.col("consolidate").alias("r_cons"), pl.col("other_event").alias("r_other"), pl.col("turns").alias("r_turns")).collect())
     ab = ab.join(cal.select("pt_date", "n_win"), on="pt_date").with_columns(
         pl.min_horizontal(pl.col("minute") // 30, pl.col("n_win").cast(pl.Int64) - 1).cast(pl.Int16).alias("win30"),
         (pl.col("state") >= 3).alias("act"), (pl.col("state") == 4).alias("talk"))
     # agents with >= 1 event that day
     present = ab.group_by("pt_date", "agent").agg((pl.col("state") >= 2).any().alias("present")).filter("present")
     ab = ab.join(present.select("pt_date", "agent"), on=["pt_date", "agent"])
+    if a.trim:   # DQ8: keep only minutes inside every present agent's first..last record span (all-present window)
+        rec = (ab.filter((pl.col("r_talk") + pl.col("r_idle") + pl.col("r_cons") + pl.col("r_other") + pl.col("r_turns")) > 0)
+               .group_by("pt_date", "agent").agg(pl.col("minute").min().alias("m0"), pl.col("minute").max().alias("m1")))
+        win = rec.group_by("pt_date").agg(pl.col("m0").max().alias("lo"), pl.col("m1").min().alias("hi"))
+        n0 = ab.height
+        ab = ab.join(win, on="pt_date", how="left").filter((pl.col("minute") >= pl.col("lo")) & (pl.col("minute") <= pl.col("hi"))).drop("lo", "hi")
+        print(f"trim: kept {ab.height / max(n0, 1):.3f} of agent-minutes", flush=True)
+    ab = ab.drop("r_talk", "r_idle", "r_cons", "r_other", "r_turns")
     outage = (ab.group_by("pt_date", "minute").agg(pl.col("act").any().alias("any"), pl.col("win30").first())
               .group_by("pt_date", "win30").agg((1 - pl.col("any").cast(pl.Float32).mean()).alias("idle_share"),
                                                 pl.len().alias("n_min")).sort("pt_date", "win30"))
@@ -142,7 +194,7 @@ def main():
     chat = chat.with_columns(
         ((pl.col("t") - pl.col("win_start")).dt.total_seconds() // 1800).cast(pl.Int16).alias("win30"))
     exo = chat.join(dayidx, on="pt_date", how="inner")
-    bases = {R: load_basis(R) for R in ("II", "III")}
+    bases = {R: {k: v for k, v in np.load(H01 / f"basis_{R}.npz").items()} for R in ("II", "III")}   # = load_basis(R) for round 1
     reg = {u: units[u]["regimes"][-1] for u in units}
     Xe = np.zeros((exo.height, 32), np.float32)
     raw = np.asarray(E[exo["emb_row"].to_numpy()], dtype=np.float32)
@@ -156,7 +208,7 @@ def main():
 
     # ------------------------------------------------------------------ static field directions
     from h01data import Scheme
-    S = Scheme(d=32)
+    S = Scheme(d=32, base=H01)
     static, static_info = {}, {}
     for u, ui in units.items():
         R = reg[u]
@@ -185,12 +237,14 @@ def main():
     np.savez(OUT / "static.npz", **static)
     (OUT / "static_info.json").write_text(json.dumps(static_info, indent=1))
 
+    (OUT / "r1b_config.json").write_text(json.dumps({"h01_base": str(H01.relative_to(ROOT)), **vars(a)}, indent=1))
     prov = {"built_by": "hypotheses/H26-content-near-critical/scheme/build.py", "git_commit": git_commit(),
             "inputs": [{"source": "ai-village", "revision": REVISION,
                         "tables": ["H01 statements + vectors_w64 + basis_* + goals (read-only)", "chat_core",
                                    "embeddings/chat_bge_small", "embeddings/chat_index", "activity_bins",
                                    "rooms_timeline", "calendar"]}],
-            "params": {"units": UNITS, "dedupe": "chat, raw cosine > 0.95 to earlier same agent-day (H12 rule)",
+            "params": {"units": UNITS, "r1b": vars(a),
+                       "dedupe": "chat, raw cosine > 0.95 to earlier same agent-day (H12 rule)" if a.dedupe == "h26" else f"DQ5 statement_flags ({a.dedupe}), chat only",
                        "nsplit_activity": NSPLIT, "seed": SEED, "active": "state >= 3", "talk": "state == 4",
                        "window": "30 min from calendar.win_start, tail stub merged into last window",
                        "holdout": "asserted absent"},

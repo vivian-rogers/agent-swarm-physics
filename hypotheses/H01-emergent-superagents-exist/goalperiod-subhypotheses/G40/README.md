@@ -1,6 +1,7 @@
 # H01 × G40: Connect your worlds into a 3D universe (2026-05-04 → 05-11)
 
 **Verdict:** mixed (round 2: continuity, partial agency; round 1: supported)
+**Verdict (1b):** supported (P7) in both models; DiD gone after style residualization
 **Role:** exploratory
 **Period:** (verdict for P7, this period's specific prediction; P5/P6/P9 as in the table) regime III · mode C · 15 agents · merged into #universe-coordination 05-04, GPT-5 alone in #rest · 5 days.
 
@@ -39,3 +40,19 @@ Cross-fitted-h variant: new-arm DiD +0.102 (permutation p = 0.026).
 
 ## Round 2 (2026-10-04)
 Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **mixed**: continuity, partial agency.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round-1 statistics re-run on the corrected inputs (card: Round 1b): shared goal vectors, restatements removed (each model's own DQ5 flag, chat only), bge-small and gte-modernbert, and DQ5's style-residualized vectors (identity claims).
+
+| unit | statistic | round 1 | 1b bge | 1b gte | 1b bge style-resid | 1b gte style-resid |
+| --- | --- | --- | --- | --- | --- | --- |
+| 40 | P1 room ΔH (median) | – | – | – | – | – |
+| 40 | P5 field R² | 0.77 | 0.77 | 0.68 | 0.77 | 0.83 |
+| 40 | P6 exposure slope | +0.027 ± 0.042 | +0.020 ± 0.041 | +0.040 ± 0.041 | +0.032 ± 0.026 | -0.012 ± 0.032 |
+| 40 | P6 within − cross | 0.128 | 0.141 | 0.270 | 0.082 | 0.145 |
+| 40 | within − cross, room fields removed | 0.128 | 0.141 | 0.270 | 0.082 | 0.145 |
+| 40 | P9 βJ₀/n (upper bound) | 0.89 | 0.90 | 0.92 | – | – |
+
+Style-residualized runs report P1/P2/P5–P7 only (goal fields are not defined in that space). Data: `data/processed/H01-emergent-superagents-exist/r1b/<instrument>/explore.json`, `r1b/compare.json`.
+<!-- /R1B -->

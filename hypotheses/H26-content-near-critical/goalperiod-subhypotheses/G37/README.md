@@ -1,6 +1,7 @@
 # H26 × G37: Free week (2026-03-30 → 2026-04-02)
 
 **Verdict:** failed: content co-fluctuation is global (within-room 0.23, cross-room 0.20): L3 only 0.15; seen during debugging
+**Verdict (1b):** mixed
 **Role:** exploratory
 **Period:** regime III · mode F · 13 agents · two rooms · 3 days. H01 units used: 37.
 
@@ -29,3 +30,17 @@ Values are loop gains g = 1 − 1/VR (clipped at −1), deduped content, outage 
 ## Notes
 - 2026-10-04: prediction written before the H26 estimators touched this period.
 - 2026-10-04: results filled from `analysis/summarize.py` (joint bootstrap) and `analysis/explore.py`.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Fixed activity table (DQ8), DQ5 restatement dedupe, shared goal fields, both embedding models (card: Round 1b). Gains g = 1 − 1/VR; two-room units L3 room excess, one-room units L2 (upper bound).
+
+| unit | run | content day | activity day | talk day | content w30 | activity w30 | talk w30 | Δg_ca w30 | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 37 | round 1 | 0.15 | 0.40 | 0.90 | 0.35 | 0.29 | 0.67 | 0.06 | failed |
+| 37 | 1b bge | 0.15 | < −1 | 0.67 | 0.35 | -0.39 | 0.47 | 0.75 | mixed |
+| 37 | 1b gte | -0.53 | < −1 | 0.67 | 0.42 | -0.39 | 0.47 | 0.82 | mixed |
+| 37 | 1b bge, trimmed activity | 0.15 | < −1 | 0.89 | 0.35 | 0.07 | 0.45 | 0.29 | mixed |
+
+Data: `data/processed/H26-content-near-critical/r1b/<run>/G37/`.
+<!-- /R1B -->

@@ -1,43 +1,79 @@
 {
-  "complete": 40,
-  "faithfulness": 1.0,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 done: dated predictions and nulls, synthetic validation at village sampling (10 scenarios, two-room and one-room), two pre-data amendments, 10 G folders with dated predictions and verdicts, joint-bootstrap gap tests, scorecard, a post hoc N-scaling check prompted by H25, and a confirmatory script (dry-run reproduces exploration; not run). Missing: holdout run, embedding swap, lagged estimator, cascade sizes.",
-    "faithfulness": "The core claim (content near-critical while activity is subcritical) is refuted at matched resolution: 0/10 units supported, median 30-min gap +0.03, talk at least as high as content, activity far higher in #51. The synthetic shows H01's 0.74 is reproducible by drives alone. The positive half (a real content room excess of about 0.5 that beats a room-permutation null) survives but cannot be separated from unmeasured room drives. Scorecard A1 B1 C1 D0 E0 F1 G1 H0 I0.",
-    "usefulness": "A computable diagnostic and a methods correction. Compare channels only at matched resolution and drive removal. Within-room minus cross-room co-fluctuation tells room-local (content) from village-wide (activity, platform) co-movement. Operator broadcasts do not explain room content. Not a lever, and the 'ideas cascade' alarm it set out to provide turns out not to exist."
-  },
-  "one_line": "No content-vs-activity criticality gap: at matched resolution both have room loop gains of ~0.5; H01's 0.74 is drives plus time-averaging",
-  "rated_by": "H26 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
-  "v2": {
-    "claim": "No content-vs-activity criticality gap: both room gains ~0.5 at matched resolution",
-    "original_verdict": "failed",
-    "credence": 0.67,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      }
-    ],
-    "mechanism_level": "M1",
-    "fragile": false,
-    "value_if_true": 1.5,
-    "decision": "none directly",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 1.0,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: dated predictions and nulls, synthetic validation at village sampling (10 scenarios, two-room and one-room), two pre-data amendments, 10 G folders with dated predictions and verdicts, joint-bootstrap gap tests, scorecard, a post hoc N-scaling check prompted by H25, and a confirmatory script (dry-run reproduces exploration; not run). Missing: holdout run, embedding swap, lagged estimator, cascade sizes.",
+  "faithfulness": "The core claim (content near-critical while activity is subcritical) is refuted at matched resolution: 0/10 units supported, median 30-min gap +0.03, talk at least as high as content, activity far higher in #51. The synthetic shows H01's 0.74 is reproducible by drives alone. The positive half (a real content room excess of about 0.5 that beats a room-permutation null) survives but cannot be separated from unmeasured room drives. Scorecard A1 B1 C1 D0 E0 F1 G1 H0 I0.",
+  "usefulness": "A computable diagnostic and a methods correction. Compare channels only at matched resolution and drive removal. Within-room minus cross-room co-fluctuation tells room-local (content) from village-wide (activity, platform) co-movement. Operator broadcasts do not explain room content. Not a lever, and the 'ideas cascade' alarm it set out to provide turns out not to exist.",
+  "r1b": "Round 1b (2026-10-04, RE-C3 agent): fixed activity table, both embedding models, DQ5 dedupe, shared goal fields, DQ8 trim, two natives (NE42 supported, #12 supported/mixed). Activity's round-1 room gain was the event-drop artifact; card outcome failed (R2) -> unresolved. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0. Suggested complete 40 -> 50, faithfulness 1.0 -> 1.5, usefulness 2.0 kept."
+ },
+ "one_line": "On corrected data content and talk co-move inside rooms (gain ~0.5, channel-borne) while activity barely does; no channel is near-critical",
+ "rated_by": "H26 agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+ "v2": {
+  "claim": "Content and talk co-move within rooms at a loop gain of ~0.5 (not near-critical); activity has no room gain once the event drop is fixed, so the content–activity gap is real at 30 min",
+  "scope": "10 units at 30 min (day level CI touches 0); natives NE42 pseudo-rooms, G12 motion field",
+  "direction": "positive",
+  "original_verdict": "failed (R2) → unresolved",
+  "credence": 0.89,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (9/10 units)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "calibrated null (DQ8 trim)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "partly robust (both models; survives trim, smaller)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "intervention consistent (NE42 pseudo-rooms, both models)",
+    "x": 2,
+    "evidence": "native NE42"
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "penalty: day-level gap inconclusive",
+    "x": 0.7,
+    "evidence": "card §Round 1b"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": true,
+  "value_if_true": 2,
+  "decision": "read room coupling from content or talk, not activity synchrony",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.79,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (RE-C3); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "No content-vs-activity criticality gap: both room gains ~0.5 at matched resolution",
+   "credence": 0.67,
+   "fragile": false,
+   "value_if_true": 1.5,
+   "expected_usefulness": 1.0,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

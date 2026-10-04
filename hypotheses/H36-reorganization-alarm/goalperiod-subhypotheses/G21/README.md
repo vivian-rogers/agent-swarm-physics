@@ -1,6 +1,7 @@
 # H36 × G21: Forecast the abilities and effects of AI (2025-12-01 → 2025-12-08)
 
 **Verdict:** supported
+**Verdict (1b):** failed
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode I (each agent its own objective) · N = 8 at start · 5 non-holdout active days · events inside: NE28, NE07
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys 1.05.
 
 Data: `data/processed/H36-reorganization-alarm/G21/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 2.29 / 0.62 / 1.16 | 1.60 / 0.77 / 0.65 | 1.06 / 1.01 / 1.10 |
+| Z_act | 3.85 / -0.47 / 2.24 | 2.31 / 0.02 / 1.42 | 2.31 / 0.02 / 1.42 |
+| Z_cont | 0.33 / 1.86 / -0.09 | 0.85 / 1.58 / 0.05 | -0.26 / 2.07 / 1.02 |
+| R1 | 1.97 / 1.49 / -0.17 | 2.17 / 1.46 / -0.07 | 2.35 / 1.82 / -0.06 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

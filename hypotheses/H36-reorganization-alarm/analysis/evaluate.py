@@ -2,8 +2,12 @@
 false-alarm rates on placebo days and windows, AUC, timing, random-date null, Monday placebos, stall null, rivals,
 robustness variants, per-period and per-NE results.
 
-Usage: uv run python hypotheses/H36-reorganization-alarm/analysis/evaluate.py
+Usage: uv run python hypotheses/H36-reorganization-alarm/analysis/evaluate.py [--r1b TAG] [--events TAG2]
 Outputs: data/processed/H36-reorganization-alarm/{scores.parquet, event_table.parquet, results.json}
+Round 1b (2026-10-04): --r1b TAG reads and writes data/processed/H36-reorganization-alarm/r1b/<TAG>/ (scheme/build.py
+--r1b TAG); --events TAG2 takes events/allevents from r1b/<TAG2>/ instead (e.g. the round-1 day statistics scored
+against the corrected catalog). The trim variant Z_phys_trim is scored when its columns exist. Class `r1b` (the new
+and re-dated NEs) is reported but never enters the pre-registered class metrics.
 """
 from __future__ import annotations
 
@@ -17,10 +21,16 @@ import h36lib as L  # noqa: E402
 import numpy as np  # noqa: E402
 import polars as pl  # noqa: E402
 
+ARGV = sys.argv[1:]
+R1B = ARGV[ARGV.index("--r1b") + 1] if "--r1b" in ARGV else None
+EVT = ARGV[ARGV.index("--events") + 1] if "--events" in ARGV else None
+IND = (L.OUT / "r1b" / R1B) if R1B else L.OUT
+EVD = (L.OUT / "r1b" / EVT) if EVT else IND
 OFFS = list(range(-3, 4))
 CLASSES = ["goal", "room", "scaffold", "roster", "operator"]
 MAIN_SCORES = ["Z_phys", "Z_I", "Z_chi", "Z_C", "Z_act", "Z_cont", "Z_chan", "Z_or", "Z_phys_2s",
-               "R1", "R2", "R3", "Z_phys_none", "Z_phys_lull", "Z_phys_b5", "R1_or_Zphys"]
+               "R1", "R2", "R3", "Z_phys_none", "Z_phys_lull", "Z_phys_b5", "R1_or_Zphys",
+               "Z_phys_trim", "Z_act_trim", "C3"]
 THR = {k: (L.OR_THRESH if k == "Z_or" else L.THRESH) for k in MAIN_SCORES}
 
 
@@ -38,21 +48,29 @@ def compute_scores(d: pl.DataFrame) -> dict[str, np.ndarray]:
     sc = {k: A[k] for k in ["Z_phys", "Z_I", "Z_chi", "Z_C", "Z_act", "Z_cont", "Z_chan", "Z_or"]}
     sc.update({"z_" + k: v for k, v in Z.items()})
     sc["Z_phys_2s"] = np.abs(A["Z_phys"])
-    for suf in ["_none", "_lull", "_b5"]:
-        sc["Z_phys" + suf] = L.alarm_scores(zs(suf))["Z_phys"]
+    for suf in ["_none", "_lull", "_b5", "_trim"]:
+        if suf == "_trim" and "I_act_trim" not in d.columns:
+            sc["Z_phys_trim"] = np.full(d.height, np.nan); sc["Z_act_trim"] = np.full(d.height, np.nan)
+            continue
+        A_ = L.alarm_scores(zs(suf))
+        sc["Z_phys" + suf] = A_["Z_phys"]
+        if suf == "_trim":
+            sc["Z_act_trim"] = A_["Z_act"]
     sc["R1"] = L.trailing_z(d["R1_shift"].to_numpy().astype(float))
     sc["R2"] = L.trailing_z(d["R2_level"].to_numpy().astype(float), two_sided=True)
     sc["R3"] = L.trailing_z(d["R3_polar"].to_numpy().astype(float), two_sided=True)
     # union rule R1 or Z_phys: encoded as the max of the two (alarm iff either >= 2.0)
     sc["R1_or_Zphys"] = np.fmax(sc["R1"], sc["Z_phys"])
+    # post hoc operator rule frozen as C3 (R1 >= 3 or Z_cont >= 2), encoded so that score >= 2.0 <=> alarm
+    sc["C3"] = np.fmax(sc["R1"] - 1.0, sc["Z_cont"])
     return sc
 
 
 def main():
     rng = np.random.default_rng(L.SEED)
-    d = pl.read_parquet(L.OUT / "day_stats.parquet").sort("aday")
-    ev = pl.read_parquet(L.OUT / "events.parquet")
-    allev = pl.read_parquet(L.OUT / "allevents.parquet")
+    d = pl.read_parquet(IND / "day_stats.parquet").sort("aday")
+    ev = pl.read_parquet(EVD / "events.parquet")
+    allev = pl.read_parquet(EVD / "allevents.parquet")
     sc = compute_scores(d)
     aday = d["aday"].to_numpy()
     pos = {int(a): i for i, a in enumerate(aday)}
@@ -66,7 +84,14 @@ def main():
     st = d.select("aday", "pt_date", "goal_no", "regime", "monday", "n_present", "T", "stall_min", "lull_min",
                   "consol_per_agent").with_columns(
         [pl.Series(k, v) for k, v in sc.items()] + [pl.Series("placebo", placebo), pl.Series("dist_event", dist)])
-    st.write_parquet(L.OUT / "scores.parquet", compression="zstd")
+    if R1B:
+        OUTD = L.OUT / "r1b" / (R1B + (f"__ev_{EVT}" if EVT and EVT != R1B else ""))
+    elif EVT:
+        OUTD = L.OUT / "r1b" / f"r1data__ev_{EVT}"
+    else:
+        OUTD = L.OUT
+    OUTD.mkdir(parents=True, exist_ok=True)
+    st.write_parquet(OUTD / "scores.parquet", compression="zstd")
 
     def val(k, a):
         i = pos.get(int(a))
@@ -99,7 +124,7 @@ def main():
                 row[f"{k}_o{o}"] = val(k, c + o)
         rows.append(row)
     et = pl.DataFrame(rows, infer_schema_length=None)
-    et.write_parquet(L.OUT / "event_table.parquet", compression="zstd")
+    et.write_parquet(OUTD / "event_table.parquet", compression="zstd")
 
     # ---- placebo windows
     pidx = np.flatnonzero(placebo)
@@ -225,7 +250,7 @@ def main():
                                  "Z_phys": float(np.mean(sc["Z_phys"][placebo & (reg == rg)] >= 2)) if (placebo & (reg == rg)).any() else None}
                             for rg in ["I", "II", "III"]}
     res["periods"], res["ne"] = period_results(d, st, et, sc, placebo, pos, val), ne_results(et, res, val)
-    (L.OUT / "results.json").write_text(json.dumps(res, indent=1, default=lambda o: None if o is None or (isinstance(o, float) and not np.isfinite(o)) else (float(o) if isinstance(o, (np.floating,)) else int(o) if isinstance(o, np.integer) else bool(o) if isinstance(o, np.bool_) else str(o))))
+    (OUTD / "results.json").write_text(json.dumps(res, indent=1, default=lambda o: None if o is None or (isinstance(o, float) and not np.isfinite(o)) else (float(o) if isinstance(o, (np.floating,)) else int(o) if isinstance(o, np.integer) else bool(o) if isinstance(o, np.bool_) else str(o))))
     L.write_provenance("hypotheses/H36-reorganization-alarm/analysis/evaluate.py", ["(H36 day_stats, events)"],
                        {"thresh": L.THRESH, "base_days": L.BASE_DAYS, "placebo_dist": L.PLACEBO_DIST})
     report(res)

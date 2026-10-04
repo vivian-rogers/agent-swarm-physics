@@ -1,6 +1,7 @@
 # H36 × NE34: goal changes (all non-holdout kickoffs, #2–#51)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (bge) / failed (gte)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** spans #2–#51 (35 non-holdout kickoffs; transitions as the object, exception c)
 
@@ -33,3 +34,44 @@ Per-event table: `data/processed/H36-reorganization-alarm/event_table.parquet`; 
 
 **Prediction check:** P1 hit ≤ 40% held (0.30) and AUC came out slightly above the predicted < 0.65 (0.68); window FAR was lower than predicted (0.10 vs 0.15–0.30). R1 AUC ≥ 0.8 and beats Z_phys: held (0.95; difference −0.26, CI excludes 0). Content > activity: held (0.77 vs 0.55). Timing: 7 of 10 hits first fire on day 0/+1, 3 on day −1 (post hoc PH1: day −1 AUC 0.69 vs placebo, 0.68 vs Friday placebos; a weak end-of-goal signal, not predicted). Verdict by the pre-registered rule: **mixed** (hit rate below 0.6; not failed because AUC 0.68 and random-date p 0.03).
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round 1b tables (bge-small, restatements removed, fixed activity table):
+
+| Score | hit rate (n) | window FAR | per-day FAR | AUC day 0 [95% CI] | AUC window max | random-date p |
+| --- | --- | --- | --- | --- | --- | --- |
+| Z_phys | 0.27 (33) | 0.11 | 0.036 | 0.68 [0.57, 0.79] | 0.62 | 0.081 |
+| Z_I | 0.39 (33) | 0.15 | 0.055 | 0.63 [0.51, 0.75] | 0.57 | – |
+| Z_chi | 0.39 (33) | 0.11 | 0.036 | 0.62 [0.49, 0.75] | 0.59 | – |
+| Z_C | 0.36 (33) | 0.15 | 0.055 | 0.66 [0.53, 0.78] | 0.62 | – |
+| Z_act | 0.33 (33) | 0.18 | 0.073 | 0.54 [0.40, 0.67] | 0.56 | 0.268 |
+| Z_cont | 0.36 (33) | 0.00 | 0.000 | 0.78 [0.67, 0.87] | 0.73 | 0.003 |
+| R1 | 0.61 (33) | 0.18 | 0.073 | 0.95 [0.90, 0.99] | 0.71 | 0.001 |
+| R2 | 0.36 (33) | 0.24 | 0.091 | 0.49 [0.37, 0.62] | 0.50 | 0.190 |
+| R1_or_Zphys | 0.73 (33) | 0.29 | 0.109 | 0.84 [0.74, 0.93] | 0.79 | 0.001 |
+
+Monday-placebo window FAR (Z_phys): 0.20; AUC(day 0 vs Monday placebos) 0.62. Rival AUC difference (Z_phys − R1, day 0): -0.29 [-0.42, -0.17].
+Unconfounded goal changes only (n = 26): Z_phys hit 0.31, AUC 0.65.
+
+Per-event table: `data/processed/H36-reorganization-alarm/event_table.parquet`; figure `figures/event_locked.pdf`.
+
+gte-modernbert:
+
+| Score | hit rate (n) | window FAR | per-day FAR | AUC day 0 [95% CI] | AUC window max | random-date p |
+| --- | --- | --- | --- | --- | --- | --- |
+| Z_phys | 0.21 (33) | 0.11 | 0.036 | 0.66 [0.54, 0.77] | 0.59 | 0.209 |
+| Z_I | 0.42 (33) | 0.15 | 0.055 | 0.63 [0.50, 0.75] | 0.56 | – |
+| Z_chi | 0.36 (33) | 0.11 | 0.036 | 0.63 [0.49, 0.75] | 0.62 | – |
+| Z_C | 0.30 (33) | 0.25 | 0.091 | 0.60 [0.48, 0.72] | 0.49 | – |
+| Z_act | 0.33 (33) | 0.18 | 0.073 | 0.54 [0.40, 0.67] | 0.56 | 0.268 |
+| Z_cont | 0.39 (33) | 0.11 | 0.036 | 0.74 [0.61, 0.85] | 0.69 | 0.011 |
+| R1 | 0.58 (33) | 0.18 | 0.055 | 0.97 [0.94, 1.00] | 0.73 | 0.001 |
+| R2 | 0.36 (33) | 0.24 | 0.091 | 0.49 [0.37, 0.62] | 0.50 | 0.190 |
+| R1_or_Zphys | 0.67 (33) | 0.29 | 0.091 | 0.86 [0.77, 0.94] | 0.79 | 0.003 |
+
+Monday-placebo window FAR (Z_phys): 0.20; AUC(day 0 vs Monday placebos) 0.61. Rival AUC difference (Z_phys − R1, day 0): -0.34 [-0.48, -0.21].
+Unconfounded goal changes only (n = 26): Z_phys hit 0.23, AUC 0.61.
+
+Per-event table: `data/processed/H36-reorganization-alarm/event_table.parquet`; figure `figures/event_locked.pdf`.
+<!-- /R1B -->

@@ -1,51 +1,74 @@
 {
-  "complete": 45,
-  "faithfulness": 1.0,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Two rounds done (D3 ordering, then the redirected KW superagent programme R4-R8 with synthetic validation, coordination-based candidates and 19 period cards); no holdout run yet, and the main agency tests turned out unidentifiable at village sampling.",
-    "faithfulness": "The KW superagent model's core predictions failed or were null (no individuality maxima, no semantic information, no repair); only the necessary condition (allocation continuity) and the goal-scramble sign held. C = 1, D = 0.",
-    "usefulness": "A clear operational negative with a usable corollary: work persistence across resets lives in agents' own artifacts and the prompt, not in teams or memory, so make work state legible in the repo. Night continuity is a cheap diagnostic anyone can compute."
-  },
-  "one_line": "No effective superagents: allocation persists through artifacts, single agents out-persist crews, the goal sets the rate",
-  "rated_by": "H01 round-2 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 2 done: complete -> 45; faithfulness/usefulness as suggested)",
-  "v2": {
-    "claim": "No coordination-defined group is an effective (KW) superagent; the persistent unit is agent + own artifact",
-    "original_verdict": "refuted (R4-R8)",
-    "credence": 0.56,
-    "ladder": [
-      {
-        "factor": "base (sec)",
-        "x": 0.3
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "not identifiable / underpowered",
-        "x": 0.5
-      },
-      {
-        "factor": "intervention consistent",
-        "x": 2
-      },
-      {
-        "factor": "rival beaten",
-        "x": 1.5
-      }
-    ],
-    "mechanism_level": "M1",
-    "fragile": false,
-    "value_if_true": 2.5,
-    "decision": "builders: treat agent+repo as the unit; don't expect emergent group agency",
-    "magnitude": "material",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 1.41,
-    "scientific_value": 4,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Two rounds done (D3 ordering, then the redirected KW superagent programme R4-R8 with synthetic validation, coordination-based candidates and 19 period cards); no holdout run yet, and the main agency tests turned out unidentifiable at village sampling.",
+  "faithfulness": "The KW superagent model's core predictions failed or were null (no individuality maxima, no semantic information, no repair); only the necessary condition (allocation continuity) and the goal-scramble sign held. C = 1, D = 0.",
+  "usefulness": "A clear operational negative with a usable corollary: work persistence across resets lives in agents' own artifacts and the prompt, not in teams or memory, so make work state legible in the repo. Night continuity is a cheap diagnostic anyone can compute.",
+  "r1b": "Round 1b (2026-10-04, RE-C3 agent) re-ran round 1 (D3.1.a/D3.2) on shared goal vectors, both embedding models, DQ5 restatement dedupe, style residualization and ledger exposure, plus two natives (G12 teams: failed; NE42 A-B-A: supported). Round-2 ratings unchanged; round-1 scorecard unchanged except E strengthened (still 1)."
+ },
+ "one_line": "No effective superagents: allocation persists through artifacts, single agents out-persist crews, the goal sets the rate",
+ "rated_by": "H01 round-2 agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (round 2 done: complete -> 45; faithfulness/usefulness as suggested)",
+ "v2": {
+  "claim": "No coordination-defined group is an effective (KW) superagent; the persistent unit is agent + own artifact",
+  "scope": "round 2 (R4–R8); round-1 basis re-checked in 1b",
+  "direction": "negative",
+  "original_verdict": "refuted (R4-R8)",
+  "credence": 0.61,
+  "ladder": [
+   {
+    "factor": "base (sec)",
+    "x": 0.3
+   },
+   {
+    "factor": "replication",
+    "x": 2,
+    "evidence": "card §Round 2"
+   },
+   {
+    "factor": "not identifiable / underpowered",
+    "x": 0.5,
+    "evidence": "card §Round 2"
+   },
+   {
+    "factor": "intervention consistent",
+    "x": 2,
+    "evidence": "card §Round 2"
+   },
+   {
+    "factor": "rival beaten",
+    "x": 1.5,
+    "evidence": "card §Round 2"
+   },
+   {
+    "factor": "round-1 basis re-checked (lab order = style; room order and exposure slope model-dependent; NE42 supported)",
+    "x": 1.2,
+    "evidence": "card §Round 1b"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "builders: treat agent+repo as the unit; don't expect emergent group agency",
+  "magnitude": "material",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.52,
+  "scientific_value": 4,
+  "rater": "coordinator, updated after round 1b (RE-C3); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "No coordination-defined group is an effective (KW) superagent; the persistent unit is agent + own artifact",
+   "credence": 0.56,
+   "fragile": false,
+   "value_if_true": 2.5,
+   "expected_usefulness": 1.41,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

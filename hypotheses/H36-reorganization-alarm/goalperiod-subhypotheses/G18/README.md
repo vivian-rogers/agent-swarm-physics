@@ -1,6 +1,7 @@
 # H36 × G18: Reduce global poverty as much as you can (2025-10-20 → 2025-11-03)
 
 **Verdict:** supported
+**Verdict (1b):** supported (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 7 at start · 10 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 10 of 10; mean Z_phys 0.55.
 
 Data: `data/processed/H36-reorganization-alarm/G18/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 0.84 / 2.80 / -0.01 | 0.82 / 3.10 / 0.30 | 0.61 / 2.83 / 0.05 |
+| Z_act | 0.87 / 2.55 / -0.45 | 0.99 / 2.89 / 0.01 | 0.99 / 2.89 / 0.01 |
+| Z_cont | 0.93 / 3.04 / 0.63 | 0.74 / 3.33 / 0.74 | 0.29 / 2.64 / 0.16 |
+| R1 | -0.11 / 2.26 / -0.54 | -0.49 / 2.11 / -0.39 | -0.32 / 2.46 / -0.53 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

@@ -1,6 +1,6 @@
 # H36: A reorganization alarm: susceptibility and multi-information peak at transitions
 
-**Status:** exploratory round 1 done (agent, 2026-10-04): **mixed**. The physics alarm sees goal changes weakly (hit 0.30, AUC 0.68), entirely through content, and loses to a plain content-centroid detector (AUC 0.95). `analysis/confirm.py` written and dry-run, not run. Observables, nulls, the alarm rule and the predictions below were written 2026-10-04 ~01:40 UTC, before the synthetic validation and before any statistic was computed on real data.
+**Status:** exploratory round 1 done (agent, 2026-10-04): **mixed**. **Round 1b (improved data, 2026-10-04): mixed (bge) / failed (gte)**: on the fixed activity table the physics alarm no longer beats random dates robustly (p 0.08 / 0.21, was 0.03); content and the rival R1 replicate in both models; NE40 and NE45 are not detected blind (see Round 1b). The physics alarm sees goal changes weakly (hit 0.30, AUC 0.68), entirely through content, and loses to a plain content-centroid detector (AUC 0.95). `analysis/confirm.py` written and dry-run, not run. Observables, nulls, the alarm rule and the predictions below were written 2026-10-04 ~01:40 UTC, before the synthetic validation and before any statistic was computed on real data.
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH126, merging HH65 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`). Related: H27 (herding early warning, HH109) and H25 (criticality dial), running in parallel; H38 (platform stalls) supplies the outage mask.
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population N(t), **day-present variant** (roster agents, Claude Code excluded, with ≥ 10 active minutes, `activity_bins.state ≥ 3`, on that PT day; H38 uses ≥ 1 minute); Regime (alarm baselines cross regime boundaries on purpose, because the boundary is a transition to detect; this is the card's named exception (c), transitions as the object); Agent state, **categorical variant = the 4-state activity class** of `activity_bins` (silent / idle / act / talk; the regime-invariant action class); Agent state, **vector variant = whitened statement mean per agent × 30-min window** (`embeddings/agent_win30`, regime whitener, n = 32, unit-normalized; H01's "whitened statement mean" at window instead of day resolution); Mutual information between agents. **New named variants proposed** (not edited into DEFINITIONS.md; outside this card's scope): *multi-information (Gaussian, activity spins)*, *multi-information (pairwise expansion, behavior states)*, *content multi-information (overlap)*, *heat-capacity analogue (alignment-energy variance)*, *joint silence / village-off gap* (H38's definitions, reused as the outage mask).
@@ -143,9 +143,9 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | --- | --- | --- | --- |
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | All statistics from `activity_bins`, `agent_win30`/`agent_day` and the event catalog; assumptions listed. Not invariant: activity alarms are twice as frequent on days when n, day length or the gap to the previous day changes (15% vs 7%, PH3); content uses regime whiteners. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | The trailing-baseline null is calibrated: real per-day placebo FAR 0.033 matches the synthetic 0.02–0.05 after the Amendment 1 scale fix. No Markov or update-order audit (equal-time statistics only). |
-| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Goal changes: beats placebo days (AUC 0.68 [0.56, 0.79]) and random dates (p 0.03); weaker against Monday placebos (AUC 0.62); hit rate 0.30, below the 0.6 bar. |
+| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Goal changes: beats placebo days (AUC 0.68 [0.56, 0.79]) and random dates (p 0.03); weaker against Monday placebos (AUC 0.62); hit rate 0.30, below the 0.6 bar. **Round 1b:** on the fixed table the random-date p rises to 0.08 (bge) / 0.21 (gte); AUC vs placebo still above 0.5. |
 | D unfitted predictions | unfitted statistics and the model's signature | 0 | The coupling signature (activity and content χ, C, I rising together, synthetic S1/S6) is absent: the activity channel is at chance (AUC 0.55; 0.47 without sampling changes); the content rise is ~40% a within-day linear drift (PH2). |
-| E interventional | predicts the change across a natural experiment | 0 | Room events show no coupling sign pattern (05-04 merge: activity z −0.6); NE14 (03-24) missed; scaffold events at chance (1/13 vs window FAR 0.10). |
+| E interventional | predicts the change across a natural experiment | 1 | Room events show no coupling sign pattern (05-04 merge: activity z −0.6); NE14 (03-24) missed; scaffold events at chance (1/13 vs window FAR 0.10). **Round 1b:** native specificity held: no alarm at NE40 or NE45/NE38, as predicted; NE43b (nudger off) and NE39 not as predicted. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Synthetic at village sampling: content coupling recovered (S6 AUC 0.93), activity coupling only partly (S1 AUC 0.77, hit 0.40); blind to day-boundary field steps as designed. Real AUC robust to bin width and mask (0.68–0.75). No embedding swap. |
 | G ground truth | agrees with known structure | 1 | Detects catalogued goal changes above chance; misses scaffold changes; roster batches 3/6 (n small, confounded). |
 | H comparative | beats the named rivals | 0 | Loses to R1 by ΔAUC −0.26 [−0.39, −0.13]. Post hoc, the content channel is complementary to R1 (same hit rate at a tenth of the false alarms), but in-sample. |
@@ -163,6 +163,10 @@ Each G folder holds that period's kickoff (day 0 = its first active day) and its
 | [NE17](goalperiod-subhypotheses/NE17/README.md) | exploratory | failed | no alarm (Z_phys −1.18), as predicted |
 | [NE18](goalperiod-subhypotheses/NE18/README.md) | exploratory | failed | no alarm (Z_phys 0.73), as predicted |
 | [NE41](goalperiod-subhypotheses/NE41/README.md) | exploratory | n/a | consolidations vs Z_phys on regime-III placebo days ρ −0.31 (p 0.26, n 15) |
+| [NE39](goalperiod-subhypotheses/NE39/README.md) | native (1b) | failed | public chat closed 2025-07-01: content silent; activity alarm on day +1 (N = 4, NE02's window) |
+| [NE40](goalperiod-subhypotheses/NE40/README.md) | native (1b) | supported | search answerer swap 04-20: silent as predicted (not detected blind) |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) | native (1b) | failed | nudger off 08-21: Z_act 3.1, R1 2.1–2.2 (unpredicted); bookends end 08-05: activity quiet |
+| [NE45](goalperiod-subhypotheses/NE45/README.md) | native (1b) | supported | search schema change + NE38 on 07-29: silent as predicted (not detected blind) |
 | [G02](goalperiod-subhypotheses/G02/README.md) | exploratory | n/a | kickoff not scored |
 | [G03](goalperiod-subhypotheses/G03/README.md) | exploratory | n/a | kickoff not scored |
 | [G04](goalperiod-subhypotheses/G04/README.md) | exploratory | failed | kickoff Z_phys –/−1.8/1.6 (d−1/0/+1), Z_cont d0 −2.8; placebo 1/14 |
@@ -261,6 +265,83 @@ This caught 58% of goal changes at 1 false alarm in 61 placebo windows. The phys
 - `figures/roc_goal.pdf`: hit rate vs window false-alarm rate across thresholds.
 - `figures/timeline.pdf`: daily Z_phys and Z_cont with all events marked.
 - `figures/synthetic.pdf`: AUC per synthetic scenario.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the round-1 pipeline on the corrected inputs, plus four period-native tests. Predictions P0–P8, the alarm rule and the per-period rule are unchanged. Native predictions were written in the NE39, NE40, NE43 and NE45 folders at 07:50 UTC, before any round-1b score was computed.*
+
+**What changed in the inputs.**
+- **Activity:** `activity_bins_fixed` replaces `activity_bins`, which had dropped about half of all events (DQ8). The stall mask now comes from the shared `outages_fixed/outages.parquet`, with the same rule (village_off, or cause scheduled or infra_error, or infra_burst). The day count rises from 279 to 282.
+- **Content:**
+  - both embedding models: bge-small, and gte-modernbert with its own regime whiteners;
+  - window and agent-day vectors recomputed without restatements (each model's own DQ5 `self_repeat` flag, chat only);
+  - R1 and R3 on the same vectors.
+- **Catalog (`--catalog r1b`):** six dates added as class `r1b`. They join the placebo exclusion list but not the pre-registered class metrics.
+  - NE39: 2025-07-01, public chat closed;
+  - NE40: 04-20, search answerer swap, the same day as NE18;
+  - NE43a: 08-05, bookends stop, the same day as #focus;
+  - NE43b: 08-21, nudger off;
+  - NE44: 06-11, held out;
+  - NE45: 07-29, search-tool schema change, the same day as NE38.
+  NE06 is flagged as confounded. Placebo days fall from 61 to 55.
+- **DQ8 trim:** new variant `Z_phys_trim` / `Z_act_trim`. Each day is cut to its all-present window before the circular-shift surrogates are drawn.
+- **Code:** `scheme/build.py --data-version fixed --model … --dedupe … --catalog r1b --r1b TAG` (defaults reproduce round 1 exactly: verified, max |Δ| = 0 on every statistic); `analysis/evaluate.py --r1b TAG [--events TAG]`; new `analysis/r1b_native.py`, `r1b_periods.py`, `r1b_estimates.py`. Outputs in `data/processed/H36-reorganization-alarm/r1b/<TAG>/`.
+
+**Old vs new (goal kickoffs, 33 scored; hit = alarm on day −1, 0 or +1).**
+
+| Score | Round 1 | Catalog only | 1b bge (fixed + dedupe) | 1b gte (fixed + dedupe) |
+| --- | --- | --- | --- | --- |
+| Z_phys (pre-registered) hit · window FAR · AUC [95% CI] | 0.30 · 0.10 · 0.68 [0.56, 0.79] | 0.30 · 0.11 · 0.67 | 0.27 · 0.11 · 0.68 [0.57, 0.79] | 0.21 · 0.11 · 0.66 [0.54, 0.77] |
+| Z_phys random-date p | **0.03** | 0.04 | **0.08** | **0.21** |
+| Z_act AUC (per-day FAR) | 0.55 (0.033) | 0.53 (0.036) | 0.54 (0.073) | 0.54 (0.073) |
+| Z_act_trim AUC · Z_phys_trim AUC (DQ8 trim) | 0.53 · 0.71 (old table) | – | 0.50 · 0.67 | 0.50 · 0.65 |
+| Z_cont hit · window FAR · AUC | 0.42 · 0.00 · 0.77 | 0.42 · 0.00 · 0.76 | 0.36 · 0.00 · 0.78 | 0.39 · 0.11 · 0.74 |
+| R1 (centroid shift) hit · AUC | 0.58 · 0.95 | 0.58 · 0.96 | 0.61 · 0.95 | 0.58 · 0.97 |
+| ΔAUC (Z_phys − R1) [95% CI] | −0.26 [−0.39, −0.13] | −0.28 | −0.29 [−0.42, −0.17] | −0.34 [−0.48, −0.21] |
+| C3 operator rule (R1 ≥ 3 or Z_cont ≥ 2) hit · window FAR | 0.58 · 0.02 | 0.58 · 0.02 | 0.55 · 0.02 | 0.67 · 0.13 |
+| all primary classes, Z_phys random-date p | 0.04 | – | 0.17 | 0.16 |
+| stall null: false alarms on top-decile joint-silence placebo days, masked / unmasked | 0/7 / 0/7 | – | 2/6 / 1/6 | 2/6 / 1/6 |
+| per-period verdicts supported / failed / n/a | 10 / 23 / 2 | – | 9 / 24 / 2 | 7 / 26 / 2 |
+
+"Catalog only" means the round-1 day statistics scored against the corrected catalog. The class tables for room, scaffold and roster are in `results.json`; scaffold is still 1/13 (bge) or 2/13 (gte).
+
+**Which verdicts change.**
+- **NE34 (the primary test): mixed → mixed (bge) / failed (gte).** The card's failure rule is "AUC ≤ 0.60 or random-date p > 0.10".
+  - With bge (restatements removed) the random-date p is 0.08: still mixed. It is 0.11 without dedupe and 0.21 with gte.
+  - AUC is unchanged (0.66–0.68), but the hit rate falls (0.30 → 0.21–0.27), so the alarm no longer beats random dates robustly.
+  - **The physics alarm's goal signal sits at the failure boundary.**
+- **The rival wins by more.** R1 is unchanged or better (0.95–0.97) in both models; Z_phys loses by 0.29–0.34 in AUC.
+- **The content channel replicates in both models** (Z_cont AUC 0.74–0.78). The activity channel stays at chance (0.54), and after the DQ8 trim it is exactly at chance (0.50). On the fixed table it also fires more on placebo days (per-day FAR 0.073 vs 0.033).
+- **P6 (stalls cause false alarms) turns from "failed" to "weakly held".** With the fixed outage table, both placebo false alarms fall on top-decile joint-silence days, but the mask does not remove them (n = 6).
+- **The C3 operator rule is model-dependent.** With bge it keeps 0.55 hits at 0.02 window FAR. With gte it reaches 0.67 hits, but at 0.13 window FAR.
+- **Per period:**
+  - G21, G39, G41: supported → failed in both models. Their round-1 alarms were activity-channel alarms on the buggy table.
+  - G07, G27: failed → supported, with bge only.
+
+**Native tests (Role: native).**
+
+| Test | Prediction | Outcome (bge / gte) | Verdict (1b) |
+| --- | --- | --- | --- |
+| [NE39](goalperiod-subhypotheses/NE39/README.md) public chat closed, 2025-07-01 (#6, N = 4) | no Z_phys alarm [0.75]; R1 ≥ 2 [0.45]; blind dating by R1 [0.35] | Z_phys fires on day +1 (3.3; Z_act 7.2), which is also NE02's day −1. Content is silent (Z_cont ≤ −0.6, R1 ≤ 0.3); not dated. | failed |
+| [NE40](goalperiod-subhypotheses/NE40/README.md) search answerer swap, 04-20 (#38) | silent [0.8]; R1 < 2 [0.65]; not dated [0.8] | every score < 1.4 on −1..+1. With gte, the window's R1 (−0.01) tops 8 negative candidates: a degenerate "top", not a detection | supported (silent, as predicted) |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) a: bookends stop 08-05 (+ #focus); b: nudger off 08-21 (#51) | b silent [0.7], Z_act \|z\| < 2 [0.7]; a: a content alarm [0.5], Z_act quiet [0.65] | b: Z_act 3.1 (trim 3.9) and R1 2.2 / 2.1 on day 0; Z_phys 1.5 / 1.9. a: Z_act ≤ 0.6; R1 1.9 / 2.4 on day −1 | failed (b is not silent) |
+| [NE45](goalperiod-subhypotheses/NE45/README.md) search-tool schema change + NE38 one-agent role change, 07-29 (#51) | silent [0.8]; R1 < 2 [0.75]; not dated [0.85] | every score < 0.2 (R1 −1.3) | supported (silent, as predicted) |
+
+**Blind detection of undocumented steps (HH268's question).**
+- H36's detector does **not** find NE40 or NE45 blind, in either model. NE39's only alarm is an activity spike at N = 4 on a day shared with NE02's window.
+- The one structural day it does flag is the first nudge-free day (08-21). That was not predicted, it has no replication, and a single z ≈ 3 has a per-day FAR of about 0.07.
+- Undocumented platform steps are invisible to what agents say and when they act at day resolution. They need H56's log features (event mix, tool schemas, answer stylometry), which is what HH268 proposes to combine.
+
+**Scorecard after 1b.**
+- A 1, B 1.
+- C 1: beats placebo days, AUC CI above 0.5 in both models, but random dates only with bge (p 0.08 / 0.21).
+- D 0.
+- **E 0 → 1:** specificity held at NE40 and NE45/NE38 as predicted; NE43b and NE39 did not.
+- F 1: second model; content robust, the physics alarm not.
+- G 1.
+- H 0: R1 wins by more.
+- I 0.
+
+**Reading.** On corrected data the multi-information/susceptibility alarm is weaker than in round 1. Its residual goal signal is the content channel, and a first moment detects that better. The case for the physics statistics as a reorganization alarm is now essentially closed. The operator rule stays C3 (topic shift, plus within-day content alignment as a false-alarm filter), with its gte false-alarm rate as a caveat.
 
 ## Round 2 redirects
 **What the direction is really after:** a cheap, log-computable alarm for structural change in a swarm (goal, roster, room, scaffold) with known hit and false-alarm rates; round 1 says content carries it, activity fluctuations don't, and a first-moment topic-shift detector beats the physics statistics.

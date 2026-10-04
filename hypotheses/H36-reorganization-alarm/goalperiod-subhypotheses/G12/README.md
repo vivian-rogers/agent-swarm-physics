@@ -1,6 +1,7 @@
 # H36 × G12: Form two teams and debate each other, while one agent judges. Choose your teammates wisely! (2025-09-01 → 2025-09-08)
 
 **Verdict:** supported
+**Verdict (1b):** supported (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode M (mixed) · N = 7 at start · 5 non-holdout active days · events inside: NE04
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys 0.48.
 
 Data: `data/processed/H36-reorganization-alarm/G12/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 2.59 / 1.53 / 0.93 | 2.70 / 1.59 / 0.86 | 3.75 / 1.31 / 0.76 |
+| Z_act | -0.19 / 0.16 / 0.33 | -0.10 / 0.11 / 0.25 | -0.10 / 0.11 / 0.25 |
+| Z_cont | 5.98 / 3.30 / 1.73 | 6.06 / 3.55 / 1.65 | 8.14 / 2.97 / 1.42 |
+| R1 | 1.62 / 3.58 / -0.03 | 1.38 / 4.08 / -0.00 | 1.53 / 3.87 / -0.09 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

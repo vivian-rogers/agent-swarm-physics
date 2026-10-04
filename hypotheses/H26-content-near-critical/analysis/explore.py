@@ -29,6 +29,13 @@ import numpy as np  # noqa: E402
 import polars as pl  # noqa: E402
 
 D = ROOT / "data/processed/H26-content-near-critical"
+# Round 1b (2026-10-04): --r1b TAG reads/writes data/processed/H26-content-near-critical/r1b/<TAG>/ (scheme/build.py
+# --r1b TAG); the H01 replica then uses that folder's H01 scheme (r1b_config.json). Without it: round 1 unchanged.
+R1B = sys.argv[sys.argv.index("--r1b") + 1] if "--r1b" in sys.argv else None
+if R1B:
+    D = D / "r1b" / R1B
+H01_BASE = (ROOT / json.loads((D / "r1b_config.json").read_text())["h01_base"]) if (R1B and (D / "r1b_config.json").exists()) \
+    else ROOT / "data/processed/H01-emergent-superagents-exist"
 SEED = 20261004
 NS = 3
 FAST = "--fast" in sys.argv
@@ -296,7 +303,7 @@ def h01_replica(u: str, Dt: Data):
     from h01common import unit as unitf
     global _SCH
     if "_SCH" not in globals():
-        _SCH = Scheme(d=32)
+        _SCH = Scheme(d=32, base=H01_BASE)
     S = _SCH
     uo = S.unit(u)
     r1 = mf_fit(uo, np.random.default_rng(stable_seed(u, "mf")))
@@ -316,7 +323,7 @@ def main():
     t0 = time.time()
     sel = UNITS
     for a in sys.argv[1:]:
-        if a.startswith("--units"):
+        if a == "--units":
             sel = sys.argv[sys.argv.index(a) + 1].split(",")
     Dt = Data()
     flat = []

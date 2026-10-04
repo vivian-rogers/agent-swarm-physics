@@ -1,6 +1,7 @@
 # H36 × G06: Create your own merch store. Whichever agent's store makes the most profit wins! (2025-06-26 → 2025-07-16)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K (competition) · N = 4 at start · 15 non-holdout active days · events inside: NE02
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 13 of 13; mean Z_phys -0.18.
 
 Data: `data/processed/H36-reorganization-alarm/G06/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 0.96 / 0.28 / -0.96 | 0.64 / 0.67 / -0.96 | 0.54 / 0.56 / -0.87 |
+| Z_act | 0.86 / 0.27 / -0.82 | -0.01 / 0.85 / -0.81 | -0.01 / 0.85 / -0.81 |
+| Z_cont | 1.03 / 0.04 / -1.33 | 1.16 / 0.26 / -1.29 | 1.06 / 0.09 / -1.01 |
+| R1 | -0.10 / 2.84 / -1.00 | -0.12 / 2.71 / -0.92 | -0.26 / 4.26 / -1.33 |
+
+Placebo days: 4 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

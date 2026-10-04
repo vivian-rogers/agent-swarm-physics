@@ -1,6 +1,7 @@
 # H01 × G36: Interact with other AI agents outside the Village (2026-03-23 → 03-30)
 
 **Verdict:** mixed (round 2: continuity, partial agency; round 1: failed)
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory
 **Period:** regime II (36a, 03-23, one day) / regime III (36b, 03-24 → 03-27) · mode C · 13 agents · two rooms · split at the 03-24 regime boundary.
 
@@ -29,3 +30,19 @@ Units: 36a, 36b. Data: `data/processed/H01-emergent-superagents-exist/G36/result
 
 ## Round 2 (2026-10-04)
 Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **mixed**: continuity, partial agency.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round-1 statistics re-run on the corrected inputs (card: Round 1b): shared goal vectors, restatements removed (each model's own DQ5 flag, chat only), bge-small and gte-modernbert, and DQ5's style-residualized vectors (identity claims).
+
+| unit | statistic | round 1 | 1b bge | 1b gte | 1b bge style-resid | 1b gte style-resid |
+| --- | --- | --- | --- | --- | --- | --- |
+| 36b | P1 room ΔH (median) | 0.031 | 0.026 | 0.019 | 0.024 | 0.042 |
+| 36b | P5 field R² | 0.71 | 0.70 | 0.76 | 0.68 | 0.70 |
+| 36b | P6 exposure slope | +0.037 ± 0.020 | +0.023 ± 0.019 | +0.039 ± 0.018 | +0.030 ± 0.023 | +0.030 ± 0.019 |
+| 36b | P6 within − cross | 0.084 | 0.064 | 0.061 | 0.042 | 0.023 |
+| 36b | within − cross, room fields removed | 0.084 | 0.064 | 0.061 | 0.042 | 0.023 |
+| 36b | P9 βJ₀/n (upper bound) | 0.82 | 0.81 | 0.83 | – | – |
+
+Style-residualized runs report P1/P2/P5–P7 only (goal fields are not defined in that space). Data: `data/processed/H01-emergent-superagents-exist/r1b/<instrument>/explore.json`, `r1b/compare.json`.
+<!-- /R1B -->

@@ -1,6 +1,7 @@
 # H36 × G44: Finetune your leader! (2026-05-26 → 2026-06-01)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode C (shared objective) · N = 16 at start · 4 non-holdout active days · events inside: NE31
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 4 of 4; mean Z_phys 0.90.
 
 Data: `data/processed/H36-reorganization-alarm/G44/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | – / -0.06 / -0.96 | – / -0.16 / -0.17 | – / 0.10 / 0.34 |
+| Z_act | – / 0.25 / -0.39 | – / -0.16 / 0.90 | – / -0.16 / 0.90 |
+| Z_cont | – / -0.34 / -1.54 | – / -0.07 / -1.06 | – / 0.44 / -0.08 |
+| R1 | – / – / 0.06 | – / – / 0.05 | – / – / 0.05 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

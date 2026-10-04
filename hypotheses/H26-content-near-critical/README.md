@@ -1,6 +1,6 @@
 # H26: The swarm is near-critical in what it says but subcritical in when it acts
 
-**Status:** round 1 done (2026-10-04): **failed as posed (R2 wins).** Content does carry a real room-level loop gain: drive-removed day-level median 0.53 [0.34, 0.66], room-permutation null beaten in 6/10 two-room units. But activity shows comparable room-excess gains at the same resolution, and its whole-swarm co-fluctuation is larger (global). H01's 0.74 is reproduced by drives alone in the synthetic, and the HH108 "gap" compared day means with 1-min spins. `analysis/confirm.py` written and dry-run, not run. Not promoted. Promoted 2026-10-04 by Vivian from HH108; predictions written 2026-10-04 ~01:40 UTC, before any H26 real-data statistic.
+**Status:** round 1 done (2026-10-04): **failed as posed (R2 wins).** Content does carry a real room-level loop gain: drive-removed day-level median 0.53 [0.34, 0.66], room-permutation null beaten in 6/10 two-room units. But activity shows comparable room-excess gains at the same resolution, and its whole-swarm co-fluctuation is larger (global). H01's 0.74 is reproduced by drives alone in the synthetic, and the HH108 "gap" compared day means with 1-min spins. `analysis/confirm.py` written and dry-run, not run. Not promoted. **Round 1b (improved data, 2026-10-04): unresolved.** On the fixed activity table activity's room gain collapses (w30 0.44 → 0.12; cross-room ρ 0.50 → 0.10: round 1's activity co-movement was the event-drop artifact), so content now exceeds activity at 30 min in both models (Δg +0.41 [0.13, …]); talk matches content and content stays ≈ 0.5, not near-critical. NE42 native: the room excess is channel-borne. Promoted 2026-10-04 by Vivian from HH108; predictions written 2026-10-04 ~01:40 UTC, before any H26 real-data statistic.
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH108 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Agent; Population N(t) (active variant: agents with data in the window); Regime (III only, plus #35 in II as a descriptive extra); Driving / external field (goal, kickoffs, human and `automated` messages); Interaction (broadcast, room rule); Agent state, *vector (for model 11)* in H01's named variant *whitened statement mean* (n = 32, H01's regime bases) but **unnormalized** (see "Agent state (vector), linear statement mean" below); H01's *goal field ĝ*. **New named variants proposed for `physics-models/DEFINITIONS.md`** (not edited here; outside H26's scope): *agent state (vector), linear statement mean*; *loop gain (equal-time, room excess)*; *exogenous drive direction*. The loop-gain functional is H19's *loop gain (equal-time)*, g = 1 − 1/VR.
@@ -104,11 +104,11 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Content state = linear mean of whitened bge statement vectors (H01 basis), deduped; activity and talk = minute fractions from `activity_bins`; rooms from `rooms_timeline`; drives from goal, kickoff and first-hour directions and human/`automated` message embeddings. All channels use one estimand, g = 1 − 1/VR. Assumptions listed. Not checked across families or regimes; one embedding model. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Time-averaging derived and shown: an equal-time gain 0.4 reads 0.64 in day means, so resolution must match. Within-unit stationarity assumed over 3–19 days. Synthetic: a 5-day window sees about 60% of the stationary gain. No Markov or update-order audit. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Content room excess beats the room-permutation null in 6/10 two-room units (day) and 7/10 (w30). Time-shuffle nulls use real anisotropic vectors; the isotropic surrogate is about 2× too narrow (1.1–2.9×; H20 lesson reproduced). No held-out day likelihood. The H26 claim itself fails its rule. |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | The signature (content ≥ 0.5 *and* above activity by > 0.15) is absent: 0/10 units supported; median Δg_ca at w30 is +0.03. P5 (operator inputs explain ≤ 10%) passed, but it is a supporting check, not the signature. |
-| E interventional | predicts the change across a natural experiment | 0 | No natural experiment used. The #40 merge fails the two-room rule; NE15 is in the holdout. |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 | The signature (content ≥ 0.5 *and* above activity by > 0.15) is absent: 0/10 units supported; median Δg_ca at w30 is +0.03. P5 (operator inputs explain ≤ 10%) passed, but it is a supporting check, not the signature. **Round 1b:** on the fixed activity table the content > activity half of the signature holds at 30 min in both models (Δg +0.41 [0.13, …], 9/10 units); the near-critical half does not (content ≈ 0.5). |
+| E interventional | predicts the change across a natural experiment | 1 | No natural experiment used. The #40 merge fails the two-room rule; NE15 is in the holdout. **Round 1b:** NE42 A-B-A native: the #39 partition's content and talk excess collapse in the merged week and return at the split (both models; goal-confounded, not blind). |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | H01's P9 returns 0.57 (global drive at the observed cross-room level) to 0.74 at J = 0, and 0.79–0.83 at J = 0.2–0.6: drives saturate it. L3 tracks the realized gain under global drives (0.28 vs 0.29). It reads unmeasured room drives as coupling (0.46–0.49 at J = 0) and is biased toward content in drive-rich worlds (content +0.25, activity −0.1 to −0.2). Robust to dedupe, static and exogenous projections (Δ ≤ 0.06). No embedding swap. |
 | G ground truth | agrees with known structure | 1 | Content co-fluctuation sits inside rooms (ρ_cross ≈ 0.05), including #41 where both rooms had identical instructions. Activity co-fluctuation is village-wide (ρ_cross 0.5–0.8), as expected from shared schedule and platform stalls. Measured operator messages explain nothing beyond their null. |
-| H comparative | beats the named rivals | 0 | R2 (no robust channel gap at matched resolution) wins by the card's rule at both resolutions. R1 (drives only) cannot be excluded for room-level drives. |
+| H comparative | beats the named rivals | 1 | R2 (no robust channel gap at matched resolution) wins by the card's rule at both resolutions. R1 (drives only) cannot be excluded for room-level drives. **Round 1b:** R2 rejected for activity (its round-1 room gain was the event-drop artifact), not for talk. |
 | I transfer | holds in other same-mode periods, including the holdout | 0 | Holdout not run. Large heterogeneity across periods (content L3 0.13–0.80). |
 
 ## Prediction
@@ -202,6 +202,8 @@ Day level. Two-room units: L3 room excess. One-room units: L2 (upper bound). g c
 | [G42](goalperiod-subhypotheses/G42/README.md) | exploratory | failed | content 0.13 (global co-fluctuation). Activity w30 0.60 > content 0.28. |
 | [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | mixed | content 0.76. w30: activity 0.81, talk 0.78 > content 0.72 (Δg −0.09 [−0.16, 0.14]). |
 | [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | mixed | single room: activity 0.92–0.95 ≫ content 0.25–0.65 (Δg −0.27 to −0.50). #focus (51c): content 0.54, N2 p 0.18. |
+| [NE42](goalperiod-subhypotheses/NE42/README.md) | native (1b) | supported | #39 partition as pseudo-rooms: content and talk excess collapse in the merged week and return at the split |
+| [G12](goalperiod-subhypotheses/G12/README.md) | native (1b) | supported (bge) / mixed (gte) | debate motion on: g 0.72 vs off 0.66; removing the motion direction halves it |
 
 ## Results
 ### Exploratory round 1 (2026-10-04; non-holdout only, holdout asserted in every loader)
@@ -291,6 +293,92 @@ Day level. Two-room units: L3 room excess. One-room units: L2 (upper bound). g c
   - It also refuses unless the script, card, `h26lib.py` and `explore.py` are committed and unmodified (reuse policy item 1).
   - `--dry-run` uses #41, #42 and #44, asserts no holdout day is touched, and reproduces `explore.py` (content day 0.770 vs 0.767; w30 within 0.01).
 - **Reuse disclosure:** goes into LOG.md and the H02, H04 and H23 cards when run.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the pre-registered pipeline on corrected inputs, plus two period-native tests. P1–P6, the verdict rules and the outcome rule are unchanged. The native predictions were written in the NE42 and G12 folders at 07:45 UTC, before they were run.*
+
+**What changed in the inputs.**
+- **Activity:** `activity_bins_fixed` (DQ8). Round 1 had lost about half of all events, and the loss fraction is day-specific, so it acts as a shared day-level field (RE-A1). The outage proxy is recomputed on the fixed table.
+  - Active agent-minutes rise 36%, talk minutes 86%.
+- **DQ8 trim variant (`bge_fixed_trim`):** activity and talk minutes restricted to each day's all-present window (every present agent between its first and last record). This keeps 69% of agent-minutes and is applied before windows and split halves are formed.
+- **Content:**
+  - H01's round-1b scheme (`r1b/bge_none`, `r1b/gte_none`): shared goal fields, which fix the #38 room-kickoff swap in L1's static subspace;
+  - both embedding models, with exogenous message directions in each model's basis;
+  - DQ5's own-model restatement flags (chat only, as in round 1: bge 2,756, gte 2,116 of 96,621 statements). Round 1's rule flagged 2,755.
+- **Code:** `scheme/build.py --r1b TAG --h01 … --model … --dedupe … --data-version fixed [--trim]`; `analysis/explore.py` and `summarize.py --r1b TAG` (no flag = round 1); new `analysis/r1b_native.py`, `r1b_compare.py`, `r1b_period_folders.py`, `r1b_estimates.py`.
+  - Outputs in `data/processed/H26-content-near-critical/r1b/<TAG>/`; side by side in `r1b/compare.json`.
+  - `old_check` (old activity table, shared goal fields, round-1 dedupe rule) reproduces round 1 to ≤ 0.001.
+
+**Old vs new (10 regime-III two-room units; day = day level, w30 = 30-min; L3 room excess, medians).**
+
+| Statistic | Round 1 | 1b bge | 1b gte | 1b bge, activity trimmed |
+| --- | --- | --- | --- | --- |
+| content g_ex day [95% CI] · units ≥ 0.5 | 0.53 [0.34, 0.66] · 6/10 | 0.52 [0.33, …] · 5/10 | 0.47 [0.25, …] · 4/10 | 0.52 · 5/10 |
+| content g_ex w30 | 0.43 | 0.43 | 0.47 | 0.43 |
+| **activity g_ex day · w30** | 0.32 · 0.44 | **−0.38 · 0.12** | −0.38 · 0.12 | −0.37 · 0.16 |
+| talk g_ex day · w30 | 0.76 · 0.63 | 0.59 · 0.64 | 0.59 · 0.64 | 0.73 · 0.69 |
+| **activity cross-room ρ_c day · w30** | 0.79 · 0.50 | **−0.05 · 0.10** | −0.05 · 0.10 | −0.03 · −0.01 |
+| content cross-room ρ_c day · w30 | 0.05 · 0.05 | 0.06 · 0.05 | 0.05 · 0.04 | 0.06 · 0.05 |
+| Δg_ca day [CI] · units > 0.15 | +0.32 [−0.08, 1.48] · 6/10 | +0.76 [−0.02, …] · 6/10 | +0.42 [−0.03, …] · 6/10 | +0.65 [−0.06, …] · 6/10 |
+| **Δg_ca w30 [CI] · units > 0.15** | +0.03 [−0.15, …] · 4/10 | **+0.41 [0.13, …] · 9/10** | **+0.42 [0.14, …] · 9/10** | **+0.22 [0.01, …] · 6/10** |
+| Δg_ck w30 (talk) | −0.09 | −0.03 | −0.04 | −0.09 |
+| robust pooled estimator day: content / activity / talk | 0.52 / 0.54 / −0.08 | 0.51 / −0.04 / 0.41 | 0.44 / −0.04 / 0.41 | 0.51 / −0.01 / 0.50 |
+| N2 room-permutation p < 0.05 (content day · w30) | 6 · 7 | 6 · 6 | 6 · 10 | 6 · 6 |
+| measured operator inputs, excess share (P5) | −0.16 to +0.01 | −0.15 to +0.01 | −0.17 to −0.00 | −0.16 to +0.01 |
+| H01 P9 replica (median βJ₀/n) | 0.74 | 0.74 | 0.73 | 0.74 |
+| per-unit verdicts supported / mixed / failed | 0 / 8 / 2 | 1 / 8 / 1 | 1 / 7 / 2 | 0 / 9 / 1 |
+| card outcome | failed (R2) | **unresolved** | **unresolved** | **unresolved** |
+
+**Which verdicts change.**
+- **Activity's room gain was largely an artifact of the event-drop bug.**
+  - On the fixed table, activity's cross-room correlation collapses: 0.79 → −0.05 at day level, 0.50 → 0.10 at w30. Its room excess falls to −0.38 (day) and 0.12–0.16 (w30).
+  - This is the same artifact RE-A1 found for H12's market mode: dropping a day-specific fraction of everyone's events is a shared field.
+  - What remains of activity co-movement is the runner's day edge (H50), which the trim removes.
+- **Card outcome: failed (R2) → unresolved.**
+  - **Against activity, the R2 null fails.** The content–activity gap is now real at 30 min in both models (Δg_ca +0.41 [0.13, …] and +0.42 [0.14, …], 9/10 units > 0.15) and survives the trim (+0.22 [0.01, …]).
+  - At day level the median gap is larger (+0.42 to +0.76), but its CI still touches 0 (day-level activity is unpowered).
+  - **Against talk, R2 still holds.** Talk's room excess matches or exceeds content's at w30 (Δg_ck −0.03 to −0.09).
+  - **Content is still not near-critical:** median g_ex,c is 0.47–0.52, at or below the 0.5 bar.
+  - The "gap real but content not near-critical" branch needs the day-level CI to exclude 0, and it misses by 0.02–0.06. So the honest reading is between that branch and R2: **ideas co-move inside rooms about as strongly as talk does, much more than activity, and well below criticality.**
+- **P3 (gap at matched resolution): failed → half held.**
+  - w30 Δg_ca > 0.15 in 9/10 units (≥ 2/3 required) in both models.
+  - Day level: 6/10.
+  - Talk Δg_ck: 2/10 → 1–2/10 (still fails).
+- **P6 (#51 g_c ≥ g_a) still fails** (1/4 sub-units at day level), although #51 activity drops from 0.92–0.95 to 0.13–0.86.
+- **P2, P4, P5 unchanged** (content inputs differ only through dedupe and goal fields). P1 (synthetic) is not re-run.
+- **Per unit:**
+  - 38b mixed → supported (both models; activity's day excess is now negative);
+  - 35 (regime II extra) mixed → supported;
+  - 37 failed → mixed;
+  - 36b mixed → failed with gte;
+  - with the trim, 38b returns to mixed.
+
+**Native tests (Role: native).**
+
+| Test | Prediction | Outcome (bge / gte) | Verdict (1b) |
+| --- | --- | --- | --- |
+| [NE42](goalperiod-subhypotheses/NE42/README.md): #39 partition as pseudo-rooms in #39 → #40 → #41 | content w30 g_ex < 0.15 in #40, ≥ 0.3 in #39 and #41 [0.55]; activity change < 0.2 [0.5]; talk collapses [0.45] | content w30: 0.36 → **ρ_w 0.21 < ρ_c 0.29 (g −1)** → 0.71 / 0.41 → (ρ_w 0.23 < ρ_c 0.34) → 0.74. Talk: 0.80 → (−0.03 < 0.12) → 0.74. Activity: ρ_w < ρ_c in #39 already (undefined change) | **supported** for content and talk (both models); activity uninformative |
+| [G12](goalperiod-subhypotheses/G12/README.md): #12 motion field on vs off (10-min slots) | g_on > g_off [0.6]; removing each debate's motion direction halves g_on [0.5] | g_on 0.72 [0.68, 0.75] vs g_off 0.66 [0.63, 0.68]; after removal 0.34 [−0.01, 0.48] / 0.73 vs 0.67 → 0.37 [0.07, 0.51] | supported (bge) / mixed (gte; 0.37 vs the 0.365 bar) |
+
+**Reading of the natives.**
+- When the channel between the old rooms opens, their content excess does not just vanish: cross-partition pairs co-move *more* than within-partition pairs, and the excess returns at the split. **The room excess is channel-borne (coupling or a room-task drive the merge removes; #40's shared objective confounds).**
+- In a debate, about half of the content gain is the motion's direction (a field). The rest is either co-fluctuation around it, or the removal is incomplete.
+
+**Scorecard after 1b.**
+- A 1.
+- B 1.
+- C 1.
+- **D 0 → 1:** the signature's activity half (content > activity at matched resolution) now holds at w30 in both models. The near-critical half does not.
+- **E 0 → 1:** the NE42 A-B-A behaves as the coupling/channel reading predicts, but it is goal-confounded and not blind (H47 seen).
+- F 1.
+- G 1.
+- **H 0 → 1:** R2 is rejected for activity, though not for talk.
+- I 0.
+
+**Operator-facing update.**
+- On correct activity data, what agents *do* barely co-moves room by room. What they *say* and *how much they talk* do (gain ≈ 0.4–0.6), and the room channel carries it.
+- Village-wide activity co-movement in round 1 was a data artifact plus the runner's schedule.
+- **No channel is near-critical.**
 
 ## Round 2 redirects
 **What the direction is really after:** whether ideas spread through a swarm more easily than effort does, measured so that channels are comparable. Round 1 says: not at matched resolution; the channels differ in where they co-move, not in how much.

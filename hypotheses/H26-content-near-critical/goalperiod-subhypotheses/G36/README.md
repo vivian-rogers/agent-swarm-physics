@@ -1,6 +1,7 @@
 # H26 × G36: Regime-III start (#36b) (2026-03-24 → 2026-03-30 (non-holdout unit #36b))
 
 **Verdict:** mixed: content 0.53; activity excess noisy (4 days); at w30 activity exceeds content (gap -0.21)
+**Verdict (1b):** mixed (bge) / failed (gte)
 **Role:** exploratory
 **Period:** regime III · mode C · 13 agents · two rooms · 4 days. H01 units used: 36b.
 
@@ -29,3 +30,17 @@ Values are loop gains g = 1 − 1/VR (clipped at −1), deduped content, outage 
 ## Notes
 - 2026-10-04: prediction written before the H26 estimators touched this period.
 - 2026-10-04: results filled from `analysis/summarize.py` (joint bootstrap) and `analysis/explore.py`.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Fixed activity table (DQ8), DQ5 restatement dedupe, shared goal fields, both embedding models (card: Round 1b). Gains g = 1 − 1/VR; two-room units L3 room excess, one-room units L2 (upper bound).
+
+| unit | run | content day | activity day | talk day | content w30 | activity w30 | talk w30 | Δg_ca w30 | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 36b | round 1 | 0.53 | < −1 | – | 0.40 | 0.61 | 0.28 | -0.21 | mixed |
+| 36b | 1b bge | 0.53 | 0.51 | < −1 | 0.40 | 0.25 | 0.42 | 0.16 | mixed |
+| 36b | 1b gte | 0.48 | 0.51 | < −1 | 0.44 | 0.25 | 0.42 | 0.20 | failed |
+| 36b | 1b bge, trimmed activity | 0.53 | 0.46 | < −1 | 0.40 | 0.38 | 0.36 | 0.02 | mixed |
+
+Data: `data/processed/H26-content-near-critical/r1b/<run>/G36/`.
+<!-- /R1B -->

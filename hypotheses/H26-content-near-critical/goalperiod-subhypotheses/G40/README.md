@@ -1,6 +1,7 @@
 # H26 × G40: Room merge week (2026-05-04 → 2026-05-11)
 
 **Verdict:** descriptive: rooms merged (not two-room by rule); whole-room gains: content 0.75, activity 0.90
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory
 **Period:** regime III · mode C · 15 agents · two rooms, merged mid-week (universe-coordination room) · 5 days. H01 units used: 40.
 
@@ -29,3 +30,17 @@ Values are loop gains g = 1 − 1/VR (clipped at −1), deduped content, outage 
 ## Notes
 - 2026-10-04: prediction written before the H26 estimators touched this period.
 - 2026-10-04: results filled from `analysis/summarize.py` (joint bootstrap) and `analysis/explore.py`.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Fixed activity table (DQ8), DQ5 restatement dedupe, shared goal fields, both embedding models (card: Round 1b). Gains g = 1 − 1/VR; two-room units L3 room excess, one-room units L2 (upper bound).
+
+| unit | run | content day | activity day | talk day | content w30 | activity w30 | talk w30 | Δg_ca w30 | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 40 | round 1 | 0.75 | 0.90 | 0.89 | 0.74 | 0.88 | 0.85 | -0.14 | descriptive |
+| 40 | 1b bge | 0.75 | -0.92 | 0.34 | 0.74 | 0.32 | 0.35 | 0.42 | descriptive |
+| 40 | 1b gte | 0.78 | -0.92 | 0.34 | 0.76 | 0.32 | 0.35 | 0.44 | descriptive |
+| 40 | 1b bge, trimmed activity | 0.75 | 0.27 | 0.16 | 0.74 | 0.30 | 0.21 | 0.44 | descriptive |
+
+Data: `data/processed/H26-content-near-critical/r1b/<run>/G40/`.
+<!-- /R1B -->

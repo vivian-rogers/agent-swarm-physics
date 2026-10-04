@@ -1,6 +1,7 @@
 # H26 × G35: RPG forks (#best / #rest) (2026-03-16 → 2026-03-23)
 
 **Verdict:** mixed: content room excess 0.80 (N2 p 0.01), but activity nearly matches it at w30 once its global part is removed (gap +0.12)
+**Verdict (1b):** supported
 **Role:** exploratory
 **Period:** regime II · mode C · 13 agents · two rooms (#best, #rest) working on separate forks of one game · 5 days. H01 units used: 35.
 
@@ -29,3 +30,17 @@ Values are loop gains g = 1 − 1/VR (clipped at −1), deduped content, outage 
 ## Notes
 - 2026-10-04: prediction written before the H26 estimators touched this period.
 - 2026-10-04: results filled from `analysis/summarize.py` (joint bootstrap) and `analysis/explore.py`.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Fixed activity table (DQ8), DQ5 restatement dedupe, shared goal fields, both embedding models (card: Round 1b). Gains g = 1 − 1/VR; two-room units L3 room excess, one-room units L2 (upper bound).
+
+| unit | run | content day | activity day | talk day | content w30 | activity w30 | talk w30 | Δg_ca w30 | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 35 | round 1 | 0.80 | 0.55 | – | 0.78 | 0.66 | < −1 | 0.12 | mixed |
+| 35 | 1b bge | 0.80 | 0.45 | < −1 | 0.78 | 0.24 | < −1 | 0.54 | supported |
+| 35 | 1b gte | 0.81 | 0.45 | < −1 | 0.79 | 0.24 | < −1 | 0.55 | supported |
+| 35 | 1b bge, trimmed activity | 0.80 | 0.55 | – | 0.78 | 0.25 | 0.81 | 0.53 | supported |
+
+Data: `data/processed/H26-content-near-critical/r1b/<run>/G35/`.
+<!-- /R1B -->

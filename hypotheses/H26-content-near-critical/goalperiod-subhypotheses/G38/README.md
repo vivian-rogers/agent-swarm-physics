@@ -1,6 +1,7 @@
 # H26 × G38: Rooms with different instructions (#38a–c) (2026-04-02 → 2026-04-27 (units 38a, 38b, 38c split at NE17 04-14 and NE18 04-20))
 
 **Verdict:** mixed: content 0.65, 0.55, 0.40 in 38a, b, c (N2 p up to 0.03); at w30 activity ties or exceeds content; talk higher
+**Verdict (1b):** 38a: mixed (unchanged); 38b: supported; 38c: mixed (unchanged)
 **Role:** exploratory
 **Period:** regime III · mode C · 12 agents · two rooms given different instructions · 17 days. H01 units used: 38a, 38b, 38c.
 
@@ -31,3 +32,25 @@ Values are loop gains g = 1 − 1/VR (clipped at −1), deduped content, outage 
 ## Notes
 - 2026-10-04: prediction written before the H26 estimators touched this period.
 - 2026-10-04: results filled from `analysis/summarize.py` (joint bootstrap) and `analysis/explore.py`.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Fixed activity table (DQ8), DQ5 restatement dedupe, shared goal fields, both embedding models (card: Round 1b). Gains g = 1 − 1/VR; two-room units L3 room excess, one-room units L2 (upper bound).
+
+| unit | run | content day | activity day | talk day | content w30 | activity w30 | talk w30 | Δg_ca w30 | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 38a | round 1 | 0.65 | 0.53 | 0.62 | 0.59 | 0.59 | 0.71 | 0.00 | mixed |
+| 38a | 1b bge | 0.64 | 0.73 | 0.55 | 0.59 | 0.60 | 0.62 | -0.01 | mixed |
+| 38a | 1b gte | 0.63 | 0.73 | 0.55 | 0.57 | 0.60 | 0.62 | -0.03 | mixed |
+| 38a | 1b bge, trimmed activity | 0.64 | 0.75 | 0.60 | 0.59 | 0.63 | 0.68 | -0.04 | mixed |
+| 38b | round 1 | 0.55 | 0.24 | 0.92 | 0.47 | < −1 | 0.82 | 1.47 | mixed |
+| 38b | 1b bge | 0.55 | < −1 | 0.79 | 0.47 | < −1 | 0.82 | 1.47 | supported |
+| 38b | 1b gte | 0.58 | < −1 | 0.79 | 0.49 | < −1 | 0.82 | 1.49 | supported |
+| 38b | 1b bge, trimmed activity | 0.55 | 0.26 | 0.51 | 0.47 | -0.87 | 0.81 | 1.34 | mixed |
+| 38c | round 1 | 0.40 | -0.34 | 0.40 | 0.45 | 0.62 | 0.58 | -0.17 | mixed |
+| 38c | 1b bge | 0.40 | < −1 | 0.56 | 0.45 | 0.12 | -0.85 | 0.33 | mixed |
+| 38c | 1b gte | 0.45 | < −1 | 0.56 | 0.53 | 0.12 | -0.85 | 0.41 | mixed |
+| 38c | 1b bge, trimmed activity | 0.40 | < −1 | 0.72 | 0.45 | -0.09 | 0.12 | 0.54 | mixed |
+
+Data: `data/processed/H26-content-near-critical/r1b/<run>/G38/`.
+<!-- /R1B -->

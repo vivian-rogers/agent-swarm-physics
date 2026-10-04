@@ -12,6 +12,8 @@ Sections (run all, or pass --only SECTION[,SECTION]):
   p9    P9 mean-field O(32) fit per unit
 
 Usage: uv run python hypotheses/H01-emergent-superagents-exist/analysis/explore.py [--only p1,p56] [--d 32] [--fast]
+Round 1b (2026-10-04): --r1b TAG reads the scheme folder r1b/<TAG>/ built by scheme/build_r1b.py and writes r1b/<TAG>/explore.json;
+without it the round-1 path is unchanged.
 Writes data/processed/H01-emergent-superagents-exist/explore[_d16|_d64].json and per-goal-period G##/results.json.
 """
 from __future__ import annotations
@@ -40,6 +42,7 @@ WEIGHT = ARGS[ARGS.index("--weight") + 1] if "--weight" in ARGS else "agent"   #
 H_MODE = ARGS[ARGS.index("--hmode") + 1] if "--hmode" in ARGS else "firstday"   # Amendment 3 primary; "crossfit" = variant
 SEED_OFF = int(ARGS[ARGS.index("--seed") + 1]) if "--seed" in ARGS else 0
 LEX = "--lex" in ARGS
+R1B = ARGS[ARGS.index("--r1b") + 1] if "--r1b" in ARGS else None   # round 1b: scheme folder r1b/<R1B>/ (scheme/build_r1b.py)
 TAG = ARGS[ARGS.index("--tag") + 1] if "--tag" in ARGS else (f"_d{D}" if D != 32 else "") + (f"_k{K}" if K != 40 else "") + ("_wmsg" if WEIGHT == "message" else "") + ("_hcross" if H_MODE == "crossfit" else "") + (f"_seed{SEED_OFF}" if SEED_OFF else "") + ("_lex" if LEX else "")
 NPERM = 300 if FAST else 1000
 NNULL = 50 if FAST else 200
@@ -658,14 +661,14 @@ def p9_section(S: Scheme, rng):
 def main():
     t0 = time.time()
     rng = np.random.default_rng(SEED + SEED_OFF)
-    S = Scheme(d=D, base=OUT / "lexical") if LEX else Scheme(d=D)
+    S = Scheme(d=D, base=OUT / "lexical") if LEX else (Scheme(d=D, base=OUT / "r1b" / R1B) if R1B else Scheme(d=D))
     if K != 40:
         S.labels[40] = S.labels[K] if K in S.labels else S.labels[40]
         S.labels = {K: S.labels[K]}
-    path = OUT / f"explore{TAG}.json"
+    path = (OUT / "r1b" / R1B / f"explore{TAG}.json") if R1B else OUT / f"explore{TAG}.json"
     res = json.loads(path.read_text()) if path.exists() else {}
     res["config"] = {"d": D, "k": K, "weight": WEIGHT, "h_mode": H_MODE, "seed_offset": SEED_OFF, "lexical": LEX, "nperm": NPERM, "nnull": NNULL, "M_ent": M_ENT, "R_ent": R_ENT,
-                     "M_vec": M_VEC, "R_vec": R_VEC, "fast": FAST}
+                     "M_vec": M_VEC, "R_vec": R_VEC, "fast": FAST, "r1b": R1B}
     if "inv" in ONLY:
         res["invariance"] = invariance(S); log("invariance", json.dumps({k: {kk: vv for kk, vv in v.items() if kk != "per_agent_median"} for k, v in res["invariance"].items()}))
     if "p1" in ONLY:

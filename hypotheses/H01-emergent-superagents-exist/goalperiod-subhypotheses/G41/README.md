@@ -1,6 +1,7 @@
 # H01 × G41: Perform novel research (2026-05-11 → 05-18)
 
 **Verdict:** failed (round 2: no agency signature; round 1: mixed)
+**Verdict (1b):** mixed (unchanged, both models)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents · re-split into #best/#rest on 05-11 · 5 days.
 
@@ -28,3 +29,19 @@ Units: 41. Data: `data/processed/H01-emergent-superagents-exist/G41/results.json
 
 ## Round 2 (2026-10-04)
 Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **failed**: no agency signature.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round-1 statistics re-run on the corrected inputs (card: Round 1b): shared goal vectors, restatements removed (each model's own DQ5 flag, chat only), bge-small and gte-modernbert, and DQ5's style-residualized vectors (identity claims).
+
+| unit | statistic | round 1 | 1b bge | 1b gte | 1b bge style-resid | 1b gte style-resid |
+| --- | --- | --- | --- | --- | --- | --- |
+| 41 | P1 room ΔH (median) | -0.190 | -0.196 | -0.240 | -0.076 | -0.105 |
+| 41 | P5 field R² | 0.50 | 0.51 | 0.61 | 0.47 | 0.53 |
+| 41 | P6 exposure slope | +0.082 ± 0.032 | +0.088 ± 0.032 | +0.106 ± 0.039 | +0.045 ± 0.041 | +0.052 ± 0.042 |
+| 41 | P6 within − cross | 0.156 | 0.164 | 0.208 | 0.119 | 0.157 |
+| 41 | within − cross, room fields removed | 0.156 | 0.164 | 0.208 | 0.119 | 0.157 |
+| 41 | P9 βJ₀/n (upper bound) | 0.82 | 0.82 | 0.84 | – | – |
+
+Style-residualized runs report P1/P2/P5–P7 only (goal fields are not defined in that space). Data: `data/processed/H01-emergent-superagents-exist/r1b/<instrument>/explore.json`, `r1b/compare.json`.
+<!-- /R1B -->

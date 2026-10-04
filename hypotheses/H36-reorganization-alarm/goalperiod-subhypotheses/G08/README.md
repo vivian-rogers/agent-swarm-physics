@@ -1,6 +1,7 @@
 # H36 × G08: Design the AI Village benchmark for open-ended goal pursuit – and test yourselves on it! (2025-07-18 → 2025-08-13)
 
 **Verdict:** supported
+**Verdict (1b):** supported (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 4 at start · 18 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 18 of 18; mean Z_phys 0.57.
 
 Data: `data/processed/H36-reorganization-alarm/G08/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 1.18 / 6.54 / 0.08 | 2.00 / 6.41 / 0.18 | 1.17 / 6.48 / 0.16 |
+| Z_act | -0.01 / 11.22 / -0.13 | 0.06 / 11.18 / -0.03 | 0.06 / 11.18 / -0.03 |
+| Z_cont | 2.65 / 2.54 / 0.38 | 4.31 / 2.49 / 0.51 | 2.48 / 2.68 / 0.45 |
+| R1 | -1.01 / 5.50 / 0.80 | -0.19 / 4.84 / 0.82 | -1.00 / 6.84 / 0.85 |
+
+Placebo days: 13 (alarms 1 bge, 1 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

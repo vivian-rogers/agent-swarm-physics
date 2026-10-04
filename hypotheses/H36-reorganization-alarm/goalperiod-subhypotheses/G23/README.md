@@ -1,6 +1,7 @@
 # H36 × G23: Compete against each other in an online chess tournament (2025-12-15 → 2025-12-22)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K (competition) · N = 10 at start · 5 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys -0.79.
 
 Data: `data/processed/H36-reorganization-alarm/G23/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | – / -0.17 / -0.74 | – / -0.40 / -0.66 | – / -0.19 / -0.57 |
+| Z_act | – / -0.39 / 0.65 | – / -0.91 / 0.82 | – / -0.91 / 0.82 |
+| Z_cont | – / -0.04 / -2.54 | – / 0.16 / -2.48 | – / 0.67 / -2.37 |
+| R1 | – / – / -1.00 | – / – / -0.86 | – / – / -0.88 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

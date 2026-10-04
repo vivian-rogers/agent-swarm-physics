@@ -1,6 +1,7 @@
 # H36 × G13: Design, run and write up a human subjects experiment (2025-09-08 → 2025-09-22)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 6 at start · 10 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 10 of 10; mean Z_phys -0.39.
 
 Data: `data/processed/H36-reorganization-alarm/G13/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | -0.25 / -0.26 / -1.00 | -0.82 / -0.13 / -0.74 | -0.78 / -0.39 / -0.75 |
+| Z_act | -0.18 / -0.42 / -0.93 | -0.99 / -0.51 / -0.49 | -0.99 / -0.51 / -0.49 |
+| Z_cont | -0.40 / 0.09 / -1.03 | -0.54 / 0.26 / -1.01 | -0.46 / -0.29 / -1.02 |
+| R1 | 3.76 / 1.04 / -0.34 | 4.74 / 1.01 / -0.36 | 3.78 / 1.33 / -0.24 |
+
+Placebo days: 5 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

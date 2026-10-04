@@ -1,6 +1,7 @@
 # H36 × G41: Perform novel research! (2026-05-11 → 2026-05-18)
 
 **Verdict:** supported
+**Verdict (1b):** failed
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode I (each agent its own objective) · N = 15 at start · 5 non-holdout active days · events inside: NE42b
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys 0.46.
 
 Data: `data/processed/H36-reorganization-alarm/G41/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 0.55 / -0.67 / 2.36 | 1.45 / 1.79 / 1.53 | 1.94 / 1.64 / 1.61 |
+| Z_act | 0.22 / -3.00 / 3.98 | 1.76 / 0.98 / 2.37 | 1.76 / 0.98 / 2.37 |
+| Z_cont | 0.76 / 3.15 / 0.80 | 0.76 / 2.97 / 0.60 | 1.88 / 2.66 / 0.77 |
+| R1 | -0.27 / 9.02 / 0.51 | -0.23 / 8.61 / 0.49 | -0.04 / 10.41 / 0.56 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

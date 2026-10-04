@@ -1,6 +1,7 @@
 # H36 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-27)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode C (shared objective) · N = 12 at start · 17 non-holdout active days · events inside: NE36, NE17, NE18
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 17 of 17; mean Z_phys -0.15.
 
 Data: `data/processed/H36-reorganization-alarm/G38/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 0.44 / -0.63 / -0.19 | 0.32 / -0.08 / -0.14 | 0.20 / 0.05 / -0.11 |
+| Z_act | 0.92 / -1.28 / -0.17 | 0.60 / -0.36 / -0.01 | 0.60 / -0.36 / -0.01 |
+| Z_cont | -0.16 / 0.30 / -0.30 | -0.18 / 0.29 / -0.31 | -0.41 / 0.57 / -0.24 |
+| R1 | -0.13 / 2.37 / 0.59 | -0.13 / 2.36 / 0.58 | 0.29 / 1.75 / 0.67 |
+
+Placebo days: 3 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

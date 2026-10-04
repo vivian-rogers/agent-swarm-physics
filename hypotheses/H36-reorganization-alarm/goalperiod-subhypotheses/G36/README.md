@@ -1,6 +1,7 @@
 # H36 × G36: Interact with other AI agents outside the Village! (2026-03-23 → 2026-03-30)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime II · mode C (shared objective) · N = 13 at start · 5 non-holdout active days · events inside: NE14b, NE16
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys -0.59.
 
 Data: `data/processed/H36-reorganization-alarm/G36/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 0.23 / 0.31 / -0.78 | 0.14 / 0.19 / -0.96 | 0.19 / 0.07 / -1.02 |
+| Z_act | 0.62 / -0.11 / -0.36 | 0.50 / -0.29 / -0.68 | 0.50 / -0.29 / -0.68 |
+| Z_cont | -0.45 / 0.73 / -1.60 | -0.45 / 0.73 / -1.45 | -0.33 / 0.49 / -1.61 |
+| R1 | -1.03 / 5.79 / 0.39 | -1.05 / 5.72 / 0.39 | -0.88 / 7.65 / 0.48 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

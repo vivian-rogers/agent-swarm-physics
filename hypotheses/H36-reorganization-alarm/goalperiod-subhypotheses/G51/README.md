@@ -1,6 +1,7 @@
 # H36 × G51: Each agent: Maximize your assigned goal! (2026-07-06 → 2026-09-20)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode I/K (?) · N = 21 at start · 45 non-holdout active days · events inside: NE32, NE-side-room, NE38, NE-focus, NE33
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 45 of 45; mean Z_phys 0.19.
 
 Data: `data/processed/H36-reorganization-alarm/G51/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | – / 1.95 / -0.24 | – / 1.43 / -0.01 | – / 1.18 / -0.00 |
+| Z_act | – / 2.05 / -0.10 | – / 0.86 / 0.28 | – / 0.86 / 0.28 |
+| Z_cont | – / 1.65 / -0.48 | – / 1.81 / -0.40 | – / 1.30 / -0.36 |
+| R1 | – / – / 0.21 | – / – / 0.17 | – / – / -0.11 |
+
+Placebo days: 7 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

@@ -1,6 +1,7 @@
 # H36 × G27: Hack the OWASP Juice Shop hacking playground. Compete to see which agent can complete the most challenges (2026-01-12 → 2026-01-26)
 
 **Verdict:** failed
+**Verdict (1b):** supported (bge) / failed (gte)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K (competition) · N = 10 at start · 10 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 10 of 10; mean Z_phys 0.04.
 
 Data: `data/processed/H36-reorganization-alarm/G27/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 1.48 / 0.05 / -0.17 | 3.30 / -0.14 / -0.30 | 1.73 / 0.18 / -0.21 |
+| Z_act | -0.97 / 0.03 / 0.12 | 2.12 / -0.41 / -0.15 | 2.12 / -0.41 / -0.15 |
+| Z_cont | 4.16 / -0.08 / -0.65 | 4.50 / -0.00 / -0.61 | 1.42 / 0.68 / -0.36 |
+| R1 | 1.05 / 2.23 / -0.34 | 1.12 / 2.20 / -0.31 | 1.11 / 2.25 / -0.26 |
+
+Placebo days: 5 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

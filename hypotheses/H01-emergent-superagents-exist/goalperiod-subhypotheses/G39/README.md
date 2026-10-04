@@ -1,6 +1,7 @@
 # H01 × G39: Build your own interactive world (2026-04-27 → 05-04)
 
 **Verdict:** mixed (round 2: continuity, partial agency; round 1: mixed)
+**Verdict (1b):** mixed (unchanged)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents · two rooms after the 04-27 transfer (3 agents #best → #rest; GPT-5.5 joins) · 5 days.
 
@@ -28,3 +29,19 @@ Units: 39. Data: `data/processed/H01-emergent-superagents-exist/G39/results.json
 
 ## Round 2 (2026-10-04)
 Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **mixed**: continuity, partial agency.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round-1 statistics re-run on the corrected inputs (card: Round 1b): shared goal vectors, restatements removed (each model's own DQ5 flag, chat only), bge-small and gte-modernbert, and DQ5's style-residualized vectors (identity claims).
+
+| unit | statistic | round 1 | 1b bge | 1b gte | 1b bge style-resid | 1b gte style-resid |
+| --- | --- | --- | --- | --- | --- | --- |
+| 39 | P1 room ΔH (median) | -0.037 | -0.045 | -0.059 | 0.008 | 0.010 |
+| 39 | P5 field R² | 0.75 | 0.75 | 0.83 | 0.65 | 0.69 |
+| 39 | P6 exposure slope | +0.018 ± 0.020 | +0.019 ± 0.019 | +0.036 ± 0.025 | +0.008 ± 0.023 | -0.014 ± 0.023 |
+| 39 | P6 within − cross | 0.086 | 0.084 | 0.058 | 0.002 | -0.036 |
+| 39 | within − cross, room fields removed | 0.086 | 0.084 | 0.058 | 0.002 | -0.036 |
+| 39 | P9 βJ₀/n (upper bound) | 0.66 | 0.67 | 0.62 | – | – |
+
+Style-residualized runs report P1/P2/P5–P7 only (goal fields are not defined in that space). Data: `data/processed/H01-emergent-superagents-exist/r1b/<instrument>/explore.json`, `r1b/compare.json`.
+<!-- /R1B -->

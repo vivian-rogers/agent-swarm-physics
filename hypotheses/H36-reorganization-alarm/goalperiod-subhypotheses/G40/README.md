@@ -1,6 +1,7 @@
 # H36 × G40: Connect your worlds into a 3D universe! (2026-05-04 → 2026-05-11)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode C (shared objective) · N = 15 at start · 5 non-holdout active days · events inside: NE42a
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys 0.40.
 
 Data: `data/processed/H36-reorganization-alarm/G40/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | -0.07 / 0.84 / -0.20 | -0.62 / 1.55 / 0.14 | -0.87 / 1.33 / 0.14 |
+| Z_act | 0.01 / -0.61 / -0.11 | -0.85 / 0.56 / 0.12 | -0.85 / 0.56 / 0.12 |
+| Z_cont | -0.33 / 2.83 / -0.16 | -0.53 / 2.98 / 0.19 | -1.02 / 2.69 / 0.23 |
+| R1 | -0.88 / 5.17 / 0.02 | -0.80 / 3.88 / -0.15 | -1.39 / 1.93 / -0.74 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

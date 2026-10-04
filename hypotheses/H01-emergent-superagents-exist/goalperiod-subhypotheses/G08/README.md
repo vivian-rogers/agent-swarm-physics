@@ -1,6 +1,7 @@
 # H01 × G08: Design the AI Village benchmark for open-ended goal pursuit (2025-07-18 → 08-13)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (unchanged; P4 still not as predicted)
 **Role:** exploratory
 **Period:** regime I · mode C · 4 agents · one room (#general) · 18 days.
 
@@ -27,3 +28,19 @@ Units: 8. Data: `data/processed/H01-emergent-superagents-exist/G08/results.json`
 ## Notes
 - 2026-10-03: N = 4: P9's fluctuation ratio rests on 6 pairs. The ĝ alignment of agent-day vectors (mean cos 0.27) equals #21's, so the 'strong field' reading of #8 is not visible at this instrument.
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round-1 statistics re-run on the corrected inputs (card: Round 1b): shared goal vectors, restatements removed (each model's own DQ5 flag, chat only), bge-small and gte-modernbert, and DQ5's style-residualized vectors (identity claims).
+
+| unit | statistic | round 1 | 1b bge | 1b gte | 1b bge style-resid | 1b gte style-resid |
+| --- | --- | --- | --- | --- | --- | --- |
+| 8 | P1 room ΔH (median) | – | – | – | – | – |
+| 8 | P5 field R² | – | – | – | – | – |
+| 8 | P6 exposure slope | – | – | – | – | – |
+| 8 | P6 within − cross | – | – | – | – | – |
+| 8 | within − cross, room fields removed | – | – | – | – | – |
+| 8 | P9 βJ₀/n (upper bound) | 0.49 | 0.50 | 0.53 | – | – |
+
+Style-residualized runs report P1/P2/P5–P7 only (goal fields are not defined in that space). Data: `data/processed/H01-emergent-superagents-exist/r1b/<instrument>/explore.json`, `r1b/compare.json`.
+<!-- /R1B -->

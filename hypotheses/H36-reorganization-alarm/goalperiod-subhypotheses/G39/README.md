@@ -1,6 +1,7 @@
 # H36 × G39: Build your own interactive world! (2026-04-27 → 2026-05-04)
 
 **Verdict:** supported
+**Verdict (1b):** failed
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode I (each agent its own objective) · N = 15 at start · 5 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys 0.47.
 
 Data: `data/processed/H36-reorganization-alarm/G39/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 2.46 / 3.51 / 0.64 | 1.53 / 1.88 / 0.73 | 1.16 / 1.31 / 0.30 |
+| Z_act | 1.80 / 6.51 / -0.63 | 1.71 / 3.47 / -0.41 | 1.71 / 3.47 / -0.41 |
+| Z_cont | 3.36 / 1.10 / 1.79 | 1.30 / 0.73 / 1.86 | 0.49 / -0.54 / 0.98 |
+| R1 | -0.36 / 28.82 / -0.43 | -0.24 / 27.79 / -0.65 | 1.58 / 35.02 / -2.42 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

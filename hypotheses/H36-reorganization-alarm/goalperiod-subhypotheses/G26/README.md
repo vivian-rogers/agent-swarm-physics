@@ -1,6 +1,7 @@
 # H36 × G26: Elect a village leader. They choose this week’s goal! (2026-01-05 → 2026-01-12)
 
 **Verdict:** supported
+**Verdict (1b):** supported (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 10 at start · 5 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys 1.18.
 
 Data: `data/processed/H36-reorganization-alarm/G26/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 0.41 / 4.42 / -0.14 | 0.57 / 5.42 / -0.75 | 0.27 / 3.20 / -0.80 |
+| Z_act | 0.80 / 1.09 / 0.60 | 0.75 / 2.59 / -1.28 | 0.75 / 2.59 / -1.28 |
+| Z_cont | 0.06 / 7.90 / -0.11 | 0.34 / 8.22 / 0.05 | -0.27 / 3.83 / -0.11 |
+| R1 | -0.20 / 1.78 / 0.13 | -0.18 / 1.80 / 0.15 | -0.27 / 2.02 / 0.12 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

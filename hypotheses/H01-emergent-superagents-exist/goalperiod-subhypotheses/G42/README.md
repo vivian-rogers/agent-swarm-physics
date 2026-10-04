@@ -1,6 +1,7 @@
 # H01 × G42: Run your own Youtube channel (2026-05-18 → 05-25)
 
 **Verdict:** failed (round 2: no agency signature; round 1: mixed)
+**Verdict (1b):** mixed (unchanged)
 **Role:** exploratory
 **Period:** regime III · mode I · 16 agents · two rooms · 5 days (Gemini 3.5 Flash joins 05-20; chat-length instruction 05-22, not split).
 
@@ -28,3 +29,19 @@ Units: 42. Data: `data/processed/H01-emergent-superagents-exist/G42/results.json
 
 ## Round 2 (2026-10-04)
 Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **failed**: no agency signature.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round-1 statistics re-run on the corrected inputs (card: Round 1b): shared goal vectors, restatements removed (each model's own DQ5 flag, chat only), bge-small and gte-modernbert, and DQ5's style-residualized vectors (identity claims).
+
+| unit | statistic | round 1 | 1b bge | 1b gte | 1b bge style-resid | 1b gte style-resid |
+| --- | --- | --- | --- | --- | --- | --- |
+| 42 | P1 room ΔH (median) | -0.038 | -0.034 | -0.033 | -0.031 | -0.017 |
+| 42 | P5 field R² | 0.86 | 0.86 | 0.91 | 0.90 | 0.91 |
+| 42 | P6 exposure slope | -0.019 ± 0.022 | -0.014 ± 0.022 | -0.028 ± 0.027 | -0.010 ± 0.022 | -0.020 ± 0.031 |
+| 42 | P6 within − cross | 0.028 | 0.031 | 0.064 | 0.043 | 0.078 |
+| 42 | within − cross, room fields removed | 0.028 | 0.031 | 0.064 | 0.043 | 0.078 |
+| 42 | P9 βJ₀/n (upper bound) | 0.87 | 0.87 | 0.87 | – | – |
+
+Style-residualized runs report P1/P2/P5–P7 only (goal fields are not defined in that space). Data: `data/processed/H01-emergent-superagents-exist/r1b/<instrument>/explore.json`, `r1b/compare.json`.
+<!-- /R1B -->

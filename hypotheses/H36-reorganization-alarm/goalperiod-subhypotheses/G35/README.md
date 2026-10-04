@@ -1,6 +1,7 @@
 # H36 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-23)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime II · mode C (shared objective) · N = 13 at start · 5 non-holdout active days · events inside: NE15
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys -0.08.
 
 Data: `data/processed/H36-reorganization-alarm/G35/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | – / -0.75 / -0.13 | – / 1.71 / -0.41 | – / 1.69 / -0.41 |
+| Z_act | – / -1.10 / -0.26 | – / 3.63 / -0.69 | – / 3.63 / -0.69 |
+| Z_cont | – / -0.19 / -0.01 | – / -0.15 / -0.02 | – / -0.18 / -0.00 |
+| R1 | – / – / -1.95 | – / – / -2.06 | – / – / -1.67 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

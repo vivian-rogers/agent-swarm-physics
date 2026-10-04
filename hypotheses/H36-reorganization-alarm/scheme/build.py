@@ -12,6 +12,19 @@ Outputs:
 Holdout days are dropped with a hard assertion (calendar.holdout and infra holdout_mask must agree).
 
 Usage: uv run python hypotheses/H36-reorganization-alarm/scheme/build.py [--catalog-only] [--workers 2]
+
+Round 1b (improved data, 2026-10-04): switches that keep the round-1 path runnable (defaults = round 1):
+  --data-version old | fixed     fixed = activity_bins_fixed (DQ8 event-drop fix) + shared outages_fixed/outages.parquet
+                                 as the stall mask (same rule: village_off | cause in {scheduled, infra_error} | infra_burst)
+  --model bge_small | gte_modernbert   content windows (agent_win30) and R1/R3 agent-day vectors from either model (DQ5)
+  --dedupe none | restate | copies     recompute window and agent-day vectors without flagged chat statements
+                                 (restate = the model's own self-repeat flag; copies = self_repeat_both)
+  --catalog r1 | r1b             r1b adds the corrected and new NE dates as class `r1b` targets (NE39 2025-07-01,
+                                 NE40 2026-04-20, NE43a 08-05, NE43b 08-21, NE44 06-11 (held out), NE45 07-29) and flags
+                                 NE06 as confounded; they also enter the placebo-exclusion list
+  every 1b build adds the activity variant `_trim` (DQ8: each day trimmed to the all-present window, the minutes in
+  which every present agent is between its first and last record, before surrogates are drawn)
+  --r1b TAG                      write to data/processed/H36-reorganization-alarm/r1b/<TAG>/ instead of the round-1 files
 """
 from __future__ import annotations
 
@@ -30,6 +43,54 @@ import polars as pl  # noqa: E402
 
 H38 = L.ROOT / "data/processed/H38-platform-stalls"
 EMB = L.SH / "embeddings"
+# Round 1b switches (set by main(); defaults reproduce round 1, so confirm.py and old calls are unchanged)
+CFG = {"data_version": "old", "model": "bge_small", "dedupe": "none", "trim": False}
+R1B_CATALOG = False
+SUFFIX = {"bge_small": "", "gte_modernbert": "_gte_modernbert"}
+FLAGCOL = {("restate", "bge_small"): "self_repeat", ("restate", "gte_modernbert"): "self_repeat_gte",
+           ("copies", "bge_small"): "self_repeat_both", ("copies", "gte_modernbert"): "self_repeat_both"}
+
+
+def dedup_vectors(level: str, dl: list[str]):
+    """Round 1b: agent_<level> raw mean vectors (normalized mean of raw statement embeddings, the shared
+    build_agent_vectors rule) recomputed without flagged chat statements, for the given days. Returns (frame with gid,
+    agent, pt_date[, win30], vectors (n, d))."""
+    sys.path.insert(0, str(L.ROOT / "infra/shared"))
+    from embed_models import statement_embeddings
+    keys = ["agent", "pt_date"] + (["win30"] if level == "win30" else [])
+    st = pl.read_parquet(EMB / "statements.parquet").with_row_index("srow").filter(pl.col("pt_date").is_in(dl))
+    if level == "win30":
+        st = st.filter(pl.col("win30").is_not_null())
+    fl = pl.read_parquet(L.SH / "statement_flags.parquet", columns=["srow", FLAGCOL[(CFG["dedupe"], CFG["model"])]])
+    st = st.join(fl, on="srow", how="left")
+    st = st.filter(~(pl.col(FLAGCOL[(CFG["dedupe"], CFG["model"])]).fill_null(False) & (pl.col("kind") == "chat")))
+    E = statement_embeddings(CFG["model"], st.select("kind", "src_row"))
+    E = E / np.clip(np.linalg.norm(E, axis=1, keepdims=True), 1e-9, None)
+    g = st.select(keys).with_row_index("r").group_by(keys, maintain_order=True).agg(pl.col("r")).sort(keys)
+    V = np.zeros((g.height, E.shape[1]), np.float32)
+    for n, ix in enumerate(g["r"].to_list()):
+        v = E[np.asarray(ix)].mean(0)
+        V[n] = v / max(np.linalg.norm(v), 1e-9)
+    return g.drop("r").with_row_index("gid").with_columns(pl.col("gid").cast(pl.UInt32)), V
+
+
+def window_vectors(dl: list[str]):
+    if CFG["dedupe"] != "none":
+        return dedup_vectors("win30", dl)
+    aw = pl.read_parquet(EMB / "agent_win30.parquet").filter(pl.col("pt_date").is_in(dl))
+    vec = np.load(EMB / f"agent_win30_vec{SUFFIX[CFG['model']]}.npy", mmap_mode="r")
+    return aw, vec
+
+
+def day_vectors(dl: list[str] | None):
+    """(agent_day frame with gid and holdout, vectors) for R1/R3; dl None = all days (the shared table)."""
+    ad = pl.read_parquet(EMB / "agent_day.parquet")
+    if CFG["dedupe"] == "none":
+        return ad, np.load(EMB / f"agent_day_vec{SUFFIX[CFG['model']]}.npy").astype(np.float32)
+    days = ad.filter(~pl.col("holdout"))["pt_date"].unique().to_list() if dl is None else dl
+    g, V = dedup_vectors("day", sorted(set(days)))
+    hol = ad.select("pt_date", "holdout").unique()
+    return g.join(hol, on="pt_date", how="left").with_columns(pl.col("holdout").fill_null(False)), V
 PT = "America/Los_Angeles"
 
 # Classes per the card (Transitions; Amendment 0). Scaffold = documented scaffold NEs; roster = batch roster NEs.
@@ -95,6 +156,19 @@ def catalog(cal: pl.DataFrame):
         rows.append(dict(cls="room", ref=ref, label=label, t=first))
     back = rt.filter(pl.col("room").is_in([2, 3]) & (pl.col("t_start").dt.date() == dt.date(2026, 5, 11)))["t_start"].min()
     rows.append(dict(cls="room", ref="NE42b", label="split back to #best/#rest", t=back))
+    if R1B_CATALOG:
+        # Round 1b (2026-10-04): corrected and new NE dates from the catalog (DQ9, H35, H56); class r1b so the
+        # pre-registered class metrics keep their round-1 composition. Times are 17:00 UTC (= before or inside the
+        # PT day's window) unless the record gives one.
+        for ref, label, t in [
+            ("NE39", "public chat closed (undocumented; dated by DQ9)", dt.datetime(2025, 7, 1, 17, 0, tzinfo=UTC)),
+            ("NE40", "history-search answerer swap (undocumented; dated by H56, with NE18)", dt.datetime(2026, 4, 20, 17, 0, tzinfo=UTC)),
+            ("NE43a", "daily pause/resume bookends stop (last 08-05 00:00 UTC)", dt.datetime(2026, 8, 5, 17, 0, tzinfo=UTC)),
+            ("NE43b", "nudger off (last nudge 08-20 17:42 UTC)", dt.datetime(2026, 8, 21, 17, 0, tzinfo=UTC)),
+            ("NE44", "pause default 12 h -> 5 min (with NE22)", dt.datetime(2026, 6, 11, 17, 0, tzinfo=UTC)),
+            ("NE45", "history-search tool schema change (undocumented; H56)", dt.datetime(2026, 7, 29, 17, 0, tzinfo=UTC)),
+        ]:
+            rows.append(dict(cls="r1b", ref=ref, label=label, t=t))
     ev = pl.DataFrame(rows).with_columns(pl.col("t").dt.cast_time_unit("us"))
     ev = ev.with_columns(pl.Series("aday0", [day0_index(cal, t) for t in ev["t"].to_list()], dtype=pl.Int32))
     ev = ev.join(cal.select(pl.col("aday").alias("aday0"), pl.col("pt_date").alias("pt_date0"),
@@ -105,6 +179,10 @@ def catalog(cal: pl.DataFrame):
     ev = ev.join(same, on="aday0", how="left").with_columns(
         pl.col("refs").list.len().gt(1).fill_null(False).alias("confounded"),
         pl.col("refs").list.join(",").alias("all_refs_same_day")).drop("refs")
+    if R1B_CATALOG:   # DQ9: NE06 coincides with all-agent system-prompt changes (2025-11-20/21)
+        ev = ev.with_columns(pl.when(pl.col("ref") == "NE06").then(True).otherwise(pl.col("confounded")).alias("confounded"))
+        r1b_same = ev.filter(pl.col("cls").is_in(["goal", "room", "scaffold", "roster", "operator", "r1b"])).group_by("aday0").agg(pl.col("ref").alias("refs2"))
+        ev = ev.join(r1b_same, on="aday0", how="left").with_columns(pl.col("refs2").list.join(",").alias("all_refs_same_day_r1b")).drop("refs2")
     ev = ev.sort("t").with_row_index("event_id")
     # every catalogued event (placebo exclusion): + roster joins/leaves, room creations/deletions
     ex = [(t,) for t in ev["t"].to_list()]
@@ -122,10 +200,14 @@ def catalog(cal: pl.DataFrame):
 _WH: dict = {}
 
 
-def whitener(reg):
-    if reg not in _WH:
-        _WH[reg] = L.load_whitener(reg, 32)
-    return _WH[reg]
+def whitener(reg, model="bge_small"):
+    if (reg, model) not in _WH:
+        if model == "bge_small":
+            _WH[(reg, model)] = L.load_whitener(reg, 32)
+        else:
+            from embed_models import load_whitener as lw
+            _WH[(reg, model)] = lw(reg, 32, model)
+    return _WH[(reg, model)]
 
 
 def day_worker(p: dict) -> dict:
@@ -136,8 +218,12 @@ def day_worker(p: dict) -> dict:
     out = {"aday": p["aday"], "T": X.shape[1], "n_present": X.shape[0], "stall_min": int(stall.sum()),
            "lull_min": int(lull.sum()), "offgap_min": int(L.off_runs(K).sum())}
     variants = {"": ~stall, "_none": np.ones_like(stall), "_lull": ~(stall | lull)}
+    if p.get("allpres") is not None:   # round 1b: DQ8 trim to the all-present window (before surrogates)
+        variants["_trim"] = ~stall & p["allpres"]
+        out["trim_min"] = int(variants["_trim"].sum())
+    rng_trim = np.random.default_rng([L.SEED, int(p["aday"]), 7])   # own stream: round-1 draws stay identical
     for tag, keep in variants.items():
-        a = L.activity_stats(X[:, keep].astype(float), Bh[:, keep], rng)
+        a = L.activity_stats(X[:, keep].astype(float), Bh[:, keep], rng_trim if tag == "_trim" else rng)
         for kk, v in a.items():
             if kk in L.ACT_STATS or kk.endswith(("_obs", "_sm", "_ss")) and tag == "":
                 out[kk + tag] = v
@@ -157,7 +243,7 @@ def day_worker(p: dict) -> dict:
                 out[kk + "_b5"] = a[kk]
     # content
     if p.get("V") is not None:
-        W = whitener(p["regime"])
+        W = whitener(p["regime"], p.get("model", "bge_small"))
         V = W(p["V"].reshape(-1, p["V"].shape[-1])).reshape(p["V"].shape[0], p["V"].shape[1], 32)
         V = V / np.clip(np.linalg.norm(V, axis=2, keepdims=True), 1e-9, None)
         c = L.content_stats(V, p["M"], rng)
@@ -171,20 +257,26 @@ def make_payloads(days: pl.DataFrame):
     which days are allowed (build.py: non-holdout only; confirm.py: holdout only with the confirm flags)."""
     h38prov = None
     dl = days["pt_date"].to_list()
-    ab = (pl.scan_parquet(L.SH / "activity_bins.parquet").select("pt_date", "minute", "agent", "state")
+    fixed = CFG["data_version"] == "fixed"
+    abt = "activity_bins_fixed.parquet" if fixed else "activity_bins.parquet"
+    ab = (pl.scan_parquet(L.SH / abt).select("pt_date", "minute", "agent", "state",
+                                              *(["talk", "idle", "consolidate", "other_event", "turns"] if CFG["trim"] else []))
           .filter(pl.col("pt_date").is_in(dl)).collect())
-    # H38 outage mask (Amendment 0d) or the fallback
-    use_h38 = (H38 / "outages.parquet").exists()
+    # H38 outage mask (Amendment 0d) or the fallback; round 1b: the corrected shared outages_fixed table
+    osrc = (L.SH / "outages_fixed/outages.parquet") if fixed else (H38 / "outages.parquet")
+    use_h38 = osrc.exists()
     if use_h38:
-        o = (pl.read_parquet(H38 / "outages.parquet").filter(pl.col("pt_date").is_in(dl))
+        o = (pl.read_parquet(osrc).filter(pl.col("pt_date").is_in(dl))
              .filter(pl.col("village_off") | pl.col("cause").is_in(["scheduled", "infra_error"]) | pl.col("infra_burst")))
         omask = {}
         for d, s, e in o.select("pt_date", "m_start", "m_end").iter_rows():
             omask.setdefault(d, []).append((s, e))
-        h38prov = json.loads((H38 / "_provenance.json").read_text()).get("build_outages", {}).get("built_at")
-    # content windows
-    aw = pl.read_parquet(EMB / "agent_win30.parquet").filter(pl.col("pt_date").is_in(dl))
-    vec = np.load(EMB / "agent_win30_vec.npy", mmap_mode="r")
+        if fixed:
+            h38prov = json.loads((L.SH / "_provenance.json").read_text()).get("outages_fixed", {}).get("built_at", "shared outages_fixed")
+        else:
+            h38prov = json.loads((H38 / "_provenance.json").read_text()).get("build_outages", {}).get("built_at")
+    # content windows (round 1b: model and dedupe switches)
+    aw, vec = window_vectors(dl)
     # consolidations per agent-day (NE41 nuisance check)
     cons = (pl.scan_parquet(L.SH / "events_core.parquet").filter(pl.col("action_type") == "CONSOLIDATE")
             .filter(pl.col("pt_date").is_in(dl)).group_by("pt_date").agg(pl.len().alias("n_consolidate")).collect())
@@ -215,7 +307,17 @@ def make_payloads(days: pl.DataFrame):
                 stall[max(0, s):min(T, e)] = True
         else:
             stall = L.off_runs(K)
-        p = {"aday": r["aday"], "X": X, "Bh": Bh, "stall": stall, "regime": r["regime"]}
+        p = {"aday": r["aday"], "X": X, "Bh": Bh, "stall": stall, "regime": r["regime"], "model": CFG["model"]}
+        if CFG["trim"]:   # DQ8: all-present window = minutes where every present agent is inside its record span
+            rec = gg.filter((pl.col("talk") + pl.col("idle") + pl.col("consolidate") + pl.col("other_event") + pl.col("turns")) > 0)
+            span = rec.group_by("agent").agg(pl.col("minute").min().alias("m0"), pl.col("minute").max().alias("m1"))
+            sp = {a_: (m0, m1) for a_, m0, m1 in span.iter_rows()}
+            allp = np.ones(T, bool)
+            for a_ in pres:
+                m0, m1 = sp.get(a_, (0, -1))
+                inside = np.zeros(T, bool); inside[max(0, m0):min(T, m1 + 1)] = True
+                allp &= inside
+            p["allpres"] = allp
         w = awd.get(d)
         if w is not None and w.height:
             agents = sorted(set(w["agent"].to_list())); Wn = int(w["win30"].max()) + 1
@@ -232,8 +334,7 @@ def add_rivals(st: pl.DataFrame, cal: pl.DataFrame, dl: list[str], allow_holdout
     """R1 (centroid shift vs the previous active day) and R3 (polarization) on raw 384-d agent-day vectors centered on the
     non-holdout mean (Amendment 0e). R1 is NaN when the previous active day is held out, unless allow_holdout_prev."""
     # rivals R1 / R3 on raw 384-d agent-day vectors centered on the non-holdout mean (Amendment 0e)
-    ad = pl.read_parquet(EMB / "agent_day.parquet")
-    av = np.load(EMB / "agent_day_vec.npy").astype(np.float32)
+    ad, av = day_vectors(None if allow_holdout_prev or CFG["dedupe"] == "none" else dl)
     nh = ad.filter(~pl.col("holdout"))
     mu = av[nh["gid"].to_numpy()].mean(0)
     mbar = {}
@@ -260,13 +361,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--catalog-only", action="store_true")
     ap.add_argument("--workers", type=int, default=2)
+    ap.add_argument("--data-version", default="old", choices=["old", "fixed"])
+    ap.add_argument("--model", default="bge_small", choices=["bge_small", "gte_modernbert"])
+    ap.add_argument("--dedupe", default="none", choices=["none", "restate", "copies"])
+    ap.add_argument("--catalog", default="r1", choices=["r1", "r1b"])
+    ap.add_argument("--r1b", default=None, help="round-1b tag: write to r1b/<tag>/ (adds the _trim variant)")
     a = ap.parse_args()
+    global R1B_CATALOG
+    CFG.update(data_version=a.data_version, model=a.model, dedupe=a.dedupe, trim=a.r1b is not None)
+    R1B_CATALOG = a.catalog == "r1b"
+    OUTD = (L.OUT / "r1b" / a.r1b) if a.r1b else L.OUT
     t0 = time.time()
-    L.OUT.mkdir(parents=True, exist_ok=True)
+    OUTD.mkdir(parents=True, exist_ok=True)
     cal = calendar()
     ev, allev = catalog(cal)
-    ev.write_parquet(L.OUT / "events.parquet", compression="zstd")
-    allev.write_parquet(L.OUT / "allevents.parquet", compression="zstd")
+    ev.write_parquet(OUTD / "events.parquet", compression="zstd")
+    allev.write_parquet(OUTD / "allevents.parquet", compression="zstd")
     print(f"catalog: {ev.height} events ({ev.filter(~pl.col('holdout0')).height} with non-holdout day 0), "
           f"{allev.height} exclusion dates")
     if a.catalog_only:
@@ -287,10 +397,11 @@ def main():
 
     st = add_rivals(st, cal, days["pt_date"].to_list(), allow_holdout_prev=False)
     assert not st["pt_date"].is_in(cal.filter(pl.col("holdout"))["pt_date"]).any()
-    st.write_parquet(L.OUT / "day_stats.parquet", compression="zstd")
-    for (g,), sub in st.group_by(["goal_no"]):
-        dd = L.OUT / f"G{int(g):02d}"; dd.mkdir(exist_ok=True)
-        sub.write_parquet(dd / "day_stats.parquet", compression="zstd")
+    st.write_parquet(OUTD / "day_stats.parquet", compression="zstd")
+    if not a.r1b:
+        for (g,), sub in st.group_by(["goal_no"]):
+            dd = L.OUT / f"G{int(g):02d}"; dd.mkdir(exist_ok=True)
+            sub.write_parquet(dd / "day_stats.parquet", compression="zstd")
     L.write_provenance("hypotheses/H36-reorganization-alarm/scheme/build.py",
                        ["activity_bins", "calendar", "kicks", "rooms", "rooms_timeline", "events_core",
                         "embeddings/agent_win30", "embeddings/agent_day", "whitening_<regime>"],

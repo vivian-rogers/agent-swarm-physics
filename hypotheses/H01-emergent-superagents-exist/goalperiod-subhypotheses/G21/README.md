@@ -1,6 +1,7 @@
 # H01 × G21: Forecast the abilities and effects of AI (2025-12-01 → 12-08)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory
 **Period:** regime I · mode I · 9 agents · one room · 5 days (NE28: o3 and Opus 4.1 retired on day 1).
 
@@ -27,3 +28,19 @@ Units: 21. Data: `data/processed/H01-emergent-superagents-exist/G21/results.json
 ## Notes
 - 2026-10-03: Polarization along ĝ is as high as #8 (0.27 vs 0.27); the kickoff text is long and specific, which may make ĝ easy to align with. Strong day-to-day co-fluctuation (R ≈ 5).
 - Agent field h_i: the agent's first day in the unit (Amendment 3, after the invariance check failed in regimes II and III), so P5/P6 use days 2+. P6 uses rarefied agent-day vectors (8 statements, Amendment 2).
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round-1 statistics re-run on the corrected inputs (card: Round 1b): shared goal vectors, restatements removed (each model's own DQ5 flag, chat only), bge-small and gte-modernbert, and DQ5's style-residualized vectors (identity claims).
+
+| unit | statistic | round 1 | 1b bge | 1b gte | 1b bge style-resid | 1b gte style-resid |
+| --- | --- | --- | --- | --- | --- | --- |
+| 21 | P1 room ΔH (median) | – | – | – | – | – |
+| 21 | P5 field R² | – | – | – | – | – |
+| 21 | P6 exposure slope | – | – | – | – | – |
+| 21 | P6 within − cross | – | – | – | – | – |
+| 21 | within − cross, room fields removed | – | – | – | – | – |
+| 21 | P9 βJ₀/n (upper bound) | 0.86 | 0.87 | 0.89 | – | – |
+
+Style-residualized runs report P1/P2/P5–P7 only (goal fields are not defined in that space). Data: `data/processed/H01-emergent-superagents-exist/r1b/<instrument>/explore.json`, `r1b/compare.json`.
+<!-- /R1B -->

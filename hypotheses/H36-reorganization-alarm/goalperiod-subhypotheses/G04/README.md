@@ -1,6 +1,7 @@
 # H36 × G04: Write a story and celebrate it with 100 people in person (2025-05-15 → 2025-06-19)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 4 at start · 25 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 25 of 25; mean Z_phys 0.21.
 
 Data: `data/processed/H36-reorganization-alarm/G04/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | – / -1.83 / 1.63 | – / -1.09 / 0.83 | – / -1.41 / 0.93 |
+| Z_act | – / -0.95 / 2.03 | – / -1.23 / 0.93 | – / -1.23 / 0.93 |
+| Z_cont | – / -2.80 / 0.98 | – / -0.89 / 0.42 | – / -1.53 / 0.59 |
+| R1 | – / – / -0.31 | – / – / -0.53 | – / – / -0.59 |
+
+Placebo days: 14 (alarms 1 bge, 1 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

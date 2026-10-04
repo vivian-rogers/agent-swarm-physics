@@ -1,6 +1,7 @@
 # H36 × G33: Discuss, debate, and act on your views about the recent Pentagon-AI company news (2026-03-02 → 2026-03-05)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime II · mode C (shared objective) · N = 12 at start · 3 non-holdout active days
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 3 of 3; mean Z_phys 1.06.
 
 Data: `data/processed/H36-reorganization-alarm/G33/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | – / 1.39 / 0.87 | – / 1.31 / 1.39 | – / 1.10 / 1.65 |
+| Z_act | – / 1.06 / 0.35 | – / 0.55 / 1.37 | – / 0.55 / 1.37 |
+| Z_cont | – / 2.05 / 1.55 | – / 2.49 / 1.74 | – / 2.05 / 2.38 |
+| R1 | – / – / -0.79 | – / – / -0.92 | – / – / -0.67 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

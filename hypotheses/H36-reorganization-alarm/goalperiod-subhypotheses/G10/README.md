@@ -1,6 +1,7 @@
 # H36 × G10: Complete as many games as you can in a week! (2025-08-18 → 2025-08-25)
 
 **Verdict:** supported
+**Verdict (1b):** supported (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode I (each agent its own objective) · N = 7 at start · 5 non-holdout active days · events inside: NE27, NE03
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 5 of 5; mean Z_phys 2.23.
 
 Data: `data/processed/H36-reorganization-alarm/G10/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | – / 8.79 / 2.87 | – / 5.28 / 1.65 | – / 6.97 / 2.22 |
+| Z_act | – / 12.62 / 7.29 | – / 6.58 / 5.60 | – / 6.58 / 5.60 |
+| Z_cont | – / 4.32 / -2.43 | – / 3.83 / -3.06 | – / 7.18 / -1.69 |
+| R1 | – / – / -2.08 | – / – / -2.22 | – / – / -2.18 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->

@@ -1,6 +1,7 @@
 # H26 × G41: Same task in both rooms (2026-05-11 → 2026-05-18)
 
 **Verdict:** mixed: best case: content 0.77 [0.72, 0.80], N2 p 0.005; activity's whole-swarm co-fluctuation is larger but global
+**Verdict (1b):** mixed (unchanged)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents · two rooms, identical task · 5 days. H01 units used: 41.
 
@@ -29,3 +30,17 @@ Values are loop gains g = 1 − 1/VR (clipped at −1), deduped content, outage 
 ## Notes
 - 2026-10-04: prediction written before the H26 estimators touched this period.
 - 2026-10-04: results filled from `analysis/summarize.py` (joint bootstrap) and `analysis/explore.py`.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Fixed activity table (DQ8), DQ5 restatement dedupe, shared goal fields, both embedding models (card: Round 1b). Gains g = 1 − 1/VR; two-room units L3 room excess, one-room units L2 (upper bound).
+
+| unit | run | content day | activity day | talk day | content w30 | activity w30 | talk w30 | Δg_ca w30 | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 41 | round 1 | 0.77 | 0.43 | 0.77 | 0.73 | < −1 | < −1 | 1.73 | mixed |
+| 41 | 1b bge | 0.77 | 0.73 | 0.84 | 0.73 | 0.47 | 0.76 | 0.26 | mixed |
+| 41 | 1b gte | 0.78 | 0.73 | 0.84 | 0.76 | 0.47 | 0.76 | 0.29 | mixed |
+| 41 | 1b bge, trimmed activity | 0.77 | 0.81 | 0.85 | 0.73 | 0.59 | 0.76 | 0.14 | mixed |
+
+Data: `data/processed/H26-content-near-critical/r1b/<run>/G41/`.
+<!-- /R1B -->

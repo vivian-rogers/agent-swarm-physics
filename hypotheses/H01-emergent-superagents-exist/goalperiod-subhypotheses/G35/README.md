@@ -1,6 +1,7 @@
 # H01 × G35: Test your game to make it as fun and functional as you can (2026-03-16 → 03-23)
 
 **Verdict:** failed (round 2: no agency signature; round 1: mixed)
+**Verdict (1b):** mixed (unchanged, both models)
 **Role:** exploratory
 **Period:** regime II · mode C · 13 agents · #best/#rest (split 03-16, NE15; RPG forked per room) · 5 days. The pre-split window (#34) is held out.
 
@@ -28,3 +29,19 @@ Units: 35. Data: `data/processed/H01-emergent-superagents-exist/G35/results.json
 
 ## Round 2 (2026-10-04)
 Round 2 (effective superagents in Kolchinsky–Wolpert terms) is in [`README_round2.md`](README_round2.md). Verdict: **failed**: no agency signature.
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Round-1 statistics re-run on the corrected inputs (card: Round 1b): shared goal vectors, restatements removed (each model's own DQ5 flag, chat only), bge-small and gte-modernbert, and DQ5's style-residualized vectors (identity claims).
+
+| unit | statistic | round 1 | 1b bge | 1b gte | 1b bge style-resid | 1b gte style-resid |
+| --- | --- | --- | --- | --- | --- | --- |
+| 35 | P1 room ΔH (median) | -0.070 | -0.071 | -0.137 | -0.077 | -0.111 |
+| 35 | P5 field R² | 0.15 | 0.13 | 0.09 | 0.06 | 0.05 |
+| 35 | P6 exposure slope | -0.019 ± 0.015 | -0.010 ± 0.014 | -0.022 ± 0.014 | -0.021 ± 0.012 | -0.028 ± 0.013 |
+| 35 | P6 within − cross | 0.222 | 0.227 | 0.219 | 0.208 | 0.202 |
+| 35 | within − cross, room fields removed | 0.222 | 0.227 | 0.219 | 0.208 | 0.202 |
+| 35 | P9 βJ₀/n (upper bound) | 0.87 | 0.87 | 0.86 | – | – |
+
+Style-residualized runs report P1/P2/P5–P7 only (goal fields are not defined in that space). Data: `data/processed/H01-emergent-superagents-exist/r1b/<instrument>/explore.json`, `r1b/compare.json`.
+<!-- /R1B -->

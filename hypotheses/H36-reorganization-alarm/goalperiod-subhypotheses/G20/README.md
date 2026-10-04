@@ -1,6 +1,7 @@
 # H36 × G20: Start a Substack and join the blogosphere (2025-11-17 → 2025-12-01)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode I (each agent its own objective) · N = 8 at start · 10 non-holdout active days · events inside: NE06
 
@@ -34,3 +35,17 @@ Non-holdout days scored: 10 of 10; mean Z_phys 0.26.
 
 Data: `data/processed/H36-reorganization-alarm/G20/day_stats.parquet`, `scores.parquet`.
 <!-- /RESULT -->
+
+## Round 1b (improved data, 2026-10-04)
+<!-- R1B -->
+Re-run on the fixed activity table and outage mask (DQ8), restatements removed, both embedding models (card: Round 1b). Same verdict rule as round 1.
+
+| Score (day −1 / 0 / +1) | round 1 | 1b bge | 1b gte |
+| --- | --- | --- | --- |
+| Z_phys (alarm) | 0.51 / 0.10 / -0.13 | 0.06 / -0.62 / 0.02 | 0.29 / -0.55 / -0.00 |
+| Z_act | 0.45 / 0.57 / -0.46 | -0.09 / -0.56 / -0.21 | -0.09 / -0.56 / -0.21 |
+| Z_cont | 0.25 / -0.52 / 0.22 | 0.07 / -0.58 / 0.23 | 0.60 / -0.39 / 0.23 |
+| R1 | 1.48 / 5.24 / 1.86 | 0.99 / 5.62 / 1.83 | 0.77 / 5.21 / 1.52 |
+
+Placebo days: 0 (alarms 0 bge, 0 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
+<!-- /R1B -->
