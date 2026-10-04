@@ -52,7 +52,7 @@ def main():
         c = cal[g]
         in_p2 = g in P2_WINDOWS
         v = verdict(t["kappa_x"]) if in_p2 else "descriptive"
-        folder = H / f"G{g:02d}"
+        folder = H / "goalperiod-subhypotheses" / f"G{g:02d}"
         readme = folder / "README.md"
         if readme.exists() and MARK not in readme.read_text():
             print("skip (hand-edited)", folder.name); continue

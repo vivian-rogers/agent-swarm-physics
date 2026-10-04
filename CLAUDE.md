@@ -36,14 +36,16 @@ hypotheses/H<NN>-<slug>/
 ├── scheme/       # the postprocessing scheme: builds data/processed/H<NN>-<slug>/ from data/raw/
 ├── analysis/     # ONE pipeline for the hypothesis, run per goal period (e.g. --period G38)
 ├── figures/      # cross-period summary figures
-├── G38/          # this hypothesis on goal period #38: README (verdict, role, why this period,
-│   └── figures/  #   dated prediction, result, period-specific scorecard) + per-period figures
-├── G41/ …
-└── NE15/         # a test across a natural experiment that spans goal periods (the named exception)
+├── summary/      # one-page RevTeX summary: content.tex + meta.json (written), summary.pdf (built)
+└── goalperiod-subhypotheses/
+    ├── G38/          # this hypothesis on goal period #38: README (verdict, role, why this period,
+    │   └── figures/  #   dated prediction, result, period-specific scorecard) + per-period figures
+    ├── G41/ …
+    └── NE15/         # a test across a natural experiment that spans goal periods (the named exception)
 ```
 
-- **Goal-period folders.** Each goal period a hypothesis is tested on gets a `G<NN>/` folder (two digits, e.g. `G08`, `G38`). Use `G35a`/`G35b` only when a step change splits a period. Copy `hypotheses/_template/GNN/`. The README's first lines are `**Verdict:**` (pending · supported · failed · mixed · descriptive · n/a) and `**Role:**` (exploratory · confirmatory). Write the period's prediction there before running on that period. Its data goes in `data/processed/H<NN>-<slug>/G<NN>/`.
-- **Tests across a boundary** (event studies, cuts, merges, reversals) go in `NE<NN>/` folders named after the natural experiment.
+- **Goal-period folders.** Each goal period a hypothesis is tested on gets a `goalperiod-subhypotheses/G<NN>/` folder (two digits, e.g. `G08`, `G38`). Use `G35a`/`G35b` only when a step change splits a period. Copy `hypotheses/_template/goalperiod-subhypotheses/GNN/`. The README's first lines are `**Verdict:**` (pending · supported · failed · mixed · descriptive · n/a) and `**Role:**` (exploratory · confirmatory). Write the period's prediction there before running on that period. Its data goes in `data/processed/H<NN>-<slug>/G<NN>/`.
+- **Tests across a boundary** (event studies, cuts, merges, reversals) go in `goalperiod-subhypotheses/NE<NN>/` folders named after the natural experiment. If a script ever writes period folders at the hypothesis root, `infra/overview/organize_period_folders.py` moves them (idempotent).
 - **`hypotheses/OVERVIEW.md`** is the hypothesis × goal-period table. It is generated from the G and NE folders by `infra/overview/build_overview.py`; never edit it by hand.
 
 - Number hypotheses sequentially (`H01`, `H02`, …); never reuse a number. Parked or refuted ones stay, with their status updated.
@@ -80,6 +82,8 @@ Each `data/processed/<name>/` folder has a `_provenance.json`:
 - Agent narration is a claim, not ground truth.
 
 ## Conventions
+
+- **Human-facing documents are RevTeX** (decided by Vivian 2026-10-04): explainers, summary pages, the compendium and reports written for Vivian are `revtex4-2` `.tex` compiled to PDF, not Markdown. Markdown stays for working files that agents and scripts parse: cards, period READMEs, LOG.md, tool READMEs.
 
 - Python via `uv` with the project environment (`pyproject.toml`, `.venv`): `uv run python …`. Times are UTC unless a column says otherwise.
 - **Storage budget: 20 GB for the whole project** (raised from 10 GB on 2026-10-03) (raw is 5.4 GB; `.venv` ~0.4 GB). Keep processed outputs ≲1 GB: compressed parquet, small dtypes, no duplicated text; check `du -sh` around big builds.

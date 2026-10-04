@@ -165,7 +165,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G21](G21/README.md) | exploratory | failed (literal H24); ramp descriptive | τ\* = 50 min after open. ΔA_res at τ_i +0.010 [−0.047, +0.086] vs placebo q90 0.12 / 0.11. A_res ≈ 0.33 before and after (rotation q95 ≈ 0.03). Snapshot βJ₀/n 0.67 → 0.67. Documents +0.128 [+0.06, +0.18]. Ramp ρ = 0.73. Hand-verified κ = 0.25 (p = 0.17). |
+| [G21](goalperiod-subhypotheses/G21/README.md) | exploratory | failed (literal H24); ramp descriptive | τ\* = 50 min after open. ΔA_res at τ_i +0.010 [−0.047, +0.086] vs placebo q90 0.12 / 0.11. A_res ≈ 0.33 before and after (rotation q95 ≈ 0.03). Snapshot βJ₀/n 0.67 → 0.67. Documents +0.128 [+0.06, +0.18]. Ramp ρ = 0.73. Hand-verified κ = 0.25 (p = 0.17). |
 
 ## Results
 **Exploratory round 1 (2026-10-03; G21 only, non-holdout; holdout asserted absent in every script).**

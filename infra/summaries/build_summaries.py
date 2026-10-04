@@ -124,7 +124,7 @@ def goal_span(scope: str):
 def period_diagram(h: dict, out: Path):
     cal = collect.calendar_meta()
     held = set(json.loads((HYP / "holdout.json").read_text())["goal_periods_held_out"])
-    fig, ax = plt.subplots(figsize=(7.4, 1.35), dpi=150)
+    fig, ax = plt.subplots(figsize=(7.4, 1.12), dpi=150)
     # regime bands
     reg = [(g, (cal.get(g) or {}).get("regime")) for g in range(1, 52)]
     spans, cur = [], None
@@ -236,7 +236,7 @@ def build_page(h: dict) -> dict:
                         f"card hypotheses/{h['slug']}/README.md · ratings: {meta.get('rated_by', 'not rated')}"
                         + (" · DRAFT: auto stub, not yet written" if stub else ""))
     status = h["status"] if len(h["status"]) < 260 else h["status"][:257] + "…"
-    tex = rf"""\documentclass[10pt]{{article}}
+    tex = rf"""\documentclass[aps,pre,reprint,10pt,nofootinbib]{{revtex4-2}}
 \input{{{rel.as_posix()}}}
 \def\hID{{{h['id']}}}
 \def\hTitle{{{tex_escape(h['title'])}}}
@@ -244,6 +244,7 @@ def build_page(h: dict) -> dict:
 \def\hStage{{{stage_text(h, meta)}}}
 \def\hBadges{{{badges(meta)}}}
 \def\hPeriodSummary{{{period_summary(h)}}}
+\def\hDate{{Updated {meta.get('updated', dt.date.today().isoformat())}}}
 \def\hFooter{{{footer}}}
 \input{{content.tex}}
 \begin{{document}}
@@ -257,7 +258,7 @@ def build_page(h: dict) -> dict:
     m = re.search(r"Output written on summary\.pdf \((\d+) page", log)
     pages = int(m.group(1)) if m else 0
     err = None if r.returncode == 0 else (re.findall(r"^! .*", log, re.M) or ["pdflatex failed"])[0]
-    for ext in (".aux", ".log", ".out"):
+    for ext in (".aux", ".log", ".out", "Notes.bib", ".bbl", ".blg"):
         (sdir / f"summary{ext}").unlink(missing_ok=True)
     return {"id": h["id"], "pages": pages, "error": err, "stub": stub, "meta": meta}
 

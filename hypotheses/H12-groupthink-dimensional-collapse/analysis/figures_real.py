@@ -220,8 +220,8 @@ def fig_periods(ut):
         ax.plot([], [], color=C1, label="PR30 (30-min windows)"); ax.plot([], [], color=C2, lw=1.6, label="PRday")
         ax.legend(fontsize=6, loc="lower right"); ax.set_title("dimensionality by window and day", fontsize=7.5, loc="left")
         fig.tight_layout()
-        (L.HYP / f"G{g:02d}" / "figures").mkdir(parents=True, exist_ok=True)
-        fig.savefig(L.HYP / f"G{g:02d}" / "figures" / f"G{g:02d}_summary.pdf"); plt.close(fig)
+        (L.HYP / "goalperiod-subhypotheses" / f"G{g:02d}" / "figures").mkdir(parents=True, exist_ok=True)
+        fig.savefig(L.HYP / "goalperiod-subhypotheses" / f"G{g:02d}" / "figures" / f"G{g:02d}_summary.pdf"); plt.close(fig)
     print("period figures done")
 
 

@@ -1,6 +1,6 @@
 # H04: External forcing reshapes the response kernel, reversibly
 
-**Status:** **confirmatory run on the locked holdout (2026-10-03): C1 FALSIFIED, in the opposite direction.** The branching ratio n is *higher* on 8 h days at all three hours switches; the ABAB contrast is at the edge of week-to-week noise. C2 is inconclusive, C3 untestable, C4 (NE23) partial with a failed manipulation check, and MF-C indistinguishable from week-to-week variation. Exploratory round 1 (non-holdout) found real but delayed nudge responses (Results). See [NE21/README.md](NE21/README.md).
+**Status:** **confirmatory run on the locked holdout (2026-10-03): C1 FALSIFIED, in the opposite direction.** The branching ratio n is *higher* on 8 h days at all three hours switches; the ABAB contrast is at the edge of week-to-week noise. C2 is inconclusive, C3 untestable, C4 (NE23) partial with a failed manipulation check, and MF-C indistinguishable from week-to-week variation. Exploratory round 1 (non-holdout) found real but delayed nudge responses (Results). See [NE21/README.md](goalperiod-subhypotheses/NE21/README.md).
 **Fields:** dynamics, stat mech, sociophysics
 **Literature:** none of the notes in `literature/` covers linear response; the references are in the model folders: Cugliandolo, Kurchan & Peliti, *PRE* 55, 3898 (1997)† (`physics-models/02-nonequilibrium-ising`, effective temperature); Crane & Sornette 2008† and Filimonov & Sornette 2015† (`physics-models/09-hawkes`).
 **Definitions used:** Regime; Driving / external field; Activity time (here: minutes since the day's empirical window start); Action; Interaction (broadcast) for bystanders; Population N(t). New operational terms are defined below (activity n, kick, Green's function G, FD ratio X).
@@ -255,7 +255,7 @@ Code: `analysis/h04lib.py` (machinery), `analysis/explore.py` (G, linearity, FD,
 - The Hawkes slow component may absorb nonstationarity.
 
 ### Confirmatory (locked holdout; run 2026-10-03 23:13–23:27 UTC, signed off by Vivian; pre-registration commit e9bf2f7)
-`confirm_ne21_ne23.py --confirm --i-understand-this-uses-the-locked-holdout` was run once. Output: `data/processed/H04-reversible-forcing/confirm_ne21_ne23.json`. Full table in [NE21/README.md](NE21/README.md).
+`confirm_ne21_ne23.py --confirm --i-understand-this-uses-the-locked-holdout` was run once. Output: `data/processed/H04-reversible-forcing/confirm_ne21_ne23.json`. Full table in [NE21/README.md](goalperiod-subhypotheses/NE21/README.md).
 
 | Prediction | Result | Verdict |
 | --- | --- | --- |

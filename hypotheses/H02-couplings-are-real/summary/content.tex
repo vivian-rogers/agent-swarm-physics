@@ -1,0 +1,16 @@
+\hwhat{Directed kinetic-Ising couplings were fitted to 1-min activity spins in 21 non-holdout 5-day chunks (\#10--\#44), with block fields and surrogate nulls. On synthetic villages the pipeline is identifiable: edge AUC 0.95 at 5 days, and a leader with total outgoing $J\ge1.5$ is found 90--100\% of the time. On real data, pairwise couplings sit at the null floor (5.7--8.4\% significant against a 6--7\% false-positive rate). Shared-objective weeks couple no more than free weeks (ratio 0.92 and 1.06), only 19\% of couplings survive 2-min bins, and \#26's elected leader ranked 8/10. What survives is weak collective co-activation (Curie--Weiss $\beta J_0q\le0.36$), much of it synchronized lulls, and its forward prediction of $P(K)$ failed. \textbf{Locked holdout \#45 failed:} the operators' Fine-Tuned Leader ranked 4/18 by net outgoing influence ($z=0.76$; the rule needed rank 1 and $z\ge2$).}
+
+\hmodel{Model 02 (kinetic Ising, primary); model 01 (equilibrium Ising) is the rival. Spin $s_i(t)=\pm1$: agent $i$ active (acts or talks) or not in 1-min bin $t$. $h_i$: bias; $\delta_i(b)$: field per (day, 30-min block), absorbing schedule and kickoffs; $J_{ij}$: lagged influence of $j$ on $i$; $\sigma$: logistic; $I_k$: net outgoing influence. Mean field: uniform coupling $\beta J_0$; $m$: mean spin; $q$: mean spin variance; VR: variance of $\sum_i s_i$ over its independent value.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+P\big(s_i(t{+}1)=+1\mid\mathbf s(t)\big)=\sigma\big(2H_i(t)\big)\\
+H_i(t)=h_i+\delta_i(b)+\textstyle\sum_{j}J_{ij}\,s_j(t)\\
+I_k=\textstyle\sum_{j\neq k}\big(J_{jk}-J_{kj}\big)\\
+N\,\mathrm{Var}(m)=q/(1-\beta J_0q)\;\Rightarrow\;\beta J_0=(1-1/\mathrm{VR})/q
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Pass rate of the locked rule in synthetic villages sampled like \#45 (18 agents, 5 days), by the planted leader's total outgoing coupling: a leader of strength 1.5 or more would almost surely have been found. (b) The real \#45 holdout: $z$ of net outgoing influence for every agent. The installed Fine-Tuned Leader ranks 4th at $z=0.76$, and no agent reaches $z=2$.}
+
+\htelos{A useful negative. Fitting an Ising model to who is active when, and reading off who leads, is the first thing a physicist tries on agent logs, and it does not work. Per-pair couplings from activity timing are noise, and they missed a leader the operators deliberately installed. The fault is in the data, not the estimator, which finds planted leaders easily. Anyone trying to find which agent steers a swarm should look at content and replies, not timing. The one surviving signal, the swarm going quiet together, looks more like platform stalls than social coupling. Mostly this tells you what not to compute.}
+
+\hbottom{Inverse-Ising couplings from minute-level activity do not measure influence in an agent swarm: they sit at the null floor and missed the operator-installed leader on the locked holdout.}

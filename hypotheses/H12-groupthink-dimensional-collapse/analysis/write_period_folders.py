@@ -72,7 +72,7 @@ def predict():
     units = pl.read_parquet(L.OUT / "units.parquet")
     tt = titles(); tr = transitions(units)
     for g in PERIODS:
-        d = L.HYP / f"G{g:02d}"
+        d = L.HYP / "goalperiod-subhypotheses" / f"G{g:02d}"
         (d / "figures").mkdir(parents=True, exist_ok=True)
         f = d / "README.md"
         if f.exists() and "## Prediction" in f.read_text():
@@ -125,7 +125,7 @@ def predict():
 def results():
     res = json.loads((L.OUT / "period_results.json").read_text())
     for g in PERIODS:
-        f = L.HYP / f"G{g:02d}" / "README.md"
+        f = L.HYP / "goalperiod-subhypotheses" / f"G{g:02d}" / "README.md"
         r = res.get(str(g))
         if r is None or not f.exists():
             continue

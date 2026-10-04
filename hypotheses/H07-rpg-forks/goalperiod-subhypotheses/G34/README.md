@@ -22,7 +22,7 @@ Exploratory H07 code reads only the T0 tree, never #34 commits, authors or messa
 - **C2 (touch clock transfers).** In the second half of #34, the src-file copy fraction relative to the snapshot at the end of 2026-03-10 PT, against cumulative touches to those reference files, has a single-exponential rate within a factor of 1.5 of the #35 value from the same function (pooled #best + #rest = 0.00194 per touch; #best 0.00211, #rest 0.00176). *Falsifier:* ratio outside [0.5, 2].
 
 ## Result
-Not run. Script: [`../analysis/confirm_h34.py`](../analysis/confirm_h34.py). Run it once with `--i-am-confirming`; it writes `data/processed/H07-rpg-forks/confirm_h34.json`. The default mode is a dry run on #35 stand-ins, which exercised the code path on 2026-10-03 and touched no #34 data. Its stand-in numbers are not evidence.
+Not run. Script: [`../analysis/confirm_h34.py`](../../analysis/confirm_h34.py). Run it once with `--i-am-confirming`; it writes `data/processed/H07-rpg-forks/confirm_h34.json`. The default mode is a dry run on #35 stand-ins, which exercised the code path on 2026-10-03 and touched no #34 data. Its stand-in numbers are not evidence.
 
 ## Scorecard (period-specific axes)
 | Axis | Score | Evidence |

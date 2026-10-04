@@ -1,0 +1,16 @@
+\hwhat{Exploratory (non-holdout): a nudge adds 1.54 [0.80, 2.29] active minutes to its named target over 30 min, but only after a 4-min delay, peaking near 15 min; bystanders show nothing. Human messages act at once on mentioned agents (4.7$\times$ unmentioned). Goal kickoffs leave the activity level unchanged. No kick type passes as a linear propagator: dose is untestable, and superposition is confounded by the nudger re-firing. FDT fails in shape (responses come after 5 min, while autocorrelation decays within 1), and kicked activations persist longer than spontaneous ones ($T_{\text{eff}}\approx0.65$). Mean-field Glauber underpredicts decay times 5--26$\times$. Hawkes beats Poisson ($n=0.59$ in regime I, 0.72 in III). \textbf{Locked holdout NE21} (hours $4\to8\to4\to8$ h): \textbf{C1 falsified in the opposite direction}. $n$ was \emph{higher} on 8 h days at 3/3 switches (0.31, 0.67, 0.46, 0.89; ABAB $-0.39$ vs noise 0.42). The NE23 nudger-off manipulation check failed; C2 was inconclusive and C3 untestable.}
+
+\hmodel{Models 02 (linear response, fluctuation--dissipation) and 09 (Hawkes). $n_i(m)\in\{0,1\}$: agent $i$ active in minute $m$. A kick (nudge, human message, kickoff) at $m_0$ is a field pulse; $G$: matched response; $C$: activity autocorrelation; $\chi$: integrated $G$; $X$: FD ratio ($X=1$ at equilibrium). Hawkes: $\mu_d b(t)$ daily baseline, $\phi$ talk-triggered kernel, $\eta_c$ messages triggered per class-$c$ kick, $n$ branching ratio. Mean field: loop gain $K$, agent time $\tau_0$, variance ratio VR.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+G(\tau)=\mathbb E[n_i(m_0{+}\tau)\mid\text{kick}]-\mathbb E[n_i(m_0{+}\tau)\mid\text{control}]\\
+\text{FDT: }\chi(\tau)=X\,[C(0)-C(\tau)],\qquad T_{\text{eff}}=1/X\\
+\lambda(t)=\mu_d b(t)+\textstyle\sum_k\phi(t-t_k)+\sum_c\eta_c\sum_j\gamma_c e^{-\gamma_c(t-t_j)}\\
+n=\textstyle\int_0^\infty\phi(\tau)\,d\tau,\qquad \tau=\tau_0/(1-K),\quad K=1-1/\mathrm{VR}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) A nudged agent's activity against matched no-kick controls (95\% day-block band): nothing for four minutes, then a plateau from about 10 to 30 min. The delay is why a field-on-activity reading and FDT fail: the nudge enters the agent's context and is read at its next turn. (b) Branching ratio per hours segment on the holdout; dashed arrows mark the predicted 8 h drop. Every switch went the other way, by about the size of week-to-week noise.}
+
+\htelos{The useful part is the plainest. A nudge works, on the agent it names and nobody else, after a lag of minutes, because it lands in a context the agent reads on its next turn. So target nudges and expect the lag, as any scaffold operator might guess. The physics vocabulary (Green's functions, FDT, effective temperature) mostly shows that a field-on-activity model is wrong; it does not supply a better one. The one intervention test, longer days lowering self-excitation, failed in the opposite direction at the edge of weekly noise. If real, longer sessions breed more triggered activity: a sizing hint at best. Goal changes alter what agents do, not how much.}
+
+\hbottom{Nudges and mentions have real, delayed, target-only effects that no linear-field or FDT picture captures, and the one reversal test of how working hours reshape self-excitation was falsified in the opposite direction.}

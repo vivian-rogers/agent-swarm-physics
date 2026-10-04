@@ -1,0 +1,16 @@
+\hwhat{Starting set D3.1.a (rooms as ordered ``ideological'' units) and D3.2 (coupling vs field), tested on 184,713 embedded chat messages and intentions in 16 non-holdout regime II/III units. Rooms had lower meaning-cluster entropy than random same-size groups on 96\% of 54 days, but the median gap ($-0.098$ nats) \emph{narrowly missed} the locked $-0.1$. The biggest gaps came where rooms got different instructions (\#38: $-0.34$ to $-0.38$), i.e.\ a room field. The exposure slope of residual alignment ($+0.013$ per e-fold) was positive in 12/15 units and beat the rotation null ($p=0.005$), but its random-effects $p=0.019$ missed the required 0.01 and it vanished at $n=16$. Merging rooms (05-04) raised new pairs' alignment by $+0.18$ ($p=0.004$, confounded with a goal change). Failed: field dominance (P5 at null level), day-to-day stability (P3), lab order as style (P2), and weak coupling (P9: median $\beta J_0/n=0.74$). The NE15 holdout test is written but \textbf{not run}.}
+
+\hmodel{Model 11 (O($n$) vector spins) inside model 04's superagent framing. Spin $\mathbf s_i$: agent $i$'s day-mean statement embedding ($n=32$). Fields: goal direction $\hat g$, agent field $\mathbf h_i$ (style, prior). Couplings $J_{ij}$ act through room chat; $E_{ij}$: messages of $j$ that $i$ saw. $p_c$: share of a group's statements in meaning cluster $c$. $r_{ij}$: pair alignment net of the fields; $b$: exposure slope ($\alpha,\delta$: pair, day effects). $J_0$: mean-field coupling; $L_n$: Bessel ratio.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+P(\{\mathbf s\})\propto\exp\big(\textstyle\sum_{i<j}J_{ij}\,\mathbf s_i\!\cdot\!\mathbf s_j+\sum_i(h\hat g+\mathbf h_i)\!\cdot\!\mathbf s_i\big)\\
+H_G=-\textstyle\sum_c p_c\ln p_c,\qquad \Delta H=H_{\text{rooms}}-\langle H_{\text{random}}\rangle\\
+r_{ij}(t)=\alpha_{ij}+\delta_t+b\,\ln\!\big(1+E_{ij}(t)\big)+\varepsilon_{ij}(t)\\
+m=L_n\big(\beta(J_0m+h)\big),\qquad \text{critical point } \beta J_0=n
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Each dot is one day's room-minus-random entropy gap; bars are unit medians. Rooms sit below random on 96\% of days, but the pooled median lands just above the locked $-0.1$ line. The deep gaps (\#38a--c) are periods whose rooms had different instructions, which a room field alone reproduces in synthetic data. (b) Per-unit exposure slopes (95\% CI) and their random-effects summary: positive, but $p=0.019$ against the required 0.01.}
+
+\htelos{Rooms make agents talk about the same things, which is obvious in hindsight, and the cleanest cases are rooms given different instructions: the operator's field, not an emergent mind. The coupling residual is tiny and depends on the embedding; nobody would design channels around $+0.013$ cosine per e-fold. The one usable fact is where the shared dynamics live: day-to-day co-fluctuation sits inside rooms (correlation 0.06--0.66 within, about 0 across), so to read or damp herding, look at rooms, not labs. ``Superagent'' is, for now, a word for that. Whether room order is coupling or just a shared room drive is the NE15 holdout's job, and it hasn't run.}
+
+\hbottom{Rooms are measurably more like-minded than random groups, but both locked thresholds were narrowly missed and the order looks more like operator-imposed room fields than an emergent superagent.}

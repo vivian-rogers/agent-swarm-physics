@@ -124,41 +124,41 @@ Per-period verdict rule (written in each G card before the fit): the collapse mo
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G02](G02/README.md) | exploratory | failed | x_att 0.81, k_llm 0.94; n̂ TALK 0.72 (LOPO pred 0.43); g_eq active 0.23 (LOPO pred 0.07); log density vs regime-only -0.46 |
-| [G03](G03/README.md) | exploratory | mixed | x_att 0.85, k_llm 1.44; n̂ TALK 0.66 (LOPO pred 0.43); g_eq active 0.02 (LOPO pred 0.09); log density vs regime-only -0.22 |
-| [G04](G04/README.md) | exploratory | mixed | x_att 0.80, k_llm 0.62; n̂ TALK 0.55 (LOPO pred 0.45); g_eq active 0.10 (LOPO pred 0.08); log density vs regime-only -0.66 |
-| [G05](G05/README.md) | exploratory | supported | x_att 0.78, k_llm 0.53; n̂ TALK 0.15 (LOPO pred 0.47); g_eq active -0.07 (LOPO pred 0.08); log density vs regime-only +0.36 |
-| [G06](G06/README.md) | exploratory | supported | x_att 0.81, k_llm 0.32; n̂ TALK 0.65 (LOPO pred 0.44); g_eq active 0.00 (LOPO pred 0.09); log density vs regime-only +1.71 |
-| [G07](G07/README.md) | exploratory | mixed | x_att 0.83, k_llm 0.36; n̂ TALK 0.47 (LOPO pred 0.45); g_eq active 0.08 (LOPO pred 0.08); log density vs regime-only -0.18 |
-| [G08](G08/README.md) | exploratory | supported | x_att 0.82, k_llm 0.28; n̂ TALK 0.27 (LOPO pred 0.46); g_eq active 0.03 (LOPO pred 0.09); log density vs regime-only +1.52 |
-| [G10](G10/README.md) | exploratory | mixed | x_att 0.78, k_llm 0.68; n̂ TALK 0.22 (LOPO pred 0.47); g_eq active 0.29 (LOPO pred 0.07); log density vs regime-only -0.91 |
-| [G11](G11/README.md) | exploratory | failed | x_att 0.92, k_llm 1.06; n̂ TALK 0.61 (LOPO pred 0.43); g_eq active 0.30 (LOPO pred 0.09); log density vs regime-only -0.45 |
-| [G12](G12/README.md) | exploratory | mixed | x_att 0.97, k_llm 1.69; n̂ TALK 0.63 (LOPO pred 0.42); g_eq active 0.17 (LOPO pred 0.10); log density vs regime-only -0.53 |
-| [G13](G13/README.md) | exploratory | supported | x_att 0.85, k_llm 0.93; n̂ TALK 0.57 (LOPO pred 0.44); g_eq active 0.03 (LOPO pred 0.09); log density vs regime-only +0.05 |
-| [G16](G16/README.md) | exploratory | mixed | x_att 0.97, k_llm 0.85; n̂ TALK 0.59 (LOPO pred 0.42); g_eq active 0.28 (LOPO pred 0.10); log density vs regime-only -0.31 |
-| [G17](G17/README.md) | exploratory | mixed | x_att 1.22, k_llm 1.16; n̂ TALK 0.48 (LOPO pred 0.38); g_eq active 0.12 (LOPO pred 0.13); log density vs regime-only -1.48 |
-| [G18](G18/README.md) | exploratory | mixed | x_att 1.02, k_llm 1.48; n̂ TALK 0.70 (LOPO pred 0.41); g_eq active 0.08 (LOPO pred 0.11); log density vs regime-only -1.07 |
-| [G19](G19/README.md) | exploratory | mixed | x_att 0.97, k_llm 0.99; n̂ TALK 0.69 (LOPO pred 0.41); g_eq active 0.11 (LOPO pred 0.10); log density vs regime-only -1.02 |
-| [G20](G20/README.md) | exploratory | mixed | x_att 1.00, k_llm 0.84; n̂ TALK 0.62 (LOPO pred 0.41); g_eq active 0.04 (LOPO pred 0.11); log density vs regime-only -0.86 |
-| [G21](G21/README.md) | exploratory | mixed | x_att 1.08, k_llm 0.98; n̂ TALK 0.68 (LOPO pred 0.40); g_eq active 0.09 (LOPO pred 0.12); log density vs regime-only -0.28 |
-| [G23](G23/README.md) | exploratory | supported | x_att 0.93, k_llm 0.53; n̂ TALK 0.10 (LOPO pred 0.44); g_eq active 0.04 (LOPO pred 0.10); log density vs regime-only +0.54 |
-| [G24](G24/README.md) | exploratory | supported | x_att 0.94, k_llm 0.51; n̂ TALK 0.13 (LOPO pred 0.44); g_eq active -0.00 (LOPO pred 0.10); log density vs regime-only +0.49 |
-| [G25](G25/README.md) | exploratory | mixed | x_att 0.99, k_llm 1.06; n̂ TALK 0.38 (LOPO pred 0.42); g_eq active 0.05 (LOPO pred 0.11); log density vs regime-only -0.30 |
-| [G26](G26/README.md) | exploratory | supported | x_att 0.96, k_llm 1.21; n̂ TALK 0.56 (LOPO pred 0.42); g_eq active 0.21 (LOPO pred 0.10); log density vs regime-only +0.65 |
-| [G27](G27/README.md) | exploratory | supported | x_att 0.94, k_llm 0.62; n̂ TALK 0.41 (LOPO pred 0.43); g_eq active 0.14 (LOPO pred 0.10); log density vs regime-only +1.49 |
-| [G30](G30/README.md) | exploratory | mixed | x_att 0.89, k_llm 0.84; n̂ TALK 0.28 (LOPO pred 0.45); g_eq active 0.10 (LOPO pred 0.09); log density vs regime-only -0.04 |
-| [G31](G31/README.md) | exploratory | supported | x_att 0.85, k_llm 0.93; n̂ TALK 0.07 (LOPO pred 0.45); g_eq active 0.07 (LOPO pred 0.09); log density vs regime-only +0.60 |
-| [G33](G33/README.md) | exploratory | supported | x_att 0.82, k_llm 1.21; n̂ TALK 0.76 (LOPO pred 0.44); g_eq active 0.11 (LOPO pred 0.08); log density vs regime-only +1.98 |
-| [G35](G35/README.md) | exploratory | mixed | x_att 0.84, k_llm 0.32; n̂ TALK 0.08 (LOPO pred 0.47); g_eq active 0.10 (LOPO pred 0.08); log density vs regime-only +2.08 |
-| [G36](G36/README.md) | exploratory | mixed | x_att 1.13, k_llm 0.24; n̂ TALK 0.29 (LOPO pred 0.40); g_eq active 0.17 (LOPO pred 0.12); log density vs regime-only -0.47 |
-| [G37](G37/README.md) | exploratory | mixed | x_att 1.74, k_llm 0.20; n̂ TALK 0.30 (LOPO pred 0.30); g_eq active 0.32 (LOPO pred 0.19); log density vs regime-only -5.95 |
-| [G38](G38/README.md) | exploratory | supported | x_att 1.53, k_llm 0.20; n̂ TALK 0.32 (LOPO pred 0.34); g_eq active 0.12 (LOPO pred 0.18); log density vs regime-only +1.18 |
-| [G39](G39/README.md) | exploratory | mixed | x_att 1.82, k_llm 0.20; n̂ TALK 0.10 (LOPO pred 0.32); g_eq active 0.19 (LOPO pred 0.21); log density vs regime-only -1.22 |
-| [G40](G40/README.md) | exploratory | failed | x_att 1.56, k_llm 0.51; n̂ TALK 0.00 (LOPO pred 0.36); g_eq active 0.35 (LOPO pred 0.16); log density vs regime-only -3.93 |
-| [G41](G41/README.md) | exploratory | supported | x_att 1.40, k_llm 0.49; n̂ TALK 0.31 (LOPO pred 0.36); g_eq active 0.13 (LOPO pred 0.16); log density vs regime-only +0.27 |
-| [G42](G42/README.md) | exploratory | mixed | x_att 1.75, k_llm 0.24; n̂ TALK 0.20 (LOPO pred 0.31); g_eq active 0.11 (LOPO pred 0.22); log density vs regime-only -0.90 |
-| [G44](G44/README.md) | exploratory | mixed | x_att 1.59, k_llm 0.60; n̂ TALK 0.25 (LOPO pred 0.33); g_eq active 0.36 (LOPO pred 0.18); log density vs regime-only -0.09 |
-| [G51](G51/README.md) | exploratory | failed | x_att 2.24, k_llm 0.98; n̂ TALK 0.54 (LOPO pred 0.07); g_eq active 0.24 (LOPO pred 0.28); log density vs regime-only -3.07 |
+| [G02](goalperiod-subhypotheses/G02/README.md) | exploratory | failed | x_att 0.81, k_llm 0.94; n̂ TALK 0.72 (LOPO pred 0.43); g_eq active 0.23 (LOPO pred 0.07); log density vs regime-only -0.46 |
+| [G03](goalperiod-subhypotheses/G03/README.md) | exploratory | mixed | x_att 0.85, k_llm 1.44; n̂ TALK 0.66 (LOPO pred 0.43); g_eq active 0.02 (LOPO pred 0.09); log density vs regime-only -0.22 |
+| [G04](goalperiod-subhypotheses/G04/README.md) | exploratory | mixed | x_att 0.80, k_llm 0.62; n̂ TALK 0.55 (LOPO pred 0.45); g_eq active 0.10 (LOPO pred 0.08); log density vs regime-only -0.66 |
+| [G05](goalperiod-subhypotheses/G05/README.md) | exploratory | supported | x_att 0.78, k_llm 0.53; n̂ TALK 0.15 (LOPO pred 0.47); g_eq active -0.07 (LOPO pred 0.08); log density vs regime-only +0.36 |
+| [G06](goalperiod-subhypotheses/G06/README.md) | exploratory | supported | x_att 0.81, k_llm 0.32; n̂ TALK 0.65 (LOPO pred 0.44); g_eq active 0.00 (LOPO pred 0.09); log density vs regime-only +1.71 |
+| [G07](goalperiod-subhypotheses/G07/README.md) | exploratory | mixed | x_att 0.83, k_llm 0.36; n̂ TALK 0.47 (LOPO pred 0.45); g_eq active 0.08 (LOPO pred 0.08); log density vs regime-only -0.18 |
+| [G08](goalperiod-subhypotheses/G08/README.md) | exploratory | supported | x_att 0.82, k_llm 0.28; n̂ TALK 0.27 (LOPO pred 0.46); g_eq active 0.03 (LOPO pred 0.09); log density vs regime-only +1.52 |
+| [G10](goalperiod-subhypotheses/G10/README.md) | exploratory | mixed | x_att 0.78, k_llm 0.68; n̂ TALK 0.22 (LOPO pred 0.47); g_eq active 0.29 (LOPO pred 0.07); log density vs regime-only -0.91 |
+| [G11](goalperiod-subhypotheses/G11/README.md) | exploratory | failed | x_att 0.92, k_llm 1.06; n̂ TALK 0.61 (LOPO pred 0.43); g_eq active 0.30 (LOPO pred 0.09); log density vs regime-only -0.45 |
+| [G12](goalperiod-subhypotheses/G12/README.md) | exploratory | mixed | x_att 0.97, k_llm 1.69; n̂ TALK 0.63 (LOPO pred 0.42); g_eq active 0.17 (LOPO pred 0.10); log density vs regime-only -0.53 |
+| [G13](goalperiod-subhypotheses/G13/README.md) | exploratory | supported | x_att 0.85, k_llm 0.93; n̂ TALK 0.57 (LOPO pred 0.44); g_eq active 0.03 (LOPO pred 0.09); log density vs regime-only +0.05 |
+| [G16](goalperiod-subhypotheses/G16/README.md) | exploratory | mixed | x_att 0.97, k_llm 0.85; n̂ TALK 0.59 (LOPO pred 0.42); g_eq active 0.28 (LOPO pred 0.10); log density vs regime-only -0.31 |
+| [G17](goalperiod-subhypotheses/G17/README.md) | exploratory | mixed | x_att 1.22, k_llm 1.16; n̂ TALK 0.48 (LOPO pred 0.38); g_eq active 0.12 (LOPO pred 0.13); log density vs regime-only -1.48 |
+| [G18](goalperiod-subhypotheses/G18/README.md) | exploratory | mixed | x_att 1.02, k_llm 1.48; n̂ TALK 0.70 (LOPO pred 0.41); g_eq active 0.08 (LOPO pred 0.11); log density vs regime-only -1.07 |
+| [G19](goalperiod-subhypotheses/G19/README.md) | exploratory | mixed | x_att 0.97, k_llm 0.99; n̂ TALK 0.69 (LOPO pred 0.41); g_eq active 0.11 (LOPO pred 0.10); log density vs regime-only -1.02 |
+| [G20](goalperiod-subhypotheses/G20/README.md) | exploratory | mixed | x_att 1.00, k_llm 0.84; n̂ TALK 0.62 (LOPO pred 0.41); g_eq active 0.04 (LOPO pred 0.11); log density vs regime-only -0.86 |
+| [G21](goalperiod-subhypotheses/G21/README.md) | exploratory | mixed | x_att 1.08, k_llm 0.98; n̂ TALK 0.68 (LOPO pred 0.40); g_eq active 0.09 (LOPO pred 0.12); log density vs regime-only -0.28 |
+| [G23](goalperiod-subhypotheses/G23/README.md) | exploratory | supported | x_att 0.93, k_llm 0.53; n̂ TALK 0.10 (LOPO pred 0.44); g_eq active 0.04 (LOPO pred 0.10); log density vs regime-only +0.54 |
+| [G24](goalperiod-subhypotheses/G24/README.md) | exploratory | supported | x_att 0.94, k_llm 0.51; n̂ TALK 0.13 (LOPO pred 0.44); g_eq active -0.00 (LOPO pred 0.10); log density vs regime-only +0.49 |
+| [G25](goalperiod-subhypotheses/G25/README.md) | exploratory | mixed | x_att 0.99, k_llm 1.06; n̂ TALK 0.38 (LOPO pred 0.42); g_eq active 0.05 (LOPO pred 0.11); log density vs regime-only -0.30 |
+| [G26](goalperiod-subhypotheses/G26/README.md) | exploratory | supported | x_att 0.96, k_llm 1.21; n̂ TALK 0.56 (LOPO pred 0.42); g_eq active 0.21 (LOPO pred 0.10); log density vs regime-only +0.65 |
+| [G27](goalperiod-subhypotheses/G27/README.md) | exploratory | supported | x_att 0.94, k_llm 0.62; n̂ TALK 0.41 (LOPO pred 0.43); g_eq active 0.14 (LOPO pred 0.10); log density vs regime-only +1.49 |
+| [G30](goalperiod-subhypotheses/G30/README.md) | exploratory | mixed | x_att 0.89, k_llm 0.84; n̂ TALK 0.28 (LOPO pred 0.45); g_eq active 0.10 (LOPO pred 0.09); log density vs regime-only -0.04 |
+| [G31](goalperiod-subhypotheses/G31/README.md) | exploratory | supported | x_att 0.85, k_llm 0.93; n̂ TALK 0.07 (LOPO pred 0.45); g_eq active 0.07 (LOPO pred 0.09); log density vs regime-only +0.60 |
+| [G33](goalperiod-subhypotheses/G33/README.md) | exploratory | supported | x_att 0.82, k_llm 1.21; n̂ TALK 0.76 (LOPO pred 0.44); g_eq active 0.11 (LOPO pred 0.08); log density vs regime-only +1.98 |
+| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory | mixed | x_att 0.84, k_llm 0.32; n̂ TALK 0.08 (LOPO pred 0.47); g_eq active 0.10 (LOPO pred 0.08); log density vs regime-only +2.08 |
+| [G36](goalperiod-subhypotheses/G36/README.md) | exploratory | mixed | x_att 1.13, k_llm 0.24; n̂ TALK 0.29 (LOPO pred 0.40); g_eq active 0.17 (LOPO pred 0.12); log density vs regime-only -0.47 |
+| [G37](goalperiod-subhypotheses/G37/README.md) | exploratory | mixed | x_att 1.74, k_llm 0.20; n̂ TALK 0.30 (LOPO pred 0.30); g_eq active 0.32 (LOPO pred 0.19); log density vs regime-only -5.95 |
+| [G38](goalperiod-subhypotheses/G38/README.md) | exploratory | supported | x_att 1.53, k_llm 0.20; n̂ TALK 0.32 (LOPO pred 0.34); g_eq active 0.12 (LOPO pred 0.18); log density vs regime-only +1.18 |
+| [G39](goalperiod-subhypotheses/G39/README.md) | exploratory | mixed | x_att 1.82, k_llm 0.20; n̂ TALK 0.10 (LOPO pred 0.32); g_eq active 0.19 (LOPO pred 0.21); log density vs regime-only -1.22 |
+| [G40](goalperiod-subhypotheses/G40/README.md) | exploratory | failed | x_att 1.56, k_llm 0.51; n̂ TALK 0.00 (LOPO pred 0.36); g_eq active 0.35 (LOPO pred 0.16); log density vs regime-only -3.93 |
+| [G41](goalperiod-subhypotheses/G41/README.md) | exploratory | supported | x_att 1.40, k_llm 0.49; n̂ TALK 0.31 (LOPO pred 0.36); g_eq active 0.13 (LOPO pred 0.16); log density vs regime-only +0.27 |
+| [G42](goalperiod-subhypotheses/G42/README.md) | exploratory | mixed | x_att 1.75, k_llm 0.24; n̂ TALK 0.20 (LOPO pred 0.31); g_eq active 0.11 (LOPO pred 0.22); log density vs regime-only -0.90 |
+| [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | mixed | x_att 1.59, k_llm 0.60; n̂ TALK 0.25 (LOPO pred 0.33); g_eq active 0.36 (LOPO pred 0.18); log density vs regime-only -0.09 |
+| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | failed | x_att 2.24, k_llm 0.98; n̂ TALK 0.54 (LOPO pred 0.07); g_eq active 0.24 (LOPO pred 0.28); log density vs regime-only -3.07 |
 
 ## Results
 *Exploratory round 1, 2026-10-04. Non-holdout data only (35 periods, 282 days); nothing here is confirmatory. Numbers come from `data/processed/H19-loop-gain-collapse/results/explore.json` (`analysis/explore.py`), `synthetic/summary.json` (`analysis/synthetic.py`) and `results/posthoc_channels.json` (`analysis/posthoc_channels.py`). One-page summary: `figures/summary.pdf`.*

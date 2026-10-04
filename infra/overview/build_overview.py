@@ -1,6 +1,6 @@
 """Build hypotheses/OVERVIEW.md: the goal-period x hypothesis table of verdicts.
 
-Scans hypotheses/H*/G<NN>[a-z]/README.md and hypotheses/H*/NE<NN>/README.md for their
+Scans hypotheses/H*/goalperiod-subhypotheses/{G<NN>[a-z],NE<NN>}/README.md for their
 `**Verdict:**` and `**Role:**` lines. Never edit OVERVIEW.md by hand; rerun this instead.
 
 Usage: uv run python infra/overview/build_overview.py
@@ -37,14 +37,16 @@ def main():
     hyps = sorted(d for d in HYP.iterdir() if d.is_dir() and re.match(r"^H\d{2}-", d.name))
     cells, periods = {}, set()
     for h in hyps:
-        for d in h.iterdir():
+        sub = h / "goalperiod-subhypotheses"
+        cands = (list(sub.iterdir()) if sub.is_dir() else []) + [d for d in h.iterdir() if not (sub / d.name).exists()]
+        for d in cands:
             if d.is_dir() and PERIOD_RE.match(d.name) and (d / "README.md").exists():
                 t = (d / "README.md").read_text()
                 v, role = field(t, "Verdict"), field(t, "Role")
                 sym = verdict_symbol(v)
                 if role.lower().startswith("confirm"):
                     sym = f"**{sym}**"
-                cells[(d.name, h.name)] = f"[{sym}]({h.name}/{d.name}/README.md)"
+                cells[(d.name, h.name)] = f"[{sym}]({d.relative_to(HYP).as_posix()}/README.md)"
                 periods.add(d.name)
 
     cal = None

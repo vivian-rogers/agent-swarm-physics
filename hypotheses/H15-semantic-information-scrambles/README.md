@@ -149,40 +149,40 @@ Verdicts follow the pre-registered rule in each folder (V* only). Most regime II
 
 | Period | Role | Verdict | Key numbers (V*, effect in SD vs unit-pooled placebo; z) |
 | --- | --- | --- | --- |
-| [G03](G03/README.md) | exploratory | n/a | no event estimable |
-| [G04](G04/README.md) | exploratory | mixed | V* = V_rel; MR -0.53 (z -1.2, n 1); MN +0.21 (z +0.4, n 1) |
-| [G06](G06/README.md) | exploratory | descriptive | V* = V_rel; MR +0.55 (z +1.3, n 1) |
-| [G08](G08/README.md) | exploratory | descriptive | V* = V_rel; MR +0.06 (z +0.1, n 1) |
-| [G10](G10/README.md) | exploratory | supported | V* = V_rel; MN -0.17 (z -2.1, n 3) |
-| [G13](G13/README.md) | exploratory | supported | V* = V_rel; ML -1.17 (z -10.5, n 2); MR -0.14 (z -1.3, n 2) |
-| [G17](G17/README.md) | exploratory | n/a | no event estimable |
-| [G18](G18/README.md) | exploratory | supported | V* = V_rel; MN -0.11 (z -0.2, n 1) |
-| [G19](G19/README.md) | exploratory | failed | V* = V_rel; MR +0.08 (z +0.2, n 1); MN +1.76 (z +3.0, n 1) |
-| [G20](G20/README.md) | exploratory | mixed | V* = V_rel; MR +0.21 (z +0.6, n 3); MN +0.22 (z +0.8, n 2) |
-| [G21](G21/README.md) | exploratory | n/a | no event estimable |
-| [G23](G23/README.md) | exploratory | n/a | no event estimable |
-| [G24](G24/README.md) | exploratory | n/a | no event estimable |
-| [G25](G25/README.md) | exploratory | n/a | no event estimable |
-| [G26](G26/README.md) | exploratory | n/a | no event estimable |
-| [G27](G27/README.md) | exploratory | descriptive | V* = V_rel; MR +0.70 (z +1.1, n 1) |
-| [G30](G30/README.md) | exploratory | n/a | no event estimable |
-| [G31](G31/README.md) | exploratory | mixed | V* = V_rel; MN +0.03 (z +0.1, n 1) |
-| [G33](G33/README.md) | exploratory | n/a | no event estimable |
-| [G35](G35/README.md) | exploratory | supported | V* = V_rel; MN -0.93 (z -1.5, n 1) |
-| [G36a](G36a/README.md) | exploratory | n/a | no event estimable |
-| [G36b](G36b/README.md) | exploratory | failed | V* = V_eng; CF−CV +0.0192 [+0.0090, +0.0302]; post-hoc CF dip -0.35 [-0.58, -0.08] |
-| [G37](G37/README.md) | exploratory | failed | V* = V_eng; CF−CV +0.0095 [+0.0026, +0.0164]; post-hoc CF dip -0.19 [-0.53, +0.34] |
-| [G38](G38/README.md) | exploratory | failed | V* = V_eng; MR -0.14 (z -0.3, n 2); CC -0.74 (z -1.2, n 1); MN -0.36 (z -0.5, n 2); CF−CV +0.0059 [+0.0005, +0.0113]; post-hoc CF dip -0.47 [-0.61, -0.27]; NE18 slope V* −0.15 (p 0.80) |
-| [G39](G39/README.md) | exploratory | failed | V* = V_eng; MN +1.28 (z +2.2, n 1); CF−CV +0.0228 [+0.0005, +0.0480]; post-hoc CF dip -0.33 [-0.46, -0.21] |
-| [G40](G40/README.md) | exploratory | mixed | V* = V_eng; CF−CV +0.0080 [-0.0133, +0.0301]; post-hoc CF dip -0.38 [-0.47, -0.29] |
-| [G41](G41/README.md) | exploratory | mixed | V* = V_eng; CF−CV +0.0016 [-0.0182, +0.0211]; post-hoc CF dip -0.53 [-0.61, -0.44] |
-| [G42](G42/README.md) | exploratory | failed | V* = V_eng; MN +0.20 (z +0.2, n 1); CF−CV +0.0147 [+0.0022, +0.0264]; post-hoc CF dip -0.48 [-0.58, -0.38] |
-| [G44](G44/README.md) | exploratory | supported | V* = V_eng; CF−CV -0.0096 [-0.0265, +0.0084]; post-hoc CF dip -0.48 [-0.64, -0.28] |
-| [G51](G51/README.md) | exploratory | failed | V* = V_eng; ML +0.08 (z +0.5, n 10); MG +0.31 (z +2.3, n 15); MR -0.26 (z -1.1, n 5); CC -0.12 (z -0.4, n 2); MN +0.18 (z +0.8, n 6); CF−CV +0.0104 [+0.0071, +0.0137]; post-hoc CF dip -0.45 [-0.49, -0.41] |
-| [NE14](NE14/README.md) | exploratory | n/a | catalogued only (bundle with regime II→III) |
-| [NE18](NE18/README.md) | exploratory | not supported | slope of Δu on pre-search rate: V* −0.15 (p 0.80), V_out +0.21 (p 0.40), n 12 |
-| [NE27](NE27/README.md) | exploratory | supported on V* (fragile) | 3 newcomers, V_rel deficit −0.17 (z −2.1; tight 4-incumbent null); V_eng +0.35 (z +1.1) |
-| [NE30](NE30/README.md) | confirmatory (locked holdout) | pending (confirmatory, not run) | criteria C1–C5 in `NE30/README.md`; dry run passes on stand-ins |
+| [G03](goalperiod-subhypotheses/G03/README.md) | exploratory | n/a | no event estimable |
+| [G04](goalperiod-subhypotheses/G04/README.md) | exploratory | mixed | V* = V_rel; MR -0.53 (z -1.2, n 1); MN +0.21 (z +0.4, n 1) |
+| [G06](goalperiod-subhypotheses/G06/README.md) | exploratory | descriptive | V* = V_rel; MR +0.55 (z +1.3, n 1) |
+| [G08](goalperiod-subhypotheses/G08/README.md) | exploratory | descriptive | V* = V_rel; MR +0.06 (z +0.1, n 1) |
+| [G10](goalperiod-subhypotheses/G10/README.md) | exploratory | supported | V* = V_rel; MN -0.17 (z -2.1, n 3) |
+| [G13](goalperiod-subhypotheses/G13/README.md) | exploratory | supported | V* = V_rel; ML -1.17 (z -10.5, n 2); MR -0.14 (z -1.3, n 2) |
+| [G17](goalperiod-subhypotheses/G17/README.md) | exploratory | n/a | no event estimable |
+| [G18](goalperiod-subhypotheses/G18/README.md) | exploratory | supported | V* = V_rel; MN -0.11 (z -0.2, n 1) |
+| [G19](goalperiod-subhypotheses/G19/README.md) | exploratory | failed | V* = V_rel; MR +0.08 (z +0.2, n 1); MN +1.76 (z +3.0, n 1) |
+| [G20](goalperiod-subhypotheses/G20/README.md) | exploratory | mixed | V* = V_rel; MR +0.21 (z +0.6, n 3); MN +0.22 (z +0.8, n 2) |
+| [G21](goalperiod-subhypotheses/G21/README.md) | exploratory | n/a | no event estimable |
+| [G23](goalperiod-subhypotheses/G23/README.md) | exploratory | n/a | no event estimable |
+| [G24](goalperiod-subhypotheses/G24/README.md) | exploratory | n/a | no event estimable |
+| [G25](goalperiod-subhypotheses/G25/README.md) | exploratory | n/a | no event estimable |
+| [G26](goalperiod-subhypotheses/G26/README.md) | exploratory | n/a | no event estimable |
+| [G27](goalperiod-subhypotheses/G27/README.md) | exploratory | descriptive | V* = V_rel; MR +0.70 (z +1.1, n 1) |
+| [G30](goalperiod-subhypotheses/G30/README.md) | exploratory | n/a | no event estimable |
+| [G31](goalperiod-subhypotheses/G31/README.md) | exploratory | mixed | V* = V_rel; MN +0.03 (z +0.1, n 1) |
+| [G33](goalperiod-subhypotheses/G33/README.md) | exploratory | n/a | no event estimable |
+| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory | supported | V* = V_rel; MN -0.93 (z -1.5, n 1) |
+| [G36a](goalperiod-subhypotheses/G36a/README.md) | exploratory | n/a | no event estimable |
+| [G36b](goalperiod-subhypotheses/G36b/README.md) | exploratory | failed | V* = V_eng; CF−CV +0.0192 [+0.0090, +0.0302]; post-hoc CF dip -0.35 [-0.58, -0.08] |
+| [G37](goalperiod-subhypotheses/G37/README.md) | exploratory | failed | V* = V_eng; CF−CV +0.0095 [+0.0026, +0.0164]; post-hoc CF dip -0.19 [-0.53, +0.34] |
+| [G38](goalperiod-subhypotheses/G38/README.md) | exploratory | failed | V* = V_eng; MR -0.14 (z -0.3, n 2); CC -0.74 (z -1.2, n 1); MN -0.36 (z -0.5, n 2); CF−CV +0.0059 [+0.0005, +0.0113]; post-hoc CF dip -0.47 [-0.61, -0.27]; NE18 slope V* −0.15 (p 0.80) |
+| [G39](goalperiod-subhypotheses/G39/README.md) | exploratory | failed | V* = V_eng; MN +1.28 (z +2.2, n 1); CF−CV +0.0228 [+0.0005, +0.0480]; post-hoc CF dip -0.33 [-0.46, -0.21] |
+| [G40](goalperiod-subhypotheses/G40/README.md) | exploratory | mixed | V* = V_eng; CF−CV +0.0080 [-0.0133, +0.0301]; post-hoc CF dip -0.38 [-0.47, -0.29] |
+| [G41](goalperiod-subhypotheses/G41/README.md) | exploratory | mixed | V* = V_eng; CF−CV +0.0016 [-0.0182, +0.0211]; post-hoc CF dip -0.53 [-0.61, -0.44] |
+| [G42](goalperiod-subhypotheses/G42/README.md) | exploratory | failed | V* = V_eng; MN +0.20 (z +0.2, n 1); CF−CV +0.0147 [+0.0022, +0.0264]; post-hoc CF dip -0.48 [-0.58, -0.38] |
+| [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | supported | V* = V_eng; CF−CV -0.0096 [-0.0265, +0.0084]; post-hoc CF dip -0.48 [-0.64, -0.28] |
+| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | failed | V* = V_eng; ML +0.08 (z +0.5, n 10); MG +0.31 (z +2.3, n 15); MR -0.26 (z -1.1, n 5); CC -0.12 (z -0.4, n 2); MN +0.18 (z +0.8, n 6); CF−CV +0.0104 [+0.0071, +0.0137]; post-hoc CF dip -0.45 [-0.49, -0.41] |
+| [NE14](goalperiod-subhypotheses/NE14/README.md) | exploratory | n/a | catalogued only (bundle with regime II→III) |
+| [NE18](goalperiod-subhypotheses/NE18/README.md) | exploratory | not supported | slope of Δu on pre-search rate: V* −0.15 (p 0.80), V_out +0.21 (p 0.40), n 12 |
+| [NE27](goalperiod-subhypotheses/NE27/README.md) | exploratory | supported on V* (fragile) | 3 newcomers, V_rel deficit −0.17 (z −2.1; tight 4-incumbent null); V_eng +0.35 (z +1.1) |
+| [NE30](goalperiod-subhypotheses/NE30/README.md) | confirmatory (locked holdout) | pending (confirmatory, not run) | criteria C1–C5 in `NE30/README.md`; dry run passes on stand-ins |
 
 ## Results
 *Exploratory round 1, 2026-10-03, non-holdout days only (282 active days; 3,173 agent-days). Scripts: `scheme/build.py`, `analysis/choose_v.py`, `analysis/synthetic.py`, `analysis/run_scrambles.py`, `analysis/write_period_folders.py`, `analysis/figures.py`. Numbers: `data/processed/H15-semantic-information-scrambles/{v_choice,synthetic,results}.json`. Figures: `figures/F0_summary.pdf` (one page), F1 synthetic, F2 viability choice, F3 event studies, F4 context erasure, F5 value by store.*

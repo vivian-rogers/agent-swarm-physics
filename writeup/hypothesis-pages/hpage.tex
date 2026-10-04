@@ -1,29 +1,19 @@
-% Shared one-page layout for hypothesis summaries. Input after \documentclass[10pt]{article}.
+% Shared RevTeX (revtex4-2) one-page layout for hypothesis summaries.
+% Loaded by the generated summary.tex after \documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}.
 % Content macros are set by hypotheses/H<NN>-*/summary/content.tex; header macros by build_summaries.py.
-\usepackage[letterpaper,left=0.55in,right=0.55in,top=0.45in,bottom=0.45in]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{amsmath,amssymb}
 \usepackage{graphicx}
+\usepackage{amsmath,amssymb}
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
-\pagestyle{empty}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{2.5pt}
-\setlength{\fboxsep}{2.5pt}
+\setlength{\fboxsep}{2pt}
 \definecolor{inkmuted}{HTML}{6B6A65}
-\definecolor{rulecol}{HTML}{D8D6CF}
-\definecolor{mathbg}{HTML}{F3F2EE}
 \definecolor{vgood}{HTML}{0CA30C}\definecolor{vbad}{HTML}{D03B3B}\definecolor{vmix}{HTML}{FAB219}
 \definecolor{vdesc}{HTML}{86B6EF}\definecolor{vpend}{HTML}{ECEBE6}
-
-\newcommand{\hsec}[1]{\par\vspace{3pt}{\sffamily\bfseries\scriptsize\MakeUppercase{#1}}\par\vspace{0.5pt}}
-\newcommand{\hsecx}[2]{\par\vspace{3pt}{\sffamily\bfseries\scriptsize\MakeUppercase{#1}}\quad{\scriptsize\color{inkmuted}#2}\par\vspace{0.5pt}}
 \newcommand{\hbadge}[4]{\colorbox[HTML]{#3}{\color[HTML]{#4}\sffamily\scriptsize\strut #1\ \textbf{#2}}}
 \newcommand{\vchip}[3]{\colorbox{#1}{\color{#2}\sffamily\scriptsize\strut\,#3\,}}
 
 % content macros (defaults mark missing pieces)
-\def\hWhat{\textit{Pending.}}\def\hModel{\textit{Pending.}}\def\hMath{\textit{Pending.}}
+\def\hWhat{\textit{Pending.}}\def\hModel{\textit{Pending.}}\def\hMath{}
 \def\hObsFile{}\def\hObsNote{\textit{Pending.}}\def\hTelos{\textit{Pending.}}\def\hBottom{\textit{Pending.}}
 \newcommand{\hwhat}[1]{\def\hWhat{#1}}
 \newcommand{\hmodel}[1]{\def\hModel{#1}}
@@ -32,26 +22,37 @@
 \newcommand{\htelos}[1]{\def\hTelos{#1}}
 \newcommand{\hbottom}[1]{\def\hBottom{#1}}
 
+\newcommand{\hlegend}{{\color{inkmuted}\vchip{vgood}{white}{$\checkmark$}~supported\enspace
+   \vchip{vbad}{white}{$\times$}~failed\enspace\vchip{vmix}{black}{$\sim$}~mixed\enspace
+   \vchip{vdesc}{black}{d}~descriptive\enspace\vchip{vpend}{inkmuted}{$\cdots$}~pending.
+   Heavy outline: confirmatory test on the locked holdout. Hatched columns: held-out goal periods.
+   Brackets: tests spanning a natural experiment.}}
+
+% Body of the page; called by the generated summary.tex after the content macros are set.
 \newcommand{\makehpage}{%
-  {\sffamily\bfseries\Large\hID}\hspace{0.6em}{\sffamily\bfseries\large\hTitle}\par
-  \vspace{2pt}\hBadges\hfill{\scriptsize\color{inkmuted}\hStage}\par
-  \vspace{1pt}{\scriptsize\color{inkmuted}\itshape\hStatus}\par
-  \vspace{2pt}{\color{rulecol}\hrule}\vspace{1pt}
-  \begin{minipage}[t]{0.535\textwidth}\hsec{What happened}\small\hWhat\end{minipage}\hfill
-  \begin{minipage}[t]{0.44\textwidth}\hsec{Physical model}\small\hModel\par\vspace{3pt}%
-    \colorbox{mathbg}{\begin{minipage}{0.965\linewidth}\small\hMath\end{minipage}}\end{minipage}\par
-  \vspace{3pt}\hsecx{Goal periods tested}{\hPeriodSummary}
-  \includegraphics[width=\textwidth]{periods.pdf}\par\vspace{-1pt}
-  {\scriptsize\color{inkmuted}\vchip{vgood}{white}{$\checkmark$} supported\enspace
-   \vchip{vbad}{white}{$\times$} failed\enspace\vchip{vmix}{black}{$\sim$} mixed\enspace
-   \vchip{vdesc}{black}{d} descriptive\enspace\vchip{vpend}{inkmuted}{$\cdots$} pending\enspace
-   heavy outline = confirmatory (locked holdout)\enspace hatched columns = held-out goal periods\enspace brackets = tests spanning a natural experiment}\par
-  \begin{minipage}[t]{0.565\textwidth}\vspace{0pt}\hsec{Observables}%
-    \ifx\hObsFile\empty{\color{inkmuted}\small\itshape Figure pending.}\else
-    \includegraphics[width=\linewidth,height=2.45in,keepaspectratio]{\hObsFile}\fi\end{minipage}\hfill
-  \begin{minipage}[t]{0.41\textwidth}\vspace{0pt}\hsec{What the figure shows}\small\hObsNote\end{minipage}\par
-  \vspace{3pt}\hsec{So what? Practical value for understanding agent swarms}
-  {\small\hTelos}\par\vspace{2pt}
-  {\small\textbf{Bottom line.} \hBottom}\par
-  \vfill{\color{rulecol}\hrule}\vspace{1pt}{\tiny\color{inkmuted}\hFooter}%
+  \title{\hID: \hTitle}
+  \author{Vivian Rogers, with Claude Opus 5.5 \textperiodcentered{} agent-swarm physics \textperiodcentered{} \hDate}
+  \date{}
+  \begin{abstract}
+  \hBadges\par\vspace{3pt}
+  \textbf{Bottom line.} \hBottom\par\vspace{2pt}
+  {\footnotesize\color{inkmuted}Status: \hStatus\enspace(\hStage)}\par\vspace{4pt}
+  \includegraphics[width=\linewidth]{periods.pdf}\par\vspace{1pt}
+  {\scriptsize\textbf{Goal periods tested} (\hPeriodSummary). \hlegend\par}
+  \end{abstract}
+  \maketitle
+  \section*{What happened}
+  \hWhat
+  \section*{Physical model}
+  \hModel
+  \ifx\hMath\empty\else\par\vspace{2pt}\hMath\fi
+  \ifx\hObsFile\empty\else
+  \par\medskip\noindent\includegraphics[width=\columnwidth,height=1.85in,keepaspectratio]{\hObsFile}\par\smallskip
+  {\footnotesize\noindent\textbf{Observables.} \hObsNote\par}
+  \fi
+  \section*{So what? Practical value for understanding agent swarms}
+  \hTelos
+  \ifx\hObsFile\empty\par\smallskip{\small\color{inkmuted}\textbf{Observables.} \hObsNote}\fi
+  \par\vfill
+  {\tiny\color{inkmuted}\hFooter\par}
 }

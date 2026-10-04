@@ -157,7 +157,7 @@ Scored for D3.1.a + D3.2 (model 11 vector spins, mapping = per-regime whitened b
 
 Confirmatory prediction: after the split, the residual alignment of cross-room pairs falls toward the field-only level while within-room pairs hold. At 02-25 nothing changes. This reuses H05's pair-separation machinery.
 
-*Added 2026-10-03 after exploratory round 1, before any holdout use:* the operational confirmatory criteria C1–C6 are in [`NE15/README.md`](NE15/README.md) and machine-readable in `analysis/confirm_d32.py` (`PREDICTIONS`).
+*Added 2026-10-03 after exploratory round 1, before any holdout use:* the operational confirmatory criteria C1–C6 are in [`NE15/README.md`](goalperiod-subhypotheses/NE15/README.md) and machine-readable in `analysis/confirm_d32.py` (`PREDICTIONS`).
 
 ## Results
 
@@ -246,26 +246,26 @@ P1's direction survives every variant; its size criterion is met only at k = 80 
 - Many units, variants and nulls: only the P1–P9 verdicts are counted; per-unit p-values are descriptive.
 - Statements are what agents *say* (narration is a claim). The Claude Code agent's chat is included in #35–#37.
 
-**Confirmation.** `analysis/confirm_d32.py` (NE15 cut DiD, pooled TWFE, NE12 placebo, transfer to #45–#47) is written and dry-run on non-holdout stand-ins; it refuses to run on the holdout without `--confirm --i-understand-this-uses-the-locked-holdout`. See [`NE15/`](NE15/README.md).
+**Confirmation.** `analysis/confirm_d32.py` (NE15 cut DiD, pooled TWFE, NE12 placebo, transfer to #45–#47) is written and dry-run on non-holdout stand-ins; it refuses to run on the holdout without `--confirm --i-understand-this-uses-the-locked-holdout`. See [`NE15/`](goalperiod-subhypotheses/NE15/README.md).
 
 ### Results by goal period
 
 | Folder | Units | Verdict | One line |
 | --- | --- | --- | --- |
-| [G08](G08/README.md) | 8 | descriptive | P4: polarization along ĝ 0.27, same as #21 (not as predicted); βJ₀/n 0.49 |
-| [G21](G21/README.md) | 21 | descriptive | P4 contrast fails (0.27); strong day-to-day co-fluctuation (βJ₀/n 0.86) |
-| [G35](G35/README.md) | 35 | mixed | rooms ordered (−0.07), big within-room excess (+0.22) but slope ≈ 0 and field R² 0.15 |
-| [G36](G36/README.md) | 36a, 36b | failed | secondary: no room order (ΔH > 0) |
-| [G37](G37/README.md) | 37 | failed | secondary: weak order, no room excess, cross-room co-fluctuation as large as within |
-| [G38](G38/README.md) | 38a–c | mixed | strongest room order (−0.34 to −0.38) with rooms given different goals (room field); slopes mixed |
-| [G39](G39/README.md) | 39 | mixed | weak room order, strong lab order (−0.25); pre-window of the merge |
-| [G40](G40/README.md) | 40 | supported (P7) | merge DiD +0.18 (perm p = 0.004), confounded with the goal change |
-| [G41](G41/README.md) | 41 | mixed | most coupling-like week: order −0.19, slope +0.08, within +0.16, ρ_within 0.47 vs 0.04 |
-| [G42](G42/README.md) | 42 | mixed | field-dominated: goal-only R² 0.54, little room effect |
-| [G44](G44/README.md) | 44 | mixed | rooms ordered (−0.11) and within +0.24, but per-room goal override |
-| [G51](G51/README.md) | 51a–e | mixed | small positive slopes in the big single room; #focus ordered (−0.07) |
-| [NE32](NE32/README.md) | 51b | n/a | triplet wrote nothing while isolated |
-| [NE15](NE15/README.md) | holdout | pending | confirmatory test (not run) |
+| [G08](goalperiod-subhypotheses/G08/README.md) | 8 | descriptive | P4: polarization along ĝ 0.27, same as #21 (not as predicted); βJ₀/n 0.49 |
+| [G21](goalperiod-subhypotheses/G21/README.md) | 21 | descriptive | P4 contrast fails (0.27); strong day-to-day co-fluctuation (βJ₀/n 0.86) |
+| [G35](goalperiod-subhypotheses/G35/README.md) | 35 | mixed | rooms ordered (−0.07), big within-room excess (+0.22) but slope ≈ 0 and field R² 0.15 |
+| [G36](goalperiod-subhypotheses/G36/README.md) | 36a, 36b | failed | secondary: no room order (ΔH > 0) |
+| [G37](goalperiod-subhypotheses/G37/README.md) | 37 | failed | secondary: weak order, no room excess, cross-room co-fluctuation as large as within |
+| [G38](goalperiod-subhypotheses/G38/README.md) | 38a–c | mixed | strongest room order (−0.34 to −0.38) with rooms given different goals (room field); slopes mixed |
+| [G39](goalperiod-subhypotheses/G39/README.md) | 39 | mixed | weak room order, strong lab order (−0.25); pre-window of the merge |
+| [G40](goalperiod-subhypotheses/G40/README.md) | 40 | supported (P7) | merge DiD +0.18 (perm p = 0.004), confounded with the goal change |
+| [G41](goalperiod-subhypotheses/G41/README.md) | 41 | mixed | most coupling-like week: order −0.19, slope +0.08, within +0.16, ρ_within 0.47 vs 0.04 |
+| [G42](goalperiod-subhypotheses/G42/README.md) | 42 | mixed | field-dominated: goal-only R² 0.54, little room effect |
+| [G44](goalperiod-subhypotheses/G44/README.md) | 44 | mixed | rooms ordered (−0.11) and within +0.24, but per-room goal override |
+| [G51](goalperiod-subhypotheses/G51/README.md) | 51a–e | mixed | small positive slopes in the big single room; #focus ordered (−0.07) |
+| [NE32](goalperiod-subhypotheses/NE32/README.md) | 51b | n/a | triplet wrote nothing while isolated |
+| [NE15](goalperiod-subhypotheses/NE15/README.md) | holdout | pending | confirmatory test (not run) |
 
 P9 for the remaining 26 non-holdout units (regime I and #33) is in `figures/p9_meanfield.pdf` and `data/processed/H01-emergent-superagents-exist/G##/results.json`; those periods have no period-specific prediction beyond P9 and get no folder.
 

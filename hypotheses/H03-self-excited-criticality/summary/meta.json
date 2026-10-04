@@ -1,0 +1,13 @@
+{
+  "complete": 40,
+  "faithfulness": 1.5,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Round 1 is done over 35 periods with per-period verdicts, synthetic guards and a scorecard; the holdout predictions are drafted but not locked or run, and the room-aware and reply-vs-wake-up follow-ups are open.",
+    "faithfulness": "Hawkes beats same-baseline Poisson and the fast cross term beats the agent-shift null (C = 1), but every mode and criticality prediction (P1-P6) failed and pooled n-hat is not identified against slow rate modulation.",
+    "usefulness": "A branching ratio with a schedule baseline, plus a fast cross-excitation term, is a cascade-risk diagnostic anyone can compute on their own logs, and the constant-baseline pitfall is a concrete warning; the payoff beyond that is unclear."
+  },
+  "one_line": "Subcritical everywhere (n about 0.2-0.4), no coupling-mode effect; only fast cross-agent triggering beats nulls",
+  "rated_by": "summary writer (suggested)",
+  "updated": "2026-10-04"
+}

@@ -245,7 +245,7 @@ def main():
         if T["regime"] in ("III", "II/III"):
             notes.append("- Regime III (perma-computer-use): `events_core` holds chat and session events, but not computer-use turns, so ALL means something different here than in regime I.")
         lines += notes
-        out = CARD / f"G{goal:02d}"
+        out = CARD / "goalperiod-subhypotheses" / f"G{goal:02d}"
         out.mkdir(exist_ok=True)
         (out / "README.md").write_text("\n".join(lines) + "\n")
         rows_index.append({"goal_no": goal, "mode": mode, "verdict": v, "n_talk": T["n"], "lo": lo, "hi": hi,

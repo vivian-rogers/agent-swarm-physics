@@ -165,41 +165,41 @@ Primary n̂ is for TALK (M1, B2 + exogenous drive). The CI is the day-level boot
 
 | G | mode | regime | N | h/day | n̂ TALK [95% CI] | n̂ ALL | n_cross ≤300 s (TALK) | splits | verdict |
 |---|---|---|---|---|---|---|---|---|---|
-| [G02](G02/README.md) | F | I | 3.5 | 2 | 0.72 [0.61, 0.84] | 0.72 | 0.161 | 0 | failed |
-| [G03](G03/README.md) | F | I | 4.0 | 2 | 0.66 [0.40, 0.72] | 0.70 | 0.070 | 0 | mixed |
-| [G04](G04/README.md) | C | I | 4.0 | 2 | 0.55 [0.41, 0.63] | 0.56 | 0.085 | 2 | failed |
-| [G05](G05/README.md) | F | I | 4.0 | 2 | 0.15 [0.00, 0.38] | 0.27 | 0.072 | 0 | supported |
-| [G06](G06/README.md) | K | I | 4.0 | 2 | 0.65 [0.17, 0.81] | 0.46 | 0.122 | 1 | descriptive |
-| [G07](G07/README.md) | F | I | 4.0 | 2 | 0.47 [0.29, 0.67] | 0.53 | 0.118 | 0 | mixed |
-| [G08](G08/README.md) | C | I | 4.0 | 3 | 0.27 [0.10, 0.42] | 0.40 | 0.000 | 0 | failed |
-| [G10](G10/README.md) | I | I | 7.0 | 3 | 0.22 [0.17, 0.59] | 0.48 | 0.069 | 1 | descriptive |
-| [G11](G11/README.md) | F | I | 7.0 | 3 | 0.61 [0.36, 0.68] | 0.63 | 0.067 | 0 | mixed |
-| [G12](G12/README.md) | M | I | 7.0 | 3 | 0.63 [0.39, 0.68] | 0.65 | 0.102 | 1 | descriptive |
-| [G13](G13/README.md) | C | I | 6.0 | 3 | 0.57 [0.50, 0.61] | 0.52 | 0.024 | 0 | failed |
-| [G16](G16/README.md) | F | I | 7.0 | 3 | 0.59 [0.20, 0.69] | 0.45 | 0.075 | 0 | mixed |
-| [G17](G17/README.md) | I | I | 7.0 | 3 | 0.48 [0.25, 0.59] | 0.57 | 0.130 | 0 | descriptive |
-| [G18](G18/README.md) | C | I | 7.5 | 4 | 0.70 [0.51, 0.80] | 0.70 | 0.075 | 2 | mixed |
-| [G19](G19/README.md) | C | I | 7.1 | 4 | 0.69 [0.54, 0.74] | 0.66 | 0.107 | 1 | mixed |
-| [G20](G20/README.md) | I | I | 9.2 | 4 | 0.62 [0.37, 0.71] | 0.42 | 0.112 | 3 | descriptive |
-| [G21](G21/README.md) | I | I | 8.4 | 4 | 0.68 [0.09, 1.01] | 0.31 | 0.070 | 2 | descriptive |
-| [G23](G23/README.md) | K | I | 10.0 | 4 | 0.10 [0.00, 0.23] | 0.26 | 0.062 | 0 | descriptive |
-| [G24](G24/README.md) | C | I | 10.0 | 4 | 0.13 [0.00, 0.23] | 0.34 | 0.113 | 0 | failed |
-| [G25](G25/README.md) | C | I | 9.8 | 4 | 0.38 [0.05, 0.45] | 0.37 | 0.107 | 0 | failed |
-| [G26](G26/README.md) | C | I | 10.0 | 4 | 0.56 [0.42, 0.75] | 0.58 | 0.211 | 0 | mixed |
-| [G27](G27/README.md) | K | I | 10.0 | 4 | 0.41 [0.00, 0.98] | 0.21 | 0.010 | 0 | descriptive |
-| [G30](G30/README.md) | C | I | 12.0 | 4 | 0.28 [0.07, 0.36] | 0.43 | 0.099 | 1 | failed |
-| [G31](G31/README.md) | F | I | 12.2 | 4 | 0.07 [0.00, 0.77] | 0.25 | 0.066 | 3 | mixed |
-| [G33](G33/README.md) | C | II | 12.0 | 4 | 0.76 [0.00, 0.84] | 0.28 | 0.081 | 0 | mixed |
-| [G35](G35/README.md) | C | II | 13.0 | 4 | 0.08 [0.00, 0.24] | 0.30 | 0.070 | 0 | failed |
-| [G36](G36/README.md) | C | II/III | 13.0 | 4 | 0.29 [0.14, 0.37] | 0.18 | 0.008 | 2 | failed |
-| [G37](G37/README.md) | F | III | 12.3 | 4 | 0.30 [0.25, 0.32] | 0.19 | 0.000 | 0 | supported |
-| [G38](G38/README.md) | C | III | 12.4 | 4 | 0.32 [0.08, 0.61] | 0.57 | 0.020 | 4 | failed |
-| [G39](G39/README.md) | I | III | 14.8 | 4 | 0.10 [0.00, 0.20] | 0.00 | 0.009 | 0 | descriptive |
-| [G40](G40/README.md) | C | III | 15.0 | 4 | 0.00 [0.00, 0.07] | 0.00 | 0.000 | 0 | failed |
-| [G41](G41/README.md) | I | III | 15.0 | 4 | 0.31 [0.12, 0.38] | 0.20 | 0.040 | 0 | descriptive |
-| [G42](G42/README.md) | I | III | 15.6 | 4 | 0.20 [0.05, 0.27] | 0.02 | 0.053 | 1 | descriptive |
-| [G44](G44/README.md) | C | III | 16.5 | 4 | 0.25 [0.00, 0.30] | 0.51 | 0.009 | 1 | failed |
-| [G51](G51/README.md) | P | III | 26.5 | 8 | 0.54 [0.44, 0.61] | 0.59 | 0.026 | 9 | failed |
+| [G02](goalperiod-subhypotheses/G02/README.md) | F | I | 3.5 | 2 | 0.72 [0.61, 0.84] | 0.72 | 0.161 | 0 | failed |
+| [G03](goalperiod-subhypotheses/G03/README.md) | F | I | 4.0 | 2 | 0.66 [0.40, 0.72] | 0.70 | 0.070 | 0 | mixed |
+| [G04](goalperiod-subhypotheses/G04/README.md) | C | I | 4.0 | 2 | 0.55 [0.41, 0.63] | 0.56 | 0.085 | 2 | failed |
+| [G05](goalperiod-subhypotheses/G05/README.md) | F | I | 4.0 | 2 | 0.15 [0.00, 0.38] | 0.27 | 0.072 | 0 | supported |
+| [G06](goalperiod-subhypotheses/G06/README.md) | K | I | 4.0 | 2 | 0.65 [0.17, 0.81] | 0.46 | 0.122 | 1 | descriptive |
+| [G07](goalperiod-subhypotheses/G07/README.md) | F | I | 4.0 | 2 | 0.47 [0.29, 0.67] | 0.53 | 0.118 | 0 | mixed |
+| [G08](goalperiod-subhypotheses/G08/README.md) | C | I | 4.0 | 3 | 0.27 [0.10, 0.42] | 0.40 | 0.000 | 0 | failed |
+| [G10](goalperiod-subhypotheses/G10/README.md) | I | I | 7.0 | 3 | 0.22 [0.17, 0.59] | 0.48 | 0.069 | 1 | descriptive |
+| [G11](goalperiod-subhypotheses/G11/README.md) | F | I | 7.0 | 3 | 0.61 [0.36, 0.68] | 0.63 | 0.067 | 0 | mixed |
+| [G12](goalperiod-subhypotheses/G12/README.md) | M | I | 7.0 | 3 | 0.63 [0.39, 0.68] | 0.65 | 0.102 | 1 | descriptive |
+| [G13](goalperiod-subhypotheses/G13/README.md) | C | I | 6.0 | 3 | 0.57 [0.50, 0.61] | 0.52 | 0.024 | 0 | failed |
+| [G16](goalperiod-subhypotheses/G16/README.md) | F | I | 7.0 | 3 | 0.59 [0.20, 0.69] | 0.45 | 0.075 | 0 | mixed |
+| [G17](goalperiod-subhypotheses/G17/README.md) | I | I | 7.0 | 3 | 0.48 [0.25, 0.59] | 0.57 | 0.130 | 0 | descriptive |
+| [G18](goalperiod-subhypotheses/G18/README.md) | C | I | 7.5 | 4 | 0.70 [0.51, 0.80] | 0.70 | 0.075 | 2 | mixed |
+| [G19](goalperiod-subhypotheses/G19/README.md) | C | I | 7.1 | 4 | 0.69 [0.54, 0.74] | 0.66 | 0.107 | 1 | mixed |
+| [G20](goalperiod-subhypotheses/G20/README.md) | I | I | 9.2 | 4 | 0.62 [0.37, 0.71] | 0.42 | 0.112 | 3 | descriptive |
+| [G21](goalperiod-subhypotheses/G21/README.md) | I | I | 8.4 | 4 | 0.68 [0.09, 1.01] | 0.31 | 0.070 | 2 | descriptive |
+| [G23](goalperiod-subhypotheses/G23/README.md) | K | I | 10.0 | 4 | 0.10 [0.00, 0.23] | 0.26 | 0.062 | 0 | descriptive |
+| [G24](goalperiod-subhypotheses/G24/README.md) | C | I | 10.0 | 4 | 0.13 [0.00, 0.23] | 0.34 | 0.113 | 0 | failed |
+| [G25](goalperiod-subhypotheses/G25/README.md) | C | I | 9.8 | 4 | 0.38 [0.05, 0.45] | 0.37 | 0.107 | 0 | failed |
+| [G26](goalperiod-subhypotheses/G26/README.md) | C | I | 10.0 | 4 | 0.56 [0.42, 0.75] | 0.58 | 0.211 | 0 | mixed |
+| [G27](goalperiod-subhypotheses/G27/README.md) | K | I | 10.0 | 4 | 0.41 [0.00, 0.98] | 0.21 | 0.010 | 0 | descriptive |
+| [G30](goalperiod-subhypotheses/G30/README.md) | C | I | 12.0 | 4 | 0.28 [0.07, 0.36] | 0.43 | 0.099 | 1 | failed |
+| [G31](goalperiod-subhypotheses/G31/README.md) | F | I | 12.2 | 4 | 0.07 [0.00, 0.77] | 0.25 | 0.066 | 3 | mixed |
+| [G33](goalperiod-subhypotheses/G33/README.md) | C | II | 12.0 | 4 | 0.76 [0.00, 0.84] | 0.28 | 0.081 | 0 | mixed |
+| [G35](goalperiod-subhypotheses/G35/README.md) | C | II | 13.0 | 4 | 0.08 [0.00, 0.24] | 0.30 | 0.070 | 0 | failed |
+| [G36](goalperiod-subhypotheses/G36/README.md) | C | II/III | 13.0 | 4 | 0.29 [0.14, 0.37] | 0.18 | 0.008 | 2 | failed |
+| [G37](goalperiod-subhypotheses/G37/README.md) | F | III | 12.3 | 4 | 0.30 [0.25, 0.32] | 0.19 | 0.000 | 0 | supported |
+| [G38](goalperiod-subhypotheses/G38/README.md) | C | III | 12.4 | 4 | 0.32 [0.08, 0.61] | 0.57 | 0.020 | 4 | failed |
+| [G39](goalperiod-subhypotheses/G39/README.md) | I | III | 14.8 | 4 | 0.10 [0.00, 0.20] | 0.00 | 0.009 | 0 | descriptive |
+| [G40](goalperiod-subhypotheses/G40/README.md) | C | III | 15.0 | 4 | 0.00 [0.00, 0.07] | 0.00 | 0.000 | 0 | failed |
+| [G41](goalperiod-subhypotheses/G41/README.md) | I | III | 15.0 | 4 | 0.31 [0.12, 0.38] | 0.20 | 0.040 | 0 | descriptive |
+| [G42](goalperiod-subhypotheses/G42/README.md) | I | III | 15.6 | 4 | 0.20 [0.05, 0.27] | 0.02 | 0.053 | 1 | descriptive |
+| [G44](goalperiod-subhypotheses/G44/README.md) | C | III | 16.5 | 4 | 0.25 [0.00, 0.30] | 0.51 | 0.009 | 1 | failed |
+| [G51](goalperiod-subhypotheses/G51/README.md) | P | III | 26.5 | 8 | 0.54 [0.44, 0.61] | 0.59 | 0.026 | 9 | failed |
 
 Verdict count: C 11 failed, 4 mixed; F 2 supported, 5 mixed, 1 failed; I/K/M 11 descriptive; P (#51) failed.
 

@@ -91,7 +91,7 @@ def main():
     for g, m in META.items():
         units = sorted([u for u in p9 if "".join(c for c in u if c.isdigit()) == str(g)] +
                        ([u for u in ("36a",) if g == 36]), key=lambda s: s)
-        d = HYP / f"G{g:02d}"; (d / "figures").mkdir(parents=True, exist_ok=True)
+        d = HYP / "goalperiod-subhypotheses" / f"G{g:02d}"; (d / "figures").mkdir(parents=True, exist_ok=True)
         L = [f"# H01 × G{g:02d}: {GOALS[g][0]} ({GOALS[g][1]})", "",
              f"**Verdict:** {m['verdict']}", "**Role:** exploratory", f"**Period:** {m['line']}", "",
              "## Why this period", m["why"], "",

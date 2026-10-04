@@ -188,22 +188,22 @@ Readings:
 
 | G | regime · mode | days | N_room | k med / mean | units (rate) | β̂ [95% CI] | CV best (effective) | Δℓ inv−rec ×10³ | ε_S | e^γ | β̂_D2 [CI] (units, resp.) | verdict |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [G24](G24/README.md) | I · C | 5 | 10.0 | 7 / 10.0 | 5718 (0.090) | 0.56 [0.52, 0.66] | sat (sat) | -7.6 | 0.38 | 4.5 | — | mixed |
-| [G25](G25/README.md) | I · C | 5 | 10.0 | 4 / 9.3 | 8211 (0.211) | 0.59 [0.56, 0.62] | sat (sat) | -9.3 | 0.42 | 1.3 | — | mixed |
-| [G26](G26/README.md) | I · C | 5 | 10.0 | 4 / 9.4 | 7201 (0.205) | 0.50 [0.44, 0.53] | sat (sat) | -22.9 | 0.49 | 1.1 | — | mixed |
-| [G27](G27/README.md) | I · K | 10 | 10.0 | 6 / 10.1 | 13743 (0.116) | 0.69 [0.56, 0.80] | sat (sat~inv) | -0.6 | 0.33 | 1.2 | — | supported |
-| [G30](G30/README.md) | I · C | 5 | 11.0 | 7 / 12.7 | 9196 (0.131) | 0.55 [0.52, 0.58] | rec (rec) | -18.8 | 0.44 | 0.8 | — | mixed |
-| [G31](G31/README.md) | I · F | 5 | 11.2 | 8 / 13.1 | 11946 (0.144) | 0.46 [0.41, 0.50] | rec (rec) | -23.2 | 0.50 | 1.7 | — | mixed |
-| [G35](G35/README.md) | II · C | 5 | 7.3 | 4 / 7.7 | 5568 (0.161) | 0.75 [0.63, 0.82] | rec (rec) | -12.1 | 0.25 | 1.1 | — | mixed |
-| [G36](G36/README.md) | II/III · C | 5 | 6.3 | 3 / 5.7 | 2842 (0.262) | 0.78 [0.74, 0.82] | sat (sat~inv) | 1.7 | 0.22 | 2.2 | underpowered (40, 8) | supported |
-| [G37](G37/README.md) | III · F | 3 | 6.9 | 2 / 5.0 | 937 (0.393) | 0.75 [0.52, 0.98] | rec (rec) | -28.9 | 0.19 | 2.1 | 0.79 [0.71, 0.86] (301, 47) | mixed |
-| [G38](G38/README.md) | III · C | 17 | 6.4 | 3 / 5.3 | 6806 (0.194) | 0.69 [0.62, 0.80] | sat (sat~inv) | -5.6 | 0.29 | 2.4 | -0.13 [-0.41, 0.03] (1335, 89) | mixed |
-| [G39](G39/README.md) | III · I | 5 | 10.0 | 4 / 7.6 | 2280 (0.091) | 0.62 [0.45, 0.78] | sat (sat) | -4.4 | 0.34 | 3.5 | underpowered (0, 0) | mixed |
-| [G40](G40/README.md) | III · C | 5 | 14.0 | 6 / 11.0 | 7002 (0.117) | 0.60 [0.51, 0.71] | sat (sat) | -7.5 | 0.38 | 2.7 | 0.57 [-0.03, 1.81] (206, 13) | mixed |
-| [G41](G41/README.md) | III · I | 5 | 9.4 | 4 / 8.0 | 5976 (0.232) | 0.65 [0.55, 0.74] | sat (sat~inv) | -9.4 | 0.34 | 1.9 | 0.14 [-0.83, 0.62] (617, 113) | mixed |
-| [G42](G42/README.md) | III · I | 5 | 9.7 | 4 / 7.0 | 2744 (0.245) | 0.72 [0.69, 0.86] | rec (rec) | -17.1 | 0.17 | 5.2 | underpowered (125, 34) | mixed |
-| [G44](G44/README.md) | III · C | 4 | 10.5 | 4 / 7.6 | 4444 (0.276) | 0.72 [0.69, 0.76] | sat (sat~inv) | -7.2 | 0.23 | 3.3 | 0.31 [0.09, 0.58] (500, 55) | supported |
-| [G51](G51/README.md) | III · P | 45 | 23.7 | 7 / 19.9 | 195913 (0.102) | 0.61 [0.58, 0.63] | sat (sat) | -8.8 | 0.21 | 11.6 | 0.50 [0.45, 0.56] (129567, 3520) | mixed |
+| [G24](goalperiod-subhypotheses/G24/README.md) | I · C | 5 | 10.0 | 7 / 10.0 | 5718 (0.090) | 0.56 [0.52, 0.66] | sat (sat) | -7.6 | 0.38 | 4.5 | — | mixed |
+| [G25](goalperiod-subhypotheses/G25/README.md) | I · C | 5 | 10.0 | 4 / 9.3 | 8211 (0.211) | 0.59 [0.56, 0.62] | sat (sat) | -9.3 | 0.42 | 1.3 | — | mixed |
+| [G26](goalperiod-subhypotheses/G26/README.md) | I · C | 5 | 10.0 | 4 / 9.4 | 7201 (0.205) | 0.50 [0.44, 0.53] | sat (sat) | -22.9 | 0.49 | 1.1 | — | mixed |
+| [G27](goalperiod-subhypotheses/G27/README.md) | I · K | 10 | 10.0 | 6 / 10.1 | 13743 (0.116) | 0.69 [0.56, 0.80] | sat (sat~inv) | -0.6 | 0.33 | 1.2 | — | supported |
+| [G30](goalperiod-subhypotheses/G30/README.md) | I · C | 5 | 11.0 | 7 / 12.7 | 9196 (0.131) | 0.55 [0.52, 0.58] | rec (rec) | -18.8 | 0.44 | 0.8 | — | mixed |
+| [G31](goalperiod-subhypotheses/G31/README.md) | I · F | 5 | 11.2 | 8 / 13.1 | 11946 (0.144) | 0.46 [0.41, 0.50] | rec (rec) | -23.2 | 0.50 | 1.7 | — | mixed |
+| [G35](goalperiod-subhypotheses/G35/README.md) | II · C | 5 | 7.3 | 4 / 7.7 | 5568 (0.161) | 0.75 [0.63, 0.82] | rec (rec) | -12.1 | 0.25 | 1.1 | — | mixed |
+| [G36](goalperiod-subhypotheses/G36/README.md) | II/III · C | 5 | 6.3 | 3 / 5.7 | 2842 (0.262) | 0.78 [0.74, 0.82] | sat (sat~inv) | 1.7 | 0.22 | 2.2 | underpowered (40, 8) | supported |
+| [G37](goalperiod-subhypotheses/G37/README.md) | III · F | 3 | 6.9 | 2 / 5.0 | 937 (0.393) | 0.75 [0.52, 0.98] | rec (rec) | -28.9 | 0.19 | 2.1 | 0.79 [0.71, 0.86] (301, 47) | mixed |
+| [G38](goalperiod-subhypotheses/G38/README.md) | III · C | 17 | 6.4 | 3 / 5.3 | 6806 (0.194) | 0.69 [0.62, 0.80] | sat (sat~inv) | -5.6 | 0.29 | 2.4 | -0.13 [-0.41, 0.03] (1335, 89) | mixed |
+| [G39](goalperiod-subhypotheses/G39/README.md) | III · I | 5 | 10.0 | 4 / 7.6 | 2280 (0.091) | 0.62 [0.45, 0.78] | sat (sat) | -4.4 | 0.34 | 3.5 | underpowered (0, 0) | mixed |
+| [G40](goalperiod-subhypotheses/G40/README.md) | III · C | 5 | 14.0 | 6 / 11.0 | 7002 (0.117) | 0.60 [0.51, 0.71] | sat (sat) | -7.5 | 0.38 | 2.7 | 0.57 [-0.03, 1.81] (206, 13) | mixed |
+| [G41](goalperiod-subhypotheses/G41/README.md) | III · I | 5 | 9.4 | 4 / 8.0 | 5976 (0.232) | 0.65 [0.55, 0.74] | sat (sat~inv) | -9.4 | 0.34 | 1.9 | 0.14 [-0.83, 0.62] (617, 113) | mixed |
+| [G42](goalperiod-subhypotheses/G42/README.md) | III · I | 5 | 9.7 | 4 / 7.0 | 2744 (0.245) | 0.72 [0.69, 0.86] | rec (rec) | -17.1 | 0.17 | 5.2 | underpowered (125, 34) | mixed |
+| [G44](goalperiod-subhypotheses/G44/README.md) | III · C | 4 | 10.5 | 4 / 7.6 | 4444 (0.276) | 0.72 [0.69, 0.76] | sat (sat~inv) | -7.2 | 0.23 | 3.3 | 0.31 [0.09, 0.58] (500, 55) | supported |
+| [G51](goalperiod-subhypotheses/G51/README.md) | III · P | 45 | 23.7 | 7 / 19.9 | 195913 (0.102) | 0.61 [0.58, 0.63] | sat (sat) | -8.8 | 0.21 | 11.6 | 0.50 [0.45, 0.56] (129567, 3520) | mixed |
 
 Verdicts: **3 supported (G27, G36, G44), 13 mixed, 0 failed.**
 - Every period has dilution: β̂ > 0 with the CI excluding 0, and the k-dependent model beats the constant one on held-out data.
@@ -212,8 +212,8 @@ Verdicts: **3 supported (G27, G36, G44), 13 mixed, 0 failed.**
   - recency-only wins (G30, G31, G35, G37, G42);
   - D2 contradicts D1 (G38, G41).
 - Spanning tests:
-  - [`NE15/`](NE15/README.md): mixed (the #35 room effect is absorbed by k; replication 3 of 7 two-room periods);
-  - [`NE42/`](NE42/README.md): failed.
+  - [`NE15/`](goalperiod-subhypotheses/NE15/README.md): mixed (the #35 room effect is absorbed by k; replication 3 of 7 two-room periods);
+  - [`NE42/`](goalperiod-subhypotheses/NE42/README.md): failed.
 
 ## Results
 *All numbers: `data/processed/H18-attention-dilution/summary.json` (`analysis/summarize.py`), per-period `G<NN>/fits.json`, `spanning.json`, `posthoc_*.json`. Figures: `figures/summary.pdf` (one page), `figures/synthetic.pdf`, `G<NN>/figures/curves.pdf`, `NE15/figures/rooms.pdf`, `NE42/figures/merge.pdf`.*

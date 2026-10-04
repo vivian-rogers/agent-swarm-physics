@@ -1,0 +1,13 @@
+{
+  "complete": 60,
+  "faithfulness": 0.5,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1, synthetic validation and the pre-registered #45 holdout test are all done; the talk/mention spins, the Hawkes comparison and the #14/#49 transfer set remain.",
+    "faithfulness": "The core claim (pairwise couplings measure influence) was refuted on the locked holdout and pairwise J never beat the nulls; only a weak mean-field co-activation beats N1 in some chunks, and its forward P(K) test failed.",
+    "usefulness": "A well-controlled negative: it tells operators not to infer leaders or influence from activity timing, which saves effort but gives no positive handle."
+  },
+  "one_line": "Activity-timing Ising couplings are null-level and missed the installed #45 leader; only shared lulls remain",
+  "rated_by": "summary writer (suggested)",
+  "updated": "2026-10-04"
+}

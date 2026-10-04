@@ -134,9 +134,14 @@ def level(sc: dict, confirmed: bool) -> str:
     return "hypothesis"
 
 
+PERIOD_SUB = "goalperiod-subhypotheses"
+
+
 def period_folders(hdir: Path) -> list[dict]:
     out = []
-    for d in sorted(hdir.iterdir()):
+    cands = sorted((hdir / PERIOD_SUB).iterdir()) if (hdir / PERIOD_SUB).is_dir() else []
+    cands += [d for d in sorted(hdir.iterdir()) if not (hdir / PERIOD_SUB / d.name).exists()]  # stragglers at the old place
+    for d in cands:
         if d.is_dir() and PERIOD_RE.match(d.name) and (d / "README.md").exists():
             t = (d / "README.md").read_text(errors="replace")
             v, role = field(t, "Verdict"), field(t, "Role")

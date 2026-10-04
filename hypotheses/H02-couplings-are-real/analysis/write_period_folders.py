@@ -45,7 +45,7 @@ def main():
             v = "mixed"
         else:
             v = "failed"
-        folder = H / f"G{g:02d}"; readme = folder / "README.md"
+        folder = H / "goalperiod-subhypotheses" / f"G{g:02d}"; readme = folder / "README.md"
         if readme.exists() and MARK not in readme.read_text():
             print("skip (hand-edited)", folder.name); continue
         folder.mkdir(exist_ok=True)

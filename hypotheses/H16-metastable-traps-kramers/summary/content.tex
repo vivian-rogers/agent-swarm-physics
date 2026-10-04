@@ -1,0 +1,16 @@
+\hwhat{Four trap types (inactive spells, timer-pause chains, error loops, repeated-command loops) were tested in 11 non-holdout goal periods (3 regime I, 8 regime III). Predictions were written after a synthetic validation and before touching data. Kramers predicts memoryless escape; instead, traps \emph{age}. Within agent, the escape hazard falls roughly as $t^{-0.8}$ (G51: $\beta=-0.77$ [$-0.81,-0.73$], 4,321 escapes; G38: $-1.71$). Each re-pause lowers the odds of acting at the next timer expiry (G51: $-0.38$), and error loops age too ($-0.72$). Kicks help but saturate: one directed message during a pause raises the odds of acting $\times$1.5--2.9 (5/7 periods), and more messages add little (14/16 powered dose curves additive or saturating, not exponential). Messages never broke error loops (0/10) and did not shorten long regime-I silences (0/3). $\beta J_0=0.09$--$0.41$; swarm activity is unimodal. The barrier was unidentifiable. Holdout (\#32, \#45): not run.}
+
+\hmodel{Models 01/02 (mean field) plus Kramers escape. Agent activity $x$ moves in a double well $U(x)$ (idle and active basins) at temperature $T$. A trap is a stay in the idle basin, escaped at rate $k$ over barrier $\Delta U$ (attempt rate $\nu$). A kick (a message reaching the agent) adds force $f$. Swarm: Curie--Weiss coupling $J_0$, field $h$, active fraction $m$. Fitted: hazard $h_{it}$ with agent effects $\alpha_i$, aging slope $\beta$, dose effects $\gamma_n$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+k=\nu\,e^{-\Delta U/T},\qquad G(x)=-\ln P(x)=U(x)/T+\text{const}\\
+k(n)=k_0\,e^{nf/T}\ \text{(Kramers)}\quad\text{vs}\quad k(n)=k_0(1+c\,n)\ \text{(triggers)}\\
+\ln\!\big[-\ln(1-h_{it})\big]=\alpha_i+\beta\ln t+\textstyle\sum_{n}\gamma_n\,\mathbb 1[\text{dose}_{it}=n]\\
+f(m)=-\tfrac{1}{2}J_0m^2-hm-Ts(m);\ \text{bistable iff }\beta J_0(1-m^2)>1
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Escape hazard from inactive spells vs.\ time in the spell (robust spells, ignoring single stray actions) in the two best-powered periods. Kramers predicts the flat dashed line once the first minutes (grey) have passed; instead the hazard falls, so traps age. (b) G51 hazard and odds ratios by number of kicks. Dotted lines extrapolate Kramers (exponential in dose) from one kick. The observed curves flatten: one message is what matters.}
+
+\htelos{Modestly useful, mostly as a correction. Facts an operator could use: a stuck agent gets stickier the longer it sits, so intervene early rather than wait. The lever that works is one directed message landing during a pause; the agent reads it at its next timer expiry. Repeating it, or chatting at the room, adds little. Chat does nothing for error loops, which need another fix (tooling, a reset). There is no swarm-wide tipping point at today's coupling. The physics added little: ``Kramers'' failed, the free-energy barrier was a smoothing artifact, and ``aging plus saturating triggers'' is ordinary survival analysis. Effects are modest and unconfirmed on the holdout.}
+
+\hbottom{Agent traps are real and individual, but they age instead of escaping by Kramers kinetics, and kicks act as saturating triggers at scheduled decision points rather than as barrier-lowering forces.}

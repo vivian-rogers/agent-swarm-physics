@@ -50,7 +50,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G<NN>](G<NN>/README.md) | exploratory | | |
+| [G<NN>](goalperiod-subhypotheses/G<NN>/README.md) | exploratory | | |
 
 ## Results
 <Cross-period synthesis, filled in after analysis: how the result depends on mode, regime and rooms; heterogeneity across periods. Link to analysis/ and figures/.>

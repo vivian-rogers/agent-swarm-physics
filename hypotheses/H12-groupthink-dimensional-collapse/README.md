@@ -205,30 +205,30 @@ Period verdicts follow Amendment 1, item 9: HH77's per-period check, plus P7a, P
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G11](G11/README.md) | exploratory · free (P7, P9) | mixed | k act 1 (lull 1), content 1; PRday 13.6; day 1/later 10.5/14.7; kickoff ΔPR +28% |
-| [G13](G13/README.md) | exploratory · shared (P9) | mixed | k act 1 (lull 0), content 1; PRday 13.7; day 1/later 16.9/14.6; kickoff ΔPR −2% |
-| [G16](G16/README.md) | exploratory · free (P7, P9) | supported | k act 1 (lull 0), content 1; PRday 14.9; day 1/later 15.1/15.3 |
-| [G18](G18/README.md) | exploratory · shared (P9) | mixed | k act 1 (lull 0), content 1; PRday 14.7; kickoff ΔPR +36% |
-| [G19](G19/README.md) | exploratory · consensus (P7–P9) | mixed | k act 1 (lull 0), content 1; PRday 14.8; day 1/later 16.0/15.0; slope days 2..D +0.16/day; kickoff +1% |
-| [G23](G23/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 12.5; day 1/later 14.1/12.3 |
-| [G24](G24/README.md) | exploratory · scored | mixed | k act **0**, content 1; PRday 13.8; day 1/later 14.7/12.4; kickoff +16% |
-| [G25](G25/README.md) | exploratory · scored | mixed | k act 1 (lull 0), content 1; PRday 16.1; day 1/later 15.2/16.8; kickoff −7% |
-| [G26](G26/README.md) | exploratory · scored | mixed | k act 1 (lull 0; 39% joint lulls), content 1; PRday 14.9; kickoff −23% |
-| [G27](G27/README.md) | exploratory · scored | supported | k act 1 (lull 1), content 1; PRday 15.6; day 1/later 15.9/16.1; kickoff −25% |
-| [G30](G30/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 16.3; day 1/later 16.6/16.3 |
-| [G31](G31/README.md) | exploratory · free + consensus | mixed | k act 1 (lull 0), content 1; PRday 16.2; day 1/later 16.8/15.8; slope −0.16/day (the only consensus week that declines); kickoff −17% |
-| [G33](G33/README.md) | exploratory · scored | supported | k act 1 (lull 1), content 1; PRday 17.7; day 1/later 16.2/18.5 |
-| [G35](G35/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 18.3; day 1/later 20.2/17.4; talk room p (2nd eigvec) 0.01 |
-| [G36](G36/README.md) | exploratory · scored (36b) | mixed | k act 1 (lull 1), content 1; PRday 16.8; kickoff +14% |
-| [G37](G37/README.md) | exploratory · free, regime III | mixed | k act 1 (lull 0; 42% joint lulls), content 1; PRday 15.8 (rank 2/4 in III); kickoff +42% |
-| [G38](G38/README.md) | exploratory · scored (38a–c) | mixed | k act 1,1,1 (lull 1,0,0), content 1,1,2; PRday **9.3**; day 1/later 14.6/8.9; 25% self-repeats |
-| [G39](G39/README.md) | exploratory · scored | mixed | k act 1 (lull 0), content 1; PRday **5.7**; 60% self-repeats; kickoff +87% |
-| [G40](G40/README.md) | exploratory · shared + consensus | mixed | k act 1 (lull 1), content 1; PRday **9.9**; day 1/later 13.1/9.2; slope +0.17/day; 16% self-repeats |
-| [G41](G41/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 15.4; day 1/later 16.7/15.4; kickoff +45% |
-| [G42](G42/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 16.8; day 1/later 17.4/16.5; kickoff +33% |
-| [G44](G44/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 2; PRday 16.9; day 1/later 18.7/15.8 |
-| [G51](G51/README.md) | exploratory · scored (51a–e) | mixed | k act 1,1,1,1,0 (lull 0,1,1,1,0), content 1,1,2,1,1; PRday 15.9; strongest market mode (λ₁/edge 2.1–2.5 in 51b–d) |
-| [NE34](NE34/README.md) | exploratory · kickoff event study | failed | 20 transitions: median ΔPR +7% (regime III +44%), 45% negative, p = 0.86 vs 189 placebos |
+| [G11](goalperiod-subhypotheses/G11/README.md) | exploratory · free (P7, P9) | mixed | k act 1 (lull 1), content 1; PRday 13.6; day 1/later 10.5/14.7; kickoff ΔPR +28% |
+| [G13](goalperiod-subhypotheses/G13/README.md) | exploratory · shared (P9) | mixed | k act 1 (lull 0), content 1; PRday 13.7; day 1/later 16.9/14.6; kickoff ΔPR −2% |
+| [G16](goalperiod-subhypotheses/G16/README.md) | exploratory · free (P7, P9) | supported | k act 1 (lull 0), content 1; PRday 14.9; day 1/later 15.1/15.3 |
+| [G18](goalperiod-subhypotheses/G18/README.md) | exploratory · shared (P9) | mixed | k act 1 (lull 0), content 1; PRday 14.7; kickoff ΔPR +36% |
+| [G19](goalperiod-subhypotheses/G19/README.md) | exploratory · consensus (P7–P9) | mixed | k act 1 (lull 0), content 1; PRday 14.8; day 1/later 16.0/15.0; slope days 2..D +0.16/day; kickoff +1% |
+| [G23](goalperiod-subhypotheses/G23/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 12.5; day 1/later 14.1/12.3 |
+| [G24](goalperiod-subhypotheses/G24/README.md) | exploratory · scored | mixed | k act **0**, content 1; PRday 13.8; day 1/later 14.7/12.4; kickoff +16% |
+| [G25](goalperiod-subhypotheses/G25/README.md) | exploratory · scored | mixed | k act 1 (lull 0), content 1; PRday 16.1; day 1/later 15.2/16.8; kickoff −7% |
+| [G26](goalperiod-subhypotheses/G26/README.md) | exploratory · scored | mixed | k act 1 (lull 0; 39% joint lulls), content 1; PRday 14.9; kickoff −23% |
+| [G27](goalperiod-subhypotheses/G27/README.md) | exploratory · scored | supported | k act 1 (lull 1), content 1; PRday 15.6; day 1/later 15.9/16.1; kickoff −25% |
+| [G30](goalperiod-subhypotheses/G30/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 16.3; day 1/later 16.6/16.3 |
+| [G31](goalperiod-subhypotheses/G31/README.md) | exploratory · free + consensus | mixed | k act 1 (lull 0), content 1; PRday 16.2; day 1/later 16.8/15.8; slope −0.16/day (the only consensus week that declines); kickoff −17% |
+| [G33](goalperiod-subhypotheses/G33/README.md) | exploratory · scored | supported | k act 1 (lull 1), content 1; PRday 17.7; day 1/later 16.2/18.5 |
+| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 18.3; day 1/later 20.2/17.4; talk room p (2nd eigvec) 0.01 |
+| [G36](goalperiod-subhypotheses/G36/README.md) | exploratory · scored (36b) | mixed | k act 1 (lull 1), content 1; PRday 16.8; kickoff +14% |
+| [G37](goalperiod-subhypotheses/G37/README.md) | exploratory · free, regime III | mixed | k act 1 (lull 0; 42% joint lulls), content 1; PRday 15.8 (rank 2/4 in III); kickoff +42% |
+| [G38](goalperiod-subhypotheses/G38/README.md) | exploratory · scored (38a–c) | mixed | k act 1,1,1 (lull 1,0,0), content 1,1,2; PRday **9.3**; day 1/later 14.6/8.9; 25% self-repeats |
+| [G39](goalperiod-subhypotheses/G39/README.md) | exploratory · scored | mixed | k act 1 (lull 0), content 1; PRday **5.7**; 60% self-repeats; kickoff +87% |
+| [G40](goalperiod-subhypotheses/G40/README.md) | exploratory · shared + consensus | mixed | k act 1 (lull 1), content 1; PRday **9.9**; day 1/later 13.1/9.2; slope +0.17/day; 16% self-repeats |
+| [G41](goalperiod-subhypotheses/G41/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 15.4; day 1/later 16.7/15.4; kickoff +45% |
+| [G42](goalperiod-subhypotheses/G42/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 16.8; day 1/later 17.4/16.5; kickoff +33% |
+| [G44](goalperiod-subhypotheses/G44/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 2; PRday 16.9; day 1/later 18.7/15.8 |
+| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory · scored (51a–e) | mixed | k act 1,1,1,1,0 (lull 0,1,1,1,0), content 1,1,2,1,1; PRday 15.9; strongest market mode (λ₁/edge 2.1–2.5 in 51b–d) |
+| [NE34](goalperiod-subhypotheses/NE34/README.md) | exploratory · kickoff event study | failed | 20 transitions: median ΔPR +7% (regime III +44%), 45% negative, p = 0.86 vs 189 placebos |
 
 ## Results
 *Round 1, 2026-10-03, non-holdout only. Code: `scheme/build.py`, `analysis/{h12lib, synthetic, run_units, evaluate, posthoc, figures, figures_real, write_period_folders, confirm}.py`. Data: `data/processed/H12-groupthink-dimensional-collapse/` (26 MB). One-page summary: `figures/H12_summary.pdf`.*

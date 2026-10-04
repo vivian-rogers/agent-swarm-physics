@@ -83,7 +83,7 @@ P3_PERIODS = {19, 26, 31, 40}
 
 
 def init_readme(g, cls):
-    f = HC.HYP / f"G{g:02d}" / "README.md"
+    f = HC.HYP / "goalperiod-subhypotheses" / f"G{g:02d}" / "README.md"
     if f.exists():
         return False
     title, dates, reg, mode, N, d, rooms = GOAL[g]
@@ -124,7 +124,7 @@ def init_readme(g, cls):
 
 
 def fill_results(g):
-    f = HC.HYP / f"G{g:02d}" / "README.md"
+    f = HC.HYP / "goalperiod-subhypotheses" / f"G{g:02d}" / "README.md"
     rj = HC.OUT / f"G{g:02d}" / "results.json"
     if not f.exists() or not rj.exists():
         return False

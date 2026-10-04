@@ -46,7 +46,7 @@ def main():
     jt = pl.read_parquet(DATA / "jitter_table.parquet")
     for goal in select_goals(sorted(days["goal_no"].unique().to_list())):
         keys = days.filter(pl.col("goal_no") == goal).sort("day_id")["day_id"].to_list()
-        out = HERE.parent / f"G{goal:02d}" / "figures"
+        out = HERE.parent / "goalperiod-subhypotheses" / f"G{goal:02d}" / "figures"
         out.mkdir(parents=True, exist_ok=True)
         fig, axs = plt.subplots(2, 3, figsize=(7.4, 4.8))
         # (a) ladder

@@ -88,23 +88,23 @@ Scored for round 1 (exploratory, non-holdout), mapping = git trees + tree-sitter
 
 | Folder | Period | Role | Verdict | Headline |
 | --- | --- | --- | --- | --- |
-| [`G34/`](G34/README.md) | #34 RPG build (held out) | confirmatory | pending | C1 (hot spots persist from #34) and C2 (touch clock transfers) written; `confirm_h34.py` not run |
-| [`NE15/`](NE15/README.md) | the 03-16 split → 05-28 (spans #35–#44) | exploratory | mixed | Horizontal copy information falls monotonically through #35; the independent-lineage identity holds exactly. The freeze afterwards holds for files and names, not for numbers and functions (#37 revival). 3 shared innovations, all convergent repairs of inherited defects, none channel-borne |
-| [`G35/`](G35/README.md) | #35 Test your game | exploratory | mixed | Gradual divergence (files 0.69 / 0.81 identical to the ancestor). Content divergence is punctuated, and nearly all of it is in #best (re-theming, rebalancing). The touch clock collapses code-level rates; the commit clock and population size do not explain them |
-| [`G36/`](G36/README.md) | #36 Interact with outside agents | exploratory | supported | Freeze and activity collapse as predicted; the only fork commits are README cross-links (2 on #best's repo by #rest agents) |
-| [`G37/`](G37/README.md) | #37 Pick your own goal | exploratory | mixed | One agent (Gemini 3.1 Pro) returned to the game: 27 #best commits, inherited content stable, fork grew (378 new numeric keys) |
+| [`G34/`](goalperiod-subhypotheses/G34/README.md) | #34 RPG build (held out) | confirmatory | pending | C1 (hot spots persist from #34) and C2 (touch clock transfers) written; `confirm_h34.py` not run |
+| [`NE15/`](goalperiod-subhypotheses/NE15/README.md) | the 03-16 split → 05-28 (spans #35–#44) | exploratory | mixed | Horizontal copy information falls monotonically through #35; the independent-lineage identity holds exactly. The freeze afterwards holds for files and names, not for numbers and functions (#37 revival). 3 shared innovations, all convergent repairs of inherited defects, none channel-borne |
+| [`G35/`](goalperiod-subhypotheses/G35/README.md) | #35 Test your game | exploratory | mixed | Gradual divergence (files 0.69 / 0.81 identical to the ancestor). Content divergence is punctuated, and nearly all of it is in #best (re-theming, rebalancing). The touch clock collapses code-level rates; the commit clock and population size do not explain them |
+| [`G36/`](goalperiod-subhypotheses/G36/README.md) | #36 Interact with outside agents | exploratory | supported | Freeze and activity collapse as predicted; the only fork commits are README cross-links (2 on #best's repo by #rest agents) |
+| [`G37/`](goalperiod-subhypotheses/G37/README.md) | #37 Pick your own goal | exploratory | mixed | One agent (Gemini 3.1 Pro) returned to the game: 27 #best commits, inherited content stable, fork grew (378 new numeric keys) |
 | — | #38–#44 | — | n/a | 16 fork commits in 41 active days: README and data notes, 6 #rest code fixes (GPT-5.2), 4 playthrough-milestone logs (Opus 4.5); covered in NE15 |
 
 ### Prediction verdicts (where evaluated)
-- **P1** gradual divergence: supported ([G35](G35/README.md)).
-- **P2** feature hierarchy: failed in #best, held in #rest; the model-08 "numbers are copied" rival is not supported either ([G35](G35/README.md)).
-- **P3a** commit clock: failed; the file-touch clock works for code (post hoc, tested by C2) ([G35](G35/README.md)).
-- **P3b** frozen core: mixed ([G35](G35/README.md)).
-- **P4** decay then freeze: mixed ([NE15](NE15/README.md), [G36](G36/README.md), [G37](G37/README.md)).
-- **P5** rare, channel-borne leakage: mixed. Leakage is rare, but the shared innovations are convergent, and #best received 3 cross-fork commits ([NE15](NE15/README.md)).
-- **P6** population size: failed ([G35](G35/README.md)).
-- **P7** copying, not transformation: supported, with a small significant numeric rebalance in #best ([G35](G35/README.md)).
-- **P8** ground truth: supported ([G35](G35/README.md)).
+- **P1** gradual divergence: supported ([G35](goalperiod-subhypotheses/G35/README.md)).
+- **P2** feature hierarchy: failed in #best, held in #rest; the model-08 "numbers are copied" rival is not supported either ([G35](goalperiod-subhypotheses/G35/README.md)).
+- **P3a** commit clock: failed; the file-touch clock works for code (post hoc, tested by C2) ([G35](goalperiod-subhypotheses/G35/README.md)).
+- **P3b** frozen core: mixed ([G35](goalperiod-subhypotheses/G35/README.md)).
+- **P4** decay then freeze: mixed ([NE15](goalperiod-subhypotheses/NE15/README.md), [G36](goalperiod-subhypotheses/G36/README.md), [G37](goalperiod-subhypotheses/G37/README.md)).
+- **P5** rare, channel-borne leakage: mixed. Leakage is rare, but the shared innovations are convergent, and #best received 3 cross-fork commits ([NE15](goalperiod-subhypotheses/NE15/README.md)).
+- **P6** population size: failed ([G35](goalperiod-subhypotheses/G35/README.md)).
+- **P7** copying, not transformation: supported, with a small significant numeric rebalance in #best ([G35](goalperiod-subhypotheses/G35/README.md)).
+- **P8** ground truth: supported ([G35](goalperiod-subhypotheses/G35/README.md)).
 
 ### Main findings
 1. **A measurable inheritance curve.** Copy fractions decline gradually after the split and level off when work stops. The independent-lineage bound holds exactly: no inherited file was changed to identical content in both forks after day 2.

@@ -1,0 +1,13 @@
+{
+ "complete": 42,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: synthetic validation, dated predictions, 11 per-period verdicts, scorecard, confirmatory script written and dry-run. Holdout not run; content-level spirals (TS5) and natural experiments not done.",
+  "faithfulness": "The Kramers core failed: escape is not memoryless (aging within agent wherever powered), dose curves saturate rather than rise exponentially (14/16), and the Boltzmann barrier is not identifiable at 1-min sampling. Only the mean-field 'no collective bistability' part holds (10/11 by the pre-registered test). No holdout.",
+  "usefulness": "Gives computable monitors (an aging hazard; the effect of a directed message at the pause gate) and a partial lever: intervene early, one directed message during a pause helps and repeats don't, chat does not fix error loops. Modest effect sizes, exploratory only."
+ },
+ "one_line": "Agent traps age, not Kramers-escape; one directed message at a pause gate helps, more add little.",
+ "rated_by": "H16 agent (suggested)",
+ "updated": "2026-10-03"
+}

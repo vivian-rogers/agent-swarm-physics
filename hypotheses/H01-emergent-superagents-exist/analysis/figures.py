@@ -287,7 +287,7 @@ def fig_periods(ex):
         g = "".join(ch for ch in u if ch.isdigit())
         gmap.setdefault(g, []).append(u)
     for g, units in gmap.items():
-        gdir = HYP / f"G{int(g):02d}"
+        gdir = HYP / "goalperiod-subhypotheses" / f"G{int(g):02d}"
         if not gdir.exists():
             continue
         (gdir / "figures").mkdir(exist_ok=True)

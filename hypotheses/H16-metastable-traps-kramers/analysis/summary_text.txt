@@ -1,0 +1,29 @@
+QUESTION. Are idle spells, pause chains, error loops and identical-command loops metastable traps with Kramers escape (memoryless,
+rate set by a barrier, kicks lowering the barrier exponentially)? With beta*J0 < 1, is there no collective bistability?
+
+SYNTHETIC VALIDATION (axis F, done first). Langevin double-well agents seen only through event times at village sampling:
+  - dwell-law slope (robust spells, agent FE, >= 10 min) recovered (exp. truth +0.02 -> +0.05; deepening -0.54 -> -0.58);
+    pooled fits fake aging under frailty; agent-day FE is biased; naive dwell means are biased once dwell >~ 0.4 day.
+  - Boltzmann inversion of a smoothed 1-min activity coordinate does NOT measure a barrier: the barrier region is crossed in
+    one minute, the 1D Kramers closure misses by x2.4, and the apparent barrier sits where the EWMA jumps (x ~ 0.125).
+  - dose law (exponential vs additive vs saturating) discriminates only at high kick rates; swarm bimodality test detects
+    beta*J0 >= 1.3 and gives no false positives at <= 0.6 once joint-silence minutes are excluded.
+
+RESULTS (non-holdout; 3 regime-I and 8 regime-III goal periods; predictions written before the run).
+  (a) Traps AGE; escape is not memoryless. Within agent, the deep-window escape hazard falls ~ t^-0.8 in G51 (beta -0.77
+      [-0.81, -0.73], 4,321 escapes), G38 (-1.71) and G37 (-1.56); point estimates negative in 6/8 regime-III periods, none
+      memoryless with a tight CI. Pause chains: P(act at the timer gate) falls with the number of re-pauses (G51 -0.38,
+      G38 -0.44). Error loops age (G51 -0.72; negative in 8/11). Regime I is underpowered (no verdict).
+  (b) Not identifiable at 1-min resolution (coordinate artifact; see synthetic). Reported, not interpreted.
+  (c) Kicks help, but not as barrier lowering. One kick is what matters: dose laws are saturating/additive in 14/16 powered
+      cells (Kramers predicts exponential). A directed message (mention or nudge) during a pause raises the odds of acting
+      at the timer gate x1.5-2.9 (5/7 periods). In regime III undirected room messages raise escape from long silences
+      x1.2-1.7 above the day-swap null (5/8; contrary to prediction). In regime I they do not shorten >= 3-min silences
+      (0/3). Messages do not break error loops (0/10).
+  (d) Mean field is right: beta*J0 = 0.09-0.41 (stalls excluded) in 10/11 periods (G37: 1.10, an outage-day artifact,
+      0.35 against a within-day null); swarm activity unimodal in 10/11 by the pre-registered test and 11/11 with a
+      minimum-mass rule. Slow collective persistence (30-min residual memory) in 5/11 periods, without bistability.
+
+BOTTOM LINE. The trap picture holds and the Kramers picture does not: agents' stuck states deepen with time (aging), are
+individual (no swarm bistability), and are escaped through scheduled decision points, where one directed message helps and
+more add little. Holdout confirmation (#32, #45) is written, dry-run on stand-ins, and not run.

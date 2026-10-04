@@ -147,7 +147,7 @@ I had **not** seen any window-level shares, fluctuations, couplings or time cour
     - **mixed** otherwise.
   - **Cross-period contrast:** βJ_CW(AF) < βJ_CW(FM), one-sided Mann–Whitney over candidate + transfer periods.
 - **P2 (O2). Dynamic coupling beyond agent fields follows the class.** AF: z_N2 ≤ 0 (avoidance or none); FM: z_N2 ≥ +2. Per period: supported / weak / failed on the same pattern.
-- **P3 (O4 + O5). Consensus is a first-order Potts jump** (#19; #26 on declared votes; #40; #31 for the herding project). HH22's own tests for #26 are in [`G26/README.md`](G26/README.md) (P-G26a symmetric point, P-G26b runoff jump, P-G26c mean-field mechanism), written 2026-10-03 before running on #26. Two clauses:
+- **P3 (O4 + O5). Consensus is a first-order Potts jump** (#19; #26 on declared votes; #40; #31 for the herding project). HH22's own tests for #26 are in [`G26/README.md`](goalperiod-subhypotheses/G26/README.md) (P-G26a symmetric point, P-G26b runoff jump, P-G26c mean-field mechanism), written 2026-10-03 before running on #26. Two clauses:
   - **(a) data:** x₁ shows a "jump" (Δ ≥ 0.3, τ ≤ 2 windows) with persistence ≤ 0.15;
   - **(b) mechanism:** βJ_CW ≥ βJ_s(q_eff), the first-order region.
 
@@ -194,22 +194,22 @@ All periods were run on 2026-10-03. Predictions were written before the run (car
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G13](G13/README.md) | candidate, AF | n/a (14 blocks < 15) | descriptive βJ_CW +4.7 (opposite sign; not a test) |
-| [G18](G18/README.md) | candidate, AF | P1 failed (significantly opposite); P2 failed | βJ_CW +5.00 (t 6.7); z_N2 +8.7; last-day convergence on one repo |
-| [G19](G19/README.md) | candidate, FM-consensus | P1 supported; P2 supported; P3 failed (consensus already in place: frozen) | +2.76 (t 9.6); z +5.2; build repo at ≈ 0.6 share from the start |
-| [G26](G26/README.md) | candidate, FM-consensus + HH22 | P1 supported; P2 supported; HH22: jump supported, mechanism inconclusive | +6.13 (t 7.0); z +6.4; votes jump Δ 0.62 within 1 window; βJ_snap 2.80 [0.65, 4.65] vs βJ_s 2.75 |
-| [G31](G31/README.md) | candidate, FM-free | P1 supported; P2 supported; P3 failed (relapse 0.27) | +4.88 (t 20.4); z +14.3; herding waves onto successive shared repos |
-| [G40](G40/README.md) | candidate, FM-consensus | P1 failed (opposite, n.s.); P2 failed | −17.9 (t −2.6); z −0.1; spread carried by fields (own worlds + hub) |
-| [G41](G41/README.md) | candidate, FM-convergence | P1 supported; P2 supported | +4.30 (t 24.9); z +5.4 |
-| [G11](G11/README.md), [G16](G16/README.md) | transfer, FM-free | n/a (3 and 5 blocks) | – |
-| [G24](G24/README.md) | transfer, AF | P1 failed (n.s.); P2 failed (significant) | +3.25 (jackknife SE 26.6, unstable); z +2.7 |
-| [G25](G25/README.md) | transfer, AF | P1 failed (significant); P2 failed | +4.12 (t 3.8); z +6.7 |
-| [G30](G30/README.md) | transfer, AF | P1 failed (significant); P2 failed | +2.01 (t 8.0); z +4.3 |
-| [G37](G37/README.md) | transfer, FM-free | P1 supported; P2 supported | +3.73 (t 23.1); z +6.9 |
-| [G38](G38/README.md) | transfer, AF | P1 failed (significant); P2 failed | +4.28 (t 16.7); z +2.1; within-day excess only +0.4 |
-| [G20](G20/README.md) | transfer, I (descriptive) | descriptive | +2.18 (t 6.3); z +1.9 |
-| [G39](G39/README.md) | transfer, I (descriptive) | descriptive | −8.61 (t −3.05); z −1.3; ownership 1.00 |
-| [G42](G42/README.md) | transfer, I (descriptive) | descriptive | −2.16 (t −1.7); z +1.3; ownership 0.73 |
+| [G13](goalperiod-subhypotheses/G13/README.md) | candidate, AF | n/a (14 blocks < 15) | descriptive βJ_CW +4.7 (opposite sign; not a test) |
+| [G18](goalperiod-subhypotheses/G18/README.md) | candidate, AF | P1 failed (significantly opposite); P2 failed | βJ_CW +5.00 (t 6.7); z_N2 +8.7; last-day convergence on one repo |
+| [G19](goalperiod-subhypotheses/G19/README.md) | candidate, FM-consensus | P1 supported; P2 supported; P3 failed (consensus already in place: frozen) | +2.76 (t 9.6); z +5.2; build repo at ≈ 0.6 share from the start |
+| [G26](goalperiod-subhypotheses/G26/README.md) | candidate, FM-consensus + HH22 | P1 supported; P2 supported; HH22: jump supported, mechanism inconclusive | +6.13 (t 7.0); z +6.4; votes jump Δ 0.62 within 1 window; βJ_snap 2.80 [0.65, 4.65] vs βJ_s 2.75 |
+| [G31](goalperiod-subhypotheses/G31/README.md) | candidate, FM-free | P1 supported; P2 supported; P3 failed (relapse 0.27) | +4.88 (t 20.4); z +14.3; herding waves onto successive shared repos |
+| [G40](goalperiod-subhypotheses/G40/README.md) | candidate, FM-consensus | P1 failed (opposite, n.s.); P2 failed | −17.9 (t −2.6); z −0.1; spread carried by fields (own worlds + hub) |
+| [G41](goalperiod-subhypotheses/G41/README.md) | candidate, FM-convergence | P1 supported; P2 supported | +4.30 (t 24.9); z +5.4 |
+| [G11](goalperiod-subhypotheses/G11/README.md), [G16](goalperiod-subhypotheses/G16/README.md) | transfer, FM-free | n/a (3 and 5 blocks) | – |
+| [G24](goalperiod-subhypotheses/G24/README.md) | transfer, AF | P1 failed (n.s.); P2 failed (significant) | +3.25 (jackknife SE 26.6, unstable); z +2.7 |
+| [G25](goalperiod-subhypotheses/G25/README.md) | transfer, AF | P1 failed (significant); P2 failed | +4.12 (t 3.8); z +6.7 |
+| [G30](goalperiod-subhypotheses/G30/README.md) | transfer, AF | P1 failed (significant); P2 failed | +2.01 (t 8.0); z +4.3 |
+| [G37](goalperiod-subhypotheses/G37/README.md) | transfer, FM-free | P1 supported; P2 supported | +3.73 (t 23.1); z +6.9 |
+| [G38](goalperiod-subhypotheses/G38/README.md) | transfer, AF | P1 failed (significant); P2 failed | +4.28 (t 16.7); z +2.1; within-day excess only +0.4 |
+| [G20](goalperiod-subhypotheses/G20/README.md) | transfer, I (descriptive) | descriptive | +2.18 (t 6.3); z +1.9 |
+| [G39](goalperiod-subhypotheses/G39/README.md) | transfer, I (descriptive) | descriptive | −8.61 (t −3.05); z −1.3; ownership 1.00 |
+| [G42](goalperiod-subhypotheses/G42/README.md) | transfer, I (descriptive) | descriptive | −2.16 (t −1.7); z +1.3; ownership 0.73 |
 
 ## Results
 *Exploratory round 1, 2026-10-03.*

@@ -250,16 +250,16 @@ One folder per goal period; verdict rule in `analysis/period_results.py` (failed
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G35](G35/README.md) | exploratory | mixed | 35: T 0.32 (p 0.000), S-a 0.06 (p 0.16); talk Δ 0.029 (p 0.24); content Δ -0.028 (p 0.49); y2 b_lab/b_room 0.31/0.25 |
-| [G36](G36/README.md) | exploratory | mixed | 36b: T 0.38 (p 0.005), S-a 0.01 (p 0.41); talk Δ 0.049 (p 0.28); content Δ -0.027 (p 0.62); y2 b_lab/b_room 0.43/0.19 |
-| [G37](G37/README.md) | exploratory | failed | 37: T -0.08 (p 0.784), S-a 0.03 (p 0.31); talk Δ -0.029 (p 0.41); content Δ -0.655 (p 0.75); y2 b_lab/b_room -0.08/0.35 |
-| [G38](G38/README.md) | exploratory | mixed | 38a: T 0.11 (p 0.179), S-a -0.01 (p 0.43); talk Δ -0.035 (p 0.72); content Δ -0.060 (p 0.58); y2 b_lab/b_room 0.18/0.89<br>38b: T -0.03 (p 0.455), S-a -0.08 (p 0.77); talk Δ -0.486 (p 0.99); content Δ -0.001 (p 0.30); y2 b_lab/b_room 0.08/0.89<br>38c: T 0.12 (p 0.156), S-a 0.01 (p 0.38); talk Δ -0.041 (p 0.56); content Δ -0.047 (p 0.61); y2 b_lab/b_room 0.14/0.86 |
-| [G39](G39/README.md) | exploratory | mixed | 39: T 0.17 (p 0.040), S-a -0.13 (p 0.99); talk Δ -0.119 (p 0.77); content Δ 0.081 (p 0.03); y2 b_lab/b_room 0.17/0.04 |
-| [G40](G40/README.md) | exploratory | mixed | 40: T 0.32 (p 0.007), S-a -0.05 (p 0.74); talk Δ 0.040 (p 0.21); content Δ 0.017 (p 0.15) |
-| [G41](G41/README.md) | exploratory | mixed | 41: T 0.28 (p 0.011), S-a -0.09 (p 0.91); talk Δ 0.002 (p 0.41); content Δ 0.032 (p 0.07); y2 b_lab/b_room 0.26/0.47 |
-| [G42](G42/README.md) | exploratory | mixed | 42: T 0.22 (p 0.009), S-a 0.06 (p 0.18); talk Δ -0.307 (p 0.90); content Δ -0.033 (p 0.50); y2 b_lab/b_room 0.16/0.33 |
-| [G44](G44/README.md) | exploratory | failed | 44: T 0.06 (p 0.185), S-a 0.05 (p 0.23); talk Δ -0.008 (p 0.50); content Δ -0.028 (p 0.34); y2 b_lab/b_room 0.06/0.72 |
-| [G51](G51/README.md) | exploratory | mixed | 51a: T 0.06 (p 0.047), S-a 0.02 (p 0.21); talk Δ 0.084 (p 0.01); content Δ -0.005 (p 0.40)<br>51b: T 0.07 (p 0.009), S-a -0.01 (p 0.61); talk Δ 0.026 (p 0.23); content Δ -0.002 (p 0.29)<br>51c: T 0.09 (p 0.002), S-a 0.04 (p 0.06); talk Δ -0.010 (p 0.51); content Δ -0.001 (p 0.17)<br>51d: T 0.01 (p 0.379), S-a -0.03 (p 0.86); talk Δ -0.053 (p 0.68); content Δ -0.008 (p 0.40)<br>51e: T 0.01 (p 0.341), S-a -0.03 (p 0.79); talk Δ -0.116 (p 0.86); content Δ -0.049 (p 0.76) |
+| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory | mixed | 35: T 0.32 (p 0.000), S-a 0.06 (p 0.16); talk Δ 0.029 (p 0.24); content Δ -0.028 (p 0.49); y2 b_lab/b_room 0.31/0.25 |
+| [G36](goalperiod-subhypotheses/G36/README.md) | exploratory | mixed | 36b: T 0.38 (p 0.005), S-a 0.01 (p 0.41); talk Δ 0.049 (p 0.28); content Δ -0.027 (p 0.62); y2 b_lab/b_room 0.43/0.19 |
+| [G37](goalperiod-subhypotheses/G37/README.md) | exploratory | failed | 37: T -0.08 (p 0.784), S-a 0.03 (p 0.31); talk Δ -0.029 (p 0.41); content Δ -0.655 (p 0.75); y2 b_lab/b_room -0.08/0.35 |
+| [G38](goalperiod-subhypotheses/G38/README.md) | exploratory | mixed | 38a: T 0.11 (p 0.179), S-a -0.01 (p 0.43); talk Δ -0.035 (p 0.72); content Δ -0.060 (p 0.58); y2 b_lab/b_room 0.18/0.89<br>38b: T -0.03 (p 0.455), S-a -0.08 (p 0.77); talk Δ -0.486 (p 0.99); content Δ -0.001 (p 0.30); y2 b_lab/b_room 0.08/0.89<br>38c: T 0.12 (p 0.156), S-a 0.01 (p 0.38); talk Δ -0.041 (p 0.56); content Δ -0.047 (p 0.61); y2 b_lab/b_room 0.14/0.86 |
+| [G39](goalperiod-subhypotheses/G39/README.md) | exploratory | mixed | 39: T 0.17 (p 0.040), S-a -0.13 (p 0.99); talk Δ -0.119 (p 0.77); content Δ 0.081 (p 0.03); y2 b_lab/b_room 0.17/0.04 |
+| [G40](goalperiod-subhypotheses/G40/README.md) | exploratory | mixed | 40: T 0.32 (p 0.007), S-a -0.05 (p 0.74); talk Δ 0.040 (p 0.21); content Δ 0.017 (p 0.15) |
+| [G41](goalperiod-subhypotheses/G41/README.md) | exploratory | mixed | 41: T 0.28 (p 0.011), S-a -0.09 (p 0.91); talk Δ 0.002 (p 0.41); content Δ 0.032 (p 0.07); y2 b_lab/b_room 0.26/0.47 |
+| [G42](goalperiod-subhypotheses/G42/README.md) | exploratory | mixed | 42: T 0.22 (p 0.009), S-a 0.06 (p 0.18); talk Δ -0.307 (p 0.90); content Δ -0.033 (p 0.50); y2 b_lab/b_room 0.16/0.33 |
+| [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | failed | 44: T 0.06 (p 0.185), S-a 0.05 (p 0.23); talk Δ -0.008 (p 0.50); content Δ -0.028 (p 0.34); y2 b_lab/b_room 0.06/0.72 |
+| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | mixed | 51a: T 0.06 (p 0.047), S-a 0.02 (p 0.21); talk Δ 0.084 (p 0.01); content Δ -0.005 (p 0.40)<br>51b: T 0.07 (p 0.009), S-a -0.01 (p 0.61); talk Δ 0.026 (p 0.23); content Δ -0.002 (p 0.29)<br>51c: T 0.09 (p 0.002), S-a 0.04 (p 0.06); talk Δ -0.010 (p 0.51); content Δ -0.001 (p 0.17)<br>51d: T 0.01 (p 0.379), S-a -0.03 (p 0.86); talk Δ -0.053 (p 0.68); content Δ -0.008 (p 0.40)<br>51e: T 0.01 (p 0.341), S-a -0.03 (p 0.79); talk Δ -0.116 (p 0.86); content Δ -0.049 (p 0.76) |
 
 ## Results
 
