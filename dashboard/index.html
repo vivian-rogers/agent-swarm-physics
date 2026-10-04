@@ -137,7 +137,10 @@ td.num { text-align: right; white-space: nowrap; }
 
 #tip { position: fixed; z-index: 30; pointer-events: none; background: var(--text-primary); color: var(--surface-1); padding: 5px 8px; border-radius: 4px; font-size: 12px; max-width: 420px; display: none; white-space: pre-wrap; }
 .err { color: var(--critical); padding: 8px 16px; }
-.vet { border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; margin: 0 0 6px; background: var(--surface-2); }
+.vetstrip #vet { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 6px; }
+.vetstrip #vet > details { grid-column: 1 / -1; }
+.vetbadge { background: var(--accent); color: #fff; border: none; border-radius: 10px; padding: 1px 9px; font-size: 12px; cursor: pointer; }
+.vet { border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; margin: 0; background: var(--surface-2); }
 .vet .hd { display: flex; gap: 6px; align-items: baseline; }
 .vet .hd b { font-family: ui-monospace, monospace; }
 .vet .why { color: var(--text-secondary); font-size: 12px; margin: 2px 0 4px; }
@@ -213,6 +216,7 @@ td.num { text-align: right; white-space: nowrap; }
 <header>
   <h1>Agent-swarm physics · lab status</h1>
   <div class="facts" id="facts"></div>
+  <button id="vetbadge" class="vetbadge" hidden data-tip="HHs waiting for your vetting: jump to them">HHs to vet</button>
   <div class="live"><span id="livedot" class="dot"></span><span id="updated">loading…</span>
     <button id="pause" data-tip="Stop the 6 s refresh. Click again to start it.">pause</button>
     <button id="theme" data-tip="Change between light and dark.">◐</button></div>
@@ -220,6 +224,8 @@ td.num { text-align: right; white-space: nowrap; }
 <div id="error" class="err" hidden></div>
 <main>
   <div>
+    <section id="s-vet" class="vetstrip"><h2>HHs to vet <span class="sub" id="vet-sub"></span></h2><div id="vet"></div>
+      <div class="legend small">The coordinator proposes these hypothesis ideas. ✓ sends an HH to the H queue. ✕ declines it. ⏸ defers it. ↺ undoes a click. Each click is saved in hypotheses/hypohypotheses/vetting_decisions.jsonl, and the coordinator sees it.</div></section>
     <section id="s-hyp">
       <h2>Hypotheses <span class="sub" id="hyp-sub"></span>
         <span style="margin-left:auto"><input id="filter" placeholder="filter: H18, running, mixed, holdout…"></span></h2>
@@ -260,8 +266,6 @@ td.num { text-align: right; white-space: nowrap; }
     </section>
   </div>
   <div>
-    <section id="s-vet"><h2>HHs to vet <span class="sub" id="vet-sub"></span></h2><div id="vet"></div>
-      <div class="legend small">The coordinator proposes these hypothesis ideas. ✓ sends an HH to the H queue. ✕ declines it. ⏸ defers it. ↺ undoes a click. Each click is saved in hypotheses/hypohypotheses/vetting_decisions.jsonl, and the coordinator sees it.</div></section>
     <section><h2>Measured swarm constants <span class="sub">round 1b · exploratory · no holdout test</span></h2><table id="consts"></table>
       <div class="legend small">Each row gives one measured parameter of the swarm, its uncertainty and its source hypothesis. Hover a row for its meaning. Click a row to open the source card. File: interpretation/swarm-constants.json.</div></section>
     <section><h2>Agents <span class="sub" id="ag-sub"></span></h2><table id="agents"></table></section>
@@ -892,6 +896,7 @@ function renderVetting() {
   const items = S.vetting?.items || [];
   const open = items.filter(x => !x.decision && !x.promoted_to), done = items.filter(x => x.decision || x.promoted_to);
   const n = k => items.filter(x => x.decision === k).length;
+  const vb = $("#vetbadge"); if (vb) { vb.hidden = !open.length; vb.textContent = `${open.length} HHs to vet ↓`; vb.onclick = () => $("#s-vet").scrollIntoView({ behavior: "smooth" }); }
   $("#vet-sub").textContent = `${open.length} open · ${n("approved")} approved · ${n("declined")} declined · ${n("later")} later`;
   const card = x => {
     const st = x.promoted_to ? `→ ${x.promoted_to}` : x.decision === "approved" ? "approved → H queue" : x.decision === "declined" ? "declined" : x.decision === "later" ? "later" : "";
