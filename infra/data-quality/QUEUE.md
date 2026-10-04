@@ -54,7 +54,7 @@ Audit (2026-10-04): in ~15 of 34 hypotheses the period READMEs are near-identica
 ## New hypotheses H40–H58 (promoted 2026-10-04): launch plan
 | Wave | Hypotheses | Launch when |
 | --- | --- | --- |
-| A (running) | H43, H46, H47, H49, H54, H56, H50 | launched 2026-10-04 |
+| A | H43, H46, H47, H49, H54, H56, H50 | launched 2026-10-04; paused by the session-limit outage, resume as DQ / near-done agents finish |
 | B | H40, H41, H42, H48, H52, H53, H45 | DQ1 (`call_windows`, context ledger) lands |
 | C | H44 (DQ1 + DQ3 + DQ4), H55 (DQ2 + DQ5), H57 (DQ1 + DQ5), H58 (DQ4 + H01 round 2) | their inputs land |
 | D | H51 (one dial) | after waves B–C and the re-evaluation wave |
