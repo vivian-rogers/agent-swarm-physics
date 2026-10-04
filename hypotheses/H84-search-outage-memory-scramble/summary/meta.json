@@ -29,7 +29,7 @@
   "scope": "G37 outage days vs 38 placebo day pairs; the outage fully reached one agent",
   "direction": "negative",
   "original_verdict": "failed",
-  "credence": 0.38,
+  "credence": 0.42,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -62,9 +62,51 @@
   "decision": "don't spend effort protecting history search; its outage had no measured cost",
   "magnitude": "small",
   "generality": "LLM swarms with history search",
-  "expected_usefulness": 0.38,
-  "scientific_value": 1.5,
-  "rater": "coordinator, updated after round 1b (H84 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.42,
+  "scientific_value": 1.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.38,
+    "value_if_true": 1.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 1.5
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "The 2026-03-31/04-01 history-search outage cost no project continuity: a dose-proportional continuity (V1) dip >= 0.30 at the mean searcher dose is excluded (beta_V1 +0.12, placebo rank p for a dip 0.87; commits per 20 calls +0.03 +/- 0.51). Excluded: dips of 0.10-0.20 (power 0.63-0.74), duplicates (13 events), NE18 (no first stage), G51 failed answers (not exogenous), the I_Q replication clause.",
+    "credence": 0.46,
+    "value_if_true": 1.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.0,
+    "ladder": [
+     [
+      "calibrated null (placebo-rank test sized on a synthetic with the real 12-agent x 48-day skeleton; power 0.85-0.91 at a 0.30 dip; the natural scramble and its placebos are one design, credited once)",
+      2,
+      "Synthetic validation table; Amendment A1"
+     ],
+     [
+      "replication: single unit (one event, two days; one effectively treated agent)",
+      0.6,
+      "Results 'one-agent scramble'; scorecard I=0"
+     ],
+     [
+      "partly robust (weighted, binary-dose and leave-one-agent-out variants agree in sign)",
+      1.5,
+      "Scorecard F"
+     ],
+     [
+      "power overstated: the synthetic planted a dose-proportional dip in all searchers, but the first stage reached 1 of 3 (one halved, one stopped searching)",
+      0.7,
+      "Outcome P4; Caveats"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

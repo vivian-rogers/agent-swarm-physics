@@ -29,7 +29,7 @@
   "scope": "G51 (resolvable); 7 other periods underpowered; natives G38 rooms, G51 pairwise, NE43",
   "direction": "positive",
   "original_verdict": "supported in G51 only",
-  "credence": 0.48,
+  "credence": 0.41,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -63,13 +63,45 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 1.5,
   "decision": "directed coupling lives in named talk; look for it there, not in activity",
   "magnitude": "small",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 0.97,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H90 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.61,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.48,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "In G51 (#51 head, ~45 non-holdout days, N 21-32) 1-min talk has a collective irreversibility that is address-gated: Delta_addr = sigma_nam - sigma_un = 8.0 [5.1, 12.1]e-3 nats/min (block-shift p 0.01), with sigma_un ~0. Excluded: the 7 smaller periods (underpowered, A3 post hoc), N2 pairwise direction (failed), P4 H50 match (failed), behavior/activity collective terms (at floor).",
+    "credence": 0.34,
+    "value_if_true": 1.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.0,
+    "ladder": [
+     [
+      "calibrated null (address contrast sized 0.00-0.10 under a lagged common field at the real S38/S51 sizes; the HH's block-shift null shown to fail)",
+      2,
+      "Synthetic results table; A1"
+     ],
+     [
+      "replication: single powered unit (G51; G38 same sign p 0.08 at power 0.45, 5-day periods mixed signs)",
+      0.6,
+      "Results by goal period; A3"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

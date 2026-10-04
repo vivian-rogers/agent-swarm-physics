@@ -1,0 +1,18 @@
+{
+ "complete": 45,
+ "faithfulness": 2.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and predictions before data, calibration and synthetic (9 scenarios, 40 replicates, plus P4 power), Amendment 1 before real data, 25 transitions x 7 input variants, 3 natives (NE38, G44, G26), per-period estimates, confirm.py frozen and dry-run, not run.",
+  "faithfulness": "The scoped claim (a kickoff erases position beyond an ordinary day) beats a calibrated kickoff-matched placebo in 16/18 kickoffs and every variant (C = 2). The HH-literal law fails: anisotropic, overshooting, no shown agent constancy (D = 1). Scorecard A1 B1 C2 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "Corrects how to read day-1 content (overshoot, scrambling beyond the goal axis) and gives one clean lever observation (a one-agent goal change retargets only that agent). The hoped-for per-agent steerability rank is not available. The embedding-memory artifact is a useful instrument note."
+ },
+ "one_line": "A goal kickoff is a restoring force: cross-agent memory falls 0.68 -> 0.42 (drho +0.26 +/- 0.04, 16/18 kickoffs, both models), stiffer along the goal and overshooting on day 1; the per-agent rate is not shown to be an agent constant.",
+ "models": [
+  {"model": "11-vector-spins", "role": "primary", "outcome": "mixed", "note": "restoring well confirmed; anisotropic, overshoots; HH-literal law fails"},
+  {"model": "02-nonequilibrium-ising", "role": "secondary", "outcome": "mixed", "note": "overdamped relaxation; day-1 overshoot breaks it"},
+  {"model": "10-potts", "role": "rival", "outcome": "untested", "note": "common-target (full reset) rival rejected as complete"}
+ ],
+ "rated_by": "H97 agent (suggested)",
+ "updated": "2026-10-04"
+}

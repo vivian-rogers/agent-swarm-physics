@@ -1,0 +1,33 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done on 13 non-holdout periods in two channels: card and dated predictions, synthetic validation on 13 real schedules (6 worlds, 40 runs; estimator choice A1 fixed before data), post hoc burst worlds (A2), replication with per-unit fits and DL pooling, Brock-Durlauf fixed points with parametric P_multi and a multiplicity boundary gamma_c per period, 3 natives (G37 room replicas, G44 arms, G51 same-goal units), 179 estimate rows, frozen guarded confirm script (dry-run only).",
+  "faithfulness": "HH283's core claim (multiple equilibria split same-type weeks) is not supported: no replica split, every period subcritical at its point estimate, fitted fields rank the order parameter. The share coefficient is real (validated against static fitness) but not identified as social coupling J because fast repo bursts reproduce it. P2, P3, P4 (by the letter), P6 and the G44 native failed. C = 1, D = 1, E = 0, F = 1, H = 1.",
+  "usefulness": "Practical content is a negative with a bound: a week will not lock into a herd by chance at the observed fields, so operators should steer allocation through fields (owners, assignments, kickoff naming) rather than fear runaway herding. Habit (odds x12-400 of returning to one's own repo) is the largest term. The share coefficient itself is not actionable until J is identified."
+ },
+ "one_line": "Project choice has a share coefficient (+2 to +6 shared weeks, -12 private roles) that repo bursts mimic; no period is bistable and no same-field replica splits.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Share coefficient real; J unidentified; no multiple equilibria"
+  },
+  {
+   "model": "05-replicator-dissipation",
+   "role": "rival",
+   "outcome": "mixed",
+   "note": "Static fitness controlled; time-varying fitness mimics coupling"
+  },
+  {
+   "model": "06-neutral-cooperative-dynamics",
+   "role": "rival",
+   "outcome": "mixed",
+   "note": "Neutral log(1+n) form ties BD in 8/11 periods"
+  }
+ ],
+ "rated_by": "H93 round-1 agent (suggested)",
+ "updated": "2026-10-04"
+}

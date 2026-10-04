@@ -35,7 +35,7 @@
   "scope": "9 kickoff units; natives G44, G38",
   "direction": "positive",
   "original_verdict": "failed as posed (post hoc goal-type split)",
-  "credence": 0.34,
+  "credence": 0.35,
   "ladder": [
    {
     "factor": "base (post)",
@@ -64,13 +64,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.5,
+  "value_if_true": 2.75,
   "decision": "give the swarm a concrete artifact in the kickoff to settle in under an hour",
   "magnitude": "material",
   "generality": "any LLM swarm",
-  "expected_usefulness": 0.85,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (H95 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.96,
+  "scientific_value": 2.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.34,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "Across nine regime-III kickoff units, the post hoc goal-type code (goal assigns a concrete artifact vs open/objective-only) separates speed-limit slack perfectly: assigned S 1.0-2.5, T_e 0.25-0.75 h; open S 3.0-14.5, T_e 4-13 h (exact Mann-Whitney p 0.008). Excluded: the pre-registered x gauge (rho -0.01; invalid measure), P2-P5, N2.",
+    "credence": 0.37,
+    "value_if_true": 3.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.0,
+    "ladder": [
+     [
+      "partial replication (9/9 units consistent; G37, G38, G42 are new beyond H75's points)",
+      1.5,
+      "Results by goal period; Results 3"
+     ],
+     [
+      "partly robust (S and T_e both separate; p 0.004 with G36)",
+      1.5,
+      "Amendment A2"
+     ],
+     [
+      "intervention partly consistent (G44 rooms, same days, assigned vs free: x5.8 slack; but the S values were already seen in H75)",
+      1.5,
+      "N1; 'what I had seen'"
+     ],
+     [
+      "penalty: goal-type coding chosen after the run by an analyst who had seen H75's S values; one holdout target (#47 #best) is disclosed to have frozen fast",
+      0.7,
+      "A2; Confirmatory predictions disclosure"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

@@ -29,7 +29,7 @@
   "scope": "#36, #38, #41, #44, #51g; replication 5 periods",
   "direction": "negative",
   "original_verdict": "failed",
-  "credence": 0.48,
+  "credence": 0.52,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -67,9 +67,46 @@
   "decision": "put agents in the room whose content you want; don't expect cross-room reading to carry content home",
   "magnitude": "small",
   "generality": "multi-room LLM swarms",
-  "expected_usefulness": 0.72,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (H102 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.78,
+  "scientific_value": 2.2,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.48,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "In #51g (the #focus weeks), room hoppers are not intermediate on the inter-domain axis and hopping read-outs do not move a hopper's home-room content: kappa_R -0.014 [-0.042, 0.024] per e-fold, excluding kappa >= 0.1 (synthetic power >= 0.93); the frequent hopper sits at s 0.06 vs stayers' p95 0.21. Excluded: small per-read pulls (kappa < 0.1), selection vs coupling (not separable), the domain half (scored separately in notes).",
+    "credence": 0.55,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     [
+      "calibrated synthetic on the real 51g read skeleton (kappa_R power >= 0.93 at 0.1; mixture world cannot fake intermediacy; bootstrap size liberal 0.05-0.18, which makes the null result conservative)",
+      2,
+      "Amendment 1"
+     ],
+     [
+      "replication: single powered unit (51g; one hopper with >=5 hop-days; G36 DeepSeek-V3.2 shows the same situational pattern without a dose test)",
+      0.6,
+      "Results 3-4, 6; Caveats"
+     ],
+     [
+      "partly robust (bge/gte, style_resid/white32, dedupe; hopper positions agree within 0.05-0.25)",
+      1.5,
+      "Scorecard F; Caveats"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

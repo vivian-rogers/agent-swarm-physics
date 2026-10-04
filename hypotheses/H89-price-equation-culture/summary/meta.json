@@ -35,7 +35,7 @@
   "scope": "33 periods; natives NE29, NE32, #51 roster growth",
   "direction": "negative",
   "original_verdict": "mixed (no egregore attractor)",
-  "credence": 0.71,
+  "credence": 0.78,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -64,13 +64,50 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 1.5,
+  "value_if_true": 1.25,
   "decision": "don't expect roster changes to move a period's content; style moves with membership",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.06,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H89 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.98,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.71,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "Within goal periods, the day-to-day change of the village's mean content is carried by stayers' own change (cross-fitted transmission share median 0.98, >=0.5 and largest in 33/33 periods, both embedding models; migration ~0.004, |selection| ~0.01). Excluded: style migration dominance (P1 failed), selection detection (no power by design), copying vs field (not separable), the attractor reading (rejected, C<0 in 29/29), natives.",
+    "credence": 0.84,
+    "value_if_true": 1.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     [
+      "calibrated estimator (synthetic at real counts in 5 periods: cross-fit bias <=0.03 at rho>=0.3; naive bias found and removed)",
+      2,
+      "Synthetic table; Amendments A1-A5"
+     ],
+     [
+      "replication (33/33 periods, regimes I-III)",
+      2,
+      "Outcome P2"
+     ],
+     [
+      "robust (bge and gte; conventions trait agrees)",
+      2,
+      "Outcome P2; Results 1"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

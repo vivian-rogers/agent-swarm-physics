@@ -35,7 +35,7 @@
   "scope": "8 periods (G35–G44), natives G38, G39, G41, G44; both embeddings",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.5,
+  "credence": 0.63,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -73,9 +73,46 @@
   "decision": "expect rooms to diverge in content on their own within a goal; reseeding rooms costs nothing across goals (no remanence)",
   "magnitude": "medium",
   "generality": "multi-room LLM swarms",
-  "expected_usefulness": 0.75,
-  "scientific_value": 2.5,
-  "rater": "coordinator, updated after round 1b (H100 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.95,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.5,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": true,
+    "scientific_value": 2.5
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "In regime-III two-room periods, the #best/#rest content separation exceeds random regroupings after removing members' leave-period-out constants and the measured field directions (Q_spont > 1, p < 0.05 in 5/7 bge, 4/7 gte; f_comp small where rooms separate). Excluded: the explicit-field direction (P3 failed), the movers' room-holding (P5 mixed, 5 movers), the post hoc 'trigger' reading and fielded-vs-identical ranking.",
+    "credence": 0.75,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.0,
+    "ladder": [
+     [
+      "calibrated null (real-skeleton synthetic: relabel size 0.04; Q_spont size <=0.10 under sorted composition; joint-relabel fix for remanence)",
+      2,
+      "Amendment 1"
+     ],
+     [
+      "partial replication (5/7 bge, 4/7 gte regime-III periods; < 6 periods meet 2/3 in gte)",
+      1.5,
+      "Outcome P4; Headline 1"
+     ],
+     [
+      "partly robust (both models, style_resid vs white32; #39 and #42 borderline)",
+      1.5,
+      "Scorecard F"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

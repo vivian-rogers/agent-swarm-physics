@@ -29,7 +29,7 @@
   "scope": "pooled NE41 forced erasures, 9 periods; natives G37, NE34",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.58,
+  "credence": 0.63,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -63,13 +63,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.0,
+  "value_if_true": 2.5,
   "decision": "lengthen the context cap before anything else; treat the context window as the only valuable channel",
   "magnitude": "medium",
   "generality": "any LLM swarm with context resets",
-  "expected_usefulness": 1.16,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H87 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.57,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.58,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "Among seven channels at regime-III forced erasures (NE41, 18,760 erasures), only the context window has measurable value: erasure costs ~41% [38, 44] of the next 20 calls' commits (cost CI > 0 in 7/9 periods; kappa_C 5.2 [3.8, 7.9] commits per 20 calls per bit, kappa_C > kappa_A with paired P 1.00); artifact, memory, chat-pointer, search and human rows have Delta-V CIs including 0. Excluded: the HH ordering (failed), per-period kappa_C (identified 2/9), eta (n.i.), the post hoc reading of the chat +22% kick, the K row.",
+    "credence": 0.67,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.0,
+    "ladder": [
+     [
+      "calibrated estimator (synthetic on the real NE41 skeleton: Delta-V bias <=0.05, no false value under R2; ordering restricted to identified rows, 0/25 wrong-direction claims, power 0.92 for C > A)",
+      2,
+      "Synthetic validation; Amendment A1; scorecard F=2"
+     ],
+     [
+      "replication of the erasure cost (CI > 0 in 7/9 regime-III periods, 0.30-0.45)",
+      2,
+      "Results by goal period; Results 'phase-diagram reading'"
+     ],
+     [
+      "partly robust (V20/V40 no sign flip; independent pointer mapping reproduces H70's rows - same data, so robustness not replication, rule 4)",
+      1.5,
+      "Outcome P2, P8"
+     ],
+     [
+      "per-bit ratio identified alone in only 2/9 periods (I_C n.i. elsewhere)",
+      0.8,
+      "Outcome R; Caveats"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

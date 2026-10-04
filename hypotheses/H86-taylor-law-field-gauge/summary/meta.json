@@ -58,13 +58,50 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.5,
+  "value_if_true": 2.25,
   "decision": "report c_× (taylor_c_shared, activity_trim) as the shared-field gauge for every unit",
   "magnitude": "material",
   "generality": "scheduled swarms",
-  "expected_usefulness": 1.69,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H86 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.53,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.68,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "After DQ8 trimming, the shared (pair-covariance) part of per-agent activity fluctuations is small: c_x ~0.008 and shared share phi_trim ~0.08 (regime III ~0.04) over 70 units in all three regimes, so ~90% of super-Poisson activity variance is private. Excluded: Taylor b/c_T as gauges (P1 failed, b ~0.85), per-unit agreement with H38 f_scaffold (P7 failed), commit-specificity (n=6), NE14 raw clause.",
+    "credence": 0.68,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.0,
+    "ladder": [
+     [
+      "calibrated null (synthetic on real presence grids: c_x recovers planted shared variance with bias <=20%, shift null size <=0.1; b~2 from private burstiness found before data)",
+      2,
+      "Synthetic table; Amendments A1-A3; scorecard F=2"
+     ],
+     [
+      "replication (phi_trim < 0.3 in ~28/35 periods across regimes I-III; P4 kill not fired)",
+      2,
+      "Results by goal period; Outcome P4"
+     ],
+     [
+      "instrument limits: one bin width (15 min), day-bootstrap CIs under-cover (0.7-0.8), c_x counts equal-time coupling as field",
+      0.8,
+      "Caveats"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

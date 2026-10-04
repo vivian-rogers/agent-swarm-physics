@@ -35,7 +35,7 @@
   "scope": "23 kickoffs, 258 day pairs; natives NE42, G51",
   "direction": "negative",
   "original_verdict": "failed",
-  "credence": 0.42,
+  "credence": 0.6,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -68,9 +68,46 @@
   "decision": "don't use eigenvector rotation as a reorganization alarm; use topic shift",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 0.42,
-  "scientific_value": 2,
-  "rater": "coordinator, updated after round 1b (H91 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.6,
+  "scientific_value": 2.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean; ADJUDICATION NEEDED",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.42,
+    "value_if_true": 1.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "At non-holdout goal kickoffs at real counts (median N~10, W~8), the day-to-day eigenvector-rotation alarm of the content matrix does not flag kickoffs (AUC 0.56 [0.40, 0.71]) and loses to the centroid-shift R1 (Delta-AUC -0.41 [-0.56, -0.27]); combining adds nothing. Excluded: strong regroupings in the powered range (none occurred), the Dyson-stationarity clause (narrow, model-dependent), NE42 rotation (below threshold).",
+    "credence": 0.75,
+    "value_if_true": 1.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.0,
+    "ladder": [
+     [
+      "partly calibrated (synthetic-sized block-bootstrap null and random-date/placebo design; but per-pair power for regroupings only 0.2-0.4 at real counts)",
+      1.5,
+      "Amendment 1; scorecard F=1"
+     ],
+     [
+      "replication (R1 > A_C at essentially every scorable kickoff across regimes I-III, >20 kickoffs)",
+      2,
+      "Results by goal period kickoff columns"
+     ],
+     [
+      "partly robust (style-resid +0.09, restate +0.07, pooled-split null 0.66: all far below R1; per-day z agrees only weakly between models, Spearman 0.33)",
+      1.5,
+      "Outcome P1, P5; Results"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": true
  }
 }

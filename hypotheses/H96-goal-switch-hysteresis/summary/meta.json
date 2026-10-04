@@ -1,0 +1,33 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; synthetic validation on all 24 real transition skeletons, which exposed a normalization bias and led to a pre-data amendment (ratio switching time); replication on 24 transitions in two regimes and both embedding models; natives G39 and NE38; estimates rows; confirm.py frozen with a passing dry run (not run). Missing: holdout run, a two-stage fit, power for the order test.",
+  "faithfulness": "The quench reading is strong and model-robust: day-1 remanence 0.18-0.27 of the pre level vs 0.85-0.89 across ordinary nights (RE CI below 0 in both models), and a single-agent reassignment quenches beyond all 22 placebos. HH123's coercivity is not supported; its test has power 0.50 and the trend is reversed. Scorecard A1 B1 C2 D1 E1 F1 G1 H1 I1.",
+  "usefulness": "A clear operator fact: no need to clear a swarm before reassigning it; the new kickoff erases the old content state within the first active hour, with a small residual over ~1 active day. Also a methods warning: cosine decay times on unit vectors depend on the amplitude, which biases order-vs-timescale comparisons in other cards."
+ },
+ "one_line": "A goal switch quenches the old content state within the first active hour (day-1 remanence 0.18-0.27 vs 0.85-0.89 across a night); no order-dependent coercivity (test power 0.50, sign reversed).",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "hysteresis/coercivity reading fails; switch is a quench"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "tool",
+   "outcome": "supported",
+   "note": "instant-freeze rival (H75) matches the content quench"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "rival",
+   "outcome": "n/a",
+   "note": "HH123's hysteresis framing; no loop measured"
+  }
+ ],
+ "rated_by": "H96 agent (suggested)",
+ "updated": "2026-10-04"
+}

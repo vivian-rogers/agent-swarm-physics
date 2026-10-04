@@ -35,7 +35,7 @@
   "scope": "25 goal boundaries; natives NE27, NE32, NE15",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.71,
+  "credence": 0.73,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -68,9 +68,46 @@
   "decision": "clear or refresh agent context at goal changes if you want a clean start",
   "magnitude": "small",
   "generality": "agents with context resets",
-  "expected_usefulness": 1.06,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H82 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.09,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.71,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "On day 1 of a new goal, agents' content loads on the previous period's village centroid beyond the new kickoff, goal text, previous kickoff, operator messages, prior and placebo centroids (pooled Delta-gamma_1 ~0.15 vs S0 q95 ~0.06, 25 boundaries, both models), and the loading does not decay over days 1-5. Excluded: the HH's decaying remanence (P3 failed), newcomer/record carriage (P4 unpowered), the post hoc 'own past absorbs it' reading (PH2), NE27/NE32/NE15.",
+    "credence": 0.75,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     [
+      "calibrated null (S0 on the 25 real boundaries; upward null bias found and the decision moved to the S0 q95 before real data)",
+      2,
+      "Synthetic table; Amendment A1"
+     ],
+     [
+      "partial replication (17/25 bge, 16/25 gte boundaries positive: one model just under 2/3)",
+      1.5,
+      "Outcome P1"
+     ],
+     [
+      "partly robust (pooled value stable over 12 variants and both models; but per-boundary sign flips between models at G06, G20, G24, G25, G27 and regime III is model-dependent)",
+      1.5,
+      "Results table; Outcome 'P1 by regime'"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

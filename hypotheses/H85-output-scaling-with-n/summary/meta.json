@@ -29,7 +29,7 @@
   "scope": "71 units, 35 goal clusters; natives NE42, G51, G38",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.58,
+  "credence": 0.61,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -58,13 +58,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 1.5,
+  "value_if_true": 2.25,
   "decision": "plan talk budgets: adding agents does not add proportional talk",
   "magnitude": "small",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 0.87,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H85 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.37,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean; ADJUDICATION NEEDED",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.58,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "Across non-holdout period units with regime intercepts, room message volume per scheduled hour grows sublinearly with active population (beta_msg 0.33 [-0.18, 0.64]; ~0.09 in regime I), i.e. not as an independent-agent sum. Excluded: the addressing-slope pass (P3; two thirds is post hoc co-addressing), reply aggregation (kill fired), work and repo exponents (unidentified), NE42/G51 natives.",
+    "credence": 0.64,
+    "value_if_true": 3.0,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 3.0,
+    "ladder": [
+     [
+      "calibrated estimator (synthetic at the real 71-unit layout: bias <=0.02, cluster-CI coverage 0.90-0.93, regime-confound scenario)",
+      2,
+      "Synthetic validation table; scorecard F=2"
+     ],
+     [
+      "partial replication (within-day room-size contrasts in 4 rooms-era periods: same sign, RE 0.85 [0.17, 1.53]; G38 0.36)",
+      1.5,
+      "Results 1; Outcome N3"
+     ],
+     [
+      "partly robust (WLS, roster N, span N, active hours: 0.26-0.52)",
+      1.5,
+      "Outcome P1"
+     ],
+     [
+      "known confound: N grew with calendar time (model generations, operator practice) and regime-I chat mode capped the visible window; regime III is near-extensive (0.77)",
+      0.6,
+      "Caveats; Results 1"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": true
  }
 }

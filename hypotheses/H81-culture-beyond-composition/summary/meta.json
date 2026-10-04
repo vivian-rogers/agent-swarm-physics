@@ -35,7 +35,7 @@
   "scope": "regime I (24 goals), regime III marginal; natives G51, NE33/NE32",
   "direction": "positive",
   "original_verdict": "supported (regime I)",
-  "credence": 0.66,
+  "credence": 0.61,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -69,13 +69,55 @@
   ],
   "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 1.75,
   "decision": "expect a slow village culture over weeks in chat-mode swarms; it does not follow roster changes",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.32,
-  "scientific_value": 4,
-  "rater": "coordinator, updated after round 1b (H81 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.07,
+  "scientific_value": 3.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.66,
+    "value_if_true": 2,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 4
+   },
+   {
+    "rater": "blind_r3",
+    "claim": "Regime I (non-holdout, May 2025-Feb 2026): the village content residual, after leave-goal-out two-way-FE personal vectors and measured goal/kickoff/human-message directions, carries a shared slow mode (tau_u ~23-28 d; D_adjg 0.24/0.21 vs S0 q95 0.08/0.09) that survives the member-overlap adjustment. Excluded: regime III (marginal, power <=0.42), roster-event jumps (P4 failed), #51 within-period mode (N1 failed), NE33, the post hoc PH1/PH2 checks as separate claims.",
+    "credence": 0.56,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.5,
+    "ladder": [
+     [
+      "calibrated null (S0 composition null on the real regime-I panel, which also found and fixed the literal-null +0.37 artifact; S1/S2 recovery is the same design, credited once)",
+      2,
+      "card 'Synthetic validation', Amendments A1-A4; scorecard F=2"
+     ],
+     [
+      "replication: single powered unit (the regime-I span is one cross-period statistic; regime III same sign but at threshold and underpowered)",
+      0.6,
+      "Results table rows 'local: regime I/III span'; A4"
+     ],
+     [
+      "robust (both embedding models, 7 preprocessing variants, Gemini 2.5 Pro dropped x1.06, size-matched x0.90-0.96, scaffold segments)",
+      2,
+      "Outcome P5; Results 2; PH1"
+     ],
+     [
+      "uncorrected multiplicity: P2 passes if regime I OR III; decision statistics re-chosen (A3) after synthetic",
+      0.8,
+      "Prediction P2; Amendment A3"
+     ]
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }
