@@ -313,6 +313,11 @@ Two builders and two libraries are now shared, and `semantic_kappa` is extended.
 
 ## Known issues
 
+- **Held-out Jev labels live apart** (DQ10, input preparation for frozen confirm scripts; never merged into shared tables). They are in `data/processed/holdout_labels/`:
+  - `behavior_states_v3_holdout.parquet`: the 3,313 #51-tail windows;
+  - `opptype_holdout.parquet`: H55's opposes subtype, 1,968 pairs.
+
+  No statistic of them has been computed. Held-out stance v2.1 labels are not built yet (about $0.91).
 - **In one-room regime I, the ledger's posted-but-unread partition is empty** (4 of 271 agent-blocks; H81 r2): read vs posted-but-unread contrasts need rooms or matched-lag in-flight designs.
 - **Regime-I old-artifact traffic is too sparse to carry week-scale content** (188 chat mentions in 9 months; H81 r2).
 - **Calendar, documented-hours and goal-count clocks are not identifiable for regime-I block profiles** (synthetic accuracy ≤ 0.64–0.82; H81 r2). Ratio-type mediation statistics with a near-zero denominator are unstable.
@@ -323,7 +328,7 @@ Two builders and two libraries are now shared, and `semantic_kappa` is extended.
 - **Family baselines from first-day vectors share an onboarding component** (H83; size up to 0.55). Use unnormalized differences.
 - **H34 marker uses exclude held-out text** (H88, H101): confirm scripts need `idea_markers.uses_for_rows(allow_holdout=True)`.
 - **NE32 is not an isolation experiment** (H83, H98): the newcomers were isolated ~1.5–2 h and posted nothing.
-- **DQ2 `opposes` is mostly not conflict** (DQ10): in a blind fresh sample only 12% of DQ2-opposes pairs dispute A on the merits (the rest: information 32%, logistics 22%, corrections 18%, declines 14%). Stance v2 (`stance_v2.py`) failed its precision gate, so no replacement table exists; use DQ2 stance in aggregate only.
+- **DQ2 `opposes` is mostly not conflict** (DQ10): in a blind fresh sample only 12% of DQ2-opposes pairs dispute A on the merits (the rest: information 32%, logistics 22%, corrections 18%, declines 14%). For conflict, use `reply_stance_v2.disagree_validated_agent` (DQ10, precision ≈ 0.6–0.67, recall ≈ 0.6; non-holdout, regime I 78% covered), not `opposes`.
 - **Behavior states v3.1 over-call `execute_task`** (DQ10 fresh reference, κ 0.60): a small own-notes or log commit inside a checking or debugging window makes the window execute_task (precision 0.66, recall 0.92). Use probability vectors or gate on non-trivial artifact changes.
 - **The regime-III whitening center is dominated by #51 statements** (H98): uniform-field magnitudes measured from the origin are ≈ 0 for #51 by construction (raw-center R 0.92–0.98). Use a leave-own-period-out reference center.
 - **H22's pooled overlap variance W_P is anti-conservative** under per-agent day shifts (size 0.10–0.45; H98). Use the lag-residualized W.

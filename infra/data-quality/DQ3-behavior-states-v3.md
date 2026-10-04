@@ -96,3 +96,9 @@ STEPS.append(["uv", "run", "python", "infra/behavior_states/label_v3.py", "--all
 - the two references agree with each other at κ 0.85.
 
 Reading (pre-registered): **confirmed**. The main confusion is over-called execute_task (small own-notes commits inside checking or debugging windows). Details: `infra/behavior_states/DESIGN.md`, "Fresh blind reference on v3 states".
+
+## Held-out #51 windows (DQ10, 2026-10-04)
+The 3,313 windows left unlabelled by HTTP 402 are labelled (3,313 / 3,313, 0 errors, $0.21).
+- **Where:** `data/processed/holdout_labels/behavior_states_v3_holdout.parquet` (holdout only).
+- **Not merged** into `behavior_states_v3.parquet`.
+- **Use:** confirm scripts join on `pt_date`, `agent`, `w`.

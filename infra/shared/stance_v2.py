@@ -145,6 +145,85 @@ def sample(which: str = "draft"):
     print(f"wrote sheet_{which}.jsonl ({x.height} items; strata {dict(x.group_by('stratum').len().iter_rows())}); key kept separately")
 
 
+# -------------------------------------------------------------------- Amendment 2: two-phase second confirmation attempt
+POOL_REST = 4000
+F_MAX, H_MAX, O_PER = 45, 25, 20
+CONFIRM2 = "confirm2"
+
+
+def used_b() -> set:
+    used = set()
+    for f in VAL.glob("key_*.parquet"):
+        used |= set(pl.read_parquet(f)["B_message_id"].to_list())
+    return used
+
+
+def pool2() -> pl.DataFrame:
+    """Phase-1 pool (fixed by seed; written once): every OPP and G12 pair + a uniform 4,000 of the rest, unused B only."""
+    path = VAL / "pool2.parquet"
+    if path.exists():
+        return pl.read_parquet(path)
+    P = population()
+    P = P.with_columns(pl.when(pl.col("stratum").is_in(["OPP", "G12"])).then(pl.col("stratum")).otherwise(pl.lit("REST")).alias("s1"))
+    N1 = dict(P.group_by("s1").len().iter_rows())
+    Q = P.filter(~pl.col("B_message_id").is_in(list(used_b())))
+    rest = Q.filter(pl.col("s1") == "REST").sort("B_message_id", "A_message_id")
+    rest = rest.sample(min(POOL_REST, rest.height), seed=SEED)
+    X = pl.concat([Q.filter(pl.col("s1") != "REST"), rest])
+    n1 = dict(X.group_by("s1").len().iter_rows())
+    X = X.with_columns(pl.col("s1").replace_strict(N1, return_dtype=pl.Float64).alias("N_s1"),
+                       pl.col("s1").replace_strict(n1, return_dtype=pl.Float64).alias("n1_s1"))
+    X.write_parquet(path)
+    print(f"pool2: {X.height} pairs (complete strata OPP/G12 minus used B; REST uniform {rest.height})")
+    return X
+
+
+def sample_confirm2(tax: str = "stance-v2.1"):
+    """Phase-2 sheet from the labelled pool: cells s1 x {F, H, O}; weights N_cell / n2_cell. Prints no Jev output."""
+    X = pool2()
+    lab = labels_df(tax).select("B_message_id", "A_message_id", pl.col("stance2").alias("j"), "stance2_conf")
+    X = X.join(lab, on=["B_message_id", "A_message_id"], how="inner")
+    X = X.with_columns(pl.when((pl.col("j") == "disagree") & (pl.col("stance2_conf") >= 0.6)).then(pl.lit("F"))
+                       .when(pl.col("j") == "disagree").then(pl.lit("H")).otherwise(pl.lit("O")).alias("c"))
+    X = X.with_columns(pl.concat_str("s1", pl.lit("|"), "c").alias("cell"))
+    n1c = dict(X.group_by("cell").len().iter_rows())
+    X = X.with_columns((pl.col("N_s1") * pl.col("cell").replace_strict(n1c, return_dtype=pl.Float64) / pl.col("n1_s1")).alias("N_cell"))
+    import numpy as np
+    rng = np.random.default_rng(SEED + 23)
+
+    def alloc(cls: str, total: int) -> dict:
+        Ncell = {s1: float(X.filter(pl.col("cell") == f"{s1}|{cls}")["N_cell"].max() or 0) for s1 in ("OPP", "G12", "REST")}
+        avail = {s1: n1c.get(f"{s1}|{cls}", 0) for s1 in Ncell}
+        if sum(avail.values()) <= total:
+            return avail
+        out = {s1: min(avail[s1], 5) for s1 in Ncell}
+        left = total - sum(out.values())
+        tot = sum(Ncell.values())
+        for s1 in sorted(Ncell, key=lambda k: -Ncell[k]):
+            add = min(avail[s1] - out[s1], round(left * Ncell[s1] / tot) if tot else 0)
+            out[s1] += max(add, 0)
+        return out
+
+    parts = []
+    for cls, total in (("F", F_MAX), ("H", H_MAX)):
+        for s1, n in alloc(cls, total).items():
+            sub = X.filter(pl.col("cell") == f"{s1}|{cls}").sort("B_message_id", "A_message_id")
+            if n and sub.height:
+                parts.append(sub[np.sort(rng.choice(sub.height, size=min(n, sub.height), replace=False))])
+    for s1 in ("OPP", "G12", "REST"):
+        sub = X.filter(pl.col("cell") == f"{s1}|O").sort("B_message_id", "A_message_id")
+        parts.append(sub[np.sort(rng.choice(sub.height, size=min(O_PER, sub.height), replace=False))])
+    x = pl.concat(parts).unique("B_message_id", keep="first")
+    x = x.sample(fraction=1.0, shuffle=True, seed=SEED + 29).with_row_index("vid")
+    st = rt.make_states(x.select("b", "a", pl.lit("cand").alias("set"), pl.col("cand_rank").alias("rank")))
+    with (VAL / f"sheet_{CONFIRM2}.jsonl").open("w") as f:
+        for vid, s_ in enumerate(st):
+            f.write(json.dumps({"vid": vid, "A": s_["state"]["message_A"], "B": s_["state"]["message_B"]}) + "\n")
+    x.select("vid", "b", "a", "B_message_id", "A_message_id", pl.col("cell").alias("stratum"), pl.col("N_cell").alias("N_stratum"),
+             "regime_s", "goal_no", "stance", "stance_conf", "opp_type", "p_reply", "cand_rank").write_parquet(VAL / f"key_{CONFIRM2}.parquet")
+    print(f"wrote sheet_{CONFIRM2}.jsonl ({x.height} items); key kept separately (cell composition not printed)")
+
+
 # --------------------------------------------------------------------------------------------------------------- Jev
 def total_spent() -> float:
     s = 0.0
@@ -207,7 +286,9 @@ async def _run(items, key, cap, workers, jsonl, phase, tax):
     return spent
 
 
-def select(phase: str) -> pl.DataFrame:
+def select(phase: str, pri_keep: list[int] | None = None) -> pl.DataFrame:
+    if phase == "pool2":
+        return pool2().select("b", "a", "B_message_id", "A_message_id", "cand_rank")
     if phase in ("draft", "fresh"):
         k = pl.read_parquet(VAL / f"key_{phase}.parquet")
         return k.select("b", "a", "B_message_id", "A_message_id", "cand_rank")
@@ -216,15 +297,17 @@ def select(phase: str) -> pl.DataFrame:
     pri = (pl.when(pl.col("regime_s") == "III").then(0).when(pl.col("goal_no") == 12).then(1)
            .when(pl.col("regime_s") == "II").then(2).otherwise(3))
     P = P.with_columns(pri.alias("_pri"), pl.Series("_u", rng.random(P.height)))
+    if pri_keep is not None:
+        P = P.filter(pl.col("_pri").is_in(pri_keep))
     return P.sort("_pri", "_u").select("b", "a", "B_message_id", "A_message_id", "cand_rank")
 
 
-def label(phase: str, limit: int | None, cap: float, workers: int, tax: str = TAXONOMY):
+def label(phase: str, limit: int | None, cap: float, workers: int, tax: str = TAXONOMY, pri_keep: list[int] | None = None):
     from label_windows import load_key
     if cap > TASK_CAP:
         sys.exit(f"cap above the ${TASK_CAP} DQ10 task cap")
     LABELS.mkdir(parents=True, exist_ok=True)
-    x = select(phase)
+    x = select(phase, pri_keep)
     done = done_pairs(tax)
     if done:
         x = x.filter(~pl.struct("B_message_id", "A_message_id").map_elements(
@@ -407,7 +490,7 @@ def compile_table(tax: str = TAXONOMY):
     lab = labels_df(tax)
     if lab.is_empty():
         sys.exit("no stance v2 labels")
-    rf = VAL / f"results_fresh__{tax}.json"
+    rf = VAL / f"results_{CONFIRM2}__{tax}.json"
     gate = json.loads(rf.read_text())["gate"] if rf.exists() else {"pass": False, "validated_conf_min": None}
     if not gate.get("pass"):
         print(f"compile skipped: the pre-registered gate has not passed for {tax} (see {rf.name}); no shared table is written")
@@ -431,6 +514,9 @@ def compile_table(tax: str = TAXONOMY):
     T = T.with_columns(pl.when(pl.col("labelled")).then(pl.col("s2_sign")).alias("s2_sign"),
                        pl.when(pl.col("labelled")).then(pl.col("disagree_conf")).alias("disagree_conf"),
                        pl.when(pl.col("labelled")).then(pl.col("disagree_validated")).alias("disagree_validated"))
+    # post hoc (Amendment 2 sensitivity): replies to automated messages (mostly the idling nudge) are where the reference's
+    # "disagree" calls are least secure; conflict analyses should use the validated flag on agent or human parents only
+    T = T.with_columns((pl.col("disagree_validated") & (pl.col("a_kind") != 2)).alias("disagree_validated_agent"))
     path = OUT / "reply_stance_v2.parquet"
     T.sort("B_message_id", "A_message_id").write_parquet(path, compression="zstd")
     gates = {f.stem: json.loads(f.read_text()).get("gate") for f in sorted(VAL.glob("results_*.json"))}
@@ -453,22 +539,23 @@ def compile_table(tax: str = TAXONOMY):
 def main():
     ap = argparse.ArgumentParser()
     sp = ap.add_subparsers(dest="cmd", required=True)
-    s1 = sp.add_parser("sample"); s1.add_argument("--which", default="draft", choices=["draft", "fresh"])
-    s2 = sp.add_parser("label"); s2.add_argument("--phase", required=True, choices=["draft", "fresh", "full"])
+    s1 = sp.add_parser("sample"); s1.add_argument("--which", default="draft", choices=["draft", "fresh", CONFIRM2])
+    s2 = sp.add_parser("label"); s2.add_argument("--phase", required=True, choices=["draft", "fresh", "pool2", "full"])
+    s2.add_argument("--pri", help="full only: priority groups to label (0 regime III, 1 #12, 2 regime II, 3 regime I), e.g. 0,1,2")
     s2.add_argument("--limit", type=int); s2.add_argument("--cap", type=float, default=CAP_USD); s2.add_argument("--workers", type=int, default=WORKERS)
-    s3 = sp.add_parser("validate"); s3.add_argument("--which", default="draft", choices=["draft", "fresh"])
+    s3 = sp.add_parser("validate"); s3.add_argument("--which", default="draft", choices=["draft", "fresh", CONFIRM2])
     s4 = sp.add_parser("compile"); sp.add_parser("spent")
     for x in (s2, s3, s4):
         x.add_argument("--taxonomy", default=TAXONOMY, choices=list(TAXONOMIES))
     a = ap.parse_args()
     if a.cmd == "sample":
-        sample(a.which)
+        sample_confirm2() if a.which == CONFIRM2 else sample(a.which)
     elif a.cmd == "label":
         if a.phase == "full":
-            rf = VAL / f"results_fresh__{a.taxonomy}.json"
+            rf = VAL / f"results_{CONFIRM2}__{a.taxonomy}.json"
             if not (rf.exists() and json.loads(rf.read_text())["gate"]["pass"]):
                 sys.exit("full run refused: the pre-registered gate has not passed on the fresh sheet")
-        label(a.phase, a.limit, a.cap, a.workers, a.taxonomy)
+        label(a.phase, a.limit, a.cap, a.workers, a.taxonomy, [int(v) for v in a.pri.split(",")] if a.pri else None)
     elif a.cmd == "validate":
         validate(a.which, a.taxonomy)
     elif a.cmd == "compile":

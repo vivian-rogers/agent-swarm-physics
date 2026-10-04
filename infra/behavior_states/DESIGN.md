@@ -259,3 +259,10 @@ Results file: `data/processed/behavior_states/blind_ref_v31/results.json`.
 **Limits**
 - The reference labellers are the same model family as the designer (Claude). A human audit of a subset by Vivian is still the stronger check.
 - One labeller of the first run reported that a shared scratch file was being written by another process during labelling. It rebuilt its labels from its own rows and never read the other rows' labels.
+
+### Held-out windows labelled (2026-10-04, input preparation authorized by Vivian; DQ10)
+The 3,313 #51 holdout windows that DQ3 left unlabelled (HTTP 402) now have v3.1 labels: 3,313 of 3,313, 0 errors, $0.2103. They use the same questions and the same state assembly.
+- **Where:** `data/processed/holdout_labels/behavior_states_v3_holdout.parquet`, one row per window, keyed on `pt_date`, `agent`, `w`, every row `holdout = true`. Raw answers are in `jev_holdout_behavior_v3.jsonl`; provenance in `_provenance.json` in the same folder.
+- **Not merged** into `behavior_states_v3.parquet`, whose rows for these windows keep `labeled = false` and `label_error = '402'`. A frozen confirm script that needs them joins this file on the key.
+- **Not inspected:** no distribution or statistic of these labels was computed.
+- **Rebuild:** `uv run --with httpx python infra/shared/holdout_labels.py behavior --cap 0.40`. It makes no calls once complete.

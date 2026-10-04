@@ -7,6 +7,15 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **DQ10 round 2 (authorized by Vivian): stance v2.1 passed its gate on a second confirmation sheet; `reply_stance_v2` shipped. Held-out labels prepared, kept apart. Spend $2.951 of $3.**
+  - **Stance (Amendment 2):** two-phase sheet (129 pairs; pool of 10,576 labelled), new blind labeller. The flag `disagree` & confidence ≥ 0.6 has reweighted precision **0.67 [0.54, 0.80], n = 44** (gate pass); confidence ≥ 0.8: 0.81, n = 26; hard class 0.56 (fail). The first two failures stay in `stance_v2.md`.
+    - Post hoc: replies to the idling nudge are the shaky part (0.61 without them). Use `disagree_validated_agent`.
+    - **`reply_stance_v2.parquet`:** 55,428 / 61,533 non-holdout pairs (regime III, II and #12 complete; regime I a random 78%, cut at the cap).
+    - **Unblocked:** H21, H22, H37, H64 (conflict channel) and H55 (stance side).
+  - **Held-out (input prep only, no statistics, `data/processed/holdout_labels/`, never merged):**
+    - behavior v3.1 #51-tail windows: 3,313 / 3,313, 0 errors, $0.21;
+    - H55 opposes subtype: 1,968 / 1,968, 0 errors, $0.066 (H55's confirm prerequisite met; `confirm.py` must join the file);
+    - stance v2.1 held-out pass skipped: about $0.91 over the cap. No confirm script was run.
 - **H81 round 2 (carrier and drift): the slow mode survives; the external-drift rival is narrowed, not beaten.** Two-way FE estimator reproduces round 1. Removing ~7 extra operator directions per goal leaves the mode intact (D_adjg 0.24 / 0.23 vs S0 q95 0.07 / 0.08); calendar-dated outside topics show no concentration. **The read artifact record is not the carrier** (C_R1 +0.02 / −0.07 vs exogenous q95 0.11 / 0.09, power 1.00; only 188 old-artifact mentions in regime I). Calendar vs goal-count clock not identifiable (R2c inconclusive by design). One OU mode for H81 and H82 passes weakly (joint τ 21 / 16 d). Regime III shows record-following (+0.12) with a room-topic confound. Round-3 redirects: the rolling chat window as carrier; regime-I newcomers to split calendar drift from reading. GOALS Q3 updated; τ_u extended; holdout item 43; three known issues. (H106, the finite-size test of the same mode, is running.)
 - **10 kinetic-Ising HHs promoted to H115–H124 (Vivian, dashboard):** HH353 → H115 debate judge role recovery; HH354 → H116 election coupling step; HH355 → H117 couplings invariant across a rule reset (NE35); HH358 → H118 forked-RPG replicas (NE15); HH359 → H119 room-merge adjacency (NE42); HH360 → H120 period NESS stationarity; HH361 → H121 daily-boot quench; HH363 → H122 batch join as spin addition; HH364 → H123 regime-I turn sweep; HH365 → H124 small-N mean-field benchmark. Deferred: HH351, HH352, HH356, HH357, HH362.
 - **HH366–HH375 added (kinetic versions of what Potts and vector spins got right; Vivian asked):** damped-oscillator kickoff (day-2 undershoot), telegraph goal occupancy, content trailing the goal on the call clock, coarsening vs freeze, project cycle currents, OU agents in #51, zero-inertia room content, immigration floor, antagonism off in one read-out, debate limit cycle. All 10 in the vetting queue.

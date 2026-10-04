@@ -160,6 +160,10 @@ All numbers are in `data/processed/shared/reply_threading/validation/results.jso
 DQ10 tried to replace this file's 4-class stance with an 8-class taxonomy (`stance_v2.md`, `infra/shared/stance_v2.py`). That taxonomy separates disagreement on the merits from correction, decline, coordination, questions, acknowledgments and information.
 - **Verdict:** the pre-registered gate failed twice (v2.0 on the draft, v2.1 on a fresh 150-pair sheet). The hard `disagree` class has reweighted precision 0.48. The confident flag (`disagree` with confidence ≥ 0.6) was right 7 of 7 times, but n = 7 is under the required 15.
 - **Consequence:** no shared table was built. **Limits 1 above still holds:** use this file's stance in aggregate only.
+- **Update (Amendment 2, same day):** a second, Vivian-authorized confirmation sheet passed the gate. The flag `disagree` with confidence ≥ 0.6 has reweighted precision 0.67 [0.54, 0.80], n = 44. `reply_stance_v2.parquet` (non-holdout, 55,428 of 61,533 pairs labelled) now carries it as `disagree_validated` and `disagree_validated_agent`; use those for conflict instead of `opposes`. Details are in `stance_v2.md`.
+- **Held-out opposes subtype (H55's prerequisite)** is labelled with this file's exact `questions_opp`: 1,968 of 1,968 held-out pairs (cand, p_reply ≥ 0.5, `stance = opposes`, no `opp_type`), 0 errors, $0.066.
+  - **Where:** `data/processed/holdout_labels/opptype_holdout.parquet` (keys `B_message_id`, `A_message_id`; `holdout = true`; raw answers in `opptype_holdout.jsonl`).
+  - **Not merged** into `reply_pairs`.
 - **New evidence on this file's labels** (blind reference, fresh sheet):
   - only 12% of DQ2 `opposes` pairs are disagreement on the merits; the rest are inform 32%, coordinate 22%, correct 18%, decline 14%;
   - `opp_type = position` holds 6 disagreements out of 19;

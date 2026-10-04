@@ -3,6 +3,7 @@
 **Code:** `infra/shared/stance_v2.py` (sample, blind sheet, Jev labelling, validation, compile).
 **Table:** `data/processed/shared/reply_stance_v2.parquet` (codes only); working files in `data/processed/shared/stance_v2/` (label JSONL with codes only; gated blind sheets and keys).
 **Status:** pre-registered 2026-10-04 (UTC), before any v2 sample was drawn or any v2 label requested. Results go below the line, dated.
+**Outcome (2026-10-04):** v2.0 and v2.1 failed the gate on the draft and on the first fresh sheet. **v2.1 passed on the second, Vivian-authorized confirmation sheet (Amendment 2).** The validated observable is `disagree` with confidence ≥ 0.6: precision 0.67 [0.54, 0.80], n = 44. `reply_stance_v2.parquet` covers 55,428 of 61,533 non-holdout pairs.
 **Downstream:** H21, H22, H37, H55, H64.
 
 ## Why
@@ -159,3 +160,92 @@ This confirms the Limits of `reply_threading.md`. Most DQ2 opposes are not confl
 **For downstream users (H21, H22, H37, H55, H64)**
 - Nothing is unblocked. Keep DQ2's aggregate stance with its Limits.
 - **H55 and H64:** v2.1's `decline` (0.90) and confident labels (94%) are the best evidence so far that a zero-shot labeller can separate declines from conflict. They are still not a shipped table.
+
+### Amendment 2: second confirmation attempt, authorized by Vivian 2026-10-04 (written before the pool or sheet was drawn)
+**Why.** On the fresh sheet the confident flag (`disagree`, confidence ≥ 0.6) was right 7 of 7 times, but n = 7 is below the gate's 15. True disagreement is rare, so an enriched random sheet would need about 300 pairs to reach 15 flags. Vivian authorized one more confirmation attempt. The earlier results above stay in full.
+
+**Design (two-phase, enrichment by Jev's v2.1 prediction; the labeller stays blind):**
+1. **Phase 1 pool.** These are non-holdout population pairs whose B message is in none of the 350 earlier sheet pairs:
+   - every OPP and G12 pair;
+   - a uniform random 4,000 of the rest (ASK, NEU, SUP-I/II/III; seed 20261004).
+
+   Jev v2.1 labels the pool. The labels count toward the full run if one follows. Code reads them only to select phase 2; no Jev output on the pool is printed or inspected before the blind labels exist.
+2. **Phase 2 sheet (about 130 pairs).** Phase-1 strata s ∈ {OPP, G12, REST} are crossed with Jev cells:
+   - F = `disagree` with confidence ≥ 0.6: all of them if ≤ 45, else 45 allocated in proportion to estimated population counts, with at least 5 per s where available;
+   - H = `disagree` with confidence < 0.6: up to 25, allocated the same way;
+   - O = any other class: 20 per s.
+3. **Weights.** Each sheet cell (s, c) has weight N_{s,c} / n2_{s,c}, where N_{s,c} = N_s · n1_{s,c} / n1_s (exact for OPP and G12, whose pools are complete). Precision of a rule is the weighted share of its sheet items the reference calls `disagree`. Cells are the strata of the bootstrap.
+4. **Blind reference.** A new Claude subagent labels the sheet on the v2.1 definitions. It sees the text only: shuffled, with no cells, strata, DQ2 labels or Jev output.
+
+**Gate.** Unchanged (rules a, b, c with reweighted precision ≥ 0.6 and ≥ 15 flagged items for b and c), judged on this sheet only. The combined results over the first and second fresh sheets are reported as secondary.
+- **Multiple testing.** This is the second attempt and has three rules, so the bootstrap CI and the lower bound are reported with any pass. A pass whose lower bound is below 0.5 is flagged as weak in the verdict.
+
+**If it passes.** Full v2.1 pass over the rest of the population, in the order regime III, #12, regime II, then regime I.
+- **Spend:** these labels share a $3.00 cap with the held-out passes. Remaining regime-I pairs may stay unlabelled at the cap; they are marked `labelled = false`.
+- **Validated observable:** the observable of the passing rule (the least restrictive one if several pass) is shipped as `disagree_validated`.
+
+**If it fails.** Recorded; no full run, no table.
+
+### Amendment 2 result (2026-10-04): gate passed; full run; `reply_stance_v2` shipped
+Results file: `results_confirm2__stance-v2.1.json`.
+- **Sheet:** 129 pairs, two-phase. The phase-1 pool was 10,576 pairs labelled with v2.1. Sheet cells: OPP F 36, H 13, O 20; G12 F 7, H 5, O 20; REST F 1, H 7, O 20.
+- **Blind reference:** a new subagent; it flagged 73 of 129 items ambiguous.
+
+| Rule | Correct / flagged | Precision raw [Wilson] | Reweighted [stratified bootstrap] | Recall (raw / reweighted) | Gate |
+| --- | --- | --- | --- | --- | --- |
+| (a) hard `disagree` | 41 / 69 | 0.59 [0.48, 0.70] | 0.56 [0.43, 0.70] | 1.0 / 1.0 | fail |
+| (b) `disagree` & conf ≥ 0.8 | 22 / 26 | 0.85 [0.67, 0.94] | **0.81 [0.64, 0.96]** | 0.54 / 0.40 | pass |
+| **(c) `disagree` & conf ≥ 0.6** | **31 / 44** | 0.70 [0.56, 0.82] | **0.67 [0.54, 0.80]** | 0.76 / 0.61 | **pass (shipped)** |
+
+**Gate: pass.**
+- Rules (b) and (c) pass, and the pre-registered choice is the least restrictive passing rule, so (c) is shipped as `disagree_validated`.
+- The lower bound of (c) is 0.54, which is ≥ 0.5, so the pass is not flagged weak.
+- This is the second attempt, with three rules per attempt. Read the pass with that in mind.
+
+**Other numbers on this sheet**
+- 8-class κ 0.45 raw, 0.31 reweighted. The sheet is built around `disagree`; agreement on the other classes is not its purpose.
+- Agreement at confidence ≥ 0.8: 88% (n = 50).
+- None of the 60 sampled O-cell pairs is a reference `disagree`, so the reweighted recall rests on that.
+- Jev's false `disagree` calls (28) were inform 11, correct 10, coordinate 3, agree 2, acknowledge 1, ask 1.
+
+**Sensitivity (post hoc, disclosed).** Nine sheet pairs reply to automated messages, mostly the idling nudge. The reference labelled the agents' objections to the nudge `disagree`.
+- Without those pairs, rule (c) scores 0.61 (n = 38) and rule (b) 0.78 (n = 23).
+- Counting them as false positives instead gives 0.52 and 0.67.
+- Hence the convenience column `disagree_validated_agent` (validated flag, parent by an agent or a human). **Use it for agent–agent conflict analyses.**
+
+**Combined record over all three test sheets** (secondary, not a gate): the confidence ≥ 0.6 flag was right 7 of 7 times on fresh sheet 1 and 31 of 44 on confirm2.
+
+**Full run and spend.** The $3.00 cap was shared with the held-out passes; the round spent **$2.9512**.
+
+| Item | Cost |
+| --- | --- |
+| held-out behavior | $0.2103 |
+| H55 opposes-subtype | $0.0661 |
+| phase-1 pool | $0.5136 |
+| priorities III, #12, II | $1.3778 |
+| regime I, up to the cap | $0.7834 |
+
+The DQ10 total including the first round is $2.98: DQ10 round 1 spent $0.0259 of its $6 cap, and the second round $2.95 of its $3.
+
+**`data/processed/shared/reply_stance_v2.parquet`** (3.2 MB, non-holdout only, `holdout = false` on every row).
+- One row per population pair: 61,533 rows; **labelled 55,428 (90.1%)**:
+  - regime III 31,404 / 31,408 (4 call errors);
+  - regime II 2,265 / 2,265;
+  - #12 1,325 / 1,325;
+  - regime I 21,759 / 27,860. The regime-I remainder was cut at the cap; its order was random, so the labelled part is a random 78% of regime I.
+- Columns:
+  - keys `B_message_id`, `A_message_id` (join to `reply_pairs`), context, and DQ2's `p_reply`, `dq2_stance` and `dq2_opp_type`;
+  - `stance2`, `stance2_conf` and the eight `p_*` probabilities;
+  - `s2_sign`, `s2_soft`, `p_pushback`;
+  - `disagree_conf` (confidence ≥ 0.8), **`disagree_validated`** (confidence ≥ 0.6, the gate-passing rule), **`disagree_validated_agent`**;
+  - `labelled`, `phase`, `cost`.
+- 707 labelled pairs carry `disagree_validated` (1.3%).
+- Rebuild: `build_all.py --only stance_v2_validate_confirm2,stance_v2_compile`. No API calls.
+
+**How to use it**
+- **Conflict:** count or sum `disagree_validated_agent` per group. Precision is about 0.6–0.67 and recall about 0.6, so build the labeller's confusion into any null (H37's ordered-logit agent-field null).
+- **Soft sums:** `p_disagree`; `s2_soft` for sign.
+- **Corrections and declines:** `p_correct` is over-called (precision 0.26–0.55). `decline` was 0.90 on fresh sheet 1 and 0.50–0.61 on confirm2.
+- **Not validated:** the hard class and the other classes, beyond the κ above.
+
+**Held-out stance labels (pass c): not run.** Labelling the 18,621 held-out pairs would cost about $0.91, which did not fit under the $3 cap after the non-holdout pass. Vivian set the non-holdout pass first. To run it later: `uv run --with httpx python infra/shared/holdout_labels.py stance2 --cap <cap>`. The script refuses unless the confirm2 gate has passed, and writes to `data/processed/holdout_labels/stance_v2_holdout.jsonl` and `reply_stance_v2_holdout.parquet`.

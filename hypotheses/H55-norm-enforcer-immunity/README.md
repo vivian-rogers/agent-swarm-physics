@@ -214,6 +214,10 @@ The first immune-contrast draft was anti-conservative when corrections target es
 *`analysis/confirm.py`; refuses without `--confirm --i-understand-this-uses-the-locked-holdout`; dry-run on stand-ins (#51 2026-08-17 → 09-05 for the tail; G27, G30, G31, G33 for the held-out periods) runs end to end (`confirm/confirm_dryrun.json`).*
 - **Targets:** #51 tail (roles from ground truth) and G22, G28, G29, G32. Ledger: no prior *run* on these targets; competing planned uses on the #51 tail include H37 (stance) and many content/activity scripts, so disclosure is needed.
 - **Prerequisite:** held-out pairs have no DQ2 `opp_type`; a ~$0.08 Jev subtype pass (`--label`, cap $0.30) is needed for C1/C5. Not run (account out of credit, HTTP 402).
+  - **Update 2026-10-04 (DQ10, authorized by Vivian):** the subtype pass is done. DQ2's exact `questions_opp` was run on every held-out pair with cand, p_reply ≥ 0.5, `stance = opposes` and no `opp_type`: 1,968 / 1,968, 0 errors, $0.066.
+  - **Where:** `data/processed/holdout_labels/opptype_holdout.parquet` (keys `B_message_id`, `A_message_id`; `opp_type`, `p_opp_*`; `holdout = true`). It is not merged into `reply_pairs`, and no statistic of it has been computed.
+  - **Why `--label` was not used:** `confirm.py --label` would run the confirmation right after labelling. So the pass ran from `infra/shared/holdout_labels.py opptype` instead.
+  - **Before the frozen run:** `confirm.py` still has to join this file. Its `--label` stub is unchanged.
 - **C1 (primary):** random-effects ρ(c_j, ν_j) < 0 over the five targets (one-sided p < 0.05). Credence 0.5. **C2:** #51-tail negative pairs beat the agent-field null and concentrate on enforcers beyond their reply share (p < 0.10). 0.3. **C3:** blocked-spell Δ has 95% upper bound < 0.20. 0.55. **C4:** address effect on loops > 0 in the held-out periods. 0.5. **C5:** < 2% of loop episodes corrected. 0.85.
 - **Decision:** "friction reversed" confirmed if C1 passes; "missing immune system" confirmed if C3 and C5 pass.
 

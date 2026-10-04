@@ -37,7 +37,7 @@ Steps (outputs in data/processed/shared/):
   null_sizes           DQ8 null size table (expensive, ~4 min)
   per_period_estimates DQ8 per-period estimates backfill
   reply_*              reply_pairs, reply_graph (DQ2: candidates, ledger candidates, validate, compile; no API calls)
-  stance_v2_validate_* DQ10 stance v2 validation records (gate failed: no reply_stance_v2 table); no API calls
+  stance_v2_*          DQ10 stance v2: validation records + reply_stance_v2 (v2.1, gate passed on confirm2); no API calls
   blind_reference_v31  DQ10 fresh blind reference for behavior states v3.1 (kappa, confusion); no API calls
   round-2 consolidation (2026-10-04; each takes --verify against the hypothesis copies it replaced):
   pending_sets         pending_sets/G<NN>/ (H18 ledger k: talks, pending, invisible, wakes, wake_pending; non-holdout)
@@ -165,14 +165,17 @@ STEPS = [
     {"name": "reply_compile", "cmd": "py", "script": "reply_threading.py", "args": ["compile"],
      "outputs": ["reply_pairs.parquet", "reply_graph.parquet"]},
     # DQ10 stance v2: rebuild never calls the Jev API (`stance_v2.py label --phase ...` is manual and capped)
-    # validation records (the v2.0 draft, v2.1 on the draft, v2.1 on the fresh sheet); the gate failed 2026-10-04, so no
-    # reply_stance_v2.parquet is built and the compile step (which refuses without a passed gate) is not registered
+    # validation records (v2.0 draft, v2.1 on the draft, v2.1 fresh: gate failed; v2.1 confirm2: gate passed, Amendment 2)
     {"name": "stance_v2_validate_draft", "cmd": "py", "script": "stance_v2.py",
      "args": ["validate", "--which", "draft", "--taxonomy", "stance-v2.0"], "deps": ["reply_compile"], "outputs": []},
     {"name": "stance_v2_validate_draft_v21", "cmd": "py", "script": "stance_v2.py",
      "args": ["validate", "--which", "draft", "--taxonomy", "stance-v2.1"], "deps": ["reply_compile"], "outputs": []},
     {"name": "stance_v2_validate_fresh", "cmd": "py", "script": "stance_v2.py",
      "args": ["validate", "--which", "fresh", "--taxonomy", "stance-v2.1"], "deps": ["reply_compile"], "outputs": []},
+    {"name": "stance_v2_validate_confirm2", "cmd": "py", "script": "stance_v2.py",
+     "args": ["validate", "--which", "confirm2", "--taxonomy", "stance-v2.1"], "deps": ["reply_compile"], "outputs": []},
+    {"name": "stance_v2_compile", "cmd": "py", "script": "stance_v2.py", "args": ["compile", "--taxonomy", "stance-v2.1"],
+     "deps": ["stance_v2_validate_confirm2"], "outputs": ["reply_stance_v2.parquet"]},
     {"name": "blind_reference_v31", "cmd": "py", "script": "../behavior_states/blind_reference_v3.py", "args": ["compare"],
      "deps": ["behavior_states_v3"], "outputs": []},
     # round-2 consolidation (2026-10-04): builders moved out of hypothesis folders; each takes --verify
