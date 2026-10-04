@@ -1,0 +1,82 @@
+{
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic validation on the real #51 skeleton (8 worlds x 3 units x 3 reps) forcing a dated pre-data amendment (drive-robust estimators for both rates, pooled kill rules); replication on 12 units x 3 vector variants (both embedding models); 3 natives (1 mixed, 1 failed, 1 inconclusive); 112 estimates rows; confirm.py frozen with hashes, guarded, dry-run. Missing: holdout run, 1-call kick kernel, transfer to shared-goal weeks.",
+  "faithfulness": "The one-rate OU model fails by an order of magnitude (rho_gamma ~15, 90% CI [7, 30], all variants): the read kick is real and read-gated (J_K beats the in-flight placebo in every unit >= 3 days) but decays in ~7 calls while the well relaxes in ~100 calls, homogeneous across units and robust to context erasure. Joiners do not relax at gamma. Scorecard A1 B1 C2 D1 E1 F2 G0 H1 I0.",
+  "usefulness": "Two measured time scales for an operator: a message's effect lasts ~5 min (7 calls); an agent's own line lasts ~1 h and survives erasure. Repeat inputs to steer; single messages echo and fade."
+ },
+ "one_line": "#51 reads kick the next statement toward the sender (J_K 0.044 [0.038, 0.050], 11/12 units) but the kick fades ~15x faster (~7 calls) than the agent's own well memory (gamma_auto 0.0094/call, ~100 calls); the one-rate OU picture fails (kill K1).",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Vector OU with read kicks: one-rate consistency fails (rho_gamma ~15)"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Measured response (read jump) real; response vs fluctuation clocks differ (FDT-type violation)"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "rival",
+   "outcome": "supported",
+   "note": "R1 context-held fast kick: decay ~0.15/call, like the synthetic context world"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "rival",
+   "outcome": "refuted",
+   "note": "R4 static random field only (kappa = 0): read jump > 0 in every unit"
+  }
+ ],
+ "rated_by": "H130 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "In #51 a read pulls the reader's next statement toward the sender beyond the in-flight placebo (J_K 0.044 [0.038, 0.050], 11/12 units, both models), but the pull fades about 15× faster (≈ 7 calls) than the agent's own content memory (γ_auto 0.0094 per call, ≈ 100 calls, the same in all 12 units)",
+  "scope": "#51 main body, 12 units; natives NE41, joiners",
+  "direction": "positive",
+  "original_verdict": "failed",
+  "credence": 0.64,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "partition contrast (read vs in flight) passed",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "replication 11/12 units, both embedding models",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic recovery of both rates (A1)",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "penalty: one period",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "a message nudges its reader for a few calls; an agent's own content drifts back within about an hour",
+  "magnitude": "medium",
+  "generality": "read-out-gated LLM swarms",
+  "expected_usefulness": 0.96,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H130 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

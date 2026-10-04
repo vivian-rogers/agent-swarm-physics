@@ -1,0 +1,34 @@
+\hwhat{HH371 proposed the simplest kinetic version of H98's random field: each \#51 agent is an Ornstein--Uhlenbeck particle in its own well, every read is a small kick toward the sender, and the kick decays at the well's own rate. H130 measures both rates on the per-call clock in all 12 non-holdout \#51 units (45 days, 40,958 statements, 930k reads), with two embedding models. A read does kick: the read-minus-in-flight jump is $J_K=0.044$ [0.038, 0.050], positive in every unit with $\ge3$ days. The well relaxes at $\gamma_{\rm auto}=0.0094$ per call ($\approx$100 calls, 1 h), the same in every unit. The kick fades $\approx15\times$ faster ($\rho_\gamma$ 14.8, 90\% CI [7.2, 30.4]), so the one-rate kill fires. The holdout is not run.}
+
+\hmodel{Vector OU dynamics on the call clock (model 11) with a measured response tested against fluctuations (model 02). $x_i$ is agent $i$'s 32-d whitened, style-residualized content minus its well centre $h_i$ (leave-day-out mean). $\gamma$ is the well stiffness per call, $\kappa$ the kick per read toward the sender's message $z_m$, $\xi$ the agent's own noise, $D_r$ a room drive. A linear system has one rate for response and memory; a kick held only in the context window would decay faster.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+x_i(n{+}1)=(1-\gamma)\,x_i(n)+\kappa\!\!\sum_{m\ {\rm read\ at}\ n}\!\!(z_m-h_i)+\xi_i(n)\\
+C(\tau)=\langle x_B\!\cdot\!x_{B'}\rangle-C_\times(|t_{B'}-t_B|)\;\to\;\gamma_{\rm auto}\\
+y_{Bj}=x_B\!\cdot\!\widehat{h_j-h_i}=\sum_b\beta_b R^{(j)}_b+\ldots\;\to\;\gamma_{\rm kick},\quad \rho_\gamma=\gamma_{\rm kick}/\gamma_{\rm auto}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_col.pdf}{Left: pooled \#51 (bge). Own content autocorrelation, corrected for the common drive (blue), against the sender-specific kick per read from the dose regression (red), both normalized, against lag in the reader's calls. The dotted line is $e^{-\gamma_{\rm auto}\tau}$. The kick is gone after $\approx$10 calls; the memory lasts $\approx$100. Right: per-unit rates with 95\% agent-day bootstrap CIs.}
+
+\htelos{For an operator, a message changes what a \#51-style agent says next, but only for its next few calls ($\approx$5 min): influence is a fast echo, not a lasting displacement. To move an agent's direction, repeat the input; one message decays within $\sim$7 calls, while the agent's own line persists $\sim$100 calls ($\approx$1 h) and survives context erasure. Expect pairs that read each other often to co-move more ($\beta_R\approx0.018$ per e-fold of reads), through repeated echoes.}
+
+\hbottom{In \#51 a read pulls the next statement toward the sender (J$_K$ 0.044 [0.038, 0.050], 11/12 units, both models), but the pull fades about 15$\times$ faster ($\approx$7 calls) than the agent's own content memory ($\gamma_{\rm auto}$ 0.0094/call, homogeneous over 12 units).}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.49\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1/K2 read kick $>$ in-flight & 0.044 [0.038, 0.050]; 7/7 units $\ge3$ d & supported\\
+P2/K1 $\rho_\gamma\in[0.5,2]$ & 14.8 [7.2, 30.4]; gte 20.2 & failed (kill)\\
+P3 co-movement rises with reads & $\beta_R$ 0.018 [0.012, 0.024] & supported\\
+P4 pair decay at $\gamma$ & $\gamma_\times/\gamma_{\rm auto}$ $\approx$6--8 & failed\\
+P5 one well rate, 30--600 calls & I$^2$ 0; 1/$\gamma\approx$106 calls & supported\\
+P6 call clock fits better & 5/12 units & not supported\\
+N1 rival kick ratio $\in[0.5,2]$ & 2.4 [$-$0.7, 5.3] & inconclusive\\
+N2 NE41: memory, kick survive erasure & $R_C$ 1.03 [0.95, 1.10]; $R_K$ undefined & mixed\\
+N3 joiners relax at $\gamma$ & flat at 0.39 of own well on day 1 & failed\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_col.pdf}{Synthetic validation on the real \#51 skeleton (real statements, calls, reads, resets; 3 units $\times$ 3 replicates). The drive-corrected $\gamma_{\rm auto}$ recovers the planted 0.01 under 5-min to 3-h room drives; the raw estimator does not. The sender-specific $\gamma_{\rm kick}$ recovers 0.01 and separates a context-held kick (0.05). The registered message-direction profile read the drive's rate and was replaced before real data (A1).}
+
+\hcaveats{The estimators for both rates were changed after the synthetic and before real data (A1). $\gamma_{\rm kick}$ rests on the first 2--3 lag bins, so its CI spans $\times4$, but the lower 90\% bound of $\rho_\gamma$ is 7. In one-room \#51 every agent reads every message, so beyond the first read-out the kick is identified only through sender-specific doses. The erasure test of the kick is undefined (the kick has decayed by lag 4). One private-role period; no transfer test.}
+
+\hnext{Resolve the kick kernel at 1-call steps and split replies from plain reads; fit joiners' well formation over days; run the read jump and the two rates on \#38--\#44; run the frozen confirm on the \#51 tail after sign-off.}

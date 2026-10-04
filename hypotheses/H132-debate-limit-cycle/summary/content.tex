@@ -1,0 +1,33 @@
+\hwhat{HH375 proposed that a debate is a two-sublattice limit cycle: each team rebuts the other's last move, so the issue content alternates sign at lag one and the cycle runs one way. H132 tests this in \#12's ten Asian-Parliamentary debates (306 turns, drafted Government and Opposition teams). Each turn is projected on the motion's support--oppose axis, built from the motion text without labels, and each team's static position is removed. The content does not alternate. Consecutive cross-team turns are \emph{positively} correlated ($\rho_1=+0.16$, shuffle $p=0.002$), and the alternation $\Lambda=\rho_2-\rho_1=+0.05$ sits inside the turn-shuffled null ($p=0.08$). The kill fires; the synthetic power for $k_\times=0.6$ is 1.00. The holdout is not run.}
+
+\hmodel{Alternating-update two-sublattice linear dynamics (model 02) with antiferromagnetic block coupling (model 01). $y_t$ is turn $t$'s whitened projection on the issue axis $\hat a_d$; $\epsilon_t=\pm1$ marks Government or Opposition; $\mu_d$ is the assigned (staggered) field; $u_t$ is the dynamic issue state with antiferromagnetic response $k_\times$; $z_t$ removes each team's mean. Speakers alternate by format, so only $z_t$ can carry a cycle.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+y_t=\epsilon_t\mu_d+a_{i(t)}+u_t+e_t,\qquad u_{t+1}=-k_\times u_t+\eta_{t+1}\\
+\rho_1\approx-k_\times r,\quad \rho_2\approx k_\times^2 r,\quad \Lambda=\rho_2-\rho_1\\
+A_\gamma=\rho_{G\to O}(1)-\rho_{O\to G}(1),\qquad L=\langle a_t g_{t+1}-g_t a_{t+1}\rangle
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_col.pdf}{Left: observed $\rho_1$, $\rho_2$ and $\Lambda$ (dots) against the 5--95\% band of 5,000 turn shuffles (grey) in four input variants. A cycle needs $\rho_1$ below its band; it sits above it. Right: rejection rates on the real turn skeleton (100 replicates per world): the $\Lambda$ test has size 0.05 and power 0.74--1.00 for cycles; drift never triggers it; a rotation is caught only by $L$.}
+
+\htelos{For an operator running adversarial or debate formats: assigned sides show up as a static tilt in content, and turn-to-turn content persists across the team line. Expect a rebuttal to restate the point it answers (lag-one correlation $\approx+0.16$ on the issue axis, $+0.15$ in full content), not to swing the topic back and forth. Use stance labels, not embeddings, to see opposition between moves.}
+
+\hbottom{In \#12's debates the team-centred issue projection persists across consecutive turns of opposite teams ($\rho_1$ +0.16, shuffle $p$ 0.002), with no lag-one alternation beyond the turn-shuffled null ($\Lambda$ +0.05, $p$ 0.08; power 1.00 at $k_\times=0.6$).}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.49\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1/K $\Lambda>0$, $\rho_1<0$ & $\Lambda$ +0.047 ($p$ 0.08); $\rho_1$ +0.161 & failed (kill)\\
+P2 $A_\gamma\neq0$ & +0.048 ($p$ 0.71) & failed\\
+P3 no within-team alternation & same-team $\rho$ +0.30 & supported\\
+P4 cycle area $L\neq0$ & $-$0.071 ($p$ 0.39) & failed\\
+P5 topic echo $\rho_1^{\rm vec}>0$ & +0.145 ($p$ 0.0002) & supported\\
+N1 verdict switch-off & $\Lambda_{\rm post}$ $-$0.18, no cycle to stop & uninformative\\
+N2 read gate & $\Delta\rho_1$ $-$0.006 ($p$ 0.47) & failed\\
+N3 re-drafted pairs & $-$0.047 (18 pairs, $p$ 0.29) & failed\\
+\end{tabular}}
+
+\hobsb{../figures/per_debate_col.pdf}{Lag-1 turn correlation per debate in the two masked embedding models. A limit cycle predicts negative values in most debates; $\rho_1>0$ in 8/10 debates in bge and 6/10 in gte.}
+
+\hcaveats{Embeddings encode negation poorly, so a rebuttal that restates a claim reads as agreement on the issue axis; the antiferromagnet H21 and H37 found lives in reply stance. Cycles weaker than $k_\times\approx0.4$ at H21-sized noise are not excluded (power 0.74 at 0.3). A staggered-field ramp gives false $\Lambda$ in 10\% of synthetic worlds. The negative $L$ in all variants is post hoc. Ten debates, one period, regime I.}
+
+\hnext{Re-run the turn statistics on stance v2.1 and DQ2 reply stance to the previous turn; fit a common-drift plus team-persistence model; try other alternating formats (\#23, \#26); run the frozen \#34 confirm after sign-off.}

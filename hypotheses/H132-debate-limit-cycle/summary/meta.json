@@ -1,0 +1,71 @@
+{
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic validation on the real #12 turn skeleton (8 worlds x 100 reps) with a dated pre-data amendment; replication on G12 (10 debates) in 2 models x masked/unmasked inputs plus a detrended variant; 3 natives (1 uninformative, 2 null); 40 estimates rows; confirm.py (#34) frozen with hashes, guarded, dry-run. Missing: holdout run, stance-channel sequence.",
+  "faithfulness": "The limit cycle fails with power: Lambda +0.05 inside the turn-shuffled null (p 0.08) where k = 0.6 cycles are found 100% and k = 0.3 74%; lag-1 correlation is positive (+0.16, p 0.002) in all variants, the opposite of a cycle; no direction or current. Scorecard A1 B1 C1 D1 E0 F2 G1 H1 I0.",
+  "usefulness": "A clean negative with a positive by-product: in debate formats content persists and echoes across the team line; opposition is visible in stance, not embedding dynamics."
+ },
+ "one_line": "#12 debates are not a two-sublattice limit cycle: team-centred issue content is positively correlated across consecutive opposite-team turns (rho1 +0.16, p 0.002) and shows no lag-1 alternation beyond the turn-shuffled null (Lambda +0.05, p 0.08; power 1.00 at k = 0.6).",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Alternating two-sublattice dynamics: no period-2 cycle, no antisymmetric part"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "Antiferromagnetic dynamic coupling absent in content; static staggered tilt only"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "rival",
+   "outcome": "supported",
+   "note": "R2 topic echo / common drift: rho1 > 0, full-vector echo +0.15"
+  }
+ ],
+ "rated_by": "H132 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Debate content does not alternate between teams turn by turn (Λ +0.05, inside the turn-shuffled null; power 1.00 at cross-coupling 0.6): consecutive opposite-team turns echo the topic instead (ρ₁ +0.16, p 0.002; full-vector echo +0.15)",
+  "scope": "#12, 10 debates",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.44,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic power at the real turn counts",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "calibrated shuffle null (size 0.01–0.06)",
+    "x": 1.3,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "penalty: one period",
+    "x": 0.6,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 0.5,
+  "decision": "debate is topic echo plus shared drift, not ping-pong",
+  "magnitude": "small",
+  "generality": "LLM swarms with assigned debates",
+  "expected_usefulness": 0.22,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H132 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
