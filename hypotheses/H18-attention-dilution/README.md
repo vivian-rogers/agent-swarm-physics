@@ -327,6 +327,7 @@ Holdout reuse under the 2026-10-03 policy: H18's statistic (mention responses vs
 6. Feed β̂ into H03 and H05 as the per-pair normalization J ∝ N^−β, and test whether it closes H03's n̂-vs-N trend.
 
 ## Notes
+- **From DQ1 + DQ2 (2026-10-04): the failed placebo is mostly the visibility rule.** Under the context ledger, about 30% of this card's "invisible" pairs were in fact visible, and strictly invisible pairs score p_reply 0.24 vs 0.32 for matched visible pairs (0.21 vs 0.59 in regime III). The pre-registered threshold (< 0.227) missed narrowly (0.239). Re-run P10 and the k exponent on `context_ledger_turns.k_since_talk` and `reply_pairs.parent` in the re-evaluation wave.
 - **From H29 (2026-10-04):** the call-start visibility rule labels messages that arrive during a PAUSE or long tool call as invisible, but the next call sees them (39–70% of regime-III invisible rows). Content similarity also falls 5–23× with message age. Together with H08's mid-exchange explanation, this accounts for the failed placebo. Re-run on the context ledger's visibility.
 - 2026-10-03: promoted from HH99.
 - 2026-10-03: observables, nulls, predictions and the choice of periods written before any real-data run.

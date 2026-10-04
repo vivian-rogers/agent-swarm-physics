@@ -23,6 +23,7 @@ Steps (outputs in data/processed/shared/):
   context_ledger       call_starts_logged (raw scan), call_windows, context_ledger_turns/_items (+ validation JSON)
   work_ledger          work_repos, work_commits, work_api_writes, work_daily, work_outcomes (offline; `work_ledger.py refresh` refetches)
   ground_truth         ground_truth_labels (one gzip+grep pass over raw computer_use_turns)
+  reply_*              reply_pairs, reply_graph (DQ2: candidates, ledger candidates, validate, compile; no API calls)
 Tests (--tests): infra/shared/tests/test_*.py
 
 Usage:
@@ -100,13 +101,21 @@ STEPS = [
      "outputs": ["call_starts_logged.parquet", "call_windows.parquet", "context_ledger_turns.parquet",
                  "context_ledger_items.parquet"]},
     {"name": "ground_truth", "cmd": "py", "script": "ground_truth.py", "outputs": ["ground_truth_labels.parquet"]},
+    # DQ2 reply threading: rebuild never calls the Jev API (`reply_threading.py label --phase ...` is manual)
+    {"name": "reply_candidates", "cmd": "py", "script": "reply_threading.py", "args": ["candidates"], "outputs": []},
+    {"name": "reply_candidates_ledger", "cmd": "py", "script": "reply_threading.py",
+     "args": ["candidates", "--visibility", "ledger"], "outputs": []},
+    {"name": "reply_validate", "cmd": "py", "script": "reply_threading.py", "args": ["validate"], "outputs": []},
+    {"name": "reply_compile", "cmd": "py", "script": "reply_threading.py", "args": ["compile"],
+     "outputs": ["reply_pairs.parquet", "reply_graph.parquet"]},
 ]
 NAMES = [s["name"] for s in STEPS]
 
 
 def command(step: dict) -> list[str]:
     path = str(HERE / step["script"])
-    return [sys.executable, path] if step["cmd"] == "py" else ST + [path]
+    base = [sys.executable, path] if step["cmd"] == "py" else ST + [path]
+    return base + list(step.get("args", []))
 
 
 def outputs_exist(step: dict) -> bool:
