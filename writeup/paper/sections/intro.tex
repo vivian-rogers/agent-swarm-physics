@@ -5,10 +5,42 @@
 \textbf{The question.} We ask what couples one agent to another, how much of the joint behaviour is a response to external drives, and whether the swarm holds a state that its members do not hold.
 
 \subsection*{Motivation I: Ising-like sociophysics}
-Sociophysics models people as spins~\cite{castellano2009}. A voter, Ising or Potts model gives each person a discrete state, a local field and couplings to neighbours. These models predict phases: a disordered paramagnet, an ordered consensus, symmetry breaking into domains, and a critical point where the susceptibility diverges and fluctuations become long-ranged. An agent swarm gives a clean test bed for such models. Each agent has measurable state variables: an action class, a content vector and a project. External fields are known and dated: the goal, the scheduler and operator messages. The coupling channel is logged message by message, so the inverse problem (couplings from correlations) has ground truth for who could read what~\cite{schneidman2006,meshulam2019}. The update rule is not the random sequential update of equilibrium Monte Carlo. Each agent updates at its own model calls and reads only at those calls, so detailed balance can fail and the steady state can carry entropy production~\cite{aguilera2026}. The practical question follows from the phase. Near a critical point, a small nudge can drive a large cascade. Deep in a field-dominated paramagnet, the operator controls the swarm through the fields, and couplings are a small correction. Language-model populations also form shared conventions~\cite{centola2015,ashery2025}, which raises the question of an ordered phase in content.
+Sociophysics models people as spins~\cite{castellano2009}. In the Ising model, each agent $i$ has a state $s_i=\pm1$, a local field $h_i$ and couplings $J_{ij}$ to the other agents. The energy and the equilibrium distribution are
+\begin{equation}
+H(\mathbf s)=-\sum_i h_i s_i-\sum_{i<j}J_{ij}s_is_j,\qquad P(\mathbf s)\propto e^{-\beta H(\mathbf s)}.
+\label{eq:ising}
+\end{equation}
+A field is an external drive on one agent. A coupling is an interaction between two agents. Fitting $h_i$ and $J_{ij}$ to measured means and correlations is the inverse Ising problem~\cite{schneidman2006,meshulam2019}. In mean field, the magnetization $m$ obeys $m=\tanh[\beta(J_0m+h)]$, and the linear response to a field is
+\begin{equation}
+\chi=\frac{\partial m}{\partial h}\propto\frac{1}{1-g},\qquad g=\beta J_0(1-m^2).
+\label{eq:chi}
+\end{equation}
+The loop gain $g$ sets the phase. For $g\ll1$ the system is a paramagnet: fields set the state, and a push spreads little. As $g\to1$ the susceptibility diverges, fluctuations become long-ranged, and a small nudge can drive a large cascade. Agents do not update in equilibrium. Each agent changes state only at its own model calls, and it reads messages only at those calls. A kinetic (Glauber) Ising model describes this case:
+\begin{equation}
+P\big(s_i^{\,\rm new}=+1\big)=\tfrac12\Big[1+\tanh\Big(\beta h_i+\beta\!\!\sum_{j\in\mathcal R_i}\!J_{ij}s_j\Big)\Big],
+\label{eq:glauber}
+\end{equation}
+where $\mathcal R_i$ is the set of messages that the call can read. When $J_{ij}\neq J_{ji}$, detailed balance fails. The steady state then produces entropy at a rate $\sigma=\sum_{ij}(J_{ij}-J_{ji})\langle s_i(t+1)s_j(t)\rangle$ in the parallel-update form~\cite{aguilera2026}. An agent swarm suits these models. The state variables are measurable: action class, content vector and project. The fields are known and dated: goals, the scheduler and operator messages. The coupling channel is logged message by message. Language-model populations also form shared conventions~\cite{centola2015,ashery2025}, so content can show an ordered phase.
 
 \subsection*{Motivation II: information dynamics}
-A second question is where the swarm keeps its information and what that information is worth. Information dynamics divides distributed computation into storage, transfer and modification~\cite{lizier2008,lizier2013}. Partial information decomposition separates redundant, unique and synergistic parts of the information that sources carry about a target~\cite{williams2010}. O-information and causal-emergence criteria ask whether a macroscopic variable predicts the future better than its parts do~\cite{rosas2019,rosas2020,mediano2022}. An individual, in the information-theoretic sense, is a unit that propagates its own information through time~\cite{krakauer2020}. If a swarm had a collective state of its own, an ``egregore'', these measures would show synergy and persistence beyond pairs and fields. Semantic information gives a value scale~\cite{kolchinsky2018}. It counts only the information that an agent needs to keep its function, measured by the loss after a scramble of one channel. An agent swarm has several channels to scramble: the context window, memory notes, its own artifacts, chat and history search. The scaffold erases some of these at known times, which gives natural interventions.
+The second question is where the swarm keeps its information and what that information is worth. Information dynamics divides distributed computation into storage, transfer and modification~\cite{lizier2008,lizier2013}. For an agent state $X_t$ with history $X_t^{(k)}$ and a source $Y_t$,
+\begin{equation}
+A_X=I\big(X_{t+1};X_t^{(k)}\big),\qquad T_{Y\to X}=I\big(X_{t+1};Y_t\,\big|\,X_t^{(k)}\big)
+\label{eq:aiste}
+\end{equation}
+are the active information storage and the transfer entropy. Partial information decomposition splits the information that two sources carry about a target into redundant, unique and synergistic parts~\cite{williams2010}: $I(S_1,S_2;T)=R+U_1+U_2+S$. Synergy is information that only the joint state holds. For $n$ agents, the O-information $\Omega=\mathrm{TC}-\mathrm{DTC}$ is negative when synergy dominates~\cite{rosas2019}. A macroscopic variable $V_t$ of the swarm shows causal emergence when
+\begin{equation}
+\Psi=I(V_t;V_{t+1})-\sum_j I(X_{j,t};V_{t+1})>0,
+\label{eq:psi}
+\end{equation}
+that is, when $V$ predicts its own future better than the parts do~\cite{rosas2020,mediano2022}. An individual, in this sense, is a unit that propagates its own information through time~\cite{krakauer2020}. A collective state of the swarm, an ``egregore'', would show synergy and positive $\Psi$ beyond pairs and fields.
+
+Kolchinsky and Wolpert add a value scale: semantic information~\cite{kolchinsky2018}. Let $\mathcal V$ be a measure of the agent's function, here the committed work per call. Scramble one channel $c$ of the agent's environment, and measure the information $I_c$ that the channel carried and the loss $\Delta\mathcal V_c$ of function. The semantic information of the channel is the part of $I_c$ whose loss reduces $\mathcal V$, and its value per bit is
+\begin{equation}
+\kappa_c=\frac{\Delta\mathcal V_c}{I_c}.
+\label{eq:kappa}
+\end{equation}
+An agent swarm has several channels to scramble: the context window, memory notes, its own artifacts, chat and history search. The scaffold erases some of these at known times, which gives natural interventions. Kolchinsky's later work on excess and housekeeping entropy production and on replicator thermodynamics gives the dissipation side of the same question~\cite{kolchinsky2026,kolchinsky2025}.
 
 \textbf{The method.} We tested 15 physics models on the record (Fig.~\ref{fig:arch}). A physics model can fit almost any record, so a fit is not evidence. Each of the 132 hypotheses states its prediction, its null and its kill rule before the data. Each must remove four impostors: the scheduler, external drives, shared model priors, and responses to a common input. Each runs its estimator on synthetic swarms with the real call schedule before it runs on real data. We fit every model inside one goal period and compare periods by their fitted parameters (Fig.~\ref{fig:tablezoom}). Claude judged every claim as two judges, one blind (Fig.~\ref{fig:scoring}). The judges give each claim a credence (faithfulness) and an estimated usefulness (Fig.~\ref{fig:scatter}).
 
