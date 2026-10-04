@@ -118,6 +118,8 @@ The result is a biexponential with a fast τ₁ = 1/(p + r) and a slow τ₂ = 1
 - **Matched placebo dates** for every event study (carrier loss, outage, merge). Use every same-type boundary of the period.
 - **Composition null** for the culture vector: presence-weighted members' personal vectors estimated from other periods (HH293).
 
+- **Collective memory decay in the village (H88):** exponential + floor beats Candia's biexponential (τ 5.5 village days, floor 1.9%; biexponential wins 5/27 fits); decay persists in a closed roster, so it does not need turnover.
+
 ## Pitfalls
 
 **The four impostors** (`../../STANDARDS.md` §1):

@@ -1,0 +1,32 @@
+\hwhat{The test asks whether newcomers acquire a village culture. A newcomer's style-free chat content is compared with the veterans' same-day centroid in tenure days 2--4 and 8--14, after the goal and kickoff span is projected out. The veterans' change on the same days is subtracted. Over 19 joins (15 join days, three regimes) the enculturation index is $\Delta G=+0.020$ [$-0.025$, $+0.070$] with bge and $-0.011$ [$-0.047$, $+0.026$] with gte. Both sit below the calibrated null cut ($+0.032$). Newcomers start only $0.02$ below the veterans. The synthetic power at half closure is 0.15--0.30, so the headline is inconclusive. A family signature at entry is real (13/15 joins) and fades by week two. In \#38 newcomers align with their own room at once. NE32's isolation lasted 1.5--2 h, not a day. The holdout script is not run.}
+
+\hmodel{Vector spins (model 11). The spin is a statement's 32-d style-residualized unit vector $\tilde u_s$. $\Pi_P$ projects out the goal and kickoff field. A newcomer's constant $q_i$ relaxes toward the veterans' centroid $\bar V$ with closure $\lambda$ as its veteran reads $D_i$ grow. $h_d$ is the day field. The observable $a_{i,d}$ is the mean statement cosine with the veterans' centroid $V_d$. $\Delta G$ is the newcomer's change minus the veterans'. $K$ is the family signature against other newcomers' first-day baselines $F_f$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\tilde u_s\propto\Pi_P\bigl[q_i(\tau)+h_d+\varepsilon_s\bigr],\quad q_i(\tau)=q_i^0+\lambda\bigl(1-e^{-D_i(\tau)/D^*}\bigr)(\bar V-q_i^0)\\
+\Delta G_i=(\bar a_{i,L}-\bar a_{i,E})-\langle\bar a_{j,L}-\bar a_{j,E}\rangle_{j},\quad a_{i,d}=\langle\tilde u_s\rangle\cdot\hat V_{d}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Enculturation index per join (blue bge, orange gte) and the means with join-day bootstrap CIs. The gray band is the synthetic null 95\% range of the mean. Joins scatter on both sides; the models disagree. (b) Family signature $K$ per join at days 2--4 and 8--14. Newcomers start closer to their own family's newcomer baseline (black: mean, CI) and lose part of it.}
+
+\htelos{An operator should not expect newcomers to need an induction period for content. They match the day's conversation from day 2: the gap to the veterans is $-0.02$ in cosine units and closes to 0 by days 8--14. Put a newcomer in the room whose work it should join; it aligns with that room's veterans at once (0.18, the veterans' own value). Expect a family flavor in its first week; it fades. Do not rely on reading volume: veteran items read do not predict the move ($\rho=+0.06$). Whether a deeper village culture exists is not settled here. The shared persistent content is about 3\% of statement variance, too small to test with 19 joins.}
+
+\hbottom{Newcomers join the village's conversation at once and lose a first-week family signature, but no slower enculturation into a village culture is detectable at this power.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 gap closes: $\Delta G>+0.032$ & \raggedright bge $+0.020$ [$-0.025$, $+0.070$]; gte $-0.011$; $\bar G_E$ $-0.020$ & \raggedright inconclusive\tabularnewline
+\raggedright P2 family signature fades & \raggedright $K_E$ $+0.038$ (13/15; gte $+0.031$); $\Delta K$ $-0.018$ [$-0.033$, $-0.004$] & \raggedright pass (bge)\tabularnewline
+\raggedright P3 dose response & \raggedright $\rho$ $+0.06$ ($p$ 0.41) & \raggedright fail (descr.)\tabularnewline
+\raggedright P4 persistent part & \raggedright $\Delta G^{mm}$ $+0.040$ [$-0.030$, $+0.110$] & \raggedright fail (descr.)\tabularnewline
+\raggedright P5 style approaches & \raggedright $\Delta S$ $+0.95$ [$-2.3$, $+4.5$] (away) & \raggedright fail\tabularnewline
+\raggedright N1 NE32 isolated day & \raggedright isolation 1.5--2 h, no statements; 733 veteran items read & \raggedright n/a\tabularnewline
+\raggedright N2 \#38 own room & \raggedright 0.178 [0.099, 0.262]; veterans 0.161 & \raggedright supported\tabularnewline
+\raggedright N3 NE27 kickoff-matched gap & \raggedright $-0.017$ [$-0.103$, $+0.066$]; gte $+0.013$ & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Synthetic power of the pooled test on the real join schedule. Even full closure is detected in under half of the replicates. (b) \#38: newcomers' own-room minus other-room alignment (CIs) equals the veterans' (diamonds).}
+
+\hcaveats{The persistent shared component is small, so a null is inconclusive, not absent. bge and gte disagree in sign on $\Delta G$; statement-level geometry is model-dependent. Family baselines use 1--4 same-family newcomers per regime, and the fade is significant with bge only. Batch joins share windows (15 clusters). \#51 roles are an agent-specific field; the own role text is projected out, but role topics remain. Windows can cross a goal boundary. The baselines without same-day joins and the NE32 premise check are post hoc.}
+
+\hnext{Test enculturation on discrete conventions (village-coined terms and file conventions) through each newcomer's first uses inside the logged light cone. Fit the decay time of the entry family signature per join.}

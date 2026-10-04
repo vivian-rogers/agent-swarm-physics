@@ -601,6 +601,36 @@
    "model": "11",
    "source": "H98",
    "meaning": "Late joiners start off their role and take time to align."
+  },
+  {
+   "symbol": "τ_mem",
+   "name": "collective attention decay of a finished period",
+   "value": "terms τ 5.5 village days (median, 20 periods) to a floor of 1.9%; artifacts τ ≈ 4, floor ≈ 0; veterans' days 21–40 share 0.079 of days 1–3; biexponential (τ₁ ≈ 2, τ₂ ≈ 48 d) wins 5/27 fits",
+   "kind": "relaxation",
+   "scope": "20 periods (terms), 7 (artifacts)",
+   "model": "13",
+   "source": "H88",
+   "meaning": "The village forgets a finished goal within about a week; the floor is fed partly by re-coinage."
+  },
+  {
+   "symbol": "g_new",
+   "name": "newcomer content gap to veterans",
+   "value": "−0.020 [−0.056, +0.020] at tenure days 2–4, ≈ 0 by days 8–14; family signature at entry K_E +0.038 (13/15), fades by 0.018; own-room alignment 0.18 (veterans 0.16); newcomer/veteran use of just-finished terms 0.93",
+   "kind": "enculturation",
+   "scope": "19 joins",
+   "model": "13",
+   "source": "H83, H88",
+   "meaning": "Newcomers fit in within a day or two."
+  },
+  {
+   "symbol": "f_shared",
+   "name": "veterans' persistent shared content fraction",
+   "value": "≈ 3% of statement variance within a period, 0.5% across periods (bge, style-residualized, kickoff-projected)",
+   "kind": "order parameter",
+   "scope": "three regimes",
+   "model": "11",
+   "source": "H83",
+   "meaning": "There is little persistent village culture in content; culture tests on window means have little power."
   }
  ]
 }

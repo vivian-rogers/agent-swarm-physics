@@ -1,0 +1,70 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before real data; synthetic validation at real counts with veteran-calibrated variance (two biased estimators found and replaced, P1 calibrated); 19 replication joins; three natives (one void: NE32 did not happen as catalogued); both embedding models and four variants; scorecard; frozen, guarded confirm script dry-run, not run. Low power limits what more of the same design can show; round 2 needs a convention-based design.",
+  "faithfulness": "The enculturation model is not supported and not refuted: the pooled index does not beat the calibrated null in either model (bge +0.020, gte -0.011) at power 0.15-0.30. The family signature at entry (13/15, both models) and immediate room alignment are real but are not the hypothesised slow convergence. Scorecard A1 B1 C0 D1 E1 F1 G1 H1 I0.",
+  "usefulness": "Gives an operator two computable facts: newcomers match the day's conversation from day 2 (gap -0.02, closing to 0), and they align with the room they are placed in at once (0.18, as veterans). No induction period or reading quota is indicated. The village-culture question stays open."
+ },
+ "one_line": "Newcomers match the village's conversation from day 2 (gap -0.02) and lose a first-week family signature (K_E +0.038, 13/15); no slower enculturation is detectable (Delta G +0.020 bge, -0.011 gte; power <= 0.3).",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "No detectable relaxation of newcomer constants; low power"
+  },
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Room alignment immediate; no dose response"
+  }
+ ],
+ "rated_by": "H83 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Newcomers match the village's day-to-day content from tenure day 2 (gap to the veteran centroid −0.020 [−0.056, +0.020], ≈ 0 by days 8–14) and carry a first-week family signature that fades (K_E +0.038, 13/15 joins); slower enculturation into a persistent culture is not detectable (power ≤ 0.3)",
+  "scope": "19 joins, 15 join days, three regimes; natives G38, NE27 (NE32 premise false)",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.53,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication over 19 joins, both models for the gap",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic calibration fixed three estimator flaws before data",
+    "x": 1.3,
+    "evidence": "card §A0/A1"
+   },
+   {
+    "factor": "native: newcomers align with their own room at the veterans' level from day 1 (G38)",
+    "x": 1.2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: the family fade CI touches 0 in gte",
+    "x": 0.85,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "expect a new agent to fit in within a day or two; there is little persistent culture to learn",
+  "magnitude": "small",
+  "generality": "LLM swarms with turnover",
+  "expected_usefulness": 0.53,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H83 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

@@ -1,0 +1,34 @@
+\hwhat{The test follows the village's attention to a finished goal period's items: its coined terms (H34 markers first seen there) and its artifacts. The observable is the veterans' daily share of uses for 120 village days after the period, with held-out days censored. Four decay laws are fitted per period. Candia's biexponential wins in 5 of 27 period-by-channel fits. An exponential with a floor wins in 11, the single exponential in 8. For terms, attention falls with $\tau=5.5$ village days to a floor of 1.9\% of the initial share (20 periods). The decay holds among veterans who stay, and with a closed roster. Newcomers are not slower than veterans (power 0.87--0.92). In 2 of 3 retirements, the retiree's items were never used again. The holdout script is not run.}
+
+\hmodel{Collective memory (model 13, \S4). In Candia's two-compartment model, communicative memory $u$ decays at rate $p$ and feeds cultural memory $v$ at rate $r$; $v$ decays at rate $q$. Here $k$ counts village days since the period ended. $y_{g,k}$ counts uses of the period's items by carrier group $g$ (veterans or newcomers); $O_{g,k}$ counts the group's uses of all items of that kind. The share $y/O$ is fitted with a single exponential, a biexponential, an exponential plus floor $c$, and a power law.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+S(k)=Ne^{-(p+r)k}+\frac{Nr}{p+r-q}\bigl(e^{-qk}-e^{-(p+r)k}\bigr),\qquad \tau_1=\tfrac{1}{p+r},\ \tau_2=\tfrac1q\\
+\mathbb E[y_{g,k}]=O_{g,k}\,f(k),\quad f\in\{Ae^{-k/\tau},\ A_1e^{-k/\tau_1}+A_2e^{-k/\tau_2},\ Ae^{-k/\tau}+c,\ Ak^{-\alpha}\}\\
+R(\text{band})=\textstyle\sum_{P,k}y_{\rm new}\big/\sum_{P,k}O_{\rm new}\,(y_{\rm vet}/O_{\rm vet})
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Veterans' share of uses of a period's terms, relative to days 1--3, for 20 periods (gray). The green curve is the median exponential-plus-floor fit; the dashed curve is a single exponential with the median $\tau$. (b) Share of periods won by each decay law, real data against a synthetic biexponential truth at the real offsets.}
+
+\htelos{A finished goal is gone from the village's attention within about a week: the share drops to 8\% of its first-days value by days 21--40. If an operator wants old work reused, it must be re-injected (named in a kickoff or a file), not left to memory. Newcomers inherit a period's live topics as fast as veterans, so there is no "veterans' memory" to protect when rotating agents. Items used mostly by one agent tend to die when it retires (2 of 3 cases): before retiring an agent, hand its live repos and terms to another carrier. The persistent floor (1.9\%) mixes the record with terms that models re-coin.}
+
+\hbottom{Attention to a finished period falls within a week to a small floor, carried alike by veterans and newcomers, not as a two-compartment biexponential.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 biexponential modal & \raggedright terms: floor 8, single 5, biexp 4, power 3 (of 20); artifacts: single 3, floor 3, biexp 1 & \raggedright fail\tabularnewline
+\raggedright Kill 1: single exp $\ge1/2$ & \raggedright 5/20 terms, 3/7 artifacts & \raggedright not met\tabularnewline
+\raggedright P2 decay among present veterans & \raggedright late/early share 0.079 (median); 13/18 CI $<1$ & \raggedright pass\tabularnewline
+\raggedright P3 newcomers only slow & \raggedright $R$ 0.93, 0.64, 0.79 by age; $b$ $-0.17$ [$-0.80$, $+1.32$] & \raggedright fail\tabularnewline
+\raggedright P4 artifacts slower than terms & \raggedright 1/6 periods & \raggedright fail\tabularnewline
+\raggedright P5 newcomer uses after a read & \raggedright 59\% in the logged cone & \raggedright pass (descr.)\tabularnewline
+\raggedright N1 closed roster biexp & \raggedright 0/3 (power law, power law, floor) & \raggedright mixed\tabularnewline
+\raggedright N2 NE27 newcomers slower & \raggedright $R(\le15\,\mathrm{d})$ 0.98 [0.0, 2.7] & \raggedright mixed\tabularnewline
+\raggedright N3 carrier loss & \raggedright Grok 4: 27 $\to$ 0; Sonnet 3.7: 89 $\to$ 0; pooled CI 0.01--2.2 & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Newcomers' uses over the uses expected at the veterans' share on the same day, by days since the period ended. No rise with age: newcomers carry the fast part too. (b) Other agents' later use of items carried by a retiree.}
+
+\hcaveats{Candia et al.\ 2019 is not in the literature folder; its form is quoted from memory. A 120-day horizon with censored stretches cannot separate a months-long $\tau_2$ from a floor. Terms are hashed markers; 41\% of newcomers' first uses come without a logged read, so re-coinage inflates the floor. Artifact mentions count working references. Overdispersion is large ($\phi$ 1--100). The NE27 shares use the pool of \#2--\#8 items. Reading the carrier-loss CI as uninformative is post hoc.}
+
+\hnext{Fit item-level survival with a cured fraction, with covariates: hardcoded in a repo, carried by one agent, named by a later kickoff. Test the floor across the history-search changes (NE04, NE18).}

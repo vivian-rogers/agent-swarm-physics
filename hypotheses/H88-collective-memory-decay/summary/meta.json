@@ -1,0 +1,75 @@
+{
+ "complete": 42,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before real data; synthetic validation at real offsets and masks (model-selection rates for four truths; two flawed newcomer estimators replaced before real data); 25 replication periods in two channels; three natives; exogenous re-activation refit; scorecard; frozen, guarded confirm script dry-run, not run.",
+  "faithfulness": "Candia's biexponential is refuted as the village's decay law: it wins 5 of 27 fits, newcomers are not slower (powered), and the floor model wins most often. What holds is a clean descriptive law: fast decay (tau ~5 village days) to a small floor, among veterans who stay and with a closed roster. Scorecard A1 B1 C1 D1 E1 F2 G0 H0 I1.",
+  "usefulness": "A computable attention half-life for finished work (share 8% of its first-days value by days 21-40), a reason to re-inject old work explicitly rather than rely on memory, and a handover rule before retiring an agent (2 of 3 retirees' items died). Modest evidence; floor partly re-coinage."
+ },
+ "one_line": "Attention to a finished period falls with tau 5.5 village days to a 1.9% floor, carried alike by veterans and newcomers; Candia's biexponential wins 5/27 fits.",
+ "models": [
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Biexponential memory rare; exponential plus floor wins"
+  },
+  {
+   "model": "04-semantic-information",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Which store carries the floor not separated"
+  }
+ ],
+ "rated_by": "H88 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Attention to a finished goal period's terms falls within about a week (τ 5.5 village days) to a small floor (1.9% of the initial share), carried alike by veterans who stay and by newcomers (ratio 0.93; power 0.87–0.92); Candia's biexponential wins only 5/27 fits",
+  "scope": "20 periods (terms), 7 (artifacts); natives G05 closed roster, NE27, NE28",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.62,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication across 20 periods",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic calibration (day-level standardization, size 0.067)",
+    "x": 1.3,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "native: decay without turnover in a closed roster (G05)",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "powered newcomer null",
+    "x": 1.2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: no single functional form wins (4 forms split the fits)",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "expect a finished goal to fade from talk within about a week; re-seed anything that must persist",
+  "magnitude": "medium",
+  "generality": "LLM swarms",
+  "expected_usefulness": 0.93,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H88 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

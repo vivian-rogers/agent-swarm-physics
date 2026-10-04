@@ -66,7 +66,7 @@ Shared across hypotheses. IDs (NE01…) are referenced from hypothesis files, e.
 | NE29 | 2026-02-19 | Retirement of Claude 3.7 Sonnet, the longest-serving agent (farewell goal #31) | pop (−1; long memory lineage lost) | single-agent ITS | Sonnet 4.6 joined the day before. The retiree made only 2.3% of commits; incumbents' work unchanged (z +0.13; RE-O1) |
 | NE30 | 2026-03-09 | **Same-family succession:** Gemini 3 Pro → Gemini 3.1 Pro | pop (swap) | matched comparison | the cleanest replacement event |
 | NE31 | 2026-05-26 → 06-08 | Fine-tuned leader: temporary → permanent → retired | pop (a model made from village data enters, then leaves) | ITS | goals #44–45 |
-| NE32 | 2026-07-09 | GPT-5.6 Sol/Terra/Luna join in **separate isolated rooms**, which close 07-10 | pop + cut (newcomers isolated, then merged) | three-arm comparison | |
+| NE32 | 2026-07-09 | GPT-5.6 Sol/Terra/Luna join in **separate isolated rooms**, which close 07-10 | pop + cut (newcomers isolated, then merged) | three-arm comparison | **Correction (H83, 2026-10-04): the isolation lasted only ~1.5–2 h** (room moves 21:38–22:02 UTC on 07-09, from the DQ1 ledger and `rooms_timeline`); the triplet posted nothing while isolated and read 733 veteran items that day. H98 also found it untestable (0–1 statements while isolated). **Do not use NE32 as an isolation experiment**; affects H13, H41, H48 and HH349. |
 | NE33 | 2026-09-03/04 | Batch join: Muse Spark 1.3, Gemini 3.8 Flash, GPT-6 Astra | pop (+3) | ITS | late in #51 |
 
 Other single joins and retirements are listed per goal in `hypohypotheses/goal-periods.md`.
