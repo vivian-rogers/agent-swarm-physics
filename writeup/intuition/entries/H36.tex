@@ -1,0 +1,48 @@
+\section{H36: A topic-shift alarm beats a fluctuation alarm}
+\label{sec:H36}
+
+\textbf{The question:} Can an operator see from the logs, each day, that the swarm is reorganizing? Examples are a goal change, a room change or a scaffold change. Do collective fluctuation statistics peak at these transitions, and do they beat a plain topic-shift detector?
+
+\textbf{The intuition:} Near a phase transition, a physical system fluctuates strongly and its parts move together. Flocks show this during a collective turn. We use three statistics.
+\begin{itemize}
+\item \emph{Susceptibility}, the variance of the swarm's total divided by the sum of the agents' variances. It is 1 for independent agents.
+\item A \emph{heat-capacity analogue}, the variance of the alignment energy. It measures how much the agreement between agent pairs swings during a day.
+\item \emph{Multi-information}, the total correlation of all agents. It measures how much less random the whole is than its parts.
+\end{itemize}
+The rival picture says that a goal change is a field step: a new external push between two days. A field step changes where agents point, not how strongly they couple. Fluctuation statistics are then blind to it. A first-moment detector, which tracks the mean, sees it at once.
+
+\textbf{What we measured:} For each day outside the reserved goal periods (282 in round 1b), we computed each statistic as an excess over surrogates shuffled within the day. We used one-minute activity spins, four activity classes and 30-minute content vectors. A trailing 10-day $z$-score feeds the pre-registered alarm $Z_\mathrm{phys}\ge2$. The targets are 33 goal kickoffs. The nulls are placebo days far from every event, Monday placebos and random event dates. The rival R1 is $1-\cos$ between today's and yesterday's mean content vector.
+\begin{itemize}
+\item \emph{Scheduler field:} removed by within-day circular-shift surrogates, a stall mask and the trim to the all-present window.
+\item \emph{External drive:} partly removed with Monday placebos. About 40\% of the content signal is a drift within the day after a kickoff.
+\item \emph{Shared model prior:} open. The content vectors carry no style residualization.
+\item \emph{Common input:} not relevant, because the alarm makes no influence claim.
+\end{itemize}
+The synthetic check used kinetic Ising swarms at village sampling, with 30 runs per scenario. The alarm finds a content-coupling switch (AUC 0.93) but an activity-coupling switch only partly (AUC 0.77, hit 0.40). It is blind to field steps at a day boundary, as designed, and R1 catches a goal switch (AUC 1.00).
+
+\textbf{What we found:} Plain topic shift detects goal changes far better than the physics alarm\cred{0.80}; EU 2.2 (value if true 2.75).
+\begin{itemize}
+\item R1 has AUC 0.95 with the bge embedding and 0.97 with gte (round 1: $[0.90, 0.98]$).
+\item The physics alarm hits 0.27 (bge) or 0.21 (gte) of goal changes, at a window false-alarm rate of 0.11. Its AUC is 0.68 $[0.57, 0.79]$ or 0.66 $[0.54, 0.77]$.
+\item Against random dates, the physics alarm gives $p=0.08$ (bge) and $0.21$ (gte). That is at the pre-registered failure boundary. It loses to R1 by $\Delta$AUC $-0.29$ $[-0.42,-0.17]$ (bge) and $-0.34$ $[-0.48,-0.21]$ (gte).
+\item All of its signal comes from content ($Z_\mathrm{cont}$ AUC 0.74--0.78). The activity channel is at chance (0.54; 0.50 after the trim).
+\item It catches 1/13 scaffold changes (2/13 with gte). No score found the undocumented platform steps NE40 and NE45 blind.
+\end{itemize}
+The scope is the goal changes of the goal periods outside the reserved data, plus the native tests NE38, NE39, NE40, NE43 and NE45.
+
+\textbf{What it means:} For an operator, run R1 each day. Raise the alarm when R1 is at least 3 trailing standard deviations, or when the within-day content alignment $Z_\mathrm{cont}$ is at least 2. In-sample, this rule catches 55\% of goal changes at a 2\% window false-alarm rate (bge). With gte it catches 67\%, at 13\%. Do not build the alarm on activity fluctuations, because they follow who is present and how long the day is. For scaffold changes, add log features such as the event mix and tool schemas. No daily swarm statistic here saw them.
+
+\textbf{Caveats:}
+\begin{itemize}
+\item The fragile flag is set. The verdict moves with the embedding model and the dedupe rule (bge without dedupe: $p=0.11$).
+\item The operator rule is post hoc: we chose it from seven candidates, and its false-alarm rate depends on the model.
+\item The test has daily resolution only. There are 55 placebo days, none in regime II. Most kickoffs fall on a Monday, and only 11 placebos are Mondays.
+\item No confirmation test on reserved goal periods exists yet. \texttt{confirm.py} ran only as a dry run, and it must be re-frozen on the fixed activity table first.
+\item The alarm on the first nudge-free day (NE43b) is a single day with no replication.
+\end{itemize}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{H36-reorganization-alarm/figures/summary_obs.pdf}
+\caption{Fluctuation statistics barely mark goal changes. (a) Mean alarm scores around 33 kickoffs: the physics alarm and its content part rise but stay below threshold, while the topic shift (R1) jumps. (b) Hit rate against placebo false-alarm rate as the threshold changes; the star is the post hoc rule (R1~$\ge$~3 or $Z_\mathrm{cont}\ge2$).}
+\label{fig:int-H36}
+\end{figure}

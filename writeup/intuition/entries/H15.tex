@@ -1,0 +1,72 @@
+% H15: semantic information through natural scrambles. Sources: hypotheses/H15-semantic-information-scrambles/{README.md (Round 1b), summary/content.tex, summary/meta.json};
+% writeup/visuals/H44-context-wipe/{caption.tex, README.md} (shared H44+H15 figure); interpretation/swarm-constants.json (ΔW_erase).
+\section{H15: Memory loss costs nothing visible; a context wipe costs a tenth of output}
+
+\textbf{The question:}
+Which stored information keeps an agent working: its memory file, its context window, the chat or its artifacts?
+We cannot run new swarms, so we use natural scrambles from the logs.
+These are memory losses, newcomers with empty memories, chat cuts, artifact switches and forced context wipes.
+
+\textbf{The intuition:}
+Kolchinsky--Wolpert semantic information is the information whose loss lowers a system's viability, a measure of how well it keeps going.
+The test is an intervention on an information channel: scramble a store and watch whether output falls.
+An agent has two stores with different timescales.
+Memory holds information over days; the context window holds it over one session of about 40 calls.
+A scramble erases one store, or cuts the channel from the room to the agent.
+
+\textbf{What we measured:}
+At the day scale, the observable is a viability $V^*$ per agent-day, chosen by a pre-registered procedure (D2.6).
+Regime I uses engagement and regime III uses reliability (one minus the real-failure share).
+Each event is compared with placebo days of agents in the same unit, with a Kalman-filtered counterfactual.
+At the call scale, the observable is work commits per call around a forced wipe at the 41-turn cap.
+It compares calls $+1\ldots+10$ with calls $-20\ldots-11$, on the DQ1 ledger and the DQ4 work ledger.
+The scope is goal periods outside the reserved data.
+\emph{Scheduler field:} removed by same-day differencing against other agents, and by the comparison within one segment.
+\emph{External drive:} partly removed; the cap times forced wipes, but 118/172 artifact switches fall on goal-change days.
+The pre-registered forced-versus-voluntary contrast also carries a task-phase confound.
+\emph{Shared model prior} and \emph{common input:} not relevant; the designs are within one agent and make no influence claim.
+\emph{Synthetic check:} 150 replicates on the real village skeleton.
+The calibrated null gives 1--7\% false positives, but the day-scale power is only 17--41\%.
+The check chose the Kalman counterfactual because it removes the bias from resets that happen on bad days.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{H44-context-wipe/fig.pdf}
+\caption{The forced context wipe, shared with H44.
+Writes and work commits dip right after the wipe and recover over a few calls, against a no-reset null that keeps rising.
+Panel (e) carries H15's ledger estimate: work commits fall 39\% for ten calls in 7/9 periods.
+Animation: \texttt{writeup/visuals/H44-context-wipe/anim.mp4}.}
+\label{fig:int-H15}
+\end{figure}
+
+\textbf{What we found:}
+Memory losses show no day-scale cost.
+Losing 50--80\% of memory (12 events) gives $+0.29$\,SD [$-0.05$, $+0.63$] on $V^*$.
+Newcomers with empty memories give $+0.20$ [$-0.13$, $+0.54$], and they progress \emph{more} ($+0.31$ [0.06, 0.56]).
+Mid-period artifact switches cost nothing measurable on work output ($-0.00$ [$-0.17$, $+0.17$]).
+The context window is the one store whose loss shows.
+A forced wipe cuts work commits by 39\% [$-42$, $-35$] over ten calls, in 7/9 periods.
+Write calls fall 26\% (8/9) and real failures rise 27\%.
+The lost work is 2.5--13\% of a forced segment's output, with a median near 10\%.
+The memory written at the wipe does not soften the dip ($\rho=+0.01$; top against bottom tercile $-0.05$ [$-0.10$, $+0.01$]).
+H44 measures the same dip ($-38\%$) with its own pipeline.
+Scope: regime III for the wipe; all regimes for the day-scale nulls.
+The claim stands\cred{0.78}: ``a forced wipe cuts work commits by about 39\% for ten calls. More memory does not help, and memory carries no day-scale information.''
+Its expected usefulness is EU~2.73 (value if true 3.5; two raters, one blind).
+Small conflict: \texttt{meta.json} counts ``turns''; the card's round 1b counts calls on the ledger, and this note follows the card.
+
+\textbf{What it means:}
+For a scaffold builder: each forced wipe at the 41-turn cap costs about 39\% of committed work for ten calls, about a tenth of output.
+To recover it, raise the cap or carry a task-state summary across the reset; nobody has tested the summary yet.
+Do not ask the agent to write more memory at the wipe; the dose has no effect.
+Do not spend effort to protect memory files against loss: no day-scale cost appears, though the tests can only see large effects.
+
+\textbf{Caveats:}
+The day-scale tests have low power (17--41\%), so ``no cost'' means ``no large cost''.
+The viability measure $V^*$ changed between rounds, so the period verdicts are replications under a new yardstick.
+The wipe dip is post hoc: the pre-registered forced-versus-voluntary test came out with the wrong sign.
+NE41 then replicated the dip with dated predictions on new timing and output data.
+The study measures neither the semantic information $S$ nor its share $\eta$; Kolchinsky--Wolpert supplies the vocabulary only.
+The chat-cut test has 3 events.
+The fragile flag is set: the coordinator rated the claim fragile.
+The confirmation script must be re-frozen on work commits.
+No confirmation test on reserved goal periods has run.

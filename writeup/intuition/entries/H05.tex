@@ -1,0 +1,36 @@
+\section{H05: Rooms couple chat only through reading}
+\label{sec:H05}
+
+\textbf{The question:} The village puts agents in rooms, and an agent sees only the chat of its own room. When a split puts two groups in different rooms, does the coupling between the groups vanish while the coupling inside each room holds? Does the swarm's irreversibility (entropy production) fall with it?
+
+\textbf{The intuition:} Treat each agent as a spin: up in a minute when it talks, down when it is silent. A coupling $J_{ij}$ is how much agent $j$'s talk in one minute raises agent $i$'s talk in the next minute. This is a kinetic Ising model, a model in which spins update each step in response to a field and to their couplings. Here the field is the shared daily schedule. Room-mates read each other, so we expect a within-room coupling $J_\mathrm{in}>0$. A cut removes the cross-room reads, so the cross-room coupling $J_\mathrm{out}$ should fall to zero. The rooms then act as two coupled blocks. Entropy production measures how different the swarm's movie looks when you play it backwards. Asymmetric couplings create it, so a cut should also remove the cross-room part of it.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{H05-rooms-cut/fig.pdf}
+\caption{Rooms decouple chat only through what agents read. (a) The two-block picture: room-mates read each other, and a cut removes the cross-room reads. (b) Talk coupling follows the room in all six regime-III two-room windows, and activity does not (gray: random room labels). (c) At the 05-11 split, cut pairs lose talk coupling. The co-location effect disappears once ledger read counts enter the model.}
+\label{fig:int-H05}
+\end{figure}
+
+\textbf{What we measured:} The observable is the lagged talk coupling $\kappa_x$ of each pair-day: the mean of the two one-minute-lagged correlations, minus a cross-day surrogate. The surrogate pairs agent $i$'s day with another day of agent $j$, aligned by minute, so it keeps the shared schedule and removes interaction. We compared within-room and cross-room pairs in six regime-III two-room windows against random room labels. We ran pair difference-in-differences (DiD) at room splits and merges, and a two-way fixed-effects panel (pair and day effects) of co-location. A new test (HH248) added context-ledger read counts to that panel.
+The impostors stand as follows. The cross-day surrogate, applied after the trim of each day to its all-present window, removes the scheduler field. Day effects absorb goal changes and operator resets, and goal-change placebos show no effect; room-specific kickoffs stay in, so the external drive is only partly removed. The shared model prior is open, because there is no same-family pair term. Read counts absorb the room effect, but no ``posted but unread'' arm exists, so common input is only partly removed.
+The synthetic check used kinetic Ising swarms with known couplings at village sampling (16 agents, 20--40 days of 240 one-minute bins). The fitted antisymmetric couplings correlate with the true ones at $r=0.89$--$0.95$, and the pair DiD recovers a planted cut in 20/20 runs. The power for a single room event is only 23--63\%.
+
+\textbf{What we found:} Rooms are coupled blocks for talk, and the coupling runs through reading\cred{0.88}; EU 2.2 (value if true 2.5).
+\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+\item Within-room talk coupling exceeds cross-room coupling in 6/6 windows (pooled $+0.021$, Fisher $p=6\times10^{-7}$). The per-period rule passes in G38, G41, G42 and G44, and is mixed in G37 and G39.
+\item Co-location raises $\kappa_x$ by $+0.0123$ ($z=5.1$). With $\log(1+\text{reads})$ in the model, the co-location effect falls to $+0.0013$ ($z=0.2$), and reads keep $z=2.1$. Inside rooms, coupling rises by $+0.0051$ per log-read ($z=2.3$).
+\item At the 05-11 split (NE42), the 40 cut pairs lose talk coupling against the 51 pairs that stay together (DiD $-0.020$, permutation $p=0.027$). The stay pairs regain coupling, $+0.022$ $[0.013, 0.032]$.
+\item Activity spins (the actual work) show no room structure ($p=0.17$).
+\item Pairwise entropy production on one-minute activity spins equals the cross-day schedule null in 18/18 windows (every $p\ge0.07$).
+\end{itemize}
+The scope is six regime-III two-room windows plus two period-native tests: the \#focus cut (G51) and the NE42 split. The summary page says ``15/18'' for entropy production; the card's latest round (the recheck) gives 18/18, and we use it.
+
+\textbf{What it means:} For an operator, a room is a read filter. To decouple two agents, stop them reading each other. A room move works only as far as it cuts reads: at \#focus the cross-room reads fell 95\%, from 95 to 4.4 per pair-day. Expect co-location to add about 0.01 to the talk coupling, and a split to remove about 0.02. Do not use rooms to divide work, because activity does not follow the room. When you re-cut rooms, expect the pairs that stay together to couple more strongly. For a physicist, do not try pairwise entropy production on one-minute spins, because it stays at the schedule null.
+
+\textbf{Caveats:}
+\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+\item Co-location and log read counts correlate at 0.82. The mediation test thus has little leverage: the standard error grows $\times2.2$, and the interval still includes half the room effect.
+\item H05 ran one confirmation test on reserved goal periods, at NE12/NE15 (2026-10-03). The verdict was inconclusive. The primary pair DiD passed ($-0.022$ $[-0.038,-0.008]$, $p=0.021$), but the pooled panel missed ($z=1.4$). Within-room $J_\mathrm{in}$ rose about $\times6$, which no prediction said. That run used the faulty activity table, which dropped about half of all events. Nobody re-ran it, so the corrected table has no confirmation test on reserved data yet.
+\item The \texttt{ep\_gauss\_crossfit} recheck withdrew the round-1 entropy-production exception in \#42 (excess $+0.24\to+0.056$, $p=0.10$) and the one in \#51 W28.
+\item The chat half of the claim is close to a restatement of the visibility scaffold. The NE42 merge week also carries a shared objective, which confounds it.
+\end{itemize}

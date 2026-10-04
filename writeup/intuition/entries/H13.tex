@@ -1,0 +1,44 @@
+\section{H13: Model families share a writing style, not a coupling}
+\label{sec:H13}
+
+\textbf{The question:} Do agents from the same lab share a direction in content space, beyond the day's goal? We call such a direction a family field. Do same-lab agents also couple more strongly with each other than with other labs? Does the family or the room decide who moves with whom?
+
+\textbf{The intuition:} Treat each agent's daily chat as a vector spin: an arrow in a 32-dimensional embedding space. The arrow is a sum of parts: the day's common field (the goal), a family field, the agent's own offset and fluctuations. A field is a fixed push that sets where an arrow points. A coupling makes two arrows move together. A family field has two possible readings. In the \emph{position} reading, a lab takes its own stance on each period's material, so the field changes from period to period. In the \emph{style} reading, the field is a fixed formatting offset. It is the same in every period, and style features remove it. Family preference in interaction (homophily) would show as a block coupling matrix with stronger blocks inside each family.
+
+\textbf{What we measured:} The family-field statistic $T_\mathrm{field}$ is the mean cosine between same-lab agents' mean vectors, minus the mean over cross-lab pairs. We first subtract each day's mean vector, which removes the goal field. The null shuffles lab labels inside each unit. The style rival regresses each message embedding on 20 style features (length, bullets, punctuation, pronouns and similar) and recomputes $T_\mathrm{field}$ on the residuals. For coupling, we fit a $K\times K$ block mean field to talk spins and to 30-minute content co-movement. A pair regression then puts same-lab and same-room terms side by side.
+\begin{itemize}
+\item \emph{Scheduler field:} partly removed. A cross-day surrogate covers talk spins, but without the all-present trim.
+\item \emph{External drive:} removed by subtracting the day or window mean from every observable.
+\item \emph{Shared model prior:} this is the object of the card. Two style rivals remove it.
+\item \emph{Common input:} open for ``rooms carry coupling'', which rests on co-movement and not on reads.
+\end{itemize}
+The synthetic check simulated village sizes and sampling. Every test had its nominal false-positive rate (0.01--0.06). At a family share of 10\% of the agent-offset variance, the family-field test had power 0.24--0.90, rising with unit size. A world with room couplings only did not trigger the family test.
+
+\textbf{What we found:} Model-family content fields are writing style, and behavior carries only a weak family trace\cred{0.87}; EU 2.17 (value if true 2.5).
+\begin{itemize}
+\item A family field exists in 9/15 units, with random-effects $T=0.080$ $[0.024, 0.137]$. The second embedding model (gte) gives 8/15 and $0.085$ $[0.040, 0.131]$.
+\item The field is stable across periods: the family split-half cosine is 0.88 against a regrouping null of 0.76 ($p\le0.008$; gte 0.90 against 0.74).
+\item After style residualization, it survives in 0/9 units, with $T=-0.001$ $[-0.037, 0.035]$. The 20 style features alone identify labs in 14/15 units.
+\item Families do not couple by family. In talk timing the family contrast is $-0.003$ $[-0.021, 0.016]$. In content co-movement it is $-0.002$ $[-0.019, 0.015]$ (1/15 units significant).
+\item Rooms carry the coupling. The room term beats the lab term for talk in 10/10 two-room units. For content co-movement the room term is $0.217$ $[0.163, 0.271]$ and the lab term is $0.013$.
+\item A behavioral family field fails its rule: 3/15 units, random-effects $0.075$ $[0.030, 0.121]$. It lives mostly in file-write and commit cadence in the build weeks \#39--\#40.
+\end{itemize}
+The scope is 15 units in goal periods \#35--\#44 and \#51, with the native tests NE06, NE32 and G35.
+
+\textbf{What it means:} Any consensus or alignment metric built on embeddings must remove writing style first. Without style control, labs look like blocs in 9/15 units; with it, in 0 of those 9. Do not infer a vendor ``ideology'' or collusion from content. To control who interacts with whom, use rooms: for content co-movement the room term is about $17\times$ the lab term. To fingerprint a lab, use the 20 style features, which work in 14/15 units against 9/15 for embeddings.
+
+\textbf{Caveats:}
+\begin{itemize}
+\item The ``no family coupling'' results exclude only couplings of about 0.1 or more in talk and 0.08 or more in content.
+\item The style rival is the strongest one possible. A gentler version keeps about a third of the field in 4/15 units, so ``only style'' is not shown.
+\item Subtracting the day mean weakens the field of the largest family, Anthropic (about 40\% of agents).
+\item The behavioral field can come from the harness (each provider's tool conventions), not from the model. NE06 cannot separate the two, because that change hit every agent.
+\item Newcomers match their own lab in 4/11 cases by content ($p=0.06$) and 3/9 by behavior ($p=0.14$).
+\item No natural experiment acts on one family only. No confirmation test on reserved goal periods has run.
+\end{itemize}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{H13-family-fields/figures/summary_obs.pdf}
+\caption{The family field is writing style. (a) The family-field statistic per unit before (blue) and after (orange) the removal of writing-style features; filled markers have permutation $p<0.05$. (b) In two-room units, talk timing and content co-movement follow rooms, not labs.}
+\label{fig:int-H13}
+\end{figure}
