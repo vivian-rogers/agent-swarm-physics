@@ -1,6 +1,7 @@
 # H41 × G51: Each agent: Maximize your assigned goal! (2026-07-06 → 2026-09-04)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged; with rooms fixed #focus bridging fails: 0.51 of 839 cross-room adoptions in the cone, was 0.97 of 1720; J_in 2.08 [1.49, 3.10], J_mh 9.2 [6.5, 13.9]; replication verdicts still supported / supported)
 **Role:** native (exploratory)
 **Period:** regime III · up to 32 agents · rooms [0, 15] · 45 non-holdout days · units 51a, 51b, 51c, 51d, 51e, 51f, 51g, 51h, 51i, 51j, 51k, 51l.
 
@@ -51,6 +52,21 @@ Run 2026-10-04 (`analysis/explore.py`; data `data/processed/H41-readout-light-co
 | P7 identified channels (robust acausal) | 0.84 of 438 | in-cone controls 0.84 | non-specific |
 
 Verdict by the pre-registered rule A4 (J_in): **supported**. Post-hoc verdict with the delay-matched J_mh (A6): **supported**.
+
+## Round 1b (room-index fix, 2026-10-04)
+Round 1 dropped open `rooms_timeline` segments, so 63% of this period's room lookups (68% of calls) returned an agent's previous room; 46% of adoptions had a wrong cross-room label. Rebuilt with the fixed index (`H41_ROOMS=old` reproduces round 1). The cone, items and adoptions do not depend on rooms and are unchanged. Card section "Round 1b" has the full table.
+
+| Test | Round 1 | Round 1b |
+| --- | --- | --- |
+| b: #general ↔ #focus cross-room adoptions inside the cone | 0.97 (n 1720); hops 1588 / 70 / 11 | **0.51** (lenient 0.51; n 839); hops 148 / 193 / 89 → **fail** |
+| cross-room share of adoptions; their robust acausal share | 0.51; 0.05 | 0.05; 0.47 |
+| J_in (pre-registered) | 40.7 [12.2, 110]; in-flight n 158,639 | 2.08 [1.49, 3.10]; in-flight n 16,894 |
+| J_mh (post hoc) | 15.8 [7.4, 31.1] | 9.2 [6.5, 13.9] |
+| within-room A_rob | 0.005 | 0.002 |
+| c: cadence b, volume c | b 0.04 [−0.44, 0.59], c 0.65 [0.17, 1.19] (n 7665) | b 0.18 [−0.20, 0.53], c 0.53 [0.09, 1.10] (n 15,146) → fail |
+| a: isolated adoptions | 1 | 1 (unchanged; the native check always used the full timeline) |
+
+Native verdict stays **mixed**, but now with b and c failing. Replication verdicts (A4 and post hoc) stay supported.
 
 ## Scorecard (period-specific axes)
 - C (adequacy): J_in beats the field/room null (in-flight hazard).

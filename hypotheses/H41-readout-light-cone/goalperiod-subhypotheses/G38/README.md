@@ -1,6 +1,7 @@
 # H41 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged; no stale room lookups on non-holdout days; rebuilt tables identical)
 **Role:** native (exploratory)
 **Period:** regime III · up to 14 agents · rooms [2, 3] · 17 non-holdout days · units 38a, 38b, 38c, 38d, 38e.
 

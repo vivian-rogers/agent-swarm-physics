@@ -28,6 +28,11 @@ INF = np.inf
 AUTOMATED_NODE = 99
 HUMAN_BASE = 100
 ROOMS_START = 1772006400.0  # 2026-02-25 08:00 UTC: before this everyone sits in #general (room 0)
+# Room index: "fixed" (round 1b, default) keeps open rooms_timeline segments; "old" reproduces round 1 (open segments
+# dropped). Set with the environment variable H41_ROOMS=old.
+ROOMS_MODE = os.environ.get("H41_ROOMS", "fixed")
+if ROOMS_MODE not in ("fixed", "old"):
+    raise ValueError(f"H41_ROOMS must be 'fixed' or 'old', got {ROOMS_MODE!r}")
 
 
 def ts(col: str) -> pl.Expr:
@@ -189,12 +194,22 @@ def load_skeleton(goal: int, cal: pl.DataFrame | None = None, days_filter=None, 
     b = np.flatnonzero(np.diff(m_sorted)) + 1
     st, en = np.r_[0, b], np.r_[b, len(m_sorted)]
     sk.readers_of = {int(m_sorted[s]): o[s:e] for s, e in zip(st, en)} if len(m_sorted) else {}
-    rt = pl.read_parquet(SH / "rooms_timeline.parquet").with_columns(ts("t_start").alias("ts"), ts("t_end").alias("te"))
-    # Bug fix (coordinator, 2026-10-04, found by re-freeze batch B): rooms still open have no end time; the old filter
-    # (te >= t_min - 1 day) dropped them, so 61-70% of #51 lookups read the agent's previous room. Keep open rooms (te = +inf).
-    rt = rt.with_columns(pl.col("te").fill_null(float("inf")))
-    sk.rooms = rt.filter((pl.col("te") >= sk.t_min - 86400) & (pl.col("ts") <= sk.t_max + 86400))
+    sk.rooms = rooms_table(sk.t_min, sk.t_max)
     return sk
+
+
+def rooms_table(t_min: float, t_max: float, mode: str | None = None) -> pl.DataFrame:
+    """rooms_timeline rows overlapping [t_min - 1 day, t_max + 1 day].
+
+    Bug fix (coordinator, 2026-10-04, found by re-freeze batch B; round 1b): rooms still open have no end time; the
+    round-1 filter (te >= t_min - 1 day) dropped them, so RoomIndex.at returned the agent's previous room (61-70% of
+    #51 lookups). Open rooms are now kept with te = +inf. H41_ROOMS=old reproduces round 1 exactly.
+    """
+    mode = mode or ROOMS_MODE
+    rt = pl.read_parquet(SH / "rooms_timeline.parquet").with_columns(ts("t_start").alias("ts"), ts("t_end").alias("te"))
+    if mode != "old":
+        rt = rt.with_columns(pl.col("te").fill_null(float("inf")))
+    return rt.filter((pl.col("te") >= t_min - 86400) & (pl.col("ts") <= t_max + 86400))
 
 
 # ----------------------------------------------------------------------------------------------- rooms

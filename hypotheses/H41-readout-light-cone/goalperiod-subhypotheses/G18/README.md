@@ -1,6 +1,7 @@
 # H41 × G18: Reduce global poverty as much as you can (2025-10-20 → 2025-10-31)
 
 **Verdict:** supported
+**Verdict (1b):** failed, post hoc supported (was supported: J_in lower CI 1.01 → 0.98 with a deterministic bootstrap, > 1 in 6/20 bootstrap seeds; borderline, not a room effect)
 **Role:** replication (exploratory)
 **Period:** regime I · up to 8 agents · rooms [0] · 10 non-holdout days · units 18a, 18b, 18c.
 

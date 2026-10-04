@@ -289,7 +289,7 @@
    "family": "magnet (new)",
    "q": "Q1",
    "cost": "low",
-   "why": "Rooms with different instructions form two content domains. Agents who hop rooms sit in the wall, and its width grows with their reads (H41 bridging)."
+   "why": "Rooms with different instructions form two content domains. Agents who hop rooms sit in the wall, and its width grows with their reads. H41 1b: #51 hoppers leak about half the time."
   }
  ]
 }

@@ -1,11 +1,11 @@
 {
- "complete": 45,
+ "complete": 48,
  "faithfulness": 2.0,
  "usefulness": 2.0,
  "rationale": {
-  "complete": "Round 1 done: predictions and nulls written before any real-data run, synthetic validation (two runs, 132 configurations on real call schedules), 32 replication periods plus 4 native tests (G31, G38, G51, NE42), channel attribution with in-cone controls, scorecard, and a guarded confirmatory script dry-run on stand-ins (not run). Round 2 must pre-register the matched jump and time-stamp the unlogged channel.",
-  "faithfulness": "The logged light cone organizes the data where it binds: within-room adoptions almost never precede read-out (<= 4%, median 0.6%), 75-100% of cross-room adoptions fall outside the logged cone, and NE42's merge/split moves cross-group pickup 80-860x as predicted. But the pre-registered gating test failed (12/32); it passes (22/32) only with a post-hoc recency-matched estimator, about a third of fast adoptions look co-generated, the cadence and velocity predictions failed, and nothing is confirmed on the holdout.",
-  "usefulness": "A computable diagnostic: logged chat explains almost no cross-room spread, and shared artifacts cannot be blamed from logs (they are as common in in-cone adoptions); human cross-posts are the only enriched leak. Rooms are strong cages for chat (merging multiplies cross-group pickup ~100x). Spread runs at about one hop per 1.5-5 talk turns, independent of call cadence. No validated control knob."
+  "complete": "Round 1 plus round 1b (2026-10-04): a room-index bug (open room segments dropped) was fixed and #33, #38, #44 and #51 rebuilt, with a switch (H41_ROOMS=old) that reproduces round 1, a per-period audit of changed lookups, an old-to-new table, a deterministic bootstrap and a re-run of the #51 synthetic validation. 32 replication periods, 4 native tests, channel attribution with in-cone controls, guarded confirm script re-frozen (not run). Round 2 must pre-register the matched jump and time-stamp the unlogged channel.",
+  "faithfulness": "The logged light cone organizes the data where it binds: within-room adoptions almost never precede read-out (<= 4%, median 0.6%), 75-100% of cross-room adoptions in fixed two-room periods fall outside the cone, and NE42's merge/split moves cross-group pickup 80-860x as predicted (all unchanged by the 1b fix). But the pre-registered gating test failed (10-12/32; post hoc matched 22-24/32), #51's bridging claim reversed once rooms were fixed (51% in the cone, not 97%), a third of fast adoptions look co-generated, cadence and velocity predictions failed, and nothing is confirmed on the holdout.",
+  "usefulness": "A computable diagnostic: logged chat explains almost no cross-room spread, and shared artifacts cannot be blamed from logs; human cross-posts (23-28x) are the only strongly enriched leak. Fixed rooms are strong cages for chat (merging multiplies cross-group pickup ~100x); rooms that agents hop between leak about half the time. Spread runs at about one hop per 1.5-5 talk turns, independent of call cadence. No validated control knob."
  },
  "one_line": "Novel items obey a logged read-out light cone in rooms and across NE42; the gating jump passes only post hoc; cross-room leaks stay untraceable.",
  "models": [
@@ -13,7 +13,7 @@
    "model": "02-nonequilibrium-ising",
    "role": "primary",
    "outcome": "mixed",
-   "note": "light cone holds in rooms; gating test passes only post hoc"
+   "note": "light cone holds in rooms; gating passes only post hoc; hopping rooms leak half (1b)"
   },
   {
    "model": "03-contagion",
@@ -28,14 +28,14 @@
    "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
- "rated_by": "H41 agent (suggested)",
+ "rated_by": "H41 agent (suggested; round 1b)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Inside rooms, novel items follow the logged light cone (acausal ≤ 4%, median 0.6%) and rooms cage spread (NE42 moved cross-group pickup 80–860×); spread runs at ~1 hop per 1.5–5 talk calls; about a third of fast adoptions are co-generated, and cross-room leaks bypass logged chat",
+  "claim": "Inside rooms, novel items follow the logged light cone (acausal ≤ 4%, median 0.6%) and rooms cage spread (75–100% of cross-room adoptions outside the cone in 7/8 two-room periods; NE42 82×/863×); spread runs at ~1 hop per 1.5–5 talk calls; about a third of fast adoptions are co-generated; agents hopping between rooms leak about half the time (#51, corrected 1b)",
   "scope": "32 periods; natives NE42, G38, G31, G51",
   "direction": "positive",
   "original_verdict": "mixed (gating failed as pre-registered)",
-  "credence": 0.71,
+  "credence": 0.7,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -73,9 +73,9 @@
   "decision": "monitoring: chat logs can't attribute cross-room leaks; rooms cage chat-borne spread",
   "magnitude": "material",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.95,
+  "expected_usefulness": 1.92,
   "scientific_value": 3.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; updated after the room-index re-run (round 1b, 2026-10-04)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -123,7 +123,17 @@
     ]
    }
   ],
-  "adjudicate": false,
-  "under_rerun": "room-index bug (2026-10-04): #51 and #38 room labels were stale; re-run in progress"
- }
+  "adjudicate": false
+ },
+ "v2_history": [
+  {
+   "claim": "Inside rooms, novel items follow the logged light cone (acausal ≤ 4%, median 0.6%) and rooms cage spread (NE42 moved cross-group pickup 80–860×); spread runs at ~1 hop per 1.5–5 talk calls; about a third of fast adoptions are co-generated, and cross-room leaks bypass logged chat",
+   "credence": 0.71,
+   "fragile": true,
+   "value_if_true": 2.75,
+   "expected_usefulness": 1.95,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04"
+  }
+ ]
 }

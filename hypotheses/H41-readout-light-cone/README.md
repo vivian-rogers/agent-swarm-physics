@@ -1,12 +1,12 @@
 # H41: Read-out gating gives the swarm a light cone
 
-**Status:** exploratory round 1 done (2026-10-04). Card, definitions, nulls and dated predictions written ~06:00 UTC, before any real-data light-cone statistic; synthetic validation and amendments A1–A5 before real data; A6 (delay-matched jump) is post hoc and labelled.
+**Status:** exploratory round 1 done (2026-10-04); **round 1b (room-index fix, 2026-10-04) re-ran #33, #38, #44 and #51: see "Round 1b" below. Where this block and later sections disagree with Round 1b, Round 1b wins.** Card, definitions, nulls and dated predictions written ~06:00 UTC, before any real-data light-cone statistic; synthetic validation and amendments A1–A5 before real data; A6 (delay-matched jump) is post hoc and labelled.
 - **Inside a room the logged light cone holds:** across 32 non-holdout periods (133,549 novel marker items, 45,183 adoptions), adoptions by agents in the source's room almost never precede the first model call that could read the item (robust acausal share median 0.6%, max 4% in a 25-adoption period). In one room this bound is only one call wide, and a shared field would also pass it (synthetic).
 - **The pre-registered gating test mostly failed:** the hazard at the first entry call over the call in flight, J_in, has lower CI > 1 in 12/32 periods (verdicts by rule A4: 11 supported, 18 failed, 3 n/a). The cause is a recency confound: adoption hazard falls 10–20× with time since the item appeared, and in-flight calls all sit near t0. **Post hoc**, matching for delay since t0 (J_mh, validated afterwards on synthetic data: field ≈ 1, 8% false positives), the jump passes in 22/32 (post-hoc verdicts 20 supported, 9 failed, 3 n/a). The in-flight hazard is still ≈ 38% of the entry hazard: about a third of fast adoptions are co-generated. Names gate (J_mh,N lower CI > 1 in 24/29); numbers are co-generated (median J_mh,D 0.88); links essentially never appear before read-out.
-- **Across rooms the logged cone is a cage, and NE42 moves it:** 75–100% of cross-room adoptions lie outside the logged cone in 7/8 two-room periods. In #38 the cross-room hazard is 0.001× the within-room hazard, and cross-room adoptions come about 71 h later. NE42's merge raised the cross-group hazard 82× over #39 and 863× over #41, and the cross-group acausal share went 1.00 → 0.02 → 1.00 (native verdict supported). #51's #focus hoppers bridge rooms (97% of cross-room adoptions in the cone).
+- **Across rooms the logged cone is a cage, and NE42 moves it:** 75–100% of cross-room adoptions lie outside the logged cone in 7/8 two-room periods. In #38 the cross-room hazard is 0.001× the within-room hazard, and cross-room adoptions come about 71 h later. NE42's merge raised the cross-group hazard 82× over #39 and 863× over #41, and the cross-group acausal share went 1.00 → 0.02 → 1.00 (native verdict supported). ~~#51's #focus hoppers bridge rooms (97% of cross-room adoptions in the cone).~~ **1b:** with true rooms, #51's #general ↔ #focus hoppers bridge only half the time (51% of 839 cross-room adoptions in the cone, mostly over 2–3 hops); the 97% was a stale-room artifact.
 - **The leaks cannot be traced from logs:** the channel classifier "explains" 82% of robust violations, but also 82% of in-cone controls. Shared repos (lift 1.04), sites (0.94) and history search (0.89) are not enriched. Only human cross-posts (27×), shared reply parents (2.1×), room moves (1.8×) and the agent's own private stream (1.5×) are.
 - **Velocity is set by talk turns, not cadence or volume:** the front advances one hop per 47 / 46 / 16 receiving calls (regimes I / II / III), i.e. one hop per 5 / 2 / 1.5 talk calls, 6–25 min. Cadence predicts nothing within periods (b > 0 in 3/25), and more room traffic does not speed spread.
-- Native tests: NE42 supported; G38 mixed (cage yes, artifact leak no); G31 mixed (regime-I gating not weaker than regime III; clock test inconclusive); G51 mixed (hoppers bridge; cadence fails; only one isolated adoption). Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I1. `analysis/confirm.py` written and dry-run on stand-ins, not run. Not promoted.
+- Native tests: NE42 supported; G38 mixed (cage yes, artifact leak no); G31 mixed (regime-I gating not weaker than regime III; clock test inconclusive); G51 mixed (1b: hoppers bridge only half the time, fails; cadence fails; only one isolated adoption). Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I1. `analysis/confirm.py` written and dry-run on stand-ins, not run. Not promoted.
 
 **Fields:** info theory, stat mech, dynamics, sociophysics
 **Literature:** none of the light-cone / temporal-network papers is in `literature/` yet; cited from memory (†): Lieb & Robinson, *Commun. Math. Phys.* 28, 251 (1972)†; Holme & Saramäki, *Phys. Rep.* 519, 97 (2012) (time-respecting paths)†; Pan et al., *PRL* 113, 238702 (2014) (path lengths in temporal networks)†. Project cards used: H08 (read-out gating), H34 (marker rule, field pitfall), H05 (rooms cut), H18, H29, H27, H31.
@@ -15,7 +15,7 @@
 **Data inputs (shared tables first):** DQ1 `call_windows`, `context_ledger_items` (who read what at which call); `chat_core`, `chat_text` (in memory only, non-holdout), `artifact_mentions` / `artifacts`, `artifact_commands_text` and `intentions_text` (in memory only, for the private-stream channel), `statement_flags`, `reply_pairs`, `rooms_timeline`, `kicks_classified`, `calendar`, `roster`. Read-only code import: H34's `scheme/markers.py` and `scheme/build_markers.py` (marker rule).
 
 ## Standards (2026-10-04)
-*Documentation pass against `STANDARDS.md`. No analysis was re-run. H41 has no round-1b section; round 1 already ran on the corrected inputs.*
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. Round 1 already ran on the corrected inputs. (Later the same day a pipeline bug, the room index, forced a re-run: see "Round 1b (room-index fix)".)*
 
 **Question served:** Q1. The card measures how far and how fast information moves per read-out call, inside and across rooms.
 
@@ -245,7 +245,7 @@ Verdicts: pre-registered rule A4 (J_in) first, post-hoc rule (J_mh) in brackets.
 | [G13](goalperiod-subhypotheses/G13/README.md) | replication | failed (post hoc supported) | regime I; 227 adoptions; J_in 1.04 [0.65, 3.81]; J_mh 2.60 [1.51, 7.78]; A_rob 0.009 (within-room 0.009, cross-room –); cycles/talk calls per hop 47/8.0 |
 | [G16](goalperiod-subhypotheses/G16/README.md) | replication | failed (post hoc failed) | regime I; 112 adoptions; J_in 0.38 [0.26, 1.35]; J_mh 1.30 [0.28, 3.02]; A_rob 0.018 (within-room 0.018, cross-room –); cycles/talk calls per hop 41/6.0 |
 | [G17](goalperiod-subhypotheses/G17/README.md) | replication | failed (post hoc failed) | regime I; 125 adoptions; J_in 0.83 [0.18, 6.36]; J_mh 3.20 [0.48, 7.05]; A_rob 0.024 (within-room 0.024, cross-room –); cycles/talk calls per hop 50/11.0 |
-| [G18](goalperiod-subhypotheses/G18/README.md) | replication | supported (post hoc supported) | regime I; 1632 adoptions; J_in 2.04 [1.01, 4.79]; J_mh 2.34 [1.42, 4.73]; A_rob 0.006 (within-room 0.006, cross-room –); cycles/talk calls per hop 70/9.0 |
+| [G18](goalperiod-subhypotheses/G18/README.md) | replication | supported (post hoc supported); **1b:** failed (borderline bootstrap: J_in lower CI 0.98) | regime I; 1632 adoptions; J_in 2.04 [1.01, 4.79]; J_mh 2.34 [1.42, 4.73]; A_rob 0.006 (within-room 0.006, cross-room –); cycles/talk calls per hop 70/9.0 |
 | [G19](goalperiod-subhypotheses/G19/README.md) | replication | supported (post hoc supported) | regime I; 889 adoptions; J_in 1.98 [1.21, 3.89]; J_mh 3.07 [1.71, 7.61]; A_rob 0.007 (within-room 0.007, cross-room –); cycles/talk calls per hop 40/4.0 |
 | [G20](goalperiod-subhypotheses/G20/README.md) | replication | supported (post hoc supported) | regime I; 1307 adoptions; J_in 2.38 [1.52, 7.50]; J_mh 3.90 [1.81, 22.85]; A_rob 0.004 (within-room 0.004, cross-room –); cycles/talk calls per hop 46/5.0 |
 | [G21](goalperiod-subhypotheses/G21/README.md) | replication | supported (post hoc supported) | regime I; 549 adoptions; J_in 2.20 [1.27, 12.95]; J_mh 4.52 [1.97, 9.03]; A_rob 0.000 (within-room 0.000, cross-room –); cycles/talk calls per hop 48/5.0 |
@@ -256,7 +256,7 @@ Verdicts: pre-registered rule A4 (J_in) first, post-hoc rule (J_mh) in brackets.
 | [G27](goalperiod-subhypotheses/G27/README.md) | replication | supported (post hoc failed) | regime I; 3723 adoptions; J_in 1.61 [1.04, 3.65]; J_mh 2.29 [0.98, 5.61]; A_rob 0.002 (within-room 0.002, cross-room –); cycles/talk calls per hop 293/16.0 |
 | [G30](goalperiod-subhypotheses/G30/README.md) | replication | failed (post hoc supported) | regime I; 1184 adoptions; J_in 1.49 [0.98, 2.24]; J_mh 2.21 [1.21, 3.59]; A_rob 0.007 (within-room 0.007, cross-room –); cycles/talk calls per hop 52/4.0 |
 | [G31](goalperiod-subhypotheses/G31/README.md) | native | mixed (post hoc supported) | regime I; 1493 adoptions; J_in 1.86 [1.19, 3.94]; J_mh 2.95 [1.50, 6.53]; A_rob 0.002 (within-room 0.002, cross-room –); cycles/talk calls per hop 43/4.0 |
-| [G33](goalperiod-subhypotheses/G33/README.md) | replication | supported (post hoc supported) | regime II; 1767 adoptions; J_in 1.88 [1.30, 3.29]; J_mh 3.03 [2.19, 5.48]; A_rob 0.008 (within-room 0.008, cross-room –); cycles/talk calls per hop 20/2.0 |
+| [G33](goalperiod-subhypotheses/G33/README.md) | replication | supported (post hoc supported); 1b unchanged | regime II; 1767 adoptions; J_in 1.88 [1.30, 3.29] (1b 1.87 [1.31, 2.75]); J_mh 3.03 [2.19, 5.48] (1b 2.93 [2.28, 4.07]); A_rob 0.008 (within-room 0.008, cross-room –); cycles/talk calls per hop 20/2.0 |
 | [G35](goalperiod-subhypotheses/G35/README.md) | replication | failed (post hoc failed) | regime II; 1907 adoptions; J_in 1.60 [0.80, 3.16]; J_mh 2.55 [0.99, 6.52]; A_rob 0.199 (within-room 0.003, cross-room 0.78); cycles/talk calls per hop 53/3.0 |
 | [G36](goalperiod-subhypotheses/G36/README.md) | replication | supported (post hoc supported) | regime II; 1386 adoptions; J_in 6.55 [2.75, 26.05]; J_mh 25.44 [6.70, 42.92]; A_rob 0.271 (within-room 0.000, cross-room 0.83); cycles/talk calls per hop 46/2.0 |
 | [G37](goalperiod-subhypotheses/G37/README.md) | replication | n/a (post hoc n/a) | regime III; 238 adoptions; J_in 2.48 [2.21, 4.08]; J_mh 10.31 [8.86, 11.59]; A_rob 0.017 (within-room 0.004, cross-room 0.75); cycles/talk calls per hop 6/1.0 |
@@ -265,8 +265,8 @@ Verdicts: pre-registered rule A4 (J_in) first, post-hoc rule (J_mh) in brackets.
 | [G40](goalperiod-subhypotheses/G40/README.md) | replication | failed (post hoc failed) | regime III; 1955 adoptions; J_in 0.59 [0.34, 1.17]; J_mh 1.31 [0.83, 2.65]; A_rob 0.014 (within-room 0.014, cross-room 0.00); cycles/talk calls per hop 19/1.0 |
 | [G41](goalperiod-subhypotheses/G41/README.md) | replication | failed (post hoc supported) | regime III; 1984 adoptions; J_in 1.04 [0.85, 1.22]; J_mh 2.34 [1.92, 3.19]; A_rob 0.022 (within-room 0.016, cross-room 0.87); cycles/talk calls per hop 11/1.0 |
 | [G42](goalperiod-subhypotheses/G42/README.md) | replication | failed (post hoc supported) | regime III; 638 adoptions; J_in 1.54 [0.91, 10.31]; J_mh 7.75 [3.21, 8.34]; A_rob 0.053 (within-room 0.007, cross-room 0.83); cycles/talk calls per hop 26/2.0 |
-| [G44](goalperiod-subhypotheses/G44/README.md) | replication | failed (post hoc failed) | regime III; 660 adoptions; J_in 0.68 [0.37, 1.73]; J_mh 1.45 [0.83, 5.82]; A_rob 0.029 (within-room 0.028, cross-room 0.11); cycles/talk calls per hop 9/2.0 |
-| [G51](goalperiod-subhypotheses/G51/README.md) | native | mixed (post hoc supported) | regime III; 16521 adoptions; J_in 40.70 [12.25, 109.98]; J_mh 15.80 [7.44, 31.06]; A_rob 0.027 (within-room 0.005, cross-room 0.05); cycles/talk calls per hop 27/3.0 |
+| [G44](goalperiod-subhypotheses/G44/README.md) | replication | failed (post hoc failed); 1b unchanged | regime III; 660 adoptions; J_in 0.68 [0.37, 1.73] (1b 0.70 [0.36, 1.84]); J_mh 1.45 [0.83, 5.82] (1b 1.47 [0.83, 4.18]); A_rob 0.029 (within-room 0.028, cross-room 0.11); cycles/talk calls per hop 9/2.0 |
+| [G51](goalperiod-subhypotheses/G51/README.md) | native | mixed (post hoc supported); **1b:** mixed, replication supported / supported | regime III; 16521 adoptions; **1b:** J_in 2.08 [1.49, 3.10]; J_mh 9.16 [6.55, 13.89]; A_rob 0.027 (within-room 0.002, cross-room 0.47); round 1 (stale rooms): J_in 40.70, J_mh 15.80, cross-room 0.05; cycles/talk calls per hop 27/3.0 |
 | [NE42](goalperiod-subhypotheses/NE42/README.md) | native | supported | cross-group hazard #40/#39 ×82, #40/#41 ×863; cross-group acausal 1.00 / 0.02 / 1.00 |
 
 ## Results
@@ -280,7 +280,7 @@ Verdicts: pre-registered rule A4 (J_in) first, post-hoc rule (J_mh) in brackets.
 **2. Gating at the cone boundary is real but partial, and the pre-registered estimator was confounded.**
 - **Pre-registered J_in** (hazard at the first post-entry talk call over the in-flight talk call): lower CI > 1 in 12/32 periods (regime I 8/19 powered, II 2/3, III 1/7). **P1 fails as written.**
 - **Why:** the per-call adoption hazard falls steeply with time since t0 (`figures/hazard_by_delay.pdf`: #51 from 5% within 30 s to 0.1% after 15 min). In-flight calls all sit at short delays, while first post-entry calls are spread over hours. This is H29's recency confound; the card should have matched on age from the start.
-- **Post hoc (A6), delay-matched J_mh:** lower CI > 1 in 22/32 periods; median 2.6 in regime I, 3.0 in II, 2.6 in III, and 15.8 in #51. In the synthetic data J_mh is ≈ 1 under a shared field (1/12 false positives) and unbounded under relay.
+- **Post hoc (A6), delay-matched J_mh:** lower CI > 1 in 22/32 periods; median 2.6 in regime I, 3.0 in II, 2.6 in III, and 15.8 in #51 (1b: 9.2 [6.5, 13.9]; the 15.8 used stale rooms). In the synthetic data J_mh is ≈ 1 under a shared field (1/12 false positives) and unbounded under relay.
 - **Co-generation is large:** the median in-flight/entry hazard ratio 1/J_mh is 0.38. About a third of fast adoptions happen in calls that could not have read the item.
 - **It depends on the item class:**
   - names and identifiers gate (J_mh,N lower CI > 1 in 24/29 estimable periods, median 3.0);
@@ -294,7 +294,7 @@ Verdicts: pre-registered rule A4 (J_in) first, post-hoc rule (J_mh) in brackets.
   - the cross-group hazard per talk call rose from 3.5×10⁻⁵ (#39) to 2.9×10⁻³ (#40, merged) and fell to ≈ 3×10⁻⁶ (#41);
   - in the merged week cross-group pickup was 1.4× the within-group rate;
   - the cross-group acausal share was 1.00 / 0.02 / 1.00.
-- **Hopping rooms bridge:** in #51, agents moved between #general and #focus on minute scales, and 97% of cross-room adoptions were inside the logged cone (hop counts along the earliest path: 1588 at one hop, 70 at two, 11 at three).
+- ~~**Hopping rooms bridge:** in #51, agents moved between #general and #focus on minute scales, and 97% of cross-room adoptions were inside the logged cone (hop counts along the earliest path: 1588 at one hop, 70 at two, 11 at three).~~ **1b (rooms fixed):** hopping rooms leak half the time. Of 839 #general ↔ #focus adoptions, 51% lie inside the logged cone (hop counts 148 at one hop, 193 at two, 89 at three); over all #51 cross-room adoptions (865, 5% of adoptions) 47% lie outside. The round-1 97% counted same-room adoptions as cross-room.
 - **Static vs time-respecting graphs:** on the pre-item read-out graph (4 active h), cross-room adopters are unreachable in 5/8 two-room periods. In #35/#36 bridges existed before the item (h = 2–4), but no time-respecting path after it: 78–83% of their cross-room adoptions were still outside the cone. The static graph overstates reach; the time-respecting cone is the right object, as Vivian's scope anticipated.
 
 **4. The front velocity is set by talk turns.**
@@ -328,7 +328,7 @@ Verdicts: pre-registered rule A4 (J_in) first, post-hoc rule (J_mh) in brackets.
   - clock test: between-agent SD of log hop delay 0.67 in seconds, 0.59 in receiving calls, 0.53 in chat-mode calls; difference CI [−0.28, 0.12], nominal pass but inconclusive.
 - **G51 (mixed):**
   - only one adoption by a strictly isolated agent (acausal; a shared-artifact touch);
-  - #focus hoppers bridge (97% in the cone, pass);
+  - #focus hoppers bridge (97% in the cone, pass); **1b:** 51% of 839, fail;
   - cadence b 0.04 [−0.44, 0.59] fails, c 0.65 [0.17, 1.19].
 
 ## Outcome vs prediction
@@ -345,7 +345,7 @@ Verdicts: pre-registered rule A4 (J_in) first, post-hoc rule (J_mh) in brackets.
 | G38 | a, b, c (d) | a 1.00, b 0.001, c 0.19 vs 0.31, d 830× | mixed |
 | NE42 | a ≥ 3× both ways; b; c | a 82×, 863×; b 1.00 / 0.02 vs 0.03 within / 1.00; c fails (62 / 20 / 11) | supported |
 | G31 | a J_in > 1 and < regime III; b; c clock | a: J_in 1.86 > 1 but above regime III; b fails; c nominal | mixed |
-| G51 | a, b, c | a: 1 event; b 0.97; c b 0.04 fails, c 0.65 | mixed |
+| G51 | a, b, c | a: 1 event; b 0.97; c b 0.04 fails, c 0.65. **1b:** b 0.51 (fail); c b 0.18 [−0.20, 0.53] fails, c 0.53 | mixed (1b: mixed, b and c fail) |
 
 Prior credences were P1 0.6, P2 0.5, P3 0.6, P4 0.7, P5 0.45, P6 0.4, P7 0.35, P8 0.55; native 0.4 / 0.55 / 0.45 / 0.35.
 
@@ -378,6 +378,115 @@ Frozen tests (SHA-256 sealed before reading held-out text):
 
 **Reuse disclosure** (policy in `../holdout.md`): the #51 tail is also targeted by the unrun scripts of H14, H18, H20, H22 and H34; #28 by H10 and H34; #46–#50 by S3 and H26. H41's observable (ledger-cone status and call-level jumps of marker adoptions) differs from all of them.
 
+## Round 1b (room-index fix, 2026-10-04)
+*A bug-fix re-run, not a new test. No new predictions were written; round-1 predictions and verdict rules are re-scored as written. Holdout untouched; no confirm script run.*
+
+### What changed
+- **The bug.** `scheme/h41core.load_skeleton` kept `rooms_timeline` rows with `te ≥ t_min − 1 day`. Open segments (`t_end` null: each agent's current, last segment) fail that comparison and were dropped, so `RoomIndex.at` returned the agent's previous room, or −1 (unknown) if it had none. Found by the re-freeze (`analysis/CONFIRM_R1B.md`); patched by the coordinator.
+- **The fix and the switch.** `h41core.rooms_table` keeps open segments with `te = +∞`. `H41_ROOMS=old` reproduces round 1: rebuilding #44 with it gives identical items, adoptions and hazard tables.
+- **What uses rooms:**
+  - the source-room flag `in_room0` (J_in, J_mh and the hazard groups);
+  - the adopter's room at t0 (`cross`: cross-room shares, the cage);
+  - the static-hop seeds (h4, h24) and the room cone `h_room`;
+  - the room volume V (cadence regression);
+  - the `room_move` channel flag.
+- **What does not use rooms:** the logged cone itself (K, T, H come from ledger reads), items, adoptions, acausal status and velocity. `native.py` reads the full timeline for the NE42 partition and for G51 isolation, so those were never affected.
+- **Other H41 code paths.** `RoomIndex.rooms_in` and `moves` use segment starts only; they are correct once open rows are kept. No other path drops open rows. `confirm_r1b.fix_rooms` is now redundant but gives the same index. The frozen `confirm.py` picks up the fixed index through `load_skeleton`; it is superseded by `confirm_r1b.py` and was not run.
+- **Second fix: deterministic bootstrap.** The J_in and J_mh day bootstraps drew from `unique()` days in arbitrary order, so CIs moved between runs. Days are now sorted (`analysis/h41stats.py`). This is not a room effect, but it moves borderline verdicts (below).
+
+### Which periods the bug touched (`analysis/rooms_audit.py` → `results/rooms_audit.json`)
+| Period | Hazard lookups (agent × source message) with a changed room | In-room flag changed | Adoptions with changed room at t0 | Cross-room label changed | Cause |
+| --- | --- | --- | --- | --- | --- |
+| #5–#31 | 0 | 0 | 0 | 0 | before rooms, everyone is in #general |
+| #33 | 9.1% of 11,421 | 9.1% | 6.6% | 0 | one agent's open #general segment dropped → room unknown, not cross |
+| #35–#42 | 0 | 0 | 0 | 0 | no open segment in the window. #38 is 0 at every call on non-holdout days; the re-freeze note's "5%" does not reproduce there |
+| #44 | 3.0% of 16,934 | 0.7% | 2.0% | 0 | one agent's open room-2 segment |
+| #51 | **62.9%** of 632,193 | **57.3%** | **51.8%** | **45.7%** | every agent's open #general segment from 07-06; cross-room adoptions 8,368 → 865 |
+
+Rebuilt with `scheme/build.py periods --only 33,38,44,51` plus the `private` step. The #38 rebuild is identical: same adoptions, hazard and items. Its violations differ only in the in-cone control sample, which follows a nondeterministic row order. Then `explore.py`, `native.py`, `figures.py` and `write_estimates.py` were re-run. The synthetic validation was re-run on the #51 skeleton (`synthetic/runs_r1b_51.parquet`).
+
+### Old → new (`analysis/round1b_compare.py` → `results/round1b_compare.json`)
+| Statistic | Round 1 (stale rooms) | Round 1b |
+| --- | --- | --- |
+| #51 J_in (pre-registered) | 40.7 [12.2, 110]; in-flight n 158,639, h 0.0003 | **2.08 [1.49, 3.10]**; in-flight n 16,894, h 0.0033 |
+| #51 J_mh (post hoc) | 15.8 [7.4, 31.1] | **9.2 [6.5, 13.9]** |
+| #51 J_mh by class N / D / W | 18.7 / 11.3 / 12.8 | 11.0 / 7.8 / 2.5 |
+| #51 cross-room share of adoptions | 0.51 | 0.052 (865) |
+| #51 cross-room robust acausal share | 0.05 | **0.47** (408 / 865) |
+| #51 within-room A_rob | 0.005 | 0.002 |
+| #51 #focus bridging (native b) | 0.97 of 1,720; hops 1588 / 70 / 11 | **0.51** of 839; hops 148 / 193 / 89 |
+| #51 cadence b; volume c | 0.04 [−0.44, 0.59]; 0.65 [0.17, 1.19] (n 7,665) | 0.18 [−0.20, 0.53]; 0.53 [0.09, 1.10] (n 15,146) |
+| #51 static h = ∞ share; outside room cone | 0.050; 0.55 | 0.072; 0.019 |
+| #33 J_in; J_mh | 1.88 [1.30, 3.29]; 3.03 [2.19, 5.48] | 1.87 [1.31, 2.75]; 2.93 [2.28, 4.07] |
+| #44 J_in; J_mh; volume c | 0.68 [0.37, 1.73]; 1.45 [0.83, 5.82]; 0.07 [0.01, 0.67] | 0.70 [0.36, 1.84]; 1.47 [0.83, 4.18]; 0.06 [−0.00, 0.67] |
+| #38 native (cage 0.001, a 1.00, c 0.19 vs 0.31, d 830×) | as listed | identical |
+| NE42 (82× [21, 223], 863× [186, 2365]; acausal 1.00 / 0.02 / 1.00) | as listed | identical |
+| Synthetic, #51 skeleton (24 runs): field J_mh; relay; timing error | 0.95, 1/4 false positives; ∞ 12/12; 8.0, 3/4 | 0.72, **0/4**; ∞ 12/12; 6.9, 4/4 |
+| All periods: J_in lower CI > 1 | 12/32 (I 8/19 powered, II/III 3/10) | 10/32 (I 6/19, II/III 3/10) |
+| All periods: J_mh lower CI > 1 | 22/32 (I 15/21, II/III 7/11) | 23/32 (I 15/21, II/III 8/11) |
+| Verdicts, rule A4 (supported / failed / n/a) | 11 / 18 / 3 | 9 / 20 / 3 |
+| Verdicts, post hoc | 20 / 9 / 3 | 21 / 8 / 3 |
+| Within-room A_rob, median and max | 0.6%, 4% | 0.6%, 4% |
+| P8: J_in ≥ 3; J_mh ≥ 3 (powered II/III) | 2/10; 4/10 | 1/10; 3/10 |
+| P6: c > 0 with CI (of 25) | 3 (#37, #44, #51) | 2 (#37, #51) |
+| Pooled channel lifts: room move; human cross-post; repo / site / search | 1.83; 27.5; 1.04 / 0.94 / 0.89 | 1.85; 22.8; 1.04 / 0.95 / 0.90 |
+
+**Bootstrap jitter, not rooms, moves the counts outside #33, #44 and #51** (`results/round1b_seed_stability.json`, 20 seeds). Lower CI > 1 in:
+- G18 J_in: 6/20 seeds;
+- G27 J_in: 14/20 seeds; G27 J_mh: 9/20;
+- G35 J_mh: 0/20 (the sorted draw gives 1.005);
+- G23 J_mh: 2/20;
+- G26 J_in: 4/20; G30 J_in: 3/20.
+
+Read the gating counts as J_in 10–12/32 and J_mh 22–24/32. The human cross-post lift moved because the four rebuilt periods drew new in-cone control samples. It is 23–28×.
+
+### Verdict changes
+- **No verdict changes because of rooms.**
+  - G51 native stays mixed, but b (#focus bridging) now fails as well as c (cadence).
+  - G51 replication stays supported / supported, because J_in's lower CI is still > 1.
+  - G33, G38, G44 and NE42 are unchanged.
+- **Bootstrap-borderline periods.** The 1b verdict is the one that holds in the majority of 20 seeds.
+  - G18 (rule A4): supported → **failed**.
+  - G27 and G35 keep their round-1 verdicts, although the sorted draw flips them.
+  - Each affected README has a `**Verdict (1b):**` line.
+
+### Which headline claims survive
+1. **Within-room bound** (robust acausal median 0.6%, max 4%): survives unchanged.
+2. **Cage: 75–100% of cross-room adoptions outside the cone in 7/8 two-room periods** (#35–#39, #41, #42; #44 0.11): survives unchanged. Those periods had no stale lookups. #38's hazard ratio 0.001 [0.0003, 0.002] and the 71 h delay are unchanged.
+3. **NE42's 82× and 863×, and the 1.00 / 0.02 / 1.00 acausal shares:** survive exactly. They never used the stale index.
+4. **#51 #focus bridging (97% in the cone): does not survive.**
+   - With true rooms, 51% of 839 #general ↔ #focus adoptions are inside the cone, mostly over two or three hops.
+   - Over all #51 cross-room adoptions, 47% are outside the cone.
+   - Hopping rooms are a leaky cage, between a broadcast room (about 100% in the cone) and #38's fixed split (0%).
+   - The round-1 97% counted same-room adoptions as cross-room.
+5. **#51's large jump: shrinks.**
+   - J_in 40.7 was an artifact: mislabelled agents put 9× too many calls into the in-flight group.
+   - The true values are J_in 2.1 [1.5, 3.1] and J_mh 9.2 [6.5, 13.9]. That is still the largest regime-III matched jump.
+6. **Gating counts (12/32 pre-registered, 22/32 post hoc):** survive within bootstrap noise (10–12 and 22–24).
+7. **Channel attribution:** survives. Human cross-posts are 23–28× enriched and room moves 1.8×; repos, sites and search are about 1.
+8. **Velocity:** unchanged, because it is cone-based.
+9. **Cadence:** still fails. #51's b is 0.18 [−0.20, 0.53] and its dilution c is 0.53.
+10. **Synthetic validation (F):** holds and improves on the fixed #51 skeleton: the field gives J_mh 0.72 with 0/4 false positives.
+11. **Confirm dry run:** the T1 stand-in's J_mh goes from 0.60 to 12.9 (`CONFIRM_R1B.md`). The "T1 may fail" warning was this bug.
+
+### Scorecard after 1b
+Unchanged: A1 B1 C1 D1 E1 F1 G1 H1 I1.
+- G loses one supporting fact (#51 bridging). The #38 cage and NE42 still stand.
+- F gains a cleaner field null on #51.
+- C: the gating counts now carry a stated bootstrap uncertainty of ±2 periods.
+
+### Code and data (1b)
+- **Code:**
+  - `scheme/h41core.py`: `rooms_table`, `ROOMS_MODE` (`H41_ROOMS`).
+  - `scheme/build.py`: a partial rebuild merges `periods_meta.json`; the provenance entry `periods_partial` records the rooms mode.
+  - `analysis/h41stats.py`: sorted bootstrap days.
+  - New: `analysis/rooms_audit.py`, `analysis/round1b_compare.py`, `analysis/write_estimates.py`.
+  - `analysis/figures.py`: uses `synthetic/runs_r1b_51.parquet` unless `H41_ROOMS=old`.
+- **Data** (`data/processed/H41-readout-light-cone/`):
+  - `round1/`: the round-1 tables of #35–#51 and round-1 `results/`, copied before the rebuild. `round1/G33` was regenerated with `H41_ROOMS=old`, because its snapshot was missed; it has no private-stream flags.
+  - `results/rooms_audit.json`, `results/round1b_compare.json`, `results/round1b_seed_stability.json`.
+- **Estimates:** all periods re-emitted to `per_period_estimates`. New statistics: `acausal_share_robust_cross_room`, `cross_room_hazard_ratio_cage` (G38) and `focus_cross_room_in_cone_share` (G51).
+
 ## Round 2 redirects (2026-10-04)
 *Proposed by the round-1 agent; the coordinator may revise.*
 - **What the direction is really after:** which channels actually move information between agents, and how fast. The logged chat channel is gated at the call scale and bounded by rooms, but a third of fast adoptions and almost all cross-room spread come from elsewhere.
@@ -398,6 +507,7 @@ Frozen tests (SHA-256 sealed before reading held-out text):
   - ledger items beyond the 200-event cap are now excluded (#51 only; numbers moved by < 0.01);
   - cross-room is defined only for agents with a known room;
   - the confirm script imported H34's `build.py` by name (path order).
+  - **round 1b (2026-10-04):** the room index dropped open `rooms_timeline` segments (stale rooms in #51, #33, #44); fixed, `H41_ROOMS=old` reproduces round 1. The J_in / J_mh day bootstrap was nondeterministic; days are now sorted. See "Round 1b".
 - **Read-only imports:** `hypotheses/H34-idea-cascades/scheme/markers.py` (marker rule) and `scheme/build_markers.py` (`non_holdout_chat`, `_init`, `_work`). No other hypothesis code or data is used; H08's Claude Code tables (`cc/`) were empty, so no Claude Code ground truth.
 - **Data:** `data/processed/H41-readout-light-cone/` (≈ 15 MB, `_provenance.json`): `markers/`, `G<NN>/{items, adoptions, hazard, violations}.parquet`, `synthetic/`, `results/`, `confirm/`. Hashes and ids only.
 - **Proposed for `physics-models/DEFINITIONS.md`** (not edited; outside H41's scope):

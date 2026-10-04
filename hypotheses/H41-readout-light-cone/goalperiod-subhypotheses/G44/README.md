@@ -1,6 +1,7 @@
 # H41 × G44: Finetune your leader! (2026-05-26 → 2026-05-29)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged; one agent's room fixed, 1.5% of calls; J_in 0.70 [0.36, 1.84], J_mh 1.47 [0.83, 4.18])
 **Role:** replication (exploratory)
 **Period:** regime III · up to 18 agents · rooms [2, 3] · 4 non-holdout days · units 44a, 44b.
 

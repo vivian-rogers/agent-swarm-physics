@@ -210,6 +210,10 @@ def main():
     sp = DATA / "synthetic/runs_v2.parquet"
     syn = pl.read_parquet(sp) if sp.exists() else (pl.read_parquet(DATA / "synthetic/runs.parquet")
                                                     if (DATA / "synthetic/runs.parquet").exists() else None)
+    # round 1b: the #51 skeleton was re-simulated with the fixed room index (runs_r1b_51); H41_ROOMS=old keeps round 1
+    s51 = DATA / "synthetic/runs_r1b_51.parquet"
+    if syn is not None and s51.exists() and os.environ.get("H41_ROOMS", "fixed") != "old":
+        syn = pl.concat([syn.filter(pl.col("skel") != "51"), pl.read_parquet(s51)], how="diagonal_relaxed")
     summary_obs(t, syn)
     synthetic_fig(syn)
     hazard_delay_fig()

@@ -1,6 +1,7 @@
 # H41 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-20)
 
 **Verdict:** failed
+**Verdict (1b):** failed, post hoc failed (unchanged: J_mh lower CI 1.005 on the deterministic draw but > 1 in 0/20 other seeds; borderline)
 **Role:** replication (exploratory)
 **Period:** regime II · up to 12 agents · rooms [2, 3] · 5 non-holdout days · units 35.
 

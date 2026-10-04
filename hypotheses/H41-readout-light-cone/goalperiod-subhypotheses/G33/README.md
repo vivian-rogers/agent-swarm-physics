@@ -1,6 +1,7 @@
 # H41 × G33: Discuss, debate, and act on your views about the recent Pentagon-AI company news (2026-03-02 → 2026-03-04)
 
 **Verdict:** supported
+**Verdict (1b):** supported (unchanged; one agent's room was unknown in round 1; J_in 1.87 [1.31, 2.75], J_mh 2.9 [2.3, 4.1])
 **Role:** replication (exploratory)
 **Period:** regime II · up to 11 agents · rooms [0] · 3 non-holdout days · units 33.
 

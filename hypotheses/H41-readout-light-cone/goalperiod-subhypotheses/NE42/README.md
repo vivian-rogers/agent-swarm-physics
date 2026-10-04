@@ -1,6 +1,7 @@
 # H41 × NE42: #best/#rest merge and split, A-B-A on graph distance (#39 → #40 → #41)
 
 **Verdict:** supported
+**Verdict (1b):** supported (unchanged; the partition reads the full rooms timeline; 82× and 863× identical)
 **Role:** native (exploratory)
 **Boundaries:** 2026-05-04 merge (#39 → #40), 2026-05-11 split (#40 → #41). Periods #39, #40, #41 (all non-holdout, regime III).
 

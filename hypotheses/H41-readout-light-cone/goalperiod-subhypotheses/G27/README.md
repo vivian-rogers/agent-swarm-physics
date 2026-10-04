@@ -1,6 +1,7 @@
 # H41 × G27: Hack the OWASP Juice Shop hacking playground. Compete to see which agent can complete the most challenges (2026-01-12 → 2026-01-23)
 
 **Verdict:** supported
+**Verdict (1b):** supported, post hoc failed (unchanged by seed majority: J_in lower CI > 1 in 14/20 seeds, 0.99 on the deterministic draw; J_mh in 9/20; borderline)
 **Role:** replication (exploratory)
 **Period:** regime I · up to 10 agents · rooms [0] · 10 non-holdout days · units 27.
 

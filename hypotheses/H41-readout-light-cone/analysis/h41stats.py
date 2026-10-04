@@ -107,7 +107,7 @@ def hazard_jump(hz: pl.DataFrame, B: int = 500, seed: int = 0) -> dict:
             res[f"h_{g}_{'in' if inr else 'out'}"] = float(x["adopt"].sum() / x["at_risk"].sum()) if x["at_risk"].sum() else np.nan
     x1 = h.filter((pl.col("group") == "o1") & pl.col("in_room0"))
     res["risk_o1_in"], res["adopt_o1_in"] = int(x1["at_risk"].sum()), int(x1["adopt"].sum())
-    days = h["day"].unique().to_numpy()
+    days = np.sort(h["day"].unique().to_numpy())  # sorted: deterministic bootstrap (round 1b)
     tab = {}
     for (day, g2, grp), sub in h.group_by(["day", "g2", "group"]):
         tab.setdefault(day, {})
@@ -171,7 +171,7 @@ def hazard_jump_mh(hz: pl.DataFrame, B: int = 300, seed: int = 0, prefix: str = 
         return {}
     num, den = prefix + "o1", prefix + "pre_in"
     pt = mh_rate_ratio(h, num, den)
-    days = h["day"].unique().to_numpy()
+    days = np.sort(h["day"].unique().to_numpy())  # sorted: deterministic bootstrap (round 1b)
     by = {d: sub for (d,), sub in h.group_by(["day"])}
     rng = np.random.default_rng(seed)
     out = []

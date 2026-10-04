@@ -958,7 +958,7 @@ These three build on today's results: the kickoff is a field (H54, H75), H82's r
   - *Kill:* active hours fit as well as or better than nights.
   - *Models:* 11, 15 · *Builds on:* H82, H71, H20
 - **HH332 · Domain walls between rooms: width set by the bridging agents.** In weeks where rooms get different instructions (#38, #44) or work on different things, content forms two domains with a wall at the room boundary. Agents who hop rooms sit inside the wall.
-  - *Prediction:* agent positions along the inter-domain axis are bimodal by room. Hoppers sit at intermediate positions. Wall width (the spread of the hoppers' positions) grows with the number of hopping read-outs (H41 #focus bridging).
+  - *Prediction:* agent positions along the inter-domain axis are bimodal by room. Hoppers sit at intermediate positions. Wall width (the spread of the hoppers' positions) grows with the number of hopping read-outs. Note: H41 round 1b corrected #51: hoppers leak about half the time, not 97% in cone.
   - *Check:* projection onto the axis between room centroids (DQ5, both models, style-residualized), with hoppers identified from the ledger; compare with a shuffled room assignment.
   - *Kill:* hoppers are not intermediate, or the positions are not bimodal.
   - *Models:* 11, 01 · *Builds on:* H05, H41, H47, HH183

@@ -615,15 +615,22 @@ def main():
             metas = pool.map(_run, sorted(goals, key=lambda g: -g), chunksize=1)
     else:
         metas = [_run(g) for g in goals]
-    (OUT / "periods_meta.json").write_text(json.dumps(metas, indent=1))
-    prov(("periods", {"built_by": "hypotheses/H41-readout-light-cone/scheme/build.py periods",
+    pm = OUT / "periods_meta.json"
+    if a.only and pm.exists():  # partial rebuild (round 1b): keep the other periods' entries
+        keep = [m for m in json.loads(pm.read_text()) if m.get("goal") not in set(goals)]
+        metas = sorted(keep + metas, key=lambda m: -m.get("goal", 0))
+    pm.write_text(json.dumps(metas, indent=1))
+    prov(("periods" if not a.only else "periods_partial", {
+                      "built_by": "hypotheses/H41-readout-light-cone/scheme/build.py periods"
+                                  + (f" --only {a.only}" if a.only else "") + f" (H41_ROOMS={C.ROOMS_MODE})",
                       "inputs_tables": ["shared/call_windows", "shared/context_ledger_items", "shared/chat_core",
                                         "shared/rooms_timeline", "shared/calendar", "shared/roster",
                                         "shared/artifact_mentions", "shared/artifacts", "shared/statement_flags",
                                         "shared/embeddings/statements", "shared/embeddings/chat_index",
                                         "shared/reply_pairs", "H41 markers/"],
                       "params": {"cone_horizon_min_s": H_CONE_MIN, "hazard_horizon_s": H_HAZ, "jitter_s": JIT,
-                                 "static_windows_active_s": list(W_STATIC), "early_s": EARLY, "periods": goals}}))
+                                 "static_windows_active_s": list(W_STATIC), "early_s": EARLY, "periods": goals,
+                                 "rooms_mode": C.ROOMS_MODE}}))
     print(f"periods done in {time.time() - t0:.0f}s", flush=True)
 
 
