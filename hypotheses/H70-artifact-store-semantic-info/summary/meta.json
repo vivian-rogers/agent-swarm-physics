@@ -1,0 +1,69 @@
+{
+ "complete": 50,
+ "faithfulness": 1.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card with impostor table and dated predictions before data; a shared estimator (infra/shared/semantic_kappa.py, --verify) for HH307's kappa table; synthetic validation on the real event skeleton that caught two estimator traps before real data (additive DiD, bootstrap strata; amendments A1, A2); replication on 13 periods at two scales; natives NE41 (full call-scale kappa row) and NE34; estimates rows; confirm.py with NE24 frozen and dry-run (not run). Missing: holdout run (NE24 is the decisive involuntary scramble), file-level re-reads, history and kickoff rows.",
+  "faithfulness": "The core claim (artifact loss costs more than memory loss) is not supported: the artifact channel carries allocation bits (0.14, 7/9 periods) but no measurable value (R2 wins), and the memory note carries neither. The context row replicates H15/H44's erasure cost on an independent estimator. Value tests rest on agent-chosen open flags and parallel trends; size about 0.1. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "A practical reading for scaffold builders: wipes cost working state (41% of the next 20 calls' commits), not orientation (89% return without help), so preserving tool outputs across resets matters more than pointing agents at repos or memory notes. The shared kappa estimator is reusable for HH307's other channels."
+ },
+ "one_line": "The artifact store tells an agent where to work after a context erasure (0.14 bits, 89% return) but adds no measurable output; the erased context carries the value (41% of output, kappa about 5 commits per 20 calls per bit).",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "artifact carries bits not value; context carries value"
+  }
+ ],
+ "rated_by": "H70 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "The artifact store tells an agent where to work after a context erasure (89% return to own repo; 0.14 bits) but adds no measurable output (κ_A ≈ 0); only the erased context window carries value (κ_C 5.2 commits per 20 calls per bit; erasure costs 41%)",
+  "scope": "regime-III periods (forced erasures); natives NE41, NE34",
+  "direction": "positive",
+  "original_verdict": "failed (artifact semantic information)",
+  "credence": 0.76,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (I_A above floor 7/9 periods)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic identification (two estimator traps fixed before real data)",
+    "x": 1.5,
+    "evidence": "card §A1–A2"
+   },
+   {
+    "factor": "intervention consistent (NE41 forced erasures)",
+    "x": 2,
+    "evidence": "native NE41"
+   },
+   {
+    "factor": "cross-hypothesis agreement (H15, H44 erasure cost)",
+    "x": 1.3,
+    "evidence": "H15, H44"
+   },
+   {
+    "factor": "penalty: single-period CIs mildly anticonservative (size 0.11)",
+    "x": 0.8,
+    "evidence": "card §Synthetic"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "protect the context window; artifacts and memory notes don't buy output back",
+  "magnitude": "material",
+  "generality": "agents with context resets",
+  "expected_usefulness": 1.89,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H70 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

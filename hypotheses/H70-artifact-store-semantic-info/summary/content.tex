@@ -1,0 +1,32 @@
+\hwhat{HH261 claims that the artifact store carries the swarm's day-scale semantic information, so losing it costs more than losing memory. H70 measures each channel at the two exogenous context erasures: the forced 41-call erasure (NE41, 21k events) and the night. It uses one shared estimator for HH307's $\kappa$ table, on 13 non-holdout periods (\#30--\#51). \textbf{The artifact store holds \emph{where} an agent works, not \emph{how much} it gets done.} After a forced erasure, 89\% of first commits return to the agent's own repo. The repo pointer carries 0.14 [0.12, 0.16] bits beyond agent identity. Re-reading the repo adds no output beyond its placebo association ($\Delta V_{\rm rel}=-0.05$ [$-0.13$, +0.01]), so $\kappa_A\approx0$. The context window holds the value: the erasure costs 41\% of the next 20 calls' commits for 0.08 bits destroyed. A new goal, not a lost repo, resets allocation (return 10\% vs 80\%). The NE24 holdout test is written, not run.}
+
+\hmodel{Model 04 (Kolchinsky--Wolpert, natural-scramble variant). The system is one agent; its state is its allocation $X$, the repo of its next work commit. A channel $c$ (own artifact, memory note, room, context) stores a pointer $S_c$ to a repo. A forced erasure or a night cuts the context and leaves the other channels. A matched placebo (pseudo-erasure, mid-day call) keeps the context. $I_c$ is the information the channel carries about $X$; $\Delta V_c$ is the output an open channel adds after the cut.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+I_c=I_{\rm MM}(X^+;S_c)-\big\langle I_{\rm MM}(X^+;S_c^{\pi})\big\rangle_{\pi\,\in\,\text{within agent}}\\
+\log E[V]=\alpha_{\rm agent\cdot period\cdot arm}+\beta_1\,{\rm open}+\beta_2\,{\rm open}\cdot{\rm scramble}\\
+\Delta V_{\rm rel}=e^{\beta_2}-1,\qquad \kappa_c=\Delta V_c/I_c
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) $I_A$ per period: bits the last-commit repo carries about the next repo after an erasure (call scale, blue) or a night (orange), above the within-agent permutation floor. (b, c) The $\kappa$ row, regime III pooled: information and value per channel. Only the context row has value. Its bits are the allocation information the erasure destroys. Its value is the output lost (41\%).}
+
+\htelos{For a scaffold builder: the cost of a context wipe is lost working state, not lost orientation. Agents find their repo again (89\%) whether or not they re-read it, and a re-read in the first five calls buys no measurable output. A memory note naming the repo buys none either. Measures that preserve working state (a longer cap, carrying the last tool outputs across the reset) are where the 41\% per-wipe loss sits. Pointing the agent at its repo is not. To scramble allocation, change the goal; repo loss inside a goal was not observed outside the holdout. The shared estimator (\texttt{semantic\_kappa.py}) is the reusable part for HH307.}
+
+\hbottom{The artifact store tells an agent where to work after an erasure (0.14 bits, 89\% return) but carries no measurable value per bit; the erased context window carries the value (41\% of output, $\kappa_C\approx5$ commits per 20 calls per bit).}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 $I_A\ge0.3$ bits & call 0.14 [0.12, 0.16] (7/9 periods $>0$); day 0.08 (5/12) & failed\\
+P2 $\Delta V_A>0$ (call) & $\Delta V_{\rm rel}$ $-0.05$ [$-0.13$, +0.01] & failed (R2)\\
+P3 artifact beats memory note & $I$ 0.14 vs 0.04; $\Delta V_M$ +0.05, CI incl.\ 0 & mixed\\
+P4 artifact beats room & $I$ 0.14 vs 0.02; $\Delta V_R$ CI incl.\ 0 & mixed\\
+P5 context cost $>0$, $I_C<0.3I_A$ & cost 41\% [38, 44]; $I_C=0.56\,I_A$ & mixed\\
+P6 $\kappa_A>\kappa_R>\kappa_M$ & $\kappa_C$ 5.2 [3.8, 8.4]; others CI incl.\ 0 & failed\\
+P7 return $\ge0.8$ & F 0.89 (P 0.87); N 0.76 (PN 0.82) & mixed\\
+NE41 $\kappa$ table & value only in the context row & failed\\
+NE34 goal resets allocation & new goal 0.10, within 0.80, \#39$\to$\#40 0.78 & supported\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Planted worlds on the real event skeleton (8 replicates). (a) A +30\% channel value is recovered without bias. A ``reading precedes writing'' effect ($\times1.3$ in both arms) reads as 0. An additive DiD read the same effect as $-0.14$, which led to the Poisson estimator (A1). (b) Power is 1.0 at call scale and low per period at day scale. Size is about 0.1.}
+
+\hcaveats{The open flag is chosen by the agent, so $\Delta V$ rests on parallel trends between erasure and placebo arms. Size is about 0.1 (B = 50 in the synthetic), so single-period intervals are mildly anticonservative. $I_A$ counts only bits beyond agent identity: where each agent has one repo (\#35, \#39) it is 0 by construction. Commits measure attempts, not value. The room row includes the consolidation backlog. No involuntary loss of an artifact occurs outside the holdout, so HH261's ``repo moved or broken'' case waits for NE24.}

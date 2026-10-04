@@ -2,19 +2,28 @@
 \input{../../../writeup/hypothesis-pages/hpage.tex}
 \def\hID{H71}
 \def\hTitle{Memory is a first-order homeostat}
-\def\hStatus{specified (promoted 2026-10-04 from HH269; round 1 can start now)}
-\def\hStage{level: hypothesis  $\cdot$  pipeline checks 14\%  $\cdot$  updated —}
-\def\hBadges{{\scriptsize\color{inkmuted}\itshape not yet rated}}
-\def\hPeriodSummary{none yet}
+\def\hStatus{round 1 done (2026-10-04; exploratory, non-holdout; 37 period units, 4 natives). Homeostat yes, first order no, overshoot no. Post-compression memory size reverts toward an agent set point in every period ($\phi$$^+$ pooled 0.67 [0.63, 0.71] per compression cycle; ...}
+\def\hStage{level: hypothesis  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-04}
+\def\hBadges{\hbadge{Complete}{55\%}{3987e5}{ffffff}\ \hbadge{Faithfulness}{1.5/5}{ee8584}{0b0b0b}\ \hbadge{Usefulness}{1.5/5}{ee8584}{0b0b0b}}
+\def\hPeriodSummary{26 supported, 3 failed, 12 mixed}
 \def\hDate{Updated 2026-10-04}
-\def\hFooter{H71-memory-homeostat $\cdot$ generated 2026-10-04 11:10 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H71-memory-homeostat/README.md $\cdot$ ratings: not rated $\cdot$ DRAFT: auto stub, not yet written}
-\def\hPeriodTable{\textit{No goal-period folders yet.}}
-\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & -- & F identifiability & -- \\
-B assumptions & -- & G ground truth & -- \\
-C adequacy & -- & H comparative & -- \\
-D unfitted predictions & -- & I transfer & -- \\
-E interventional & -- &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
-\def\hRoundTwo{\textit{No round-2 redirects yet.}}
+\def\hFooter{H71-memory-homeostat $\cdot$ generated 2026-10-04 12:45 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H71-memory-homeostat/README.md $\cdot$ ratings: H71 agent (suggested)}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G03 & $\checkmark$ & supported \\
+G04 & $\checkmark$ & supported \\
+G05 & $\checkmark$ & supported \\
+G06 & $\sim$ & mixed \\
+G07 & $\checkmark$ & supported \\
+G08 & $\checkmark$ & supported \\
+G10 & $\sim$ & mixed \\
+G11 & $\checkmark$ & supported \\
+G12a & $\checkmark$ & supported \\
+G12b & $\sim$ & mixed \\\multicolumn{3}{l}{\textit{+31 more periods: see the card.}} \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 2 & F identifiability & 2 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 1 & H comparative & 1 \\
+D unfitted predictions & 1 & I transfer & 1 \\
+E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{H71-R1} Fit the two-timescale model directly (state-space Kalman fit per agent) and test the set point's drift against task covariates: does the target follow the agent's active repo count or its role (DQ4, DQ6)?\item \textbf{H71-R2} Set point vs viability: do agents whose memory is above its set point at a forced erasure recover output faster (H44 re-acquisition, H15 dip)?\item \textbf{H71-R3} Run confirm.py (\#43 is the one goal that acts on the store) after disclosures.\item \textbf{H71-R4} Content turnover: the hashed-line Jaccard per cycle as a second order parameter (what is kept, not how much).\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage

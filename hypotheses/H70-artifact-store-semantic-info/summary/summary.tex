@@ -2,19 +2,28 @@
 \input{../../../writeup/hypothesis-pages/hpage.tex}
 \def\hID{H70}
 \def\hTitle{The semantic information of the artifact store}
-\def\hStatus{specified (promoted 2026-10-04 from HH261; round 1 can start now)}
-\def\hStage{level: hypothesis  $\cdot$  pipeline checks 14\%  $\cdot$  updated —}
-\def\hBadges{{\scriptsize\color{inkmuted}\itshape not yet rated}}
-\def\hPeriodSummary{none yet}
+\def\hStatus{round 1 done (2026-10-04; exploratory, non-holdout; 13 periods, 2 natives). The artifact store holds *where* an agent works, not *how much* it gets done; the context window holds the value. Across a forced erasure the agent returns to its own repo for 89\% o...}
+\def\hStage{level: hypothesis  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-04}
+\def\hBadges{\hbadge{Complete}{50\%}{5598e7}{0b0b0b}\ \hbadge{Faithfulness}{1/5}{e34948}{0b0b0b}\ \hbadge{Usefulness}{2/5}{f5bcbb}{0b0b0b}}
+\def\hPeriodSummary{1 supported, 4 failed, 8 mixed, 2 descriptive}
 \def\hDate{Updated 2026-10-04}
-\def\hFooter{H70-artifact-store-semantic-info $\cdot$ generated 2026-10-04 11:10 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H70-artifact-store-semantic-info/README.md $\cdot$ ratings: not rated $\cdot$ DRAFT: auto stub, not yet written}
-\def\hPeriodTable{\textit{No goal-period folders yet.}}
-\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & -- & F identifiability & -- \\
-B assumptions & -- & G ground truth & -- \\
-C adequacy & -- & H comparative & -- \\
-D unfitted predictions & -- & I transfer & -- \\
-E interventional & -- &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
-\def\hRoundTwo{\textit{No round-2 redirects yet.}}
+\def\hFooter{H70-artifact-store-semantic-info $\cdot$ generated 2026-10-04 13:02 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H70-artifact-store-semantic-info/README.md $\cdot$ ratings: H70 agent (suggested)}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G30 & d & descriptive \\
+G31 & $\sim$ & mixed \\
+G33 & d & descriptive \\
+G35 & $\times$ & failed \\
+G36 & $\sim$ & mixed \\
+G37 & $\sim$ & mixed \\
+G38 & $\sim$ & mixed \\
+G39 & $\times$ & failed \\
+G40 & $\sim$ & mixed \\
+G41 & $\sim$ & mixed \\\multicolumn{3}{l}{\textit{+5 more periods: see the card.}} \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 2 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 1 & H comparative & 1 \\
+D unfitted predictions & 1 & I transfer & 1 \\
+E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{H70-R1} Value the artifact by what is re-read: join post-erasure reads to the files touched before the erasure (H44-R3) and test whether re-reading the exact pre-erasure files shortens the dip.\item \textbf{H70-R2} Add the history-search row (HH294: the 03-31/04-01 outage) and the kickoff row to the $\kappa$ table with the shared estimator.\item \textbf{H70-R3} Run confirm.py on NE24 after disclosure: the one involuntary scramble of the whole artifact medium.\item \textbf{H70-R4} Allocation information by role: in \#51 (private roles), split the artifact bits into identity, role and artifact parts.\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage

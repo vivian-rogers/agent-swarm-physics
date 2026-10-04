@@ -281,6 +281,26 @@
    "model": "02",
    "source": "H74",
    "meaning": "Diffing the raw record's schema catches platform changes with no false alarms."
+  },
+  {
+   "symbol": "κ_C",
+   "name": "value of the context window per bit (Kolchinsky κ)",
+   "value": "5.2 [3.8, 8.4] commits per 20 calls per bit; artifact κ_A ≈ 0 (−0.6 [−1.7, +0.2])",
+   "kind": "information value",
+   "scope": "regime III forced erasures",
+   "model": "04",
+   "source": "H70",
+   "meaning": "Only the context window carries output value; artifacts carry location, not output."
+  },
+  {
+   "symbol": "φ⁺",
+   "name": "memory-size reversion per compression cycle",
+   "value": "0.67 [0.63, 0.71] (regime III 0.77; relaxation ≈ 3.8 cycles ≈ 55 active min)",
+   "kind": "timescale",
+   "scope": "37/37 units",
+   "model": "05",
+   "source": "H71",
+   "meaning": "Memory size is regulated around an agent set point, with no overshoot."
   }
  ]
 }

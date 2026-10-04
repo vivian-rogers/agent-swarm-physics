@@ -362,6 +362,7 @@ Both cover **all days** and carry a `holdout` flag. Exploratory users must filte
 Ratings suggestion: completeness 40, faithfulness 1.5, usefulness 2.5. The operator rule: to wake a timer-paused agent, address it; room chatter alone keeps it asleep.
 
 ## Notes
+- **Erratum (coordinator, 2026-10-04, from H71):** the round-1b "memory overshoots after erasure" (AR(1) φ −0.10 / −0.22) is a sampling artifact. `memory_stats` writes two rows per regime-III consolidation (an append, then a compression). On post-compression rows memory reverts to an agent set point with φ⁺ 0.67 and no overshoot (H71). The gate results (chatter holds, a mention releases) are unaffected.
 - 2026-10-03: opened at Vivian's request ("a whole new hypothesis for the general thermodynamics framing"). Predictions for E1–E5 written before data. Holdout locked first.
 - 2026-10-03: round-2 predictions (E6–E8) written before running them. Structural checks first found two things:
   - `actions.tok_in` follows two accounting conventions. For Anthropic it excludes cache reads (tok_in < tok_cache_read in most turns); for Gemini it includes them. OpenAI, DeepSeek, Kimi, GLM and Grok agents report no tokens.

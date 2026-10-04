@@ -1,0 +1,34 @@
+\hwhat{HH269 claims that memory size is a first-order homeostat with overshoot after erasures and a gain change at NE41. H71 fits the post-compression memory size from \texttt{memory\_stats} (62k non-holdout cycles, 37 units, regimes I--III). Each regime-III consolidation writes an append snapshot, then a compression snapshot. \textbf{Memory is a homeostat, but not first order, and it does not overshoot.} Size reverts toward an agent set point in 37/37 units ($\phi^+$ pooled 0.67 [0.63, 0.71] per cycle). H09's overshoot is the mixed sampling: the mixed series gives $\phi<0$ in 10/10 regime-III units while $\phi^+>0$. Forced and voluntary consolidations give the same $\phi^+$. AR(2) terms are positive (median +0.19). NE14 raises the set point (+17--31\%). The holdout script is not run.}
+
+\hmodel{Model 04 (a maintained store) with model 05's import and removal bookkeeping. The degree of freedom is $x_n$, the log size of an agent's memory after compression $n$. Growth adds $\Delta_n$ (appends), and compression maps the peak $y_n$ back toward a set point $\mu_i$. A single first-order loop gives an AR(1) with gain $1-\phi$, where $\phi=b(1+c)$. The rivals are a random walk ($\phi=1$), a deadbeat template ($\phi=0$) and an over-correcting controller ($\phi<0$). A post hoc model adds a slowly drifting set point $m_n$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+y_n=x_{n-1}+\Delta_n,\quad \Delta_n=d_i+c\,(x_{n-1}-\mu_i)+\xi_n\\
+x_n=a_i+b\,y_n+\zeta_n,\qquad \phi=b(1+c)\\
+x_n-\mu_i=\phi\,(x_{n-1}-\mu_i)+\varepsilon_n\\
+\text{post hoc: } x_n=m_n+e_n,\ m_n=\rho_s m_{n-1}+\eta_n
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) $\phi^+$ per unit (agent bootstrap, half-panel jackknife): all between 0 and 1. Open diamonds give H09's mixed-phase statistic for regime III. It is negative in every unit, which looks like overshoot. (b) Autocorrelation of $x^+$ at lags 1--3, averaged over units, against the one-loop prediction $\rho_1^k$ (dashed). The slower decay shows a second, slow timescale.}
+
+\htelos{For a scaffold builder, memory size is a regulated variable with a per-agent set point (agent identity holds 91\% of its variance, the lab 41\%). Agents restore it within a few consolidations, so a memory-size alarm needs a per-agent baseline, not a global cap. Forced erasures do not destabilize it. The NE14 scaffold change raised the set point by about 20\% and left the per-cycle gain almost unchanged, so a prompt change moves the target, not the loop. A monitor reading raw \texttt{memory\_stats} will see a false overshoot ($\phi\approx-0.5$) from the two-snapshot write. Filter to compression rows first. The result is a design fact about the scaffold's memory loop. It does not say what the memory is worth (H15: about 0 at day scale).}
+
+\hbottom{Memory size is regulated toward an agent set point on the consolidation clock, without overshoot; the loop is a fast near-deadbeat compression around a slowly drifting target, not a first-order homeostat.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 $0<\phi^+<0.9$, CI excl.\ 0, 1 & 35/37; pooled 0.67 [0.63, 0.71]; overshoot 0/37 & supported\\
+P2 AR(1) beats RW $\ge70\%$ & 69\% of 353 agent-periods; beats deadbeat 88\% & narrowly failed\\
+P3 mixed $\phi<0$, $\phi^+>0$ (III) & 10/10; one-loop synthetic matches 0/10 & mixed\\
+P4 no overshoot after forced & $\phi^+_F$ 0.49--0.79; $|F-V|<0.15$ in 9/10 & supported\\
+P5 $|$AR(2)$|<0.1$ & 5/37; median +0.19 & failed\\
+P6 event clock & 29/37 $|$slope$|\le0.1$ & supported\\
+P7 agent-level gain & across-period $r$ 0.52 (null p95 0.33) & supported\\
+P8 $\phi^+\approx b(1+c)$ & $b(1+c)$ median 0.13 vs $\phi^+$ 0.67 & failed\\
+NE14 / NE04 & set point +17--31\%, $\Delta\phi^+$ +0.12 / $\Delta\phi^+$ +0.15 & mixed / failed\\
+NE16 / NE32 & no change / relaxation $\approx0.9$ per cycle & supported / mixed\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Synthetic one-loop dynamics on six real cycle skeletons. (a) The estimator recovers the planted $\phi^+$ (bias $\le0.02$; power 1.0 for an overshoot of $-0.3$). (b) With one append per cycle (regime III), the mixed-phase $\phi$ is negative for any planted $\phi^+\le0.6$. This is H09's artifact. A post hoc two-timescale sawtooth matches the observed size in 7/8 units.}
+
+\hcaveats{The two-timescale model is post hoc: it explains P5 and P8 after they failed. Size is a capacity, not content; hashed-line turnover is not analysed. Regime-I cycles are session-scale and differ in structure from regime-III cycles, so pooling across regimes compares unlike cycles. NE04 has 7 agents and a goal change inside the window. NE16 has two days per side. The out-of-sample margin over a random walk is small (median MSE ratio 0.89) because the target drifts. The holdout is not used; \#43, the memory goal, is the main confirmation target.}

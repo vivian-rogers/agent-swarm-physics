@@ -49,7 +49,7 @@
  "rated_by": "RE-R1 agent (suggested, round 1b); coordinator calibration pending",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Agents leave idle at a timer gate; unaddressed chatter holds them there (OR 0.50) and a mention releases them (OR 3.1); memory size is a set point that overshoots after erasure",
+  "claim": "Agents leave idle at a timer gate; unaddressed chatter holds them there (OR 0.50) and a mention releases them (OR 3.1); (the round-1b memory overshoot was a sampling artifact, H71)",
   "scope": "regime III gate test; NE43; #51 roster sweep",
   "direction": "positive",
   "original_verdict": "mixed",
