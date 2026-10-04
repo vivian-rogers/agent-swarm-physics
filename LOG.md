@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **Literature: 13 new arXiv papers with notes** (Rosas 2020/2019, Krakauer 2020, Meshulam 2019, Mediano 2022, Lizier 2008/2013, Kolchinsky & Corominas-Murtra 2020, Mathis 2017, Sharma 2023 plus the Abrahão 2024 critique, Barrett 2015, Hordijk 2023). Not on arXiv: Bertschinger 2008, Candia 2019, Hoel 2013, Bentley 2004, Heylighen Part II. **Erratum:** H01 and H58 swapped Krakauer's organismal and colonial labels (the estimators were right); errata added to both cards and passed to the summary-rewrite agents. Refinements added to HH296–HH300, HH314, HH316, HH317, HH319 and HH321 (e.g. a slow shared field pushes Ψ down, not up; hard share constraints fake Ω < 0; α̃ can't separate a field from a fixed point; leave-in mean removal fakes synergy). Running agents for H77/H78 and H79/H80 were sent the Mathis, RAF/CAF and assembly-index (grammar-size) refinements.
 - **Vivian: approved HH323–HH328 → H75–H80; asked to "unslopify" summaries (physicist voice, ASD-STE100) and to rebuild the dashboard's bottom table as physics model × hypothesis.**
   - **Style guide** added to `writeup/hypothesis-pages/RUBRIC.md` ("Writing style"). It also defines a `meta.json` `models` field (role primary/secondary/rival/null/tool; outcome).
   - **Agents launched:** four summary-rewrite agents (H01–H59); three round-1 agents (H75+H76 thermodynamics, H77+H78 replicators, H79+H80 artifact layer); two literature agents.
