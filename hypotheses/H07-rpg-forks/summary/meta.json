@@ -31,56 +31,52 @@
  "rated_by": "RE-D2 round 1b (suggested); round 1 calibrated by coordinator 2026-10-04",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Isolated copies diverge gradually and independently; identical new content arises only by convergent repair with no readable channel; a fork family sharing an upstream breaks the independence bound",
-  "scope": "NE15 (RPG forks), G36 agent-papers forks, G35",
+  "claim": "After the 03-16 split the two RPG forks diverge gradually (69% / 81% of ancestor files identical at the end of #35, no commit carries > 10% of file divergence), and their horizontal identity sits at the independent-lineage bound: none of the 3 shared innovations had a readable cross-team channel, while every cross-fork commit followed a read; a fork family with a shared upstream (agent-papers) exceeds the bound, as it should.",
+  "scope": "NE15 / G35 (one split, n = 2 forks, file and keyed-feature level); G36 agent-papers family as the positive control",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.61,
+  "credence": 0.52,
   "ladder": [
    {
-    "factor": "base (pre)",
-    "x": 0.4
+    "factor": "base: pre-registered primary (P1 and the independent-lineage null fixed before the repos were fetched; R1b-4 light cone dated before running)",
+    "x": 0.4,
+    "evidence": "card §Prediction, §Null / baseline, §Round 1b predictions"
    },
    {
-    "factor": "partial replication (two fork events)",
-    "x": 1.5,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "synthetic identification",
-    "x": 1.5,
-    "evidence": "card §Synthetic"
-   },
-   {
-    "factor": "robust (copy_info exact; ledger reads)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "intervention consistent (NE15 light cone: 5/5 cross-fork commits after a read)",
-    "x": 2,
-    "evidence": "native NE15"
-   },
-   {
-    "factor": "ground truth agrees (DQ6 rooms, DQ4 commits)",
-    "x": 1.5,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "penalty: small n (3 shared innovations, 5 cross-fork commits)",
+    "factor": "single unit (one split, n = 2 forks)",
     "x": 0.6,
-    "evidence": "card §Round 1b"
+    "evidence": "card §Caveats 'Sample size'"
+   },
+   {
+    "factor": "partly robust (shared copy_info identical, DQ4/DQ6 change no verdict; one instrument family, keyed vs set measures)",
+    "x": 1.5,
+    "evidence": "card §Round 1b Old -> new"
+   },
+   {
+    "factor": "intervention partly consistent (NE15 ledger light cone: 0/3 innovations and 5/5 cross-fork commits after a read; counted once, not also as robustness)",
+    "x": 1.5,
+    "evidence": "card §Round 1b Natives; NE15/README.md"
+   },
+   {
+    "factor": "ground truth agrees (known upstream syncs in agent-papers flagged: identity 0.97 vs bound 0.67; DQ6 rooms 99-100%)",
+    "x": 1.5,
+    "evidence": "card §Round 1b Natives G36; content.tex hresults"
+   },
+   {
+    "factor": "penalty: open impostors (kickoff/operator channel and shared priors untested; Claude Code agent absent from the ledger; leakage is a lower bound)",
+    "x": 0.8,
+    "evidence": "card §Standards impostor table; §Model- and data-dependence"
    }
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 1.25,
-  "decision": "leakage detection: identity beyond the independence bound flags a channel",
-  "magnitude": "small",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 0.76,
-  "scientific_value": 2.2,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "value_if_true": 1.5,
+  "decision": "detection: auditing leakage between isolated agent groups (identity above P(both unchanged) flags a channel; an identical fix in two groups is weak evidence of leakage)",
+  "magnitude": "negligible",
+  "generality": "any multi-agent LLM system that forks shared artifacts (+0.5); readiness not credited (bound tested on two events only)",
+  "expected_usefulness": 0.78,
+  "scientific_value": 2.0,
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -118,7 +114,8 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "adjudication_note": "Mainly an error plus double counting: the coordinator's ladder credited a synthetic identification that does not exist (card axis F = 0) and stacked the NE15 ledger check as both robustness and intervention, while the blind rater gave no credit for the light cone or the agent-papers positive control. Ruling: score the gradual-divergence plus independent-lineage-bound claim at primary base, one split (x0.6), credit the light cone once and the agent-papers known-channel check as ground truth, and penalize the untested exogenous and prior channels. V is a negligible detection rule with broad generality."
  },
  "v2_history": [
   {

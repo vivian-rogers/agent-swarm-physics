@@ -32,28 +32,45 @@
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
  "v2": {
-  "claim": "No common loop-gain curve; trimmed activity gains track Hawkes gains; the channel split was day edges",
+  "claim": "Per-period loop gains do not collapse onto one positive curve of attended partners per attention (x_att): the pre-registered collapse fails in round 1 and in round 1b (raw, day-edge-trimmed and H38-conditioned), a regime-only step wins out of sample, and a collapse of moderate strength (R^2 >= 0.5) is excluded.",
   "original_verdict": "failed",
-  "credence": 0.56,
+  "credence": 0.71,
   "ladder": [
    {
-    "factor": "base (post)",
-    "x": 0.2
+    "factor": "base: pre-registered primary (P1 and its rule fixed before any control was related to any gain)",
+    "x": 0.4,
+    "evidence": "card §Prediction P1"
    },
    {
-    "factor": "replication",
-    "x": 2
+    "factor": "identified: synthetic power of the P1 rule 0.87 at R^2 = 0.5, false support <= 0.01 (negative claim powered at the stated scope)",
+    "x": 1.5,
+    "evidence": "card §Synthetic validation"
+   },
+   {
+    "factor": "robust to data versions and estimator variants (round 1 and 1b; raw, trim, conditioned; without G51, >= 4 days, LLM-step turns)",
+    "x": 2,
+    "evidence": "card §Round 1b Old vs new; §P1 robustness"
+   },
+   {
+    "factor": "intervention partly consistent (NE42 merge and the #51 N sweep do not follow the x_att / dilution prediction)",
+    "x": 1.5,
+    "evidence": "card §Round 1b period-native layer"
+   },
+   {
+    "factor": "penalty: methods share raw events; summed ELPD over-counts",
+    "x": 0.8,
+    "evidence": "card §Caveats; content.tex hcaveats"
    }
   ],
   "mechanism_level": "M0",
-  "fragile": true,
-  "value_if_true": 1.25,
-  "decision": "none",
-  "magnitude": "small",
-  "generality": "this scaffold",
-  "expected_usefulness": 0.7,
-  "scientific_value": 2.5,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "science model choice / monitoring: no single loop-gain number or x_att knob for a swarm dashboard",
+  "magnitude": "negligible",
+  "generality": "this scaffold's read-out-gated regimes (0); no readiness",
+  "expected_usefulness": 0.71,
+  "scientific_value": 3.0,
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -96,6 +113,9 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "scope": "35 non-holdout periods, 6 methods (H04/H05 dropped until re-run); weak collapses (R^2 about 0.25) not excluded",
+  "direction": "negative",
+  "adjudication_note": "Different claim and provenance: the coordinator scored a composite that included the post hoc day-edge reinterpretation (base 0.20) and called it fragile because the round-1 channel-opposition reading was withdrawn; the blind rater scored the pre-registered collapse failure, which held in every data version. Ruling: score the negative P1 claim at primary base, scoped to R^2 >= 0.5 where the synthetic power is 0.87; credit the synthetic and the data-version robustness once each; fragile is false because the scored headline never changed. The day-edge correction is credited in S, not in p."
  }
 }

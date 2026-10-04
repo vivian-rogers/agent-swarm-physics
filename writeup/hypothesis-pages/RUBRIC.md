@@ -103,6 +103,17 @@ Negative claims ("X does not happen") need synthetic power ≥ 0.8 at the effect
 - **V before adjustments.** Negligible 1–2 (cap 2), small ≈ 2, material ≈ 3, large ≈ 4; then apply generality (−1 / 0 / +0.5) and readiness (+0.5).
 - **Null mis-sized** also applies when a known issue says the test is dominated by something other than its target (e.g. co-response in seen/unseen content tests).
 
+**Adjudication rules (2026-10-04, from resolving 11 coordinator-vs-blind-rater disagreements).** All raters follow these.
+1. Score only the card's "claim that stands": one clause. Withdrawn, post hoc or unpowered sub-results are named exclusions, not parts of the claim.
+2. A negative claim states the effect size at which its power was computed. If power is < 0.8 at the size that matters, narrow the scope to where it reaches 0.8; do not apply a ×0.5–0.6 penalty instead.
+3. A reversed or failed pre-registered test keeps its base when the stated falsifier is what happened. Drop to secondary only if the estimator was redesigned after the data.
+4. Agreement with another hypothesis on the same period and data is robustness, not replication. A prior negative counts only if it had power.
+5. A variant that fails its own synthetic check is not a "reasonable analytic variant" for the fragile flag.
+6. Claim only factors the card's own scorecard supports. If the card scores F = 0, there is no "synthetic identification" factor.
+7. V needs a magnitude in the decision's units. Readiness credit applies only if the rule runs on standard logs, without a special ledger or LLM labeller. Generality +0.5 applies only if the mechanism was shown outside this scaffold.
+8. One natural experiment, ledger check or synthetic suite is one design. Credit it once, under whichever factor fits best.
+9. Several segments of one period count as at most partial replication. Units below power do not count as replications of a null.
+
 **`meta.json` schema v2** (added under a `"v2"` key; v1 keys untouched):
 ```json
 "v2": {"claim": "...", "scope": "...", "direction": "positive|negative", "original_verdict": "supported|refuted|mixed|inconclusive",

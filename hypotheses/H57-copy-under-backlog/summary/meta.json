@@ -32,32 +32,45 @@
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
  "v2": {
-  "claim": "Backlog doesn't raise echo; near-duplication is mostly contemporaneous convergence",
+  "claim": "A large read backlog does not make agents copy what they read: the raw read-set echo, an upper bound, rises by at most +0.0016 per doubling of backlog (gte +0.0012; <= 5% of the synthetic H57 effect) across 34 non-holdout periods and the NE42, NE41 and #51 natives; below 15 s mutually unread pairs are near-copies as often as read pairs, so most near-duplication is contemporaneous convergence.",
   "original_verdict": "refuted",
-  "credence": 0.55,
+  "credence": 0.57,
   "ladder": [
    {
-    "factor": "base (sec)",
-    "x": 0.3
+    "factor": "base: secondary (P1 pre-registered; the verdict rests on Amendment 2 estimators built after the first real-data run)",
+    "x": 0.3,
+    "evidence": "card §Amendment 2"
    },
    {
-    "factor": "synthetic identification",
-    "x": 1.5
+    "factor": "identified: raw echo and the lag-matched count recover the planted slope on real schedules, unbiased in convergence worlds (also the null calibration; one design)",
+    "x": 1.5,
+    "evidence": "card §Amendment 2; content.tex hobsb"
    },
    {
-    "factor": "replication",
-    "x": 2
+    "factor": "robust to instruments and estimators (both encoders; raw, lag-matched, filtered, day FE all show no rise)",
+    "x": 2,
+    "evidence": "card §Outcome vs prediction; §Results 1"
+   },
+   {
+    "factor": "intervention partly consistent (NE42 backlog +0.59 log2 with no dose response; NE41 erasures null; goal-confounded)",
+    "x": 1.5,
+    "evidence": "card §Outcome vs prediction natives"
+   },
+   {
+    "factor": "penalty: verdict and the convergence account are post hoc",
+    "x": 0.7,
+    "evidence": "card §Caveats"
    }
   ],
   "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 2.75,
-  "decision": "echo monitoring baselines",
-  "magnitude": "small",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 1.51,
+  "value_if_true": 3.0,
+  "decision": "detection: echo / groupthink monitors must compare near-duplicates with unread messages at matched lag; near-duplicates are not copying",
+  "magnitude": "material (below 15 s most near-duplication is chance convergence; DQ5 cross_echo, H12 and H07 readings are affected)",
+  "generality": "read-out-gated swarms (0); readiness not credited (lag-resolved chance model not yet built, H57-R3)",
+  "expected_usefulness": 1.71,
   "scientific_value": 3.5,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -100,6 +113,9 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "scope": "34 non-holdout periods plus NE42, NE41, #51; near-copy at DQ5 thresholds on bge and gte",
+  "direction": "negative",
+  "adjudication_note": "V judgement: the coordinator valued only the backlog negative (V 1.5); the blind rater valued the convergence finding as a large, general, ready rule for echo monitors (V 4) and called it M1. Ruling: the claim keeps both parts, the convergence part carries the decision value, but its signature was diagnosed post hoc and the replacement chance model is not built, so V is material without generality or readiness credit and the mechanism level is M0. Credence credits the synthetic once and the two-encoder robustness, with a post hoc penalty."
  }
 }

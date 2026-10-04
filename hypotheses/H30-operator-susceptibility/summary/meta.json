@@ -26,51 +26,42 @@
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
  "v2": {
-  "claim": "A first nudge adds ~1 active minute to its target (χ_act ≈ 1.0 in G51 and G38) and works in swarm-wide lulls; human content pull ≈ 0.02–0.04; no daily steerability gauge",
-  "scope": "G51, G38 (powered); natives #5, NE44, NE10",
+  "claim": "In regime III a nudge adds about one extra active minute for its leading-@ target from the receiving call (G51 0.98 [0.63, 1.37], G38 0.95 [0.38, 1.54]; first nudges about 1.2, repeats about 0.4), with room-mates at about 0.",
+  "scope": "G51 and G38 (the two resolved periods); pooled regime III excl. G51 0.57 [0.04, 1.10]; policy-relative estimand",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.48,
+  "credence": 0.39,
   "ladder": [
    {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "replication (2 powered periods agree; count rule 5/10 fails)",
-    "x": 1.5,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "cross-hypothesis replication (H04 1.16, H35 1.45)",
-    "x": 2,
-    "evidence": "H04, H35"
-   },
-   {
-    "factor": "calibrated null (bystander P11 nulls pass)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "changed under a data fix (G38 sign; lull rule reversed)",
+    "factor": "base: secondary (P1 pre-registered; the round-1b design, receiving-call timing, past-only controls, day FE primary, followed the re-evaluation brief)",
     "x": 0.3,
-    "evidence": "card §Round 1b"
+    "evidence": "card §Round 1b 'What changed'; content.tex hcaveats"
    },
    {
-    "factor": "synthetic identification",
+    "factor": "calibrated null (synthetic S0 after A1 unbiased; real pre-window placebo and day-swap null within bounds in G51 and G38; one design, counted once)",
+    "x": 2,
+    "evidence": "card §Synthetic validation; §Round 1b P11"
+   },
+   {
+    "factor": "partial replication (two resolved periods; small periods 5/10 > 0)",
     "x": 1.5,
-    "evidence": "card §Synthetic"
+    "evidence": "card §Round 1b Old vs new"
+   },
+   {
+    "factor": "changed under a data fix (partial: G38 -0.08 -> 0.95; level 0.98 vs 1.56 with the A1 regressors)",
+    "x": 0.5,
+    "evidence": "card §Round 1b decomposition table"
    }
   ],
   "mechanism_level": "M1",
   "fragile": true,
-  "value_if_true": 2.25,
-  "decision": "nudge targeting and timing (lulls are fine)",
-  "magnitude": "negligible",
-  "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.08,
-  "scientific_value": 2.2,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "value_if_true": 2.5,
+  "decision": "operator: whom and when to nudge (one first nudge to the leading-@ target; repeats add little)",
+  "magnitude": "small (about 1 extra active minute per 30-min window, ~3%)",
+  "generality": "read-out-gated swarms (0); readiness +0.5 (rule written, computable from nudge and call logs)",
+  "expected_usefulness": 0.98,
+  "scientific_value": 2.5,
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -108,7 +99,8 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "adjudication_note": "Different base and stacked factors: the coordinator scored a composite (nudge level, the post hoc lull reversal, human content pull, no daily gauge) at primary base and credited H04/H35 as cross-hypothesis replication and the bystander placebo separately; the blind rater used secondary base and partial factors. Ruling: secondary base (the 1b design was redesigned after round 1), score only the nudge level with bystanders, drop the lull split (post hoc, reversed by the data fix) and the daily-gauge clause (permutation power 0.7 < 0.8); H04's corrected number is the same period and data, not replication. Fragile stays true (G38 changed significance)."
  },
  "v2_history": [
   {

@@ -32,28 +32,45 @@
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
  "v2": {
-  "claim": "Correctors get warmer replies; corrections rarely reach looping agents",
+  "claim": "Peer correction carries no stance cost: agents who correct more receive no colder, if anything warmer, replies (random-effects rho -0.24 [-0.44, -0.02] over 27 periods; replies to a correction no colder than to the same agent's other messages), and corrections almost never reach looping agents (0.65% of loop episodes vs 35% that receive any directed message).",
   "original_verdict": "refuted (friction)",
-  "credence": 0.42,
+  "credence": 0.56,
   "ladder": [
    {
-    "factor": "base (sec)",
-    "x": 0.3
+    "factor": "base: pre-registered primary (P1, P2, P8 dated before any outcome; sensor rule fixed in Amendment 1 before any outcome statistic; rho <= 0 was the stated falsifier)",
+    "x": 0.4,
+    "evidence": "card §Prediction, Amendment 1"
    },
    {
-    "factor": "replication",
-    "x": 2
+    "factor": "calibrated null (synthetic on real reply graphs with measured label noise: P1 size 0.02-0.07, meta power > 0.9 at rho 0.4)",
+    "x": 2,
+    "evidence": "card §Synthetic validation S1; §Verdict"
+   },
+   {
+    "factor": "partial replication (17/27 periods negative; tau^2 0.17)",
+    "x": 1.5,
+    "evidence": "card §Outcome vs prediction P1"
+   },
+   {
+    "factor": "penalty: correction sensor recall about 0.1 (c_j a scaled rate; agent independence unchecked)",
+    "x": 0.8,
+    "evidence": "card §Caveats 1"
+   },
+   {
+    "factor": "penalty: stance labels noisy; warmth may be a labeller habit (one blind rater)",
+    "x": 0.8,
+    "evidence": "card §Caveats 2-3"
    }
   ],
   "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 2.25,
-  "decision": "error-correction coverage",
+  "value_if_true": 2.0,
+  "decision": "operator / scaffold builder: do not rely on peers to correct a stuck agent; supply correction from outside the peer network; enforcers need no protection",
   "magnitude": "small",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 0.94,
-  "scientific_value": 2.2,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "generality": "read-out-gated swarms (0); no readiness (needs an LLM correction labeller)",
+  "expected_usefulness": 1.12,
+  "scientific_value": 2.5,
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -91,6 +108,9 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "scope": "27 non-holdout periods, DQ2 confident correction/decline subtype (precision 0.93, recall about 0.1); the immune contrast is underpowered and not claimed",
+  "direction": "negative",
+  "adjudication_note": "V judgement driven by the claim: the blind rater's claim included the 'address an agent to break its loop' lever (+5 points per step) and scored V 3, while the coordinator's claim was the descriptive friction and coverage result (V 1.5). Ruling: the address effect is a pre-registered descriptive with an open mechanical confound and is absent in #38 and #51, and the immune contrast is an unpowered negative, so both stay out; the scored claim is the powered friction test plus coverage, at primary base since rho <= 0 was the pre-stated falsifier, with V small for the external-correction decision."
  }
 }

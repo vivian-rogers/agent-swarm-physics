@@ -31,51 +31,47 @@
  "rated_by": "H58 round-1 agent (suggested)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Where there is power (#51b–d), no coordination-defined unit is an effective superagent: co-movement onto artifacts is a shared field, and after a forced erasure members return to their own artifact (61% vs 1% to the group's), usually after re-reading it",
-  "scope": "#51b–d (powered), G38; natives NE42, #44, #focus",
+  "claim": "In the powered units (#51b-d) no coordination-defined composite of agents plus artifacts predicts members' next artifact better than agent + own artifact: a group store of strength rho >= 0.7 is excluded (power 0.95-1.00, size 0.5%), large-set co-allocation is matched by outsiders on the same artifacts (a shared field), and after 11k forced erasures members move to the group's artifact no more than at placebo calls (1.1% vs 1.2%), going mostly to their own (61%).",
+  "scope": "#51b-d powered; G38, NE42, #44, #focus underpowered and consistent; stores of rho ~ 0.5 disfavoured but not excluded (power 0.60-0.75)",
   "direction": "negative",
   "original_verdict": "failed (superagents)",
-  "credence": 0.61,
+  "credence": 0.71,
   "ladder": [
    {
-    "factor": "base (pre)",
-    "x": 0.4
+    "factor": "base: pre-registered primary (P1, P6 dated before real data; powered-unit rule A2.1 fixed before the replication run)",
+    "x": 0.4,
+    "evidence": "card §Prediction; Amendment A2"
    },
    {
-    "factor": "synthetic identification (size 0.5%; power 0.6–0.75 at ρ 0.5, ≥ 0.95 at ρ 0.7)",
-    "x": 1.5,
-    "evidence": "card §Synthetic"
-   },
-   {
-    "factor": "partial replication (3 powered units)",
-    "x": 1.5,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "cross-hypothesis replication (H01 round 2)",
+    "factor": "calibrated null with synthetic power, one design (size 0.5% under W_own and W_env; power >= 0.95 at rho 0.7 in #51b-d)",
     "x": 2,
-    "evidence": "H01"
+    "evidence": "card §Amendment A2 S0 table"
    },
    {
-    "factor": "intervention consistent (11k forced erasures; NE42)",
+    "factor": "partial replication (three powered #51 segments; underpowered units and natives consistent)",
     "x": 1.5,
-    "evidence": "card §Results"
+    "evidence": "card §Results by goal period"
    },
    {
-    "factor": "penalty: several amendment rounds; power only in 3 units",
-    "x": 0.7,
-    "evidence": "card §Results"
+    "factor": "intervention partly consistent (NE41 forced erasures: group log-OR +0.19, z 1.5; own effect partly a window artifact)",
+    "x": 1.5,
+    "evidence": "card §Outcome vs prediction P6; §Caveats"
+   },
+   {
+    "factor": "penalty: shared-field reading rests on the post hoc attraction diagnostic (A3)",
+    "x": 0.8,
+    "evidence": "card §Notes Amendment A3"
    }
   ],
   "mechanism_level": "M1",
   "fragile": false,
   "value_if_true": 2.5,
-  "decision": "builders: treat agent + own artifact as the unit; re-reading the artifact is how agents recover",
+  "decision": "builders: treat agent + own artifact as the unit; keep each agent's work state legible in its own repo (agents recover by re-reading it)",
   "magnitude": "material",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 1.52,
+  "generality": "any LLM swarm working in shared repositories (0)",
+  "expected_usefulness": 1.77,
   "scientific_value": 3.5,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -108,6 +104,7 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "adjudication_note": "Evidence weighting and the power rule: the coordinator stacked synthetic identification, partial replication, H01 as cross-hypothesis replication and the erasure intervention (p 0.76); the blind rater applied the negative-claim rule (power 0.60-0.75 < 0.8 at rho 0.5) and credited only the null (p 0.44). Ruling: scope the negative to rho >= 0.7, where power is 0.95-1.00, which satisfies the rule; count the synthetic once; drop H01, whose binary state had <= 7% power and so cannot replicate; and credit NE41 only as partly consistent."
  }
 }

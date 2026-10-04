@@ -25,46 +25,42 @@
  "rated_by": "RE-C1 re-evaluation agent (suggested)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Content does not age: it settles within days, then decorrelates at an age-independent rate",
-  "scope": "35 periods (random effects); #38, #51 detail",
+  "claim": "At day resolution swarm content does not age as strongly as mu = 0.5: in #51 mu = 0.5 aging is rejected (power >= 0.98), the random-effects aging slope over 10 long and medium goals is +0.02 +/- 0.02, and where age dependence appears (#38) it is a ~4-day kickoff relaxation with A_late <= 0; this holds in all 7 input configurations (both embedding models, dedupe, style residuals).",
+  "scope": "29 non-holdout periods; powered only in #51 and for strong aging (mu ~ 1) in the long goals; weak sub-aging (mu <~ 0.3) not excluded",
   "direction": "negative",
   "original_verdict": "mixed, leaning refuted",
-  "credence": 0.62,
+  "credence": 0.72,
   "ladder": [
    {
-    "factor": "base (pre)",
-    "x": 0.4
+    "factor": "base: secondary (predictions pre-registered; the calibrated null was chosen after the real-data calibration failure, Amendment 2)",
+    "x": 0.3,
+    "evidence": "card §Prediction, Amendment 2"
    },
    {
-    "factor": "replication (29 period verdicts)",
+    "factor": "calibrated null with synthetic power (one design: fitted-shape null, robust z-SD 1.07 / 0.91; mu = 0.5 rejection power >= 0.98 in #51)",
+    "x": 2,
+    "evidence": "card §Calibration on real data; §Round 1b replication table"
+   },
+   {
+    "factor": "partial replication (3/4 long goals flat or front-loaded; low power outside #51)",
+    "x": 1.5,
+    "evidence": "card §Outcome vs prediction"
+   },
+   {
+    "factor": "robust to instruments (bge and gte, dedupe, style residuals: every verdict identical)",
     "x": 2,
     "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "robust (verdicts identical in 7 configs)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "null mis-sized (isotropic null fails, Amendment 2)",
-    "x": 0.7,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "underpowered for weak aging",
-    "x": 0.5,
-    "evidence": "A CI; style halves A"
    }
   ],
   "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 1.25,
-  "decision": "monitoring cadence",
-  "magnitude": "small",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 0.78,
+  "value_if_true": 1.0,
+  "decision": "operator monitoring cadence: no rigidification to watch for; allow about four active days after a large kickoff (seen once)",
+  "magnitude": "negligible",
+  "generality": "read-out-gated swarms (0); no readiness",
+  "expected_usefulness": 0.72,
   "scientific_value": 2.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -107,7 +103,8 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "adjudication_note": "Different scope and power treatment: the coordinator scored the unscoped 'content does not age' with primary base, penalizing both the isotropic null (x0.7) and weak-aging power (x0.5); the blind rater scored a claim scoped to where the test has power, with secondary base. Ruling: secondary base (the headline null was chosen after data), scope the negative to mu >= 0.5 in #51 and strong aging elsewhere so the power rule is met, and count the calibrated null and the synthetic power as one design."
  },
  "v2_history": [
   {

@@ -20,36 +20,45 @@
  "updated": "2026-10-04",
  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
  "v2": {
-  "claim": "Talk timing follows each agent's call clock; cross-triggering ≈ 0 except named messages",
+  "claim": "Once each agent's own call clock and call class are modelled, talk cross-excitation from read messages is near zero (median n_cross 0.004 vs 0.061 for H03's exponential kernel; below the synthetic shared-field floor 0.05 in all but one period), and the call-clock world beats the H03 world on held-out likelihood in 57/57 units.",
   "original_verdict": "not supported",
-  "credence": 0.59,
+  "credence": 0.61,
   "ladder": [
    {
-    "factor": "base (sec)",
-    "x": 0.3
+    "factor": "base: secondary (comparison pre-registered as P3; world B estimator added in A1 / A3 after smoke fits and the synthetic)",
+    "x": 0.3,
+    "evidence": "card §Prediction, §Amendments"
    },
    {
-    "factor": "rival beaten",
-    "x": 1.5
+    "factor": "replication and rival beaten held out, one design counted once (call-clock world wins 57/57 units)",
+    "x": 2,
+    "evidence": "card §Findings 1; content.tex hwhat"
    },
    {
-    "factor": "synthetic identification",
-    "x": 1.5
+    "factor": "identified: world B recovers planted read-out excitation (15/16 within +/-25%), so effects >= 0.15 would be seen",
+    "x": 1.5,
+    "evidence": "card §Synthetic validation"
    },
    {
-    "factor": "replication",
-    "x": 2
+    "factor": "partly robust (call-start bounds and edge trims change nothing; one estimator family)",
+    "x": 1.5,
+    "evidence": "card §Findings 8"
+   },
+   {
+    "factor": "penalty: shift / day-block nulls miss a shared 15-min field; floor from one synthetic strength",
+    "x": 0.8,
+    "evidence": "card §Caveats 'Nulls are weak'"
    }
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.75,
-  "decision": "model agents on their own clocks",
-  "magnitude": "small",
-  "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.62,
+  "value_if_true": 3.0,
+  "decision": "science model choice / detection: model each agent's call schedule and call class before fitting influence or branching models to agent logs",
+  "magnitude": "material (apparent cross-excitation falls from 0.061 to 0.004 per message once the call clock is modelled)",
+  "generality": "read-out-gated swarms (0); readiness not credited (needs the context ledger; call starts calibrated for most agents)",
+  "expected_usefulness": 1.83,
   "scientific_value": 4.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -97,6 +106,9 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "scope": "71 non-holdout units (35 periods), TALK; conditional on call times and classes; the post hoc named-message effect is excluded",
+  "direction": "negative",
+  "adjudication_note": "V judgement: the coordinator read the result as a small modelling note (V 2), the blind rater as a large, general rule for anyone inferring influence from timestamps (V 3.5); the rater also flagged it fragile because the pre-registered world gave the opposite sign. Ruling: the pre-registered world failed its own synthetic guard, so it is not a reasonable variant and fragile is false; replication and the held-out rival win are one design; V is material for analysts' model choice, without readiness credit because the call clock needs the ledger."
  }
 }

@@ -37,46 +37,52 @@
  "rated_by": "calibrated by coordinator 2026-10-04 (from H23 agent (suggested))",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "A distilled leader's messages are no more corpus-like than base Kimi's (a base-model echo), and none of its plans carried over",
-  "scope": "G44 (single unit)",
-  "direction": "negative",
+  "claim": "In #44 the deployed self-distilled leader's plan-act profile departs sharply from its 100%-directive training corpus (directive share 0.62 coder / 0.25 hand-coded; JSD 0.35 vs resampling p95 0.06) and tracks the room, while its only excess corpus-likeness is addressing-style vocabulary (14.2 vs 10.0 corpus-distinctive tokens per 100 vs the room); whether that trace exceeds base Kimi is inconclusive (n = 6 same-window Kimi messages).",
+  "scope": "G44 only: 16 leader messages in one afternoon, exploratory and not blind; #45 holdout not run",
+  "direction": "mixed (plans not transmitted; a vocabulary trace)",
   "original_verdict": "mixed",
-  "credence": 0.35,
+  "credence": 0.37,
   "ladder": [
    {
-    "factor": "base (pre)",
-    "x": 0.4
+    "factor": "base: pre-registered primary (P1a, P2a dated before any statistic; estimators frozen)",
+    "x": 0.4,
+    "evidence": "card §Prediction"
    },
    {
-    "factor": "single powered unit",
+    "factor": "single unit (16 messages, one afternoon)",
     "x": 0.6,
-    "evidence": "card §Round 1b"
+    "evidence": "card §Caveats 'Thin data'"
    },
    {
-    "factor": "ground truth agrees (DQ6 checkpoints)",
+    "factor": "ground truth agrees (lexical instruments pass positive and negative controls: offline student, Qwen v10; DQ6 checkpoints relabel 0/27)",
     "x": 1.5,
-    "evidence": "card §Round 1b"
+    "evidence": "card axis D, G; §Round 1b"
    },
    {
-    "factor": "partly robust (copy_info reproduced exactly; edge model-dependent)",
+    "factor": "partly robust (corpus +/- 18 unplaced samples, sibling checkpoints, hand coding; copy_info reproduced)",
     "x": 1.5,
-    "evidence": "card §Round 1b"
+    "evidence": "card axis F; §Round 1b"
    },
    {
-    "factor": "rival favored (base echo, consistent with H46/H32)",
-    "x": 1.5,
-    "evidence": "card §Round 1b"
+    "factor": "penalty: not blind (transcript read before predictions)",
+    "x": 0.8,
+    "evidence": "card §Prediction disclosure"
+   },
+   {
+    "factor": "penalty: plan coder kappa about 0.45",
+    "x": 0.8,
+    "evidence": "card axis A; §Caveats"
    }
   ],
   "mechanism_level": "M0",
-  "fragile": true,
-  "value_if_true": 1.25,
-  "decision": "leader distillation",
-  "magnitude": "small",
-  "generality": "fine-tuned agents",
-  "expected_usefulness": 0.44,
-  "scientific_value": 1.8,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; ADJUDICATION NEEDED",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "builders distilling a leader model: cover deployment situations in the training set; expect surface style, not policy, to transfer",
+  "magnitude": "negligible",
+  "generality": "fine-tuned agents in swarms (0); the card notes this is standard ML",
+  "expected_usefulness": 0.37,
+  "scientific_value": 1.5,
+  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
   "rated_at": "2026-10-04",
   "raters": [
    {
@@ -114,7 +120,8 @@
     ]
    }
   ],
-  "adjudicate": true
+  "adjudicate": false,
+  "adjudication_note": "Different claim scored: the coordinator scored the base-echo negative ('no more corpus-like than base Kimi'), which rests on 6 Kimi messages with marker power 0.3-0.5 and whose only counter-hint changed with the embedding model (hence fragile); the blind rater scored the vocabulary trace plus plans not carried, with penalties for non-blind coding and multiplicity. Ruling: the base-echo comparison is an unpowered negative and is reported as inconclusive, not scored; the scored claim is the plan departure plus the room-relative vocabulary trace, whose headline did not change between versions (fragile false)."
  },
  "v2_history": [
   {
