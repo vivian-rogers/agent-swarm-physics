@@ -63,6 +63,14 @@ Negative claims ("X does not happen") need synthetic power ≥ 0.8 at the effect
 
 **Process:** an independent rater (not the hypothesis agent) scores from the card and evidence; anchors are double-scored by the coordinator to measure agreement; disagreements beyond Δp > 0.25 or ΔV > 1 are adjudicated.
 
+**Clarifications after the first rater check (2026-10-04).** A blind rater scored six anchors (H08, H12, H54, H44, H04, H29). Mean |Δp| was 0.105 against the coordinator, and the largest gap was 0.23 (H29), so none crossed the thresholds. Rank agreement was Spearman 0.75 on p and 0.99 on EU. Where two raters exist, credence is the log-odds mean and V the mean; both records are kept under `v2.raters`. The rater's ambiguity notes became these rules:
+- **Base provenance.** *Primary*: the prediction and estimator were both fixed before the run. *Secondary*: the prediction was pre-registered, but the estimator or outcome was redesigned after seeing data (e.g. a round-1b redesign). *Post hoc*: the claim was formed after seeing the result.
+- **Partial factors.** "Partly robust" (one instrument family only, or estimator variants without a second embedding model) and "partial replication" (scattered or < 6 units) each get ×1.5. Interventions that are only partly consistent also get ×1.5.
+- **One design counts once.** When a natural experiment, a synthetic check and a null are one piece of work, credit the strongest factor among them, not all three. In particular, don't stack ×2 for intervention and ×2 for a calibrated null that is the same NE placebo.
+- **Fragile** refers to the scored claim's *headline* in the previous data version, not to sub-findings. A withdrawn secondary result (e.g. H08's ~3-min post-read-out lag) does not set it; a collapsed headline that the claim replaces (H12's activity market mode) does.
+- **V before adjustments.** Negligible 1–2 (cap 2), small ≈ 2, material ≈ 3, large ≈ 4; then apply generality (−1 / 0 / +0.5) and readiness (+0.5).
+- **Null mis-sized** also applies when a known issue says the test is dominated by something other than its target (e.g. co-response in seen/unseen content tests).
+
 **`meta.json` schema v2** (added under a `"v2"` key; v1 keys untouched):
 ```json
 "v2": {"claim": "...", "scope": "...", "direction": "positive|negative", "original_verdict": "supported|refuted|mixed|inconclusive",

@@ -16,7 +16,7 @@
   "scope": "9 units; natives NE38, #35, #26",
   "direction": "positive",
   "original_verdict": "not supported (drivers)",
-  "credence": 0.76,
+  "credence": 0.65,
   "ladder": [
    {
     "factor": "base (post)",
@@ -50,14 +50,65 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3,
+  "value_if_true": 3.0,
   "decision": "to move an agent, name it; relay through high net-reply-current agents",
   "magnitude": "material",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 2.29,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (RE-V2); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.95,
+  "scientific_value": 3.0,
+  "rater": "coordinator + independent blind rater (log-odds mean of credences; mean V); no disagreement beyond thresholds",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.76,
+    "value_if_true": 3,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-04)",
+    "claim": "Agent-to-agent content influence is address-gated: in #51 a visible message that names the recipient moves its next statement 0.05-0.08 of the gap (matched age, ledger visibility), an unnamed one 0.00-0.013, and an operator message to one agent does not relay to bystanders.",
+    "credence": 0.53,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: post hoc (Amendment 2 boundary test, like-for-like named controls)",
+      "x": "p0=0.20",
+      "evidence": "Amendment 2 (POST HOC)"
+     },
+     {
+      "factor": "null mis-sized",
+      "x": 0.7,
+      "evidence": "Caveats 'Synthetic realism': synthetic null under-produces fast co-response"
+     },
+     {
+      "factor": "replication >=2/3 of >=6 units",
+      "x": 2,
+      "evidence": "Round 1b P10 named >=2x unnamed 7/9 (bge), 8/9 (gte), pre-registered"
+     },
+     {
+      "factor": "robust to data/instruments",
+      "x": 2,
+      "evidence": "Round 1b: named jump 0.05-0.08 under ledger visibility and both embedding models"
+     },
+     {
+      "factor": "intervention consistent",
+      "x": 2,
+      "evidence": "Round 1b native NE38: named target 96-100th pct, bystanders not moved (single event)"
+     },
+     {
+      "factor": "penalty: named effect partly conversation state / engagement",
+      "x": 0.8,
+      "evidence": "Caveats: like-for-like shrinks effect by ~1/4"
+     }
+    ]
+   }
+  ]
  },
  "v2_history": [
   {

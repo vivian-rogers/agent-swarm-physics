@@ -1,59 +1,115 @@
 {
-  "complete": 50,
-  "faithfulness": 3.0,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 plus round 1b on the improved data (context ledger, reply labels, corrected activity, H04's corrected nudge design): 17 replication periods re-run, NE41 re-run, two new native tests (NE32 supported, NE03 underpowered). The holdout script still uses the round-1 rule and is not run.",
-    "faithfulness": "Read-out gating now holds in every regime for addressing (14/17) and for reply labels (17/17), beats a pseudo-message null and an other-room placebo (8/8), survives a non-mention content response in regime III, and every named rival including a constant delay is beaten (H = 2). NE41 holds in sign on replies and NE32 passes cleanly. Still: the talk clause fails in regime I/II, the kernel shape is a transient the step model misses, ground truth covers one agent, and nothing is confirmed on the holdout.",
-    "usefulness": "Concrete, computable facts for an operator: reactions wait for the next model call (coupling delay = call cadence), a nudge acts at the target's next call so its lag is the pause schedule, compaction cuts about a fifth of conversational coupling, and fetch logs reveal silent exposure failures. Modest novelty, since gating follows from scaffold design; no validated control knob."
-  },
-  "one_line": "Responses start at the call that received the message (addressing 14/17, replies 17/17; nudges too); erasure cuts reply coupling 21%",
-  "rated_by": "H08 re-evaluation agent RE-V1 (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b: faithfulness 3.0 accepted, the highest so far; not holdout-confirmed)",
-  "v2": {
-    "claim": "Responses are gated at the recipient's next model call (read-out)",
-    "original_verdict": "supported",
+ "complete": 50,
+ "faithfulness": 3.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 plus round 1b on the improved data (context ledger, reply labels, corrected activity, H04's corrected nudge design): 17 replication periods re-run, NE41 re-run, two new native tests (NE32 supported, NE03 underpowered). The holdout script still uses the round-1 rule and is not run.",
+  "faithfulness": "Read-out gating now holds in every regime for addressing (14/17) and for reply labels (17/17), beats a pseudo-message null and an other-room placebo (8/8), survives a non-mention content response in regime III, and every named rival including a constant delay is beaten (H = 2). NE41 holds in sign on replies and NE32 passes cleanly. Still: the talk clause fails in regime I/II, the kernel shape is a transient the step model misses, ground truth covers one agent, and nothing is confirmed on the holdout.",
+  "usefulness": "Concrete, computable facts for an operator: reactions wait for the next model call (coupling delay = call cadence), a nudge acts at the target's next call so its lag is the pause schedule, compaction cuts about a fifth of conversational coupling, and fetch logs reveal silent exposure failures. Modest novelty, since gating follows from scaffold design; no validated control knob."
+ },
+ "one_line": "Responses start at the call that received the message (addressing 14/17, replies 17/17; nudges too); erasure cuts reply coupling 21%",
+ "rated_by": "H08 re-evaluation agent RE-V1 (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (round 1b: faithfulness 3.0 accepted, the highest so far; not holdout-confirmed)",
+ "v2": {
+  "claim": "Responses are gated at the recipient's next model call (read-out)",
+  "original_verdict": "supported",
+  "credence": 0.93,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2
+   },
+   {
+    "factor": "replication",
+    "x": 2
+   },
+   {
+    "factor": "robust to data/instruments",
+    "x": 2
+   },
+   {
+    "factor": "intervention consistent",
+    "x": 2
+   },
+   {
+    "factor": "rival beaten",
+    "x": 1.5
+   },
+   {
+    "factor": "partly robust",
+    "x": 1.5
+   }
+  ],
+  "mechanism_level": "M2",
+  "fragile": false,
+  "value_if_true": 3.0,
+  "decision": "design: coupling delay = call cadence; message timing",
+  "magnitude": "large",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 2.79,
+  "scientific_value": 4.0,
+  "rater": "coordinator + independent blind rater (log-odds mean of credences; mean V); no disagreement beyond thresholds",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
     "credence": 0.95,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      },
-      {
-        "factor": "intervention consistent",
-        "x": 2
-      },
-      {
-        "factor": "rival beaten",
-        "x": 1.5
-      },
-      {
-        "factor": "partly robust",
-        "x": 1.5
-      }
-    ],
+    "value_if_true": 3,
     "mechanism_level": "M2",
     "fragile": false,
-    "value_if_true": 3,
-    "decision": "design: coupling delay = call cadence; message timing",
-    "magnitude": "large",
-    "generality": "read-out-gated swarms",
-    "expected_usefulness": 2.85,
+    "scientific_value": 4
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-04)",
+    "claim": "On the context-ledger read-out rule, a recipient's chance of addressing a sender (mention or reply-parent) jumps at the first model call that received the message and not at in-flight calls, in every regime (mention 14/17 periods, reply author 17/17; regime II/III 10/11).",
+    "credence": 0.89,
+    "value_if_true": 3.0,
+    "mechanism_level": "M2",
+    "fragile": true,
     "scientific_value": 4,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
-  }
+    "ladder": [
+     {
+      "factor": "base: pre-registered secondary (C9-V2; primary was C8/HH92)",
+      "x": "p0=0.30",
+      "evidence": "card Prediction (round 1) C9-V2"
+     },
+     {
+      "factor": "calibrated null passed",
+      "x": 2,
+      "evidence": "pseudo-message null |D|<0.004 and C9 synthetic guard (common cause gives a flat floor); Synthetic validation C9"
+     },
+     {
+      "factor": "replication >=2/3 of >=6 units",
+      "x": 2,
+      "evidence": "Round 1b C9 table: D_addr 14/17, reply author 17/17, other-room placebo 8/8"
+     },
+     {
+      "factor": "robust to data/instruments",
+      "x": 2,
+      "evidence": "Round 1b: survives ledger switch, holds on mention, reply author and content (regime III)"
+     },
+     {
+      "factor": "identified (synthetic recovery)",
+      "x": 1.5,
+      "evidence": "Synthetic validation C9: injected D recovered within ~10%"
+     },
+     {
+      "factor": "intervention consistent",
+      "x": 2,
+      "evidence": "Round 1b NE32 newcomers 35/35 name after first receipt; NE41 forced erasure cuts reply coupling -21% (8/9)"
+     },
+     {
+      "factor": "penalty: response measure is a name/reply label (mentions carry engagement; reply_pairs candidate rule)",
+      "x": 0.8,
+      "evidence": "Caveats 'Mentions as responses'; Round 1b responses row"
+     }
+    ]
+   }
+  ]
+ }
 }
