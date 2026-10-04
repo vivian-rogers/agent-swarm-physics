@@ -1221,36 +1221,42 @@ Potts and vector spins were faithful for statics: the goal as a field vector (H5
   - *Kill:* no undershoot beyond placebo days in either model.
   - *Impostors:* a fading kickoff field mimics overshoot without undershoot. That is exactly the rival this tests. Scheduler: active-hour clock (H103).
   - *Models:* 11, 02 · *Builds on:* H97, H54, H96
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H125.
 - **HH367 · Goal occupancy is a telegraph process: dwell times predict the occupancy.** H105 found on-goal occupancy p 0.23–0.44 with binomial variance. The simplest kinetic model is a two-state switch per agent with rates k_on (set by the goal field) and k_off: p = k_on/(k_on + k_off).
   - *Prediction:* on- and off-goal dwell times (in calls) are each roughly exponential, and p predicted from the two mean dwells matches the measured occupancy within 20% in each assigned week. A kickoff raises k_on, not k_off.
   - *Check:* per-statement on/off-goal labels (H105's decoy threshold; calibrate first, as H105 asked); dwell distributions per agent and week.
   - *Kill:* dwell distributions far from exponential (strongly heavy-tailed), or predicted p off by more than 30%.
   - *Impostors:* misclassified statements shorten dwells; run the synthetic misclassification correction from H105 first.
   - *Models:* 10, 02 · *Builds on:* H105, H10
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H126.
 - **HH368 · Content trails a moving goal like an overdamped particle: agents that call more catch up faster.** Model content as a particle in a potential well that moves when the goal moves (Langevin: ẋ = −k(x − g(t)) + noise). H103 says the clock is active work. So each agent's lag behind the goal should scale with its own call rate.
   - *Prediction:* per agent, the time to reach half of its settled alignment after a kickoff falls with its calls per active hour (log-log slope near −1); measured in calls, it is the same for all agents (data collapse).
   - *Check:* per-agent half-alignment times across non-holdout kickoffs; regress on call rate; compare the collapse on calls vs hours.
   - *Kill:* slope near 0, or no improvement in the collapse when time is measured in calls.
   - *Impostors:* busy agents may also be more on-task (a field); control for agent constant (H100 â_i) and lab.
   - *Models:* 11, 02 · *Builds on:* H97, H103, H40, HH344
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H127.
 - **HH369 · Free kickoffs coarsen, named kickoffs freeze: a kinetic Potts quench.** In a zero-temperature Potts quench, many small domains merge and the number of distinct domains falls as a power of time (coarsening). A strong field (a named project) skips coarsening and freezes at once. H75 found named kickoffs freeze instantly (slack 1.0–1.4) and free ones are slow (5–15).
   - *Prediction:* in free-kickoff weeks, the number of active projects falls as t^(−α) with α ≈ 0.3–0.5 over the first days; in named-kickoff weeks it drops to its final value within hours, with no power-law stretch.
   - *Check:* H94/H77 project tables; active projects per active hour from each kickoff; fit power law vs exponential vs step.
   - *Kill:* the free and named curves have the same shape.
   - *Impostors:* projects finish for exogenous reasons (deadlines); exclude finished-and-shipped projects from "merged" counts.
   - *Models:* 10 · *Builds on:* H75, H94, H93
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H128.
 - **HH370 · Project hopping carries cycle currents: the sticky Potts walker breaks detailed balance.** H93 found habit dominates project choice (b_own 2.5–6 nats). A kinetic Potts walker with a habit field hops rarely. If hopping only followed a fixed attractiveness, the flows A→B and B→A would balance. Projects being born, finished and abandoned instead drive a net circulation (A→B→C→A).
   - *Prediction:* on agent project-transition triples, the cycle affinity ln(P_ABC/P_CBA) is nonzero in shared-goal weeks, with the circulation running from older to newer projects. Dwell times are geometric with a rate that falls with habit.
   - *Check:* transitions between projects per agent in H93's choice table; cycle affinities with a time-reversal null.
   - *Kill:* cycle affinities within the reversal null.
   - *Impostors:* project age is a drift field by construction; that is the claimed mechanism, so the test is whether the circulation exceeds what age-ordering alone gives in a synthetic walker.
   - *Models:* 02, 10, 15 · *Builds on:* H93, H94, H56, HH56
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H129.
 - **HH371 · #51 agents are Ornstein–Uhlenbeck particles in private wells: reads kick them and the kick decays at the well's rate.** H98 found #51 is a static random field with a weak pull, plus co-movement through conversation. The simplest kinetic version: each agent relaxes toward its own private goal direction at rate γ, and each read of another agent's message is a small kick toward it.
   - *Prediction:* after a read, an agent's content moves toward the sender by a small amount that decays as e^(−γτ), and the same γ also sets the agent's own autocorrelation decay (an unfitted consistency check). Pairs with more reads co-move more, and the co-movement decays at γ.
   - *Check:* per-call content projections in #51 main body; event-triggered averages after reads vs matched non-read calls; fit γ two ways.
   - *Kill:* the two γ estimates differ by more than ×2, or no read kick beyond the in-flight placebo.
   - *Impostors:* niche overlap (shared role text) is a common field; use the read vs in-flight contrast.
   - *Models:* 11, 02 · *Builds on:* H98, H22, H65 (read_response)
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H130.
 - **HH372 · Room content has no inertia: an agent's content switches within one call when it changes room.** H102 found content follows the room an agent is speaking in, with nothing carried home. In a kinetic picture this is a spin with zero memory driven by a room field.
   - *Prediction:* when an agent posts in a new room, its first message there is already most of the way to that room's centroid; the relaxation time is under one call (≤ 1 message), and switching back is equally fast.
   - *Check:* sequences of messages around room switches (H102 hoppers, H100 movers); per-message distance to each room's centroid.
@@ -1269,11 +1275,13 @@ Potts and vector spins were faithful for statics: the goal as a field vector (H5
   - *Kill:* the switch-off is aligned to wall-clock time, not to each agent's read.
   - *Impostors:* the end of the competition period is a field step for everyone; the per-agent read timing is the partition contrast.
   - *Models:* 02, 10 · *Builds on:* H64, H37, H08
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H131.
 - **HH375 · Debate is a two-sublattice limit cycle: topic ping-pong at lag one.** Two teams that each respond to the other's last move form a pair of antiferromagnetically coupled sublattices updating in turn. That gives a period-2 cycle in content: team A's message points along the issue, team B's rebuts it, and so on. This breaks detailed balance (the cycle runs one way).
   - *Prediction:* in #12, the lagged cross-team content correlation is negative at lag 1 and positive at lag 2 (in turns), and its antisymmetric part is nonzero (the cycle has a direction); within-team lags show no alternation.
   - *Check:* turn sequences per debate from the DQ6 schedule; content projections on each debate's issue axis.
   - *Kill:* no alternation beyond a turn-shuffled null.
   - *Impostors:* the debate format forces alternation (a scheduler field); test whether the content alternates, not just the speakers.
   - *Models:* 02, 01 · *Builds on:* H21, H37, H101, HH353
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H132.
 
 *Suggested first picks.* HH366 (one figure decides inertia vs fading field), HH367 (dwell times predict occupancy, unfitted), HH368 (a data collapse on the call clock), HH373 (the floor from an independent rate) and HH369 (coarsening vs freeze).

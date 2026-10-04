@@ -241,3 +241,11 @@ Vivian picked these from HH107–HH126 and the leftovers. HH92 was already H08's
 | S121 | A batch join is a spin addition: do incumbents respond as the fitted couplings say? (NE27, NE33) | HH363 | 02 | H122 (launched) |
 | S122 | Regime I's turn order is a sweep: equilibrium-looking statistics with nonzero entropy production | HH364 | 02, 15 | H123 (launched) |
 | S123 | Four agents for weeks: an exact kinetic Ising benchmark for the mean-field approximations (#4, #6) | HH365 | 02 | H124 (launched) |
+| S124 | The kickoff response is a damped oscillator: look for the day-2 undershoot | HH366 | 11, 02 | H125 (launched) |
+| S125 | Goal occupancy is a telegraph process: dwell times predict the occupancy | HH367 | 10, 02 | H126 (launched) |
+| S126 | Content trails a moving goal like an overdamped particle: agents that call more catch up faster | HH368 | 11, 02 | H127 (launched) |
+| S127 | Free kickoffs coarsen, named kickoffs freeze: a kinetic Potts quench | HH369 | 10 | H128 (launched) |
+| S128 | Project hopping carries cycle currents: the sticky Potts walker breaks detailed balance | HH370 | 02, 10, 15 | H129 (launched) |
+| S129 | #51 agents are Ornstein–Uhlenbeck particles in private wells: reads kick them and the kick decays at the well's rate | HH371 | 11, 02 | H130 (launched) |
+| S130 | Assigned antagonism switches off in one read-out after the prize goes: a field quench with no remanence | HH374 | 02, 10 | H131 (launched) |
+| S131 | Debate is a two-sublattice limit cycle: topic ping-pong at lag one | HH375 | 02, 01 | H132 (launched) |

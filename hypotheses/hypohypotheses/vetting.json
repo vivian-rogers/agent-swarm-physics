@@ -622,7 +622,10 @@
    "family": "kinetic (Potts/vector)",
    "q": "Q2",
    "cost": "low",
-   "why": "One figure decides whether H97's overshoot is inertia (undershoot follows) or a fading field (no undershoot)."
+   "why": "One figure decides whether H97's overshoot is inertia (undershoot follows) or a fading field (no undershoot).",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:50:32.551218+00:00",
+   "promoted_to": "H125"
   },
   {
    "id": "HH367",
@@ -630,7 +633,10 @@
    "family": "kinetic (Potts/vector)",
    "q": "Q2",
    "cost": "low",
-   "why": "A two-rate switch gives p = k_on/(k_on + k_off); measured dwells predict H105's occupancy with no fit."
+   "why": "A two-rate switch gives p = k_on/(k_on + k_off); measured dwells predict H105's occupancy with no fit.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:50:48.369892+00:00",
+   "promoted_to": "H126"
   },
   {
    "id": "HH368",
@@ -638,7 +644,10 @@
    "family": "kinetic (Potts/vector)",
    "q": "Q1",
    "cost": "low",
-   "why": "An overdamped particle on the work clock: lag ∝ 1/call rate, and curves collapse in calls."
+   "why": "An overdamped particle on the work clock: lag ∝ 1/call rate, and curves collapse in calls.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:50:44.456620+00:00",
+   "promoted_to": "H127"
   },
   {
    "id": "HH369",
@@ -646,7 +655,10 @@
    "family": "kinetic (Potts/vector)",
    "q": "Q2",
    "cost": "low",
-   "why": "Power-law fall in active projects after free kickoffs vs an instant step after named ones."
+   "why": "Power-law fall in active projects after free kickoffs vs an instant step after named ones.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:50:40.385394+00:00",
+   "promoted_to": "H128"
   },
   {
    "id": "HH370",
@@ -656,7 +668,8 @@
    "cost": "low",
    "why": "Project births and deaths should drive a net circulation through projects beyond age-ordering.",
    "decision": "approved",
-   "decided_at": "2026-10-04T21:50:20.117291+00:00"
+   "decided_at": "2026-10-04T21:50:20.117291+00:00",
+   "promoted_to": "H129"
   },
   {
    "id": "HH371",
@@ -666,7 +679,8 @@
    "cost": "medium",
    "why": "One relaxation rate should explain both an agent's own memory and how fast a read's influence fades.",
    "decision": "approved",
-   "decided_at": "2026-10-04T21:50:22.568363+00:00"
+   "decided_at": "2026-10-04T21:50:22.568363+00:00",
+   "promoted_to": "H130"
   },
   {
    "id": "HH372",
@@ -674,7 +688,9 @@
    "family": "kinetic (Potts/vector)",
    "q": "Q1",
    "cost": "low",
-   "why": "Measures the time constant behind H102's 'content follows the room you speak in'."
+   "why": "Measures the time constant behind H102's 'content follows the room you speak in'.",
+   "decision": "later",
+   "decided_at": "2026-10-04T22:02:56.138791+00:00"
   },
   {
    "id": "HH373",
@@ -682,7 +698,9 @@
    "family": "kinetic (Potts/vector)",
    "q": "Q4",
    "cost": "low",
-   "why": "A birth–death–immigration floor μ/(d − b) from independently measured re-coinage."
+   "why": "A birth–death–immigration floor μ/(d − b) from independently measured re-coinage.",
+   "decision": "later",
+   "decided_at": "2026-10-04T22:02:58.768108+00:00"
   },
   {
    "id": "HH374",
@@ -690,7 +708,10 @@
    "family": "kinetic (Potts/vector)",
    "q": "Q1",
    "cost": "low",
-   "why": "Per-agent read timing, not the clock, should set when rivals stop opposing each other."
+   "why": "Per-agent read timing, not the clock, should set when rivals stop opposing each other.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:52:35.640796+00:00",
+   "promoted_to": "H131"
   },
   {
    "id": "HH375",
@@ -698,7 +719,10 @@
    "family": "kinetic (Potts/vector)",
    "q": "Q3",
    "cost": "low",
-   "why": "Content should alternate between teams turn by turn, with a direction to the cycle."
+   "why": "Content should alternate between teams turn by turn, with a direction to the cycle.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:52:32.862070+00:00",
+   "promoted_to": "H132"
   }
  ]
 }
