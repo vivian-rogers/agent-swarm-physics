@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **Second session-limit outage (~08:15 UTC):** 14 agents stopped mid-run (re-evaluations RE-P1, RE-C1, RE-C2, RE-C3, RE-V2, RE-O1, RE-R1; new hypotheses H40, H41, H42, H49, H52, H57, H58); most were writing cards. Two background jobs survived (H40's replication run and a round-1b native script). The limit resets at 3:20am PT (10:20 UTC); a one-shot check-in at 3:27am PT resumes all 14 from their transcripts.
 - **Re-evaluation RE-R1 (H05, H09, H23) launched** (load easing to ~150): fixed activity bins (H05's gains feed H19), ledger read counts (tests HH248, rooms as a read-out filter), shared `copy_info`, DQ6 checkpoints. Remaining for re-evaluation: H06, H07, H28, H32, H34.
 - **Re-evaluation RE-V1 done (H18, H08, H04 round 1b on the context ledger, reply labels, fixed bins, leading-@ targets, no future-kick isolation):**
   - **H08:** **read-out gating holds in every regime**: addressing jumps at read-out in 14/17 periods (17/17 with reply parents); regime I 1/6 → 4/6 (its round-1 failure was the call-start rule, not unlogged calls); other-room placebo 8/8. The nudge response starts at the receiving call (round-1 finding 2, the ~3-min post-read-out lag, withdrawn). NE41: replies −21% ± 7% (8/9). NE32: newcomers name an old-timer only after receiving that old-timer's message, 35/35 pairs. Faithfulness 3.0 (highest so far; not holdout-confirmed).
