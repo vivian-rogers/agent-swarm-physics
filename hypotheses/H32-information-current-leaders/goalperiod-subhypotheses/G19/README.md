@@ -1,6 +1,7 @@
 # H32 × G19: Create a popular daily puzzle game like Wordle (2025-11-03 → 2025-11-14)
 
 **Verdict:** supported (transfer, split-half ρ +0.43)
+**Verdict (1b):** supported (ledger exposure: T +0.112% p 0.024, split-half ρ +0.43; gte p 0.048; style-resid p 0.048)
 **Role:** exploratory
 **Period:** regime I · mode C (shared objective) · 8 agents · 1 room with ≥ 20 agent messages · 10 days. No splits (one unit per goal period).
 

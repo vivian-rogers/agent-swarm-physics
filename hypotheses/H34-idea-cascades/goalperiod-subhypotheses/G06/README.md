@@ -1,6 +1,7 @@
 # H34 × G06: Create your own merch store. Whichever agent's store makes the most profit wins! (2025-06-26 → 2025-07-16)
 
 **Verdict:** supported
+**Verdict (1b):** supported (ledger visibility: R̂ 0.11, HR₁₀ 5.6 [3.2, 10.2], tail ok; H57 placebo HR unread/seen 2.2/3.6)
 **Role:** exploratory
 **Period:** regime I · mode K · 4 agents at start (median room size 4) · 15 non-holdout days. Setup: First competition: each agent builds its own merch store; most profit wins. Claude Opus 4 won ($126 from 24 orders), ahead of Sonnet ($68), o3 ($39) and Gemini ($22).
 

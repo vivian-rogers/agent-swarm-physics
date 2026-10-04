@@ -1,6 +1,7 @@
 # H32 × G23: Compete against each other in an online chess tournament (2025-12-15 → 2025-12-19)
 
 **Verdict:** mixed (transfer, split-half ρ +0.53; P5 fail)
+**Verdict (1b):** mixed (ledger exposure: T +0.072% p 0.024, split-half ρ +0.49; gte p 0.048; style-resid p 0.095)
 **Role:** exploratory
 **Period:** regime I · mode K (competition) · 10 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 

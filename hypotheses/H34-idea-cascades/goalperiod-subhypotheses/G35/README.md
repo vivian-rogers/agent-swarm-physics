@@ -1,7 +1,8 @@
 # H34 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-23)
 
 **Verdict:** mixed
-**Role:** exploratory
+**Verdict (1b):** mixed (native: lead-designer seeds P(s≥2) ratio 1.11 [0.82, 1.45]; replication mixed, HR₁₀ 25.6)
+**Role:** native (round 1b: designated lead designers as idea seeders, DQ6; round 1: exploratory)
 **Period:** regime II · mode C · 13 agents at start (median room size 9) · 5 non-holdout days. Setup: Test your game. The village split into #best (GPT-5.4, Opus 4.6, Gemini 3.1 Pro) and #rest to evolve **separate forks** of the RPG.
 
 ## Why this period
@@ -54,3 +55,27 @@ C (adequacy): HR₁₀ beats the field null (lower CI 20.09). D (unfitted shape)
 - Censoring check: R̂ without trees rooted on the last day = 0.341.
 - Root vs non-root mean offspring 0.284 vs 0.361 (GW assumes equal).
 - Root types: invented 0.88, from humans 0.038, field (unexposed) 0.087; 0.85 of non-seed first uses were visibly exposed.
+
+## Round 1b native: are the day's lead designers idea sources? (DQ6)
+*Prediction written 2026-10-04 16:50 UTC, before running.* **Seen beforehand:** round 1 for this period (above) and the card; DQ6's `ground_truth_labels` rows (leader terms and lead designers; codes and times only); H29's round-1b native summary (#35: designated leaders get 1.4x more replies per message; #26: the elected leader's broadcast pull rose most); H32's round-1 finding that formal leaders are not content sources. No round-1b H34 statistic (ledger trees, any idea split by seeder) had been computed.
+
+**Design.** DQ6 lead designers: 03-16 (#rest 18, #best 23), 03-17 (19, 20), 03-18 (6, 22). Window = the lead designer's PT day, its room. Trees from the round-1b build (context-ledger visibility: j's first use is *exposed* if an earlier use reached one of j's receiving calls before the call that produced j's use). For each idea whose **seed** (first use in the period) falls in the window, the seed's tree size s (agents reached through visible exposure). Statistic: the ratio of P(s ≥ 2) for leader-seeded ideas to that for ideas seeded by other agents in the same room and window, with an idea-bootstrap 95% CI (2,000 draws); mean s as a secondary. Pooled over the six room-days (Mantel–Haenszel-style: ideas pooled, stratum = room-day).
+
+**Predictions:**
+- **N35a:** leader-seeded ideas spread more: the pooled P(s ≥ 2) ratio > 1 with CI excluding 1 [0.55].
+- **N35b (negative control):** ideas seeded in one room reach the other room only without ledger exposure: the share of cross-room first uses classified *exposed* is ≤ 2% [0.85].
+
+**Verdict rule (H34 here):** N35a decides: *supported* (a known idea source is visible in the branching) if the ratio > 1 with CI excluding 1; *failed* if the point estimate ≤ 1; *mixed* if the point estimate > 1 but the CI includes 1.
+
+### Result (round 1b, run 2026-10-04)
+`analysis/r1b_natives.py natives` → `data/processed/H34-idea-cascades/r1b/results/natives.json`.
+
+| Test | Observed | Prediction | Verdict |
+| --- | --- | --- | --- |
+| N35a pooled P(s ≥ 2), leader-seeded / other-seeded (6 room-days; 227 vs 1,621 seeds) | **1.11 [0.82, 1.45]**; P(s ≥ 2) 0.24 vs 0.24; mean size 1.31 vs 1.48. Per room-day: 03-16 #rest 0.33 vs 0.28, #best 0.27 vs 0.29; 03-17 #rest leader seeded nothing, #best 0.18 vs 0.12; 03-18 #rest 0.20 vs 0.22, #best 0.10 vs 0.09 | > 1, CI excluding 1 | prediction **failed**; rule → *mixed* (point > 1, CI includes 1) |
+| N35b share of cross-room first uses classified exposed | **0.49** (229/464) vs 0.99 within the seed room | ≤ 2% | **failed as written** |
+| N35b' (post hoc) the *crossing* event: an idea's first use in the other of #best/#rest | exposed in **6/235 (2.6%)** | — | descriptive |
+
+**Reading.** Designated lead designers do not seed ideas that spread further than their room-mates' (H29's 1.4× reply premium does not show up in idea branching). The pre-registered negative control was mis-specified: once an idea crosses rooms (almost always without ledger exposure, 97%), it spreads inside the new room through visible exposure, so most cross-room first uses *are* exposed. The crossing events themselves behave as the control intended: rooms gate visible exposure, and ideas cross by independent invention or channels the ledger does not log (artifacts, history search).
+
+**Verdict (H34 here):** mixed (no leader premium; crossing events confirm room gating, post hoc).

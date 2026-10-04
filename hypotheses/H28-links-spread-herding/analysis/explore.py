@@ -155,7 +155,14 @@ def run_period(g, shifts=99, sims=200, lat_shifts=49, seed=28, folder=None, verb
                                  for k in ("peak_occ", "burst60", "top_visitors")}
         out["cf_calibration"]["arrivals"] = dict(obs=out["arrivals"], mean=float(np.mean(f1["arrivals"])))
     out["secs"] = time.time() - t0
-    (folder / "round1.json").write_text(json.dumps(out, indent=1, default=float))
+    led, work = hc.r1b_mode()
+    if led or work:      # round 1b outputs never overwrite round 1
+        od = OUT / "r1b" / gname(g)
+        od.mkdir(parents=True, exist_ok=True)
+        out["r1b"] = dict(ledger=led, work=work)
+        (od / f"round1b{'_work' if work else ''}.json").write_text(json.dumps(out, indent=1, default=float))
+    else:
+        (folder / "round1.json").write_text(json.dumps(out, indent=1, default=float))
     if verbose:
         print(f"{gname(g)} done in {out['secs']:.0f}s", flush=True)
     return out

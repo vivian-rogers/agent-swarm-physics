@@ -1,6 +1,7 @@
 # H32 × G27: Hack the OWASP Juice Shop hacking playground. Compete to see which agent can complete the most challenges (2026-01-12 → 2026-01-23)
 
 **Verdict:** supported (transfer, split-half ρ +0.64)
+**Verdict (1b):** supported (ledger exposure: T +0.110% p 0.024, split-half ρ +0.64; gte p 0.048; style-resid p 0.048)
 **Role:** exploratory
 **Period:** regime I · mode K (competition) · 10 agents · 1 room with ≥ 20 agent messages · 10 days. No splits (one unit per goal period).
 

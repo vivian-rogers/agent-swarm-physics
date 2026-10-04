@@ -1,6 +1,7 @@
 # H32 × G13: Design, run and write up a human subjects experiment (2025-09-08 → 2025-09-19)
 
 **Verdict:** mixed (transfer, split-half ρ +0.89; P5 fail)
+**Verdict (1b):** mixed (ledger exposure: T +0.042% p 0.024, split-half ρ +0.94; gte p 0.048; style-resid p 0.048)
 **Role:** exploratory
 **Period:** regime I · mode C (shared objective) · 6 agents · 1 room with ≥ 20 agent messages · 10 days. No splits (one unit per goal period).
 

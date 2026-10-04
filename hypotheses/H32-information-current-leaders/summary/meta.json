@@ -1,43 +1,73 @@
 {
-  "complete": 40,
-  "faithfulness": 1.5,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 done on 32 non-holdout goal periods plus NE42: dated predictions in the card and every period folder, synthetic validation on three real skeletons (240 runs) with a synthetic-only amendment before real data, per-period verdicts, scorecard, 8 robustness variants, a labelled post-hoc sensitivity (A2). Confirmatory script for #28/#22/#14 frozen and dry-run (reproduces round 1), not run. Not done: per-message coupling, agenda-setting event study, style control, second embedding model, #51.",
-    "faithfulness": "The leader claim failed by its own pre-registered rules: humans as a known source rank above the median agent in only 4/16 periods, the elected #26 leader ranks 7/10 after the vote, the #44 operator 5/7. A source stands out in 2/18 periods, and NE42 shows no switch-on. What holds is narrower: transfer beats the cross-day shift null in 18/32 periods (15/32 within-day too), depends on exposure (7/8 multi-room weeks), and the outflow ranking replicates across halves (23/26). The level is sensitive to field removal, and the top-source identity is not robust. Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I0.",
-    "usefulness": "A computable diagnostic from chat logs: total content transfer T, a reproducible outflow ranking, and a 'does any source stand out' test, with measured synthetic accuracy and a known confound (fast responders). The actionable lesson is negative but relevant for steering: installed or elected leaders do not become content sources, and an installed fine-tuned leader was the most-influenced agent in its room. It does not tell an operator where to intervene."
-  },
-  "one_line": "Content transfer between agents is real and its outflow ranking reproducible, but elected, installed and operator leaders are not content sources",
-  "rated_by": "H32 agent (suggested)",
-  "updated": "2026-10-03",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
-  "v2": {
-    "claim": "Content transfer is real and exposure-dependent; designated leaders are not content sources",
-    "original_verdict": "failed (leaders)",
-    "credence": 0.67,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "ground truth agrees",
-        "x": 1.5
-      }
-    ],
-    "mechanism_level": "M0",
-    "fragile": false,
-    "value_if_true": 2,
-    "decision": "don't equate leadership with influence",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 1.33,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done on 32 non-holdout goal periods plus NE42: dated predictions in the card and every period folder, synthetic validation on three real skeletons (240 runs) with a synthetic-only amendment before real data, per-period verdicts, scorecard, 8 robustness variants, a labelled post-hoc sensitivity (A2). Confirmatory script for #28/#22/#14 frozen and dry-run (reproduces round 1), not run. Not done: per-message coupling, agenda-setting event study, style control, second embedding model, #51. Round 1b (2026-10-04): re-run on context-ledger exposure, gte and style-residualized embeddings, statement dedupe, an H57 read-vs-in-flight placebo, and three leader natives (#26 real term, #35 lead designers, #44 window).",
+  "faithfulness": "The leader claim failed by its own pre-registered rules: humans as a known source rank above the median agent in only 4/16 periods, the elected #26 leader ranks 7/10 after the vote, the #44 operator 5/7. A source stands out in 2/18 periods, and NE42 shows no switch-on. What holds is narrower: transfer beats the cross-day shift null in 18/32 periods (15/32 within-day too), depends on exposure (7/8 multi-room weeks), and the outflow ranking replicates across halves (23/26). The level is sensitive to field removal, and the top-source identity is not robust. Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I0. Round 1b: replicates on ledger exposure; existence robust across embedding models but the top source's identity is not (17/32); at matched short lag read > in-flight in 17/17 but in-flight carries about a third; all leader natives fail as predicted. Axes unchanged.",
+  "usefulness": "A computable diagnostic from chat logs: total content transfer T, a reproducible outflow ranking, and a 'does any source stand out' test, with measured synthetic accuracy and a known confound (fast responders). The actionable lesson is negative but relevant for steering: installed or elected leaders do not become content sources, and an installed fine-tuned leader was the most-influenced agent in its room. It does not tell an operator where to intervene."
+ },
+ "one_line": "Content transfer between agents is real (17-23/32 periods, read > in-flight at matched lag 17/17) but model-dependent in who leads, and elected, designated, installed and operator leaders are not content sources",
+ "rated_by": "H32 agent (suggested); round 1b RE-D1 (suggested)",
+ "updated": "2026-10-04 (round 1b)",
+ "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+ "v2": {
+  "claim": "Exposure-gated content transfer is real (17/32 periods; read beats unread at 60 s in 17/17), but about a third of it is convergence; formal leaders are not content sources (3/3 natives); which agent leads depends on the embedding model",
+  "scope": "32 periods; natives #26, #35, #44",
+  "direction": "positive",
+  "original_verdict": "failed (leaders)",
+  "credence": 0.87,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null (circular shift)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "partial replication (17/32 periods)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "partly robust (gte 23/32, style 18/32; top source model-dependent)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "ground truth agrees (DQ6 leader terms)",
+    "x": 1.5,
+    "evidence": "natives"
+   },
+   {
+    "factor": "rival beaten (read vs in-flight at matched lag)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "don't equate leadership with influence",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.74,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (RE-D1); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "Content transfer is real and exposure-dependent; designated leaders are not content sources",
+   "credence": 0.67,
+   "fragile": false,
+   "value_if_true": 2,
+   "expected_usefulness": 1.33,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

@@ -1,6 +1,7 @@
 # H32 × G39: Build your own interactive world! (2026-04-27 → 2026-05-01)
 
 **Verdict:** failed (no transfer)
+**Verdict (1b):** failed (ledger exposure: T -0.073% p 0.634, split-half ρ +0.14; gte p 1.000; style-resid p 0.857)
 **Role:** exploratory
 **Period:** regime III · mode I (each agent its own objective) · 15 agents · 2 rooms with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 

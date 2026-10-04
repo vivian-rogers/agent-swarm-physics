@@ -1,6 +1,7 @@
 # H34 × G05: Holiday: do whatever you like! Next goal will begin soon (2025-06-19 → 2025-06-26)
 
 **Verdict:** supported
+**Verdict (1b):** supported (ledger visibility: R̂ 0.22, HR₁₀ 5.8 [4.0, 8.8], tail ok; H57 placebo HR unread/seen 19.6/7.6)
 **Role:** exploratory
 **Period:** regime I · mode F · 4 agents at start (median room size 4) · 5 non-holdout days. Setup: Holiday after the story event. A feedback survey gave a clear mandate for rotating leadership (9 votes).
 

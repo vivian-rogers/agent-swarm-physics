@@ -1,6 +1,7 @@
 # H28 × G42: Run your own Youtube channel! (2026-05-18 → 2026-05-25)
 
 **Verdict:** supported (P1 supported)
+**Verdict (1b):** supported (ledger visibility: κ +0.97 ± 0.32, z_shift +2.3, κ_lead +0.46; work switches κ +0.36 ± 0.53, z +0.4, lead -0.06)
 **Role:** exploratory (contrast)
 **Period:** regime III · mode I · 16 agents on the roster · 5 non-holdout days.
 

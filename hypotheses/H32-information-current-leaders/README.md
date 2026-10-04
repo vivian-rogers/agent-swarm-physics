@@ -1,6 +1,7 @@
 # H32: A net information current identifies de facto leaders
 
 **Status:** exploratory round 1 **done (2026-10-03). Leader identification failed by the pre-registered rules; a narrower result stands.** Exposure-gated content transfer between agents is real in about half the goal periods, depends on exposure, and gives a reproducible outflow ranking. But that ranking does not single out the known sources: the elected leader (#26), the operator (#44) and human messages generally do not rank high. The installed fine-tuned leader (#44) is the *weakest* source in its room. Confirmatory script for #28/#22/#14 written and dry-run, not run.
+**Round 1b (2026-10-04, ledger exposure, gte, style-resid, H57 placebo):** transfer replicates (17/32 bge, 23/32 gte, 18/32 style-resid; rankings ρ 0.99 vs round 1) and still needs exposure (7/8). At matched short lag, read messages beat not-yet-read ones in 17/17 transfer periods, but unread ones carry about a third of the gain (convergence). Which agent is the top source is model-dependent (same top in 17/32 across embedding models). All three leader natives fail as predicted: the elected leader over its real DQ6 term (#26 rank 5/10), #35's daily lead designers (percentile 0.43) and #44's installed leader over its full window (last of 6).
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH118 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`), which extends HH93 (influence lives in content, not timing).
 **Definitions used:** agent; regime (whitening basis = the majority regime of the goal period's days); goal period as the unit of analysis; driving / external field (goal text + kickoff per room, extended to a multi-direction field subspace, see Model); agent state, variant *vector (for model 11)*: per-regime whitened bge-small statement embeddings (`common.load_whitener`, n = 32), unit-normalized per message; interaction (broadcast): j is exposed to i's message if j's `rooms_timeline` room at the message time is the message's room (the rule `exposure.parquet` uses), and the message precedes j's message. Proposed named variants (not yet in DEFINITIONS.md; outside this card's edit scope): **content transfer (exposure-conditioned, cross-validated Gaussian)** and **outflow centralization Φ**, both defined under Observables.
@@ -269,6 +270,57 @@ Primary verdicts use the pre-registered fit.
 5. Matched age bins for seen vs unseen (H29 recency confound).
 6. A second embedding model.
 7. #51 segments (four rooms, private roles) for the exposure contrast with more power.
+
+## Round 1b (improved data, 2026-10-04)
+
+### Inputs changed
+- **Exposure (DQ1 context ledger).** Round 1: i's message was "seen" by j's message m if j was in its room and it was posted before m. Round 1b: seen iff it was posted in j's room before **the start (`t_call`) of the call that produced m** (j's latest `call_windows` start before m). Same-room messages posted during that call are now **unread** (in flight) and leave the source term. The same rule is applied to every shifted null replica. Other-room messages stay the "unseen" term of the exposure contrast (P8).
+- **Copying vs convergence (H57).** New placebo: the second source term holds i's *unread* same-room messages (posted after j's call started, before m). Copying through reading predicts seen ≫ unread; contemporaneous convergence (both answer the same prior turn) predicts unread ≈ seen. Run at the card's τ = 15 min (all 32 periods) and at **τ = 60 s** (window 3 min, both terms recent; the 17 periods with transfer), which roughly matches ages.
+- **Embeddings (DQ5).** Second model gte-modernbert (whitened in the period's regime basis, gte goal fields) and bge style-residualized within goal period (`statements_style_resid_period32`); 20 null replicas each.
+- **Dedupe (DQ5 `statement_flags`).** Targets flagged cross-echo (either model), templated (either) or self-repeat (both) are dropped (1–35% of targets).
+- **Goal fields** were already the shared ones (A1f); the H01 #38 swap never reached H32. Activity bins, outages and reply threading are not used by H32's estimator.
+- **Code.** Switches in `analysis/ic_core.py`: `H32_DATA=r1b`, `H32_EMB=bge|gte|style`, `H32_S0=other|unread` (plus `H32_DEDUPE`, `H32_TAU` in `analysis/r1b.py`); defaults reproduce round 1 exactly (checked: #26 T = +0.0563%, p 0.024, identical). New: `scheme/build_r1b.py` (vectors), `analysis/r1b.py` (runs, natives), `analysis/r1b_assemble.py` (tables, verdict lines, 237 `per_period_estimates` rows, methods `H32.r1b_*`). Outputs: `data/processed/H32-information-current-leaders/r1b/` (22 MB).
+
+### Old → new (32 non-holdout periods; % of held-out residual variance)
+| Statistic | Round 1 | 1b ledger (bge) | 1b gte | 1b style-resid | 1b dedupe |
+| --- | --- | --- | --- | --- | --- |
+| P1 T significant (cross-day null) | 18/32 | **17/32** | 23/32 | 18/32 | 16/32 |
+| Out ranking vs ledger-bge (median Spearman ρ; same top source) | 0.99 vs round 1; 28/32 | — | 0.77; 17/32 | 0.77; 22/32 | 0.99; 30/32 |
+| P3 split-half ρ > 0 (median) | 23/26 (0.38) | 20/26 (0.27) | — | — | — |
+| P8 seen > unseen-other-room (multi-room) | 7/8, unseen significant 1/8 | 7/8 (sign p 0.035), 1/8 | — | — | — |
+| P5 humans above the median agent | 4/16 (≥ 15 human msgs) | 6/29 (any humans) | — | — | — |
+| Per-period verdicts (supported / mixed / failed) | 8 / 9 / 15 | 9 / 7 / 16 | — | — | — |
+| **H57, τ = 15 min:** unread term significant / seen significant | — | 24/32 / 16/32; seen > unread in 12/32 | — | — | — |
+| **H57, τ = 60 s (17 transfer periods):** seen > unread; unread significant; median T seen vs unread | — | **17/17**; 13/17; 0.20% vs 0.07% | — | — | — |
+
+Verdict changes: G04 supported → mixed (split-half ρ −0.20); G35 supported → failed (T halves, p 0.073, plus the native); G26 mixed → failed (native); G06, G36, G38 → supported; G30 failed → mixed.
+
+**Reading.**
+1. **The ledger changes almost nothing for H32.** Room exposure at posting time and ledger exposure agree for nearly every pair at τ = 15 min; only messages posted during j's own call move (to "unread"). Transfer level, rankings and the exposure contrast replicate.
+2. **Transfer is model-dependent in level and identity, robust in existence.** gte finds transfer in more periods (23/32) and agrees with bge on the top source in only 17/32 (ρ 0.77); removing style within periods keeps 18/32 but changes the top source in 10/32. Statement-level claims (who the top source is) are not robust across embedding models, in line with DQ5. Copies are not the carrier: dropping echoes and templates leaves T and rankings unchanged (ρ 0.99).
+3. **Most of the τ = 15 min transfer is matched by unread messages.** Messages j could not yet have read predict its next message better than the ones it had read in 20/32 periods. This is the co-response effect RE-V2 flagged for H29: j and i answer the same prior turn. Matching ages with a short kernel (τ = 60 s) separates them: **read messages beat same-age unread ones in 17/17 transfer periods**, and unread ones carry about a third of the read effect (0.3–0.6 in regime I/II periods, ≈ 0 in regime III's #36, #38, #42). So reading-based content transfer is real, but about a third of the naive short-lag gain is convergence.
+
+### Natives (predictions written 16:45 UTC before running; all three as predicted)
+| Folder | Test | Result | Verdict |
+| --- | --- | --- | --- |
+| [G26](goalperiod-subhypotheses/G26/README.md) | elected leader over its real term (DQ6: 01-05 19:35 → 01-09) | DeepSeek-V3.2 rank 5/10, z +0.55; top sources Claude Opus 4.5 and Gemini 2.5 Pro | failed |
+| [G35](goalperiod-subhypotheses/G35/README.md) | daily designated lead designers (5 testable room-days) | mean percentile 0.43 (p 0.69); 1/5 in the top half | failed |
+| [G44](goalperiod-subhypotheses/G44/README.md) | installed leader over DQ6's window (05-26 19:15 →) | agent 28 last of 6 (z −2.4); operator 6th of 7 | failed |
+
+Elected, designated and installed leaders are not content sources. The negative ground-truth result now holds on the correct #26 window, on three designated leaders per room, and on the full #44 window.
+
+### Scorecard changes
+| Axis | Round 1 | 1b | Why |
+| --- | --- | --- | --- |
+| A mapping | 1 | 1 | Exposure on validated call starts; but the top source changes with the embedding model (17/32) and with style removal (22/32). |
+| C adequacy | 1 | 1 | 17/32 (bge) – 23/32 (gte) significant. |
+| D unfitted | 1 | 1 | Split-half stability weaker (20/26, 0.27); exposure contrast replicates. |
+| E interventional | 0 | 0 | NE42 not re-run (ledger exposure leaves cross-room pairs unchanged). |
+| F identifiability | 1 | 1 | Second embedding model done: existence robust, identity not. |
+| G ground truth | 1 | 1 | Three leader natives, all negative as predicted; humans above the median agent in 6/29. |
+| H comparative | 1 | 1 | New rival, convergence (H57): beaten at matched short lag (17/17) but accounts for about a third of the gain. |
+
+**Model- and style-dependent results:** which agent is the top source (17/32 agreement across models; 22/32 with style removed); the per-period count of significant transfer (17 vs 23). Not model-dependent: that transfer exists in about half the periods, needs exposure, and does not single out leaders. Suggested ratings: completeness 52 (from about 45), faithfulness 1.5, usefulness 2.0.
 
 ## Notes
 - 2026-10-04: promoted from HH118 by Vivian (usefulness-first batch); wave 1.

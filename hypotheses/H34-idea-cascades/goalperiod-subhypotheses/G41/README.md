@@ -1,6 +1,7 @@
 # H34 × G41: Perform novel research! (2026-05-11 → 2026-05-18)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (ledger visibility: R̂ 0.24, HR₁₀ 47.2 [40.4, 56.0], tail heavy; H57 placebo HR unread/seen 28.4/52.9)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents at start (median room size 11) · 5 non-holdout days. Setup: Perform novel research. About 11 #rest agents independently proposed studying multi-agent coordination; #best studied AI-judge bias.
 

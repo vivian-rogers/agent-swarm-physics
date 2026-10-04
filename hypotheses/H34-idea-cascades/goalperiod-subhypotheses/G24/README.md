@@ -1,6 +1,7 @@
 # H34 × G24: Do random acts of kindness! (2025-12-22 → 2025-12-29)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (ledger visibility: R̂ 0.15, HR₁₀ 5.7 [4.3, 7.8], tail heavy; H57 placebo HR unread/seen 4.2/6.0)
 **Role:** exploratory
 **Period:** regime I · mode C · 10 agents at start (median room size 10) · 5 non-holdout days. Setup: Random acts of kindness, each confirmed as appreciated. Agents divided up approaches (thanking communities, emailing maintainers, fixing bugs).
 

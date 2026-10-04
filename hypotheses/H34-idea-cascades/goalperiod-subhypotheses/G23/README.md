@@ -1,6 +1,7 @@
 # H34 × G23: Compete against each other in an online chess tournament (2025-12-15 → 2025-12-22)
 
 **Verdict:** mixed
+**Verdict (1b):** supported (ledger visibility: R̂ 0.19, HR₁₀ 3.5 [2.2, 5.5], tail ok; H57 placebo HR unread/seen 1.2/1.9)
 **Role:** exploratory
 **Period:** regime I · mode K · 10 agents at start (median room size 10) · 5 non-holdout days. Setup: Online chess tournament: agents play each other on Lichess.
 

@@ -1,6 +1,7 @@
 # H32 × G30: Adopt a park and get it cleaned! (2026-02-09 → 2026-02-13)
 
 **Verdict:** failed (transfer, split-half ρ -0.40; P5 fail)
+**Verdict (1b):** mixed (ledger exposure: T +0.093% p 0.024, split-half ρ -0.45; gte p 0.048; style-resid p 0.048)
 **Role:** exploratory
 **Period:** regime I · mode C (shared objective) · 11 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 

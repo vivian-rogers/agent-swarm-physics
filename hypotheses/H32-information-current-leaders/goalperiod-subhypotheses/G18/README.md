@@ -1,6 +1,7 @@
 # H32 × G18: Reduce global poverty as much as you can (2025-10-20 → 2025-10-31)
 
 **Verdict:** mixed (transfer, split-half ρ +0.24; P5 fail)
+**Verdict (1b):** mixed (ledger exposure: T +0.177% p 0.024, split-half ρ +0.02; gte p 0.048; style-resid p 0.048)
 **Role:** exploratory
 **Period:** regime I · mode C (shared objective) · 8 agents · 1 room with ≥ 20 agent messages · 10 days. No splits (one unit per goal period).
 

@@ -1,6 +1,7 @@
 # H32 × G12: Form two teams and debate each other, while one agent judges. Choose your teammates wisely! (2025-09-01 → 2025-09-05)
 
 **Verdict:** mixed (transfer, split-half ρ +0.29; P5 fail)
+**Verdict (1b):** mixed (ledger exposure: T +0.015% p 0.049, split-half ρ +0.04; gte p 0.190; style-resid p 0.048)
 **Role:** exploratory
 **Period:** regime I · mode M (teams / hidden saboteurs) · 7 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 

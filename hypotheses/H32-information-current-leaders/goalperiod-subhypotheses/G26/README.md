@@ -1,7 +1,8 @@
 # H32 × G26: Elect a village leader. They choose this week’s goal! (2026-01-05 → 2026-01-09)
 
 **Verdict:** mixed (transfer, split-half ρ +0.21; P6a pass, P6b fail)
-**Role:** exploratory
+**Verdict (1b):** failed (native leader test); general supported (ledger exposure: T +0.054% p 0.024, split-half ρ +0.57; gte p 0.048; style-resid p 0.048)
+**Role:** native (round 1b: corrected leadership window from DQ6; round 1: exploratory)
 **Period:** regime I · mode C (shared objective) · 10 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 
 ## Why this period
@@ -57,3 +58,27 @@ ground truth for the leader call (card: Candidate goal periods).
 ## Notes
 - 2026-10-03: folder and prediction written before any H32 statistic was computed on this period. Counts used: 2112 agent messages, 2 human, 10 automated.
 - 2026-10-03: round 1 run; verdict by the card's rules (amendment A1).
+
+## Round 1b native: the elected leader over its real term (DQ6)
+*Prediction written 2026-10-04 16:45 UTC, before running.* **Seen beforehand:** round 1 for this period (above) and the card; DQ6's `ground_truth_labels` rows for #26, #35 and #44 (leader terms, lead designers, temporary leader; codes and times only); H29's round-1b native summary in its card status line (#35: designated leaders get 1.4x more replies per message, no broadcast pull; #26: the elected leader's broadcast pull rose most). No round-1b H32 statistic (ledger exposure, any variant) had been computed on any period.
+
+**Why redo it.** Round 1 timed the election at 01-09 18:59 (the *confirmatory* re-election) and tested ~3 h after it. DQ6: DeepSeek-V3.2 (agent 17) was elected on **01-05 19:35:22 UTC** (term 1, to 01-09 19:00:43) and re-elected 9–0 (term 2, to the end of the period).
+
+**Estimator:** O9's pooled-sender gain Out*_i (CV over 30-min blocks; one shared source coefficient over all receivers in the segment; null = 40 cross-day circular shifts of the sender timelines), with round 1b's **ledger exposure**: i's message counts as seen by j's message m iff it was posted in j's room before the start (`t_call`) of the call that produced m. Segment = targets posted in term 1.
+
+**Predictions:**
+- **N26a:** DeepSeek-V3.2 is not the top source in term 1: its Out* rank is ≥ 3 of the agents with ≥ 10 messages [0.7].
+- **N26b:** its term-1 Out* is not significant against the shift null (z < 2) [0.65].
+
+**Verdict rule (H32's leader claim on this period):** *supported* if DeepSeek ranks 1st with z ≥ 2; *failed* if rank ≥ 3 and z < 2; *mixed* otherwise.
+
+### Result (round 1b, run 2026-10-04)
+`analysis/r1b.py natives` → `data/processed/H32-information-current-leaders/r1b/natives.json` (1,416 targets in term 1; 40 shifts).
+
+| Test | Observed | Prediction | Verdict |
+| --- | --- | --- | --- |
+| N26a DeepSeek-V3.2's Out* rank in term 1 | **5 of 10** (ΔG +0.021%) | rank ≥ 3 | pass |
+| N26b its z against the shift null | **+0.55** | z < 2 | pass |
+| Top sources in term 1 | Claude Opus 4.5 (+0.160%, z 5.7), Gemini 2.5 Pro (+0.090%, z 9.4) | — | — |
+
+**Verdict (H32's leader claim here): failed**, as predicted. On its real term (four days, not round 1's three hours) the elected leader is a middle-ranked content source.

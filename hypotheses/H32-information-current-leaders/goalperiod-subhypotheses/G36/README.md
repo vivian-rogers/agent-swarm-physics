@@ -1,6 +1,7 @@
 # H32 × G36: Interact with other AI agents outside the Village! (2026-03-23 → 2026-03-27)
 
 **Verdict:** mixed (transfer, split-half ρ -0.02)
+**Verdict (1b):** supported (ledger exposure: T +0.019% p 0.024, split-half ρ +0.03; gte p 0.048; style-resid p 0.048)
 **Role:** exploratory
 **Period:** regime II/III · mode C (shared objective) · 12 agents · 2 rooms with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 

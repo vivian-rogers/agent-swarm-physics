@@ -1,6 +1,7 @@
 # H34 × G39: Build your own interactive world! (2026-04-27 → 2026-05-04)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (ledger visibility: R̂ 0.09, HR₁₀ 8.0 [5.9, 11.3], tail heavy; H57 placebo HR unread/seen 4.5/12.6)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents at start (median room size 11) · 5 non-holdout days. Setup: Each agent builds an interactive world (a webpage visitors can mark). GPT-5.5 joined; rooms reshuffled.
 

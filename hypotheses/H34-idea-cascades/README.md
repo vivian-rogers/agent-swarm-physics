@@ -8,6 +8,7 @@
 - **The pre-registered forecast was overconfident:** 36–46% coverage at 90% nominal. A post-hoc rule (R̂ from the last two days + day drift) reaches 70–84% and is frozen for confirmation.
 - **Post hoc:** R̂ tracks H25's *content* dial (partial ρ 0.41 given N; daily ρ 0.28), not its activity dial.
 - Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I1. `analysis/confirm.py` frozen and dry-run, not run. Not promoted.
+- **Round 1b (2026-10-04, context-ledger visibility):** contagion beyond the field now holds in **32/32** periods (round 1: 27/32); regime I was mismeasured by the call-start rule (median HR₁₀ 2.3 → 6.4). **But about half of the exposure-locked hazard is contemporaneous convergence:** uses not yet read predict adoption too (HR_unread5/HR_seen5 median 0.56; read > unread in 30/32). Natives: designated lead designers seed no more spreadable ideas (#35, ratio 1.11 [0.82, 1.45]); the elected leader's ideas spread *less* (#26, 0.36 [0.27, 0.46]). Verdicts 9 supported / 23 mixed / 0 failed. Scorecard unchanged.
 
 Predictions were written 2026-10-04 01:30 UTC, before any real-data run.
 
@@ -363,6 +364,56 @@ The dry run on stand-ins passes all six, as it should on seen data (`results/con
 - #22 and #28 are targeted by H11 and H10.
 - None of those has run, and H34's observable (first-use cascades of novel markers) is a different statistic from all of them.
 - Avoided: #45 (H23's content copying), #14 (H24's numbers), #34 (six scripts).
+
+## Round 1b (improved data, 2026-10-04)
+
+### Inputs changed
+- **Visibility (DQ1 context ledger).** Round 1 imported H18's call-start rule on the `exposure` room table (the known issue "H34's cascade trees use H18's call-start visibility rule"). Round 1b: a use m is a visible exposure of agent j's use u iff m reached one of j's receiving calls (`context_ledger_items` ⋈ `call_windows`) no later than the call that produced u (j's latest `t_call` before u). The same rule sets k_src, the parent, the lag, the at-risk sets (HR₁₀, dose-response), the jitter null and the room contrast. The fallback share is 0 in every period (round 1: 0.1–1.7%).
+- **Copying vs convergence (H57).** New placebo at every at-risk talk turn: HR_seen5 = adoption hazard when another agent's use of the idea was posted in the last 5 min *and* already read by the producing call; HR_unread5 = the same when such a use exists but was still in flight (same room, read by a later call). Both against turns with no use in the last 5 min; idea-stratified conditional likelihood, profile CIs. Copying predicts HR_seen5 > 1 ≈ HR_unread5; contemporaneous convergence predicts HR_unread5 ≈ HR_seen5.
+- **Not used here:** activity bins, outages, embeddings and reply threading (H34's ideas are hashed text markers and its trees are exposure-based). Markers are unchanged.
+- **Code.** Switch `H34_DATA=r1b` in `scheme/h34core.py` (also read by `scheme/build.py` and `analysis/explore.py`); the default reproduces round 1 byte for byte (checked on #42: first uses, trees, at-risk, jitter and room tables identical). New: `analysis/r1b_natives.py` (natives, estimates). Outputs: `data/processed/H34-idea-cascades/r1b/` (9 MB; `results/period_table.parquet`, `summary.json`, `natives.json`). 162 rows in `per_period_estimates` (method `H34.r1b_ledger`, `H34.r1b_leader_seed`).
+
+### Old → new (32 non-holdout periods)
+| Statistic | Round 1 (H18 rule) | Round 1b (ledger) |
+| --- | --- | --- |
+| R̂ range (median) | 0.06–0.39 (0.21) | 0.09–0.40 (0.22); upper CI < 1 in 32/32, 113/113 class cells |
+| HR₁₀ lower CI > 1 (P5, A2) | 27/32 | **32/32** |
+| HR₁₀ median, regime I / II / III | 2.3 / 15 / 33 | **6.4** / 20 / 47 |
+| R_c median (R_c / R̂) | 0.15 (0.77) | 0.21 (0.89) |
+| Per-period verdicts (supported / mixed / failed) | 4 / 26 / 2 | **9 / 23 / 0** |
+| P3a FN-GW band covers P(s ≥ 3) and P(s ≥ 5) | 7/32 | 9/32 |
+| P4 ρ(R̂, H03 n̂_talk) | 0.06 (Holm p 1) | 0.19 (Holm p 0.33) |
+| P6 pooled HR(2 vs 1) median | 4.2 | 4.1 |
+| P7 pre-registered forecast coverage P(s ≥ 2) / P(s ≥ 3) | 36% / 46% | 38% / 47% |
+| P5a jitter excess p < 0.05 | 0/32 | 3/32 (test still fails its guard) |
+| **New (H57):** HR_seen5 > HR_unread5 | — | **30/32**; HR_unread5 lower CI > 1 in 25/32 |
+| **New:** HR_unread5 / HR_seen5, median (regime I / II / III) | — | **0.56** (0.60 / 0.61 / 0.31); on the log scale unread carries 69% of the seen effect |
+
+### Verdict changes
+- **Regime I was mismeasured, not weak.** Round 1's five regime-I failures of HR₁₀ (#7, #8, #11, #16, #17) came from the call-start rule (scheduled chat-mode calls and pauses): on the ledger all 21 regime-I periods pass and the regime-I median HR₁₀ nearly triples (2.3 → 6.4). G11 and G16 move from failed to mixed (HR₁₀ now passes, tail still heavy); G07, G08, G10, G17 and G23 move from mixed to supported. The regime step in HR₁₀ (I ≪ III) shrinks but stays (6 vs 47).
+- **The exposure-locked adoption is partly convergence.** Uses that were posted in the last 5 min but not yet read predict adoption too (25/32 periods with CI > 1), at about half the strength of read ones. Read uses beat unread ones in 30/32, so copying through reading is real, but HR₁₀ (and R_c) overstate it. Unread uses are on average *more recent* than read ones within the window, which favours convergence, so the copying excess HR_seen5/HR_unread5 (median ≈ 1.8) is a conservative estimate.
+- Unchanged: subcritical everywhere; no s^−3/2; τ_app is R̂ reparametrized; tails heavier than one branching law; P4 (activity gains) and P7 (pre-registered forecast) still fail; simple vs complex stays ambiguous.
+
+### Natives (predictions in the period READMEs, written 16:50 UTC before running)
+| Folder | Test | Result | Verdict |
+| --- | --- | --- | --- |
+| [G35](goalperiod-subhypotheses/G35/README.md) | DQ6 daily lead designers as idea seeders (6 room-days) | P(s ≥ 2) ratio 1.11 [0.82, 1.45] (227 vs 1,621 seeds). Negative control as written failed (49% of cross-room first uses exposed, because ideas spread inside the new room after crossing); post hoc, the crossing events are exposed in 6/235 (2.6%) | **mixed** (prediction > 1 failed) |
+| [G26](goalperiod-subhypotheses/G26/README.md) | DQ6 elected leader (from 01-05 19:35) as idea seeder | ratio **0.36 [0.27, 0.46]**; it seeds 7.5× more new markers per message, each far less taken up | **failed** (leader is a high-volume, low-uptake source) |
+
+Known idea origins (designated and elected leaders) are not visible as higher branching: authority does not raise R for the ideas a leader introduces.
+
+### Scorecard changes
+| Axis | Round 1 | 1b | Why |
+| --- | --- | --- | --- |
+| A mapping | 1 | 1 | Visibility is now the validated ledger; the regime dependence of HR₁₀ shrinks (×20 → ×7) but remains. |
+| C adequacy | 1 | 1 | HR₁₀ beats the field null in 32/32; the forecast still loses to the beta-binomial. |
+| D unfitted | 1 | 1 | Unchanged: both tail probabilities covered in only 9/32 (round 1: 7/32). |
+| E interventional | 0 | 0 | No NE test; natives use ground truth, not a step change. |
+| G ground truth | 1 | 1 | Known seeders (leaders) tested: no premium (#35), deficit (#26). Room crossings are unexposed (97%). |
+| H comparative | 1 | 1 | New rival, contemporaneous convergence (H57): partly beaten (seen > unread 30/32) but explains about half the hazard ratio. |
+| I transfer | 1 | 1 | 32/32 periods on both statistics. |
+
+**Model- and style-dependence.** No embedding enters H34 (ideas are hashed markers), so nothing here depends on bge vs gte or on style. The results depend on the marker rule and, for regime I, on the visibility rule: the regime-I HR₁₀ values are ledger-dependent (2.3 under the old rule). Suggested ratings: completeness 50 (from 42), faithfulness 2.0, usefulness 2.5.
 
 ## Round 2 redirects (2026-10-04)
 *Proposed by the round-1 agent; the coordinator may revise.*

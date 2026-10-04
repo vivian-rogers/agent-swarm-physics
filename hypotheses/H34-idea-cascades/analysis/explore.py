@@ -30,7 +30,7 @@ sys.path.insert(0, str(HERE.parent / "scheme"))
 import h34stats as S  # noqa: E402
 import h34core as C  # noqa: E402
 
-DATA = C.OUT
+DATA = C.OUT_RUN          # round 1b (H34_DATA=r1b): data/processed/H34-idea-cascades/r1b/
 RES = DATA / "results"
 ROOT = C.ROOT
 CLS = {0: "U", 1: "D", 2: "N", 3: "W"}
@@ -148,6 +148,8 @@ def class_stats(fu, tr, ar, jt, rx, N, cls_name, seed=0, full=True):
                  R_c_lo=R * max(0.0, 1 - 1 / l10) if (np.isfinite(l10) and l10 > 0) else 0.0,
                  R_c_hi=R * max(0.0, 1 - 1 / h10) if (np.isfinite(h10) and h10 > 0) else (R if h10 == np.inf else np.nan))
         d["contagion_pass"] = bool(np.isfinite(l10) and l10 > 1)
+        if "sr" in ar.columns:      # round 1b H57 placebo: read vs not-yet-read uses of the idea within the last 5 min
+            d.update(placebo_57(ar))
     if rx.height:
         ne, na, ue, ua = (float(rx[c].sum()) for c in ("n_exposed", "n_exposed_adopt", "n_unexposed", "n_unexposed_adopt"))
         d.update(rx_p_exp=na / ne if ne else np.nan, rx_p_unexp=ua / ue if ue else np.nan, rx_n_unexp=ue, rx_n_unexp_adopt=ua)
@@ -164,6 +166,27 @@ def class_stats(fu, tr, ar, jt, rx, N, cls_name, seed=0, full=True):
         elif ue >= 100 and ne > 0:
             d.update(rx_ratio=np.inf, rx_ratio_lo=np.nan, rx_ratio_hi=np.nan)
     return d
+
+
+def placebo_57(ar):
+    """Idea-stratified hazard ratios (conditional likelihood) at at-risk talk turns: >= 1 other agent's use posted in the
+    last 5 min and already read by this call (sr) vs none read or unread; and only unread ones (ur & ~sr, in flight: same
+    room, received by a later call) vs none. Copying predicts HR_seen > 1 = HR_unread; contemporaneous convergence
+    predicts HR_unread ~ HR_seen."""
+    w = ar.group_by("idea", "sr", "ur").agg(pl.col("turns").sum(), pl.col("adopts").sum())
+    piv = {}
+    for r in w.iter_rows(named=True):
+        key = "S" if r["sr"] else ("U" if r["ur"] else "N")
+        piv.setdefault(r["idea"], {}).setdefault(key, [0, 0])
+        piv[r["idea"]][key][0] += r["adopts"]; piv[r["idea"]][key][1] += r["turns"]
+    ideas = list(piv)
+    g = lambda k, j: np.array([piv[i].get(k, [0, 0])[j] for i in ideas], float)
+    out = {}
+    for lab, k in (("seen5", "S"), ("unread5", "U")):
+        hr, lo, hi = S.rate_ratio_cond(g(k, 0), g(k, 1), g("N", 0), g("N", 1))
+        out.update({f"hr_{lab}": hr, f"hr_{lab}_lo": lo, f"hr_{lab}_hi": hi, f"turns_{lab}": float(g(k, 1).sum()),
+                    f"adopts_{lab}": float(g(k, 0).sum())})
+    return out
 
 
 # ------------------------------------------------------------------------------------------- day-ahead forecasts

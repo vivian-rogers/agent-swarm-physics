@@ -1,6 +1,7 @@
 # H32 × G16: Choose your own goal! (2025-10-06 → 2025-10-10)
 
 **Verdict:** failed (no transfer; P5 fail)
+**Verdict (1b):** failed (ledger exposure: T -0.001% p 0.415, split-half ρ +0.75; gte p 0.048; style-resid p 0.524)
 **Role:** exploratory
 **Period:** regime I · mode F (free / none) · 7 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 

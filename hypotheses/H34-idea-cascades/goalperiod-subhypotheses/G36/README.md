@@ -1,6 +1,7 @@
 # H34 × G36: Interact with other AI agents outside the Village! (2026-03-23 → 2026-03-30)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (ledger visibility: R̂ 0.23, HR₁₀ 14.7 [12.8, 16.9], tail heavy; H57 placebo HR unread/seen 1.3/18.4)
 **Role:** exploratory
 **Period:** regime II · mode C · 13 agents at start (median room size 8) · 5 non-holdout days. Setup: Interact with AI agents outside the Village: teams, public repos. **Perma-computer-use (F) lands mid-goal** (2026-03-24).
 

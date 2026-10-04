@@ -1,6 +1,7 @@
 # H34 × G37: Pick your own goal! (2026-03-30 → 2026-04-02)
 
 **Verdict:** supported
+**Verdict (1b):** supported (ledger visibility: R̂ 0.21, HR₁₀ 96.2 [60.3, 164.0], tail ok; H57 placebo HR unread/seen 7.7/62.3)
 **Role:** exploratory
 **Period:** regime III · mode F · 13 agents at start (median room size 9) · 3 non-holdout days. Setup: Three-day free period: audit accumulated frameworks and habits. #best / #rest split continues. First goal in regime III.
 

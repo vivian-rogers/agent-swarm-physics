@@ -22,6 +22,12 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 SH = ROOT / "data/processed/shared"
 OUT = ROOT / "data/processed/H34-idea-cascades"
+# Round 1b (2026-10-04): H34_DATA=r1b switches visibility to the DQ1 context ledger and writes under OUT/r1b/.
+# Default (unset) reproduces round 1 exactly (H18 call-start rule on the `exposure` room table).
+R1B = os.environ.get("H34_DATA", "") == "r1b"
+OUT_RUN = OUT / "r1b" if R1B else OUT
+INF_US = np.iinfo(np.int64).max // 4
+RECENT_US = 300 * 1_000_000      # round 1b H57 placebo: same-lag window for seen vs unread uses
 US = 1_000_000
 GUARD_US = 1 * US            # H18: the talk's own action mirror is logged ~0.06 s before AGENT_TALK
 STALE_US = 6 * 3600 * US     # no turn within 6 h before a talk -> call start = t - 1 s (flagged)
@@ -64,7 +70,7 @@ class Shared:
         self.cal = pl.read_parquet(SH / "calendar.parquet")
         self.chat = pl.read_parquet(SH / "chat_core.parquet",
                                     columns=["t", "pt_date", "goal_no", "room", "speaker_kind", "agent", "human"]
-                                    ).with_row_index("msg")
+                                    + (["message_id"] if R1B else [])).with_row_index("msg")
         self.exposure = pl.read_parquet(SH / "exposure.parquet", columns=["msg", "agent"])
         self.roster = pl.read_parquet(SH / "roster.parquet")
         self.cc = set(self.roster.filter(pl.col("claude_code"))["agent"].to_list())
@@ -118,11 +124,45 @@ def period_inputs(sh: Shared, g: int, days: list[str] | None = None, uses: pl.Da
             ideas = sh.first_seen.filter(pl.col("first_goal") == g)["marker"].to_numpy()
         uses = sh.uses.filter(pl.col("msg").is_in(rows) & pl.col("marker").is_in(ideas))
     upos = np.array([pos[int(m)] for m in uses["msg"].to_numpy()], dtype=np.int64)
-    return dict(goal=g, days=days, rows=rows, t=t, kind=kind, sender=sender, human=human,
-                day=np.array([day_idx[d] for d in chat["pt_date"].to_list()], dtype=np.int16),
-                room=chat["room"].fill_null(-1).to_numpy().astype(np.int16), E=E, turns=turns, cc=sh.cc,
-                use_pos=upos, use_marker=uses["marker"].to_numpy().astype(np.int64),
-                use_cls=uses["cls"].to_numpy().astype(np.int8))
+    out = dict(goal=g, days=days, rows=rows, t=t, kind=kind, sender=sender, human=human,
+               day=np.array([day_idx[d] for d in chat["pt_date"].to_list()], dtype=np.int16),
+               room=chat["room"].fill_null(-1).to_numpy().astype(np.int16), E=E, turns=turns, cc=sh.cc,
+               use_pos=upos, use_marker=uses["marker"].to_numpy().astype(np.int64),
+               use_cls=uses["cls"].to_numpy().astype(np.int8))
+    if R1B:
+        out.update(ledger_arrays(chat, t, kind, sender, sh.n_agents, t0, t1))
+    return out
+
+
+def ledger_arrays(chat: pl.DataFrame, t: np.ndarray, kind: np.ndarray, sender: np.ndarray, n_agents: int, t0, t1) -> dict:
+    """Round 1b: TS[m, a] = t_call (us) of agent a's call that received message m (DQ1 context ledger; INF_US if never),
+    and cs[m] = t_call of the call that produced agent message m (the sender's latest call with t_call < t_m)."""
+    mids = chat["message_id"].to_list()
+    pos = pl.DataFrame({"message_id": mids, "pos": np.arange(len(mids), dtype=np.int64)})
+    it = pl.scan_parquet(SH / "context_ledger_items.parquet").select("turn_id", "message_id").join(
+        pos.lazy(), on="message_id", how="inner").collect()
+    cw = (pl.scan_parquet(SH / "call_windows.parquet").select("turn_id", "agent", "t_call", "holdout")
+          .filter((pl.col("t_call") >= t0) & (pl.col("t_call") <= t1)).collect())
+    assert not cw.filter(pl.col("turn_id").is_in(it["turn_id"].implode()))["holdout"].any(), "holdout call in a ledger join"
+    j = it.join(cw.select("turn_id", "agent", "t_call"), on="turn_id", how="inner")
+    TS = np.full((len(mids), n_agents), INF_US, dtype=np.int64)
+    if j.height:
+        np.minimum.at(TS, (j["pos"].to_numpy(), j["agent"].to_numpy().astype(np.int64)), _us(j["t_call"]))
+    cs = t - GUARD_US
+    cfb = np.ones(len(t), dtype=bool)
+    for a in np.unique(sender[kind == 0]):
+        if a < 0:
+            continue
+        ca = np.sort(_us(cw.filter(pl.col("agent") == int(a))["t_call"]))
+        idx = np.where((kind == 0) & (sender == a))[0]
+        if len(ca) == 0:
+            continue
+        k = np.searchsorted(ca, t[idx], side="left") - 1
+        ok = k >= 0
+        ok &= (t[idx] - ca[np.clip(k, 0, None)]) <= STALE_US
+        cs[idx[ok]] = ca[k[ok]]
+        cfb[idx[ok]] = False
+    return dict(TS=TS, cs=cs, cs_fb=cfb, n_ledger_items=int(j.height))
 
 
 # ------------------------------------------------------------------------------------------------ assembler
@@ -158,7 +198,11 @@ def assemble(inp: dict, atrisk_cap: int = 4000, seed: int = 0, with_null: bool =
     t, kind, sender = inp["t"], inp["kind"], inp["sender"]
     E, cc = inp["E"], inp["cc"]
     spk = _spk(kind, sender, inp["human"])
-    s_all, fb_all = call_starts(inp)
+    if "TS" in inp:          # round 1b: ledger call starts and receipts
+        s_all, fb_all, TS = inp["cs"], inp["cs_fb"], inp["TS"]
+    else:
+        s_all, fb_all = call_starts(inp)
+        TS = None
     last_day = int(inp["day"].max())
     agents = sorted(int(a) for a in np.unique(sender[kind == 0]) if int(a) >= 0 and int(a) not in cc)
     talk = {a: np.where((kind == 0) & (sender == a))[0] for a in agents}
@@ -197,15 +241,19 @@ def assemble(inp: dict, atrisk_cap: int = 4000, seed: int = 0, with_null: bool =
                 st, par_r, par_e, ksrc, nexp, lag, fvis = 0, -9, -9, 0, 0, 0, -1
             else:
                 su = s_all[u]
-                vis = (Pt < su) & E[P, a] & (Ps != a)
+                vis = ((TS[P, a] <= su) if TS is not None else ((Pt < su) & E[P, a])) & (Ps != a)
                 if vis.any():
                     vi = np.where(vis)[0]
                     st = 1
                     par_r, par_e = int(Ps[vi[-1]]), int(Ps[vi[0]])
                     ksrc, nexp = len(set(Ps[vi].tolist())), len(vi)
-                    fvis = int(Pt[vi[0]])
                     ts = talk_s[a]
-                    lag = int(np.sum((ts > fvis) & (talk[a] <= u)))
+                    if TS is not None:
+                        fvis = int(TS[P[vi], a].min())
+                        lag = int(np.sum((ts >= fvis) & (talk[a] <= u)))
+                    else:
+                        fvis = int(Pt[vi[0]])
+                        lag = int(np.sum((ts > fvis) & (talk[a] <= u)))
                 else:
                     st, par_r, par_e, ksrc, nexp, lag, fvis = 2, -9, -9, 0, 0, 0, -1
             rows_idea.append([a, u, st, par_r, par_e, ksrc, nexp, lag])
@@ -243,12 +291,15 @@ def assemble(inp: dict, atrisk_cap: int = 4000, seed: int = 0, with_null: bool =
                 other = Ps != a
                 tfo = Pt[other].min() if other.any() else Pt[0]
                 ta, sa, pa = talk_t[a], talk_s[a], talk[a]
-                visa = other & E[P, a]
-                vt = Pt[visa]
+                if TS is not None:
+                    vt = np.sort(TS[P[other], a]); vt = vt[vt < INF_US]
+                else:
+                    visa = other & E[P, a]
+                    vt = Pt[visa]
                 after = ta > tfo
                 exp_turn = np.zeros(len(ta), dtype=bool)
                 if len(vt):
-                    exp_turn = np.searchsorted(vt, sa, side="left") > 0
+                    exp_turn = np.searchsorted(vt, sa, side="right" if TS is not None else "left") > 0
                 first_exp = np.zeros(len(ta), dtype=bool)
                 ii = np.where(exp_turn & after)[0]
                 if len(ii):
@@ -278,11 +329,30 @@ def assemble(inp: dict, atrisk_cap: int = 4000, seed: int = 0, with_null: bool =
                 if not sel.any():
                     continue
                 idx = np.where(sel)[0]
-                visa = (Ps != a) & E[P, a]
-                vt, vs = Pt[visa], Ps[visa]
+                if TS is not None:
+                    oth = Ps != a
+                    tsv = TS[P[oth], a]
+                    okv = tsv < INF_US
+                    oo = np.argsort(tsv[okv], kind="stable")
+                    vt, vs = tsv[okv][oo], Ps[oth][okv][oo]
+                    side = "right"
+                    # H57 placebo flags: another agent's use posted within RECENT_US before the talk, read (TS <= call
+                    # start) vs not yet read (TS > call start, eventually received: same room, in flight)
+                    pt_o, ts_o = Pt[oth][okv], tsv[okv]
+                    sr = np.zeros(len(idx), dtype=bool); ur = np.zeros(len(idx), dtype=bool)
+                    lo_w = np.searchsorted(pt_o, ta[idx] - RECENT_US, side="left")
+                    hi_w = np.searchsorted(pt_o, ta[idx], side="left")
+                    for q in np.flatnonzero(hi_w > lo_w):
+                        tw_ = ts_o[lo_w[q]:hi_w[q]]
+                        sr[q] = bool(tw_.min() <= sa[idx][q]); ur[q] = bool(tw_.max() > sa[idx][q])
+                else:
+                    visa = (Ps != a) & E[P, a]
+                    vt, vs = Pt[visa], Ps[visa]
+                    side = "left"
+                    sr = ur = np.zeros(len(idx), dtype=bool)
                 kr = np.zeros(len(idx), dtype=np.int16)
                 if len(vt):
-                    cnt = np.searchsorted(vt, sa[idx], side="left")
+                    cnt = np.searchsorted(vt, sa[idx], side=side)
                     seen, cd = set(), np.zeros(len(vt) + 1, dtype=np.int16)
                     for q, x in enumerate(vs):
                         seen.add(int(x))
@@ -290,7 +360,7 @@ def assemble(inp: dict, atrisk_cap: int = 4000, seed: int = 0, with_null: bool =
                     ks = cd[cnt]
                     # recency window: sources whose use arrived within the agent's last MEM_TURNS call windows
                     s_back = np.r_[np.full(MEM_TURNS, np.iinfo(np.int64).min), sa][: len(sa)][idx]
-                    lo_r = np.searchsorted(vt, s_back, side="left")
+                    lo_r = np.searchsorted(vt, s_back, side=side)
                     for q in range(len(idx)):
                         if cnt[q] > lo_r[q]:
                             kr[q] = len(set(vs[lo_r[q]:cnt[q]].tolist()))
@@ -308,7 +378,7 @@ def assemble(inp: dict, atrisk_cap: int = 4000, seed: int = 0, with_null: bool =
                 for q in np.where(keep)[0]:
                     kb = min(int(ks[q]), 3)
                     tb = 0 if kb == 0 else (1 if tsince[q] == 1 else 2 if tsince[q] == 2 else 3 if tsince[q] <= 5 else 4)
-                    AR.append((mk, cl, kb, min(int(kr[q]), 3), tb, bool(adopt[q])))
+                    AR.append((mk, cl, kb, min(int(kr[q]), 3), tb, bool(adopt[q]), bool(sr[q]), bool(ur[q])))
             # ------------------------------------------------ 24 h exposed vs never-exposed contrast
             t_end = t_first + DAY_US
             win = (Pt >= t_first) & (Pt < t_end)
@@ -320,8 +390,12 @@ def assemble(inp: dict, atrisk_cap: int = 4000, seed: int = 0, with_null: bool =
                 w = (ta > t_first) & (ta < t_end)
                 if not w.any():
                     continue
-                visa = win & (Ps != a) & E[P, a]
-                exposed = bool(visa.any() and Pt[visa].min() < sa[w].max())
+                if TS is not None:
+                    tw = TS[P[win & (Ps != a)], a]
+                    exposed = bool(len(tw) and tw.min() <= sa[w].max())
+                else:
+                    visa = win & (Ps != a) & E[P, a]
+                    exposed = bool(visa.any() and Pt[visa].min() < sa[w].max())
                 adopted = a in fu and t[fu[a]] < t_end
                 if exposed:
                     ne += 1
@@ -335,7 +409,7 @@ def assemble(inp: dict, atrisk_cap: int = 4000, seed: int = 0, with_null: bool =
     tr_cols = ["idea", "cls", "tree", "root_agent", "root_type", "size", "depth", "censored", "day", "t_us"]
     jt_cols = ["idea", "cls", "agent", "pos", "obs_exposed", "obs_first_turn", "p_exp_30m", "n_c30m", "p_exp_1h", "n_c1h",
                "p_exp_2h", "n_c2h", "p_first_1h"]
-    ar_cols = ["idea", "cls", "kbin", "krbin", "tbin", "adopt"]
+    ar_cols = ["idea", "cls", "kbin", "krbin", "tbin", "adopt", "sr", "ur"]
     rx_cols = ["idea", "cls", "n_exposed", "n_exposed_adopt", "n_unexposed", "n_unexposed_adopt", "first_kind"]
     out = {
         "first_uses": pl.DataFrame(FU, schema=fu_cols, orient="row"),
@@ -344,11 +418,16 @@ def assemble(inp: dict, atrisk_cap: int = 4000, seed: int = 0, with_null: bool =
         "roomx": pl.DataFrame(RX, schema=rx_cols, orient="row"),
     }
     ar = pl.DataFrame(AR, schema=ar_cols, orient="row")
-    out["atrisk"] = (ar.group_by("idea", "cls", "kbin", "krbin", "tbin").agg(pl.len().alias("turns"), pl.col("adopt").sum().alias("adopts"))
-                     .sort("idea", "kbin", "krbin", "tbin") if ar.height else
+    if TS is None:      # round 1: same table as before (no H57 placebo flags)
+        ar = ar.drop("sr", "ur")
+    gk = ["idea", "cls", "kbin", "krbin", "tbin"] + (["sr", "ur"] if TS is not None else [])
+    out["atrisk"] = (ar.group_by(gk).agg(pl.len().alias("turns"), pl.col("adopt").sum().alias("adopts"))
+                     .sort(gk) if ar.height else
                      pl.DataFrame(schema={"idea": pl.Int64, "cls": pl.Int8, "kbin": pl.Int64, "krbin": pl.Int64, "tbin": pl.Int64,
+                                          **({"sr": pl.Boolean, "ur": pl.Boolean} if TS is not None else {}),
                                           "turns": pl.UInt32, "adopts": pl.UInt32}))
-    out["meta"] = dict(n_msgs=len(t), n_agent_msgs=int((kind == 0).sum()), n_agents=len(agents),
+    out["meta"] = dict(visibility="ledger" if TS is not None else "h18_call_start", n_ledger_items=int(inp.get("n_ledger_items", -1)),
+                       n_msgs=len(t), n_agent_msgs=int((kind == 0).sum()), n_agents=len(agents),
                        n_ideas=int(len(idea_ids)), s_fallback_frac=float(fb_all[kind == 0].mean()) if (kind == 0).any() else 0.0,
                        n_rooms_active=int(len(np.unique(inp["room"][kind == 0]))), last_day=last_day,
                        n_days=len(inp["days"]))

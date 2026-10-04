@@ -47,15 +47,24 @@ LINK_FEATURES = {"E60", "Eold", "lE015", "lE1560", "lE60240", "d11", "d12", "d13
 
 
 # ----------------------------------------------------------------------------------------------- loading (real data)
+def r1b_mode() -> tuple[bool, bool]:
+    """Round 1b switches (2026-10-04). H28_DATA=r1b: link exposures and visibility from the DQ1 context ledger
+    (r1b/G<NN>/exposures.parquet, calls.parquet). H28_TOUCH=work: touches are DQ4 agent work commits. Defaults: round 1."""
+    import os
+    return os.environ.get("H28_DATA", "") == "r1b", os.environ.get("H28_TOUCH", "") == "work"
+
+
 def load_period(folder: Path, universe: str = "U") -> dict:
     import polars as pl
+    led, work = r1b_mode()
+    f1b = folder.parent / "r1b" / folder.name
     meta = json.loads((folder / "meta.json").read_text())
     days = meta["days"]
     tb = pl.read_parquet(folder / "turn_bins.parquet")
     agents = sorted(set(tb["agent"].to_list()))
     amap = np.full(128, -1, np.int64)
     amap[np.array(agents)] = np.arange(len(agents))
-    touches = pl.read_parquet(folder / "touches.parquet")
+    touches = pl.read_parquet((f1b / "touches_work.parquet") if work else (folder / "touches.parquet"))
     links = pl.read_parquet(folder / "links.parquet")
     projects = [u["project"] for u in meta["universe"]]
     if universe == "U+":
@@ -74,7 +83,7 @@ def load_period(folder: Path, universe: str = "U") -> dict:
              room=links["room"].to_numpy().astype(np.int64),
              x=np.array([pidx.get(p, -1) for p in links["project"].to_list()], np.int64),
              addressed=[set(a or []) for a in links["addressed"].to_list()])
-    ex = pl.read_parquet(folder / "exposures.parquet")
+    ex = pl.read_parquet((f1b if led else folder) / "exposures.parquet")
     exj = links.select("lid", "msg").join(ex, on="msg", how="inner")
     ri = amap[exj["recipient"].to_numpy().astype(np.int64)]
     ok = ri >= 0
@@ -108,9 +117,18 @@ def load_period(folder: Path, universe: str = "U") -> dict:
     KI = dict(human=(hm["t_ms"].to_numpy(), hm["room"].fill_null(-1).to_numpy().astype(np.int64)),
               auto=(am["t_ms"].to_numpy(), am["room"].fill_null(-1).to_numpy().astype(np.int64)),
               kickoff=ko["t_ms"].to_numpy())
-    return dict(goal=meta["goal"], days=days, agents=agents, K=K, projects=projects, touches=T, links=L, expo=E,
-                turns=tdict, ev_turns=edict, pre_ne09=meta["pre_ne09"], active=A, roster=roster, plans=PL, kicks=KI,
-                meta=meta)
+    out = dict(goal=meta["goal"], days=days, agents=agents, K=K, projects=projects, touches=T, links=L, expo=E,
+               turns=tdict, ev_turns=edict, pre_ne09=meta["pre_ne09"], active=A, roster=roster, plans=PL, kicks=KI,
+               meta=meta)
+    if led:
+        cl = pl.read_parquet(f1b / "calls.parquet")
+        vc = {}
+        for (a,), sub in cl.group_by(["agent"], maintain_order=True):
+            i = amap[int(a)]
+            if i >= 0:
+                vc[int(i)] = np.sort(sub["t_ms"].to_numpy())
+        out["vis_calls"] = vc
+    return out
 
 
 # ----------------------------------------------------------------------------------------------- bins and grids
@@ -241,13 +259,14 @@ def build_rows(P, B=None, G=None):
 def visibility(P, t_post, ri):
     """Visibility time of a link posted at t_post for recipient ri: first logged turn at/after the post."""
     out = np.full(len(t_post), -1, np.int64)
-    src = P["ev_turns"] if P["pre_ne09"] else P["turns"]
+    led = "vis_calls" in P      # round 1b: the recipient's first receiving call with t_call > t_post (DQ1 ledger rule)
+    src = P["vis_calls"] if led else (P["ev_turns"] if P["pre_ne09"] else P["turns"])
     for a in np.unique(ri):
         m = ri == a
         tv = src.get(int(a), np.zeros(0, np.int64))
         if len(tv) == 0:
             continue
-        j = np.searchsorted(tv, t_post[m], "left")
+        j = np.searchsorted(tv, t_post[m], "right" if led else "left")
         ok = j < len(tv)
         out[np.where(m)[0][ok]] = tv[j[ok]]
     return out

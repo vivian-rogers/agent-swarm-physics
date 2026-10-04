@@ -32,6 +32,16 @@ from common import holdout_mask, load_holdout, load_whitener  # noqa: E402
 
 SH = ROOT / "data/processed/shared"
 DATA = ROOT / "data/processed/H32-information-current-leaders"
+# Round 1b switches (2026-10-04); all unset = round 1 exactly.
+#   H32_DATA=r1b   exposure on DQ1 ledger call starts: i's message is seen by j's message m iff it was posted in j's room
+#                  before t_call of the call that produced m (call_windows); later same-room messages are "unread" (in flight)
+#   H32_EMB=bge|gte|style   statement vectors: bge-small (round 1), gte-modernbert (DQ5), bge style_resid_period (DQ5)
+#   H32_S0=other|unread     what the second source term holds: other-room unseen messages (round 1) or the H57
+#                  placebo, same-room messages not yet read by the producing call
+R1B = os.environ.get("H32_DATA", "") == "r1b"
+EMB_VARIANT = os.environ.get("H32_EMB", "bge")
+S0_MODE = os.environ.get("H32_S0", "other")
+OUT_R1B = DATA / "r1b" / (EMB_VARIANT + ("_unread" if S0_MODE == "unread" else ""))
 HUMAN, AUTO = 100, 101
 SEED = 20261003
 
@@ -131,7 +141,11 @@ def field_basis(goal_no: int, regime: str, u_agent: np.ndarray, day: np.ndarray,
         if "white" in fields:  # synthetic: field vectors already in the whitened space
             G = unit(fields["white"]); kind = fields["kind"]
         else:
-            W = load_whitener(regime, dim)
+            if R1B and EMB_VARIANT == "gte":
+                import embed_models as EM
+                W = EM.load_whitener(regime, dim, model="gte_modernbert")
+            else:
+                W = load_whitener(regime, dim)
             G = unit(W(fields[f"g{goal_no}_raw"]))
             kind = fields[f"g{goal_no}_kind"]
         if K == 1:
@@ -172,14 +186,17 @@ def load_period(goal_no: int, dim: int = None, K_field: int = None, allow_holdou
         assert goal_no not in set(h["goal_periods_held_out"]), "held-out goal period"
         assert not any(holdout_mask(pi["days"], [goal_no] * len(pi["days"]))), "holdout day"
     msgs = pl.read_parquet(base / "messages.parquet").with_row_index("row").filter(pl.col("goal_no") == goal_no)
-    V = np.load(base / "vec_w64.npy", mmap_mode="r")
+    vfile = {"bge": base / "vec_w64.npy", "gte": base / "r1b" / "vec_w64_gte.npy",
+             "style": base / "r1b" / "vec_style32_bge.npy"}[EMB_VARIANT if R1B else "bge"]
+    V = np.load(vfile, mmap_mode="r")
     rows = msgs["row"].to_numpy()
     U = unit(np.asarray(V[rows, :dim], np.float32))
     kind = msgs["kind"].to_numpy(); spk = msgs["spk"].to_numpy().astype(np.int16)
     tt = np.array([x.timestamp() for x in msgs["t"].to_list()])
     day = msgs["day"].to_numpy().astype(np.int16)
     room = msgs["room"].fill_null(-1).to_numpy().astype(np.int16)
-    fz = dict(np.load(base / "fields.npz")) if text_fields else None
+    fz = dict(np.load((base / "r1b" / "fields_gte.npz") if (R1B and EMB_VARIANT == "gte") else (base / "fields.npz"))) \
+        if text_fields else None
     ag_chat = (kind == 0) & (spk < 100)
     Q = field_basis(goal_no, pi["regime_basis"], U[ag_chat], day[ag_chat], room[ag_chat], K_field, dim, fz)
     Z = U - (U @ Q) @ Q.T
@@ -191,7 +208,38 @@ def load_period(goal_no: int, dim: int = None, K_field: int = None, allow_holdou
                   tt[~c], spk[~c], Z[~c], load_rooms_tl(agents), agents,
                   {"mode": pi["mode"], "regime": pi["regime_basis"], "K_field_eff": int(Q.shape[1]), "dim": dim,
                    "rooms_populated": pi["rooms_populated"]})
+    if R1B:
+        sk.meta["calls"] = ledger_calls(agents, ws[0] - 8 * 3600, ws[-1] + 30 * 3600)
     return sk
+
+
+def ledger_calls(agents, t0: float, t1: float) -> dict:
+    """Round 1b: sorted call start times (t_call, epoch s) per agent from DQ1 call_windows (non-holdout rows only)."""
+    cw = (pl.scan_parquet(SH / "call_windows.parquet").select("agent", "t_call", "holdout")
+          .filter(pl.col("agent").is_in([int(a) for a in agents])
+                  & (pl.col("t_call") >= dt.datetime.fromtimestamp(t0, dt.timezone.utc))
+                  & (pl.col("t_call") <= dt.datetime.fromtimestamp(t1, dt.timezone.utc)) & ~pl.col("holdout")).collect())
+    out = {}
+    for (a,), sub in cw.group_by(["agent"]):
+        out[int(a)] = np.sort(sub["t_call"].dt.epoch("us").to_numpy() / 1e6)
+    return out
+
+
+def call_start_of(sk: "Skeleton", tgt: np.ndarray) -> np.ndarray:
+    """t_call of the call that produced each target message (the speaker's latest call starting before it)."""
+    c = sk.t[tgt] - P["min_gap_s"]
+    calls = sk.meta.get("calls", {})
+    for a in np.unique(sk.spk[tgt]):
+        m = sk.spk[tgt] == a
+        ca = calls.get(int(a))
+        if ca is None or len(ca) == 0:
+            continue
+        k = np.searchsorted(ca, sk.t[tgt][m], side="left") - 1
+        ok = (k >= 0) & (sk.t[tgt][m] - ca[np.clip(k, 0, None)] <= 6 * 3600)
+        cc = c[m]
+        cc[ok] = ca[k[ok]]
+        c[m] = cc
+    return c
 
 
 # ======================================================================================== predictors
@@ -227,7 +275,14 @@ def decayed_sums(sk: Skeleton, tgt: np.ndarray, t_src: np.ndarray, day_src: np.n
     keep = (day_src[x] == dm[rep]) & (spk_src[x] != jm[rep]) & (src_k[x] >= 0)
     rep, x = rep[keep], x[keep]
     ja = np.array([agent_index[int(j)] for j in jm])
-    ex = R[x, ja[rep]]
+    ex = R[x, ja[rep]].astype(np.int8)
+    if "calls" in sk.meta:      # round 1b: same-room messages posted after the producing call started were not yet read
+        cm = call_start_of(sk, tgt)
+        unread = (ex == 1) & (t_src[x] >= cm[rep])
+        ex[unread] = 2
+        if S0_MODE == "unread":
+            ex[ex == 0] = 3      # other-room messages leave the model; the second term holds the unread placebo
+            ex[ex == 2] = 0
     w = np.exp(-(tm[rep] - t_src[x]) / tau)
     for val, S, W in ((1, S1, W1), (0, S0, W0)):
         m = ex == val

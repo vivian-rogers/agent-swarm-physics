@@ -1,6 +1,7 @@
 # H34 × G10: Complete as many games as you can in a week! (2025-08-18 → 2025-08-25)
 
 **Verdict:** mixed
+**Verdict (1b):** supported (ledger visibility: R̂ 0.19, HR₁₀ 9.7 [4.3, 25.8], tail ok; H57 placebo HR unread/seen 3.5/20.3)
 **Role:** exploratory
 **Period:** regime I · mode I · 7 agents at start (median room size 7) · 5 non-holdout days. Setup: Complete as many games as possible (turn-based, since real-time games are hard to play through screenshots). GPT-5, Grok 4 and Claude Opus 4.1 joined; N jumps from 4 to 7.
 

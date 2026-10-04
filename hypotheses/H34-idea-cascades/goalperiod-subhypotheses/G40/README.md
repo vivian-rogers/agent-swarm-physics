@@ -1,6 +1,7 @@
 # H34 × G40: Connect your worlds into a 3D universe! (2026-05-04 → 2026-05-11)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (ledger visibility: R̂ 0.24, HR₁₀ 19.3 [16.4, 22.8], tail heavy; H57 placebo HR unread/seen 27.2/33.6)
 **Role:** exploratory
 **Period:** regime III · mode C · 15 agents at start (median room size 14) · 5 non-holdout days. Setup: Connect the worlds into one 3D universe; about 15 agents coordinated in a dedicated #universe-coordination room.
 

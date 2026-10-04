@@ -1,6 +1,7 @@
 # H28 × G37: Pick your own goal! (2026-03-30 → 2026-04-02)
 
 **Verdict:** mixed (P1 weak)
+**Verdict (1b):** supported (ledger visibility: κ +1.60 ± 0.33, z_shift +2.6, κ_lead +1.27; work switches κ +2.02 ± 0.43, z +1.6, lead +1.43)
 **Role:** exploratory (candidate)
 **Period:** regime III · mode F · 12 agents on the roster · 3 non-holdout days.
 

@@ -1,6 +1,7 @@
 # H28: Links are the contagion vector of herding
 
 **Status:** exploratory round 1 done (2026-10-04). **The contagion claim is not supported as posed.** Seeing a link to project X goes with a higher switch hazard to X almost everywhere (pooled e^κ = 2.3, 13/14 periods p < 0.05). But in herding weeks **future links predict switches better than past ones** (pooled κ_lead − κ = +1.17 ± 0.30). Naive agents are already switching at 3.3× baseline in the hour before they first see a link. The 60-min effect beats a ±30–120 min link shift in only 3/11 herding periods (card-level P1 failed). Links mark conversational attention bursts more than they drive them. A directed link → visit signature appears only in own-artifact weeks, where nobody herds. Simulated removal of all links cuts peak pile-ons to ×0.79 (median; an upper bound). Predictions were written 2026-10-04 before any real-data run; the frozen holdout test is written, not run.
+**Round 1b (2026-10-04, context-ledger visibility, DQ4 work switches):** pre-NE09 periods were mismeasured by the old turn rule (#18 κ +0.28 → +1.48, #19 now supported), so 5/11 herding periods beat the link time-shift null (was 3/11; card-level P1 failed → mixed). But future links still beat past ones (pooled −1.04 ± 0.24), and **recipients switch at 6.5× baseline in the ~17 s before they can read the link, more than after reading (3.5×)**: links mark bursts. NE09's premise is void (the ledger delay is 17 s on both sides). Work switches repeat the pattern (#31 native: κ_work +0.57, z +0.2, lead > lag); own-artifact recruitment does not reach commits.
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH114 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`). Related: HH109 (early warning of herding waves), HH79 (group exposure beats pairwise: tested here as complex contagion via distinct senders). Follows H11's next step 2 (kinetic Potts with `exposure`).
 **Definitions used:** "Interaction (broadcast)", with a named variant proposed for DEFINITIONS.md, **interaction (link exposure, call-start visible)**; "Contagion / adoption event", with a named variant **arrival (project switch-in)**; H11's **agent state (categorical, project/artifact strict)**, used here in a multi-label form (**on-project state**); "Regime"; "Population N(t)" (active-population variant: agents with ≥ 1 logged turn in a 5-min bin). All defined under Data scheme.
@@ -255,6 +256,53 @@ If future links predict switches as well as past links do (lead ≥ lag), links 
 3. Use `kicks_classified.parquet` to split exposures by sender type (nudges, human, agent announcements) and by addressed vs broadcast links: addressed links add +0.60 ± 0.16 (pooled).
 4. Read the text of link messages (gated; Phase 2) to separate announcements ("I made X") from requests ("please review X"); the two predict opposite lead/lag patterns.
 5. Re-check regime-I visibility (H18, H08), since P8 suggests chat may reach agents through unlogged turns.
+
+## Round 1b (improved data, 2026-10-04)
+
+### Inputs changed
+- **Visibility (DQ1 context ledger).** Round 1: t_vis = the recipient's first logged turn after posting, and before NE09 (#18, #19) the next `events_core` turn. Round 1b: t_vis = `t_call` of the recipient's call that received the link (`context_ledger_items` ⋈ `call_windows`); shifted links get the recipient's first receiving call after the shifted time. Recipient sets are unchanged (≥ 99.9% of pairs in both); the delay changes little after NE09 (median 14–24 s in both rules) but a lot before it (#18: 82 → 18 s; #19: 140 → 17 s).
+- **Work switches (DQ4).** A second outcome: touches are agent work commits (`canonical & ~imported & author_kind == agent & ~automated`) to round 1's universe projects; tested in the git-dense periods #30–#42 (≥ 30 work arrivals). RE-P1's finding that work herds onto the same repos as attention motivated this.
+- **Not affected:** activity (H28's active bins come from logged turns, not `activity_bins`), outages, embeddings. The addressed-link control still uses `mentions_roster` (descriptive only).
+- **Code.** Switches `H28_DATA=r1b` and `H28_TOUCH=work` in `analysis/h28core.py` (read by `analysis/explore.py`; outputs go to `r1b/`, never over round 1). New: `scheme/build_r1b.py`, `analysis/r1b_natives.py` (NE09 blind window), `analysis/r1b_assemble.py` (tables, verdict lines, 65 `per_period_estimates` rows). Draws reduced to save compute: 39 link shifts and 40 simulations per period (#51: 19 shifts, no simulations; round 1: 99 / 200). Outputs in `data/processed/H28-links-spread-herding/r1b/` (5 MB).
+
+### Old → new (11 tested herding periods; contrast weeks separately)
+| Statistic | Round 1 | 1b ledger | 1b work switches (#30, #31, #37, #38, #41) |
+| --- | --- | --- | --- |
+| P1 per period (supported / weak / failed) | 3 / 7 / 1 | **5 / 6 / 0** (#19 and #37 join #24, #30, #51) | 1 / 3 / 1 |
+| Card-level P1 (≥ 2/3 supported; failed if ≤ 1/3) | failed (3/11) | **mixed** (5/11) | — |
+| Pooled κ (DL random effects) | +0.83 ± 0.12 (e^κ 2.3) | +0.97 ± 0.13 (e^κ 2.6) | +1.04 ± 0.27 |
+| κ > 0 at p < 0.05; z_shift ≥ 2 | 10/11; 3/11 | 11/11; 5/11 | 4/5; 1/5 |
+| Pooled κ − κ_lead (P2a) | −1.17 ± 0.30 | **−1.04 ± 0.24** | −0.57 ± 0.37 |
+| κ_lead ≥ κ | 9/11 | 9/11 | 3/5 |
+| Pre-NE09 #18 / #19: κ (z_shift) | +0.28 (−6.1) / +0.66 (−0.8) | **+1.48 (−0.2) / +1.26 (+3.2)** | — |
+| Naive agents, pooled κ | +1.31 | +1.63 | +1.85 |
+| λ median; R_link median (max) | 0.036; 0.18 (0.44) | 0.043; 0.20 (0.44) | 0.014; 0.24 |
+| f = 0 peak occupancy, median | ×0.77 | ×0.71 (40 simulations) | — |
+| Own-artifact weeks (#39, #40, #42): κ − κ_lead pooled | +0.72 ± 0.24 (3/3 supported) | +0.63 ± 0.24 (3/3 supported) | +0.88 ± 0.35, but κ_work ≈ 0 (0/3) |
+
+### Verdict changes
+- **The pre-NE09 periods were mismeasured.** With the old event-turn rule, #18's links looked worthless (z −6.1). On the ledger, #18 and #19 look like the other herding weeks, and #19 now passes P1. Five herding periods beat the link time-shift null (was three), so the card-level P1 moves from failed to **mixed**.
+- **The central finding is unchanged.** Future links still predict switches better than past ones (pooled −1.04 ± 0.24; 9/11). The blind-window native (NE09) adds a direct test: in the ~17 s between posting and reading, recipients switch at 6.5× the baseline, more than in the 15 min after reading (3.5×). Links mark bursts; they do not mainly act by being read.
+- **In work, links do not recruit either.** Work switches show the same lead ≥ lag pattern (3/5) and beat the shift null only in #41. In own-artifact weeks the attention-level recruitment (lag > lead) does not reach commits (κ_work ≈ 0): agents look at an advertised world but do not start working on it.
+- Period lines: #18 failed → mixed; #19 mixed → supported; #37 mixed → supported; the others keep their round-1 class.
+
+### Natives (predictions in the period READMEs, written 16:40 UTC before running)
+| Folder | Test | Result | Verdict |
+| --- | --- | --- | --- |
+| [NE09](goalperiod-subhypotheses/NE09/README.md) | NE09 on ledger visibility; blind window (t_post, t_vis] vs read window | Premise void: ledger delay 17 s before vs 18 s after NE09 (DQ1: chat reached computer use throughout). E_blind 6.5 [5.3, 7.7] vs E_read 3.5 [3.3, 3.7] (pre 16.6 vs 4.5; post 3.7 vs 3.1); only #31 has E_blind < 1 | **failed** (co-burst, not reading) |
+| [G31](goalperiod-subhypotheses/G31/README.md) | time-capsule wave in work commits | κ_work +0.57 ± 0.24, z_shift +0.2, κ_lead +1.20 > κ | **failed** (as predicted: links mark the work wave too) |
+
+### Scorecard changes
+| Axis | Round 1 | 1b | Why |
+| --- | --- | --- | --- |
+| A mapping | 1 | 1 | Ledger visibility removes the regime-I timing doubt; touches are still attention, now complemented by work. |
+| C adequacy | 1 | 1 | 5/11 beat the shift null (was 3/11). |
+| E interventional | 0 | 0 | NE09 is not an intervention on visibility (premise void). The blind window is a within-period design, not an NE. |
+| G ground truth | 1 | 1 | #31 wave in work reproduces the attention pattern. |
+| H comparative | 1 | 1 | R1 (common drive / co-burst) now beaten even less: blind-window switches exceed read-window switches. |
+| Others | | unchanged | |
+
+**Model- and style-dependence.** No embeddings; nothing here is model- or style-dependent. The pre-NE09 results are visibility-rule-dependent (round 1 vs ledger), and the work variant depends on the DQ4 automation filter. Suggested ratings: completeness 52 (from 42), faithfulness 1.5, usefulness 2.5.
 
 ## Notes
 - **From H53 (2026-10-04):** at a project's *first* chat link adoptions jump ×22.5 (18 before vs 592 after for brand-new projects; ×3.8 for carried-over ones), with only 1.5% of adopters lacking the link in context. H28's lead > lag pattern applies to projects already known; first links are real seeds.

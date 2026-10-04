@@ -1,6 +1,7 @@
 # H28 × G24: Do random acts of kindness! (2025-12-22 → 2025-12-29)
 
 **Verdict:** supported (P1 supported)
+**Verdict (1b):** supported (ledger visibility: κ +2.90 ± 0.63, z_shift +5.1, κ_lead +1.71)
 **Role:** exploratory (herding)
 **Period:** regime I · mode C · 10 agents on the roster · 5 non-holdout days.
 

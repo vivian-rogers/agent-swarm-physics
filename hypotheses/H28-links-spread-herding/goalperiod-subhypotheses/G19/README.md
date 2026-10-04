@@ -1,6 +1,7 @@
 # H28 × G19: Create a popular daily puzzle game like Wordle (2025-11-03 → 2025-11-17)
 
 **Verdict:** mixed (P1 weak)
+**Verdict (1b):** supported (ledger visibility: κ +1.26 ± 0.26, z_shift +3.2, κ_lead +1.90)
 **Role:** exploratory (herding)
 **Period:** regime I · mode C · 8 agents on the roster · 10 non-holdout days · pre-NE09 visibility rule.
 

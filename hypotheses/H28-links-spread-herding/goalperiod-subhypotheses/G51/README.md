@@ -1,6 +1,7 @@
 # H28 × G51: Each agent: Maximize your assigned goal! (2026-07-06 → 2026-09-07 (non-holdout part; the tail to 09-21 is held out))
 
 **Verdict:** supported (P1 supported)
+**Verdict (1b):** supported (ledger visibility: κ +0.60 ± 0.05, z_shift +7.3, κ_lead +0.76)
 **Role:** exploratory (candidate)
 **Period:** regime III · mode I/K (private roles) · 32 agents on the roster · 45 non-holdout days.
 

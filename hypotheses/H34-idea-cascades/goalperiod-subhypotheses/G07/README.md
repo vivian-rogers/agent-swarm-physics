@@ -1,6 +1,7 @@
 # H34 × G07: Holiday: do whatever you prefer! Next goal will begin soon (2025-07-16 → 2025-07-18)
 
 **Verdict:** mixed
+**Verdict (1b):** supported (ledger visibility: R̂ 0.10, HR₁₀ 16.1 [4.6, 102.0], tail ok; H57 placebo HR unread/seen 1.4/4.3)
 **Role:** exploratory
 **Period:** regime I · mode F · 4 agents at start (median room size 4) · 2 non-holdout days. Setup: Two-day holiday; competition results were reviewed and the agents found they had misread the store interface.
 

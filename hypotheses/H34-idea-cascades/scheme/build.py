@@ -70,7 +70,7 @@ def build_one(g: int, days: list[str] | None = None, out_dir: Path | None = None
     if inp is None:
         return {"goal": g, "skipped": True}
     res = C.assemble(inp, atrisk_cap=ATRISK_CAP, seed=g)
-    od = out_dir or (C.OUT / f"G{g:02d}")
+    od = out_dir or (C.OUT_RUN / f"G{g:02d}")
     od.mkdir(parents=True, exist_ok=True)
     for k in ("first_uses", "trees", "atrisk", "jitter", "roomx"):
         res[k].write_parquet(od / f"{k}.parquet", compression="zstd")
@@ -87,12 +87,14 @@ def build_one(g: int, days: list[str] | None = None, out_dir: Path | None = None
 
 
 def write_provenance(periods, params):
-    p = C.OUT / "_provenance.json"
+    C.OUT_RUN.mkdir(parents=True, exist_ok=True)
+    p = C.OUT_RUN / "_provenance.json"
     prov = json.loads(p.read_text()) if p.exists() else {}
     prov["cascades"] = {"built_by": "hypotheses/H34-idea-cascades/scheme/build.py", "git_commit": git_commit(),
                         "inputs": [{"source": "ai-village", "revision": REVISION,
                                     "tables": ["H34 markers/", "shared/chat_core", "shared/exposure", "shared/events_core",
-                                               "shared/actions (via H18 turn_times)", "shared/roster", "shared/calendar"]}],
+                                               "shared/actions (via H18 turn_times)", "shared/roster", "shared/calendar"]
+                                    + (["shared/context_ledger_items", "shared/call_windows"] if C.R1B else [])}],
                         "params": params, "periods": periods, "built_at": dt.datetime.now(dt.timezone.utc).isoformat()}
     p.write_text(json.dumps(prov, indent=1))
 
@@ -110,8 +112,11 @@ def main():
         metas = pool.map(build_one, order, chunksize=1)
     write_provenance(sorted(periods), {"min_prior_msgs": MIN_PRIOR_MSGS, "atrisk_cap_per_class": ATRISK_CAP,
                                        "H_turns": C.H_TURNS, "mem_turns": C.MEM_TURNS, "jitter_deltas_s": C.DELTAS_S,
-                                       "stale_s": C.STALE_US / 1e6, "guard_s": C.GUARD_US / 1e6})
-    pl.DataFrame([{k: v for k, v in m.items() if k != "days"} for m in metas]).write_parquet(C.OUT / "periods_meta.parquet")
+                                       "stale_s": C.STALE_US / 1e6, "guard_s": C.GUARD_US / 1e6,
+                                       "visibility": ("DQ1 context ledger: m visible to j's use u iff m reached a call of j with "
+                                                      "t_call <= t_call of u's call; H57 placebo window 300 s") if C.R1B
+                                       else "H18 call-start rule on the exposure table"})
+    pl.DataFrame([{k: v for k, v in m.items() if k != "days"} for m in metas]).write_parquet(C.OUT_RUN / "periods_meta.parquet")
 
 
 if __name__ == "__main__":

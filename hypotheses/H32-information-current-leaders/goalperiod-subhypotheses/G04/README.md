@@ -1,6 +1,7 @@
 # H32 × G04: Write a story and celebrate it with 100 people in person (2025-05-15 → 2025-06-18)
 
 **Verdict:** supported (transfer, split-half ρ +0.30; P5 pass)
+**Verdict (1b):** mixed (ledger exposure: T +0.028% p 0.024, split-half ρ -0.20; gte p 0.048; style-resid p 0.048)
 **Role:** exploratory
 **Period:** regime I · mode C (shared objective) · 6 agents · 1 room with ≥ 20 agent messages · 25 days. No splits (one unit per goal period).
 

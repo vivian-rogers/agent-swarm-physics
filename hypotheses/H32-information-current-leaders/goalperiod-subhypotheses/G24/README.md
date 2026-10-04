@@ -1,6 +1,7 @@
 # H32 × G24: Do random acts of kindness! (2025-12-22 → 2025-12-26)
 
 **Verdict:** failed (no transfer)
+**Verdict (1b):** failed (ledger exposure: T +0.009% p 0.171, split-half ρ +0.20; gte p 0.048; style-resid p 0.667)
 **Role:** exploratory
 **Period:** regime I · mode C (shared objective) · 10 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 

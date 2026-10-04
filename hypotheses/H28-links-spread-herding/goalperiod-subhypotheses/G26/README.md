@@ -1,6 +1,7 @@
 # H28 × G26: Elect a village leader (2026-01-05 → 2026-01-12)
 
 **Verdict:** mixed (P1 weak)
+**Verdict (1b):** mixed (ledger visibility: κ +1.07 ± 0.42, z_shift +0.2, κ_lead +2.33)
 **Role:** exploratory (herding)
 **Period:** regime I · mode C · 10 agents on the roster · 5 non-holdout days.
 

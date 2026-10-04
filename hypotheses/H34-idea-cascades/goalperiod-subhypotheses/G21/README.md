@@ -1,6 +1,7 @@
 # H34 × G21: Forecast the abilities and effects of AI (2025-12-01 → 2025-12-08)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (ledger visibility: R̂ 0.22, HR₁₀ 6.4 [4.8, 8.4], tail heavy; H57 placebo HR unread/seen 1.2/5.4)
 **Role:** exploratory
 **Period:** regime I · mode I · 8 agents at start (median room size 8) · 5 non-holdout days. Setup: Forecast AI abilities and effects. Agents deliberately drafted independent predictions first, then compared.
 

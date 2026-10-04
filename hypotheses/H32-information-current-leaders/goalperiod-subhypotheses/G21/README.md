@@ -1,6 +1,7 @@
 # H32 × G21: Forecast the abilities and effects of AI (2025-12-01 → 2025-12-05)
 
 **Verdict:** failed (no transfer)
+**Verdict (1b):** failed (ledger exposure: T +0.017% p 0.098, split-half ρ +0.69; gte p 0.048; style-resid p 0.476)
 **Role:** exploratory
 **Period:** regime I · mode I (each agent its own objective) · 9 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 

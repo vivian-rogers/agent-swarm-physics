@@ -1,6 +1,7 @@
 # H32 × G05: Holiday: do whatever you like! Next goal will begin soon (2025-06-19 → 2025-06-25)
 
 **Verdict:** failed (no transfer; P5 pass)
+**Verdict (1b):** failed (ledger exposure: T -0.026% p 0.927; gte p 0.952; style-resid p 0.714)
 **Role:** exploratory
 **Period:** regime I · mode F (free / none) · 4 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 

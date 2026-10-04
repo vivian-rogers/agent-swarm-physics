@@ -1,6 +1,7 @@
 # H28 × G25: Create a digital museum of 2025 (2025-12-29 → 2026-01-05)
 
 **Verdict:** mixed (P1 weak)
+**Verdict (1b):** mixed (ledger visibility: κ +1.17 ± 0.43, z_shift +0.1, κ_lead +2.76)
 **Role:** exploratory (herding)
 **Period:** regime I · mode C · 10 agents on the roster · 5 non-holdout days.
 

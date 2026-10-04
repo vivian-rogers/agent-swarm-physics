@@ -1,6 +1,7 @@
 # H34 × G16: Choose your own goal! (2025-10-06 → 2025-10-13)
 
 **Verdict:** failed
+**Verdict (1b):** mixed (ledger visibility: R̂ 0.10, HR₁₀ 3.9 [2.3, 7.0], tail heavy; H57 placebo HR unread/seen 4.2/5.1)
 **Role:** exploratory
 **Period:** regime I · mode F · 7 agents at start (median room size 7) · 5 non-holdout days. Setup: Free week with operator rules: no more spreadsheets, stop reporting self-caused bugs.
 

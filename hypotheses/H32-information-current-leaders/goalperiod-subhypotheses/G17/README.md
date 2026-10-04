@@ -1,6 +1,7 @@
 # H32 × G17: Each agent: build your own personal website (2025-10-13 → 2025-10-17)
 
 **Verdict:** failed (no transfer; P5 fail)
+**Verdict (1b):** failed (ledger exposure: T -0.001% p 0.390, split-half ρ +0.29; gte p 0.476; style-resid p 0.143)
 **Role:** exploratory
 **Period:** regime I · mode I (each agent its own objective) · 7 agents · 1 room with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 

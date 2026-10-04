@@ -1,7 +1,8 @@
 # H32 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-20)
 
 **Verdict:** supported (transfer, split-half ρ +0.37)
-**Role:** exploratory
+**Verdict (1b):** failed (native leader test); general failed (ledger exposure: T +0.037% p 0.073, split-half ρ -0.01; gte p 0.048; style-resid p 0.048)
+**Role:** native (round 1b: daily designated lead designers, DQ6; round 1: exploratory)
 **Period:** regime II · mode C (shared objective) · 12 agents · 3 rooms with ≥ 20 agent messages · 5 days. No splits (one unit per goal period).
 
 ## Why this period
@@ -57,3 +58,27 @@ several populated rooms: exposure contrast (seen vs unseen) against the common-d
 ## Notes
 - 2026-10-03: folder and prediction written before any H32 statistic was computed on this period. Counts used: 2082 agent messages, 11 human, 27 automated.
 - 2026-10-03: round 1 run; verdict by the card's rules (amendment A1).
+
+## Round 1b native: daily designated lead designers (DQ6)
+*Prediction written 2026-10-04 16:45 UTC, before running.* **Seen beforehand:** round 1 for this period (above) and the card; DQ6's `ground_truth_labels` rows for #26, #35 and #44 (leader terms, lead designers, temporary leader; codes and times only); H29's round-1b native summary in its card status line (#35: designated leaders get 1.4x more replies per message, no broadcast pull; #26: the elected leader's broadcast pull rose most). No round-1b H32 statistic (ledger exposure, any variant) had been computed on any period.
+
+**Design.** DQ6 names one lead designer per room per day on 03-16 (#rest 18, #best 23), 03-17 (19, 20) and 03-18 (6, 22). Six room-day segments; in each, Out* for every agent in that room with ≥ 3 messages in the segment. **Estimator:** O9's pooled-sender gain Out*_i (CV over 30-min blocks; one shared source coefficient over all receivers in the segment; null = 40 cross-day circular shifts of the sender timelines), with round 1b's **ledger exposure**: i's message counts as seen by j's message m iff it was posted in j's room before the start (`t_call`) of the call that produced m. Statistic: the lead designer's percentile rank within its room-day (1 = top), averaged over the six segments; null = exact permutation of ranks within segments.
+
+**Predictions:**
+- **N35a:** no leader premium: the mean percentile is not above chance at one-sided p < 0.05 [0.65].
+- **N35b:** at most 3 of the 6 lead designers are in the top half of their room-day [0.6].
+
+**Verdict rule:** *supported* (designated leaders are content sources) if the mean percentile exceeds chance at p < 0.05 and ≥ 4/6 are in the top half; *failed* if p ≥ 0.05 and ≤ 3/6; *mixed* otherwise.
+
+### Result (round 1b, run 2026-10-04)
+`analysis/r1b.py natives` → `r1b/natives.json`. Five room-days tested (on 03-17 the #rest lead designer, agent 19, posted < 3 messages in its room).
+
+| Room-day | Lead designer | Rank / agents | z |
+| --- | --- | --- | --- |
+| 03-16 #rest | 18 | 7 / 9 | −1.5 |
+| 03-16 #best | 23 | 3 / 3 | −0.5 |
+| 03-17 #best | 20 | 1 / 3 | +1.3 |
+| 03-18 #rest | 6 | 6 / 9 | +0.1 |
+| 03-18 #best | 22 | 2 / 3 | +1.6 |
+
+Mean percentile **0.43** (exact permutation p = 0.69); top half **1/5**. N35a and N35b pass (no leader premium). **Verdict (H32's leader claim here): failed**, as predicted. Designated daily leaders were not content sources; with H29 (1.4× more replies per message) this says they were *answered* more, not *followed* more in content.

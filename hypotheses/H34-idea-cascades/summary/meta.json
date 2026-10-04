@@ -1,51 +1,78 @@
 {
-  "complete": 42,
-  "faithfulness": 2.0,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 done: pre-registered predictions, synthetic validation (finite-N branching and the full pipeline on real village timelines), 32 per-period verdicts, cross-period tests, a scorecard, and a frozen, dry-run confirmatory script (not run). No natural-experiment test or holdout run yet.",
-    "faithfulness": "The subcritical, exposure-driven branching description holds everywhere (32/32 subcritical; HR10 beats the validated field null in 27/32), so C, D, F, G, H and I are each 1. The literal claim (a power law whose exponent reads criticality, tied to activity loop gains) failed. There is no s^-3/2, tau_app is just R-hat, P4 gave rho = 0.06, tails are heavier than one branching law, and the pre-registered forecast was overconfident. E = 0.",
-    "usefulness": "A computable rule: R-hat from two days of logs gives next-day reach probabilities for new ideas or claims, and the post-hoc version is roughly calibrated (70-84% at 90%). The practical negative results also help: activity gains don't proxy idea spread, and exposure ordering can't separate copying from independent invention in a shared room. The calibration evidence is post hoc and the rule is unconfirmed, hence between a diagnostic (2) and a validated monitor (3)."
-  },
-  "one_line": "Idea cascades are strongly subcritical (R-hat 0.06-0.39, 32/32) and exposure-driven, not s^-3/2; the exponent is just R-hat and activity gains don't predict spread",
-  "rated_by": "H34 agent (suggested)",
-  "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
-  "v2": {
-    "claim": "Idea cascades are subcritical and exposure-locked; no s^-3/2",
-    "original_verdict": "mixed",
-    "credence": 0.74,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      },
-      {
-        "factor": "penalty (labels/post hoc/multiplicity)",
-        "x": 0.7
-      }
-    ],
-    "mechanism_level": "M1",
-    "fragile": false,
-    "value_if_true": 2,
-    "decision": "forecast idea spread",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 1.47,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 2.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: pre-registered predictions, synthetic validation (finite-N branching and the full pipeline on real village timelines), 32 per-period verdicts, cross-period tests, a scorecard, and a frozen, dry-run confirmatory script (not run). No natural-experiment test or holdout run yet. Round 1b (2026-10-04): re-run on context-ledger visibility with an H57 read-vs-unread placebo, and two ground-truth natives (#35 lead designers, #26 elected leader).",
+  "faithfulness": "The subcritical, exposure-driven branching description holds everywhere (32/32 subcritical; HR10 beats the validated field null in 27/32), so C, D, F, G, H and I are each 1. The literal claim (a power law whose exponent reads criticality, tied to activity loop gains) failed. There is no s^-3/2, tau_app is just R-hat, P4 gave rho = 0.06, tails are heavier than one branching law, and the pre-registered forecast was overconfident. E = 0. Round 1b: HR10 now passes 32/32 (regime I was mismeasured), but not-yet-read uses predict adoption at about half the strength of read ones, so part of the exposure lock is convergence; known leaders are not idea sources. Axes unchanged.",
+  "usefulness": "A computable rule: R-hat from two days of logs gives next-day reach probabilities for new ideas or claims, and the post-hoc version is roughly calibrated (70-84% at 90%). The practical negative results also help: activity gains don't proxy idea spread, and exposure ordering can't separate copying from independent invention in a shared room. The calibration evidence is post hoc and the rule is unconfirmed, hence between a diagnostic (2) and a validated monitor (3)."
+ },
+ "one_line": "Idea cascades are strongly subcritical (R-hat 0.09-0.40, 32/32) and exposure-locked in 32/32 on ledger visibility, though about half the lock is contemporaneous convergence; no s^-3/2",
+ "rated_by": "H34 agent (suggested); round 1b RE-D1 (suggested)",
+ "updated": "2026-10-04 (round 1b)",
+ "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+ "v2": {
+  "claim": "Idea cascades are subcritical (R̂ 0.09–0.40) and exposure-locked in 32/32 periods, but about half of the lock is convergence; leaders are not stronger idea seeders",
+  "scope": "32 periods; natives #35, #26",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.89,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "replication (32/32)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "robust (ledger: 27 → 32/32; no embeddings involved)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "rival partly beaten (read > unread 30/32; unread/read 0.56)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "penalty: multiplicity / forecast undercoverage",
+    "x": 0.7,
+    "evidence": "card §Round 1b"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "forecast idea spread; expect ~half of apparent spread to be convergence",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.79,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (RE-D1); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "Idea cascades are subcritical and exposure-locked; no s^-3/2",
+   "credence": 0.74,
+   "fragile": false,
+   "value_if_true": 2,
+   "expected_usefulness": 1.47,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }
