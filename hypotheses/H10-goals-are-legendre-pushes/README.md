@@ -226,6 +226,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - 2026-10-03: exploratory round 1 run: **failed**. Confirmatory script written, dry-run checked, not run. Period folders moved to `goalperiod-subhypotheses/` (coordinator's request).
 - Proposed for DEFINITIONS.md: "agent state (vector, statement-mean projection)", "goal field direction ĝ", "push size ε", "loop gain (window-level, along a direction)". Text is in the round-1 hand-back.
 - 2026-10-04: round 1b (re-evaluation agent RE-C1): corrected inputs in 8 configurations, natives G44 / NE38 / G26 (predictions dated in the folders before running), per-period estimates; verdict unchanged (failed). Section "Round 1b" above.
+- 2026-10-04: H105 answers H10-R2 (goals act on a two-state on-goal occupancy): inconclusive. The tilt test is not identifiable until the on-goal classifier is calibrated (see `../H105-two-state-goal-order/README.md`).
 
 ## Round 1b (improved data, 2026-10-04)
 *Re-evaluation wave (Vivian's priority 2), two-layer design (`infra/data-quality/QUEUE.md`). Replication: the round-1 estimators rerun unchanged on corrected inputs; native: three new period-specific tests (DQ9 cross-index), predictions dated in their folders before running. Holdout untouched: #23 still unused on either side, nothing along ĝ₃₂, `confirm.py` not run.*
