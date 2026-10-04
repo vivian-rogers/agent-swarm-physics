@@ -175,3 +175,19 @@ Vivian picked these from HH107–HH126 and the leftovers. HH92 was already H08's
 | S55 | Entropy production fingerprints the platform | HH175 | 02, 05 | H56 (wave A, ready) |
 | S56 | Copying beats transformation when the backlog is large | HH171 | 08, 03 | H57 (waits for DQ) |
 | S57 | Effective superagents are coordinated agents plus their artifacts | HH176 | 04 | H58 (waits for DQ) |
+| S58 | One lever model for all operator inputs | HH251 | 02, 09 | H59 (waits) |
+| S59 | An index policy beats the nudger | HH252 | 04, 09 | H60 (ready) |
+| S60 | Contagiousness is predictable at first use | HH253 | 03 | H61 (ready) |
+| S61 | Ideas travel the reply graph, not the room | HH254 | 03, 09 | H62 (ready) |
+| S62 | Herding bursts start with a work signal | HH263 | 10, 03 | H63 (ready) |
+| S63 | Conflict needs a scarce prize | HH255 | 01, 10 | H64 (ready) |
+| S64 | Leaders are routers, not sources | HH264 | 02, 04 | H65 (ready) |
+| S65 | Shared platform latency is a common-noise field | HH256 | 01, 02 | H66 (ready) |
+| S66 | A lagged criticality dial | HH262 | 01, 09 | H67 (waits) |
+| S67 | Attention dilution is a mixture of two strategies | HH258 | 03 | H68 (ready) |
+| S68 | Restatement loops are context fixed points | HH259 | 08, 02 | H69 (ready) |
+| S69 | The semantic information of the artifact store | HH261 | 04 | H70 (ready) |
+| S70 | Memory is a first-order homeostat | HH269 | 04, 05 | H71 (ready) |
+| S71 | Trap aging is input starvation | HH260 | 09, 02 | H72 (ready) |
+| S72 | Style = weights + context + register | HH265 | 11, 04 | H73 (ready) |
+| S73 | An operator-grade change detector | HH268 | 02, 11 | H74 (waits) |

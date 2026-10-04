@@ -96,3 +96,10 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | RE-P1 | H11, H31, H27 | running (2026-10-04): shared labels, #26 per round, attention vs work space |
 | next | H44 (new, unblocked by DQ3); H06, H07, H28, H32, H34 | queued, 2–3 hypotheses per agent as slots free |
 
+## New hypotheses H59–H74 (promoted 2026-10-04): launch plan
+| Status | Hypotheses |
+| --- | --- |
+| running | H60, H61, H62, H63, H64, H65 |
+| waits for a running agent | H59 (RE-V2 lever table), H67 (H42), H74 (H36 round 1b) |
+| queued (inputs ready) | H66, H68, H69, H70, H71, H72, H73 |
+
