@@ -1,0 +1,34 @@
+\hwhat{HH322 asked whether co-usage of conventions has structure beyond pairs: a ``group mind'' would leave multi-information that a pairwise maximum-entropy model cannot capture after fields are removed. The test covers 71 non-holdout units (282 days): per day, which active agents used which H34 marker, on random 6-agent subsets. The raw Schneidman ratio is $I_2/I_N=0.95$, but the synthetic shows this is near 1 even with a planted group term. After removing agent rates and a shared item-popularity field, pairs capture a median $\rho_F=0.91$ of the remaining multi-information. A higher-order remainder of 3--5\% of $I_N$ is significant in 83\% of units with $N\ge6$, and it stays inside what agent-specific responses to a shared field produce in 92\%. Known teams and rooms appear as signed pairwise couplings. The holdout is not run.}
+
+\hmodel{Models 01 and 12. Sample: one marker used in agent chat on one day; spin $s_i=1$ if agent $i$ used it. Fields $h_i$ (agent-day rate), $V(K)$ (shared item popularity, $K$ = users), couplings $J_{ij}$. Models are fitted exactly on the $2^6-1$ patterns with $K\ge1$; entropies are bias-corrected by a parametric bootstrap from the fitted K-pairwise model.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+P(\mathbf s)\propto\exp\!\Big(\textstyle\sum_i h_is_i+\sum_{i<j}J_{ij}s_is_j+V(K)\Big),\quad K=\sum_i s_i\ge1\\
+I_N=S_1-S_N,\qquad \rho_{raw}=\frac{S_1-S_2}{S_1-S_N},\qquad \phi=\frac{S_1-S_K}{S_1-S_N}\\
+\rho_F=\frac{S_K-S_{2K}}{S_K-S_N},\qquad r_{HO}=\frac{S_{2K}-S_N}{S_1-S_N}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{Units with $N\ge6$. Left: pairwise sufficiency after field removal against the field share. Regime-I units (blue) carry most multi-information in the uniform field ($\phi\approx0.7$); regime-III units (red) carry most in pairs ($\phi\approx0.26$) and sit at $\rho_F\approx0.93$. Right: the measured higher-order remainder against the remainder of a heterogeneous-field model fitted to the same subsets; almost every unit lies below the diagonal.}
+
+\htelos{For a monitor: co-usage of names, numbers and coinages across an agent swarm is described by who-pairs-with-whom plus shared hot topics. Rooms and teams show up as pairwise blocks (opponents avoid each other's terms: $J=-0.60$ vs $+0.15$ within teams). Nothing here needs a group-level interaction, so a pairwise model of co-usage is a sufficient compressed description for steering or auditing. The cynical reading is that this instrument cannot see a group mind of moderate size: a heterogeneous shared field leaves the same remainder. Raw $I_2/I_N\approx1$ is not evidence of anything at these rates.}
+
+\hbottom{Convention co-usage is pairs plus fields (field-removed pairwise sufficiency 0.91, remainder 3--5\% of $I_N$ and field-sized); no separable group term is resolved, and the raw Schneidman ratio is uninformative at village sampling.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.50\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+Y1--Y5 synthetic & bias correction recovers $\rho_F$ 0.93--1.00; planted group term never gives $\rho_F<0.8$; raw ratio uninformative & 2 pass, 1 fail\\
+R1 $\rho_F\ge0.9$ in $\ge$70\% & median 0.91; 56\% of resolved units & mixed\\
+R2 field share $\phi\ge0.5$ & 0.56 overall; I 0.71, III 0.26 & supported overall\\
+R3 raw $I_2/I_N\ge0.9$ & 0.95 & uninformative\\
+R4 remainder in $\le$20\% & 83\% of $N\ge6$ units (pairwise world $\le$33\%) & failed\\
+R6 $\phi$ larger in regime III & 0.26 vs 0.71 (smaller) & failed\\
+R7/R8 (A1) remainder common, field-sized & 83\%; $\le$ field reference in 92\% & supported\\
+R5 projects & 15 resolved; 5 candidates, days pooled & mixed\\
+Natives G12, NE42, G51 & teams, rooms = signed pair blocks ($p$ 0.0005); Roudi size trend & mixed / mixed / supported\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic.pdf}{Synthetic validation at the real day counts, item counts and agent rates of four units. Left: field-removed sufficiency in pairwise (blue), planted group (red) and uniform-field (grey) worlds. Right: the remainder $z$ against the pairwise bootstrap. The group term is detected at $N\ge10$, never at $N=4$, and never pushes $\rho_F$ below 0.8.}
+
+\hcaveats{A group interaction of the planted size and a heterogeneous shared field give the same remainder, so the egregore question is open, not closed. Markers within one message are not independent, so item-level resampling understates uncertainty; ratios carry no CI in the estimates table. Subsets of 6 agents marginalize hidden agents, which creates real subset-level higher order. Units with 4 agents (most of 2025) have no power. Projects pool days, so their day field is not removed.}
+
+\hnext{Fit a latent-factor max-ent rival (pairs plus agent-specific field loadings); resample by message; confirm C1--C4 on \#22, \#28, \#43.}

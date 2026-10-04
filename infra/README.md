@@ -262,6 +262,10 @@ Seven builders and nine libraries are now shared and registered in `build_all.py
 
 ## Known issues
 
+- **Talk minutes have ρ_⊥(1) ≈ 0** (H99): per-agent relaxation-time estimators on 1-min talk spins are undefined. Use the per-call clock.
+- **Leave-in day-mean centring of content windows fakes g_χ ≈ −0.21** for independent agents (H99). Centre leave-one-out.
+- **Item-level bootstraps of plug-in entropies are biased** (H101): duplicated items lower the entropy. Use message-level or parametric bootstraps.
+- **H34's `uses.parquet` holds non-holdout rows only** (H101); held-out uses come from `idea_markers.uses_for_rows(..., allow_holdout=True)`.
 - **κ is unstable when I < ~0.05 bits** (H87): raw κ ratios give false orderings in 32% of synthetic replicates when a row carries ~0.02 bits. Order channels only when both rows' information is clearly above 0.02 bits; `semantic_kappa.kappa_row` should get an `identified` flag.
 - **Human chat almost never names repos** (H87): 244 mentions in all, none inside a non-holdout call window, so human repo pointers are empty.
 - **Search-row builders are duplicated** (H70 events, H84 `search_events.py`, H87 pointers; also H56): move to `infra/shared/`.

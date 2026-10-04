@@ -83,6 +83,7 @@ At N ≲ 30 with short windows, inferring every J_ij is data-hungry and fragile.
 - This is an **equilibrium** model: it only sees equal-time correlations, which are symmetric. Directed influence (i talks, then j replies) is invisible here. That is what model 02 is for.
 - Small N and short windows give noisy J. Regularize (L1 or L2) and report uncertainty by bootstrapping over days.
 - A heat-capacity peak can be a finite-size or sampling artifact. Compare against the same analysis on shuffled data.
+- **Multi-information at swarm rates (H101):** raw I₂/I_N stays near 1 (0.89–0.95) even with a planted group term, so it is uninformative. Subset marginalization creates real subset-level higher order (17–33% false positives in pairwise worlds). A heterogeneous shared field leaves a larger remainder than a 4-agent group term. First-order bias corrections fail; use parametric bootstraps.
 
 ## Hypothesis seeds
 

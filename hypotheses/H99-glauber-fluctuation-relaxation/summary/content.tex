@@ -1,0 +1,34 @@
+\hwhat{Mean-field Glauber dynamics ties two numbers together: the gain $g$ read from equal-time fluctuations must also set how much slower the collective mode relaxes than one agent. HH81 asked whether this holds without inferring $J$. The test covers 70 non-holdout units in 35 periods, on talk, activity (control) and content. Talk minutes carry no single-agent memory ($\rho_\perp(1)\approx0.006$), so a post hoc statistic, the collective memory excess $\Delta\rho_1$, replaced the planned log-ratio. \textbf{Where talk coupling is real (regime III), the collective outlives the prediction} in every resolved period: $\Delta\rho_1=+0.067\,[0.034,0.100]$ in \#51. Regime I passes, but the test has no power there. Content is a field. Kicks outlive the fluctuation clock: the \#51 nudge response is $\times9.5$ the Onsager value. The holdout is not run.}
+
+\hmodel{Models 02 and 01. Spin $s_i(t)$: agent $i$ talks (or acts) in minute $t$, centred within 30-min blocks on the all-present window; content uses 32-d style-residualized window vectors. $M_t$ is the collective (uniform) mode, $X^\perp_t$ the transverse modes. Linearized mean-field Glauber relaxes $M$ at rate $(1-g)/\tau_0$ and $X^\perp$ at $1/\tau_0$, with the same $g=\beta J_0(1-m^2)$ that sets the equal-time variance ratio.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\tau_0\dot m=-m+\tanh\!\big(\beta(J_0m+h)\big)\;\Rightarrow\;\tau_c=\tau_0/(1-g)\\
+g_\chi=1-\textstyle\sum_t p_t\big/\sum_t c_t,\quad c_t=M_t^2,\ p_t=\big(|X_t|^2-M_t^2\big)/(N-1)\\
+\Delta g=\Big[1-\frac{\ln\rho_c(1)}{\ln\rho_\perp(1)}\Big]-g_\chi,\qquad \Delta\rho_k=\rho_c(k)-\rho_\perp(k)^{\,1-g_\chi}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{Left: each point is one talk unit (size $\propto$ trimmed minutes). The x-axis is the Glauber prediction for the collective lag-1 memory, the y-axis the measured value. Regime-III units (red) sit above the diagonal: the swarm remembers talk longer than its equal-time gain allows. Right: activity (filled) and content (open) gap $\Delta g$ against $g_\chi$; content lies below the band, the field-like side.}
+
+\htelos{For a monitor: the equal-time talk dial is not a distance to criticality in regime III. There the collective talk mode keeps memory for minutes ($\Delta\rho_1\approx0.07$) that no agent has on its own, which is what a coupling delayed by one read-out call produces. Use a lagged estimator (H67's $g_{lag}$) and report $\Delta\rho_1$ beside the dial as a check. For an operator: a nudge's effect does not decay like spontaneous activity. Expect about ten times more response, spread over 10--30 min, than the agent's own one-minute clock predicts, and do not read the kick kernel as a susceptibility. In regime I nothing here distinguishes a coupling from a fast shared field.}
+
+\hbottom{Equal-time fluctuations do not predict the swarm's relaxation where talk coupling is real: the collective mode outlives the mean-field Glauber prediction (delayed read-out coupling or a slow conversation field), kicks outlive it tenfold, and content behaves as a field.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.50\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S1--S6 synthetic (real masks) & Glauber consistent 78--100\%; fast field 78\% ($\tau_0$=1 min); slow field only at lag 2 & 3/6 pass\\
+A2 power (post hoc, $\tau_0$=15 s) & slow field 88--100\%, delay 100\%; fast field 0--6\% & limits P2\\
+P1 regime-III talk consistent & 0/4 resolved periods; 8 slow vs 7 consistent units; $\Delta\rho_1$ +0.077 & failed\\
+P2 regime-I talk = fast field & 2/25 fast calls; no power & not testable\\
+P3 activity inconsistent $\ge$50\% & 9/16 resolved periods (fast, regime I) & supported\\
+P4 content $\Delta g\ge0$ & $\Delta g_1<0$ in 92\% of 60 units (median $-0.17$) & failed (sign)\\
+P5 kick decay $\approx$ Glauber & \#4c $\lambda$ 0.54 [0.21, 0.86] vs 0.15; \#51 nudge $\times$9.5 & failed\\
+P6 $g_\chi$ upper bound $<0.6$ & all but 3 small regime-I units & mostly\\
+Natives NE42, NE14, G51 & merge collapses $g_\chi$ ($-0.13$, $-0.22$); 36c slow; nudge tail & mixed / d / failed\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic.pdf}{Synthetic validation on real trimmed masks. Left (A2, agent clock 15 s): $\Delta\rho_1$ (blue) and $\Delta\rho_2$ (orange) are near 0 in independent and Glauber worlds, positive for slow fields and delayed coupling, negative only for a strong fast field. Right (A1, clock 1 min): the lag-1 and lag-2 gaps $\Delta g$. Grey bands are the decision thresholds.}
+
+\hcaveats{The talk statistic and its rule were chosen after the talk autocorrelations were seen (A2, post hoc). The one-minute bin is coarser than the talk clock, so regime I is untestable and $g_\tau$ is undefined there. A slow conversation field and a delayed coupling give the same sign; only the match with H67's read-out gain points to coupling. Content keeps the day's topic field (day centring faked anti-correlation). The nudge comparison uses H04's kernel, whose tail H59 attributes to the nudger's selection.}
+
+\hnext{Re-index talk on the per-call clock and fit an instantaneous-plus-one-call kernel; align human-message kicks on the receiving call; confirm C1--C4 on \#22, \#28, \#43.}

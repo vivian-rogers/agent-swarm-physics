@@ -471,6 +471,56 @@
    "model": "04",
    "source": "H84",
    "meaning": "Losing history search for two days had no measured cost."
+  },
+  {
+   "symbol": "ρ_⊥(1)",
+   "name": "single-agent talk memory per minute",
+   "value": "median 0.006 over 70 units (talk); activity ≈ 0.25, #51 0.34",
+   "kind": "clock",
+   "scope": "1-min spins",
+   "model": "02",
+   "source": "H99",
+   "meaning": "Talk minutes carry no single-agent memory; relaxation must be measured on the per-call clock."
+  },
+  {
+   "symbol": "Δρ₁",
+   "name": "collective talk memory excess over mean-field Glauber",
+   "value": "period median +0.077; #51 +0.067 [0.034, 0.100]; content Δg₁ median −0.17 (content acts as a field)",
+   "kind": "consistency test",
+   "scope": "6 resolved regime-II/III periods (post hoc statistic)",
+   "model": "02",
+   "source": "H99",
+   "meaning": "The collective mode stays correlated longer than its gain predicts; a slow common drive is not excluded."
+  },
+  {
+   "symbol": "R_Onsager",
+   "name": "nudge response over the Onsager-regression prediction",
+   "value": "×9.5 [7.0, 12.3] at 30 min; #4c human-message decay λ 0.54 vs predicted 0.15",
+   "kind": "FDT violation",
+   "scope": "#51 (H04 kernel)",
+   "model": "02",
+   "source": "H99",
+   "meaning": "Kicks outlive the fluctuation clock about tenfold: fluctuations do not predict response."
+  },
+  {
+   "symbol": "ρ_F",
+   "name": "pairwise sufficiency of convention co-usage (fields removed)",
+   "value": "median 0.91 (regime I 0.89, III 0.93); raw I₂/I_N 0.95; field share φ 0.71 (I) / 0.26 (III); remainder 3–5% of I_N",
+   "kind": "multi-information",
+   "scope": "71 units, n = 6 subsets",
+   "model": "01",
+   "source": "H101",
+   "meaning": "Pairwise couplings plus fields explain co-usage; in regime III pairwise structure dominates."
+  },
+  {
+   "symbol": "J_team",
+   "name": "co-usage coupling within vs across teams",
+   "value": "+0.15 within vs −0.60 across (p 0.0005)",
+   "kind": "coupling",
+   "scope": "#12 debate teams",
+   "model": "01",
+   "source": "H101",
+   "meaning": "Assigned teams show up as antiferromagnetic co-usage blocks across team lines."
   }
  ]
 }

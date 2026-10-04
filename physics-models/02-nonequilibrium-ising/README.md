@@ -92,6 +92,7 @@ The fixed-order sweep is the subtle case. Each single-site update satisfies deta
 - Nonstationarity within a window (new agents, goal changes) can masquerade as irreversibility. Use windows within one regime (`../DEFINITIONS.md`, Regime).
 - Bin width changes everything: too coarse merges cause and effect into the same bin and hides the arrow of time.
 - Causally ordered tool use (open a file, then edit it) is trivially irreversible inside one agent. Decide whether that counts as signal or as nuisance before measuring.
+- **Onsager regression fails in regime III (H99):** kicks outlive the fluctuation clock about tenfold (nudge response ×9.5 the prediction in #51), and the collective talk mode keeps more memory than mean-field Glauber allows. Do not infer response functions from equal-time fluctuations; talk minutes carry no single-agent memory (ρ_⊥(1) ≈ 0.006), so use the per-call clock.
 
 ## Hypothesis seeds
 
