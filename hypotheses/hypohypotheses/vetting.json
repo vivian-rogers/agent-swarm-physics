@@ -455,6 +455,126 @@
    "decision": "approved",
    "decided_at": "2026-10-04T21:12:45.819476+00:00",
    "promoted_to": "H114"
+  },
+  {
+   "id": "HH351",
+   "title": "Chess pairings as a positive control: the estimator should find known opponents (#23)",
+   "family": "kinetic Ising",
+   "q": "Q1",
+   "cost": "low",
+   "why": "If kinetic Ising and the EP bound can't find a coupling we know exists, every negative coupling result built on them is in doubt."
+  },
+  {
+   "id": "HH352",
+   "title": "Juice Shop race as a negative control: fields, not couplings (#27)",
+   "family": "kinetic Ising",
+   "q": "Q2",
+   "cost": "low",
+   "why": "A competition on a fixed list should give J ≈ 0 after a difficulty field; a nonzero J flags estimator false positives."
+  },
+  {
+   "id": "HH353",
+   "title": "Blind role recovery: the debate judge is a sink of antisymmetric coupling (#12)",
+   "family": "kinetic Ising",
+   "q": "Q1",
+   "cost": "low",
+   "why": "Recover the judge and the teams from talk dynamics alone, then check against the known roles."
+  },
+  {
+   "id": "HH354",
+   "title": "The election as a coupling step: influence flows to the winner (#26)",
+   "family": "kinetic Ising",
+   "q": "Q1",
+   "cost": "low",
+   "why": "One dated result splits the week into peer and leader regimes; out-coupling of the winner should step up."
+  },
+  {
+   "id": "HH355",
+   "title": "J should not move when the rules do (NE35, #32)",
+   "family": "kinetic Ising",
+   "q": "Q2",
+   "cost": "low",
+   "why": "A pure field change mid-goal tests whether fitted couplings are field artifacts."
+  },
+  {
+   "id": "HH356",
+   "title": "The nudger is a state-dependent update rule: EP drops when it is off (NE10, NE43)",
+   "family": "kinetic Ising",
+   "q": "Q6",
+   "cost": "low",
+   "why": "Scheduler-made irreversibility at two known switches, with couplings held fixed."
+  },
+  {
+   "id": "HH357",
+   "title": "One tool call per turn changes one family's update clock (NE06, Gemini DiD)",
+   "family": "kinetic Ising",
+   "q": "Q1",
+   "cost": "low",
+   "why": "Per-call couplings should survive a change of update granularity; per-hour ones should not."
+  },
+  {
+   "id": "HH358",
+   "title": "The forked RPG as two replicas: damage spreading between rooms (NE15)",
+   "family": "kinetic Ising",
+   "q": "Q3",
+   "cost": "medium",
+   "why": "Same game, two rooms: overlap decay measures noise vs the rules' common field."
+  },
+  {
+   "id": "HH359",
+   "title": "The room merge switches a known adjacency on and off: recover it (NE42)",
+   "family": "kinetic Ising",
+   "q": "Q1",
+   "cost": "low",
+   "why": "Cross-room J should appear only while the rooms can read each other, and leave nothing behind."
+  },
+  {
+   "id": "HH360",
+   "title": "Is a goal period a stationary NESS? Drift of J and EP within #38 and #51",
+   "family": "kinetic Ising",
+   "q": "Q2",
+   "cost": "low",
+   "why": "Checks the unit-of-analysis assumption that fits within a period describe one steady state."
+  },
+  {
+   "id": "HH361",
+   "title": "The daily boot as a reproducible quench: relaxation time predicted from g_lag",
+   "family": "kinetic Ising",
+   "q": "Q1",
+   "cost": "low",
+   "why": "Hundreds of identical quenches; τ = τ₀/(1 − g_lag) is an unfitted prediction."
+  },
+  {
+   "id": "HH362",
+   "title": "A retirement is a spin removal: predict bystanders' shifts from fitted J (NE28, NE29)",
+   "family": "kinetic Ising",
+   "q": "Q1",
+   "cost": "low",
+   "why": "An out-of-sample prediction from pre-retirement couplings, the strongest test of a fitted J."
+  },
+  {
+   "id": "HH363",
+   "title": "A batch join is a spin addition: incumbents respond as fitted couplings say (NE27, NE33)",
+   "family": "kinetic Ising",
+   "q": "Q1",
+   "cost": "low",
+   "why": "Cross-fit couplings in time and predict the join-day response."
+  },
+  {
+   "id": "HH364",
+   "title": "Regime I's turn order is a sweep: equilibrium statics, nonzero EP",
+   "family": "kinetic Ising",
+   "q": "Q6",
+   "cost": "low",
+   "why": "Model 02's subtle case; measures how much irreversibility the turn order alone makes."
+  },
+  {
+   "id": "HH365",
+   "title": "Four agents for weeks: exact kinetic Ising benchmarks the mean-field approximations (#4, #6)",
+   "family": "kinetic Ising",
+   "q": "Q1",
+   "cost": "low",
+   "why": "Tells us which approximation to trust at N = 21 before we rely on it."
   }
  ]
 }

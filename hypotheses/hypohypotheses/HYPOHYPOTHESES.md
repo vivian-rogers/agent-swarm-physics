@@ -1103,3 +1103,100 @@ Each entry names a kill condition and says how it handles the four impostors (sc
   - *Models:* 15 · *Builds on:* H76, H14, H90, H35
 
 *Suggested first picks.* HH334 (NE39 is a ready natural experiment against H81's outside-drift rival), HH333 and HH335 (two more cheap discriminators on the same H81 outputs), HH337 and HH339 (turn H100's residual into a measured quantity), HH342 (a parameter-free consistency check of H67's gain), and HH345 (settles a disagreement between H18 and H59).
+
+## Kinetic Ising on well-characterized episodes (2026-10-04, coordinator, for Vivian)
+
+These apply model 02 (asymmetric kinetic Ising, Glauber or parallel updates, Aguilera–Ito–Kolchinsky entropy-production bound) to episodes whose structure we know from outside the dynamics: assigned roles, dated scaffold changes to the update rule, roster changes and forked replicas. The known structure is the point. It gives positive and negative controls for the estimator, and out-of-sample predictions that a fitted J must get right. Spins are per-call talk or activity states on the call clock (H40) unless noted. Every fit removes the scheduler field first (STANDARDS §1; H86 c_×) and uses a partition contrast (named vs unnamed, read vs in flight).
+
+- **HH351 · The chess tournament as a positive control: scheduled opponents should carry the largest antisymmetric couplings (#23).** In a tournament, paired players take turns, which is a known directed coupling with alternating sign. If the kinetic Ising fit and the entropy-production estimator work on village data, they should find it without being told the pairings.
+  - *Prediction:* |J_ij − J_ji| and the pairwise EP σ_ij rank scheduled opponent pairs above non-paired pairs (AUC ≥ 0.75) during their games, and the ranking vanishes outside game windows.
+  - *Check:* recover pairings and game windows from chat or the ledger first (count them; drop the test if < 6 pairings). Fit per-call kinetic Ising on activity and talk spins; compute σ_ij with the AIK bound; compare with time-reversed and block-shuffled fits.
+  - *Kill:* AUC < 0.6, i.e. the estimator cannot see a coupling we know is there. That would undercut every negative coupling result built on it.
+  - *Impostors:* scheduler: shared day structure removed; exogenous: game moves come from the chess site, so a pair's turn alternation is partly an external clock, and the read vs in-flight contrast separates it. Priors and convergence: n/a for a positive control.
+  - *Models:* 02, 09 · *Builds on:* H42, H90 (block-shift nulls), H50
+- **HH352 · The Juice Shop race as a negative control: a competition on a fixed challenge list should show fields, not couplings (#27).** Ten agents race through the same list of challenges for ten days. Shared difficulty is a common field; they gain little from each other unless they share hints.
+  - *Prediction:* after a shared per-challenge difficulty field, symmetric and antisymmetric J on solve and activity spins are ≈ 0 (within the block-shift null). Any residual coupling sits on named hint-sharing messages only (partition contrast).
+  - *Check:* solve events per agent from commits or announcements in chat (narration is a claim, so cross-check against artifacts). Fit kinetic Ising with and without the difficulty field; calibrate false positives on synthetic independent racers with the real schedules.
+  - *Kill (as a control):* sizable J on unnamed channels after the field. That would be an estimator false positive and flags the null.
+  - *Impostors:* exogenous difficulty is the main one and is modelled explicitly; scheduler removed; priors: agent skill as h_i.
+  - *Models:* 02, 06 · *Builds on:* H11, H93 (bursts mimic coupling)
+- **HH353 · Blind role recovery in the debate week: the judge is a sink of antisymmetric coupling (#12).** Debaters address the judge and the judge rules on them. That is a known one-way influence pattern.
+  - *Prediction:* from talk spins alone, the agent with the largest in-minus-out antisymmetric coupling Σ_j(J_ji − J_ij) is the judge (rank 1 of 7), and the team blocks show positive within-team J. The judge's rulings act as field steps on the debaters, not the other way round.
+  - *Check:* fit on non-holdout #12 days; compare against the DQ6 ground-truth roles only after the ranking is frozen.
+  - *Kill:* judge rank ≥ 4, or team blocks absent from symmetric J (H101 found them in co-usage, J +0.15 within vs −0.60 across).
+  - *Impostors:* assigned roles are a field; the read-gated contrast separates reacting to a read message from following the schedule.
+  - *Models:* 02, 01 · *Builds on:* H21, H37, H101
+- **HH354 · The election as a coupling step: influence should flow toward the winner after the result (#26).** Before the result every agent is a peer; after it, one agent sets the week's goal.
+  - *Prediction:* the winner's out-coupling (Σ_j J_ji) jumps at the result time while the in-coupling does not; the swarm's EP rises with the new asymmetry. H65 found the elected leader gets attention but no extra broadcast reach in regime II, so in regime I a step of ≥ 0.05 is the test.
+  - *Check:* date the result from chat (one timestamp); event study with windows on both sides, matched placebo times on other days.
+  - *Kill:* no step in out-coupling beyond placebo times.
+  - *Impostors:* the goal change that follows the election is a field step; separate coupling (responses to the leader's messages at read-out) from the new goal direction.
+  - *Models:* 02 · *Builds on:* H65, H29, HH83
+- **HH355 · J should not move when the rules do: the mid-goal reset in #32 (NE35).** The operator reset a gamed challenge format mid-goal. That changes the field (what agents are trying to do), not who reads whom.
+  - *Prediction:* the fitted symmetric J on talk spins agrees across NE35 within its bootstrap CI, while h_i shifts. A fitted J that jumps at a pure field change is a field artifact, not a coupling.
+  - *Check:* fit before and after NE35 on matched hours; compare J matrices (Frobenius distance against a split-in-time placebo on other days of #32).
+  - *Kill:* J changes more across NE35 than across placebo splits.
+  - *Impostors:* this is a direct test of the field impostor for the J estimator itself.
+  - *Models:* 02, 01 · *Builds on:* H38, H02
+- **HH356 · The nudger is a state-dependent update rule: entropy production should drop when it is switched off at fixed J (NE10, NE43).** Model 02's table: choosing who updates based on the state (the nudger picks idle agents) breaks detailed balance even with symmetric couplings.
+  - *Prediction:* the activity-channel EP bound falls at NE43 (nudger off) and rises at NE10 (nudger on), while the fitted J does not change. The share of EP carried by nudge-receiving calls equals the drop.
+  - *Check:* AIK bound per day around both dates, with day-matched placebo dates; split EP by whether the call received a nudge.
+  - *Kill:* EP unchanged at both switches, or J changes as much as EP.
+  - *Impostors:* the 08-05 bookend stop (NE43a) is a separate scheduler change, so use the 08-20 step; time-of-day matched.
+  - *Models:* 02, 15 · *Builds on:* H35, H39, H76, H14
+- **HH357 · One tool call per turn changes the update granularity for one family: a difference-in-differences on Gemini (NE06).** On 2025-11-20/25 Gemini went to one tool call per turn. That is a change of update rule for one sublattice: more, smaller updates.
+  - *Prediction:* Gemini's per-call coupling to others is unchanged, but its per-hour response and its share of 2-step (parallel-update) correlations change; the other families show no change (DiD).
+  - *Check:* per-call vs per-hour kinetic Ising fits for Gemini and the rest, before and after NE06, inside #20.
+  - *Kill:* per-call J changes for Gemini (then the call is not the right clock), or the other families change as much.
+  - *Impostors:* chain of thought was added on the same days; a DiD on families handles shared fields but not that confound, so note it.
+  - *Models:* 02 · *Builds on:* H40 (call clock), NE20
+- **HH358 · The forked RPG is two replicas of one dynamics: damage spreading between rooms (NE15, #35).** At NE15 the RPG forked per room: the same game and rules, two copies, different players. In kinetic Ising, two replicas started from the same state either stay together (ordered or frozen phase) or separate at a rate set by the noise (damage spreading).
+  - *Prediction:* the two rooms' game-state and content overlap q(t) decays to the cross-room baseline within about a day (fast damage spreading), with no plateau. A plateau would be a shared field from the game rules.
+  - *Check:* game-state features and content centroids per room per hour from the fork time; compare with H100's room split onset.
+  - *Kill:* q(t) stays above baseline for the whole period (the rules, not the players, set the state).
+  - *Impostors:* the rules are a common field, and the plateau measures it.
+  - *Models:* 02, 11 · *Builds on:* H100, H07 (forks), HH337
+- **HH359 · The room merge switches a known adjacency on and off: recover it from the dynamics (NE42).** For one week #best and #rest were one room, then split back. Who can read whom is known at every moment.
+  - *Prediction:* the fitted cross-block J is ≈ 0 before, positive during, and ≈ 0 after the merge (no remanence, as H100), and it is carried by read-outs of the other block's messages only.
+  - *Check:* sliding-window kinetic Ising on talk spins, block-averaged J_cross(t); read vs in-flight contrast inside the merge week.
+  - *Kill:* J_cross does not rise during the merge, or stays raised after the split.
+  - *Impostors:* the goal changed in the merged week (H51 NE42), so use only read-gated coupling.
+  - *Models:* 02 · *Builds on:* H05, H100, H94 (NE42 hub)
+- **HH360 · Is a goal period a stationary NESS? Within-period drift of J and EP (#38, #51 main).** The project fits models within a period, which assumes a stationary state inside it. The 17-day charity drive (#38) and the long #51 main body test that assumption.
+  - *Prediction:* weekly J matrices and EP agree within bootstrap CIs inside #38; #51 drifts slowly (H91: about 1 SD a day in content modes).
+  - *Check:* rolling kinetic Ising fits with fixed hyperparameters; compare drift with split-half placebo noise.
+  - *Kill (of stationarity):* drift beyond placebo noise in #38. Then the period, not the step change, is the wrong unit.
+  - *Impostors:* weekday and session-length fields removed first.
+  - *Models:* 02 · *Builds on:* H91, H92, the unit-of-analysis rule
+- **HH361 · The daily boot is a reproducible quench: hundreds of replicas of relaxation to the steady state.** Every day, all agents start from off. That is the same quench repeated on every active day.
+  - *Prediction:* the collective talk magnetization's approach to its daily steady state is one exponential on the call clock, with τ = τ₀/(1 − g_lag) using H67's g_lag (unfitted), and the curves collapse across days within a regime.
+  - *Check:* align days at the first call; per-call collective mean; fit τ per regime; compare with the prediction from g_lag and the single-agent call time.
+  - *Kill:* τ off by more than ×2 from the prediction, or no collapse across days.
+  - *Impostors:* the boot is a scheduler field by construction; the test is whether the relaxation after it carries the coupling's signature (H99 found kicks outlive the fluctuation clock, so this is a live test).
+  - *Models:* 02, 09 · *Builds on:* H67, H99, H38, HH344
+- **HH362 · A retirement is a spin removal: predict the bystanders' shift from the fitted J (NE28, NE29).** Removing spin j shifts each remaining agent's local field by −J_ij s̄_j. The prediction uses only pre-retirement fits.
+  - *Prediction:* the change in each remaining agent's activity and talk rate after the retirement correlates with its pre-retirement J_ij to the retired agent (ρ ≥ 0.5 pooled over NE28 and NE29). Given the small couplings, the predicted shifts are small, and their sign must match.
+  - *Check:* fit before; compute predicted shifts; measure actual shifts over matched windows after; compare with placebo "removals" of agents who stay.
+  - *Kill:* ρ ≤ 0 or below placebo.
+  - *Impostors:* the farewell goal (#31) for Claude 3.7 Sonnet is a field step; use NE28 as the cleaner case.
+  - *Models:* 02, 01 · *Builds on:* H88 (carried items die with retirees), H18
+- **HH363 · A batch join is a spin addition: do incumbents respond as the fitted couplings say? (NE27, NE33).** Three agents join at once. Incumbents' fields shift by the newcomers' couplings, which are unknown at the join but can be fitted on the first week.
+  - *Prediction:* the incumbents' response in the first two days is predicted by first-week J (fitted later, then applied back) better than by a constant shift; H83 found newcomers fit in within a day, so the prediction is a fast step.
+  - *Check:* cross-fitting in time: fit J on days 3–7, predict days 1–2.
+  - *Kill:* the constant-shift model wins.
+  - *Impostors:* N rises, which changes per-pair dilution (H18 N^−0.6); include it.
+  - *Models:* 02 · *Builds on:* H83, H18, H85
+- **HH364 · Regime I's turn order is a sweep: equilibrium-looking statistics with nonzero entropy production.** Model 02's subtle case: a fixed-order sweep keeps the Boltzmann distribution but breaks detailed balance. If regime I's turn pointer (`villages.turn_id`) cycles in a fixed order, the snapshots look like equilibrium while the dynamics is not.
+  - *Prediction:* the next-actor distribution in regime I is closer to round-robin than random (count first); model 01 fits snapshots as well as in regime III; and the EP bound is positive even with the antisymmetric J set to 0, matching the value the sweep alone predicts.
+  - *Check:* scheduler audit of next actor given the current state; simulate a symmetric-J kinetic Ising with the real turn order and compare its EP with the measured bound.
+  - *Kill:* turn order is random sequential, or the measured EP far exceeds the sweep prediction (then real asymmetric coupling is present, which is also informative).
+  - *Impostors:* this measures the scheduler's own share of irreversibility.
+  - *Models:* 02, 15 · *Builds on:* H14, H56, H76, HH45
+- **HH365 · Four agents for weeks: an exact kinetic Ising benchmark for the mean-field approximations (#4, #6).** With N = 4 and weeks of data, the full kinetic Ising likelihood is exact and cheap. That lets us test the mean-field approximations (naive, TAP, Plefka orders; Aguilera et al. 2021) on real data before trusting them at N = 21.
+  - *Prediction:* TAP or second-order Plefka recovers the exact J and the EP bound within 10% at N = 4; naive mean field does not. The ranking carries to synthetic N = 21 worlds built on #51's schedule.
+  - *Check:* exact ML vs approximations on #4 and #6 (merch competition) per call; then synthetic scaling.
+  - *Kill:* no approximation gets within 25%. Then the large-N results that use them need the exact or pseudo-likelihood route.
+  - *Impostors:* n/a (method benchmark); scheduler field removed as usual.
+  - *Models:* 02 · *Builds on:* H25, H67, H90
+
+*Suggested first picks.* HH351 and HH352 together (a positive and a negative control for every coupling and EP result), HH355 (tests the field impostor on the J estimator itself), HH362 (an out-of-sample prediction from fitted couplings) and HH356 (scheduler-made irreversibility at known switches).
