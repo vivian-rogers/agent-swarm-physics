@@ -179,6 +179,15 @@ def hypothesis(hdir: Path) -> dict:
         "confirm script": 1.0 if confirm_scripts else 0.0,
         "holdout run": 1.0 if (conf_run or data_conf) else 0.0,
     }
+    meta = {}
+    mp = hdir / "summary/meta.json"
+    if mp.exists():
+        try:
+            meta = json.loads(mp.read_text())
+        except ValueError:
+            meta = {}
+    rating = {k: meta.get(k) for k in ("complete", "faithfulness", "usefulness", "one_line", "rated_by", "updated")}
+    rating["rationale"] = meta.get("rationale", {})
     size, newest, nfiles = dir_stats(hdir)
     dsize, dnewest, _ = dir_stats(data_dir)
     last = max(x for x in (newest, dnewest, 0) if x is not None) or None
@@ -191,7 +200,8 @@ def hypothesis(hdir: Path) -> dict:
         "confirm_scripts": confirm_scripts, "confirm_runs": [p["period"] for p in conf_run] or data_conf,
         "confirm_verdicts": [{"period": p["period"], "verdict": p["verdict"], "text": p["verdict_text"]} for p in conf_run],
         "data_bytes": dsize, "files": nfiles, "last_activity": iso(last),
-        "parked": "parked" in status.lower(),
+        "parked": "parked" in status.lower(), "rating": rating,
+        "summary_pdf": str((hdir / "summary/summary.pdf").relative_to(ROOT)) if (hdir / "summary/summary.pdf").exists() else None,
     }
 
 

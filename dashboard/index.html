@@ -67,8 +67,8 @@ tr.changed td { animation: flash 1.6s ease-out; }
 td.num { text-align: right; white-space: nowrap; }
 .muted { color: var(--text-muted); }
 .sec { color: var(--text-secondary); }
-.status-line { color: var(--text-muted); font-size: 12px; max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.title { font-weight: 550; max-width: 340px; }
+.status-line { color: var(--text-muted); font-size: 12px; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.title { font-weight: 550; max-width: 300px; }
 
 .pips { white-space: nowrap; letter-spacing: 1px; font-size: 11px; color: var(--text-primary); }
 .pips .e { color: var(--text-muted); }
@@ -109,6 +109,7 @@ td.num { text-align: right; white-space: nowrap; }
 .state.stalled::before { content: "⚠ "; color: var(--serious); }
 .state.finished { color: var(--text-muted); }
 .level { font-size: 11px; color: var(--text-secondary); }
+.rchip { display: inline-block; min-width: 28px; text-align: center; border-radius: 3px; padding: 1px 4px; font: 600 11px/16px ui-monospace, monospace; }
 .warn { color: var(--serious); }
 
 .stack { display: flex; height: 14px; border-radius: 3px; overflow: hidden; gap: 2px; background: var(--surface-2); position: relative; }
@@ -156,6 +157,7 @@ td.num { text-align: right; white-space: nowrap; }
       <div class="scroll"><table id="hyp"></table></div>
       <div class="legend small" style="margin-top:8px">
         <span>Progress pips: card · predictions · synthetic check · periods with verdicts · scorecard · confirm script · holdout run (● done, ◐ partial, ○ not yet)</span>
+        <span>Useful = estimated usefulness for controlling, steering or aligning agent swarms (0–5); Faithful = scoped faithfulness (0–5); red low ↔ gray 2.5 ↔ blue high; rubric in writeup/hypothesis-pages/RUBRIC.md</span>
         <span>Scorecard A–I: <i style="background:var(--ord-0)"></i>0 <i style="background:var(--ord-1)"></i>1 <i style="background:var(--ord-2)"></i>2, dashed = not scored</span>
       </div>
     </section>
@@ -197,6 +199,13 @@ function ago(iso) {
 function dur(a, b) {
   const s = (new Date(b) - new Date(a)) / 1000; if (!(s > 0)) return "—";
   return s < 3600 ? Math.round(s / 60) + "m" : (s / 3600).toFixed(1) + "h";
+}
+const DIV = [[0,"#a32b2b","#fff"],[0.5,"#c43a3a","#fff"],[1,"#e34948","#fff"],[1.5,"#ee8584","#0b0b0b"],[2,"#f5bcbb","#0b0b0b"],[2.5,"#e9e7e1","#0b0b0b"],
+             [3,"#b7d3f6","#0b0b0b"],[3.5,"#86b6ef","#0b0b0b"],[4,"#5598e7","#fff"],[4.5,"#2a78d6","#fff"],[5,"#1c5cab","#fff"]];
+function ratingChip(v, why, who) {
+  if (v == null) return `<span class="muted small" data-tip="not rated yet: summary page pending">—</span>`;
+  const [, bg, fg] = DIV.reduce((a, b) => Math.abs(b[0] - v) < Math.abs(a[0] - v) ? b : a);
+  return `<span class="rchip" style="background:${bg};color:${fg}" data-tip="${esc(v + "/5 — " + (why || "") + (who ? "\nrated by: " + who : ""))}">${v}</span>`;
 }
 const mb = b => b == null ? "—" : b >= 1e9 ? (b / 1e9).toFixed(2) + " GB" : b >= 1e6 ? (b / 1e6).toFixed(1) + " MB" : (b / 1e3).toFixed(0) + " kB";
 const gb = b => b == null ? "—" : (b / 1e9).toFixed(1);
@@ -293,19 +302,22 @@ function renderHyp() {
   let hs = S.hypotheses.map(h => ({ ...h, agent: agentFor(h.id) }));
   if (f) hs = hs.filter(h => [h.id, h.title, h.status, h.level, h.agent?.state, Object.entries(h.verdicts).filter(([, v]) => v).map(([k]) => k).join(" "), h.confirm_scripts.length ? "holdout confirm" : ""].join(" ").toLowerCase().includes(f));
   const key = { id: h => h.id, progress: h => h.progress, activity: h => h.last_activity || "", data: h => h.data_bytes, level: h => h.level,
-                periods: h => Object.values(h.verdicts).reduce((a, b) => a + b, 0) }[sortKey] || (h => h.id);
+                periods: h => Object.values(h.verdicts).reduce((a, b) => a + b, 0),
+                useful: h => h.rating?.usefulness ?? -1, faith: h => h.rating?.faithfulness ?? -1 }[sortKey] || (h => h.id);
   hs.sort((a, b) => (key(a) > key(b) ? 1 : key(a) < key(b) ? -1 : 0) * sortDir);
   const th = (k, label, cls = "") => `<th class="sort ${cls}" data-k="${k}">${label}${sortKey === k ? (sortDir > 0 ? " ▲" : " ▼") : ""}</th>`;
-  $("#hyp").innerHTML = `<thead><tr>${th("id", "ID")}<th>Hypothesis</th>${th("progress", "Progress")}<th>Scorecard</th>${th("periods", "Goal periods")}<th>Holdout</th>${th("activity", "Activity")}</tr></thead><tbody>` +
+  $("#hyp").innerHTML = `<thead><tr>${th("id", "ID")}<th>Hypothesis</th>${th("progress", "Progress")}<th>Scorecard</th>${th("periods", "Goal periods")}<th>Holdout</th>${th("useful", "Useful")}${th("faith", "Faithful")}${th("activity", "Activity")}</tr></thead><tbody>` +
     hs.map(h => {
       const a = h.agent; const changed = lastSeen[h.id] && lastSeen[h.id] !== h.last_activity;
       return `<tr class="click ${changed ? "changed" : ""}" data-card="${esc(h.card || "")}">
         <td class="id">${h.id}</td>
-        <td><div class="title">${esc(h.title)}</div><div class="status-line" data-tip="${esc(h.status)}">${esc(h.status)}</div></td>
+        <td><div class="title">${esc(h.title)}</div><div class="status-line" data-tip="${esc(h.status)}">${esc(h.rating?.one_line || h.status)}</div></td>
         <td><span class="pips">${pips(h.stages)}</span><span class="pct mono">${h.progress}%</span><div class="level">${h.level}</div></td>
         <td>${scoreCells(h.scores)}</td>
         <td>${vbar(h.verdicts)}</td>
         <td>${holdoutCell(h)}</td>
+        <td>${ratingChip(h.rating?.usefulness, h.rating?.rationale?.usefulness, h.rating?.rated_by)}</td>
+        <td>${ratingChip(h.rating?.faithfulness, h.rating?.rationale?.faithfulness, h.rating?.rated_by)}</td>
         <td style="white-space:nowrap">${a ? `<span class="state ${a.state}">${a.state === "running" ? '<span class="dot"></span> ' : ""}${a.state}</span><br>` : ""}<span class="small muted">${ago(h.last_activity)} · ${mb(h.data_bytes)}</span></td></tr>`; }).join("") + `</tbody>`;
   hs.forEach(h => lastSeen[h.id] = h.last_activity);
   const lv = {}; S.hypotheses.forEach(h => lv[h.level] = (lv[h.level] || 0) + 1);
