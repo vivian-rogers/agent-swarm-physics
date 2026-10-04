@@ -54,6 +54,7 @@ $$\lambda_i(t) = \mu_i(t) + \sum_j \sum_{t_k^j < t} \phi_{ij}(t - t_k^j)$$
 
 ## Pitfalls
 
+- **Model the recipient's call clock before comparing kernels** (H42, 2026-10-04): talk is locked to each agent's own call starts, so a call-clock baseline beats H03-style models in 57/57 units, and inside it cross-excitation nearly vanishes (median n_cross 0.004 vs 0.061 exponential). Exponential kernels overstate cross-triggering by counting schedule co-movement. Shift and day-block nulls do not control a shared 15-min field. Only messages naming the recipient excite talk (regime III, ~0.15 events each, post hoc).
 - **At N ≤ 25 a fitted cascade exponent does not estimate 3/2** (H34): with a cutoff the fit is biased (0.5–2.9), and the apparent exponent is a monotone function of the branching ratio (ρ = −0.95 with R̂), so it carries no extra information. Activity Hawkes n̂ does not predict idea spread (ρ = 0.06).
 - **Endogenous turn timing fakes attention dilution** (H18): with reactive turn timing and no attention budget, the per-message response rate still falls with the backlog (β̂ ≈ 0.78). Identify dilution from exogenous batch sizes (timer wakes), and count only messages visible in the agent's room.
 

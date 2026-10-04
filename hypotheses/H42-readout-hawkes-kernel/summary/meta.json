@@ -1,0 +1,14 @@
+{
+  "complete": 42,
+  "faithfulness": 1.0,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Round 1 done: dated predictions, synthetic validation on real call grids (32 runs), 71 units in 35 goal periods with day-blocked CV, shift and day-block nulls and t_call sensitivity, four native tests (NE41, NE14, G51, G19), a post-hoc named-message test, and confirm.py (C1-C5) dry-run on stand-ins. Holdout not run; two-layer call-process model not built.",
+    "faithfulness": "The core claim (a read-out kernel raises n_cross and makes it consistent) is refuted in the coherent comparison: n_cross falls from 0.061 (exponential) to 0.004 once the recipient's call clock is modelled, and it is regime-dependent. The pre-registered wins are void (synthetic guard failed). Only the hop-1 shape and the regime-I native survive. Scorecard A1 B1 C1 D0 E0 F1 G1 H0 I0.",
+    "usefulness": "A diagnostic with teeth for anyone fitting influence or branching models to agent logs: model each agent's call clock and call class first, or timestamps measure the scaffold, and shift nulls will not catch it. Plus a post-hoc operator handle (naming an agent raises its talk at the next call, about 0.15 per message in the always-on regime) that restates H29's naming lever. Not a new control knob."
+  },
+  "one_line": "Anchoring cross-excitation at the recipient's next call removes most of H03's apparent triggering: talk timing follows each agent's own call clock, and only messages that name the recipient (regime III, post hoc) excite it.",
+  "rated_by": "H42 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)"
+}

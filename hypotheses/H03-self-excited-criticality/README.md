@@ -347,6 +347,7 @@ Verdict count: C 11 failed, 4 mixed; F 2 supported, 5 mixed, 1 failed; I/K/M 11 
 **Scorecard updates (round 1b).** A 1, B 1, C 1, D 1, F 1, H 1, I 0 unchanged. **E 0 → 1:** natural experiments now tested with dated predictions (NE43 supported; NE14 mixed). **G 0 → 0** (no ground-truth labels bear on branching). The C = 1 positive (fast n_x beats the strongest available null) is now shown against the DQ8-corrected null as well.
 
 ## Notes
+- **From H42 (2026-10-04):** H03's fast n_x replicates in an H03-style model (0.061) but mostly disappears once each recipient's call clock is in the baseline (0.004); the residual is carried by messages naming the recipient.
 - **From H50 (2026-10-04, cross-hypothesis):** talk is a real coupling gated at the recipient's next model call (hop 1; +25% / +44% over the base talk rate in regimes I / III; regime III needs naming). That is the kernel shape behind the fast n_x here; H42 fits it.
 - **From H34 (2026-10-04), answering H03-R3:** content (idea) cascades are subcritical too: R̂ 0.06–0.39 in 32/32 periods, exposure-locked (HR₁₀ CI > 1 in 27/32), no s^−3/2. R̂ is unrelated to H03's activity n̂ (ρ 0.06) but tracks H25's content dial (post hoc).
 - 2026-10-03: Card and predictions written before fitting. Holdout masked via `calendar.holdout` and `infra/shared/common.py: holdout_mask`. Every kickoff lands before its day's window opens (checked from `kicks` vs. `calendar`), so the kickoff bump starts at `win_start` of each goal's first day.

@@ -1,0 +1,36 @@
+\hwhat{H03's multivariate Hawkes fits were redone with kernels anchored at the recipient's next model call (the read-out, from the context ledger), on 71 non-holdout period units in 35 goal periods, with synthetic validation, shift and day-block nulls, and four native tests. Modelling the read-out did not raise cross-excitation; it removed most of it. Talk is locked to each agent's \emph{own} call clock: a model where talk can only follow the recipient's call starts wins by 1.1 nats per message held out in 57/57 units. Inside that model, messages read at a call barely change whether the agent talks ($n_{\rm cross}\approx 0.004$, against 0.061 for H03's exponential kernel); regime I $\approx 0$, regime III 0.01--0.05. The pre-registered estimator ``confirmed'' the prediction but fails the synthetic guard. Natives NE41, NE14 and \#51 failed. Post hoc, messages that \emph{name} the recipient carry 0.15 extra talk events each in regime III. Holdout: not run.}
+
+\hmodel{Model 09 (multivariate Hawkes); $\lambda^A$: H03 world, $\lambda^B$: call-clock world. Events: agent chat messages; sources: other agents' messages that agent $i$ read (ledger pairs). $c_k$: start of $i$'s $k$-th call ($k^*$ the latest); $f_i$: talk-delay density; $\kappa$: call class (chat or computer use, wake or not). $k_1(m)$: the call that read message $m$; $w_b$: read-out weights over call-index bins $b$; $\alpha_q,\beta_q$: exponential grid; $X_i$: cross part. $n_{\rm cross}$: cross offspring per event.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\lambda^{A}_i=c_{id}s_{b}+\Phi^{\rm self}_i+\textstyle\sum_{m}\sum_q\alpha_q\beta_q e^{-\beta_q(t-s_m)}\\
+\lambda^{B}_i=f_i\big(t-c_{k^*}\big)\Big[c_{id\kappa}s_b+\Phi^{\rm self}_i+\textstyle\sum_b \frac{w_b}{M_b}N_b(k^*)\Big]\\
+N_b(k^*)=\#\{m:\,k^*-k_1(m)\in b\},\quad k_1(m)=\min\{k:\,c_k>s_m\}\\
+n_{\rm cross}=\textstyle\frac{1}{N}\sum_i\int X_i(t)\,dt
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Per unit, held-out gain from adding cross-excitation: read-out kernel in the call-clock world against the exponential kernel in the H03 world (symlog). The read-out gain is $\le 0$ in most regime-I units. (b) Extra talk per message by regime (I, II, III): exponential (H03 world), read-out over all messages, and read-out for messages naming the recipient (post hoc). Bars: medians; dashed: shift-null q95; 0.001 = zero; red: synthetic shared-field floor.}
+
+\htelos{Mostly a measurement lesson, and a useful one for anyone fitting influence models to agent logs. Event-timing ``contagion'' between LLM agents is dominated by each agent's own call schedule. Unless the model knows when each agent can act and what kind of call it is in, branching ratios and influence graphs from timestamps mostly measure the scaffold. Shift nulls do not catch this. Once the call clock is in, an ordinary message barely changes whether an agent speaks at all. The one handle left is direct address: in the always-on regime, naming an agent raises its chance of talking at its next call (about 0.15 per message; post hoc; mid-exchange confound open). For an operator that is H29's lesson again: name who you want to respond. The read-out kernel itself is not a new knob.}
+
+\hbottom{Anchoring cross-excitation at the recipient's read-out does not reveal hidden coupling; it shows that talk timing is set by each agent's own call clock, with real message-driven excitation confined to messages that name the recipient.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.31\columnwidth}p{0.49\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (amended reading; pre-registered in brackets)} & \textbf{Verdict}\\\hline
+\raggedright P1 read-out beats exponential, held out & \raggedright gain $>$ exponential gain in 33\% (III 52\%) [pr 89\%, void] & \raggedright failed\tabularnewline
+\raggedright P3 exponential understates $n_{\rm cross}$ & \raggedright 0.004 vs 0.061; ratio 0.22 [pr 0.41 vs 0, void] & \raggedright reversed\tabularnewline
+\raggedright P4 consistent across regimes & \raggedright regime medians 0 / 0.005 / 0.013 (exp.\ 0.084 / 0.091 / 0.018) & \raggedright failed\tabularnewline
+\raggedright P5 step at calls 0--1 & \raggedright 100\% of mass at calls 0--1, 73\% at read-out (34 units) & \raggedright supported\tabularnewline
+\raggedright P6 beats nulls & \raggedright shift q95 42\%, day-block mean 63\% & \raggedright failed\tabularnewline
+\raggedright P8 call index beats time since arrival & \raggedright $B\ge A_g$ in 40\% & \raggedright failed\tabularnewline
+\raggedright G1 synthetic guard & \raggedright shared field passes every null; pr inflates $n_x$ 70\% & \raggedright failed\tabularnewline
+\raggedright NE41 erasure cuts tail & \raggedright surviving fraction $3.1\pm2.5$ (pred.\ $\le 0.5$) & \raggedright failed\tabularnewline
+\raggedright G19 regime-I talk ignores reads & \raggedright $n_x=0.000$; pr 0.89 $\approx$ its shift null 0.88 & \raggedright supported\tabularnewline
+\raggedright post hoc: named messages & \raggedright 0.15 per named msg (III), $>$ null 25/27; unnamed $\approx 0$ & \raggedright frozen (C5)\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_compact.pdf}{Synthetic validation on real call grids of \#27, \#33, \#40, \#51c, with a shared 15-min field in every arm (32 runs). Only the call-clock world recovers planted read-out excitation (median $+6\%$). With no cross-excitation, every world still beats its empirical nulls (field floor 0.05).}
+
+\hcaveats{The call-clock world treats call times and call classes as given, so any influence that changes \emph{when} or \emph{how} an agent calls is excluded by construction; the activity channel is only a partial check. Call starts are calibrated, not measured, outside Gemini (regime-I chat calls are latency-placed); bound sensitivity changed nothing. Shift and day-block nulls do not control a shared 15-min field. Three dated amendments (two estimator worlds, the field floor); pre-registered verdicts are reported and voided. The named-message result is post hoc, and recipients mid-exchange are its main rival.}
+
+\hnext{Run \texttt{confirm.py} (C1--C5: \#51 tail, \#28, \#22, \#29a, \#43). Separate named-message triggering from ongoing exchanges with DQ2 reply threads. Model call timing as its own process so excitation through call timing or class can be measured.}
