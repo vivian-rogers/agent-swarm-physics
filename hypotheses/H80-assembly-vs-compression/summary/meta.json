@@ -1,0 +1,64 @@
+{
+ "complete": 40,
+ "faithfulness": 2.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card, exact-vs-proxy synthetic validation with pipeline power, three replication units plus a powered post-period unit, two natives, frozen guarded confirm script; holdout not run.",
+  "faithfulness": "The headline (assembly adds nothing over compression) is pre-registered, power-backed (synthetic power 1.0) and holds in 4/4 units. The compression half of the hypothesis (C >= 0.9, prior share >= 70%) failed, and the label favours timing by construction.",
+  "usefulness": "A computable detector rule from standard logs (timing flags scripts under agent identities, AUC >= 0.91), plus the warning that compression only catches replay. Assembly theory gives operators nothing."
+ },
+ "one_line": "Assembly index adds nothing over compression (dAUC <= 0.001); timing, not sequence structure, separates scripts from agents; high-index motifs are single-agent habits",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "tool",
+   "outcome": "mixed",
+   "note": "compression estimators; assembly = grammar size, adds nothing"
+  }
+ ],
+ "rated_by": "H80 round-1 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "The assembly index adds nothing over compression for telling agent work from scripted work (ΔAUC −0.007 to +0.001, power 1.0); timing alone does it; high-index motifs are single-agent habits, not shared priors or selection",
+  "scope": "G51, G51+post, G31, G41; natives NE32, G38",
+  "direction": "negative",
+  "original_verdict": "mixed",
+  "credence": 0.64,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification (assembly-only signal detected with power 1.0)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "replication (4 units)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "rival beaten (compression and LZ match or beat assembly)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: the automated label is defined by timing",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "detect agent vs script output by timing and compression, not assembly index",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.29,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H80 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

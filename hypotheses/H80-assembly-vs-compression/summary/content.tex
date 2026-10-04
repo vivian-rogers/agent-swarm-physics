@@ -1,0 +1,36 @@
+\hwhat{H80 tests assembly theory's index against compression as a signature of script work. The units are 16-commit windows labelled automated or agent (DQ4) in G51, G31 and G41. A fourth unit, G51+post, adds 28 scripts that commit after the village's last day. The index is a Re-Pair grammar bound, checked against an exact search. Adding the index to compression changes AUC by $-0.007$ to $+0.001$, so the kill ($\ge0.05$) is far. Timing alone, the scheduler baseline, reaches 0.92--1.00. Compression reaches 0.96 only for single cron streams that replay identical commits. Across the 28 scripts it falls to 0.25. High-index, high-copy command motifs belong to single agents. Only 7.8\% appear on a joiner's first day across $\ge2$ labs, so P5 fails. Holdout script frozen, not run.}
+
+\hmodel{Model 04 used as a tool family. A window is a token string $x$ of length $L=16$; one token hashes one commit's size fields. The assembly index $a(x)$ is the fewest joins that build $x$ with reuse. It equals the minimal grammar size minus the basis (Abrahão Cor.~8), and Re-Pair bounds it from above. The rivals are entropy rate, LZ76, LZ78, gzip and zstd (C), and the timing features (T). Motifs are 4--8-grams of command heads; $n_i$ is the number of sessions holding motif $i$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+a(x)=\min_{D}\sum_{d\in D\cup\{x\}}\big(\mathrm{tiles}(d\,|\,D_{<d})-1\big)\ \le\ a_{\rm RP}=|\mathcal R|+|x_{\rm RP}|-1\\
+A=\sum_i e^{a_i}(n_i-1)/N_T,\qquad \mathrm{NCD}(x,y)=\frac{C(xy)-\min(C_x,C_y)}{\max(C_x,C_y)}\\
+\Delta\mathrm{AUC}_A=\mathrm{AUC}(\mathrm{C}+a_{\rm RP})-\mathrm{AUC}(\mathrm{C})
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Left: out-of-fold AUC with 95\% cluster-bootstrap CI, for automated vs agent windows. Adding the assembly index (dark blue) never moves compression (light blue). Timing (gray) wins everywhere. With one cron stream compression looks strong. Across 28 scripts (repo-blocked) it inverts. Right: the median number of agents per command motif falls from 7 to 1 as $a$ rises. Counts of motifs are printed at the bottom.}
+
+\htelos{A monitor that must flag script commits under an agent's identity should use timing: off-hours activity, regular gaps, and no agent turn nearby. Timing alone gives AUC $\ge0.91$ here. Compression catches only replay loops. A script that writes varied content looks like an agent, and the compression detector then flags 97\% of a script-free period. The assembly index adds nothing to compression, so drop it. For a selection meter, high index $\times$ high copy here measures one agent repeating its own habit. That habit is present from the agent's first day, even in isolation. No operator decision changes because of assembly theory; the timing rule is the usable part.}
+
+\hbottom{The assembly index is compression in disguise here, compression detects replay rather than automation, and the scheduler's timing carries the agent-vs-script label.}
+
+\hresults{\footnotesize\begin{tabular}{@{}p{0.28\columnwidth}p{0.52\columnwidth}l@{}}
+\hline
+prediction & observed & verdict\\\hline
+P1 C AUC $\ge$0.9 & 0.965 (G51, 1 stream); 0.25 (28 streams); G31 0.69 & failed\\
+P2 $\Delta$AUC$_A<0.02$ & $+0.001$, 0.000, $-0.001$, $-0.007$ & supported\\
+P3 $\rho(a_{\rm RP},$LZ78$)\ge0.9$ & 0.82 (G51), 0.98, 0.95 & 2/3\\
+P4 T $\ge$0.85; C adds $\ge$0.02 & T 0.92--1.00; C adds $\le$0.005 & half\\
+P5 prior share $\ge$70\% & 7.8\% (562 motifs); single-agent habits & failed\\
+P6 no NCD fall & $+0.005$ (7 joiners) & supported\\
+N1 NE32 isolated day 1 & 1.65$\times$ incumbents' motif use & supported$^*$\\
+N2 G38 no automation & C flags 97\%; T 0\% & failed\\
+S1 synthetic & proxy $\ge$ exact, 97.6\% exact; power 1.0 & passed\\
+\hline
+\end{tabular}\\[1pt]{\footnotesize $^*$NE33 contrast arm uninformative (motif-set selection).}}
+
+\hobsb{../figures/synthetic_validation.pdf}{Left: the Re-Pair proxy against the exact assembly index on 500 random strings ($L$ 6--12). It is never below the exact value and is exact in 97.6\%. Right: $s^k$ strings, where the exact index matches $|s|-1+\ell(k)$, with $\ell$ the shortest addition chain.}
+
+\hcaveats{The label \texttt{automated} is defined by the time to the nearest agent turn, which favours timing by construction. In-period units have one automated stream each, so their AUCs compare one script against the agents. The powered unit (G51+post) uses scripts that run after the village stopped. Commit tokens hash size fields only; file paths could separate scripts better. Motif copy counts need $\ge20$ sessions inside G51, which excludes late joiners. Holdout not used.}
+
+\hnext{Copies per independent producer for ensemble assembly; file-path tokens; a timing-free label (H80-R1--R3).}

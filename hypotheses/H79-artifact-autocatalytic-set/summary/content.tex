@@ -1,0 +1,37 @@
+\hwhat{H79 asks if the village's artifacts form an autocatalytic set when agents are not catalysts. A reaction is a write to repo $X$ in a session where repo $Y$'s code runs first; cron streams catalyse their own repo. We built the network for G51, G31, G38 and G41, and for the natives G40 and NE29. Self-catalysis carries 85--99\% of maxRAF commits. No period has a catalytic cycle of length $\ge3$ with $\ge3$ events per edge. G51 has fewer such cycles than the rewired null ($p=0.01$). The maxRAF covers 21--40\% of agent work commits, so P1 ($\le20\%$) fails. This coverage equals the execution share and the rewired null, and it falls to 0.3--14\% without python heads. Executions follow writes more often than they precede them. Holdout script frozen, not run.}
+
+\hmodel{Model 05 (replicators), RAF variant. Species: repos. Reaction $r=(X,Y)$: product $X$, catalyst $Y$, aggregated over session events. Food $F$: platforms, pre-period artifacts, operator-named artifacts. Agents are the uncatalysed background: their products are reactants, never catalysts. A maxRAF reaction needs $Y\in F$ or $Y$ produced inside the set. Order parameters: coverage $c$, self share $s$, supported cycles $n_3$, time ratio $\tau$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\mathcal R'\ \text{RAF}\iff \forall r=(X,Y)\in\mathcal R':\ Y\in F\cup\{X':(X',Y')\in\mathcal R'\}\\
+c=\frac{\sum_{e:\,r(e)\in\mathrm{maxRAF}} n_e}{\sum_e n_e},\qquad s=\frac{\sum_{r=(X,X)} n_r}{\sum_{r\in\mathrm{maxRAF}} n_r}\\
+\text{irrRAF}_{|\cdot|\ge2}=\text{simple cycle in } G=\{Y\!\to\!X:\ X,Y\notin F,\ X\neq Y\}\\
+\tau=\frac{\#\{\text{commits with a repo run before the write}\}}{\#\{\text{commits with a repo run after the write}\}}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Left: share of agent work commits by catalyst class (classes overlap); bars mark maxRAF coverage; dashed line, P1's 20\% bound. Self-catalysis dominates in every period. The in-period tool class, which would be the artifact layer, is $\le4\%$ except G31, where the rewired null gives the same value. Right: executions before / after a write, with day-bootstrap 95\% CI. All five values are below 1, so P4 fails in reverse.}
+
+\htelos{For an operator, the automata that agents build are single scripts that maintain their own repo. They do not form a self-sustaining tool ecosystem. When an agent leaves, nothing others depend on stops: the retiree's 120 repos catalysed 0 later commits. To audit what keeps running without agents, list the self-writing streams per repo. The G51 cron stream alone made 54,892 commits. A dependency-graph search for tool chains adds nothing to that list. The catalysis edge also points the wrong way in time, because agents mostly commit and then run code. So "this tool produced that work" cannot be read from session co-occurrence. This result is mostly a negative for the egregore reading.}
+
+\hbottom{Artifact catalysis in the village is first order: self-maintaining scripts and repos, no cross-catalytic cycles, and execution that follows writes rather than causes them.}
+
+\hresults{\footnotesize\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}l@{}}
+\hline
+prediction & observed (5 periods) & verdict\\\hline
+P1 coverage $\le$0.20 & 0.21--0.40 (G51 0.21 [0.19, 0.24]); 0.003--0.14 without python & failed$^*$\\
+P2 no $\ge3$ cycles & 0 supported cycles; G51 below null ($p_{\rm low}$ 0.01) & supported\\
+P3a self $\ge$0.5 of RAF & 0.85--0.99 & supported\\
+P3b in-period tools $\le$0.05 & 0.003--0.037; G31 0.21 (null 0.20) & 4/5\\
+P4 before/after $>1$ & 0.74--0.90 (CI $<1$ in 3/5) & failed\\
+P5 CAF/RAF $\ge$0.9 & G51 0.09; others 0.75--0.99 & 2/5\\
+N1 G40 commons & 0 cycles; self 0.98; N1c failed & mixed\\
+N2 NE29 exit & 0\% of later work catalysed & supported\\
+S1 synthetic & exact vs brute force; power 30/30, size 0/30 & passed\\
+\hline
+\end{tabular}\\[1pt]{\footnotesize $^*$fails only under the head-only execution rule (post hoc variant).}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Synthetic network (3,000 events, neutral catalysis): rate of detecting a planted 3-cycle (cycle present and rewired $p<0.05$) vs events per planted edge. Counting all cross edges gives false 3-cycles in 77\% of empty networks and low power. Requiring $\ge3$ events per edge (amendment A2) gives size 0 and power 1.}
+
+\hcaveats{Execution is read from the bash head and the last logged working directory. python3 heredocs count as running the repo, and cwd precision is 0.89. The no-python variant moves coverage by a factor of 10 but leaves the structure unchanged. \texttt{first\_t} is first mention, not creation, so some old repos enter as in-period artifacts. The rewired null was redesigned after a synthetic check (A2) and before the real run. Catalysis is session co-occurrence, not content dependence. NE29's retiree made few commits. Holdout not used.}
+
+\hnext{Content-dependent catalysis edges from file-level diffs; full command text for execution (H79-R1, R2).}

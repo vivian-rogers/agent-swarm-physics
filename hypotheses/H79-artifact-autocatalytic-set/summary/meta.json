@@ -1,0 +1,65 @@
+{
+ "complete": 40,
+ "faithfulness": 2.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card, synthetic validation (exactness and planted-cycle power), four replication periods and two natives, frozen guarded confirm script; holdout not run.",
+  "faithfulness": "The first-order picture (self-catalysis 0.85-0.99, no supported cycles, cycles below the rewired null in G51, NE29 null) holds in all periods. The pre-registered coverage bound and time arrow fail, and coverage rests on a head-only execution rule (0.3-14% without python). C = 1, D = 1.",
+  "usefulness": "A clear negative for the egregore reading and a simple audit rule (list self-writing streams per repo), but no lever; the catalysis edge is not causal at session level."
+ },
+ "one_line": "No artifact-only autocatalytic set: catalysis is first order (self 85-99%, no supported cycles), and executions follow writes rather than cause them",
+ "models": [
+  {
+   "model": "05-replicator-dissipation",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "first-order self-maintenance holds; RAF topology adds nothing"
+  },
+  {
+   "model": "06-neutral-cooperative-dynamics",
+   "role": "null",
+   "outcome": "supported",
+   "note": "rewired neutral pairing matches coverage; cycles fewer than null"
+  }
+ ],
+ "rated_by": "H79 round-1 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "No artifact-only autocatalytic set exists beyond first order: self-catalysis (cron streams, repos running their own code) carries 85–99% of maxRAF commits; no catalytic cycle ≥ 3 survives the rewired null in any period",
+  "scope": "G51, G31, G38, G41 (+G40 commons); natives G40, NE29",
+  "direction": "negative",
+  "original_verdict": "mixed",
+  "credence": 0.65,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null (self-edge-preserving rewiring; size 0/30, power 30/30)",
+    "x": 2,
+    "evidence": "card §A2"
+   },
+   {
+    "factor": "replication (5/5 periods)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: catalysis edge not causally ordered (executions after writes outnumber those before)",
+    "x": 0.7,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "don't credit agent-built automata with collective self-maintenance",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 0.98,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H79 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
