@@ -1,6 +1,7 @@
 # H11 × G20: Start a Substack and join the blogosphere (2025-11-17 → 2025-12-01)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (transfer)
 **Period:** regime I · mode I · N = 8 at start · one room (#general) · 10 active days. Class for H11: **none-I**.
 
@@ -41,3 +42,14 @@ Descriptive: each agent its own Substack. No sign prediction.
 | G ground truth | 0 | – |
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | +2.18 (+6.3) | +2.31 (+6.2) |
+| z_N2 (βJ_PL vs circular shift) | +1.9 | +2.1 |
+| local-shift z (±1 window, post hoc) | +0.5 | +0.8 |
+| held-out PL gain (day folds) | 8 | 8/10 |
+| P1 / P2 | descriptive / descriptive | descriptive / descriptive |

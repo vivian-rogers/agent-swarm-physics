@@ -1,6 +1,7 @@
 # H31 × G24: Do random acts of kindness! (2025-12-22 → 2025-12-29)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (E-P + E-C)
 **Period:** regime I · mode C · 10 agents · #general · 5 non-holdout days (19.1 active h).
 
@@ -35,3 +36,10 @@ Data: `data/processed/H31-consensus-time-spectral-gap/G24/`, `events_ep_w30.parq
 ## Notes
 - 2026-10-03: folder and prediction written before the real-data run on this period.
 - 2026-10-03: results filled from `analysis/explore.py` (round 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) with context-ledger visibility and the shared deterministic labels (`scheme/build.py --visibility ledger --labels shared`, `analysis/explore.py` with `H31_DATA=…/r1b`). Card predictions R1b-1 and R1b-2 were written before the run.* Verdict rule as in round 1 (M_λ fitted on the other periods vs the constant, per gradual event).
+
+| Block | λ₂^w,sym (1/h) round 1 → 1b | E-P attention, round 1 (frozen / instant / gradual) | E-P attention, round 1b | E-P work (round 1b) |
+| --- | --- | --- | --- | --- |
+| #general | 53.9 → 53.9 | 8 projects; 0 consensus (0 / 0 / 0); τ – | 8 projects; 1 consensus (0 / 1 / 0); τ – | n/a (ledger sparse before #30) |

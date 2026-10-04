@@ -1,4 +1,4 @@
-\hwhat{A pre-registered rule on H11's project labels defined herding onsets: a project's share of labeled agents jumps from $\le 0.25$ to $\ge 0.5$ within an hour and stays there. It found 21 onsets in 14 non-holdout weeks at 15-min resolution, mostly in shared-artifact weeks (\#18, \#19, \#30, \#31, \#33, \#38). Early-warning trends (Kendall $\tau$ of the rolling lag-1 autocorrelation and SD over the previous 6\,h) were compared with matched placebo segments. Only 8 onsets were evaluable. The composite separated them weakly at 15\,min (AUC 0.62 [0.51, 0.76]) and not at 30\,min (0.44). Autocorrelation never rose (AUC 0.42), so this is not critical slowing down. The frozen alarm warned of 5 of 21 onsets at 5.3 false alarms per active day, no better than a time-shifted alarm ($p=0.07$) or a naive share alarm. Four onsets came out of nowhere. Post hoc, 11 of 21 followed a chat link to the project within 30\,min ($p=0.0005$). Holdout not run.}
+\hwhat{A pre-registered rule on project labels defined herding onsets: a project's share of labeled agents jumps from $\le 0.25$ to $\ge 0.5$ within an hour and stays there. It found 21 onsets in 14 non-holdout weeks at 15-min resolution, mostly in shared-artifact weeks. Early-warning trends (rolling lag-1 autocorrelation and SD over the previous 6\,h) were compared with matched placebo segments; 8 onsets were evaluable. The composite separated them weakly at 15\,min (AUC 0.62) and not at 30\,min; autocorrelation never rose (0.41), so this is not critical slowing down. \textbf{Round 1b} (deterministic labels, work ledger) reproduces all of it: same onsets, same AUC. The frozen alarm now beats a time-shifted copy at $p=0.038$ (was 0.07), but a naive share alarm matches its 5/21 hits with fewer alarms. Work-commit onsets coincide with attention onsets, and \#40's pile-on ran in minutes after a link. Holdout not run.}
 
 \hmodel{Models 10 (kinetic mean-field Potts) and 01 (mean-field susceptibility). $\sigma_i$: agent $i$'s project in a window (0 = rare projects, uncoupled). $k_a^{(-i)}$: other agents on $a$; $h_a(t)$: a slowly drifting popularity field; $\beta J$: uniform herding coupling; $\gamma$: reconsideration rate; $x_a$: share on $a$. Near a fold of $x_A$ the leading eigenvalue $\lambda\to 0$, so the lag-1 autocorrelation $\rho_1$ and the variance rise (critical slowing down). Rivals (field steps, noise-induced flips) give no warning.}
 
@@ -11,23 +11,23 @@ P(\sigma_i\!\to\! a)\propto e^{\,h_a(t)+\beta J k_a^{(-i)}/(N-1)}\ (a\ge 1),\qua
 
 \hobs{../figures/summary_obs.pdf}{(a) AUC of each early-warning trend, onset vs placebo segments, at 1\,h lead. Series: a synthetic fold at village size (purple), a clean $N=200$ fold (green), and the village at 15\,min (blue, 8 onsets) and 30\,min (orange, 6). Autocorrelation never discriminates; variance does only at 15\,min, with wide CIs. (b) Onsets warned within 3\,h against false alarms per active day. Open circles: the same alarms shifted in time. No alarm beats its shifted copy.}
 
-\htelos{For an operator this is a useful negative. Generic early-warning indicators (rising autocorrelation and variance, popular in ecology and finance) do not forecast pile-ons in a 10--15-agent LLM swarm logged at 15-min resolution. Most pile-ons are fast pushes: a project nobody had touched, or a link posted in chat, then a majority within the hour. The synthetic runs show it would not help even if the physics were right: at $N\approx 12$ a true fold is barely detectable. So don't build a critical-slowing-down dashboard for swarms this size. If you want warning, watch announcements (links; H28 is testing this) or just watch shares, and accept about two false alarms a day. The transferable lesson: test alarm timing against a rate-matched shift, or every indicator looks predictive.}
+\htelos{For an operator this is a useful negative, now checked on cleaner data and in commits. Generic early-warning indicators (rising autocorrelation and variance) do not forecast pile-ons in a 10--15-agent LLM swarm. Pile-ons are fast pushes: a link posted in chat, then half the room within minutes (\#40: 4 min to half the room's attention, 19 min to half its commits). A 6-hour trend window cannot see that, and at $N\approx 12$ a true fold would be barely detectable anyway. So don't build a critical-slowing-down dashboard for swarms this size. Watch announcements and shares instead, and size any response to minutes, not hours. The transferable lesson: test alarm timing against a rate-matched shift; the round-1 vs 1b $p$ (0.07 vs 0.04) shows how thin such timing signals are.}
 
-\hbottom{Critical slowing down does not warn of herding in the AI Village: pile-ons are fast, often announced by a link, and too few agents are watched for slowing down to show.}
+\hbottom{Critical slowing down does not warn of herding in the AI Village: pile-ons in attention and in commits are fast, usually marked by a link, and too few agents are watched for slowing down to show.}
 
-\hresults{{\scriptsize\noindent\begin{tabular}{@{}l@{\ \ }l@{\ \ }l@{}}
-\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\
-P0: 10--25 onsets & 21 in 7/14 weeks; 8 evaluable & yes\\
-P1: AUC $\ge 0.70$ & 0.62 [0.51, 0.76]; 30\,min: 0.44 & mixed\\
-P2: SD $>$ AR1, mean rise & 0.70 vs 0.42; binomial 0.69 & partly\\
-P3: no operator value & 5/21 hits, 5.3 false/day, $p=0.07$ & yes\\
+\hresults{{\footnotesize\noindent\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.27\columnwidth}p{0.52\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (round 1 $\to$ 1b)} & \textbf{Verdict}\\\hline
+P0: 10--25 onsets & 21 $\to$ 21; 8 evaluable & yes\\
+P1: AUC $\ge 0.70$ & 0.62 $\to$ 0.62 [0.50, 0.76]; 30\,min 0.44 $\to$ 0.50 & mixed\\
+P2: SD $>$ AR1 & 0.70/0.42 $\to$ 0.71/0.41 & partly\\
+P3: no operator value & 5/21 hits; shift $p$ 0.07 $\to$ 0.038; level alarm 5/21 & mostly\\
 P4: synthetic & $N{=}200$: 0.75; $N{=}12$: 0.58 & 2 of 4\\
-P5: lead $\le 1$\,h & 1.25\,h (inflated) & moot\\
-P6: concentration & 2 evaluable onsets & untestable\\
-Post hoc: link first & 11/21 vs 2.7 expected; $p=0.0005$ & to confirm\\
-\end{tabular}\par}
-\noindent P3's $p$ compares the alarm with the same alarms shifted in time. P4 missed on $N{=}200$ (0.8 predicted) and on drift raising false alarms (it did not).}
+R1b-1 replication & same onsets, same verdicts & yes\\
+R1b-2 work onsets & 8 vs 14; lag 0 (3) or $+1$ (1) window & mostly\\
+R1b-3 links & 11/21; 9 to known projects, 2 first links & yes\\
+\#40 minute clock & $t_{50}$ 1.5 min after link; work 15 min later & 2 of 3\\
+\end{tabular}\par}}
 
-\hobsb{../figures/summary_synth.pdf}{Synthetic kinetic Potts at village sampling, 200 runs per scenario. Filled: the composite trend; open: the share level in the last hour. The nulls, field steps and noise-induced flips sit near 0.5. A true fold at $N=12$ reaches only 0.58--0.65; a clean $N=200$ fold, 0.75. The share level beats the trends everywhere.}
+\hobsb{../figures/r1b_auc_hub.pdf}{(a) AUC of each trend, onset vs placebo, at 1\,h lead: round 1 (orange) vs round 1b shared labels (blue). Nothing moves; autocorrelation stays below 0.5. (b) \#40 at the minute clock: share of the room with a first mention of the hub (orange) and a first commit to it (blue) after the kickoff. Half the room is in within one 15-min window (shaded).}
 
-\hcaveats{21 onsets, 8 evaluable: the per-week AUCs rest on 1--2 onsets and the CIs are wide. Many indicators, leads, window lengths and two onset rules were computed; only the 15-min composite at 1\,h was primary. Labels are artifact mentions (attention, not work) and are sparse in regime I. The step rule misses slow rises (synthetic $N=200$); the slow-rise variant gives 0.73 at 15\,min but 0.50 at 30\,min. The link association is post hoc and partly mechanical, since a link also labels its poster. \#51 supplies most of the false alarms. Leads count from the earliest alarm in the horizon, which flatters noisy alarms.}
+\hcaveats{21 onsets, 8 evaluable, 4 in work: per-week AUCs rest on 1--2 onsets. Many indicators, leads, window lengths and two onset rules; only the 15-min composite at 1\,h was primary. The alarm-vs-shift $p$ crosses 0.05 between null draws (0.038--0.07): treat it as borderline. The step rule misses slow rises; the slow-rise variant gives 0.74 at 15\,min. The link association is post hoc; most linked onsets are bursts of known projects (H28). Work labels are public agent commits (dense from \#30). \#51 supplies most false alarms.}

@@ -1,6 +1,7 @@
 # H31 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-27)
 
 **Verdict:** supported
+**Verdict (1b):** supported (unchanged)
 **Role:** exploratory (E-P + E-C; two-room contrast (T6))
 **Period:** regime III · mode C · 12 agents · #best, #rest · 17 non-holdout days (72.2 active h).
 
@@ -43,3 +44,11 @@ Data: `data/processed/H31-consensus-time-spectral-gap/G38/`, `events_ep_w30.parq
 ## Notes
 - 2026-10-03: folder and prediction written before the real-data run on this period.
 - 2026-10-03: results filled from `analysis/explore.py` (round 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) with context-ledger visibility and the shared deterministic labels (`scheme/build.py --visibility ledger --labels shared`, `analysis/explore.py` with `H31_DATA=…/r1b`). Card predictions R1b-1 and R1b-2 were written before the run.* Verdict rule as in round 1 (M_λ fitted on the other periods vs the constant, per gradual event).
+
+| Block | λ₂^w,sym (1/h) round 1 → 1b | E-P attention, round 1 (frozen / instant / gradual) | E-P attention, round 1b | E-P work (round 1b) |
+| --- | --- | --- | --- | --- |
+| #best | 1.6 → 1.6 | 2 projects; 2 consensus (1 / 0 / 1); τ 19.6 | 2 projects; 2 consensus (1 / 0 / 1); τ 19.6 | not eligible |
+| #rest | 17.2 → 17.2 | 6 projects; 5 consensus (1 / 0 / 4); τ 1.0, 10.1, 4.5, 7.1 | 6 projects; 5 consensus (1 / 0 / 4); τ 1.0, 10.1, 4.5, 7.1 | not eligible |

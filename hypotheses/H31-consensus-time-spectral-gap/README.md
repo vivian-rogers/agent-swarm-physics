@@ -1,6 +1,6 @@
 # H31: Consensus time scales with the interaction graph's spectral gap
 
-**Status:** exploratory round 1 done (2026-10-03). **The 1/λ₂ law is not supported as posed.**
+**Status:** exploratory round 1 done (2026-10-03); **round 1b on improved data done (2026-10-04): no card-level verdict change** (context-ledger visibility and deterministic labels reproduce the failed 1/λ₂ law, slope 0.38 [0.05, 0.60]; the sub-linear lead weakens; work commits reach majorities on the same repos at least as fast as attention; on the correct #26 rounds votes settle in 57 s and 39 s, at read-out speed, so P10 now holds). **The 1/λ₂ law is not supported as posed.**
 - Gradual project consensus scales *sub-linearly*, τ ∝ λ₂^−0.37 [0.08, 0.55], and the slope-1 rule loses to a constant forecast out of sample.
 - A pure field model is rejected for these events; the data cannot tell diffusion, voter and herding apart.
 - About half of all consensus events are not gradual: they are frozen at the kickoff or happen as one-window waves.
@@ -140,13 +140,13 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Exposure (`exposure` recipients plus H18 call-start visibility), turns, H11 project labels and whitened embeddings are all defined from fields; assumptions are listed. Not invariant: the visibility rule is doubtful in regime I and before NE09, labels measure attention rather than work, and λ₂^bin is ≈ N/(N−1) everywhere (rooms are complete broadcast graphs). |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Exposure (`exposure` recipients plus H18 call-start visibility), turns, H11 project labels and whitened embeddings are all defined from fields; assumptions are listed. Not invariant: the visibility rule is doubtful in regime I and before NE09, labels measure attention rather than work, and λ₂^bin is ≈ N/(N−1) everywhere (rooms are complete broadcast graphs). Round 1b: visibility now from the context ledger; work-commit states give the same consensus pattern. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Time-rescaling: W = 15 / 30 / 60 give slopes 0.60 / 0.37 / 0.42. Update order is taken from the real reading schedule (time-respecting variants). Stationarity of the graph within a period is not established: the event-window λ₂ slope is n.s. (0.25 [−0.25, 0.48]) while the period-level one is significant. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | The H31 rule (slope fixed at 1) loses to the constant in leave-one-period-out RMSE (1.25 vs 1.08). A free sub-linear slope beats it modestly (0.99, −8%; also −6% at W = 15 and −12% at W = 60). Gradual events are not kick-locked beyond placebo (0.27 vs 0.25), so they are not purely field-timed. |
 | D unfitted predictions | unfitted statistics and the model's signature | 0 | The model's signatures failed: the slope is 0.37, not 1; content diverges instead of converging (0/35 blocks converge); rises are gradual rather than diffusive-exponential or abrupt in the predicted mix. The two-room sign agrees with D in 3/4 periods, which is too few to count. |
-| E interventional | predicts the change across a natural experiment | 0 | No natural experiment was used. NE15's pre-split side is held out (#34). The #39 → #40 → #41 merge A-B-A is not tested. |
+| E interventional | predicts the change across a natural experiment | 0 | No natural experiment was used. NE15's pre-split side is held out (#34). Round 1b: the #39 → #40 → #41 merge (NE42) raises λ₂ 2.4× but the split does not lower it, and #40's only consensus is kickoff-set, so no leverage. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Synthetic recovery on the real schedules: the primary λ₂^w,sym slope is attenuated (≈ 0.5 under the true diffusion model) and underpowered (P1 pass rate 0.13). Bulk predictors (core λ₂, reading rate) recover a slope near 1 with power 0.7–0.85. The field null is calibrated (5–10% false positives). The real-data result is not robust to the core-agent variant (0.25 [−0.40, 0.52]). |
-| G ground truth | agrees with known structure | 1 | The #26 winner (DeepSeek-V3.2) and the runoff step (0.22 → ≥ 0.5 in 0.76 h, post hoc) match the dataset's summary and H11. #19 is frozen at the start, as H11 found. All 13 kickoff-frozen events sit on goal kickoffs. There is no ground truth for consensus timing. |
+| G ground truth | agrees with known structure | 2 | The #26 winner (DeepSeek-V3.2) and the runoff step (0.22 → ≥ 0.5 in 0.76 h, post hoc) match the dataset's summary and H11. #19 is frozen at the start, as H11 found. All 13 kickoff-frozen events sit on goal kickoffs. There is no ground truth for consensus timing. **Round 1b (1 → 2):** DQ6 gives ground-truth instants and ballots for three #26 rounds; consensus times (57 s runoff, 39 s confirmatory, approval tie censored) are measured on them with ledger read-out times, and the round-1 E-V (wrong vote) is superseded. |
 | H comparative | beats the named rivals | 1 | λ₂-based models beat the voter-on-schedule, herding-wave and fixed-slope γ_tr models by large margins (RMSE 2.06–2.84). The free-slope λ₂ is marginally best, but it ties N^a (1.09) and the constant (1.08) within noise. The rivals are not decisively beaten. |
 | I transfer | holds in other same-mode periods, including the holdout | 0 | Holdout not run. Within-regime slopes have CIs that include 0 (regime I 0.99 [−0.05, 3.04], 8 periods; regime II/III 0.41 [−0.18, 1.03], 6 periods). |
 
@@ -245,6 +245,8 @@ Per-period verdicts are descriptive. "Supported" or "failed" says whether the H3
 | [G41](goalperiod-subhypotheses/G41/README.md) | two rooms | failed | #rest τ 4.0, 13.5 |
 | [G42](goalperiod-subhypotheses/G42/README.md) | two rooms | supported | #best τ 8.0; content divergence in both rooms |
 | [G44](goalperiod-subhypotheses/G44/README.md) | two rooms | failed | #best τ 0.5, #rest τ 4.6. T6 agrees with V, not D |
+
+**Round 1b (2026-10-04):** every period folder has a `**Verdict (1b):**` line (ledger visibility, shared labels, work space from #30). Changes: #19 supported → descriptive (its 18.5-h event becomes left-censored after label renumbering), #21 failed → supported (a third gradual event), #26 failed → supported for E-V per round (native, DQ6). New native folder: [NE42](goalperiod-subhypotheses/NE42/README.md) (mixed).
 
 ## Results
 *Exploratory round 1, 2026-10-03; non-holdout periods #10–#44 only.*
@@ -354,7 +356,66 @@ Per-period verdicts are descriptive. "Supported" or "failed" says whether the H3
 4. Use the #39 → #40 → #41 merge A-B-A (λ₂ jumps when rooms merge) as an interventional test (axis E).
 5. Content: replace the 30-min statement mean with day-level or topic-cluster states, and test whether the post-kickoff decay time tracks λ₂ (post hoc slope +0.86 [−0.10, 1.49], 12 events).
 
+## Round 1b (improved data, 2026-10-04)
+
+### What changed in the inputs
+- **Visibility ("seen" weights):** the context ledger (`context_ledger_items`, `call_windows`) replaces H18's call-start rule, which mislabels 65–70% of "invisible" messages (pauses, scheduled chat calls, first calls of the day). A read is now (message, recipient, receiving call): t_seen = the call's context-assembly time `t_call`, t_upd = its first logged record `t_first`. Reading turns for τ_wave are receiving calls.
+- **Project states:** the shared deterministic `project_states` (via H11's round-1b files) instead of H11's nondeterministic labels (8.1% of W = 30 labels change).
+- **#26:** E-V per election round from DQ6 ballots and phases, replacing the keyword onset (which measured the 01-09 vote).
+- **New, work space:** E-P events on **agent state (categorical, project, work ledger)** (H11's round-1b work labels: the repo with the most agent work commits per agent-window), periods #30 onward.
+- **Code:** `scheme/build.py --visibility ledger --labels shared --out data/processed/H31-consensus-time-spectral-gap/r1b` (defaults keep the round-1 build); `analysis/h31lib.py` reads `H31_DATA` (default: round 1's folder); `analysis/round1b.py` adds the work space, #26 per round and NE42.
+
+### Predictions for the new round-1b analyses
+*Written 2026-10-04 07:22 UTC, before rebuilding anything for H31 on the new inputs.* The pre-registered round-1 predictions are unchanged and are re-scored as written.
+
+**What I had seen:** the round-1 results; the DQ6 #26 ballot and phase times (runoff opening 19:32:19 UTC, ballots 19:32:36 → 19:33:59, 7–1–0; confirmatory scheduled 18:45, ballots 18:45:29 → 18:46:54, 9–0; approval first ballot 19:25:09, close 19:30, 9–9–9 tie); H53's #26 read-out results and its finding that #40's hub was link-seeded 2.4 min into the kickoff; the context-ledger validation numbers; H11's round-1b label counts (8.1% change; work-label row counts per period).
+
+- **R1b-1 (replication on ledger visibility and shared labels).** P1 stays failed (literal): the slope CI excludes 1 or M_λ does not beat M0 by 5%. The slope point estimate stays positive and sub-linear (0.1–0.7). Consensus counts within ±20% of round 1 (63 consensus events, 33 gradual). Leave-one-period-out still picks the constant. Credence 0.6.
+- **R1b-2 (work space, #30 onward).** On work labels: fewer consensus events than attention on the same blocks; work consensus is slower (median τ_P(work) > median τ_P(attention)); the kickoff-frozen share in work is at most half of attention's; instant (one-window) work events are rarer than attention's. Credence 0.55.
+- **R1b-3 (#26 per election round; native, `G26/`)** and **R1b-4 (NE42 merge A-B-A; native, `NE42/`).** Predictions in those READMEs.
+
+### Results (round 1b, run 2026-10-04)
+Code: `scheme/build.py --visibility ledger --labels shared --out …/r1b`, `analysis/predictors.py`, `analysis/explore.py` (`H31_DATA`, `H31_EV26=dq6`, `H31_STATE=work`), `analysis/robustness.py`, `analysis/ev26_dq6.py`, `analysis/round1b.py` (summary, estimates), `analysis/figures_r1b.py`. Data: `data/processed/H31-consensus-time-spectral-gap/r1b/` (`events_ep_w{15,30,60}.parquet`, `events_ep_w30_work.parquet`, `cross_period_w*.json`, `ev26.json`, `robustness_w30.json`, `round1b_summary.json`). Per-period estimates in `per_period_estimates` (H31). The ledger reassigns reads to calls but keeps almost the same (message, recipient) pairs (e.g. #40: 22,372 → 22,281 reads), so λ₂ moves by < 1% per block; the label fix moves which events are gradual.
+
+**Layer 1, replication (old → new, W = 30).**
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| E-P consensus events (frozen / instant / gradual) | 63 (13 / 17 / 33) | 63 (14 / 18 / 31), 13 periods with gradual events |
+| Median τ_P (80%) | 4.5 h (1.0–17) | 4.5 h (1.0–13.5) |
+| P1 slope on log(1/λ₂^w,sym) | 0.37 [0.08, 0.55], perm p 0.039 | 0.38 [0.05, 0.60], perm p 0.069 |
+| M_λ vs M0 (LOPO log-RMSE) | 1.25 vs 1.08 | 1.24 vs 1.08 → **P1 failed (literal), unchanged** |
+| Best LOPO model (forecast protocol) | M0 (constant) | **M_ul2_rw (reading rate × random-walk gap), 1.049 vs M0 1.075 (−2.4%)**; free-slope λ₂ 0.98 |
+| u·λ₂^rw slope | 0.40 [−0.35, 0.70] | 0.53 [−0.07, 1.06] |
+| Kick locking K / placebo (P3) | 0.41 / 0.25, p 0.002 | 0.41 / 0.25, p 0.0005 |
+| Abrupt rises ρ ≤ 1 (P4) | 13% | 17% |
+| Two-room sign agrees with D (P6) | 3/4 | 2/3 (#36 lost its #rest event) |
+| W = 15 / W = 60 slope | 0.60 [0.23, 1.14] / 0.42 [0.23, 0.73] | 0.38 [0.11, 0.85] / 0.39 [0.18, 0.61] |
+| Robustness: + regime FE; block level; excl. pre-NE09 | 0.53 [0.05, 1.09]; 0.39 [0.03, 0.61]; 0.34 [−0.04, 0.52] | 0.25 [−0.62, 0.65]; 0.38 [−0.07, 0.59]; 0.32 [−0.03, 0.47] |
+| E-C content | 0/35 converge; 12 diverge | unchanged (content inputs did not change) |
+
+- **R1b-1: supported.** P1 still fails literally; the slope stays positive and sub-linear; counts within ±20%. But the constant no longer wins the leave-one-period-out comparison: the bulk predictor u·λ₂^rw does, by 2.4% (within noise). The frozen confirmatory rule (`analysis/frozen_rule.json`: C1 slope-1 λ₂, C1b free slope, constant reference) is **not** refrozen.
+- **The sub-linear slope lead weakens:** its CI now touches 0 at the block level and with a regime fixed effect, and permutation p rises to 0.07. Per-period verdicts change in #19 (supported → descriptive: its 18.5-h gradual event becomes left-censored after renumbering) and #21 (failed → supported: a third gradual event).
+
+**Work space (#30 onward; R1b-2).** Same 10 periods and 16 blocks in both spaces.
+
+| Space | Projects | Consensus (frozen / instant / gradual) | Median τ_P (gradual) | Kick locking K / placebo |
+| --- | --- | --- | --- | --- |
+| Attention | 65 | 23 (9 / 1 / 13) | 4.6 h | – |
+| Work | 62 | 19 (7 / 1 / 11) | 2.0 h | 0.63 / 0.23 (all 19 work events, any period) |
+
+- **R1b-2 mostly failed:** fewer work events (19 vs 23) as predicted, but work consensus is not slower (2.0 vs 4.6 h median; #41 #rest 5.5 and 2.0 h vs 13.5 and 4.0 h), and the frozen share (0.37 vs 0.39) and instant count (1 vs 1) are the same. Work reaches majorities on the same repos and at least as fast as attention. The λ₂ slope in work is flat (0.04 [−0.69, 1.51], 11 gradual events, 6 periods).
+
+**Native layer.**
+- **#26 per election round (`G26/`; supported):** approval round censored (9–9–9 tie); runoff τ_V = 57 s, confirmatory 39 s, both far below the M_λ forecast (1.14 h; 80%: 0.22–5.2 h) and 1.7× and 2.9× the time for the third agent to read the opening message. P10 holds per round; the λ₂ law is irrelevant for deadline-bound votes, whose clock is read-out.
+- **NE42 merge A-B-A (`NE42/`; mixed):** λ₂ rises 2.4× at the merge (#39 → #40) but does not fall at the split (#41's #rest ≈ #40, ratio 1.06); #40's only consensus (the hub) is frozen at the kickoff in attention and in work, so D's predicted speed-up cannot be tested.
+
+**Verdict changes.** None at the card level: P1 failed (literal), P3 supported (trivial), P4 failed, P5 untestable, P8 failed. P10 (#26 τ_V ≤ 1 h) changes from "failed (literal)" to **supported** now that the votes are measured on the correct rounds. Forecast-rule protocol: on improved data it would pick u·λ₂^rw over the constant by 2.4%; the frozen rule stays as it was.
+
+**Scorecard changes (round 1b):** G 1 → 2 (#26 consensus times on ground-truth ballots and instants, three rounds, with read-out times from the ledger); C, D, E, F, H, I unchanged (E: NE42 tried, no leverage). A stays 1: visibility now comes from the context ledger (the round-1 call-start-rule caveat is resolved), but labels still measure attention, and work-space consensus behaves the same. Ratings suggested: complete 45 → 50, faithfulness 1.5 (unchanged), usefulness 2.0 → 2.5 (operator rule for votes: consensus ≈ 2–3 read-out cycles, tens of seconds; for projects: a constant ≈ 4.5 active h, now calibrated in work too).
+
 ## Notes
+- **2026-10-04, round 1b:** re-evaluated on context-ledger visibility, shared deterministic labels, the DQ4 work ledger and DQ6 ballots (section "Round 1b" above). P10 becomes supported; G 1 → 2; the forecast-rule protocol would now pick u·λ₂^rw by 2.4% but the frozen rule is not changed.
 - **From H53 (2026-10-04):** the #40 "kickoff-frozen" hub was link-seeded 2.4 min into the kickoff and drew an 8-agent wave (0.5 predicted, p = 0.0004). Some "frozen" events are first-link waves inside the first window.
 - **From DQ6 (2026-10-04): E-V measured the 01-09 re-election, not the runoff.** The keyword onset fired at 18:02 on 01-05 and the consensus time landed on 01-09 at 18:46. The actual runoff opened at 19:32:19 UTC on 01-05 and ended 7–1–0 within about 100 s. That agrees with the post-hoc 0.76-h rise being an upper bound. Redo E-V per election round with `ground_truth_labels`.
 - 2026-10-03: promoted from HH115 by Vivian (usefulness-first batch, wave 1). Round 1 started; card predictions written before any real-data run.

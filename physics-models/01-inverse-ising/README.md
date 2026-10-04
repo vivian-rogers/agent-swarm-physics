@@ -72,6 +72,7 @@ At N ≲ 30 with short windows, inferring every J_ij is data-hungry and fragile.
 
 ## Pitfalls
 
+- **Significant-bond graphs are power-limited** (H49, 2026-10-04): at village sampling J = 0.5 bonds are recovered with recall 0.34–0.89 and percolation is rarely detectable; check CV-C10 (dense vs dilute), split-half bond reliability and the mean-z shift of all pairs before reading a bond graph. Regime-III activity excess after day-edge trimming is a weak uniform shift (dense or shared field), not sparse strong bonds; pairwise structure exists in talk.
 - **A day-level common data loss inflates whole-unit λ₁ against cross-day nulls** (RE-A1, 2026-10-04): the activity_bins bug dropped a day-specific share of every agent's events, which acts as a shared day field; cross-day surrogates destroy it and report a collective mode. Trim to the all-present window and use a block-shift edge.
 - **Compare channels at matched time resolution** (H26): an equal-time gain J measured on day means reads J(2 − J), so a 1-min activity gain and a day-mean content gain are not comparable. HH108's "content near-critical, activity subcritical" gap came from exactly this mismatch plus drives.
 - **Equal-time gains grow with N and miss delayed coupling** (H25, 2026-10-04): at fixed pair correlation ρ̄, g = 1 − 1/VR rises with headcount, so a bigger swarm looks closer to criticality with no change in coupling; compare ρ̄. The equal-time variance ratio reads ≈ 0 when agents react 2–8 min later (read-out gating, H08), so use lagged or Hawkes estimators for slow coupling.

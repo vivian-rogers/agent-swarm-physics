@@ -1,7 +1,8 @@
 # H11 × G40: Connect your worlds into a 3D universe! (2026-05-04 → 2026-05-11)
 
 **Verdict:** P1 failed; P2 failed; P3 failed
-**Role:** exploratory (candidate)
+**Verdict (1b):** mixed (native: work spread; hub worked as much as attended)
+**Role:** native (round 1b: hub vs own worlds in work, DQ4 ledger; round 1: exploratory candidate)
 **Period:** regime III · mode C · N = 15 at start · #universe-coordination + #rest · 5 active days. Class for H11: **FM-consensus**.
 
 ## Why this period
@@ -44,3 +45,27 @@ Shared interfaces and standards in a shared universe hub: consensus, so ferromag
 
 ## Notes
 - 2026-10-03 (round 1): `the-universe` hub held 0.74 of labeled agent-windows from the start, and each agent also kept its own world repo. The occupancy is far steadier than binomial, so the uniform-field βJ_CW is strongly negative. That is specialization through fields (N1 reproduces it: N1 mean −15.6). βJ_PL against N2 is ≈ 0. The a-priori FM-consensus class was wrong for this week: the 'consensus' (the hub) was given by the goal, not reached.
+
+## Round 1b: hub vs own worlds in work (native; DQ4 ledger)
+*Design and predictions written 2026-10-04 07:18 UTC, before any work-space statistic was computed.* DQ9: #40 is one room, one shared artifact (the universe hub) plus each agent's own world, with 2,945 agent work commits by 13 agents (bulk commits common). Round 1 found spread by fields in attention (hub 0.74 of labelled agent-windows from the start, βJ_CW −17.9, z_N2 ≈ 0). H53 found that the hub was link-seeded 2.4 min into the kickoff.
+
+**What I had seen:** the round-1 attention results above; 325 work-labelled agent-windows at W = 30; nothing about which repos carry #40's work commits.
+
+- **W40-a:** work is spread by fields too: βJ_CW(work) ≤ 0 and z_N2(work) < 2.
+- **W40-b:** agents commit mainly to their own world repos: the hub's share of work-labelled agent-windows is below its attention share by ≥ 0.2.
+- **W40-c:** the ownership index (share of agent-windows on repos one agent dominates) is higher in work than in attention.
+- **HH266 reading:** W40-b is what "attention herds (on the hub), work stays private (own worlds)" predicts for this week; a work share of the hub as high as its attention share counts against it.
+
+### Result (round 1b, run 2026-10-04)
+`analysis/round1b.py replicate` and `work` → `r1b/G40/round1b.json`, `r1b/work/G40.json`.
+
+| Test | Prediction | Observed (attention / work) | Verdict |
+| --- | --- | --- | --- |
+| Replication (shared labels) | unchanged | βJ_CW −17.9 → −17.9 (t −2.6); z_N2 −0.1 → +0.1; q 4 → 5 | P2 "failed" → "weak" (z ≈ 0) |
+| W40-a spread by fields in work | βJ_CW(work) ≤ 0, z_N2 < 2 | −17.4 (t −3.1); z_N2 +0.6 | **supported** |
+| W40-b hub work share below attention by ≥ 0.2 | ≤ 0.54 | 0.73 (attention 0.74); the hub is the top work repo too | **failed** |
+| W40-c ownership higher in work | work > attention | 0.27 vs 0.26 | **failed** (no difference) |
+
+**Reading.** #40 is not "attention on the hub, work in private worlds". Agents committed to the shared hub as often as they mentioned it (0.73 of work agent-windows; 9 agents in one 30-min window), and to their own world repos for the rest; the occupancy is steadier than binomial in both spaces, so the uniform-field coupling is strongly negative in both and nothing is left beyond agent fields. Division of labor here is fixed staffing (fields), and it is the same in work and attention.
+
+**Scorecard (round 1b, native):** D 1 (own-artifact spread predicted in work and observed); G 1.

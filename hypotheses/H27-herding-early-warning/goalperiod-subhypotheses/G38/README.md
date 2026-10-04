@@ -1,6 +1,7 @@
 # H27 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-27)
 
 **Verdict:** descriptive (1 evaluable onset, percentile 0.86)
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (transfer / false-alarm period)
 **Period:** regime III · mode C · N = 12 · 17 active days in the series · W = 15: 302 windows, q = 7, 90% of windows with ≥ 3 labeled agents (mean 6.5); W = 30: 87%.
 
@@ -41,3 +42,14 @@ Arm W = 15 min. τ* = 0.538 (frozen from synthetic S0). Onsets (O1): 3; O1-slow 
 - 2026-10-04: prediction written before running this period.
 - 2026-10-04: round 1 run (`analysis/explore.py`); data in `data/processed/H27-herding-early-warning/G38/round1_w*.json`.
 - 2026-10-04 (post hoc): 3 onsets in 17 days on the two shared campaign repos; the evaluable one shows rising variance and flickering with falling AR1.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic labels (`scheme/build.py --labels shared`, `analysis/round1b.py replicate`), plus the work-ledger series for #30 onward (`round1b.py work`). Card predictions R1b-1 to R1b-3 were written before the run.*
+
+| Arm | Labels | Onsets | Evaluable | Composite AUC | EWS hits | EWS false alarms / day |
+| --- | --- | --- | --- | --- | --- | --- |
+| W15 | round 1 (H11 labels) | 3 | 1 | 0.86 | 0/3 | 1.7 |
+| W15 | round 1b (shared labels) | 3 | 1 | 0.86 | 0/3 | 1.4 |
+| W30 | round 1 (H11 labels) | 0 | 0 | – | 0/0 | 0.1 |
+| W30 | round 1b (shared labels) | 0 | 0 | – | 0/0 | 0.1 |
+| W30 | round 1b, work commits | 1 | 0 | – | 0/1 | 0.0 |

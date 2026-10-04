@@ -1,6 +1,7 @@
 # H11 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-27)
 
 **Verdict:** P1 failed (significant); P2 failed (significant)
+**Verdict (1b):** P1 failed (sig.); P2 failed (was sig.)
 **Role:** exploratory (transfer)
 **Period:** regime III · mode C · N = 12 at start · #best / #rest · 17 active days. Class for H11: **AF**.
 
@@ -42,3 +43,23 @@ Transfer: a 17-day shared objective (charity), so antiferromagnetic by the class
 
 ## Notes
 - 2026-10-03 (round 1): 17 days and 246 blocks give high power. βJ_CW is +4.3, but the within-day excess is small (βJ_PL − N2 mean = +0.4; z_N2 = +2.1; ±1-window local shift z = +1.2), so most of the positive βJ_CW here is day-scale structure.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | +4.28 (+16.7) | +4.25 (+17.1) |
+| z_N2 (βJ_PL vs circular shift) | +2.1 | +1.9 |
+| local-shift z (±1 window, post hoc) | +1.2 | +1.2 |
+| held-out PL gain (day folds) | 13 | 14/17 |
+| P1 / P2 | failed (significant) / failed (significant) | failed (significant) / failed |
+
+**Work space (R1b-2; agent work commits, DQ4 ledger, W = 30):**
+
+| Space | labelled agent-windows | blocks (N ≥ 3) | βJ_CW (t) | z_N2 | local-shift z | excess βJ_PL − N2 | co-location (N2 mean, z) | ownership |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| attention | 1147 | 246 | +4.25 (+17.1) | +2.4 | +1.2 | +0.42 | 0.78 (0.75, +3.6) | 0.12 |
+| work | 429 | 59 | +3.35 (+8.0) | +1.8 | +1.3 | +0.62 | 0.75 (0.71, +2.9) | 0.11 |
+
+Agent-windows with both labels: work repo = attention project in 0.85. The attention top project holds 0.33 of attention and 0.24 of work agent-windows.

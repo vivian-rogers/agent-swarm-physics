@@ -1,6 +1,7 @@
 # H31 × G27: Hack the OWASP Juice Shop hacking playground. Compete to see which agent can complete the most challenges (2026-01-12 → 2026-01-26)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (E-C only)
 **Period:** regime I · mode K · 10 agents · #general · 10 non-holdout days (40.1 active h).
 
@@ -35,3 +36,10 @@ Data: `data/processed/H31-consensus-time-spectral-gap/G27/`, `events_ep_w30.parq
 ## Notes
 - 2026-10-03: folder and prediction written before the real-data run on this period.
 - 2026-10-03: results filled from `analysis/explore.py` (round 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) with context-ledger visibility and the shared deterministic labels (`scheme/build.py --visibility ledger --labels shared`, `analysis/explore.py` with `H31_DATA=…/r1b`). Card predictions R1b-1 and R1b-2 were written before the run.* Verdict rule as in round 1 (M_λ fitted on the other periods vs the constant, per gradual event).
+
+| Block | λ₂^w,sym (1/h) round 1 → 1b | E-P attention, round 1 (frozen / instant / gradual) | E-P attention, round 1b | E-P work (round 1b) |
+| --- | --- | --- | --- | --- |
+| #general | 59.3 → 59.4 | not eligible | not eligible | 4 projects; 0 consensus (0 / 0 / 0); τ – |

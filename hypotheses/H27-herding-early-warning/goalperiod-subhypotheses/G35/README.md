@@ -1,6 +1,7 @@
 # H27 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-23)
 
 **Verdict:** descriptive (no evaluable onset)
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (transfer / false-alarm period)
 **Period:** regime II · mode C · N = 13 · 5 active days in the series · W = 15: 80 windows, q = 2, 99% of windows with ≥ 3 labeled agents (mean 7.6); W = 30: 100%.
 
@@ -33,3 +34,15 @@ Arm W = 15 min. τ* = 0.538 (frozen from synthetic S0). Onsets (O1): 0; O1-slow 
 ## Notes
 - 2026-10-04: prediction written before running this period.
 - 2026-10-04: round 1 run (`analysis/explore.py`); data in `data/processed/H27-herding-early-warning/G35/round1_w*.json`.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic labels (`scheme/build.py --labels shared`, `analysis/round1b.py replicate`), plus the work-ledger series for #30 onward (`round1b.py work`). Card predictions R1b-1 to R1b-3 were written before the run.*
+
+| Arm | Labels | Onsets | Evaluable | Composite AUC | EWS hits | EWS false alarms / day |
+| --- | --- | --- | --- | --- | --- | --- |
+| W15 | round 1 (H11 labels) | 0 | 0 | – | 0/0 | 0.0 |
+| W15 | round 1b (shared labels) | 0 | 0 | – | 0/0 | 0.0 |
+| W15 | round 1b, work commits | 0 | 0 | – | 0/0 | 0.0 |
+| W30 | round 1 (H11 labels) | 0 | 0 | – | 0/0 | 0.7 |
+| W30 | round 1b (shared labels) | 0 | 0 | – | 0/0 | 0.7 |
+| W30 | round 1b, work commits | 0 | 0 | – | 0/0 | 0.0 |

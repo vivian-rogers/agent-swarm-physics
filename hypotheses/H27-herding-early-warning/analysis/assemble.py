@@ -57,7 +57,7 @@ def trigger_check(periods, W=15, p=E.P0, pre_min=30, base=None):
         watch = ind["valid"] & ind["matched"]
         sj = s.join(cal, on="pt_date", how="left")
         t0 = (sj["win_start"].dt.epoch("s").to_numpy() + sj["win"].to_numpy().astype(np.int64) * W * 60)
-        projs = pl.read_parquet(base / f"G{g:02d}" / f"projects_w{W}.parquet")
+        projs = pl.read_parquet(base / f"G{g:02d}" / (f"projects_w{W}.parquet" if X.STATE == "project" else f"projects_{X.STATE}_w{W}.parquet"))
         names = dict(zip(projs["label"].to_list(), projs["project"].to_list()))
         T, q = k.shape
         onset_set = {(o["project"], o["w0"]) for o in on}
@@ -70,10 +70,13 @@ def trigger_check(periods, W=15, p=E.P0, pre_min=30, base=None):
                     if not watch[t, a] or any(t - 4 < w0 <= t + p.horizon for w0 in w0s):
                         continue
                 lo, hi = t0[t] - pre_min * 60, t0[t]
-                rows.append(dict(goal=g, onset=is_on, human=any_in(hum, lo, hi), automated=any_in(aut, lo, hi), link=any_in(lk, lo, hi)))
+                # round 1b addition: was the link in the window the project's first chat link in the record (H53's seed)?
+                first = bool(lk is not None and len(lk) and lo <= lk[0] < hi)
+                rows.append(dict(goal=g, onset=is_on, human=any_in(hum, lo, hi), automated=any_in(aut, lo, hi), link=any_in(lk, lo, hi),
+                                 link_first=first, link_known=any_in(lk, lo, hi) and not first))
     df = pl.DataFrame(rows)
     res = {}
-    for col in ("human", "automated", "link"):
+    for col in ("human", "automated", "link", "link_first", "link_known"):
         a_ = int(df.filter(pl.col("onset"))[col].sum())
         n1 = int(df["onset"].sum())
         b_ = int(df.filter(~pl.col("onset"))[col].sum())
@@ -108,7 +111,7 @@ def trigger_check(periods, W=15, p=E.P0, pre_min=30, base=None):
 def main():
     warnings.simplefilter("ignore")
     tau = X.load_tau_star()
-    R = json.loads((DATA / "results_round1.json").read_text())
+    R = json.loads((DATA / f"results_round1{X.SUFFIX}.json").read_text())
     out = {}
     rng = np.random.default_rng(20261005)
     for arm, W, p in (("W15", 15, E.P0), ("W30", 30, E.P_W30)):
@@ -162,7 +165,7 @@ def main():
         print(arm, prec)
     out["W15"]["triggers_posthoc"] = trigger_check(R["W15"]["periods"])
     print("triggers (W15, post hoc):", json.dumps(out["W15"]["triggers_posthoc"], indent=1))
-    (DATA / "assemble_round1.json").write_text(json.dumps(out, indent=1, default=float))
+    (DATA / f"assemble_round1{X.SUFFIX}.json").write_text(json.dumps(out, indent=1, default=float))
 
 
 if __name__ == "__main__":

@@ -2,12 +2,32 @@
 \input{../../../writeup/hypothesis-pages/hpage.tex}
 \def\hID{H11}
 \def\hTitle{Division of labor vs herding is the sign of a Potts coupling, set by the goal}
-\def\hStatus{exploratory round 1 done (2026-10-03). The sign-by-goal-mode prediction is not supported. $\beta$J\_CW > 0 (herding) in 11 of the 14 tested weeks, whatever the mode, including all five weeks predicted to be AF. The exceptions are the three weeks where agents built...}
+\def\hStatus{exploratory round 1 done (2026-10-03); round 1b on improved data done (2026-10-04): no verdict changes; work herds where attention does (shared deterministic labels reproduce every round-1 sign; agents' work commits herd in 4/6 shared-artifact weeks, onto t...}
 \def\hStage{level: hypothesis  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-04}
-\def\hBadges{\hbadge{Complete}{40\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{1.5/5}{ee8584}{0b0b0b}\ \hbadge{Usefulness}{2/5}{f5bcbb}{0b0b0b}}
-\def\hPeriodSummary{3 supported, 6 failed, 2 mixed, 3 descriptive, 3 n/a}
+\def\hBadges{\hbadge{Complete}{50\%}{5598e7}{0b0b0b}\ \hbadge{Faithfulness}{1.5/5}{ee8584}{0b0b0b}\ \hbadge{Usefulness}{2.5/5}{e9e7e1}{0b0b0b}}
+\def\hPeriodSummary{7 supported, 5 failed, 3 mixed, 3 descriptive, 3 n/a}
 \def\hDate{Updated 2026-10-04}
-\def\hFooter{H11-potts-labor-vs-herding $\cdot$ generated 2026-10-03 18:08 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H11-potts-labor-vs-herding/README.md $\cdot$ ratings: calibrated by coordinator 2026-10-04 (from summary writer (suggested))}
+\def\hFooter{H11-potts-labor-vs-herding $\cdot$ generated 2026-10-04 01:32 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H11-potts-labor-vs-herding/README.md $\cdot$ ratings: RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.5 / 2.0)}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G18 & $\times$ & 1b: P1 failed (sig.); P2 failed (sig.) (unchanged) \\
+G19 & $\checkmark$ & 1b: P1 supported; P2 supported (unchanged) \\
+G20 & d & 1b: descriptive (unchanged) \\
+G24 & $\times$ & 1b: P1 failed; P2 failed (sig.) (unchanged) \\
+G25 & $\times$ & 1b: P1 failed (sig.); P2 failed (sig.) (unchanged) \\
+G26 & $\sim$ & 1b: mixed (native: jump on the right vote; cascade, not field) \\
+G30 & $\times$ & 1b: P1 failed (sig.); P2 failed (sig.) (unchanged) \\
+G31 & $\checkmark$ & 1b: supported (native: work herds) \\
+G33 & $\checkmark$ & 1b: supported (work herds) \\
+G35 & $\checkmark$ & 1b: supported (work herds) \\
+G37 & $\checkmark$ & 1b: P1 supported; P2 supported (unchanged) \\
+G38 & $\times$ & 1b: P1 failed (sig.); P2 failed (was sig.) \\
+G39 & d & 1b: descriptive (unchanged) \\
+G40 & $\sim$ & 1b: mixed (native: work spread; hub worked as much as attended) \\\multicolumn{3}{l}{\textit{+7 more periods: see the card.}} \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 1 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 1 & H comparative & 1 \\
+D unfitted predictions & 1 & I transfer & 0 \\
+E interventional & 0 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} Why do agents pile on: imitation, or attraction to where the work already is?\item \textbf{H11-R1} Preferential attachment: P(join X) $\propto$ (recent activity on X)\textasciicircum{}$\alpha$.\item \textbf{H11-R2} Herding is stigmergic, not social: artifact activity predicts joining better than chat mentions of X (E3, vs H28).\item \textbf{H11-R3} Herding is a coordination solution that raises output; own-artifact spread duplicates effort (test against the work ledger).\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage

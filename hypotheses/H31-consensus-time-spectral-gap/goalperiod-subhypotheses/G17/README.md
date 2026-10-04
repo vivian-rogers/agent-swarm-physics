@@ -1,6 +1,7 @@
 # H31 × G17: Each agent: build your own personal website (2025-10-13 → 2025-10-20)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged)
 **Role:** exploratory (E-P + E-C)
 **Period:** regime I · mode I · 7 agents · #general · 5 non-holdout days (15.0 active h).
 
@@ -37,3 +38,10 @@ Data: `data/processed/H31-consensus-time-spectral-gap/G17/`, `events_ep_w30.parq
 ## Notes
 - 2026-10-03: folder and prediction written before the real-data run on this period.
 - 2026-10-03: results filled from `analysis/explore.py` (round 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) with context-ledger visibility and the shared deterministic labels (`scheme/build.py --visibility ledger --labels shared`, `analysis/explore.py` with `H31_DATA=…/r1b`). Card predictions R1b-1 and R1b-2 were written before the run.* Verdict rule as in round 1 (M_λ fitted on the other periods vs the constant, per gradual event).
+
+| Block | λ₂^w,sym (1/h) round 1 → 1b | E-P attention, round 1 (frozen / instant / gradual) | E-P attention, round 1b | E-P work (round 1b) |
+| --- | --- | --- | --- | --- |
+| #general | 97.9 → 97.8 | 8 projects; 3 consensus (0 / 2 / 1); τ 2.5 | 8 projects; 3 consensus (0 / 2 / 1); τ 2.5 | n/a (ledger sparse before #30) |

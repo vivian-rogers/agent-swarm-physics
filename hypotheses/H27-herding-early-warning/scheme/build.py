@@ -10,7 +10,12 @@ this folder (G<NN>/h11labels/). #51 loses its locked tail (09-07 -> 09-21) throu
 Also writes coverage.json (structural only: windows, fraction with n >= 3 at W = 15 and W = 30) used by the
 pre-registered coverage rule, and _provenance.json.
 
-Usage:  uv run python hypotheses/H27-herding-early-warning/scheme/build.py [--goals 31 37 ...]
+Round 1b (2026-10-04): --labels shared reads H11's round-1b files (data/processed/H11-potts-labor-vs-herding/r1b/:
+shared deterministic project_states, #51 included) instead of H11's round-1 labels, and also writes the work-ledger
+series (series_work_w{15,30}.parquet, projects_work_w*.parquet, coverage_work.json) from H11's round-1b work labels
+(agent state (categorical, project, work ledger)). Use with --out data/processed/H27-herding-early-warning/r1b.
+
+Usage:  uv run python hypotheses/H27-herding-early-warning/scheme/build.py [--goals 31 37 ...] [--labels shared --out DIR]
 Holdout periods are refused unless --allow-holdout (only analysis/confirm_holdout.py passes it, with --out).
 """
 from __future__ import annotations
@@ -70,6 +75,18 @@ def h11_labels_for(goal: int, W: int, allow_holdout: bool, labdir: Path):
     return lp, wins, proj
 
 
+def shared_labels_for(goal: int, W: int, kind: str = "project"):
+    """Round 1b: (labels, windows, projects) from H11's round-1b folder (built from the shared tables)."""
+    f = H11_OUT / "r1b" / f"G{goal:02d}"
+    lf = f / f"labels_{kind}_w{W}.parquet"
+    if not lf.exists():
+        return None
+    pf = f / (f"projects_w{W}.parquet" if kind == "project" else f"projects_work_w{W}.parquet")
+    proj = pl.read_parquet(pf) if pf.exists() else pl.DataFrame(
+        schema={"project": pl.String, "aw": pl.UInt32, "n_agents": pl.UInt32, "label": pl.Int8, "share": pl.Float64})
+    return pl.read_parquet(lf), pl.read_parquet(f / f"windows_w{W}.parquet"), proj
+
+
 def series(lab: pl.DataFrame, wins: pl.DataFrame) -> pl.DataFrame:
     wins = wins.sort("day", "win").with_row_index("gwin").with_columns(pl.col("gwin").cast(pl.Int32))
     n = lab.group_by("day", "win").agg(pl.len().cast(pl.Int16).alias("n"))
@@ -92,18 +109,38 @@ def main():
     ap.add_argument("--goals", type=int, nargs="*", default=None)
     ap.add_argument("--allow-holdout", action="store_true", help="only for analysis/confirm_holdout.py")
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--labels", choices=("h11", "shared"), default="h11", help="round 1b: shared")
     a = ap.parse_args()
     goals = a.goals or default_goals()
     HC.assert_not_holdout(goals, a.allow_holdout)
     out = Path(a.out)
     if a.allow_holdout and out.resolve() == OUT.resolve():
         raise SystemExit("refusing: holdout builds must go to a separate --out folder")
-    cov = {}
+    if a.labels == "shared" and a.allow_holdout:
+        raise SystemExit("refusing: round-1b shared labels are exploration only")
+    cov, cov_w = {}, {}
     for g in goals:
         f = out / f"G{g:02d}"
         cg = {}
+        if a.labels == "shared":   # work-ledger series (round 1b)
+            cw = {}
+            for W in WINDOWS:
+                r = shared_labels_for(g, W, "work")
+                if r is None or r[0].height == 0:
+                    continue
+                lab, wins, proj = r
+                s_ = series(lab, wins)
+                f.mkdir(parents=True, exist_ok=True)
+                s_.write_parquet(f / f"series_work_w{W}.parquet", compression="zstd")
+                proj.filter(pl.col("label") > 0).select("label", "project", "aw", "share", "n_agents").sort("label").write_parquet(
+                    f / f"projects_work_w{W}.parquet", compression="zstd")
+                q = int(proj.filter(pl.col("label") > 0)["label"].max() or 0)
+                cw[f"w{W}"] = dict(windows=s_.height, days=int(s_["day"].n_unique()), q=q,
+                                   frac_n_ge3=float((s_["n"] >= 3).mean()), mean_n=float(s_["n"].mean()))
+            if cw:
+                cov_w[g] = cw
         for W in WINDOWS:
-            r = h11_labels_for(g, W, a.allow_holdout, f / "h11labels")
+            r = h11_labels_for(g, W, a.allow_holdout, f / "h11labels") if a.labels == "h11" else shared_labels_for(g, W)
             if r is None:
                 continue
             lab, wins, proj = r
@@ -124,11 +161,15 @@ def main():
             cov[g] = cg
             print(g, cg)
     (out / "coverage.json").write_text(json.dumps(cov, indent=1))
+    if a.labels == "shared":
+        (out / "coverage_work.json").write_text(json.dumps(cov_w, indent=1))
     prov = {"built_by": "hypotheses/H27-herding-early-warning/scheme/build.py", "git_commit": HC.C.git_commit(),
             "inputs": [{"source": "ai-village", "revision": HC.C.REVISION,
                         "tables": ["artifacts", "artifact_mentions", "calendar", "rooms_timeline"],
-                        "via": "data/processed/H11-potts-labor-vs-herding (H11 scheme/build.py; #51 built here with H11's functions)"}],
-            "params": {"windows_min": list(WINDOWS), "goals": goals, "allow_holdout": a.allow_holdout,
+                        "via": ("data/processed/H11-potts-labor-vs-herding (H11 scheme/build.py; #51 built here with H11's functions)"
+                                if a.labels == "h11" else "data/processed/H11-potts-labor-vs-herding/r1b (H11 scheme/build_r1b.py: shared "
+                                "project_states + DQ4 work ledger)")}],
+            "params": {"windows_min": list(WINDOWS), "goals": goals, "allow_holdout": a.allow_holdout, "labels": a.labels,
                        "h11_params": {"q_max": HC.Q_MAX, "min_share": HC.MIN_SHARE, "strict_how": list(HC.STRICT_HOW)}},
             "built_at": dt.datetime.now(dt.timezone.utc).isoformat()}
     (out / "_provenance.json").write_text(json.dumps(prov, indent=1))

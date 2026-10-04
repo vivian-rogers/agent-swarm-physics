@@ -1,14 +1,14 @@
 {
-  "complete": 40,
+  "complete": 50,
   "faithfulness": 1.0,
   "usefulness": 2.0,
   "rationale": {
-    "complete": "Round 1 done: pre-registered onset rule, nine-scenario synthetic validation, 19 non-holdout periods with per-period verdicts, scorecard, frozen and dry-run holdout script. The holdout test and the per-turn re-test are not run.",
-    "faithfulness": "The critical-slowing-down signature is absent: autocorrelation never rises (AUC 0.42). The composite beats placebos only at 15 min and fragilely (0.62 [0.51, 0.76], n = 8) and fails at 30 min. Rivals fit better (onsets out of nowhere; link announcements). C = D = H = 0; F = 1 shows the method can barely work at village N.",
-    "usefulness": "A clear, quantified negative an operator can act on (don't build CSD dashboards for 10-15-agent swarms), measured operating characteristics, and a rate-matched-shift check for any alarm. The positive pointer (links precede pile-ons) is post hoc."
+    "complete": "Round 1 done; round 1b re-evaluation on deterministic labels and the DQ4 work ledger done (same onsets and AUC; work onsets coincide with attention onsets), with a native layer (#31 wave in work; #40 hub at the minute clock). Holdout and the per-turn onset rule are not run.",
+    "faithfulness": "The critical-slowing-down signature is absent on improved data too (autocorrelation AUC 0.41; composite 0.62, mixed by rule). The alarm's timing edge over a rate-matched shift is borderline (p 0.038-0.07). Rivals fit better: pile-ons are fast, link-marked bursts (#40 reaches half the room in minutes). Scorecard unchanged.",
+    "usefulness": "A clear negative an operator can act on (no CSD dashboards for 10-15-agent swarms), measured operating characteristics, a rate-matched-shift check for any alarm, and now the timescale of a pile-on in commits (minutes after a link), which says responses must be sized to minutes."
   },
-  "one_line": "Generic early-warning signals do not forecast LLM-swarm pile-ons: autocorrelation never rises, and alarms time no better than chance.",
-  "rated_by": "H27 agent (suggested)",
+  "one_line": "Generic early-warning signals do not forecast LLM-swarm pile-ons: autocorrelation never rises, and pile-ons in attention and commits arrive within minutes of a link.",
+  "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.0 / 2.0)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)"
 }

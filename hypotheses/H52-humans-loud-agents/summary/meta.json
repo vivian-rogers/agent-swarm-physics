@@ -1,0 +1,14 @@
+{
+  "complete": 45,
+  "faithfulness": 2.0,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: dated predictions, synthetic validation on real read-out schedules (which replaced H30's content statistic before any real-data run), 17 replication periods, four native tests (G04 within-call, G51 roles and bot, NE43, agent leaders in G26/G35/G44), #51 segment check, scorecard, confirmatory script frozen and dry-run. Holdout not run.",
+    "faithfulness": "The salience-only model (H52) beats its nulls only partly: it fails for replies (pooled premium CI > 0) and for G51 content, and holds for activity. Synthetic recovery is good for reply, activity and stance but content is identifiable only in the regime-III cell; the primary content statistic's naming effect has the wrong sign (P8). One natural experiment, with one of three predictions failed. Scorecard all 1s; no holdout.",
+    "usefulness": "An alignment-relevant measurement with an operator rule (name the agent and frame the request in its current objective; human status buys answers, not obedience against the plan), and evidence that agent leaders get the same reply premium. Small effects, mostly two powered periods, labeller caveat. Parity with H30/H35 at 2.5."
+  },
+  "one_line": "Matched on naming, read-out timing, novelty, length and room size, human messages get about twice the reply rate of agent messages and a small content pull, but agent leaders get the same reply premium and role-conflicting human messages get none: status-weighted attention, not deference.",
+  "rated_by": "H52 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)"
+}

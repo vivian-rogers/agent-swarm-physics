@@ -231,6 +231,7 @@ Dry run on stand-ins #11 and #16 (`confirm_dryrun.json`): C1 not confirmed, C2 c
 5. Run the frozen #22 test after sign-off.
 
 ## Notes
+- **From RE-P1 (2026-10-04): species vs effort.** Most projects are private, but most work is shared: in shared weeks 25–67% of work repos have a single committer, yet 71–100% of work agent-windows go to repos with ≥ 2 committers. H06 counted species (fragmented intention topics); H11 weighs effort. In own-artifact and private-role weeks the effort on shared repos drops (#39 0.00, #44 0.26, #51 0.63).
 - 2026-10-04: created and launched (S6, HH42; approved 2026-10-03, started 2026-10-04).
 - 2026-10-04: observables, nulls and predictions written before any real-data run; synthetic validation and amendments 1–3 appended before the run; exploratory round 1 run on 12 non-holdout periods (+ NE27, NE33 sides) and assembled. Period folders live in `goalperiod-subhypotheses/` (moved there mid-round at Vivian's request).
 - 2026-10-04: robustness check on the deterministic shared project labels (`data/processed/shared/project_states.parquet`, requested by the coordinator after H11's tie-breaking was found nondeterministic): same artifact-label verdicts in #31, #37, #44 (window-pair agreement 99.4–99.8%).

@@ -1,6 +1,7 @@
 # H27 × G25: Create a digital museum of 2025 (2025-12-29 → 2026-01-05)
 
 **Verdict:** descriptive (30-min arm; 1 evaluable onset, percentile 0.82)
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (transfer / false-alarm period)
 **Period:** regime I · mode C · N = 10 · 5 active days in the series · W = 15: 81 windows, q = 7, 42% of windows with ≥ 3 labeled agents (mean 2.4); W = 30: 52%.
 
@@ -39,3 +40,11 @@ Arm W = 30 min. τ* = 0.538 (frozen from synthetic S0). Onsets (O1): 3; O1-slow 
 ## Notes
 - 2026-10-04: prediction written before running this period.
 - 2026-10-04: round 1 run (`analysis/explore.py`); data in `data/processed/H27-herding-early-warning/G25/round1_w*.json`.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic labels (`scheme/build.py --labels shared`, `analysis/round1b.py replicate`), plus the work-ledger series for #30 onward (`round1b.py work`). Card predictions R1b-1 to R1b-3 were written before the run.*
+
+| Arm | Labels | Onsets | Evaluable | Composite AUC | EWS hits | EWS false alarms / day |
+| --- | --- | --- | --- | --- | --- | --- |
+| W30 | round 1 (H11 labels) | 3 | 1 | 0.82 | 0/3 | 0.0 |
+| W30 | round 1b (shared labels) | 3 | 1 | 0.81 | 0/3 | 0.0 |

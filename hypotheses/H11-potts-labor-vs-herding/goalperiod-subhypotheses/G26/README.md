@@ -1,7 +1,8 @@
 # H11 × G26: Elect a village leader. They choose this week's goal! (2026-01-05 → 2026-01-12)
 
 **Verdict:** P1 supported; P2 supported; HH22: jump supported, mechanism inconclusive
-**Role:** exploratory (candidate)
+**Verdict (1b):** mixed (native: jump on the right vote; cascade, not field)
+**Role:** native (round 1b: #26 per election round on DQ6 ballots; round 1: exploratory candidate)
 **Period:** regime I · mode C · N = 10 at start · one room (#general) · 5 active days. Class for H11: **FM-consensus**.
 
 ## Why this period
@@ -65,3 +66,37 @@ Winner (most single-candidate declarations, from structural codes) = agent 17, D
 
 ## Notes
 - 2026-10-03 (round 1): the project labels (mostly ballot Google Docs) are not the consensus variable. The declared votes are. The pre-registered runoff-onset rule (≥ 2 'runoff' messages in a window) fired on day 1, long before the decisive vote at window ≈ 27, so P-G26a measured an early state.
+
+## Round 1b: per election round (native; DQ6 ballots)
+*Design and predictions written 2026-10-04 07:15 UTC, before computing any of the statistics below.* DQ9 names #26 per election round as H11's (and H31's) mandatory native test: three vote events at known instants with known ballots.
+
+**What I had seen:** the DQ6 tallies and ballot timestamps (approval 01-05: first ballot 19:25:09 UTC, recorded opening 19:26:03, close 19:30; 47 approvals by 9 voters, with Claude 3.7 Sonnet, Gemini 2.5 Pro and DeepSeek-V3.2 each approved by all 9; runoff: opening 19:32:19, 8 ballots 19:32:36 → 19:33:59, 7–1–0 for DeepSeek-V3.2; confirmatory 01-09: scheduled 18:45, 9 ballots 18:45:29 → 18:46:54, 9–0); H53's finding that 14/17 runoff and confirmatory ballots were cast by the call that read the round's opening message. I had not looked at any ballot's context (which earlier ballots or candidate mentions a voter had seen).
+
+**States.** Ballot rows from `ground_truth_labels` (`label_kind = ballot`, preferred), by round (approval, runoff, confirmatory): voter, candidate, time. Codes only.
+
+- **N26-a (symmetric point, approval round).** Ground truth, not a prediction: each of the three tied candidates was approved by all 9 voters, so the runoff starts from an exact symmetric point among q = 3 (x = 1/3 each). Round 1's P-G26a (chat proxy, onset on day 1) is replaced by this fact.
+- **N26-b (runoff jump).** Also known from DQ6 before writing: the winner's share goes from 1/3 to 7/8 within ≈ 100 s (Δ ≈ 0.54, far inside one 30-min window) and is confirmed 9–0 four days later (persistence 0). Scored as a ground-truth check of P-G26b on the right election, not as a blind prediction.
+- **N26-c (mean-field mechanism, per round).** Profile-likelihood βJ_snap of the symmetric-field Curie–Weiss Potts on each round's final ballots: runoff (7, 1, 0) with q = 3; confirmatory (9, 0) with q = 2.
+  - Prediction: runoff βJ_snap MLE ≥ βJ_s(3) = 2.75, but the 95% profile interval includes βJ_s (inconclusive with N = 8). P(max ≥ 7 of 8 | independent symmetric voters) < 0.05 (my hand estimate before running: ≈ 0.008).
+  - Confirmatory: unanimous, so the MLE sits at the grid bound and the test is uninformative by construction; P(9 of 9 | independent symmetric, q = 2) ≈ 0.004.
+- **N26-d (coupling needs visibility: ballots vs a pre-set field).** Potts coupling acts through what voters see. For each runoff and confirmatory ballot, find the voter's call that cast it (`call_windows`, talk call containing the ballot message) and count the same round's earlier ballots that had entered the voter's context by that call (`context_ledger_items`). Also count, in the voter's context between the approval tally and the ballot call, the messages naming each runoff candidate (`chat_mentions_clean.mentions_roster`): the visible "field".
+  - Prediction: ≥ 5 of 8 runoff ballots are cast having seen ≤ 1 earlier runoff ballot, and DeepSeek-V3.2's share among ballots cast with no earlier ballot visible is ≥ 0.6. So the runoff consensus does not need ballot-to-ballot coupling: it was set before the runoff opened.
+  - Prediction: DeepSeek-V3.2 leads the visible candidate mentions (ties count as not leading) for ≥ 5 of 8 runoff voters.
+  - **Coupling reading** (counts against my prediction): DeepSeek's share rises with the number of earlier DeepSeek ballots seen, and voters who saw none split near 1/3.
+
+### Result (round 1b, run 2026-10-04)
+`analysis/round1b.py g26` → `data/processed/H11-potts-labor-vs-herding/r1b/g26_rounds_r1b.json`. Ballot-to-call matching: the voter's talk call whose logged span contains the ballot message (`call_windows`); visibility: items received by that call or earlier (`context_ledger_items`).
+
+| Test | Prediction | Observed | Verdict |
+| --- | --- | --- | --- |
+| N26-a symmetric point (approval) | ground truth | 9/9 voters approved all three tied candidates (0, 6, 17); approvals {17: 9, 0: 9, 6: 9, 16: 7, 12: 7, 15: 4, 13: 2} | exact symmetric start (fact, not a test) |
+| N26-b runoff jump | ground truth check | winner's share 1/3 → 7/8 (Δ = 0.54) over 83 s (first ballot 17 s after the opening); 9/9 on 01-09 | **holds on the correct election** (round 1's 0.18 → 0.80 was the 01-09 vote) |
+| N26-c coupling, runoff (7, 1, 0), q = 3 | MLE ≥ 2.75, CI includes it; P(indep) < 0.05 | βJ_snap 3.2 [1.05, 6.0]; P(≥ 7 of 8 \| independent symmetric) = 0.008 | **as predicted: inconclusive mechanism, independence rejected** |
+| N26-c confirmatory (9, 0), q = 2 | at bound, uninformative | MLE at the bound (CI [1.85, ∞)); P = 0.004 | as predicted |
+| N26-d earlier ballots seen | ≥ 5/8 runoff ballots with ≤ 1 seen | 3/8 (seen: 0, 1, 1, 2, 3, 4, 4, 6; mean 2.6) | **failed** |
+| N26-d winner share, nothing seen | ≥ 0.6 | 1/1 (only the first ballot was cast blind) | met, n = 1 |
+| N26-d visible mention field | DeepSeek leads for ≥ 5/8 voters | 0/8. From the first approval ballot on, Gemini 2.5 Pro led the visible candidate mentions for 7/8 runoff voters (Claude 3.7 Sonnet for the first); in the 16-s window from the tally on, mentions were tied or led by Gemini | **failed** |
+
+**Reading.** The runoff was not decided by a field visible in chat before it opened: the mention field favoured Gemini 2.5 Pro, yet DeepSeek-V3.2 won 7–1. The first ballot came from one of the three candidates (Claude 3.7 Sonnet), for a rival (DeepSeek-V3.2); the next voter, having seen that one ballot, voted for Gemini 2.5 Pro; then Gemini 2.5 Pro itself, having seen one DeepSeek ballot, voted for DeepSeek, and every later voter, having seen 2–6 earlier ballots, did the same. That is the order of a ballot cascade (sequential, visible, majority-following), which is the Potts-coupling reading, with a courtesy twist (2 of 3 candidates voted for a rival). n = 8 cannot tell a cascade from a shared norm ("vote for the proposer of the runoff"); text would be needed and is out of scope. The confirmatory vote is the clean field case: 6/9 ballots were cast before any earlier ballot was visible, all for the incumbent.
+
+**Scorecard (round 1b, native):** D 1 (jump holds on the correct election; mechanism inconclusive); G 1 (DQ6 tallies are the ground truth); B (update-order audit) partial: ballots are cast by calls that read 0–6 earlier ballots.

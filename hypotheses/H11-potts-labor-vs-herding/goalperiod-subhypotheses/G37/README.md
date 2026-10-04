@@ -1,6 +1,7 @@
 # H11 × G37: Pick your own goal! (2026-03-30 → 2026-04-02)
 
 **Verdict:** P1 supported; P2 supported
+**Verdict (1b):** P1 supported; P2 supported (unchanged)
 **Role:** exploratory (transfer)
 **Period:** regime III · mode F · N = 13 at start · #best / #rest · 3 active days. Class for H11: **FM-free**.
 
@@ -41,3 +42,23 @@ Transfer: free week (regime III, #best / #rest), so ferromagnetic by the class r
 | G ground truth | 0 | – |
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | +3.73 (+23.1) | +3.68 (+27.4) |
+| z_N2 (βJ_PL vs circular shift) | +6.9 | +6.9 |
+| local-shift z (±1 window, post hoc) | +2.7 | +2.7 |
+| held-out PL gain (day folds) | 3 | 3/3 |
+| P1 / P2 | supported / supported | supported / supported |
+
+**Work space (R1b-2; agent work commits, DQ4 ledger, W = 30):**
+
+| Space | labelled agent-windows | blocks (N ≥ 3) | βJ_CW (t) | z_N2 | local-shift z | excess βJ_PL − N2 | co-location (N2 mean, z) | ownership |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| attention | 202 | 28 | +3.68 (+27.4) | +7.8 | +3.4 | +3.16 | 0.63 (0.48, +4.7) | 0.13 |
+| work | 84 | 12 (< 15: descriptive) | +1.58 (+1.3) | +2.3 | +1.2 | +1.38 | 0.58 (0.53, +1.0) | 0.29 |
+
+Agent-windows with both labels: work repo = attention project in 0.78. The attention top project holds 0.16 of attention and 0.21 of work agent-windows.

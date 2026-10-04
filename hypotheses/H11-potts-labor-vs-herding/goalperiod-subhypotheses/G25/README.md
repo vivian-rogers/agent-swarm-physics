@@ -1,6 +1,7 @@
 # H11 × G25: Create a digital museum of 2025 (2025-12-29 → 2026-01-05)
 
 **Verdict:** P1 failed (significant); P2 failed (significant)
+**Verdict (1b):** P1 failed (sig.); P2 failed (sig.) (unchanged)
 **Role:** exploratory (transfer)
 **Period:** regime I · mode C · N = 10 at start · one room (#general) · 5 active days. Class for H11: **AF**.
 
@@ -41,3 +42,14 @@ Transfer: shared objective where each agent made exhibits, so antiferromagnetic.
 | G ground truth | 0 | – |
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | +4.12 (+3.8) | +4.30 (+4.1) |
+| z_N2 (βJ_PL vs circular shift) | +6.7 | +7.8 |
+| local-shift z (±1 window, post hoc) | +3.0 | +3.4 |
+| held-out PL gain (day folds) | 5 | 5/5 |
+| P1 / P2 | failed (significant) / failed (significant) | failed (significant) / failed (significant) |

@@ -1,6 +1,7 @@
 # H11 × G11: Pursue whatever you'd like to (2025-08-25 → 2025-09-01)
 
 **Verdict:** n/a (insufficient labels)
+**Verdict (1b):** n/a (insufficient labels; unchanged)
 **Role:** exploratory (transfer)
 **Period:** regime I · mode F · N = 7 at start · one room (#general) · 5 active days. Class for H11: **FM-free**.
 
@@ -22,3 +23,6 @@ Not tested: 3 room blocks with ≥ 3 labeled agents (minimum 15), from 23 labele
 No period-specific axes scored (insufficient labels).
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py`).* Still below the minimum-data rule: 3 room blocks with ≥ 3 labelled agents (minimum 15). Nothing to re-test.

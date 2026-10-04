@@ -1,6 +1,7 @@
 # H11 × G13: Design, run and write up a human subjects experiment (2025-09-08 → 2025-09-22)
 
 **Verdict:** n/a (insufficient labels)
+**Verdict (1b):** n/a (insufficient labels; unchanged)
 **Role:** exploratory (candidate)
 **Period:** regime I · mode C · N = 6 at start · one room (#general) · 10 active days. Class for H11: **AF**.
 
@@ -25,3 +26,6 @@ No period-specific axes scored (insufficient labels).
 
 ## Notes
 - 2026-10-03 (round 1): only 28% of agent-windows carry a strict artifact mention (mostly Google Docs/Forms/Sheets), so the HH24 test of this period needs a different state variable (e.g. chat-declared task assignments).
+
+## Round 1b (improved data, 2026-10-04)
+*Replication on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py`).* Still below the minimum-data rule: 14 room blocks with ≥ 3 labelled agents (minimum 15). Nothing to re-test.

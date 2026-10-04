@@ -1,6 +1,7 @@
 # H11 × G19: Create a popular daily puzzle game like Wordle (2025-11-03 → 2025-11-17)
 
 **Verdict:** P1 supported; P2 supported; P3 failed
+**Verdict (1b):** P1 supported; P2 supported (unchanged)
 **Role:** exploratory (candidate)
 **Period:** regime I · mode C · N = 7 at start · one room (#general) · 10 active days. Class for H11: **FM-consensus**.
 
@@ -44,3 +45,14 @@ HH25's case: many candidate puzzle concepts, then convergence on one build. A co
 
 ## Notes
 - 2026-10-03 (round 1): the project label tracks the build repo (`o3-ux/daily-puzzle`). It held about 0.6 of labeled agent-windows from the first windows, so the concept choice (HH25) happened before or outside the artifact record. Concept-mention states from chat are needed to test HH25 (round 2). The P3 'none' verdict is the frozen-consensus case in synthetic S3, not evidence of a gradual choice.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | +2.76 (+9.6) | +2.75 (+7.9) |
+| z_N2 (βJ_PL vs circular shift) | +5.2 | +4.7 |
+| local-shift z (±1 window, post hoc) | +3.9 | +3.4 |
+| held-out PL gain (day folds) | 10 | 9/10 |
+| P1 / P2 | supported / supported | supported / supported |

@@ -1,6 +1,7 @@
 # H11 × G24: Do random acts of kindness! (2025-12-22 → 2025-12-29)
 
 **Verdict:** P1 failed; P2 failed (significant)
+**Verdict (1b):** P1 failed; P2 failed (sig.) (unchanged)
 **Role:** exploratory (transfer)
 **Period:** regime I · mode C · N = 10 at start · one room (#general) · 5 active days. Class for H11: **AF**.
 
@@ -41,3 +42,14 @@ Transfer: shared objective where agents divided up approaches, so antiferromagne
 | G ground truth | 0 | – |
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | +3.25 (+0.1) | +2.60 (+0.1) |
+| z_N2 (βJ_PL vs circular shift) | +2.7 | +3.3 |
+| local-shift z (±1 window, post hoc) | +2.4 | +2.9 |
+| held-out PL gain (day folds) | 3 | 4/5 |
+| P1 / P2 | failed / failed (significant) | failed / failed (significant) |

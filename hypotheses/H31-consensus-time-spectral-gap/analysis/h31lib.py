@@ -18,7 +18,13 @@ import numpy as np
 import polars as pl
 
 ROOT = Path(__file__).resolve().parents[3]
-DATA = ROOT / "data/processed/H31-consensus-time-spectral-gap"
+# Round 1b switches (2026-10-04), read from the environment so spawned workers inherit them; defaults = round 1:
+#   H31_DATA   data folder (round 1b: data/processed/H31-consensus-time-spectral-gap/r1b, built with ledger visibility
+#              and shared labels by scheme/build.py --visibility ledger --labels shared --out ...)
+#   H31_STATE  'project' (default) or 'work': which agent state fills P["states{W}"] (work = DQ4 work-ledger labels)
+DATA = Path(os.environ.get("H31_DATA", str(ROOT / "data/processed/H31-consensus-time-spectral-gap")))
+STATE = os.environ.get("H31_STATE", "project")
+SUFFIX = "" if STATE == "project" else f"_{STATE}"
 HYP = ROOT / "hypotheses/H31-consensus-time-spectral-gap"
 W_H = 0.5          # window length (h) for W = 30 min
 CARRY = 4          # carry-forward windows
@@ -33,7 +39,7 @@ def load_period(g: int, root: Path = DATA) -> dict:
         p = f / f"{name}.parquet"
         P[name] = pl.read_parquet(p) if p.exists() else None
     for W in (15, 30, 60):
-        p = f / f"states_project_w{W}.parquet"
+        p = f / f"states_{STATE}_w{W}.parquet"
         P[f"states{W}"] = pl.read_parquet(p) if p.exists() else None
     return P
 

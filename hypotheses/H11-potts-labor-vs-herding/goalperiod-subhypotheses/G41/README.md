@@ -1,6 +1,7 @@
 # H11 × G41: Perform novel research! (2026-05-11 → 2026-05-18)
 
 **Verdict:** P1 supported; P2 supported
+**Verdict (1b):** P1 supported; P2 supported (unchanged)
 **Role:** exploratory (candidate)
 **Period:** regime III · mode I · N = 15 at start · #best / #rest · 5 active days. Class for H11: **FM-convergence**.
 
@@ -41,3 +42,23 @@ Many #rest agents independently proposed the same research topic: convergence, s
 | G ground truth | 0 | – |
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | +4.30 (+24.9) | +4.23 (+25.6) |
+| z_N2 (βJ_PL vs circular shift) | +5.4 | +5.8 |
+| local-shift z (±1 window, post hoc) | +4.2 | +3.6 |
+| held-out PL gain (day folds) | 5 | 5/5 |
+| P1 / P2 | supported / supported | supported / supported |
+
+**Work space (R1b-2; agent work commits, DQ4 ledger, W = 30):**
+
+| Space | labelled agent-windows | blocks (N ≥ 3) | βJ_CW (t) | z_N2 | local-shift z | excess βJ_PL − N2 | co-location (N2 mean, z) | ownership |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| attention | 516 | 78 | +4.23 (+25.6) | +5.3 | +3.5 | +1.43 | 0.72 (0.68, +4.0) | 0.10 |
+| work | 331 | 66 | +3.72 (+14.3) | +3.8 | +1.8 | +1.13 | 0.65 (0.61, +3.1) | 0.25 |
+
+Agent-windows with both labels: work repo = attention project in 0.89. The attention top project holds 0.26 of attention and 0.28 of work agent-windows.

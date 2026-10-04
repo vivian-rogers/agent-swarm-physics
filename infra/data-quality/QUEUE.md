@@ -38,6 +38,7 @@ Each DQ agent writes only new files in `infra/` and new tables in `data/processe
 - Add an event-time agent-shift row to the DQ8 null size table (RE-A2).
 - `actions_bash_head_fixed`: add a shell sub-class column (`head_class`: vcs/net/run/read/write/wait/other; H14's `build_r1b.py`).
 - Context ledger: add a per-call prompt-token column (H45's `calls.parquet`; Anthropic from `actions` cache fields).
+- Move H11's `build_work` (work-ledger project states) into `infra/shared/` as a `work_states` table; H11, H27, H31 use it, H06/H28/H53 could.
 - `kicks_classified`: add `primary_target` (the nudge's leading @; 29% of nudges mention other agents too, H35).
 - DQ7 rebuild should also apply stall-adjusted (agent-state conditioned) variants of the collective statistics used by H02, H12 and H19.
 
@@ -93,7 +94,7 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | RE-B1 | H17, H16, H14 | **done** (2026-10-04) |
 | RE-C1 | H10, H20, H24 | running (2026-10-04): shared goal vectors, both embedding models, dedupe flags |
 | RE-C2 | H13, H21, H22 | running (2026-10-04): DQ6 ground truth (Opus 5 role), stance channel with calibrated null, style residuals, behavioral family test |
-| RE-P1 | H11, H31, H27 | running (2026-10-04): shared labels, #26 per round, attention vs work space |
+| RE-P1 | H11, H31, H27 | **done** (2026-10-04) |
 | next | H44 (new, unblocked by DQ3); H06, H07, H28, H32, H34 | queued, 2–3 hypotheses per agent as slots free |
 
 ## New hypotheses H59–H74 (promoted 2026-10-04): launch plan

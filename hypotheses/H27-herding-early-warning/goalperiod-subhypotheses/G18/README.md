@@ -1,6 +1,7 @@
 # H27 × G18: Reduce global poverty as much as you can (2025-10-20 → 2025-11-03)
 
 **Verdict:** descriptive (1 evaluable onset, percentile 0.46)
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (candidate)
 **Period:** regime I · mode C · N = 7 · 10 active days in the series · W = 15: 153 windows, q = 8, 59% of windows with ≥ 3 labeled agents (mean 3.1); W = 30: 79%.
 
@@ -42,3 +43,13 @@ Arm W = 15 min. τ* = 0.538 (frozen from synthetic S0). Onsets (O1): 4; O1-slow 
 - 2026-10-04: prediction written before running this period.
 - 2026-10-04: round 1 run (`analysis/explore.py`); data in `data/processed/H27-herding-early-warning/G18/round1_w*.json`.
 - 2026-10-04 (post hoc): 3 of the 4 onsets land on projects never mentioned before in the period (two Netlify sites and a Google doc; 3–8 agents in the first window the project appears). No share-based indicator can warn of these. H11's last-day convergence is not an O1 onset (none of the W = 15 or W = 30 onsets is on the last day): it did not start from a low baseline.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic labels (`scheme/build.py --labels shared`, `analysis/round1b.py replicate`), plus the work-ledger series for #30 onward (`round1b.py work`). Card predictions R1b-1 to R1b-3 were written before the run.*
+
+| Arm | Labels | Onsets | Evaluable | Composite AUC | EWS hits | EWS false alarms / day |
+| --- | --- | --- | --- | --- | --- | --- |
+| W15 | round 1 (H11 labels) | 4 | 1 | 0.46 | 0/4 | 0.4 |
+| W15 | round 1b (shared labels) | 4 | 1 | 0.45 | 0/4 | 0.4 |
+| W30 | round 1 (H11 labels) | 5 | 2 | 0.37 | 0/5 | 0.3 |
+| W30 | round 1b (shared labels) | 6 | 2 | 0.35 | 0/6 | 0.3 |

@@ -312,3 +312,8 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 ### RE-V1 named variants (2026-10-04; see H18, H08, H04 round-1b sections)
 - **Exposure (ledger receiving call):** a message is exposed to a recipient at its receiving call (the first call whose context contains it, `context_ledger_items`); replaces "Exposure (turn read-out)" timing with ledger t_call.
 - **Talk turn / pending set (ledger):** a talk turn is a call that posts chat; its pending set is the senders whose messages entered the recipient's context since its last talk turn (`context_ledger_turns.k_since_talk` counts them).
+
+### RE-P1, H49, H52 named variants (2026-10-04)
+- **Agent state (categorical, project, work ledger)** (H11 round 1b): per agent-window, the repo with the most agent work commits (DQ4 default filter). **Co-location (raw project):** the share of agents sharing their repo with a room-mate in the same 30 min.
+- **Conditioned pseudolikelihood bond** (H49): equal-time pseudolikelihood inverse-Ising coupling after H38's agent-state conditioning, against 200 joint block-shift surrogates. **Significant-bond graph:** bonds with one-sided empirical p < 1/n_pairs. **CV-C10:** cross-validated share of the excess covariance carried by the top 10% of pairs (dense ≈ 0.1–0.16, dilute ≈ 0.3–0.65 in synthetics).
+- **Sender class; authority premium π** (H52): human / agent / bot sender; π = coarsened-exact-matching ATT of a human (or bot) message vs matched agent messages (naming, read-out age, novelty, length, recipient state, room size). **Content pull (DiD χ):** H52's difference-in-differences content statistic (replaces H30's χ_con where sender classes differ in topicality).

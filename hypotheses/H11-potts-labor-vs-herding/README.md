@@ -1,6 +1,6 @@
 # H11: Division of labor vs herding is the sign of a Potts coupling, set by the goal
 
-**Status:** exploratory round 1 done (2026-10-03). **The sign-by-goal-mode prediction is not supported.** βJ_CW > 0 (herding) in 11 of the 14 tested weeks, whatever the mode, including all five weeks predicted to be AF. The exceptions are the three weeks where agents built their own artifacts, and there the spread is static specialization (fields), not avoidance. A frozen confirmatory test of the original rule and of the round-1 pattern on the holdout (#22, #28, #45) is written but not run. Predictions below were written 2026-10-03, before any real-data run.
+**Status:** exploratory round 1 done (2026-10-03); **round 1b on improved data done (2026-10-04): no verdict changes; work herds where attention does** (shared deterministic labels reproduce every round-1 sign; agents' work commits herd in 4/6 shared-artifact weeks, onto the same repos they attend; HH266's "attention herds, work stays private" holds only in own-artifact and private-role units; #26 redone per election round on DQ6 ballots). **The sign-by-goal-mode prediction is not supported.** βJ_CW > 0 (herding) in 11 of the 14 tested weeks, whatever the mode, including all five weeks predicted to be AF. The exceptions are the three weeks where agents built their own artifacts, and there the spread is static specialization (fields), not avoidance. A frozen confirmatory test of the original rule and of the round-1 pattern on the holdout (#22, #28, #45) is written but not run. Predictions below were written 2026-10-03, before any real-data run.
 **Fields:** stat mech, sociophysics
 **Origin:** HH24 + HH26 + HH84 (shortlist 2, item 2), plus **HH22** (the election, #26), folded in as `G26/` by Vivian on 2026-10-03 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** "Agent state (categorical)" with two named variants proposed for DEFINITIONS.md, **agent state (categorical, project/artifact strict)** and **agent state (categorical, action class)** (defined under Data scheme); "Population N(t)", active-population variant (labeled agents in a window and room); "Regime" (each period sits inside one regime); "Interaction (broadcast)" (the room is the interaction neighbourhood, so the coupling is uniform within a room block).
@@ -103,15 +103,15 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | States come from strict artifact mentions, rooms and action classes, all defined from fields, with assumptions listed under Data scheme. Coverage is 28–78% of agent-windows (#11, #13, #16 below the minimum). A mention measures attention to a project, not necessarily work on it. The same mapping works in regimes I and III. |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | States come from strict artifact mentions, rooms and action classes, all defined from fields, with assumptions listed under Data scheme. Coverage is 28–78% of agent-windows (#11, #13, #16 below the minimum). A mention measures attention to a project, not necessarily work on it. The same mapping works in regimes I and III. Round 1b: a work-ledger state (agent work commits) is added; an agent's attention project equals its work repo in a median 84% of agent-windows with both labels (#30–#51). |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | **Stationarity:** violated at the day scale (βJ_CW with day fields is lower but stays positive). **Time-rescaling:** W = 15 / 30 / 60 min gives the same signs and similar sizes. **Not audited:** Markov order and update order. **Equilibrium is doubtful:** persistence P(same project next window) is 0.5–0.9. |
-| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Coupling beyond agent fields beats N1, N1d and N2 in 10/14 tested periods, and survives a ±1-window local shift in 9 (post hoc). The coupled PL gains on held-out days in 8/10 of those periods. Common fast drive and coupling are not separable, so this is adequacy of an *effective* coupling. |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | The a-priori sign mapping failed: 5/11 correct, p = 0.73. First-order consensus passed fully in 0/4 periods. The prior |βJ| < 2 (P7) failed for βJ_CW. Only the #26 runoff jump (P-G26b) came out as predicted. |
+| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Coupling beyond agent fields beats N1, N1d and N2 in 10/14 tested periods, and survives a ±1-window local shift in 9 (post hoc). The coupled PL gains on held-out days in 8/10 of those periods. Common fast drive and coupling are not separable, so this is adequacy of an *effective* coupling. Round 1b (shared labels): 10/11 shared weeks z_N2 ≥ 2; held-out gain 10/10. |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 | The a-priori sign mapping failed: 5/11 correct, p = 0.73. First-order consensus passed fully in 0/4 periods. The prior |βJ| < 2 (P7) failed for βJ_CW. Only the #26 runoff jump (P-G26b) came out as predicted. **Round 1b (0 → 1):** the coupling found in attention predicts coupling in an independent output channel, agent work commits: z_N2 ≥ 2 in 4/6 shared weeks, spread in 3/3 own-artifact weeks; the #26 jump holds on the correct election (DQ6: 1/3 → 7/8 in 83 s). |
 | E interventional | predicts the change across a natural experiment | 0 | Not done in round 1. Candidate: NE15 (#best / #rest split), where herding should become block-local. |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | **Synthetic recovery:** the sign is recovered with attenuation 0.4–0.75×, and per-period power is ≈ 0.35 at |βJ| = 2. **Confounds characterized:** specialization reads as AF in βJ_CW; day-level drift reads as FM in βJ_CW and is absorbed by N2; field steps are caught by the MF clause. **Preprocessing:** robust to raw labels, q ≤ 4, W, and action-only labels. Drive vs coupling remains unidentified. |
-| G ground truth | agrees with known structure | 1 | #26: the winner (DeepSeek-V3.2) and the runoff jump match the dataset's goal summary. #31: herding onto shared repos matches, though the narrated guardrails pile-up shows no step. #39: each agent's own world gives strong spread, as described. |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | **Synthetic recovery:** the sign is recovered with attenuation 0.4–0.75×, and per-period power is ≈ 0.35 at |βJ| = 2. **Confounds characterized:** specialization reads as AF in βJ_CW; day-level drift reads as FM in βJ_CW and is absorbed by N2; field steps are caught by the MF clause. **Preprocessing:** robust to raw labels, q ≤ 4, W, and action-only labels. Drive vs coupling remains unidentified. Round 1b: labels are now bit-reproducible; null Monte Carlo noise moves z by up to ≈ 0.5 near 2. |
+| G ground truth | agrees with known structure | 1 | #26: the winner (DeepSeek-V3.2) and the runoff jump match the dataset's goal summary. #31: herding onto shared repos matches, though the narrated guardrails pile-up shows no step. #39: each agent's own world gives strong spread, as described. Round 1b: #26 per round on DQ6 ballots (exact symmetric point, 7–1–0 runoff); #31's wave appears in work commits. |
 | H comparative | beats the named rivals | 1 | **R1** (agent fields only): beaten in 10 periods. **R2** (common drive): beaten at the day scale (N2, N1d), not within the day. **R3** (gradual adoption): beaten by a step in the #26 votes (ΔBIC 40) and #31 (step vs linear), but "none" in #19 and #40. |
-| I transfer | holds in other same-mode periods, including the holdout | 0 | The mode rule does not transfer: AF transfer periods are 0/4 negative. The round-1 pattern holds across regimes I and III but is post hoc: βJ_CW > 0 in all 11 weeks other than the own-artifact weeks #39, #40 and #42, with z_N2 ≥ 2 in 10 of them. The ownership index sorts the periods imperfectly (#24 is 'owned' at 0.65 but herds; #40 is 'shared' at 0.26 but does not). Holdout not run. |
+| I transfer | holds in other same-mode periods, including the holdout | 0 | The mode rule does not transfer: AF transfer periods are 0/4 negative. The round-1 pattern holds across regimes I and III but is post hoc: βJ_CW > 0 in all 11 weeks other than the own-artifact weeks #39, #40 and #42, with z_N2 ≥ 2 in 10 of them. The ownership index sorts the periods imperfectly (#24 is 'owned' at 0.65 but herds; #40 is 'shared' at 0.26 but does not). Holdout not run. Round 1b: in new periods #33 fits, #44 and #51 are private in work as predicted, but #35 (shared, ownership 0.01) has z_N2(attention) −2.5, against the pattern. |
 
 ## Prediction
 *Written 2026-10-03, before any real-data run of the analysis.*
@@ -211,6 +211,8 @@ All periods were run on 2026-10-03. Predictions were written before the run (car
 | [G39](goalperiod-subhypotheses/G39/README.md) | transfer, I (descriptive) | descriptive | −8.61 (t −3.05); z −1.3; ownership 1.00 |
 | [G42](goalperiod-subhypotheses/G42/README.md) | transfer, I (descriptive) | descriptive | −2.16 (t −1.7); z +1.3; ownership 0.73 |
 
+**Round 1b (2026-10-04):** every tested period gets a `**Verdict (1b):**` line (shared labels; work space for #30 onward). Verdict changes: #38 P2 "failed (significant)" → "failed" and #40 P2 "failed" → "weak" (z ≈ 0 and ≈ 2 noise). Native folders: G26 (per election round), G31 (wave in work), G40 (hub vs own worlds in work). New replication folders for the work space: [G33](goalperiod-subhypotheses/G33/README.md), [G35](goalperiod-subhypotheses/G35/README.md), [G44](goalperiod-subhypotheses/G44/README.md), [G51](goalperiod-subhypotheses/G51/README.md) (seven non-holdout units).
+
 ## Results
 *Exploratory round 1, 2026-10-03.*
 - Code: `scheme/build.py`, `analysis/potts_core.py`, `analysis/synthetic.py`, `analysis/explore.py`, `analysis/local_shift.py` (post hoc), `analysis/assemble.py`, `analysis/figures.py`.
@@ -290,12 +292,95 @@ Dry run on stand-ins (#31, #25, #38): C1 not confirmed, C2 inconclusive (#38 fai
 6. Clean the #26 ballot: restrict to the candidate list and the runoff interval.
 
 ## Notes
+- **2026-10-04, round 1b:** re-evaluated on the shared deterministic labels, DQ6 #26 ballots and the DQ4 work ledger (section "Round 1b" above). No card-level verdict changes; D 0 → 1.
 - **From DQ6 (2026-10-04): the G26 "runoff" analysis measured the wrong election.** #26 had a 01-05 approval vote (9–9–9 tie) and a 7–1–0 runoff that closed in about 100 s, then a 01-09 confirmatory re-election (9–0). Nine of the ten declarations in this card's runoff snapshot are dated 01-09. Redo the vote tests per round with `ground_truth_labels` (`phase`, `ballot`, `tally`) in the re-evaluation wave.
 - **From H31 (2026-10-04):** `modal()` breaks ties without `maintain_order`, so about 1% of labels flip between rebuilds; the confirmatory run must use the deterministic shared build. The #26 runoff winner's declared share rose 0.22 → ≥ 0.5 in 0.76 h, and many #18 and #26 projects reach a majority within one 30-min window: herding arrives as one-window waves.
 - 2026-10-03: promoted from shortlist 2 (HH24 + HH26 + HH84 (shortlist 2, item 2)).
 - 2026-10-03, **scheme amendment before analysis:** the first build used q ≤ 6 and a 5% share threshold. That gave q = 2 for #13 and #38, with long tails (47 and 74 distinct projects). Seeing only those structural counts, I changed to q ≤ 8 and 2% before any analysis. Raw unmerged labels are kept for robustness.
 - 2026-10-03: exploratory round 1 run and assembled (see Results). Scheme amendment (q ≤ 8 / 2%) was made before analysis. The action-only robustness variant was added after seeing #31's βJ_CW, and the local-shift null and ownership index after the full run; all are flagged above.
 - 2026-10-03: HH22 folded in as G26 by Vivian; G26 predictions written before running on #26. Vote states use `chat_mentions_clean.mentions_roster` (o1-bug-free), per the coordinator.
+
+## Round 1b (improved data, 2026-10-04)
+
+### What changed in the inputs
+- **Project labels:** shared deterministic `project_states` (W = 15/30/60; ranking on non-holdout rows) instead of H11's own files, whose `modal()` broke exact ties nondeterministically. Against round 1, 633 of 7,802 W = 30 agent-windows (8.1%) change label: 111 tie re-picks, 499 renumberings, 52 in or out of "other" (reproduced exactly by `scheme/build_r1b.py`). Action-class labels get the same deterministic tie-break.
+- **#26:** DQ6 `ground_truth_labels` ballots and phases (approval 9–9–9 tie, 7–1–0 runoff in ≈ 100 s on 01-05, 9–0 confirmatory vote on 01-09). Round 1's "runoff" jump and snapshot measured the 01-09 vote.
+- **New state, work space:** **agent state (categorical, project, work ledger)**: the repo with the most agent work commits (DQ4 default filter `canonical & ~imported & author_kind == agent & ~automated`, author time) by agent i in window w; no commit = missing; same q ≤ 8 / 2% merging. Dense from #30. Proposed as a named variant for DEFINITIONS.md.
+- **Code:** `scheme/build_r1b.py` writes `data/processed/H11-potts-labor-vs-herding/r1b/G<NN>/`; `analysis/h11data.py` reads it when `H11_LABELS=shared` (default `h11` keeps the round-1 path runnable); `analysis/round1b.py` runs the replication, the work-space version and the native tests.
+
+### Predictions for the new round-1b analyses
+*Written 2026-10-04 07:10 UTC, before running the replication, the work-space version or the native tests.* The pre-registered round-1 predictions above are unchanged and are re-scored as written.
+
+**What I had seen when writing this:** the round-1 results; the label-change counts above; one timing run of the #31 attention replication on shared labels (βJ_CW +4.88, t 19.9, z_N2 +16.0 with 19 nulls); work-label row counts per period (e.g. #31: 286 work vs 423 attention agent-windows; #37: 84; #51: 8,508); #31's work-project table (its top three repos were committed to by 11, 9 and 8 distinct agents over the week, top share 0.19); the DQ6 #26 tallies and ballot timestamps; the H06, H28 and H53 headline results, including H53's #26 read-out finding (14/17 ballots cast by the call that read the round's opening message). I had not computed any work-space coupling, null, co-work rate or #26 snapshot fit.
+
+- **R1b-1 (replication on shared labels).** The 14 tested periods keep their round-1 verdict category (P1 and P2) and the sign of βJ_CW, with |ΔβJ_CW| ≤ 1 in ≥ 12/14. Credence 0.8.
+- **R1b-2 (work space, non-holdout periods #30 onward that pass the same minimum-data rule on work labels: ≥ 15 room blocks with ≥ 3 work-labelled agents at W = 30).** HH266 ("attention herds, work stays private") predicts z_N2(work) < 2 in most shared-artifact weeks where attention herds. My prediction is the opposite: work herds too, more weakly.
+  - (a) In shared-artifact weeks (ownership index < 0.5), βJ_CW(work) > 0 and z_N2(work) ≥ 2 in at least half of the testable periods. Credence 0.55.
+  - (b) The drift-corrected excess (βJ_PL − N2 mean) is smaller in work than in attention in ≥ 2/3 of the periods testable in both. Credence 0.65.
+  - (c) Own-artifact weeks (#39, #40, #42): βJ_CW(work) ≤ 0 and z_N2(work) < 2 (spread by fields). Credence 0.6.
+  - (d) The co-work rate (share of labelled agents whose raw project is shared by ≥ 1 block-mate in the same window) exceeds its N2 (circular-shift) null in shared weeks in both spaces; the work excess is smaller.
+  - **HH266 is supported** if z_N2(work) < 2 in ≥ 2/3 of the shared-artifact weeks where z_N2(attention) ≥ 2, with a co-work excess near 0 in work. **Refuted** if (a) holds.
+- **R1b-3 (#26 per election round; native, `G26/`).** Predictions in `goalperiod-subhypotheses/G26/README.md` (Round 1b section).
+- **R1b-4 (#31 work-space wave; native, `G31/`)** and **R1b-5 (#40 hub vs own worlds in work; native, `G40/`).** Predictions in those period READMEs.
+
+### Results (round 1b, run 2026-10-04)
+Code: `scheme/build_r1b.py`, `analysis/round1b.py` (`replicate`, `work`, `g26`, `assemble`), `analysis/summary_figure_r1b.py`. Data: `data/processed/H11-potts-labor-vs-herding/r1b/` (`G<NN>/round1b.json`, `verdicts_round1b.parquet`, `cross_period_round1b.json`, `work/<unit>.json`, `work_vs_attention_r1b.parquet`, `g26_rounds_r1b.json`). Per-period estimates: `per_period_estimates` (H11, round 1b rows). 99 nulls per statistic (49 for #51 units).
+
+**Layer 1, replication on shared labels (old → new).** Nothing changes that matters.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW > 0 (tested weeks) | 11/14 | 11/14; same sign in 14/14; max ΔβJ_CW 0.65 (#24: +3.25 → +2.60, still n.s.) |
+| P1 per-period verdicts | – | identical in 14/14 |
+| P2 per-period verdicts | – | identical in 12/14: #38 "failed (significant)" → "failed" (z_N2 +2.1 → +1.9); #40 "failed" → "weak" (−0.1 → +0.1) |
+| Mode rule: sign test / AF < FM (Mann–Whitney) | 5/11, p = 0.73 / p = 0.47 | 5/11, p = 0.73 / p = 0.53 |
+| Shared-artifact weeks with z_N2 ≥ 2 / with local-shift z ≥ 2 | 10/11 / 9 | 10/11 / 9 (#20 rises to +2.1, #38 falls to +1.9) |
+| Ownership vs z_N2 (Spearman, post hoc) | −0.56, p = 0.04 | −0.53, p = 0.054 |
+| P3 project-label consensus jumps | 0/4 | 0/4 |
+| P4 action class AF vs FM | p = 1.0 | p = 1.0 (action-class labels unchanged by the deterministic tie-break) |
+| P5 held-out gain where abs(z_N2) ≥ 2 | 8/10 | 10/10 |
+| P7 abs(βJ_CW) < 2 | 0/14 | 1/14 (#30 +1.97) |
+
+Monte Carlo noise: the same z_N2 drawn with a different null seed moves by up to ≈ 0.5 near z = 2 (#38: +1.9 in the replication run, +2.4 in the work run). Verdicts that hinge on z ≈ 2 (#20, #38) are not stable.
+
+**Work space (#30 onward; R1b-2).** 18 units: #30–#44 whole, #51 split into its seven non-holdout units with ≥ 3 active days (unit of analysis rule). Work labels cover 37–75% of the attention agent-windows; #37 has too few work blocks (12 < 15).
+
+| Unit | ownership (att / work) | z_N2 attention | z_N2 work | excess att / work | co-location att / work (N2 mean) | work repo = attention project |
+| --- | --- | --- | --- | --- | --- | --- |
+| #30 | 0.00 / 0.00 | +5.1 | +0.8 | +1.60 / +0.43 | 0.94 / 0.86 (0.85) | 0.83 |
+| #31 | 0.07 / 0.13 | +14.1 | +7.2 | +2.36 / +1.87 | 0.69 / 0.54 (0.47) | 0.69 |
+| #33 | 0.06 / 0.05 | +22.0 | +9.0 | +1.66 / +1.97 | 0.94 / 0.94 (0.94) | 0.97 |
+| #35 | 0.01 / 0.00 | −2.5 | +2.2 | −0.58 / +2.77 | 0.98 / 1.00 (0.98) | 0.98 |
+| #37 | 0.13 / 0.29 | +7.8 | +2.3 (n/a: 12 blocks) | +3.16 / +1.38 | 0.63 / 0.58 (0.53) | 0.78 |
+| #38 | 0.12 / 0.11 | +2.4 | +1.8 | +0.42 / +0.62 | 0.78 / 0.75 (0.71) | 0.85 |
+| #39 (own) | 1.00 / 1.00 | −1.2 | all private (no shared repo) | – | 0.12 / 0.00 | 0.97 |
+| #40 (own + hub) | 0.26 / 0.27 | −0.1 | +0.6 | −0.04 / +0.43 | 0.78 / 0.73 (0.73) | 0.96 |
+| #41 | 0.10 / 0.25 | +5.3 | +3.8 | +1.43 / +1.13 | 0.72 / 0.65 (0.61) | 0.89 |
+| #42 (own) | 0.73 / 0.74 | +1.1 | +1.4 | +0.99 / +1.13 | 0.23 / 0.20 (0.18) | 0.94 |
+| #44 | 0.51 / 0.74 | +5.0 | +1.3 | +1.98 / +0.77 | 0.43 / 0.18 (0.14) | 0.80 |
+| #51 units (7) | 0.57–0.75 / 0.71–0.97 | −0.7 to +5.7 | ill-determined (see caveat) | – | 0.18–0.30 / 0.04–0.21 | 0.56–0.88 |
+
+- **(a) Work herds in shared-artifact weeks: supported.** βJ_CW(work) > 0 and z_N2(work) ≥ 2 in 4/6 testable shared weeks (#31, #33, #35, #41; not #30, #38).
+- **(b) Work coupling is weaker than attention's: not supported** (work excess below attention's in 4/9 testable periods #30–#44; 3/5 where attention herds).
+- **(c) Own-artifact weeks are spread in work too: supported** (#39 βJ_CW at the lower bound, every work label private; #40 −17.4, z +0.6; #42 −2.4, z +1.4).
+- **(d) Co-location above the shift null in shared weeks: 4/6 in attention, 4/6 in work;** the excesses are about equal (#31: +0.07 vs +0.07).
+- **HH266 ("attention herds, work stays private") is not supported in shared-artifact weeks:** of the 5 shared weeks where attention herds, work also has z_N2 ≥ 2 in 3 (#31, #33, #41), with #30 and #38 below 2. Agents' work repo equals their attention project in a median 84% of agent-windows with both labels (56–98%). Attention labels mostly measure where work goes.
+- **Where work *is* more private than attention (post hoc): own-artifact and private-role units.** Co-location in work vs attention: #44 0.18 vs 0.43, #51 units 0.04–0.21 vs 0.18–0.30 (51a 0.06 vs 0.30; 51g 0.04 vs 0.18), #39 0.00 vs 0.12. There agents look at each other's artifacts more than they commit to them.
+- **Reconciling with H06 (post hoc):** most *projects* are private, most *work* is shared. In shared weeks 25–67% of work repos have one committer (singletons), yet 71–100% of work agent-windows go to repos with ≥ 2 committers (#31: 25% singletons, 87% of work on shared repos; top three repos 43%). In own-artifact weeks the effort share on shared repos drops (#39 0.00, #42 0.38, #44 0.26; #51 0.63 vs 0.88 in attention). H06 counted species (fragmented intention topics); H11 weighs effort.
+
+**Native layer (R1b-3 to R1b-5).**
+- **#26 per election round (`G26/`; mixed).** On the correct election, the runoff goes from an exact symmetric point (all 9 voters approved all three tied candidates) to 7/8 for DeepSeek-V3.2 in 83 s, and the 01-09 vote confirms it 9–0: P-G26b's jump holds on DQ6 ground truth. Snapshot coupling βJ_snap = 3.2 [1.05, 6.0] vs βJ_s(3) = 2.75 (inconclusive, as predicted); independent symmetric voters give ≥ 7/8 with p = 0.008. **My field prediction failed:** only 3/8 runoff ballots were cast having seen ≤ 1 earlier ballot (mean 2.6 seen; predicted ≥ 5/8), and DeepSeek-V3.2 led the visible candidate mentions for 0/8 voters (Gemini 2.5 Pro led for 7/8). The runoff looks like a ballot cascade seeded by the first ballot (a candidate voting for a rival), not a pre-set field. The confirmatory vote is the opposite: 6/9 ballots cast with no earlier ballot seen, all for the incumbent (a field).
+- **#31 work wave (`G31/`; supported).** Work herds: βJ_CW +4.04 (t 10.7), z_N2 +7.2, local-shift z +4.5; weaker than attention (excess 1.87 vs 2.36); 9 agents committed to one repo in one 30-min window (predicted ≤ 6; attention 11); work repo = attention project in 69% of agent-windows.
+- **#40 hub vs own worlds (`G40/`; mixed).** Work is spread by fields as predicted (βJ_CW −17.4, z_N2 +0.6), but the hub carries as much work as attention (0.73 vs 0.74 of labelled agent-windows; predicted ≥ 0.2 lower) and ownership is the same (0.27 vs 0.26). HH266 fails here too.
+
+**Verdict changes.** None at the card level. P1 stays mixed by rule (substantively failed), P2 failed, P3 failed (0/4 on project labels; the #26 vote jump holds on the correct election but the mechanism stays at threshold), P4 and P5 supported (P5 now 10/10). New: work-space herding in shared-artifact weeks (R1b-2a supported; HH266 not supported), and the runoff's ballot-visibility pattern points to a cascade rather than my predicted field (n = 8).
+
+**Caveats (round 1b).**
+- **#51 work PL is ill-determined:** most #51 work agent-windows fall into "other" (each agent has its own repo; q ≤ 8), so βJ_CW sits at the grid bound and z_N2 swings (−4.4 to +3.0). Use co-location there.
+- **#35 contradicts the frozen C2 rule:** a shared-artifact week (ownership 0.01) with z_N2(attention) = −2.5. Had it been a holdout target, C2 would be refuted. Disclose before running `confirm_holdout.py`.
+- Work is commits (author time) of agents with public repos: regime I is too sparse; bulk commits in #40 count once per commit.
+
+**Scorecard changes (round 1b):** D 0 → 1 (the effective coupling found in attention predicts coupling in an independent output channel, work commits, in 4/6 shared weeks and spread in 3/3 own-artifact weeks; the #26 jump holds on the correct election); others unchanged (C stays 1: P5 10/10 but drive vs coupling still unseparated; I stays 0: #35 contradicts the post hoc pattern in attention). Ratings suggested: complete 40 → 50, faithfulness 1.5 (unchanged), usefulness 2.0 → 2.5 (the attention-based herding statistic now tracks duplicated *work*, not only attention).
 
 ## Round 2 redirects (2026-10-04)
 *From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*

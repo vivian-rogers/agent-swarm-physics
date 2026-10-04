@@ -3,11 +3,19 @@
 \def\hID{H24}
 \def\hTitle{In the forecast week (\#21), switching from independent drafts to comparison switches the coupling on}
 \def\hStatus{exploratory round 1 done (2026-10-03). The literal H24 (an alignment step at switch-on) failed in G21. The reformulated H24' is mixed: a coupling ramp over the week (descriptive, confounded), and numeric herding that does not survive an extraction audit. Co...}
-\def\hStage{level: hypothesis  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-03}
+\def\hStage{level: hypothesis  $\cdot$  pipeline checks 79\%  $\cdot$  updated 2026-10-03}
 \def\hBadges{\hbadge{Complete}{40\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{1/5}{e34948}{0b0b0b}\ \hbadge{Usefulness}{1.5/5}{ee8584}{0b0b0b}}
-\def\hPeriodSummary{1 failed}
+\def\hPeriodSummary{1 failed, 1 pending}
 \def\hDate{Updated 2026-10-03}
-\def\hFooter{H24-forecast-coupling-switch $\cdot$ generated 2026-10-03 18:08 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H24-forecast-coupling-switch/README.md $\cdot$ ratings: calibrated by coordinator 2026-10-04 (from H24 agent (suggested))}
+\def\hFooter{H24-forecast-coupling-switch $\cdot$ generated 2026-10-04 01:33 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H24-forecast-coupling-switch/README.md $\cdot$ ratings: calibrated by coordinator 2026-10-04 (from H24 agent (suggested))}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G21 & $\times$ & failed \\
+G41 & $\cdots$ & pending \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 1 \\
+B assumptions & 0 & G ground truth & 1 \\
+C adequacy & 1 & H comparative & 0 \\
+D unfitted predictions & 0 & I transfer & 0 \\
+E interventional & 0 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} Information aggregation in swarms is copying from the first or most confident agent, not averaging.\item \textbf{H24-R1} Anchoring cascade: first-posted numbers dominate the final consensus (a founder effect) in every estimation-like task.\item \textbf{H24-R2} Copy fidelity vs transformation of shared numbers (H07 machinery).\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage

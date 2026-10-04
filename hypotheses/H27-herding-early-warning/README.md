@@ -1,6 +1,6 @@
 # H27: Critical slowing down warns of herding waves hours ahead
 
-**Status:** exploratory round 1 done (2026-10-04). **Negative: critical slowing down does not warn of herding onsets.** 21 onsets in 14 non-holdout periods (15-min windows); only 8 are evaluable (6 h of well-observed history, starting from a low share). The composite trend (τ_AR1 + τ_SD) separates them from placebo segments weakly and fragilely (AUC 0.62 [0.51, 0.76] at 15 min; 0.44 at 30 min). Autocorrelation never rises, which is the defining sign of slowing down. The frozen alarm hits 5/21 onsets at 5.3 false alarms per active day, no better than a rate-matched random alarm (p = 0.07) or a naive share alarm. Synthetic validation shows that even a true fold is barely detectable at village size (AUC ≈ 0.6). Post hoc: onsets follow a chat link to the project (11/21 within 30 min; within-period p = 0.0005), consistent with announcement-driven pile-ons (H28). Predictions were written 2026-10-04 before the synthetic and real-data runs; the frozen holdout test is written, not run.
+**Status:** exploratory round 1 done (2026-10-04); **round 1b on improved data done (2026-10-04): the negative stands** (shared deterministic labels give the same 21 onsets and AUC 0.62; work-commit onsets coincide with attention onsets; #40's pile-on runs in minutes, below the design's resolution). **Negative: critical slowing down does not warn of herding onsets.** 21 onsets in 14 non-holdout periods (15-min windows); only 8 are evaluable (6 h of well-observed history, starting from a low share). The composite trend (τ_AR1 + τ_SD) separates them from placebo segments weakly and fragilely (AUC 0.62 [0.51, 0.76] at 15 min; 0.44 at 30 min). Autocorrelation never rises, which is the defining sign of slowing down. The frozen alarm hits 5/21 onsets at 5.3 false alarms per active day, no better than a rate-matched random alarm (p = 0.07) or a naive share alarm. Synthetic validation shows that even a true fold is barely detectable at village size (AUC ≈ 0.6). Post hoc: onsets follow a chat link to the project (11/21 within 30 min; within-period p = 0.0005), consistent with announcement-driven pile-ons (H28). Predictions were written 2026-10-04 before the synthetic and real-data runs; the frozen holdout test is written, not run.
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH109 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`). Related: HH114 (H28, links as the contagion vector, running in parallel), HH126 (reorganization alarm).
 **Definitions used:** "Agent state (categorical)" in H11's named variant **agent state (categorical, project/artifact strict)** (H11 card, Data scheme; proposed there for DEFINITIONS.md); "Population N(t)", active-population variant (**n(w)** = agents with any project label in window w); "Regime" (every period used sits inside one regime; #36, which crosses 2026-03-24, is excluded); active time as in `infra/README.md` (village-on clock time, overnight and weekend gaps removed). New named variant proposed for DEFINITIONS.md: **herding onset (H27, project-share step)**, defined under Observables (O1).
@@ -165,6 +165,8 @@ All periods were run on 2026-10-04, after each `G<NN>/README.md` prediction was 
 | [G51](goalperiod-subhypotheses/G51/README.md) | false-alarm (tail held out) | descriptive | 0 onsets in 45 days; 462 EWS false alarms (≈ 10 per 8-h day) |
 | [G17](goalperiod-subhypotheses/G17/README.md), [G20](goalperiod-subhypotheses/G20/README.md), [G24](goalperiod-subhypotheses/G24/README.md), [G25](goalperiod-subhypotheses/G25/README.md), [G26](goalperiod-subhypotheses/G26/README.md) | 30-min arm only | descriptive | onsets 0, 1, 0, 3, 1; one evaluable (#25, percentile 0.82); EWS 0 hits |
 
+**Round 1b (2026-10-04):** every period folder has a `**Verdict (1b):**` line (shared labels; work-commit series from #30). No per-period verdict changes. Native: G31 (the wave in work; mixed), G40 (the hub wave at the minute clock; mixed).
+
 ## Results
 *Exploratory round 1, 2026-10-04.*
 - **Code:** `scheme/build.py`; `analysis/ews_core.py` (onset rule, indicators, placebo segments, operator scoring); `analysis/synthetic.py`; `analysis/explore.py`; `analysis/assemble.py` (base rates, rate-matched nulls for every rule, precursor counts; post hoc parts flagged); `analysis/period_folders.py`; `analysis/figures.py`; `analysis/confirm_holdout.py` (frozen, not run).
@@ -250,6 +252,64 @@ All periods were run on 2026-10-04, after each `G<NN>/README.md` prediction was 
 
   H27's statistics (project-label onset timing, early-warning trends, link precursors) are different and unexamined. To be disclosed in LOG.md and the other cards when run.
 
+## Round 1b (improved data, 2026-10-04)
+
+### What changed in the inputs
+- **Project labels:** the shared deterministic `project_states` (through H11's round-1b files, `data/processed/H11-potts-labor-vs-herding/r1b/`) instead of H11's nondeterministic labels; 8.1% of W = 30 labels change (111 tie re-picks, 499 renumberings, 52 in or out of "other"). #51 labels now come from the same shared build.
+- **New, work space:** onsets and indicators on **agent state (categorical, project, work ledger)** (H11's round-1b work labels: the repo with the most agent work commits per agent-window; DQ4 default filter), periods #30 onward.
+- **Link precursor:** H28 and H53 reinterpret round 1's post-hoc link precursor (a project's *first* link seeds a wave; for known projects links mark bursts). The precursor count is re-run on the new onsets and split by first vs later link.
+- **Code:** `scheme/build.py --labels shared --out data/processed/H27-herding-early-warning/r1b` (default keeps the round-1 path); `analysis/explore.py` reads `H27_DATA` (default: round 1's folder); `analysis/round1b.py` adds the work space and the native tests.
+
+### Predictions for the new round-1b analyses
+*Written 2026-10-04 07:28 UTC, before rebuilding anything for H27.* The pre-registered round-1 predictions are unchanged and are re-scored as written.
+
+**What I had seen:** the round-1 results; the label-change counts; H28's and H53's headline results; H11's round-1b work-label row counts and #31's work-project table (top repos committed to by 11, 9 and 8 agents over the week).
+
+- **R1b-1 (replication on shared labels).** P1 stays not supported (AUC < 0.70 or CI includes 0.5); τ_AR1 AUC ≤ 0.55; the onset count stays within 21 ± 4; the frozen alarm still does not beat the rate-matched null (p ≥ 0.05) or the naive level alarm matches its hits. Credence 0.8.
+- **R1b-2 (work space, #30 onward).** Work labels give fewer onsets than attention on the same periods; too few are evaluable (≤ 4) for a work AUC, so P1 in work is untestable; where a project has onsets in both spaces, the work onset comes at or after the attention onset (median lag ≥ 1 window at W = 15).
+- **R1b-3 (link precursor, re-run).** ≥ 40% of attention onsets follow a chat link to the project within 30 min (round 1: 11/21), and onsets after a project's *first* link are a minority of those (most are links to known projects, H28's "marks a burst").
+- **R1b-4 (#31 work wave; native, `G31/`)** and **R1b-5 (#40 hub at the minute clock; native, `G40/`).** Predictions in those READMEs.
+
+### Results (round 1b, run 2026-10-04)
+Code: `scheme/build.py --labels shared --out …/r1b`, `analysis/explore.py` + `assemble.py` (`H27_DATA`, `H27_STATE`), `analysis/round1b.py` (`replicate`, `work`, `compare`, `estimates`), `analysis/figures_r1b.py`. Data: `data/processed/H27-herding-early-warning/r1b/` (`results_round1{,_work}.json`, `assemble_round1{,_work}.json`, `onsets_round1{,_work}.parquet`, `compare_r1b.json`). Per-period estimates in `per_period_estimates` (H27). The frozen τ* = 0.538 is reused unchanged.
+
+**Layer 1, replication on shared labels (old → new).**
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| Onsets W = 15 (evaluable at 1 h) | 21 (8) | 21 (8), the same per period |
+| Composite AUC, W = 15 (P1) | 0.62 [0.51, 0.76] | 0.62 [0.50, 0.76] → **mixed by the rule, unchanged** |
+| Composite AUC, W = 30 | 0.44 [0.32, 0.60] (21 onsets) | 0.50 [0.34, 0.65] (22 onsets) |
+| τ_AR1 / τ_SD / binomial τ_SD AUC | 0.42 / 0.70 / 0.69 | 0.41 / 0.71 / 0.69 |
+| O1-slow composite | 0.73 (n = 10) | 0.74 (n = 9) |
+| Frozen alarm: hits, alarm rate, false alarms / day, PPV | 5/21, 3.5%, 5.3, 1.4% | 5/21, 3.3%, 5.1, 1.7% |
+| Alarm vs rate-matched shift (N2) | p = 0.07 (0.048 on a re-draw) | **p = 0.038 (0.040 on a re-draw)** |
+| Level alarm / momentum alarm | 5/21 at 1.4% / 6/21 at 2.2% | 5/21 at 1.4% / 6/21 at 2.2% |
+| Onsets onto never-mentioned projects | 4/21 | 4/21 |
+| Link to the project within 30 min before the onset | 11/21, OR 11.6, p 0.0005 | 11/21, OR 10.0, p 0.0005 |
+| … of which the project's first-ever chat link / a link to a known project | – | 2/21 (OR 9.3, p 0.07) / 9/21 (OR 7.6, p 0.0005) |
+
+- **R1b-1: supported.** P1 stays short of the bar, autocorrelation never rises (0.41), counts are identical. One sub-clause moves: the frozen alarm now beats its rate-matched shift at p = 0.038 (0.040 on a re-draw; round 1: 0.07 / 0.048). It is a borderline timing signal either way, and the naive level alarm still matches its 5 hits with 2.4× fewer alarms, so the operator verdict (do not deploy) and C4's "or" clause stand. P3's "does not beat the rate-matched null" clause, read literally, now fails narrowly.
+- **R1b-3: supported.** 52% of onsets follow a link within 30 min, and 9 of those 11 are links to projects already known: H28's "links mark bursts" reading. Only 2 onsets follow a project's first link (H53's seed).
+
+**Work space (#30 onward; R1b-2).**
+
+| Labels | Onsets W = 15 (periods) | Evaluable | Composite AUC | Frozen alarm hits | Level alarm hits | Link within 30 min |
+| --- | --- | --- | --- | --- | --- | --- |
+| Attention, #30 onward | 14 (#30 4, #31 4, #33 2, #37 1, #38 3) | 4 | – | – | – | – |
+| Work commits | 8 (#30 1, #31 2, #33 2, #41 2, #44 1) | 4 | 0.58 [0.13, 0.99] | 1/8 | 3/8 | 2/8 (OR 1.6, p 0.44) |
+
+- **R1b-2: mostly supported.** Fewer work onsets (8 vs 14) and too few evaluable (4) for a work AUC (P1 untestable in work). For the 4 projects with onsets in both spaces, the work onset comes in the same 15-min window (3) or the next one (1): never before attention, median lag 0 (predicted ≥ 1 window). Work pile-ons are the same events as attention pile-ons, seen in commits. The link precursor does not carry over to work onsets (2/8).
+- New work-only onsets: #41 `research-2026-05` (twice) and #44 `kimi-leader-finetune`: herding in commits that the attention rule did not flag (attention labels there are spread over more artifacts).
+
+**Native layer.**
+- **#31 (`G31/`; mixed):** 2 work onsets (time capsule, event log), each at lag 0 or +1 window from its attention onset; the frozen alarm misses both.
+- **#40 (`G40/`; mixed):** at the minute clock the hub wave runs in minutes: first touch 1.9 min after the kickoff, first chat link 2.4 min, half the room 1.5 min after the link, half the room committing by 18.6 min (13/14 agents committed to it). No 15-min onset exists, so the early-warning design is structurally blind to it; work followed within ≈ 15 min (predicted ≥ 1 h).
+
+**Verdict changes.** None at the card level: P1 mixed by the rule (failed in substance: no slowing-down signature), P2 partly, P3 as predicted except the false-alarm rate and, now, the narrow N2 clause; usefulness criterion fails. Per-period verdicts unchanged (#30 AUC 0.57 → 0.55, still mixed).
+
+**Scorecard changes (round 1b):** none. G stays 1 (#31's work onsets reproduce two of its attention waves; the #40 kickoff wave is confirmed at the minute clock); C stays 0 (the alarm's N2 p = 0.038 is borderline and the level alarm matches it); H stays 0 (the field-step / announcement rival still fits better; links mostly mark bursts of known projects). Ratings suggested: complete 40 → 50, faithfulness 1.0, usefulness 2.0 (unchanged: the negative stands; the minute-clock result restates H53's operator rule: watch announcements, not trends).
+
 ## Round 2 redirects (proposed by the round-1 agent, 2026-10-04)
 - **What the direction is really after:** Can an operator see a pile-on coming early enough to act, and from what signal?
 - **H27-R1.** Model onsets as announcement-triggered cascades: hazard of a majority pile-on after a link post, by poster, room size and the project's prior share; joint with H28.
@@ -257,6 +317,7 @@ All periods were run on 2026-10-04, after each `G<NN>/README.md` prediction was 
 - **H27-R3.** Test the one regime where the theory says warnings can work: long, large swarms with slowly drifting incentives (#51 roles, if any shared project ever rises), with the slow-rise onset rule.
 
 ## Notes
+- **2026-10-04, round 1b:** re-evaluated on the shared deterministic labels and the DQ4 work ledger (section "Round 1b" above). No verdict or scorecard changes; the alarm-vs-shift p moved from 0.07 to 0.038 (borderline).
 - **From H28 (2026-10-04):** the post-hoc link precursor (11/21 onsets after a link) fits bursts *marked* by announcements: H28 finds links posted in the next hour predict switches better than past links (10/11 herding weeks), with a 3.3× pre-trend before first exposure. Links don't, by themselves, trigger onsets. H28's design excludes the "link labels its poster" artifact (posters' links count as their switch, recipients must be off X).
 - 2026-10-04: promoted from HH109 by Vivian (usefulness-first batch); wave 1.
 - 2026-10-04: model variant, scheme, observables, nulls and predictions written before the synthetic validation and before any real-data run.

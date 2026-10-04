@@ -1,0 +1,34 @@
+\hwhat{Does a human message move its recipient more than an agent message with the same naming, read-out age (context ledger), novelty, length, recipient state and room size? Matched comparisons on 17 non-holdout periods plus four native tests, with dated predictions and synthetic recovery first. \textbf{Replies:} humans are answered about twice as often as matched agent messages (pooled $+0.030$ [0.019, 0.042]; naming adds $+0.13$). \textbf{Content:} a small premium, G51 $+0.014$ [0.008, 0.021] under five statistics; regime I $+0.05$ on H29's boundary design. \textbf{Activity} $\approx 0$. Replies to humans are more supportive. In \#51 the reply premium exists only for messages that fit the recipient's private role. Elected or appointed agent leaders get the same reply premium. The bot is treated like a matched agent message, but rebuffed. Verdict: mixed. Holdout: not run.}
+
+\hmodel{Model 02 (linear response to fields). A message $m$ read at the recipient's next model call is an impulsive field on its content spin (whitened statement vector), activity spin, reply and stance. Its coupling $g(s_m)$ depends only on salience $s_m$ (named, read-out age, novelty $\|P_\perp \hat u_m\|$, length, idle recipient, room size), the same for every sender. The authority premium $\pi_c$ is an extra field term carried by sender class $c$ (human, bot, leader); H52 (HH164) says $\pi_{\rm human}=0$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\mathbb{E}[Y_{mj}\mid s_m,c]=g(s_m)+\pi_c,\qquad \pi_{\rm agent}\equiv 0\\
+\hat\pi_c=\textstyle\sum_s n_{c,s}\,(\bar Y_{c,s}-\bar Y_{{\rm agent},s})\,/\sum_s n_{c,s}\\
+Y^{\rm con}=(Q-x_{\rm last})\cdot\widehat{P'_\perp u_m}-\langle\,\cdot\,\rangle_{\rm placebo}\\
+Y^{\rm rep}=\mathbf{1}[m=\mathrm{parent}(j\text{'s next messages})]
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/h52_obs_compact.pdf}{(a) Reply premium over matched agent messages: positive for humans in both eras, only for \#51 messages aligned with the recipient's role, the same for elected or appointed agent leaders, none for the bot. (b) Content premium: G51 positive under every statistic; regime I positive on H29's boundary design (the DiD statistic is biased about $-0.024$ there); agent leaders get none.}
+
+\htelos{Alignment-relevant, but small. Humans in this swarm are not just loud agents: at equal salience, agents answer human messages about twice as often and lean a little toward their content. But the extra weight is a status effect: elected and appointed agent leaders get the same reply premium. It also does not override the agent's assigned plan; off-role human messages get none. An operator who wants to be followed should name the agent and frame the request in terms of its current objective. Being human buys an answer, not obedience. A safety team should not read the premium as robust deference: it vanishes for role-conflicting requests, and the reply and stance labels may partly reflect a labeller that knew the sender was human. One period carries most of the regime-III evidence.}
+
+\hbottom{Matched on salience, human messages get about twice the reply rate and a small content pull compared with agent messages; the premium is shared by agent leaders and disappears when the message conflicts with the recipient's role, so it is status-weighted attention, not deference against the plan.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 H52: content $\approx 0$ & \raggedright G51 $+0.014$ (5 statistics, 5/5 segments); reg.\ I DiD $+0.005$, boundary $+0.05$/$+0.09$ & \raggedright H52 fails in III\tabularnewline
+\raggedright P2 reply premium $>0$ & \raggedright pooled $+0.030$ [0.019, 0.042]; 8/17 CI $>0$, none $<0$ & \raggedright yes\tabularnewline
+\raggedright P3 activity $\approx 0$ & \raggedright CI includes 0 in 15/17 & \raggedright yes\tabularnewline
+\raggedright P4 stance $\ge +0.05$ & \raggedright $+0.16$ [0.10, 0.23] (labeller knew) & \raggedright yes\tabularnewline
+\raggedright P5 bot = neither & \raggedright like a matched agent; replies push back ($-0.97$) & \raggedright no\tabularnewline
+\raggedright P8 naming moves content & \raggedright DiD naming $<0$ (reply quoting); boundary 5.4$\times$ & \raggedright no (statistic)\tabularnewline
+\raggedright N1 G04 same call & \raggedright content $-0.006$ [$-0.024$, 0.014]; reply odds 1.49 [0.88, 2.79] & \raggedright inconcl.\tabularnewline
+\raggedright N2 \#51 role conflict & \raggedright reply on-role $+0.037$, off $+0.007$ ($\Delta$ CI $>0$) & \raggedright R1 rejected\tabularnewline
+\raggedright N3 NE43 no change & \raggedright content same; reply $-0.039$ [$-0.072$, $-0.005$] & \raggedright mixed\tabularnewline
+\raggedright N4 leaders get none & \raggedright reply $+0.028$ (G26), $+0.029$ (G35); content n.s. & \raggedright no\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/h52_synth_compact.pdf}{Synthetic validation on the real read-out schedules (10 replicates per cell; circles null, squares planted premium). Reply, activity (bias-corrected) and stance are recovered. H30's orthogonalized $\chi$ is biased by shared topic, so it was replaced. The DiD content statistic is unbiased in the G51 cells but reads about $-0.024$ low in dense regime-I chat with real labels.}
+
+\hcaveats{``Human'' means public viewers in 2025, mostly staff later; speech acts (requests, instructions) are not matched. Content statistics carry known, opposite biases; the claim rests on their agreement in G51 and on the boundary design in regime I. Only G04, G06, G51 are powered. The reply and stance labeller knew when an author was human. The placebo-class null is anti-conservative.}

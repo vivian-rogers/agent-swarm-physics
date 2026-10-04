@@ -2,12 +2,28 @@
 \input{../../../writeup/hypothesis-pages/hpage.tex}
 \def\hID{H15}
 \def\hTitle{Semantic information through natural scrambles: which information keeps agents and the swarm viable}
-\def\hStatus{exploratory round 1 done (2026-10-03, non-holdout only). The pre-registered "memory is load-bearing" predictions failed: no detectable day-scale viability cost of losing up to \textasciitilde{}80\% of memory (P1) or of starting with an empty memory (P4); the rewrite control...}
-\def\hStage{level: hypothesis  $\cdot$  pipeline checks 85\%  $\cdot$  updated 2026-10-03}
-\def\hBadges{\hbadge{Complete}{40\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{1.5/5}{ee8584}{0b0b0b}\ \hbadge{Usefulness}{2.5/5}{e9e7e1}{0b0b0b}}
-\def\hPeriodSummary{6 supported, 8 failed, 5 mixed, 3 descriptive, 1 pending, 11 n/a}
-\def\hDate{Updated 2026-10-03}
-\def\hFooter{H15-semantic-information-scrambles $\cdot$ generated 2026-10-03 18:08 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H15-semantic-information-scrambles/README.md $\cdot$ ratings: calibrated by coordinator 2026-10-04 (from H15 agent (suggested))}
+\def\hStatus{round 1b done (2026-10-04, improved data; see "Round 1b" below): on the work ledger, real failures and the context ledger the day-scale nulls stand (memory loss +0.29 SD on V*, newcomers +0.20, artifact switches -0.00 on work commits), and the forced-erasur...}
+\def\hStage{level: hypothesis  $\cdot$  pipeline checks 85\%  $\cdot$  updated 2026-10-04}
+\def\hBadges{\hbadge{Complete}{55\%}{3987e5}{ffffff}\ \hbadge{Faithfulness}{1.5/5}{ee8584}{0b0b0b}\ \hbadge{Usefulness}{2.5/5}{e9e7e1}{0b0b0b}}
+\def\hPeriodSummary{4 supported, 5 failed, 13 mixed, 3 descriptive, 1 pending, 11 n/a}
+\def\hDate{Updated 2026-10-04}
+\def\hFooter{H15-semantic-information-scrambles $\cdot$ generated 2026-10-04 01:35 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H15-semantic-information-scrambles/README.md $\cdot$ ratings: H15 round-1b agent (suggested); round 1 calibrated by coordinator 2026-10-04}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}NE30 & $\cdots$ & pending (confirmatory; not run) \textbf{(holdout)} \\
+G04 & $\checkmark$ & 1b: supported improved data: work ledger, real failur... \\
+G06 & d & 1b: descriptive improved data: work ledger, real fail... \\
+G08 & d & 1b: descriptive improved data: work ledger, real fail... \\
+G10 & $\sim$ & 1b: mixed improved data: work ledger, real failures, ... \\
+G13 & $\sim$ & 1b: mixed improved data: work ledger, real failures, ... \\
+G18 & $\sim$ & 1b: mixed improved data: work ledger, real failures, ... \\
+G19 & $\sim$ & 1b: mixed improved data: work ledger, real failures, ... \\
+G20 & $\times$ & 1b: failed improved data: work ledger, real failures,... \\
+G27 & d & 1b: descriptive improved data: work ledger, real fail... \\\multicolumn{3}{l}{\textit{+27 more periods: see the card.}} \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 1 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 1 & H comparative & 1 \\
+D unfitted predictions & 0 & I transfer & 1 \\
+E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} Where does the swarm keep its knowledge? In artifacts and history, not in agents.\item \textbf{H15-R1} Stigmergic memory: after a memory loss, agents re-acquire state from artifacts (file reads, history search) within a few turns; richer artifact trails mean faster recovery (E3).\item \textbf{H15-R2} Semantic information is concentrated in the few items read first after a reset (the goal and the last messages).\item \textbf{H15-R3} Memory notes are performative: their content rarely reappears in later actions.\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage

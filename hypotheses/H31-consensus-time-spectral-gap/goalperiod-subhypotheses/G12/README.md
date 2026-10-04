@@ -1,6 +1,7 @@
 # H31 × G12: Form two teams and debate each other, while one agent judges. Choose your teammates wisely! (2025-09-01 → 2025-09-08)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (E-C only)
 **Period:** regime I · mode M · 7 agents · #general · 5 non-holdout days (15.0 active h).
 
@@ -36,3 +37,10 @@ Data: `data/processed/H31-consensus-time-spectral-gap/G12/`, `events_ep_w30.parq
 ## Notes
 - 2026-10-03: folder and prediction written before the real-data run on this period.
 - 2026-10-03: results filled from `analysis/explore.py` (round 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) with context-ledger visibility and the shared deterministic labels (`scheme/build.py --visibility ledger --labels shared`, `analysis/explore.py` with `H31_DATA=…/r1b`). Card predictions R1b-1 and R1b-2 were written before the run.* Verdict rule as in round 1 (M_λ fitted on the other periods vs the constant, per gradual event).
+
+| Block | λ₂^w,sym (1/h) round 1 → 1b | E-P attention, round 1 (frozen / instant / gradual) | E-P attention, round 1b | E-P work (round 1b) |
+| --- | --- | --- | --- | --- |
+| #general | 177.4 → 177.6 | not eligible | not eligible | n/a (ledger sparse before #30) |

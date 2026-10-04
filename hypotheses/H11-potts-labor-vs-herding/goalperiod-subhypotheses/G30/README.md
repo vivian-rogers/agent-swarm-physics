@@ -1,6 +1,7 @@
 # H11 × G30: Adopt a park and get it cleaned! (2026-02-09 → 2026-02-16)
 
 **Verdict:** P1 failed (significant); P2 failed (significant)
+**Verdict (1b):** P1 failed (sig.); P2 failed (sig.) (unchanged)
 **Role:** exploratory (transfer)
 **Period:** regime I · mode C · N = 12 at start · one room (#general) · 5 active days. Class for H11: **AF**.
 
@@ -41,3 +42,23 @@ Transfer: shared objective with a shared repo and two parks, so antiferromagneti
 | G ground truth | 0 | – |
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | +2.01 (+8.0) | +1.97 (+8.1) |
+| z_N2 (βJ_PL vs circular shift) | +4.3 | +4.1 |
+| local-shift z (±1 window, post hoc) | +3.5 | +3.5 |
+| held-out PL gain (day folds) | 4 | 4/5 |
+| P1 / P2 | failed (significant) / failed (significant) | failed (significant) / failed (significant) |
+
+**Work space (R1b-2; agent work commits, DQ4 ledger, W = 30):**
+
+| Space | labelled agent-windows | blocks (N ≥ 3) | βJ_CW (t) | z_N2 | local-shift z | excess βJ_PL − N2 | co-location (N2 mean, z) | ownership |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| attention | 439 | 40 | +1.97 (+8.1) | +5.1 | +3.3 | +1.60 | 0.94 (0.92, +2.6) | 0.00 |
+| work | 161 | 35 | -0.39 (-0.5) | +0.8 | -0.0 | +0.43 | 0.86 (0.85, +0.7) | 0.00 |
+
+Agent-windows with both labels: work repo = attention project in 0.83. The attention top project holds 0.70 of attention and 0.74 of work agent-windows.

@@ -1,6 +1,7 @@
 # H27 × G19: Create a popular daily puzzle game like Wordle (2025-11-03 → 2025-11-17)
 
 **Verdict:** descriptive (1 evaluable onset, percentile 0.59)
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (transfer / false-alarm period)
 **Period:** regime I · mode C · N = 7 · 10 active days in the series · W = 15: 163 windows, q = 4, 66% of windows with ≥ 3 labeled agents (mean 3.3); W = 30: 82%.
 
@@ -41,3 +42,13 @@ Arm W = 15 min. τ* = 0.538 (frozen from synthetic S0). Onsets (O1): 3; O1-slow 
 - 2026-10-04: prediction written before running this period.
 - 2026-10-04: round 1 run (`analysis/explore.py`); data in `data/processed/H27-herding-early-warning/G19/round1_w*.json`.
 - 2026-10-04 (post hoc): the build repo dominated from the start (H11: frozen order); the 3 onsets are on the landing repo and sites. One lands on a project with no prior mention.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic labels (`scheme/build.py --labels shared`, `analysis/round1b.py replicate`), plus the work-ledger series for #30 onward (`round1b.py work`). Card predictions R1b-1 to R1b-3 were written before the run.*
+
+| Arm | Labels | Onsets | Evaluable | Composite AUC | EWS hits | EWS false alarms / day |
+| --- | --- | --- | --- | --- | --- | --- |
+| W15 | round 1 (H11 labels) | 3 | 1 | 0.59 | 0/3 | 0.0 |
+| W15 | round 1b (shared labels) | 3 | 1 | 0.58 | 0/3 | 0.0 |
+| W30 | round 1 (H11 labels) | 4 | 1 | 0.20 | 0/4 | 0.0 |
+| W30 | round 1b (shared labels) | 4 | 2 | 0.74 | 0/4 | 0.0 |

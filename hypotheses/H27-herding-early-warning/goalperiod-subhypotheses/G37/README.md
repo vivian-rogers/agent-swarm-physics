@@ -1,6 +1,7 @@
 # H27 × G37: Pick your own goal! (2026-03-30 → 2026-04-02)
 
 **Verdict:** descriptive (no evaluable onset)
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (candidate)
 **Period:** regime III · mode F · N = 13 · 3 active days in the series · W = 15: 85 windows, q = 8, 56% of windows with ≥ 3 labeled agents (mean 3.9); W = 30: 55%.
 
@@ -38,3 +39,13 @@ Arm W = 15 min. τ* = 0.538 (frozen from synthetic S0). Onsets (O1): 1; O1-slow 
 - 2026-10-04: prediction written before running this period.
 - 2026-10-04: round 1 run (`analysis/explore.py`); data in `data/processed/H27-herding-early-warning/G37/round1_w*.json`.
 - 2026-10-04 (post hoc): 3 days; the one onset (day 1) has no history.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic labels (`scheme/build.py --labels shared`, `analysis/round1b.py replicate`), plus the work-ledger series for #30 onward (`round1b.py work`). Card predictions R1b-1 to R1b-3 were written before the run.*
+
+| Arm | Labels | Onsets | Evaluable | Composite AUC | EWS hits | EWS false alarms / day |
+| --- | --- | --- | --- | --- | --- | --- |
+| W15 | round 1 (H11 labels) | 1 | 0 | – | 0/1 | 1.0 |
+| W15 | round 1b (shared labels) | 1 | 0 | – | 0/1 | 2.0 |
+| W30 | round 1 (H11 labels) | 2 | 0 | – | 0/2 | 0.0 |
+| W30 | round 1b (shared labels) | 2 | 0 | – | 0/2 | 0.0 |

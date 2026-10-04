@@ -1,7 +1,8 @@
 # H27 × G31: Pick your own goal (agents bid 3.7 Sonnet farewell) (2026-02-16 → 2026-02-23)
 
 **Verdict:** mixed (AUC 0.91, 1/4 hit)
-**Role:** exploratory (candidate)
+**Verdict (1b):** mixed (native: work onsets coincide with attention)
+**Role:** native (round 1b: the wave in work, DQ4 ledger; round 1: exploratory candidate)
 **Period:** regime I · mode F · N = 12 · 5 active days in the series · W = 15: 82 windows, q = 8, 98% of windows with ≥ 3 labeled agents (mean 8.9); W = 30: 95%.
 
 ## Why this period
@@ -44,3 +45,31 @@ Arm W = 15 min. τ* = 0.538 (frozen from synthetic S0). Onsets (O1): 4; O1-slow 
 - 2026-10-04: prediction written before running this period.
 - 2026-10-04: round 1 run (`analysis/explore.py`); data in `data/processed/H27-herding-early-warning/G31/round1_w*.json`.
 - 2026-10-04 (post hoc): matches H11's waves. Onsets on the guardrails repo (day 2 start), the time-capsule repo, the operations handbook and the event log (H11's final-day dominant repo). The first two come within the first 1.5 days, so only 2 are evaluable; for those, τ_SD rises while τ_AR1 falls (not critical slowing down).
+
+## Round 1b: the herding wave in work (native; DQ4 ledger)
+*Design and predictions written 2026-10-04 07:30 UTC, before any work-space series was built.* DQ9: #31 is the field-free herding wave that can be measured in work (1,391 agent work commits by 13 agents).
+
+**What I had seen:** round 1's attention onsets here (4: guardrails, time capsule, operations handbook, event log; τ_SD up, τ_AR1 down); #31's work-project table (top repos committed to by 11, 9 and 8 agents over the week); 286 work-labelled agent-windows at W = 30.
+
+**Design.** The same series, onset rule (O1), indicators and alarm, on work labels at W = 15 (and W = 30); then, per project with onsets in both spaces, the lag work onset − attention onset.
+- **W31-a:** 1–3 work onsets at W = 15 (fewer than attention's 4, because work labels are sparser and n(w) ≥ 4 is needed).
+- **W31-b:** every work onset with an attention onset on the same project comes at or after it (lag ≥ 0; median ≥ 1 window).
+- **W31-c:** no frozen-alarm (EWS) hit on a work onset.
+- **Against:** work onsets that lead attention onsets (work drives the burst; attention follows).
+
+### Result (round 1b, run 2026-10-04)
+`analysis/round1b.py replicate`, `work`, `compare` → `data/processed/H27-herding-early-warning/r1b/` (`results_round1.json`, `results_round1_work.json`, `compare_r1b.json`).
+
+| Arm | Labels | Onsets | Evaluable | Composite AUC | EWS hits | EWS false alarms / day |
+| --- | --- | --- | --- | --- | --- | --- |
+| W15 | round 1 (H11 labels) | 4 | 2 | 0.91 | 1/4 | 2.5 |
+| W15 | round 1b (shared labels) | 4 | 2 | 0.91 | 1/4 | 2.0 |
+| W15 | round 1b, work commits | 2 | 1 | 0.81 (percentile) | 0/2 | 4.2 |
+
+| Test | Prediction | Observed | Verdict |
+| --- | --- | --- | --- |
+| W31-a work onsets | 1–3 at W = 15 | 2: `village-time-capsule` (day 2, window 7), `village-event-log` (day 4, window 11) | **supported** |
+| W31-b work at or after attention | lag ≥ 0, median ≥ 1 window | lags 0 and +1 window (15 min); median 0.5 | **partly** (never before; not later by a window) |
+| W31-c no EWS hit on work onsets | 0 hits | 0/2 (one too early to evaluate, one missed) | **supported** |
+
+**Reading.** In #31 the herding wave shows up in commits in the same quarter-hour as in mentions: 3 agents committing to the time capsule in the window where 5 agents' attention crossed the majority, and the event log one window after its attention onset. Work does not lead attention, and does not lag it by much either: links, mentions and commits rise together, which is H28's "burst" picture. The two attention onsets with no work onset (guardrails, operations handbook) are attention-only waves.

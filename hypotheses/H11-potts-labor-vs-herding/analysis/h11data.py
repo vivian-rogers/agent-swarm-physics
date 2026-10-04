@@ -1,6 +1,12 @@
-"""Load H11 processed labels into Snap objects (shared by explore.py and confirm_holdout.py)."""
+"""Load H11 processed labels into Snap objects (shared by explore.py and confirm_holdout.py).
+
+Label source switch (round 1b, 2026-10-04): H11_LABELS=h11 (default; round 1's own files in
+data/processed/H11-potts-labor-vs-herding/G<NN>/) or H11_LABELS=shared (scheme/build_r1b.py's files in .../r1b/G<NN>/:
+shared deterministic project_states, deterministic action classes, and the new work-ledger state `work`).
+An explicit `base` argument overrides both. The environment variable is read at call time, so spawned workers see it."""
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -13,15 +19,29 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import potts_core as P  # noqa: E402
 
 
-def load_period(g, W=30, state="project", variant="merged", pool_rooms=False, qmax=None, base=None):
+def label_base() -> Path:
+    src = os.environ.get("H11_LABELS", "h11")
+    if src not in ("h11", "shared"):
+        raise ValueError(f"H11_LABELS must be 'h11' or 'shared', not {src!r}")
+    return HC.OUT / "r1b" if src == "shared" else HC.OUT
+
+
+def load_period(g, W=30, state="project", variant="merged", pool_rooms=False, qmax=None, base=None, pt_dates=None):
     """Return (snap, df) for period g. variant: 'merged' (labels 0..q, 0 neutral) or 'raw' (every project its own
     coupled state). state: 'project' or 'action'."""
-    base = Path(base) if base else HC.OUT
+    base = Path(base) if base else label_base()
     f = base / f"G{g:02d}"
     df = pl.read_parquet(f / f"labels_{state}_w{W}.parquet")
-    if state == "projectact":
+    if state in ("projectact", "work"):
         state = "project"
-    wins = pl.read_parquet(f / f"windows_w{W}.parquet").sort("day", "win").with_row_index("gwin")
+    wins = pl.read_parquet(f / f"windows_w{W}.parquet")
+    if pt_dates is not None:  # round 1b: one period unit (a subset of the period's days)
+        df = df.filter(pl.col("pt_date").is_in(list(pt_dates)))
+        wins = wins.filter(pl.col("pt_date").is_in(list(pt_dates)))
+        dmap = wins.select("pt_date").unique().sort("pt_date").with_row_index("day_u").with_columns(pl.col("day_u").cast(pl.Int16))
+        wins = wins.join(dmap, on="pt_date").drop("day").rename({"day_u": "day"})
+        df = df.join(dmap, on="pt_date").drop("day").rename({"day_u": "day"})
+    wins = wins.sort("day", "win").with_row_index("gwin")
     df = df.join(wins.select("day", "win", "gwin"), on=["day", "win"], how="left")
     if state == "project" and variant == "raw":
         ranks = df.group_by("project").agg(pl.len().alias("n")).sort(["n", "project"], descending=[True, False]).with_row_index("r")

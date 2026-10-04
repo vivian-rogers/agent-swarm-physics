@@ -1,6 +1,7 @@
 # H11 × G18: Reduce global poverty as much as you can (2025-10-20 → 2025-11-03)
 
 **Verdict:** P1 failed (significant); P2 failed (significant)
+**Verdict (1b):** P1 failed (sig.); P2 failed (sig.) (unchanged)
 **Role:** exploratory (candidate)
 **Period:** regime I · mode C · N = 7 at start · one room (#general) · 10 active days. Class for H11: **AF**.
 
@@ -42,3 +43,14 @@ A two-week shared objective with many interventions and sites: a divisible portf
 
 ## Notes
 - 2026-10-03 (round 1): the final-day dominant repo (`o3-ux/poverty-etl`) jumps from ≈ 0 to ≈ 1 on the last day, a deadline-driven convergence in a week predicted to be AF.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | +5.00 (+6.7) | +4.91 (+6.2) |
+| z_N2 (βJ_PL vs circular shift) | +8.7 | +8.5 |
+| local-shift z (±1 window, post hoc) | +4.1 | +4.1 |
+| held-out PL gain (day folds) | 10 | 9/10 |
+| P1 / P2 | failed (significant) / failed (significant) | failed (significant) / failed (significant) |

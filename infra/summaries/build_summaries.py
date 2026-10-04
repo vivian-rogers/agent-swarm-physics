@@ -227,7 +227,7 @@ AXIS_NAMES = {"A": "mapping", "B": "assumptions", "C": "adequacy", "D": "unfitte
               "F": "identifiability", "G": "ground truth", "H": "comparative", "I": "transfer"}
 
 
-def period_table(h: dict, max_rows: int = 16) -> str:
+def period_table(h: dict, max_rows: int = 10) -> str:
     ps = sorted(h["periods"], key=lambda p: (p["role"] != "confirmatory", p["verdict"] in ("pending", "other", "n/a"), p["period"]))
     if not ps:
         return r"\textit{No goal-period folders yet.}"
@@ -235,7 +235,10 @@ def period_table(h: dict, max_rows: int = 16) -> str:
     rows = []
     for p in ps[:max_rows]:
         txt = p.get("verdict_text") or p["verdict"]
-        txt = txt if len(txt) < 95 else txt[:92] + "..."
+        if p.get("round") == "1b":  # round-1b verdict lines are long; drop the boilerplate and mark them
+            txt = re.sub(r"\(?\s*round 1b[^,;)]*[,;)]?\s*(2026-\d\d-\d\d[,;)]?)?\s*", "", txt, flags=re.I).strip()
+            txt = "1b: " + txt
+        txt = txt if len(txt) < 56 else txt[:53] + "..."
         conf = r" \textbf{(holdout)}" if p["role"] == "confirmatory" else ""
         rows.append(rf"{tex_escape(p['period'])} & {sym.get(p['verdict'], '?')} & {tex_escape(txt)}{conf} \\")
     more = rf"\multicolumn{{3}}{{l}}{{\textit{{+{len(ps) - max_rows} more periods: see the card.}}}} \\" if len(ps) > max_rows else ""

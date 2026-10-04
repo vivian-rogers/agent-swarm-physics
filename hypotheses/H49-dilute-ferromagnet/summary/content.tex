@@ -1,0 +1,36 @@
+\hwhat{Asked whether regime-III activity coupling, once H38's day-edge drive is trimmed, sits in a few strong pairs whose bond graph is below percolation. Inferred conditioned pairwise couplings in 23 regime-III and 23 regime-I period units, each against 200 block-shift surrogates calibrated on synthetic swarms at real schedules. \textbf{Refuted as posed.} Trimming removes 67\% of regime-III bonds (17\% in regime I). What is left is at the false-positive floor: 38 bonds against $\approx$23 expected false. The surviving collective excess (10 units, including \#44 and \#51) is a structureless shift of all pairs: the top 10\% of pairs carry a median 11\% of it, and pair structure doesn't replicate. \#44's fine-tuning team appears in talk, not activity. Same-lab (provider-outage) pairs carry no excess bonds. At \#51's sampling the method would have found strong bonds (recall 0.89). NE43: the edge drive outlives the daily bookend messages. Holdout script frozen, not run.}
+
+\hmodel{Model 01 (inverse Ising). $s_i(t)=\pm1$: agent $i$ active in minute $t$. $\delta_i(b)$: agent field per 30-min block. $x_j$: block-centered spin with scaffold-unavailable minutes (not started, finished, consolidating, error gap) set to the block mean (H38's conditioning). $J_{ij}$: equal-time bond from pseudolikelihood. A bond is significant when its surrogate z passes $p<1/n_{\rm pairs}$. Percolation: Molloy--Reed $\kappa$. CV-C10: cross-validated share of the excess covariance $\Delta C$ in the top 10\% of pairs.}
+
+\hmath{\vspace{-8pt}\begin{gather*}
+\operatorname{logit}P\big(s_i(t)=1\mid\cdot\big)=2\Big[\delta_i(b)+\textstyle\sum_{j\ne i}J_{ij}\,x_j(t)\Big],\qquad x_j=a_j\,(s_j-\bar s_j^{(b)})\\
+z_{ij}=\big(J_{ij}-\langle J_{ij}\rangle_{\rm shift}\big)/\sigma_{ij},\qquad \text{bond if } p(z_{ij})<1/n_{\rm pairs}\\
+\kappa=\langle k^2\rangle/\langle k\rangle\ (\text{giant component iff }\kappa>2),\qquad
+\mathrm{VR}-1=\textstyle\sum_{i\ne j}\bar C_{ij}\big/\sum_i\bar C_{ii}
+\end{gather*}\vspace{-10pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Units with a significant edge-trimmed excess (regime III blue, regime I orange) against planted swarms at village sampling (grey $\times$ dense $J=1.2/N$; green $+$ dilute $J=0.5$). Real units sit with the dense cloud: low CV-C10, positive mean bond z. (b) Regime-III significant bonds per unit, raw (grey) vs trimmed (blue). Trimming takes them down to the $\approx$1 expected false bond per unit (dotted).}
+
+\htelos{Mostly a useful negative. If you run an always-on swarm and want to know who is coupled to whom from activity timing, the answer here is: nobody in particular. Once you trim the daily start and stop, there are no small cliques of agents that work in lockstep. What remains is a weak common mode shared by everyone, plausibly a shared fast drive rather than peer influence. So don't target pairs, and don't trust individual inferred bonds from 1-min activity. Monitor and steer the common mode, and look for real pairwise structure in who talks to whom, which is where the one known team showed up. The corrected NE43 date is a small data contribution.}
+
+\hbottom{After trimming the operator's schedule, regime-III co-activation is not a dilute ferromagnet of small coupled clusters but a weak, structureless swarm-wide mode, with individual bonds at the false-positive floor.}
+
+\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.40\columnwidth}p{0.45\columnwidth}p{0.12\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+Synthetic: calibrated null; dilute bonds recovered & size 0.054--0.062; recall 0.47 / 0.34 / 0.89 & $\checkmark$ / partial\\
+Synthetic: percolation detectable & 0.13 / 0.00 / 0.77 of percolating graphs & $\times$\\
+P1 trimmed bonds $\le5\%$ of pairs & 0.95\%; 38 vs $\approx$23 false & $\checkmark$\\
+P2 excess concentrated (CV-C10 $\ge0.4$) & 0/10 units; median 0.11 (dense) & $\times$\\
+P3 below percolation & 23/23, trivially (power) & $\checkmark$\\
+P5 trimming removes bonds in III, not I & 67\% vs 17\% & $\checkmark$\\
+NE43 edge drive outlives bookends & $\times0.77$, $\times0.93$ & $\checkmark$\\
+\#44 team is a bond cluster & activity p 0.26, 0 bonds; talk p 0.013 & $\times$\\
+\#51 bonds recur; same-lab (R2) & r 0.02; OR 0.50 & $\times$\\
+NE14 bonds persist II$\to$III & no reliable pairs either side & n/a\\
+\end{tabular}}}
+
+\hobsb{../figures/synthetic.png}{Planted swarms at three real schedules (30 replicates each). (a) Raw inference fakes bonds from the day edges; conditioning brings the null to the floor. (b) CV-C10 separates dense from dilute when the excess is significant. (c) Every structure reads as ``below percolation'', even a percolating one. The concentration call is rare for dense coupling and common for dilute.}
+
+\hcaveats{Equal-time inference is blind to coupling delayed by minutes, such as read-out-gated replies (H08). The verdict is about equal-time bonds. Dense $J_0/N$ coupling and a fast shared drive look the same here; the post-hoc size law favours a field but relies on cross-period N. Individual bonds need $J\gtrsim0.5$ and $\ge5$ days to be found. CV-C10 was redefined as a pooled ratio after the first pass, with no verdict change. All results were rebuilt after the activity-bins join bug (no verdict changed). The holdout has not been run.}
+
+\hnext{Lagged (read-out-lag) bonds; identify the shared field (human messages, nudges, provider latency) and test the size law at roster joins within \#51; dilute-vs-dense in the talk channel, where the \#44 team appears; run \texttt{confirm.py}.}

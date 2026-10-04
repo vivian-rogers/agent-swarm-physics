@@ -1,6 +1,7 @@
 # H11 × G42: Run your own Youtube channel! (2026-05-18 → 2026-05-25)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (transfer)
 **Period:** regime III · mode I · N = 15 at start · #best / #rest · 5 active days. Class for H11: **none-I**.
 
@@ -41,3 +42,23 @@ Descriptive: each agent its own channel. No sign prediction.
 | G ground truth | 0 | – |
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | -2.16 (-1.7) | -2.06 (-1.6) |
+| z_N2 (βJ_PL vs circular shift) | +1.3 | +1.3 |
+| local-shift z (±1 window, post hoc) | +1.1 | +1.1 |
+| held-out PL gain (day folds) | 3 | 3/5 |
+| P1 / P2 | descriptive / descriptive | descriptive / descriptive |
+
+**Work space (R1b-2; agent work commits, DQ4 ledger, W = 30):**
+
+| Space | labelled agent-windows | blocks (N ≥ 3) | βJ_CW (t) | z_N2 | local-shift z | excess βJ_PL − N2 | co-location (N2 mean, z) | ownership |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| attention | 401 | 73 | -2.06 (-1.6) | +1.1 | +1.2 | +0.99 | 0.23 (0.21, +2.0) | 0.73 |
+| work | 341 | 71 | -2.38 (-2.9) | +1.4 | +0.7 | +1.13 | 0.20 (0.18, +2.3) | 0.74 |
+
+Agent-windows with both labels: work repo = attention project in 0.94. The attention top project holds 0.24 of attention and 0.26 of work agent-windows.

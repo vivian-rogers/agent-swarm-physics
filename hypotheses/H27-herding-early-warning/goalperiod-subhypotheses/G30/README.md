@@ -1,6 +1,7 @@
 # H27 × G30: Adopt a park and get it cleaned! (2026-02-09 → 2026-02-16)
 
 **Verdict:** mixed (AUC 0.57, 2/4 hit)
+**Verdict (1b):** mixed (AUC 0.55, 2/4 hit; unchanged)
 **Role:** exploratory (transfer / false-alarm period)
 **Period:** regime I · mode C · N = 12 · 5 active days in the series · W = 15: 83 windows, q = 4, 96% of windows with ≥ 3 labeled agents (mean 9.0); W = 30: 93%.
 
@@ -44,3 +45,15 @@ Arm W = 15 min. τ* = 0.538 (frozen from synthetic S0). Onsets (O1): 4; O1-slow 
 - 2026-10-04: prediction written before running this period.
 - 2026-10-04: round 1 run (`analysis/explore.py`); data in `data/processed/H27-herding-early-warning/G30/round1_w*.json`.
 - 2026-10-04 (post hoc): all 4 onsets are returns of the same shared site repo to majority after dips; the two late ones were warned by the EWS alarm (leads 1.25 h and 3 h) and the level alarm (2.5 h and 3 h); a 3-h lead is the horizon cap, i.e. the alarm was already on. The two early onsets had too little history.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic labels (`scheme/build.py --labels shared`, `analysis/round1b.py replicate`), plus the work-ledger series for #30 onward (`round1b.py work`). Card predictions R1b-1 to R1b-3 were written before the run.*
+
+| Arm | Labels | Onsets | Evaluable | Composite AUC | EWS hits | EWS false alarms / day |
+| --- | --- | --- | --- | --- | --- | --- |
+| W15 | round 1 (H11 labels) | 4 | 2 | 0.57 | 2/4 | 0.8 |
+| W15 | round 1b (shared labels) | 4 | 2 | 0.55 | 2/4 | 1.0 |
+| W15 | round 1b, work commits | 1 | 0 | – | 0/1 | 0.0 |
+| W30 | round 1 (H11 labels) | 1 | 1 | 0.29 | 0/1 | 0.0 |
+| W30 | round 1b (shared labels) | 1 | 1 | 0.29 | 0/1 | 0.0 |
+| W30 | round 1b, work commits | 0 | 0 | – | 0/0 | 0.0 |

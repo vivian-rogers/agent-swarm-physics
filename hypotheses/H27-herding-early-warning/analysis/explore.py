@@ -24,7 +24,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import ews_core as E  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[3]
-DATA = ROOT / "data/processed/H27-herding-early-warning"
+# Round 1b switches (2026-10-04; env so they are explicit in the shell): H27_DATA = data folder (round 1b:
+# data/processed/H27-herding-early-warning/r1b, built with scheme/build.py --labels shared); H27_STATE = 'project'
+# (default) or 'work' (series_work_w*, coverage_work.json; outputs get a _work suffix). Defaults = round 1.
+DATA = Path(os.environ.get("H27_DATA", str(ROOT / "data/processed/H27-herding-early-warning")))
+STATE = os.environ.get("H27_STATE", "project")
+SER = "series" if STATE == "project" else f"series_{STATE}"
+COV = "coverage.json" if STATE == "project" else f"coverage_{STATE}.json"
+SUFFIX = "" if STATE == "project" else f"_{STATE}"
 sys.path.insert(0, str(ROOT))
 from infra.shared import common as C  # noqa: E402
 
@@ -36,21 +43,22 @@ SEED = 20261004
 
 
 def load_tau_star() -> float:
-    return float(json.loads((DATA / "synthetic/synthetic_summary.json").read_text())["meta"]["tau_star"])
+    f = ROOT / "data/processed/H27-herding-early-warning/synthetic/synthetic_summary.json"   # frozen in round 1
+    return float(json.loads(f.read_text())["meta"]["tau_star"])
 
 
 def load_series(g: int, W: int, base: Path = DATA):
-    s = pl.read_parquet(base / f"G{g:02d}" / f"series_w{W}.parquet").sort("gwin")
+    s = pl.read_parquet(base / f"G{g:02d}" / f"{SER}_w{W}.parquet").sort("gwin")
     # exploration guard: no held-out day may be present
     if base == DATA and any(C.holdout_mask(s["pt_date"].to_list(), [g] * s.height)):
         raise SystemExit(f"G{g}: holdout rows present")
-    q = json.loads((base / "coverage.json").read_text())[str(g)][f"w{W}"]["q"]
+    q = json.loads((base / COV).read_text())[str(g)][f"w{W}"]["q"]
     k = s.select([f"k{a}" for a in range(1, q + 1)]).to_numpy().astype(int) if q else np.zeros((s.height, 0), int)
     return k, s["n"].to_numpy().astype(int), s["win"].to_numpy(), s["day"].to_numpy(), s
 
 
 def period_set(W: int, base: Path = DATA, goals=None):
-    cov = json.loads((base / "coverage.json").read_text())
+    cov = json.loads((base / COV).read_text())
     out = []
     for g, c in cov.items():
         if goals is not None and int(g) not in goals:
@@ -229,7 +237,7 @@ def main():
                  active_days_evaluated=R["active_days_evaluated"], watch_windows=R["watch_windows"])
             for R in arm["results"]]
     out["tau_star"] = tau_star
-    (DATA / "results_round1.json").write_text(json.dumps(out, indent=1, default=lambda o: o.item() if hasattr(o, "item") else str(o)))
+    (DATA / f"results_round1{SUFFIX}.json").write_text(json.dumps(out, indent=1, default=lambda o: o.item() if hasattr(o, "item") else str(o)))
     # tables
     rows, orow = [], []
     for nm, arm in (("W15", arm15), ("W30", arm30)):
@@ -243,13 +251,15 @@ def main():
             for o in R["onsets_slow"]:
                 orow.append(dict(arm=nm, goal=R["goal"], rule="O1slow", **o))
             f = DATA / f"G{R['goal']:02d}"
-            (f / f"round1_w{R['W']}.json").write_text(json.dumps(
+            (f / f"round1_w{R['W']}{SUFFIX}.json").write_text(json.dumps(
                 dict(goal=R["goal"], W=R["W"], T=R["T"], q=R["q"], onsets=R["onsets"], onsets_slow=R["onsets_slow"], drops=R["drops"],
                      per_period=arm["per_period"].get(R["goal"]),
                      operator={rule: {kk: v for kk, v in R["operator"][rule].items() if kk != "shift_hits"} for rule in R["operator"]}),
                 indent=1, default=lambda o: o.item() if hasattr(o, "item") else str(o)))
-    pl.DataFrame(rows).write_parquet(DATA / "segments_round1.parquet", compression="zstd")
-    pl.DataFrame(orow).write_parquet(DATA / "onsets_round1.parquet", compression="zstd")
+    if rows:
+        pl.DataFrame(rows).write_parquet(DATA / f"segments_round1{SUFFIX}.parquet", compression="zstd")
+    if orow:
+        pl.DataFrame(orow).write_parquet(DATA / f"onsets_round1{SUFFIX}.parquet", compression="zstd")
     for nm in ("W15", "W30"):
         v = out[nm]["verdicts"]
         print(nm, v)

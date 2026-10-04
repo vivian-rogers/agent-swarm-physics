@@ -16,6 +16,15 @@ Definitions are in the card (`../README.md`, "Data scheme" and "Observables"). S
 Outputs (data/processed/H31-consensus-time-spectral-gap/G<NN>/, zstd parquet, no text): msgs, reads, turns,
 block_windows, states_project_w{15,30,60}, alignment, kicks; _provenance.json at the folder root.
 Holdout days are dropped before anything is computed unless --allow-holdout (only analysis/confirm_holdout.py).
+
+Round 1b switches (2026-10-04; defaults reproduce round 1):
+  --visibility ledger   reads from the context ledger (DQ1): one read per (agent message, recipient), assigned to the
+                        recipient's first call whose context could hold it; t_seen = that call's t_call (context
+                        assembly), t_upd = its t_first (first logged record = the call's output). Turns (for tau_wave)
+                        = receiving calls (t_call, ctx_mode != summary).
+  --labels shared       project states from H11's round-1b files (shared deterministic project_states) and, new,
+                        work-ledger states (states_work_w{15,30,60}).
+  --out DIR             output folder (round 1b: data/processed/H31-consensus-time-spectral-gap/r1b).
 """
 from __future__ import annotations
 
@@ -55,6 +64,7 @@ h18build = _load_h18()
 
 SH = ROOT / "data/processed/shared"
 H11 = ROOT / "data/processed/H11-potts-labor-vs-herding"
+H11_R1B = H11 / "r1b"
 OUT = ROOT / "data/processed/H31-consensus-time-spectral-gap"
 W_MIN = 30
 GUARD_S = 1.0
@@ -80,6 +90,17 @@ class Shared:
         self.rooms_tl = pl.read_parquet(SH / "rooms_timeline.parquet").sort("agent", "t_start")
         self.kicks = pl.read_parquet(SH / "kicks.parquet")
         self.cc = set(self.roster.filter(pl.col("claude_code"))["agent"].to_list())
+        self._ledger = None
+
+    def ledger(self):
+        """(items: msg, recipient, turn_id; calls: turn_id, agent, t_call, t_first, receiving) for agent-sent items."""
+        if self._ledger is None:
+            ids = pl.read_parquet(SH / "chat_core.parquet", columns=["message_id"]).with_row_index("msg")
+            it = pl.read_parquet(SH / "context_ledger_items.parquet", columns=["turn_id", "message_id", "kind"]).filter(
+                pl.col("kind") == "agent").join(ids, on="message_id", how="inner").select("turn_id", "msg")
+            cw = pl.read_parquet(SH / "call_windows.parquet", columns=["turn_id", "agent", "pt_date", "t_call", "t_first", "ctx_mode"])
+            self._ledger = (it, cw)
+        return self._ledger
 
 
 def period_days(sh: Shared, g: int, allow_holdout: bool) -> pl.DataFrame:
@@ -140,7 +161,8 @@ def rooms_at(sh: Shared, agents: list[int], t_us: np.ndarray) -> dict[int, np.nd
     return out
 
 
-def build_period(sh: Shared, g: int, allow_holdout: bool = False, verbose: bool = True) -> dict | None:
+def build_period(sh: Shared, g: int, allow_holdout: bool = False, verbose: bool = True, visibility: str = "h18",
+                 labels: str = "h11") -> dict | None:
     cal = period_days(sh, g, allow_holdout)
     if cal.height == 0:
         return None
@@ -171,6 +193,15 @@ def build_period(sh: Shared, g: int, allow_holdout: bool = False, verbose: bool 
         ok = (k >= 0) & (v <= clock.we[np.clip(k, 0, None)] + 60e6)  # within a period day's window (+1 min)
         turn_rows.append(pl.DataFrame({"agent": np.full(ok.sum(), a, np.int8), "t_us": v[ok], "act": inday[ok]}))
     turns = pl.concat(turn_rows).sort("agent", "t_us") if turn_rows else pl.DataFrame()
+    if visibility == "ledger":
+        it, cw = sh.ledger()
+        cwp = cw.filter(pl.col("pt_date").is_in(days) & pl.col("agent").is_in(list(roster_agents)))
+        rc = cwp.filter(pl.col("ctx_mode") != "summary")
+        tc = _us(rc["t_call"])
+        k = np.searchsorted(clock.ws, tc, side="right") - 1
+        ok = (k >= 0) & (tc <= clock.we[np.clip(k, 0, None)] + 60e6)
+        turns = pl.DataFrame({"agent": rc["agent"].to_numpy()[ok].astype(np.int8), "t_us": tc[ok],
+                              "act": clock(tc[ok])}).sort("agent", "t_us")
 
     # ---- reads: exposure rows of agent messages, recipient a roster agent != sender
     am = msgs.filter(pl.col("kind") == 0)
@@ -197,6 +228,17 @@ def build_period(sh: Shared, g: int, allow_holdout: bool = False, verbose: bool 
                                    "sender": sub["sender"].to_numpy()[ok], "room": sub["room"].to_numpy()[ok],
                                    "t_seen_us": ts[ok], "t_upd_us": tu[ok]}))
     reads = pl.concat(reads) if reads else pl.DataFrame()
+    if visibility == "ledger":
+        it, cw = sh.ledger()
+        cwp = cw.filter(pl.col("pt_date").is_in(days) & pl.col("agent").is_in(list(roster_agents)))
+        r = it.join(cwp.select("turn_id", pl.col("agent").alias("recipient"), "t_call", "t_first"), on="turn_id", how="inner")
+        r = r.join(am.select("msg", "sender", "room"), on="msg", how="inner").filter(pl.col("recipient") != pl.col("sender"))
+        ts, tu = _us(r["t_call"]), _us(r["t_first"])
+        kd = np.searchsorted(clock.ws, ts, side="right") - 1
+        ok = (kd >= 0) & (ts <= clock.we[np.clip(kd, 0, None)] + 60e6)
+        reads = pl.DataFrame({"msg": r["msg"].to_numpy()[ok], "recipient": r["recipient"].to_numpy()[ok].astype(np.int8),
+                              "sender": r["sender"].to_numpy()[ok], "room": r["room"].to_numpy()[ok],
+                              "t_seen_us": ts[ok], "t_upd_us": np.maximum(tu[ok], ts[ok])})
     if reads.height:
         reads = reads.with_columns(pl.Series("act_seen", clock(reads["t_seen_us"].to_numpy())),
                                    pl.Series("act_upd", clock(reads["t_upd_us"].to_numpy()))).sort("t_upd_us")
@@ -221,13 +263,16 @@ def build_period(sh: Shared, g: int, allow_holdout: bool = False, verbose: bool 
 
     # ---- project states (H11, imported)
     states = {}
-    for W in (15, 30, 60):
-        f = H11 / f"G{g:02d}" / f"labels_project_w{W}.parquet"
-        if f.exists():
-            lab = pl.read_parquet(f)
-            # H11 'day' is the dense rank of non-holdout days within the goal; map by pt_date to ours
-            lab = lab.drop("day").join(cal.select("pt_date", "day"), on="pt_date", how="inner")
-            states[W] = lab.select("pt_date", "day", "win", "agent", "room", "label", "project")
+    src = H11 if labels == "h11" else H11_R1B
+    kinds = ("project",) if labels == "h11" else ("project", "work")
+    for kind in kinds:
+        for W in (15, 30, 60):
+            f = src / f"G{g:02d}" / f"labels_{kind}_w{W}.parquet"
+            if f.exists():
+                lab = pl.read_parquet(f)
+                # H11 'day' is the dense rank of non-holdout days within the goal; map by pt_date to ours
+                lab = lab.drop("day").join(cal.select("pt_date", "day"), on="pt_date", how="inner")
+                states[W if kind == "project" else f"work{W}"] = lab.select("pt_date", "day", "win", "agent", "room", "label", "project")
 
     # ---- content alignment per block x window
     align = alignment_period(g, cal, grid, sh, ra, on_ros)
@@ -301,21 +346,26 @@ def write_period(g: int, res: dict, out: Path = OUT):
         res["reads"].write_parquet(f / "reads.parquet", compression="zstd")
     res["block_windows"].write_parquet(f / "block_windows.parquet", compression="zstd")
     for W, lab in res["states"].items():
-        lab.write_parquet(f / f"states_project_w{W}.parquet", compression="zstd")
+        name = f"states_project_w{W}" if isinstance(W, int) else f"states_work_w{W[4:]}"
+        lab.write_parquet(f / f"{name}.parquet", compression="zstd")
     if res["alignment"] is not None:
         res["alignment"].write_parquet(f / "alignment.parquet", compression="zstd")
     res["kicks"].write_parquet(f / "kicks.parquet", compression="zstd")
 
 
-def write_provenance(goals: list[int], params: dict, out: Path = OUT):
+def write_provenance(goals: list[int], params: dict, out: Path = OUT, labels: str = "h11", visibility: str = "h18"):
     out.mkdir(parents=True, exist_ok=True)
     prov = {"built_by": "hypotheses/H31-consensus-time-spectral-gap/scheme/build.py", "git_commit": git_commit(),
             "inputs": [{"source": "ai-village", "revision": REVISION,
                         "tables": ["calendar", "chat_core", "chat_mentions_clean", "exposure", "events_core", "actions",
                                    "roster", "rooms_timeline", "kicks", "embeddings/agent_win30", "whitening_<regime>"],
                         "via": "data/processed/shared"},
-                       {"source": "H11", "path": "data/processed/H11-potts-labor-vs-herding/G<NN>/labels_project_w{15,30,60}",
-                        "built_by": "hypotheses/H11-potts-labor-vs-herding/scheme/build.py"}],
+                       ({"source": "H11", "path": "data/processed/H11-potts-labor-vs-herding/G<NN>/labels_project_w{15,30,60}",
+                         "built_by": "hypotheses/H11-potts-labor-vs-herding/scheme/build.py"} if labels == "h11" else
+                        {"source": "H11 round 1b", "path": "data/processed/H11-potts-labor-vs-herding/r1b/G<NN>/labels_{project,work}_w{15,30,60}",
+                         "built_by": "hypotheses/H11-potts-labor-vs-herding/scheme/build_r1b.py (shared project_states; DQ4 work ledger)"})]
+                      + ([{"source": "ai-village", "revision": REVISION, "tables": ["context_ledger_items", "call_windows"],
+                           "via": "data/processed/shared (infra/shared/context_ledger.py)"}] if visibility == "ledger" else []),
             "imports": ["hypotheses/H18-attention-dilution/scheme/build.py: turn_times"],
             "params": params, "goals": goals, "built_at": dt.datetime.now(dt.timezone.utc).isoformat()}
     (out / "_provenance.json").write_text(json.dumps(prov, indent=1))
@@ -330,7 +380,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--goals", type=int, nargs="*", default=None)
     ap.add_argument("--allow-holdout", action="store_true", help="only for analysis/confirm_holdout.py")
+    ap.add_argument("--visibility", choices=("h18", "ledger"), default="h18", help="round 1b: ledger")
+    ap.add_argument("--labels", choices=("h11", "shared"), default="h11", help="round 1b: shared")
+    ap.add_argument("--out", default=str(OUT))
     a = ap.parse_args()
+    out = Path(a.out)
     goals = a.goals or nonholdout_goals()
     held = set(load_holdout()["goal_periods_held_out"])
     if (set(goals) & held) and not a.allow_holdout:
@@ -340,15 +394,16 @@ def main():
     print(f"loaded shared tables in {time.time() - t:.0f}s", flush=True)
     built = []
     for g in goals:
-        res = build_period(sh, g, a.allow_holdout)
+        res = build_period(sh, g, a.allow_holdout, visibility=a.visibility, labels=a.labels)
         if res is None:
             print(f"G{g:02d}: no days", flush=True)
             continue
-        write_period(g, res)
+        write_period(g, res, out)
         built.append(g)
     write_provenance(built, {"window_min": W_MIN, "guard_s": GUARD_S, "whiten_dim": 32,
-                             "visibility": "H18 call-start rule; t_upd = first turn after t_seen + 1 s",
-                             "allow_holdout": a.allow_holdout})
+                             "visibility": ("H18 call-start rule; t_upd = first turn after t_seen + 1 s" if a.visibility == "h18" else
+                                            "context ledger: t_seen = receiving call's t_call, t_upd = its t_first; turns = receiving calls"),
+                             "labels": a.labels, "allow_holdout": a.allow_holdout}, out, a.labels, a.visibility)
     print(f"done in {time.time() - t:.0f}s", flush=True)
 
 

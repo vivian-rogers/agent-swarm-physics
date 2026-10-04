@@ -1,6 +1,7 @@
 # H11 × G39: Build your own interactive world! (2026-04-27 → 2026-05-04)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (unchanged)
 **Role:** exploratory (transfer)
 **Period:** regime III · mode I · N = 15 at start · #best / #rest · 5 active days. Class for H11: **none-I**.
 
@@ -41,3 +42,23 @@ Descriptive: each agent its own world. No sign prediction.
 | G ground truth | 1 | per-agent worlds → strong spread, matching 'each agent builds a world' |
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication (templated) on the shared deterministic `project_states` labels (`scheme/build_r1b.py`, `analysis/round1b.py replicate`; 99 nulls). Card predictions R1b-1 (replication) and R1b-2 (work space) were written before the run.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| βJ_CW (t) | -8.61 (-3.1) | -9.08 (-4.5) |
+| z_N2 (βJ_PL vs circular shift) | -1.3 | -1.1 |
+| local-shift z (±1 window, post hoc) | -1.4 | -1.3 |
+| held-out PL gain (day folds) | 1 | 1/5 |
+| P1 / P2 | descriptive / descriptive | descriptive / descriptive |
+
+**Work space (R1b-2; agent work commits, DQ4 ledger, W = 30):**
+
+| Space | labelled agent-windows | blocks (N ≥ 3) | βJ_CW (t) | z_N2 | local-shift z | excess βJ_PL − N2 | co-location (N2 mean, z) | ownership |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| attention | 517 | 79 | -9.08 (-4.5) | -1.2 | -1.1 | -1.90 | 0.12 (0.10, +1.9) | 1.00 |
+| work | 377 | 71 | -30.00 (–) | – | – | +0.00 | 0.00 (0.00, –) | 1.00 |
+
+Agent-windows with both labels: work repo = attention project in 0.97. The attention top project holds 0.09 of attention and 0.11 of work agent-windows.

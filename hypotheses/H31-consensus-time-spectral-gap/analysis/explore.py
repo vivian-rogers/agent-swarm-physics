@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
@@ -110,7 +111,12 @@ def ec_period(P, b):
 
 
 def ev26():
-    """E-V: #26 runoff, from H11's votes.parquet (first-person single-candidate declarations, carried forward)."""
+    """E-V: #26 runoff, from H11's votes.parquet (first-person single-candidate declarations, carried forward).
+    Round 1b (H31_EV26=dq6): per election round from DQ6 ballots instead (ev26_dq6.py); the runoff round fills the
+    top-level keys used downstream, and all three rounds are under 'rounds'."""
+    if os.environ.get("H31_EV26", "keyword") == "dq6":
+        from ev26_dq6 import ev26_rounds
+        return ev26_rounds(L.load_period(26))
     v = pl.read_parquet(L.ROOT / "data/processed/H11-potts-labor-vs-herding/G26/votes.parquet").sort("t")
     P = L.load_period(26)
     days = P["days"]
@@ -295,7 +301,7 @@ def main():
     ep_rows = [dict(goal_no=r["goal_no"], **e) for r in results for e in r["ep"]]
     ep = pl.DataFrame(ep_rows, infer_schema_length=None) if ep_rows else pl.DataFrame()
     ep = ep.join(pred.drop("variant"), on=["goal_no", "room"], how="left")
-    ep.write_parquet(L.DATA / f"events_ep_w{W}.parquet", compression="zstd")
+    ep.write_parquet(L.DATA / f"events_ep_w{W}{L.SUFFIX}.parquet", compression="zstd")
     cross = {"W": W, "n_eligible_blocks": len(elig)}
     unc = ep.filter(pl.col("consensus") & ~pl.col("frozen"))
     y = np.log(unc["tau_h"].to_numpy())
@@ -338,7 +344,8 @@ def main():
     ec = pl.DataFrame(ec_rows, infer_schema_length=None) if ec_rows else pl.DataFrame()
     if ec.height:
         ec = ec.join(pred.drop("variant"), on=["goal_no", "room"], how="left")
-        ec.write_parquet(L.DATA / "events_ec.parquet", compression="zstd")
+        if not L.SUFFIX:
+            ec.write_parquet(L.DATA / "events_ec.parquet", compression="zstd")
         conv = ec.filter(pl.col("kind") == "convergence")
         cross["ec_counts"] = {k: int(v) for k, v in zip(*np.unique(ec["kind"].to_numpy(), return_counts=True))}
         if conv.height >= 4:
@@ -361,7 +368,7 @@ def main():
         conv = pl.DataFrame()
 
     # ---- E-V and forecast rule (W = 30 only)
-    if W == 30:
+    if W == 30 and not L.SUFFIX:
         e26 = ev26()
         p26 = pred.filter(pl.col("goal_no") == 26).row(0, named=True)
         c_lambda = float(np.mean(y + np.log(unc["l2_sym"].to_numpy())))        # log tau = c - log l2
@@ -408,7 +415,7 @@ def main():
             g = r["goal_no"]
             write_period_results(g, r, unc, ep, conv, ec, cross, pred, e26 if g == 26 else None)
 
-    (L.DATA / f"cross_period_w{W}.json").write_text(json.dumps(cross, indent=1, default=float))
+    (L.DATA / f"cross_period_w{W}{L.SUFFIX}.json").write_text(json.dumps(cross, indent=1, default=float))
     print(json.dumps({k: v for k, v in cross.items() if k not in ("T6_two_room",)}, indent=1, default=float)[:6000])
     print("T6", cross["T6_two_room"])
 
