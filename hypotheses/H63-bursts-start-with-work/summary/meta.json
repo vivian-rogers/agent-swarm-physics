@@ -1,0 +1,70 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic validation (4 worlds x 15 runs) with a dated pre-data amendment; replication on 13 eligible periods (7 tested, 317 bursts) with matched controls, time-shift null, hazard lead-lag with placebo commits, untrimmed variant; 3 natives with dated predictions; confirm.py frozen, guarded and dry-run. Missing: text-defined state changes, holdout run.",
+  "faithfulness": "The work-signal trigger is cleanly refuted: OR_S 1.53 [0.77, 3.05] vs matched clusters, shift-null z -0.23, no hazard lead, 2 of 3 natives against, the field-led control behaves. Faithfulness scores the hypothesis, which failed; the refutation itself is well identified on the proxy used. Scorecard A1 B1 C0 D0 E0 F1 G1 H0 I0.",
+  "usefulness": "A practical monitoring rule (watch links to a project, not its deploys, for early warning of pile-ons) and a bound on H28's lead-lag reading via the day-edge trim. A diagnostic, not a lever."
+ },
+ "one_line": "Herding bursts do not start with a work signal: deploy-type state changes precede 2% of bursts (OR 1.5, CI incl. 1), chat links 60% (OR 11.9); work follows the pile-on.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Artifact field step as burst trigger: no work lead"
+  },
+  {
+   "model": "03-contagion",
+   "role": "rival",
+   "outcome": "supported",
+   "note": "Link-first (imitation/announcement) route precedes bursts"
+  }
+ ],
+ "rated_by": "H63 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Herding bursts are announced, not caused by work: a chat link precedes the second agent's arrival in 60% of bursts vs 12% of controls (OR 11.9), while deploy-type state changes do not (2.2% vs 1.8%); commits and deploys follow the pile-on",
+  "scope": "317 bursts in 7 periods; natives G31, G39, G40",
+  "direction": "negative",
+  "original_verdict": "failed (work signal)",
+  "credence": 0.61,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification (power 15/15, size ≤ 1/15)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "replication (7 periods)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "cross-hypothesis agreement (H53 announcement nucleation)",
+    "x": 1.3,
+    "evidence": "H53"
+   },
+   {
+    "factor": "penalty: link lead-lag sign depends on day-edge trim",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "watch chat links to anticipate pile-ons; work signals come after",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.22,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H63 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

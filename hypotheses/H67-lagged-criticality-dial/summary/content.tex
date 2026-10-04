@@ -1,0 +1,35 @@
+\hwhat{H25's equal-time talk dial measures feedback within one minute. Coupling acts at the recipient's next model call, so HH262 asked whether a dial built on that read-out call shows larger gains that are still subcritical. The test covers 66 non-holdout units in 35 periods, with 1.47M receiving calls in all-present windows. The read-out loop gain $g_{lag}$ counts the extra talk messages that one message causes through reading. Every unit is subcritical (all upper bounds $<0.40$). The gain is 0.13 in regime III (median) and $\approx 0$ in regimes I and II. It exceeds the equal-time dial in only 7/35 periods, so \textbf{the HH claim fails}. In regime III, messages that name the recipient carry about half of the gain. $g_{lag}$ ranks periods like H42's read-out Hawkes fit ($\rho=0.55$). The holdout is not run.}
+
+\hmodel{Linear response on the call clock (models 01, 09). Agent $i$'s call $c$ is a talk call ($Y_{ic}=1$) or not. $R^m_{ic}$ counts peer messages read at $c$ that were posted within the call's latency $d_c$ before its start. $P_{ic}$ counts messages posted within $d_c$ after the start (in flight, unreadable). $a_{i,d,\kappa}$ is an agent $\times$ day $\times$ call-class field. $\bar r$ is the readers per message and $\bar m$ the messages per talk call.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+P(Y_{ic}{=}1)=a_{i,d,\kappa}+\beta_m R^m_{ic}+\beta_o R^o_{ic}+\beta_P P_{ic}+\gamma\cdot E_{ic}+\rho\,Y_{i,c-1}\\
+J_1^*=\beta_m-\beta_P,\qquad g_{lag}=\bar m\,\bar r\,J_1^*,\qquad T/T_c=1/g_{lag}\\
+g_{eq}=1-\Big[\textstyle\sum_t\sum_i X_{it}^2\Big]\Big/\textstyle\sum_t\big(\sum_i X_{it}\big)^2
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_col.pdf}{Each point is one goal period (random-effects pool of its units, 95\% CI). The x-axis is H25's equal-time talk dial on the same calls, the y-axis the read-out loop gain. Regime-I periods sit on $g_{lag}\approx0$ while $g_{eq}$ reads 0.05--0.40: a fast shared field, not read-out coupling. Regime-III periods lie near the diagonal at 0.07--0.23.}
+
+\htelos{For a monitor: report $g_{lag}$, not the equal-time dial, as distance to a talk cascade. The equal-time dial counts shared fields as feedback, and in regime I that is all it sees. Here one talk message causes about 0.13 further messages through reading (amplification $\times1.15$, $T/T_c\approx8$). The gain stays flat as the swarm grows from 21 to 32 agents, because per-read coupling falls with headcount ($\rho=-0.59$). For an operator: naming carries the coupling. A named message raises the recipient's next-call talk probability by 0.08; an unnamed one by 0.004. No village configuration came near runaway, so this is a gauge, not a lever.}
+
+\hbottom{Read-out talk coupling is real but small and subcritical ($g_{lag}\approx0.13$ in regime III, $\approx0$ elsewhere), it is carried by named messages, and the equal-time dial overstates it wherever fields drive talk.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S1--S4 synthetic (real call grids) & bias $-1$ to $-3\%$, null CI$\neq$0 7.5\%; equal-time dial not blind (S3) & 3/4 pass\\
+P1 subcritical everywhere & max upper bound 0.39; all units $<0.5$ & supported\\
+P2 $g_{lag}>g_{eq}$ in $\ge2/3$ & 7/35 periods; median ratio 0.09 & failed\\
+P3 rank-consistent with H42 & $\rho=0.55$ ($p=0.0007$); ratio 2.0 & supported\\
+P3b consistent with H50 & $\rho=0.24$; H50 implies 0.24 vs 0.13 & failed\\
+P4 jump over placebo & $J_1^*>0$ in 35\% (III: 80\%); shift size 13.6\% & mixed\\
+P5 named $\ge5\times$ unnamed (III) & 0.079 vs 0.004 ($\times19$) & supported\\
+P6 trim, exogenous robust & $-10\%$, $0\%$ (III medians) & supported\\
+P7 $J_1^*$ falls with $N$ & $\rho=-0.59$; $g_{lag}$ flat ($\rho=0.24$) & supported\\
+Natives NE14, NE42, G51 & switch-on at II$\to$III; \#40 merge kills coupling; flat in $N$ & d / mixed / mixed\\
+\end{tabular}}
+
+\hobsb{../figures/decomposition_col.pdf}{Regime-III units ordered by headcount. Bars split $g_{lag}$ into the part carried by messages that name the recipient (dark) and the rest (light). Points show $g_{lag}$ with 95\% CI. The named part is 0.03--0.14 in every unit. The unnamed part is small per read but is multiplied by 10--30 readers.}
+
+\hcaveats{The unnamed part (about 0.003 per read) sits at the resolution of the in-flight placebo. In-flight messages are decided closer to the call, which biases $g$ by about $\pm0.03$ in synthetic burst worlds. A post hoc quiet-recipient subset lowers the regime-III median to 0.086. Regime-I talk happens at scheduled chat calls, so a hop-1 estimator may miss a later response there. Only direct offspring at hop 1 are placebo-corrected. Per-unit significance is mildly anti-conservative (shift size 13.6\%). Predictions were written knowing H25, H42 and H50.}
+
+\hnext{Re-index regime I to its talk-capable calls. Confirm the named-message gain on the holdout (C3). Run H50's and H67's estimators on identical pairs to locate the factor-2 gap.}

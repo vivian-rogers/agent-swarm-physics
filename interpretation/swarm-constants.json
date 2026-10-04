@@ -301,6 +301,26 @@
    "model": "05",
    "source": "H71",
    "meaning": "Memory size is regulated around an agent set point, with no overshoot."
+  },
+  {
+   "symbol": "g_lag",
+   "name": "read-out loop gain of talk (hop 1)",
+   "value": "regime III median 0.13 (#51 0.142 [0.111, 0.174]); regime I 0.005; max upper bound 0.39",
+   "kind": "gain",
+   "scope": "66/66 units subcritical",
+   "model": "09",
+   "source": "H67",
+   "meaning": "One message causes about 0.13 extra messages through reading; the swarm is far from runaway."
+  },
+  {
+   "symbol": "OR_link",
+   "name": "chat link before a herding burst",
+   "value": "60% vs 12% of controls (OR 11.9 [9.2, 15.3]); deploys 2.2% vs 1.8%",
+   "kind": "response",
+   "scope": "317 bursts, 7 periods",
+   "model": "03",
+   "source": "H63",
+   "meaning": "Pile-ons are announced in chat; commits and deploys follow them."
   }
  ]
 }

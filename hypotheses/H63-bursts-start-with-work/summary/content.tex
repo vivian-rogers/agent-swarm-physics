@@ -1,0 +1,34 @@
+\hwhat{H28 found that chat links mark herding bursts rather than start them. HH263 proposed that a visible artifact state change starts them instead: a site goes live or a deploy lands, and links follow. The test uses the DQ4 work ledger on the 13 dense-git non-holdout periods from \#30 on. A herding burst is three or more agents arriving on one project within linked 20-minute gaps, inside the all-present window. In the hour before the second agent arrives, a deploy-type state change appears in 2.2\% of 317 bursts and in 1.8\% of 5,470 matched one- or two-agent clusters (OR 1.53 [0.77, 3.05]). A chat link appears in 60\% of bursts and 12\% of controls (OR 11.9). The arrival hazard shows no work lead. \textbf{The claim fails}: links come first, and work follows the pile-on. The holdout is not run.}
+
+\hmodel{Kinetic Potts with a field step (models 10, 03). Agent $i$, off project $X$, switches onto it in a 5-min bin $b$ at rate $\mu_{iXb}$. $\alpha_i,\pi_X,\delta_d$ are agent, project and day fields. $S_{Xb}$ ($S'_{Xb}$) flags another agent's state change on $X$ in the past (next) 60 min, $R$ the same for routine commits, $L$ for chat links in $i$'s room. $K$ holds kickoff, human and nudge pulses. A field step at the work signal predicts $h_S>h_{S'}$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\log\mu_{iXb}=\alpha_i+\pi_X+\delta_d+h_S S_{Xb}+h_{S'}S'_{Xb}+h_R R_{Xb}+h_{R'}R'_{Xb}+\kappa L_{iXb}+\kappa' L'_{iXb}+\zeta\!\cdot\!K_{ib}\\
+\mathrm{OR}_S=\frac{P(S\in[t_f-60',t_f)\mid\text{burst})/[1-\cdot]}{P(S\in[t_f-60',t_f)\mid\text{1--2-agent cluster})/[1-\cdot]}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_col.pdf}{Share of clusters with each event in the 60 min before the follower onset (the second agent's arrival). Herding bursts (red) and matched one- or two-agent clusters (gray) are pooled over the 7 tested periods. State changes are as rare before bursts as before non-bursts. Chat links and project births are 5--15 times more common before bursts.}
+
+\htelos{For a monitor that wants early warning of a pile-on, watch chat links to a project, not its deploys or commits. A link to the project appears in the hour before 60\% of herding bursts; a deploy appears before 2\%. Commits and deploys arrive after agents converge, so work telemetry lags attention by the burst itself. For an operator who wants to prevent duplicated work, assigning ownership (H11, H28) acts earlier than gating deploys. The result also bounds H28's ``links mark bursts'': once day edges are trimmed, links lead arrivals ($\kappa-\kappa'=+0.30$).}
+
+\hbottom{Herding bursts do not start with a visible work signal: chat links precede them (OR 11.9), deploy-type state changes do not (OR 1.5, CI including 1), and commits follow the pile-on.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S1--S3 synthetic & joint criterion power 15/15, size 0--1/15; ordering 1.00 vs 0.33 & passed\\
+P1 OR$_S\ge2$, CI excl.\ 1, $z\ge2$ & 1.53 [0.77, 3.05]; $z=-0.23$; 1/7 periods & failed\\
+P2 state change before link & 3/11 bursts & failed\\
+P3 $h_S-h_{S'}>0$; links $\kappa-\kappa'\le0$ & $+0.15$ [$-0.08$, 0.37]; links $+0.30$ [0.04, 0.57] & failed\\
+P4 state change $>$ routine commit & hazard $+0.33$ [0.17, 0.48]; OR$_S$ 1.53 $<$ OR$_R$ 2.05 & mixed\\
+P5 work terms absorb links & $\kappa$ 0.96 vs 0.91 without ($-6\%$) & failed\\
+P6 $\le30\%$ exogenous-led & 0\% (trim removes kickoff hour) & uninformative\\
+G31 time capsule & wave starts before any state change or link & failed\\
+G39 own worlds & visitors precede first deploy in 9/12 & failed\\
+G40 kickoff control & hub wave at +1.9 min, 95 min before deploy & supported\\
+\end{tabular}}
+
+\hobsb{../figures/leadlag_col.pdf}{Arrival-hazard lead--lag contrasts per period (log hazard, 95\% day-bootstrap CI) and the random-effects pool (diamonds). Red: state change in the last 60 min minus the next 60 min. Blue: chat link, same contrast. No period shows a clear work lead. Untrimmed, the pooled link contrast falls to $-0.10$.}
+
+\hcaveats{``State change'' is a proxy: pages-branch or deploy-message commits and deploy commands. ``It works now'' events need text (Phase 2). Only 7 periods are tested, and \#51 contributes 218 of 317 bursts. Births precede bursts mechanically and are not counted as evidence. Bursts are attention clusters from strict mentions. The synthetic worlds are stylized point processes, not real schedules. The kickoff share is uninformative under the trim. Predictions were written knowing H27, H28 and H53.}
+
+\hnext{Detect ``made usable'' from commit and deploy text. Split preceding links into announcements and requests. Rerun H28's link model with and without the all-present trim.}
