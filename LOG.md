@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **Re-evaluation RE-V2 (H29, H30, H39) launched:** operator levers on ledger visibility, fixed activity bins, leading-@ nudge targets, past-only lever designs and v3 states; asked for a reconciled lever table across H29/H30/H35/H39/H43/H50.
 - **Re-evaluation RE-A1 done (H38, H12, H25 round 1b on the fixed tables, with DQ8's calibrated nulls and native tests):**
   - **H38:** joint silences 14.3% → 5.3% (now 78% scheduled, explained share 0.51 → 0.88); regime-III co-activation is 70–80% day-edge synchrony (f_trim 0.83); under the trimmed block-shift null only #44 and #51 keep real coupling. NE43 native test failed: agents start *more* tightly after the bookends stop, so **the edges are the runner's schedule, not the operator's message** (agrees with H50). Ratings 50 / 2.0 / 2.5.
   - **H12:** **the round-1 activity market mode was mostly an artifact** of the event-drop bug (7/24 units under the calibrated null; λ₁/edge medians fall to ~1.0); talk (21/24) and content (24/24) modes are real; the loop weeks (#38–#40) stay low-PR under both models and dedups (restatements 12–25%, copies 4–20%, exact copies 0%). Native: a #12 debate motion compresses content (PR −25%, p 0.010). Ratings 52 / 1.5 / 2.5.
