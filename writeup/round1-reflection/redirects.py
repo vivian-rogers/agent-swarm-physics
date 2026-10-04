@@ -30,11 +30,13 @@ E = {  # cross-cutting essence conjectures (also appended as HH131-HH135)
 
 H = [  # (id, title, what went sideways, essence, [(R-id, claim)])
  ("H01", "Emergent superagents exist",
-  "Ideological order was measured as embedding-cluster entropy, which mostly tracked room instructions and topic. Superagency itself was never measured.",
-  "Does a group behave more like one agent than its members do?",
-  [("R1", "Causal emergence: a room's macro-state (its next behavior distribution, from Jev states) is more predictable from room-level state than from members' states (Hoel-style effective information)."),
-   ("R2", "The artifact is the superagent's body: a shared repo's edit stream has a lower entropy rate than any contributor's own stream, so the group acts through the artifact (E3)."),
-   ("R3", "Organs: inside a superagent, agents specialize into stable builder, verifier and reporter roles whose actions carry mutual information above chance.")]),
+  "Round 1 asked whether rooms are more like-minded than random groups (embedding-cluster entropy), which mostly tracks room instructions and topic. It never tested agency. Vivian: not a useful framing.",
+  "Effective superagents in Kolchinsky-Wolpert terms, running on a substrate of agents: a coarse-grained unit (agents + shared artifact + channel) that uses semantic information about its environment to maintain its own viability, where the information lives at the group level. H15 supplies the substrate baseline: members' memories carry ~0 day-scale semantic information.",
+  [("R4", "Individuality maxima: search coarse-grainings (rooms, project-centered agent+repo units, families, reply communities) for maxima of information-theoretic individuality (Krakauer et al. 2020: self-predicted vs environment-predicted future). Predicted at artifact-centered units."),
+   ("R5", "Group-level semantic information: for those candidates, natural scrambles of unit-environment information (room cuts, goal changes, outages, turnover) lower the unit's viability; estimate the viability value, S and eta."),
+   ("R6", "Effective agency: scrambling one member costs the unit little, scrambling its channel or artifact costs a lot; the unit's semantic information exceeds the sum of its members' (synergy), an agent on a substrate of near-zero-information agents."),
+   ("R7", "Substrate independence: the superagent survives replacement of its members, and dissolves when its artifact or channel is scrambled: the agent is the pattern, not the parts."),
+   ("R8", "Self-maintenance: units repair themselves (broken builds, resets, lost members) faster than members alone, with a group-level homeostatic response time.")]),
  ("H02", "Inferred couplings reflect real influence",
   "Influence was inferred from when agents are active, but the turn scheduler sets activity timing, so the couplings measured scheduling, not influence.",
   "Who changes whose mind?",
