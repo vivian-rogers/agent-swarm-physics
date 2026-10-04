@@ -1,0 +1,36 @@
+\hwhat{The test splits an agent's chat style into an agent constant, a context-fill drift and an assigned-register shift. Style is H13's 17 type-controlled features. The fit runs per goal period on 34 non-holdout periods (126k messages). The three components explain most of the systematic variance that the day field leaves ($F_3=0.72$, IQR 0.65--0.80; 34/34 periods above 0.57). The agent constant carries almost all of it. Context fill adds a median share of 0.08, and 0.011 in regime III. Removing the context term does not raise attribution ($\Delta_c=-0.007$ [$-0.017$, $+0.003$]). At forced erasures the fitted drift predicts 1.7\% of the style jump. Judging in \#12 is a shared register. The \#51 roles share none. The holdout script exists and is not run.}
+
+\hmodel{Vector spins (model 11). The spin is a message's style vector $x_m$. The day field $g_d$ and a time-of-day term $\tau$ are external fields. The agent constant $q_i$ is the weights. The context term is a profile $c(s)$ over fill bins plus an agent drift $b_i$ along $z=\log_2(1+p)$, with $p$ the calls since the last reset. $\rho_r$ is an assigned register (judge, role). $\eta$ is agent-day jitter. $\kappa$ is the cell-means ceiling.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+x_m=g_d+\tau(h_m)+q_i+c(s_m)+b_i\,z_m+\rho_{r_m}+\eta_{i,d}+\varepsilon_m\\
+F_3=\frac{\bar R^2(G{+}A{+}C{+}R)-\bar R^2(G)}{\kappa-\bar R^2(G)},\qquad
+u_X=\frac{\bar R^2(\text{all})-\bar R^2(\text{all}\setminus X)}{\kappa-\bar R^2(G)}\\
+\Delta_c=\mathrm{acc}\bigl[q_j+c(s)+b_j z\bigr]-\mathrm{acc}\bigl[q_j\bigr],\qquad
+\beta=\frac{\sum\langle\Delta x,\Delta\hat x_{\rm ctx}\rangle}{\sum\lVert\Delta\hat x_{\rm ctx}\rVert^2}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Shares of the non-day systematic style variance per goal period. Blue is the agent constant, orange is the context term, and black dots are all three components ($F_3$). The agent constant is the largest share in every period. The context share falls to about 0.01 in regime III. (b) Attribution gain from the context model on blocks of five messages. Real gains (dots) sit in the synthetic null band, not in the planted-drift band.}
+
+\htelos{For attribution, use the agent's mean style over at least five messages. Balanced accuracy is 0.63 against chance 0.10. Do not correct for context position: the correction gains $-0.007$. A style monitor can treat the agent constant as fixed within a period. It carries 0.55 of the non-day systematic variance, and agent-day jitter carries 0.18. Expect one message to be mostly noise: only 27\% of its style variance is systematic. Known speech roles such as judging shift style in one shared direction (cos 0.78). That shift does not confuse attribution. Context erasure moves style by a random amount with no fixed direction, so a monitor should not read a post-reset style change as a model change.}
+
+\hbottom{Style is an agent constant plus noise: context fill and assigned registers add small shares, and removing them does not improve attribution.}
+
+\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
+\raggedright P1 $F_3\ge0.57$ in $\ge2/3$ & \raggedright 34/34; median 0.72 (agent-day ceiling 0.82) & \raggedright pass\tabularnewline
+\raggedright P2 agent largest; context $p<.05$ & \raggedright $u_A$ largest 34/34 (0.55); $u_C$ 23/26 (0.08) & \raggedright pass\tabularnewline
+\raggedright P3 context removal helps attribution & \raggedright $\Delta_c$ $-0.007$ [$-0.017$, $+0.003$]; 16/34 positive & \raggedright fail\tabularnewline
+\raggedright P4 dispersion grows with fill & \raggedright 1/5 dense periods; G51 negative & \raggedright fail\tabularnewline
+\raggedright P5 rivals (genre, own fill) & \raggedright genre retention 1.04; received fill beats own fill 6/8 (regime III) & \raggedright partial\tabularnewline
+\raggedright N1 NE41 drift predicts the jump & \raggedright $\beta$ 0.27 [0.12, 0.36]; 1.7\% of the jump; $T_s$ 0.567 $\to$ 0.568 & \raggedright mixed\tabularnewline
+\raggedright N2 \#12 judges share a register & \raggedright cos $+0.78$ ($p$ 0.001); $u_R$ 0.056; attribution $+0.01$ & \raggedright mixed\tabularnewline
+\raggedright N3 \#51 roles are registers & \raggedright Prankster 0.60; media cos $-0.11$ ($p$ 0.56) & \raggedright fail\tabularnewline
+\raggedright N4 leader writes like Kimi & \raggedright rank 3 blind, 1 with agent drift (20 msgs) & \raggedright descr.\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{(a) Forced erasures (NE41): drift projection $\beta$ against the style percentile $T_s$. The real point (orange, 95\% CIs) sits near the synthetic directionless excursion (S2), far from a directed drift (S1). (b) \#12: each judge's style shift points along the other judges' mean shift.}
+
+\hcaveats{The 20 features mix formatting with topic-adjacent rates (digits, uppercase). $F_3$ rests on a cell ceiling that is noisy where cells are small. The synthetic bias reaches $+0.07$ near 0.55, and $F_3$ exceeds 1 in G03. In regimes I/II half of the context share is the chat versus computer-use level. Fill counts calls, not messages or tokens, and it may miss what drives the erasure excursion. The \#51 role test is pre-registered on three-week eras. The onset-block result (Prankster 1.00) is post hoc. The natives are small: five judges, four media agents, 20 leader messages.}
+
+\hnext{Model the conversation state (received items, pending mentions, thread depth) in place of fill, with an in-flight placebo. Fit the persona shift as a transient with a decay time. Run the NE30 model swap on the holdout.}

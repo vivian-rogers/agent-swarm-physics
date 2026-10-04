@@ -191,6 +191,16 @@
    "model": "15",
    "source": "H76",
    "meaning": "The scheduler's day end carries the swarm's excess entropy production."
+  },
+  {
+   "symbol": "u_A",
+   "name": "agent-constant share of systematic style variance",
+   "value": "0.55 (F3 three-component share 0.72, IQR 0.65–0.80; context fill 0.08; per-message systematic share κ 0.27)",
+   "kind": "share",
+   "scope": "34/34 non-holdout periods",
+   "model": "11",
+   "source": "H73",
+   "meaning": "Style is mostly a fixed property of the agent; context and role add little."
   }
  ]
 }

@@ -1,0 +1,70 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before real data; synthetic validation at real counts in five periods (two estimator flaws found and fixed as amendments); 34 replication periods; four natives (NE41, #12 judges, #51 roles, #44 leader); preprocessing and post-hoc variants; scorecard; frozen, guarded confirm script dry-run, not run. No holdout run, no conversation-state or message-position variant of the context term.",
+  "faithfulness": "The decomposition holds in every period (F3 >= 0.57 in 34/34; agent constant largest in 34/34) and survives genre controls, raw features, dedupe variants and an agent-day ceiling. The context and register parts of the model are weak: the context term is small (0.011 in regime III), follows received chat more than own fill, gives no attribution gain, and does not predict the size of the erasure jump; one register (judging) is shared, #51 roles are not. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "Tells a monitor builder what to do: attribute on the agent's mean style over >= 5 messages (accuracy 0.63, chance 0.10), skip context-position corrections, expect single messages to be ~73% noise, and do not read a post-reset style change as a model swap. Bounds H46's style-as-state rival. Not validated on the holdout or as a swap detector (one 20-message leader)."
+ },
+ "one_line": "Style is an agent constant (0.55 of non-day systematic variance; F3 0.72 in 34/34 periods); context fill adds 0.08 (0.01 in regime III) and removing it gains no attribution.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Agent field dominates; context and register terms small"
+  },
+  {
+   "model": "04-semantic-information",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Listed on the stub; H46 already ran it"
+  }
+ ],
+ "rated_by": "H73 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Style is mostly an agent constant: three components explain 0.72 of systematic style variance (34/34 periods), the agent constant 0.55, context fill 0.08 (0.01 in regime III); removing context does not improve attribution",
+  "scope": "34 non-holdout periods; natives NE41, G12, G51, G44",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.8,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (34/34 periods)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic identification (two flaws fixed before real data)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "rival beaten (genre controls keep the context share)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "robust (agent-day jitter ceiling measured)",
+    "x": 1.3,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "attribute agents by style; don't expect context correction to help",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.59,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H73 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
