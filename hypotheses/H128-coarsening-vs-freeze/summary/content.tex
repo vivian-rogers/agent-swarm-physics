@@ -1,0 +1,33 @@
+\hwhat{HH369 says that a goal kickoff is a zero-temperature Potts quench on the agents' work projects. A free kickoff should coarsen: projects merge and their number falls as $t^{-\alpha}$ with $\alpha\approx0.3$--0.5. A kickoff that names its target should freeze at once. H128 replays every agent's work-ledger host label after 12 non-holdout kickoffs (7 free, 5 named; regimes I--III) and two natives (\#44 rooms, NE42). \textbf{Free and named kickoffs give the same curves}: freeze time $p=0.32$, excess area $p=0.73$, where a true coarsening-vs-freeze world gives $p<0.05$ with power 0.96--1.00. Free weeks lose projects by finishing, not merging (merge share 0.00--0.38 in 7/7). HH369's kill is met. The holdout is not run.}
+
+\hmodel{Model 10, kinetic Potts quench with births. At each of its work windows an agent picks repo $j$ with $P(j)\propto e^{\beta J s_j+h_j+b\,[j=\sigma_i]}$ plus a new-repo option. Free kickoff: $h=0$, so domains merge by coupling (mean-field voter: $N_p\propto1/t$). Named kickoff: $h_T\gg1$ on a shared target or one target per agent, so the count jumps to its final value in one round. Rival R1: projects end by finishing (expiry), with no merging.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+d_w(t)=\frac{N_p(t)-1}{N_h(t)-1},\qquad t_f=\min\{t:\ |d_w(s)-d_w^\infty|\le\delta\ \forall s\ge t\},\quad \delta=\max\!\Big(\tfrac{1}{\bar N_h-1},\,0.15\,d_w^\infty\Big)\\
+A_u=\int_{t_\mathrm{pk}}^{t_\mathrm{pk}+8\,\mathrm{h}}\frac{d_w(t)-d_w^\infty}{d_w^\mathrm{pk}-d_w^\infty}\,dt,\qquad c_m=\frac{\#\,\text{merge deaths}}{\#\,\text{project deaths}}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Domain-wall fraction $d_w$ after each kickoff (1-h running mean; named blue, free orange). Per-agent named weeks (\#39, \#51) sit at $d_w\approx1$; free weeks stay scattered, fragment (\#41) or drift slowly. (b) Freeze time $t_f$ per unit (triangles: censored at the horizon), with the post hoc drift of $d_w$ per active hour. The dashed line is the 3-h freeze criterion. The kickoff code does not order either quantity.}
+
+\htelos{For an operator: naming the target in a kickoff does not make the swarm converge on fewer projects. Own-artifact goals freeze at one project per agent from the first hour. A free goal leaves agents scattered or splitting, and projects end when work stops, not by merging (merge share $\le0.38$). To get agents onto one repo, give a shared target to a swarm that is already scattered (NE42: $d_w$ 1 to 0.2 over about 16 active hours). Expect hours, not minutes.}
+
+\hbottom{After a goal kickoff, the spread of agents over work projects does not separate free from named kickoffs (freeze time $p=0.32$, excess area $p=0.73$, power $\ge0.96$), and free weeks lose projects by finishing, not merging (merge share 0.00--0.38): HH369's coarsening-vs-freeze split is killed.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+F: rule valid on skeletons & $d_w$ 12/13; HH's $N_p$ 0/16 (A1) & $d_w$ only\\
+P1 free: $t^{-\alpha}$, $\alpha\in[0.3,0.5]$ & 1/7 (\#30, $\hat\alpha$ 0.44 [0.32, 0.60]) & failed\\
+P2 named: freeze $\le3$ h & 1/5 (\#39, frozen at $d_w=1$) & failed\\
+P3 free slower (kill test) & $t_f$ $p=0.32$; $A_u$ $p=0.73$ & killed\\
+P4 merging, not finishing & $c_m$ 0.00--0.38 in 7/7 free & failed\\
+P5 power beats exponential & 3/7 & failed\\
+N1 \#44 rooms & free room flat at 0.92; named drifts & failed\\
+N2 NE42 A-B-A & named merge coarsens (0.26); free splits & failed\\
+N3 \#37 replicas & one room $<2$ hosts & descr.\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic validation on the real skeletons (60 runs per world and period). (a) The primary $d_w$ classifies coarsening worlds as slow and field or finishing worlds as frozen. (b) The HH's literal project count $N_p$ calls per-agent freezes and pure finishing ``slow'' in every run: it tracks how many agents hold a label, not the number of domains (Amendment A1).}
+
+\hcaveats{The observable was changed before real data (A1): $N_p$ failed the synthetic rule on every skeleton. Power law vs exponential is not identified at village sizes (a true coarsening selects the power law in $\le48\%$ of runs), so P1 and P5 were weak by design; the kill contrast P3 is the powered test. Host labels lapse after 100 own calls, so ``finishing'' mixes shipped and abandoned projects. The NE42 coarsening reading and the drift signs are post hoc (A2). \#44 \#best has 4 hosts (below the testability floor).}
+
+\hnext{Measure field strength per agent (share of first post-kickoff commits on the settled repo), split finishing into shipped vs dropped with deploy commits, and test ``shared target into a scattered start'' on held-out \#45. Confirm C1--C3 on \#46--\#49.}

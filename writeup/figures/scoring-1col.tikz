@@ -1,62 +1,40 @@
-% Single-column "Scoring" figure: credence (faithfulness) and estimated usefulness. \input by scoring-1col.tex.
-% Needs: tikz with libraries arrows.meta, positioning, calc; xcolor.
+% Single-column "Scoring" figure: Claude as the judge of credence (faithfulness) and estimated usefulness.
+% \input by scoring-1col.tex. Needs: tikz with libraries arrows.meta, positioning, calc; xcolor.
 \definecolor{scHy}{HTML}{c2662d}
-\definecolor{scFd}{HTML}{3a7d6b}
-\definecolor{scUse}{HTML}{3f6fb5}
+\definecolor{scJudge}{HTML}{8a4f9e}
+\definecolor{scRule}{HTML}{3a7d6b}
 \definecolor{scOut}{HTML}{6b6b6b}
 \begin{tikzpicture}[font=\scriptsize, node distance=3.6mm and 3mm,
   bx/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center,
              text width=3.55cm, inner sep=2.4pt, minimum height=8mm},
-  wide/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center, text width=7.6cm, inner sep=2.4pt, minimum height=8mm},
+  wide/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center,
+               text width=7.6cm, inner sep=2.4pt, minimum height=8mm},
   ar/.style={-{Stealth[length=1.7mm]}, line width=0.6pt, draw=black!65},
   lb/.style={font=\tiny\itshape, text=black!70, fill=white, inner sep=0.8pt}]
 
-% the claim
-\node[wide=scHy] (claim) {\textbf{Claim that stands}\\one scoped sentence per hypothesis: the result that\\survived, positive or negative (negatives state their power)};
+\node[wide=scHy] (card) {\textbf{Hypothesis card and round-1 results}\\predictions written before the data, nulls, synthetic checks};
 
-% two columns
-\node[bx=scFd, below=of claim.south west, anchor=north west, text width=3.6cm, align=left] (cred) {%
-  \centering\textbf{Credence (faithfulness)}\par\raggedright\vspace{1pt}
-  base rate:\\
-  0.40 predicted before data\\
-  0.30 redesigned after data\\
-  0.20 found in the data\\[2pt]
-  multiply the odds:\\
-  $\times 2$\; beats the strongest null\\
-  $\times 2$\; replicates across periods\\
-  $\times 2$\; survives data fixes\\
-  $\times 1.5$\; synthetic recovery\\
-  $\times 2$\; natural experiment\\
-  $\times 1.5$\; rival model beaten\\
-  $\times 1.5$\; known structure\\
-  $\times 0.5$--$0.8$\; weak inputs\\[2pt]
-  cap at 0.95};
-\node[bx=scUse, below=of claim.south east, anchor=north east, text width=3.6cm, align=left] (use) {%
-  \centering\textbf{Estimated usefulness}\par\raggedright\vspace{1pt}
-  value if true, $V$ (0--5):\\
-  which decision it changes,\\
-  by how much, how generally\\[3pt]
-  $\mathrm{EU} = \text{credence} \times V$\\[3pt]
-  mechanism depth\\
-  M0\; reproducible pattern\\
-  M1\; signature, rival out\\
-  M2\; intervention, rival out,\\
-  \hspace*{1.6em}synthetic recovery\\[3pt]
-  fragile: headline moved\\
-  across data versions};
+\node[wide=scJudge, below=of card] (claim) {\textbf{Claude states the claim that stands}\\one sentence with its scope:\\what survived, positive or negative};
 
-% raters
-\node[wide=scHy, anchor=north] (raters) at ($(claim.south |- cred.south)+(0,-3.6mm)$) {%
-  \textbf{Two raters}: coordinator + blind rater, log-odds mean;\\
-  big splits ($\Delta p>0.25$ or $\Delta V>1$) are adjudicated};
+\node[bx=scJudge, below=of claim.south west, anchor=north west] (j1) {\textbf{Claude, judge 1}\\the coordinator, who\\has seen the whole project};
+\node[bx=scJudge, below=of claim.south east, anchor=north east] (j2) {\textbf{Claude, judge 2}\\blind: sees the card and\\evidence, not judge 1's score};
 
-% output
-\node[wide=scOut, below=of raters] (out) {\textbf{Research theses}, sorted by credence and EU $\rightarrow$ write-up};
+\node[wide=scRule, anchor=north] (rule) at ($(claim.south |- j1.south)+(0,-3.6mm)$) {%
+  \textbf{Both judges score the same two things}\\[1pt]
+  \textbf{credence (faithfulness)}: will it hold in a new test?\\
+  start at 0.4, 0.3 or 0.2 by when the prediction was written;\\
+  raise it for each check passed, lower it for weak inputs\\[1pt]
+  \textbf{estimated usefulness}: credence $\times$ value if true (0--5)};
 
-% arrows
-\draw[ar] (claim.south -| cred.north) -- (cred.north);
-\draw[ar] (claim.south -| use.north) -- (use.north);
-\draw[ar] (cred.south) -- (cred.south |- raters.north);
-\draw[ar] (use.south) -- (use.south |- raters.north);
-\draw[ar] (raters) -- (out);
+\node[wide=scJudge, below=of rule] (adj) {\textbf{Combine}\quad average the two scores;\\if they differ by more than 0.25, Claude adjudicates by written rules};
+
+\node[wide=scOut, below=of adj] (out) {\textbf{Research theses} $\rightarrow$ write-up\\ranked by credence and usefulness};
+
+\draw[ar] (card) -- (claim);
+\draw[ar] (claim.south -| j1.north) -- (j1.north);
+\draw[ar] (claim.south -| j2.north) -- (j2.north);
+\draw[ar] (j1.south) -- (j1.south |- rule.north);
+\draw[ar] (j2.south) -- (j2.south |- rule.north);
+\draw[ar] (rule) -- (adj);
+\draw[ar] (adj) -- (out);
 \end{tikzpicture}

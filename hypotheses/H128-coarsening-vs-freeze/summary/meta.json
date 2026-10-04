@@ -1,0 +1,59 @@
+{
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; real-skeleton kinetic Potts synthetic (5 worlds x 60 runs x 16 skeletons) and Amendment A1 before real data; replication on 12 kickoffs plus natives (G44 rooms, NE42 A-B-A, G37 replicas); estimates rows; confirm.py frozen and dry-run (not run). Missing: holdout run; a per-agent field gauge; shipped-vs-dropped split of finishing.",
+  "faithfulness": "HH369's kill fires with a powered contrast (0.96-1.00). The kinetic Potts quench fails its own signature (no merging; c_m <= 0.38). Scorecard A1 B1 C0 D1 E0 F1 G1 H1 I0.",
+  "usefulness": "Operator rule: naming a target does not by itself concentrate agents on fewer repos; own-artifact goals freeze one project per agent; projects end by finishing. Corrects the reading of H75's instant freeze (a per-agent freeze, not a skipped coarsening)."
+ },
+ "one_line": "Free and named kickoffs give the same project-spread curves (freeze time p = 0.32, power >= 0.96) and free weeks lose projects by finishing, not merging (merge share 0.00-0.38): no coarsening-vs-freeze split.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "kinetic Potts quench: no coarsening by merging after free kickoffs; field freeze only for one-project-per-agent goals"
+  }
+ ],
+ "rated_by": "H128 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "After a goal kickoff, the domain-wall fraction of agents over projects does not separate free from named kickoffs (one-sided p 0.32 / 0.73, power ≥ 0.96), and free weeks lose projects by finishing them, not by merging (merge share 0.00–0.38)",
+  "scope": "12 testable kickoff units; natives G44, NE42, G37",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.51,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic power ≥ 0.96 on the real skeletons",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "estimator validated (dw passes 12/13 skeletons)",
+    "x": 1.3,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "penalty: few units (7 free vs 5 named)",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "don't expect free kickoffs to coarsen into fewer projects over days; projects end when work stops",
+  "magnitude": "small",
+  "generality": "LLM swarms with shared projects",
+  "expected_usefulness": 0.51,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H128 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

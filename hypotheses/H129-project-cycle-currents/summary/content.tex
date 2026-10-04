@@ -1,0 +1,33 @@
+\hwhat{HH370 says that agents hopping between projects behave like a sticky Potts walker whose flows are driven around cycles ($A\to B\to C\to A$) by projects being born and dying, so detailed balance breaks with a circulation from older to newer projects, and dwell times are geometric. H129 extracts every agent's sequence of distinct projects (work host labels and attention labels) in 13 non-holdout periods and 12 \#51 units and measures triple affinities against a per-agent time-reversal null and against an age walker calibrated to each unit. \textbf{There is no circulation beyond age drift}: the rotation-summed cycle affinity beats the age walker in 0/9 shared-goal unit-channels (power 0.55--0.97 for a 2-nat cycle). HH370's literal test passes in only 3/9. Dwell hazards age (32/39). The holdout is not run.}
+
+\hmodel{Models 10, 02 and 15. Sticky walker: per own call an agent leaves with probability $r$; at a hop it picks $j$ with $P(j)\propto e^{\alpha_j+b\,[\text{held}]+\lambda z_j(t)}$, $z_j$ the standardized age rank among available projects. Any potential (fixed attractiveness, age bias $\lambda$) makes the three rotations of a triangle cancel; a cyclic force $\kappa$ does not. Age drift is excess entropy production; a cycle is housekeeping.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+A_3=\ln\frac{N(omn)+\frac12}{N(nmo)+\frac12},\qquad \mathcal{A}_\mathrm{cyc}=\sum_{\text{rot}}\ln\frac{N(\text{rot})+\frac12}{N(\overline{\text{rot}})+\frac12}\;\approx\;2\ln\frac{P_{om}P_{mn}P_{no}}{P_{on}P_{nm}P_{mo}}\\
+m_2=\frac{n_\uparrow-n_\downarrow}{n_\uparrow+n_\downarrow},\qquad \ln h(d)\simeq a+\gamma\ln d
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Age-signed triple affinity $A_3$ and (b) rotation-summed cycle affinity $\mathcal{A}_\mathrm{cyc}$ per testable unit-channel (work blue, attention orange; agent-bootstrap 95\% CIs; filled markers: per-agent reversal null $p<0.05$; circles shared-goal, squares own-role). Black ticks: 95th percentile of the age walker calibrated to the unit's net age flux and return share. No shared-goal unit exceeds its tick in (b).}
+
+\htelos{For an operator: agents do not rotate through projects. They drift slightly toward the newest ones (net flow 0.03--0.21 of hops) and become stickier the longer they stay (hazard falls by about 20--60\% per e-fold of dwell). To move an agent off a project, act early in its stay; an agent several hours into a project rarely leaves on its own. Expect few returns-in-a-ring; plan handoffs as one-way moves to new work.}
+
+\hbottom{Agents' project hops carry no circulation beyond age drift (cycle affinity above a calibrated age walker in 0/9 shared-goal unit-channels, power 0.55--0.97); net flow to newer projects is small but consistent (30/37 positive) and dwell hazards age rather than stay geometric (32/39).}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+F: valid circulation test & $\mathcal{A}_\mathrm{cyc}$+W1* 5/6 skeletons; $C_2$ not identified & partly\\
+P1 $A_3>0$ vs reversal (kill) & 3/9 shared unit-channels & killed\\
+P2 $\mathcal{A}_\mathrm{cyc}$ beyond age walker & 0/9 & failed\\
+P3 Hodge curl & 0/5; not identified (A1) & n.i.\\
+P4 $m_2>0$, $p<0.05$, $\ge2/3$ & 8/34; sign $+$ in 30/37 (post hoc) & failed\\
+P5a geometric dwell & 6/39; aging in 32/39 & failed\\
+P5b rate falls with habit & $\rho=-0.29$ ($p$ 0.53) & weak\\
+P6 own-role smaller & reversed (2 vs 3 units) & failed\\
+N2 \#38 drift, no cycle & $m_2$ 0.17 ($p$ 0.03); $\mathcal{A}_\mathrm{cyc}$ inside & supported\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic validation on six real skeletons (40 datasets per world). $A_3$ against the reversal null rejects in an age walker with recency and no cycle (W2), so it measures drift. $\mathcal{A}_\mathrm{cyc}$ against both nulls stays below 0.10 in every no-cycle world and detects a 2-nat cycle (W3s) in 0.55--0.97 of datasets. The detailed-balance null for the Hodge curl rejects in the reversible fixed world W0 (finite-time transients), so $C_2$ is not identified.}
+
+\hcaveats{Work hops are few outside \#51 (2--120 per period); most per-period verdicts rest on 30--170 triples, and weak cycles ($\kappa=1$: power 0.07--0.57) are not excluded. Attention labels are artifact mentions, not work. Age is the first non-holdout appearance; projects started before the record look young. The m$_2$ sign test and \#51 pooling are post hoc (A2); two own-role \#51 attention units pass both nulls, about the chance rate for 14 tests.}
+
+\hnext{Model dwell as an aging renewal process and relate its exponent to habit and to H72's gate aging; replicate the two \#51 hits across units; bound the excess EP of the age flow. Confirm C0--C3 on \#45--\#47.}
