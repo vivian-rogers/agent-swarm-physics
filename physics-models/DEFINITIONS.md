@@ -215,3 +215,8 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 ### H06 named variants (2026-10-04; see `hypotheses/H06-neutral-cooperative-dynamics/README.md`)
 - **Agent state (categorical, intention cluster):** whitened bge intention vectors clustered within the period (k-means or Ward; ladder m ∈ {8, 24, 64}), carried forward up to 4 windows. Topics of stated intentions, not repositories (compare H11's project/artifact strict variant).
 - **Copy-consistency:** the share of an agent's project switches that go to a project another agent currently holds. Every exchangeable copying model (NCD, Hubbell, herding) predicts ≈ 1; the village shows 0.23–0.53 (0.08–0.10 in #51).
+
+### H35 named variants (2026-10-04; see `hypotheses/H35-nudger-maxwell-demon/README.md`)
+- **Mutual information (controller–state):** I(nudge decision; agent state) per decision, in bits, against a full-permutation null, for nested state spaces (coarse paused/idle; trap age = pause-chain length; gate level).
+- **Work (feedback, activity gain):** extra active minutes (or tool turns) of the nudged agent in the next 30 min, past-only ATT. Distinct from the token-based "Energy / work proxy".
+- **Semantic efficiency of a controller:** η_SU = achieved work ÷ the work attainable with the same information (Sagawa–Ueda-style); η_KW = bits needed ÷ bits used (Kolchinsky–Wolpert-style); κ = extra active minutes per bit per nudge; frontier V*(R) = best work at information rate R. Ceiling ΔV ≤ s·√(2rI) (Donsker–Varadhan), with s the half-range of the response across states, playing the role of k_BT.

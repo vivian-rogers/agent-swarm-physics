@@ -22,6 +22,7 @@ Each DQ agent writes only new files in `infra/` and new tables in `data/processe
 - `actions.error` → `error_class` from H38's categories (consolidation agent).
 - H11 project labels: deterministic tie-break (consolidation agent).
 - H25's `dial.py` (daily Curie–Weiss dial, null-calibrated stall mask) → `infra/shared/` once a second hypothesis imports it (H26 may).
+- `kicks_classified`: add `primary_target` (the nudge's leading @; 29% of nudges mention other agents too, H35).
 - DQ7 rebuild should also apply stall-adjusted (agent-state conditioned) variants of the collective statistics used by H02, H12 and H19.
 
 

@@ -1,0 +1,35 @@
+\hwhat{The auto-nudger was treated as a feedback controller (a Maxwell demon). I measured how much agent-state information its nudges carry, how much activity they buy, and how close it comes to the best use of those bits, on 13 non-holdout periods plus two natural experiments (dated predictions; synthetic recovery checked first). In G51, the only well-powered period, a first nudge buys 1.45 [0.72, 2.20] extra active minutes using 1.4 bits of state. That is 38\% of the work those bits could buy ($\eta_{SU}=0.38$ [$-0.08$, 0.68]); only 15\% of the bits were needed. Among pausing agents it does worse than random: 38\% of nudges go to traps $\ge 10$ pauses deep (0.5 min each, vs 2.2--2.6 at $k=1$--9). Nudges add 0.5\% of active minutes, invisible at switch-on (NE10) and at a silent stop on 08-20. Under the old 12-h pause default, nudges wake agents at any trap age. Holdout: not run.}
+
+\hmodel{Models 04 (Kolchinsky--Wolpert) and 02. System $X$: an agent's state (idle time, pause timing, trap age $k$ = pause-chain length). Demon: nudge $M\in\{0,1\}$ at rate $r$. Work $g(x)$: extra active minutes in 30 min caused by a nudge in state $x$. Value of information $\Delta V$: work beyond random nudging. Frontier $V^*(R)$: the most work any policy using $R$ bits can buy. $s$: half-range of $g$ (plays $k_BT$). $p_k$: probability of acting at the pause expiry.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\Delta V(\pi)=\mathbb{E}[\pi g]-r\,\mathbb{E}[g],\qquad I=I(X;M)\\
+V^*(R)=\max_{I\le R}\Delta V\ \Rightarrow\ \pi_\beta=\sigma\big(\mathrm{logit}\,r+\beta(g-\lambda)\big)\\
+\eta_{SU}=\Delta V_{\log}/V^*(I_{\log}),\quad \eta_{KW}=R^*(\Delta V_{\log})/I_{\log}\\
+\Delta V\le s\sqrt{2rI}\ \ (\text{Donsker--Varadhan})\\
+\mathrm{logit}\,p_k=\alpha_i+\theta\ln k+(\gamma+\lambda\ln k)\,\mathbb{1}[\text{nudge}]
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) G51 in trap-age space: work beyond random nudging against state information used. The curve is the best any policy can do with that many bits (dotted: analytic ceiling). The logged nudger sits far below it; nudging only at $k=2$--3 reaches the curve's end, and nudging only deep traps is worse than random. (b) The nudger's mass (bars) sits where the response per nudge (points) is lowest.}
+
+\htelos{Directly actionable, though the stakes are small. For an operator running an idle-nudger on LLM agents: nudge each pause chain once, early (the first or second re-pause), and only while the agent is paused. Stop re-nudging agents stuck for many pauses; they barely respond and need something else (a reset, a new task). In G51 that would double or triple the work per nudge at the same budget. The catch: the nudger buys only about 0.5\% of agent activity, so even a perfect policy moves the swarm little unless you nudge far more. The thermodynamic framing works as accounting (frontier, ceiling, efficiency), not as physics. The policy result rests on one short-pause period and is untested on the holdout.}
+
+\hbottom{The nudger is a measurably inefficient Maxwell demon: it reads the right variable (trap age) but spends its nudges on the deepest, least responsive traps, and nudging once early in a pause chain would buy two to three times more work per nudge.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.31\columnwidth}p{0.47\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (G51 unless noted)} & \textbf{Verdict}\\\hline
+\raggedright P1 3--8 bits; agent-blind & \raggedright 1.42 bits/nudge; agent adds 0.43 & \raggedright partly\tabularnewline
+\raggedright P2 work 0.5--3 min & \raggedright 1.45 [0.72, 2.20]; placebo clean & \raggedright yes\tabularnewline
+\raggedright P3 falls with trap age & \raggedright $\lambda=-0.32\pm0.13$; G38 reversed & \raggedright G51 only\tabularnewline
+\raggedright P4 gates: $\Delta V>0$, $\eta_{SU}\le0.5$ & \raggedright $\Delta V<0$: worse than random & \raggedright no (as worded)\tabularnewline
+\raggedright P4 in trap-age space & \raggedright $\eta_{SU}=0.38$, $\eta_{KW}=0.15$ & \raggedright bands met\tabularnewline
+\raggedright P5 once early $\ge1.25\times$ & \raggedright $\times$2.0--2.2 escapes; $\times$2.3 min & \raggedright yes\tabularnewline
+\raggedright P6 08-20 stop invisible & \raggedright $-1.4$ pp [$-4.8$, 2.0]; DiD $\approx$ drift & \raggedright yes / inconcl.\tabularnewline
+\raggedright P7 NE10 invisible & \raggedright $\le0.4$ pp predicted; $+1.1$ pp seen & \raggedright yes\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_compact.pdf}{Synthetic validation (30 agents $\times$ 33 days, $\sim$700 nudges, circles; G38-sized, squares). Information, the once-early vs logged ratio and $\eta_{SU}$ are recovered (dotted: truth). Levels run 10--20\% low; at $\le$30 nudges the gate efficiencies are not identifiable.}
+
+\hcaveats{Only G51 is powered, and it is the only short-pause period outside the holdout, so the policy result has no replication yet. Identification assumes the nudger acts on what we see; agent identity carries extra information, so it does not, fully. The efficiencies depend on the state space: about 0.7 coarse, 0.38 by trap age, below 0 among gates. The minute response per trap-age bin rests on 20--99 nudges. Placebos are clean only for the strict design. The 08-20 stop is undocumented and coincides with operator messages. Three post-hoc amendments are disclosed on the card.}
+
+\hnext{Run \texttt{confirm.py} on \#47 and \#50 (short pauses: C2--C4) and \#45 (wake-up). Test the once-early rule as an actual intervention if operators allow. Add an LLM-state feature (Jev behavior labels) to see what the nudger reads beyond trap age.}
