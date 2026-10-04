@@ -7,6 +7,13 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **H21 (#12 debate antiferromagnet), round 1:** **failed.**
+  - #12 was a tournament of 10 debates with re-drafted teams and rotating judges; labels verified.
+  - No two-sublattice order in full content space (Δ̄ 0.028, p 0.34; true team split recovered in 1/10).
+  - **The motion is a strong uniform field** that switches off within 10 min of the verdict (8/8). **Family beats team** in content alignment.
+  - A faint a-priori stance tilt (p 0.002, 9/10 debates); post hoc, it *reverses* after the verdict (7/9; a lead, not a result).
+  - Scorecard A1 B0 C1 D0 E0 F1 G1 H0 I0. `confirm_g34.py` written, not run. **#34 is now targeted by unrun confirm scripts of H01, H05, H07, H12, H19 and H21** (reuse policy applies).
+- **Wave 2 started:** H34 (idea cascades).
 - **Promoted (Vivian), usefulness-first batch → H25–H39:** HH107 dial, HH108, HH109, HH114, HH110, HH116, HH115, HH118, HH119 (low priority), HH122, HH124, HH126, HH125, HH94, HH52. HH92 is H08's primary test (running). Wave 1 (H25, H27, H28, H29, H30, H31, H32, H38) launched now; wave 2 (H26, H33–H37, H39) starts as slots free.
 - **H14 (behavior entropy production), round 1:** mostly refuted as posed.
   - No per-family arrow of time (HH19), no collective irreversibility (HH67), none of the predicted work cycles (HH56).

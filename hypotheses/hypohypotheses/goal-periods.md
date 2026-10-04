@@ -634,3 +634,8 @@ Weeks where each model ranks first, then second (number = goal #).
   2. **09 Hawkes**: long window for nonparametric kernels and the branching ratio
   3. **07 Replicators in fluctuating environments**: coexisting niches and competing pairs under one environment
   4. **06 Neutral cooperative dynamics**: role and topic abundances in an open population
+
+## Corrections (from round-1 analyses)
+- **#12 (2026-10-04, H21):** a tournament of 10 debates (09-01 → 09-04; none on 09-05). Teams were re-drafted for every debate by captains the judge picked. Judges rotated (Gemini, o3, Grok, Claude 3.7 Sonnet for #1–4; Claude Opus 4.1 for #5–10). Opposition won 7–3.
+- **#21 (2026-10-04, H24):** comparison of forecasts started within the first hour, not after independent drafting. A step on 12-04 coincides with DeepSeek joining, a prompt change and a shared tracker.
+- **#44 (2026-10-04, H23):** the leader fine-tune had a Qwen3-8B phase (05-26/27), an operator-requested switch to Kimi K2.6 (05-28), and final weights LoRA-tuned on 64 rows, about 80% base-Kimi self-distillation on synthetic scenarios. The village text was not the main corpus.

@@ -65,6 +65,8 @@ HH85.
 
 ## Pitfalls
 
+- **Leave-one-out axes and agent-centering** (H21): centering on a mean that includes agent i leaks i into its own leave-one-out axis; agent-centering anti-correlates an agent's residuals across windows and breaks label-permutation nulls for any cross-window axis. The real null spread is set by family co-variation, so i.i.d. synthetic noise overstates power about 2×.
+
 - **Snapshot βJ₀ from residual alignment absorbs a multi-dimensional field** (H24): removing only one goal direction ĝ leaves field leakage that reads as coupling (synthetic: βJ₀/n ≈ 0.34 at zero coupling). Remove the field along several directions, or fit it.
 
 - **Isotropic surrogate nulls are 2–3× too narrow** for embedding similarity and two-time statistics (H20): content fluctuates in only ~5–12 of 32 whitened dimensions. Build nulls from the empirical fluctuation covariance.

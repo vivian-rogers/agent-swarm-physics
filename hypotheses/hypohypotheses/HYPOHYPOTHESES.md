@@ -306,3 +306,11 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
   *Models:* 01 (signed), 10 · *Periods:* #51, #12, #34 (holdout)
 - **HH126 · A reorganization alarm: susceptibility and multi-information peak at transitions.** The total correlation among agents' states and the heat-capacity analogue (variance of the alignment energy) should spike when the swarm reorganizes: goal changes, room events, scaffold changes. One alarm for "something structural is happening" (merges HH65). *Check:* peak detection against known transitions; false-alarm rate on placebo days.
   *Models:* 01, 11 · *Periods:* all transitions (NE34, NE15, NE42)
+
+## Round-1 inspired, late additions (2026-10-04)
+- **HH127 · Roles leave negative remanence: agents concede the side they argued once the role ends.** After #12's verdicts, the Government − Opposition stance tilt flipped sign (+0.43 → −0.36, 7/9 debates; H21 post hoc). If general, assigned roles bias content only while active, then overshoot. *Check:* stance-axis tilt before and after role ends in other role periods (#26 election, #51 private roles on non-holdout days); compare with a single-agent inertia null.
+  *Models:* 11 (two-sublattice), 01 (remanence) · *Periods:* #12, #26, #51
+- **HH128 · Family exchange beats assigned teams in content.** Same-lab pairs out-align assigned teammates even after centering each agent (H21: b_lab 0.24 vs b_team 0.08), consistent with H13's family style field. Assigned team structure is weaker than vendor style in what agents write. *Check:* lab vs team vs room alignment in every period with assigned groupings, with style residualized (H13's features).
+  *Models:* 11, 10 · *Periods:* #12, #34 (holdout), #38–#44 rooms
+- **HH129 · #51 is a random-field system.** Private roles pin each agent's topic (a random field), and the shared room adds a weak positive mean-field pull. Rivals co-move because they share a niche (H22). A random-field Ising/O(n) model predicts the overlap distribution and the absence of collective switching. *Check:* fit random-field mean-field to #51's content (field from role text, coupling from co-movement); predict the day-to-day overlap and synchrony H22 measured.
+  *Models:* 01 (random-field Ising), 11 · *Periods:* #51 non-holdout segments

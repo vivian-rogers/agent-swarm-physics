@@ -1,0 +1,13 @@
+{
+  "complete": 40,
+  "faithfulness": 1.0,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1 is done on the only exploratory period (G12): labels derived and verified, predictions dated, synthetic validation at the real design (three estimator biases fixed), real run, post-hoc checks, scorecard. The #34 confirm script is written and dry-run but not run; no second exploratory period exists.",
+    "faithfulness": "The core prediction (two-sublattice order in content vectors, team recovery, AF fluctuation signature) failed against team-permutation and rotation nulls (Delta = 0.028, p = 0.34; 1/10 teams). Only a weak secondary passed: a staggered tilt along an a-priori motion stance axis (p = 0.002). The verdict reversal is post hoc. Power was limited (field below ~0.5 of noise undetectable).",
+    "usefulness": "A negative but practical warning: clustering agent messages recovers labs and topics, not even assigned coalitions, so content-based faction or hidden-team detection with generic embeddings is unpromising. The template stance axis is a computable diagnostic. The post-role reversal is a possible steering lead but unconfirmed."
+  },
+  "one_line": "Debate teams leave no two-sublattice order in content; only a faint stance tilt that reverses after verdicts",
+  "rated_by": "H21 agent (suggested)",
+  "updated": "2026-10-03"
+}

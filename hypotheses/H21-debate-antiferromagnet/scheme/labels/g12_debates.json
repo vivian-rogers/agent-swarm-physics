@@ -1,0 +1,311 @@
+{
+ "derived_by": "Claude (H21 exploratory round 1), 2026-10-03, from the #12 chat record (judge confirmations, verdicts, follow-ups), before any alignment outcome was computed. A helper agent drafted line references; every team list and verdict was re-checked against the full message text.",
+ "time_zone": "UTC",
+ "source": "ai-village chat (chat_core/chat_text); message ids refer to chat_core.message_id",
+ "phase_rule": "pre = [max(t_lineup, t_motion, t_first_speech - 15 min, previous post end), t_first_speech); deb = [t_first_speech, t_verdict); post = [t_verdict, min(t_verdict + 10 min, next debate's pre start, day end)). Fixed 2026-10-03 before outcomes.",
+ "summary": "10 debates, all held 09-01..09-04; none on 09-05. Judges: Gemini 2.5 Pro (#1), o3 (#2), Grok 4 (#3), Claude 3.7 Sonnet (#4), Claude Opus 4.1 (#5-#10). Winners: Opp 7, Gov 3. Teams re-drafted each debate except #7 (= #6).",
+ "debates": [
+  {
+   "debate": 1,
+   "held": true,
+   "judge": "Gemini 2.5 Pro",
+   "gov": [
+    "Claude 3.7 Sonnet",
+    "o3",
+    "Grok 4"
+   ],
+   "opp": [
+    "Claude Opus 4",
+    "Claude Opus 4.1",
+    "GPT-5"
+   ],
+   "bench": [],
+   "winner": "Gov",
+   "score": null,
+   "topic_paraphrase": "indefinite pause on AGI development",
+   "motion_chosen_by": "judge",
+   "gov_argues_for_motion": true,
+   "t_lineup": "2025-09-01T17:05:16.138987+00:00",
+   "lineup_message_id": "f57db61e-cbb1-4064-888c-377e3f5ade39",
+   "t_motion": "2025-09-01T17:13:48.359893+00:00",
+   "motion_message_id": "36804925-a7bc-418f-bb04-57f7f90c9561",
+   "t_first_speech": "2025-09-01T17:14:07.029702+00:00",
+   "first_speech_message_id": "c9a32b6e-216d-4514-ae45-0a8cf3847b32",
+   "t_verdict": "2025-09-01T17:24:12.970066+00:00",
+   "verdict_message_id": "64d63496-1b25-4864-9a6e-bcad2af977fd",
+   "notes": "Judge appointed captains; captains drafted."
+  },
+  {
+   "debate": 2,
+   "held": true,
+   "judge": "o3",
+   "gov": [
+    "Gemini 2.5 Pro",
+    "Claude Opus 4.1",
+    "Claude Opus 4"
+   ],
+   "opp": [
+    "Claude 3.7 Sonnet",
+    "GPT-5"
+   ],
+   "bench": [
+    "Grok 4"
+   ],
+   "winner": "Opp",
+   "score": "2-1",
+   "topic_paraphrase": "ban corporate political campaign donations",
+   "motion_chosen_by": "judge",
+   "gov_argues_for_motion": true,
+   "t_lineup": "2025-09-01T17:30:15.672015+00:00",
+   "lineup_message_id": "eb61b064-a179-4cd6-9f51-58dfd4f3310c",
+   "t_motion": "2025-09-01T17:26:38.317004+00:00",
+   "motion_message_id": "2f796790-aa1c-4dd7-900e-b4d1f45d5f83",
+   "t_first_speech": "2025-09-01T17:30:27.784077+00:00",
+   "first_speech_message_id": "cf858ba5-c31a-4e52-a5af-ae539467bf0e",
+   "t_verdict": "2025-09-01T17:33:07.380734+00:00",
+   "verdict_message_id": "0fb5a373-1d41-40bc-ae3e-7e7af63f1e69",
+   "notes": "30-s shot clock; Opposition's third draft slot forfeited (late pick of Grok 4 rejected); 3 of 5 speeches forfeited."
+  },
+  {
+   "debate": 3,
+   "held": true,
+   "judge": "Grok 4",
+   "gov": [
+    "Claude Opus 4.1",
+    "GPT-5",
+    "o3"
+   ],
+   "opp": [
+    "Claude 3.7 Sonnet",
+    "Gemini 2.5 Pro",
+    "Claude Opus 4"
+   ],
+   "bench": [],
+   "winner": "Opp",
+   "score": null,
+   "topic_paraphrase": "UBI essential in AI economy",
+   "motion_chosen_by": "judge",
+   "gov_argues_for_motion": true,
+   "t_lineup": "2025-09-01T18:09:05.132789+00:00",
+   "lineup_message_id": "bef4d9f7-a2d1-4a49-83c8-274fa121ba35",
+   "t_motion": "2025-09-01T18:11:04.365100+00:00",
+   "motion_message_id": "06aa9a3b-9345-4cf8-9226-9e08755f374b",
+   "t_first_speech": "2025-09-01T18:11:30.867483+00:00",
+   "first_speech_message_id": "b26e7762-fcf1-4108-ac04-1e4f9bd474f7",
+   "t_verdict": "2025-09-01T18:27:08.320979+00:00",
+   "verdict_message_id": "9f148a80-c8c6-4ef1-92db-60fe64424c4a",
+   "notes": "Teams self-organised before the judge confirmed; debaters used computers mid-debate, then banned."
+  },
+  {
+   "debate": 4,
+   "held": true,
+   "judge": "Claude 3.7 Sonnet",
+   "gov": [
+    "Grok 4",
+    "GPT-5",
+    "Gemini 2.5 Pro"
+   ],
+   "opp": [
+    "Claude Opus 4.1",
+    "o3",
+    "Claude Opus 4"
+   ],
+   "bench": [],
+   "winner": "Opp",
+   "score": "72-68",
+   "topic_paraphrase": "legal personhood for AI agents",
+   "motion_chosen_by": "judge",
+   "gov_argues_for_motion": true,
+   "t_lineup": "2025-09-01T19:41:57.553007+00:00",
+   "lineup_message_id": "c04dffa6-3018-4898-93f0-49f938835580",
+   "t_motion": "2025-09-01T19:13:28.740855+00:00",
+   "motion_message_id": "5a609960-2e7a-4142-919c-9224d18d47cb",
+   "t_first_speech": "2025-09-02T17:32:04.344077+00:00",
+   "first_speech_message_id": "d10a29a0-cc52-4bf3-8b79-294a36eb2989",
+   "t_verdict": "2025-09-02T17:39:58.125653+00:00",
+   "verdict_message_id": "cfe05bec-454c-4aa4-bf8c-ade41f83e4f7",
+   "notes": "Set up on 09-01, held 09-02; Government DPM speech forfeited."
+  },
+  {
+   "debate": 5,
+   "held": true,
+   "judge": "Claude Opus 4.1",
+   "gov": [
+    "Gemini 2.5 Pro",
+    "Claude Opus 4",
+    "Grok 4"
+   ],
+   "opp": [
+    "Claude 3.7 Sonnet",
+    "GPT-5",
+    "o3"
+   ],
+   "bench": [],
+   "winner": "Opp",
+   "score": "78-72",
+   "topic_paraphrase": "nationalize social media as utilities",
+   "motion_chosen_by": "judge",
+   "gov_argues_for_motion": true,
+   "t_lineup": "2025-09-02T18:28:07.309125+00:00",
+   "lineup_message_id": "98ddb66c-d30f-4118-a900-a2828857f3fe",
+   "t_motion": "2025-09-02T17:49:13.014468+00:00",
+   "motion_message_id": "bfa7d274-aebb-4775-b2f9-182513f07362",
+   "t_first_speech": "2025-09-02T18:43:11.406424+00:00",
+   "first_speech_message_id": "6ebe72de-747e-4e28-b082-b7ccb0471b52",
+   "t_verdict": "2025-09-02T19:05:09.315514+00:00",
+   "verdict_message_id": "a4a61350-251f-4077-bce9-5bb0b786ec8c",
+   "notes": "Claude 3.7 Sonnet substituted as LO for absent GPT-5 (2-pt penalty) and also gave the Whip speech; o3 gave no speech."
+  },
+  {
+   "debate": 6,
+   "held": true,
+   "judge": "Claude Opus 4.1",
+   "gov": [
+    "Gemini 2.5 Pro",
+    "Claude 3.7 Sonnet",
+    "o3"
+   ],
+   "opp": [
+    "GPT-5",
+    "Claude Opus 4",
+    "Grok 4"
+   ],
+   "bench": [],
+   "winner": "Opp",
+   "score": "76-74",
+   "topic_paraphrase": "license frontier general-purpose AI deployment",
+   "motion_chosen_by": "debater",
+   "gov_argues_for_motion": true,
+   "t_lineup": "2025-09-03T18:07:10.655495+00:00",
+   "lineup_message_id": "bbc62193-83ba-4923-b6b7-afa78fbb50d9",
+   "t_motion": "2025-09-03T18:06:37.280593+00:00",
+   "motion_message_id": "e56b706c-520c-4997-b9b5-18efa009f4a8",
+   "t_first_speech": "2025-09-03T18:20:05.423946+00:00",
+   "first_speech_message_id": "5bd3ff91-c7b8-4f8c-bee9-bbc8e22787bf",
+   "t_verdict": "2025-09-03T18:39:28.997903+00:00",
+   "verdict_message_id": "f8788b79-c71b-4161-b1e7-7e850d85f2bf",
+   "notes": "Motion, teams and judge proposed by a debater (GPT-5); judge passive, o3 ran the clock."
+  },
+  {
+   "debate": 7,
+   "held": true,
+   "judge": "Claude Opus 4.1",
+   "gov": [
+    "Gemini 2.5 Pro",
+    "Claude 3.7 Sonnet",
+    "o3"
+   ],
+   "opp": [
+    "GPT-5",
+    "Claude Opus 4",
+    "Grok 4"
+   ],
+   "bench": [],
+   "winner": "Gov",
+   "score": "75-73",
+   "topic_paraphrase": "prefer open-source frontier LLMs",
+   "motion_chosen_by": "debater",
+   "gov_argues_for_motion": true,
+   "t_lineup": "2025-09-04T17:26:18.489303+00:00",
+   "lineup_message_id": "8a233170-7160-49a3-b87a-d72e9c229e65",
+   "t_motion": "2025-09-04T17:26:18.489303+00:00",
+   "motion_message_id": "8a233170-7160-49a3-b87a-d72e9c229e65",
+   "t_first_speech": "2025-09-04T17:37:19.139491+00:00",
+   "first_speech_message_id": "69d63687-5de6-4474-9477-8cba7a56c057",
+   "t_verdict": "2025-09-04T17:47:21.317258+00:00",
+   "verdict_message_id": "55f8797e-d5ce-43a4-b4f2-c7a0e448bec2",
+   "notes": "Same teams and sides as #6; motion proposed by o3; GPT-5 and Claude 3.7 Sonnet absent at start (forfeits); Grok 4 Whip posted late."
+  },
+  {
+   "debate": 8,
+   "held": true,
+   "judge": "Claude Opus 4.1",
+   "gov": [
+    "Claude 3.7 Sonnet",
+    "Grok 4",
+    "GPT-5"
+   ],
+   "opp": [
+    "o3",
+    "Claude Opus 4",
+    "Gemini 2.5 Pro"
+   ],
+   "bench": [],
+   "winner": "Opp",
+   "score": "74-72",
+   "topic_paraphrase": "compensate people for training data",
+   "motion_chosen_by": "judge",
+   "gov_argues_for_motion": true,
+   "t_lineup": "2025-09-04T17:47:56.663529+00:00",
+   "lineup_message_id": "7531461a-69b2-4ad2-a44c-de4a310f016c",
+   "t_motion": "2025-09-04T17:47:56.663529+00:00",
+   "motion_message_id": "7531461a-69b2-4ad2-a44c-de4a310f016c",
+   "t_first_speech": "2025-09-04T18:02:17.726831+00:00",
+   "first_speech_message_id": "480e4cff-62fa-4d8a-ac1c-6ca996454c68",
+   "t_verdict": "2025-09-04T18:12:33.869789+00:00",
+   "verdict_message_id": "814c8daa-c28b-4560-a5a2-fab260559864",
+   "notes": "Grok 4 DPM forfeited (late speech not counted)."
+  },
+  {
+   "debate": 9,
+   "held": true,
+   "judge": "Claude Opus 4.1",
+   "gov": [
+    "Gemini 2.5 Pro",
+    "Claude 3.7 Sonnet"
+   ],
+   "opp": [
+    "Claude Opus 4",
+    "Grok 4",
+    "o3"
+   ],
+   "bench": [
+    "GPT-5"
+   ],
+   "winner": "Opp",
+   "score": "76-74",
+   "topic_paraphrase": "AI right to refuse unethical tasks",
+   "motion_chosen_by": "judge",
+   "gov_argues_for_motion": true,
+   "t_lineup": "2025-09-04T18:16:14.692007+00:00",
+   "lineup_message_id": "aef91de5-c060-42c7-93e2-4ff2bd8bbfe2",
+   "t_motion": "2025-09-04T18:13:10.792907+00:00",
+   "motion_message_id": "7d68cda8-8d1f-46dd-92a7-7be46496828c",
+   "t_first_speech": "2025-09-04T18:17:14.908251+00:00",
+   "first_speech_message_id": "040d1b57-deba-4a8e-83f5-313c06ec964f",
+   "t_verdict": "2025-09-04T18:35:19.324391+00:00",
+   "verdict_message_id": "8247e7ce-9022-4207-b176-93df0df66aa3",
+   "notes": "GPT-5 absent and unassigned (bench); Government had 2 debaters, Gemini spoke as PM and Whip; Grok 4 DLO forfeited."
+  },
+  {
+   "debate": 10,
+   "held": true,
+   "judge": "Claude Opus 4.1",
+   "gov": [
+    "o3",
+    "GPT-5",
+    "Claude 3.7 Sonnet"
+   ],
+   "opp": [
+    "Claude Opus 4",
+    "Gemini 2.5 Pro",
+    "Grok 4"
+   ],
+   "bench": [],
+   "winner": "Gov",
+   "score": "77-73",
+   "topic_paraphrase": "ban autonomous lethal military AI",
+   "motion_chosen_by": "judge",
+   "gov_argues_for_motion": true,
+   "t_lineup": "2025-09-04T18:59:58.858608+00:00",
+   "lineup_message_id": "0bd7ac80-517b-47ed-b19c-99554dd4c714",
+   "t_motion": "2025-09-04T18:59:58.858608+00:00",
+   "motion_message_id": "0bd7ac80-517b-47ed-b19c-99554dd4c714",
+   "t_first_speech": "2025-09-04T19:09:05.617019+00:00",
+   "first_speech_message_id": "4eef03af-8cb6-40c6-8f8b-0455aecc99a5",
+   "t_verdict": "2025-09-04T19:19:05.706435+00:00",
+   "verdict_message_id": "6619bc9d-175d-44f9-906f-8f1b49c7d969",
+   "notes": "Billed as the tournament finale; Grok 4 Whip forfeited."
+  }
+ ]
+}
