@@ -1,0 +1,135 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\begin{document}
+\title{Where the swarm physics stands: answers to Q1--Q7 after 81 scored hypotheses}
+\author{Vivian Rogers, with Claude Opus 5.5}
+\affiliation{Agent-swarm physics project}
+\date[]{2026-10-04. Supersedes the round-1b memo. Exploratory only.}
+\begin{abstract}
+\textbf{Q1.} Coupling runs through reading at the recipient's next model call; in regime III only named messages couple at hop 1 ($J_1$ 0.17 vs 0.004).
+\textbf{Q2.} Fields dominate the co-movement: the runner's schedule makes 70--80\% of regime-III co-activation, and the kickoff sets day-1 content in 18/33 periods ($p=3\times10^{-6}$).
+\textbf{Q3.} Talk and content modes exist, but every unit is subcritical (read-out loop gain $g_\mathrm{lag}$, regime-III median 0.13, 66/66 units), and no group out-persists one agent with its own artifact (15/18 units).
+\textbf{Q4.} Only the context window carries output value ($\kappa_C$ 5.2 [3.8, 8.4] commits per 20 calls per bit); artifacts carry location, and memory carries $\approx 0$ day-scale information.
+\textbf{Q5.} A first nudge buys 1.16 [0.75, 1.57] active minutes, naming steers content one hop, and forced erasure costs 4--11\% of output.
+\textbf{Q6.} Fine-action irreversibility is real in 9/9 periods, but 0.80 [0.73, 0.90] of the excess irreversibility sits at the scheduler's day edges.
+\textbf{Q7.} Only log-level signatures transfer so far: timing separates agents from scripts (AUC 0.92--1.00), and a schema diff detects platform changes with 0/34 false alarms.
+\end{abstract}
+\maketitle
+
+\section{Scope and scores}
+This memo covers 81 hypotheses with scoring-v2 credences: H01--H80 except H51 (not run), plus H85 and H86. The median credence is 0.70 (range 0.37--0.94). Twenty-three claims have $p\ge0.8$; four have $p\ge0.9$ (H02, H08, H38, H54). Thirteen claims carry the fragility flag. Round 1 is running for H81--H84 and H87--H105; this memo reports no results for them. The holdout is locked and untouched. Table~\ref{tab:eu} lists the 16 claims with the highest expected usefulness EU $=pV$.
+
+\begin{table*}[t]
+\caption{\label{tab:eu}Top claims by EU $=pV$ (scoring v2, multi-rater log-odds mean credence $p$, mean value-if-true $V$ on 0--4). The H16/H52 tie at 2.10 gives 16 rows. $\dagger$ = fragile headline. No claim is holdout-confirmed.}
+\begin{ruledtabular}
+\begin{tabular}{lp{11.8cm}cccl}
+Q & Claim & $p$ & $V$ & EU & Source \\
+\hline
+Q4 & A forced erasure triggers orderly re-reading, costs 4--11\% of output and breaks command loops & 0.88 & 3.67 & 3.23 & H44 \\
+Q2 & Activity co-movement is the scheduler's field; talk is a coupling gated at hop 1 of the read-out & 0.85 & 3.50 & 2.98 & H50 \\
+Q2 & Regime-III co-activation is 70--80\% the runner's start/stop schedule$^\dagger$ & 0.90 & 3.25 & 2.93 & H38 \\
+Q1 & Responses are gated at the recipient's next model call (read-out) & 0.91 & 3.17 & 2.88 & H08 \\
+Q4 & A forced wipe cuts work commits 39\% [35, 42] for $\sim$10 turns; saving more memory does not soften it$^\dagger$ & 0.78 & 3.50 & 2.73 & H15 \\
+Q2 & Day-1 content lands on what the kickoff names; in \#51 each agent lands on its private goal & 0.92 & 2.83 & 2.60 & H54 \\
+Q1 & Regimes II--III: reply coupling runs on the call clock ($\eta\approx0$); doubling cadence raises 5-min coupling $\times$1.3--1.5 & 0.72 & 3.50 & 2.52 & H40 \\
+Q2 & Style drifts with context fill and resets at erasure, yet identifies agents better than content & 0.75 & 3.25 & 2.44 & H46 \\
+Q2 & Pairwise activity couplings sit at the null floor; regime-III ``collective coupling'' was day edges$^\dagger$ & 0.94 & 2.50 & 2.35 & H02 \\
+Q1 & Per-pair attention dilutes as $k^{-0.66\pm0.02}$ in 16/16 periods & 0.83 & 2.75 & 2.28 & H18 \\
+Q1 & Rooms couple talk only through reading: co-location $z$ 5.1 $\to$ 0.2 with ledger reads controlled & 0.88 & 2.50 & 2.20 & H05 \\
+Q5 & Topic shift detects goal changes (AUC $\approx$ 0.95); the physics alarm does not beat random dates$^\dagger$ & 0.80 & 2.75 & 2.20 & H36 \\
+Q2 & Model-family content fields are writing style (0/8 survive style residuals) & 0.87 & 2.50 & 2.17 & H13 \\
+Q5 & A schema diff of the raw record detects platform changes: 0/34 placebo false alarms, 6 undocumented API changes & 0.71 & 3.00 & 2.12 & H74 \\
+Q5 & Escape from pause chains ages; one directed message at a pause gate raises the odds of acting $\times$1.5--2.9 (5/7) & 0.70 & 3.00 & 2.10 & H16 \\
+Q5 & Humans get a status-weighted reply premium (+0.030 [0.019, 0.042], $\approx2\times$), not deference & 0.60 & 3.50 & 2.10 & H52 \\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+\section{Q1. What couples agents?}
+\textbf{Claims that stand.} A message acts at the recipient's receiving call, not at posting time. Addressing jumps at the read-out in 14/17 periods and in 17/17 with reply parents; the other-room placebo fails 8/8 (H08, $p$ 0.91). In regimes II--III the reply hazard per call does not depend on the call's wall-time span: $\eta=-0.00\pm0.05$ in G51, near 0 in 11/11 periods (H40, $p$ 0.72). Talk co-movement is a coupling gated at exactly one read-out call; $J_1>0$ in 45/71 units and never at hop 0 (H50, $p$ 0.85). In regime III the named hop-1 coupling is 0.17 and the unnamed one 0.004 (H50, H29). Rooms route reading: controlling for ledger read counts takes the co-location effect from $z=5.1$ to 0.2 (H05, $p$ 0.88). Copying follows reading: read vs posted-but-unread OR 8.6 for project copying (H06), and 5/5 cross-fork commits follow a read (H07).
+
+\textbf{What failed or reversed.} Exponential Hawkes kernels overstate cross-excitation: with each agent's call clock modelled, $n_\mathrm{cross}$ is 0.004 vs 0.061, and the call-clock model wins held out in 57/57 units (H42). Kicks have no refractory window beyond one read-out: $R(\le15\,\text{min})=0.78$ [0.67, 0.89] (H43). The reply-graph premium for ideas ($\Lambda$ 1.92 [1.52, 2.42]) is mostly thread field, because a thread field alone gives $\Lambda\approx3$; read-vs-unread copying passes only in \#51 and \#38 (H62, $p$ 0.49). Links mark herding bursts rather than start them: recipients switch at 6.5$\times$ baseline before they can read the link (H28). The H41 claim that \#51 room hoppers bridge rooms reversed after the room-index fix (97\% $\to$ 51\% in the cone).
+
+\textbf{Constants.} Dilution exponent $\beta=0.66\pm0.02$ (H18), between-agent SD 0.09--0.20 (H68). Read-out delay 108--122\,s (\#51). Cadence elasticity of 5-min coupling $\varepsilon=0.57$ [0.36, 0.78] (H40). Spread velocity 1 hop per 1.5--5 talk calls (H41). Regime-I chat calls are partly wall-clock: $\eta=+0.51$ [0.41, 0.61], cause unidentified.
+
+\section{Q2. What is field and what is coupling?}
+\textbf{Claims that stand.} The scheduler field: the runner's start/stop schedule makes 70--80\% of regime-III co-activation (H38, $p$ 0.90), and pairwise activity couplings sit at the null floor after day-edge trimming (H02, $p$ 0.94). Agents start within 9--22\,s of each other at the daily resume (H50). The kickoff field: day-1 content lands on the kickoff target (top-1 in 18/33 periods; percentile $\ge0.9$ in 26/33), and the NE38 reassignment moved its target agent by DiD +0.61 within a day (H54, $p$ 0.92). The prior field: family content fields vanish under style residuals in both embedding models (H13, $p$ 0.87). Style is mostly an agent constant ($u_A=0.55$; three components explain 0.72 in 34/34 periods; H73). Style identifies agents across goal switches better than content (0.76 vs 0.51, chance 0.15; H46). Convergence: in-flight messages carry about a third of content transfer at 60\,s (H32) and about half of idea adoption (unread/read 0.56; H34). Unread pairs within 15\,s are near-copies as often as read pairs (H57).
+
+\textbf{What failed or reversed.} The kickoff push is positive in 19/19 periods, but pre-kickoff fluctuations do not predict who moves (P1 fails 8/8; H10): no linear response. The H66 latency field is load, not drive: it rises with the active count in 28/29 units. H86 found that Taylor's $c_T$ is not a field gauge, because $b\approx0.85<1$ for clocked agents.
+
+\textbf{Constants.} Pair-covariance field gauge $c_\times$ 0.016 raw, 0.008 trimmed; trimming removes 0.77 of it in regime III; shared share $\varphi$ 0.08 for activity and 0.21 for talk (H86). Content settling time $\tau$ 4.5\,h (bge) / 1.9\,h (gte), about 10$\times$ the read-out coverage time 0.24\,h (H48).
+
+\section{Q3. Is there collective order beyond fields?}
+\textbf{Claims that stand.} Talk modes (21/24 units) and content modes (24/24) survive the calibrated null (H12, $p$ 0.77, fragile). Content and talk co-move inside rooms at a loop gain near 0.5 (H26), and the coherence boundary follows the chat channel (H47, $C_B$ median 0.23). Every unit is subcritical on every estimator: Hawkes $n$ 0.2--0.4 (H03), equal-time gain 0.10--0.16 (H25), idea branching $\hat R$ median 0.22, 32/32 periods (H34), and read-out loop gain $g_\mathrm{lag}\le0.39$ in 66/66 units (H67). No coordination-defined group is a superagent: single agents with their own artifacts out-persist every grouping in 15/18 units (H01, $p$ 0.62). A group store of strength $\rho\ge0.7$ is excluded at power 0.95--1.00 in \#51b--d (H58, $p$ 0.71).
+
+\textbf{What failed.} Near-criticality (H03, H25, H26), the spin glass from private goals (H22: rivals show homophily), the content antiferromagnet (H21: stance order recovers the assigned teams in 10/10 debates, so assignment explains it), the dilute ferromagnet (H49), and an artifact-only autocatalytic set (H79: self-catalysis carries 85--99\% of maxRAF commits). Q3 has no positive answer yet. The egregore tests that would settle it (H81--H83, H88, H90, H101) are running.
+
+\section{Q4. Where does information live?}
+\textbf{Claims that stand.} The context window holds the call-scale information. A forced wipe cuts work commits by 39\% [35, 42] for about 10 turns (H15). After the wipe the read share jumps from 0.22 to 0.47 at the first call, $\Theta_c=+0.079$ [0.071, 0.086] in 9/9 periods (H44, $p$ 0.88). The Kolchinsky value per bit is $\kappa_C=5.2$ [3.8, 8.4] commits per 20 calls per bit for the context window and $\kappa_A=-0.6$ [$-1.7$, +0.2] for the artifact store (H70). The store carries location: 89\% of agents return to their own repo after an erasure (0.14\,bits). Restatement loops are copies held by the context window: OR 3.38 [2.56, 4.46], and erasure raises loop exit $\times$2.40 [1.18, 4.88] (H69). Memory size reverts to an agent set point, $\varphi^+=0.67$ [0.63, 0.71] per consolidation cycle in 37/37 units, with no overshoot (H71). The room share of context is passive (regulation index $\le0.22$ in 32/32 periods; H45).
+
+\textbf{What failed or reversed.} Saving more memory before a wipe does not soften it (NE41 dose $\rho=+0.01$). The H09 ``memory overshoot'' was a sampling artifact (Sec.~\ref{sec:bugs}). The $\kappa$ table across all channels (H87), collective memory decay (H88) and the search-outage scramble (H84) are running.
+
+\section{Q5. What can an operator do?}
+\textbf{Claims that stand.} A first nudge buys 1.16 [0.75, 1.57] active minutes per 30\,min for its named target (H04; H30: G51 0.98 [0.63, 1.37]). It buys a glance, not work: +0.08 in $P(\text{active in 30 min})$ and about 0.4\% of commits (H35). All three claims are fragile. The best simple policy nudges each trap once at its second idle gate: $\times$1.55 [1.25, 1.81] over the logged nudger, against $\times$1.46 for random choice; no index does better (H60). Space kicks by one read-out, not by an episode (H43). Name the agent to steer content; unnamed messages do not couple in regime III (H29, H50). Size vote windows to read-out delays: 15\,min reaches about 90\% of a regime-III swarm (H53). The 41-turn context cap breaks loops at a cost of 4--11\% of output (H44). Settling a prize stops assigned antagonism within minutes ($\Delta=-0.69$, $p=0.001$; H64). For monitors, a schema diff dates platform changes (H74) and topic shift detects goal changes (H36).
+
+\textbf{What failed or reversed.} No single (field, catalysis, delay) triple transfers between input classes; leave-one-class-out fails in 4/4 periods (H59). Round 1's ``do not nudge into a lull'' rule reversed: lull response 1.74 vs 0.72 (H30). The 4-min nudge dead time was an artifact; the response starts at the receiving call (H04, H43). Ambient chatter holds idle agents at the gate ($\beta_s=+0.23$ [+0.11, +0.33]) instead of releasing them (H72).
+
+\section{Q6. Thermodynamics and selection}
+\textbf{Claims that stand.} Fine-action arrows are irreversible for every agent in 9/9 periods and survive scaffold removal (H14). Of the swarm's debiased excess irreversibility, 0.80 [0.73, 0.90] lies in the first and last 30\,min of the day in G51 (0.94 in G38, 1.00 in G40); trimming removes 81--100\% (H76, $p$ 0.78). A kickoff that names its target moves the swarm near the Wasserstein speed limit, slack $S=1.0$--1.4 with settling in 0.25--0.5 active h; free-choice goals settle 5--40$\times$ slower ($S$ 5--15; H75, $p$ 0.40).
+
+\textbf{What failed.} Turn-level entropy production does not fingerprint 32 tool and prompt changes (H56). The H14 regime I/III contrast was the session scaffold. Replicator growth order and the selection-resolution bound are not identifiable from commit logs (H77, H78). Collective entropy production beyond the parts (H90) and slack as a specificity gauge (H95) are running.
+
+\section{Q7. What transfers outside the village?}
+Timing alone separates agents from scripts (AUC 0.92--1.00, partly by construction); the assembly index adds nothing over compression ($\Delta$AUC $-0.007$ to +0.001, synthetic power 1.0; H80, $p$ 0.64). The schema-diff detector needs only the raw record schema (H74). Read-out gating, the call clock and the dilution exponent are candidate signatures for any logged swarm. Nobody has tested them on a second system. HH191--HH210 remain ideas.
+
+\section{Cross-cutting lessons}
+\subsection{The four impostors}
+Table~\ref{tab:imp} counts the headlines each impostor faked before we removed it. The counts are lower bounds from the cards and LOG.md. The scheduler field fooled us most often, partly because the event-drop bug acted as a day-level field. The standards pass found that convergence is still open in 19 cards and shared priors in 13 (STANDARDS.md \S1).
+
+\begin{table}[h]
+\caption{\label{tab:imp}Headlines each impostor faked (lower bounds).}
+\begin{ruledtabular}
+\begin{tabular}{lcp{4.3cm}}
+Impostor & $n$ & Hypotheses \\
+\hline
+Scheduler field & 11 & H02, H09, H12, H14, H19, H25, H26, H36, H38, H49, H76 \\
+Convergence & 7 & H07, H28, H32, H34, H41, H57, H62 \\
+Exogenous field & 6 & H21, H25 (content), H58, H62, H77, H78 \\
+Shared priors & 5 & H01 (lab order), H13, H20, H23, H24 \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+\subsection{Fragility}
+In round 1b, 15 of 39 headlines changed sign or significance (38\%). In round 1 for H40--H80, two more reversed after bug fixes (H41 bridging, H09 overshoot). That is 17 changes in 81 scored claims. Thirteen claims now carry the fragility flag, among them four of the top 16 by EU (H02, H15, H36, H38). Same-data agreement across embedding models counts as robustness, not replication (adjudication rule, RUBRIC.md).
+
+\subsection{Bugs found and fixed}\label{sec:bugs}
+\begin{enumerate}
+\item \textbf{The \texttt{activity\_bins} drop.} Events and the minute grid computed the join key differently, so about half of all events vanished (talk 90{,}765 vs 170{,}870). The drop acted as a day-level field and drove most of the 15 round-1b changes. Fixed in \texttt{build\_derived.py}; the three executed holdout runs (H02, H04, H05) used the old table.
+\item \textbf{The H41 room index.} It dropped open \texttt{rooms\_timeline} segments and changed 63\% of \#51 lookups. $J_\mathrm{in}$ fell from 40.7 to 2.08, and the bridging claim reversed. A nondeterministic day bootstrap was fixed at the same time.
+\item \textbf{The H09 memory artifact.} The ``overshoot after erasure'' came from two rows per consolidation. H71 found reversion with no overshoot; H09 is fragile at $p$ 0.56.
+\item \textbf{H13's confirm crash.} The original \texttt{confirm.py} overwrote the unit list with held-out names and would raise a KeyError on the real run. The dry run passed because the stand-in names existed. Lesson: dry-run with unit names absent from the exploration files.
+\item \textbf{The Krakauer label swap.} H01 and H58 called $I(x';x|y)$ ``organismal''; it is the colonial $A$. The estimators were right; only the labels change.
+\end{enumerate}
+
+\section{The phase diagram as it stands}
+Three per-unit axes now exist for the non-holdout units, all in the shared estimates table (\texttt{per\_period\_estimates}). \textbf{Coupling:} $g_\mathrm{lag}$ from H67 (66 units). \textbf{Field:} the trimmed shared share $\varphi$ or $c_\times$ from H86 (70 units). \textbf{Size:} $N$ from \texttt{period\_units}. A fourth axis, the kickoff specificity, has only four points: slack $S$ from H75 (G39 1.0, G40 1.25--1.64, G51 1.4, G41 3.7 [1.5, 7.5]).
+
+A coordinator join of the H67 and H86 rows places the regimes. Regime III (23 units) sits at median $g_\mathrm{lag}=0.13$ and activity $\varphi=0.04$. Regime I (38 units) sits at $g_\mathrm{lag}=0.005$ and $\varphi=0.13$. The two axes are weakly anticorrelated across units (Spearman $\rho=-0.18$, $n=65$). Inside a regime $g_\mathrm{lag}$ has no clear $N$ trend ($\rho=-0.37$ regime I, $+0.23$ regime III). The regimes therefore separate along the coupling axis, which the scaffold sets. No unit approaches a critical line: the largest upper bound is 0.39. The diagram still lacks CIs on $\varphi$ and a per-unit kickoff-field axis; H95 (slack as a specificity gauge) and H97 (quench restoring force) target the latter.
+
+\section{What remains open, and decisions needed}
+Open science: a powered answer to Q3 with fields removed; the full $\kappa$ table (Q4); collective entropy production (Q6); and any test outside the village (Q7). H40 also has an unexplained result: G38 and G44 have $\eta$ significantly below zero ($-0.57$ [$-0.77$, $-0.38$] in G38), which neither clock predicts. ``Done'' in GOALS.md needs three holdout-confirmed core claims; we have zero.
+
+The decisions for Vivian come from the confirm sheet, \href{../../hypotheses/confirm-decisions.md}{\texttt{hypotheses/\allowbreak confirm-decisions.md}}.
+\begin{enumerate}
+\item \textbf{First confirmatory runs:} sign off H40 on NE20 and H08. Both scripts are re-frozen and dry-run.
+\item \textbf{Executed holdout runs on the buggy table:} re-run H02 (\#45), H04 (NE21+NE23) and H05 (NE12 C3) with amendments, or keep them as run.
+\item \textbf{Ledger family tags:} re-tag (holdout item 6), or rule case by case. Without a ruling H12, H26, H30, H35, H38, H43 and H49 lose targets.
+\item \textbf{The both-model rule:} accept the ``model-dependent'' outcome label when bge and gte disagree.
+\item \textbf{Reversed or post-hoc primaries:} approve or reject those of H12, H16, H19, H26, H31 and H35; approve the H23 agent-30 exclusion and the H41 fix (add H41 to the holdout ledger).
+\item \textbf{Small items:} a $\sim$\$0.22 OpenRouter top-up labels 3{,}313 \#51 holdout windows; the three deferred HHs (HH183, HH247, HH317).
+\end{enumerate}
+Round 2 should first close the convergence and prior impostors in the 19 and 13 cards where they are open.
+\end{document}

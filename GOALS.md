@@ -3,8 +3,8 @@
 **Mission.** Build a quantitative physics of LLM agent swarms that someone running, steering or aligning one can use. The physics should give measured constants, fitted models with error bars, and laws that survive the four impostors (`STANDARDS.md` §1) and the locked holdout. The AI Village is the system. Each goal period is one point on a phase diagram.
 
 **Status as of 2026-10-04:**
-- Round 1b covers H01–H39. Round 1 covers H40–H59.
-- 60 hypotheses are scored (scoring v2).
+- Round 1b covers H01–H39. Round 1 is done for H40–H80 and H85–H86; H51, H81–H84, H87–H105 are running.
+- 81 hypotheses carry multi-rater v2 scores (coordinator plus a blind rater; disagreements adjudicated).
 - Nothing is holdout-confirmed yet.
 - Measured constants are listed in `interpretation/swarm-constants.json`.
 - The synthesis is in `writeup/round1b-synthesis/`.
