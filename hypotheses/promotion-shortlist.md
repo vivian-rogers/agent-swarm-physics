@@ -231,3 +231,13 @@ Vivian picked these from HH107–HH126 and the leftovers. HH92 was already H08's
 | S111 | Crossing claims anti-coordinate: parallel updates make 2-cycles | HH343 | 02, 10 | H112 (launched) |
 | S112 | Read-out channel capacity: information per call grows as k^(1−β) ≈ k^0.34 | HH345 | 04, 12 | H113 (launched) |
 | S113 | A Griffiths phase: rare strong pairs give a subcritical swarm heavy-tailed talk | HH346 | 09, 03, 01 | H114 (launched) |
+| S114 | Blind role recovery in the debate week: the judge is a sink of antisymmetric coupling (#12) | HH353 | 02, 01 | H115 (launched) |
+| S115 | The election as a coupling step: influence should flow toward the winner after the result (#26) | HH354 | 02 | H116 (launched) |
+| S116 | J should not move when the rules do: the mid-goal reset in #32 (NE35) | HH355 | 02, 01 | H117 (launched) |
+| S117 | The forked RPG is two replicas of one dynamics: damage spreading between rooms (NE15, #35) | HH358 | 02, 11 | H118 (launched) |
+| S118 | The room merge switches a known adjacency on and off: recover it from the dynamics (NE42) | HH359 | 02 | H119 (launched) |
+| S119 | Is a goal period a stationary NESS? Within-period drift of J and EP (#38, #51 main) | HH360 | 02 | H120 (launched) |
+| S120 | The daily boot is a reproducible quench: hundreds of replicas of relaxation to the steady state | HH361 | 02, 09 | H121 (launched) |
+| S121 | A batch join is a spin addition: do incumbents respond as the fitted couplings say? (NE27, NE33) | HH363 | 02 | H122 (launched) |
+| S122 | Regime I's turn order is a sweep: equilibrium-looking statistics with nonzero entropy production | HH364 | 02, 15 | H123 (launched) |
+| S123 | Four agents for weeks: an exact kinetic Ising benchmark for the mean-field approximations (#4, #6) | HH365 | 02 | H124 (launched) |

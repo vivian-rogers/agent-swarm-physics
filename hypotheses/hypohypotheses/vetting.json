@@ -462,7 +462,9 @@
    "family": "kinetic Ising",
    "q": "Q1",
    "cost": "low",
-   "why": "If kinetic Ising and the EP bound can't find a coupling we know exists, every negative coupling result built on them is in doubt."
+   "why": "If kinetic Ising and the EP bound can't find a coupling we know exists, every negative coupling result built on them is in doubt.",
+   "decision": "later",
+   "decided_at": "2026-10-04T21:47:45.409686+00:00"
   },
   {
    "id": "HH352",
@@ -470,7 +472,9 @@
    "family": "kinetic Ising",
    "q": "Q2",
    "cost": "low",
-   "why": "A competition on a fixed list should give J ≈ 0 after a difficulty field; a nonzero J flags estimator false positives."
+   "why": "A competition on a fixed list should give J ≈ 0 after a difficulty field; a nonzero J flags estimator false positives.",
+   "decision": "later",
+   "decided_at": "2026-10-04T21:47:52.551383+00:00"
   },
   {
    "id": "HH353",
@@ -478,7 +482,10 @@
    "family": "kinetic Ising",
    "q": "Q1",
    "cost": "low",
-   "why": "Recover the judge and the teams from talk dynamics alone, then check against the known roles."
+   "why": "Recover the judge and the teams from talk dynamics alone, then check against the known roles.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:46:20.634293+00:00",
+   "promoted_to": "H115"
   },
   {
    "id": "HH354",
@@ -486,7 +493,10 @@
    "family": "kinetic Ising",
    "q": "Q1",
    "cost": "low",
-   "why": "One dated result splits the week into peer and leader regimes; out-coupling of the winner should step up."
+   "why": "One dated result splits the week into peer and leader regimes; out-coupling of the winner should step up.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:47:38.905669+00:00",
+   "promoted_to": "H116"
   },
   {
    "id": "HH355",
@@ -494,7 +504,10 @@
    "family": "kinetic Ising",
    "q": "Q2",
    "cost": "low",
-   "why": "A pure field change mid-goal tests whether fitted couplings are field artifacts."
+   "why": "A pure field change mid-goal tests whether fitted couplings are field artifacts.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:47:12.269597+00:00",
+   "promoted_to": "H117"
   },
   {
    "id": "HH356",
@@ -502,7 +515,9 @@
    "family": "kinetic Ising",
    "q": "Q6",
    "cost": "low",
-   "why": "Scheduler-made irreversibility at two known switches, with couplings held fixed."
+   "why": "Scheduler-made irreversibility at two known switches, with couplings held fixed.",
+   "decision": "later",
+   "decided_at": "2026-10-04T21:48:38.765205+00:00"
   },
   {
    "id": "HH357",
@@ -510,7 +525,9 @@
    "family": "kinetic Ising",
    "q": "Q1",
    "cost": "low",
-   "why": "Per-call couplings should survive a change of update granularity; per-hour ones should not."
+   "why": "Per-call couplings should survive a change of update granularity; per-hour ones should not.",
+   "decision": "later",
+   "decided_at": "2026-10-04T21:48:39.785677+00:00"
   },
   {
    "id": "HH358",
@@ -518,7 +535,10 @@
    "family": "kinetic Ising",
    "q": "Q3",
    "cost": "medium",
-   "why": "Same game, two rooms: overlap decay measures noise vs the rules' common field."
+   "why": "Same game, two rooms: overlap decay measures noise vs the rules' common field.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:46:24.439372+00:00",
+   "promoted_to": "H118"
   },
   {
    "id": "HH359",
@@ -526,7 +546,10 @@
    "family": "kinetic Ising",
    "q": "Q1",
    "cost": "low",
-   "why": "Cross-room J should appear only while the rooms can read each other, and leave nothing behind."
+   "why": "Cross-room J should appear only while the rooms can read each other, and leave nothing behind.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:47:36.619092+00:00",
+   "promoted_to": "H119"
   },
   {
    "id": "HH360",
@@ -534,7 +557,10 @@
    "family": "kinetic Ising",
    "q": "Q2",
    "cost": "low",
-   "why": "Checks the unit-of-analysis assumption that fits within a period describe one steady state."
+   "why": "Checks the unit-of-analysis assumption that fits within a period describe one steady state.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:47:43.565459+00:00",
+   "promoted_to": "H120"
   },
   {
    "id": "HH361",
@@ -542,7 +568,10 @@
    "family": "kinetic Ising",
    "q": "Q1",
    "cost": "low",
-   "why": "Hundreds of identical quenches; τ = τ₀/(1 − g_lag) is an unfitted prediction."
+   "why": "Hundreds of identical quenches; τ = τ₀/(1 − g_lag) is an unfitted prediction.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:47:30.649432+00:00",
+   "promoted_to": "H121"
   },
   {
    "id": "HH362",
@@ -550,7 +579,9 @@
    "family": "kinetic Ising",
    "q": "Q1",
    "cost": "low",
-   "why": "An out-of-sample prediction from pre-retirement couplings, the strongest test of a fitted J."
+   "why": "An out-of-sample prediction from pre-retirement couplings, the strongest test of a fitted J.",
+   "decision": "later",
+   "decided_at": "2026-10-04T21:48:40.241993+00:00"
   },
   {
    "id": "HH363",
@@ -558,7 +589,10 @@
    "family": "kinetic Ising",
    "q": "Q1",
    "cost": "low",
-   "why": "Cross-fit couplings in time and predict the join-day response."
+   "why": "Cross-fit couplings in time and predict the join-day response.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:46:35.196124+00:00",
+   "promoted_to": "H122"
   },
   {
    "id": "HH364",
@@ -566,7 +600,10 @@
    "family": "kinetic Ising",
    "q": "Q6",
    "cost": "low",
-   "why": "Model 02's subtle case; measures how much irreversibility the turn order alone makes."
+   "why": "Model 02's subtle case; measures how much irreversibility the turn order alone makes.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:46:13.028716+00:00",
+   "promoted_to": "H123"
   },
   {
    "id": "HH365",
@@ -574,7 +611,94 @@
    "family": "kinetic Ising",
    "q": "Q1",
    "cost": "low",
-   "why": "Tells us which approximation to trust at N = 21 before we rely on it."
+   "why": "Tells us which approximation to trust at N = 21 before we rely on it.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:46:32.579993+00:00",
+   "promoted_to": "H124"
+  },
+  {
+   "id": "HH366",
+   "title": "The kickoff response is a damped oscillator: look for the day-2 undershoot",
+   "family": "kinetic (Potts/vector)",
+   "q": "Q2",
+   "cost": "low",
+   "why": "One figure decides whether H97's overshoot is inertia (undershoot follows) or a fading field (no undershoot)."
+  },
+  {
+   "id": "HH367",
+   "title": "Goal occupancy is a telegraph process: dwell times predict occupancy",
+   "family": "kinetic (Potts/vector)",
+   "q": "Q2",
+   "cost": "low",
+   "why": "A two-rate switch gives p = k_on/(k_on + k_off); measured dwells predict H105's occupancy with no fit."
+  },
+  {
+   "id": "HH368",
+   "title": "Content trails a moving goal: agents that call more catch up faster",
+   "family": "kinetic (Potts/vector)",
+   "q": "Q1",
+   "cost": "low",
+   "why": "An overdamped particle on the work clock: lag ∝ 1/call rate, and curves collapse in calls."
+  },
+  {
+   "id": "HH369",
+   "title": "Free kickoffs coarsen, named kickoffs freeze (kinetic Potts quench)",
+   "family": "kinetic (Potts/vector)",
+   "q": "Q2",
+   "cost": "low",
+   "why": "Power-law fall in active projects after free kickoffs vs an instant step after named ones."
+  },
+  {
+   "id": "HH370",
+   "title": "Project hopping carries cycle currents: the sticky Potts walker breaks detailed balance",
+   "family": "kinetic (Potts/vector)",
+   "q": "Q6",
+   "cost": "low",
+   "why": "Project births and deaths should drive a net circulation through projects beyond age-ordering.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:50:20.117291+00:00"
+  },
+  {
+   "id": "HH371",
+   "title": "#51 agents are OU particles in private wells: reads kick, kicks decay at the well's rate",
+   "family": "kinetic (Potts/vector)",
+   "q": "Q1",
+   "cost": "medium",
+   "why": "One relaxation rate should explain both an agent's own memory and how fast a read's influence fades.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T21:50:22.568363+00:00"
+  },
+  {
+   "id": "HH372",
+   "title": "Room content has no inertia: content switches within one call on a room change",
+   "family": "kinetic (Potts/vector)",
+   "q": "Q1",
+   "cost": "low",
+   "why": "Measures the time constant behind H102's 'content follows the room you speak in'."
+  },
+  {
+   "id": "HH373",
+   "title": "The memory floor is immigration: predict it from the re-coinage rate",
+   "family": "kinetic (Potts/vector)",
+   "q": "Q4",
+   "cost": "low",
+   "why": "A birth–death–immigration floor μ/(d − b) from independently measured re-coinage."
+  },
+  {
+   "id": "HH374",
+   "title": "Assigned antagonism switches off in one read-out after the prize goes",
+   "family": "kinetic (Potts/vector)",
+   "q": "Q1",
+   "cost": "low",
+   "why": "Per-agent read timing, not the clock, should set when rivals stop opposing each other."
+  },
+  {
+   "id": "HH375",
+   "title": "Debate is a two-sublattice limit cycle: topic ping-pong at lag one",
+   "family": "kinetic (Potts/vector)",
+   "q": "Q3",
+   "cost": "low",
+   "why": "Content should alternate between teams turn by turn, with a direction to the cycle."
   }
  ]
 }

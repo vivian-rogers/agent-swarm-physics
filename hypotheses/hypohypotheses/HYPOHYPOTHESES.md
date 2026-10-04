@@ -1126,18 +1126,21 @@ These apply model 02 (asymmetric kinetic Ising, Glauber or parallel updates, Agu
   - *Kill:* judge rank ≥ 4, or team blocks absent from symmetric J (H101 found them in co-usage, J +0.15 within vs −0.60 across).
   - *Impostors:* assigned roles are a field; the read-gated contrast separates reacting to a read message from following the schedule.
   - *Models:* 02, 01 · *Builds on:* H21, H37, H101
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H115.
 - **HH354 · The election as a coupling step: influence should flow toward the winner after the result (#26).** Before the result every agent is a peer; after it, one agent sets the week's goal.
   - *Prediction:* the winner's out-coupling (Σ_j J_ji) jumps at the result time while the in-coupling does not; the swarm's EP rises with the new asymmetry. H65 found the elected leader gets attention but no extra broadcast reach in regime II, so in regime I a step of ≥ 0.05 is the test.
   - *Check:* date the result from chat (one timestamp); event study with windows on both sides, matched placebo times on other days.
   - *Kill:* no step in out-coupling beyond placebo times.
   - *Impostors:* the goal change that follows the election is a field step; separate coupling (responses to the leader's messages at read-out) from the new goal direction.
   - *Models:* 02 · *Builds on:* H65, H29, HH83
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H116.
 - **HH355 · J should not move when the rules do: the mid-goal reset in #32 (NE35).** The operator reset a gamed challenge format mid-goal. That changes the field (what agents are trying to do), not who reads whom.
   - *Prediction:* the fitted symmetric J on talk spins agrees across NE35 within its bootstrap CI, while h_i shifts. A fitted J that jumps at a pure field change is a field artifact, not a coupling.
   - *Check:* fit before and after NE35 on matched hours; compare J matrices (Frobenius distance against a split-in-time placebo on other days of #32).
   - *Kill:* J changes more across NE35 than across placebo splits.
   - *Impostors:* this is a direct test of the field impostor for the J estimator itself.
   - *Models:* 02, 01 · *Builds on:* H38, H02
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H117.
 - **HH356 · The nudger is a state-dependent update rule: entropy production should drop when it is switched off at fixed J (NE10, NE43).** Model 02's table: choosing who updates based on the state (the nudger picks idle agents) breaks detailed balance even with symmetric couplings.
   - *Prediction:* the activity-channel EP bound falls at NE43 (nudger off) and rises at NE10 (nudger on), while the fitted J does not change. The share of EP carried by nudge-receiving calls equals the drop.
   - *Check:* AIK bound per day around both dates, with day-matched placebo dates; split EP by whether the call received a nudge.
@@ -1156,24 +1159,28 @@ These apply model 02 (asymmetric kinetic Ising, Glauber or parallel updates, Agu
   - *Kill:* q(t) stays above baseline for the whole period (the rules, not the players, set the state).
   - *Impostors:* the rules are a common field, and the plateau measures it.
   - *Models:* 02, 11 · *Builds on:* H100, H07 (forks), HH337
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H118.
 - **HH359 · The room merge switches a known adjacency on and off: recover it from the dynamics (NE42).** For one week #best and #rest were one room, then split back. Who can read whom is known at every moment.
   - *Prediction:* the fitted cross-block J is ≈ 0 before, positive during, and ≈ 0 after the merge (no remanence, as H100), and it is carried by read-outs of the other block's messages only.
   - *Check:* sliding-window kinetic Ising on talk spins, block-averaged J_cross(t); read vs in-flight contrast inside the merge week.
   - *Kill:* J_cross does not rise during the merge, or stays raised after the split.
   - *Impostors:* the goal changed in the merged week (H51 NE42), so use only read-gated coupling.
   - *Models:* 02 · *Builds on:* H05, H100, H94 (NE42 hub)
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H119.
 - **HH360 · Is a goal period a stationary NESS? Within-period drift of J and EP (#38, #51 main).** The project fits models within a period, which assumes a stationary state inside it. The 17-day charity drive (#38) and the long #51 main body test that assumption.
   - *Prediction:* weekly J matrices and EP agree within bootstrap CIs inside #38; #51 drifts slowly (H91: about 1 SD a day in content modes).
   - *Check:* rolling kinetic Ising fits with fixed hyperparameters; compare drift with split-half placebo noise.
   - *Kill (of stationarity):* drift beyond placebo noise in #38. Then the period, not the step change, is the wrong unit.
   - *Impostors:* weekday and session-length fields removed first.
   - *Models:* 02 · *Builds on:* H91, H92, the unit-of-analysis rule
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H120.
 - **HH361 · The daily boot is a reproducible quench: hundreds of replicas of relaxation to the steady state.** Every day, all agents start from off. That is the same quench repeated on every active day.
   - *Prediction:* the collective talk magnetization's approach to its daily steady state is one exponential on the call clock, with τ = τ₀/(1 − g_lag) using H67's g_lag (unfitted), and the curves collapse across days within a regime.
   - *Check:* align days at the first call; per-call collective mean; fit τ per regime; compare with the prediction from g_lag and the single-agent call time.
   - *Kill:* τ off by more than ×2 from the prediction, or no collapse across days.
   - *Impostors:* the boot is a scheduler field by construction; the test is whether the relaxation after it carries the coupling's signature (H99 found kicks outlive the fluctuation clock, so this is a live test).
   - *Models:* 02, 09 · *Builds on:* H67, H99, H38, HH344
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H121.
 - **HH362 · A retirement is a spin removal: predict the bystanders' shift from the fitted J (NE28, NE29).** Removing spin j shifts each remaining agent's local field by −J_ij s̄_j. The prediction uses only pre-retirement fits.
   - *Prediction:* the change in each remaining agent's activity and talk rate after the retirement correlates with its pre-retirement J_ij to the retired agent (ρ ≥ 0.5 pooled over NE28 and NE29). Given the small couplings, the predicted shifts are small, and their sign must match.
   - *Check:* fit before; compute predicted shifts; measure actual shifts over matched windows after; compare with placebo "removals" of agents who stay.
@@ -1186,17 +1193,87 @@ These apply model 02 (asymmetric kinetic Ising, Glauber or parallel updates, Agu
   - *Kill:* the constant-shift model wins.
   - *Impostors:* N rises, which changes per-pair dilution (H18 N^−0.6); include it.
   - *Models:* 02 · *Builds on:* H83, H18, H85
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H122.
 - **HH364 · Regime I's turn order is a sweep: equilibrium-looking statistics with nonzero entropy production.** Model 02's subtle case: a fixed-order sweep keeps the Boltzmann distribution but breaks detailed balance. If regime I's turn pointer (`villages.turn_id`) cycles in a fixed order, the snapshots look like equilibrium while the dynamics is not.
   - *Prediction:* the next-actor distribution in regime I is closer to round-robin than random (count first); model 01 fits snapshots as well as in regime III; and the EP bound is positive even with the antisymmetric J set to 0, matching the value the sweep alone predicts.
   - *Check:* scheduler audit of next actor given the current state; simulate a symmetric-J kinetic Ising with the real turn order and compare its EP with the measured bound.
   - *Kill:* turn order is random sequential, or the measured EP far exceeds the sweep prediction (then real asymmetric coupling is present, which is also informative).
   - *Impostors:* this measures the scheduler's own share of irreversibility.
   - *Models:* 02, 15 · *Builds on:* H14, H56, H76, HH45
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H123.
 - **HH365 · Four agents for weeks: an exact kinetic Ising benchmark for the mean-field approximations (#4, #6).** With N = 4 and weeks of data, the full kinetic Ising likelihood is exact and cheap. That lets us test the mean-field approximations (naive, TAP, Plefka orders; Aguilera et al. 2021) on real data before trusting them at N = 21.
   - *Prediction:* TAP or second-order Plefka recovers the exact J and the EP bound within 10% at N = 4; naive mean field does not. The ranking carries to synthetic N = 21 worlds built on #51's schedule.
   - *Check:* exact ML vs approximations on #4 and #6 (merch competition) per call; then synthetic scaling.
   - *Kill:* no approximation gets within 25%. Then the large-N results that use them need the exact or pseudo-likelihood route.
   - *Impostors:* n/a (method benchmark); scheduler field removed as usual.
   - *Models:* 02 · *Builds on:* H25, H67, H90
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H124.
 
 *Suggested first picks.* HH351 and HH352 together (a positive and a negative control for every coupling and EP result), HH355 (tests the field impostor on the J estimator itself), HH362 (an out-of-sample prediction from fitted couplings) and HH356 (scheduler-made irreversibility at known switches).
+
+## Kinetic versions of what Potts and vector spins got right (2026-10-04, coordinator, for Vivian)
+
+Potts and vector spins were faithful for statics: the goal as a field vector (H54, H30, H74), the kickoff as an anisotropic restoring force with a day-1 overshoot (H97), goal switches as quenches (H96), rooms breaking symmetry anew at each goal (H100), domains with no wall (H102), #51 as a static random field (H98), two-camp order only with assigned sides (H21, H37, H64), instant freeze onto named projects (H75), max-ent allocation with an ownership price (H94), and memory that decays with work to a floor (H88, H103). These ten HHs give each of those a simple kinetic (nonequilibrium) model: a rate equation, a Langevin equation or a Markov chain, with one or two parameters and a prediction the static fit did not use.
+
+- **HH366 · The kickoff response is a damped oscillator: look for the day-2 undershoot.** H97 found a day-1 overshoot toward the goal (+0.12). An overdamped spin cannot overshoot; an underdamped one (inertia plus restoring force, x″ + γx′ + kx = 0) overshoots and then undershoots. Inertia here would be agents carrying their own momentum (plans, open tasks) past the target.
+  - *Prediction:* the alignment with the goal direction, relative to its settled level, goes positive on day 1 and negative on day 2–3 (an undershoot), with the ratio of the two peaks giving the damping ratio ζ < 1. If ζ ≥ 1 (no undershoot), the overshoot is a field that fades (the kickoff text's salience), not inertia.
+  - *Check:* H97's kickoff-aligned series per active hour, both models; fit damped-oscillator vs overdamped-plus-fading-field on all 18 kickoffs.
+  - *Kill:* no undershoot beyond placebo days in either model.
+  - *Impostors:* a fading kickoff field mimics overshoot without undershoot. That is exactly the rival this tests. Scheduler: active-hour clock (H103).
+  - *Models:* 11, 02 · *Builds on:* H97, H54, H96
+- **HH367 · Goal occupancy is a telegraph process: dwell times predict the occupancy.** H105 found on-goal occupancy p 0.23–0.44 with binomial variance. The simplest kinetic model is a two-state switch per agent with rates k_on (set by the goal field) and k_off: p = k_on/(k_on + k_off).
+  - *Prediction:* on- and off-goal dwell times (in calls) are each roughly exponential, and p predicted from the two mean dwells matches the measured occupancy within 20% in each assigned week. A kickoff raises k_on, not k_off.
+  - *Check:* per-statement on/off-goal labels (H105's decoy threshold; calibrate first, as H105 asked); dwell distributions per agent and week.
+  - *Kill:* dwell distributions far from exponential (strongly heavy-tailed), or predicted p off by more than 30%.
+  - *Impostors:* misclassified statements shorten dwells; run the synthetic misclassification correction from H105 first.
+  - *Models:* 10, 02 · *Builds on:* H105, H10
+- **HH368 · Content trails a moving goal like an overdamped particle: agents that call more catch up faster.** Model content as a particle in a potential well that moves when the goal moves (Langevin: ẋ = −k(x − g(t)) + noise). H103 says the clock is active work. So each agent's lag behind the goal should scale with its own call rate.
+  - *Prediction:* per agent, the time to reach half of its settled alignment after a kickoff falls with its calls per active hour (log-log slope near −1); measured in calls, it is the same for all agents (data collapse).
+  - *Check:* per-agent half-alignment times across non-holdout kickoffs; regress on call rate; compare the collapse on calls vs hours.
+  - *Kill:* slope near 0, or no improvement in the collapse when time is measured in calls.
+  - *Impostors:* busy agents may also be more on-task (a field); control for agent constant (H100 â_i) and lab.
+  - *Models:* 11, 02 · *Builds on:* H97, H103, H40, HH344
+- **HH369 · Free kickoffs coarsen, named kickoffs freeze: a kinetic Potts quench.** In a zero-temperature Potts quench, many small domains merge and the number of distinct domains falls as a power of time (coarsening). A strong field (a named project) skips coarsening and freezes at once. H75 found named kickoffs freeze instantly (slack 1.0–1.4) and free ones are slow (5–15).
+  - *Prediction:* in free-kickoff weeks, the number of active projects falls as t^(−α) with α ≈ 0.3–0.5 over the first days; in named-kickoff weeks it drops to its final value within hours, with no power-law stretch.
+  - *Check:* H94/H77 project tables; active projects per active hour from each kickoff; fit power law vs exponential vs step.
+  - *Kill:* the free and named curves have the same shape.
+  - *Impostors:* projects finish for exogenous reasons (deadlines); exclude finished-and-shipped projects from "merged" counts.
+  - *Models:* 10 · *Builds on:* H75, H94, H93
+- **HH370 · Project hopping carries cycle currents: the sticky Potts walker breaks detailed balance.** H93 found habit dominates project choice (b_own 2.5–6 nats). A kinetic Potts walker with a habit field hops rarely. If hopping only followed a fixed attractiveness, the flows A→B and B→A would balance. Projects being born, finished and abandoned instead drive a net circulation (A→B→C→A).
+  - *Prediction:* on agent project-transition triples, the cycle affinity ln(P_ABC/P_CBA) is nonzero in shared-goal weeks, with the circulation running from older to newer projects. Dwell times are geometric with a rate that falls with habit.
+  - *Check:* transitions between projects per agent in H93's choice table; cycle affinities with a time-reversal null.
+  - *Kill:* cycle affinities within the reversal null.
+  - *Impostors:* project age is a drift field by construction; that is the claimed mechanism, so the test is whether the circulation exceeds what age-ordering alone gives in a synthetic walker.
+  - *Models:* 02, 10, 15 · *Builds on:* H93, H94, H56, HH56
+- **HH371 · #51 agents are Ornstein–Uhlenbeck particles in private wells: reads kick them and the kick decays at the well's rate.** H98 found #51 is a static random field with a weak pull, plus co-movement through conversation. The simplest kinetic version: each agent relaxes toward its own private goal direction at rate γ, and each read of another agent's message is a small kick toward it.
+  - *Prediction:* after a read, an agent's content moves toward the sender by a small amount that decays as e^(−γτ), and the same γ also sets the agent's own autocorrelation decay (an unfitted consistency check). Pairs with more reads co-move more, and the co-movement decays at γ.
+  - *Check:* per-call content projections in #51 main body; event-triggered averages after reads vs matched non-read calls; fit γ two ways.
+  - *Kill:* the two γ estimates differ by more than ×2, or no read kick beyond the in-flight placebo.
+  - *Impostors:* niche overlap (shared role text) is a common field; use the read vs in-flight contrast.
+  - *Models:* 11, 02 · *Builds on:* H98, H22, H65 (read_response)
+- **HH372 · Room content has no inertia: an agent's content switches within one call when it changes room.** H102 found content follows the room an agent is speaking in, with nothing carried home. In a kinetic picture this is a spin with zero memory driven by a room field.
+  - *Prediction:* when an agent posts in a new room, its first message there is already most of the way to that room's centroid; the relaxation time is under one call (≤ 1 message), and switching back is equally fast.
+  - *Check:* sequences of messages around room switches (H102 hoppers, H100 movers); per-message distance to each room's centroid.
+  - *Kill:* relaxation over ≥ 3 messages.
+  - *Impostors:* the room's own thread (what the agent replies to) is a strong local field; the test is the time constant, and a thread field also acts at once.
+  - *Models:* 11, 02 · *Builds on:* H102, H100, H109
+- **HH373 · The memory floor is immigration: predict it from the re-coinage rate.** H88 found attention to a finished goal falls with τ 5.5 village days to a floor of 1.9%. A birth–death process with immigration (each use triggers more use at rate b, each term dies at rate d, and new independent coinages arrive at rate μ) has a floor μ/(d − b). H88 also found 41% of newcomer first uses fall outside the read cone, which is a direct estimate of re-coinage.
+  - *Prediction:* the floor predicted from the separately measured re-coinage rate and the fitted decay matches the observed floor within ×2 across periods.
+  - *Check:* H88 terms; estimate μ from first uses with no prior read in the ledger; d − b from the decay.
+  - *Kill:* the predicted floor is off by more than ×3, or uncorrelated with the observed one across periods.
+  - *Impostors:* recurring outside topics give re-coinage that is a field; separate terms that recur in human messages.
+  - *Models:* 13, 03 · *Builds on:* H88, H103, H34
+- **HH374 · Assigned antagonism switches off in one read-out after the prize goes: a field quench with no remanence.** H64 found assigned antagonism switches off within minutes of a verdict and leaves no resentment. In a kinetic Ising model with the field removed and weak coupling, the order decays in about one update per agent.
+  - *Prediction:* the opposing-stance rate between former rivals falls to the baseline within each agent's first call after it reads the verdict, not on a wall-clock time; agents who read the verdict later switch later.
+  - *Check:* verdict times in #12, #6, #27 and #29 competitions; per-agent first read of the verdict (context ledger); stance labels (DQ2 aggregate; stance v2.1 if it passes).
+  - *Kill:* the switch-off is aligned to wall-clock time, not to each agent's read.
+  - *Impostors:* the end of the competition period is a field step for everyone; the per-agent read timing is the partition contrast.
+  - *Models:* 02, 10 · *Builds on:* H64, H37, H08
+- **HH375 · Debate is a two-sublattice limit cycle: topic ping-pong at lag one.** Two teams that each respond to the other's last move form a pair of antiferromagnetically coupled sublattices updating in turn. That gives a period-2 cycle in content: team A's message points along the issue, team B's rebuts it, and so on. This breaks detailed balance (the cycle runs one way).
+  - *Prediction:* in #12, the lagged cross-team content correlation is negative at lag 1 and positive at lag 2 (in turns), and its antisymmetric part is nonzero (the cycle has a direction); within-team lags show no alternation.
+  - *Check:* turn sequences per debate from the DQ6 schedule; content projections on each debate's issue axis.
+  - *Kill:* no alternation beyond a turn-shuffled null.
+  - *Impostors:* the debate format forces alternation (a scheduler field); test whether the content alternates, not just the speakers.
+  - *Models:* 02, 01 · *Builds on:* H21, H37, H101, HH353
+
+*Suggested first picks.* HH366 (one figure decides inertia vs fading field), HH367 (dwell times predict occupancy, unfitted), HH368 (a data collapse on the call clock), HH373 (the floor from an independent rate) and HH369 (coarsening vs freeze).
