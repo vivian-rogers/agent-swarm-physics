@@ -2,22 +2,195 @@
  "note": "Measured constants of the swarm. Exploratory (round 1b), not holdout-confirmed. Coordinator-curated from integrated reports; each value cites its hypothesis card. Update when a card changes.",
  "updated": "2026-10-04",
  "constants": [
-  {"symbol": "β", "name": "per-pair attention dilution exponent", "value": "0.66 ± 0.02", "kind": "exponent", "scope": "16/16 periods, mention-based, ledger k", "model": "01", "source": "H18", "meaning": "Reply rate per sender falls as k^−β with k pending senders."},
-  {"symbol": "η", "name": "exposure-time elasticity of the reply hazard", "value": "−0.00 ± 0.05 (G51); +0.51 [0.41, 0.61] regime I", "kind": "elasticity", "scope": "11/11 regime II–III periods near 0", "model": "09", "source": "H40", "meaning": "0 = coupling runs on the call clock; 1 = on the wall clock."},
-  {"symbol": "ε(5 min)", "name": "cadence elasticity of 5-min coupling", "value": "0.57 [0.36, 0.78]", "kind": "elasticity", "scope": "regime III pooled (G51 0.40)", "model": "09", "source": "H40", "meaning": "Doubling the call rate raises 5-min reply coupling by about ×1.5."},
-  {"symbol": "J₁", "name": "hop-1 coupling, named vs unnamed", "value": "0.17 vs 0.004", "kind": "coupling", "scope": "regime III", "model": "02", "source": "H50", "meaning": "Only addressed messages couple at the first read-out."},
-  {"symbol": "R̂", "name": "idea branching ratio", "value": "median 0.22 (0.09–0.40)", "kind": "gain", "scope": "32/32 periods subcritical", "model": "03", "source": "H34", "meaning": "A new idea makes 0.22 new adopters per adopter; cascades die out."},
-  {"symbol": "n", "name": "activity branching ratio (Hawkes)", "value": "≈ 0.2–0.4", "kind": "gain", "scope": "all regimes", "model": "09", "source": "H03", "meaning": "Activity is subcritical: most events are driven, not self-excited."},
-  {"symbol": "g_room", "name": "room loop gain, content and talk", "value": "content ≈ 0.47, talk ≈ 0.64 (30 min)", "kind": "gain", "scope": "9/10 units; activity ≈ 0", "model": "11", "source": "H26", "meaning": "Content and talk co-move inside rooms; activity has no room gain."},
-  {"symbol": "f_sched", "name": "schedule share of regime-III co-activation", "value": "70–80%", "kind": "share", "scope": "regime III", "model": "02", "source": "H38", "meaning": "Most activity synchrony is the runner's start/stop schedule (a field)."},
-  {"symbol": "f_conv", "name": "convergence share of exposure effects", "value": "≈ 1/3 (content, 60 s lag); ≈ 1/2 (ideas)", "kind": "share", "scope": "in-flight placebo at matched lag", "model": "08", "source": "H32, H34", "meaning": "Part of apparent influence happens without reading: shared fields and priors."},
-  {"symbol": "t_read", "name": "median read-out delay", "value": "108–122 s", "kind": "timescale", "scope": "#51", "model": "09", "source": "H08, H30", "meaning": "A message acts at the recipient's next model call."},
-  {"symbol": "τ_settle", "name": "content settling time after a kickoff", "value": "≈ 4.5 h (bge) / 1.9 h (gte)", "kind": "timescale", "scope": "coverage 0.24 h; about 10× slower than coverage", "model": "11", "source": "H48", "meaning": "Agents see everything in minutes but settle in hours."},
-  {"symbol": "v_hop", "name": "spread velocity", "value": "1 hop per 1.5–5 talk calls", "kind": "timescale", "scope": "regimes III–I", "model": "03", "source": "H41", "meaning": "Spread is set by talk turns, not cadence or volume."},
-  {"symbol": "ΔW_erase", "name": "forced-erasure work cost", "value": "commits −39% [−42, −35] for ~10 turns; ≈ 10% of a segment", "kind": "response", "scope": "7/9 periods", "model": "04", "source": "H15, H44", "meaning": "The context window carries the call-scale information; memory does not recover it."},
-  {"symbol": "χ_act", "name": "first-nudge activity response", "value": "1.16 [0.75, 1.57] active min / 30 min", "kind": "response", "scope": "#51 (G38 ≈ 0.95)", "model": "02", "source": "H04, H30", "meaning": "A nudge buys about one active minute, a glance, not committed work."},
-  {"symbol": "I_nudge", "name": "information per nudge", "value": "1.42 bits", "kind": "information", "scope": "#51", "model": "04", "source": "H35", "meaning": "The nudger uses its information inefficiently."},
-  {"symbol": "π_human", "name": "human reply premium", "value": "+0.030 [0.019, 0.042] (≈ 2× replies)", "kind": "response", "scope": "matched on naming, timing, novelty", "model": "02", "source": "H52", "meaning": "Status-weighted attention, not deference."},
-  {"symbol": "top-1", "name": "kickoff quench target recovery", "value": "18/33 periods (p 3e−6)", "kind": "response", "scope": "day-1 content centroid", "model": "11", "source": "H54", "meaning": "Day-1 content lands on what the kickoff names."}
+  {
+   "symbol": "β",
+   "name": "per-pair attention dilution exponent",
+   "value": "0.66 ± 0.02",
+   "kind": "exponent",
+   "scope": "16/16 periods, mention-based, ledger k",
+   "model": "01",
+   "source": "H18",
+   "meaning": "Reply rate per sender falls as k^−β with k pending senders."
+  },
+  {
+   "symbol": "η",
+   "name": "exposure-time elasticity of the reply hazard",
+   "value": "−0.00 ± 0.05 (G51); +0.51 [0.41, 0.61] regime I",
+   "kind": "elasticity",
+   "scope": "11/11 regime II–III periods near 0",
+   "model": "09",
+   "source": "H40",
+   "meaning": "0 = coupling runs on the call clock; 1 = on the wall clock."
+  },
+  {
+   "symbol": "ε(5 min)",
+   "name": "cadence elasticity of 5-min coupling",
+   "value": "0.57 [0.36, 0.78]",
+   "kind": "elasticity",
+   "scope": "regime III pooled (G51 0.40)",
+   "model": "09",
+   "source": "H40",
+   "meaning": "Doubling the call rate raises 5-min reply coupling by about ×1.5."
+  },
+  {
+   "symbol": "J₁",
+   "name": "hop-1 coupling, named vs unnamed",
+   "value": "0.17 vs 0.004",
+   "kind": "coupling",
+   "scope": "regime III",
+   "model": "02",
+   "source": "H50",
+   "meaning": "Only addressed messages couple at the first read-out."
+  },
+  {
+   "symbol": "R̂",
+   "name": "idea branching ratio",
+   "value": "median 0.22 (0.09–0.40)",
+   "kind": "gain",
+   "scope": "32/32 periods subcritical",
+   "model": "03",
+   "source": "H34",
+   "meaning": "A new idea makes 0.22 new adopters per adopter; cascades die out."
+  },
+  {
+   "symbol": "n",
+   "name": "activity branching ratio (Hawkes)",
+   "value": "≈ 0.2–0.4",
+   "kind": "gain",
+   "scope": "all regimes",
+   "model": "09",
+   "source": "H03",
+   "meaning": "Activity is subcritical: most events are driven, not self-excited."
+  },
+  {
+   "symbol": "g_room",
+   "name": "room loop gain, content and talk",
+   "value": "content ≈ 0.47, talk ≈ 0.64 (30 min)",
+   "kind": "gain",
+   "scope": "9/10 units; activity ≈ 0",
+   "model": "11",
+   "source": "H26",
+   "meaning": "Content and talk co-move inside rooms; activity has no room gain."
+  },
+  {
+   "symbol": "f_sched",
+   "name": "schedule share of regime-III co-activation",
+   "value": "70–80%",
+   "kind": "share",
+   "scope": "regime III",
+   "model": "02",
+   "source": "H38",
+   "meaning": "Most activity synchrony is the runner's start/stop schedule (a field)."
+  },
+  {
+   "symbol": "f_conv",
+   "name": "convergence share of exposure effects",
+   "value": "≈ 1/3 (content, 60 s lag); ≈ 1/2 (ideas)",
+   "kind": "share",
+   "scope": "in-flight placebo at matched lag",
+   "model": "08",
+   "source": "H32, H34",
+   "meaning": "Part of apparent influence happens without reading: shared fields and priors."
+  },
+  {
+   "symbol": "t_read",
+   "name": "median read-out delay",
+   "value": "108–122 s",
+   "kind": "timescale",
+   "scope": "#51",
+   "model": "09",
+   "source": "H08, H30",
+   "meaning": "A message acts at the recipient's next model call."
+  },
+  {
+   "symbol": "τ_settle",
+   "name": "content settling time after a kickoff",
+   "value": "≈ 4.5 h (bge) / 1.9 h (gte)",
+   "kind": "timescale",
+   "scope": "coverage 0.24 h; about 10× slower than coverage",
+   "model": "11",
+   "source": "H48",
+   "meaning": "Agents see everything in minutes but settle in hours."
+  },
+  {
+   "symbol": "v_hop",
+   "name": "spread velocity",
+   "value": "1 hop per 1.5–5 talk calls",
+   "kind": "timescale",
+   "scope": "regimes III–I",
+   "model": "03",
+   "source": "H41",
+   "meaning": "Spread is set by talk turns, not cadence or volume."
+  },
+  {
+   "symbol": "ΔW_erase",
+   "name": "forced-erasure work cost",
+   "value": "commits −39% [−42, −35] for ~10 turns; ≈ 10% of a segment",
+   "kind": "response",
+   "scope": "7/9 periods",
+   "model": "04",
+   "source": "H15, H44",
+   "meaning": "The context window carries the call-scale information; memory does not recover it."
+  },
+  {
+   "symbol": "χ_act",
+   "name": "first-nudge activity response",
+   "value": "1.16 [0.75, 1.57] active min / 30 min",
+   "kind": "response",
+   "scope": "#51 (G38 ≈ 0.95)",
+   "model": "02",
+   "source": "H04, H30",
+   "meaning": "A nudge buys about one active minute, a glance, not committed work."
+  },
+  {
+   "symbol": "I_nudge",
+   "name": "information per nudge",
+   "value": "1.42 bits",
+   "kind": "information",
+   "scope": "#51",
+   "model": "04",
+   "source": "H35",
+   "meaning": "The nudger uses its information inefficiently."
+  },
+  {
+   "symbol": "π_human",
+   "name": "human reply premium",
+   "value": "+0.030 [0.019, 0.042] (≈ 2× replies)",
+   "kind": "response",
+   "scope": "matched on naming, timing, novelty",
+   "model": "02",
+   "source": "H52",
+   "meaning": "Status-weighted attention, not deference."
+  },
+  {
+   "symbol": "top-1",
+   "name": "kickoff quench target recovery",
+   "value": "18/33 periods (p 3e−6)",
+   "kind": "response",
+   "scope": "day-1 content centroid",
+   "model": "11",
+   "source": "H54",
+   "meaning": "Day-1 content lands on what the kickoff names."
+  },
+  {
+   "symbol": "S_named",
+   "name": "re-allocation speed-limit slack, named-target kickoff",
+   "value": "1.00–1.40 (settling 0.25–0.5 active h); free choice 5–15",
+   "kind": "ratio",
+   "scope": "G39, G40, G51; G41, G44 #rest",
+   "model": "15",
+   "source": "H75",
+   "meaning": "A named target moves agents at the speed limit: each moved agent switches once."
+  },
+  {
+   "symbol": "f_edge",
+   "name": "day-edge share of excess irreversibility",
+   "value": "0.80 [0.73, 0.90] (G51); 0.94 (G38); 1.00 (G40)",
+   "kind": "share",
+   "scope": "first and last 30 min vs 12–25% time share",
+   "model": "15",
+   "source": "H76",
+   "meaning": "The scheduler's day end carries the swarm's excess entropy production."
+  }
  ]
 }

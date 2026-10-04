@@ -1,0 +1,76 @@
+{
+ "complete": 40,
+ "faithfulness": 2.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done: card and predictions before data, synthetic validation (F/A/Z scenarios, 600 replicates), 4 replication kickoffs (G39, G40, G41, G51), 2 natives (G44 rooms; G51 newcomers + NE38), per-period estimates, confirm.py frozen (NE20 DiD, transfer #45-#47), not run.",
+  "faithfulness": "The speed-limit framing holds trivially (counting identity) and its field-limited predictions failed in 3/4 periods: re-allocation is an instant freeze onto named targets (S 1.0-1.4), which the rival R2 predicted. The G44 room contrast (x5.7 at equal switch rate) supports field-set settling, and the slack cleanly separates freeze from churn. Cadence elasticity not identifiable. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I1.",
+  "usefulness": "A simple kickoff design rule an operator can apply: name the artifact in the goal text and the swarm re-points within 15-30 active min with one switch per agent; free-choice goals take 4-10 h with 5-15 switches per net move. Evidence base is small (4 kickoffs + 1 room contrast with 4 agents); the cadence lever is untested."
+ },
+ "one_line": "A kickoff that names its target re-allocates the swarm at the Wasserstein speed limit (slack 1.0-1.4, within 0.5 active h); free-choice goals settle 5-40x slower through churn at the same switch rate. The bound itself is a counting identity; cadence effects untested (NE20 held out).",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "jump process on repos; bound holds, field-limited predictions fail 3/4"
+  },
+  {
+   "model": "05-replicator-dissipation",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "field-driven allocation; G44 contrast supports field-set settling"
+  },
+  {
+   "model": "10-potts",
+   "role": "rival",
+   "outcome": "supported",
+   "note": "instant freeze onto named projects (H54 R2) wins 3/4"
+  }
+ ],
+ "rated_by": "H75 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "A kickoff that names its target moves the swarm at the Wasserstein speed limit (slack S = 1.0–1.4, settling 0.25–0.5 active h); free-choice goals settle 5–40× slower through churn (S 5–15)",
+  "scope": "G39, G40, G41, G51; natives G44 (two arms), NE38 + #51 newcomers",
+  "direction": "positive",
+  "original_verdict": "failed as posed (field-limited slack)",
+  "credence": 0.4,
+  "ladder": [
+   {
+    "factor": "base (post)",
+    "x": 0.2
+   },
+   {
+    "factor": "replication (3/4 named-target periods saturate)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "quasi-intervention (G44: named-target room ×5.7 faster at equal switch rates)",
+    "x": 1.5,
+    "evidence": "native G44"
+   },
+   {
+    "factor": "synthetic identification (S separates freeze from churn)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "penalty: G44 #best has 4 committing agents",
+    "x": 0.8,
+    "evidence": "native G44"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.5,
+  "decision": "name the target in the kickoff to settle work in minutes, not hours",
+  "magnitude": "material",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.01,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H75 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

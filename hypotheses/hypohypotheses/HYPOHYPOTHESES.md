@@ -925,3 +925,5 @@ An egregore claim needs a residual after removing all four, and the viability fu
   - *Kill:* assembly index adds ≥ 0.05 AUC over compression.
   - *Models:* 04 · *Builds on:* HH191–HH210, HH244, DQ4 · *Literature:* OoLEN 2026 (assembly theory background; primary papers to grab)
   *Status (2026-10-04):* approved by Vivian → H80.
+- **HH329 · Speed-limit slack as a kickoff-specificity gauge.** H75 found that kickoffs naming their target settle at the speed limit (S ≈ 1.0–1.4) while free-choice goals churn (S 5–15). Prediction: across all regime-III kickoffs, S falls monotonically with kickoff specificity, i.e. the fraction of day-1 work on kickoff-named repos (H54). This would make S a one-number gauge of how much a goal statement constrains allocation. *Check:* S and T_e per kickoff vs specificity; size-matched null on agent switch rates. *Kill:* no monotone relation (Spearman |ρ| < 0.3).
+  *Models:* 15, 11 · *Builds on:* H75, H54, H48

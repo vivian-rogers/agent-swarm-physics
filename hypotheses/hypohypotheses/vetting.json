@@ -2,21 +2,141 @@
  "note": "HHs the coordinator proposes for Vivian to vet. The dashboard's 'HHs to vet' panel shows them; a click records the decision here and in vetting_decisions.jsonl. Approved items go to the H queue (promotion-shortlist.md) when the coordinator promotes them.",
  "updated": "2026-10-04",
  "items": [
-  {"id": "HH293", "title": "Culture beyond composition: the emergent slow mode", "family": "egregore", "q": "Q3", "cost": "low", "why": "The cleanest test of whether the village is more than the sum of its members' own vectors. Uses DQ5 vectors only."},
-  {"id": "HH290", "title": "Remanence: the endogenous part of the mean field", "family": "egregore", "q": "Q3", "cost": "low", "why": "Day-1 content leaning toward the previous period, beyond kickoff and agent priors. Newcomers tell record vs memory."},
-  {"id": "HH292", "title": "Enculturation of newcomers", "family": "egregore", "q": "Q3", "cost": "low", "why": "Do newcomers drift toward a village-specific culture, faster with more veteran reads? Uses every roster join."},
-  {"id": "HH294", "title": "History-search outage as a collective-memory scramble", "family": "egregore", "q": "Q4", "cost": "low", "why": "A dated natural Kolchinsky intervention (03-31/04-01). One event, cheap, a clean positive or a clean zero."},
-  {"id": "HH301", "title": "Repos recruit hosts by their own state", "family": "egregore", "q": "Q3", "cost": "medium", "why": "Tests if repo state recruits agents beyond goal naming and share. H77/H78 show share and naming dominate; this asks what remains."},
-  {"id": "HH296", "title": "Autonomy across scales with the impostors as environment", "family": "egregore", "q": "Q3", "cost": "medium", "why": "The one formal information test: where does self-prediction peak, agent to village, against size-matched nulls."},
-  {"id": "HH309", "title": "Scaling of outputs with N (replies ∝ N^1.34 from H18)", "family": "quantitative", "q": "Q1", "cost": "low", "why": "A consistency check of H18's dilution law and a direct test of collective benefit (work ∝ N^>1?)."},
-  {"id": "HH310", "title": "Taylor's law as a shared-field gauge", "family": "quantitative", "q": "Q2", "cost": "low", "why": "One number per unit for the shared-field share. Becomes a standard column for every hypothesis."},
-  {"id": "HH307", "title": "κ table: commits per bit by channel", "family": "quantitative", "q": "Q4", "cost": "medium", "why": "The flagship Kolchinsky number: what each information channel is worth. H70 builds the artifact row now."},
-  {"id": "HH316", "title": "Collective memory decays biexponentially", "family": "quantitative", "q": "Q3", "cost": "low", "why": "Fast decay carried by veterans, slow decay carried by the record. The slow part is the village's cultural memory."},
-  {"id": "HH313", "title": "Price equation: selection, transmission, migration", "family": "quantitative", "q": "Q3", "cost": "medium", "why": "Splits culture change into influence, bias and roster turnover. Separates culture from migration."},
-  {"id": "HH311", "title": "Collective entropy production beyond the parts", "family": "quantitative", "q": "Q6", "cost": "medium", "why": "A collective arrow of time that individuals lack. Uses the Aguilera estimator; pairs with H76."},
-  {"id": "HH272", "title": "Eigenvector rotation as a reorganization signal", "family": "RMT", "q": "Q5", "cost": "low", "why": "A spectral alarm for goal and platform changes. A direct rival for H74's detector."},
-  {"id": "HH277", "title": "RMT-cleaned matrices forecast tomorrow's alignment", "family": "RMT", "q": "Q2", "cost": "low", "why": "Out-of-sample test that the talk and content modes (H12) carry real structure beyond noise."},
-  {"id": "HH283", "title": "Project choice as a Brock–Durlauf equilibrium", "family": "econ free energy", "q": "Q2", "cost": "medium", "why": "Fits utility and social coupling for project choice; predicts multiple equilibria across same-type weeks."},
-  {"id": "HH285", "title": "Work allocation as a max-entropy equilibrium", "family": "econ free energy", "q": "Q2", "cost": "low", "why": "A principled null for H06/H11 allocations. Deviations measure planning or herding in bits."}
+  {
+   "id": "HH293",
+   "title": "Culture beyond composition: the emergent slow mode",
+   "family": "egregore",
+   "q": "Q3",
+   "cost": "low",
+   "why": "The cleanest test of whether the village is more than the sum of its members' own vectors. Uses DQ5 vectors only."
+  },
+  {
+   "id": "HH290",
+   "title": "Remanence: the endogenous part of the mean field",
+   "family": "egregore",
+   "q": "Q3",
+   "cost": "low",
+   "why": "Day-1 content leaning toward the previous period, beyond kickoff and agent priors. Newcomers tell record vs memory."
+  },
+  {
+   "id": "HH292",
+   "title": "Enculturation of newcomers",
+   "family": "egregore",
+   "q": "Q3",
+   "cost": "low",
+   "why": "Do newcomers drift toward a village-specific culture, faster with more veteran reads? Uses every roster join."
+  },
+  {
+   "id": "HH294",
+   "title": "History-search outage as a collective-memory scramble",
+   "family": "egregore",
+   "q": "Q4",
+   "cost": "low",
+   "why": "A dated natural Kolchinsky intervention (03-31/04-01). One event, cheap, a clean positive or a clean zero."
+  },
+  {
+   "id": "HH301",
+   "title": "Repos recruit hosts by their own state",
+   "family": "egregore",
+   "q": "Q3",
+   "cost": "medium",
+   "why": "Tests if repo state recruits agents beyond goal naming and share. H77/H78 show share and naming dominate; this asks what remains."
+  },
+  {
+   "id": "HH296",
+   "title": "Autonomy across scales with the impostors as environment",
+   "family": "egregore",
+   "q": "Q3",
+   "cost": "medium",
+   "why": "The one formal information test: where does self-prediction peak, agent to village, against size-matched nulls."
+  },
+  {
+   "id": "HH309",
+   "title": "Scaling of outputs with N (replies ∝ N^1.34 from H18)",
+   "family": "quantitative",
+   "q": "Q1",
+   "cost": "low",
+   "why": "A consistency check of H18's dilution law and a direct test of collective benefit (work ∝ N^>1?)."
+  },
+  {
+   "id": "HH310",
+   "title": "Taylor's law as a shared-field gauge",
+   "family": "quantitative",
+   "q": "Q2",
+   "cost": "low",
+   "why": "One number per unit for the shared-field share. Becomes a standard column for every hypothesis."
+  },
+  {
+   "id": "HH307",
+   "title": "κ table: commits per bit by channel",
+   "family": "quantitative",
+   "q": "Q4",
+   "cost": "medium",
+   "why": "The flagship Kolchinsky number: what each information channel is worth. H70 builds the artifact row now."
+  },
+  {
+   "id": "HH316",
+   "title": "Collective memory decays biexponentially",
+   "family": "quantitative",
+   "q": "Q3",
+   "cost": "low",
+   "why": "Fast decay carried by veterans, slow decay carried by the record. The slow part is the village's cultural memory."
+  },
+  {
+   "id": "HH313",
+   "title": "Price equation: selection, transmission, migration",
+   "family": "quantitative",
+   "q": "Q3",
+   "cost": "medium",
+   "why": "Splits culture change into influence, bias and roster turnover. Separates culture from migration."
+  },
+  {
+   "id": "HH311",
+   "title": "Collective entropy production beyond the parts",
+   "family": "quantitative",
+   "q": "Q6",
+   "cost": "medium",
+   "why": "A collective arrow of time that individuals lack. Uses the Aguilera estimator; pairs with H76."
+  },
+  {
+   "id": "HH272",
+   "title": "Eigenvector rotation as a reorganization signal",
+   "family": "RMT",
+   "q": "Q5",
+   "cost": "low",
+   "why": "A spectral alarm for goal and platform changes. A direct rival for H74's detector."
+  },
+  {
+   "id": "HH277",
+   "title": "RMT-cleaned matrices forecast tomorrow's alignment",
+   "family": "RMT",
+   "q": "Q2",
+   "cost": "low",
+   "why": "Out-of-sample test that the talk and content modes (H12) carry real structure beyond noise."
+  },
+  {
+   "id": "HH283",
+   "title": "Project choice as a Brock–Durlauf equilibrium",
+   "family": "econ free energy",
+   "q": "Q2",
+   "cost": "medium",
+   "why": "Fits utility and social coupling for project choice; predicts multiple equilibria across same-type weeks."
+  },
+  {
+   "id": "HH285",
+   "title": "Work allocation as a max-entropy equilibrium",
+   "family": "econ free energy",
+   "q": "Q2",
+   "cost": "low",
+   "why": "A principled null for H06/H11 allocations. Deviations measure planning or herding in bits."
+  },
+  {
+   "id": "HH329",
+   "title": "Speed-limit slack as a kickoff-specificity gauge",
+   "family": "thermodynamic",
+   "q": "Q5",
+   "cost": "low",
+   "why": "H75 found named-target kickoffs settle at the speed limit (S ≈ 1). Test S as a one-number gauge of how much a goal constrains allocation."
+  }
  ]
 }

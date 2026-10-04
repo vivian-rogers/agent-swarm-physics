@@ -1,0 +1,33 @@
+\hwhat{I split the irreversibility of the swarm's behavior mix into excess (net change of the mix) and housekeeping (cycles with no net change). The split follows Kolchinsky et al.\ (2026) and uses ensemble fluxes of Jev v3 states over the agents present at each time, in G51, G38 and G40. The synthetic check came first. In every period, 80--100\% of the excess falls in the day's first and last 30\,min, against a 12--25\% time share. The final block alone holds 72--100\%. DQ8 trimming removes 81--100\% of it. Kickoffs add no excess beyond an ordinary day start. The synthetic predicted this: a 5-h relaxation is too slow to show. Housekeeping does not separate from a reversible surrogate. A forced erasure gives a one-window excess pulse ($\times5$--12). Holdout: not run.}
+
+\hmodel{Models 02 (kinetic jump process) and 05 (driven population). The agents present in a 5-min window are exchangeable copies of a Markov chain on five behavior states: absent, work, explore, coord, wait. The fine version uses the 11 v3 states plus absent. $j_{xy}$ is the soft transition flux per agent-step in a 30-min block. $\sigma$ is the total EP, $\sigma_{\rm ex}$ the excess and $\sigma_{\rm hk}$ the housekeeping, all in nats per agent-step. The scheduler's start and stop and the kickoff are fields.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\sigma=\textstyle\sum_{x\ne y} j_{xy}\ln\frac{j_{xy}}{j_{yx}},\qquad \dot p_x=\sum_y (j_{yx}-j_{xy})\\
+\sigma_{\rm ex}=\max_{\phi}\Big[-\phi^{\!\top}\dot p-\textstyle\sum_{x\ne y} j_{xy}\big(e^{\phi_y-\phi_x}-1\big)\Big]\ \approx\ \dot p^{\top}H^{+}\dot p\\
+\sigma_{\rm hk}=\sigma-\sigma_{\rm ex}\ \ge0,\qquad \sigma_{\rm ex}=0\iff\dot p=0
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Debiased excess (solid) and housekeeping (dotted) per 30-min block of the day, averaged over non-kickoff days, in nats per agent-hour. In G51 and G38 the excess sits in the final block; housekeeping is near zero everywhere. (b) Edge share of the excess, trimming removal of excess and of housekeeping, and the housekeeping share, with agent-bootstrap 95\% CIs. Dotted line: the 0.6 edge criterion.}
+
+\htelos{Mostly a measurement lesson, with one operator number. The behavior mix of an LLM swarm changes irreversibly at the scheduler's stop. Agents finish at staggered times, and that carries 72--100\% of a day's excess. Any irreversibility or EP statistic on agent behavior must therefore trim to the all-present window first, or it measures the cron table (H38). A kickoff quench is invisible in 5-min behavior states: use content or repo allocation to see it (H54, H75). Housekeeping, the work cycle that could gauge real activity, is below the noise floor with soft labels at $N\le27$. For a monitor this gives a scheduler gauge, not a work gauge.}
+
+\hbottom{The swarm's excess behavioral irreversibility is the scheduler's day end, which trimming removes; kickoffs and the housekeeping work cycle are below the detection floor of a 12--27-agent ensemble with soft labels.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.45\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (G51, G38, G40)} & \textbf{Verdict}\\\hline
+\raggedright P1 kickoff above every day start & \raggedright rank 0.06, 0.85, 0.33 & \raggedright fail (expected)\tabularnewline
+\raggedright P1b decay $\tau\in[2.5,10]$\,h & \raggedright CI spans 0.25--40\,h & \raggedright not identified\tabularnewline
+\raggedright P2 edge share $\ge0.6$ & \raggedright 0.80 [0.73, 0.90], 0.94, 1.00 & \raggedright yes (3/3)\tabularnewline
+\raggedright P3a trim removes $\ge70\%$ of $\sigma_{\rm ex}$ & \raggedright 0.81 [0.69, 0.90], 1.00, 1.00 & \raggedright yes (3/3)\tabularnewline
+\raggedright P3b trim keeps $\sigma_{\rm hk}$ & \raggedright removes 0.60, 0.57, 0.64 vs steps 0.28--0.30 & \raggedright fail (CI spans 0)\tabularnewline
+\raggedright P4 $\sigma_{\rm hk}/\sigma\ge0.7$; vs H14 & \raggedright 0.33, 0.94, 1.07 (CIs span 0); $\times0.04$--0.24 of H14 & \raggedright unresolved\tabularnewline
+\raggedright N1 NE43 inside placebo range & \raggedright edge $\times0.34$ (range 0.73--2.51); recovers next week & \raggedright fail\tabularnewline
+\raggedright N2 NE41 pulse, $\sigma_{\rm hk}$ kept & \raggedright $\sigma_{\rm ex}\times12$ [6, 27], $\times5.2$ [3, 10]; $\sigma_{\rm hk}\times1.3$, $\times0.38$ & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_ne41.pdf}{(a) Synthetic five-state master equation at village sampling: soft-label estimates ($\pm$SD) against the population value (bars). Edges and trimming are recovered at G51 scale; the kickoff share stays near 0 in every scenario. (b) NE41: excess per copy-hour around a forced erasure vs presence-matched placebo windows. The pulse is the consolidation gap, and it is gone one window later.}
+
+\hcaveats{The states are zero-shot soft labels (Jev v3). Soft labels attenuate housekeeping $\times0.19$ in the synthetic, and ``absent'' also catches the consolidation gap. Block averaging gives lower bounds, and the block-flip floor is Monte Carlo (20 surrogates). The kickoff and housekeeping nulls are underpowered, not evidence of absence. Two estimator bugs were fixed after the first real-data pass (bootstrap floor, NE41 placebo; amendment A2). The NE43 dip coincides with the \#general/\#focus room split. No holdout run.}
+
+\hnext{Regress the end-block excess on the spread of agents' last-call times. Redo housekeeping on hard fine action classes (H14). Give consolidation windows their own state and rerun NE41. Run \texttt{confirm.py} once the H14 holdout overlap is settled.}
