@@ -252,6 +252,7 @@ No candidate is both displaced by goal changes beyond placebo and restored by da
 Takes over H01 D4 (D4.1.b first); H01 D2.6 chooses the viability function; H08 (context is the coupling) supplies the mechanism; H09 (memory set point, `consolidation_inflow`); H04 (messages act through unread context); H05 (room events).
 
 ## Notes
+- **From H44 (2026-10-04):** the erasure write dip replicates (−26% writes, −38% work commits; recovery τ ≈ 3 calls, within a 40-call sawtooth). The memory written at the wipe carries no measurable effect; restoration runs through re-reading artifacts.
 - **Planned holdout reuse (2026-10-04):** H01 round 2's `confirm_r2.py` (not run) targets NE30 for crew-level continuity, a different statistic from this card's. It must be disclosed when either confirmatory run happens.
 - 2026-10-03: promoted from shortlist 2 (HH43 → H01 D4.1.b (shortlist 2, item 9); Kolchinsky–Wolpert semantic information).
 - 2026-10-03: **what had been looked at before this pre-registration** (all non-outcome or aggregate): memory-size time series of 18 agents (to design the ML rule; the sawtooth of normal consolidation is visible in every agent); counts of candidate ML events under two draft rules; the distribution of computer-use turns between consolidations (spike at 41 = the forced cap, ~28k of ~52k); room timelines of agents 6, 10, 29; monthly counts of write verbs and error rates (write verbs are essentially absent before 2025-10, so V_out is degenerate in most of regime I). No outcome was computed around any scramble event.

@@ -58,6 +58,7 @@ Then the questions become:
 
 ## Pitfalls
 
+- **Viability after a context scramble is restored through artifacts, not memory or the room** (H44, 2026-10-04): after forced erasures, reading local files first brings the first write 2.6 calls sooner than looking at the screen (room first: 0.5); the memory written at the wipe has no within-agent effect (ρ −0.08 to +0.02). The context window carries the call-scale information (writes −26%, commits −38%); erasure also breaks command loops (OR 0.11).
 - Viability is chosen by the analyst. Operators decide who stays in the village, so "self-maintenance" is not intrinsic. Be explicit that the viability function is a modeling choice.
 - The framework assumes an ensemble over initial conditions; the village is one long trajectory. Windows and replays approximate it.
 - Discretizing text into states is itself a coarse-graining, and answers depend on it.

@@ -1,0 +1,14 @@
+{
+  "complete": 42,
+  "faithfulness": 2.0,
+  "usefulness": 3.0,
+  "rationale": {
+    "complete": "Round 1 done: dated predictions, synthetic validation first (three worlds on real call skeletons; it exposed and fixed a spillover flaw in the raw thrash index), 6 replication + 3 native period folders + NE41, scorecard, outcome-vs-prediction table, robustness (normalized loop hash, balanced windows, past-only pseudo control, two embedding models). Confirmatory script written and dry-run on stand-ins; holdout not run. Classifier not validated by hand.",
+    "faithfulness": "The re-acquisition half holds strongly and interventionally (forced resets at the cap): Theta_c > 0 in 9/9 periods, write and work-commit dips, forced >= voluntary, no excess pre-trend, coupling cut, loop breaking, memory dose ~0. But the hypothesis's distinctive signatures fail: no temperature pulse (entropy falls), no susceptibility rise (RR 0.97, G51 opposite), no content-pull rise, no onset or learning effect. Scorecard all 1s; no holdout.",
+    "usefulness": "Operator numbers with interventional backing: the 41-record cap costs 4-9% of write calls and 5-11% of work commits per period, breaks most command loops (OR ~0.1), raises trial-and-error failures, and wiped agents do not become more steerable by room content. The recovery rule (point the agent at its working files: artifact-first resumes 2.6 calls sooner) is observational. A cost/benefit dial for context caps, not yet a validated knob."
+  },
+  "one_line": "A forced context wipe triggers an orderly re-reading burst (read share 0.22 to 0.47 at the first call; Theta_c +0.08, 9/9 periods) and a 26% write dip costing 4-11% of output, breaks most command loops, but brings no temperature pulse and no extra susceptibility to room content.",
+  "rated_by": "H44 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 kept: quasi-random scaffold intervention with a priced design trade-off, parity with H54)"
+}

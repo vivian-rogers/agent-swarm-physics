@@ -284,3 +284,10 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Read-out jump J₁:** the increase in the probability that the recipient's hop-1 call is a talk call after a peer message, vs matched calls without one. Onset at hop 1 (not hop 0) is the signature of read-out-gated coupling.
 - **Field excess (shifted-input null):** the share of swarm co-movement explained by measured common inputs (schedule edges, human messages, nudges, platform errors) beyond the same inputs shifted in time.
 - **Coupling share (counterfactual, gated kernel):** the share of talk co-movement reproduced by a counterfactual built from the fitted hop kernels. Field and coupling shares are separate measures, not a partition: coupling amplifies field-driven talk.
+
+### H44 named variants (2026-10-04; see `hypotheses/H44-erasure-reacquisition-thrash/README.md`)
+- **Call category:** a per-call class from the command text and turn type (read local file / read remote / look at screen / room read / write / git / talk / pause …); regex heuristic, not hand-validated.
+- **Re-acquisition share:** the share of non-write calls that read (files, remote, screen, room) in calls 1–5 after a reset.
+- **Thrash index Θ_c:** the rise in re-acquisition share after a reset, conditioned on agent × previous call category (so a pure output dip does not leak into it), with a 0.01 floor.
+- **Pseudo-erasure:** a matched no-reset position in a segment, used as the control for the within-segment ramp.
+- **Reply rate per visible message:** replies (DQ2) per item that entered the call's context (ledger).

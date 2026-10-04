@@ -1,6 +1,6 @@
 # H08: Context is the coupling
 
-**Status:** round 1 done (2026-10-04): responses are gated by read-out (C9, 10/11 regime-II/III periods), but nudge responses lag read-out by ~3 min (HH92 not supported); erasure cuts coupling 18% (NE41). Holdout script written, not run.
+**Status:** round 1b done (2026-10-04, improved data): on the context ledger, responses are gated by read-out in every regime (addressing 14/17 periods, reply author 17/17; regime I's round-1 failure was the call-start rule), the nudge response starts at the receiving call (the ~3-min post-read-out lag was an artifact), erasure cuts reply coupling 21% (NE41), and newcomers name an old-timer only after receiving its message (NE32, 35/35). Round 1 (below) kept for comparison. Holdout script written, not run.
 **History:** reactivated 2026-10-04 (Vivian: start the hypotheses never worked on). Originally parked on 2026-10-03 after a misread. Since then H04 (delayed, context-mediated responses), H15 (context-erasure dip, NE41) and H18 (attention dilution) have all pointed at it. Primary test: HH92, the response kernel predicted from turn timing.
 **Exploratory round 1 done (2026-10-04; 17 non-holdout goal periods + NE41; predictions written before any real-data run).**
 - **Coupling is gated by read-out (C9).** A recipient's chance of addressing a sender jumps at the first turn whose model call started *after* the message, and not before. This holds in 10/11 regime-II/III periods. Among recipients who had not just talked, the jump holds in 16/17 periods and the in-flight floor is ≈ 0. That explains H18's failed placebo.
@@ -9,6 +9,7 @@
 - **Ground truth breaks the room rule (C1).** The Claude Code agent's fetches match the room rule (recall 0.97–1.00) until 2026-03-17, when its feed began replaying the village from April 2025.
 - **HH91.** #51's afternoon halves run hotter (n̂ 0.70 vs 0.50).
 - Period verdicts: 6 supported, 11 failed (all on the talk clause; every regime-I/II period). NE41 mixed. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I1. Holdout script written, not run.
+**Round 1b (2026-10-04, improved data): see "Round 1b" below.** Period verdicts (1b): 6 supported (G36 replaces G44), 11 failed (talk clause only); natives NE32 supported, NE41 mixed, NE03 descriptive. Scorecard A1 B1 C1 D1 E1 F1 G1 **H2** I1.
 **Fields:** info theory, dynamics, stat mech
 **Literature:** [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md) (interventions on information channels)
 **Definitions used:** Interaction / exposure (broadcast; `physics-models/DEFINITIONS.md`); Regime; Action (turn-merged); Driving / external field. New operational terms ("call start (pause-aware)", "read-out time", "in-flight turn") are defined under "Operational definitions" and proposed for DEFINITIONS.md as the named variant **"Exposure (turn read-out)"**.
@@ -234,14 +235,14 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | event IDs match exactly between the fetched feed and `events`; turns, call starts and read-out defined from dataset fields | 1 | **Fetch timestamps agree with `events` to the second** (14,466 matched events); 85% of the agent's non-holdout fetched ids match the tenure-window table (the rest are 2025 events: the replay). Turns, pause-aware call starts and read-out come from `actions` + `events_core`. **The call-start rule works in regime III but not in regime I:** there, addressing peaks at turns classified as in flight (D_addr < 0 in 4/6), so regime-I chat calls are probably not all logged. |
+| A mapping | event IDs match exactly between the fetched feed and `events`; turns, call starts and read-out defined from dataset fields | 1 | **Fetch timestamps agree with `events` to the second** (14,466 matched events); 85% of the agent's non-holdout fetched ids match the tenure-window table (the rest are 2025 events: the replay). Turns, pause-aware call starts and read-out come from `actions` + `events_core`. **The call-start rule works in regime III but not in regime I:** there, addressing peaks at turns classified as in flight (D_addr < 0 in 4/6), so regime-I chat calls are probably not all logged. **Round 1b:** with the ledger's call windows the regime-I in-flight peak disappears (addressing jumps at read-out in 4/6 regime-I periods): it was the call-start rule, not unlogged calls. Score stays 1 (talk and content responses still differ by regime). |
 | B assumptions | call-start rule; pause timers; step response | 1 | Pause timers hold (wake calls start at the expiry). **The fast-step response fails for nudges:** the onset lags read-out by ≈ 3 min (#51). Activity responses need headroom weighting (synthetic). A6's "common cause is flat" fails: replies to the recipient's own talk raise o = −1, and o = 0 is refractory. |
 | C adequacy | beats the rivals on held-out days | 1 | C9: the read-out discontinuity beats the pseudo-message null for addressing in 10/11 regime-II/III periods and for talk in 6/9 regime-III periods; the other-room placebo is null in 6/8. C8 (#51): the context model beats immediate (77–89% of splits) and Hawkes (80%), but not constant delay (41–46%). |
 | D unfitted predictions | kernel shape predicted from turn timing alone | 1 | **The location of the response is predicted with no parameters:** the jump sits on the first turn whose call started after the message (C9-V4 17/17; post hoc, the clean-recipient floor at o = 0 ≈ 0 in 15/17). **The kernel's time course is not:** Φ(1,5) is 0.03 measured vs 0.52 predicted (#51); pooled 355 cells, −0.03 vs 0.52. P2 and P4 pass. |
 | E interventional | NE41 forced erasures (exogenous timing) | 1 | Forced erasure lowers the chance of addressing a sender whose message was only in the erased context: 9/9 periods negative, CI excluding 0 in 6/9; pooled −2.5 pp, −18% ± 6% (predicted ≤ −30%). Voluntary erasures act alike. Not yet on the holdout. |
 | F identifiability | synthetic recovery on real skeletons | 1 | C9 guard passes: injected read-out responses are recovered, and a common cause gives no jump. C8: at high signal the CV identifies all four truths in #38 (5–6/6); at H04-like signal only 4/6, and less under nudger-like selection. Φ tests are underpowered per period. #51 skeletons are uninformative under the context truth (read-outs > 60 min away). |
 | G ground truth | the Claude Code agent's logged inputs | 1 | While its feed was current, the room rule's recall was 0.97–1.00 and other-room coverage 1.6% (#35, one day). But type coverage was uniform (WAITs too), delays were seconds, not minutes, and **from 2026-03-17 its feed replayed the village from April 2025** (65% of #35's, 100% of #36's fetched events), so the room rule fails completely there. One atypical agent. |
-| H comparative | immediate, constant-delay, Hawkes, memory-mediated | 1 | Immediate and Hawkes are rejected for nudges. Memory-mediated coupling is rejected by NE41 (β_F < 0). A common cause cannot produce the discontinuity (synthetic). Constant delay is **not** rejected for nudges. |
+| H comparative | immediate, constant-delay, Hawkes, memory-mediated | 2 | Immediate and Hawkes are rejected for nudges. Memory-mediated coupling is rejected by NE41 (β_F < 0). A common cause cannot produce the discontinuity (synthetic). Round 1: constant delay **not** rejected. **Round 1b (2026-10-04): constant delay rejected** (the nudge onset follows the receiving call: t₂₅ 4, 4, 15 min for read-outs ≤ 1, 1–3, 3–10 min; read-out-aligned t₂₅ 1 min), and NE41 holds on reply labels (8/9). Score 1 → 2. |
 | I transfer | across periods and regimes; holdout | 1 | The C9 addressing discontinuity holds in every regime-II/III period. In the clean-recipient subset it holds in 16/17, including regime I. The talk discontinuity is absent in regime I. NE41 is consistent in sign across 9 periods. No holdout run. |
 
 ## Results by goal period
@@ -361,6 +362,84 @@ Prior credences were C8-P1 0.6, C9-V1 0.6, C3-E1 0.45, C10-L2 0.3. Of these, onl
 - Per period: `goalperiod-subhypotheses/G<NN>/figures/c9_offsets.pdf`.
 - Summary page: `summary/summary.pdf` (two pages; `summary/content.tex`, `summary/meta.json`).
 
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation on the corrected shared tables (Vivian's priority 2; RE wave). Predictions and verdict rules are the pre-registered ones, unchanged. Round-1 outputs stay in `data/processed/H08-context-is-the-coupling/G<NN>/`; round-1b outputs are in `.../r1b/`. Holdout untouched.*
+
+### What changed
+| Input | Round 1 | Round 1b |
+| --- | --- | --- |
+| Turns, call starts, read-out | H08's own rule: turn-merged `actions` + `events_core` records, call start = previous record (pause expiry after a pause) | DQ1 ledger: `call_windows` calls (`t_call` = context assembly; summary calls excluded), read-out call = the call that received the message in `context_ledger_items` (exact by construction). In-flight share of own-room pairs falls from 0.91 to 0.63 (G38) |
+| Responses (C9, C3) | @-mention (`chat_mentions_clean`) | mention (pre-registered) **plus** the DQ2 reply-parent author (`reply_pairs`, `pair_set = cand`, `parent`) and the content cosine of the talk with the message (bge-small; non-mention, H08-R2) |
+| Erasures (C3 / NE41) | H15's consolidation catalog (41–42-turn segment) | ledger `reset_forced` / `reset_consol` between the read-out call and the talk call (round 1's ambiguous units no longer arise) |
+| Nudge kernel (C8) | H04's round-1 design (old `activity_bins`, all-mention targets, future-kick isolation) | H04's round-1b design (`activity_bins_fixed`, leading-@ target, past-only eligibility, day fixed effect, presence mask), aligned on the target's **receiving call** (ledger `age_s`) |
+| Code (switch) | `scheme/build_turns.py`, `analysis/visibility.py`, `erasure.py` (unchanged, still runnable) | `scheme/build_turns_ledger.py`, `analysis/visibility_ledger.py`, `erasure_ledger.py`, `ne32_newcomers.py`, `r1b_summarize.py` |
+
+### C9: read-out discontinuity, old vs new
+D in percentage points with day-bootstrap 95% CIs; "clean" = recipients with no talk at o = −2, −1 (post hoc in round 1); content D in cosine ×100. Full per-period tables in each G folder.
+
+| G | regime | D_talk: old → **new** | D_addr: old → **new** | D reply author (new) | D content (new) | verdict: old → **1b** |
+| --- | --- | --- | --- | --- | --- | --- |
+| G24 | I | −0.17 → +0.30 [−0.30, +0.97] | +0.18 → **+0.53 [+0.09, +1.20]** | +0.62 [+0.28, +1.01] | −0.49 [−1.92, +0.66] | failed → failed |
+| G25 | I | −0.10 → +0.26 [−0.24, +1.04] | −0.63 → +0.52 [−0.02, +0.83] | +0.76 [+0.30, +1.06] | −0.85 [−1.44, +0.12] | failed → failed |
+| G26 | I | −0.14 → −1.01 [−3.11, +0.76] | −1.22 → +0.20 [−0.17, +0.68] | +1.02 [+0.69, +1.63] | −0.65 [−1.47, +0.16] | failed → failed |
+| G27 | I | −0.71 → −0.18 [−0.69, +0.42] | −0.58 → **+0.34 [+0.18, +0.48]** | +0.35 [+0.19, +0.51] | −0.70 [−1.69, +0.06] | failed → failed |
+| G30 | I | −0.28 → −0.13 [−0.82, +0.52] | −0.31 → **+0.31 [+0.18, +0.43]** | +0.32 [+0.17, +0.44] | −0.79 [−1.53, −0.07] | failed → failed |
+| G31 | I | −0.59 → +0.10 [−0.63, +0.79] | +0.13 → **+0.26 [+0.08, +0.46]** | +0.32 [+0.19, +0.40] | −1.00 [−1.99, −0.04] | failed → failed |
+| G33 | II | +0.12 → −0.22 [−0.52, +0.06] | −0.01 → **+0.73 [+0.44, +1.21]** | +0.59 [+0.38, +0.84] | +0.15 [−0.03, +0.33] | failed → failed |
+| G35 | II | −0.72 → +0.75 [−0.08, +1.25] | +0.61 → +0.48 [+0.17, +0.71] | +1.03 [+0.84, +1.19] | −0.33 [−0.90, +0.57] | failed → failed |
+| G36 | II/III | +1.13 → **+1.10 [+0.16, +2.72]** | +1.47 → +1.60 [+0.87, +3.22] | +1.85 [+1.15, +2.84] | +2.47 [+0.56, +7.08] | failed → **supported** |
+| G37 | III | +3.27 → +2.68 [+2.47, +3.09] | +2.60 → +2.50 [+0.83, +3.34] | +3.21 [+1.70, +3.90] | +1.74 [−2.84, +9.84] | supported → supported |
+| G38 | III | +0.85 → +1.60 [+0.93, +2.22] | +0.88 → +1.14 [+0.80, +1.41] | +1.69 [+1.39, +1.95] | +2.00 [+0.14, +3.69] | supported → supported |
+| G39 | III | +0.39 → +0.38 [−0.21, +1.18] | +0.43 → +0.26 [−0.22, +0.48] | +0.60 [+0.34, +0.83] | +3.15 [+1.41, +6.62] | failed → failed |
+| G40 | III | +0.21 → +0.11 [−0.83, +1.06] | +0.62 → +0.71 [+0.44, +1.01] | +0.56 [+0.35, +0.72] | +0.82 [−0.46, +2.55] | failed → failed |
+| G41 | III | +1.43 → +1.53 [+0.95, +2.15] | +1.02 → +1.41 [+1.11, +1.62] | +1.55 [+1.12, +1.96] | +0.37 [−0.56, +2.65] | supported → supported |
+| G42 | III | +1.41 → +1.11 [+0.56, +1.50] | +1.57 → +1.87 [+1.20, +2.41] | +1.90 [+1.23, +2.59] | +3.42 [+0.48, +6.71] | supported → supported |
+| G44 | III | +1.25 → +0.45 [−0.26, +1.06] | +1.26 → +1.22 [+0.22, +1.76] | +1.50 [+0.81, +2.07] | +1.35 [+1.09, +1.82] | supported → **failed** |
+| G51 | III | +0.61 → +0.69 [+0.53, +0.89] | +0.68 → +0.81 [+0.71, +0.91] | +0.93 [+0.85, +1.03] | +1.99 [+1.68, +2.35] | supported → supported |
+
+| Prediction | Round 1 | Round 1b | Outcome (1b) |
+| --- | --- | --- | --- |
+| C9-V1 talk jumps (≥ 70%) | 6/17 | 6/17 (G36 in, G44 out; 0/8 regime I/II) | not supported (unchanged) |
+| C9-V2 addressing jumps (≥ 70%) | 11/17 (10/11 regime II/III, 1/6 regime I) | **14/17** (10/11 regime II/III, **4/6 regime I**); reply author **17/17**; clean subset 15/17 | **supported** (was: supported in II/III only) |
+| C9-V2 floor: G(0) < ½ G(1) | fails in regime I (addressing peaked in flight) | regime-I in-flight peak gone | supported |
+| C9-V3 other-room placebo | 6/8 | **8/8** (\|D\| ≤ 0.15 pp, CIs at 0) | supported |
+| C9-V4 G(2) < G(1) | 17/17 | 17/17 | supported |
+| C9-V5 median read-out delay of active recipients 10–40 s | 32–49 s; 4/9 regime III inside | first record of the read-out call 29–41 s in regime III (8/9 inside); context assembly 10–17 s | supported (was not) |
+| Non-mention response (H08-R2, new) | — | content jump D_cos > 0 (CI) in 6/9 regime-III periods; negative in regime I (G30, G31) | new: gating holds on content in regime III |
+
+**Reading.** The round-1 regime-I failure ("addressing peaks at turns classed in flight; chat calls may be unlogged") was the call-start rule: regime-I chat-mode calls are scheduled, not chained, and the ledger places them correctly. The known issue "Regime-I calls that produce chat may be unlogged" can be retired. The talk clause still fails in every regime-I/II period: in chat mode a call that sees a message is not more likely to talk than a pseudo-message baseline, although when it talks it addresses the sender. The content jump is negative in regime I, where in-flight talk sits closer in time to the message (H29's recency confound runs against the hypothesis there).
+
+### C8: the nudge kernel aligned on the receiving call (from H04 round 1b, #51)
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| median read-out delay of nudges (to the target's call) | 104 s (H08 rule) | 108 s to context assembly, 118 s to the call's first record (ledger; H43: 122 s) |
+| response in the first 5 min after the kick (A5) | ≈ 0 ("nothing for 4–5 min") | **0.23 [0.12, 0.33]**; the isolated subset H04 used still shows ≈ 0, all nudges do not |
+| kernel aligned on the receiving call | — | t₂₅ = **1 min** [1, 3]; A5 after read-out 0.52 [0.40, 0.65]; peak at 2 min |
+| onset by read-out delay (≤ 1, 1–3, 3–10 min) | — | t₂₅ = 4, 4, 15 min: the onset follows the read-out (a constant delay predicts equal onsets) |
+| Φ(1,5) measured vs predicted (A2 band) | 0.03 vs 0.52 (fails, too late) | 1.76 [0.90, 4.69] vs 0.52 (F_hr) / 0.71 (plain step): fails the band in the **other** direction (a transient at read-out that decays, not a step to a plateau) |
+
+- **C8-P1** fails in substance again, but for a different reason: the onset is the read-out (as HH92 says), the shape is a transient (glance-then-return; H43: escapes start at the receiving call in 78–96% of cases, sustained work rarely follows). **C8-P3** was not re-run; the read-out-bin onsets reject the constant-delay rival directly. **Round 1's finding 2 ("about half of H04's dead time is something slower after read-out") is withdrawn:** it came from the dropped events in `activity_bins` and from H04's future-kick isolation, which keeps late responders.
+
+### C3 / NE41 and the natives
+| Test | Round 1 | Round 1b | Verdict (1b) |
+| --- | --- | --- | --- |
+| NE41 forced erasure, pooled β_F | mention −2.5 pp [−3.7, −1.4], −18% ± 6% (6/9 CI) | mention −2.5 ± 1.4 pp, −16% ± 8%; **reply author −1.97 ± 0.64 pp, −21% ± 7% (8/9 CI)**; β_V reply −1.70 ± 0.59 | mixed (unchanged; sign yes, size < 30%) |
+| NE32 newcomers (native, new) | — | 0 talk calls in isolation (N32a untestable); first naming of an old-timer after first receipt in **35/35** pairs (71/84 pairs received j only after the newcomer had started naming others); naming rate 0.22 at calls that just received j vs 0.014 | **supported** |
+| NE03 fetch limit (native, new) | — | rank > 10 pairs 621 (#10a) vs 80 (#10b): underpowered | descriptive |
+| C1, C2, C10 | as round 1 | not re-run: C1 uses the Claude Code fetch logs (unaffected); C2 uses token accounting; C10's k from H18 barely changes under the ledger (k = k_since_talk at 98% of talks) | unchanged |
+
+### Scorecard changes (round 1b)
+- **A 1** (unchanged): the ledger removes the regime-I mapping failure for addressing, but the talk clause and the content response still differ by regime.
+- **H 1 → 2:** every named rival is now beaten: immediate and Hawkes (round 1), memory-mediated (NE41, on replies), common cause (synthetic), and constant delay (onset follows read-out delay; round 1 could not reject it).
+- **D 1** (unchanged): the location and onset of responses are predicted from turn timing with no free parameter; the transient shape is not.
+- **E 1** (unchanged): NE41 sign replicated on replies and NE32 passes, but no predicted size was met.
+- Others unchanged. Faithfulness 2.5 → 3.0 suggested (meta.json).
+
+### Cross-hypothesis notes
+- **H18:** the "invisible message" placebo is explained by visibility (see H18 round 1b), and the ledger also removes H08's regime-I in-flight peak.
+- **H04 / H43:** the response to a nudge starts at the receiving call; H04's dead time is read-out delay plus paused targets that respond late or not at all.
+- **H35:** none of the 991 non-holdout nudge read-outs in regime III (#36–#44, #51) is an early wake (`wake_early` = 0), before or after NE44; pre-NE44 read-outs are shorter because fewer targets were mid-pause (38% vs 73% of receiving calls after a pause).
+
 ## Confirmatory predictions (written 2026-10-04 after round 1, before any holdout use; `analysis/confirm_holdout.py`, not run)
 Run only after this card and the script are committed and Vivian signs off. The script refuses without `--confirm --i-understand-this-uses-the-locked-holdout`; `--dry-run` runs the same code on non-holdout stand-ins (`data/processed/H08-context-is-the-coupling/confirm_dryrun/dryrun.json`).
 
@@ -383,9 +462,9 @@ Run only after this card and the script are committed and Vivian signs off. The 
 ## Round 2 redirects (2026-10-04, proposed by the H08 agent after round 1)
 - **Where round 1 went sideways:** the activity kernel assumed a fast step response at read-out. Nudge responses lag read-out by about 3 min, and binary activity has a ceiling (headroom), so a zero-parameter shape needs a post-read-out stage.
 - **What the direction is really after:** Coupling is what enters each model call, and when: responses are gated at call boundaries, and the response kernel is the read-out delay followed by a measurable post-read-out lag.
-- **H08-R1.** Two-stage kernel: read-out delay convolved with a post-read-out lag counted in turns (talk and action turns aligned on the read-out turn), to decompose the nudge's 5-min onset and retest HH92 / H04-R1.
+- **H08-R1.** (Superseded by round 1b, 2026-10-04: on corrected data the nudge response starts at the receiving call, so there is no post-read-out lag to decompose.) Two-stage kernel: read-out delay convolved with a post-read-out lag counted in turns (talk and action turns aligned on the read-out turn), to decompose the nudge's 5-min onset and retest HH92 / H04-R1.
 - **H08-R2.** A non-mention response for the C9 discontinuity (content similarity to the sender's message against a message-specific null), so the gating result does not rest on names.
-- **H08-R3.** Regime-I call logging: identify which calls produce chat turns and redo the read-out rule, since addressing peaks at turns currently classed as in flight.
+- **H08-R3.** (Superseded by round 1b, 2026-10-04: the context ledger's scheduled chat-mode calls remove the regime-I in-flight peak.) Regime-I call logging: identify which calls produce chat turns and redo the read-out rule, since addressing peaks at turns currently classed as in flight.
 - **H08-R4.** NE41 dose: whether writing a sender or thread to memory at the erasure protects the coupling (needs memory text: stored-line overlap with sender names).
 - **H08-R5.** Exposure audit: detect stale or replayed feeds (like the Claude Code agent's from 2026-03-17) wherever input logs exist, as a monitor for silent decoupling.
 
@@ -399,6 +478,7 @@ Run only after this card and the script are committed and Vivian signs off. The 
 7. Run `confirm_holdout.py` after sign-off.
 
 ## Notes
+- **From H44 (2026-10-04):** coupling to items read before a forced erasure drops to 0.60 [0.44, 0.81] of baseline; susceptibility to new room content does not rise (RR 0.97).
 - 2026-10-03: opened on a misread; parked. `llm_calls` confirmed unavailable on Hugging Face. C1 is ready to run on the Claude Code agent whenever wanted. Its predictions above were written before any data was touched.
 - 2026-10-04: reactivated. Round-1 operational definitions, observables, nulls and predictions (C8–C10, C2, C3, C1 amendment) written before any H08 analysis of real data.
 - 2026-10-04: synthetic validation, then amendments A1–A6, before real data. Period cards written with dated predictions, then round 1 run (non-holdout only). Post-hoc analyses are labelled (C9 clean subset, C2 previous-action control).

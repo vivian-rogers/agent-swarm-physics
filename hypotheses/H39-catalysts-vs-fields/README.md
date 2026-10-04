@@ -299,6 +299,7 @@ Script: `analysis/confirm.py`. It refuses to run without `--confirm --i-understa
 - **Dry run (stand-ins, not evidence):** C1 ✗, C2 ✗, C3 ✓, C4 ✗, C5 ✓, C6 ✓, C7 ✓, C8 ✗.
 
 ## Notes
+- **From H44 (2026-10-04):** "busy but unproductive" resolves at call resolution: after a forced erasure agents re-read in an orderly burst (read share 0.22 → 0.47) and write less (−26%); Jev's 5-min windows label those windows as more executing. No temperature pulse.
 - **From H43 (2026-10-04):** a nudge's escape effect exists only when a glance counts as escape; on sustained runs (≥ 3 active calls) a first nudge's effect is null (lnHR 0.07). Kicks show no refractory window beyond the read-out: a second kick read by a later call keeps 80–130% of the first's effect.
 - 2026-10-04: promoted from HH52 by Vivian (usefulness-first batch); wave 2.
 - 2026-10-04: design, observables, nulls, classification rule and predictions P1–P8 written before any real-data run.
