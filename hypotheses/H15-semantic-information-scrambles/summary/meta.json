@@ -1,13 +1,46 @@
 {
- "complete": 40,
- "faithfulness": 1.5,
- "usefulness": 2.5,
- "rationale": {
-  "complete": "Round 1 done: catalog, pre-registered D2.6 choice, synthetic validation on the real skeleton, per-period verdicts in 30 G folders plus 4 NE folders, scorecard. The confirmatory script is written and dry-run but not run; round 2 (turn-scale D2.6, separating restart overhead from re-acquisition, Jev progress as V) not started.",
-  "faithfulness": "The pre-registered predictions that memory is load-bearing failed (P1, P4), and the context contrast came out significantly opposite (P5, task-phase confound). The strong context-erasure dip beats the nulls in 8/9 periods but is post-hoc. D2.6 was inconclusive and the KW signature (plateau, eta) was untestable. The scorecard is A1 B1 C1 D0 E0 F1 G1 H1 I1 and no holdout has been run.",
-  "usefulness": "One computable diagnostic with a design implication: the cost of a context reset (~45% of writes for ~10 turns, roughly a tenth of throughput at a 41-turn cadence) suggests a longer cap or task-state carry-over, and shows that the memory write doesn't recover the loss. It isn't validated (post-hoc, holdout pending) and is closer to scaffold engineering than swarm physics; the memory nulls are low-powered."
- },
- "one_line": "Losing memory costs nothing visible in a day; wiping the context window costs ~45% of output for 10 turns",
- "rated_by": "calibrated by coordinator 2026-10-04 (from H15 agent (suggested))",
- "updated": "2026-10-03"
+  "complete": 55,
+  "faithfulness": 1.5,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 plus round 1b on improved data: work-ledger and real-failure viability, D2.6 rerun, context-ledger erasure timing, a new artifact-store scramble (HH261) and three native tests (NE41 supported, NE16 mixed, NE29 supported). Holdout not run; restart overhead vs re-acquisition still not separated.",
+    "faithfulness": "Memory-is-load-bearing predictions failed again on corrected data; the erasure dip replicated with dated predictions on independent timing and output data (E 0 -> 1), memory dose does not buffer it, and the artifact-store rival failed. KW signature (plateau, eta) still untestable; D2.6 inconclusive for the pre-registered pool. Scorecard A1 B1 C1 D0 E1 F1 G1 H1 I1.",
+    "usefulness": "One validated operator number: the 41-turn cap costs about a tenth of committed work (2.5-13% per period, matching H44), and the memory write does not recover it; levers are a longer cap or carrying task state across the wipe. Still scaffold engineering more than swarm physics."
+  },
+  "one_line": "Losing memory (or switching repo) costs nothing visible in a day; a forced context wipe costs ~39% of committed work for 10 calls, whatever the agent saves to memory",
+  "rated_by": "H15 round-1b agent (suggested); round 1 calibrated by coordinator 2026-10-04",
+  "updated": "2026-10-04",
+  "v2": {
+    "claim": "Wiping the context costs ~25\u201345% of output for ~10 turns; memory carries ~0 day-scale information",
+    "original_verdict": "mixed",
+    "credence": 0.84,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "intervention consistent",
+        "x": 2
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "cross-hypothesis replication",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 3,
+    "decision": "context-cap and memory design",
+    "magnitude": "material",
+    "generality": "agents with context resets",
+    "expected_usefulness": 2.53,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

@@ -1,13 +1,42 @@
 {
- "complete": 40,
- "faithfulness": 1.5,
- "usefulness": 1.5,
- "rationale": {
-  "complete": "Round 1 is done on the only non-holdout period (G44): pipeline reconstructed, predictions dated, synthetic validation, verdicts and scorecard. The #45 confirmatory script is written and dry-run but not run, and the plan coder still needs work.",
-  "faithfulness": "Mixed: the vocabulary-copy prediction beats the same-room and base-field nulls (C = 1) and plans were clearly not copied, but the headline 'transforms plans' failed (not transmitted), the leader is not closer to the corpus than to its base in embeddings, and neither rival is rejected; 16 messages, a moderate coder.",
-  "usefulness": "A diagnostic anyone distilling agents could compute (corpus-marker rate vs untrained speakers, plan copy vs a perfect-copy reference), and a cautionary pipeline finding, but the practical lesson (scenario coverage limits what SFT transmits) is standard ML knowledge."
- },
- "one_line": "Distilled leader kept a trace of its corpus style but none of its plans; its corpus was Kimi talking to itself",
- "rated_by": "calibrated by coordinator 2026-10-04 (from H23 agent (suggested))",
- "updated": "2026-10-03"
+  "complete": 40,
+  "faithfulness": 1.5,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1 is done on the only non-holdout period (G44): pipeline reconstructed, predictions dated, synthetic validation, verdicts and scorecard. The #45 confirmatory script is written and dry-run but not run, and the plan coder still needs work.",
+    "faithfulness": "Mixed: the vocabulary-copy prediction beats the same-room and base-field nulls (C = 1) and plans were clearly not copied, but the headline 'transforms plans' failed (not transmitted), the leader is not closer to the corpus than to its base in embeddings, and neither rival is rejected; 16 messages, a moderate coder.",
+    "usefulness": "A diagnostic anyone distilling agents could compute (corpus-marker rate vs untrained speakers, plan copy vs a perfect-copy reference), and a cautionary pipeline finding, but the practical lesson (scenario coverage limits what SFT transmits) is standard ML knowledge."
+  },
+  "one_line": "Distilled leader kept a trace of its corpus style but none of its plans; its corpus was Kimi talking to itself",
+  "rated_by": "calibrated by coordinator 2026-10-04 (from H23 agent (suggested))",
+  "updated": "2026-10-03",
+  "v2": {
+    "claim": "A distilled leader kept its corpus style but none of its plans",
+    "original_verdict": "mixed",
+    "credence": 0.38,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "single powered unit",
+        "x": 0.6
+      },
+      {
+        "factor": "ground truth agrees",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1.5,
+    "decision": "leader distillation",
+    "magnitude": "small",
+    "generality": "fine-tuned agents",
+    "expected_usefulness": 0.56,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

@@ -1,13 +1,42 @@
 {
- "complete": 25,
- "faithfulness": 1.5,
- "usefulness": 2.0,
- "rationale": {
-  "complete": "Two light exploratory rounds with predictions written first and reusable observable tables built, but no scorecard, no goal-period verdicts, no held-out estimator and no confirmatory run.",
-  "faithfulness": "Some predictions beat their nulls (regime-I kick hazard, the consolidation cycle, timer-set pauses), but several were refuted and the thermodynamic constructs themselves (landscapes, Kramers barriers, equation of state) mostly reduce to schedule fields or scaffold mechanics.",
-  "usefulness": "The timer-gated idling result ('only @-mentions wake a paused agent, at expiry') and the idle/memory tables are diagnostics others can compute, but the result is descriptive and not validated on the holdout."
- },
- "one_line": "Thermo framing adds little; idle agents are timer-gated (only @-mentions get through); memory is a set point",
- "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
- "updated": "2026-10-04"
+  "complete": 25,
+  "faithfulness": 1.5,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Two light exploratory rounds with predictions written first and reusable observable tables built, but no scorecard, no goal-period verdicts, no held-out estimator and no confirmatory run.",
+    "faithfulness": "Some predictions beat their nulls (regime-I kick hazard, the consolidation cycle, timer-set pauses), but several were refuted and the thermodynamic constructs themselves (landscapes, Kramers barriers, equation of state) mostly reduce to schedule fields or scaffold mechanics.",
+    "usefulness": "The timer-gated idling result ('only @-mentions wake a paused agent, at expiry') and the idle/memory tables are diagnostics others can compute, but the result is descriptive and not validated on the holdout."
+  },
+  "one_line": "Thermo framing adds little; idle agents are timer-gated (only @-mentions get through); memory is a set point",
+  "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
+  "updated": "2026-10-04",
+  "v2": {
+    "claim": "Idle agents are timer-gated; memory size is a set point",
+    "original_verdict": "mixed",
+    "credence": 0.56,
+    "ladder": [
+      {
+        "factor": "base (sec)",
+        "x": 0.3
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "partly robust",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1.5,
+    "decision": "scaffold timers",
+    "magnitude": "small",
+    "generality": "this scaffold",
+    "expected_usefulness": 0.84,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

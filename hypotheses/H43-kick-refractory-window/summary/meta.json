@@ -10,5 +10,34 @@
   "one_line": "No refractory window: a second kick read by a later model call keeps 80-130% of the first kick's effect at any spacing; only kicks absorbed into the same read are wasted.",
   "rated_by": "H43 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "No refractory window beyond one read-out; only same-call kicks are wasted",
+    "original_verdict": "refuted",
+    "credence": 0.67,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 3,
+    "decision": "kick spacing: one read-out",
+    "magnitude": "material",
+    "generality": "read-out-gated swarms",
+    "expected_usefulness": 2.0,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

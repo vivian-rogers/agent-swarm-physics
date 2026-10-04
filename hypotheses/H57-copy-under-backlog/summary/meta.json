@@ -10,5 +10,34 @@
   "one_line": "Backlog does not make agents echo (raw upper bound +0.0016 per doubling, ~5% of the H57 effect); addressed replies are rephrased, and most near-duplication is simultaneous convergence, not copying",
   "rated_by": "H57 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)"
+  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
+  "v2": {
+    "claim": "Backlog doesn't raise echo; near-duplication is mostly contemporaneous convergence",
+    "original_verdict": "refuted",
+    "credence": 0.56,
+    "ladder": [
+      {
+        "factor": "base (sec)",
+        "x": 0.3
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1.5,
+    "decision": "echo monitoring baselines",
+    "magnitude": "small",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 0.84,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

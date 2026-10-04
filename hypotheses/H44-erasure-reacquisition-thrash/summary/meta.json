@@ -10,5 +10,42 @@
   "one_line": "A forced context wipe triggers an orderly re-reading burst (read share 0.22 to 0.47 at the first call; Theta_c +0.08, 9/9 periods) and a 26% write dip costing 4-11% of output, breaks most command loops, but brings no temperature pulse and no extra susceptibility to room content.",
   "rated_by": "H44 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 kept: quasi-random scaffold intervention with a priced design trade-off, parity with H54)"
+  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 kept: quasi-random scaffold intervention with a priced design trade-off, parity with H54)",
+  "v2": {
+    "claim": "Forced erasure triggers orderly re-reading, costs 4\u201311% of output, breaks loops",
+    "original_verdict": "mixed (no thrash)",
+    "credence": 0.86,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "intervention consistent",
+        "x": 2
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M2",
+    "fragile": false,
+    "value_if_true": 3.5,
+    "decision": "context-cap length",
+    "magnitude": "material",
+    "generality": "agents with context resets",
+    "expected_usefulness": 3.0,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

@@ -10,5 +10,42 @@
   "one_line": "Activity co-movement is the scheduler's field; talk spreads by a coupling gated at exactly one read-out call (45/71 units, onset hop 1, none negative); HH167's regime split fails",
   "rated_by": "H50 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 -> 2.5; others kept)"
+  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 -> 2.5; others kept)",
+  "v2": {
+    "claim": "Activity co-movement is the scheduler's field; talk is a coupling gated at hop 1",
+    "original_verdict": "mixed (regime split rejected)",
+    "credence": 0.86,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "calibrated null",
+        "x": 2
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 3,
+    "decision": "separate scheduler synchrony from real coupling",
+    "magnitude": "material",
+    "generality": "read-out-gated swarms",
+    "expected_usefulness": 2.57,
+    "scientific_value": 4,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

@@ -10,5 +10,38 @@
   "one_line": "Generic early-warning signals do not forecast LLM-swarm pile-ons: autocorrelation never rises, and pile-ons in attention and commits arrive within minutes of a link.",
   "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.0 / 2.0)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)"
+  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
+  "v2": {
+    "claim": "Critical slowing down does not warn of herding onsets",
+    "original_verdict": "failed",
+    "credence": 0.36,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "weak power",
+        "x": 0.7
+      },
+      {
+        "factor": "single powered unit",
+        "x": 0.6
+      },
+      {
+        "factor": "robust to data/instruments",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1.5,
+    "decision": "don't deploy CSD alarms",
+    "magnitude": "small",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 0.54,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

@@ -1,13 +1,46 @@
 {
- "complete": 40,
- "faithfulness": 1.0,
- "usefulness": 1.5,
- "rationale": {
-  "complete": "Round 1 done: dated predictions, calibrated synthetic validation (3,060 replicates), Amendment 1 before real data, 3 pair tests plus 2 secondary pairs, 7 period folders, a 24-transition kickoff study, robustness variants and a scorecard. Confirmatory script written and dry-run checked, not run; no embedding-model swap; the two-state re-mapping is not started.",
-  "faithfulness": "The core unfitted prediction (free-week fluctuations predict who moves, P1) failed with the opposite sign in both regime-I pairs (robust across 11/12 variants), at pushes where the synthetic gives 95% power. The cross-transition version also failed with the opposite sign (Spearman -0.56, p = 0.015). The tilt loses to uniform translation; the variance test is untestable (non-perturbative pushes) and descriptively wrong-signed. Only the existence of a push holds. Exploratory only, so not 0.",
-  "usefulness": "A cheap, validated instrument (goal-direction projection with noise-corrected variance and an identifiability analysis) and a clear negative for operators: pre-goal fluctuation does not forecast compliance; goals act as common targets toggled collectively. Nothing yet to steer with."
- },
- "one_line": "Goals aren't Legendre pushes: free-week fluctuations don't predict who follows; agents converge instead",
- "rated_by": "H10 agent (suggested)",
- "updated": "2026-10-03"
+  "complete": 50,
+  "faithfulness": 1.0,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1 plus round 1b (2026-10-04): replication on 8 input configurations (shared goal vectors, bge and gte-modernbert, DQ5 dedupe, style residualization) and three native tests (G44 room contrast, NE38 single-agent reassignment, G26 agent-set goal) with dated predictions; per-period estimates written. Holdout not run; the two-state re-mapping is not started.",
+    "faithfulness": "P1 (fluctuations predict who moves) fails in every round-1b configuration and again along an agent-set goal (G26); the single-agent reassignment (NE38) lands outside the support of the unforced distribution, which no exponential tilt can reach. Only the existence of a push holds. Exploratory only, so not 0.",
+    "usefulness": "A validated, model-robust instrument (goal-direction projection, noise-corrected variance) and a clear negative for operators: pre-goal fluctuation does not forecast compliance; an operator-written target acts as a room-specific field while 'pick your own goal' does not. Nothing to steer with yet."
+  },
+  "one_line": "Goals aren't Legendre pushes: free-week fluctuations don't predict who follows; agents converge instead",
+  "rated_by": "RE-C1 re-evaluation agent (suggested)",
+  "updated": "2026-10-04",
+  "v2": {
+    "claim": "Goals act as quenches toward a common target, not linear-response pushes",
+    "original_verdict": "failed (Legendre)",
+    "credence": 0.75,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 2,
+    "decision": "kickoff design (with H54)",
+    "magnitude": "material",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.5,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

@@ -10,5 +10,30 @@
   "one_line": "Agents read each other within minutes but content settles over hours (tau ~10x coverage time); the cross-period scaling test had no power at real noise levels",
   "rated_by": "H48 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "Coverage takes minutes, settling hours; the scaling test is unpowered",
+    "original_verdict": "inconclusive",
+    "credence": 0.18,
+    "ladder": [
+      {
+        "factor": "base (sec)",
+        "x": 0.3
+      },
+      {
+        "factor": "not identifiable / underpowered",
+        "x": 0.5
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1,
+    "decision": "none",
+    "magnitude": "small",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 0.18,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

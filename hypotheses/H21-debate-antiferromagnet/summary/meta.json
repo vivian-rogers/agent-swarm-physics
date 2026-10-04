@@ -1,13 +1,42 @@
 {
-  "complete": 40,
-  "faithfulness": 1.0,
-  "usefulness": 1.5,
+  "complete": 50,
+  "faithfulness": 2.0,
+  "usefulness": 2.0,
   "rationale": {
-    "complete": "Round 1 is done on the only exploratory period (G12): labels derived and verified, predictions dated, synthetic validation at the real design (three estimator biases fixed), real run, post-hoc checks, scorecard. The #34 confirm script is written and dry-run but not run; no second exploratory period exists.",
-    "faithfulness": "The core prediction (two-sublattice order in content vectors, team recovery, AF fluctuation signature) failed against team-permutation and rotation nulls (Delta = 0.028, p = 0.34; 1/10 teams). Only a weak secondary passed: a staggered tilt along an a-priori motion stance axis (p = 0.002). The verdict reversal is post hoc. Power was limited (field below ~0.5 of noise undetectable).",
-    "usefulness": "A negative but practical warning: clustering agent messages recovers labs and topics, not even assigned coalitions, so content-based faction or hidden-team detection with generic embeddings is unpromising. The template stance axis is a computable diagnostic. The post-role reversal is a possible steering lead but unconfirmed."
+    "complete": "Round 1 plus round 1b: DQ6 check, second embedding model on masked text, style-residualized and deduplicated inputs, DQ2 stance channel with the calibrated agent-field null, three native tests (G12 re-drafting, G26 ballots, G33 unassigned debate). #34 not run.",
+    "faithfulness": "Two-sublattice order is supported in reply stance (beats team permutation and the calibrated agent-field null; teams recovered 8/10; within-pair contrast 16/18; switches off at the verdict) but absent in content in every variant. Coupling beyond the assigned field is not shown, so the coupled-antiferromagnet model is not reached.",
+    "usefulness": "A validated faction check on assigned conflict (stance on reply pairs, aggregated, against an agent-field null) and a clear negative: no camps form without assignment (#26, #33). Useful as a role-adherence monitor; not a steering lever."
   },
-  "one_line": "Debate teams leave no two-sublattice order in content; only a faint stance tilt that reverses after verdicts",
-  "rated_by": "H21 agent (suggested)",
-  "updated": "2026-10-03"
+  "one_line": "Debate teams are invisible in content but order as two sublattices in reply stance, switched on by the assignment and off at the verdict; no unassigned camps",
+  "rated_by": "RE-C2 round-1b agent (suggested)",
+  "updated": "2026-10-04",
+  "v2": {
+    "claim": "No antiferromagnetic order in debate content (topic channel); stance carries it (H37)",
+    "original_verdict": "failed",
+    "credence": 0.67,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "ground truth agrees",
+        "x": 1.5
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1,
+    "decision": "none",
+    "magnitude": "small",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 0.67,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

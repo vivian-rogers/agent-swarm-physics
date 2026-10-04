@@ -10,5 +10,38 @@
   "one_line": "Links co-move with project switches (HR 2.3) but do not lead them in herding weeks: they mark attention bursts, and throttling them would trim pile-ons by at most ~20%.",
   "rated_by": "H28 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "Links mark herding bursts for known projects rather than trigger them",
+    "original_verdict": "not supported",
+    "credence": 0.72,
+    "ladder": [
+      {
+        "factor": "base (sec)",
+        "x": 0.3
+      },
+      {
+        "factor": "calibrated null",
+        "x": 2
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 2,
+    "decision": "watch, don't throttle links",
+    "magnitude": "small",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.44,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

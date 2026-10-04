@@ -10,5 +10,38 @@
   "one_line": "A nudge acts only on its target, at the target's next call (no real dead time); the hours-reversal holdout was falsified in reverse",
   "rated_by": "H04 re-evaluation agent RE-V1 (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b; usefulness kept at 2.5, parity with H30/H35/H43 lever results)"
+  "calibrated_by": "coordinator 2026-10-04 (round 1b; usefulness kept at 2.5, parity with H30/H35/H43 lever results)",
+  "v2": {
+    "claim": "A first nudge adds ~1.4 active min to its named target (#51); repeats less",
+    "original_verdict": "mixed",
+    "credence": 0.39,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "single powered unit",
+        "x": 0.6
+      },
+      {
+        "factor": "magnitude shrank under fix",
+        "x": 0.8
+      },
+      {
+        "factor": "cross-hypothesis replication",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": true,
+    "value_if_true": 1.5,
+    "decision": "nudge targeting",
+    "magnitude": "negligible",
+    "generality": "this scaffold",
+    "expected_usefulness": 0.59,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

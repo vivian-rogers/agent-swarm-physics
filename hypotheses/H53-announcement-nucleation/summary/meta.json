@@ -10,5 +10,34 @@
   "one_line": "Herding is announcement-seeded (adoptions jump ~20x at a project's first chat link and stay in the poster's room), but the call clock doesn't set wave size: prompt readers adopt no more (RR 1.06), and current share, not the receptive count, predicts pile-ons. The clock binds only for deadline-bound calls (#26 runoff: ballots = readers in window).",
   "rated_by": "H53 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (usefulness 2.0 -> 2.5)"
+  "calibrated_by": "coordinator 2026-10-04 (usefulness 2.0 -> 2.5)",
+  "v2": {
+    "claim": "Herding is seeded by a project's first chat link; deadline votes are read-out-bound",
+    "original_verdict": "failed as posed",
+    "credence": 0.56,
+    "ladder": [
+      {
+        "factor": "base (sec)",
+        "x": 0.3
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 3,
+    "decision": "announce projects; size vote windows",
+    "magnitude": "material",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.69,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

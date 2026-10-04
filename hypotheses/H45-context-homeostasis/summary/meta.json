@@ -10,5 +10,38 @@
   "one_line": "The room share of an agent's context is not regulated: it follows room traffic as passive accumulation predicts (RI <= 0.22 in 32/32 periods), and erasures bring a talk dip, not an import overshoot",
   "rated_by": "H45 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "Room share of context is passive; the scaffold bounds context",
+    "original_verdict": "refuted",
+    "credence": 0.8,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "intervention consistent",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 2,
+    "decision": "context budgeting is the scaffold's job",
+    "magnitude": "small",
+    "generality": "agents with context resets",
+    "expected_usefulness": 1.6,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

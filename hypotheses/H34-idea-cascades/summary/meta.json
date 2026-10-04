@@ -10,5 +10,42 @@
   "one_line": "Idea cascades are strongly subcritical (R-hat 0.06-0.39, 32/32) and exposure-driven, not s^-3/2; the exponent is just R-hat and activity gains don't predict spread",
   "rated_by": "H34 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "Idea cascades are subcritical and exposure-locked; no s^-3/2",
+    "original_verdict": "mixed",
+    "credence": 0.74,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "calibrated null",
+        "x": 2
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "penalty (labels/post hoc/multiplicity)",
+        "x": 0.7
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 2,
+    "decision": "forecast idea spread",
+    "magnitude": "small",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.47,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

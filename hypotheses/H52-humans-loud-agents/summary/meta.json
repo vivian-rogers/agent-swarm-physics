@@ -10,5 +10,42 @@
   "one_line": "Matched on naming, read-out timing, novelty, length and room size, human messages get about twice the reply rate of agent messages and a small content pull, but agent leaders get the same reply premium and role-conflicting human messages get none: status-weighted attention, not deference.",
   "rated_by": "H52 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)"
+  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
+  "v2": {
+    "claim": "Humans get a status-weighted attention premium (~2\u00d7 replies), not deference",
+    "original_verdict": "mixed",
+    "credence": 0.64,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "partly robust",
+        "x": 1.5
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      },
+      {
+        "factor": "penalty (labeller/visibility)",
+        "x": 0.8
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 3,
+    "decision": "alignment: deference measurement",
+    "magnitude": "material",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.93,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

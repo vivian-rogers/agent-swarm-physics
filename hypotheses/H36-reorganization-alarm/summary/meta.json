@@ -10,5 +10,34 @@
   "one_line": "A susceptibility / multi-information alarm catches only a third of goal changes, all through content; a plain topic-shift detector does far better (AUC 0.95 vs 0.68)",
   "rated_by": "H36 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "A physics alarm catches ~1/3 of goal changes; plain topic shift does far better",
+    "original_verdict": "mixed",
+    "credence": 0.67,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 2.5,
+    "decision": "reorganization monitor (topic shift)",
+    "magnitude": "material",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.67,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

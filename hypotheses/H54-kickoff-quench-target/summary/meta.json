@@ -10,5 +10,50 @@
   "one_line": "Day-1 content lands on its own kickoff (top-1 in 18/33; failures only where no shared target is named), #51 agents land on their own private goals (0.95), frozen projects carry the goal's name; text specificity does not set the spread",
   "rated_by": "H54 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.5 -> 3.0; others kept)"
+  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.5 -> 3.0; others kept)",
+  "v2": {
+    "claim": "Day-1 content lands on what the kickoff names; agents land on private goals",
+    "original_verdict": "supported",
+    "credence": 0.95,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "calibrated null",
+        "x": 2
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "partly robust",
+        "x": 1.5
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "intervention consistent",
+        "x": 2
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M2",
+    "fragile": false,
+    "value_if_true": 3,
+    "decision": "kickoff design",
+    "magnitude": "large",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 2.84,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

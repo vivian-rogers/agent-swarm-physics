@@ -10,5 +10,50 @@
   "one_line": "Responses start at the call that received the message (addressing 14/17, replies 17/17; nudges too); erasure cuts reply coupling 21%",
   "rated_by": "H08 re-evaluation agent RE-V1 (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b: faithfulness 3.0 accepted, the highest so far; not holdout-confirmed)"
+  "calibrated_by": "coordinator 2026-10-04 (round 1b: faithfulness 3.0 accepted, the highest so far; not holdout-confirmed)",
+  "v2": {
+    "claim": "Responses are gated at the recipient's next model call (read-out)",
+    "original_verdict": "supported",
+    "credence": 0.95,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "calibrated null",
+        "x": 2
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "robust to data/instruments",
+        "x": 2
+      },
+      {
+        "factor": "intervention consistent",
+        "x": 2
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      },
+      {
+        "factor": "partly robust",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M2",
+    "fragile": false,
+    "value_if_true": 3,
+    "decision": "design: coupling delay = call cadence; message timing",
+    "magnitude": "large",
+    "generality": "read-out-gated swarms",
+    "expected_usefulness": 2.85,
+    "scientific_value": 4,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

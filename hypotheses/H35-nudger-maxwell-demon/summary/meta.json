@@ -10,5 +10,34 @@
   "one_line": "The auto-nudger buys 1.45 active min per nudge with 1.4 bits of state but spends them on the deepest traps; nudging once, early in a pause chain, would roughly double to triple the work per nudge.",
   "rated_by": "H35 agent (suggested)",
   "updated": "2026-10-03",
-  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 -> 2.5)"
+  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 -> 2.5)",
+  "v2": {
+    "claim": "The nudger uses ~1.4 bits/nudge inefficiently; nudging once early buys ~\u00d72.3 work per nudge",
+    "original_verdict": "mixed",
+    "credence": 0.38,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "single powered unit",
+        "x": 0.6
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 2,
+    "decision": "nudge policy",
+    "magnitude": "small",
+    "generality": "scheduled nudgers",
+    "expected_usefulness": 0.75,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

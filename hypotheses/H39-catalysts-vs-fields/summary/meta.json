@@ -10,5 +10,38 @@
   "one_line": "No lever is a pure catalyst: nudges unstick and tilt idle agents (escape x1.5, idle share -0.07); mentions steer content, not activity.",
   "rated_by": "H39 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "No lever is a pure catalyst; nudges unstick and tilt; mentions steer content",
+    "original_verdict": "mixed",
+    "credence": 0.32,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "single powered unit",
+        "x": 0.6
+      },
+      {
+        "factor": "penalty (labeller/visibility)",
+        "x": 0.8
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 2,
+    "decision": "lever choice",
+    "magnitude": "small",
+    "generality": "read-out-gated swarms",
+    "expected_usefulness": 0.65,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

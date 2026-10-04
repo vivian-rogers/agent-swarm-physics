@@ -10,5 +10,42 @@
   "one_line": "Free-week projects are mostly private: no exchangeable copying model fits (NCD failed 4/5), and copying is a small excess over independent agents.",
   "rated_by": "H06 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept; page-2 sections written by coordinator from the round-1 report)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept; page-2 sections written by coordinator from the round-1 report)",
+  "v2": {
+    "claim": "No exchangeable copying model fits free weeks; most projects (species) are private",
+    "original_verdict": "refuted",
+    "credence": 0.86,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "robust to data/instruments",
+        "x": 2
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 1.5,
+    "decision": "none directly (counts species, not effort)",
+    "magnitude": "small",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.29,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

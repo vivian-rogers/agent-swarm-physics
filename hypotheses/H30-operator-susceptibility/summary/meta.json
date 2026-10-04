@@ -10,5 +10,38 @@
   "one_line": "A period-level chi_op exists (nudges add ~1 active min for their target, first nudges only; human messages steer content +0.03), but the daily steerability gauge is noise.",
   "rated_by": "H30 agent (suggested)",
   "updated": "2026-10-03",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "A period-level \u03c7_op exists (first nudges, human content pull); no daily steerability gauge",
+    "original_verdict": "mixed",
+    "credence": 0.55,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "single powered unit",
+        "x": 0.6
+      },
+      {
+        "factor": "cross-hypothesis replication",
+        "x": 2
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 2,
+    "decision": "steering expectations",
+    "magnitude": "small",
+    "generality": "read-out-gated swarms",
+    "expected_usefulness": 1.09,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

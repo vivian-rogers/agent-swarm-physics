@@ -10,5 +10,42 @@
   "one_line": "Subcritical everywhere and unchanged on corrected inputs; fast cross-triggering survives the trimmed null; drive removal changes nothing",
   "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)"
+  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
+  "v2": {
+    "claim": "Activity is subcritical everywhere (n \u2248 0.2\u20130.4)",
+    "original_verdict": "failed (criticality)",
+    "credence": 0.89,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "calibrated null",
+        "x": 2
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "robust to data/instruments",
+        "x": 2
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1.5,
+    "decision": "diagnostic: no runaway cascades to manage",
+    "magnitude": "small",
+    "generality": "read-out-gated swarms",
+    "expected_usefulness": 1.33,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

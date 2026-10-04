@@ -10,5 +10,38 @@
   "one_line": "Anchoring cross-excitation at the recipient's next call removes most of H03's apparent triggering: talk timing follows each agent's own call clock, and only messages that name the recipient (regime III, post hoc) excite it.",
   "rated_by": "H42 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)"
+  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
+  "v2": {
+    "claim": "Talk timing follows each agent's call clock; cross-triggering \u2248 0 except named messages",
+    "original_verdict": "not supported",
+    "credence": 0.66,
+    "ladder": [
+      {
+        "factor": "base (sec)",
+        "x": 0.3
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 2,
+    "decision": "model agents on their own clocks",
+    "magnitude": "small",
+    "generality": "read-out-gated swarms",
+    "expected_usefulness": 1.32,
+    "scientific_value": 4,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

@@ -1,13 +1,38 @@
 {
- "complete": 40,
- "faithfulness": 1.0,
- "usefulness": 1.5,
- "rationale": {
-  "complete": "Round 1 done on the only candidate period (G21). Switch-on determined from the record before outcomes, predictions dated, synthetic validation at #21 sampling, per-period verdict, scorecard, figures. Confirmatory #14 script written and dry-run on #21 but not run. Round-2 designs (pair-level reading DiD, multi-dimensional field removal, embedding swap, second numeric labeler) not started.",
-  "faithfulness": "The core prediction (an alignment step at switch-on) failed against within-week and kickoff-matched placebos with adequate synthetic power for a moderate step. Snapshot betaJ0 did not rise. Numeric herding passed as pre-registered but vanished after an extraction audit. Only the alignment level beats the rotation null. Scorecard A1 B0 C1 D0 E0 F1 G1 H0 I0; no holdout.",
-  "usefulness": "A negative design lesson (an independent-first-draft phase does not preserve forecast diversity in an LLM swarm) and two computable diagnostics (switch-on detection from intentions plus mention share; alignment at kickoff). Plus a methods warning: regex-extracted numbers manufacture herding through regression to the mean. One week, N = 7, no ground truth, so the evidence is thin."
- },
- "one_line": "Forecast week: the coupling switch was real but early; alignment didn't jump and herding was an artifact",
- "rated_by": "calibrated by coordinator 2026-10-04 (from H24 agent (suggested))",
- "updated": "2026-10-03"
+  "complete": 50,
+  "faithfulness": 1.5,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1 plus round 1b (2026-10-04): 13 input configurations (shared and multi-direction goal field, bge and gte-modernbert for statements and documents, dedupe incl. cross-agent echoes, style residualization) and two native tests (G21 pair-level reading DiD, G41 one kickoff two rooms) with dated predictions; per-period estimates written. #14 confirmatory not run.",
+    "faithfulness": "The literal swarm-level step fails in all configurations (model-dependent reason: none under bge, a generic kickoff-day-sized step under gte). The pair-level version passes in both models (reading pulls the reader toward the owner by ~0.03; weaker after style residualization) and #41 shows room-local divergence after a shared kickoff: D and E move to 1. Single period, no holdout.",
+    "usefulness": "For forecast aggregation: an independent-draft phase protects no diversity (alignment is set at kickoff), and coupling enters pairwise through what agents read, so reading graphs, not phase schedules, are the lever to watch. Small effects, one week."
+  },
+  "one_line": "Forecast week: the coupling switch was real but early; alignment didn't jump and herding was an artifact",
+  "rated_by": "RE-C1 re-evaluation agent (suggested)",
+  "updated": "2026-10-04",
+  "v2": {
+    "claim": "The forecast-week coupling switch was real but early; alignment didn't jump",
+    "original_verdict": "mixed",
+    "credence": 0.29,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "single powered unit",
+        "x": 0.6
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1,
+    "decision": "none",
+    "magnitude": "small",
+    "generality": "this scaffold",
+    "expected_usefulness": 0.29,
+    "scientific_value": 1,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

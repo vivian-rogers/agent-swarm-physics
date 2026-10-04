@@ -10,5 +10,38 @@
   "one_line": "Daily Curie-Weiss dial: on corrected data activity/talk g ~ 0.16 (activity 0.07 after trimming), matches H19 and H03; content 'near-critical' is size x shared field; blind to delayed coupling.",
   "rated_by": "H25 round-1b agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)"
+  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
+  "v2": {
+    "claim": "Daily equal-time gains are subcritical (~0.1\u20130.16); content 'near-critical' is a shared field",
+    "original_verdict": "mixed",
+    "credence": 0.84,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "calibrated null",
+        "x": 2
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "robust to data/instruments",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1.5,
+    "decision": "a daily criticality dial (weak)",
+    "magnitude": "small",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.26,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

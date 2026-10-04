@@ -1,13 +1,42 @@
 {
- "complete": 40,
- "faithfulness": 1.0,
- "usefulness": 1.5,
- "rationale": {
-  "complete": "Round 1 is done: synthetic validation, per-period verdicts for five #51 sub-periods and three contrast weeks, scorecard, confirmatory script with dry run. The holdout tail is not run, and the faithful test of conflict (stance spins) and lagged couplings to identify J0 are still to do.",
-  "faithfulness": "The core spin-glass predictions failed or were indeterminate: no random-sign frustration shown, rivals couple positively (meta p = 0.02, the rival direction), and no collective metastable states (W at about 1). Couplings beat only the noise null (C = 1). SK vs heterogeneous ferro is not identifiable under common drive.",
-  "usefulness": "The balance index tau3(dc), the overlap synchrony W and the role-pair contrast can be computed on any swarm's logs. The finding that assigned roles pin topics and same-objective agents align is a weak design hint for mixed-motive swarms, not a validated lever."
- },
- "one_line": "#51 is no spin glass: roles pin positions, couplings are mostly positive, rivals co-move, no collective states",
- "rated_by": "calibrated by coordinator 2026-10-04 (from H22 agent (suggested))",
- "updated": "2026-10-04"
+  "complete": 50,
+  "faithfulness": 1.0,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1 plus round 1b: DQ6 roles, two embedding models, style residuals, dedupe, corrected talk, shared unit splits, the DQ2 stance channel with the calibrated agent-field null, and two native tests (NE38, G23). Holdout tail not run; lagged couplings still to do.",
+    "faithfulness": "Failed robustly: rivals co-move positively in every content variant and are friendly in stance; no conflict-coded negative couplings anywhere, including Opus 5's role change and chess opponents. The stance channel's unbalanced residuals fit the glass side of tau3(dc) but are non-specific (SK vs heterogeneous ferro) and unrelated to conflict.",
+    "usefulness": "A clean negative for mixed-motive swarms: conflicting incentives do not produce conflict couplings, in topic or stance; assigned roles pin topics and same-objective agents converge. The rival contrast, tau3(dc) and the calibrated stance null port to other logs."
+  },
+  "one_line": "#51 is no spin glass: roles pin positions, couplings are positive in topic and stance, rivals co-move, no collective states",
+  "rated_by": "RE-C2 round-1b agent (suggested; faithfulness and usefulness unchanged from the coordinator's calibration)",
+  "updated": "2026-10-04",
+  "v2": {
+    "claim": "#51 private goals don't make a spin glass; roles pin positions",
+    "original_verdict": "refuted",
+    "credence": 0.6,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "ground truth agrees",
+        "x": 1.5
+      },
+      {
+        "factor": "partly robust",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1,
+    "decision": "none",
+    "magnitude": "small",
+    "generality": "role-play swarms",
+    "expected_usefulness": 0.6,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

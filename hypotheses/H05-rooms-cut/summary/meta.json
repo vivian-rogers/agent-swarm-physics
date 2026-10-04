@@ -1,13 +1,42 @@
 {
- "complete": 60,
- "faithfulness": 2.5,
- "usefulness": 2.5,
- "rationale": {
-  "complete": "Round 1 with per-period verdicts and the confirmatory NE15 run are done; robustness, rivals (Hawkes, shared artifacts) and per-period re-analysis of the pooled tests remain.",
-  "faithfulness": "The talk-channel block model beats the shared-schedule and room-label nulls, and the primary holdout DiD passed, but the pooled primary test failed, J_in rose instead of staying fixed, the post-split window was not blind, and the entropy-production half is untestable.",
-  "usefulness": "\"Rooms decouple chat but not work\" is a validated design rule and a cheap monitor, but the chat half is nearly implied by the visibility scaffold and rests on one cut."
- },
- "one_line": "Rooms cut chat coupling (holdout DiD passed; verdict inconclusive); work isn't room-bound; EP unmeasurable",
- "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
- "updated": "2026-10-04"
+  "complete": 60,
+  "faithfulness": 2.5,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 with per-period verdicts and the confirmatory NE15 run are done; robustness, rivals (Hawkes, shared artifacts) and per-period re-analysis of the pooled tests remain.",
+    "faithfulness": "The talk-channel block model beats the shared-schedule and room-label nulls, and the primary holdout DiD passed, but the pooled primary test failed, J_in rose instead of staying fixed, the post-split window was not blind, and the entropy-production half is untestable.",
+    "usefulness": "\"Rooms decouple chat but not work\" is a validated design rule and a cheap monitor, but the chat half is nearly implied by the visibility scaffold and rests on one cut."
+  },
+  "one_line": "Rooms cut chat coupling (holdout DiD passed; verdict inconclusive); work isn't room-bound; EP unmeasurable",
+  "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
+  "updated": "2026-10-04",
+  "v2": {
+    "claim": "Rooms cut chat coupling between agents",
+    "original_verdict": "inconclusive (holdout DiD passed)",
+    "credence": 0.77,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "holdout passed (bug-tainted)",
+        "x": 2.5
+      },
+      {
+        "factor": "intervention consistent",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 3,
+    "decision": "room design to decouple chat",
+    "magnitude": "large",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 2.31,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

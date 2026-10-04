@@ -10,5 +10,42 @@
   "one_line": "No effective superagents: allocation persists through artifacts, single agents out-persist crews, the goal sets the rate",
   "rated_by": "H01 round-2 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (round 2 done: complete -> 45; faithfulness/usefulness as suggested)"
+  "calibrated_by": "coordinator 2026-10-04 (round 2 done: complete -> 45; faithfulness/usefulness as suggested)",
+  "v2": {
+    "claim": "No coordination-defined group is an effective (KW) superagent; the persistent unit is agent + own artifact",
+    "original_verdict": "refuted (R4-R8)",
+    "credence": 0.56,
+    "ladder": [
+      {
+        "factor": "base (sec)",
+        "x": 0.3
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "not identifiable / underpowered",
+        "x": 0.5
+      },
+      {
+        "factor": "intervention consistent",
+        "x": 2
+      },
+      {
+        "factor": "rival beaten",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 2.5,
+    "decision": "builders: treat agent+repo as the unit; don't expect emergent group agency",
+    "magnitude": "material",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.41,
+    "scientific_value": 4,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

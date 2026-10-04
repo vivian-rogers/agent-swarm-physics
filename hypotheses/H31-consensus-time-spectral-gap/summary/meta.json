@@ -10,5 +10,38 @@
   "one_line": "Consensus time does not follow 1/lambda2: a constant ~4.5 h forecast wins for projects (in work too), half of consensus is kickoff-set or one-window waves, and votes settle at read-out speed",
   "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.0 / 2.0)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)"
+  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
+  "v2": {
+    "claim": "Consensus time doesn't follow 1/\u03bb\u2082 (constant ~4 h forecast); deadline votes settle at read-out speed",
+    "original_verdict": "failed",
+    "credence": 0.65,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "robust to data/instruments",
+        "x": 2
+      },
+      {
+        "factor": "weak power",
+        "x": 0.7
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 2.5,
+    "decision": "consensus forecasting; vote windows",
+    "magnitude": "material",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.63,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

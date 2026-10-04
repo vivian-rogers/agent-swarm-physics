@@ -1,13 +1,42 @@
 {
- "complete": 40,
- "faithfulness": 2.0,
- "usefulness": 1.5,
- "rationale": {
-  "complete": "Round 1 is done with period verdicts and a scorecard; the confirmatory #34 test is written but not run, and there is no synthetic recovery (axis F = 0) or transfer test.",
-  "faithfulness": "Copy information beats the shuffle nulls and the independent-lineage identity holds exactly, but the homogeneous-hazard clock was rejected, three of eight predictions failed, the touch clock is post hoc and n = 2 forks.",
-  "usefulness": "Per-feature copy fractions are a computable lineage diagnostic, and 'convergent repair mimics leakage' is a real caution for audits, but nothing here predicts or steers a swarm."
- },
- "one_line": "Forks diverge gradually in code, in team-chosen jumps in content; copying dominates; no leakage; n = 2",
- "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
- "updated": "2026-10-04"
+  "complete": 40,
+  "faithfulness": 2.0,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1 is done with period verdicts and a scorecard; the confirmatory #34 test is written but not run, and there is no synthetic recovery (axis F = 0) or transfer test.",
+    "faithfulness": "Copy information beats the shuffle nulls and the independent-lineage identity holds exactly, but the homogeneous-hazard clock was rejected, three of eight predictions failed, the touch clock is post hoc and n = 2 forks.",
+    "usefulness": "Per-feature copy fractions are a computable lineage diagnostic, and 'convergent repair mimics leakage' is a real caution for audits, but nothing here predicts or steers a swarm."
+  },
+  "one_line": "Forks diverge gradually in code, in team-chosen jumps in content; copying dominates; no leakage; n = 2",
+  "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
+  "updated": "2026-10-04",
+  "v2": {
+    "claim": "Forks diverge gradually in code; copying dominates; no leakage",
+    "original_verdict": "mixed",
+    "credence": 0.38,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "single powered unit",
+        "x": 0.6
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1.5,
+    "decision": "fork/branch management",
+    "magnitude": "small",
+    "generality": "this scaffold",
+    "expected_usefulness": 0.56,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

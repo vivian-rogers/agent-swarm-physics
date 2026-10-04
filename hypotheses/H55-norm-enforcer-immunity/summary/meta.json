@@ -10,5 +10,30 @@
   "one_line": "Correctors are treated warmly, not resisted (rho -0.24 over 27 periods; #51 -0.60); corrections reach 0.65% of loop episodes and show no immune effect, while being addressed raises loop escape by 5 points",
   "rated_by": "H55 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "Correctors get warmer replies; corrections rarely reach looping agents",
+    "original_verdict": "refuted (friction)",
+    "credence": 0.46,
+    "ladder": [
+      {
+        "factor": "base (sec)",
+        "x": 0.3
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M0",
+    "fragile": false,
+    "value_if_true": 1.5,
+    "decision": "error-correction coverage",
+    "magnitude": "small",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 0.69,
+    "scientific_value": 2,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

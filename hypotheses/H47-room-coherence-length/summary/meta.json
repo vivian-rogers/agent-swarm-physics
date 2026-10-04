@@ -10,5 +10,38 @@
   "one_line": "Rooms bound content coherence when they do different things (C_B 0.23; NE42 DiD 1.0), but inside rooms it follows conversation, and no room leads a goal change",
   "rated_by": "H47 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "Rooms bound content coherence when they do different things; inside rooms coherence follows conversation",
+    "original_verdict": "mixed",
+    "credence": 0.68,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "calibrated null",
+        "x": 2
+      },
+      {
+        "factor": "intervention consistent",
+        "x": 2
+      },
+      {
+        "factor": "penalty (labeller/visibility)",
+        "x": 0.8
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 2.5,
+    "decision": "room layout",
+    "magnitude": "material",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 1.7,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }

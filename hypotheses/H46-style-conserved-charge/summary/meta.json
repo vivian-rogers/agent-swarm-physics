@@ -10,5 +10,38 @@
   "one_line": "Style is not a conserved charge: it shifts at goal switches (T 0.69), across forced context erasures (0.56, content flat) and under assigned registers (Prankster, judges), yet it out-identifies content across goal switches (0.76 vs 0.51, chance 0.15)",
   "rated_by": "H46 agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+  "v2": {
+    "claim": "Style drifts with context fill and resets at erasure, yet identifies agents better than content",
+    "original_verdict": "refuted (conservation)",
+    "credence": 0.8,
+    "ladder": [
+      {
+        "factor": "base (pre)",
+        "x": 0.4
+      },
+      {
+        "factor": "synthetic identification",
+        "x": 1.5
+      },
+      {
+        "factor": "replication",
+        "x": 2
+      },
+      {
+        "factor": "intervention consistent",
+        "x": 2
+      }
+    ],
+    "mechanism_level": "M1",
+    "fragile": false,
+    "value_if_true": 3,
+    "decision": "attribution and fingerprinting",
+    "magnitude": "material",
+    "generality": "any LLM swarm",
+    "expected_usefulness": 2.4,
+    "scientific_value": 3,
+    "rater": "coordinator first pass (from integrated reports); independent rater pending",
+    "rated_at": "2026-10-04"
+  }
 }
