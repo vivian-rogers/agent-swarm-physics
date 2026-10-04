@@ -1,0 +1,75 @@
+{
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done on 35 non-holdout periods (34 testable, 6-7 identified): card and dated predictions, synthetic validation on 4 real skeletons (8 worlds; A1 fixed before data), coordinator Note N1 recorded before data, replication in two embedding models with raw and window-field variants, cross-fitted information curves, placebo, recency and discrete (semantic_kappa) checks, 3 natives (G51 D2 wakes, NE03, NE42), 216 estimate rows, frozen guarded confirm script (dry-run only).",
+  "faithfulness": "HH345's exponent 0.34 is excluded by the pre-set talk-call pool (kill met), but the exogenous-k wake design gives 0.31 [0.25, 0.37], and every identified period excludes both one-message capacity and linear superposition. A topic field alone produces b ~ 0.8, which the placebo rule only partly guards. C 1, D 1, E 1, F 1, H 1.",
+  "usefulness": "A usable constant for operators and for H18/H59: total content uptake per call grows as k^0.2-0.3 (ten messages ~ 2x one). Direct instruction: send key messages alone or last; raise cadence rather than batch size."
+ },
+ "one_line": "The read-out channel saturates: content uptake per call grows as k^0.2-0.3 (wake batches 0.31), neither one message per call nor linear; HH345's 0.34 excluded on talk calls.",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "Intermediate capacity a_U 0.2-0.3; exponent 0.34 excluded on talk calls, held on wake batches"
+  },
+  {
+   "model": "12-information-dynamics",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Read beats in-flight at matched age, but a field alone mimics the exponent"
+  }
+ ],
+ "rated_by": "H113 round-1 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "The read-out channel has an intermediate capacity: content uptake per call grows as k^0.31 [0.25, 0.37] on #51 timer-wake batches (exogenous k) and k^0.23 [0.16, 0.31] pooled over the 6 field-identified periods, excluding one-message capacity (0), no bottleneck (1) and H18's corrected 0.50",
+  "scope": "6–7 identified periods of 34; native G51 wakes, NE42",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.64,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "exogenous batch size (timer wakes)",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic placebo rule before data (topic field fakes b ≈ 0.8)",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "both embedding models agree (34/34 within 0.2)",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "replication across identified periods (6/6)",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: only 6–7 of 34 periods identified",
+    "x": 0.7,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "each extra message read at once adds less content: expect total uptake to grow only as about k^0.3",
+  "magnitude": "medium",
+  "generality": "read-out-gated LLM swarms",
+  "expected_usefulness": 0.96,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H113 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

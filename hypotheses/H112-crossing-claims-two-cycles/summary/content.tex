@@ -1,0 +1,34 @@
+\hwhat{H112 tests a Little-model prediction: when two agents move onto the same project without having read each other (a parallel update), they should both leave again (a period-2 cycle); when one moved after reading the other (a sequential update), the move should stick. Units are co-switch pairs: two agents' call-level switch-ins onto one project within 15 min, classed by the context ledger as read, in flight or silent. Over 9 testable non-holdout periods (2,227 pairs), unaware pairs depart within 5 calls 1.15 [1.08, 1.22]$\times$ as often as read pairs, not the predicted $\ge 2\times$. With a partner claim present in both classes the ratio is 1.02 [0.92, 1.13]. There is no mutual leaving and no departure at the read. The holdout is not run.}
+
+\hmodel{Model 02's update-rule table with model 10's categorical states. Agent $i$ holds project $\sigma_i$. At a call it updates with probability $p_u$ (plus $p_r$ after reading news). It draws a project from a logit in the fields $h$ and the number $\hat n_{ij}$ of other agents it \emph{believes} are on $j$. Beliefs change only at the ledger read-out of a claim, so the read-out delay sets the update order. For $J<0$ a parallel pair is frustrated once both read: Little's 2-cycle.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+P(\sigma_i\to j)\propto\exp\!\big(h_j+J\,\hat n_{ij}(t)\big),\qquad \hat n_{ij}\ \text{updated at read-out only}\\
+\mathrm{RR}_U=\frac{P(\ge1\ \text{departs in }K{=}5\ \text{calls}\mid\text{unaware})}{P(\ge1\ \text{departs}\mid\text{read})}\ \ (\text{MH over lag}\times\text{named})\\
+M=\frac{P(\text{both depart})}{P(i\ \text{departs})\,P(j\ \text{departs})}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Left: departure risk ratio, unaware over read pairs, per testable period (95\% CI), the pool, the pool with a partner claim present in both classes (orange; post hoc A2) and the literal crossing contrast (in flight over read, 20 pairs). Gray band: the no-coupling range on the real schedules. Dashed: HH343's $2\times$. Right: departure rates by class; silent pairs (no claim) depart most.}
+
+\htelos{Two agents that land on the same project at the same time do not bounce off each other. Their fate does not depend on who read whom once chat about the project is matched. Most simultaneous moves are silent: nobody wrote about the project, and the "move" is often a glance. An operator need not stagger agents or force them to read before claiming work to avoid thrashing: at village cadence true crossings are rare (1\% of co-switches) because a message is read in about 20 s.}
+
+\hbottom{Co-switch departures do not depend on whether the movers had read each other once chat engagement is matched (RR 1.02 [0.92, 1.13]); HH343's $2\times$ crossing effect and 2-cycle are absent.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.44\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 $\mathrm{RR}_U\ge2$, CI $>1$ & \raggedright 1.15 [1.08, 1.22], 9 periods & \raggedright failed\tabularnewline
+\raggedright P1$'$ in flight vs read $\ge2$ & \raggedright 1.04 [0.80, 1.35], 20 pairs & \raggedright failed (descr.)\tabularnewline
+\raggedright P2 mutual leaving after unaware & \raggedright $M$ 1.07 vs 1.19 (read) & \raggedright failed (descr.)\tabularnewline
+\raggedright P3 sequential sticks & \raggedright $S$ 0.70, but biased without coupling & \raggedright not a test\tabularnewline
+\raggedright P4 own-role $\ge1.5\times$ shared & \raggedright ratio 0.88 [0.73, 1.06] & \raggedright failed\tabularnewline
+\raggedright P5 $\mathrm{RR}_U>1$ in $\ge2/3$ & \raggedright 7/9 periods & \raggedright supported\tabularnewline
+\raggedright N G51 departure at the read & \raggedright 0.79 [0.37, 1.64] & \raggedright failed\tabularnewline
+\raggedright N G44 free vs assigned arm & \raggedright \#best: 0 read pairs & \raggedright descriptive\tabularnewline
+\raggedright A2 claim present (post hoc) & \raggedright 1.02 [0.92, 1.13], 577 pairs & \raggedright --\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic worlds on the real call schedules of \#18, \#31, \#38 and \#51 (40 runs; markers per schedule, bars the pool). No world reaches $\mathrm{RR}_U=2$. Read-gated avoidance ($J=-2$) gives $\mathrm{RR}_U\approx0.8$: the first mover reads the second mover's claim and leaves. The observed 1.15 (dashed) lies above every world: it is engagement selection, not coupling.}
+
+\hcaveats{Departures use touch labels, so 73--86\% of pairs have a departure within 5 calls; that caps any risk ratio near 1.35. The engagement control and the risk differences are post hoc (A2). In-flight pairs number 26 in all, so the literal crossing test is unpowered. The work channel (119 pairs) gives 0.99 [0.84, 1.18]. Regime I/II call starts are modelled, not logged.}
+
+\hnext{Joins from DQ4 commits or a two-touch rule (base rate below 50\%); first- vs second-mover departures in read pairs of \#42 and \#51, the sign that read-gated avoidance predicts.}

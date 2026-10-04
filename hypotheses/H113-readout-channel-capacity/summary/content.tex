@@ -1,0 +1,34 @@
+\hwhat{H113 measures how much content an agent takes up from a batch of $k$ peer messages read before it speaks. Each row is a talk call: the reader's next statement, orthogonalized to its previous statement and the goal, is regressed on the summed batch vectors with a gain $\gamma_1 k^{-b}$. HH345 predicted total uptake $\propto k^{0.34}$; the coordinator later corrected H18's value to $k^{0.50}$. On \#51 timer-wake batches, where others set $k$, $a_U=1-b=0.31$ [0.25, 0.37]. Pooled over the 6 periods identified against a topic field, talk calls give 0.23 [0.16, 0.31]: the pre-set kill (0.34 excluded) is met, and 0.50 is excluded everywhere. The holdout is not run.}
+
+\hmodel{Models 04 and 12: a linear read-out channel into the destination's next statement, with an in-flight placebo source. $x_m$: DQ5 \texttt{style\_resid32} vector of batch message $m$; $y$: the reader's statement; $P$ removes the reader's previous statement and the goal directions. $\gamma(k)$ is the per-message uptake slope, $U(k)=k\gamma(k)$ the total uptake per call. $b=0$: no bottleneck; $b=0.66$: HH345; $b=1$: one message per call.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+Py=\gamma_1k^{-b}\sum_{m\in B}Px_m+\gamma_F\sum_{m\in F}Px_m+\epsilon,\qquad U(k)=k\gamma(k)\propto k^{a_U},\ a_U=1-b\\
+I(k)=-\tfrac{D}{2}\log_2\!\big(1-R^2_{\rm cv}(k)\big),\qquad a_I\approx1-2b+r\ \ (\text{low SNR})
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Left: capacity exponent $\hat b$ per testable period (95\% CI; circles bge, squares gte; dark = identified against a field by the placebo rule) and on \#51 timer-wake batches (orange). Dashed lines mark HH345 ($a_U=0.34$) and the corrected H18 value (0.50); dotted, one message per call. Gray band: what a topic field alone produces. Right: total uptake $U(k)$ on the wake batches, against reference slopes; it grows about as $k^{0.3}$ up to $k\approx12$ and then flattens.}
+
+\htelos{Reading more messages before speaking helps, but with steep diminishing returns: ten messages buy about twice the content of one. An operator who wants an agent to act on a specific message should send it alone or make it the newest; burying it in a batch of ten dilutes it about fivefold. The bottleneck is per call, so faster call cadence, not longer batches, raises throughput.}
+
+\hbottom{Content uptake per read-out call grows as $k^{0.2\text{--}0.3}$ (wake batches 0.31 [0.25, 0.37]), excluding both a one-message capacity and H18's corrected $k^{0.50}$; HH345's 0.34 is excluded by the talk-call pool.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.44\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1a pooled $a_U\ni0.34$ & \raggedright 0.23 [0.16, 0.31] bge; 0.22 gte & \raggedright failed (kill)\tabularnewline
+\raggedright vs corrected 0.50 (N1) & \raggedright excluded in every identified period & \raggedright failed\tabularnewline
+\raggedright P2 $b>0$; P3 $b<1$ & \raggedright 6/6 and 6/6 (bge) & \raggedright supported\tabularnewline
+\raggedright P4 read beats in flight & \raggedright $+0.014$ [0.006, 0.022]; $\gamma_F/\gamma_1$ 0.31 & \raggedright supported\tabularnewline
+\raggedright P5 $a_I\approx1-2b+r$ & \raggedright 7/11 within 0.2 & \raggedright failed (narrow)\tabularnewline
+\raggedright P6 two models agree & \raggedright 34/34 within 0.2 & \raggedright supported\tabularnewline
+\raggedright P7 newest item favoured & \raggedright $+0.034$ [0.025, 0.043] & \raggedright supported\tabularnewline
+\raggedright N1 D2 wakes = talk calls & \raggedright 0.69 vs 0.86 ($\Delta-0.17$) & \raggedright failed\tabularnewline
+\raggedright N2 NE03 fetch limit & \raggedright \#10a underpowered & \raggedright descriptive\tabularnewline
+\raggedright N3 NE42 merge invariance & \raggedright $|\Delta\hat b|\le0.09$, $k\times1.5$ & \raggedright supported (weak)\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic worlds on the real read-out skeletons of \#18, \#31, \#38 and \#51 (10--20 runs): the estimator recovers $b=0$, 0.66 and 1 within 0.05. A topic field with no reading gives $\hat b\approx0.8$, so only periods whose read messages beat in-flight messages at matched age are scored.}
+
+\hcaveats{A time-local field mimics the exponent; 27 of 34 testable periods fail the placebo rule and are not scored. In-flight messages co-respond to the same batch, so the placebo is conservative. Talk-call batch sizes are partly reactive; the wake design avoids that. The linear channel cannot tell averaging from picking one item. Synthetic runs were cut to 10 per world on three skeletons by machine load.}
+
+\hnext{Exogenous-$k$ designs in every regime-III period; a selection-vs-averaging mixture on per-item alignment; capacity as an agent constant.}

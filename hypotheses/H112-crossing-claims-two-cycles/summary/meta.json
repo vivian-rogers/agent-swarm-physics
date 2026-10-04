@@ -1,0 +1,60 @@
+{
+ "complete": 40,
+ "faithfulness": 0.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done on 27 non-holdout periods (9 testable): card and dated predictions, synthetic validation on 4 real call schedules (7 worlds incl. the HH343 world, 40 runs; A1 fixed before data), replication with MH risk ratios, permutation null, K and channel sensitivities, pair strata, 3 natives (G51 post-read onset and phase sign, G44 arms, G42 descriptive), post hoc engagement control (A2), 70 estimate rows, frozen guarded confirm script (dry-run only).",
+  "faithfulness": "HH343's prediction (2x departure after crossing co-switches, mutual 2-cycles, stronger in avoidance weeks) fails on every pre-registered test; the raw 1.15 excess disappears when chat engagement is matched (post hoc). The synthetic shows the Little-type read-gated model itself predicts RR < 1 at village sampling. C 1, D 0, E 0, F 1, H 0.",
+  "usefulness": "A usable negative: update order does not cause thrashing on projects at village cadence, and true crossings are rare (1% of co-switches) because read-out takes ~20 s. Operators need not serialize claims. The touch-level outcome limits magnitude claims."
+ },
+ "one_line": "No 2-cycles: co-switch departures do not depend on who read whom once chat engagement is matched (RR 1.02); crossings are 1% of co-switches.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "failed",
+   "note": "No Little 2-cycle; read-gated avoidance predicts RR < 1, observed 1.15 is engagement"
+  },
+  {
+   "model": "10-potts",
+   "role": "secondary",
+   "outcome": "failed",
+   "note": "Avoidance weeks (H93 J < 0) show no larger update-order effect"
+  }
+ ],
+ "rated_by": "H112 round-1 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Agents who join the same project do not form 2-cycles: once chat engagement is matched, departures do not depend on who read whom (RR 1.02 [0.92, 1.13], 577 pairs); the raw 1.15× excess of unaware pairs is engagement, and true crossings are rare (1% of co-switches)",
+  "scope": "9 testable periods, 2,227 co-switch pairs; natives G51, G44, G42",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.44,
+  "ladder": [
+   {
+    "factor": "base (sec)",
+    "x": 0.3
+   },
+   {
+    "factor": "synthetic on real call schedules (model predicts RR < 1)",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "replication across periods",
+    "x": 1.2,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 0.5,
+  "decision": "don't worry about parallel-update oscillations in project choice",
+  "magnitude": "small",
+  "generality": "LLM swarms",
+  "expected_usefulness": 0.22,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H112 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
