@@ -1,6 +1,14 @@
 # H05: Cutting the cross-room channel lowers entropy production, and rooms become coupled blocks
 
-**Status:** **confirmatory run on the locked holdout (2026-10-03): INCONCLUSIVE by the pre-registered rule.** The primary pair DiD at the 03-16 split (C1) **passed**: separated pairs lost talk coupling relative to pairs that stayed together. The MF J_out criterion passed. The pooled TWFE (C3) had the right sign but was not significant (z = 1.4). The 02-25 placebo behaved: no separation, no change. Exploratory round 1 had found rooms to be coupled blocks for talk; EP is not detectable at this sampling.
+**Status:** **Round 1b (2026-10-04, fixed activity bins, DQ8 trim, ledger reads):**
+- the talk room effect is stronger and survives the trim (TWFE z 2.6 → 4.1; the 05-11 split DiD is now p 0.03);
+- active-spin room effects vanish;
+- **HH248 holds:** given ledger read counts, co-location adds no talk coupling;
+- NE42 shows attention reallocation (stay pairs decouple when merged and recouple at the split).
+
+The holdout run (buggy table) is not re-run.
+
+Round 1: **confirmatory run on the locked holdout (2026-10-03): INCONCLUSIVE by the pre-registered rule.** The primary pair DiD at the 03-16 split (C1) **passed**: separated pairs lost talk coupling relative to pairs that stayed together. The MF J_out criterion passed. The pooled TWFE (C3) had the right sign but was not significant (z = 1.4). The 02-25 placebo behaved: no separation, no change. Exploratory round 1 had found rooms to be coupled blocks for talk; EP is not detectable at this sampling.
 **Fields:** stat mech, thermodynamics, dynamics, info theory
 **Literature:** [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (the estimator)
 **Origin:** shortlist S4 ([`../promotion-shortlist.md`](../promotion-shortlist.md)); idea HH33; feeds H01 D1.1.a (rooms are superagents), D3.2 and D9.2 ([`../H01-emergent-superagents-exist/subhypotheses.md`](../H01-emergent-superagents-exist/subhypotheses.md)).
@@ -182,6 +190,103 @@ One folder per goal period (`G<NN>/`) or spanning natural experiment (`NE<NN>/`)
 - The pooled design across 02-09 → 03-20 is noisier than the single-cut DiD.
 - **New, unpredicted:** within-room coupling *rose* after the split, roughly ×6, with a CI excluding 0. Possibly the attention that cross-room partners had received was redirected to room-mates (a conserved attention budget?), or the #35 forks raised in-room coordination. Worth its own HH; check against #35's fork activity (H07).
 - Under the project's per-goal-period rule (adopted after this pre-registration), C1 is the natural design: one cut, compared across the boundary. C3's pooled TWFE is exactly the kind of cross-period pooling the rule discourages.
+
+## Round 1b (improved data, 2026-10-04)
+
+### Round-1b predictions for the new tests
+*Written 2026-10-04 08:35 UTC, before any of these tests was run, and before any read-count statistic was computed. Some round-1b replication numbers on `activity_bins_fixed` had started printing (X2 active spins for #38–#44), so these are not blind to them. The round-1 predictions (P1–P3, MF1–MF4, C1–C6) are unchanged.*
+- **R1b-HH248 (rooms are only a read-out filter; native on NE42, plus pooled regime III).** Pair-day read counts come from the context ledger: the number of j's messages that entered i's calls plus the reverse (`context_ledger_items`, agent senders). In the pooled two-way FE panel (talk κ_x, non-holdout regime-III pair-days, as in X4):
+  - (a) without reads, β(co-location) > 0 (replicates X4);
+  - (b) adding log(1 + reads) gives δ(reads) > 0 at z > 1.96, and β(co-location) shrinks by ≥ 50% to |z| < 1.96. HH248 holds if (b) holds; it fails if β stays significant with reads in the model;
+  - (c) dose-response among same-room pair-days (co-location ≥ 0.75): talk κ_x rises with log(1 + reads), z > 1.96, with pair and day FE.
+  - My credence that (b) holds: 0.45. Reads are counts, while the room may act as a gate: a binary jump at reads > 0 would leave β significant.
+- **R1b-N2 (#51g #focus, 08-05 → 08-24; native).** The ledger must show the cut: reads between the two #focus agents and #general fall by ≥ 90% during #focus. On fixed bins, the cut arm's talk κ_x DiD (during − before, against stay pairs) is < 0, untrimmed and trimmed. I expect this to be n.s. (two agents; 25 stay agents; V4 power). It is a replication of NE15's C1 on a self-selected, non-holdout cut. The bookends also stop on 08-05 (NE43), so active spins are confounded and only talk is read.
+- **R1b-N3 (NE42 split 05-11: attention reallocation, H05-R2; native).** This is the non-holdout version of the unpredicted holdout finding that J_in rose ×6 after the NE15 split. When the merged room splits, each agent's room shrinks, so its reads spread over fewer partners. Predictions:
+  - (a) ledger reads per partner rise for pairs that stay together (#41 vs #40, same pairs);
+  - (b) the talk κ_x of those pairs rises too: a DiD of stay pairs against cut pairs is impossible (cut pairs go to ~0), so the test is the within-pair change #40 → #41 against the #39 → #40 change for the same pairs (the merge should lower it);
+  - (c) MF: J_in on the #39 partition is higher in #41 than in #40.
+  - Direction only. Goal changes confound it (#40 has a shared objective), and the size is not predicted.
+
+### What changed
+- **Inputs.** Spins now come from `activity_bins_fixed`. The old table had dropped about half of all events: talk minutes in the panel go from 26.9k to 50.4k, active minutes from 307k to 418k.
+- **Trimmed variant.** Every pair statistic is also computed after DQ8's rule, trimming each day to its all-present window *before* the cross-day surrogate. That keeps 90 of 99 days, with a median window of 0.90 of the day.
+- **Read counts.** Pair-day ledger read counts come from DQ1 (`r1b/pair_day_reads.parquet`).
+- **Rooms.** Rooms stay `rooms_timeline` as-of joins, which DQ6 calls `room_presence`.
+- **Code.** Switches `H05_DATA=r1b` and `H05_MASK=trim` were added in `scheme/build_panel.py`, `analysis/explore_rooms.py` and `analysis/mf_blocks.py`; the defaults reproduce round 1. New scripts: `analysis/r1b_reads.py` (HH248, N2, N3) and `analysis/r1b_estimates.py` (92 rows in `per_period_estimates`). Outputs are in `data/processed/H05-rooms-cut/r1b/` and `r1b/trim/`.
+- **For H19.** `r1b/h19_gains.parquet` and `r1b/trim/h19_gains.parquet` hold the two-block loop gains, in H19's `h05_rows` layout (goal_no, window, method `H05.g2b_talk|active`, value, se, lo, hi, ci_kind, n_days, N).
+
+### Old vs new (non-holdout; talk spins unless stated)
+| Statistic | Round 1 | 1b fixed | 1b fixed + trim |
+| --- | --- | --- | --- |
+| X2 pooled within − cross, talk κ_x (6 regime-III windows) | +0.014, 5/6, Fisher p 2e-4 | **+0.021, 6/6, p 6e-7** | +0.021, 6/6, p 3e-6 |
+| X2 pooled, talk J_sym | +0.064, 6/6, p 1e-5 | +0.061, 6/6, p 2e-7 | +0.072, 6/6, p 8e-8 |
+| X2 pooled, active κ_x | +0.005, 4/6, p 0.011 | +0.003, 4/6, p 0.17 | +0.006, 2/6, p 0.43 |
+| P2 per window (talk κ_x rule) | supported G38, G41, G44; mixed G37, G42; failed G39 | supported **G38, G41, G42, G44**; mixed G37, G39 | same as fixed |
+| X4 TWFE β(co-location), talk κ_x, all regime III | +0.0076 (z 2.6) | **+0.0102 (z 4.1)** | +0.0105 (z 3.3) |
+| X4, two-room era #37–#44 | +0.0091 (z 1.7) | +0.0129 (z 3.5) | +0.0178 (z 3.4) |
+| X4, active κ_x | +0.0002 (z 0.05) | −0.0016 (z −0.4) | +0.0005 (z 0.2) |
+| X3 split 05-11, cut arm talk κ_x DiD | −0.008 (p 0.52) | **−0.020 (p 0.027)** | −0.019 (p 0.053) |
+| X3 merge 05-04, add arm talk c0_x DiD | +0.035 (p 0.03) | +0.055 (p 0.001) | +0.024 (p 0.30) |
+| X3 #focus on, cut arm talk κ_x | −0.003 (p 0.51) | −0.006 (p 0.28) | −0.009 (p 0.20) |
+| Placebo #51 July (pseudo-arm), talk κ_x | −0.003 (p 0.76) | +0.000 (p 0.99) | +0.001 (p 0.91) |
+| MF1 talk: J_in > J_out (regime-III windows) | 6/6 | 6/6 | 5/6 |
+| MF1 talk: J_out CI ∋ 0 | 6/6 | 4/6 (borderline pass) | 3/6 (fail) |
+| MF two-block loop gain, talk / active | 0.06–0.25 / 0.05–0.40 | 0.05–0.24 / −0.02–0.36 | −0.02–0.24 / −0.04–0.17 |
+
+### New tests
+| Test | Result | Verdict |
+| --- | --- | --- |
+| **R1b-HH248 (a)** without reads, β(co-location) > 0 | +0.0123 (z 5.1); trim +0.0131 (z 4.4) | pass |
+| **R1b-HH248 (b)** add log(1 + reads) | β(co-location) falls to +0.0013 (z 0.2; 90% shrink); δ(reads) +0.0029 (z 2.1). Trim: +0.0008 (z 0.1), δ z 2.2 | **holds** |
+| R1b-HH248 (c) dose-response inside rooms | +0.0051 per log-read (z 2.3); trim z 2.6 | pass |
+| R1b-N2 #focus: the ledger confirms the cut | cut-arm reads 95 → 4.4 per pair-day (−95%); the #focus pair's own reads 124 → 273 | pass |
+| R1b-N2 #focus: talk κ_x DiD < 0 | −0.006 (p 0.28), trim −0.009 (p 0.20) | right sign, n.s. (as predicted) |
+| R1b-N3 NE42 split: (a) reads per stay pair rise | +12.5 [6.3, 18.7] per pair-day | pass |
+| R1b-N3 (b): stay pairs' talk κ_x rises at the split, against the merge change | merge −0.010; split **+0.022 [0.013, 0.032]**; split − merge +0.032 [0.017, 0.048] (trim +0.030 [0.008, 0.052]) | pass |
+| R1b-N3 (c): MF J_in (#39 partition) #41 > #40 | #39 0.17 → #40 −0.02 → #41 0.06 [0.01, 0.08] | pass |
+
+**Reading.**
+1. **The fix strengthens the talk result.** Thinning events by a day-specific fraction had attenuated every talk correlation, so the block structure, the pooled FE and the 05-11 split DiD all become clearer. The split DiD is now significant: a non-holdout replication of the NE15 cut (C1). The talk effect survives the DQ8 trim, so it is not day edges.
+2. **The weak round-1 "active spins are a bit room-structured" is gone.** Active-spin room effects are null on fixed bins and null after trimming. Activity co-movement is not room coupling. This fits H50 (scheduler field) and RE-A1/RE-A2.
+3. **HH248 holds: rooms act on talk coupling only through what gets read.** Once ledger read counts are in the model, co-location adds nothing (90% shrink, z 0.2), and inside rooms coupling rises with reads. Post hoc, a binary "any reads" term does *not* absorb the room effect; the dose matters. **Caveat:** co-location and log reads correlate 0.82, so the test has little room to separate them. The interval on β(co-location | reads) is wide (SE ×2.2), and it still includes half the room effect.
+4. **Attention reallocation (H05-R2) has a non-holdout analogue.** Pairs that stay together lose coupling while merged into the bigger room and regain it at the split. MF J_in shows the same pattern (−0.02 merged vs 0.06 after the split). The holdout's unexplained "J_in rose ×6 after NE15" therefore looks like a real feature of cuts, not an artifact. Goal changes (#40's shared objective) confound this.
+5. **What did not change:** EP remains undetectable (X5 not re-scored), and MF3 #focus has no room-specific signal in active spins.
+
+### Verdict changes
+- **Exploratory verdict:** rooms are coupled blocks for talk. This is unchanged and stronger.
+- **P2 per window:** G42 goes from mixed to supported; G39 from failed to mixed (within ≈ cross).
+- **P3:** the split moves from right sign n.s. to supported for talk κ_x.
+- **MF1 talk:** stays supported on fixed bins, but the J_out ∋ 0 part fails under the trim (3/6).
+- **Active-spin claims:** withdrawn.
+- **Holdout verdict:** INCONCLUSIVE stands. It is not re-run (Vivian's call).
+
+### What the corrected numbers imply for the executed holdout run (NE12 #32 + #34 days)
+The run used the buggy panel. On non-holdout data, the fix moves every talk statistic the way the holdout predictions wanted:
+- pair-level block effects rise ×1.5;
+- the TWFE z goes from 2.6 to 4.1;
+- the single-cut DiD goes from n.s. to p = 0.03.
+
+The bug acts as attenuation, not a sign flip. So:
+- **C1** (pass) would very likely still pass;
+- **C3**'s miss (z = 1.40) is plausibly an attenuation casualty, given ×1.5 in z on the comparable non-holdout regressions. That is a reason to re-run, not evidence that it would pass;
+- **C5**'s "J_in unchanged" criterion looks mis-specified. N3 shows that within-room coupling moves when rooms are re-cut.
+
+A corrected re-run would need Vivian's sign-off and a new pre-registration amendment (fixed panel, same predictions).
+
+### Scorecard update (round 1b)
+| Axis | Round 1 | 1b | Why |
+| --- | --- | --- | --- |
+| A | 1 | 1 | Rooms are ground-truth-checked (DQ6 room_presence = rooms_timeline). Talk/active invariance across regimes is still unchecked. |
+| B | 1 | 1 | Trim-before-surrogate added; no update-order audit. |
+| C | 1 | 1 | Talk beats the cross-day surrogate and room-label nulls, now also after the trim. Still no held-out likelihood comparison. |
+| D | 0 | 1 | HH248 was predicted before running (mediation by reads) and its dose-response held. N3's direction was predicted. |
+| E | 1 | 1 | The 05-11 split is now significant (non-holdout), and the #focus cut is confirmed by the ledger. Holdout C3 failed on the buggy table. |
+| F | 1 | 1 | Unchanged (V1–V4 synthetic). |
+| G | 1 | 1 | The ledger shows the cut (−95% reads at #focus). |
+| H | 0 | 1 | Rival "rooms are only a read-out filter" (HH248) tested: it holds, so "rooms as blocks" reduces to read-out gating (H08). The artifact / shared-goal rival is not rejected for activity. |
+| I | 1 | 1 | Talk block structure 6/6 windows plus #35. |
+
+Ratings suggestion: completeness 55, faithfulness 2.0 (from 1.5), usefulness 2.5. The operator rule: a room is a read filter, so to decouple agents, stop them reading each other.
 
 ## Notes
 - 2026-10-03: card opened (one of five parallel agents). Holdout masked via `calendar.holdout` and `holdout.json`.

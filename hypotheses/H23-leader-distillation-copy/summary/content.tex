@@ -14,3 +14,20 @@ I^{\text{lex}}_{\text{copy}}=d(a\,\|\,b)\ \text{bits per n-gram}
 \htelos{For anyone distilling a swarm into a leader model, the lesson is mundane: SFT on a few dozen synthetic crisis scenarios carried the surface style (naming agents, markup, terse format) into deployment but not the decision policy, because live situations (routine project work) looked nothing like the training scenarios. That coverage failure is standard ML, not a swarm insight. The decomposition adds one useful distinction (not transmitted vs transformed) and a calibration (the perfect-copy reference), but 16 messages and a coder at $\kappa\approx0.45$ measure little. The real surprise is the pipeline: the ``village distillation'' was the base model distilling itself.}
 
 \hbottom{The fine-tuned leader carried a trace of its corpus's addressing style into the room but none of its plans, which were not transmitted rather than transformed, and its corpus was mostly its own base model talking to itself.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.46\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b} & \textbf{Verdict (1b)}\\\hline
+P1a corpus vocabulary $>$ room & 14.2 vs 10.0 /100 tokens ($p$ 0.011); unchanged & yes\\
+P1b bigram copy $>$ room & 0.064 vs 0.055 ($p$ 0.17); unchanged & inconclusive\\
+P2a plans not copied & directive 0.62 vs corpus 1.00; unchanged & yes\\
+P2b plans transformed & $I_{transform}$ within null; unchanged (shared copy\_info, 1{,}022 numbers identical) & no (not transmitted)\\
+P3a closer to corpus than base & bge: leader $>$ Kimi $p$ 0.08 $\to$ gte: $p$ 0.43 (Kimi as corpus-like) & no, both models\\
+Checkpoint labels & DQ6 times relabel 0 of 27 leader messages & unchanged\\
+R1 base echo rejected & no $\to$ no, and stronger (H46 style, H32 weakest source) & rival stands\\
+\end{tabular}}
+
+\hobsb{../figures/r1b_summary_obs2.pdf}{Embedding-level proximity $d=\cos(z,\bar z_{\rm corpus})-\cos(z,\bar z_{\rm Kimi\,field})$ in regime-III whitened space for the leader's 16 live messages, the same-window Kimi K2.6 (6) and the other \#best agents (39), in bge-small (round 1) and gte-modernbert (round 1b).}
+
+\hcaveats{16 leader messages in one afternoon; 31/64 corpus rows recovered; plan coder $\kappa\approx0.4$--0.5. The \#45 confirmatory script would include agent 30's first $\sim$11 min under a wrong model string (DQ6): an amendment is proposed, not applied. Native tests (\#26, \#35) not run.}
+
+\hnext{Amend confirm\_g45.py with the DQ6 checkpoint window and both embedding models, then ask Vivian about \#45. Run the \#26 and \#35 leader-copy natives.}

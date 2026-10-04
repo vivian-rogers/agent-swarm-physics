@@ -10,6 +10,13 @@ sqrt(v_i v_j) gives J_ab. Loop gain g = v (sum_j J_ij) for an average agent; g -
 
 Usage (exploratory, non-holdout): uv run python hypotheses/H05-rooms-cut/analysis/mf_blocks.py
 Reads data/processed/H05-rooms-cut/pair_day_bin1.parquet and agent_day.parquet; writes mf_blocks.json and figures/mf_blocks.pdf.
+
+Round 1b (2026-10-04): H05_DATA=r1b [H05_MASK=trim] reads the r1b (activity_bins_fixed) pair-day table of
+explore_rooms.py from data/processed/H05-rooms-cut/r1b[/trim]/ and writes mf_blocks.json there, plus
+h19_gains.parquet: one row per (two-room window, spin) with the two-block loop gain, its day-bootstrap SE and
+percentile CI, in the column layout H19's build_estimates.h05_rows produces (goal_no, window, method, value, se, lo,
+hi, ci_kind, n_days, N), so H19 can ingest it directly. The functions block_J / pair_day_arrays / labels_from_agent_day
+keep their signatures (H19 imports them read-only).
 """
 from __future__ import annotations
 
@@ -23,9 +30,15 @@ import polars as pl
 
 warnings.simplefilter("ignore", RuntimeWarning)  # empty-slice means for pairs absent on resampled days
 
+import os  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[3]
-DATA = ROOT / "data/processed/H05-rooms-cut"
+DATA_VERSION = os.environ.get("H05_DATA", "r1")
+MASK = os.environ.get("H05_MASK", "none")
+PANEL_DIR = ROOT / "data/processed/H05-rooms-cut" / ("" if DATA_VERSION == "r1" else "r1b")
+DATA = PANEL_DIR / ("" if MASK == "none" else MASK)
 FIG = Path(__file__).resolve().parents[1] / "figures"
+FIG_PREFIX = "" if DATA_VERSION == "r1" else ("r1b_" if MASK == "none" else f"r1b_{MASK}_")
 NBOOT = 500
 NPERM = 1000
 
@@ -109,10 +122,10 @@ def window_mf(pdf, days, labels, spin, rng, nboot=NBOOT, nperm=NPERM, col="c0_x"
     for _ in range(nboot):
         c = rng.integers(len(days), size=len(days))
         q = block_J(ai, aj, np.nanmean(Rm[:, c], 1), np.nanmean(Sv[:, c], 1), lab)
-        bs.append((q["J_in"], q["J_out"], q["J_in_minus_out"]))
+        bs.append((q["J_in"], q["J_out"], q["J_in_minus_out"], q["loop_gain"]))
     bs = np.array(bs)
     out = dict(point)
-    for k, name in enumerate(("J_in", "J_out", "J_in_minus_out")):
+    for k, name in enumerate(("J_in", "J_out", "J_in_minus_out", "loop_gain")):
         out[name + "_ci95"] = [float(np.nanpercentile(bs[:, k], 2.5)), float(np.nanpercentile(bs[:, k], 97.5))]
         out[name + "_se"] = float(np.nanstd(bs[:, k]))
     if nperm and len(np.unique(lab)) > 1:
@@ -121,6 +134,8 @@ def window_mf(pdf, days, labels, spin, rng, nboot=NBOOT, nperm=NPERM, col="c0_x"
         null = null[np.isfinite(null)]
         out["p_perm_in_gt_out"] = float((1 + np.sum(null >= point["J_in_minus_out"])) / (1 + len(null)))
     out["days"] = len(days); out["n_agents"] = int(len(lab))
+    nd = len(days)
+    out["loop_gain_se_dayboot"] = float(np.nanstd(bs[:, 3]) * np.sqrt(nd / max(nd - 1, 1)))  # H19's SE convention
     out["_boot"] = bs
     return out
 
@@ -146,7 +161,7 @@ def strip(d):
 def main():
     rng = np.random.default_rng(20261003)
     pdf = pl.read_parquet(DATA / "pair_day_bin1.parquet")
-    ad = pl.read_parquet(DATA / "agent_day.parquet")
+    ad = pl.read_parquet(PANEL_DIR / "agent_day.parquet")
     goal = dict(ad.group_by("pt_date").agg(pl.col("goal_no").first()).iter_rows())
     days_all = sorted(goal)
     gd = lambda g: [d for d in days_all if goal[d] == g]
@@ -191,6 +206,18 @@ def main():
         res["MF3"][spin] = m3
         print("MF3", spin, {k: v for k, v in m3.items() if k.startswith("delta") or k.startswith("ratio")}, flush=True)
     (DATA / "mf_blocks.json").write_text(json.dumps(res, indent=1, default=float))
+    if DATA_VERSION != "r1":
+        rows = []
+        for spin in ("talk", "active"):
+            for g, r in res["MF1"][spin].items():
+                if not r:
+                    continue
+                lo, hi = r.get("loop_gain_ci95", [None, None])
+                rows.append({"goal_no": int(g), "window": "period", "method": f"H05.g2b_{spin}", "value": float(r["loop_gain"]),
+                             "se": float(r["loop_gain_se_dayboot"]), "lo": lo, "hi": hi, "ci_kind": "day_boot",
+                             "n_days": int(r["days"]), "N": float(r["n_agents"]), "J_in": float(r["J_in"]),
+                             "J_out": float(r["J_out"]), "data_version": DATA_VERSION, "mask": MASK})
+        pl.DataFrame(rows).write_parquet(DATA / "h19_gains.parquet")
     figure(res)
 
 
@@ -210,7 +237,7 @@ def figure(res):
         ax.set_xticks(x); ax.set_xticklabels([f"#{k}" for k in ks], fontsize=7)
         ax.set_title(f"H05-MF block couplings, {spin} spins (day-bootstrap 95% CI)", fontsize=8)
         ax.legend(fontsize=7)
-    fig.tight_layout(); fig.savefig(FIG / "mf_blocks.pdf"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(FIG / f"{FIG_PREFIX}mf_blocks.pdf"); plt.close(fig)
 
 
 if __name__ == "__main__":

@@ -4,6 +4,10 @@ Reads data/processed/shared/*. Writes figures to ../figures/ and a JSON of numbe
 data/processed/H09-swarm-thermodynamics/explore_e1_e5.json.
 
 Usage: uv run python hypotheses/H09-swarm-thermodynamics/analysis/explore_e1_e5.py
+Round 1b (2026-10-04): H09_DATA=r1b reads activity_bins_fixed (activity_bins dropped ~half of all events, DQ8), also
+masks days with infra holdout_mask, adds a trimmed E1 (each day cut to its all-present window, the DQ8 / H38 rule
+for synchrony statistics) and writes to data/processed/H09-swarm-thermodynamics/r1b/; figures get an r1b_ prefix.
+H09_DATA=r1 (default) reproduces round 1. E2-E4 read events_core only, so they do not change.
 """
 from __future__ import annotations
 
@@ -17,16 +21,29 @@ import matplotlib.pyplot as plt
 import numpy as np
 import polars as pl
 
+import os  # noqa: E402
+import sys  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[3]
 SH = ROOT / "data/processed/shared"
-OUTD = ROOT / "data/processed/H09-swarm-thermodynamics"
+DATA_VERSION = os.environ.get("H09_DATA", "r1")
+assert DATA_VERSION in ("r1", "r1b"), DATA_VERSION
+OUTD = ROOT / "data/processed/H09-swarm-thermodynamics" / ("" if DATA_VERSION == "r1" else "r1b")
+BINS = "activity_bins.parquet" if DATA_VERSION == "r1" else "activity_bins_fixed.parquet"
 FIG = Path(__file__).resolve().parents[1] / "figures"
+FP = "" if DATA_VERSION == "r1" else "r1b_"
 OUTD.mkdir(parents=True, exist_ok=True); FIG.mkdir(parents=True, exist_ok=True)
 RNG = np.random.default_rng(20261003)
 plt.rcParams.update({"font.family": "serif", "font.size": 7, "axes.linewidth": 0.5, "pdf.fonttype": 42})
 
 cal = pl.read_parquet(SH / "calendar.parquet")
 keep_days = cal.filter(~pl.col("holdout")).select("pt_date", "regime", "gap_before_s", "weekday", "window_s")
+if DATA_VERSION == "r1b":
+    sys.path.insert(0, str(ROOT / "infra/shared"))
+    from common import holdout_mask  # noqa: E402
+    _c = cal.filter(~pl.col("holdout"))
+    _hm = holdout_mask(_c["pt_date"].to_list(), _c["goal_no"].to_list())
+    keep_days = keep_days.filter(~pl.Series(_hm))
 roster = pl.read_parquet(SH / "roster.parquet")
 results: dict = {"holdout_excluded_days": int(cal["holdout"].sum()), "days_used": keep_days.height}
 
@@ -34,7 +51,7 @@ CLASS = {"AGENT_TALK": "talk", "WAIT": "wait", "PAUSE": "pause", "CONSOLIDATE": 
          "START_USING_COMPUTER": "start_cu", "STOP_USING_COMPUTER": "stop_cu", "SEARCH_HISTORY": "search"}
 
 # ------------------------------------------------------------------ E1: activity landscape
-bins = (pl.read_parquet(SH / "activity_bins.parquet", columns=["pt_date", "minute", "agent", "state"])
+bins = (pl.read_parquet(SH / BINS, columns=["pt_date", "minute", "agent", "state"])
         .join(keep_days.select("pt_date", "regime"), on="pt_date"))
 bins = bins.with_columns((pl.col("state") >= 3).cast(pl.Int8).alias("on"),
                          (pl.col("minute") // 30).alias("block"))
@@ -54,6 +71,26 @@ for reg in ("I", "II", "III"):
         e1[reg] = {"days": int(len(d)), "VR_median": float(np.median(d)), "VR_iqr": [float(np.percentile(d, 25)), float(np.percentile(d, 75))],
                    "frac_days_VR_gt_1.5": float(np.mean(d > 1.5))}
 results["E1_variance_ratio_vs_independent_with_halfhour_field"] = e1
+if DATA_VERSION == "r1b":
+    # trimmed E1: per day keep the all-present window [max first-active minute, min last-active minute]
+    span = (bins.filter(pl.col("on") == 1).group_by("pt_date", "agent").agg(pl.col("minute").min().alias("m0"), pl.col("minute").max().alias("m1"))
+            .group_by("pt_date").agg(pl.col("m0").max().alias("lo"), pl.col("m1").min().alias("hi")))
+    act_agents = bins.filter(pl.col("on") == 1).select("pt_date", "agent").unique()
+    bt = (bins.join(act_agents, on=["pt_date", "agent"]).join(span, on="pt_date")
+          .filter((pl.col("minute") >= pl.col("lo")) & (pl.col("minute") <= pl.col("hi"))))
+    pt = bt.group_by("pt_date", "block", "agent").agg(pl.col("on").mean().alias("p"))
+    pmt = (bt.join(pt, on=["pt_date", "block", "agent"]).group_by("pt_date", "minute", "regime")
+           .agg(pl.col("on").sum().alias("K"), (pl.col("p") * (1 - pl.col("p"))).sum().alias("var_ind")))
+    dayt = (pmt.group_by("pt_date", "regime").agg(pl.col("K").var().alias("varK"), pl.col("var_ind").mean().alias("var_ind"), pl.len().alias("L"))
+            .filter((pl.col("var_ind") > 0) & (pl.col("L") >= 60)).with_columns((pl.col("varK") / pl.col("var_ind")).alias("VR")))
+    e1t = {}
+    for reg in ("I", "II", "III"):
+        d = dayt.filter(pl.col("regime") == reg)["VR"].drop_nulls().to_numpy()
+        if len(d):
+            e1t[reg] = {"days": int(len(d)), "VR_median": float(np.median(d)), "VR_iqr": [float(np.percentile(d, 25)), float(np.percentile(d, 75))],
+                        "frac_days_VR_gt_1.5": float(np.mean(d > 1.5))}
+    results["E1_trimmed_all_present_window"] = e1t
+    results["E1_per_day"] = day.join(dayt.select("pt_date", pl.col("VR").alias("VR_trim")), on="pt_date", how="left").sort("pt_date").to_dicts()
 # landscape G(K) = -ln P(K) at each regime's most common roster size N (integer K avoids binning artifacts)
 fig, ax = plt.subplots(1, 1, figsize=(3.3, 2.2))
 e1_land = {}
@@ -72,7 +109,7 @@ for reg, col in (("I", "#3f6fb5"), ("III", "#c2662d")):
     e1_land[reg] = {"N": n_mode, "minutes": int(len(K))}
 results["E1_landscape_N"] = e1_land
 ax.set_xlabel("fraction of agents active per minute, K/N"); ax.set_ylabel(r"$G(K)=-\ln P(K)$")
-ax.legend(frameon=False, fontsize=5.5); fig.tight_layout(); fig.savefig(FIG / "E1_activity_landscape.pdf"); plt.close(fig)
+ax.legend(frameon=False, fontsize=5.5); fig.tight_layout(); fig.savefig(FIG / f"{FP}E1_activity_landscape.pdf"); plt.close(fig)
 
 # ------------------------------------------------------------------ E2: currents in action-class space
 ev = (pl.read_parquet(SH / "events_core.parquet", columns=["event_index", "t", "pt_date", "regime", "actor_kind", "agent", "action_type"])
@@ -160,7 +197,7 @@ x = np.sort(d); ccdf = 1 - np.arange(len(x)) / len(x)
 ax.loglog(x, ccdf, lw=0.8, color="#3a7d6b", label="idle dwell (data)")
 ax.loglog(x, np.exp(-x / d.mean()), "--", lw=0.8, color="0.4", label="exponential, same mean")
 ax.set_ylim(1e-5, 1.5); ax.set_xlabel("idle run duration (s)"); ax.set_ylabel("P(dwell > t)"); ax.legend(frameon=False, fontsize=6)
-fig.tight_layout(); fig.savefig(FIG / "E4_idle_dwell_ccdf.pdf"); plt.close(fig)
+fig.tight_layout(); fig.savefig(FIG / f"{FP}E4_idle_dwell_ccdf.pdf"); plt.close(fig)
 
 # ------------------------------------------------------------------ E5: daily restarts
 pm = per_min.join(keep_days.select("pt_date", "gap_before_s", "weekday"), on="pt_date").with_columns((pl.col("K") / pl.col("N")).alias("k"))
@@ -178,7 +215,7 @@ fig, ax = plt.subplots(figsize=(3.3, 2.2))
 for (lab, (m, k)), col in zip(curves.items(), ("#3f6fb5", "#c2662d")):
     ax.plot(m, k, lw=0.8, color=col, label=lab)
 ax.set_xlabel("minutes since the day's first agent event"); ax.set_ylabel("mean fraction active, k")
-ax.legend(frameon=False, fontsize=6); fig.tight_layout(); fig.savefig(FIG / "E5_restart_relaxation.pdf"); plt.close(fig)
+ax.legend(frameon=False, fontsize=6); fig.tight_layout(); fig.savefig(FIG / f"{FP}E5_restart_relaxation.pdf"); plt.close(fig)
 
 (OUTD / "explore_e1_e5.json").write_text(json.dumps(results, indent=1, default=str))
-print(json.dumps(results, indent=1, default=str))
+print(json.dumps({k: v for k, v in results.items() if k != "E1_per_day"}, indent=1, default=str))

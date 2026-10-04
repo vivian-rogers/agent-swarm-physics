@@ -1,6 +1,11 @@
 # H09: Agent swarms have an effective thermodynamics
 
-**Status:** exploratory rounds 1 (E1–E5) and 2 (E6–E8) done, light. Observable tables built (`idle_runs`, `consolidation_inflow`). Not promoted. Opened 2026-10-03 at Vivian's request.
+**Status:** **Round 1b (2026-10-04, fixed bins, context ledger):**
+- E1's regime-III excess is day edges (trimmed VR 1.22);
+- the timer gate is context-read: chatter keeps agents paused (OR 0.50), an @-mention releases them (OR 3.1), and NE43 leaves the gate unchanged;
+- memory is a homeostat with overshoot (φ −0.22 after forced erasures; HH269), and it does not follow read inflow.
+
+Round 1: exploratory rounds 1 (E1–E5) and 2 (E6–E8) done, light. Observable tables built (`idle_runs`, `consolidation_inflow`). Not promoted. Opened 2026-10-03 at Vivian's request.
 **Fields:** stat mech, thermodynamics, dynamics, info theory
 **Literature:** [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (entropy production); [Kolchinsky 2024](../../literature/kolchinsky-2024-dissipation-does-not-bound-replicator-rates.md) (caution on dissipation bounds); [Piñero et al. 2025](../../literature/pinero-2025-neutral-theory-cooperative-dynamics.md), [2026](../../literature/pinero-2026-information-bounds-replicator-production.md)
 **Definitions used:** Regime; Action; Activity time; Agent state (categorical); see [`../hypohypotheses/statmech-primitives.md`](../hypohypotheses/statmech-primitives.md).
@@ -243,6 +248,102 @@ Both cover **all days** and carry a `holdout` flag. Exploratory users must filte
     - 'inclusive' (Gemini): uncached = tok_in − tok_cache_read, context = tok_in.
     - Null for providers without token data.
   - Use `same_day_prev` to drop intervals that span a night.
+
+## Round 1b (improved data, 2026-10-04)
+
+### Round-1b predictions for the new tests
+*Written 2026-10-04 08:40 UTC, before any of these tests was run. The only things looked at first were structural counts: 27,895 regime-III non-holdout calls follow a timer pause; 7,723 of them are re-pauses. The round-1 and round-2 predictions (E1–E8) are unchanged and are re-scored on the corrected inputs.*
+- **G1 (the timer gate on the context ledger; replication of E6c in regime III).** The unit is a regime-III model call that follows a timer pause (`call_windows.after_pause`). The outcome is whether the agent acts (any call kind other than pause or wait) or re-pauses. Covariates are the chat items that newly entered that call (`context_ledger_turns`: @-mentions of the agent, nudges naming it, human and agent messages).
+  - (a) A new @-mention raises P(act at the gate): Mantel–Haenszel OR ≥ 1.5 over agent strata.
+  - (b) New unaddressed agent messages do not (OR in [0.8, 1.25]).
+  - (c) Nudges raise it (OR > 1).
+  - (d) Pauses rarely end early (`wake_early` < 1% of post-pause calls).
+- **N1 (NE43, native: the drive is withdrawn inside #51).** The bookends stop after 08-04 and the nudger after 08-20. Windows are day-matched: 07-27 → 08-04 vs 08-06 → 08-20 vs 08-21 → 09-04.
+  - (a) For gates with no new chat item, P(act) changes by less than 20% (|log ratio| < 0.18) across each step. The timer gate is internal.
+  - (b) After the nudger stops, the overall P(act) at gates falls by no more than the pre-step accounting bound: the share of gates with a nudge × (P(act | nudge) − P(act | none)), + 0.02.
+- **N2 (#51 roster sweep, native: memory set point vs inflow).** Over #51's non-holdout weeks, N grows from 21 to 32 and ledger inflow per call grows with it.
+  - (a) The within-agent elasticity of weekly median memory size V on weekly mean new chat items per call has |b| < 0.1. The set point does not track read inflow.
+  - (b) Its elasticity on N has |b| < 0.2.
+- **N3 (HH269, memory as a first-order homeostat; regime III, non-holdout).** The series is each agent's ln V over successive same-day consolidation snapshots.
+  - (a) The AR(1) coefficient toward an agent mean lies in [0, 0.5] for ≥ 80% of agents with ≥ 100 snapshots.
+  - (b) AR(1) beats a random walk out of sample (last 30% of each agent's series) for ≥ 80% of those agents.
+  - (c) There is no overshoot: after forced resets (`reset_forced`, the 41-turn cap) φ ≥ 0, and it is not lower than after voluntary consolidations by more than 0.1. HH269 predicts overshoot; I predict none, from round 2's γ ≈ 0.87.
+
+### What changed
+- **E1, E5.** Now on `activity_bins_fixed`, plus a trimmed E1: each day is cut to its all-present window (DQ8 / H38).
+- **E6.**
+  - Spells come from the shared `outages.idle_spells()`, asserted identical to `idle_runs`.
+  - @-mentions come from `chat_mentions_clean`. Only 2.4k of 86.7k regime-I exposure-mentions change (o1's), and every E6 number is identical to 3 decimals.
+- **New gate test (G1).** A context-ledger version of the timer gate (`analysis/r1b_gate.py`): new items at the post-pause call, not coincidence in time.
+- **E8.** Re-run on ledger reads, with reset types from `reset_forced` / `reset_consol` (`analysis/r1b_memory.py`).
+- **Tokens.** Round 2 already used `actions` with cache fields, not the uncached-only `events_core.tokens_in`. Its context size matches H45's per-call prompt size P (Spearman 0.998, median ratio 1.00, n 19,127), so nothing changes.
+- **Failures.** No H09 statistic read `actions.error`, so the stderr issue does not touch H09.
+- **Not re-run.** E7 (plug-in pair EP on bins, a light pass) was not re-run, to save compute. Its activity input changed, so treat E7b as superseded until it is.
+- **Switches and outputs.** `H09_DATA=r1b` was added to `explore_e1_e5.py` and `explore_e6_idle_traps.py`; outputs go to `data/processed/H09-swarm-thermodynamics/r1b/`. 90 estimate rows were written (`analysis/r1b_estimates.py`).
+
+### Old vs new
+| Statistic | Round 1/2 | Round 1b |
+| --- | --- | --- |
+| E1 variance ratio, regime III (median day) | 1.61; 59% of days > 1.5 | fixed bins **1.85**, 86%; **trimmed 1.22, 23%** |
+| E1, regime I | 1.25; 22% | 1.35, 36%; trimmed 1.23, 19% |
+| E5 restart half-time | 1 min (overnight and weekend alike) | 1 min; plateau 0.68 vs 0.74 |
+| E6c regime III, HR of @-mention (coincidence, 60 s) | 1.52 [1.37, 1.65] | identical (clean mentions change nothing) |
+| E6c regime I, any room message | 3.06 | identical |
+| E8a elasticity ln V on inflow | 0.16 (exposure count) | **0.14 on ledger reads**; reads track interval length just as much (ρ 0.87 vs 0.84) |
+| E8c ρ(inflow, turnover) | −0.47 | −0.56 |
+| E8c γ (relaxation per snapshot) | 0.87 | 0.85 (0.83–1.21 across goal periods) |
+
+### New tests
+| Test | Result | Verdict |
+| --- | --- | --- |
+| G1a: new @-mention at the gate, OR ≥ 1.5 | MH OR **3.09 [1.95, 4.50]** (agent × goal strata 3.22); P(act) 0.85 vs 0.70 | pass |
+| G1b: unaddressed agent messages, OR in [0.8, 1.25] vs no new item | **0.50 [0.23, 0.95]**: P(act) 0.65 vs 0.85 | **fail**: chatter keeps agents paused |
+| G1a′ (post hoc): @-mention vs no new item | 1.20 [0.76, 1.87] | a mention restores the no-news rate; it does not raise it |
+| G1c: nudges, OR > 1 | vs rest 4.54 [3.17, 7.72]; vs no new item 0.69 [0.41, 4.9] | pass vs rest; n.s. vs no news |
+| G1d: early wakes < 1% | 0.20% | pass |
+| N1a (NE43): P(act | no new item) is stable across both steps | bookends off: log ratio −0.011 [−0.08, 0.05]; nudger off: −0.047 [−0.12, 0.01] (13 and 16 matched agents) | **pass** |
+| N1b (NE43): the P(act) drop after the nudger stops is within the nudge-accounting bound | drop 0.036 vs bound 0.013 | **fail**: mentions also fell (share 0.15 → 0.12) |
+| N2a (#51): elasticity of V on reads per call, \|b\| < 0.1 | 0.019 [−0.02, 0.06] (246 agent-weeks, N 25–32; reads per call ∝ N^1.9) | pass |
+| N2b: elasticity of V on N, \|b\| < 0.2 | **0.33 [0.03, 0.64]** | fail (confounded with tenure) |
+| N3a (HH269): φ in [0, 0.5] for ≥ 80% of agents | median φ **−0.10** (IQR −0.32 to 0.37); 36% in range | fail |
+| N3b: AR(1) beats a random walk out of sample for ≥ 80% | 79% (median MSE ratio 0.63) | fail (borderline) |
+| N3c: no overshoot after forced resets | φ after forced **−0.22 [−0.23, −0.20]**; after voluntary −0.10 [−0.12, −0.09] | **fail: overshoot, as HH269 predicted** |
+
+**Reading.**
+1. **The timer gate.** In regime III the gate reads the context it is handed:
+   - with nothing new, the agent acts 85% of the time;
+   - unaddressed chatter lowers that to 65%: agents who see others talking go back to sleep;
+   - an @-mention cancels that, but does not push above the no-news baseline.
+
+   So round 2's "only @-mentions get through" becomes "chatter holds agents at the gate; a mention releases them". This is consistent with H08's read-out gating. The gate is internal: it does not move when the bookends or the nudger stop (N1a).
+2. **E1.** The regime-III co-activation excess was underestimated on the buggy table (1.61 → 1.85) and is mostly day edges: trimmed, it falls to 1.22, the regime-I level. This agrees with H38, H50 and RE-A1.
+3. **Memory.**
+   - Memory size does not follow read inflow. Within agents the elasticity is 0.02 at #51's roster steps, and the snapshot-level 0.14 is mostly the clock.
+   - It does grow with N in #51, but N rises with time, so tenure is a confound.
+   - Its dynamics are mean-reverting, but with *negative* lag-1 correlation, strongest after forced erasures (φ −0.22): a sawtooth / overshoot around the set point. HH269 predicted this overshoot; my own N3c prediction was wrong.
+   - The negative φ holds for intervals > 60 s and > 300 s (−0.08, −0.18), so it is not a pairing artifact of near-simultaneous snapshots.
+
+### Verdict changes
+- **E1:** "holds in regime III only" becomes "holds untrimmed; after the day-edge trim, no regime-III excess".
+- **E6:** unchanged.
+- **T5 (timer-gated idling):** refined. Chatter suppresses acting at the gate, a mention releases it, and the gate is unaffected by drive withdrawal.
+- **T9:** "memory is a set point" becomes "a set point with overshoot (a first-order homeostat with negative lag-1 gain, larger after forced erasures)".
+- **E7b:** superseded (not re-run).
+
+### Scorecard (first scoring, round 1b; H09 had none)
+| Axis | Score | Evidence |
+| --- | --- | --- |
+| A mapping | 1 | Ledger-defined gate and inflow, fixed bins; no invariance check across families. |
+| B assumptions | 1 | Day-edge trim; within-agent strata; stationarity not tested. |
+| C adequacy | 1 | The gate effect beats the agent-stratified reference; AR(1) beats a random walk in 79% of agents. |
+| D unfitted predictions | 1 | N1a and N2a passed as predicted; G1b and N3c failed. |
+| E interventional | 1 | NE43 (both steps) leaves the gate unchanged. |
+| F identifiability | 0 | No synthetic recovery. |
+| G ground truth | 1 | Scaffold structure recovered: timer expiry (0.2% early wakes), the 41-turn reset in the memory dynamics. |
+| H comparative | 1 | Random walk vs AR(1); "only mentions matter" vs "chatter suppresses". |
+| I transfer | 1 | The gate effect holds in #38, #41, #44 and #51 (OR 1.6–3.3). |
+
+Ratings suggestion: completeness 40, faithfulness 1.5, usefulness 2.5. The operator rule: to wake a timer-paused agent, address it; room chatter alone keeps it asleep.
 
 ## Notes
 - 2026-10-03: opened at Vivian's request ("a whole new hypothesis for the general thermodynamics framing"). Predictions for E1–E5 written before data. Holdout locked first.

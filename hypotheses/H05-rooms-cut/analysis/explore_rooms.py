@@ -9,6 +9,13 @@ X5  entropy production per agent-hour per window (held-out ML bound and cross-fi
 
 Usage: uv run python hypotheses/H05-rooms-cut/analysis/explore_rooms.py [--bin 1] [--fast]
 Reads data/processed/H05-rooms-cut/panel.parquet; writes explore_bin{k}.json, pair_day_bin{k}.parquet, figures.
+
+Round 1b (2026-10-04), switches (env vars; defaults reproduce round 1):
+  H05_DATA=r1b   panel from activity_bins_fixed (scheme/build_panel.py with H05_DATA=r1b) -> data/processed/H05-rooms-cut/r1b/
+  H05_MASK=trim  DQ8 rule "trim before surrogates": each day is cut to its all-present window (every agent active that
+                 day is between its first and last active minute) BEFORE pair statistics and the cross-day surrogate
+                 are computed; outputs in r1b/trim/. The surrogate then aligns days by minute of the trimmed window.
+  Figures of r1b runs are written as figures/r1b[_trim]_*.pdf so the round-1 figures stay.
 """
 from __future__ import annotations
 
@@ -27,10 +34,19 @@ from ep import (circular_shift_agents, ep_gauss_crossfit, ep_heldout, fit_kineti
                 tod_basis)
 from pairs import twfe
 
+import os  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[3]
-DATA = ROOT / "data/processed/H05-rooms-cut"
+DATA_VERSION = os.environ.get("H05_DATA", "r1")
+MASK = os.environ.get("H05_MASK", "none")
+assert DATA_VERSION in ("r1", "r1b") and MASK in ("none", "trim"), (DATA_VERSION, MASK)
+assert not (DATA_VERSION == "r1" and MASK != "none"), "masks need the r1b panel (present column)"
+PANEL_DIR = ROOT / "data/processed/H05-rooms-cut" / ("" if DATA_VERSION == "r1" else "r1b")
+DATA = PANEL_DIR / ("" if MASK == "none" else MASK)
+DATA.mkdir(parents=True, exist_ok=True)
 SH = ROOT / "data/processed/shared"
 FIG = Path(__file__).resolve().parents[1] / "figures"
+FIG_PREFIX = "" if DATA_VERSION == "r1" else ("r1b_" if MASK == "none" else f"r1b_{MASK}_")
 BIN = int(sys.argv[sys.argv.index("--bin") + 1]) if "--bin" in sys.argv else 1
 FAST = "--fast" in sys.argv
 NPERM = 300 if FAST else 2000
@@ -50,8 +66,21 @@ def guard_holdout(days):
         assert not any(w["start"] <= d < w["end"] for w in h["ne_windows"]), f"NE window day {d}"
 
 
+def trim_window(g):
+    """DQ8 all-present window of one day (contiguous): [max first-active minute, min last-active minute] over the
+    agents active that day. Returns (lo, hi) inclusive, or None if empty."""
+    sp = (g.filter(pl.col("present") > 0).group_by("agent").agg(pl.col("minute").min().alias("m0"), pl.col("minute").max().alias("m1")))
+    if sp.height == 0:
+        return None
+    lo, hi = int(sp["m0"].max()), int(sp["m1"].min())
+    return (lo, hi) if hi > lo else None
+
+
+TRIM_INFO = {}
+
+
 def load_days():
-    p = pl.read_parquet(DATA / "panel.parquet")
+    p = pl.read_parquet(PANEL_DIR / "panel.parquet")
     days = sorted(p["pt_date"].unique().to_list())
     guard_holdout(days)
     goal = dict(p.group_by("pt_date").agg(pl.col("goal_no").first()).iter_rows())
@@ -70,12 +99,21 @@ def load_days():
         R = -np.ones((L, len(agents)), dtype=np.int8)
         R[mi, ai] = g["room"].to_numpy()
         m["room"] = R
+        if MASK == "trim":
+            w = trim_window(g)
+            TRIM_INFO[d] = {"window": w, "L": L}
+            if w is None or w[1] - w[0] + 1 < 31:
+                continue  # too short to give >= 30 transitions
+            for s in SPINS:
+                m[s] = m[s][w[0]: w[1] + 1]
+            m["room"] = m["room"][w[0]: w[1] + 1]
         if BIN > 1:
             Lb = L // BIN
             for s in SPINS:
                 m[s] = m[s][: Lb * BIN].reshape(Lb, BIN, -1).max(1)
             m["room"] = m["room"][: Lb * BIN: BIN]
         mats[d] = m
+    days = [d for d in days if d in mats]
     return days, mats, goal, regime
 
 
@@ -615,7 +653,7 @@ def figures(res):
         ax.axhline(0, color="k", lw=0.5)
     axes[0].legend(fontsize=6)
     fig.suptitle("X2: within vs cross-room coupling, active spins (non-holdout; #35-#36 regime II)", fontsize=8)
-    fig.tight_layout(); fig.savefig(FIG / f"x2_within_cross{sfx}.pdf"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(FIG / f"{FIG_PREFIX}x2_within_cross{sfx}.pdf"); plt.close(fig)
     # X3 forest
     rows = []
     for eid, r in res["X3"]["active"].items():
@@ -633,7 +671,7 @@ def figures(res):
     ax.set_yticks(range(len(rows))); ax.set_yticklabels([r[0] for r in rows], fontsize=7)
     ax.set_xlabel("pair DiD of excess lagged correlation κ (arm − pairs co-located throughout)", fontsize=7)
     ax.set_title("X3: room events (active spins, day-bootstrap 95% CI, assignment-permutation p)", fontsize=8)
-    fig.tight_layout(); fig.savefig(FIG / f"x3_events{sfx}.pdf"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(FIG / f"{FIG_PREFIX}x3_events{sfx}.pdf"); plt.close(fig)
 
 
 # ============================================================================ main
@@ -655,12 +693,21 @@ if __name__ == "__main__":
         print("X2/X3/X4 done", s, f"{time.time()-t0:.0f}s", flush=True)
     res["X5"]["active"] = x5(days, mats, goal, "active")
     res["runtime_s"] = time.time() - t0
+    res["data_version"] = DATA_VERSION
+    res["mask"] = MASK
+    if MASK == "trim":
+        kept = [d for d in days]
+        res["trim"] = {"days_kept": len(kept), "days_dropped": [d for d, v in TRIM_INFO.items() if d not in mats],
+                       "median_window_frac": float(np.median([(v["window"][1] - v["window"][0] + 1) / v["L"]
+                                                              for v in TRIM_INFO.values() if v["window"]]))}
     (DATA / f"explore_bin{BIN}.json").write_text(json.dumps(res, indent=1, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o)))
     figures(res)
-    prov_path = DATA / "_provenance.json"
+    prov_path = PANEL_DIR / "_provenance.json"
     prov = json.loads(prov_path.read_text())
-    prov[f"explore_bin{BIN}"] = {"built_by": "hypotheses/H05-rooms-cut/analysis/explore_rooms.py", "inputs": ["H05-rooms-cut/panel.parquet"],
-                                 "params": {"bin": BIN, "nperm": NPERM, "nboot": NBOOT, "seed": 20261003},
+    prov[f"explore_bin{BIN}" + ("" if MASK == "none" else f"_{MASK}")] = {
+        "built_by": "hypotheses/H05-rooms-cut/analysis/explore_rooms.py", "inputs": [str((PANEL_DIR / "panel.parquet").relative_to(ROOT))],
+                                 "params": {"bin": BIN, "nperm": NPERM, "nboot": NBOOT, "seed": 20261003,
+                                            "data_version": DATA_VERSION, "mask": MASK},
                                  "built_at": dt.datetime.now(dt.timezone.utc).isoformat()}
     prov_path.write_text(json.dumps(prov, indent=1))
     print("done", f"{time.time()-t0:.0f}s")

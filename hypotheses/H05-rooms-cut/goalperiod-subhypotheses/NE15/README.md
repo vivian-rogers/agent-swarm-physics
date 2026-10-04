@@ -1,6 +1,7 @@
 # H05 × NE15: the #best/#rest split (2026-03-16), with NE12 (02-25) as placebo and #voted-out
 
 **Verdict:** mixed (pre-registered overall rule: INCONCLUSIVE. C1 and the MF J_out check passed; pooled C3 missed significance)
+**Verdict (1b):** mixed (not re-run; corrected non-holdout analogues suggest C3's miss was attenuation by the activity_bins bug)
 **Role:** confirmatory (locked holdout: the pre-split baseline #33–#34 and the NE12 window)
 **Period:** spans #31–#35 (regimes II/III boundary region). Pre = #33 + #34 pair-days with both agents in #general (03-02 → 03-13, held out); post = #35 (03-16 → 03-20, **not held out; seen in round 1**). Placebo window 02-16 → 03-04.
 

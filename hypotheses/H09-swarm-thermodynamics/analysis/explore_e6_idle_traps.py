@@ -16,6 +16,11 @@ Null: each agent-day's kick timeline replaced by the same agent's timeline on an
 non-holdout day of the same regime, at the same clock offset from the window start.
 
 Usage: uv run python hypotheses/H09-swarm-thermodynamics/analysis/explore_e6_idle_traps.py
+Round 1b (2026-10-04): H09_DATA=r1b (i) takes the spells from the shared `outages.idle_spells()` (H09's rule moved to
+infra; asserted identical to idle_runs on the columns used), (ii) uses chat_mentions_clean.mentions_clean for the
+@-mention flag (chat_core.mentions carried a spurious `o1` on ~95% of messages), (iii) masks days with infra
+holdout_mask too, and writes to data/processed/H09-swarm-thermodynamics/r1b/ (figure r1b_E6_idle_traps.pdf).
+Kick timing stays coincidence-based (`exposure`); the context-ledger version of the gate is analysis/r1b_gate.py.
 """
 from __future__ import annotations
 
@@ -29,10 +34,17 @@ import numpy as np
 import polars as pl
 from scipy import optimize, special, stats
 
+import os  # noqa: E402
+import sys  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[3]
 SH = ROOT / "data/processed/shared"
-OUTD = ROOT / "data/processed/H09-swarm-thermodynamics"
+DATA_VERSION = os.environ.get("H09_DATA", "r1")
+assert DATA_VERSION in ("r1", "r1b"), DATA_VERSION
+IN_D = ROOT / "data/processed/H09-swarm-thermodynamics"
+OUTD = IN_D / ("" if DATA_VERSION == "r1" else "r1b")
 FIG = Path(__file__).resolve().parents[1] / "figures"
+FP = "" if DATA_VERSION == "r1" else "r1b_"
 OUTD.mkdir(parents=True, exist_ok=True); FIG.mkdir(parents=True, exist_ok=True)
 RNG = np.random.default_rng(20261003)
 plt.rcParams.update({"font.family": "serif", "font.size": 7, "axes.linewidth": 0.5, "pdf.fonttype": 42})
@@ -45,6 +57,11 @@ R = {}
 
 cal = pl.read_parquet(SH / "calendar.parquet")
 keep = cal.filter(~pl.col("holdout")).select("pt_date", pl.col("regime").cast(pl.Utf8).alias("reg"), "win_start", "win_end")
+if DATA_VERSION == "r1b":
+    sys.path.insert(0, str(ROOT / "infra/shared"))
+    from common import holdout_mask  # noqa: E402
+    _c = cal.filter(~pl.col("holdout"))
+    keep = keep.filter(~pl.Series(holdout_mask(_c["pt_date"].to_list(), _c["goal_no"].to_list())))
 roster = pl.read_parquet(SH / "roster.parquet")
 labs = dict(zip(roster["agent"].to_list(), roster["lab"].to_list()))
 R["days_used"] = {r: int(n) for r, n in keep.group_by("reg").len().iter_rows()}
@@ -91,8 +108,15 @@ tl, _sp_event = make_spells({"pause"})
 # Spells for analysis come from the reusable table (build_observables.py). Regime I: WAIT is logged < 1 s
 # before the next action in ~82% of runs, so the idle interval is the GAP from the previous non-idle row to
 # the next one (gap_dwell_s). Regime III: from the PAUSE to the next non-idle row (dwell_s).
-IR = (pl.read_parquet(OUTD / "idle_runs.parquet").filter(~pl.col("holdout") & pl.col("regime").is_in(["I", "III"]))
+IR = (pl.read_parquet(IN_D / "idle_runs.parquet").filter(~pl.col("holdout") & pl.col("regime").is_in(["I", "III"]))
       .join(keep.select("pt_date", "win_start"), on="pt_date"))
+if DATA_VERSION == "r1b":
+    import outages as _O  # noqa: E402  (infra/shared; H09's spell rule)
+    _cols = ["agent", "pt_date", "t_prev_action", "t_start", "t_end", "censored", "idle_kind"]
+    _sh = _O.idle_spells().select(_cols).join(IR.select("pt_date").unique(), on="pt_date").sort("agent", "t_start")
+    _mine = IR.select(_cols).sort("agent", "t_start")
+    R["r1b_idle_spells_identical_to_shared"] = bool(_sh.equals(_mine))
+    assert R["r1b_idle_spells_identical_to_shared"], "shared idle_spells differ from H09 idle_runs"
 sp = (IR.with_columns(pl.when(pl.col("regime") == "I").then(pl.col("t_prev_action")).otherwise(pl.col("t_start")).alias("t0"))
       .filter(pl.col("t0").is_not_null())
       .with_columns(pl.when(pl.col("regime") == "I").then(pl.col("gap_dwell_s")).otherwise(pl.col("dwell_s")).cast(pl.Float64).alias("dwell"),
@@ -212,6 +236,10 @@ R["E6b_pauses"] = {
 
 # ------------------------------------------------------------------ kicks per agent
 chat = pl.read_parquet(SH / "chat_core.parquet", columns=["t", "pt_date", "speaker_kind", "mentions"]).with_row_index("msg")
+if DATA_VERSION == "r1b":  # clean mentions (row-aligned sidecar)
+    _cm = pl.read_parquet(SH / "chat_mentions_clean.parquet", columns=["mentions_clean"])
+    assert _cm.height == chat.height
+    chat = chat.with_columns(_cm["mentions_clean"].alias("mentions"))
 ex = pl.read_parquet(SH / "exposure.parquet", columns=["msg", "agent"])
 k = (ex.join(chat, on="msg").join(keep.select("pt_date", "reg", "win_start"), on="pt_date")
      .with_columns(pl.col("mentions").list.contains(pl.col("agent")).fill_null(False).alias("mention"),
@@ -473,7 +501,7 @@ for reg, col in (("I", "#3f6fb5"), ("III", "#c2662d")):
 ax.axvline(0, color="0.5", lw=0.4)
 ax.set_xlabel("time relative to escape (s)"); ax.set_ylabel("room msgs / min"); ax.legend(frameon=False, fontsize=6)
 ax.set_title("dashed: day-swap null", fontsize=6)
-fig.tight_layout(); fig.savefig(FIG / "E6_idle_traps.pdf"); plt.close(fig)
+fig.tight_layout(); fig.savefig(FIG / f"{FP}E6_idle_traps.pdf"); plt.close(fig)
 
 (OUTD / "explore_e6_idle_traps.json").write_text(json.dumps(R, indent=1, default=str))
 print(json.dumps({k_: v for k_, v in R.items()}, indent=1, default=str)[:20000])

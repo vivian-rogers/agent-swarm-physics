@@ -1,6 +1,7 @@
 # H23 × G44: Finetune your leader! (2026-05-26 → 2026-05-29)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged; copy_info and DQ6 checkpoints identical; P3a fails in both embedding models)
 **Role:** exploratory
 **Period:** regime III · mode C in #best (shared objective: fine-tune a leader), #rest free · 16 agents (+2 joined: Opus 4.8, the temporary leader) · rooms #best/#rest · 4 active days. Splits inside the period: the temporary leader ran four checkpoints (Qwen v3 05-26; Qwen v10 05-28 17:04; Kimi v2 / v4-curated56 05-28 20:04 / 20:07; **Kimi v7-aug-64 05-29 18:24:51**, the weights later used in #45). Only the last segment is the unit of analysis here.
 

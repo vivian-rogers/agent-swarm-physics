@@ -1,42 +1,62 @@
 {
-  "complete": 25,
-  "faithfulness": 1.5,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Two light exploratory rounds with predictions written first and reusable observable tables built, but no scorecard, no goal-period verdicts, no held-out estimator and no confirmatory run.",
-    "faithfulness": "Some predictions beat their nulls (regime-I kick hazard, the consolidation cycle, timer-set pauses), but several were refuted and the thermodynamic constructs themselves (landscapes, Kramers barriers, equation of state) mostly reduce to schedule fields or scaffold mechanics.",
-    "usefulness": "The timer-gated idling result ('only @-mentions wake a paused agent, at expiry') and the idle/memory tables are diagnostics others can compute, but the result is descriptive and not validated on the holdout."
-  },
-  "one_line": "Thermo framing adds little; idle agents are timer-gated (only @-mentions get through); memory is a set point",
-  "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
-  "updated": "2026-10-04",
-  "v2": {
-    "claim": "Idle agents are timer-gated; memory size is a set point",
-    "original_verdict": "mixed",
-    "credence": 0.56,
-    "ladder": [
-      {
-        "factor": "base (sec)",
-        "x": 0.3
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "partly robust",
-        "x": 1.5
-      }
-    ],
-    "mechanism_level": "M0",
-    "fragile": false,
-    "value_if_true": 1.5,
-    "decision": "scaffold timers",
-    "magnitude": "small",
-    "generality": "this scaffold",
-    "expected_usefulness": 0.84,
-    "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 40,
+ "faithfulness": 1.5,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Two light exploratory rounds with predictions written first and reusable observable tables built, but no scorecard, no goal-period verdicts, no held-out estimator and no confirmatory run.",
+  "faithfulness": "Some predictions beat their nulls (regime-I kick hazard, the consolidation cycle, timer-set pauses), but several were refuted and the thermodynamic constructs themselves (landscapes, Kramers barriers, equation of state) mostly reduce to schedule fields or scaffold mechanics.",
+  "usefulness": "Round 1b: an operator rule with ledger evidence (address a paused agent; chatter alone keeps it asleep, OR 0.50 vs 3.1 for mentions), stable across drive withdrawal (NE43); memory set point independent of read inflow."
+ },
+ "one_line": "Thermo framing adds little; the timer gate reads context (chatter holds, @-mentions release); memory is an overshooting homeostat",
+ "rated_by": "RE-R1 agent (suggested, round 1b); coordinator calibration pending",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Agents leave idle at a timer gate; unaddressed chatter holds them there (OR 0.50) and a mention releases them (OR 3.1); memory size is a set point that overshoots after erasure",
+  "scope": "regime III gate test; NE43; #51 roster sweep",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.47,
+  "ladder": [
+   {
+    "factor": "base (sec)",
+    "x": 0.3
+   },
+   {
+    "factor": "replication (regime III gate; #51)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "intervention consistent (NE43 gate unchanged; erasure overshoot)",
+    "x": 2,
+    "evidence": "natives"
+   },
+   {
+    "factor": "penalty: chatter effect opposite to own prediction (post hoc reading)",
+    "x": 0.7,
+    "evidence": "card §Round 1b"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": true,
+  "value_if_true": 2,
+  "decision": "release stuck agents by naming them, not by broadcasting",
+  "magnitude": "small",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 0.95,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (RE-R1); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "Idle agents are timer-gated; memory size is a set point",
+   "credence": 0.56,
+   "fragile": false,
+   "value_if_true": 1.5,
+   "expected_usefulness": 0.84,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

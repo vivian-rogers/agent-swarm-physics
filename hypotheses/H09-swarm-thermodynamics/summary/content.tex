@@ -15,4 +15,24 @@
 
 \htelos{The thermodynamic vocabulary did little work; the useful findings are plain mechanics. The one an operator can use: in the current scaffold (regime III), an idle agent is asleep on a timer it set itself. Room chatter does not wake it. Only an @-mention raises the chance it acts, and only when the timer expires. To get a response, address the agent by name and expect a delay of up to its chosen pause. Regime-I agents were interruptible. ``Memory size is a set point'' says consolidation is a reset, not growing storage. The rest restates the scaffold: landscapes made by the schedule, day-scale ergodicity, and a consolidation cycle that is the prompt's own loop. Nothing here yet beats a simpler statistic.}
 
-\hbottom{As a framing, swarm thermodynamics has not yet earned its keep; its best result is a practical fact about scheduling: in the current scaffold, idle agents are timer-gated, and only @-mentions get through.}
+\hbottom{As a framing, swarm thermodynamics has not yet earned its keep; its best results are mechanics: a paused agent's timer gate reads its context (room chatter keeps it asleep, an @-mention releases it), and memory size is a homeostat that overshoots after forced erasures.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.46\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1/2 $\to$ round 1b} & \textbf{Verdict (1b)}\\\hline
+E1 VR $>1.5$ (regime III) & 1.61 $\to$ 1.85; trimmed to day edges 1.22 & no (day edges)\\
+E6c @-mention HR (coincidence) & 1.52 $\to$ identical (clean mentions) & yes\\
+G1a @-mention at the ledger gate & new: OR 3.1 [1.9, 4.5] & yes\\
+G1b unaddressed chatter neutral & new: OR 0.50 vs no news (0.65 vs 0.85 act) & no\\
+N1a gate stable at NE43 steps & log ratio $-0.01$, $-0.05$ & yes\\
+N1b nudge accounting & drop 0.036 $>$ bound 0.013 & no\\
+E8a elasticity on inflow & 0.16 (exposure) $\to$ 0.14 (ledger reads) & clock, not inflow\\
+N2a \#51 V vs reads per call & 0.02 [$-0.02$, 0.06] & yes\\
+N2b \#51 V vs N & 0.33 [0.03, 0.64] & no (tenure?)\\
+N3 homeostat, no overshoot & $\phi$ median $-0.10$; after forced $-0.22$ & overshoot (HH269)\\
+\end{tabular}}
+
+\hobsb{../figures/r1b_summary_obs2.pdf}{(a) Regime III, non-holdout: probability that an agent acts (rather than re-pauses) at the call after a timer pause, by what newly entered that call in the context ledger. (b) Per-agent AR(1) coefficient of log memory size toward the agent's mean; lines: pooled coefficient after forced (41-turn cap) and voluntary consolidations.}
+
+\hcaveats{Gate contrasts are within-agent but not randomized: chatter arrives when others are busy. N2's N effect is confounded with time in \#51. E7 (pair EP) was not re-run on fixed bins. No scorecard axis has a synthetic check.}
+
+\hnext{Fit a two-parameter gate model (chatter suppression, mention release) per agent; test HH269's gain at NE14 with the ledger's reset types.}

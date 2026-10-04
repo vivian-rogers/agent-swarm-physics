@@ -1,6 +1,12 @@
 # H23: Distilling the village into a fine-tuned leader copies its vocabulary but transforms its plans
 
-**Status:** exploratory round 1 done (2026-10-03; G44, non-holdout). **Mixed.** The deployed leader turned out to be base Kimi K2.6 self-distilled on synthetic village scenarios, not distilled from village text. Live, it uses ~40% more of its corpus's distinctive vocabulary than speakers in the same room (mostly agent addressing and markup; p = 0.011) but copies almost no phrases, and its plans are **not transmitted**: they neither copy nor systematically depend on the corpus, and look like the room's. Not closer to the corpus than its base in embedding space; rivals not rejected. Confirmatory script for #45 written (`analysis/confirm_g45.py`), **not run**.
+**Status:** **Round 1b (2026-10-04):**
+- the shared `copy_info` reproduces every number;
+- DQ6 checkpoints relabel no message;
+- in the second embedding model the leader is no closer to its corpus than base Kimi (p 0.43; bge's p 0.08 was model-specific), which strengthens rival R1 (base echo);
+- G44 stays mixed; natives not run.
+
+Round 1: exploratory round 1 done (2026-10-03; G44, non-holdout). **Mixed.** The deployed leader turned out to be base Kimi K2.6 self-distilled on synthetic village scenarios, not distilled from village text. Live, it uses ~40% more of its corpus's distinctive vocabulary than speakers in the same room (mostly agent addressing and markup; p = 0.011) but copies almost no phrases, and its plans are **not transmitted**: they neither copy nor systematically depend on the corpus, and look like the room's. Not closer to the corpus than its base in embedding space; rivals not rejected. Confirmatory script for #45 written (`analysis/confirm_g45.py`), **not run**.
 **Fields:** info theory, sociophysics
 **Origin:** HH39 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime (all data are regime III); Agent state, **variant vector** (message-level: regime-III whitened bge vector, `common.load_whitener("III", 32)`); Driving / external field (the day field); **Copy information (fork variant)**, used here in a named variant, *copy information (distillation variant)*, defined under Observables and proposed for DEFINITIONS.md. "Family field" is used as in H13 (lab = `roster.lab`); here only the base model's **agent field** h_K (Kimi K2.6) is needed, which is an agent-level property used across periods under exception (b), with H13's split-half invariance check.
@@ -149,7 +155,44 @@ What H23 predicts for the 16 v7-aug messages in #44, with the exploratory decisi
 - **Non-blind #44.** I read the full #best transcript, including the leader's messages, before writing the predictions (needed for the pipeline reconstruction); predictions were dated before any statistic. Analysis changes after data: none to the observables; one bug fix (plan acts in the message table had been built with coder v1; rebuilt with the frozen v3 before the reported run) and the perfect-copy reference added to the corpus channel after the synthetic run showed it was needed (before the real run).
 - **Copy information** uses H07's unverified reading of Kolchinsky & Corominas-Murtra; it matches my own recollection of the paper (specific copy information as a binary KL between the probability of reproducing x and the baseline probability of x), but the PDF is still not in `literature/`.
 
+## Round 1b (improved data, 2026-10-04)
+*Script: `analysis/r1b.py` (G44 only, non-holdout). The frozen files that `confirm_g45.py` checks (`h23lib.py`, `h23run.py`, `scheme/build_messages.py`, `confirm_g45.py`) are not edited. The round-1b code imports them and swaps inputs from outside. Output: `data/processed/H23-leader-distillation-copy/G44/r1b/r1b.json`. Estimates: `analysis/r1b_estimates.py` (4 rows).*
+
+### What changed and what it did
+| Input | Change | Effect |
+| --- | --- | --- |
+| Copy information | `h23lib` imported `decompose` / `mi_parts` from H07's folder; replaced by `infra/shared/copy_info` | **All 1,022 numbers of `results.json` reproduced** (max difference 5e-16). No change. |
+| Checkpoint times | `h23lib.CHECKPOINTS` (start times, rounded) vs DQ6 `checkpoint` rows (start and end, to the microsecond) | **0 of 27 leader messages relabelled**: v7-aug-64 16, Qwen v10 9, kimi-v2 1, kimi-v4 1. The only difference is kimi-v2's start (20:04:00 vs 20:04:02.2), with no message in between. |
+| Embedding model | O3a recomputed in bge (must reproduce round 1) and gte-modernbert (corpus targets embedded here, CLS, normalized, offline CPU) | see below |
+| #45 (held out) | DQ6: agent 30 ran under a wrong model string for its first ~11 min on 06-01, until an operator fixed it at 17:15:40 UTC | `confirm_g45.py` would count those messages as the leader. **Proposed amendment for Vivian:** exclude agent-30 messages before 2026-06-01 17:15:40 UTC. Not applied: the script is frozen, and no #45 content was read. |
+
+**O3a embedding level (d = cos(z, corpus) − cos(z, Kimi field), regime-III whitened 32-d; one-sided permutation p):**
+| Model | Leader | Same-window Kimi | Controls | Leader > controls | Leader > Kimi |
+| --- | --- | --- | --- | --- | --- |
+| bge (round 1, reproduced exactly) | 0.094 | −0.030 | 0.096 | p 0.51 | p 0.08 |
+| gte-modernbert | 0.102 | **0.095** | 0.065 | p 0.18 | **p 0.43** |
+
+The one round-1 hint that the leader sits closer to its corpus than its base does (leader > Kimi, p 0.08) is model-dependent and vanishes in gte, where the same-window Kimi is as corpus-like as the leader. This agrees with H46, where the leader writes like its base (Kimi K2.6 ranks 2nd of 17 by style), and with H32 (the installed leader is the weakest content source).
+
+### Verdict changes
+- **G44: mixed (unchanged).** P1a (vocabulary) and P2 (plans not transmitted) stand; they do not depend on the changed inputs.
+- **P3a:** failed (unchanged), now in both models.
+- **R1 (base echo):** stronger. P3a's only pro-distillation hint was model-specific.
+
+### Native layer
+Not run in 1b: compute is scarce. The DQ9 designs are recorded for round 2, with no predictions yet:
+- **#26:** the elected leader's goal copied by the swarm; a within-agent DiD on agent 17's lexical and plan copy, before vs after the 01-05 runoff;
+- **#35:** daily lead designers per room; leader → follower copy vs transformation of plan acts, with same-room non-leads as control.
+
+### Scorecard
+Unchanged except:
+- **A** stays 1: checkpoints are confirmed against DQ6;
+- **F** stays 1: the embedding instrument is now known to be model-dependent at this sample size.
+
+Ratings unchanged: complete 40, faithfulness 1.5, usefulness 1.5.
+
 ## Notes
+- 2026-10-04 (round 1b): see "Round 1b". `confirm_g45.py` needs a commit before it can run (this card changed), plus the proposed #45 checkpoint amendment.
 - 2026-10-03: promoted from HH39.
 - 2026-10-03: pipeline reconstructed from chat and computer-use turns. Main surprise: the deployed weights are base Kimi K2.6 self-distilled on synthetic village scenarios, not distilled from village text. The temporary leader in #44 ran four different checkpoints on two bases; only its last 16 messages come from the weights that led #45.
 - 2026-10-03: round 1 done; G44 verdict mixed (see Results). Bug fixed before the reported run: messages.parquet had plan acts from coder v1; rebuilt with the frozen v3.

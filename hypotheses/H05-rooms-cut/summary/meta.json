@@ -1,42 +1,72 @@
 {
-  "complete": 60,
-  "faithfulness": 2.5,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 with per-period verdicts and the confirmatory NE15 run are done; robustness, rivals (Hawkes, shared artifacts) and per-period re-analysis of the pooled tests remain.",
-    "faithfulness": "The talk-channel block model beats the shared-schedule and room-label nulls, and the primary holdout DiD passed, but the pooled primary test failed, J_in rose instead of staying fixed, the post-split window was not blind, and the entropy-production half is untestable.",
-    "usefulness": "\"Rooms decouple chat but not work\" is a validated design rule and a cheap monitor, but the chat half is nearly implied by the visibility scaffold and rests on one cut."
-  },
-  "one_line": "Rooms cut chat coupling (holdout DiD passed; verdict inconclusive); work isn't room-bound; EP unmeasurable",
-  "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
-  "updated": "2026-10-04",
-  "v2": {
-    "claim": "Rooms cut chat coupling between agents",
-    "original_verdict": "inconclusive (holdout DiD passed)",
-    "credence": 0.77,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "holdout passed (bug-tainted)",
-        "x": 2.5
-      },
-      {
-        "factor": "intervention consistent",
-        "x": 2
-      }
-    ],
-    "mechanism_level": "M1",
-    "fragile": false,
-    "value_if_true": 3,
-    "decision": "room design to decouple chat",
-    "magnitude": "large",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 2.31,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 55,
+ "faithfulness": 2.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 with per-period verdicts and the confirmatory NE15 run are done; robustness, rivals (Hawkes, shared artifacts) and per-period re-analysis of the pooled tests remain.",
+  "faithfulness": "Round 1b: talk block structure, pooled FE and the 05-11 split all strengthen on fixed data and survive DQ8's trim; HH248 (reads mediate the room effect) and NE42 attention reallocation were predicted before running and held; active-spin claims withdrawn; holdout run on buggy data stays inconclusive.",
+  "usefulness": "\"Rooms decouple chat but not work\" is a validated design rule and a cheap monitor, but the chat half is nearly implied by the visibility scaffold and rests on one cut."
+ },
+ "one_line": "Rooms decouple chat only through what agents read (ledger); effect stronger on fixed data; work not room-structured",
+ "rated_by": "RE-R1 agent (suggested, round 1b); coordinator calibration pending",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Rooms are coupled blocks for talk, and the coupling runs through reading: co-location adds nothing once ledger read counts are controlled",
+  "scope": "6 windows (talk spins); natives #focus (G51), NE42; holdout run inconclusive",
+  "direction": "positive",
+  "original_verdict": "inconclusive (holdout DiD passed, C3 missed)",
+  "credence": 0.86,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "holdout partly passed (C1 pass, bug-tainted; C3 miss)",
+    "x": 1.5,
+    "evidence": "holdout.md items 1, 13"
+   },
+   {
+    "factor": "intervention consistent (#focus cut, NE42 split)",
+    "x": 2,
+    "evidence": "natives"
+   },
+   {
+    "factor": "replication (6/6 windows)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "robust (strengthened on fixed bins and trim)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "weak leverage for the read-filter mechanism (co-location × reads r 0.82)",
+    "x": 0.8,
+    "evidence": "native HH248"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 3,
+  "decision": "room layout: rooms couple talk because they route reading",
+  "magnitude": "material",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 2.59,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (RE-R1); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "Rooms cut chat coupling between agents",
+   "credence": 0.77,
+   "fragile": false,
+   "value_if_true": 3,
+   "expected_usefulness": 2.31,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

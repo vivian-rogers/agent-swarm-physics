@@ -10,11 +10,17 @@ Holdout: days are dropped if calendar.holdout is true OR infra holdout_mask flag
 Exploration starts 2026-03-16 (#best/#rest exist); regime II days (#35, #36 before 03-24) are kept but labeled.
 
 Usage: uv run python hypotheses/H05-rooms-cut/scheme/build_panel.py
+Round 1b (2026-10-04): H05_DATA=r1b uv run python hypotheses/H05-rooms-cut/scheme/build_panel.py
+  reads activity_bins_fixed (the DQ8 join fix; activity_bins dropped ~half of all events) and writes the same tables
+  to data/processed/H05-rooms-cut/r1b/, plus `present` (the agent-minute lies between the agent's first and last
+  active minute of the day; DQ8 / H38 all-present-window rule) for the trimmed variants. H05_DATA=r1 (default)
+  reproduces round 1 unchanged.
 """
 from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -25,7 +31,11 @@ sys.path.insert(0, str(ROOT / "infra/shared"))
 from common import REVISION, git_commit, holdout_mask  # noqa: E402
 
 SH = ROOT / "data/processed/shared"
-OUT = ROOT / "data/processed/H05-rooms-cut"
+DATA_VERSION = os.environ.get("H05_DATA", "r1")
+assert DATA_VERSION in ("r1", "r1b"), DATA_VERSION
+BASE = ROOT / "data/processed/H05-rooms-cut"
+OUT = BASE if DATA_VERSION == "r1" else BASE / "r1b"
+BINS = "activity_bins.parquet" if DATA_VERSION == "r1" else "activity_bins_fixed.parquet"
 START = "2026-03-16"
 
 
@@ -35,7 +45,7 @@ def main():
     hm = holdout_mask(cal["pt_date"].to_list(), cal["goal_no"].to_list())
     cal = cal.with_columns(pl.Series("hm", hm)).filter(~pl.col("holdout") & ~pl.col("hm")).drop("hm")
     days = cal["pt_date"].to_list()
-    ab = (pl.scan_parquet(SH / "activity_bins.parquet").filter(pl.col("pt_date").is_in(days))
+    ab = (pl.scan_parquet(SH / BINS).filter(pl.col("pt_date").is_in(days))
           .select("pt_date", "minute", "agent", "state").collect())
     ab = ab.join(cal.select("pt_date", "win_start", "goal_no", pl.col("regime").cast(pl.Utf8)), on="pt_date")
     ab = ab.with_columns((pl.col("win_start") + pl.duration(seconds=pl.col("minute") * 60 + 30)).alias("t"))
@@ -47,6 +57,14 @@ def main():
                        pl.col("room").fill_null(-1).cast(pl.Int8),
                        "goal_no", "regime")
              .sort("pt_date", "minute", "agent"))
+    if DATA_VERSION == "r1b":
+        # present: between the agent's first and last active minute of the day (DQ8 all-present-window input)
+        span = (panel.filter(pl.col("active") > 0).group_by("pt_date", "agent")
+                .agg(pl.col("minute").min().alias("m0"), pl.col("minute").max().alias("m1")))
+        panel = (panel.join(span, on=["pt_date", "agent"], how="left")
+                 .with_columns(((pl.col("minute") >= pl.col("m0")) & (pl.col("minute") <= pl.col("m1")))
+                               .fill_null(False).cast(pl.Int8).alias("present"))
+                 .drop("m0", "m1").sort("pt_date", "minute", "agent"))
     panel.write_parquet(OUT / "panel.parquet", compression="zstd")
 
     rm = (panel.filter(pl.col("room") >= 0).group_by("pt_date", "agent", "room").agg(pl.len().alias("n"))
@@ -62,10 +80,10 @@ def main():
     prov = json.loads(prov_path.read_text()) if prov_path.exists() else {}
     prov["panel"] = {"built_by": "hypotheses/H05-rooms-cut/scheme/build_panel.py", "git_commit": git_commit(),
                      "inputs": [{"source": "ai-village", "revision": REVISION,
-                                 "tables": ["shared/activity_bins", "shared/calendar", "shared/rooms_timeline"]}],
+                                 "tables": ["shared/" + BINS.replace(".parquet", ""), "shared/calendar", "shared/rooms_timeline"]}],
                      "params": {"start": START, "active": "state>=3", "talk": "state==4", "bin": "1 min",
                                 "room": "as-of join of rooms_timeline.t_start at bin midpoint", "holdout": "excluded",
-                                "n_days": len(days)},
+                                "n_days": len(days), "data_version": DATA_VERSION},
                      "built_at": dt.datetime.now(dt.timezone.utc).isoformat()}
     prov_path.write_text(json.dumps(prov, indent=1))
     print("panel", panel.height, "rows;", len(days), "days;", panel["agent"].n_unique(), "agents")
