@@ -1,6 +1,7 @@
 # H38 × G02: Unsupervised agents look back on their previous goal and forward to their next (2025-05-10 → 2025-05-11)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1: failed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode F · 4 agents (catalog) · 2 non-holdout days · 1.9 h/day (empirical median window).
 
@@ -37,6 +38,23 @@ Data: `data/processed/H38-platform-stalls/G02/result.json`; minutes and runs in 
 
 ## Scorecard (period-specific axes)
 - **C:** explained share above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 2.9, scaffold-masked z 2.3.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.474 (0.390) | 0.313 (0.209) |
+| explained share (N1 surrogate) | 0.97 (0.96) | 0.99 (0.98) |
+| largest cause of joint-silence minutes | pause | pause |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.225, 0.233 (2.3) | 0.294, 0.303 (3.0) |
+| f_stall (pre-registered) · f_scaffold (headline) | -1.10 · 0.01 | -0.52 · 0.02 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.341 (3.1), -0.13 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.331 (3.0) |
+| talk spin E raw (z) → trimmed E (z) | 0.286 (3.5) | 0.390 (4.2) → 0.386 (3.9) |
+| per-period verdict (card rule) | failed | failed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G02/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

@@ -1,6 +1,6 @@
 # H25: A distance-to-criticality dial, T/T_c, per window and per channel
 
-**Status:** running. **Exploratory round 1 done (2026-10-04).** The dial works as a calibrated instrument for fast activity and talk feedback: every one of 279 days is subcritical (median g 0.10 activity, 0.12 talk; T/T_c ≈ 8–10). The headline prediction P1 **failed on content**: the O(32) content dial reads 0.70 (162 days with lower bound > 0.5). Post hoc, that reading is mostly swarm size times a constant per-pair correlation (field-like), not a coupling near threshold. Daily values carry little beyond the period mean (P5 failed); the 1-min dial is blind to coupling delayed by minutes (S3 failed). Confirmatory `analysis/confirm.py` frozen and dry-run, not run. Not promoted. Predictions were written 2026-10-04 ~01:30 UTC, before any dial was computed on real data.
+**Status:** running. **Exploratory round 1 done (2026-10-04); round 1b on the corrected activity table done (2026-10-04, section below):** activity and talk stay subcritical on every day but read higher (median g 0.16 / 0.16, was 0.10 / 0.12); the dial now reproduces H19's estimator on the same table (P3a passes) and tracks H03's n̂ (P4a passes, ρ 0.46); under the DQ8-calibrated null only 24% of activity days beat the independent-agent ceiling (54% on the whole-day grid); native: drive withdrawal (NE43) leaves the dial unchanged, as it should; talk co-activation vanishes when 15 agents share one room (NE42). The dial works as a calibrated instrument for fast activity and talk feedback: every one of 279 days is subcritical (median g 0.10 activity, 0.12 talk; T/T_c ≈ 8–10). The headline prediction P1 **failed on content**: the O(32) content dial reads 0.70 (162 days with lower bound > 0.5). Post hoc, that reading is mostly swarm size times a constant per-pair correlation (field-like), not a coupling near threshold. Daily values carry little beyond the period mean (P5 failed); the 1-min dial is blind to coupling delayed by minutes (S3 failed). Confirmatory `analysis/confirm.py` frozen and dry-run, not run. Not promoted. Predictions were written 2026-10-04 ~01:30 UTC, before any dial was computed on real data.
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH107 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); tests HH108 on the way.
 **Definitions used:** Population N(t) (active-population variant, per day; thresholds below); Regime; Driving / external field; Agent state (vector), *whitened statement mean* (H01 named variant), here per 30-min window. **New named variants, proposed for `physics-models/DEFINITIONS.md`** (not edited; outside H25's scope): *loop gain (equal-time, daily dial)*, *platform stall (null-calibrated joint silence)*, *content soft spin (30-min window)*, all defined under Model.
@@ -71,7 +71,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Equal-time fluctuation–dissipation audited on synthetic kinetic swarms: holds for equilibrium and asynchronous Glauber, fails for delayed reads (S3). Within-day stationarity handled by 30-min blocks (block 15/60 change the median by ≤ 0.02). Bootstrap SEs needed a calibrated ×1.5 widening; small-N days (3–4 agents) still get optimistic SEs. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Above the per-day independent-agent ceiling on 38% (activity), 47% (talk), 84% (content) of days. The field-only rival is excluded for activity/talk stalls (S2) but not for content (S4; F1 ≈ F2 ≈ F3 ≈ F2tod). No held-out likelihood comparison. |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | Talk dial exceeds the unfitted Hawkes mapping from H03's fast kernels in 80% of periods (ratio 2.3, as H19 found); LOPO map talk dial → H03 n̂ beats constant and regime-only (small margin), but ρ(talk dial, n̂) = 0.25 misses 0.3; ρ with fast n_x = 0.37. Mean-field size signature (PH1): talk follows J₀/N scaling, content does not. |
-| E interventional | predicts the change across a natural experiment | 0 | Scaffold switch 03-24: right signs (activity +0.08, talk −0.06) but 90% intervals include 0 (P7a failed). No movement at goal changes (as predicted; a null). Room merge/split, hours switches, #51 joins: no significant steps. |
+| E interventional | predicts the change across a natural experiment | 1 (1b; round 1: 0) | Scaffold switch 03-24: right signs (activity +0.08, talk −0.06) but 90% intervals include 0 (P7a failed). No movement at goal changes (as predicted; a null). Room merge/split, hours switches, #51 joins: no significant steps. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Real design days (N, minutes, schedules, statement counts): equilibrium CW recovered within 0.04 for g ≤ 0.4 (S1 mixed); stall mask = oracle (S2); fast Hawkes recovered, delayed coupling invisible (S3 failed); content field removal partial (S4 failed). Activity dial halves with H38's scheduled-off mask (PH3): preprocessing-sensitive. |
 | G ground truth | agrees with known structure | 1 | Reproduces H19's estimator per period (activity ρ 0.94; talk 0.69 fixed-effect, 0.84 random-effects). Regime III − I: activity up, talk down (H19, H38), but the activity difference is mostly N (per-pair ρ̄ 0.011 vs 0.009). Masked stalls drop the activity dial by 0.10 on the 50 stall days. |
 | H comparative | beats the named rivals | 1 | For talk, Curie–Weiss J₀/N scaling beats the field model out of sample (LOPO SSE 0.21 vs 0.30); for content the field model wins (0.81 vs 1.42), so the CW reading of the content dial is not faithful. |
@@ -115,45 +115,46 @@ The holdout is crowded, so the design follows the reuse policy (`../holdout.md`)
 - **H03 agreement on the holdout** is scored only if H03 exports held-out n̂ in H19's shared schema (`confirmatory = true`); H25 never fits Hawkes models on held-out data.
 
 ## Results by goal period
-Per-period verdict rule (card, copied into each G card at 02:00 UTC before the run). **0 supported, 22 mixed, 13 failed.** Check (i) fails in every period because content upper bounds are wide (only 22.5% of content days have an upper bound < 0.8); all 13 failures are content days with a lower bound > 0.8, concentrated in periods with N ≥ 10 (regime I from #18 on, regime II–III). Activity and talk are subcritical on every day of every period. "activity" = stalls masked (fixed-effect mean of days); "kept" = stalls kept (the H19 comparison); RE = random-effects mean.
+Per-period verdict rule (card, copied into each G card at 02:00 UTC before the run). **0 supported, 22 mixed, 13 failed** (round 1b: 1 / 21 / 13; only G07 changes). Check (i) fails in every period because content upper bounds are wide (only 22.5% of content days have an upper bound < 0.8); all 13 failures are content days with a lower bound > 0.8, concentrated in periods with N ≥ 10 (regime I from #18 on, regime II–III). Activity and talk are subcritical on every day of every period. "activity" = stalls masked (fixed-effect mean of days); "kept" = stalls kept (the H19 comparison); RE = random-effects mean.
 
-| Period | Role | Verdict | Key numbers |
-| --- | --- | --- | --- |
-| [G02](goalperiod-subhypotheses/G02/README.md) | exploratory | mixed | activity 0.22 (kept 0.22; H19 0.23), talk 0.34 (RE 0.31; H19 0.28), content median 0.64; 2 days |
-| [G03](goalperiod-subhypotheses/G03/README.md) | exploratory | mixed | activity 0.02 (kept 0.02; H19 0.02), talk 0.08 (RE 0.08; H19 0.10), content median 0.59; 3 days |
-| [G04](goalperiod-subhypotheses/G04/README.md) | exploratory | mixed | activity 0.11 (kept 0.11; H19 0.10), talk 0.27 (RE 0.24; H19 0.27), content median 0.42; 25 days |
-| [G05](goalperiod-subhypotheses/G05/README.md) | exploratory | mixed | activity -0.13 (kept -0.12; H19 -0.07), talk 0.09 (RE 0.09; H19 0.10), content median 0.55; 5 days |
-| [G06](goalperiod-subhypotheses/G06/README.md) | exploratory | mixed | activity 0.01 (kept 0.01; H19 0.00), talk 0.13 (RE 0.10; H19 -0.07), content median 0.16; 13 days; stalls-kept dial off H19 |
-| [G07](goalperiod-subhypotheses/G07/README.md) | exploratory | mixed | activity 0.10 (kept 0.10; H19 0.08), talk 0.17 (RE 0.17; H19 –), content median 0.53; 2 days |
-| [G08](goalperiod-subhypotheses/G08/README.md) | exploratory | mixed | activity 0.02 (kept 0.04; H19 0.03), talk -0.03 (RE -0.03; H19 -0.01), content median 0.30; 18 days |
-| [G10](goalperiod-subhypotheses/G10/README.md) | exploratory | mixed | activity 0.24 (kept 0.31; H19 0.29), talk 0.13 (RE 0.13; H19 0.15), content median 0.19; 5 days |
-| [G11](goalperiod-subhypotheses/G11/README.md) | exploratory | mixed | activity 0.19 (kept 0.23; H19 0.30), talk 0.18 (RE 0.18; H19 0.22), content median 0.56; 5 days |
-| [G12](goalperiod-subhypotheses/G12/README.md) | exploratory | mixed | activity 0.17 (kept 0.17; H19 0.17), talk 0.18 (RE 0.18; H19 0.18), content median 0.70; 5 days |
-| [G13](goalperiod-subhypotheses/G13/README.md) | exploratory | mixed | activity 0.01 (kept 0.01; H19 0.03), talk 0.11 (RE 0.11; H19 0.12), content median 0.49; 10 days |
-| [G16](goalperiod-subhypotheses/G16/README.md) | exploratory | mixed | activity 0.23 (kept 0.26; H19 0.28), talk 0.26 (RE 0.26; H19 0.25), content median 0.49; 4 days |
-| [G17](goalperiod-subhypotheses/G17/README.md) | exploratory | mixed | activity 0.16 (kept 0.17; H19 0.12), talk 0.36 (RE 0.31; H19 0.38), content median 0.69; 5 days |
-| [G18](goalperiod-subhypotheses/G18/README.md) | exploratory | failed | activity 0.09 (kept 0.10; H19 0.08), talk 0.27 (RE 0.26; H19 0.24), content median 0.78; 10 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
-| [G19](goalperiod-subhypotheses/G19/README.md) | exploratory | mixed | activity 0.06 (kept 0.11; H19 0.11), talk 0.25 (RE 0.24; H19 0.26), content median 0.75; 10 days; content median ≥ 0.74 |
-| [G20](goalperiod-subhypotheses/G20/README.md) | exploratory | mixed | activity 0.03 (kept 0.03; H19 0.04), talk 0.15 (RE 0.15; H19 0.17), content median 0.75; 10 days; content median ≥ 0.74 |
-| [G21](goalperiod-subhypotheses/G21/README.md) | exploratory | mixed | activity 0.07 (kept 0.05; H19 0.09), talk 0.18 (RE 0.18; H19 0.17), content median 0.71; 5 days |
-| [G23](goalperiod-subhypotheses/G23/README.md) | exploratory | mixed | activity -0.00 (kept 0.01; H19 0.04), talk 0.23 (RE 0.23; H19 0.20), content median 0.68; 5 days |
-| [G24](goalperiod-subhypotheses/G24/README.md) | exploratory | mixed | activity -0.02 (kept -0.02; H19 -0.00), talk 0.19 (RE 0.19; H19 0.20), content median 0.65; 5 days |
-| [G25](goalperiod-subhypotheses/G25/README.md) | exploratory | failed | activity 0.04 (kept 0.05; H19 0.05), talk 0.10 (RE 0.10; H19 0.13), content median 0.77; 5 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
-| [G26](goalperiod-subhypotheses/G26/README.md) | exploratory | failed | activity 0.01 (kept 0.10; H19 0.21), talk -0.05 (RE 0.08; H19 0.24), content median 0.83; 5 days; content day(s) with lower bound > 0.8, stalls-kept dial off H19, content median ≥ 0.74 |
-| [G27](goalperiod-subhypotheses/G27/README.md) | exploratory | mixed | activity 0.13 (kept 0.13; H19 0.14), talk 0.15 (RE 0.15; H19 0.12), content median 0.71; 10 days |
-| [G30](goalperiod-subhypotheses/G30/README.md) | exploratory | failed | activity 0.05 (kept 0.07; H19 0.10), talk -0.07 (RE 0.12; H19 0.21), content median 0.85; 5 days; content day(s) with lower bound > 0.8, stalls-kept dial off H19, content median ≥ 0.74 |
-| [G31](goalperiod-subhypotheses/G31/README.md) | exploratory | failed | activity 0.05 (kept 0.05; H19 0.07), talk 0.14 (RE 0.14; H19 0.13), content median 0.81; 5 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
-| [G33](goalperiod-subhypotheses/G33/README.md) | exploratory | failed | activity 0.11 (kept 0.11; H19 0.11), talk 0.07 (RE 0.07; H19 0.07), content median 0.86; 3 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
-| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory | failed | activity 0.07 (kept 0.09; H19 0.10), talk 0.21 (RE 0.21; H19 0.17), content median 0.84; 5 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
-| [G36](goalperiod-subhypotheses/G36/README.md) | exploratory | mixed | activity 0.08 (kept 0.13; H19 0.17), talk 0.10 (RE 0.10; H19 0.08), content median 0.74; 5 days; content median ≥ 0.74 |
-| [G37](goalperiod-subhypotheses/G37/README.md) | exploratory | failed | activity 0.24 (kept 0.34; H19 0.32), talk 0.19 (RE 0.19; H19 0.16), content median 0.77; 3 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
-| [G38](goalperiod-subhypotheses/G38/README.md) | exploratory | failed | activity 0.10 (kept 0.12; H19 0.12), talk -0.03 (RE 0.02; H19 0.04), content median 0.71; 17 days; content day(s) with lower bound > 0.8, stalls-kept dial off H19 |
-| [G39](goalperiod-subhypotheses/G39/README.md) | exploratory | mixed | activity 0.16 (kept 0.17; H19 0.19), talk 0.13 (RE 0.13; H19 0.12), content median 0.29; 5 days |
-| [G40](goalperiod-subhypotheses/G40/README.md) | exploratory | mixed | activity 0.28 (kept 0.31; H19 0.35), talk 0.03 (RE 0.03; H19 0.02), content median 0.72; 5 days |
-| [G41](goalperiod-subhypotheses/G41/README.md) | exploratory | failed | activity 0.07 (kept 0.09; H19 0.13), talk 0.11 (RE 0.11; H19 0.08), content median 0.80; 5 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
-| [G42](goalperiod-subhypotheses/G42/README.md) | exploratory | failed | activity 0.11 (kept 0.11; H19 0.11), talk 0.11 (RE 0.11; H19 0.08), content median 0.81; 5 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
-| [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | failed | activity 0.28 (kept 0.30; H19 0.36), talk -0.01 (RE 0.05; H19 0.15), content median 0.79; 4 days; content day(s) with lower bound > 0.8, stalls-kept dial off H19, content median ≥ 0.74 |
-| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | failed | activity 0.17 (kept 0.20; H19 0.24), talk 0.06 (RE 0.09; H19 0.11), content median 0.76; 45 days; content day(s) with lower bound > 0.8, stalls-kept dial off H19, content median ≥ 0.74 |
+| Period | Role | Verdict | Verdict (1b) | Key numbers (round 1; 1b numbers in each folder) |
+| --- | --- | --- | --- | --- |
+| [G02](goalperiod-subhypotheses/G02/README.md) | exploratory | mixed | mixed | activity 0.22 (kept 0.22; H19 0.23), talk 0.34 (RE 0.31; H19 0.28), content median 0.64; 2 days |
+| [G03](goalperiod-subhypotheses/G03/README.md) | exploratory | mixed | mixed | activity 0.02 (kept 0.02; H19 0.02), talk 0.08 (RE 0.08; H19 0.10), content median 0.59; 3 days |
+| [G04](goalperiod-subhypotheses/G04/README.md) | exploratory | mixed | mixed | activity 0.11 (kept 0.11; H19 0.10), talk 0.27 (RE 0.24; H19 0.27), content median 0.42; 25 days |
+| [G05](goalperiod-subhypotheses/G05/README.md) | exploratory | mixed | mixed | activity -0.13 (kept -0.12; H19 -0.07), talk 0.09 (RE 0.09; H19 0.10), content median 0.55; 5 days |
+| [G06](goalperiod-subhypotheses/G06/README.md) | exploratory | mixed | mixed | activity 0.01 (kept 0.01; H19 0.00), talk 0.13 (RE 0.10; H19 -0.07), content median 0.16; 13 days; stalls-kept dial off H19 |
+| [G07](goalperiod-subhypotheses/G07/README.md) | exploratory | mixed | supported | activity 0.10 (kept 0.10; H19 0.08), talk 0.17 (RE 0.17; H19 –), content median 0.53; 2 days |
+| [G08](goalperiod-subhypotheses/G08/README.md) | exploratory | mixed | mixed | activity 0.02 (kept 0.04; H19 0.03), talk -0.03 (RE -0.03; H19 -0.01), content median 0.30; 18 days |
+| [G10](goalperiod-subhypotheses/G10/README.md) | exploratory | mixed | mixed | activity 0.24 (kept 0.31; H19 0.29), talk 0.13 (RE 0.13; H19 0.15), content median 0.19; 5 days |
+| [G11](goalperiod-subhypotheses/G11/README.md) | exploratory | mixed | mixed | activity 0.19 (kept 0.23; H19 0.30), talk 0.18 (RE 0.18; H19 0.22), content median 0.56; 5 days |
+| [G12](goalperiod-subhypotheses/G12/README.md) | exploratory | mixed | mixed | activity 0.17 (kept 0.17; H19 0.17), talk 0.18 (RE 0.18; H19 0.18), content median 0.70; 5 days |
+| [G13](goalperiod-subhypotheses/G13/README.md) | exploratory | mixed | mixed | activity 0.01 (kept 0.01; H19 0.03), talk 0.11 (RE 0.11; H19 0.12), content median 0.49; 10 days |
+| [G16](goalperiod-subhypotheses/G16/README.md) | exploratory | mixed | mixed | activity 0.23 (kept 0.26; H19 0.28), talk 0.26 (RE 0.26; H19 0.25), content median 0.49; 4 days |
+| [G17](goalperiod-subhypotheses/G17/README.md) | exploratory | mixed | mixed | activity 0.16 (kept 0.17; H19 0.12), talk 0.36 (RE 0.31; H19 0.38), content median 0.69; 5 days |
+| [G18](goalperiod-subhypotheses/G18/README.md) | exploratory | failed | failed | activity 0.09 (kept 0.10; H19 0.08), talk 0.27 (RE 0.26; H19 0.24), content median 0.78; 10 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
+| [G19](goalperiod-subhypotheses/G19/README.md) | exploratory | mixed | mixed | activity 0.06 (kept 0.11; H19 0.11), talk 0.25 (RE 0.24; H19 0.26), content median 0.75; 10 days; content median ≥ 0.74 |
+| [G20](goalperiod-subhypotheses/G20/README.md) | exploratory | mixed | mixed | activity 0.03 (kept 0.03; H19 0.04), talk 0.15 (RE 0.15; H19 0.17), content median 0.75; 10 days; content median ≥ 0.74 |
+| [G21](goalperiod-subhypotheses/G21/README.md) | exploratory | mixed | mixed | activity 0.07 (kept 0.05; H19 0.09), talk 0.18 (RE 0.18; H19 0.17), content median 0.71; 5 days |
+| [G23](goalperiod-subhypotheses/G23/README.md) | exploratory | mixed | mixed | activity -0.00 (kept 0.01; H19 0.04), talk 0.23 (RE 0.23; H19 0.20), content median 0.68; 5 days |
+| [G24](goalperiod-subhypotheses/G24/README.md) | exploratory | mixed | mixed | activity -0.02 (kept -0.02; H19 -0.00), talk 0.19 (RE 0.19; H19 0.20), content median 0.65; 5 days |
+| [G25](goalperiod-subhypotheses/G25/README.md) | exploratory | failed | failed | activity 0.04 (kept 0.05; H19 0.05), talk 0.10 (RE 0.10; H19 0.13), content median 0.77; 5 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
+| [G26](goalperiod-subhypotheses/G26/README.md) | exploratory | failed | failed | activity 0.01 (kept 0.10; H19 0.21), talk -0.05 (RE 0.08; H19 0.24), content median 0.83; 5 days; content day(s) with lower bound > 0.8, stalls-kept dial off H19, content median ≥ 0.74 |
+| [G27](goalperiod-subhypotheses/G27/README.md) | exploratory | mixed | mixed | activity 0.13 (kept 0.13; H19 0.14), talk 0.15 (RE 0.15; H19 0.12), content median 0.71; 10 days |
+| [G30](goalperiod-subhypotheses/G30/README.md) | exploratory | failed | failed | activity 0.05 (kept 0.07; H19 0.10), talk -0.07 (RE 0.12; H19 0.21), content median 0.85; 5 days; content day(s) with lower bound > 0.8, stalls-kept dial off H19, content median ≥ 0.74 |
+| [G31](goalperiod-subhypotheses/G31/README.md) | exploratory | failed | failed | activity 0.05 (kept 0.05; H19 0.07), talk 0.14 (RE 0.14; H19 0.13), content median 0.81; 5 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
+| [G33](goalperiod-subhypotheses/G33/README.md) | exploratory | failed | failed | activity 0.11 (kept 0.11; H19 0.11), talk 0.07 (RE 0.07; H19 0.07), content median 0.86; 3 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
+| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory | failed | failed | activity 0.07 (kept 0.09; H19 0.10), talk 0.21 (RE 0.21; H19 0.17), content median 0.84; 5 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
+| [G36](goalperiod-subhypotheses/G36/README.md) | exploratory | mixed | mixed | activity 0.08 (kept 0.13; H19 0.17), talk 0.10 (RE 0.10; H19 0.08), content median 0.74; 5 days; content median ≥ 0.74 |
+| [G37](goalperiod-subhypotheses/G37/README.md) | exploratory | failed | failed | activity 0.24 (kept 0.34; H19 0.32), talk 0.19 (RE 0.19; H19 0.16), content median 0.77; 3 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
+| [G38](goalperiod-subhypotheses/G38/README.md) | exploratory | failed | failed | activity 0.10 (kept 0.12; H19 0.12), talk -0.03 (RE 0.02; H19 0.04), content median 0.71; 17 days; content day(s) with lower bound > 0.8, stalls-kept dial off H19 |
+| [G39](goalperiod-subhypotheses/G39/README.md) | exploratory | mixed | mixed | activity 0.16 (kept 0.17; H19 0.19), talk 0.13 (RE 0.13; H19 0.12), content median 0.29; 5 days |
+| [G40](goalperiod-subhypotheses/G40/README.md) | native (1b) · replication | mixed | mixed (native NE42: mixed) | activity 0.28 (kept 0.31; H19 0.35), talk 0.03 (RE 0.03; H19 0.02), content median 0.72; 5 days |
+| [G41](goalperiod-subhypotheses/G41/README.md) | exploratory | failed | failed | activity 0.07 (kept 0.09; H19 0.13), talk 0.11 (RE 0.11; H19 0.08), content median 0.80; 5 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
+| [G42](goalperiod-subhypotheses/G42/README.md) | exploratory | failed | failed | activity 0.11 (kept 0.11; H19 0.11), talk 0.11 (RE 0.11; H19 0.08), content median 0.81; 5 days; content day(s) with lower bound > 0.8, content median ≥ 0.74 |
+| [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | failed | failed | activity 0.28 (kept 0.30; H19 0.36), talk -0.01 (RE 0.05; H19 0.15), content median 0.79; 4 days; content day(s) with lower bound > 0.8, stalls-kept dial off H19, content median ≥ 0.74 |
+| [G51](goalperiod-subhypotheses/G51/README.md) | native (1b) · replication | failed | failed (native size law: failed) | activity 0.17 (kept 0.20; H19 0.24), talk 0.06 (RE 0.09; H19 0.11), content median 0.76; 45 days; content day(s) with lower bound > 0.8, stalls-kept dial off H19, content median ≥ 0.74 |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) | native (1b) | – | supported | bookends stop / nudger stop inside #51: activity z −0.78 / +0.43, talk −1.47 / +0.24, all inside the placebo band (q95 1.04, 1.57) |
 
 ## Results
 *Exploratory round 1, 2026-10-04, non-holdout only (35 periods, 282 days; 279 activity, 261 talk, 280 content day-dials). Numbers from `data/processed/H25-criticality-dial/results/{explore,posthoc,synthetic_verdicts}.json`; scripts `analysis/explore.py`, `posthoc.py`, `synthetic.py`, `synthetic_verdicts.py`; figures in `figures/`.*
@@ -221,6 +222,50 @@ Medians of daily g. Activity: none 0.109, auto 0.096, h38_sched 0.056, h38_exo 0
 - One embedding model (bge-small); content windows of 30 min; the H38 masks were built by a concurrently running hypothesis.
 - Not blind: H19's and H03's per-period values were known when predictions were written. Many variants: only P1–P7(b) and S1–S4 carry verdicts.
 
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the round-1 pipeline on the corrected activity table, the DQ8 null-size correction, and three period-native tests. Predictions S1–S4, P1–P7 and the per-period rule are unchanged; native predictions were written in the NE43, G51 and G40 folders at 06:34 UTC, before their runs.*
+
+**What changed in the inputs.**
+- `activity_bins` dropped about half of all events (DQ8). Round 1b rebuilds the activity-derived inputs from `activity_bins_fixed` (`scheme/build.py --data-version fixed` → `inputs_r1b/`): spins, the H38 masks from the shared `outages_fixed/stall_minutes`, and an **H19 reference on the fixed table** (H19's g_eq estimator as computed by H38's round-1b pipeline, which reproduces H19 exactly on the old table). The round-1 H19 values in `refs.parquet` are stale for the activity and talk channels. Statements and exogenous messages do not depend on the activity table; content point estimates are identical (intervals differ by bootstrap draws).
+- **Null sizes (DQ8).** The per-day null (each agent circularly shifted within 30-min blocks) on whole-day grids rejects 28–34% of independent swarms; after trimming each day to the all-present window it rejects 2–4%. Round 1b adds the variant `trim` (auto stall mask plus all-present window, applied before the null is drawn) and reports the share of days above the null ceiling under both designs. H12's lull filter, which H25 found biased (−0.37 at N ≤ 6), stays a non-primary variant.
+- Code: `--data-version fixed` in `scheme/build.py`, `analysis/explore.py`, `analysis/posthoc.py` (the old path still runs); new `analysis/r1b_native.py`, `r1b_periods.py`, `r1b_figures.py`. Outputs in `data/processed/H25-criticality-dial/r1b/`.
+
+**Old vs new (282 non-holdout days, 35 periods).**
+
+| Statistic | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| P1 activity / talk days with upper bound < 0.8 (max upper bound) | 100% / 100% (0.76 / 0.66) | 100% / 100% (0.77 / 0.68) |
+| P1 content days with upper bound < 0.8 · lower bound > 0.8 | 22.5% · 33 | 23.9% · 34 (same point estimates) |
+| P2 median daily dial, activity · talk | 0.096 · 0.122 | **0.159 · 0.162** |
+| activity medians by mask: none · auto · + H38 scheduled · + edges · **DQ8 trim** | 0.109 · 0.096 · 0.050 · 0.058 · – | 0.185 · 0.159 · 0.096 · 0.086 · **0.067** |
+| days above the per-day null q95: activity · talk · content (round-1 design) | 38% · 47% · 84% | 54% · 61% · 84% |
+| **DQ8 null:** days above the null q95 after trimming, activity · talk | – | **24% · 53%** |
+| P3a vs H19 (stalls kept), activity ρ, \|Δ\| · talk ρ | 0.94, 0.019 · 0.69 | vs round-1 H19 (stale): 0.84, 0.058 · 0.71; **vs H19 on the fixed table: 0.94, 0.021 · 0.97** |
+| P3b stall days · median drop · ρ(stall share, drop) | 50 · −0.095 · 0.21 | 30 · −0.153 · −0.09 |
+| P4a ρ(talk dial, H03 n̂ TALK) · with fast n_x | 0.25 · 0.37 | **0.46 · 0.60** |
+| P4b ρ(activity dial, n̂) | 0.04 | −0.07 |
+| P4c LOPO SSE map · constant · regime-only | 1.78 · 1.86 · 2.32 | 1.46 · 1.86 · 2.32 |
+| P4d talk dial above the Hawkes map (w = 0.6), median ratio | 80%, 2.3 | 97%, 3.3 |
+| P5 periods with between-day heterogeneity (activity) | 2/28 | 4/29 |
+| P6 content (unchanged inputs) | a ✓ · b 0.70 · c no change | identical |
+| P7a 03-24 switch, activity · talk [90%] | +0.08 [−0.05, 0.20] · −0.06 [−0.18, 0.06] | **+0.16 [+0.02, +0.29]** · +0.05 [−0.05, +0.16] |
+| P7b goal changes vs placebo, activity p · talk p | 0.55 · 0.06 | 0.46 · 0.25 |
+| PH1 (post hoc) talk α [90%] · LOPO SSE CW vs field | 0.69 [−0.38, 1.71] · 0.21 vs 0.30 | **1.25 [0.77, 1.77]** · 0.37 vs 0.57 |
+| PH1 activity α · ρ̄ · best LOPO model | 0.50 · 0.011 · field | 0.45 [0.05, 0.84] · 0.020 · field (0.29; dilution 0.31; CW 0.38) |
+| per-period verdicts (supported / mixed / failed) | 0 / 22 / 13 | 1 / 21 / 13 |
+
+**Which verdicts change.**
+- **P3a: failed → supported.** Against H19's estimator on the same (fixed) table the dial agrees closely (activity ρ 0.94, |Δ| 0.021; talk ρ 0.97). Round 1's narrow talk failure (0.69) was the event-drop bug acting differently on per-day and pooled-chunk statistics.
+- **P4a: failed → supported** (ρ 0.46 with H03's n̂, 0.60 with fast n_x). The talk dial is now a credible cross-method gauge (H03 fits event times, which the bug did not touch).
+- **P7a still fails, differently:** the activity step at the 03-24 switch now clears its 90% interval (+0.16), but the talk dial rises too (+0.05) instead of falling.
+- P1, P5, P6b/c and P3b still fail; P2, P4b–d, P6a, P7b still pass. Per period only G07 changes (mixed → supported).
+- **Corrected null:** with each day trimmed to the common running window, only 24% of activity days exceed the independent-agent ceiling (54% without trimming) and the median activity dial is 0.067 (T/T_c ≈ 15). Talk barely moves (53%; 0.143). Much of the apparent activity feedback is day-edge synchrony (H38), not coupling.
+- **Native tests:** **NE43 supported**: neither the bookend stop (08-05) nor the nudger stop (08-21) moves the activity or talk dial beyond within-#51 placebo boundaries (|z| ≤ 1.47 vs q95 1.04–1.57), so the dial measures feedback, not these drives. **G51 size law failed (uninformative)**: over N = 21 → 32 constant-ρ̄ and constant-g models differ by 2–4% in leave-one-day-out error. **G40 / NE42 mixed**: talk co-activation vanishes in the merged 15-agent room (g 0.13 → 0.003 → 0.18; Δ −0.15 [−0.27, −0.03]), which neither size reading predicted; activity rises (+0.17, interval spans 0); content does not double.
+
+**Cross-hypothesis corroboration (H50, 2026-10-04; built from `call_windows`).** H50's transfer-function analysis finds activity co-movement to be mostly the scheduler's daily start/stop (0.62–0.67 of it) and per-pair activity correlation inside the all-present window of only 0.056 (regime I) / 0.005 (regime III), in line with the trimmed activity dial (median 0.067, 24% of days above the ceiling); talk co-movement is a coupling at one read-out call (pooled J₁ 0.034 / 0.019), in line with the talk dial surviving trimming and following J₀/N. The 1-min equal-time dial sees that hop-1 coupling only partly (S3).
+
+**Scorecard after 1b.** A 1; B 1; C 1 (calibrated null: activity above the ceiling on 24% of trimmed days, talk 53%, content 84%); D 1 (P4a now passes; talk follows J₀/N with α 1.25); **E 0 → 1** (NE43: drive withdrawal predicted not to move the dial, and it does not; P7a right sign for activity only; NE42 talk collapse unpredicted); F 1; G 1 (reproduces H19 on the same table, ρ 0.94 / 0.97); H 1 (talk: CW beats the field model out of sample, 0.37 vs 0.57); I 0.
+
 ## The operator-facing dial
 **Definition (per day, per channel).** Minute spins s_i(t) = ±1 (activity: any event; talk: a message posted). Mask platform stalls (runs in which nobody logs any event, longer than chance; `dial.find_stalls`) and any known scheduled-off minutes. Remove each agent's mean in 30-min blocks. Then VR = Σ_t(Σ_i X_it)² / Σ_t Σ_i X_it², **g = 1 − 1/VR**, amplification = VR, **T/T_c = 1/g**, and **per-pair correlation ρ̄ = (VR − 1)/(N − 1)**. 90% intervals: bootstrap over 10-min segments, widened ×1.5. Content: the same ratio on 30-min window means of whitened, unit-normalized message embeddings, after removing each agent's day mean and the span of operator/human messages, with statement noise removed by a method-of-moments correction.
 
@@ -266,3 +311,4 @@ Log idle or heartbeat events as non-talk events if the platform has them: they m
 - 2026-10-04: `confirm.py --freeze` (CA1–CA4, CB1–CB2 frozen with SHA-256) and `--dry-run` on non-holdout stand-ins. The holdout has not been touched.
 - Disk: `data/processed/H25-criticality-dial/` 13 MB.
 - Concurrency: H38's `stall_minutes.parquet` (built 2026-10-04 by the running H38 agent) supplies the `h38_*` masks; H26 (HH108) is testing the content-near-critical idea in parallel.
+- 2026-10-04: round 1b (corrected activity table, DQ8 trim variant, H19 reference on the fixed table, native NE43 / #51 size law / NE42); ~10 min of compute on ≤ 2 processes; +3 MB in `data/processed/H25-criticality-dial/r1b/` and `inputs_r1b/`.

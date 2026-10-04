@@ -1,6 +1,7 @@
 # H12 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; corrected activity table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode C (shared objective) · N = 12 at start (present: 12, 12, 13) · rooms holding ≥ 3 present agents: 38a: 2, 38b: 2, 38c: 2 · 17 non-holdout days. Splits: 38a (8 d, III), 38b (4 d, III), 38c (5 d, III) (H01 step changes).
 
@@ -52,6 +53,24 @@ Figure: `figures/G38_summary.pdf`. Data: `data/processed/H12-groupthink-dimensio
 - **D (Curie–Weiss shape):** sign share 1.00, 1.00, 1.00; VR/λ₁ 0.97, 0.97, 0.93.
 - **G (rooms):** talk-mode room separation p = 0.225, 0.636, 0.015 (– = no signal talk mode).
 <!-- /SCORE -->
+
+## Round 1b (improved data, 2026-10-04)
+Arm (a) spins rebuilt from DQ8's `activity_bins_fixed` (`scheme/build.py`, `run_units.py`, `evaluate.py --data-version fixed`); content and PR inputs do not depend on the activity table and are unchanged (re-checked with the second embedding model). Predictions and verdict rule unchanged. The DQ8 rows use the calibrated null for λ₁: each day trimmed to its all-present window *before* drawing block-shift surrogates (size 0.05; the cross-day edge has size 0.19 on trimmed and 0.62 on whole-day grids).
+
+| Quantity (per unit) | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| units | 38a, 38b, 38c | 38a, 38b, 38c |
+| k activity (cross-day edge) | 1, 1, 1 | 1, 1, 1 |
+| λ₁/edge activity (cross-day) | 1.42, 1.60, 1.62 | 1.09, 1.90, 1.04 |
+| k after the lull filter (joint-lull share) | 1, 0, 0 (0.01, 0.19, 0.13) | 0, 0, 0 (0.01, 0.19, 0.01) |
+| **DQ8 null:** k activity, trimmed + block-shift edge (λ₁/edge) | not computed | 0, 0, 0 (0.99, 0.98, 0.93) |
+| DQ8: k activity, trimmed + H38 stall mask (replaces the lull filter) | not computed | 0, 0, 0 |
+| k talk (cross-day) → trimmed block-shift | 1, 1, 1 | 2, 1, 1 → 2, 1, 1 |
+| k content (inputs unchanged) | 1, 1, 2 | 1, 1, 2 |
+| mean PRday: round-1 bge ruler → gte (shared 32-d, second model) | 9.31 | 10.17 (gte) |
+| per-period verdict (card rule, Amendment 1 item 9) | mixed | mixed |
+
+Data: `data/processed/H12-groupthink-dimensional-collapse/r1b/G38/`.
 
 ## Notes
 - 2026-10-03: folder created and prediction written before running on this period.

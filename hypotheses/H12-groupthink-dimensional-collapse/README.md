@@ -1,6 +1,6 @@
 # H12: Groupthink is dimensional collapse: few collective modes, shrinking participation ratio at consensus
 
-**Status:** running. Exploratory round 1 done 2026-10-03: HH77 partially supported (one Curie–Weiss-like market mode, partly joint lulls); HH58 refuted in direction (kickoffs expand dimensionality; self-repetition, not consensus, collapses it). Confirmatory script written, not run.
+**Status:** running. Exploratory round 1 done 2026-10-03: HH77 partially supported (one Curie–Weiss-like market mode, partly joint lulls); HH58 refuted in direction (kickoffs expand dimensionality; self-repetition, not consensus, collapses it). Confirmatory script written, not run. **Round 1b (2026-10-04, section below):** on the corrected activity table the activity market mode largely disappears (above the calibrated DQ8 null in 7/24 units; 18/24 under the round-1 null), while the talk mode (21/24) and the content mode (24/24, same under a second embedding model) stay; natively, a strong uniform field does compress content (#12 debates: PR −25% while a motion is on, p = 0.01) and so does a contested vote (#26).
 **Plain-language explainer:** [EXPLAINER.pdf](EXPLAINER.pdf) (RevTeX source EXPLAINER.tex; for non-specialists).
 **Fields:** stat mech, info theory
 **Origin:** HH77 + HH58 (shortlist 2, item 3) (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
@@ -80,11 +80,11 @@ Scored after exploratory round 1, separately for the two mappings: (a) the rando
 | --- | --- | --- | --- | --- |
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | 1 | All variables come from `activity_bins` and whitened `statements` embeddings, and the assumptions are listed. Invariance is limited: whitening is per regime; activity spins change meaning at the 03-24 regime boundary; PR is confounded by self-repetition (post hoc). |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | 1 | Units are split at step changes. The cross-day null keeps each agent's schedule and autocorrelation. There is no split-half stationarity test. Joint lulls (≤ 1 active agent) make up 0–42% of bins and are nonstationary. |
-| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | 0 | (a) One mode beats MP, T_eff-MP and the cross-day (day-blocked) surrogate in 22/24 units, but survives the lull filter in only 14/24 (9/11 low-lull units). (b) No PR contrast beats its placebo or ruler: P6 p = 0.86, P9 p = 0.58. |
+| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | 1 (1b; round 1: 0) | (a) One mode beats MP, T_eff-MP and the cross-day (day-blocked) surrogate in 22/24 units, but survives the lull filter in only 14/24 (9/11 low-lull units). (b) No PR contrast beats its placebo or ruler: P6 p = 0.86, P9 p = 0.58. |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | 0 | (a) The Curie–Weiss signature was predicted and found: a single uniform mode, majority-sign share 1.0, VR/λ₁ median 0.97 (predicted ≥ 0.7), ranking like H02's βJ₀ (ρ = 0.73). The auxiliary "MP inflated" claim failed (7/24). (b) P10, the arms' agreement, failed: ρ = +0.36 and +0.15. |
-| E interventional | predicts the change across a natural experiment | 0 | 0 | (a) Not tested across an NE. (b) NE34 kickoffs: the predicted collapse is absent. The change is +7% (regime III +44%), and day 1 is *higher*-dimensional in 13/16 periods. |
+| E interventional | predicts the change across a natural experiment | 0 | 1 (1b; round 1: 0) | (a) Not tested across an NE. (b) NE34 kickoffs: the predicted collapse is absent. The change is +7% (regime III +44%), and day 1 is *higher*-dimensional in 13/16 periods. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | 1 | Synthetic recovery used village N, T and sparsity. Cross-day false positives are 6–10%; circular shifts give 70% false positives under heterogeneous profiles; one mode at a = 0.25–0.3 is recovered with ≥ 93% probability. The sparse family mode is never recovered. The lull filter loses power when lulls are long (post hoc A5). The bias-corrected PR is validated; naive PR and between-agent PR are biased. Robust to d = 8 and chat-only content. No embedding-model swap or bin-width variation was run. |
-| G ground truth | agrees with known structure | 0 | 0 | (a) The room mode was not above the edge (3/10 two-room units), although rooms separate sub-edge talk eigenvectors in 8/10. (b) The named consensus weeks did not decline (only #31). |
+| G ground truth | agrees with known structure | 1 (1b; round 1: 0) | 1 (1b; round 1: 0) | (a) The room mode was not above the edge (3/10 two-room units), although rooms separate sub-edge talk eigenvectors in 8/10. (b) The named consensus weeks did not decline (only #31). |
 | H comparative | beats the named rivals | 1 | 0 | (a) Beats R0 and R1 and agrees with R2 (Curie–Weiss, one uniform mode), but is not separated from joint lulls. (b) R3 (looping/templating) explains the lowest-PR periods; R4 beats the field quench on day 1. |
 | I transfer | holds in other same-mode periods, including the holdout | 0 | 0 | Holdout not run. (a) Holds across modes and regimes (22/24), but that is not a holdout test. |
 
@@ -203,32 +203,33 @@ Changes and clarifications:
 ## Results by goal period
 Period verdicts follow Amendment 1, item 9: HH77's per-period check, plus P7a, P6 and the period's role check. Most periods are "mixed" for the same reason: the one-mode check holds and the dimensionality checks do not. The three "supported" periods (G16, G27, G33) pass on a single favorable day-1 sign and are no evidence for HH58. The cross-period tests below are the evidence.
 
-| Period | Role | Verdict | Key numbers |
-| --- | --- | --- | --- |
-| [G11](goalperiod-subhypotheses/G11/README.md) | exploratory · free (P7, P9) | mixed | k act 1 (lull 1), content 1; PRday 13.6; day 1/later 10.5/14.7; kickoff ΔPR +28% |
-| [G13](goalperiod-subhypotheses/G13/README.md) | exploratory · shared (P9) | mixed | k act 1 (lull 0), content 1; PRday 13.7; day 1/later 16.9/14.6; kickoff ΔPR −2% |
-| [G16](goalperiod-subhypotheses/G16/README.md) | exploratory · free (P7, P9) | supported | k act 1 (lull 0), content 1; PRday 14.9; day 1/later 15.1/15.3 |
-| [G18](goalperiod-subhypotheses/G18/README.md) | exploratory · shared (P9) | mixed | k act 1 (lull 0), content 1; PRday 14.7; kickoff ΔPR +36% |
-| [G19](goalperiod-subhypotheses/G19/README.md) | exploratory · consensus (P7–P9) | mixed | k act 1 (lull 0), content 1; PRday 14.8; day 1/later 16.0/15.0; slope days 2..D +0.16/day; kickoff +1% |
-| [G23](goalperiod-subhypotheses/G23/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 12.5; day 1/later 14.1/12.3 |
-| [G24](goalperiod-subhypotheses/G24/README.md) | exploratory · scored | mixed | k act **0**, content 1; PRday 13.8; day 1/later 14.7/12.4; kickoff +16% |
-| [G25](goalperiod-subhypotheses/G25/README.md) | exploratory · scored | mixed | k act 1 (lull 0), content 1; PRday 16.1; day 1/later 15.2/16.8; kickoff −7% |
-| [G26](goalperiod-subhypotheses/G26/README.md) | exploratory · scored | mixed | k act 1 (lull 0; 39% joint lulls), content 1; PRday 14.9; kickoff −23% |
-| [G27](goalperiod-subhypotheses/G27/README.md) | exploratory · scored | supported | k act 1 (lull 1), content 1; PRday 15.6; day 1/later 15.9/16.1; kickoff −25% |
-| [G30](goalperiod-subhypotheses/G30/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 16.3; day 1/later 16.6/16.3 |
-| [G31](goalperiod-subhypotheses/G31/README.md) | exploratory · free + consensus | mixed | k act 1 (lull 0), content 1; PRday 16.2; day 1/later 16.8/15.8; slope −0.16/day (the only consensus week that declines); kickoff −17% |
-| [G33](goalperiod-subhypotheses/G33/README.md) | exploratory · scored | supported | k act 1 (lull 1), content 1; PRday 17.7; day 1/later 16.2/18.5 |
-| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 18.3; day 1/later 20.2/17.4; talk room p (2nd eigvec) 0.01 |
-| [G36](goalperiod-subhypotheses/G36/README.md) | exploratory · scored (36b) | mixed | k act 1 (lull 1), content 1; PRday 16.8; kickoff +14% |
-| [G37](goalperiod-subhypotheses/G37/README.md) | exploratory · free, regime III | mixed | k act 1 (lull 0; 42% joint lulls), content 1; PRday 15.8 (rank 2/4 in III); kickoff +42% |
-| [G38](goalperiod-subhypotheses/G38/README.md) | exploratory · scored (38a–c) | mixed | k act 1,1,1 (lull 1,0,0), content 1,1,2; PRday **9.3**; day 1/later 14.6/8.9; 25% self-repeats |
-| [G39](goalperiod-subhypotheses/G39/README.md) | exploratory · scored | mixed | k act 1 (lull 0), content 1; PRday **5.7**; 60% self-repeats; kickoff +87% |
-| [G40](goalperiod-subhypotheses/G40/README.md) | exploratory · shared + consensus | mixed | k act 1 (lull 1), content 1; PRday **9.9**; day 1/later 13.1/9.2; slope +0.17/day; 16% self-repeats |
-| [G41](goalperiod-subhypotheses/G41/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 15.4; day 1/later 16.7/15.4; kickoff +45% |
-| [G42](goalperiod-subhypotheses/G42/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 1; PRday 16.8; day 1/later 17.4/16.5; kickoff +33% |
-| [G44](goalperiod-subhypotheses/G44/README.md) | exploratory · scored | mixed | k act 1 (lull 1), content 2; PRday 16.9; day 1/later 18.7/15.8 |
-| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory · scored (51a–e) | mixed | k act 1,1,1,1,0 (lull 0,1,1,1,0), content 1,1,2,1,1; PRday 15.9; strongest market mode (λ₁/edge 2.1–2.5 in 51b–d) |
-| [NE34](goalperiod-subhypotheses/NE34/README.md) | exploratory · kickoff event study | failed | 20 transitions: median ΔPR +7% (regime III +44%), 45% negative, p = 0.86 vs 189 placebos |
+| Period | Role | Verdict | Verdict (1b) | Key numbers (round 1; 1b numbers in each folder) |
+| --- | --- | --- | --- | --- |
+| [G11](goalperiod-subhypotheses/G11/README.md) | exploratory · free (P7, P9) | mixed | mixed | k act 1 (lull 1), content 1; PRday 13.6; day 1/later 10.5/14.7; kickoff ΔPR +28% |
+| [G12](goalperiod-subhypotheses/G12/README.md) | native (1b) | – | supported | 10 debates: PR while the motion is on vs 20 min after the verdict: 7/9 lower, median −25%, Wilcoxon p = 0.010 (gte −19%, p = 0.06) |
+| [G13](goalperiod-subhypotheses/G13/README.md) | exploratory · shared (P9) | mixed | mixed | k act 1 (lull 0), content 1; PRday 13.7; day 1/later 16.9/14.6; kickoff ΔPR −2% |
+| [G16](goalperiod-subhypotheses/G16/README.md) | exploratory · free (P7, P9) | supported | supported | k act 1 (lull 0), content 1; PRday 14.9; day 1/later 15.1/15.3 |
+| [G18](goalperiod-subhypotheses/G18/README.md) | exploratory · shared (P9) | mixed | mixed | k act 1 (lull 0), content 1; PRday 14.7; kickoff ΔPR +36% |
+| [G19](goalperiod-subhypotheses/G19/README.md) | exploratory · consensus (P7–P9) | mixed | mixed | k act 1 (lull 0), content 1; PRday 14.8; day 1/later 16.0/15.0; slope days 2..D +0.16/day; kickoff +1% |
+| [G23](goalperiod-subhypotheses/G23/README.md) | exploratory · scored | mixed | failed | k act 1 (lull 1), content 1; PRday 12.5; day 1/later 14.1/12.3 |
+| [G24](goalperiod-subhypotheses/G24/README.md) | exploratory · scored | mixed | mixed | k act **0**, content 1; PRday 13.8; day 1/later 14.7/12.4; kickoff +16% |
+| [G25](goalperiod-subhypotheses/G25/README.md) | exploratory · scored | mixed | mixed | k act 1 (lull 0), content 1; PRday 16.1; day 1/later 15.2/16.8; kickoff −7% |
+| [G26](goalperiod-subhypotheses/G26/README.md) | native (1b) · scored | mixed | mixed (native votes: mixed) | k act 1 (lull 0; 39% joint lulls), content 1; PRday 14.9; kickoff −23% |
+| [G27](goalperiod-subhypotheses/G27/README.md) | exploratory · scored | supported | supported | k act 1 (lull 1), content 1; PRday 15.6; day 1/later 15.9/16.1; kickoff −25% |
+| [G30](goalperiod-subhypotheses/G30/README.md) | exploratory · scored | mixed | mixed | k act 1 (lull 1), content 1; PRday 16.3; day 1/later 16.6/16.3 |
+| [G31](goalperiod-subhypotheses/G31/README.md) | exploratory · free + consensus | mixed | mixed | k act 1 (lull 0), content 1; PRday 16.2; day 1/later 16.8/15.8; slope −0.16/day (the only consensus week that declines); kickoff −17% |
+| [G33](goalperiod-subhypotheses/G33/README.md) | exploratory · scored | supported | mixed | k act 1 (lull 1), content 1; PRday 17.7; day 1/later 16.2/18.5 |
+| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory · scored | mixed | mixed | k act 1 (lull 1), content 1; PRday 18.3; day 1/later 20.2/17.4; talk room p (2nd eigvec) 0.01 |
+| [G36](goalperiod-subhypotheses/G36/README.md) | exploratory · scored (36b) | mixed | mixed | k act 1 (lull 1), content 1; PRday 16.8; kickoff +14% |
+| [G37](goalperiod-subhypotheses/G37/README.md) | exploratory · free, regime III | mixed | mixed | k act 1 (lull 0; 42% joint lulls), content 1; PRday 15.8 (rank 2/4 in III); kickoff +42% |
+| [G38](goalperiod-subhypotheses/G38/README.md) | exploratory · scored (38a–c) | mixed | mixed | k act 1,1,1 (lull 1,0,0), content 1,1,2; PRday **9.3**; day 1/later 14.6/8.9; 25% self-repeats |
+| [G39](goalperiod-subhypotheses/G39/README.md) | exploratory · scored | mixed | failed | k act 1 (lull 0), content 1; PRday **5.7**; 60% self-repeats; kickoff +87% |
+| [G40](goalperiod-subhypotheses/G40/README.md) | exploratory · shared + consensus | mixed | mixed | k act 1 (lull 1), content 1; PRday **9.9**; day 1/later 13.1/9.2; slope +0.17/day; 16% self-repeats |
+| [G41](goalperiod-subhypotheses/G41/README.md) | exploratory · scored | mixed | mixed | k act 1 (lull 1), content 1; PRday 15.4; day 1/later 16.7/15.4; kickoff +45% |
+| [G42](goalperiod-subhypotheses/G42/README.md) | exploratory · scored | mixed | failed | k act 1 (lull 1), content 1; PRday 16.8; day 1/later 17.4/16.5; kickoff +33% |
+| [G44](goalperiod-subhypotheses/G44/README.md) | exploratory · scored | mixed | mixed | k act 1 (lull 1), content 2; PRday 16.9; day 1/later 18.7/15.8 |
+| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory · scored (51a–e) | mixed | mixed | k act 1,1,1,1,0 (lull 0,1,1,1,0), content 1,1,2,1,1; PRday 15.9; strongest market mode (λ₁/edge 2.1–2.5 in 51b–d) |
+| [NE34](goalperiod-subhypotheses/NE34/README.md) | exploratory · kickoff event study | failed | failed | 20 transitions: median ΔPR +7% (regime III +44%), 45% negative, p = 0.86 vs 189 placebos |
 
 ## Results
 *Round 1, 2026-10-03, non-holdout only. Code: `scheme/build.py`, `analysis/{h12lib, synthetic, run_units, evaluate, posthoc, figures, figures_real, write_period_folders, confirm}.py`. Data: `data/processed/H12-groupthink-dimensional-collapse/` (26 MB). One-page summary: `figures/H12_summary.pdf`.*
@@ -313,6 +314,50 @@ Ten criteria at α ≈ 0.05 would give ~0.5 false passes. No criterion passed in
 - **Short and small units.** 3-day units have ~14% false positives. Regime-I periods #11, #16, #19, #13 and #18 have N = 6–7 and enter only the PR comparisons.
 - **The holdout is untouched.** No embedding-model swap was run (bge-small only). Content modes could partly reflect shared vocabulary drift that is not semantic.
 
+## Round 1b (improved data, 2026-10-04)
+*Re-run of arm (a) on the corrected activity table with the DQ8-calibrated null, a robustness re-run of arm (b) and the content modes with DQ5's second embedding model and statement flags, and two period-native tests. Predictions P1–P10 and the per-period rule are unchanged; native predictions were written in the G12 and G26 folders at 06:35 UTC, before their runs.*
+
+**What changed in the inputs.**
+- `activity_bins` dropped about half of all events (DQ8). Activity and talk spins are rebuilt from `activity_bins_fixed` (`scheme/build.py --data-version fixed` → `r1b/spins.parquet`; presence per unit unchanged). Content and PR use statements only and are not affected.
+- **Null sizes (DQ8).** For λ₁ the cross-day edge has size 0.62 on whole-day grids and 0.19 on grids trimmed to the all-present window; the block-shift edge on trimmed grids has 0.05. Round 1b adds `trim_bs` (each day trimmed before drawing block-shift surrogates) and `trim_stall_bs` (also dropping H38's explained joint-silence minutes from the shared `outages_fixed`), the replacement for H12's lull filter, which DQ8/H25 found biased.
+- **DQ5:** self-repetition is mostly restatement; a second embedding model (gte) and statement flags exist. Re-checked with `analysis/r1b_dq5.py` (bge and gte regime-whitened, unit-normalized 32-d vectors; dedup of copies = `self_repeat_both`, of restatements = either model's flag).
+- Code: `--data-version fixed` in `scheme/build.py`, `run_units.py`, `evaluate.py` (the old path still runs); new `analysis/r1b_dq5.py`, `r1b_native.py`, `r1b_periods.py`, `r1b_figures.py`. Outputs in `data/processed/H12-groupthink-dimensional-collapse/r1b/`.
+
+**Old vs new.**
+
+| Statistic | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| P1 activity modes above the cross-day edge (k = 1 · k = 0, of 24) | 22 · 2 | 18 · 6 |
+| median λ₁/edge activity, regime I · II · III | 1.37 · 1.46 · 1.62 | 0.97 · 1.06 · 1.13 |
+| MP count inflated (k_MP ≥ k_cd + 1) | 7/24 | 14/24 |
+| P1′ after the lull filter (k = 1) | 14/24 | 8/24 (median joint-lull share 0.009, was ≈ 0.1) |
+| **DQ8 null:** activity mode above the trimmed block-shift edge · with the H38 stall mask | – | **7/24 · 7/24** (median λ₁/edge 0.99) |
+| P2 uniform shape (sign share ≥ 0.8, VR/λ₁ ≥ 0.7) among units with a mode | 22/22 | 16/18 |
+| P2 lull drop ≥ 30% | 11/24 (median 29%) | 4/24 (median 8%) |
+| P2 vs H02 βJ₀ (same chunks, both on the same table) | ρ 0.73 | ρ 0.79 |
+| P3 talk modes (k ≥ 1, cross-day) · k_talk ≤ k_act | 20/24 · 22/24 | 21/24 · 15/24 |
+| P3 a signal talk mode separates rooms (two-room units) | 3/10 | **7/10** |
+| **DQ8 null:** talk mode above the trimmed block-shift edge | – | **21/24** |
+| P4 content modes · second model (gte) | 24/24 · – | unchanged · **24/24** (λ₁/edge ρ bge–gte 0.99) |
+| PRday agreement across 190 days, bge vs gte | – | Spearman 0.94 |
+| P6 kickoff first-hour PR change (bge-shared · gte; regime III) | +7%, p 0.86 | +4%, p 0.77 · +9%, p 0.85 (III +45% · +56%) |
+| P7 day 1 more diverse than later days | 13/16, p 0.02 | bge 13/16 (p 0.02) · gte 11/16 (p 0.21) · restatements removed 9/15 (p 0.61, both models) |
+| P9 free vs shared weeks (regime I) | p 0.58 | p 0.74 (bge) · 0.58 (gte) |
+| regime-III loop periods #38–#40 PRday below every other regime-III period | yes | yes in both models, and after removing copies or restatements |
+| self-repetition in #38 · #39 · #40 (share of chat) | 25% · 60% · 16% ("near-copies") | restatements 21% · 25% · 12%; copies (both models) 9% · 20% · 4%; exact 0% |
+| Spearman(self-repetition, PRday), regime-III days | −0.75 | restatements −0.76 (gte PRday −0.66); copies −0.69; exact −0.05; cross-echo −0.26 |
+| per-period verdicts (supported / mixed / failed) | 3 / 20 / 0 | 2 / 18 / 3 |
+
+**Which verdicts change.**
+- **HH77 (arm a), card level:** P1 still fails, now on its core (k = 0 in 6/24 > 1/6) rather than only its auxiliary MP claim (which now passes); P1′, P2 and P3 still fail. **Under the calibrated null the activity market mode survives in only 7/24 units.** The round-1 mode (λ₁/edge 1.4–1.6) was largely an artifact of the event-drop bug: the bug removed a day-specific fraction of every agent's events (it depended on that day's window offset), a common day-level field that cross-day surrogates destroy. The within-block co-activation (H02/H38's βJ₀) actually *rose* on the fixed table. **The collective modes that hold are talk (21/24 under the calibrated null) and content (24/24, model-robust),** and talk modes now separate rooms in 7/10 two-room units (P3's room clause passes).
+- **HH58 (arm b):** inputs unchanged, verdicts unchanged, but P7's "day 1 is more diverse" (the reversed direction, and confirmatory C5) is fragile: it holds with bge (13/16) but not with gte (11/16, p 0.21) or after removing restatements (9/15). The "low-PR weeks are loops" reading survives both models and both dedups, with "loops" meaning restatement (copies are 4–20%, exact repeats 0%).
+- **Per period:** G23, G39, G42 mixed → failed (activity mode now 0 under the round-1 null); G33 supported → mixed; the rest unchanged.
+- **Native tests:** **G12 (#12, motion on vs off): supported.** PR is lower while a debate motion is on than in the 20 minutes after the verdict in 7/9 debates (median −25%, Wilcoxon p = 0.010; shared bge 8/9, p = 0.006; gte 6/9, p = 0.06). **G26 (#26 votes): mixed.** The contested vote (9–9–9 tie, runoff, result) is among the lowest-dimensional half hours of the week (percentile 0.04–0.07 in all vector sets) while its spread is high; the uncontested 9–0 re-election is low but not extreme (0.11–0.37). A strong uniform field and a contested decision compress what agents say; kickoffs and narrated "consensus weeks" do not.
+
+**Cross-hypothesis corroboration (H50, 2026-10-04; built from `call_windows`, independent of `activity_bins`).** H50 finds activity co-movement to be a field set by the scheduler (daily start/stop explains 0.62 / 0.67 of it in regimes I / III; per-pair correlation inside the all-present window 0.056 / 0.005), which matches the activity mode failing the trimmed block-shift null here, and talk co-movement to be a coupling gated at one read-out call (J₁ > 0 in 45/71 units, none negative), which matches the talk mode surviving it (21/24).
+
+**Scorecard after 1b.** (a) RMT: C 1 (activity fails the calibrated null in 17/24 units; talk and content pass), D 1 (uniform shape 16/18), G 0 → 1 (talk modes separate rooms in 7/10), F 1 (content robust to the second model). (b) PR: C 0 → 1 (#12's paired field-on/off contrast beats its own placebo, p = 0.01), E 0 → 1 (ten replicate field switches at ground-truth instants), G 0 → 1 (#26's contested vote), F 1 (second model run; P7 fragile). A, B, H, I unchanged.
+
 ## Groupthink monitor (sketch)
 Round 1 says *dimensional collapse* is the wrong primary statistic for groupthink: PR rises at kickoffs and falls when agents loop. A practical monitor therefore tracks three cheap statistics.
 1. **Collective-mode strength (main signal).**
@@ -349,3 +394,4 @@ Nothing is fitted, the cost is under a minute per swarm-day on a laptop, and the
 - **H12-R1.** Loop onset is predicted by the share of an agent's context filled with its own recent output; crossing a threshold is a bifurcation to a fixed point (E2).
 - **H12-R2.** Only novel external input breaks a loop, and the escape probability scales with the input's novelty (embedding distance), not with who sent it.
 - **H12-R3.** Swarm groupthink never forms because each agent is its own echo chamber: self-echo dominates cross-echo.
+- 2026-10-04: round 1b (corrected activity table, DQ8 null, DQ5 robustness, native #12 and #26 tests); ~25 min of compute on ≤ 2 processes; +6 MB in `data/processed/H12-groupthink-dimensional-collapse/r1b/`.

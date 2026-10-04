@@ -1,6 +1,7 @@
 # H38 × G10: Complete as many games as you can in a week! (2025-08-18 → 2025-08-22)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1: failed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode I · 7 agents (catalog) · 5 non-holdout days · 3.0 h/day (empirical median window).
 
@@ -39,6 +40,23 @@ Data: `data/processed/H38-platform-stalls/G10/result.json`; minutes and runs in 
 ## Scorecard (period-specific axes)
 - **C:** explained share not above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 4.8, scaffold-masked z 5.1.
 - **G:** 1 village-off gap(s), 0.00 of their minutes inside the operator's pause → resume interval.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.078 (0.050) | 0.055 (0.032) |
+| explained share (N1 surrogate) | 0.13 (0.01) | 0.15 (0.01) |
+| largest cause of joint-silence minutes | unexplained | unexplained |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.293, 0.296 (5.7) | 0.374, 0.379 (6.3) |
+| f_stall (pre-registered) · f_scaffold (headline) | 0.15 · 0.11 | 0.14 · 0.12 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.290 (4.5), 0.23 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.296 (4.1) |
+| talk spin E raw (z) → trimmed E (z) | 0.163 (3.4) | 0.144 (3.2) → 0.159 (3.1) |
+| per-period verdict (card rule) | failed | failed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G10/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

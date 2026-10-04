@@ -1,13 +1,14 @@
 {
- "complete": 42,
- "faithfulness": 1.5,
- "usefulness": 2.5,
- "rationale": {
-  "complete": "Round 1 done for both arms with synthetic validation, per-period verdicts, an NE34 event study, post hoc diagnostics and a frozen confirmatory script; holdout, embedding swap and a validated monitor are still missing.",
-  "faithfulness": "The 'few modes' half holds descriptively (one uniform mode beats MP, T_eff and cross-day nulls, C = 1, D = 1) but is half lulls, and the defining groupthink claim, PR collapse at kickoffs and consensus, failed in the wrong direction.",
-  "usefulness": "Yields a fit-free monitor (self-repetition and cross-agent echo rates, mode strength vs its own baseline) that flagged the looping weeks, but it is post hoc and the groupthink alarm has no positive case to validate against."
- },
- "one_line": "One market mode, no kickoff collapse; low-dimensional weeks are agents looping on their own text.",
- "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
- "updated": "2026-10-04"
+  "complete": 52,
+  "faithfulness": 1.5,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 plus round 1b: arm (a) re-run on the corrected activity table with the DQ8-calibrated null (trimmed block-shift edge; H38 stall mask instead of the lull filter); arm (b) and content modes re-run with the second embedding model and DQ5 statement flags; two period-native tests with ground truth (#12 motion on/off, #26 vote instants). Holdout not run; the frozen confirmatory C1-C3/C5 need re-freezing.",
+    "faithfulness": "Mixed in both directions. HH77 loses its activity half: the market mode survives the calibrated null in 7/24 units and was largely a day-level artifact of the event-drop bug; talk (21/24) and content (24/24, model-robust) modes hold. HH58 fails at kickoffs (robust), but natively a strong uniform field compresses content (#12, PR -25%, p = 0.01, same sign in gte) and a contested vote does too (#26). C = 1 in both arms; E and G now 1 for the PR arm. Net unchanged at 1.5.",
+    "usefulness": "A cheap restatement-rate monitor (either-model flag) that flags stuck agents, now robust across embedding models; a negative that matters for operators (activity co-activation is not a collective mode once schedule and data artifacts are removed); a field-compression effect that could become a 'strong-field' alarm, not yet validated beyond #12."
+  },
+  "one_line": "On corrected data the activity market mode is mostly artifact; talk and content modes are real, a strong field compresses content, kickoffs don't, and low-dimensional weeks are agents restating themselves.",
+  "rated_by": "H12 round-1b agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)"
 }

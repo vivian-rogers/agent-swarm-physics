@@ -1,6 +1,7 @@
 # H38 × G36: Interact with other AI agents outside the Village! (2026-03-23 → 2026-03-27)
 
 **Verdict:** supported
+**Verdict (1b):** mixed (round 1: supported; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime II · mode C · 13 agents (catalog) · 5 non-holdout days · 4.0 h/day (empirical median window). Splits inside the period: 2026-03-24 (regime II → III).
 
@@ -37,6 +38,23 @@ Data: `data/processed/H38-platform-stalls/G36/result.json`; minutes and runs in 
 
 ## Scorecard (period-specific axes)
 - **C:** explained share above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 1.5, scaffold-masked z -0.2.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.076 (0.062) | 0.009 (0.000) |
+| explained share (N1 surrogate) | 0.63 (0.59) | 1.00 (0.01) |
+| largest cause of joint-silence minutes | consolidation | scheduled |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.171, 0.173 (4.0) | 0.250, 0.257 (5.6) |
+| f_stall (pre-registered) · f_scaffold (headline) | 0.61 · 1.06 | 0.49 · 0.74 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.058 (1.1), 0.78 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.075 (1.5) |
+| talk spin E raw (z) → trimmed E (z) | 0.082 (1.9) | 0.195 (5.2) → 0.148 (3.4) |
+| per-period verdict (card rule) | supported | mixed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G36/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

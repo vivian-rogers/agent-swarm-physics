@@ -1,6 +1,7 @@
 # H12 × G27: Hack the OWASP Juice Shop hacking playground. Compete to see which agent can complete the most challenges (2026-01-12 → 2026-01-23)
 
 **Verdict:** supported
+**Verdict (1b):** supported (round 1: supported; corrected activity table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K (competition) · N = 10 at start (present: 10) · rooms holding ≥ 3 present agents: 27: 1 · 10 non-holdout days. 
 
@@ -50,6 +51,24 @@ Figure: `figures/G27_summary.pdf`. Data: `data/processed/H12-groupthink-dimensio
 - **D (Curie–Weiss shape):** sign share 1.00; VR/λ₁ 0.99.
 - **E (NE34 kickoff):** ΔPR_kick = -2.84 (negative).
 <!-- /SCORE -->
+
+## Round 1b (improved data, 2026-10-04)
+Arm (a) spins rebuilt from DQ8's `activity_bins_fixed` (`scheme/build.py`, `run_units.py`, `evaluate.py --data-version fixed`); content and PR inputs do not depend on the activity table and are unchanged (re-checked with the second embedding model). Predictions and verdict rule unchanged. The DQ8 rows use the calibrated null for λ₁: each day trimmed to its all-present window *before* drawing block-shift surrogates (size 0.05; the cross-day edge has size 0.19 on trimmed and 0.62 on whole-day grids).
+
+| Quantity (per unit) | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| units | 27 | 27 |
+| k activity (cross-day edge) | 1 | 1 |
+| λ₁/edge activity (cross-day) | 1.31 | 1.08 |
+| k after the lull filter (joint-lull share) | 1 (0.03) | 1 (0.00) |
+| **DQ8 null:** k activity, trimmed + block-shift edge (λ₁/edge) | not computed | 0 (1.00) |
+| DQ8: k activity, trimmed + H38 stall mask (replaces the lull filter) | not computed | 0 |
+| k talk (cross-day) → trimmed block-shift | 1 | 1 → 1 |
+| k content (inputs unchanged) | 1 | 1 |
+| mean PRday: round-1 bge ruler → gte (shared 32-d, second model) | 15.56 | 15.86 (gte) |
+| per-period verdict (card rule, Amendment 1 item 9) | supported | supported |
+
+Data: `data/processed/H12-groupthink-dimensional-collapse/r1b/G27/`.
 
 ## Notes
 - 2026-10-03: folder created and prediction written before running on this period.

@@ -1,6 +1,7 @@
 # H38 × G18: Reduce global poverty as much as you can (2025-10-20 → 2025-10-31)
 
 **Verdict:** mixed
+**Verdict (1b):** failed (round 1: mixed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 7 agents (catalog) · 10 non-holdout days · 4.0 h/day (empirical median window).
 
@@ -39,6 +40,23 @@ Data: `data/processed/H38-platform-stalls/G18/result.json`; minutes and runs in 
 ## Scorecard (period-specific axes)
 - **C:** explained share above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 2.3, scaffold-masked z 4.1.
 - **G:** 4 village-off gap(s), 0.00 of their minutes inside the operator's pause → resume interval.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.165 (0.156) | 0.008 (0.003) |
+| explained share (N1 surrogate) | 0.52 (0.49) | 0.94 (0.87) |
+| largest cause of joint-silence minutes | unexplained | pause |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.117, 0.120 (3.6) | 0.185, 0.187 (5.5) |
+| f_stall (pre-registered) · f_scaffold (headline) | 0.31 · -0.09 | 0.17 · 0.04 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.186 (6.0), 0.00 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.178 (5.3) |
+| talk spin E raw (z) → trimmed E (z) | 0.244 (7.7) | 0.257 (9.2) → 0.263 (9.3) |
+| per-period verdict (card rule) | mixed | failed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G18/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

@@ -31,6 +31,26 @@ from common import REVISION, holdout_mask, load_holdout, load_whitener  # noqa: 
 
 SEED = 20261004
 
+# Data version (round 1b, 2026-10-04). "r1": round-1 inputs (shared activity_bins, H38's own stall table; both inherit
+# the activity_bins event-drop bug). "fixed": DQ8's activity_bins_fixed and the shared outages_fixed sidecar. Set with
+# the env var H25_DATA_VERSION or the scripts' --data-version flag (set before this module is imported, so spawned
+# pool workers inherit it). Activity-derived inputs (spins, h38_masks, refs) of the fixed version live in
+# inputs_r1b/; statement and exogenous-message inputs do not depend on activity_bins and are shared (inputs/).
+# Results of the fixed version go to data/processed/H25-criticality-dial/r1b/.
+DATA_VERSION = os.environ.get("H25_DATA_VERSION", "r1")
+assert DATA_VERSION in ("r1", "fixed"), DATA_VERSION
+INP_BASE = OUT / "inputs"
+if DATA_VERSION == "fixed":
+    AB = SHARED / "activity_bins_fixed.parquet"
+    H38_STALLS = SHARED / "outages_fixed/stall_minutes.parquet"
+    INPV = OUT / "inputs_r1b"
+    RESD = OUT / "r1b"
+else:
+    AB = SHARED / "activity_bins.parquet"
+    H38_STALLS = PROC / "H38-platform-stalls/stall_minutes.parquet"
+    INPV = INP_BASE
+    RESD = OUT
+
 
 def git_commit() -> str:
     r = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--short", "HEAD"], capture_output=True, text=True)

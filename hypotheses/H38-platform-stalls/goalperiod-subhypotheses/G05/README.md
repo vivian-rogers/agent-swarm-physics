@@ -1,6 +1,7 @@
 # H38 × G05: Holiday: do whatever you like! Next goal will begin soon (2025-06-19 → 2025-06-25)
 
 **Verdict:** failed
+**Verdict (1b):** supported (round 1: failed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode F · 4 agents (catalog) · 5 non-holdout days · 2.0 h/day (empirical median window).
 
@@ -32,6 +33,23 @@ Data: `data/processed/H38-platform-stalls/G05/result.json`; minutes and runs in 
 
 ## Scorecard (period-specific axes)
 - **C:** explained share not above its N1 surrogate level; raw gain not significant vs N1.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.119 (0.133) | 0.003 (0.001) |
+| explained share (N1 surrogate) | 0.18 (0.23) | 0.50 (0.21) |
+| largest cause of joint-silence minutes | unexplained | scheduled |
+| raw g_eq active, E (z vs N1, whole-day grid) | -0.069, -0.068 (-1.3) | 0.052, 0.054 (1.1) |
+| f_stall (pre-registered) · f_scaffold (headline) | – · – | – · – |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.024 (0.5), – |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.041 (0.8) |
+| talk spin E raw (z) → trimmed E (z) | 0.090 (1.8) | 0.081 (1.6) → 0.090 (1.7) |
+| per-period verdict (card rule) | failed | supported |
+
+Data: `data/processed/H38-platform-stalls/r1b/G05/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

@@ -1,6 +1,7 @@
 # H38 × G25: Create a digital museum of 2025 (2025-12-29 → 2026-01-02)
 
 **Verdict:** mixed
+**Verdict (1b):** supported (round 1: mixed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 10 agents (catalog) · 5 non-holdout days · 4.0 h/day (empirical median window).
 
@@ -34,6 +35,23 @@ Data: `data/processed/H38-platform-stalls/G25/result.json`; minutes and runs in 
 
 ## Scorecard (period-specific axes)
 - **C:** explained share not above its N1 surrogate level; raw gain not significant vs N1.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.096 (0.096) | 0.003 (0.000) |
+| explained share (N1 surrogate) | 0.26 (0.23) | 1.00 (0.01) |
+| largest cause of joint-silence minutes | unexplained | scheduled |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.045, 0.052 (1.1) | 0.066, 0.068 (1.5) |
+| f_stall (pre-registered) · f_scaffold (headline) | – · – | – · – |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.005 (0.1), – |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.065 (1.5) |
+| talk spin E raw (z) → trimmed E (z) | 0.142 (3.1) | 0.197 (4.4) → 0.185 (4.2) |
+| per-period verdict (card rule) | mixed | supported |
+
+Data: `data/processed/H38-platform-stalls/r1b/G25/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

@@ -1,6 +1,7 @@
 # H38 × G26: Elect a village leader. They choose this week’s goal! (2026-01-05 → 2026-01-09)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1: failed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 10 agents (catalog) · 5 non-holdout days · 4.0 h/day (empirical median window).
 
@@ -39,6 +40,23 @@ Data: `data/processed/H38-platform-stalls/G26/result.json`; minutes and runs in 
 ## Scorecard (period-specific axes)
 - **C:** explained share not above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 3.8, scaffold-masked z 4.3.
 - **G:** 3 village-off gap(s), 0.00 of their minutes inside the operator's pause → resume interval.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.391 (0.383) | 0.046 (0.007) |
+| explained share (N1 surrogate) | 0.43 (0.43) | 0.11 (0.11) |
+| largest cause of joint-silence minutes | unexplained | unexplained |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.209, 0.211 (3.8) | 0.465, 0.470 (8.6) |
+| f_stall (pre-registered) · f_scaffold (headline) | -0.10 · -0.15 | 0.02 · -0.03 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.342 (5.8), 0.27 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.368 (6.0) |
+| talk spin E raw (z) → trimmed E (z) | 0.239 (4.6) | 0.354 (7.8) → 0.344 (6.5) |
+| per-period verdict (card rule) | failed | failed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G26/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

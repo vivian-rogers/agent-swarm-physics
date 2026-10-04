@@ -1,6 +1,7 @@
 # H38 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-20)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1: failed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime II · mode C · 13 agents (catalog) · 5 non-holdout days · 4.0 h/day (empirical median window).
 
@@ -37,6 +38,23 @@ Data: `data/processed/H38-platform-stalls/G35/result.json`; minutes and runs in 
 
 ## Scorecard (period-specific axes)
 - **C:** explained share not above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 2.3, scaffold-masked z 1.3.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.037 (0.040) | 0.003 (0.000) |
+| explained share (N1 surrogate) | 0.07 (0.04) | 0.00 (0.00) |
+| largest cause of joint-silence minutes | unexplained | unexplained |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.098, 0.103 (2.2) | 0.202, 0.206 (4.3) |
+| f_stall (pre-registered) · f_scaffold (headline) | -0.01 · 0.45 | 0.00 · 0.02 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.174 (3.9), 0.15 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.205 (4.6) |
+| talk spin E raw (z) → trimmed E (z) | 0.183 (3.8) | 0.150 (3.8) → 0.121 (3.0) |
+| per-period verdict (card rule) | failed | failed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G35/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

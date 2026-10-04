@@ -49,4 +49,5 @@ Findings needing a decision:
 5. **H19 and H38 plan the same equal-time gain statistic** on 9 held-out periods.
 6. Stale status lines (H02, H04, H05 cards), uncommitted confirm scripts, and cards without a confirmatory section are listed in the ledger JSON. The estimator-family tags are regex-based and need a human pass.
 7. **H43 disclosure (2026-10-04):** an early exploratory probe printed held-out nudge *counts* (no outcomes); disclosed in the H43 card.
+8. **Confirmatory scripts frozen before the data fixes need re-freezing before any holdout run** (Vivian's call): RE-A1 expects H12's C1–C3 and C5 to fail as frozen, and H25's Stage B and H38's `confirm.py` lack the trimmed variants. The same applies to any script frozen on the buggy activity_bins or the old visibility rule.
 

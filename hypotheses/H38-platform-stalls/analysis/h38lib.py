@@ -29,6 +29,22 @@ DATA = ROOT / "data/processed/H38-platform-stalls"
 SH = ROOT / "data/processed/shared"
 SEED = 20261004
 
+# Data version (round 1b, 2026-10-04). "r1" = round-1 inputs (shared activity_bins + H38's own outage tables, which
+# inherit the activity_bins event-drop bug); "fixed" = DQ8's activity_bins_fixed + the shared outages_fixed sidecar
+# (outages.py --fixed). Set with the env var H38_DATA_VERSION or the scripts' --data-version flag (which sets the env
+# var before this module is imported, so spawned pool workers inherit it). Outputs of the fixed run go to
+# data/processed/H38-platform-stalls/r1b/ so the round-1 results stay in place.
+DATA_VERSION = os.environ.get("H38_DATA_VERSION", "r1")
+assert DATA_VERSION in ("r1", "fixed"), DATA_VERSION
+if DATA_VERSION == "fixed":
+    AB = SH / "activity_bins_fixed.parquet"
+    STALLS = SH / "outages_fixed"          # outages.parquet, stall_minutes.parquet, reasons.parquet
+    RES = DATA / "r1b"
+else:
+    AB = SH / "activity_bins.parquet"
+    STALLS = DATA
+    RES = DATA
+
 
 def _load(name: str, path: Path):
     spec = importlib.util.spec_from_file_location(name, path)
@@ -171,6 +187,87 @@ def gains(S, R, sched, bid, talk: np.ndarray | None = None, masks_on: bool = Tru
             t = block_suff(impute(talk, Rt, bid, codes), bid, keep) if talk is not None else None
             res[name] = (a, t)
     return res, f
+
+
+# ------------------------------------------------------------------------------------------- DQ8 trimmed design (round 1b)
+TRIM_VARS = ["trim", "trim_stall", "trim_scaffold", "trim_all"]
+
+
+def trim_mask(R: np.ndarray) -> np.ndarray:
+    """All-present window (H38's operator rule; DQ8 `nulls.all_present_window`): minutes in which no agent of the
+    population that is present that day (>= 1 active minute) is before its first or after its last active minute."""
+    return ~np.any((R == R_PRE) | (R == R_POST), axis=1)
+
+
+def trim_gains(S, R, sched, day, minute, expl, rng, n_surr, talk=None, talk_cols=None) -> tuple[dict, dict]:
+    """Round-1b gains under the DQ8 null design: rows are removed BEFORE drawing the block-shift surrogates (whole-day
+    grids give the N1 / block-shift null a 28-34% false-positive rate on independent swarms; trimmed grids 2-4%).
+      trim           all-present window only
+      trim_stall     trim and explained joint-silence minutes removed (DQ8's cw_gain_trim_h38mask)
+      trim_scaffold  trim and scheduled minutes removed, then consolidation / infra-error agent-minutes imputed
+      trim_all       as trim_scaffold, pauses also imputed
+    Surrogates: each agent's (spin, reason, talk) series circularly shifted within (day, 30-min block) of the KEPT rows.
+    talk: full (T, N) talk spins (shifted jointly), talk_cols: boolean column subset used for the talk statistic.
+    Returns obs {var: (suff_active, suff_talk|None)} and nul {var: [(suff_active, suff_talk|None), ...]}."""
+    trim = trim_mask(R)
+    sets = {"trim": trim, "trim_stall": trim & ~expl, "trim_scaffold": trim & ~sched}
+    obs, nul = {}, {v: [] for v in TRIM_VARS}
+    tc = slice(None) if talk_cols is None else talk_cols
+    for name, keep in sets.items():
+        if keep.sum() < MIN_BLOCK_N:
+            continue
+        S2, R2, d2, m2 = S[keep], R[keep], day[keep], minute[keep]
+        T2 = talk[keep] if talk is not None else None
+        bid2, segs2 = block_segments(d2, m2)
+
+        def stats(Sx, Rx, Tx):
+            if name != "trim_scaffold":
+                return {name: (block_suff(Sx, bid2), block_suff(Tx[:, tc], bid2) if Tx is not None else None)}
+            out = {}
+            for vn, codes in (("trim_scaffold", MASK_SETS["mask_scaffold"]), ("trim_all", MASK_SETS["mask_all"])):
+                a = block_suff(impute(Sx, Rx, bid2, codes), bid2)
+                t = block_suff(impute(Tx[:, tc], Rx[:, tc], bid2, codes), bid2) if Tx is not None else None
+                out[vn] = (a, t)
+            return out
+        obs.update(stats(S2, R2, T2))
+        for _ in range(n_surr):
+            arrs = [S2, R2] + ([T2] if T2 is not None else [])
+            sh = joint_shift(arrs, segs2, rng)
+            for vn, v in stats(sh[0], sh[1], sh[2] if T2 is not None else None).items():
+                nul[vn].append(v)
+    return obs, nul
+
+
+def l1_trim_blockshift(Sd: list, Rd: list, Cd: list, Bd: list, rng, n_surr: int) -> dict:
+    """Round-1b lambda_1 under the DQ8 design (size 0.05 on independent swarms vs 0.19 for the cross-day edge on trimmed
+    grids and 0.62 on whole-day grids): per day keep the all-present window (and, for `trim_stall`, drop explained JS
+    minutes), concatenate, and compare lambda_1 with the 95% quantile under block shifts of the kept rows.
+    Sd, Rd: per-day (N x T_d) spins / reasons (H12 orientation); Cd: per-day scheduled flags; Bd: per-day block ids."""
+    out = {}
+    for name in ("trim", "trim_stall"):
+        Xs, Rs, ds, ms = [], [], [], []
+        for k, (S, R, C, B) in enumerate(zip(Sd, Rd, Cd, Bd)):
+            keep = trim_mask(R.T)
+            if name == "trim_stall":
+                keep &= ~stall_flags(S.T, R.T, C)["explained"]
+            Xs.append(S[:, keep]); Rs.append(R[:, keep]); ds.append(np.full(keep.sum(), k)); ms.append(B[keep])
+        X = np.concatenate(Xs, 1); dd = np.concatenate(ds); bb = np.concatenate(ms)
+        if X.shape[1] <= X.shape[0] or (X.std(1) == 0).any():
+            out[name] = {"l1": np.nan, "edge": np.nan, "ratio": np.nan, "above": False, "T": int(X.shape[1])}
+            continue
+        l1 = float(h12.corr_eig(X)[0])
+        key = dd.astype(np.int64) * 100000 + bb
+        order = np.argsort(key, kind="stable")
+        segs = np.split(order, np.flatnonzero(np.diff(key[order])) + 1)
+        nv = []
+        for _ in range(n_surr):
+            Y = joint_shift([X.T], segs, rng)[0].T
+            nv.append(float(h12.corr_eig(Y)[0]) if (Y.std(1) > 0).all() else np.nan)
+        nv = np.array(nv); nv = nv[np.isfinite(nv)]
+        edge = float(np.quantile(nv, 0.95)) if nv.size else np.nan
+        out[name] = {"l1": l1, "edge": edge, "ratio": l1 / edge if edge else np.nan, "above": bool(l1 > edge),
+                     "T": int(X.shape[1])}
+    return out
 
 
 # ------------------------------------------------------------------------------------------- surrogates

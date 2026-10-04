@@ -1,6 +1,7 @@
 # H12 × G41: Perform novel research! (2026-05-11 → 2026-05-15)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; corrected activity table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode I (individual objective) · N = 15 at start (present: 15) · rooms holding ≥ 3 present agents: 41: 2 · 5 non-holdout days. 
 
@@ -51,6 +52,24 @@ Figure: `figures/G41_summary.pdf`. Data: `data/processed/H12-groupthink-dimensio
 - **G (rooms):** talk-mode room separation p = 0.031 (– = no signal talk mode).
 - **E (NE34 kickoff):** ΔPR_kick = 4.69 (not negative).
 <!-- /SCORE -->
+
+## Round 1b (improved data, 2026-10-04)
+Arm (a) spins rebuilt from DQ8's `activity_bins_fixed` (`scheme/build.py`, `run_units.py`, `evaluate.py --data-version fixed`); content and PR inputs do not depend on the activity table and are unchanged (re-checked with the second embedding model). Predictions and verdict rule unchanged. The DQ8 rows use the calibrated null for λ₁: each day trimmed to its all-present window *before* drawing block-shift surrogates (size 0.05; the cross-day edge has size 0.19 on trimmed and 0.62 on whole-day grids).
+
+| Quantity (per unit) | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| units | 41 | 41 |
+| k activity (cross-day edge) | 1 | 1 |
+| λ₁/edge activity (cross-day) | 1.43 | 1.18 |
+| k after the lull filter (joint-lull share) | 1 (0.08) | 1 (0.01) |
+| **DQ8 null:** k activity, trimmed + block-shift edge (λ₁/edge) | not computed | 1 (1.02) |
+| DQ8: k activity, trimmed + H38 stall mask (replaces the lull filter) | not computed | 1 |
+| k talk (cross-day) → trimmed block-shift | 1 | 1 → 1 |
+| k content (inputs unchanged) | 1 | 1 |
+| mean PRday: round-1 bge ruler → gte (shared 32-d, second model) | 15.44 | 14.23 (gte) |
+| per-period verdict (card rule, Amendment 1 item 9) | mixed | mixed |
+
+Data: `data/processed/H12-groupthink-dimensional-collapse/r1b/G41/`.
 
 ## Notes
 - 2026-10-03: folder created and prediction written before running on this period.

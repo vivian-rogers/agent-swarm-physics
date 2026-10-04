@@ -1,6 +1,7 @@
 # H38 × G27: Hack the OWASP Juice Shop hacking playground. Compete to see which agent can complete the most challenges (2026-01-12 → 2026-01-23)
 
 **Verdict:** failed
+**Verdict (1b):** mixed (round 1: failed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K · 10 agents (catalog) · 10 non-holdout days · 4.0 h/day (empirical median window).
 
@@ -37,6 +38,23 @@ Data: `data/processed/H38-platform-stalls/G27/result.json`; minutes and runs in 
 
 ## Scorecard (period-specific axes)
 - **C:** explained share not above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 3.7, scaffold-masked z 2.9.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.025 (0.022) | 0.002 (0.000) |
+| explained share (N1 surrogate) | 0.28 (0.11) | 1.00 (0.15) |
+| largest cause of joint-silence minutes | unexplained | scheduled |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.135, 0.133 (4.6) | 0.140, 0.144 (4.5) |
+| f_stall (pre-registered) · f_scaffold (headline) | 0.19 · 0.36 | 0.26 · 0.56 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.082 (2.7), 0.43 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.060 (2.1) |
+| talk spin E raw (z) → trimmed E (z) | 0.151 (4.5) | 0.100 (3.8) → 0.067 (2.1) |
+| per-period verdict (card rule) | failed | mixed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G27/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

@@ -1,14 +1,14 @@
 {
-  "complete": 40,
+  "complete": 50,
   "faithfulness": 2.0,
   "usefulness": 2.5,
   "rationale": {
-    "complete": "Round 1 done: shared outages table built for all days, synthetic validation (24 conditions), all 35 non-holdout periods plus the NE14 boundary, per-period verdicts, scorecard; confirmatory script frozen with a working dry run, holdout not run; provider-level (API) outages untested.",
-    "faithfulness": "The literal hypothesis (joint silences are platform stalls; the pre-registered stall filter removes most co-activation) failed: P2, P3 and P4 failed, and per-period verdicts were 8 supported / 7 mixed / 20 failed. A clear partial result holds: in regime III two thirds of co-activation is scaffold, NE14 and P6 pass, and the estimator is validated synthetically (C = 1, D = 1, E = 1, F = 1).",
-    "usefulness": "A computable, log-only preprocessing rule (trim to the common running window; condition on consolidation and error gaps) and an outage table other analyses reuse. It removes most spurious synchrony in always-on swarms. Its payoff is defensive (don't misread schedule as coordination), and it can't see API outages."
+    "complete": "Round 1 plus round 1b: all 35 non-holdout periods and NE14 re-run on the corrected activity and outage tables, DQ8-calibrated null added (trim before surrogates; trimmed block-shift edge for lambda_1), three period-native tests (NE43 bookend stop, #4d restart, NE14/#36 with the corrected null). Holdout not run; API outages untested.",
+    "faithfulness": "The literal hypothesis still fails (P1, P3, P4 as written, P8; NE43 refutes the operator-message version of the day-edge mechanism; the #4d stop leaves no trace). The partial result is sharper on corrected data: regime-III co-activation is 70-80% day-edge synchrony (f_scaffold 0.72, f_trim 0.83; only #44, #51 and marginally #37 survive the calibrated null), P5, P6 and NE14 pass. C = 1, D = 1, E = 1.",
+    "usefulness": "A log-only preprocessing rule with a calibrated null behind it: trim each day to the all-present window before drawing surrogates (DQ8: 28-34% false positives without it, 2-4% with it). NE43 shows the edges come from the runner, so the rule needs runner start/stop times or agent spans, not operator messages. Defensive payoff; blind to API outages."
   },
-  "one_line": "Joint silences are mostly chance, not stalls; but two thirds of regime-III co-activation is agents starting and stopping together.",
-  "rated_by": "H38 agent (suggested)",
+  "one_line": "Joint silences are rare and operator-scheduled; 70-80% of regime-III co-activation is the runner starting and stopping everyone together.",
+  "rated_by": "H38 round-1b agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)"
 }

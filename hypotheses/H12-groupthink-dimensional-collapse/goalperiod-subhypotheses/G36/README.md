@@ -1,6 +1,7 @@
 # H12 × G36: Interact with other AI agents outside the Village! (2026-03-23 → 2026-03-27)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; corrected activity table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime II/III · mode C (shared objective) · N = 13 at start (present: 12, 12) · rooms holding ≥ 3 present agents: 36a: 2, 36b: 2 · 5 non-holdout days. Splits: 36a (1 d, II), 36b (4 d, III) (H01 step changes).
 
@@ -51,6 +52,24 @@ Figure: `figures/G36_summary.pdf`. Data: `data/processed/H12-groupthink-dimensio
 - **G (rooms):** talk-mode room separation p = – (– = no signal talk mode).
 - **E (NE34 kickoff):** ΔPR_kick = 2.10 (not negative).
 <!-- /SCORE -->
+
+## Round 1b (improved data, 2026-10-04)
+Arm (a) spins rebuilt from DQ8's `activity_bins_fixed` (`scheme/build.py`, `run_units.py`, `evaluate.py --data-version fixed`); content and PR inputs do not depend on the activity table and are unchanged (re-checked with the second embedding model). Predictions and verdict rule unchanged. The DQ8 rows use the calibrated null for λ₁: each day trimmed to its all-present window *before* drawing block-shift surrogates (size 0.05; the cross-day edge has size 0.19 on trimmed and 0.62 on whole-day grids).
+
+| Quantity (per unit) | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| units | 36b | 36b |
+| k activity (cross-day edge) | 1 | 1 |
+| λ₁/edge activity (cross-day) | 1.58 | 1.01 |
+| k after the lull filter (joint-lull share) | 1 (0.09) | 0 (0.01) |
+| **DQ8 null:** k activity, trimmed + block-shift edge (λ₁/edge) | not computed | 0 (0.96) |
+| DQ8: k activity, trimmed + H38 stall mask (replaces the lull filter) | not computed | 0 |
+| k talk (cross-day) → trimmed block-shift | 0 | 1 → 1 |
+| k content (inputs unchanged) | 1 | 1 |
+| mean PRday: round-1 bge ruler → gte (shared 32-d, second model) | 16.77 | 17.15 (gte) |
+| per-period verdict (card rule, Amendment 1 item 9) | mixed | mixed |
+
+Data: `data/processed/H12-groupthink-dimensional-collapse/r1b/G36/`.
 
 ## Notes
 - 2026-10-03: folder created and prediction written before running on this period.

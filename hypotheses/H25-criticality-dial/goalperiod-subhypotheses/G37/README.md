@@ -1,6 +1,7 @@
 # H25 × G37: Pick your own goal! (2026-03-30 → 2026-04-01)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1: failed; corrected table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode F · 13 agents at start · 3 non-holdout days · 4.1 h/day (empirical).
 
@@ -47,6 +48,22 @@ Data: `data/processed/H25-criticality-dial/G37/dial_daily.parquet`, `results.jso
 - **C (adequacy):** day-level null band (circular shifts): share of days with activity dial above its null 95th percentile = 0.33.
 - **D (unfitted):** H19 agreement (ii) passes; H03 n̂ TALK 0.30 vs talk dial 0.19 (cross-period test in the card).
 - **G (known structure):** see the card's event tests (regime switch, goal changes) where this period is involved.
+
+## Round 1b (improved data, 2026-10-04)
+Same pipeline (`analysis/explore.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` stall table (round 1's activity table dropped about half of all events). Predictions and verdict rule unchanged; check (ii) now compares with H19's estimator recomputed on the fixed table (round-1 H19 values are stale). The DQ8 row trims each day to the window in which all agents are between their first and last active minute before the block-shift null is drawn (whole-day block-shift nulls reject 28–34% of independent swarms).
+
+| Quantity | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| activity dial, stalls masked (fixed-effect mean; median) | 0.24; 0.14 | 0.30; 0.14 |
+| activity dial, stalls kept vs H19 g_eq | 0.34 vs 0.32 | 0.41 vs 0.37 (H19 estimator on the fixed table) |
+| talk dial, stalls masked (fixed-effect; random-effects) | 0.19; 0.19 | 0.23; 0.23 |
+| talk dial, stalls kept vs H19 g_eq talk | 0.19 vs 0.16 | 0.24 vs 0.23 |
+| days above the block-shift null q95: activity (round-1 design → **DQ8 trim**) | 1/3 | 1/3 → 1/3 |
+| median activity dial with the DQ8 trim | – | 0.05 |
+| content dial F2 median (inputs unchanged) | 0.77 | 0.77 |
+| per-period verdict (card rule) | failed | failed |
+
+Data: `data/processed/H25-criticality-dial/r1b/G37/`.
 
 ## Notes
 - 2026-10-04 02:14 UTC: results filled by `analysis/write_period_folders.py --results` from `analysis/explore.py` (exploratory round 1). Prediction block above unchanged from the --predict pass.

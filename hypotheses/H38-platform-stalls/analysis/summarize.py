@@ -1,16 +1,22 @@
 """H38 cross-period synthesis: scores P1-P9, writes period_results.json (for write_period_folders.py results),
 outcomes.json, the NE14 folder result, and the cross-period figures.
 
-Usage: uv run python hypotheses/H38-platform-stalls/analysis/summarize.py
+Usage: uv run python hypotheses/H38-platform-stalls/analysis/summarize.py [--data-version fixed]
+Round 1b: --data-version fixed reads/writes data/processed/H38-platform-stalls/r1b/, writes figures with an `_r1b`
+suffix, never touches the NE14 README (the 1b section is written by hand from r1b/NE14/result.json), and adds the
+DQ8-design variants (trim*, lambda_1 trim + block shift) to the tables and scores.
 """
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
 
 sys.dont_write_bytecode = True
+if "--data-version" in sys.argv:
+    os.environ["H38_DATA_VERSION"] = sys.argv[sys.argv.index("--data-version") + 1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import h38lib as L  # noqa: E402
 
@@ -19,6 +25,8 @@ import polars as pl  # noqa: E402
 from scipy.stats import spearmanr  # noqa: E402
 
 FIG = L.HYP / "figures"
+SUF = "_r1b" if L.DATA_VERSION == "fixed" else ""
+TRIMV = ("trim", "trim_stall", "trim_scaffold", "trim_all")
 H02_MODES = {10: "I", 17: "I", 20: "I", 39: "I", 41: "I", 42: "I", 13: "C", 18: "C", 19: "C", 24: "C", 25: "C", 26: "C",
              38: "C", 40: "C", 44: "C"}
 
@@ -29,7 +37,7 @@ def frac(eadj, eraw):
 
 def load():
     R = {}
-    for f in sorted(L.DATA.glob("G*/result.json")):
+    for f in sorted(L.RES.glob("G*/result.json")):
         R[f.parent.name] = json.loads(f.read_text())
     return R
 
@@ -53,13 +61,13 @@ def flat(R):
         for c in L.CAUSES:
             row[f"cause_{c}"] = (o1.get("cause_shares") or {}).get(c)
         for v in ("raw", "lull", "stall", "stall_strict", "field", "exo", "mask_edge", "mask_infra", "mask_scaffold",
-                  "mask_all", *[f"drop_{c}" for c in L.CAUSES]):
+                  "mask_all", *[f"drop_{c}" for c in L.CAUSES], *TRIMV):
             x = a.get(v, {})
             row[f"g_{v}"] = x.get("g"); row[f"E_{v}"] = x.get("E"); row[f"z_{v}"] = x.get("z"); row[f"bJ0_{v}"] = x.get("bJ0")
             y = t.get(v, {})
             row[f"tE_{v}"] = y.get("E"); row[f"tz_{v}"] = y.get("z")
         for v in ("stall", "lull", "field", "exo", "mask_edge", "mask_infra", "mask_scaffold", "mask_all",
-                  *[f"drop_{c}" for c in L.CAUSES]):
+                  *[f"drop_{c}" for c in L.CAUSES], *TRIMV):
             row[f"f_{v}"] = frac(row[f"E_{v}"], row["E_raw"])
             row[f"tf_{v}"] = frac(row[f"tE_{v}"], row["tE_raw"])
         rows.append(row)
@@ -72,7 +80,8 @@ def units(R):
         for u, x in (r["o5"] or {}).items():
             rows.append({"period": p, "unit": u, "regime": r["regime"][-1], "days": x["days"], "N": x["N"],
                          "js": x["js_share"], "stall_share": x["stall_share"],
-                         **{f"{k}_{m}": x[k][m] for k in ("raw", "lull", "stall", "mask_scaffold") for m in ("l1", "edge", "ratio")}})
+                         **{f"{k}_{m}": x[k][m] for k in ("raw", "lull", "stall", "mask_scaffold") for m in ("l1", "edge", "ratio")},
+                         **{f"{k}_{m}": (x.get(k) or {}).get(m) for k in ("trim_bs", "trim_stall_bs") for m in ("l1", "edge", "ratio", "T")}})
     return pl.DataFrame(rows)
 
 
@@ -145,6 +154,18 @@ def score(D, U, C):
     S["P4"]["pass_secondary_mask_scaffold"] = (S["P4"]["median_f_mask_scaffold"] >= 0.5
                                                and S["P4"]["n_sig_mask_scaffold"] <= S["P4"]["n_raw_sig"] / 2)
     S["P4"]["by_cause_median_f"] = {c: float(sig[f"f_drop_{c}"].median()) for c in L.CAUSES}
+    if "z_trim" in D.columns and D["z_trim"].drop_nulls().len():  # round 1b: DQ8 design (trim before surrogates)
+        S["P4"]["dq8"] = {"n_sig_trim": int((D["z_trim"] > 2).sum()), "n_sig_trim_stall": int((D["z_trim_stall"] > 2).sum()),
+                          "n_sig_trim_scaffold": int((D["z_trim_scaffold"] > 2).sum()), "n_sig_trim_all": int((D["z_trim_all"] > 2).sum()),
+                          "median_f_trim": float(sig["f_trim"].median()), "median_f_trim_stall": float(sig["f_trim_stall"].median()),
+                          "median_f_trim_scaffold": float(sig["f_trim_scaffold"].median()),
+                          "by_regime": (sig.group_by("regime").agg(pl.len(), pl.col("f_trim").median(), pl.col("f_trim_stall").median(),
+                                                                   pl.col("f_trim_scaffold").median(), (pl.col("z_trim") > 2).sum().alias("n_sig_trim"),
+                                                                   (pl.col("z_trim_scaffold") > 2).sum().alias("n_sig_trim_scaffold"))
+                                        .sort("regime").to_dicts()),
+                          "talk_median_tf_trim": float(sig["tf_trim"].median()) if "tf_trim" in sig.columns else None,
+                          "talk_n_sig_trim": int((D["tz_trim"] > 2).sum()) if "tz_trim" in D.columns else None,
+                          "talk_n_sig_raw": int((D["tz_raw"] > 2).sum())}
     S["P4"]["by_regime"] = (sig.group_by("regime").agg(pl.len(), pl.col("f_stall").median(), pl.col("f_mask_scaffold").median(),
                                                        pl.col("f_mask_all").median(), pl.col("f_lull").median()).sort("regime").to_dicts())
     if U.height:
@@ -161,9 +182,13 @@ def score(D, U, C):
                    "median_ratio_raw": float(uu["raw_ratio"].median()), "median_ratio_stall": float(uu["stall_ratio"].median()),
                    "median_ratio_lull": float(uu["lull_ratio"].median()), "median_ratio_mask": float(uu["mask_scaffold_ratio"].median())}
         S["P5"]["pass"] = S["P5"]["median_stall_over_lull_drop"] >= 0.5 and S["P5"]["spearman_stallshare_reldrop"] >= 0.6
+    if U.height and "trim_bs_ratio" in U.columns:
+        S["P5"]["dq8"] = {"n_above_trim_bs": int((U["trim_bs_ratio"] > 1).sum()), "n_above_trim_stall_bs": int((U["trim_stall_bs_ratio"] > 1).sum()),
+                          "median_ratio_trim_bs": float(U["trim_bs_ratio"].median()), "median_ratio_trim_stall_bs": float(U["trim_stall_bs_ratio"].median()),
+                          "n_units": U.height}
     rng = np.random.default_rng(6)
     S["P6"] = {}
-    for v in ("raw", "stall", "mask_scaffold", "mask_all", "lull"):
+    for v in ("raw", "stall", "mask_scaffold", "mask_all", "lull") + (("trim", "trim_scaffold") if "g_trim" in D.columns else ()):
         g3 = D.filter(pl.col("regime") == "III")[f"g_{v}"].drop_nulls().to_numpy()
         g1 = D.filter(pl.col("regime") == "I")[f"g_{v}"].drop_nulls().to_numpy()
         d = g3.mean() - g1.mean()
@@ -181,15 +206,15 @@ def score(D, U, C):
         pl.col("method") == "H03.nx_fast").select("goal_no", pl.col("value").alias("nx"))
     j = D.join(e, on="goal_no", how="inner")
     S["P8"] = {"n": j.height}
-    for v in ("raw", "stall", "mask_scaffold", "mask_all", "lull"):
+    for v in ("raw", "stall", "mask_scaffold", "mask_all", "lull") + (("trim", "trim_scaffold") if "g_trim" in D.columns else ()):
         S["P8"][f"rho_{v}"] = float(spearmanr(j[f"g_{v}"], j["nx"], nan_policy="omit").statistic)
     S["P8"]["pass"] = S["P8"]["rho_stall"] > S["P8"]["rho_raw"] and S["P8"]["rho_stall"] > 0.3
     S["P8"]["pass_mask_scaffold"] = S["P8"]["rho_mask_scaffold"] > S["P8"]["rho_raw"] and S["P8"]["rho_mask_scaffold"] > 0.3
-    ne = L.DATA / "NE14/result.json"
+    ne = L.RES / "NE14/result.json"
     if ne.exists():
         n = json.loads(ne.read_text())
         dr = n["delta"]["raw"]["dE"]
-        S["P9"] = {k: n["delta"][k] for k in ("raw", "stall", "mask_scaffold", "mask_all", "lull")}
+        S["P9"] = {k: n["delta"][k] for k in ("raw", "stall", "mask_scaffold", "mask_all", "lull", *TRIMV) if k in n["delta"]}
         S["P9"]["pass"] = dr > 0 and n["delta"]["stall"]["dE"] <= dr / 2
         S["P9"]["pass_mask_scaffold"] = dr > 0 and n["delta"]["mask_scaffold"]["dE"] <= dr / 2
     return S, ok
@@ -340,7 +365,7 @@ def figures(D, U, ok):
     ax.set_ylabel("excess equal-time gain over N1")
     ax.set_xlabel("goal period (label color: regime I blue, II purple, III red); ★ scaffold-conditioned z > 2")
     ax.legend(fontsize=7, frameon=False, ncol=4)
-    fig.tight_layout(); fig.savefig(FIG / "decomposition.png", dpi=150); plt.close(fig)
+    fig.tight_layout(); fig.savefig(FIG / f"decomposition{SUF}.png", dpi=150); plt.close(fig)
     # 2. cause composition
     fig, ax = plt.subplots(figsize=(10, 3.2))
     bottom = np.zeros(d.height)
@@ -358,7 +383,7 @@ def figures(D, U, ok):
     ax.set_ylabel("share of JS minutes by cause")
     ax.legend(fontsize=6.5, frameon=False, ncol=6, loc="upper center", bbox_to_anchor=(0.5, 1.13))
     ax2.legend(fontsize=6.5, frameon=False, loc="upper right")
-    fig.tight_layout(); fig.savefig(FIG / "causes.png", dpi=150); plt.close(fig)
+    fig.tight_layout(); fig.savefig(FIG / f"causes{SUF}.png", dpi=150); plt.close(fig)
     # 3. summary observable: raw vs scaffold-conditioned excess per period
     fig, ax = plt.subplots(1, 2, figsize=(7.6, 3.2), gridspec_kw={"width_ratios": [1.15, 1]})
     for r in d.iter_rows(named=True):
@@ -387,21 +412,21 @@ def figures(D, U, ok):
     ax[1].set_ylabel("share of joint-silence minutes", fontsize=8)
     ax[1].legend(fontsize=6, frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.12), ncol=3)
     ax[1].set_title("why everyone is quiet (mean over periods)", fontsize=8)
-    fig.tight_layout(); fig.savefig(FIG / "summary_obs.png", dpi=170); fig.savefig(FIG / "summary_obs.pdf"); plt.close(fig)
+    fig.tight_layout(); fig.savefig(FIG / f"summary_obs{SUF}.png", dpi=170); fig.savefig(FIG / f"summary_obs{SUF}.pdf"); plt.close(fig)
 
 
 def main():
     R = load()
     D = flat(R); U = units(R); C = chunks(R)
-    D.write_parquet(L.DATA / "period_table.parquet")
+    D.write_parquet(L.RES / "period_table.parquet")
     if U.height:
-        U.write_parquet(L.DATA / "unit_table.parquet")
-    C.write_parquet(L.DATA / "chunk_table.parquet")
+        U.write_parquet(L.RES / "unit_table.parquet")
+    C.write_parquet(L.RES / "chunk_table.parquet")
     S, ok = score(D, U, C)
-    (L.DATA / "outcomes.json").write_text(json.dumps(S, indent=1, default=float))
+    (L.RES / "outcomes.json").write_text(json.dumps(S, indent=1, default=float))
     recs = period_records(D, U)
-    (L.DATA / "period_results.json").write_text(json.dumps(recs, indent=1, default=float))
-    v = ne14_record()
+    (L.RES / "period_results.json").write_text(json.dumps(recs, indent=1, default=float))
+    v = ne14_record() if L.DATA_VERSION == "r1" else "(1b: README section written by hand)"
     figures(D, U, ok)
     with pl.Config(tbl_rows=60, tbl_cols=30, tbl_width_chars=300, float_precision=3):
         print(D.select("period", "regime", "js", "js_exp", "expl", "expl_surr", "g_raw", "z_raw", "E_raw", "E_lull", "E_stall",

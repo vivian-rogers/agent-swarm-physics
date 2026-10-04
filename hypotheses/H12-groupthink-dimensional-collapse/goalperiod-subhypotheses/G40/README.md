@@ -1,6 +1,7 @@
 # H12 × G40: Connect your worlds into a 3D universe! (2026-05-04 → 2026-05-08)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; corrected activity table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode C (shared objective) · N = 15 at start (present: 15) · rooms holding ≥ 3 present agents: 40: 1 · 5 non-holdout days. 
 
@@ -52,6 +53,24 @@ Figure: `figures/G40_summary.pdf`. Data: `data/processed/H12-groupthink-dimensio
 - **C (nulls):** activity modes beyond the cross-day null in 1/1 unit(s); after the lull filter in 1/1.
 - **D (Curie–Weiss shape):** sign share 1.00; VR/λ₁ 0.97.
 <!-- /SCORE -->
+
+## Round 1b (improved data, 2026-10-04)
+Arm (a) spins rebuilt from DQ8's `activity_bins_fixed` (`scheme/build.py`, `run_units.py`, `evaluate.py --data-version fixed`); content and PR inputs do not depend on the activity table and are unchanged (re-checked with the second embedding model). Predictions and verdict rule unchanged. The DQ8 rows use the calibrated null for λ₁: each day trimmed to its all-present window *before* drawing block-shift surrogates (size 0.05; the cross-day edge has size 0.19 on trimmed and 0.62 on whole-day grids).
+
+| Quantity (per unit) | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| units | 40 | 40 |
+| k activity (cross-day edge) | 1 | 1 |
+| λ₁/edge activity (cross-day) | 1.63 | 1.10 |
+| k after the lull filter (joint-lull share) | 1 (0.05) | 0 (0.02) |
+| **DQ8 null:** k activity, trimmed + block-shift edge (λ₁/edge) | not computed | 0 (0.99) |
+| DQ8: k activity, trimmed + H38 stall mask (replaces the lull filter) | not computed | 0 |
+| k talk (cross-day) → trimmed block-shift | 1 | 0 → 0 |
+| k content (inputs unchanged) | 1 | 1 |
+| mean PRday: round-1 bge ruler → gte (shared 32-d, second model) | 9.86 | 9.36 (gte) |
+| per-period verdict (card rule, Amendment 1 item 9) | mixed | mixed |
+
+Data: `data/processed/H12-groupthink-dimensional-collapse/r1b/G40/`.
 
 ## Notes
 - 2026-10-03: folder created and prediction written before running on this period.

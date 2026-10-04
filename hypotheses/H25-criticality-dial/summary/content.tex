@@ -1,4 +1,4 @@
-\hwhat{Built a reusable daily dial: the Curie--Weiss loop gain $g=1-1/\mathrm{VR}$ and $T/T_c=1/g$, per day and channel, from logs, with platform stalls masked, slow drives removed and calibrated 90\% intervals. Ran it on 282 non-holdout days (35 periods). \textbf{Activity and talk are far from criticality on every day:} median $g=0.10$ and $0.12$ ($T/T_c\approx10$, 8), no upper bound reaching 0.8. The dial reproduces H19 per period (activity $\rho=0.94$) and sits above the Hawkes-mapped gain in 80\% of periods. \textbf{The content dial reads near-critical} (median 0.70; 33 days with lower bound $>0.8$), so the headline prediction P1 failed. Post hoc, that reading is roster size times a constant per-pair correlation ($\bar\rho\approx0.28$), the signature of a shared field. Day-to-day variation is mostly noise (P5 failed). In simulated swarms the dial misses coupling delayed by minutes. Holdout script frozen, not run.}
+\hwhat{Built a reusable daily dial: the Curie--Weiss loop gain $g=1-1/\mathrm{VR}$ and $T/T_c=1/g$, per day and channel, from logs, with stalls masked, slow drives removed and calibrated 90\% intervals; ran it on 282 non-holdout days. \textbf{Round 1b} re-ran it on the corrected activity table (round 1 had lost half of all events) with DQ8's calibrated null. \textbf{Activity and talk are subcritical on every day} (median $g=0.16$ both, was 0.10 and 0.12; $T/T_c\approx6$); trimmed to the common running window, activity drops to 0.07 and beats the independent-agent ceiling on only 24\% of days. The dial now reproduces H19 on the same table ($\rho$ 0.94, 0.97) and tracks H03's Hawkes $\hat n$ ($\rho=0.46$). \textbf{Content still reads near-critical} (0.70; P1 failed), as swarm size times a shared-field correlation. Native tests: withdrawing the operator's drives (NE43) leaves the dial unchanged; talk co-activation vanishes when 15 agents share one room (NE42). Holdout not run.}
 
 \hmodel{Models 01 (Curie--Weiss), 09 (Hawkes), 11 (O($n$) spins). $s_i=\pm1$: agent $i$ active, or posting, in a minute; for content, $s_i$ is its 30-min mean of whitened unit message embeddings ($n=32$). $h_i(t)$: private fields (schedule, goal), removed by 30-min block means and agent-day means; stalls masked. $q_i=1-m_i^2$; $g$: loop gain; VR: collective over independent variance; $\bar\rho$: mean pairwise correlation; $N$: agents that day.}
 
@@ -9,26 +9,27 @@ g=1-\mathrm{VR}^{-1},\qquad T/T_c=1/g\ \ (h=0)\\
 \mathrm{VR}-1=(N-1)\,\bar\rho\ \Rightarrow\ g(N)=\frac{(N-1)\bar\rho}{1+(N-1)\bar\rho}
 \end{gather*}\vspace{-10pt}}
 
-\hobs{../figures/summary_obs.pdf}{(a) Daily dial (dots) and period means (bars) for activity (blue), talk (orange) and content (green) over all non-holdout days; red dashes mark $g=0.8$. Activity and talk stay near 0.1; content climbs once rosters grow. (b) Period dial against swarm size: dashed curves hold the per-pair correlation fixed. Content and activity follow them (field-like), while talk does not rise with $N$ (attention-diluted coupling, as in H19).}
+\hobs{../figures/summary_obs.pdf}{Round 1 (old table). (a) Daily dial (dots) and period means (bars) for activity (blue), talk (orange) and content (green); red dashes mark $g=0.8$. Activity and talk stay low; content climbs once rosters grow. On the corrected table activity and talk shift up by about 0.06 (figure on page 2), content is unchanged. (b) Period dial against swarm size: dashed curves hold the per-pair correlation fixed; content and activity follow them (field-like), talk does not (on the fixed table talk $\bar\rho\propto N^{-1.25}$).}
 
-\htelos{The useful part is a calibrated instrument and two warnings. Any operator can compute the dial from event logs with \texttt{compute\_dial}. In this village it says the swarm amplifies a nudge by about 10\%: no fast runaway. Warning 1: a green dial does not rule out slow herding. The village's coupling acts through context read minutes later, which the 1-min dial cannot see, as shown on simulated swarms. Warning 2: $g$ rises with headcount at fixed per-pair correlation. ``Near-critical'' content just means agents in one chat share a topic, and adding agents pushes any field-driven channel toward $g=1$. Track $\bar\rho$, not $g$, weekly, not daily. As a criticality alarm it is mostly reassurance plus a lower bound.}
+\htelos{The useful part is a calibrated instrument and three warnings. Any operator can compute the dial from event logs with \texttt{compute\_dial}; here it says the swarm amplifies a nudge by 10--20\%: no fast runaway. Warning 1: a green dial does not rule out slow herding through context read minutes later. Warning 2: $g$ rises with headcount at fixed per-pair correlation, so track $\bar\rho$, weekly. Warning 3 (new): trim each day to the common running window before reading activity feedback; without it, half the ``signal'' is agents booting together. The talk dial is now the credible gauge: it matches an independent Hawkes fit and survives trimming.}
 
-\hbottom{A daily Curie--Weiss loop-gain dial is computable from logs with honest intervals and shows activity and talk far from criticality ($g\approx0.1$), but it is blind to delayed coupling, mostly noise day to day, and its near-critical content reading is swarm size times a shared-field correlation.}
+\hbottom{A daily Curie--Weiss dial is computable from logs with honest intervals and, on corrected data, agrees with H19 and H03 and shows activity and talk far from criticality ($g\approx0.16$, activity 0.07 after trimming), but it is blind to delayed coupling and its near-critical content reading is size times a shared field.}
 
-\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.42\columnwidth}p{0.43\columnwidth}p{0.12\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
-S1--S4 synthetic recovery (CW, kinetic, stalls, content) & CW and fast Hawkes recovered; stall mask = oracle; delayed coupling invisible; content field removal partial & 1 ok, 1 mixed, 2 $\times$\\
-P1 every day subcritical (all channels) & activity, talk 100\%; content 22.5\% & $\times$\\
-P2 medians activity 0.03--0.20, talk 0.03--0.25 & 0.096, 0.122 & $\checkmark$\\
-P3 reproduces H19 ($\rho\ge0.8$ act., $\ge0.7$ talk); stall drop scales with stall share & 0.94, 0.69 (RE means 0.84); drop $-0.10$ but $\rho=0.21$ & $\times$ (narrow)\\
-P4 H03: talk $\rho\ge0.3$; LOPO map beats constant; above Hawkes map & 0.25 (fast $n_x$ 0.37); SSE 1.78 vs 1.86; 80\% & 3 of 4\\
-P5 day-to-day signal in $\ge50\%$ of periods & 7\% (32\% unwidened SEs) & $\times$\\
-P6 content $>$ activity; content in 0.15--0.6; F2 lowers it & 35/35; 0.70; no change & 1 of 3\\
-P7 03-24 switch steps; goal changes do not & $+0.08$/$-0.06$, CIs span 0; no steps & $\times$/$\checkmark$\\
+\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.50\columnwidth}p{0.11\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b (corrected table)} & \textbf{Verdict}\\\hline
+P1 every day subcritical, all channels & activity, talk 100\% $\to$ 100\%; content 22.5\% $\to$ 24\% & $\times$\\
+P2 medians activity 0.03--0.20, talk 0.03--0.25 & 0.096, 0.122 $\to$ 0.159, 0.162 & $\checkmark$\\
+P3a reproduces H19 (same table) & talk $\rho$ 0.69 $\to$ 0.97; activity 0.94 $\to$ 0.94 & $\times\to\checkmark$\\
+DQ8 null (trim first) & activity days above ceiling 54\% $\to$ 24\%; talk 61\% $\to$ 53\% & new\\
+P4a talk dial vs H03 $\hat n$ ($\rho\ge0.3$) & 0.25 $\to$ 0.46 (fast $n_x$ 0.60) & $\times\to\checkmark$\\
+P5 day-to-day signal ($\ge50\%$) & 2/28 $\to$ 4/29 & $\times$\\
+P7a 03-24: activity up, talk down & $+0.08/-0.06\to+0.16\,[0.02,0.29]/+0.05$ & $\times$\\
+NE43 drives withdrawn: no step (native) & $|z|\le1.47$, inside placebo band & $\checkmark$\\
+NE42 room merge: talk size-free (native) & talk $g$ $0.13\to0.003\to0.18$ & $\sim$\\
 \end{tabular}}}
 
-\hobsb{../figures/summary_obs2.pdf}{Synthetic swarms on 120 real day designs. (a) Equilibrium Curie--Weiss is recovered once stalls are masked; with 2--8 min delayed reads the dial stays at zero. (b) Hawkes talk: fast kernels are recovered, 3-min kernels are not. (c) A time-varying exogenous content field leaks about 0.25; removing operator-message directions (F2) helps little.}
+\hobsb{../figures/r1b_dial.pdf}{(a) Period dials, round 1 vs 1b: restored events raise activity and talk by about 0.06; trimming (red) pulls activity back down. (b) NE42, 15 agents: talk co-activation vanishes in the one-room week and returns at the split.}
 
-\hcaveats{The 1-min dial is a lower bound on the steady-state loop gain: context-mediated coupling is invisible. The content dial is an upper bound: shared time-varying fields survive, and the flat per-pair correlation fits a field. $g$ depends on $N$, so cross-period contrasts (including the regime-III rise in activity) are partly roster size. Intervals are widened $\times1.5$ by a synthetic calibration; days with 3--4 agents still get optimistic SEs and pull fixed-effect means. H38's scheduled-off mask halves the activity dial (0.10$\to$0.05). One embedding model. Not blind to H19 and H03 values; the size-scaling result and the F2tod variant are post hoc.}
+\hcaveats{The 1-min dial is a lower bound (context-mediated coupling is invisible); the content dial is an upper bound (shared fields survive). $g$ depends on $N$. Intervals are widened $\times1.5$ by synthetic calibration. The fixed-table H19 reference comes from H38's pipeline (same estimator). The \#51 size-law test was uninformative; NE42 is goal-confounded.}
 
-\hnext{Run Stage A of \texttt{confirm.py} (content, incl.\ the size-law test CA4) once committed; build the lagged dial before treating green as safe.}
+\hnext{Add the DQ8 trim to \texttt{confirm.py} Stage B before any holdout run; build the lagged dial.}

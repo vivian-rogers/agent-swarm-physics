@@ -1,6 +1,7 @@
 # H38 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1: failed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode C · 12 agents (catalog) · 17 non-holdout days · 4.0 h/day (empirical median window).
 
@@ -41,6 +42,23 @@ Data: `data/processed/H38-platform-stalls/G38/result.json`; minutes and runs in 
 ## Scorecard (period-specific axes)
 - **C:** explained share not above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 1.4, scaffold-masked z 0.7.
 - **G:** 1 village-off gap(s), 0.99 of their minutes inside the operator's pause → resume interval.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.091 (0.081) | 0.059 (0.048) |
+| explained share (N1 surrogate) | 0.88 (0.88) | 0.99 (1.00) |
+| largest cause of joint-silence minutes | scheduled | scheduled |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.147, 0.149 (6.1) | 0.237, 0.237 (9.1) |
+| f_stall (pre-registered) · f_scaffold (headline) | 0.76 · 0.89 | 0.63 · 0.76 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.027 (0.9), 0.89 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.002 (0.1) |
+| talk spin E raw (z) → trimmed E (z) | 0.056 (2.3) | 0.102 (4.7) → 0.088 (3.5) |
+| per-period verdict (card rule) | failed | failed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G38/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

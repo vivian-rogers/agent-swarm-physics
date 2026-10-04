@@ -11,19 +11,27 @@ O5 lambda_1        H12 units inside the period: top eigenvalue raw / lull / stal
                    surrogate edges (95% quantile)
 Output: data/processed/H38-platform-stalls/G<NN>/result.json
 
-Usage: uv run python hypotheses/H38-platform-stalls/analysis/run_period.py --period G38 [--n-surr 200]
-       uv run python hypotheses/H38-platform-stalls/analysis/run_period.py --all [--workers 2]
+Round 1b (2026-10-04): --data-version fixed reads DQ8's activity_bins_fixed and the shared outages_fixed sidecar and
+writes to data/processed/H38-platform-stalls/r1b/G<NN>/result.json (round-1 outputs untouched). Both versions also
+report the DQ8-calibrated variants (O4 `trim*`: rows outside the all-present window removed before block-shift
+surrogates; O5 `trim_bs`: lambda_1 on trimmed rows vs a block-shift edge).
+
+Usage: uv run python hypotheses/H38-platform-stalls/analysis/run_period.py --period G38 [--n-surr 200] [--data-version fixed]
+       uv run python hypotheses/H38-platform-stalls/analysis/run_period.py --all [--workers 2] [--data-version fixed]
 """
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 from multiprocessing import Pool
 from pathlib import Path
 
 sys.dont_write_bytecode = True
+if "--data-version" in sys.argv:  # must be set before h38lib is imported (and inherited by spawned workers)
+    os.environ["H38_DATA_VERSION"] = sys.argv[sys.argv.index("--data-version") + 1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import h38lib as L  # noqa: E402
 
@@ -33,6 +41,7 @@ import polars as pl  # noqa: E402
 CHUNK_DAYS, MIN_TAIL_DAYS, MIN_ACTIVE_BINS = 5, 3, 30  # H02 / H19 rules
 VARS = ["raw", "lull", "stall", "stall_strict", "field", "exo", "mask_edge", "mask_infra", "mask_scaffold", "mask_all"] + \
        [f"drop_{c}" for c in L.CAUSES]
+ALLV = VARS + L.TRIM_VARS
 INFRA = ["timeout", "vm", "resource", "network"]
 
 
@@ -53,10 +62,10 @@ def chunks_of(days):
 
 
 def load(days):
-    ab = (pl.scan_parquet(L.SH / "activity_bins.parquet").filter(pl.col("pt_date").is_in(days))
+    ab = (pl.scan_parquet(L.AB).filter(pl.col("pt_date").is_in(days))
           .select("pt_date", pl.col("minute").cast(pl.Int32), "agent", "state").collect())
-    rs = pl.scan_parquet(L.DATA / "reasons.parquet").filter(pl.col("pt_date").is_in(days)).collect()
-    sm = pl.scan_parquet(L.DATA / "stall_minutes.parquet").filter(pl.col("pt_date").is_in(days)).collect()
+    rs = pl.scan_parquet(L.STALLS / "reasons.parquet").filter(pl.col("pt_date").is_in(days)).collect()
+    sm = pl.scan_parquet(L.STALLS / "stall_minutes.parquet").filter(pl.col("pt_date").is_in(days)).collect()
     ab = ab.join(rs, on=["pt_date", "minute", "agent"], how="left").with_columns(pl.col("reason").fill_null(0))
     return ab, sm
 
@@ -86,8 +95,8 @@ def matrices(ab: pl.DataFrame, sm: pl.DataFrame, days: list[str], agents: list[i
 
 # ------------------------------------------------------------------------------------------------ O4
 def o4_gains(ab, sm, days, rng, n_surr):
-    obs = {v: [] for v in VARS}; obs_t = {v: [] for v in VARS}
-    nul = {v: [[] for _ in range(n_surr)] for v in VARS}; nul_t = {v: [[] for _ in range(n_surr)] for v in VARS}
+    obs = {v: [] for v in ALLV}; obs_t = {v: [] for v in ALLV}
+    nul = {v: [[] for _ in range(n_surr)] for v in ALLV}; nul_t = {v: [[] for _ in range(n_surr)] for v in ALLV}
     o6n = o6d = 0.0
     chunks = []
     for k, ch in enumerate(chunks_of(days)):
@@ -116,13 +125,28 @@ def o4_gains(ab, sm, days, rng, n_surr):
                 nul[v][s].append(rx[v][0])
                 if use_talk:
                     nul_t[v][s].append(rx[v][1])
+        # round 1b: DQ8 design (rows removed before block-shift surrogates)
+        tob, tnu = L.trim_gains(S, R, sched, day, minute, f["explained"], rng, n_surr,
+                                talk=Tk if use_talk else None, talk_cols=talk_ok if use_talk else None)
+        for v in L.TRIM_VARS:
+            if v in tob and len(tnu[v]) == n_surr:
+                obs[v].append(tob[v][0])
+                if use_talk:
+                    obs_t[v].append(tob[v][1])
+                for s in range(n_surr):
+                    nul[v][s].append(tnu[v][s][0])
+                    if use_talk:
+                        nul_t[v][s].append(tnu[v][s][1])
         chunks.append({"chunk": f"c{k}", "days": len(ch), "N": len(agents), "N_talk": int(talk_ok.sum()),
                        "js_share": float(f["js"].mean()), "stall_share": float(f["explained"].mean()),
+                       "trim_share": float(L.trim_mask(R).mean()),
                        "g_raw_chunk": L.cw(res["raw"][0])["g"], "bJ0_raw_chunk": L.cw(res["raw"][0])["bJ0"]})
     if not chunks:
         return None
     for ci, c in enumerate(chunks):  # chunk-level z (H02's 21 chunks are scored on these)
-        for v in ("raw", "lull", "stall", "field", "mask_scaffold", "mask_all"):
+        for v in ("raw", "lull", "stall", "field", "mask_scaffold", "mask_all", "trim", "trim_stall", "trim_scaffold"):
+            if len(obs[v]) != len(chunks):
+                continue
             go = L.cw(obs[v][ci])["g"]
             gn = np.array([L.cw(nul[v][s][ci])["g"] for s in range(n_surr)])
             gn = gn[np.isfinite(gn)]
@@ -132,8 +156,8 @@ def o4_gains(ab, sm, days, rng, n_surr):
 
     def summarize(o, n):
         out = {}
-        for v in VARS:
-            if not o[v]:
+        for v in ALLV:
+            if not o[v] or any(len(n[v][s]) != len(o[v]) for s in range(n_surr)):
                 continue
             go = L.cw(np.vstack(o[v]))
             gn = np.array([L.cw(np.vstack(n[v][s]))["g"] for s in range(n_surr)])
@@ -143,7 +167,7 @@ def o4_gains(ab, sm, days, rng, n_surr):
                       "null_sd": sd, "E": go["g"] - mu, "z": (go["g"] - mu) / sd if sd and sd > 0 else np.nan}
         return out
     A = summarize(obs, nul)
-    Tt = summarize(obs_t, nul_t) if any(obs_t[v] for v in VARS) else {}
+    Tt = summarize(obs_t, nul_t) if any(obs_t[v] for v in ALLV) else {}
     o6g = 1 - o6d / o6n if o6n > 0 else np.nan
     return {"active": A, "talk": Tt, "chunks": chunks, "o6_g_pred": o6g}
 
@@ -156,7 +180,7 @@ def poisson_binomial_le1(p: np.ndarray) -> float:
 
 
 def o123(ab, sm, days, rng, n_surr):
-    te = pl.read_parquet(L.DATA / "turn_errors.parquet").filter(pl.col("err_cat").cast(pl.String).is_in(INFRA))
+    te = pl.read_parquet(L.DATA / "turn_errors.parquet").filter(pl.col("err_cat").cast(pl.String).is_in(INFRA))  # = shared turn_errors
     cal = pl.read_parquet(L.SH / "calendar.parquet").filter(pl.col("pt_date").is_in(days)).select("pt_date", "win_start")
     tem = (te.with_columns(pl.col("t").dt.convert_time_zone("America/Los_Angeles").dt.date().cast(pl.String).alias("pt_date"))
            .join(cal, on="pt_date").with_columns(((pl.col("t") - pl.col("win_start")).dt.total_seconds() // 60).cast(pl.Int32).alias("m")))
@@ -232,7 +256,7 @@ def o123(ab, sm, days, rng, n_surr):
     s = sm.filter(pl.col("js"))
     tot = max(s.height, 1)
     out["cause_shares"] = {c: float((s["cause"] == c).sum() / tot) for c in L.CAUSES}
-    o = pl.read_parquet(L.DATA / "outages.parquet").filter(pl.col("pt_date").is_in(days))
+    o = pl.read_parquet(L.STALLS / "outages.parquet").filter(pl.col("pt_date").is_in(days))
     off = o.filter(pl.col("village_off"))
     out["village_off"] = {"n": off.height, "minutes": int(off["k0_longest"].sum()) if off.height else 0,
                           "share_scheduled_minutes": float((off["frac_scheduled"] * off["dur_min"]).sum() / off["dur_min"].sum()) if off.height else None,
@@ -267,6 +291,7 @@ def o5_lambda(ab, sm, days, g, rng, n_surr):
         bid = np.concatenate([b + 1000 * i for i, b in enumerate(Bd)])
         _, bid = np.unique(bid, return_inverse=True)
         obs = L.l1_variants(X, Rr, sched, bid)
+        tbs = L.l1_trim_blockshift(Sd, Rd, Cd, Bd, rng, n_surr)  # round 1b: DQ8 design
         PS, _ = L.h12._pad_days(Sd); PR, _ = L.h12._pad_days(Rd)
         nulls = {k: [] for k in obs}
         for _ in range(n_surr):
@@ -280,6 +305,8 @@ def o5_lambda(ab, sm, days, g, rng, n_surr):
             nv = np.array(nulls[k]); nv = nv[np.isfinite(nv)]
             edge = float(np.quantile(nv, 0.95)) if nv.size else np.nan
             res[k] = {"l1": obs[k], "edge": edge, "ratio": obs[k] / edge if edge else np.nan, "above": bool(obs[k] > edge)}
+        for k, v in tbs.items():
+            res[f"{k}_bs"] = v
         out[u] = res
     return out
 
@@ -297,7 +324,8 @@ def run(period: str, n_surr: int = 200) -> dict:
     res["o4"] = o4_gains(ab, sm, days, rng, n_surr)
     res["o5"] = o5_lambda(ab, sm, days, g, rng, n_surr)
     res["runtime_s"] = round(time.time() - t0, 1)
-    out = L.DATA / period
+    res["data_version"] = L.DATA_VERSION
+    out = L.RES / period
     out.mkdir(parents=True, exist_ok=True)
     (out / "result.json").write_text(json.dumps(res, indent=1, default=lambda x: float(x) if isinstance(x, np.floating) else
                                                 (int(x) if isinstance(x, np.integer) else str(x))))
@@ -322,6 +350,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--period"); ap.add_argument("--all", action="store_true")
     ap.add_argument("--n-surr", type=int, default=200); ap.add_argument("--workers", type=int, default=2)
+    ap.add_argument("--data-version", choices=["r1", "fixed"], default="r1")
     a = ap.parse_args()
     if a.all:
         ps = periods_all()

@@ -25,6 +25,16 @@ OUT = ROOT / "data/processed/H12-groupthink-dimensional-collapse"
 SH = ROOT / "data/processed/shared"
 FIG = HYP / "figures"
 SEED = 20261003
+
+# Data version (round 1b, 2026-10-04). "r1": round-1 activity spins from shared activity_bins (which dropped about
+# half of all events, DQ8). "fixed": spins rebuilt from activity_bins_fixed into OUT/r1b/ (units, agents_units,
+# spins); statement inputs (stmt_index, stmt_white_d64) do not depend on activity_bins and stay in OUT. Set with the
+# env var H12_DATA_VERSION or the scripts' --data-version flag (set before import, inherited by spawned workers).
+DATA_VERSION = os.environ.get("H12_DATA_VERSION", "r1")
+assert DATA_VERSION in ("r1", "fixed"), DATA_VERSION
+AB = SH / ("activity_bins_fixed.parquet" if DATA_VERSION == "fixed" else "activity_bins.parquet")
+OUTV = OUT / "r1b" if DATA_VERSION == "fixed" else OUT      # activity-derived tables and arm-(a) spin results
+STALLS_FIXED = SH / "outages_fixed/stall_minutes.parquet"   # H38's rule on the fixed table (shared sidecar)
 sys.path.insert(0, str(ROOT / "infra/shared"))
 from common import REVISION, holdout_mask, load_holdout  # noqa: E402,F401
 
@@ -178,6 +188,64 @@ def spectrum_test(days: list[np.ndarray], n_surr: int, rng: np.random.Generator,
             "null_l1_med": float(np.median(null_eigs[:, 0])),
             "null_eigs_q95": np.quantile(null_eigs, q, axis=0), "null_eigs_med": np.median(null_eigs, axis=0),
             "T": int(Xobs.shape[1])}
+
+
+# ---------------------------------------------------------------------------------------------- round 1b (DQ8 design)
+def trim_rows(A: np.ndarray) -> np.ndarray:
+    """All-present window of one day (H38's operator rule, DQ8 `all_present_window`): bins in which every agent with
+    at least one active bin that day is between its first and last active bin. A: N x L (+1 active, -1 not)."""
+    act = A > 0
+    has = act.any(1)
+    if not has.any():
+        return np.zeros(A.shape[1], bool)
+    L = A.shape[1]
+    first = np.argmax(act, axis=1); last = L - 1 - np.argmax(act[:, ::-1], axis=1)
+    idx = np.arange(L)
+    inside = (idx[None, :] >= first[:, None]) & (idx[None, :] <= last[:, None])
+    return inside[has].all(0)
+
+
+def blockshift_surrogate(days: list[np.ndarray], mins: list[np.ndarray], rng: np.random.Generator, block_min: int = 30) -> np.ndarray:
+    """Independent circular shift (>= 1) of each agent's series within each (day, 30-min block of minute index) of the
+    kept bins (DQ8 `nulls.block_shift`; H25/H38 N1). days: N x L_d arrays (rows already trimmed); mins: their minutes."""
+    out = []
+    for A, m in zip(days, mins):
+        B = np.empty_like(A)
+        blk = np.asarray(m) // block_min
+        N = A.shape[0]
+        for b in np.unique(blk):
+            ix = np.flatnonzero(blk == b)
+            Lb = len(ix)
+            if Lb < 2:
+                B[:, ix] = A[:, ix]
+                continue
+            sh = rng.integers(1, Lb, size=N)
+            ar = (np.arange(Lb)[None, :] - sh[:, None]) % Lb
+            B[:, ix] = A[np.arange(N)[:, None], ix[ar]]
+        out.append(B)
+    return np.concatenate(out, axis=1)
+
+
+def spectrum_test_blockshift(days: list[np.ndarray], mins: list[np.ndarray], n_surr: int, rng: np.random.Generator,
+                             q: float = 0.95) -> dict:
+    """Round-1b corrected null for spin spectra: rows are trimmed BEFORE the surrogates are drawn (caller), and the edge
+    is the q-quantile of the top eigenvalue under block shifts (size 0.05 on independent swarms in the DQ8 table, vs
+    0.19 for the cross-day edge on trimmed grids and 0.62 on whole-day grids)."""
+    X = np.concatenate(days, axis=1)
+    keep = X.std(1) > 0
+    days = [d[keep] for d in days]
+    X = X[keep]
+    w = corr_eig(X)
+    null = np.empty((n_surr, len(w)))
+    for s in range(n_surr):
+        Y = blockshift_surrogate(days, mins, rng)
+        null[s] = corr_eig(Y) if (Y.std(1) > 0).all() else np.nan
+    null = null[np.isfinite(null).all(1)]
+    edge = float(np.quantile(null[:, 0], q)) if len(null) else np.nan
+    qk = np.quantile(null, q, axis=0) if len(null) else np.full(len(w), np.nan)
+    above = w > qk
+    return {"eig": w, "edge": edge, "k": int((w > edge).sum()), "k_rank": int(np.argmin(above)) if not above.all() else len(w),
+            "T": int(X.shape[1]), "N": int(X.shape[0])}
 
 
 def mode_summary(v: np.ndarray) -> dict:

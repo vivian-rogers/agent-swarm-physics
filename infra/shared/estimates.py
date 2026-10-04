@@ -116,7 +116,7 @@ def holdout_of(goal_no: int | None, period_unit: str | None, first_day: str | No
         days = unit_days(period_unit)
     elif first_day and last_day:
         cal = pl.read_parquet(OUT / "calendar.parquet")
-        days = cal.filter(pl.col("pt_date").is_between(first_day, last_day))["pt_date"].to_list()
+        days = cal.filter(pl.col("pt_date").is_between(pl.lit(first_day), pl.lit(last_day)))["pt_date"].to_list()
     elif goal_no is not None:
         days = sorted(d for ds in period_units().filter(pl.col("goal_no") == goal_no)["days"].to_list() for d in ds)
         # a whole goal period counts as held out only if all of it is (e.g. #51 is not; its tail is a window)
@@ -124,6 +124,11 @@ def holdout_of(goal_no: int | None, period_unit: str | None, first_day: str | No
         return bool(days) and all(any(s <= d < e for s, e in wins) for d in days)
     if not days:
         return False
+    # days inside a held-out goal period count as held out, however the unit was specified
+    held = set(h["goal_periods_held_out"])
+    cal = pl.read_parquet(OUT / "calendar.parquet", columns=["pt_date", "goal_no"])
+    if cal.filter(pl.col("pt_date").is_in(days) & pl.col("goal_no").is_in(list(held))).height:
+        return True
     wins = [(w["start"], w["end"]) for w in h["ne_windows"]]
     return any(any(s <= d < e for s, e in wins) for d in days)
 

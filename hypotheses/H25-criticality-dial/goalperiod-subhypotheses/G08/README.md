@@ -1,6 +1,7 @@
 # H25 × G08: Design the AI Village benchmark for open-ended goal pursuit – and test yourselves on it! (2025-07-18 → 2025-08-12)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; corrected table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 4 agents at start · 18 non-holdout days · 3.0 h/day (empirical).
 
@@ -46,6 +47,22 @@ Data: `data/processed/H25-criticality-dial/G08/dial_daily.parquet`, `results.jso
 - **C (adequacy):** day-level null band (circular shifts): share of days with activity dial above its null 95th percentile = 0.06.
 - **D (unfitted):** H19 agreement (ii) passes; H03 n̂ TALK 0.27 vs talk dial -0.03 (cross-period test in the card).
 - **G (known structure):** see the card's event tests (regime switch, goal changes) where this period is involved.
+
+## Round 1b (improved data, 2026-10-04)
+Same pipeline (`analysis/explore.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` stall table (round 1's activity table dropped about half of all events). Predictions and verdict rule unchanged; check (ii) now compares with H19's estimator recomputed on the fixed table (round-1 H19 values are stale). The DQ8 row trims each day to the window in which all agents are between their first and last active minute before the block-shift null is drawn (whole-day block-shift nulls reject 28–34% of independent swarms).
+
+| Quantity | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| activity dial, stalls masked (fixed-effect mean; median) | 0.02; 0.03 | 0.04; 0.06 |
+| activity dial, stalls kept vs H19 g_eq | 0.04 vs 0.03 | 0.05 vs 0.14 (H19 estimator on the fixed table) |
+| talk dial, stalls masked (fixed-effect; random-effects) | -0.03; -0.03 | -0.02; -0.02 |
+| talk dial, stalls kept vs H19 g_eq talk | -0.03 vs -0.01 | -0.02 vs -0.02 |
+| days above the block-shift null q95: activity (round-1 design → **DQ8 trim**) | 1/18 | 2/18 → 3/18 |
+| median activity dial with the DQ8 trim | – | 0.01 |
+| content dial F2 median (inputs unchanged) | 0.30 | 0.30 |
+| per-period verdict (card rule) | mixed | mixed |
+
+Data: `data/processed/H25-criticality-dial/r1b/G08/`.
 
 ## Notes
 - 2026-10-04 02:14 UTC: results filled by `analysis/write_period_folders.py --results` from `analysis/explore.py` (exploratory round 1). Prediction block above unchanged from the --predict pass.

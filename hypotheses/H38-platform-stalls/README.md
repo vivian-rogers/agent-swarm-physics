@@ -1,10 +1,11 @@
 # H38: Joint silences are platform stalls
 
-**Status:** exploratory round 1 done (2026-10-04); confirmatory script written, not run. Predictions written 2026-10-04 01:25 UTC, before any real-data run (see Prediction). **Headline: mostly refuted as posed, but with a regime-specific yes.**
+**Status:** exploratory round 1 done (2026-10-04); **round 1b on the corrected tables done (2026-10-04, section below)**; confirmatory script written, not run. Predictions written 2026-10-04 01:25 UTC, before any real-data run (see Prediction). **Headline: mostly refuted as posed, but with a regime-specific yes.**
 - **Joint silences are not mostly platform stalls.** Their rate is what independent agents with their own half-hour on/off rates produce (median excess over independence 0.008 of minutes). Infrastructure errors don't precede them: an error burst makes a joint silence *less* likely (median log odds −0.43). Scaffold states sit in them at roughly chance level. What is real: village-off gaps are 84% operator-scheduled.
 - **In the always-on regime III, about two thirds of the collective co-activation is infrastructure.** Median f_scaffold = 0.68 over 8 significant periods. The main cause is agents starting and stopping together at the operator's daily resume and pause. The regime-III rise in co-activation (H19: +0.11) disappears once those minutes are conditioned on: +0.15 → +0.01 across NE14; +0.125 → +0.017 across periods.
 - **In regime I, co-activation is not infrastructure** (f_scaffold 0.11). Talk co-activation survives everywhere.
 - **Operator rule:** before reading any swarm synchrony statistic, drop off-schedule minutes and condition on not-started / finished / consolidating agent-minutes (`analysis/h38lib.py`).
+- **Round 1b (corrected tables):** joint silences fall from 14.3% to 5.3% of non-holdout minutes and are now 78% operator-scheduled; the regime-III share of co-activation that is day-edge synchrony holds (f_scaffold 0.68 → 0.72; f_trim 0.83), and under the DQ8-calibrated null (trim, then block shift) only 3 of 8 regime-III periods keep a significant excess (#44, #51 and, marginally, #37) against 16 of 18 in regime I. Native test NE43: the day-edge share does **not** drop when the operator's pause/resume messages stop (08-05), so the edges are the runner's schedule, not the announcement.
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH94 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Agent; Population N(t) (variants: *present population* (H02 rule, per chunk/unit) and *day-present population*, below); Regime; Driving / external field. **New named variants proposed for `physics-models/DEFINITIONS.md`** (not edited here; outside H38's scope): *joint silence*, *village-off gap*, *stall (explained joint silence)*, *silence reason*, defined under Data scheme.
@@ -151,44 +152,45 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - SP2 as written ("coupling alone") is scored on the pauses-only condition (background pauses, no edges, no stalls); a `clean` condition (no edges, pauses or stalls) defines the coupling truth for SP3, and a `partial` condition (stalls hitting half the agents) tests the subset case.
 
 ## Results by goal period
-| Period | Role | Verdict | Key numbers |
-| --- | --- | --- | --- |
-| [G02](goalperiod-subhypotheses/G02/README.md) | exploratory | failed | JS 0.474 (indep 0.390); explained 0.97 vs surr 0.96; top cause pause; raw g 0.23 z 2.3; f_stall -1.10, f_scaffold 0.01 |
-| [G03](goalperiod-subhypotheses/G03/README.md) | exploratory | supported | JS 0.444 (indep 0.425); explained 0.79 vs surr 0.79; top cause pause; raw g 0.02 z 0.4 |
-| [G04](goalperiod-subhypotheses/G04/README.md) | exploratory | mixed | JS 0.230 (indep 0.219); explained 0.76 vs surr 0.74; top cause scheduled; raw g 0.12 z 4.5; f_stall 0.45, f_scaffold 0.11 |
-| [G05](goalperiod-subhypotheses/G05/README.md) | exploratory | failed | JS 0.119 (indep 0.133); explained 0.18 vs surr 0.23; top cause unexplained; raw g -0.07 z -1.3 |
-| [G06](goalperiod-subhypotheses/G06/README.md) | exploratory | supported | JS 0.498 (indep 0.496); explained 0.74 vs surr 0.73; top cause scheduled; raw g 0.07 z 2.1; f_stall 1.21, f_scaffold 0.74 |
-| [G07](goalperiod-subhypotheses/G07/README.md) | exploratory | failed | JS 0.375 (indep 0.375); explained 0.17 vs surr 0.19; top cause unexplained; raw g 0.08 z 1.2 |
-| [G08](goalperiod-subhypotheses/G08/README.md) | exploratory | mixed | JS 0.092 (indep 0.090); explained 0.27 vs surr 0.26; top cause unexplained; raw g 0.08 z 3.0; f_stall 0.36, f_scaffold 0.11 |
-| [G10](goalperiod-subhypotheses/G10/README.md) | exploratory | failed | JS 0.078 (indep 0.050); explained 0.13 vs surr 0.01; top cause unexplained; raw g 0.29 z 5.7; f_stall 0.15, f_scaffold 0.11 |
-| [G11](goalperiod-subhypotheses/G11/README.md) | exploratory | failed | JS 0.078 (indep 0.056); explained 0.54 vs surr 0.44; top cause unexplained; raw g 0.30 z 5.7; f_stall 0.17, f_scaffold 0.26 |
-| [G12](goalperiod-subhypotheses/G12/README.md) | exploratory | failed | JS 0.072 (indep 0.055); explained 0.49 vs surr 0.56; top cause unexplained; raw g 0.17 z 3.8; f_stall -0.12, f_scaffold -0.02 |
-| [G13](goalperiod-subhypotheses/G13/README.md) | exploratory | mixed | JS 0.042 (indep 0.038); explained 0.24 vs surr 0.18; top cause unexplained; raw g 0.01 z 0.6 |
-| [G16](goalperiod-subhypotheses/G16/README.md) | exploratory | failed | JS 0.218 (indep 0.200); explained 0.38 vs surr 0.42; top cause unexplained; raw g 0.28 z 5.0; f_stall -0.01, f_scaffold -0.05 |
-| [G17](goalperiod-subhypotheses/G17/README.md) | exploratory | failed | JS 0.190 (indep 0.169); explained 0.71 vs surr 0.70; top cause pause; raw g 0.12 z 2.7; f_stall -0.25, f_scaffold -0.16 |
-| [G18](goalperiod-subhypotheses/G18/README.md) | exploratory | mixed | JS 0.165 (indep 0.156); explained 0.52 vs surr 0.49; top cause unexplained; raw g 0.12 z 3.6; f_stall 0.31, f_scaffold -0.09 |
-| [G19](goalperiod-subhypotheses/G19/README.md) | exploratory | failed | JS 0.152 (indep 0.145); explained 0.58 vs surr 0.57; top cause unexplained; raw g 0.12 z 4.2; f_stall 0.05, f_scaffold 0.16 |
-| [G20](goalperiod-subhypotheses/G20/README.md) | exploratory | failed | JS 0.078 (indep 0.073); explained 0.40 vs surr 0.43; top cause unexplained; raw g 0.04 z 1.2 |
-| [G21](goalperiod-subhypotheses/G21/README.md) | exploratory | mixed | JS 0.201 (indep 0.196); explained 0.22 vs surr 0.22; top cause unexplained; raw g 0.09 z 1.9 |
-| [G23](goalperiod-subhypotheses/G23/README.md) | exploratory | failed | JS 0.200 (indep 0.197); explained 0.15 vs surr 0.18; top cause unexplained; raw g 0.04 z 1.1 |
-| [G24](goalperiod-subhypotheses/G24/README.md) | exploratory | supported | JS 0.001 (indep 0.000); explained 1.00 vs surr 0.00; top cause scheduled; raw g -0.00 z -0.1 |
-| [G25](goalperiod-subhypotheses/G25/README.md) | exploratory | mixed | JS 0.096 (indep 0.096); explained 0.26 vs surr 0.23; top cause unexplained; raw g 0.05 z 1.1 |
-| [G26](goalperiod-subhypotheses/G26/README.md) | exploratory | failed | JS 0.391 (indep 0.383); explained 0.43 vs surr 0.43; top cause unexplained; raw g 0.21 z 3.8; f_stall -0.10, f_scaffold -0.15 |
-| [G27](goalperiod-subhypotheses/G27/README.md) | exploratory | failed | JS 0.025 (indep 0.022); explained 0.28 vs surr 0.11; top cause unexplained; raw g 0.13 z 4.6; f_stall 0.19, f_scaffold 0.36 |
-| [G30](goalperiod-subhypotheses/G30/README.md) | exploratory | mixed | JS 0.110 (indep 0.108); explained 0.11 vs surr 0.08; top cause unexplained; raw g 0.10 z 2.4; f_stall 0.25, f_scaffold 0.31 |
-| [G31](goalperiod-subhypotheses/G31/README.md) | exploratory | failed | JS 0.147 (indep 0.145); explained 0.09 vs surr 0.11; top cause unexplained; raw g 0.07 z 1.6 |
-| [G33](goalperiod-subhypotheses/G33/README.md) | exploratory | failed | JS 0.003 (indep 0.001); explained 1.00 vs surr 0.07; top cause scheduled; raw g 0.11 z 2.2; f_stall 0.18, f_scaffold 0.12 |
-| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory | failed | JS 0.037 (indep 0.040); explained 0.07 vs surr 0.04; top cause unexplained; raw g 0.10 z 2.2; f_stall -0.01, f_scaffold 0.45 |
-| [G36](goalperiod-subhypotheses/G36/README.md) | exploratory | supported | JS 0.076 (indep 0.062); explained 0.63 vs surr 0.59; top cause consolidation; raw g 0.17 z 4.0; f_stall 0.61, f_scaffold 1.06 |
-| [G37](goalperiod-subhypotheses/G37/README.md) | exploratory | failed | JS 0.421 (indep 0.411); explained 1.00 vs surr 1.00; top cause scheduled; raw g 0.32 z 5.1; f_stall 0.54, f_scaffold 0.78 |
-| [G38](goalperiod-subhypotheses/G38/README.md) | exploratory | failed | JS 0.091 (indep 0.081); explained 0.88 vs surr 0.88; top cause scheduled; raw g 0.15 z 6.1; f_stall 0.76, f_scaffold 0.89 |
-| [G39](goalperiod-subhypotheses/G39/README.md) | exploratory | supported | JS 0.015 (indep 0.002); explained 0.83 vs surr 0.43; top cause scheduled; raw g 0.19 z 4.9; f_stall 0.68, f_scaffold 0.48 |
-| [G40](goalperiod-subhypotheses/G40/README.md) | exploratory | supported | JS 0.045 (indep 0.026); explained 0.67 vs surr 0.52; top cause scheduled; raw g 0.35 z 7.5; f_stall 0.58, f_scaffold 0.69 |
-| [G41](goalperiod-subhypotheses/G41/README.md) | exploratory | supported | JS 0.079 (indep 0.081); explained 0.66 vs surr 0.62; top cause unexplained; raw g 0.13 z 2.9; f_stall 0.77, f_scaffold 0.66 |
-| [G42](goalperiod-subhypotheses/G42/README.md) | exploratory | supported | JS 0.103 (indep 0.089); explained 0.51 vs surr 0.48; top cause unexplained; raw g 0.11 z 2.4; f_stall 1.16, f_scaffold 0.87 |
-| [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | failed | JS 0.084 (indep 0.061); explained 0.34 vs surr 0.35; top cause unexplained; raw g 0.36 z 7.1; f_stall 0.16, f_scaffold -0.03 |
-| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | failed | JS 0.136 (indep 0.125); explained 0.95 vs surr 0.97; top cause scheduled; raw g 0.28 z 25.1; f_stall 0.36, f_scaffold 0.14 |
-| [NE14](goalperiod-subhypotheses/NE14/README.md) | exploratory (boundary) | supported | Δ excess gain II → III: raw +0.150 [+0.070, +0.230]; stall +0.012; edge-conditioned +0.005; scaffold-conditioned -0.060 |
+| Period | Role | Verdict | Verdict (1b) | Key numbers (round 1; 1b numbers in each folder) |
+| --- | --- | --- | --- | --- |
+| [G02](goalperiod-subhypotheses/G02/README.md) | exploratory | failed | failed | JS 0.474 (indep 0.390); explained 0.97 vs surr 0.96; top cause pause; raw g 0.23 z 2.3; f_stall -1.10, f_scaffold 0.01 |
+| [G03](goalperiod-subhypotheses/G03/README.md) | exploratory | supported | mixed | JS 0.444 (indep 0.425); explained 0.79 vs surr 0.79; top cause pause; raw g 0.02 z 0.4 |
+| [G04](goalperiod-subhypotheses/G04/README.md) | native (1b) | mixed | failed (native #4d: failed) | JS 0.230 (indep 0.219); explained 0.76 vs surr 0.74; top cause scheduled; raw g 0.12 z 4.5; f_stall 0.45, f_scaffold 0.11 |
+| [G05](goalperiod-subhypotheses/G05/README.md) | exploratory | failed | supported | JS 0.119 (indep 0.133); explained 0.18 vs surr 0.23; top cause unexplained; raw g -0.07 z -1.3 |
+| [G06](goalperiod-subhypotheses/G06/README.md) | exploratory | supported | supported | JS 0.498 (indep 0.496); explained 0.74 vs surr 0.73; top cause scheduled; raw g 0.07 z 2.1; f_stall 1.21, f_scaffold 0.74 |
+| [G07](goalperiod-subhypotheses/G07/README.md) | exploratory | failed | failed | JS 0.375 (indep 0.375); explained 0.17 vs surr 0.19; top cause unexplained; raw g 0.08 z 1.2 |
+| [G08](goalperiod-subhypotheses/G08/README.md) | exploratory | mixed | failed | JS 0.092 (indep 0.090); explained 0.27 vs surr 0.26; top cause unexplained; raw g 0.08 z 3.0; f_stall 0.36, f_scaffold 0.11 |
+| [G10](goalperiod-subhypotheses/G10/README.md) | exploratory | failed | failed | JS 0.078 (indep 0.050); explained 0.13 vs surr 0.01; top cause unexplained; raw g 0.29 z 5.7; f_stall 0.15, f_scaffold 0.11 |
+| [G11](goalperiod-subhypotheses/G11/README.md) | exploratory | failed | failed | JS 0.078 (indep 0.056); explained 0.54 vs surr 0.44; top cause unexplained; raw g 0.30 z 5.7; f_stall 0.17, f_scaffold 0.26 |
+| [G12](goalperiod-subhypotheses/G12/README.md) | exploratory | failed | mixed | JS 0.072 (indep 0.055); explained 0.49 vs surr 0.56; top cause unexplained; raw g 0.17 z 3.8; f_stall -0.12, f_scaffold -0.02 |
+| [G13](goalperiod-subhypotheses/G13/README.md) | exploratory | mixed | mixed | JS 0.042 (indep 0.038); explained 0.24 vs surr 0.18; top cause unexplained; raw g 0.01 z 0.6 |
+| [G16](goalperiod-subhypotheses/G16/README.md) | exploratory | failed | failed | JS 0.218 (indep 0.200); explained 0.38 vs surr 0.42; top cause unexplained; raw g 0.28 z 5.0; f_stall -0.01, f_scaffold -0.05 |
+| [G17](goalperiod-subhypotheses/G17/README.md) | exploratory | failed | failed | JS 0.190 (indep 0.169); explained 0.71 vs surr 0.70; top cause pause; raw g 0.12 z 2.7; f_stall -0.25, f_scaffold -0.16 |
+| [G18](goalperiod-subhypotheses/G18/README.md) | exploratory | mixed | failed | JS 0.165 (indep 0.156); explained 0.52 vs surr 0.49; top cause unexplained; raw g 0.12 z 3.6; f_stall 0.31, f_scaffold -0.09 |
+| [G19](goalperiod-subhypotheses/G19/README.md) | exploratory | failed | failed | JS 0.152 (indep 0.145); explained 0.58 vs surr 0.57; top cause unexplained; raw g 0.12 z 4.2; f_stall 0.05, f_scaffold 0.16 |
+| [G20](goalperiod-subhypotheses/G20/README.md) | exploratory | failed | supported | JS 0.078 (indep 0.073); explained 0.40 vs surr 0.43; top cause unexplained; raw g 0.04 z 1.2 |
+| [G21](goalperiod-subhypotheses/G21/README.md) | exploratory | mixed | failed | JS 0.201 (indep 0.196); explained 0.22 vs surr 0.22; top cause unexplained; raw g 0.09 z 1.9 |
+| [G23](goalperiod-subhypotheses/G23/README.md) | exploratory | failed | failed | JS 0.200 (indep 0.197); explained 0.15 vs surr 0.18; top cause unexplained; raw g 0.04 z 1.1 |
+| [G24](goalperiod-subhypotheses/G24/README.md) | exploratory | supported | supported | JS 0.001 (indep 0.000); explained 1.00 vs surr 0.00; top cause scheduled; raw g -0.00 z -0.1 |
+| [G25](goalperiod-subhypotheses/G25/README.md) | exploratory | mixed | supported | JS 0.096 (indep 0.096); explained 0.26 vs surr 0.23; top cause unexplained; raw g 0.05 z 1.1 |
+| [G26](goalperiod-subhypotheses/G26/README.md) | exploratory | failed | failed | JS 0.391 (indep 0.383); explained 0.43 vs surr 0.43; top cause unexplained; raw g 0.21 z 3.8; f_stall -0.10, f_scaffold -0.15 |
+| [G27](goalperiod-subhypotheses/G27/README.md) | exploratory | failed | mixed | JS 0.025 (indep 0.022); explained 0.28 vs surr 0.11; top cause unexplained; raw g 0.13 z 4.6; f_stall 0.19, f_scaffold 0.36 |
+| [G30](goalperiod-subhypotheses/G30/README.md) | exploratory | mixed | mixed | JS 0.110 (indep 0.108); explained 0.11 vs surr 0.08; top cause unexplained; raw g 0.10 z 2.4; f_stall 0.25, f_scaffold 0.31 |
+| [G31](goalperiod-subhypotheses/G31/README.md) | exploratory | failed | failed | JS 0.147 (indep 0.145); explained 0.09 vs surr 0.11; top cause unexplained; raw g 0.07 z 1.6 |
+| [G33](goalperiod-subhypotheses/G33/README.md) | exploratory | failed | failed | JS 0.003 (indep 0.001); explained 1.00 vs surr 0.07; top cause scheduled; raw g 0.11 z 2.2; f_stall 0.18, f_scaffold 0.12 |
+| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory | failed | failed | JS 0.037 (indep 0.040); explained 0.07 vs surr 0.04; top cause unexplained; raw g 0.10 z 2.2; f_stall -0.01, f_scaffold 0.45 |
+| [G36](goalperiod-subhypotheses/G36/README.md) | exploratory | supported | mixed | JS 0.076 (indep 0.062); explained 0.63 vs surr 0.59; top cause consolidation; raw g 0.17 z 4.0; f_stall 0.61, f_scaffold 1.06 |
+| [G37](goalperiod-subhypotheses/G37/README.md) | exploratory | failed | failed | JS 0.421 (indep 0.411); explained 1.00 vs surr 1.00; top cause scheduled; raw g 0.32 z 5.1; f_stall 0.54, f_scaffold 0.78 |
+| [G38](goalperiod-subhypotheses/G38/README.md) | exploratory | failed | failed | JS 0.091 (indep 0.081); explained 0.88 vs surr 0.88; top cause scheduled; raw g 0.15 z 6.1; f_stall 0.76, f_scaffold 0.89 |
+| [G39](goalperiod-subhypotheses/G39/README.md) | exploratory | supported | supported | JS 0.015 (indep 0.002); explained 0.83 vs surr 0.43; top cause scheduled; raw g 0.19 z 4.9; f_stall 0.68, f_scaffold 0.48 |
+| [G40](goalperiod-subhypotheses/G40/README.md) | exploratory | supported | supported | JS 0.045 (indep 0.026); explained 0.67 vs surr 0.52; top cause scheduled; raw g 0.35 z 7.5; f_stall 0.58, f_scaffold 0.69 |
+| [G41](goalperiod-subhypotheses/G41/README.md) | exploratory | supported | supported | JS 0.079 (indep 0.081); explained 0.66 vs surr 0.62; top cause unexplained; raw g 0.13 z 2.9; f_stall 0.77, f_scaffold 0.66 |
+| [G42](goalperiod-subhypotheses/G42/README.md) | exploratory | supported | supported | JS 0.103 (indep 0.089); explained 0.51 vs surr 0.48; top cause unexplained; raw g 0.11 z 2.4; f_stall 1.16, f_scaffold 0.87 |
+| [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | failed | mixed | JS 0.084 (indep 0.061); explained 0.34 vs surr 0.35; top cause unexplained; raw g 0.36 z 7.1; f_stall 0.16, f_scaffold -0.03 |
+| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | failed | failed | JS 0.136 (indep 0.125); explained 0.95 vs surr 0.97; top cause scheduled; raw g 0.28 z 25.1; f_stall 0.36, f_scaffold 0.14 |
+| [NE14](goalperiod-subhypotheses/NE14/README.md) | native (1b) | supported | supported | Δ excess gain II → III: raw +0.150 [+0.070, +0.230]; stall +0.012; edge-conditioned +0.005; scaffold-conditioned -0.060 |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) | native (1b) | – | failed | bookends stop 08-05: day-edge share 0.189 → 0.135 (p 0.08), start spread narrower; nudger stop 08-21: no edge change, start spread +22.6 min (post hoc) |
 
 ## Results
 Scripts:
@@ -308,8 +310,56 @@ Among the 25 periods with a significant raw gain, f is the share of the excess g
 - `figures/causes.png`: cause composition of joint silences per period, with the JS share against its independent expectation.
 - `figures/synthetic.png`: planted stalls / edges vs planted coupling, and false-coupling rates of each filter.
 
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the round-1 pipeline on corrected inputs, plus the DQ8 null-size correction and three period-native tests. Predictions P1–P9 and the per-period rule are unchanged; native predictions were written in the folders before each run (NE43 06:31, G04 and NE14 06:32 UTC).*
+
+**What changed in the inputs.**
+- `activity_bins` dropped about half of all events (DQ8 join-key bug). Round 1b reads `activity_bins_fixed` and the shared `outages_fixed/{outages,stall_minutes,reasons}` sidecar (H38's own outage rule rebuilt on the fixed table by `infra/shared/outages.py --fixed`). Joint silences fall from 14.3% to 5.3% of non-holdout minutes; non-holdout runs from 2,650 to 429.
+- **Null sizes (DQ8).** H38's N1 null (block shift within day × 30-min block) on whole-day grids rejects 28–34% of independent swarms; after trimming each day to the all-present window it rejects 2–4%. Round 1b adds `trim`, `trim_stall` and `trim_scaffold`, with rows removed *before* the surrogates are drawn. For λ₁ (O5), the cross-day edge has size 0.62 on whole-day grids and 0.19 on trimmed grids, so round 1b adds `trim_bs` (trimmed rows, block-shift edge; size 0.05).
+- NE43 is two steps (bookends end after 08-04 PT, nudges after 08-20). The day-edge mechanism is tested at the bookend stop.
+- Code: `analysis/run_period.py`, `ne14.py`, `summarize.py --data-version fixed` (the old path still runs by default and reproduces round 1 exactly, e.g. G40 g_raw 0.349955); new `analysis/r1b_native.py`, `analysis/r1b_periods.py`. Outputs in `data/processed/H38-platform-stalls/r1b/`.
+
+**Old vs new (non-holdout, 35 periods).**
+
+| Statistic | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share, pooled minutes · median over periods | 14.3% · 0.103 | 5.3% · 0.009 |
+| above the independent expectation (median excess) | 32/35 (0.008) | 32/35 (0.007) |
+| causes of JS minutes (pooled) | unexplained 31%, scheduled 30%, pause 17%, edge 16%, consolidation 6%, infra 0.7% | **scheduled 78%**, unexplained 8%, pause 8%, edge 7%, consolidation 0%, infra 0.1% |
+| explained share, median (strict) · above surrogate mean / q95 | 0.51 (0.16) · 23 / 8 | 0.88 (0.67) · 24 / 12 |
+| village-off gaps | 28 in 9 periods, 84% scheduled | 15 in 7 periods, 94% scheduled |
+| P3 log OR(JS ∣ prior infra burst), median · positive · significant > 0 | −0.43 · 9/30 · 0/30 | −0.96 · 8/30 · 1/30 |
+| raw g_eq active significant (N1, whole-day grid) | 25/35 | 29/35 |
+| median f (significant periods): stall · lull · scaffold · + pauses | 0.25 · 0.46 · 0.16 · 0.60 | 0.26 · 0.48 · 0.14 · 0.59 |
+| f_scaffold regime III (8) · regime I | 0.68 · 0.11 | **0.72** · 0.11 |
+| significant after stall · lull · scaffold · + pauses | 16 · 13 · 16 · 10 | 28 · 27 · 24 · 13 |
+| H02 chunks significant: raw → stall / lull / scaffold | 13 → 8 / 5 / 9 | 16 → 13 / 12 / 9 |
+| **DQ8 null:** significant after trimming (trim · trim_stall · trim_scaffold) | not computed | **20 · 16 · 21 of 35**; regime III **3/8**, regime I 16/18 |
+| **DQ8 null:** median f_trim (III · I) | – | 0.27 (0.83 · 0.11) |
+| talk spins significant raw → trimmed; median talk f_trim | – | 31 → 29 of 35; 0.03 |
+| λ₁ units above edge: raw · stall · lull · scaffold (cross-day edge) | 37 · 31 · 19 · 34 of 41 | 31 · 18 · 15 · 24 of 41 |
+| **DQ8 null:** λ₁ above the trimmed block-shift edge (trim · trim_stall) | – | **19 · 18 of 41** (median ratio 1.00) |
+| P5: stall drop / lull drop · ρ(stall share, drop) | 0.48 · 0.89 | 1.00 · 0.87 |
+| P6: regime III − I, raw → stall → scaffold (→ trim) | +0.125 → +0.041 → +0.017 | +0.155 → +0.051 → −0.006 (→ −0.059) |
+| P8: ρ with H03 fast n_x, raw → scaffold (→ trim) | −0.38 → +0.05 | −0.33 → +0.19 (→ +0.20) |
+| P9 NE14: Δ raw → stall → scaffold (→ trim) | +0.150 [0.07, 0.23] → +0.012 → −0.060 | +0.116 [−0.04, 0.27] → −0.046 → −0.135 (→ −0.076) |
+| per-period verdicts (supported / mixed / failed) | 8 / 7 / 20 | 9 / 7 / 19 |
+
+**Which verdicts change.**
+- **Card level:** P2a now passes (explained 0.88, above the surrogate mean in 24/35 ≥ 2/3), but only because most joint silences are now operator-scheduled minutes; P5 now passes (stall/lull drop 1.00, ρ 0.87). P1 fails more clearly (median JS share 0.009, outside [0.05, 0.30]). P2b, P3, P4 (as written) and P8 still fail; P2c, P2d, P6, P7 (consistency) and P9 still pass. **Headline unchanged in direction and sharpened:** joint silences are rare and almost all scheduled; in regime III most co-activation is day-edge synchrony; in regime I it is not.
+- **Under the corrected null** the regime-III verdict is stronger: after trimming, only 3 of 8 regime-III periods keep a significant excess (#37 at z 2.0, #44 z 3.4, #51 z 8.5), and with scaffold conditioning on top only #44 and #51 do (G38–G42 lose it), so the "#44 and #51 residuals" are the only regime-III candidates for coupling. In regime I the excess survives trimming in 16/18 periods.
+- **Per period (12 changes, all regime I except G36 and G44):** G05, G20, G25 failed/mixed → supported; G12, G27 failed → mixed; G44 failed → mixed; G03, G36 supported → mixed; G04, G08, G18, G21 mixed → failed. They follow from much smaller joint-silence counts (explained shares rest on a handful of minutes in most regime-I periods), not from a change in the gains.
+- **Native tests:** NE14 (re-run with the DQ8 null and the #36-only pair) **supported**, with a smaller raw jump whose interval now includes 0; **NE43 failed**: the day-edge component does not drop when the bookend messages stop (0.189 → 0.135, p = 0.08) and agents start *more* tightly together (start spread 15.3 → 3.8 min), so the edges come from the runner's schedule, not the operator's announcement (post hoc: the start spread widens at the nudger stop, +22.6 min, p = 0.010); **G04 #4d failed**: the 300-min operator stop on 2025-06-18 is detected (299 min, 99% scheduled) and the restart is perfectly synchronized (all agents within 1 min), but it leaves no trace in the block-detrended gain (E_raw 0.022, below the other days' median 0.191): whole-block stalls are harmless to the 30-min-block estimator.
+
+**Scorecard after 1b** (unchanged scores, updated evidence): A 1 (the `scheduled` flag depends on operator messages and empties after 08-05; agent-level trimming does not); B 1; C 1 (DQ8 null: 20/35 periods significant after trimming; scaffold reasons above surrogate q95 in 12/35); D 1 (P5 and P6 pass, P8 fails at ρ 0.19); E 1 (NE14 supported but weaker; NE43 refutes the message mechanism and supports the runner mechanism; #4d no inflation); F 1; G 1 (village-off minutes 94% scheduled; synchronized restart on 06-18); H 1; I 1.
+
+**Cross-hypothesis corroboration (H50, 2026-10-04; `data/processed/H50-field-vs-coupling-transfer-lag/`, built from `call_windows`, not `activity_bins`).** H50 finds activity co-movement to be a scheduler field: the daily start/stop alone explains 0.62 (regime I) / 0.67 (regime III) of it, agents start within ~9–22 s of each other, and inside the all-present window per-pair activity correlation nearly vanishes (0.056 / 0.005). After 08-04 (no bookends) agents still start within ~22 s and the day-start step keeps its size: an independent measurement of the same NE43 result (the runner starts the agents, not the message). It also finds talk co-movement to be a genuine coupling gated at one read-out call (J₁ > 0 in 45/71 units), consistent with H38's talk excess surviving every scaffold adjustment and trimming (29/35).
+
+**Operator rule, revised.** Trim each day to the window in which every agent that runs that day is between its first and last action, *then* draw surrogates. Do not rely on operator start/stop messages to find the edges: the runner's schedule makes the edges whether or not it is announced.
+
 ## Notes
 - 2026-10-04: promoted from HH94 by Vivian (usefulness-first batch); wave 1.
 - 2026-10-04 01:21 UTC: ran `scheme/scan_turn_errors.py` (37 s, one raw pass, categories only) before writing predictions; its output only fixed the error categories, which are design.
 - 2026-10-04: shared `outages.parquet` / `stall_minutes.parquet` built for all 389 days (holdout flagged, 3,590 joint-silence runs, 2,650 non-holdout). Consumers (H25, H26, H36) should filter `holdout == False` and decide whether to drop `explained` runs, `village_off` runs or only `cause == "scheduled"` minutes.
 - 2026-10-04: round 1 done; disk 4.6 MB in `data/processed/H38-platform-stalls/`.
+- 2026-10-04: round 1b on the corrected tables (`activity_bins_fixed`, `outages_fixed`), DQ8 null correction, native tests NE43 / G04 #4d / NE14; ~7 min of compute on ≤ 2 processes; disk +1.5 MB in `data/processed/H38-platform-stalls/r1b/`.

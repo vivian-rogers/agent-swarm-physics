@@ -11,15 +11,21 @@ Outputs:
                          are the d = 32 representation. No text anywhere.
 Holdout days are dropped with a hard assertion (calendar.holdout and infra holdout_mask must agree).
 
-Usage: uv run python hypotheses/H12-groupthink-dimensional-collapse/scheme/build.py
+Usage: uv run python hypotheses/H12-groupthink-dimensional-collapse/scheme/build.py [--data-version fixed]
+Round 1b (2026-10-04): --data-version fixed rebuilds only the activity-derived tables (units with N_present,
+agents_units, spins) from activity_bins_fixed into data/processed/H12-groupthink-dimensional-collapse/r1b/; the
+statement tables are unchanged and are not rewritten.
 """
 from __future__ import annotations
 
+import os
 import re
 import sys
 import time
 from pathlib import Path
 
+if "--data-version" in sys.argv:
+    os.environ["H12_DATA_VERSION"] = sys.argv[sys.argv.index("--data-version") + 1]
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "analysis"))
 import h12lib as L  # noqa: E402
 
@@ -48,6 +54,8 @@ def goal_catalog() -> pl.DataFrame:
 def main():
     t0 = time.time()
     L.OUT.mkdir(parents=True, exist_ok=True)
+    L.OUTV.mkdir(parents=True, exist_ok=True)
+    fixed = L.DATA_VERSION == "fixed"
     cal = pl.read_parquet(L.SH / "calendar.parquet").with_columns(pl.col("regime").cast(pl.String))
     hm = L.holdout_mask(cal["pt_date"].to_list(), cal["goal_no"].to_list())
     assert cal["holdout"].to_list() == hm, "calendar.holdout disagrees with holdout_mask"
@@ -67,7 +75,7 @@ def main():
                        pl.lit("exploratory").alias("role"))
 
     # ---- activity spins (present population per unit)
-    ab = (pl.scan_parquet(L.SH / "activity_bins.parquet").select("pt_date", "minute", "agent", "state")
+    ab = (pl.scan_parquet(L.AB).select("pt_date", "minute", "agent", "state")
           .filter(pl.col("pt_date").is_in(cal["pt_date"].to_list())).collect())
     ab = ab.join(cal.select("pt_date", "unit"), on="pt_date")
     nd = cal.group_by("unit").agg(pl.len().alias("nd_unit"))
@@ -77,13 +85,24 @@ def main():
     spins = (ab.join(pres.filter("present").select("unit", "agent"), on=["unit", "agent"], how="semi")
              .join(dayidx, on=["pt_date", "unit"])
              .select("unit", "pt_date", "day", pl.col("minute").cast(pl.Int16), "agent", "state").sort("unit", "day", "minute", "agent"))
-    spins.write_parquet(L.OUT / "spins.parquet", compression="zstd")
+    spins.write_parquet(L.OUTV / "spins.parquet", compression="zstd")
 
-    # ---- statements, whitened per regime
-    st = (pl.read_parquet(L.SH / "embeddings/statements.parquet")
+    # ---- statements, whitened per regime (unchanged in the fixed version: read back, never rewritten)
+    if fixed:
+        st = pl.read_parquet(L.OUT / "stmt_index.parquet")
+    else:
+        st = None
+    st = st if fixed else (pl.read_parquet(L.SH / "embeddings/statements.parquet")
           .filter(~pl.col("holdout") & pl.col("pt_date").is_in(cal["pt_date"].to_list()))
           .join(cal.select("pt_date", "unit"), on="pt_date"))
     assert not any(L.holdout_mask(st["pt_date"].to_list(), st["goal_no"].to_list()))
+    if not fixed:
+        build_statements(st)
+        st = pl.read_parquet(L.OUT / "stmt_index.parquet")
+    finish(cal, u, pres, st, fixed, t0, spins)
+
+
+def build_statements(st):
     Ec = np.load(L.SH / "embeddings/chat_bge_small.npy", mmap_mode="r")
     Ei = np.load(L.SH / "embeddings/intentions_bge_small.npy", mmap_mode="r")
     kind = st["kind"].to_numpy(); src = st["src_row"].to_numpy(); reg = st["regime"].to_numpy()
@@ -98,6 +117,8 @@ def main():
     st.write_parquet(L.OUT / "stmt_index.parquet", compression="zstd")
     np.save(L.OUT / "stmt_white_d64.npy", Wout)
 
+
+def finish(cal, u, pres, st, fixed, t0, spins):
     # ---- agents x units: lab, modal room, presence
     roster = pl.read_parquet(L.SH / "roster.parquet").select("agent", "name", "lab")
     rt = pl.read_parquet(L.SH / "rooms_timeline.parquet")
@@ -112,7 +133,7 @@ def main():
     nst = st.group_by("unit", "agent").agg(pl.len().alias("n_stmt"), (pl.col("kind") == "chat").sum().alias("n_chat"))
     au = (pres.select("unit", "agent", "present", "nd", "nact").join(nst, on=["unit", "agent"], how="full", coalesce=True)
           .join(modal, on=["unit", "agent"], how="left").join(roster, on="agent", how="left").sort("unit", "agent"))
-    au.write_parquet(L.OUT / "agents_units.parquet", compression="zstd")
+    au.write_parquet(L.OUTV / "agents_units.parquet", compression="zstd")
 
     # room count per unit (rooms holding >= 3 present agents as their modal room)
     rooms = (au.filter(pl.col("present").fill_null(False)).group_by("unit", "room_modal").len()
@@ -120,13 +141,14 @@ def main():
     u = u.join(rooms, on="unit", how="left").with_columns(pl.col("n_rooms3").fill_null(0))
     npres = au.filter(pl.col("present").fill_null(False)).group_by("unit").len().rename({"len": "N_present"})
     u = u.join(npres, on="unit", how="left")
-    u.write_parquet(L.OUT / "units.parquet", compression="zstd")
+    u.write_parquet(L.OUTV / "units.parquet", compression="zstd")
 
     L.write_provenance("hypotheses/H12-groupthink-dimensional-collapse/scheme/build.py",
-                       ["activity_bins", "calendar", "roster", "rooms_timeline", "embeddings/statements",
+                       [L.AB.name, "calendar", "roster", "rooms_timeline", "embeddings/statements",
                         "embeddings/chat_bge_small.npy", "embeddings/intentions_bge_small.npy", "embeddings/whitening_*"],
                        {"units": "goal periods split at H01 step changes", "min_active_bins": MIN_ACTIVE_BINS,
-                        "whitening_dim_stored": 64, "holdout": "excluded (calendar.holdout == holdout_mask, asserted)"})
+                        "whitening_dim_stored": 64, "holdout": "excluded (calendar.holdout == holdout_mask, asserted)",
+                        "data_version": L.DATA_VERSION}, path=L.OUTV / "_provenance.json")
     with pl.Config(tbl_rows=60, tbl_width_chars=200):
         print(u.select("unit", "goal_no", "regime", "mode", "N_catalog", "N_present", "n_days", "n_rooms3", "scored"))
     print(f"spins {spins.height}, statements {st.height}; {time.time() - t0:.0f}s")

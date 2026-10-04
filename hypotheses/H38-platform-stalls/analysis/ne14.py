@@ -5,15 +5,21 @@ every day of the side and >= 30 active bins). N1 joint surrogates (200) for E an
 uncertainty of Delta = E_III - E_II.
 
 Output: data/processed/H38-platform-stalls/NE14/result.json; the card's NE14 folder is written by summarize.py.
-Usage: uv run python hypotheses/H38-platform-stalls/analysis/ne14.py
+Round 1b: --data-version fixed (activity_bins_fixed + shared outages_fixed) writes r1b/NE14/result.json and adds the
+DQ8-design variants (trim, trim_stall, trim_scaffold, trim_all: rows outside the all-present window removed before the
+block-shift surrogates), plus a #36-only window pair (03-23 vs 03-24..03-27, same goal) as a sensitivity.
+Usage: uv run python hypotheses/H38-platform-stalls/analysis/ne14.py [--data-version fixed]
 """
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
 sys.dont_write_bytecode = True
+if "--data-version" in sys.argv:
+    os.environ["H38_DATA_VERSION"] = sys.argv[sys.argv.index("--data-version") + 1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import h38lib as L  # noqa: E402
 import run_period as RP  # noqa: E402
@@ -22,6 +28,7 @@ import numpy as np  # noqa: E402
 import polars as pl  # noqa: E402
 
 VARS = ["raw", "lull", "stall", "field", "mask_edge", "mask_infra", "mask_scaffold", "mask_all"]
+TV = L.TRIM_VARS
 N_SURR, N_BOOT = 200, 500
 
 
@@ -45,16 +52,21 @@ def window(days, rng):
     S, Tk, R, day, minute, sched = RP.matrices(ab, sm, days, agents)
     bid, segs = L.block_segments(day, minute)
     res, f = L.gains(S, R, sched, bid)
-    out = {"days": days, "N": len(agents), "js_share": float(f["js"].mean()), "stall_share": float(f["explained"].mean())}
-    nulls = {v: [] for v in VARS}
+    out = {"days": days, "N": len(agents), "js_share": float(f["js"].mean()), "stall_share": float(f["explained"].mean()),
+           "trim_share": float(L.trim_mask(R).mean())}
+    nulls = {v: [] for v in VARS + TV}
     for _ in range(N_SURR):
         Sx, Rx = L.joint_shift([S, R], segs, rng)
         rx, _ = L.gains(Sx, Rx, sched, bid)
         for v in VARS:
             nulls[v].append(L.cw(rx[v][0])["g"])
+    tob, tnu = L.trim_gains(S, R, sched, day, minute, f["explained"], rng, N_SURR)
+    for v in TV:
+        res[v] = (tob[v][0], None)
+        nulls[v] = [L.cw(x[0])["g"] for x in tnu[v]]
     # day bootstrap of the observed g per variant (block suffstats carry their day)
     bday = np.array([day[bid == b][0] for b in range(bid.max() + 1)])
-    for v in VARS:
+    for v in VARS + TV:
         nv = np.array(nulls[v])
         go = L.cw(res[v][0])["g"]
         out[v] = {"g": go, "null_mean": float(nv.mean()), "null_sd": float(nv.std()), "E": go - float(nv.mean()),
@@ -64,14 +76,16 @@ def window(days, rng):
     for d in np.unique(day):
         m = day == d
         rr, _ = L.gains(S[m], R[m], sched[m], L.h02.block_ids(day[m], minute[m]))
+        to, _ = L.trim_gains(S[m], R[m], sched[m], day[m], minute[m], f["explained"][m], rng, 0)
         per_day[d] = {v: rr[v][0] for v in VARS}
+        per_day[d].update({v: (to[v][0] if v in to else np.zeros((0, 4))) for v in TV})
     dd = list(per_day)
-    boots = {v: [] for v in VARS}
+    boots = {v: [] for v in VARS + TV}
     for _ in range(N_BOOT):
         pick = rng.choice(dd, size=len(dd), replace=True)
-        for v in VARS:
+        for v in VARS + TV:
             boots[v].append(L.cw(np.vstack([per_day[x][v] for x in pick]))["g"])
-    for v in VARS:
+    for v in VARS + TV:
         out[v]["boot_sd"] = float(np.nanstd(boots[v]))
     _ = bday
     return out
@@ -83,16 +97,22 @@ def main():
     A, B = window(ii, rng), window(iii, rng)
     # sensitivity (post hoc, disclosed): drop 2026-03-31, whose window contains a 513-min operator-scheduled gap
     B2 = window([d for d in iii if d != "2026-03-31"], rng)
-    res = {"II": A, "III": B, "III_no0331": B2, "delta": {}, "delta_no0331": {}}
-    for key, BB in (("delta", B), ("delta_no0331", B2)):
-        for v in VARS:
-            dE = BB[v]["E"] - A[v]["E"]
-            se = float(np.hypot(A[v]["boot_sd"], BB[v]["boot_sd"]))
+    res = {"II": A, "III": B, "III_no0331": B2, "delta": {}, "delta_no0331": {}, "data_version": L.DATA_VERSION}
+    pairs = [("delta", A, B), ("delta_no0331", A, B2)]
+    if L.DATA_VERSION == "fixed":  # round 1b sensitivity: #36 only (same goal across the boundary; DQ9 native)
+        A36 = window(["2026-03-23"], rng)
+        B36 = window([d for d in iii if d < "2026-03-28"], rng)
+        res.update({"II_36": A36, "III_36": B36, "delta_36": {}})
+        pairs.append(("delta_36", A36, B36))
+    for key, AA, BB in pairs:
+        for v in VARS + TV:
+            dE = BB[v]["E"] - AA[v]["E"]
+            se = float(np.hypot(AA[v]["boot_sd"], BB[v]["boot_sd"]))
             res[key][v] = {"dE": dE, "se": se, "lo": dE - 1.96 * se, "hi": dE + 1.96 * se}
-    out = L.DATA / "NE14"
+    out = L.RES / "NE14"
     out.mkdir(parents=True, exist_ok=True)
     (out / "result.json").write_text(json.dumps(res, indent=1, default=float))
-    for v in VARS:
+    for v in VARS + TV:
         print(f"{v:14s} II E={A[v]['E']:.3f} (z {A[v]['z']:.1f})  III E={B[v]['E']:.3f} (z {B[v]['z']:.1f})  "
               f"dE={res['delta'][v]['dE']:+.3f} ± {1.96 * res['delta'][v]['se']:.3f}")
     print("N", A["N"], B["N"], "stall share", round(A["stall_share"], 3), round(B["stall_share"], 3))

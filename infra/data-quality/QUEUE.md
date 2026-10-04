@@ -27,6 +27,9 @@ Each DQ agent writes only new files in `infra/` and new tables in `data/processe
 - DQ6 `ground_truth_labels`: give #51 rival-pair rows time bounds (Opus 5 is listed as game-dev after its 07-29 reassignment; H54).
 - `actions_bash_head_fixed.system_class` is constant `none`: fix the classifier (H56).
 - Move `h56lib.newton_counts` / `cfx_counts` (H14's EP estimators from count matrices, ~100× faster) to `infra/shared/`.
+- `outages.py`: derive `scheduled` from runner start/stop (empty after 08-04 with the operator-message rule; RE-A1).
+- Move the trim-before-surrogate functions (H38 `trim_gains`/`l1_trim_blockshift`, H12 `trim_rows`/`spectrum_test_blockshift`, H25 trim variant) into `infra/shared/nulls.py`.
+- A stable shared statement id across `statements.parquet`, embeddings and `statement_flags` (H12 had to join on kind, agent, t, pt_date).
 - `kicks_classified`: add `primary_target` (the nudge's leading @; 29% of nudges mention other agents too, H35).
 - DQ7 rebuild should also apply stall-adjusted (agent-state conditioned) variants of the collective statistics used by H02, H12 and H19.
 
@@ -72,7 +75,7 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 ### Re-evaluation progress
 | Agent | Hypotheses | Status |
 | --- | --- | --- |
-| RE-A1 | H38, H12, H25 | running (2026-10-04) |
+| RE-A1 | H38, H12, H25 | **done** (2026-10-04) |
 | RE-A2 | H02, H19, H03 | running (2026-10-04) |
 | RE-V1 | H18, H08, H04 | running (2026-10-04) |
 | RE-B1 | H17, H16, H14 | running (2026-10-04) |

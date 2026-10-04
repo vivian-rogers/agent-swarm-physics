@@ -1,6 +1,7 @@
 # H12 × G25: Create a digital museum of 2025 (2025-12-29 → 2026-01-02)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; corrected activity table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 10 at start (present: 10) · rooms holding ≥ 3 present agents: 25: 1 · 5 non-holdout days. 
 
@@ -52,6 +53,24 @@ Figure: `figures/G25_summary.pdf`. Data: `data/processed/H12-groupthink-dimensio
 - **D (Curie–Weiss shape):** sign share 1.00; VR/λ₁ 0.97.
 - **E (NE34 kickoff):** ΔPR_kick = -1.00 (negative).
 <!-- /SCORE -->
+
+## Round 1b (improved data, 2026-10-04)
+Arm (a) spins rebuilt from DQ8's `activity_bins_fixed` (`scheme/build.py`, `run_units.py`, `evaluate.py --data-version fixed`); content and PR inputs do not depend on the activity table and are unchanged (re-checked with the second embedding model). Predictions and verdict rule unchanged. The DQ8 rows use the calibrated null for λ₁: each day trimmed to its all-present window *before* drawing block-shift surrogates (size 0.05; the cross-day edge has size 0.19 on trimmed and 0.62 on whole-day grids).
+
+| Quantity (per unit) | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| units | 25 | 25 |
+| k activity (cross-day edge) | 1 | 0 |
+| λ₁/edge activity (cross-day) | 1.23 | 0.97 |
+| k after the lull filter (joint-lull share) | 0 (0.10) | 0 (0.00) |
+| **DQ8 null:** k activity, trimmed + block-shift edge (λ₁/edge) | not computed | 1 (1.02) |
+| DQ8: k activity, trimmed + H38 stall mask (replaces the lull filter) | not computed | 1 |
+| k talk (cross-day) → trimmed block-shift | 1 | 1 → 1 |
+| k content (inputs unchanged) | 1 | 1 |
+| mean PRday: round-1 bge ruler → gte (shared 32-d, second model) | 16.13 | 14.74 (gte) |
+| per-period verdict (card rule, Amendment 1 item 9) | mixed | mixed |
+
+Data: `data/processed/H12-groupthink-dimensional-collapse/r1b/G25/`.
 
 ## Notes
 - 2026-10-03: folder created and prediction written before running on this period.

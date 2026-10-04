@@ -1,6 +1,7 @@
 # H38 × G08: Design the AI Village benchmark for open-ended goal pursuit – and test yourselves on it! (2025-07-18 → 2025-08-12)
 
 **Verdict:** mixed
+**Verdict (1b):** failed (round 1: mixed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 4 agents (catalog) · 18 non-holdout days · 3.0 h/day (empirical median window).
 
@@ -37,6 +38,23 @@ Data: `data/processed/H38-platform-stalls/G08/result.json`; minutes and runs in 
 
 ## Scorecard (period-specific axes)
 - **C:** explained share not above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 1.9, scaffold-masked z 2.8.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.092 (0.090) | 0.029 (0.024) |
+| explained share (N1 surrogate) | 0.27 (0.26) | 0.50 (0.50) |
+| largest cause of joint-silence minutes | unexplained | unexplained |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.084, 0.084 (3.0) | 0.138, 0.135 (4.7) |
+| f_stall (pre-registered) · f_scaffold (headline) | 0.36 · 0.11 | 0.26 · 0.02 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.152 (4.5), -0.13 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.148 (4.8) |
+| talk spin E raw (z) → trimmed E (z) | -0.019 (-0.8) | -0.022 (-1.0) → -0.022 (-0.8) |
+| per-period verdict (card rule) | mixed | failed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G08/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

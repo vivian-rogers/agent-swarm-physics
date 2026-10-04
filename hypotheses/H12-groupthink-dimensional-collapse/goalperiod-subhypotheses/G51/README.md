@@ -1,6 +1,7 @@
 # H12 × G51: Each agent: Maximize your assigned goal! (2026-07-06 → 2026-09-04)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; corrected activity table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode I/K (private roles (individual/competitive)) · N = 21 at start (present: 21, 24, 27, 27, 31) · rooms holding ≥ 3 present agents: 51a: 1, 51b: 1, 51c: 1, 51d: 1, 51e: 1 · 45 non-holdout days. Splits: 51a (3 d, III), 51b (19 d, III), 51c (14 d, III), 51d (7 d, III), 51e (2 d, III) (H01 step changes).
 
@@ -51,6 +52,24 @@ Figure: `figures/G51_summary.pdf`. Data: `data/processed/H12-groupthink-dimensio
 - **C (nulls):** activity modes beyond the cross-day null in 4/5 unit(s); after the lull filter in 3/5.
 - **D (Curie–Weiss shape):** sign share 1.00, 1.00, 1.00, 1.00, 0.90; VR/λ₁ 0.97, 0.94, 0.93, 0.90, 0.91.
 <!-- /SCORE -->
+
+## Round 1b (improved data, 2026-10-04)
+Arm (a) spins rebuilt from DQ8's `activity_bins_fixed` (`scheme/build.py`, `run_units.py`, `evaluate.py --data-version fixed`); content and PR inputs do not depend on the activity table and are unchanged (re-checked with the second embedding model). Predictions and verdict rule unchanged. The DQ8 rows use the calibrated null for λ₁: each day trimmed to its all-present window *before* drawing block-shift surrogates (size 0.05; the cross-day edge has size 0.19 on trimmed and 0.62 on whole-day grids).
+
+| Quantity (per unit) | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| units | 51a, 51b, 51c, 51d, 51e | 51a, 51b, 51c, 51d, 51e |
+| k activity (cross-day edge) | 1, 1, 1, 1, 0 | 1, 1, 1, 1, 0 |
+| λ₁/edge activity (cross-day) | 1.64, 2.53, 2.45, 2.12, 0.93 | 1.73, 2.22, 1.13, 1.09, 0.89 |
+| k after the lull filter (joint-lull share) | 0, 1, 1, 1, 0 (0.27, 0.09, 0.14, 0.22, 0.01) | 0, 1, 1, 0, 0 (0.27, 0.06, 0.01, 0.01, 0.01) |
+| **DQ8 null:** k activity, trimmed + block-shift edge (λ₁/edge) | not computed | 0, 1, 0, 0, 0 (0.98, 1.02, 0.99, 0.98, 0.90) |
+| DQ8: k activity, trimmed + H38 stall mask (replaces the lull filter) | not computed | 0, 1, 0, 0, 0 |
+| k talk (cross-day) → trimmed block-shift | 1, 2, 1, 1, 0 | 1, 3, 2, 1, 1 → 1, 2, 1, 1, 1 |
+| k content (inputs unchanged) | 1, 1, 2, 1, 1 | 1, 1, 2, 1, 1 |
+| mean PRday: round-1 bge ruler → gte (shared 32-d, second model) | 15.91 | 16.80 (gte) |
+| per-period verdict (card rule, Amendment 1 item 9) | mixed | mixed |
+
+Data: `data/processed/H12-groupthink-dimensional-collapse/r1b/G51/`.
 
 ## Notes
 - 2026-10-03: folder created and prediction written before running on this period.

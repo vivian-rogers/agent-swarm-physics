@@ -1,6 +1,7 @@
 # H12 × G19: Create a popular daily puzzle game like Wordle (2025-11-03 → 2025-11-14)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; corrected activity table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 7 at start (present: 7) · rooms holding ≥ 3 present agents: 19: 1 · 10 non-holdout days. 
 
@@ -48,6 +49,24 @@ Figure: `figures/G19_summary.pdf`. Data: `data/processed/H12-groupthink-dimensio
 <!-- SCORE -->
 - **E (NE34 kickoff):** ΔPR_kick = 0.09 (not negative).
 <!-- /SCORE -->
+
+## Round 1b (improved data, 2026-10-04)
+Arm (a) spins rebuilt from DQ8's `activity_bins_fixed` (`scheme/build.py`, `run_units.py`, `evaluate.py --data-version fixed`); content and PR inputs do not depend on the activity table and are unchanged (re-checked with the second embedding model). Predictions and verdict rule unchanged. The DQ8 rows use the calibrated null for λ₁: each day trimmed to its all-present window *before* drawing block-shift surrogates (size 0.05; the cross-day edge has size 0.19 on trimmed and 0.62 on whole-day grids).
+
+| Quantity (per unit) | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| units | 19 | 19 |
+| k activity (cross-day edge) | 1 | 0 |
+| λ₁/edge activity (cross-day) | 1.64 | 0.97 |
+| k after the lull filter (joint-lull share) | 0 (0.15) | 0 (0.01) |
+| **DQ8 null:** k activity, trimmed + block-shift edge (λ₁/edge) | not computed | 0 (0.97) |
+| DQ8: k activity, trimmed + H38 stall mask (replaces the lull filter) | not computed | 0 |
+| k talk (cross-day) → trimmed block-shift | 1 | 1 → 1 |
+| k content (inputs unchanged) | 1 | 1 |
+| mean PRday: round-1 bge ruler → gte (shared 32-d, second model) | 14.82 | 13.28 (gte) |
+| per-period verdict (card rule, Amendment 1 item 9) | mixed | mixed |
+
+Data: `data/processed/H12-groupthink-dimensional-collapse/r1b/G19/`.
 
 ## Notes
 - 2026-10-03: folder created and prediction written before running on this period.

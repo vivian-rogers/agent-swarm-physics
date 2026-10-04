@@ -1,6 +1,7 @@
 # H12 × G30: Adopt a park and get it cleaned! (2026-02-09 → 2026-02-13)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; corrected activity table, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C (shared objective) · N = 12 at start (present: 11) · rooms holding ≥ 3 present agents: 30: 1 · 5 non-holdout days. 
 
@@ -49,6 +50,24 @@ Figure: `figures/G30_summary.pdf`. Data: `data/processed/H12-groupthink-dimensio
 - **C (nulls):** activity modes beyond the cross-day null in 1/1 unit(s); after the lull filter in 1/1.
 - **D (Curie–Weiss shape):** sign share 1.00; VR/λ₁ 0.98.
 <!-- /SCORE -->
+
+## Round 1b (improved data, 2026-10-04)
+Arm (a) spins rebuilt from DQ8's `activity_bins_fixed` (`scheme/build.py`, `run_units.py`, `evaluate.py --data-version fixed`); content and PR inputs do not depend on the activity table and are unchanged (re-checked with the second embedding model). Predictions and verdict rule unchanged. The DQ8 rows use the calibrated null for λ₁: each day trimmed to its all-present window *before* drawing block-shift surrogates (size 0.05; the cross-day edge has size 0.19 on trimmed and 0.62 on whole-day grids).
+
+| Quantity (per unit) | Round 1 (old table) | Round 1b (fixed table) |
+| --- | --- | --- |
+| units | 30 | 30 |
+| k activity (cross-day edge) | 1 | 1 |
+| λ₁/edge activity (cross-day) | 1.65 | 1.06 |
+| k after the lull filter (joint-lull share) | 1 (0.11) | 0 (0.00) |
+| **DQ8 null:** k activity, trimmed + block-shift edge (λ₁/edge) | not computed | 1 (1.03) |
+| DQ8: k activity, trimmed + H38 stall mask (replaces the lull filter) | not computed | 1 |
+| k talk (cross-day) → trimmed block-shift | 1 | 1 → 1 |
+| k content (inputs unchanged) | 1 | 1 |
+| mean PRday: round-1 bge ruler → gte (shared 32-d, second model) | 16.27 | 15.80 (gte) |
+| per-period verdict (card rule, Amendment 1 item 9) | mixed | mixed |
+
+Data: `data/processed/H12-groupthink-dimensional-collapse/r1b/G30/`.
 
 ## Notes
 - 2026-10-03: folder created and prediction written before running on this period.

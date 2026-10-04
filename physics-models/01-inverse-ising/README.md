@@ -72,6 +72,7 @@ At N ≲ 30 with short windows, inferring every J_ij is data-hungry and fragile.
 
 ## Pitfalls
 
+- **A day-level common data loss inflates whole-unit λ₁ against cross-day nulls** (RE-A1, 2026-10-04): the activity_bins bug dropped a day-specific share of every agent's events, which acts as a shared day field; cross-day surrogates destroy it and report a collective mode. Trim to the all-present window and use a block-shift edge.
 - **Compare channels at matched time resolution** (H26): an equal-time gain J measured on day means reads J(2 − J), so a 1-min activity gain and a day-mean content gain are not comparable. HH108's "content near-critical, activity subcritical" gap came from exactly this mismatch plus drives.
 - **Equal-time gains grow with N and miss delayed coupling** (H25, 2026-10-04): at fixed pair correlation ρ̄, g = 1 − 1/VR rises with headcount, so a bigger swarm looks closer to criticality with no change in coupling; compare ρ̄. The equal-time variance ratio reads ≈ 0 when agents react 2–8 min later (read-out gating, H08), so use lagged or Hawkes estimators for slow coupling.
 - **Signed bonds from ordinal labels** (H37, 2026-10-04): stance labels map onto bond signs J_ij (support ferromagnetic, oppose antiferromagnetic). After removing speaker/target fields, sign-shuffle and FDR nulls are anti-conservative (10–28% false camps); calibrate against a parametric agent-field null. Stance recovered assigned #12 debate teams (7/10 exact) but found no camps where no protocol assigns sides.

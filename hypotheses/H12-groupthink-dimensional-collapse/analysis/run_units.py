@@ -11,15 +11,24 @@ Outputs: data/processed/H12-groupthink-dimensional-collapse/G<NN>/{rmt_<unit>.js
 prday_<unit>.parquet}.
 
 Usage: uv run python hypotheses/H12-groupthink-dimensional-collapse/analysis/run_units.py [unit ...] [--workers 2]
+Round 1b (2026-10-04): --data-version fixed recomputes arm (a) for activity and talk spins from activity_bins_fixed
+(r1b/spins.parquet) and writes r1b/G<NN>/rmt_<unit>.json. Added in both versions' spin blocks: `trim_bs` (each day
+trimmed to its all-present window BEFORE drawing surrogates; edge = block-shift q95, the DQ8-calibrated null for
+lambda_1) and `trim_stall_bs` (trim + H38's explained joint-silence minutes from the shared outages_fixed sidecar
+removed: the replacement for H12's lull filter, which DQ8/H25 found biased). Content and PR inputs do not depend on
+activity_bins: the content blocks are copied from the round-1 JSON and the PR tables are not rewritten.
 """
 from __future__ import annotations
 
 import json
 import math
+import os
 import sys
 import time
 from multiprocessing import Pool
 
+if "--data-version" in sys.argv:
+    os.environ["H12_DATA_VERSION"] = sys.argv[sys.argv.index("--data-version") + 1]
 import h12lib as L
 import numpy as np
 import polars as pl
@@ -34,13 +43,13 @@ def guard(pt_dates, goal_nos):
 
 
 def unit_row(unit: str) -> dict:
-    u = pl.read_parquet(L.OUT / "units.parquet").filter(pl.col("unit") == unit)
+    u = pl.read_parquet(L.OUTV / "units.parquet").filter(pl.col("unit") == unit)
     assert u.height == 1, unit
     return u.row(0, named=True)
 
 
 def labels(unit: str, agents: list[int]):
-    au = pl.read_parquet(L.OUT / "agents_units.parquet").filter(pl.col("unit") == unit)
+    au = pl.read_parquet(L.OUTV / "agents_units.parquet").filter(pl.col("unit") == unit)
     m = {r["agent"]: r for r in au.iter_rows(named=True)}
     room = np.array([m.get(a, {}).get("room_modal", -1) if m.get(a, {}).get("room_modal") is not None else -1 for a in agents])
     lab = np.array([m.get(a, {}).get("lab") or "?" for a in agents])
@@ -65,8 +74,8 @@ def separations(V, room, lab, rng, k_show=3):
 
 
 # ---------------------------------------------------------------------------------------------- arm (a)
-def spin_days(unit, which):
-    sp = pl.read_parquet(L.OUT / "spins.parquet").filter(pl.col("unit") == unit)
+def spin_days(unit, which, with_dates=False):
+    sp = pl.read_parquet(L.OUTV / "spins.parquet").filter(pl.col("unit") == unit)
     guard(sp["pt_date"].unique().to_list(), [int(unit.rstrip("abcdefgh"))] * sp["pt_date"].n_unique())
     agents = sorted(sp["agent"].unique().to_list())
     days = []
@@ -82,7 +91,42 @@ def spin_days(unit, which):
     if which == "talk":
         keep &= (X > 0).sum(1) >= MIN_TALK
     agents = [a for a, k in zip(agents, keep) if k]
+    if with_dates:
+        dmap = dict(zip(sp["day"].to_list(), sp["pt_date"].to_list()))
+        return [d[keep] for d in days], agents, [dmap[d] for d in sorted(sp["day"].unique().to_list())]
     return [d[keep] for d in days], agents
+
+
+def r1b_spin_variants(unit, which, rng):
+    """Round-1b corrected nulls for one channel: trim each day to the all-present window of the ACTIVITY population
+    (talk uses the same rows), optionally drop H38's explained joint-silence minutes (shared outages_fixed), then the
+    block-shift edge. Also the lull-filter drop on the same trimmed rows, for comparison."""
+    act_days, act_agents, dates = spin_days(unit, "act", with_dates=True)
+    days, agents = spin_days(unit, which) if which != "act" else (act_days, act_agents)
+    if len(agents) < 4:
+        return {}
+    sm = (pl.read_parquet(L.STALLS_FIXED, columns=["pt_date", "minute", "js", "explained"])
+          .filter(pl.col("pt_date").is_in(dates) & pl.col("js") & pl.col("explained")))
+    out = {}
+    for name in ("trim_bs", "trim_stall_bs"):
+        kd, km = [], []
+        for A_act, A, dt_ in zip(act_days, days, dates):
+            keep = L.trim_rows(A_act)
+            if name == "trim_stall_bs":
+                bad = sm.filter(pl.col("pt_date") == dt_)["minute"].to_numpy()
+                bad = bad[bad < A.shape[1]]
+                keep[bad] = False
+            kd.append(A[:, keep]); km.append(np.flatnonzero(keep))
+        T = sum(x.shape[1] for x in kd)
+        if T <= len(agents):
+            out[name] = {"k": None, "T": int(T)}
+            continue
+        r = L.spectrum_test_blockshift(kd, km, N_SURR, rng)
+        tot = sum(A.shape[1] for A in days)
+        out[name] = {"k": r["k"], "k_rank": r["k_rank"], "edge": r["edge"], "l1": float(r["eig"][0]),
+                     "l1_edge": float(r["eig"][0] / r["edge"]) if r["edge"] else None, "T": r["T"], "N": r["N"],
+                     "frac_kept": float(r["T"] / tot)}
+    return out
 
 
 def block_demeaned_eig(days):
@@ -119,6 +163,7 @@ def rmt_spins(unit, which, rng):
            "VR": float(u @ C @ u), "rho_bar": float((C.sum() - N) / (N * (N - 1))),
            "modes": eig_shape(V, w), "sep": separations(V, room, lab, rng),
            "active_frac": float((X > 0).mean())}
+    out.update(r1b_spin_variants(unit, which, rng))
     if which == "act":
         lu = L.spectrum_test(days, N_SURR, rng, "spin", "crossday", lull=True)
         Xl = L.lull_filter(X)
@@ -205,7 +250,7 @@ def run(unit: str) -> str:
     t0 = time.time()
     ur = unit_row(unit)
     g = ur["goal_no"]
-    od = L.OUT / f"G{g:02d}"; od.mkdir(parents=True, exist_ok=True)
+    od = L.OUTV / f"G{g:02d}"; od.mkdir(parents=True, exist_ok=True)
     cal = pl.read_parquet(L.SH / "calendar.parquet").filter(pl.col("pt_date").is_in(ur["days"]))
     guard(cal["pt_date"].to_list(), cal["goal_no"].to_list())
     idx = pl.read_parquet(L.OUT / "stmt_index.parquet").filter(pl.col("unit") == unit)
@@ -214,13 +259,22 @@ def run(unit: str) -> str:
     rng = np.random.default_rng([L.SEED, L.stable_seed(unit)])
     res = {"unit": unit, "goal_no": g, "regime": ur["regime"], "mode": ur["mode"], "n_days": ur["n_days"], "scored": ur["scored"]}
     do_rmt = (ur["N_present"] or 0) >= 6 and ur["n_days"] >= 2
+    res["data_version"] = L.DATA_VERSION
     if do_rmt:
         res["act"] = rmt_spins(unit, "act", rng)
         res["talk"] = rmt_spins(unit, "talk", rng)
-        res["content"] = rmt_content(unit, idx, Wv, cal, rng)
-        res["content_d8"] = rmt_content(unit, idx, Wv, cal, rng, d=8)
-        res["content_chat"] = rmt_content(unit, idx, Wv, cal, rng, kind="chat")
-    (od / f"rmt_{unit}.json").write_text(json.dumps(res))
+        r1 = L.OUT / f"G{g:02d}" / f"rmt_{unit}.json"
+        if L.DATA_VERSION == "fixed" and r1.exists() and "content" in json.loads(r1.read_text()):
+            old = json.loads(r1.read_text())  # content arm: inputs unchanged, copied from round 1
+            for k in ("content", "content_d8", "content_chat"):
+                res[k] = old.get(k, {})
+        else:
+            res["content"] = rmt_content(unit, idx, Wv, cal, rng)
+            res["content_d8"] = rmt_content(unit, idx, Wv, cal, rng, d=8)
+            res["content_chat"] = rmt_content(unit, idx, Wv, cal, rng, kind="chat")
+    (od / f"rmt_{unit}.json").write_text(json.dumps(res, default=float))
+    if L.DATA_VERSION == "fixed":
+        return f"{unit}: rmt={do_rmt} (fixed: spins only) {time.time() - t0:.0f}s"
     p30, pday = pr_unit(unit, idx, Wv, rng)
     p30.write_parquet(od / f"pr30_{unit}.parquet"); pday.write_parquet(od / f"prday_{unit}.parquet")
     return f"{unit}: rmt={do_rmt} windows={p30.height} days={pday.height} {time.time() - t0:.0f}s"
@@ -232,15 +286,17 @@ def main():
     if "--workers" in argv:
         i = argv.index("--workers"); workers = min(2, int(argv[i + 1])); argv = argv[:i] + argv[i + 2:]
     args = argv
-    units = args or pl.read_parquet(L.OUT / "units.parquet").sort("goal_no", "unit")["unit"].to_list()
+    args = [a for a in args if a not in ("--data-version", "fixed", "r1")]
+    units = args or pl.read_parquet(L.OUTV / "units.parquet").sort("goal_no", "unit")["unit"].to_list()
     with Pool(workers) as pool:
         for msg in pool.imap_unordered(run, units):
             print(msg, flush=True)
     L.write_provenance("hypotheses/H12-groupthink-dimensional-collapse/analysis/run_units.py",
-                       ["H12 spins.parquet, stmt_index.parquet, stmt_white_d64.npy, agents_units.parquet; shared calendar"],
+                       ["H12 spins.parquet, stmt_index.parquet, stmt_white_d64.npy, agents_units.parquet; shared calendar"]
+                       + (["shared outages_fixed/stall_minutes (trim_stall_bs)"] if L.DATA_VERSION == "fixed" else []),
                        {"n_surr": N_SURR, "d": D, "pr30": "chat, cap 8, n 30, 20 draws", "prday": "6 agents x 15 chat, 50 draws",
                         "content_agents": ">=1 statement on >=80% of days and >=20% of windows", "min_talk_minutes": MIN_TALK,
-                        "seed": L.SEED})
+                        "seed": L.SEED, "data_version": L.DATA_VERSION}, path=L.OUTV / "_provenance.json")
 
 
 if __name__ == "__main__":

@@ -2,12 +2,12 @@
 \input{../../../writeup/hypothesis-pages/hpage.tex}
 \def\hID{H25}
 \def\hTitle{A distance-to-criticality dial, T/T\_c, per window and per channel}
-\def\hStatus{running. Exploratory round 1 done (2026-10-04). The dial works as a calibrated instrument for fast activity and talk feedback: every one of 279 days is subcritical (median g 0.10 activity, 0.12 talk; T/T\_c $\approx$ 8–10). The headline prediction P1 failed on conte...}
+\def\hStatus{running. Exploratory round 1 done (2026-10-04); round 1b on the corrected activity table done (2026-10-04, section below): activity and talk stay subcritical on every day but read higher (median g 0.16 / 0.16, was 0.10 / 0.12); the dial now reproduces H19's...}
 \def\hStage{level: hypothesis  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-04}
-\def\hBadges{\hbadge{Complete}{40\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{1.5/5}{ee8584}{0b0b0b}\ \hbadge{Usefulness}{2.5/5}{e9e7e1}{0b0b0b}}
-\def\hPeriodSummary{13 failed, 22 mixed}
+\def\hBadges{\hbadge{Complete}{50\%}{5598e7}{0b0b0b}\ \hbadge{Faithfulness}{2/5}{f5bcbb}{0b0b0b}\ \hbadge{Usefulness}{2.5/5}{e9e7e1}{0b0b0b}}
+\def\hPeriodSummary{1 supported, 13 failed, 22 mixed}
 \def\hDate{Updated 2026-10-04}
-\def\hFooter{H25-criticality-dial $\cdot$ generated 2026-10-03 19:21 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H25-criticality-dial/README.md $\cdot$ ratings: H25 agent (suggested)}
+\def\hFooter{H25-criticality-dial $\cdot$ generated 2026-10-04 00:04 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H25-criticality-dial/README.md $\cdot$ ratings: H25 round-1b agent (suggested)}
 \def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G02 & $\sim$ & mixed \\
 G03 & $\sim$ & mixed \\
 G04 & $\sim$ & mixed \\
@@ -23,12 +23,12 @@ G16 & $\sim$ & mixed \\
 G17 & $\sim$ & mixed \\
 G18 & $\times$ & failed \\
 G19 & $\sim$ & mixed \\
-G20 & $\sim$ & mixed \\\multicolumn{3}{l}{\textit{+19 more periods: see the card.}} \\\end{tabular}}
+G20 & $\sim$ & mixed \\\multicolumn{3}{l}{\textit{+20 more periods: see the card.}} \\\end{tabular}}
 \def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 1 \\
 B assumptions & 1 & G ground truth & 1 \\
 C adequacy & 1 & H comparative & 1 \\
 D unfitted predictions & 1 & I transfer & 0 \\
-E interventional & 0 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
 \def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} a trustworthy number for how much the swarm amplifies a push; it must be lag-aware and size-aware, with per-pair correlation as the transferable quantity.\item \textbf{H25-R1} A lagged (DC) dial from 1–15 min cross-covariances, validated on the delayed-coupling swarms where the 1-min dial reads 0.\item \textbf{H25-R2} Agent-level availability masks from H38's scaffold states (consolidation, day edges, infra errors).\item \textbf{H25-R3} Content fields from real anchors (goal and kickoff embeddings, artifact events) plus an embedding swap; coordinate with H26.\item \textbf{H25-R4} Test the size law g(N) = (N-1)$\rho$/(1+(N-1)$\rho$) at roster changes and on the holdout (CA4).\item \textbf{H25-R5} A weekly dial with change-point detection , at least 5 agents per day.\end{itemize}}
 \input{content.tex}
 \begin{document}

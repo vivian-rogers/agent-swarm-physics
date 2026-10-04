@@ -1,6 +1,7 @@
 # H38 × G12: Form two teams and debate each other, while one agent judges. Choose your teammates wisely! (2025-09-01 → 2025-09-05)
 
 **Verdict:** failed
+**Verdict (1b):** mixed (round 1: failed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode M · 7 agents (catalog) · 5 non-holdout days · 3.0 h/day (empirical median window).
 
@@ -37,6 +38,23 @@ Data: `data/processed/H38-platform-stalls/G12/result.json`; minutes and runs in 
 
 ## Scorecard (period-specific axes)
 - **C:** explained share not above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 3.9, scaffold-masked z 3.9.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.072 (0.055) | 0.008 (0.001) |
+| explained share (N1 surrogate) | 0.49 (0.56) | 0.86 (0.29) |
+| largest cause of joint-silence minutes | unexplained | pause |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.171, 0.182 (3.8) | 0.202, 0.209 (4.5) |
+| f_stall (pre-registered) · f_scaffold (headline) | -0.12 · -0.02 | 0.26 · -0.01 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.201 (3.8), 0.04 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.210 (4.5) |
+| talk spin E raw (z) → trimmed E (z) | 0.180 (3.9) | 0.217 (4.9) → 0.225 (4.9) |
+| per-period verdict (card rule) | failed | mixed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G12/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

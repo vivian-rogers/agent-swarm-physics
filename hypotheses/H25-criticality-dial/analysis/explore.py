@@ -11,16 +11,23 @@ Sensitivity variants (dial's lower-level functions, identical estimator):
                  mean collective content on the period's other days, subtracted: the content "daily schedule")
 Outputs (data/processed/H25-criticality-dial/): dial_daily.parquet, dial_period.parquet, events.parquet,
 results/explore.json, G<NN>/dial_daily.parquet + G<NN>/results.json.
-Usage: uv run python hypotheses/H25-criticality-dial/analysis/explore.py
+Usage: uv run python hypotheses/H25-criticality-dial/analysis/explore.py [--data-version fixed]
+Round 1b (2026-10-04): --data-version fixed reads inputs_r1b/ (spins from activity_bins_fixed, H38 masks from the
+shared outages_fixed sidecar) and writes everything under data/processed/H25-criticality-dial/r1b/. Both versions add
+the DQ8-design variant `trim` (activity, talk): the auto stall mask AND the all-present window (every population agent
+between its first and last active minute of the day), applied before the block-shift null is drawn.
 """
 from __future__ import annotations
 
 import hashlib
 import json
+import os
 import sys
 from multiprocessing import Pool
 from pathlib import Path
 
+if "--data-version" in sys.argv:
+    os.environ["H25_DATA_VERSION"] = sys.argv[sys.argv.index("--data-version") + 1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import h25common as C  # noqa: E402
 import numpy as np  # noqa: E402
@@ -29,8 +36,9 @@ from scipy import stats  # noqa: E402
 
 import dial as D  # noqa: E402
 
-INP = C.OUT / "inputs"
-RES = C.OUT / "results"
+INP = C.INP_BASE            # statements, exo (version-independent)
+INPV = C.INPV               # spins, h38_masks, refs (version-dependent)
+RES = C.RESD / "results"
 N_BOOT, N_NULL = 300, 100
 MIN_ACT, MIN_TALK = 10, 5
 
@@ -42,12 +50,12 @@ def seed_of(*xs) -> int:
 
 
 def load():
-    spins = pl.read_parquet(INP / "spins.parquet")
+    spins = pl.read_parquet(INPV / "spins.parquet")
     st = pl.read_parquet(INP / "statements.parquet")
     V = np.load(INP / "statements_vec.npy").astype(np.float32)
     ex = pl.read_parquet(INP / "exo.parquet")
     EV = np.load(INP / "exo_vec.npy").astype(np.float32)
-    h38 = pl.read_parquet(INP / "h38_masks.parquet") if (INP / "h38_masks.parquet").exists() else None
+    h38 = pl.read_parquet(INPV / "h38_masks.parquet") if (INPV / "h38_masks.parquet").exists() else None
     cal = C.calendar_nonholdout()
     C.assert_no_holdout(cal["pt_date"], cal["goal_no"])
     assert set(spins["pt_date"].unique().to_list()) <= set(cal["pt_date"].to_list())
@@ -87,6 +95,16 @@ def run_binary_variants(day, sp, sp_period, h38d, rng):
     m_auto, Lstar = D.find_stalls(anyev[:, popA], minute) if popA.sum() >= 1 else (np.zeros(len(minute), bool), None)
     masks = {"none": np.ones(len(minute), bool), "auto": ~m_auto}
     masks["lull"] = active[:, popA].sum(1) >= 2
+    # round 1b (DQ8): all-present window of the activity population (first..last active minute of every agent)
+    T_ = len(minute)
+    if popA.sum() >= 1:
+        A_ = active[:, popA]
+        has = A_.any(0)
+        f_ = np.argmax(A_, axis=0); l_ = T_ - 1 - np.argmax(A_[::-1], axis=0)
+        win = ((np.arange(T_)[:, None] >= f_[None, :]) & (np.arange(T_)[:, None] <= l_[None, :]))[:, has].all(1)
+    else:
+        win = np.ones(T_, bool)
+    masks["trim"] = masks["auto"] & win
     if h38d is not None and h38d.height:
         for k in ("sched", "exo"):
             mm = set(h38d.filter(pl.col(k))["minute"].to_list())
@@ -469,6 +487,29 @@ def tests(daily, per, refs, cal, ev_out) -> dict:
     ga, gt = ev_out.get("goal_change_activity"), ev_out.get("goal_change_talk")
     R["P7"]["b"]["verdict"] = ("supported" if ga and gt and ga["mean_abs_z_events"] <= ga["placebo_q95"] and gt["mean_abs_z_events"] <= gt["placebo_q95"]
                                else "failed")
+    # round 1b: share of days above the per-day independent-agent ceiling (block-shift null q95), round-1 design (auto:
+    # whole-day grid minus stalls) vs DQ8 design (trim: all-present window), and P3a against the fixed H19 reference
+    ab = {}
+    for ch in ("activity", "talk"):
+        for v in ("none", "auto", "trim"):
+            d = okd.filter((pl.col("channel") == ch) & (pl.col("variant") == v) & pl.col("null_q95").is_not_null())
+            ab[f"{ch}_{v}"] = {"n_days": d.height, "frac_above_null_q95": float((d["g"] > d["null_q95"]).mean()) if d.height else None,
+                               "median_g": float(d["g"].median()) if d.height else None}
+    dc = okd.filter((pl.col("channel") == "content") & (pl.col("variant") == "F2") & pl.col("null_q95").is_not_null())
+    ab["content_F2"] = {"n_days": dc.height, "frac_above_null_q95": float((dc["g"] > dc["null_q95"]).mean()) if dc.height else None}
+    R["null_ceiling"] = ab
+    if "h19f_active" in tab.columns:
+        p3f = {}
+        for ch, ref in (("activity", "h19f_active"), ("talk", "h19f_talk")):
+            x, y = tab[f"{ch}_none_fe"].to_numpy(), tab[ref].to_numpy().astype(float)
+            ok = np.isfinite(x) & np.isfinite(y)
+            p3f[ch] = {**spearman(x, y), "median_abs_diff": float(np.median(np.abs(x[ok] - y[ok]))), "median_diff": float(np.median(x[ok] - y[ok]))}
+            xr = tab[f"{ch}_none_re"].to_numpy()
+            okr = np.isfinite(xr) & np.isfinite(y)
+            p3f[ch]["re"] = {**spearman(xr, y), "median_abs_diff": float(np.median(np.abs(xr[okr] - y[okr])))}
+        p3f["verdict_a"] = ("supported" if p3f["activity"]["rho"] >= 0.8 and p3f["activity"]["median_abs_diff"] <= 0.03 and p3f["talk"]["rho"] >= 0.7
+                            else "failed")
+        R["P3_fixed_ref"] = p3f
     R["_table"] = tab
     return R
 
@@ -491,7 +532,10 @@ def period_verdicts(per, refs, tab) -> pl.DataFrame:
                 return None
             tol = max(0.05, 2 * float(np.sqrt((se or 0) ** 2 + (r[f"se_{ref}"][0] or 0) ** 2)))
             return abs(fe - r[ref][0]) <= tol
-        ii = [cons("activity", "h19_active"), cons("talk", "h19_talk")]
+        fixed_ref = "h19f_active" in refs.columns  # round 1b: H19's estimator recomputed on activity_bins_fixed
+        ii = ([cons("activity", "h19f_active"), cons("talk", "h19f_talk")] if fixed_ref else
+              [cons("activity", "h19_active"), cons("talk", "h19_talk")])
+        ii_r1ref = [cons("activity", "h19_active"), cons("talk", "h19_talk")]
         ii_ok = all(x is None or x for x in ii)
         cmed = get("content", "F2", "median")
         iii_ok = cmed is None or cmed < 0.74
@@ -508,7 +552,10 @@ def period_verdicts(per, refs, tab) -> pl.DataFrame:
                      "act_I2": get("activity", "auto", "I2"), "act_pQ": get("activity", "auto", "p_Q"),
                      "k_act": get("activity", "auto", "k"), "k_content": get("content", "F2", "k"),
                      "h19_active": r["h19_active"][0] if r.height else None, "h19_talk": r["h19_talk"][0] if r.height else None,
-                     "h03_n_talk": r["h03_n_talk"][0] if r.height else None})
+                     "h03_n_talk": r["h03_n_talk"][0] if r.height else None,
+                     "h19f_active": r["h19f_active"][0] if (r.height and fixed_ref) else None,
+                     "h19f_talk": r["h19f_talk"][0] if (r.height and fixed_ref) else None,
+                     "ii_vs_round1_h19": all(x is None or x for x in ii_r1ref)})
     return pl.DataFrame(rows)
 
 
@@ -522,17 +569,18 @@ def main():
         rows = [r for rr in pool.imap(job, days, chunksize=2) for r in rr]
     daily = pl.DataFrame(rows, infer_schema_length=None).join(cal.select("pt_date", "goal_no", "regime"), on="pt_date", how="left")
     C.assert_no_holdout(daily["pt_date"], daily["goal_no"])
-    daily.write_parquet(C.OUT / "dial_daily.parquet", compression="zstd")
+    C.RESD.mkdir(parents=True, exist_ok=True)
+    daily.write_parquet(C.RESD / "dial_daily.parquet", compression="zstd")
     per = period_table(daily, cal)
-    per.write_parquet(C.OUT / "dial_period.parquet")
-    refs = pl.read_parquet(INP / "refs.parquet")
+    per.write_parquet(C.RESD / "dial_period.parquet")
+    refs = pl.read_parquet(INPV / "refs.parquet")
     ev_out, ev_rows = event_tests(daily, cal, np.random.default_rng(C.SEED))
-    ev_rows.write_parquet(C.OUT / "events.parquet")
+    ev_rows.write_parquet(C.RESD / "events.parquet")
     R = tests(daily, per, refs, cal, ev_out)
     tab = R.pop("_table")
-    tab.write_parquet(C.OUT / "period_compare.parquet")
+    tab.write_parquet(C.RESD / "period_compare.parquet")
     pv = period_verdicts(per, refs, tab)
-    pv.write_parquet(C.OUT / "period_verdicts.parquet")
+    pv.write_parquet(C.RESD / "period_verdicts.parquet")
     R["period_verdicts"] = pv.group_by("verdict").len().to_dicts()
     # API vs low-level agreement (sanity)
     api = daily.filter(pl.col("variant") == "api").select("pt_date", "channel", pl.col("g").alias("g_api"))
@@ -544,15 +592,17 @@ def main():
     RES.mkdir(parents=True, exist_ok=True)
     (RES / "explore.json").write_text(json.dumps(R, indent=1, default=lambda x: None if x is None or (isinstance(x, float) and not np.isfinite(x)) else (float(x) if isinstance(x, (np.floating, np.integer)) else str(x))))
     for g in sorted(daily["goal_no"].unique().to_list()):
-        gd = C.OUT / C.pname(g)
+        gd = C.RESD / C.pname(g)
         gd.mkdir(parents=True, exist_ok=True)
         daily.filter(pl.col("goal_no") == g).write_parquet(gd / "dial_daily.parquet")
         (gd / "results.json").write_text(json.dumps({"period": per.filter(pl.col("goal_no") == g).to_dicts(),
                                                       "verdict": pv.filter(pl.col("goal_no") == g).to_dicts()}, indent=1, default=str))
-    C.write_provenance("explore", "hypotheses/H25-criticality-dial/analysis/explore.py", ["(H25 inputs)"],
+    C.write_provenance("explore" if C.DATA_VERSION == "r1" else "explore_r1b", "hypotheses/H25-criticality-dial/analysis/explore.py", ["(H25 inputs)"],
                        {"n_boot": N_BOOT, "n_null": N_NULL, "min_active_min": MIN_ACT, "min_talk_min": MIN_TALK, "block_min": 30,
                         "seg_min": 10, "content_window_min": 30, "n_exo_dirs": 5, "f3_dirs": 3, "seed": C.SEED},
-                       extra_inputs=[{"source": "data/processed/H25-criticality-dial/inputs", "tables": ["spins", "statements", "exo", "refs", "h38_masks"]}])
+                       extra_inputs=[{"source": str(INPV.relative_to(C.ROOT)), "tables": ["spins", "refs", "h38_masks"]},
+                                     {"source": str(INP.relative_to(C.ROOT)), "tables": ["statements", "exo"]}],
+                       out=C.RESD)
     print(json.dumps({k: R[k].get("verdict") if isinstance(R[k], dict) else R[k] for k in R if k.startswith("P")}, indent=1, default=str))
     print(json.dumps(R, indent=1, default=str)[:6000])
 

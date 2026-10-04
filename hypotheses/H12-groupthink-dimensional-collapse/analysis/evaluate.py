@@ -4,13 +4,21 @@ Reads data/processed/H12-groupthink-dimensional-collapse/G*/{rmt_*.json, pr30_*.
 Writes: unit_table.parquet, ne34_kickoffs.parquet, ne34_placebos.parquet, h02_compare.parquet, period_means.parquet,
 outcomes.json, period_results.json (for write_period_folders.py results).
 
-Usage: uv run python hypotheses/H12-groupthink-dimensional-collapse/analysis/evaluate.py
+Usage: uv run python hypotheses/H12-groupthink-dimensional-collapse/analysis/evaluate.py [--data-version fixed]
+Round 1b: --data-version fixed reads the spin results from r1b/G*/rmt_*.json (activity_bins_fixed; content blocks
+copied from round 1), the PR tables from round 1 (they do not depend on activity_bins), writes every output to r1b/,
+and adds the DQ8-corrected counts (trim + block-shift edge; trim + H38 explained-JS mask) next to P1/P1'/P2/P3. The H02
+comparison uses H02's estimator recomputed on the fixed table by H38's round-1b pipeline (r1b/chunk_table).
 """
 from __future__ import annotations
 
 import json
 import math
+import os
+import sys
 
+if "--data-version" in sys.argv:
+    os.environ["H12_DATA_VERSION"] = sys.argv[sys.argv.index("--data-version") + 1]
 import h12lib as L
 import numpy as np
 import polars as pl
@@ -23,13 +31,13 @@ TOL = 1e-12
 
 def load_all():
     rmt, p30, pday = {}, [], []
-    for f in sorted(L.OUT.glob("G*/rmt_*.json")):
+    for f in sorted(L.OUTV.glob("G*/rmt_*.json")):
         r = json.loads(f.read_text()); rmt[r["unit"]] = r
     for f in sorted(L.OUT.glob("G*/pr30_*.parquet")):
         p30.append(pl.read_parquet(f))
     for f in sorted(L.OUT.glob("G*/prday_*.parquet")):
         pday.append(pl.read_parquet(f))
-    units = pl.read_parquet(L.OUT / "units.parquet")
+    units = pl.read_parquet(L.OUTV / "units.parquet")
     p30 = pl.concat(p30, how="diagonal_relaxed").join(units.select("unit", "goal_no", "regime", "mode"), on="unit")
     pday = pl.concat(pday, how="diagonal_relaxed").join(units.select("unit", "goal_no", "regime", "mode"), on="unit")
     return rmt, p30, pday, units
@@ -65,7 +73,12 @@ def unit_table(rmt, units):
                "content_p_lab": sig_sep(c, "p_lab", c.get("k_cd", 0)) if c.get("eig") else None,
                "content_p_room": sig_sep(c, "p_room", c.get("k_cd", 0)) if c.get("eig") else None,
                "k_content_d8": x.get("content_d8", {}).get("k_cd"), "k_content_chat": x.get("content_chat", {}).get("k_cd"),
-               "content_fill": c.get("fill")}
+               "content_fill": c.get("fill"),
+               # round 1b (DQ8): trim to the all-present window before the surrogates; block-shift edge
+               "k_trim": (a.get("trim_bs") or {}).get("k"), "l1_edge_trim": (a.get("trim_bs") or {}).get("l1_edge"),
+               "k_trim_stall": (a.get("trim_stall_bs") or {}).get("k"), "l1_edge_trim_stall": (a.get("trim_stall_bs") or {}).get("l1_edge"),
+               "trim_kept": (a.get("trim_bs") or {}).get("frac_kept"),
+               "k_talk_trim": (t.get("trim_bs") or {}).get("k"), "talk_l1_edge_trim": (t.get("trim_bs") or {}).get("l1_edge")}
         rows.append(row)
     return pl.DataFrame(rows, infer_schema_length=None)
 
@@ -125,11 +138,16 @@ def within_day_slope(df):
 # ------------------------------------------------------------------------------------------------ H02 chunks
 def h02_compare():
     mf = pl.read_parquet(L.ROOT / "data/processed/H02-couplings-are-real/mf_cw.parquet")
+    if L.DATA_VERSION == "fixed":  # H02's estimator on activity_bins_fixed (H38 round-1b chunk table, same rule)
+        c = (pl.read_parquet(L.ROOT / "data/processed/H38-platform-stalls/r1b/chunk_table.parquet")
+             .with_columns((pl.lit("g") + pl.col("period").str.slice(1, 2) + pl.col("chunk")).alias("chunk"))
+             .select("chunk", pl.col("bJ0_raw_chunk").alias("bJ0_fixed"), pl.col("z_raw").alias("z_fixed")))
+        mf = mf.join(c, on="chunk", how="left").with_columns(pl.col("bJ0_fixed").alias("bJ0"), pl.col("z_fixed").alias("z"))
     nl = pl.read_parquet(L.ROOT / "data/processed/H02-couplings-are-real/mf_cw_nolull.parquet").select("chunk", "bJ0_nolull", "z_nolull")
     cal = pl.read_parquet(L.SH / "calendar.parquet")
     hm = L.holdout_mask(cal["pt_date"].to_list(), cal["goal_no"].to_list())
     cal = cal.with_columns(pl.Series("hm", hm)).filter(~pl.col("hm") & ~pl.col("holdout"))
-    ab = pl.read_parquet(L.SH / "activity_bins.parquet", columns=["pt_date", "minute", "agent", "state"])
+    ab = pl.read_parquet(L.AB, columns=["pt_date", "minute", "agent", "state"])
     rows = []
     for ch in mf.iter_rows(named=True):
         g = int(ch["chunk"][1:3]); k = int(ch["chunk"].split("c")[1])
@@ -159,7 +177,8 @@ def h02_compare():
 def main():
     rmt, p30, pday, units = load_all()
     ut = unit_table(rmt, units)
-    ut.write_parquet(L.OUT / "unit_table.parquet")
+    L.OUTV.mkdir(parents=True, exist_ok=True)
+    ut.write_parquet(L.OUTV / "unit_table.parquet")
     sc = ut.filter(pl.col("scored"))
     O = {}
 
@@ -175,6 +194,22 @@ def main():
     l0 = sc.filter(pl.col("k_lull") == 0).height / n
     O["P1prime"] = {"frac_k_1_3": l13, "frac_k0": l0, "k_lull_dist": sc["k_lull"].value_counts().sort("k_lull").to_dicts(),
                     "pass": bool(l13 >= 2 / 3 and l0 <= 1 / 6)}
+    if sc["k_trim"].drop_nulls().len():  # round 1b: DQ8-corrected counts, same rules as P1 / P1'
+        kt, ks = sc["k_trim"].fill_null(0), sc["k_trim_stall"].fill_null(0)
+        O["P1_dq8"] = {"rule": "P1 rule on k_trim (trim + block-shift edge)", "frac_k_1_3": float(kt.is_between(1, 3).mean()),
+                       "frac_k0": float((kt == 0).mean()), "k_trim_dist": sc["k_trim"].value_counts().sort("k_trim").to_dicts(),
+                       "pass_core": bool(kt.is_between(1, 3).mean() >= 2 / 3 and (kt == 0).mean() <= 1 / 6),
+                       "median_l1_edge_trim": float(sc["l1_edge_trim"].median())}
+        O["P1prime_dq8"] = {"rule": "P1' rule on k_trim_stall (trim + H38 explained-JS mask, replaces the lull filter)",
+                            "frac_k_1_3": float(ks.is_between(1, 3).mean()), "frac_k0": float((ks == 0).mean()),
+                            "k_dist": sc["k_trim_stall"].value_counts().sort("k_trim_stall").to_dicts(),
+                            "pass": bool(ks.is_between(1, 3).mean() >= 2 / 3 and (ks == 0).mean() <= 1 / 6),
+                            "median_l1_edge": float(sc["l1_edge_trim_stall"].median())}
+        tt_ = sc.filter(pl.col("k_talk_trim").is_not_null())
+        O["P3_dq8"] = {"k_talk_trim_dist": tt_["k_talk_trim"].value_counts().sort("k_talk_trim").to_dicts(),
+                       "n_talk_mode_trim": int((tt_["k_talk_trim"] >= 1).sum()), "n": tt_.height}
+        O["lull_stats_fixed"] = {"median_lull_frac": float(sc["lull_frac"].median()), "max_lull_frac": float(sc["lull_frac"].max()),
+                                 "spearman_lullfrac_lulldrop": float(spearmanr(sc["lull_frac"], sc["lull_drop"]).statistic)}
     O["P1_secondary"] = {"k_circ_dist": sc["k_circ"].value_counts().sort("k_circ").to_dicts(),
                          "k_mpeff_dist": sc["k_mpeff"].value_counts().sort("k_mpeff").to_dicts(),
                          "k_rank_dist": sc["k_rank"].value_counts().sort("k_rank").to_dicts()}
@@ -189,7 +224,7 @@ def main():
                "median_VR_l1": float(s1["VR_l1"].median()) if s1.height else None,
                "parts": {"shape": shape_ok >= 2 / 3, "III_gt_I": med["III"] > med["I"], "lull": lull30 >= 0.5}}
     O["P2"]["pass"] = bool(all(O["P2"]["parts"].values()))
-    h2 = h02_compare(); h2.write_parquet(L.OUT / "h02_compare.parquet")
+    h2 = h02_compare(); h2.write_parquet(L.OUTV / "h02_compare.parquet")
     rho = spearmanr(h2["l1_block"] - 1, h2["bJ0_h02"]).statistic
     O["P2_h02"] = {"spearman_l1block_vs_bJ0": float(rho), "n_chunks": h2.height, "consistent": bool(rho >= 0.6),
                    "median_VRblock_over_l1block": float((h2["VR_block"] / h2["l1_block"]).median()),
@@ -227,7 +262,7 @@ def main():
 
     # ---------------- P6 (NE34)
     kick, plac = ne34(p30, units)
-    kick.write_parquet(L.OUT / "ne34_kickoffs.parquet"); plac.write_parquet(L.OUT / "ne34_placebos.parquet")
+    kick.write_parquet(L.OUTV / "ne34_kickoffs.parquet"); plac.write_parquet(L.OUTV / "ne34_placebos.parquet")
     pv = mannwhitneyu(kick["d_pr"], plac["d_pr"], alternative="less").pvalue
     plac2 = plac.filter(pl.col("k") >= 1)
     pv2 = mannwhitneyu(kick["d_pr"], plac2["d_pr"], alternative="less").pvalue
@@ -268,7 +303,7 @@ def main():
                "all_periods_frac_d1_lower": float(p7.filter(pl.col("prday_d1").is_not_nan() & pl.col("prday_later_med").is_not_nan())["d1_lower"].mean())}
     O["P7"]["pass"] = bool(O["P7"]["frac_d1_lower"] >= 2 / 3 and O["P7"]["frac_slope_up"] >= 2 / 3)
     O["P7"]["R4_consensus_wins"] = bool(1 - O["P7"]["frac_d1_lower"] >= 0.5)
-    p7.write_parquet(L.OUT / "p7_day1.parquet")
+    p7.write_parquet(L.OUTV / "p7_day1.parquet")
 
     # ---------------- P8
     slopes = []
@@ -287,7 +322,7 @@ def main():
         p8[g] = {"slope": float(s["slope"][0]), "regime_median_nonconsensus": float(ref), "neg": bool(s["slope"][0] < 0),
                  "below_ref": bool(s["slope"][0] < ref)}
     O["P8"] = {"by_period": p8, "pass": bool(all(v["neg"] and v["below_ref"] for v in p8.values()))}
-    slopes.write_parquet(L.OUT / "p8_slopes.parquet")
+    slopes.write_parquet(L.OUTV / "p8_slopes.parquet")
 
     # ---------------- P9
     pm = (pday.group_by("goal_no", "regime", "mode").agg(pl.col("prday").drop_nans().mean().alias("prday_mean"),
@@ -295,7 +330,7 @@ def main():
                                                          pl.col("tvday").drop_nans().mean().alias("tv_mean"),
                                                          pl.col("pr_between").drop_nans().mean().alias("pr_between_mean"))
           .sort("goal_no"))
-    pm.write_parquet(L.OUT / "period_means.parquet")
+    pm.write_parquet(L.OUTV / "period_means.parquet")
     get = lambda g: pm.filter(pl.col("goal_no") == g)["prday_mean"][0]  # noqa: E731
     fI = [get(g) for g in FREE["I"]]; sI = [get(g) for g in SHARED["I"]]
     pI = mannwhitneyu(fI, sI, alternative="greater", method="exact").pvalue
@@ -318,11 +353,12 @@ def main():
         p10[r] = {"n": y.height, "rho": float(rr.statistic), "p": float(rr.pvalue)}
     O["P10"] = {"by_regime": p10, "pass": bool(all(v["rho"] < 0 for v in p10.values()) and any(abs(v["rho"]) >= 0.3 for v in p10.values()))}
 
-    (L.OUT / "outcomes.json").write_text(json.dumps(O, indent=1, default=float))
+    (L.OUTV / "outcomes.json").write_text(json.dumps(O, indent=1, default=float))
     period_results(ut, kick, plac, p7, slopes, pm, O, units, pday)
     L.write_provenance("hypotheses/H12-groupthink-dimensional-collapse/analysis/evaluate.py",
-                       ["H12 G*/rmt_*.json, pr30_*.parquet, prday_*.parquet; H02 mf_cw*.parquet; shared activity_bins, calendar"],
-                       {"outputs": "unit_table, ne34_*, h02_compare, period_means, p7_day1, p8_slopes, outcomes.json, period_results.json"})
+                       ["H12 G*/rmt_*.json, pr30_*.parquet, prday_*.parquet; H02 mf_cw*.parquet; shared " + L.AB.name + ", calendar"],
+                       {"outputs": "unit_table, ne34_*, h02_compare, period_means, p7_day1, p8_slopes, outcomes.json, period_results.json",
+                        "data_version": L.DATA_VERSION}, path=L.OUTV / "_provenance.json")
     print(json.dumps({k: v.get("pass") for k, v in O.items() if isinstance(v, dict)}, indent=0))
     return O
 
@@ -400,7 +436,7 @@ def period_results(ut, kick, plac, p7, slopes, pm, O, units, pday):
         if not sm:
             sm.append("- Only the dimensionality checks apply here (N < 10).")
         out[str(g)] = {"verdict": verdict, "checks": {k: bool(v) for k, v in checks.items()}, "result_md": "\n".join(md), "score_md": "\n".join(sm)}
-    (L.OUT / "period_results.json").write_text(json.dumps(out, indent=1))
+    (L.OUTV / "period_results.json").write_text(json.dumps(out, indent=1))
 
 
 if __name__ == "__main__":

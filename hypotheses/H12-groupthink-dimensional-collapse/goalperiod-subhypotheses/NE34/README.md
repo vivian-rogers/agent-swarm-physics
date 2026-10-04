@@ -1,6 +1,7 @@
 # H12 × NE34: goal kickoffs as field quenches (event study across non-holdout transitions)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1: failed; PR inputs do not depend on the corrected activity table; second model gte: median first-hour change +9%, 40% negative, p = 0.85; regime III +56%)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** NE34, all goal transitions g−1 → g where both sides are non-holdout, both days are in the same regime, and both first hours have a valid PR30. That gives 20 usable transitions (15 regime I, 1 regime II, 4 regime III), against 189 placebo pairs (consecutive days inside one unit). Named exception (c) of the unit-of-analysis rule: the transition is the object.
 
@@ -62,6 +63,10 @@ Data: `data/processed/H12-groupthink-dimensional-collapse/ne34_kickoffs.parquet`
 ## Scorecard (NE-specific axes)
 - **E (interventional): 0.** The predicted sign is wrong. Kickoffs leave first-hour PR unchanged in regime I and raise it in regime III.
 - **H (comparative): 0 for HH58.** R4 ("consensus formation": dimensionality is high right after the kickoff and lower later) beats the field-quench reading on the day-1 comparison. It does not, however, predict the consistent decline over days 2..D (P8 failed).
+
+
+## Round 1b (improved data, 2026-10-04)
+The kickoff test uses statements only, so the activity-table fix does not touch it. Re-run with DQ5's robustness pack (`analysis/r1b_dq5.py`): with the shared unit-normalized bge vectors the median first-hour change is +4% (p = 0.77; regime III +45%), with gte +9% (p = 0.85; regime III +56%); removing copies (`self_repeat_both`) or restatements (either model) leaves it null (−3% to +9%, all p ≥ 0.70). The failure is robust to the embedding model and to self-repetition.
 
 ## Notes
 - 2026-10-03: folder created after the round-1 run. The prediction is the card's pre-run P6/P7, copied verbatim.

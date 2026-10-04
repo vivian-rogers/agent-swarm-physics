@@ -12,15 +12,20 @@ PH3  Combined stall mask: auto stalls OR H38 scheduled-off minutes (activity, ta
 PH4  Edge trimming at agent level (H38's finding that regime-III co-activation is mostly agents starting and stopping
      together): each agent's minutes before its first and after its last logged event of the day carry no signal
      (set to the agent's block mean over its available minutes), on top of PH3's mask.
-Output: data/processed/H25-criticality-dial/results/posthoc.json, posthoc_mask.parquet.
+Output: data/processed/H25-criticality-dial/results/posthoc.json, posthoc_mask.parquet
+(round 1b: --data-version fixed reads and writes under data/processed/H25-criticality-dial/r1b/).
 """
 from __future__ import annotations
 
 import hashlib
 import json
+import os
 import sys
 from multiprocessing import Pool
 from pathlib import Path
+
+if "--data-version" in sys.argv:
+    os.environ["H25_DATA_VERSION"] = sys.argv[sys.argv.index("--data-version") + 1]
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import h25common as C  # noqa: E402
@@ -145,16 +150,16 @@ def init(d):
 
 
 def main():
-    daily = pl.read_parquet(C.OUT / "dial_daily.parquet")
-    per = pl.read_parquet(C.OUT / "dial_period.parquet")
+    daily = pl.read_parquet(C.RESD / "dial_daily.parquet")
+    per = pl.read_parquet(C.RESD / "dial_period.parquet")
     res = {"PH1_size_scaling": ph1(daily, per), "PH2_heterogeneity_raw_se": ph2(daily)}
-    spins = pl.read_parquet(C.OUT / "inputs/spins.parquet")
-    h38 = pl.read_parquet(C.OUT / "inputs/h38_masks.parquet")
+    spins = pl.read_parquet(C.INPV / "spins.parquet")
+    h38 = pl.read_parquet(C.INPV / "h38_masks.parquet")
     days = spins["pt_date"].unique().sort().to_list()
     with Pool(2, initializer=init, initargs=({"spins": spins, "h38": h38},)) as pool:
         rows = [r for rr in pool.imap(job, days, chunksize=4) for r in rr]
     m = pl.DataFrame(rows).join(daily.select("pt_date", "goal_no").unique(), on="pt_date")
-    m.write_parquet(C.OUT / "posthoc_mask.parquet")
+    m.write_parquet(C.RESD / "posthoc_mask.parquet")
     res["PH4_edges"] = {ch: {"median_g": float(m.filter((pl.col("channel") == ch) & (pl.col("variant") == "auto+h38_sched+edges"))["g"].median()),
                              "by_regime": m.filter((pl.col("channel") == ch) & (pl.col("variant") == "auto+h38_sched+edges"))
                              .join(daily.select("pt_date", "regime").unique(), on="pt_date").group_by("regime").agg(pl.col("g").median()).to_dicts(),
@@ -165,8 +170,9 @@ def main():
                                      "median_g_auto": float(daily.filter((pl.col("channel") == ch) & (pl.col("variant") == "auto") & (pl.col("flag") == "ok"))["g"].median()),
                                      "median_g_none": float(daily.filter((pl.col("channel") == ch) & (pl.col("variant") == "none") & (pl.col("flag") == "ok"))["g"].median())}
                                 for ch in ("activity", "talk")}
-    (C.OUT / "results/posthoc.json").write_text(json.dumps(res, indent=1, default=float))
-    C.write_provenance("posthoc", "hypotheses/H25-criticality-dial/analysis/posthoc.py", ["(H25 outputs)"], {"labelled": "post hoc"})
+    (C.RESD / "results/posthoc.json").write_text(json.dumps(res, indent=1, default=float))
+    C.write_provenance("posthoc" if C.DATA_VERSION == "r1" else "posthoc_r1b", "hypotheses/H25-criticality-dial/analysis/posthoc.py",
+                       ["(H25 outputs)"], {"labelled": "post hoc"}, out=C.RESD)
     print(json.dumps(res, indent=1, default=float))
 
 

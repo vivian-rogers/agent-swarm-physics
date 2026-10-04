@@ -10,27 +10,33 @@ Outputs (data/processed/H25-criticality-dial/inputs/):
   exo_vec.npy          row-aligned whitened unit vectors, float16
   refs.parquet         per period: H19 g_eq active/talk (+SE), H03 n-hat TALK (+CI), fast n_x, n_s, H12 lull fraction
   h38_masks.parquet    H38's per-minute stall table as masks (sched, exo, stall), only if H38 has written it
-No text is stored anywhere. Usage: uv run python hypotheses/H25-criticality-dial/scheme/build.py
+No text is stored anywhere. Usage: uv run python hypotheses/H25-criticality-dial/scheme/build.py [--data-version fixed]
+Round 1b (2026-10-04): --data-version fixed rebuilds only the activity-derived inputs (spins from activity_bins_fixed,
+h38_masks from the shared outages_fixed/stall_minutes, refs + the H19 estimator recomputed on the fixed table by H38's
+round-1b pipeline) into inputs_r1b/; statements and exogenous messages are unchanged and stay in inputs/.
 """
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
 sys.dont_write_bytecode = True
+if "--data-version" in sys.argv:
+    os.environ["H25_DATA_VERSION"] = sys.argv[sys.argv.index("--data-version") + 1]
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "analysis"))
 import h25common as C  # noqa: E402
 import numpy as np  # noqa: E402
 import polars as pl  # noqa: E402
 
-INP = C.OUT / "inputs"
+INP = C.INPV
 DUP_COS = 0.95
-H38_STALL_MIN = C.PROC / "H38-platform-stalls/stall_minutes.parquet"
+H38_STALL_MIN = C.H38_STALLS
 
 
 def build_spins(cal: pl.DataFrame) -> pl.DataFrame:
     days = cal["pt_date"].to_list()
-    ab = (pl.scan_parquet(C.SHARED / "activity_bins.parquet").filter(pl.col("pt_date").is_in(days))
+    ab = (pl.scan_parquet(C.AB).filter(pl.col("pt_date").is_in(days))
           .select("pt_date", pl.col("minute").cast(pl.Int16), "agent", "state").collect())
     return ab.join(cal.select("pt_date", "goal_no", "regime"), on="pt_date").sort("pt_date", "minute", "agent")
 
@@ -102,7 +108,27 @@ def build_refs() -> pl.DataFrame:
                   pl.col("N_active").alias("h03_N_active")))
     u = (pl.read_parquet(C.PROC / "H12-groupthink-dimensional-collapse/unit_table.parquet")
          .group_by("goal_no").agg(pl.col("lull_frac").mean().alias("h12_lull_frac")))
-    return h19.join(pt, on="goal_no", how="full", coalesce=True).join(u.with_columns(pl.col("goal_no").cast(pl.Int64)), on="goal_no", how="left").sort("goal_no")
+    out = h19.join(pt, on="goal_no", how="full", coalesce=True).join(u.with_columns(pl.col("goal_no").cast(pl.Int64)), on="goal_no", how="left").sort("goal_no")
+    if C.DATA_VERSION == "fixed":
+        out = out.join(h19_fixed(), on="goal_no", how="left")
+    return out
+
+
+def h19_fixed() -> pl.DataFrame:
+    """Round 1b: H19's g_eq (active, talk) on activity_bins_fixed. H38's pipeline computes exactly H19's estimator
+    (same 5-day chunks, present population, 30-min blocks, pooled suffstats; it reproduces H19's G40 value to 6
+    digits on the old table), so its round-1b `raw` variant is the corrected reference. SE: the N1-null SD (H19's
+    day bootstrap is not recomputed here)."""
+    import json
+    rows = []
+    for f in sorted((C.PROC / "H38-platform-stalls/r1b").glob("G*/result.json")):
+        r = json.loads(f.read_text())
+        a = ((r.get("o4") or {}).get("active") or {}).get("raw") or {}
+        t = ((r.get("o4") or {}).get("talk") or {}).get("raw") or {}
+        rows.append({"goal_no": int(r["goal_no"]), "h19f_active": a.get("g"), "se_h19f_active": a.get("null_sd"),
+                     "h19f_talk": t.get("g"), "se_h19f_talk": t.get("null_sd")})
+    return pl.DataFrame(rows, schema={"goal_no": pl.Int64, "h19f_active": pl.Float64, "se_h19f_active": pl.Float64,
+                                      "h19f_talk": pl.Float64, "se_h19f_talk": pl.Float64})
 
 
 def build_h38_masks(cal: pl.DataFrame) -> pl.DataFrame | None:
@@ -123,12 +149,15 @@ def main():
     INP.mkdir(parents=True, exist_ok=True)
     spins = build_spins(cal)
     spins.write_parquet(INP / "spins.parquet", compression="zstd")
-    meta, V = build_statements(cal)
-    meta.drop("t").write_parquet(INP / "statements.parquet", compression="zstd")
-    np.save(INP / "statements_vec.npy", V)
-    ex, EV = build_exo(cal)
-    ex.write_parquet(INP / "exo.parquet", compression="zstd")
-    np.save(INP / "exo_vec.npy", EV)
+    if C.DATA_VERSION == "fixed":  # statements / exo do not depend on activity_bins: keep inputs/ (round 1)
+        meta = pl.read_parquet(C.INP_BASE / "statements.parquet"); ex = pl.read_parquet(C.INP_BASE / "exo.parquet")
+    else:
+        meta, V = build_statements(cal)
+        meta.drop("t").write_parquet(INP / "statements.parquet", compression="zstd")
+        np.save(INP / "statements_vec.npy", V)
+        ex, EV = build_exo(cal)
+        ex.write_parquet(INP / "exo.parquet", compression="zstd")
+        np.save(INP / "exo_vec.npy", EV)
     refs = build_refs()
     refs.write_parquet(INP / "refs.parquet")
     out = build_h38_masks(cal)
@@ -136,15 +165,17 @@ def main():
         out.write_parquet(INP / "h38_masks.parquet")
     print(f"spins {spins.height} rows; statements {meta.height} ({meta['dup'].mean():.3f} dup); exo {ex.height}; "
           f"refs {refs.height}; H38 masks {'used' if out is not None else 'absent'}")
-    C.write_provenance("scheme_inputs", "hypotheses/H25-criticality-dial/scheme/build.py",
-                       ["activity_bins", "calendar", "chat_core", "embeddings/statements", "embeddings/chat_bge_small",
+    C.write_provenance("scheme_inputs" if C.DATA_VERSION == "r1" else "scheme_inputs_r1b", "hypotheses/H25-criticality-dial/scheme/build.py",
+                       [C.AB.name, "calendar", "chat_core", "embeddings/statements", "embeddings/chat_bge_small",
                         "embeddings/chat_index", "embeddings/whitening_*"],
                        {"days": cal.height, "dup_cos": DUP_COS, "whiten_dim": 32, "window_min": 30,
                         "h38_masks": bool(out is not None)},
                        extra_inputs=[{"source": "data/processed/H19-loop-gain-collapse", "tables": ["estimates.parquet"]},
                                      {"source": "data/processed/H03-self-excited-criticality", "tables": ["period_table.parquet"]},
                                      {"source": "data/processed/H12-groupthink-dimensional-collapse", "tables": ["unit_table.parquet"]},
-                                     {"source": "data/processed/H38-platform-stalls", "tables": ["stall_minutes.parquet"]}])
+                                     {"source": str(C.H38_STALLS.relative_to(C.ROOT)), "tables": ["stall_minutes.parquet"]}]
+                       + ([{"source": "data/processed/H38-platform-stalls/r1b", "tables": ["G*/result.json (H19 estimator on activity_bins_fixed)"]}]
+                          if C.DATA_VERSION == "fixed" else []))
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 # H38 × G33: Discuss, debate, and act on your views about the recent Pentagon-AI company news (2026-03-02 → 2026-03-04)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1: failed; corrected tables, same rule)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime II · mode C · 12 agents (catalog) · 3 non-holdout days · 4.0 h/day (empirical median window).
 
@@ -37,6 +38,23 @@ Data: `data/processed/H38-platform-stalls/G33/result.json`; minutes and runs in 
 
 ## Scorecard (period-specific axes)
 - **C:** explained share above its N1 surrogate level; raw gain significant vs N1; stall-adjusted z 1.8, scaffold-masked z 2.0.
+
+## Round 1b (improved data, 2026-10-04)
+Re-run of the same pipeline (`analysis/run_period.py --data-version fixed`) on DQ8's `activity_bins_fixed` and the shared `outages_fixed` sidecar; the round-1 tables dropped about half of all events. Predictions unchanged; the period verdict uses the same rule. The DQ8 row reports the corrected null (whole-day N1 / block-shift nulls reject 28–34% of independent swarms; 2–4% after trimming).
+
+| Quantity | Round 1 (old tables) | Round 1b (fixed tables) |
+| --- | --- | --- |
+| joint-silence share (independent expectation) | 0.003 (0.001) | 0.000 (0.000) |
+| explained share (N1 surrogate) | 1.00 (0.07) | 0.00 (0.00) |
+| largest cause of joint-silence minutes | scheduled | – |
+| raw g_eq active, E (z vs N1, whole-day grid) | 0.113, 0.116 (2.2) | 0.133, 0.137 (2.5) |
+| f_stall (pre-registered) · f_scaffold (headline) | 0.18 · 0.12 | -0.00 · 0.07 |
+| **DQ8 null** (trimmed to the all-present window before block-shift surrogates): E_trim (z), f_trim | not computed | 0.099 (1.7), 0.28 |
+| trimmed + scaffold-conditioned: E (z) | not computed | 0.126 (2.1) |
+| talk spin E raw (z) → trimmed E (z) | 0.068 (1.3) | 0.103 (2.0) → 0.087 (1.4) |
+| per-period verdict (card rule) | failed | failed |
+
+Data: `data/processed/H38-platform-stalls/r1b/G33/result.json`.
 
 ## Notes
 - 2026-10-04: folder created with the prediction, before the run.

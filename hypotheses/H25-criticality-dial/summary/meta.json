@@ -1,14 +1,14 @@
 {
-  "complete": 40,
-  "faithfulness": 1.5,
+  "complete": 50,
+  "faithfulness": 2.0,
   "usefulness": 2.5,
   "rationale": {
-    "complete": "Round 1 done: reusable dial with synthetic validation on real day designs (S1-S4), daily dials for all 35 non-holdout periods with dated per-period predictions and verdicts, H19/H03 agreement, event tests, post hoc size scaling; confirmatory script frozen and dry-run, holdout not run; the lagged dial (R1) is still missing.",
-    "faithfulness": "The Curie-Weiss reading holds for talk (J0/N size scaling beats the field model) and the instrument recovers equilibrium and fast-Hawkes swarms, but the headline P1 failed on content, the content reading is field-like rather than coupling, P5 failed, P7a failed, the dial is blind to delayed coupling (S3), and C = 1 with no holdout.",
-    "usefulness": "A documented compute_dial(...) that runs on any swarm's event logs with calibrated intervals, a stall detector that works, and two operator rules (track per-pair correlation, not g; use weekly means). Its alarm value is limited: green readings do not exclude slow context-mediated herding."
+    "complete": "Round 1 plus round 1b: all 282 days re-run on the corrected activity table with the DQ8 trim variant, the H19 reference recomputed on the same table, post hoc size scaling re-run, three period-native tests (NE43 drive withdrawal, #51 N sweep, NE42 room merge). Holdout not run; the lagged dial (R1) is still missing.",
+    "faithfulness": "Up from 1.5: on corrected data the dial reproduces H19 on the same table (P3a passes, talk rho 0.97) and agrees with an independent Hawkes fit (P4a passes, rho 0.46); NE43 confirms it ignores drive withdrawal (E = 1); talk follows J0/N (alpha 1.25 [0.77, 1.77]). Still failing: P1 on content (field-like), P5, P7a; the #51 size-law test is uninformative and the NE42 talk collapse was not predicted; activity feedback mostly vanishes after trimming.",
+    "usefulness": "compute_dial(...) with calibrated intervals and a working stall detector, now with a cross-method check (Hawkes) and a clear preprocessing rule (trim to the common running window: activity median 0.16 -> 0.07). Operator rules: track per-pair correlation, use weekly means, trim first. Still blind to slow context-mediated herding."
   },
-  "one_line": "Daily Curie\u2013Weiss dial: activity/talk g \u2248 0.1 every day; content 'near-critical' is size \u00d7 shared-field correlation; blind to delayed coupling.",
-  "rated_by": "H25 agent (suggested)",
+  "one_line": "Daily Curie-Weiss dial: on corrected data activity/talk g ~ 0.16 (activity 0.07 after trimming), matches H19 and H03; content 'near-critical' is size x shared field; blind to delayed coupling.",
+  "rated_by": "H25 round-1b agent (suggested)",
   "updated": "2026-10-04",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)"
 }
