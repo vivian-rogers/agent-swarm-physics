@@ -1,6 +1,8 @@
 # H16 × G27: Hack the OWASP Juice Shop (competition) (2026-01-12 → 2026-01-23)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged under the round-1 rule; its core predictions did not change). Error loops on real failures: β -0.19 (stderr loops in round 1: -0.69); Jev blocked spells β -1.24; loop spells β +0.25
+**Role (1b):** native (long debugging traps, N3, below) in addition to the replication
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K · 10 agents · #general only · 10 days. Splits or exclusions: see the main card's period table.
 
@@ -57,3 +59,24 @@ Period verdict rule: core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2): a
 
 ## Notes
 - 2026-10-03: no nudges (N_tgt untestable); kicks are almost all agent room messages (A_und 3,692 kicked bins).
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H16-metastable-traps-kramers/r1b/G27/results.json`; tables built by `scheme/build.py --r1b`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| TS1r deep slope (inputs unchanged) | -0.66 | -0.66 |
+| TS2r gate slope on ln k (inputs unchanged) | n/a | n/a |
+| error-loop rows | 3658 (stderr non-empty) | 2577 (real failures) |
+| error-loop aging β (boot CI), deep escapes | -0.69 [-0.93, +0.40], 186 | -0.19 [-0.93, +3.34], 57 |
+| Jev blocked spells (p_blocked ≥ 0.5): β (Wald CI), spells | – | -1.24 [-1.93, -0.54], 335 |
+| Jev loop spells (longest_run ≥ 5): β (Wald CI), spells | – | +0.25 [-0.82, +1.31], 293 |
+| directed kick at the gate (TS2r OR, dose 1) | n/a | n/a (leading-@ nudge targets) |
+| undirected kick ln HR vs day-swap null p95 (TS1) | +0.11 | +0.11 vs +0.18 |
+| directed kick on real-failure loops, ln HR (SE) | -0.54 (stderr loops) | -0.51 (0.13) |
+| N_tgt kicks | 0 (every named agent) | 0 (leading @) |
+
+## Native test (round 1b): long debugging traps in #27
+*Prediction written 2026-10-04 before running (card, "Round 1b", N3).* #27 (Juice Shop competition, 10 days, regime I, ~55k model calls of long debugging) is where traps should be deepest. At least one of TS3r (real-failure loops) or TS5 (Jev blocked spells) ages (β < −0.3, Wald CI below 0); credence 0.5. Directed messages do not break TS3r loops (P-c6r); credence 0.7.
+
+*Result (`analysis/native_r1b.py`, `r1b/native_r1b.json`):* TS5 blocked spells **age**, β −1.24 (Wald [−1.93, −0.54]; boot [−2.10, +0.09]; 335 spells); TS3r is flat, β −0.19 (Wald [−0.98, 0.59]); TS6 loop spells flat (+0.25). Directed messages go with *fewer* loop breaks (ln HR −0.51 ± 0.13), undirected too (−0.38 ± 0.06). **Holds** on both statements: being blocked in a long debugging week deepens with time, and messages do not get agents out.

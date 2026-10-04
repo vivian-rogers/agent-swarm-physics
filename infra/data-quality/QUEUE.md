@@ -36,6 +36,7 @@ Each DQ agent writes only new files in `infra/` and new tables in `data/processe
 - New shared tables: "realizations" (days split at operator-off gaps ≥ 60 min) and a Hawkes exogenous-drive table (human + nudge, bookends separate) for H04, H42 and others.
 - `per_period_estimates`: add a `data_version` column and mark the backfilled round-1 activity rows of H02, H19 (and other activity_bins users) as superseded; the round-1b rows say they supersede them.
 - Add an event-time agent-shift row to the DQ8 null size table (RE-A2).
+- `actions_bash_head_fixed`: add a shell sub-class column (`head_class`: vcs/net/run/read/write/wait/other; H14's `build_r1b.py`).
 - `kicks_classified`: add `primary_target` (the nudge's leading @; 29% of nudges mention other agents too, H35).
 - DQ7 rebuild should also apply stall-adjusted (agent-state conditioned) variants of the collective statistics used by H02, H12 and H19.
 
@@ -87,7 +88,7 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 | RE-V2 | H29, H30, H39 | running (2026-10-04): ledger visibility, fixed bins, leading-@ targets, lever_design, v3 states |
 | RE-A2 | H02, H19, H03 | **done** (2026-10-04) |
 | RE-V1 | H18, H08, H04 | running (2026-10-04) |
-| RE-B1 | H17, H16, H14 | running (2026-10-04) |
+| RE-B1 | H17, H16, H14 | **done** (2026-10-04) |
 | RE-C1 | H10, H20, H24 | running (2026-10-04): shared goal vectors, both embedding models, dedupe flags |
 | RE-C2 | H13, H21, H22 | running (2026-10-04): DQ6 ground truth (Opus 5 role), stance channel with calibrated null, style residuals, behavioral family test |
 | RE-P1 | H11, H31, H27 | running (2026-10-04): shared labels, #26 per round, attention vs work space |

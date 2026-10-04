@@ -7,6 +7,11 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **Re-evaluation RE-B1 done (H17, H16, H14 round 1b on Jev v3 states, real failures, fixed bash heads):** v3 states don't change the qualitative reading.
+  - **H17:** t2* on v3 states is hours (median 205 min regime III), an agent-day mixture, not a metastable behavior; acting vs waiting is still the slow split; neither t2* nor `p_blocked` flags stuck periods (signs reversed). HH97 refuted on both state spaces. Ratings 45 / 1.0 / 1.5.
+  - **H16:** **"error loops age" was mostly a stderr artifact** (loop rows −51% with real failures; aging survives only in #51); blocked and repeated-action spells age where there is power; kick results survive the leading-@ fix; NE44 shows in kick response, not declared durations. Ratings 48 / 1.5 / 2.5.
+  - **H14:** fine arrows with shell sub-classes are irreversible for 100% of agents in 9/9 periods and **survive scaffold removal**; **the regime I/III contrast was the session scaffold**; v3 states carry a small arrow unrelated to output. Found: window-level reset burn-ins manufacture irreversibility (known issue, pitfall). Ratings 50 / 1.5 / 1.5.
+  - 258 estimate rows written. **Machine overloaded (load ~220, swap 4.7/6 GB): holding new launches until running agents finish.**
 - **Re-evaluation RE-A2 done (H02, H19, H03 round 1b on fixed tables with DQ8's corrected null):**
   - **H02:** pairwise couplings stay at the null floor; **the round-1 positive "collective coupling in regime-III shared-objective weeks" is withdrawn: it was the runner's day edges** (day-edge share of regime-III co-activation 0.74–0.92). CW βJ₀ significant in 9/21 chunks under the corrected null (regime I 7/13, regime III only #38c1 and #44). Post hoc: talk-spin couplings transfer across days in III-C (fits H50). #26 leader 10/10; 44b leader rank 1/5 but z 0.94 (mirrors #45). Thinning check: the bug is unlikely to have flipped the #45 FAIL. Ratings 65 / 0.5 / 1.5.
   - **H19:** **the "activity and talk move oppositely" channel split is withdrawn (day edges);** with trimmed activity gains, activity correlates with the Hawkes gains (ρ 0.35–0.49) and all 6 methods rise with messages per LLM step. P1 still fails. NE43 supported (the day-edge part doesn't change when bookends stop). `frozen_channel_model.json` stale. Ratings 50 / 1.0 / 2.0.

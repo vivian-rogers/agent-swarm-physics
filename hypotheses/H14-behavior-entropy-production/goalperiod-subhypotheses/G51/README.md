@@ -1,6 +1,7 @@
 # H14 × G51: Each agent: maximize your assigned goal! (2026-07-06 → 2026-09-04, non-holdout part)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 100% after scaffold removal with burn-in; pooled Jev v3 arrow significant (flip p 0.005)
 **Role:** exploratory
 **Period:** regime III · private assigned roles, mode I/K · N = 21 → 32 · mostly #general (GPT-5.6 triplet isolated 07-09/10; #focus 08-05 → 08-24) · 8 h/day · 45 non-holdout days (tail 09-07 → 09-21 held out). Roster steps: NE32 (07-09), 07-10, 07-17, 07-24, 08-28, 09-01, NE33 (09-03/04). Single-agent tests use each agent's own non-holdout days; the collective analysis uses the constant-roster block **07-24 → 08-28** (25 days, H09 E7's window), with weekly sub-blocks as a stability check.
 
@@ -75,3 +76,17 @@ Figures: [`figures/period_summary.pdf`](figures/period_summary.pdf). Data: `data
 - **G (ground truth):** the consolidate-linked cycle is scaffold-imposed (consolidation cadence); see the card for how much EP it carries.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H14-behavior-entropy-production/r1b/G51/`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| coarse chain: share of test agents above DB null (median Newton excess) | 0.97 (0.0090) | 0.97 (0.0090), same transitions |
+| fine classes: share above null (median excess) | `act`, shell unsplit: 1.00 (0.040) | act_sh, 7 shell sub-classes: 1.00 (0.117) |
+| scaffold removed (agent-only chain, 3-transition burn-in): share above null | – | coarse_b3 0.93; act_sh_b3 1.00 |
+| share of the median excess kept after scaffold removal | coarse, consolidate decimated: 0.36 | coarse_b3 0.36; act_sh_b3 0.90 |
+| Jev v3 pooled EP per 5-min transition (block-flip p) | – | 0.0118 (p 0.005); argmax 0.0046 (DB p 0.005) |
+| Jev v3 per agent: share above flip null (n) | – | 0.89 (28); descriptive (soft tests nearly blind per agent) |
+
+The window-level burn-in variants (v3s_b1, b1c) are selection artifacts (card, Round 1b) and are not reported here.

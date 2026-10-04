@@ -297,3 +297,7 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Directed read:** a message addressed to an agent (reply parent or @-mention) that entered its context at a receiving call (ledger).
 - **Loop episode (restatement / copy):** a run of an agent's statements flagged `self_repeat` by either model (restatement) or both (copy) (DQ5). **Blocked episode:** a run of Jev v3 windows with `p_blocked` ≥ 0.5.
 - **Immune contrast Δ:** the change in loop or blocked-episode escape hazard after a directed correction is read vs after other directed messages, with agent fixed effects.
+
+### RE-B1 named variants (2026-10-04; see H17, H16, H14 round-1b sections)
+- **MSM (soft, shifted estimator):** a Markov state model on Jev v3 probability vectors (soft occupancies) with the noise-cancelling shifted count estimator; implied timescales t2* and PCCA+ macro states. Needs ≥ ~15k windows per period; per-period verdicts are descriptive below that.
+- **Shell sub-classes:** fine action classes splitting bash turns into vcs / net / run / read / write / wait / other from `bash_head_fixed` plus change evidence (`hypotheses/H14-behavior-entropy-production/analysis/build_r1b.py: head_class`).

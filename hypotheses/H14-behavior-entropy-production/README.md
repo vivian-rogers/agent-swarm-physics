@@ -5,6 +5,7 @@
 - *Supported:* every agent's *fine* action-class sequence is irreversible (80–100% of agents in 9/9 periods). Regime-I behavior is 7–29× more irreversible per transition than regime-III behavior. Coarse arrows are small (0.002–0.010 nats/transition), carried mostly by the scaffold's consolidation boundary, and agent-specific (a weak trait, p = 0.02 / 0.0005).
 - **Verdicts:** G27 and G51 mixed, the other 7 periods failed (P2's 80% bar).
 - `analysis/confirm_h14.py` is written and dry-run; **not run** on the holdout.
+- **Round 1b (2026-10-04, improved data):** with shell sub-classes (`bash_head` fix) every agent's fine arrow is irreversible (100% in 9/9) and survives scaffold removal with a burn-in (41–104% kept); the regime-I/III contrast disappears on every corrected chain (it was the session scaffold); Jev v3 states carry a small pooled arrow (7/9) that does not track output. Natives NE43, NE14 and loops-vs-progress: no support.
 Promoted 2026-10-03 by Vivian from shortlist 2.
 **Fields:** thermodynamics, stat mech, info theory
 **Origin:** HH19 + HH67 (shortlist 2, item 6), with HH56 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
@@ -73,14 +74,14 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | States come from `actions` + `events_core`, with mirror turns and the scaffold's forced `mouse_move` removed and the gap-logging quirks handled. Regime invariance is partial: consolidate = CONSOLIDATE (III) vs. session start/stop (I). Shell sub-classes are unavailable (`bash_head` bug); `none` turns are dropped from coarse sequences. The result depends strongly on the state resolution (coarse vs. fine). |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | States come from `actions` + `events_core`, with mirror turns and the scaffold's forced `mouse_move` removed and the gap-logging quirks handled. Regime invariance is partial: consolidate = CONSOLIDATE (III) vs. session start/stop (I). Shell sub-classes were unavailable in round 1 (`bash_head` bug; available in round 1b); `none` turns are dropped from coarse sequences. The result depends strongly on the state resolution (coarse vs. fine). |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Markov-order audit: order 2 beats order 1 (held-out) for 42–100% of agents, and the order-2 bound exceeds the pair bound for 20–87%. So order-1 Σ_i is a lower bound (P8 met in 4/9 periods). Day-fold cross-fitting; cold daily starts are calibrated synthetically. No time-rescaling check. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Single-agent arrows beat the detailed-balance surrogate in 29/30 agents (G51) and 10/10 (G27). In the 4-h regime-III periods it is 47–73% of agents, far above the 5% chance rate (binomial p ≤ 4e−6), except G37 (1/9). Fine classes: 80–100%. The collective term does not beat the cross-day null after Holm in any regime-III period. |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | Cycle orientations (unfitted) failed as predicted (P5 0/8), but a consistent structure emerged: work → chat → consolidate is the dominant `lump4` cycle in 8/9 periods (G51 sign test p = 0.001). The regime contrast (P6) and "G37 lowest" (P7) held. |
 | E interventional | predicts the change across a natural experiment | 0 | No event study. The regime-I vs. III contrast (P6, held at 7–29×) compares periods two months apart, confounded with roster and calendar. The #38 outreach-approval split showed no change (Wilcoxon p = 0.34). |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Single-agent estimators and the DB test are validated: size 0.03–0.07, recovery 0.6–1.1 at n ≥ 2,000. The family test is sized only for DB-excess statistics (S2c), and its power is 0.32 at a 2× difference. The collective term is calibrated (size ≤ 0.07) but blind below ~0.3–0.5 nats/min in 5-day periods (P1(iv) failed). Results are not robust to the state resolution. |
 | G ground truth | agrees with known structure | 1 | Irreversibility concentrates where the scaffold imposes direction: the consolidation boundary (52–100% of the coarse excess) and regime I's discrete sessions (7–29× higher). Both are known scaffold structure. |
-| H comparative | beats the named rivals | 0 | Rival R1 (scaffold clock) wins over agent-driven cycles (P9 failed in 8/9). Rival R3 (independent agents) is not rejected (no collective term). R2 (action mix) has no family effect to explain. |
+| H comparative | beats the named rivals | 1 | *Round 1b (2026-10-04; was 0):* with shell sub-classes and scaffold removal plus burn-in, the fine arrows beat rival R1 (41–104% of the excess kept, 75–100% of agents above the null in 9/9); R1 still wins for the coarse arrow (5/8). Round 1: R1 (scaffold clock) won over agent-driven cycles (P9 failed in 8/9). Rival R3 (independent agents) is not rejected (no collective term). R2 (action mix) has no family effect to explain. |
 | I transfer | holds in other same-mode periods, including the holdout | 1 | The descriptive findings (fine arrows, the dominant consolidate cycle, the regime contrast, small coarse Σ) transfer across all 8 regime-III periods. Holdout not run. |
 
 ## Prediction
@@ -136,6 +137,10 @@ Script: `analysis/confirm_h14.py`. It refuses to run without `--confirm --i-unde
 | [G42](goalperiod-subhypotheses/G42/README.md) | exploratory | failed | 16 test agents; coarse arrow 9/16 (minute 0.50, fine 0.94); median Σ_i 0.0075 (0.78/h); work>chat>cons positive in 0.56; ΔΣ_MF p 0.27, ΔΣ_PW p 0.14; η²_lab 0.39 (p 0.19) |
 | [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | failed | 14 test agents; coarse arrow 7/14 (minute 0.43, fine 1.00); median Σ_i 0.0083 (0.52/h); work>chat>cons positive in 0.62; ΔΣ_MF p 0.11, ΔΣ_PW p 0.30; η²_lab 0.26 (p 0.40) |
 | [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | mixed | 30 test agents; coarse arrow 29/30 (minute 0.87, fine 1.00); median Σ_i 0.0090 (0.69/h); dominant work>idle>cons (positive 0.90, p < 1e−3), work>chat>cons positive 0.81 (p 0.001); block 07-24 → 08-28 (N 27, 24 days): ΔΣ_MF p 0.32, ΔΣ_PW p 0.024 (Holm 0.20), PW excess/Σ_1 = 0.06; η²_lab 0.21 (p 0.51) |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) | native (round 1b) | failed | v3 pooled EP −50% (bookends) and −34% (nudger off) vs placebo range −45%…+183%; act_sh_b3 −1%, +12% (inside) |
+| [NE14](goalperiod-subhypotheses/NE14/README.md) | native (round 1b) | mixed | #36 after/before: coarse 0.25, act_sh 0.71, v3 0.72; one pre day, CIs span 1 |
+
+*Round 1b (2026-10-04):* every G folder has a `Verdict (1b)` line (unchanged on the coarse chain; corrected fine-class and v3 results) and a Round 1b section; G38–G40 carry the native loops-vs-progress test (0/3).
 
 ## Results
 *Exploratory round 1, 2026-10-03, non-holdout only.*
@@ -253,6 +258,85 @@ Script: `analysis/confirm_h14.py`. It refuses to run without `--confirm --i-unde
   4. `physics-models/10-potts`: the parallel kinetic-Potts simulator with exact EP (`h14lib.simulate_potts`, `potts_exact_ep`) could move there. Its README could note that cross-fitted Newton increments ΔΣ carry a high-dimensional positive bias that only a matched surrogate removes.
   5. `physics-models/02-nonequilibrium-ising` pitfalls: the Newton quadratic is not a bound at strong asymmetry. For transition indicators the exact dual has the closed-form optimum Θ_ab = ln(p_ab / p_ba) (`ep_cfx`).
   6. The H09 E2 claim (78% of agent cells irreversible vs. a shuffle null) used a shuffle null that destroys dwell structure. Against a detailed-balance surrogate, coarse per-turn irreversibility is much weaker; H09 might note this.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation on the improved data (Vivian's priority 2; two-layer design, `infra/data-quality/QUEUE.md`). Holdout untouched; no confirmatory run. Code: `scheme/build_r1b.py`, `analysis/r1b_lib.py`, `analysis/synthetic_r1b.py`, `analysis/round1b.py`, `analysis/native_r1b.py`; round-1 scripts unchanged and still runnable. Numbers: `data/processed/H14-behavior-entropy-production/r1b/`.*
+
+### What changed in the inputs
+- **Fine action classes with shell sub-classes.** Round 1 could not split `shell` because `actions.bash_head` was null for 87% of regime-III bash turns. With `actions_bash_head_fixed` (99.6% coverage) plus the per-turn change evidence in `turn_outcomes` (git-printed commit/push, file write, API write, deploy), bash turns are split into **vcs, net, run, read, write, wait, sh_other** (wrapper heads such as `cd …&&` or `VAR=…` resolved from the command text in memory; only the class code is stored). New fine scheme **act_sh**: the 10 non-shell round-1 classes + 7 shell sub-classes (rare-class rule unchanged).
+- **Scaffold removal with burn-in (H56).** The agent-only chain (no consolidate/search/session/`other` records, no infrastructure-error turns by `error_class`, cut at scaffold-set call starts from `call_windows.gap_kind`) with the first 3 transitions after every cut dropped, because a scaffold reset leaves an irreversible relaxation transient (H56 Amendment 1). Variants **coarse_b3** and **act_sh_b3**. `system_class` is constant `none` (known issue), so it is not used.
+- **Jev v3.1 behavior states** as a third state space: 5-min windows, 11 states + `absent` (in-span windows with no record), soft vectors (**v3s**, primary), argmax (**v3h**), and **v3s_b1** (transitions into and out of the first window after a context reset dropped: a 1-window burn-in, because resets fall in ~31% of #51 windows and a 3-window burn-in would delete most of the data).
+- **Count-based estimators** (H56's closed forms for Newton and `cfx`, ~100× faster, identical values) and a **block-flip null** (each 1-hour block of transitions time-reversed with probability ½), which works for soft observables where no detailed-balance chain exists.
+- **Unchanged:** the coarse turn states (no `bash_head`, no `activity_bins`), so round-1 coarse numbers stand; they are recomputed once as a check.
+
+### Synthetic checks (axis F; `analysis/synthetic_r1b.py`, `r1b/synthetic_r1b.json`; run before any real-data round-1b statistic)
+- **Block-flip null:** size 0.07 (5 × 48 steps), 0.13 (20 × 96) and 0.10 (10 × 300) on reversible chains with cold daily starts, the same as the fast DB null (0.07 / 0.13 / 0.10; 40–60 runs per cell, so ±0.05). Power at Σ ≈ 0.033: 0.17 / 0.95 / 1.0 (DB 0.20 / 0.93 / 1.0).
+- **Soft observables are heavily attenuated.** With Jev-like vectors (argmax accuracy 0.6), the soft Newton bound recovers ~1–10% of the true EP and the flip test has power 0.05–0.08 at 240–3,000 transitions. It is a valid lower bound but nearly blind per agent. **Per-agent v3 tests are descriptive; the pooled period test (all agents' transitions, day folds) is primary.**
+
+### Predictions (round 1b; written 2026-10-04 before running)
+*What I had seen first:* H56's card (EP does not jump at scaffold changes; resets need a burn-in; family differences in fine-action EP survive scaffold removal on its pooled design, η² 0.34 → 0.40); the `build_r1b` audit (shell sub-class mix by regime, real-failure share of bash turns 6.7%); DQ3's documentation; per-period v3 window counts, mean `p_blocked` and real-failure shares (structural check). No round-1b EP number.
+- **P2-fine.** On **act_sh**, ≥ 80% of test agents are above the DB null in every period (round 1 `act`: 80–100% in 9/9). Credence 0.8. The median act_sh excess is at least the round-1 `act` excess in ≥ 6/9 periods (more classes resolve more irreversibility). Credence 0.7.
+- **P9-b3 (scaffold share, with burn-in).** coarse_b3 keeps < 50% of the coarse excess (median agent) in ≥ 6/8 regime-III periods: rival R1 (scaffold clock) wins again. Credence 0.65. act_sh_b3 keeps ≥ 50% of the act_sh excess in ≥ 6/9, with ≥ 50% of test agents above the DB null on act_sh_b3 in ≥ 7/9: the fine arrows are agent micro-workflow, not scaffold. Credence 0.6.
+- **P2-v3 (pooled).** Pooled v3s EP above the block-flip null's 95th percentile in G51 and G38. Credence 0.6. In ≥ 4 of the 6 other regime-III periods: credence 0.3. v3s_b1 keeps ≥ 50% of the pooled v3s EP in G51: credence 0.5.
+- **P6-v3 (regime contrast on semantic states).** G27 pooled v3s EP per transition ≥ 2× every regime-III period. Credence 0.4: if round 1's 7–29× was the regime-I session scaffold, semantic states show less contrast.
+- **P3-family (HH19) on act_sh_b3.** Stratified lab-permutation η² across the 8 regime-III periods, p < 0.05. Credence 0.35. Anthropic > OpenAI one-sided p < 0.05: credence 0.2.
+- **R1 useful irreversibility (H14-R1; descriptive, G38 and G51).** Per-agent v3s EP correlates positively with output rate (git-printed commits + pushes per hour). Credence 0.4.
+
+### Native tests (layer 2; predictions written 2026-10-04 before running; `analysis/native_r1b.py`)
+DQ9's cross-index lists NE06 (#20), NE14 (#36) and NE43 for H14. NE06 is dropped: DQ9 found all-agent prompt changes on the same days, and #20 has only 1–2 Google agents.
+- **N1, NE43 (#51; expected null).** Pooled v3s EP and act_sh_b3 EP per transition, 7 days before vs 7 days after each step: bookends (b = 08-05) and nudger off (b = 08-21). Placebo boundaries 07-13, 07-20, 07-27 and 08-12 (7 + 7 days, not straddling a real step). Prediction: both real changes lie inside the placebo range (min–max). Credence 0.7.
+- **N2, NE14 inside #36 (03-23 regime II vs 03-24 → 03-27 regime III; same goal and roster).** Pooled per-transition EP with agent folds (one pre day). Prediction: coarse and act_sh EP drop by ≥ 30% (credence 0.6), and v3s drops less in relative terms than coarse (after/before ratio v3s > coarse) (credence 0.5): the regime-I/III contrast is mostly scaffold.
+- **N3, loops vs progress in the loop weeks #38–#40 (H14-R2).** Pooled v3s EP per transition on transitions whose two windows are both *productive* (git-printed commit or push, or progress score ≥ 3) vs both *stuck* (p_blocked ≥ 0.5 or longest_run ≥ 5). Prediction: productive > stuck in ≥ 2 of 3 periods, with the agent-day bootstrap CI of the difference above 0. Credence 0.4.
+
+### Results (round 1b, run 2026-10-04)
+*Numbers: `r1b/<period>/{agents.parquet,results.json}`, `r1b/summary_r1b.json`, `r1b/native_r1b.json`, `r1b/synthetic_r1b.json`. Figure: `figures/r1b_summary.pdf`. Compute: ≈ 20 min of 1–2 local processes (the count-based estimators make the DB surrogates ~100× cheaper). The coarse chain reproduces round 1 exactly (identical per-agent Newton values; P2 fractions equal up to surrogate noise: G41 0.67 vs 0.73, G44 0.57 vs 0.50).*
+
+**Old vs new per period** (share of test agents above the DB null; medians are Newton excess in nats per transition; v3 pooled = all agents' 5-min transitions, Newton on soft observables, block-flip p):
+
+| Period | coarse (r1 = 1b) | fine `act` (r1) | **act_sh** (1b) | coarse_b3 (1b) | **act_sh_b3** (1b) | share kept coarse / act_sh after scaffold removal | v3 pooled EP (flip p) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G27 (I) | 1.00 (0.073) | 1.00 (0.148) | 1.00 (0.154) | 0.80 | 0.90 | 0.12 / 0.41 | 0.0115 (0.005) |
+| G37 | 0.11 (0.003) | 0.89 (0.079) | 1.00 (0.116) | 0.00 | 0.75 | 0.50 / 0.66 | 0.0096 (0.13) |
+| G38 | 0.71 (0.003) | 0.86 (0.094) | 1.00 (0.103) | 0.50 | 0.93 | 0.59 / 0.65 | 0.0069 (0.005) |
+| G39 | 0.47 (0.005) | 0.80 (0.075) | 1.00 (0.197) | 0.23 | 0.92 | 0.21 / 1.04 | 0.0262 (0.005) |
+| G40 | 0.60 (0.006) | 0.80 (0.055) | 1.00 (0.118) | 0.21 | 0.93 | 0.06 / 0.84 | 0.0026 (0.14) |
+| G41 | 0.73 (0.010) | 0.93 (0.047) | 1.00 (0.144) | 0.36 | 0.86 | 0.10 / 0.85 | 0.0153 (0.005) |
+| G42 | 0.56 (0.007) | 0.94 (0.111) | 1.00 (0.155) | 0.67 | 0.93 | 1.14 / 1.02 | 0.0073 (0.02) |
+| G44 | 0.50 (0.008) | 1.00 (0.081) | 1.00 (0.133) | 0.56 | 0.89 | 0.50 / 0.88 | 0.0122 (0.02) |
+| G51 | 0.97 (0.009) | 1.00 (0.040) | 1.00 (0.117) | 0.93 | 1.00 | 0.36 / 0.90 | 0.0118 (0.005) |
+
+**Outcome vs prediction (round 1b):**
+
+| Prediction | Outcome | Verdict |
+| --- | --- | --- |
+| P2-fine: ≥ 80% above DB null on act_sh in every period | 9/9 (100% in every period; 5–7 of the 7 shell sub-classes survive the 1% rule, usually all but `wait`) | **holds** |
+| act_sh excess ≥ round-1 `act` excess | 9/9 (median 0.10–0.20 vs 0.04–0.15) | holds |
+| P9-b3: coarse_b3 keeps < 50% in ≥ 6/8 regime-III periods | 5/8 (kept 0.06–1.14; G38 0.59, G42 1.14) | **failed narrowly**: with a proper cut and burn-in the scaffold carries less of the coarse arrow than round 1's decimation said (52–100%) |
+| P9-b3: act_sh_b3 keeps ≥ 50% in ≥ 6/9; ≥ 50% of agents above null in ≥ 7/9 | 8/9 (0.41–1.04; G27 0.41); 9/9 (0.75–1.00; block-flip null agrees) | **holds**: fine arrows survive scaffold removal |
+| P2-v3: pooled v3 EP above the flip-null p95 in G38 and G51 | both (p 0.005); also G27, G39, G41, G42, G44; n.s. in G37 (3 days), G40 | **holds** (7/9; better than the 0.3 credence for 4-h periods) |
+| v3s_b1 keeps ≥ 50% in G51 | 6.5× *larger* (b1c amended: 1.9×) | **invalid**: a selection artifact (below) |
+| P6-v3: G27 pooled v3 EP ≥ 2× every regime-III period | ratios 0.44–4.4; ≥ 2× only vs G40 | **failed**: no regime contrast on semantic states |
+| P3-family: stratified lab η² on act_sh_b3, p < 0.05 | sum η² 2.41, p 0.35 (act_sh 0.21; ranks of act_sh 0.02, Google highest) | **failed** |
+| HH19 Anthropic > OpenAI on act_sh_b3 | 8/8 periods, stratified one-sided p 0.04 (cfx 0.09; within-period ranks 0.03); driven partly by one G40 agent whose Newton value blows up (16.5) | weak support, fragile |
+| R1 useful irreversibility: v3 EP vs output | ρ +0.14 (G51, p 0.48), −0.34 (G38), −0.16 (G27) | **failed** |
+| N1 NE43 (native, expected null) | v3 pooled: bookends −50%, nudger off −34%; placebo range −45%…+183%; act_sh_b3: −1%, +12% (placebo −24%…+43%) | **failed** on 1 of 4 changes (bookend v3 change just outside the placebo range); no evidence of a step |
+| N2 NE14 inside #36 (native) | after/before ratio: coarse 0.25 [0.04, 6.6], act_sh 0.71 [0.22, 1.5], v3 0.72 [0.07, 1.06]; v3 − coarse ratio CI [−6.5, 0.8] | **mixed, underpowered** (1 pre day): coarse drop ✓, act_sh −29% (threshold 30%) ✗, v3 drops less than coarse (point) ✓ but not significant |
+| N3 loops vs progress #38–#40 (native, H14-R2) | productive − stuck v3 EP: G38 −0.0004, G39 +0.06 (n.s.), G40 −0.40 (CI below 0) | **failed** (0/3; stuck windows are not near-reversible) |
+
+**The window burn-in is a selection artifact (found after running; amendment, not a result).** v3s_b1 as pre-registered dropped transitions into and out of the first window after a context reset but kept transitions into the reset window, a time-directed selection; pooled EP rose 6–83×. The symmetric version (b1c: also drop every transition touching the reset window) still raises EP 1.7–19×, because resets mark the *start* of activity bursts: in G51 the kept transitions are 58% `absent`, and the dominant net flux becomes execute_task → absent (+0.016 vs +0.002 on all transitions). Excluding post-reset windows removes absent → work wake-ups and keeps work → absent. On 5-min windows a reset burn-in is therefore not a scaffold subtraction. The turn-level b3 chains do not have this problem (scaffold records are removed at both ends of their transitions).
+
+**Reading.**
+1. **The `bash_head` fix makes the fine arrow larger and more general:** with shell sub-classes every test agent in every period is irreversible, with median excess 0.10–0.20 nats/transition (×1.5–3 round 1's `act`).
+2. **Fine arrows are agent workflow, not scaffold:** after removing scaffold records, infrastructure errors and scaffold-set call starts with a 3-transition burn-in, the median agent keeps 41–104% of its act_sh excess, and 75–100% of agents stay above the null. Rival R1 (scaffold clock) explains the *coarse* arrow in 5/8 regime-III periods, not the fine one.
+3. **The regime-I/III contrast was the session scaffold.** Round 1's 7–29× (coarse) disappears on every corrected chain: G27 sits inside the regime-III range on act_sh (median excess 0.154 vs 0.10–0.20, ×0.8–1.5), on coarse_b3 (0.005 vs 0.0006–0.008) and on v3 states (pooled ratios ×0.4–4.4).
+4. **Semantic states carry a small, real arrow** (0.003–0.026 nats per 5-min transition, significant pooled in 7/9 periods), mostly between execute and research/verify and into and out of absence. It does not track output and is not larger in productive windows: no "useful irreversibility" (H14-R1/R2).
+5. **Families:** still no lab effect in the pre-registered η² test. Anthropic agents edge OpenAI agents on the scaffold-free fine chain in 8/8 periods (fragile; H56 also found family differences in fine EP), and Google agents are the most irreversible on fine actions.
+
+**Verdict changes.** Per period: none on the pre-registered coarse chain (inputs unchanged); `Verdict (1b)` lines record the corrected fine and v3 results. Card level: the "descriptive residue" is upgraded. Fine-action arrows are universal and survive scaffold removal, and the regime contrast is reclassified as scaffold. HH19, HH67 and the work-cycle predictions stay refuted; H14-R1/R2 (useful irreversibility; loops near-reversible) failed on first test.
+
+**Scorecard (round 1b; round 1 in brackets).** A 1 [1]: shell sub-classes and the scaffold/agent split are now explicit; v3 states added. B 1 [1]. C 1 [1]: act_sh_b3 beats the DB and flip nulls in ≥ 75% of agents in 9/9; v3 pooled in 7/9. D 1 [1]. E 0 [0]: NE43 (null as expected, one marginal miss), NE14 (underpowered). F 1 [1]: block-flip null calibrated; soft EP attenuated; window burn-in found to be a selection artifact. G 1 [1]. **H 1 [0]**: the fine arrows beat rival R1 (scaffold clock); R1 still wins for the coarse arrow. I 1 [1].
+
+**Shared-file suggestions** (not made): `physics-models/02-nonequilibrium-ising` pitfalls: *"On coarse time windows, a burn-in after resets can manufacture irreversibility when resets are tied to the activity cycle (wake-ups start with a fresh context); remove reset records at both ends, as the turn-level agent-only chain does (H14 round 1b)."* and *"Soft LLM-label observables attenuate EP roughly by (label accuracy)²; per-agent soft tests are nearly blind at ≤ 3,000 transitions; pool."* `infra/shared/`: move `newton_counts`/`cfx_counts` (now copied in H14's `r1b_lib.py` and in H56) and a shell sub-class column (`build_r1b.py: first_real_command`, `head_class`) into the shared `actions` sidecar.
 
 ## Round 2 redirects (2026-10-04)
 *From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*

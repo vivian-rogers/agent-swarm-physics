@@ -1,6 +1,7 @@
 # H14 × G27: Hack the OWASP Juice Shop playground (2026-01-12 → 2026-01-23)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 90% after scaffold removal with burn-in; pooled Jev v3 arrow significant (flip p 0.005)
 **Role:** exploratory
 **Period:** regime I · mode K (competition turned collaboration) · N = 10 · #general only (rooms arrive 02-25) · 10 days × 4 h. No step change inside.
 
@@ -55,3 +56,17 @@ Figures: [`figures/period_summary.pdf`](figures/period_summary.pdf). Data: `data
 - **G (ground truth):** the consolidate-linked cycle is scaffold-imposed (consolidation cadence); see the card for how much EP it carries.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H14-behavior-entropy-production/r1b/G27/`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| coarse chain: share of test agents above DB null (median Newton excess) | 1.00 (0.0730) | 1.00 (0.0729), same transitions |
+| fine classes: share above null (median excess) | `act`, shell unsplit: 1.00 (0.148) | act_sh, 7 shell sub-classes: 1.00 (0.154) |
+| scaffold removed (agent-only chain, 3-transition burn-in): share above null | – | coarse_b3 0.80; act_sh_b3 0.90 |
+| share of the median excess kept after scaffold removal | coarse, consolidate decimated: 0.27 | coarse_b3 0.12; act_sh_b3 0.41 |
+| Jev v3 pooled EP per 5-min transition (block-flip p) | – | 0.0115 (p 0.005); argmax 0.0055 (DB p 0.080) |
+| Jev v3 per agent: share above flip null (n) | – | 0.20 (10); descriptive (soft tests nearly blind per agent) |
+
+The window-level burn-in variants (v3s_b1, b1c) are selection artifacts (card, Round 1b) and are not reported here.

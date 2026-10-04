@@ -6,6 +6,8 @@ Pre-registered estimators and thresholds are on the card ("Observables", "Predic
 
 Usage: uv run python hypotheses/H16-metastable-traps-kramers/analysis/run_period.py --period G38 [--boot 100]
        (also importable: analyze(folder, regime, ...) is reused by confirm.py)
+       ... run_period.py --period G38 --r1b   round 1b (improved data): reads <OUT>/r1b/<period>/ (built by
+       scheme/build.py --r1b), skips the unchanged landscape (b) and swarm (d) blocks, adds TS5/TS6 window traps.
 """
 from __future__ import annotations
 
@@ -475,7 +477,8 @@ def censor_outages(ts: pl.DataFrame, outages):
                            pl.Series("dwell_s", (t1 - t0).astype(np.float32))).filter(pl.Series(keep))
 
 
-def analyze(folder: Path, regime: str, rng, B=100, n_null=40, n_sur=200, fig_dir: Path | None = None, label=""):
+def analyze(folder: Path, regime: str, rng, B=100, n_null=40, n_sur=200, fig_dir: Path | None = None, label="",
+            parts=("a", "b", "c", "d")):
     t0 = time.time()
     rd = lambda n: pl.read_parquet(folder / f"{n}.parquet")
     ts1, ts1r, ts2, ts3, ts4, mins, kk = (rd(n) for n in ("ts1", "ts1r", "ts2", "ts3", "ts4", "minutes", "kicks"))
@@ -492,12 +495,16 @@ def analyze(folder: Path, regime: str, rng, B=100, n_null=40, n_sur=200, fig_dir
               "TS2r": dwell_ts2(ts2_robust_view(ts2), rng, B) if regime == "III" else {"ok": False, "reason": "regime"},
               "TS3": dwell_loops(ts3, rng, B, L.LOOP_MIN), "TS4": dwell_loops(ts4, rng, B, L.LOOP_MIN)}
     t0log(t0, label, "b: landscape")
-    R["b"] = landscape_period(mins, ts1r)
+    R["b"] = landscape_period(mins, ts1r) if "b" in parts else {"ok": False, "reason": "skipped (inputs unchanged in round 1b)"}
     t0log(t0, label, "c: kicks")
     R["c"] = {"TS1": kicks_ts1(ts1, K, W, rng, n_null, "ts1"), "TS1r": kicks_ts1(ts1r, K, W, rng, 0, "ts1r"),
               "TS2": kicks_ts2(ts2) if regime == "III" else {"ok": False, "reason": "regime"},
               "TS2r": kicks_ts2(ts2_robust_view(ts2)) if regime == "III" else {"ok": False, "reason": "regime"},
               "TS3": kicks_loops(ts3), "TS4": kicks_loops(ts4)}
+    if "d" not in parts:
+        R["d"] = {"skipped": "inputs unchanged in round 1b"}
+        t0log(t0, label, "done")
+        return R
     t0log(t0, label, "d: swarm")
     MA = {}
     for (d,), g in mins.sort("pt_date", "agent", "minute").group_by(["pt_date"], maintain_order=True):
@@ -588,6 +595,16 @@ def main():
     from build import PERIODS  # noqa: E402
     regime = PERIODS[period]["regime"]
     rng = np.random.default_rng(L.SEED + int(period[1:3]))
+    if "--r1b" in args:
+        import r1blib as RB  # noqa: E402
+        folder = L.OUT / "r1b" / period
+        days = sorted(pl.read_parquet(folder / "minutes.parquet")["pt_date"].unique().to_list())
+        L.assert_no_holdout(days)
+        R = analyze(folder, regime, rng, B=B, n_null=n_null, fig_dir=None, label=period + " r1b", parts=("a", "c"))
+        R["a"]["TS5"] = RB.dwell_windows(pl.read_parquet(folder / "ts5.parquet"), rng, B)
+        R["a"]["TS6"] = RB.dwell_windows(pl.read_parquet(folder / "ts6.parquet"), rng, B)
+        L.jdump(R, folder / "results.json")
+        return
     folder = L.OUT / period
     days = sorted(pl.read_parquet(folder / "minutes.parquet")["pt_date"].unique().to_list())
     L.assert_no_holdout(days)

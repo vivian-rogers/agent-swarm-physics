@@ -1,6 +1,7 @@
 # H16 × G38: Choose a charity and raise money (2026-04-02 → 2026-04-24)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged under the round-1 rule; its core predictions did not change). Error loops on real failures: β -0.07 (stderr loops in round 1: -0.41); Jev blocked spells β -0.17; loop spells β -0.77
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode C · 12–14 agents · #best / #rest · 17 days. Splits or exclusions: see the main card's period table.
 
@@ -69,3 +70,19 @@ Period verdict rule: core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2): a
 
 ## Notes
 - 2026-10-03: one 213-min village-off gap (A3). Stall minutes (5.4%) drive βJ₀ 0.71 → 0.09 and the stall-included bimodality, as anticipated from synthetic data. NE17 split: aging on both sides (TS1r −1.85 / −1.39; TS2r −0.50 / −0.38).
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H16-metastable-traps-kramers/r1b/G38/results.json`; tables built by `scheme/build.py --r1b`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| TS1r deep slope (inputs unchanged) | -1.71 | -1.71 |
+| TS2r gate slope on ln k (inputs unchanged) | -0.44 | -0.44 |
+| error-loop rows | 6741 (stderr non-empty) | 4418 (real failures) |
+| error-loop aging β (boot CI), deep escapes | -0.41 [-0.59, +0.64], 218 | -0.07 [-0.31, +2.75], 77 |
+| Jev blocked spells (p_blocked ≥ 0.5): β (Wald CI), spells | – | -0.17 [-0.68, +0.34], 414 |
+| Jev loop spells (longest_run ≥ 5): β (Wald CI), spells | – | -0.77 [-1.17, -0.37], 722 |
+| directed kick at the gate (TS2r OR, dose 1) | 2.90 | 2.92 (leading-@ nudge targets) |
+| undirected kick ln HR vs day-swap null p95 (TS1) | +0.20 | +0.20 vs +0.12 |
+| directed kick on real-failure loops, ln HR (SE) | -0.31 (stderr loops) | -0.53 (0.17) |
+| N_tgt kicks | 120 (every named agent) | 110 (leading @) |

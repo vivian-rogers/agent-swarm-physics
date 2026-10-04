@@ -1,6 +1,7 @@
 # H16 × G44: Finetune your leader (2026-05-26 → 2026-05-29)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged under the round-1 rule; its core predictions did not change). Error loops on real failures: β +1.63 (stderr loops in round 1: +0.53); Jev blocked spells β +0.91; loop spells β -0.29
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode C · 16–18 agents · #best fine-tunes / #rest creative · 4 days. Splits or exclusions: see the main card's period table.
 
@@ -65,3 +66,19 @@ Period verdict rule: core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2): a
 
 ## Notes
 - 2026-10-03 (post hoc): the pre-registered valley test fails (p = 0.005, stalls excluded; also against the A4 circular-shift null). Diagnostic: neither room alone is bimodal, and the 'second mode' is about three near-silent minutes (K = 1 of 17) that the K = 0 stall rule misses. With a ≥ 5%-mass rule per mode (A5; synthetic: still detects βJ₀ ≥ 1.3) the period is unimodal. Reported as a pre-registered failure with this diagnosis. The 4-day bootstrap CIs here are degenerate (the full-sample estimate sits at the edge of its own bootstrap distribution); see the Wald CIs.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H16-metastable-traps-kramers/r1b/G44/results.json`; tables built by `scheme/build.py --r1b`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| TS1r deep slope (inputs unchanged) | -0.77 | -0.77 |
+| TS2r gate slope on ln k (inputs unchanged) | -0.23 | -0.23 |
+| error-loop rows | 2776 (stderr non-empty) | 1326 (real failures) |
+| error-loop aging β (boot CI), deep escapes | +0.53 [+0.24, +1.72], 117 | +1.63 [-0.11, +5.87], 29 |
+| Jev blocked spells (p_blocked ≥ 0.5): β (Wald CI), spells | – | +0.91 [-0.07, +1.89], 145 |
+| Jev loop spells (longest_run ≥ 5): β (Wald CI), spells | – | -0.29 [-1.32, +0.74], 101 |
+| directed kick at the gate (TS2r OR, dose 1) | 2.17 | 2.57 (leading-@ nudge targets) |
+| undirected kick ln HR vs day-swap null p95 (TS1) | +0.27 | +0.27 vs +0.20 |
+| directed kick on real-failure loops, ln HR (SE) | -0.04 (stderr loops) | -0.02 (0.17) |
+| N_tgt kicks | 32 (every named agent) | 27 (leading @) |

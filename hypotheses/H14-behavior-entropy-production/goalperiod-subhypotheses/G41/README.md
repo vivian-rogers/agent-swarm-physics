@@ -1,6 +1,7 @@
 # H14 × G41: Perform novel research! (2026-05-11 → 2026-05-15)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 86% after scaffold removal with burn-in; pooled Jev v3 arrow significant (flip p 0.005)
 **Role:** exploratory
 **Period:** regime III · mode I · N = 15 · rooms split back to #best/#rest on 05-11 · 5 days × 4 h. No step change inside.
 
@@ -58,3 +59,17 @@ Figures: [`figures/period_summary.pdf`](figures/period_summary.pdf). Data: `data
 - **G (ground truth):** the consolidate-linked cycle is scaffold-imposed (consolidation cadence); see the card for how much EP it carries.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H14-behavior-entropy-production/r1b/G41/`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| coarse chain: share of test agents above DB null (median Newton excess) | 0.73 (0.0102) | 0.67 (0.0098), same transitions |
+| fine classes: share above null (median excess) | `act`, shell unsplit: 0.93 (0.047) | act_sh, 7 shell sub-classes: 1.00 (0.144) |
+| scaffold removed (agent-only chain, 3-transition burn-in): share above null | – | coarse_b3 0.36; act_sh_b3 0.86 |
+| share of the median excess kept after scaffold removal | coarse, consolidate decimated: 0.00 | coarse_b3 0.10; act_sh_b3 0.85 |
+| Jev v3 pooled EP per 5-min transition (block-flip p) | – | 0.0153 (p 0.005); argmax 0.0068 (DB p 0.055) |
+| Jev v3 per agent: share above flip null (n) | – | n/a (0); descriptive (soft tests nearly blind per agent) |
+
+The window-level burn-in variants (v3s_b1, b1c) are selection artifacts (card, Round 1b) and are not reported here.

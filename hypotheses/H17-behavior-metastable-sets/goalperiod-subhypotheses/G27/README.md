@@ -1,6 +1,8 @@
 # H17 × G27: Hack the OWASP Juice Shop hacking playground. Compete to see which agent can complete the most challenges (2026-01-12 → 2026-01-26)
 
 **Verdict:** mixed (CK fails)
+**Role (1b):** native (change-point test N3, below) in addition to the replication
+**Verdict (1b):** descriptive (Jev v3.1 soft-state replication; by the card's D3 rule soft P3b and the soft CK are not identifiable, so no verdict; the round-1 action-class verdict above stands)
 **Role:** exploratory
 **Period:** regime I · mode K (competition) · N = 10 at start · 10 active days.
 
@@ -56,3 +58,23 @@ Verdict rule (card): **supported** if CK passes, P3b holds and P8 holds; **mixed
 | G ground truth | slow set = [['browse', 'type'], ['shell', 'chat', 'idle', 'consolidate']]; 3% of idle minutes are boundary runs (scaffold/schedule) | 1 |
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods): Jev v3.1 states lumped to 6 macro states (work, inquire, fix, talk, wait = monitor_wait + idle + absent, maint), shifted estimator at τ = 5 min; covariates from real failures instead of `actions.error`. Prediction: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H17-behavior-metastable-sets/r1b/G27.json`.*
+
+| Statistic | Round 1 (action classes) | Round 1b (v3) |
+| --- | --- | --- |
+| t2\* (min) | 6.2 | raw 227, bias-corrected 227, equal-n 227 |
+| in-span windows / agents | – | 4791 / 10 |
+| m = 2 slow split | (see Result above) | talk+wait vs work+inquire+fix+maint |
+| soft CK max \|Δ\| (no power) | – | 0.024 |
+| argmax MSM beats M0 and R1 (P8) | – | True |
+| failure share of computer-use turns | stderr 0.071 | real 0.044 |
+| mean p_blocked / output per in-span hour | – | 0.290 / 0.31 |
+
+Reading: the v3 slowest mode here is hour-scale (agent-day mixture, R2/R3); see the card for the cross-period tests (P4b-1b, P4c-1b), which failed.
+
+## Native test (round 1b): spontaneous rivalry → collaboration
+*Prediction written 2026-10-04 before running (card, "Round 1b", N3).* #27 turned from a competition into collaboration with no operator change (DQ9). On day-level soft macro-state transition counts, the best single change point (between days 2 and 8 of 10) beats a day-order permutation null (1,000 permutations, p < 0.05), and the talk share is higher after it. Credence 0.3.
+
+*Result (`analysis/native_r1b.py`, `r1b/native_r1b.json`):* best split before 01-22 (days 9–10 vs 1–8), LR 31, **permutation p 0.31**. Talk share 0.018 → 0.030, work 0.48 → 0.46, fix 0.07 → 0.08. **Failed:** the behavior-state dynamics show no dated regime change; whatever changed in #27 is in content or addressing, not in the mix or flow of behavior states.

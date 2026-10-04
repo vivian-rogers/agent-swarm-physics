@@ -1,6 +1,7 @@
 # H16 × G30: Adopt a park and get it cleaned (2026-02-09 → 2026-02-13)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged under the round-1 rule; its core predictions did not change). Error loops on real failures: β +1.27 (stderr loops in round 1: -1.05); Jev blocked spells β +0.43; loop spells β +0.02
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 11 agents · #general · 5 days. Splits or exclusions: see the main card's period table.
 
@@ -55,3 +56,19 @@ Period verdict rule: core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2): a
 
 ## Notes
 - 2026-10-03: the timer-like TS1r deep slope (+2.61) rests on 24 deep escapes in 5 days; treat as noise-limited.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H16-metastable-traps-kramers/r1b/G30/results.json`; tables built by `scheme/build.py --r1b`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| TS1r deep slope (inputs unchanged) | +2.61 | +2.61 |
+| TS2r gate slope on ln k (inputs unchanged) | n/a | n/a |
+| error-loop rows | 1906 (stderr non-empty) | 1002 (real failures) |
+| error-loop aging β (boot CI), deep escapes | -1.05 [-1.30, +0.19], 111 | +1.27 [-0.39, +5.57], 25 |
+| Jev blocked spells (p_blocked ≥ 0.5): β (Wald CI), spells | – | +0.43 [-1.18, +2.05], 155 |
+| Jev loop spells (longest_run ≥ 5): β (Wald CI), spells | – | +0.02 [-0.58, +0.61], 250 |
+| directed kick at the gate (TS2r OR, dose 1) | n/a | n/a (leading-@ nudge targets) |
+| undirected kick ln HR vs day-swap null p95 (TS1) | -0.42 | -0.42 vs +0.21 |
+| directed kick on real-failure loops, ln HR (SE) | -0.08 (stderr loops) | -0.06 (0.21) |
+| N_tgt kicks | 20 (every named agent) | 12 (leading @) |

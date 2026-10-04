@@ -1,6 +1,6 @@
 # H17: Behavior is a Markov state model with a few metastable sets; its mixing time is a per-period order parameter
 
-**Status:** exploratory round 1 done (2026-10-03): 27 non-holdout goal periods, 13 mixed / 14 failed / 0 supported; core predictions (Markovianity, sets beyond sticky states, order parameter tracking stuckness, regime contrast) mostly failed. Not promoted. Confirmatory script written, not run. Waiting for the Jev states.
+**Status:** exploratory round 1 done (2026-10-03): 27 non-holdout goal periods, 13 mixed / 14 failed / 0 supported; core predictions (Markovianity, sets beyond sticky states, order parameter tracking stuckness, regime contrast) mostly failed. **Round 1b (2026-10-04, Jev v3.1 states, real failures):** the soft-state MSM's slowest mode is agent-day scale (hours), its slow set is still acting vs waiting, and neither t2\* nor `p_blocked` orders periods by stuckness (wrong sign); natives NE41, NE43 and #27 failed. Not promoted. Confirmatory script written, not run.
 **Fields:** stat mech, dynamics
 **Origin:** HH97 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Literature:** none in `literature/` yet for MSM practice. Standard references (not in the folder): Prinz et al., *J. Chem. Phys.* 134, 174105 (2011) (MSM estimation, ITS, CK test)†; Röblitz & Weber, *Adv. Data Anal. Classif.* 7, 147 (2013) (PCCA+)†; Metzner, Schütte & Vanden-Eijnden, *Multiscale Model. Simul.* 7, 1192 (2009) (transition path theory)†; Reuter et al., *J. Chem. Phys.* 149, 174102 (2018) (non-reversible PCCA)†.
@@ -146,6 +146,10 @@ Verdict rule (card): supported = CK passes, P3b holds and P8 holds; mixed = exac
 | [G42](goalperiod-subhypotheses/G42/README.md) | exploratory (regime III) | mixed | t2\* 5.8 min [5.1, 6.6]; t2\*/N2 1.40; slow split browse+type \| shell+chat+idle+consolidate; CK 0.18; ITS rise ×4.0; I² 0.83 |
 | [G44](goalperiod-subhypotheses/G44/README.md) | exploratory (regime III) | failed | t2\* 7.5 min [6.1, 8.7]; t2\*/N2 1.22; slow split browse+type \| shell+chat+idle+consolidate; CK 0.26; ITS rise ×5.2; I² 0.84 |
 | [G51](goalperiod-subhypotheses/G51/README.md) | exploratory (regime III) | mixed | t2\* 11.7 min [11.2, 12.4]; t2\*/N2 1.26; slow split browse+type+shell+chat+consolidate \| idle; CK 0.21; ITS rise ×5.1; I² 0.99 |
+| [NE41](goalperiod-subhypotheses/NE41/README.md) | native (round 1b) | failed | forced erasures leave a transient that decays in ≈ 21 min (G51), 0.08 × the MSM's t2\*; none in G38 |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) | native (round 1b) | failed | t2\*_v3 456 → 63 → 428 min across the steps; ordinary 2-week blocks swing ×6–7 |
+
+*Round 1b (2026-10-04):* every G folder has a `Verdict (1b): descriptive` line (Jev v3 soft-state replication; card D3) and a Round 1b section; G27 also carries the native change-point test (failed, p 0.31).
 
 ## Results
 *Exploratory round 1, 2026-10-03; non-holdout days only; action-class states (H14 coarse 6-state minute grid). Scripts: `analysis/` (`synthetic.py`, `run_period.py`, `summarize.py`, `write_period_folders.py`, `confirm_h17.py`). Numbers: `data/processed/H17-behavior-metastable-sets/summary.json`, `G<NN>/result.json`, `synthetic/synthetic_rows.json`, `pooled_vs_agent.json`, `confirm/dryrun.json`. Figures: `summary/summary.pdf` (compendium page; observable figure `figures/summary_obs.pdf`), `figures/summary.pdf` (one-page analysis summary), `order_parameter.pdf`, `its_all_periods.pdf`, `agent_heterogeneity.pdf`, `stuckness_covariates.pdf`, `boundary_idle.pdf`, `g51_weekly.pdf`, `synthetic_validation.pdf`; per period `goalperiod-subhypotheses/G<NN>/figures/its_ck.pdf`.*
@@ -231,6 +235,92 @@ The P9-Jev pre-registration must be written in this card before `confirm_h17.py 
 - 2026-10-03: period folders moved to `goalperiod-subhypotheses/G<NN>/` (coordinator); scripts and links updated.
 - 2026-10-03: #39's ratio is 1.249 with 400 surrogates and 1.251 with 100; the 400-surrogate value is used (verdict: failed).
 - Compute: ≈ 45 min wall of ≤ 2 local processes (synthetic 4 min; 27 periods 13 min, dominated by #51; extra N2 surrogates ≈ 20 min including a restart). Disk: 10 MB in `data/processed/H17-behavior-metastable-sets/`, 1.8 MB in this folder.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation on the improved data (Vivian's priority 2; `infra/data-quality/QUEUE.md`, two-layer design). Holdout untouched; no confirmatory run. Code: `analysis/v3lib.py`, `analysis/synthetic_v3.py`, `analysis/round1b.py`, `analysis/native_r1b.py`; numbers in `data/processed/H17-behavior-metastable-sets/r1b/`.*
+
+### What changed in the inputs
+- **Jev behavior states v3.1** (`behavior_states_v3.parquet`, DQ3): every non-holdout agent × 5-min window, 11 states with probability vectors, plus `p_blocked` and assembly flags. This is the second state space the card was waiting for. Inactive windows inside an agent's daily span are kept as an explicit `absent` state ("idle by absence"); windows outside the span are dropped (which also removes round 1's boundary idling by construction).
+- **Stuckness covariates:** round 1's error share counted `actions.error`, which is "stderr non-empty" (58% of flagged bash turns are not failures). Replaced by real failures (`n_errors` / `turn_outcomes.failed`), plus `p_blocked`, git-printed commits and pushes (`n_commit_ok`, `n_push_ok`), `longest_run` and `repeated_error_share`.
+- **Unchanged:** the action-class states (H14's builder reads `actions` + `events_core`, untouched by the `activity_bins` event-drop bug; `bash_head` is not used in the 6 coarse classes). Round-1 action-class t2\*, CK, N2 and verdicts therefore stand as computed; only their covariate correlations are re-run.
+
+### Synthetic checks of the soft-state tools (axis F; run before any v3 statistic)
+`analysis/synthetic_v3.py` (parts 1 and 2; `r1b/synthetic_v3*.json`). Jev-like soft vectors (argmax accuracy 0.6), village sampling.
+- **Shifted estimator** C(1)⁻¹C(1+τ): unbiased at ~100k windows (q = 6: ratio 0.94–0.98; q = 12: 0.78–1.03), but biased up ×1.6–2.7 at 3,600 windows (q = 6; a 4-h period) and broken at q = 12 below ~15k windows (λ₂ → 1). A bootstrap bias correction on λ₂ brings q = 12 at 14,400 windows to ×1.13–1.32.
+- **Soft CK** (C(k) vs C(1)K(1)^(k−1), set level): passes Markov chains (100%) and lumped (non-Markov) chains alike (97–100%). **No power.**
+- **Soft N2** (argmax runs carrying their vectors): false positives on sticky-only chains in 57% (3,600 windows) to 100% (115k) of runs, because label noise splits hidden dwells. **Not a valid R1 null for soft states.**
+- **ITS rise** does not separate Markov from lumped chains at these sample sizes.
+
+### Design decisions (written 2026-10-04, after the synthetic checks, before any v3 real-data statistic)
+*What I had seen of the v3 data before writing this:* DQ3's documentation (state mix and `p_blocked ≥ 0.5` shares by regime); per-period counts of in-span, absent, post-reset and forced-reset windows; per-period mean `p_blocked` and real-failure share (printed in a structural check; no t2, MSM or correlation computed).
+- **D1, state space.** A named 6-state lumping of the Jev states: **work** = execute_task; **inquire** = research_browse + verify_report; **fix** = debug_recover; **talk** = plan_coordinate + communicate_external + social + meta; **wait** = monitor_wait + idle + absent; **maint** = self_maintenance. States below 1% of a period's mass merge into `rare`. The full 12-state MSM (11 Jev + absent) runs only in G51 (≥ 100k windows), as a check.
+- **D2, order parameter.** t2\*_v3 = shifted-estimator t2 at τ = 1 window (5 min, the round-1 τ_c), τ₀ = 1 window, with an agent-day bootstrap CI and the λ₂ bias correction (t2\*_bc). **Cross-period comparisons use t2\*_eq**: the median over 50 random sets of agent-days totalling ≈ 3,000 in-span windows, so every period carries the same small-sample bias.
+- **D3, verdicts.** By P1's falsifier rule, soft P3b (N2) and the soft CK are reported descriptively. The per-period replication on v3 is therefore **descriptive** in every period (`Verdict (1b)` lines say so); round-1 action-class verdicts stand. Card-level questions (P4b stuckness, P4c regime contrast) are answered with t2\*_eq.
+- **D4, covariates** (per period and per agent, labelled windows): real failure share Σ n_errors / Σ n_actions; mean `p_blocked`; output rate = (git-printed commits + pushes) per in-span hour; mean `longest_run`; mean `repeated_error_share`.
+
+### Predictions (round 1b; written 2026-10-04 before running)
+- **P4b-1b (primary: does t2\* or `p_blocked` flag stuck periods?).**
+  - (i) Across the 8 regime-III periods: ρ(t2\*_eq, mean p_blocked) > 0 and ρ(t2\*_eq, output rate) < 0 (descriptive, n = 8). Across all 27 periods, the regime-stratified Spearman (ranks demeaned within regime) of t2\*_eq on p_blocked has p < 0.05. Credence 0.35 / 0.3.
+  - (ii) Within periods, per-agent meta (agents with ≥ 300 transitions and ≥ 2 days): Fisher-z ρ(t2_i, p_blocked_i) > 0 with p < 0.025. Credence 0.35.
+  - (iii) Round-1 action-class t2\* against the real failure share: ρ > 0 across regime III (round 1 had ρ = −0.43 against stderr). Credence 0.3.
+  - (iv) `p_blocked` itself flags stuck periods: across the 27 periods, ρ(mean p_blocked, real failure share) > 0.4 and ρ(mean p_blocked, output rate) < −0.3. Credence 0.6 (partly mechanical: Jev saw the failures).
+- **P4c-1b.** Regime-I t2\*_eq > regime-III t2\*_eq (Mann–Whitney p < 0.05): the round-1 prediction, reversed on action classes. Credence 0.4.
+- **P3d-1b.** In the m = 2 PCCA+ split of the soft transition matrix, `wait` sits alone (or with maint) in ≥ 50% of regime-III periods. Credence 0.6.
+- **P5-1b.** Per-agent I² of ln t2 ≥ 0.5 wherever ≥ 3 agents qualify. Credence 0.6.
+- **P8-1b.** The argmax MSM beats M0 and R1 on held-out days at τ = 1 window in ≥ 75% of periods. Credence 0.7.
+- **G51 check.** t2\*_bc on 12 states is within a factor 2 of t2\*_bc on the 6 macro states. Credence 0.6.
+
+### Native tests (layer 2; predictions written 2026-10-04 before running; `analysis/native_r1b.py`)
+- **N1, NE41 forced erasures as quasi-random kicks (G51 primary, G38 secondary; axis D/E).** After a forced erasure (`context_ledger_turns.reset_forced`, the 41-turn cap, so the timing is set by the scaffold), the mean macro-state vector in windows k = 1…4 relaxes toward the period mean. **Unfitted MSM prediction:** the TV distance d(k) decays with time constant τ_relax = −5 min / slope(ln d(k) on k) within [0.5, 2] × t2\*_bc of the same period. Control: anchor windows on the same agent-days with no consolidation in the previous window. Events are censored at the next consolidation (forced or voluntary) or the end of the segment. Credence 0.7 that the erasure leaves a measurable transient (d(1) above the control's, bootstrap CI over agent-days); 0.35 for the factor-2 agreement.
+- **N2, NE43 drive withdrawal inside #51.** t2\*_v3 on A = 07-24 → 08-04 (bookends and nudges), B = 08-05 → 08-20 (nudges only), C = 08-21 → 09-02 (neither). Prediction: t2\*(C) > t2\*(A), agent-day bootstrap 95% CI of the difference above 0, and mean p_blocked higher in C than in A. Same-length placebo contrast inside 07-06 → 08-04 reported for scale. Credence 0.35.
+- **N3, #27 spontaneous rivalry → collaboration (no operator change).** On day-level soft macro-state transition counts, the best single change point (between days 2 and 8 of 10) beats a day-order permutation null (1,000 permutations, p < 0.05), and the talk share is higher after it. Credence 0.3.
+
+### Results (round 1b, run 2026-10-04)
+*Numbers: `r1b/G<NN>.json`, `r1b/summary_r1b.json`, `r1b/native_r1b.json`, `r1b/synthetic_v3*.json`. Figure: `figures/r1b_summary.pdf`. Compute: ≈ 25 min of ≤ 2 local processes.*
+
+**Old vs new, regime III** (action-class t2\* from round 1; v3 = 6 macro states, shifted estimator, τ = 5 min; failure shares are per computer-use turn):
+
+| Period | t2\* action classes (r1) | t2\* v3, raw / equal-n (1b) | stderr share (r1 covariate) | real-failure share (1b) | mean p_blocked | m = 2 split (v3) |
+| --- | --- | --- | --- | --- | --- | --- |
+| G37 | 23.5 | 192 / 192 | 0.063 | 0.028 | 0.26 | wait \| rest |
+| G38 | 10.1 | 230 / 231 | 0.058 | 0.030 | 0.25 | wait \| rest |
+| G39 | 6.6 | 598 / 258 | 0.085 | 0.024 | 0.20 | inquire+fix+maint \| work+wait |
+| G40 | 9.2 | λ₂ ≈ 1 (unidentified) | 0.174 | 0.026 | 0.22 | work \| rest |
+| G41 | 8.4 | 122 / 131 | 0.141 | 0.051 | 0.23 | wait \| rest |
+| G42 | 5.8 | 220 / 219 | 0.075 | 0.034 | 0.24 | talk+wait \| rest |
+| G44 | 7.5 | 38 / 38 | 0.105 | 0.047 | 0.26 | wait \| rest |
+| G51 | 11.7 | 268 / 160 (t2\*_bc 263) | 0.058 | 0.027 | 0.25 | wait \| rest |
+
+Regime I: t2\*_eq 16–227 min (median 40) against 4–6 min on action classes. Real failures are 30–85% of the stderr share; the two correlate across periods (ρ = 0.71).
+
+**Outcome vs prediction (round 1b):**
+
+| Prediction | Outcome | Verdict |
+| --- | --- | --- |
+| P4b-1b (i) t2\* tracks stuckness across periods | regime III: ρ(t2\*_eq, p_blocked) = −0.69 (p 0.06), ρ(t2\*_eq, output) = +0.31, ρ(t2\*_eq, real failures) = −0.74 (p 0.04); all 27 periods, regime-stratified ρ(t2\*_eq, p_blocked) = −0.49 (p 0.03) | **failed (wrong sign)** |
+| P4b-1b (ii) within periods | per-agent meta ρ(t2_i, p_blocked_i) = −0.28 (p 0.03, 7 periods, 79 agents); real failures −0.18 (p 0.16); output ≈ 0 | **failed (wrong sign)** |
+| P4b-1b (iii) action-class t2\* vs real failures | regime III ρ = −0.19 (stderr: −0.43); within-period meta +0.05 (p 0.43; stderr +0.04) | **failed**: the covariate fix does not rescue the order parameter |
+| P4b-1b (iv) p_blocked flags stuck periods | all 27: ρ(p_blocked, real failures) = **−0.64** (p 3×10⁻⁴), ρ(p_blocked, output) = −0.78 (p 2×10⁻⁶); regime III: +0.43 (n.s.) and −0.71 (p 0.05) | **mixed**: p_blocked tracks regime (regime I "waiting on others") across all periods; inside regime III it marks low-output periods |
+| P4c-1b regime I slower | median t2\*_eq I 40 min vs III 205 min, Mann–Whitney p 0.013 | **failed (reversed again)** |
+| P3d-1b wait in its own set | 5/8 regime-III periods (15/27 overall); G51 12-state split {idle, absent} \| rest | **holds** |
+| P5-1b I² ≥ 0.5 | 2/7 periods with ≥ 3 eligible agents (G20 0.61, G51 0.62) | **failed** (per-agent v3 MSMs are noisy at ≤ 800 windows) |
+| P8-1b argmax MSM beats M0 and R1 | 9/27 | **failed** |
+| G51 12 vs 6 states | t2\*_bc 479 vs 263 min (×1.8) | holds |
+| N1 NE41 relaxation (native) | G51: forced erasures leave a transient (maint +0.07 in the erasure window, work +0.11 one window later; d(1) above control, CI [0.10, 0.14]) that decays with τ_relax ≈ 21 min, **0.08 × t2\*_bc**; G38: transient (CI [0.05, 0.10]) with no decay | transient holds; **the MSM prediction fails** |
+| N2 NE43 (native) | t2\*_bc A 456, B 63, C 428 min; C − A CI unbounded; mean p_blocked C − A −0.02. Placebo (07-06…07-14 vs 07-15…07-23): 465 vs 78 min | **failed**; t2\* swings ×6–7 between ordinary 2-week blocks |
+| N3 #27 change point (native) | best split before 01-22 (days 9–10 vs 1–8; LR 31), day-order permutation p 0.31; talk share 0.018 → 0.030 | **failed** |
+
+**Reading.**
+1. **On semantic states the slowest mode is hours, not minutes, and it is not stuckness.** Once window-level label noise is cancelled, t2\* sits at roughly a day length (G38: a flat ITS plateau at ≈ 225 min, CI ±7), or the estimator finds nothing slower than ~30 min; across periods it is bimodal. A mode that lives as long as an agent-day is the agent/day mixture (rival R2 with R3), not a metastable behavior.
+2. **The slow split is still acting vs waiting.** `wait` (monitor_wait + idle + absence) is a set of its own in 15/27 periods; with 12 states, {idle, absent} against everything. Debugging, meta talk and planning never form sets of their own. Rival R4 (the timer/idle state) wins on semantic states as it did on action classes.
+3. **Neither t2\* nor p_blocked is a stuck-period monitor across regimes.** Higher p_blocked goes with *shorter* t2\* within periods. p_blocked is a regime marker (regime I's "waiting on others"); only inside regime III does it line up with low output (ρ −0.71, n = 8).
+4. **The MSM does not predict the response to the scaffold's kicks.** Forced erasures (quasi-random in timing) leave a one-window re-orientation signature that is gone in ~20 min, an order of magnitude faster than t2\*. Caveat: the control anchors are mid-segment calls, so both curves carry censoring selection after k ≈ 2.
+
+**Verdict changes.** None for the round-1 per-period verdicts (their inputs did not change). The v3 replication is descriptive in every period (D3; `Verdict (1b)` lines). Card level: the HH97 claim, a mixing time that orders periods by stuckness, is now refuted on both state spaces; H17-R1 (soft Jev MSM recovers slow cognitive modes) is not supported.
+
+**Scorecard (round 1b; round 1 in brackets).** A 1 [1]: v3 states and the absent state are explicit, but `p_blocked` changes meaning across regimes. B 0 [0]: soft CK has no power, and t2\* swings ×6–7 between ordinary 2-week blocks of #51. C 1 [1]: rests on round 1's action-class MSM; on v3 the argmax MSM beats R1 in only 9/27 and soft P3b is not identifiable. D 0 [0]: the unfitted relaxation after forced erasures misses by ×12. E 0 [0]: NE41, NE43 and #27 tested; no predicted change. F 1 [1]: the synthetic checks show the v3 MSM is not identifiable at 4-h-period sizes (stated, not hidden). G 1 [1]: slow sets match known structure (waiting, scaffold). H 1 [1]: R4 and R2/R3 explain the slow modes. I 0 [0].
+
+**Shared-file suggestions** (not made; outside this card's scope): `infra/README.md` known issue: *"Soft-label MSMs need ≥ ~15k windows per period: the shifted estimator C(1)⁻¹C(2) breaks down (λ₂ → 1) below that at q = 12 and is biased ×1.6–2.7 at 3,600 windows (q = 6); a sojourn null on argmax runs of noisy labels gives 57–100% false positives (H17 round 1b)."* `DEFINITIONS.md`: add "Markov state model (soft, shifted estimator)" as a named variant.
 
 ## Round 2 redirects (2026-10-04)
 *From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*

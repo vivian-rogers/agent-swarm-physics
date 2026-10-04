@@ -1,6 +1,7 @@
 # H16 × G37: Pick your own goal! (2026-03-30 → 2026-04-01)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged under the round-1 rule; its core predictions did not change). Error loops on real failures: β -0.53 (stderr loops in round 1: -0.39); Jev blocked spells β +1.10; loop spells β +0.91
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode F · 13 agents · #best / #rest · 3 days. Splits or exclusions: see the main card's period table.
 
@@ -65,3 +66,19 @@ Period verdict rule: core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2): a
 
 ## Notes
 - 2026-10-03 (post hoc): the 03-31 window spans 755 min with a 513-min village-off gap (all agents silent). It inflates βJ₀ (1.10 with K = 0 minutes excluded; 0.35 against the within-day circular-shift null, A4) and makes the pre-registered valley test fire with stalls included. TS1r slopes are unchanged by outage censoring (A3), because spells > 4 h were already censored.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H16-metastable-traps-kramers/r1b/G37/results.json`; tables built by `scheme/build.py --r1b`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| TS1r deep slope (inputs unchanged) | -1.56 | -1.56 |
+| TS2r gate slope on ln k (inputs unchanged) | -0.36 | -0.36 |
+| error-loop rows | 1251 (stderr non-empty) | 645 (real failures) |
+| error-loop aging β (boot CI), deep escapes | -0.39 [-1.22, +0.79], 53 | -0.53 [-0.53, +4.00], 14 |
+| Jev blocked spells (p_blocked ≥ 0.5): β (Wald CI), spells | – | +1.10 [-0.64, +2.84], 85 |
+| Jev loop spells (longest_run ≥ 5): β (Wald CI), spells | – | +0.91 [+0.01, +1.81], 157 |
+| directed kick at the gate (TS2r OR, dose 1) | 0.91 | 0.83 (leading-@ nudge targets) |
+| undirected kick ln HR vs day-swap null p95 (TS1) | +0.15 | +0.15 vs +0.51 |
+| directed kick on real-failure loops, ln HR (SE) | +0.04 (stderr loops) | -0.24 (0.53) |
+| N_tgt kicks | 24 (every named agent) | 20 (leading @) |

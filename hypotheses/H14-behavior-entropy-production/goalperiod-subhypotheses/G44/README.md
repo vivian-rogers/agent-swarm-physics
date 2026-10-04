@@ -1,6 +1,7 @@
 # H14 × G44: Finetune your leader! (2026-05-26 → 2026-05-29)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 89% after scaffold removal with burn-in; pooled Jev v3 arrow significant (flip p 0.020)
 **Role:** exploratory
 **Period:** regime III · mode C for #best (4 agents fine-tune a Kimi leader), #rest picks its own goals · N = 16 (+2: Claude Opus 4.8 and the temporary fine-tuned leader join 05-28) · 4 days × 4 h. Joins on day 3; the joiners enter single-agent tests only if they reach 2 days.
 
@@ -58,3 +59,17 @@ Figures: [`figures/period_summary.pdf`](figures/period_summary.pdf). Data: `data
 - **G (ground truth):** the consolidate-linked cycle is scaffold-imposed (consolidation cadence); see the card for how much EP it carries.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H14-behavior-entropy-production/r1b/G44/`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| coarse chain: share of test agents above DB null (median Newton excess) | 0.50 (0.0076) | 0.57 (0.0080), same transitions |
+| fine classes: share above null (median excess) | `act`, shell unsplit: 1.00 (0.081) | act_sh, 7 shell sub-classes: 1.00 (0.133) |
+| scaffold removed (agent-only chain, 3-transition burn-in): share above null | – | coarse_b3 0.56; act_sh_b3 0.89 |
+| share of the median excess kept after scaffold removal | coarse, consolidate decimated: 0.43 | coarse_b3 0.50; act_sh_b3 0.88 |
+| Jev v3 pooled EP per 5-min transition (block-flip p) | – | 0.0122 (p 0.020); argmax 0.0012 (DB p 0.428) |
+| Jev v3 per agent: share above flip null (n) | – | n/a (0); descriptive (soft tests nearly blind per agent) |
+
+The window-level burn-in variants (v3s_b1, b1c) are selection artifacts (card, Round 1b) and are not reported here.

@@ -1,6 +1,7 @@
 # H17 × G26: Elect a village leader. They choose this week’s goal! (2026-01-05 → 2026-01-12)
 
 **Verdict:** failed (CK fails; t2* not beyond the sojourn null)
+**Verdict (1b):** descriptive (Jev v3.1 soft-state replication; by the card's D3 rule soft P3b and the soft CK are not identifiable, so no verdict; the round-1 action-class verdict above stands)
 **Role:** exploratory
 **Period:** regime I · mode C (shared objective) · N = 10 at start · 5 active days.
 
@@ -56,3 +57,18 @@ Verdict rule (card): **supported** if CK passes, P3b holds and P8 holds; **mixed
 | G ground truth | slow set = [['browse', 'type', 'consolidate'], ['shell', 'chat', 'idle']]; 8% of idle minutes are boundary runs (scaffold/schedule) | 1 |
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods): Jev v3.1 states lumped to 6 macro states (work, inquire, fix, talk, wait = monitor_wait + idle + absent, maint), shifted estimator at τ = 5 min; covariates from real failures instead of `actions.error`. Prediction: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H17-behavior-metastable-sets/r1b/G26.json`.*
+
+| Statistic | Round 1 (action classes) | Round 1b (v3) |
+| --- | --- | --- |
+| t2\* (min) | 5.1 | raw 195, bias-corrected 236, equal-n 195 |
+| in-span windows / agents | – | 1755 / 10 |
+| m = 2 slow split | (see Result above) | work+inquire+fix+talk vs wait |
+| soft CK max \|Δ\| (no power) | – | 0.032 |
+| argmax MSM beats M0 and R1 (P8) | – | False |
+| failure share of computer-use turns | stderr 0.040 | real 0.025 |
+| mean p_blocked / output per in-span hour | – | 0.375 / 0.01 |
+
+Reading: the v3 slowest mode here is hour-scale (agent-day mixture, R2/R3); see the card for the cross-period tests (P4b-1b, P4c-1b), which failed.

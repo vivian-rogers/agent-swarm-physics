@@ -2,12 +2,34 @@
 \input{../../../writeup/hypothesis-pages/hpage.tex}
 \def\hID{H17}
 \def\hTitle{Behavior is a Markov state model with a few metastable sets; its mixing time is a per-period order parameter}
-\def\hStatus{exploratory round 1 done (2026-10-03): 27 non-holdout goal periods, 13 mixed / 14 failed / 0 supported; core predictions (Markovianity, sets beyond sticky states, order parameter tracking stuckness, regime contrast) mostly failed. Not promoted. Confirmatory...}
-\def\hStage{level: hypothesis  $\cdot$  pipeline checks 100\%  $\cdot$  updated 2026-10-03}
-\def\hBadges{\hbadge{Complete}{40\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{1/5}{e34948}{0b0b0b}\ \hbadge{Usefulness}{1.5/5}{ee8584}{0b0b0b}}
-\def\hPeriodSummary{14 failed, 13 mixed}
-\def\hDate{Updated 2026-10-03}
-\def\hFooter{H17-behavior-metastable-sets $\cdot$ generated 2026-10-03 18:08 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H17-behavior-metastable-sets/README.md $\cdot$ ratings: calibrated by coordinator 2026-10-04 (from H17 agent (suggested))}
+\def\hStatus{exploratory round 1 done (2026-10-03): 27 non-holdout goal periods, 13 mixed / 14 failed / 0 supported; core predictions (Markovianity, sets beyond sticky states, order parameter tracking stuckness, regime contrast) mostly failed. Round 1b (2026-10-04, Jev ...}
+\def\hStage{level: hypothesis  $\cdot$  pipeline checks 100\%  $\cdot$  updated 2026-10-04}
+\def\hBadges{\hbadge{Complete}{45\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{1/5}{e34948}{0b0b0b}\ \hbadge{Usefulness}{1.5/5}{ee8584}{0b0b0b}}
+\def\hPeriodSummary{16 failed, 13 mixed}
+\def\hDate{Updated 2026-10-04}
+\def\hFooter{H17-behavior-metastable-sets $\cdot$ generated 2026-10-04 00:20 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H17-behavior-metastable-sets/README.md $\cdot$ ratings: H17 re-evaluation agent RE-B1 (suggested; round-1 values were coordinator-calibrated)}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G10 & $\times$ & failed (CK fails; t2* not beyond the sojourn null) \\
+G11 & $\times$ & failed (CK fails; t2* not beyond the sojourn null; MSM does not beat R1/M0) \\
+G12 & $\sim$ & mixed (CK fails) \\
+G13 & $\times$ & failed (CK fails; t2* not beyond the sojourn null) \\
+G16 & $\sim$ & mixed (CK fails) \\
+G17 & $\sim$ & mixed (CK fails) \\
+G18 & $\sim$ & mixed (CK fails) \\
+G19 & $\sim$ & mixed (CK fails) \\
+G20 & $\times$ & failed (CK fails; t2* not beyond the sojourn null) \\
+G21 & $\sim$ & mixed (CK fails) \\
+G23 & $\times$ & failed (CK fails; t2* not beyond the sojourn null) \\
+G24 & $\times$ & failed (CK fails; t2* not beyond the sojourn null) \\
+G25 & $\sim$ & mixed (CK fails) \\
+G26 & $\times$ & failed (CK fails; t2* not beyond the sojourn null) \\
+G27 & $\sim$ & mixed (CK fails) \\
+G30 & $\times$ & failed (CK fails; t2* not beyond the sojourn null) \\\multicolumn{3}{l}{\textit{+13 more periods: see the card.}} \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 1 \\
+B assumptions & 0 & G ground truth & 1 \\
+C adequacy & 1 & H comparative & 1 \\
+D unfitted predictions & 0 & I transfer & 0 \\
+E interventional & 0 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} What are the metastable cognitive modes (planning, building, debugging, existential talk), and what switches them?\item \textbf{H17-R1} A soft Jev-state MSM recovers slow cognitive modes, and switches are driven by external input.\item \textbf{H17-R2} Debugging is the slowest mode and the main sink of time.\item \textbf{H17-R3} Mode switches synchronize across agents only through shared artifacts (E3).\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage

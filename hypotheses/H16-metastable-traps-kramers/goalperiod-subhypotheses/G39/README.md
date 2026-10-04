@@ -1,6 +1,7 @@
 # H16 × G39: Build your own interactive world (2026-04-27 → 2026-05-01)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (unchanged under the round-1 rule; its core predictions did not change). Error loops on real failures: β -0.08 (stderr loops in round 1: +0.20); Jev blocked spells β n/a; loop spells β +0.81
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode I · 15 agents · reshuffled rooms · 5 days. Splits or exclusions: see the main card's period table.
 
@@ -57,3 +58,19 @@ Period verdict rule: core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2): a
 - **G (ground truth):** the regime difference in what ends idling (H09) is the known structure tested by P-c1/P-c2.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H16-metastable-traps-kramers/r1b/G39/results.json`; tables built by `scheme/build.py --r1b`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| TS1r deep slope (inputs unchanged) | -1.97 | -1.97 |
+| TS2r gate slope on ln k (inputs unchanged) | n/a | n/a |
+| error-loop rows | 3195 (stderr non-empty) | 1177 (real failures) |
+| error-loop aging β (boot CI), deep escapes | +0.20 [-0.13, +1.62], 71 | -0.08 [-0.76, +3.95], 23 |
+| Jev blocked spells (p_blocked ≥ 0.5): β (Wald CI), spells | – | n/a n/a, 65 |
+| Jev loop spells (longest_run ≥ 5): β (Wald CI), spells | – | +0.81 [-0.49, +2.11], 173 |
+| directed kick at the gate (TS2r OR, dose 1) | n/a | n/a (leading-@ nudge targets) |
+| undirected kick ln HR vs day-swap null p95 (TS1) | +0.20 | +0.20 vs +0.12 |
+| directed kick on real-failure loops, ln HR (SE) | -0.43 (stderr loops) | -0.45 (0.39) |
+| N_tgt kicks | 8 (every named agent) | 7 (leading @) |

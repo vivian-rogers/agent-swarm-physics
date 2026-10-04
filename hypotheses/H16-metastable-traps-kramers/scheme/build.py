@@ -12,6 +12,9 @@ confirm.py with allow_holdout=True, which writes to a separate confirm/ folder):
 Each folder gets a _provenance.json.
 
 Usage: uv run python hypotheses/H16-metastable-traps-kramers/scheme/build.py [--period G38 ...] [--all]
+       ... build.py --r1b [G38 ...]   round 1b (improved data, 2026-10-04): TS3 from real failures (turn_outcomes),
+       N_tgt = leading-@ nudge target, plus TS5/TS6 window traps from Jev v3.1; writes <OUT>/r1b/<period>/.
+       Without --r1b the round-1 path is unchanged.
 """
 from __future__ import annotations
 
@@ -41,12 +44,18 @@ PERIODS = {
 }
 
 
-def build_period(name: str, days: list[str], out: Path, allow_holdout=False) -> dict:
+def build_period(name: str, days: list[str], out: Path, allow_holdout=False, r1b=False) -> dict:
     t0 = time.time()
     out.mkdir(parents=True, exist_ok=True)
     W = L.windows(days)
-    rows = L.load_rows(days, allow_holdout=allow_holdout)
-    K = L.load_kicks(days, allow_holdout=allow_holdout)
+    extra = {}
+    if r1b:
+        import r1blib as RB  # noqa: E402
+        rows = RB.load_rows_r1b(days, allow_holdout=allow_holdout)
+        K, extra = RB.load_kicks_r1b(days, allow_holdout=allow_holdout)
+    else:
+        rows = L.load_rows(days, allow_holdout=allow_holdout)
+        K = L.load_kicks(days, allow_holdout=allow_holdout)
     ts1 = L.build_ts1(rows, W, K)
     ts1r = L.build_ts1(rows, W, K, robust=True)
     ts2 = L.build_ts2(rows, W, K)
@@ -64,14 +73,20 @@ def build_period(name: str, days: list[str], out: Path, allow_holdout=False) -> 
         for c, arr in cl.items():
             kk.append(pl.DataFrame({"agent": np.full(len(arr), a, np.int16), "ts": arr, "kclass": [c] * len(arr)}))
     kk = pl.concat(kk) if kk else pl.DataFrame({"agent": [], "ts": [], "kclass": []})
-    for nm, df in (("ts1", ts1), ("ts1r", ts1r), ("ts2", ts2), ("ts3", ts3), ("ts4", ts4), ("minutes", mins), ("kicks", kk)):
+    tables = [("ts1", ts1), ("ts1r", ts1r), ("ts2", ts2), ("ts3", ts3), ("ts4", ts4), ("minutes", mins), ("kicks", kk)]
+    if r1b:
+        tables += [("ts5", RB.build_window_traps(days, K, "blocked", allow_holdout)),
+                   ("ts6", RB.build_window_traps(days, K, "loop", allow_holdout))]
+    for nm, df in tables:
         df.write_parquet(out / f"{nm}.parquet", compression="zstd")
     L.write_provenance(out, "hypotheses/H16-metastable-traps-kramers/scheme/build.py",
                        ["events_core", "actions", "artifact_commands_text (hashed)", "chat_core", "chat_mentions_clean",
                         "exposure", "calendar", "roster"],
-                       {"period": name, "days": days, "allow_holdout": allow_holdout, "MIN_GAP_S": L.MIN_GAP_S,
+                       {"period": name, "days": days, "allow_holdout": allow_holdout, "r1b": r1b, **extra, "MIN_GAP_S": L.MIN_GAP_S,
                         "ISO_S": L.ISO_S, "LOOP_MIN": L.LOOP_MIN, "TS4_MAX_GAP_S": L.TS4_MAX_GAP_S,
-                        "kick_classes": list(L.KCLASSES), "mentions": "chat_mentions_clean.mentions_roster"})
+                        "kick_classes": list(L.KCLASSES), "mentions": "chat_mentions_clean.mentions_roster",
+                        **({"ts3": "turn_outcomes.failed (bash/type) or platform error_class", "N_tgt": "leading-@ nudge target",
+                            "ts5": "v3 p_blocked >= 0.5 window spells", "ts6": "v3 longest_run >= 5 window spells"} if r1b else {})})
     info = {"period": name, "n_days": len(days), "ts1": ts1.height, "ts1r": ts1r.height, "ts2": ts2.height,
             "ts3": ts3.height, "ts4": ts4.height, "agent_days": len(rows), "seconds": round(time.time() - t0, 1)}
     print(info, flush=True)
@@ -80,12 +95,14 @@ def build_period(name: str, days: list[str], out: Path, allow_holdout=False) -> 
 
 def main():
     args = sys.argv[1:]
-    names = list(PERIODS) if ("--all" in args or not args) else [a for a in args if a.startswith("G")]
+    r1b = "--r1b" in args
+    sel = [a for a in args if a.startswith("G")]
+    names = sel if sel else list(PERIODS)
     for nm in names:
         p = PERIODS[nm]
         days = L.period_days(p["goal"], allow_holdout=False, date_from=p.get("date_from"), date_to=p.get("date_to"))
         L.assert_no_holdout(days)
-        build_period(nm, days, L.OUT / nm)
+        build_period(nm, days, (L.OUT / "r1b" / nm) if r1b else (L.OUT / nm), r1b=r1b)
 
 
 if __name__ == "__main__":

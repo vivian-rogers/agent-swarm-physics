@@ -6,6 +6,8 @@
 - **The Boltzmann barrier is not identifiable at 1-min resolution.**
 - **No collective bistability**, as mean field predicts (βJ₀ < 1).
 
+**Round 1b (2026-10-04, improved data):** on real failures (not stderr) error loops age only in #51; Jev blocked and repeated-action spells age in #51, #27 (and #38 for loops) but are timer-like in short periods; kick results survive the leading-@ target fix; with the nudger off (NE43) aging is unchanged, so it is intrinsic.
+
 Confirmatory script for #32/#45 is written and dry-run on stand-ins; **not run**.
 **Fields:** stat mech, dynamics, thermodynamics
 **Origin:** HH53 + HH86 (shortlist 2, item 10) (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); HH47 for the landscape.
@@ -183,7 +185,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Memorylessness, the Kramers order-0 assumption, was tested directly and fails (aging). NE17 split in G38: same sign on both sides. Within-period stationarity is otherwise untested; no update-order audit |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Kick effects beat the day-swap null in some periods: undirected in 5/8 regime-III periods; directed at gates 5/7. Aging beats the memoryless null within agent where powered. The *Kramers* model itself loses to these nulls and rivals. No held-out-day prediction |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | Mean-field forward prediction holds: βJ₀ < 1 → unimodal swarm activity in 10/11 periods (11/11 with the minimum-mass rule). The Kramers signatures (memoryless dwell; exponential dose law) are absent |
-| E interventional | predicts the change across a natural experiment | 0 | No NE tested. NE17 was only a stability check |
+| E interventional | predicts the change across a natural experiment | 1 | *Round 1b (2026-10-04; was 0):* NE43 tested: aging unchanged with the nudger off, as predicted; the predicted drop in gate escape failed, and the NE44 interaction failed as operationalized (the H35 pattern holds in probabilities). Round 1: no NE tested; NE17 was only a stability check |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | (a), the TS2 gate model and (d) are recovered on synthetic data. The dose law is identifiable only at high kick rates. **(b) is not identifiable** (1D closure fails; MSM closure tautological; barrier location is an EWMA artifact). τ = 3/10 min gives the same landscapes. Outage censoring and alternative nulls (A3–A5) do not change (a) or (d) |
 | G ground truth | agrees with known structure | 1 | Regime-III timer gates respond to directed messages (H09's mention effect at the gate, reproduced and quantified per dose). H09's regime-I message triggering does *not* extend to silences ≥ 3 min |
 | H comparative | beats the named rivals | 0 | Kramers loses to R1 (aging) in the dwell law and to R3 (saturating/additive) in the dose law (14/16 powered cells). R4 (collective bistability) is rejected in its favour only on the mean-field part |
@@ -306,6 +308,10 @@ Verdict rule: the core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2) all s
 | [G42](goalperiod-subhypotheses/G42/README.md) | exploratory, regime III | mixed | +0.21 (22 escapes); +0.32; −0.31; 1.01 vs 1.21; 8.1 (20 gates); 0.09 |
 | [G44](goalperiod-subhypotheses/G44/README.md) | exploratory, regime III | mixed | −0.77 (Wald [−1.32, −0.22]); −0.23; +0.53; 1.31 vs 1.21; **2.17**; 0.33; pre-registered bimodality test **failed** (tiny-mode artifact, A5) |
 | [G51](goalperiod-subhypotheses/G51/README.md) | exploratory, regime III | mixed | **−0.77** [−0.81, −0.73] (4,321); **−0.38**; **−0.72**; **1.48 vs 1.28**; **1.54**; 0.41 |
+| [NE44](goalperiod-subhypotheses/NE44/README.md) | native (round 1b) | mixed | kick × ln k +0.57 before, +0.06 after (predicted 0 then < 0); declared pauses 90 → 180 s; escape at k = 1 0.58 → 0.49 |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) | native (round 1b) | mixed | aging unchanged with the nudger off (TS1r −0.59 → −0.53); gate escape unchanged (+0.006 [−0.09, 0.10]) |
+
+*Round 1b (2026-10-04):* every G folder has a `Verdict (1b)` line (unchanged under the round-1 rule) and a Round 1b section; G27 carries the native long-debugging test (holds: blocked spells age, β −1.24).
 
 ## Results
 ### Exploratory round 1 (2026-10-03; non-holdout; 3 regime-I and 8 regime-III goal periods)
@@ -382,6 +388,83 @@ Verdict rule: the core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2) all s
   - #45 was used for confirmation by H02 (activity-timing couplings and its Curie–Weiss βJ₀ = 0.41). #32 lies inside H05's NE12 confirmatory window (room couplings on activity and talk spins).
   - H16's confirmatory statistics on these periods differ from those runs: dwell hazards, pause gates, loop hazards, kick dose laws and swarm bimodality. βJ₀ on #45 is **not** a confirmatory statistic for H16, because H02 computed it.
   - The H16 confirmatory script and predictions must be committed before the run.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation on the improved data (Vivian's priority 2; two-layer design, `infra/data-quality/QUEUE.md`). Holdout untouched; no confirmatory run. Code: `scheme/build.py --r1b`, `analysis/r1blib.py`, `analysis/run_period.py --r1b`, `analysis/native_r1b.py`; the round-1 path (`build.py`, `run_period.py` without the flag) is unchanged. Numbers: `data/processed/H16-metastable-traps-kramers/r1b/`.*
+
+### What changed in the inputs
+- **Real failures for error loops (TS3r).** Round 1's TS3 used `actions.error`, which is "stderr non-empty": 58% of stderr-flagged bash turns are not failures (git and curl progress), and 15% of real failures have empty stderr. TS3r uses `turn_outcomes.failed` for bash/type turns and, for other computer-use turns, a platform failure (`error_class` in timeout, vm, resource, network, tool_use, other).
+- **Nudge target = the leading @ (H35).** 29% of nudges also name other agents; round 1's N_tgt counted every named agent. N_tgt is now the nudge's leading-@ agent; every other exposure to a nudge (including being named second) is N_by. Text is read in memory only.
+- **New trap types from Jev v3.1 windows:** **TS5 blocked spell** = a run of consecutive labelled windows with `p_blocked` ≥ 0.5 (escape: the next window has p_blocked < 0.5; censored at an unlabelled/absent window or the end of the span); **TS6 loop spell** = a run of windows with `longest_run` ≥ 5 (identical action+command repeats inside the window). Hazard per window, cloglog, agent FE, slope on ln(windows elapsed) for spells that reached 2 windows.
+- **Lever controls.** H16's kick effects are hazards on *past* kicks (2-min and 15-min look-backs) inside the agent's own spell (presence-masked by construction), with a day-swap null; they never condition on future kicks, so the H30/H39 bias does not apply. Unchanged.
+- **Unchanged inputs:** TS1/TS1r/TS2 come from `events_core` + `actions` active rows (not `activity_bins`), the swarm block (d) and the outage scan (A3) from H16's own minute grid. Their dwell numbers are recomputed as a check; kick models change only through N_tgt/N_by.
+
+### Predictions (round 1b; written 2026-10-04 before running)
+*What I had seen first:* H35's card (nudge target = leading @; before NE44 a nudge wakes a pausing agent at any trap age, escape 0.86–1.0; after it only early re-pauses respond), H39's nudger-off note (idle escape −13%, post hoc), DQ3's documentation and a structural check (per-period window counts, mean `p_blocked`, real-failure shares; the distribution of `longest_run` pooled over all windows, used to set the TS6 threshold at 5 ≈ its 90th percentile). No round-1b hazard or kick estimate.
+- **P-a5r (error loops on real failures).** TS3r ages (β < −0.3, agent FE, k ≥ 3) in the majority of periods with ≥ 15 deep escapes; in G51, β < −0.3 with the bootstrap CI below −0.3. Credence 0.6. TS3r has ≥ 40% fewer loop rows than TS3 in regime III (descriptive). Credence 0.8.
+- **P-c6r.** Directed kicks do not raise the break hazard of real-failure loops (ln HR ≤ 0 or CI including 0) in the majority of periods with ≥ 30 kicked rows. Credence 0.7.
+- **P-a7 (TS5 blocked spells).** Aging (β < −0.3) in G51 and G38 and in ≥ 50% of powered periods (≥ 15 escapes after ≥ 2 windows). Credence 0.55. Memoryless (|β| ≤ 0.3 with CI inside the band): credence 0.3.
+- **P-a8 (TS6 loop spells).** Aging in G51. Credence 0.5.
+- **P-c3r (leading-@ targets).** A directed kick during a pause raises the TS2r gate escape odds (OR ≥ 1.5, CI excluding 1) in ≥ 5 of 7 regime-III periods. Credence 0.5 (round 1: 5/7 with every named agent as a target).
+- **P-c2r.** Undirected kicks raise TS1 escape above the day-swap null's 95th percentile in ≥ 5/8 regime-III periods (replication; the definition is unchanged). Credence 0.6.
+- **P-c5r.** N_tgt (leading @) raises the TS1 hazard in the 15-min window in G51 (ln HR > 0, Wald CI above 0). Credence 0.7.
+
+### Native tests (layer 2; predictions written 2026-10-04 before running; `analysis/native_r1b.py`)
+- **N1, NE44: the gate model across the pause-default change (12 h → 5 min on 06-11).** Pre = the regime-III periods G37–G44 (03-30 → 05-29) pooled with period fixed effects; post = G51 07-06 → 08-20 (nudger on, before NE43). TS2r gates, logit with agent FE, ln k and ln declared duration. (a) The directed-kick × ln k interaction is ≈ 0 before (CI includes 0) and negative after (CI below 0): a kick wakes an agent at any depth under long sleeps, only early re-pauses under short timers. Credence 0.5 (H35's version seen). (b) The median declared pause duration falls ≥ 5× from pre to post. Credence 0.8. (c) Gate escape at k = 1 is more likely before than after. Credence 0.5. The NE21+NE23 holdout window (06-08 → 07-06) contains the change itself and is not used, so this is a between-period contrast (confounded with goals and roster), not an event study.
+- **N2, NE43: escape with no kicks (#51).** B = 08-07 → 08-20 (nudges on, bookends gone) vs C = 08-21 → 09-02 (no nudges). (a) Aging persists on both sides (TS1r deep β < −0.3 and TS2r β_lnk < 0 in each). Credence 0.7. (b) Gate escape is lower without nudges: the C indicator in the TS2r gate logit (agent FE, ln k, ln declared duration) is negative with its Wald CI below 0. Credence 0.4.
+- **N3, #27 long debugging traps (regime I, 10 days, 55k model calls).** TS3r or TS5 ages in G27 (β < −0.3, Wald CI below 0, for at least one of the two). Credence 0.5. Directed messages do not break TS3r loops in G27 (P-c6r). Credence 0.7.
+- **Not run:** #16 (operator rules against two named trap behaviors) needs content labels for spreadsheet and bug-report loops; queued for round 2.
+
+### Results (round 1b, run 2026-10-04)
+*Numbers: `r1b/<period>/results.json`, `r1b/summary_r1b.json`, `r1b/native_r1b.json`. Figure: `figures/r1b_summary.pdf`. Compute: ≈ 10 min, one local process. TS1/TS1r/TS2 dwell numbers reproduce round 1 exactly (same inputs); the landscape (b) and swarm (d) blocks were not re-run (inputs unchanged).*
+
+**Old vs new per period** (agent-FE cloglog slopes on ln k or ln elapsed; boot = day-bootstrap 95% CI; TS5/TS6 have no round-1 counterpart):
+
+| Period | TS3 error loops, stderr (r1): β [boot], deep escapes | TS3r real failures (1b): β [boot], escapes | TS5 blocked spells (1b): β [Wald], spells | TS6 loop spells (1b): β [Wald] | gate OR, directed kick (r1 → 1b) | N_tgt kicks (r1 → 1b) |
+| --- | --- | --- | --- | --- | --- | --- |
+| G27 (I) | −0.69 [−0.93, 0.40], 186 | −0.19 [−0.93, 3.3], 57 | **−1.24 [−1.93, −0.54]**, 335 | +0.25 [−0.82, 1.31] | – | 0 → 0 |
+| G30 (I) | −1.06 [−1.30, 0.19], 111 | +1.27 [−0.39, 5.6], 25 | +0.43 [−1.18, 2.05], 155 | +0.02 | – | 20 → 12 |
+| G31 (I) | −0.68 [−1.25, 3.0], 127 | −0.77 [−0.86, 1.38], 43 | +0.55, 123 | −0.88 | – | 40 → 20 |
+| G37 | −0.39 [−1.22, 0.79], 53 | −0.53 (14) | +1.10 [−0.64, 2.84], 85 | +0.91 [0.01, 1.81] | 0.91 → 0.83 | 24 → 20 |
+| G38 | −0.41 [−0.59, 0.64], 218 | −0.07 [−0.31, 2.75], 77 | −0.17 [−0.68, 0.34], 414 | **−0.77 [−1.17, −0.37]** | 2.90 → 2.92 | 120 → 110 |
+| G39 | +0.21 [−0.13, 1.62], 71 | −0.09 (23) | n/a (12 escapes) | +0.81 | n/a | 8 → 7 |
+| G40 | **−0.89 [−1.30, −0.15]**, 432 | +0.09 [−0.10, 5.3], 27 | +2.95 [0.61, 5.28], 113 | −0.94 [−2.14, 0.26] | 1.84 → 1.84 | 11 → 11 |
+| G41 | −0.72 [−0.91, −0.09], 223 | −0.36 [−0.75, 4.0], 42 | −0.76 [−1.69, 0.18], 121 | +4.0 | 2.35 → 2.27 | 72 → 59 |
+| G42 | −0.31 [−0.65, 1.36], 91 | +0.16 (25) | +0.09, 145 | −0.08 | 8.1 → 17.4 (20 gates) | 28 → 25 |
+| G44 | +0.54 [0.24, 1.72], 117 | +1.63 [−0.11, 5.9], 29 | +0.91 [−0.07, 1.89], 145 | −0.29 | 2.17 → 2.57 | 32 → 27 |
+| G51 | **−0.72 [−0.89, −0.37]**, 2,253 | **−0.57 [−0.69, −0.06]**, 984 | **−0.39 [−0.56, −0.22]**, 3,417 | **−0.46 [−0.63, −0.29]** | 1.54 → 1.52 | 970 → 729 |
+
+**Outcome vs prediction (round 1b):**
+
+| Prediction | Outcome | Verdict |
+| --- | --- | --- |
+| P-a5r: real-failure loops age in the majority of powered periods; G51 boot CI below −0.3 | point β < −0.3 in 3/10 powered periods (G31, G41, G51); boot CI below −0.3 in 0/10 (Wald: G51 only). G51 −0.57 [−0.69, −0.06] | **failed** (round 1 on stderr: 8/11 point estimates) |
+| TS3r has ≥ 40% fewer loop rows (regime III) | −51% overall (−34% to −80% per period) | holds |
+| P-c6r: directed kicks do not break real-failure loops | 9/9 powered periods; ln HR −0.53 to +0.11 (G38 −0.53 ± 0.17, G27 −0.51 ± 0.13) | **holds** |
+| P-a7: blocked spells age in G51, G38 and ≥ 50% of powered periods | G51 −0.39 [−0.50, −0.12] boot; G38 −0.17 (CI spans 0); point aging 3/10; timer-like in G37, G40, G44; memoryless in 0/10 | **failed** (aging only in the long #51 window and #27) |
+| P-a8: loop spells age in G51 | −0.46, boot [−0.55, −0.18], Wald [−0.63, −0.29] | partial (β < −0.3, CI below 0 but overlaps the band) |
+| P-c3r: directed kick at the gate, OR ≥ 1.5, CI excluding 1, in ≥ 5/7 | 5/7 (G38, G41, G42, G44, G51); ORs barely move under leading-@ targets | **holds** (as round 1) |
+| P-c2r: undirected kicks above the day-swap null in ≥ 5/8 | 6/8 | holds |
+| P-c5r: N_tgt slow-window ln HR > 0 in G51 | +0.35 ± 0.045 (round 1 +0.36 ± 0.08) | holds |
+| N1 NE44 (a): kick × ln k ≈ 0 before, < 0 after | before **+0.57 [0.27, 0.87]**, after +0.06 [−0.04, 0.16] | **failed as stated** (see reading) |
+| N1 NE44 (b): median declared pause falls ≥ 5× | 90 s before vs 180 s after (90th pct 600 vs 840 s) | **failed** |
+| N1 NE44 (c): escape at k = 1 higher before | 0.58 vs 0.49 | holds |
+| N2 NE43 (a): aging persists without kicks | TS1r deep β B −0.59 [−0.68, −0.39], C −0.53 [−0.56, −0.41]; TS2r β_lnk −0.31 and −0.26 (CIs below 0) | **holds** |
+| N2 NE43 (b): gate escape lower without nudges | C indicator +0.006 [−0.09, 0.10] (directed kick +0.42 [0.28, 0.56]) | **failed** |
+| N3 #27: TS3r or TS5 ages; messages do not break TS3r | TS5 −1.24, Wald [−1.93, −0.54] ✓; TS3r −0.19 (flat); directed ln HR on TS3r −0.51 ± 0.13 ✓ | **holds** |
+
+**Reading.**
+1. **"Error loops age" was largely a stderr artifact.** Round 1's TS3 counted runs of turns with non-empty stderr, so a chain of git or curl progress messages looked like a deepening error loop. On real failures half the loop rows disappear, and aging survives only in the long #51 window (β −0.57, weaker than −0.72). In the 4-h periods real-failure loops are short and flat or timer-like.
+2. **Semantic traps age where there is power.** Blocked spells (Jev `p_blocked` ≥ 0.5) and repeated-action spells age in #51 (β −0.39, −0.46) and in #27's long debugging (blocked β −1.24); repeated-action spells age in #38 (−0.77). In short periods several are timer-like, so aging is not universal across trap types.
+3. **Kick results are robust to the nudge-target fix.** The leading-@ rule removes 25% of #51's N_tgt rows, and every kick estimate moves by less than its SE. Messages still never break failure loops; if anything they arrive during longer ones.
+4. **NE43: aging is intrinsic, not kick-made.** With the nudger off, the dwell and gate aging slopes are unchanged and gate escape is as likely as before. The trap deepens by itself.
+5. **NE44: H35's pattern holds in probabilities, not in my logit interaction.** Before the pause-default change, a directed kick lifts escape at deep gates (k ≥ 3) from 0.21 to 0.56; after it, from 0.17 to 0.25. On the logit scale that is a positive interaction before and none after. Declared pause durations did not shrink (90 → 180 s median): agents almost always declare a duration, so the 12-h default rarely applied in these periods. NE44 changed the response to kicks without changing the declared timers.
+
+**Verdict changes.** Per period: none under the round-1 rule (its core predictions, aging on TS1r/TS2r and the gate and room kicks, did not change); `Verdict (1b)` lines note the error-loop and window-trap results. Card level: the claim "error loops age too" is withdrawn outside #51; "traps age" now rests on silences, pause chains and #51's semantic spells; "aging is intrinsic" gains support from NE43.
+
+**Scorecard (round 1b; round 1 in brackets).** A 1 [1]: real failures, leading-@ targets and v3 window traps defined from fields; `p_blocked` is regime-dependent. B 1 [1]. C 1 [1]. D 1 [1]. **E 1 [0]**: NE43 tested; aging unchanged with the nudger off, as predicted; the predicted drop in gate escape and the NE44 interaction failed. F 1 [1]. G 1 [1]: the gate response follows the known scaffold change (NE44) in probabilities. H 0 [0]: Kramers still loses to aging. I 1 [1].
+
+**Shared-file suggestions** (not made): `infra/README.md` known issue: *"Error-loop statistics built on `actions.error` are mostly stderr loops (git/curl progress): H16's TS3 loses 51% of rows and most of its aging on `turn_outcomes.failed`."* `kicks_classified`: the queued `primary_target` column (H16 now computes it in `r1blib.nudge_targets`, same rule as H35). NE44 row in `natural-experiments.md`: "declared pause durations did not shrink across 06-11 in non-holdout regime-III periods (median 90 → 180 s); the change shows in the kick response, not the timers (H16 round 1b)."
 
 ## Round 2 redirects (2026-10-04)
 *From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*

@@ -1,6 +1,8 @@
 # H14 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
 **Verdict:** failed
+**Verdict (1b):** failed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 93% after scaffold removal with burn-in; pooled Jev v3 arrow significant (flip p 0.005)
+**Role (1b):** native (loops vs progress, N3, below) in addition to the replication
 **Role:** exploratory
 **Period:** regime III · mode C (shared objective) · N = 12 (+2: Claude Opus 4.7 joins 04-17, Kimi K2.6 04-22) · #best/#rest rooms · 17 days × 4 h. Step change inside: outreach approval (G) on 2026-04-14; analysed as one period, with 04-02 → 04-13 vs. 04-14 → 04-24 as a descriptive split.
 
@@ -59,3 +61,22 @@ Figures: [`figures/period_summary.pdf`](figures/period_summary.pdf). Data: `data
 - **G (ground truth):** the consolidate-linked cycle is scaffold-imposed (consolidation cadence); see the card for how much EP it carries.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Replication layer (templated across periods). Predictions: the card's "Round 1b" predictions as they apply here. Numbers: `data/processed/H14-behavior-entropy-production/r1b/G38/`.*
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| coarse chain: share of test agents above DB null (median Newton excess) | 0.71 (0.0031) | 0.71 (0.0032), same transitions |
+| fine classes: share above null (median excess) | `act`, shell unsplit: 0.86 (0.094) | act_sh, 7 shell sub-classes: 1.00 (0.103) |
+| scaffold removed (agent-only chain, 3-transition burn-in): share above null | – | coarse_b3 0.50; act_sh_b3 0.93 |
+| share of the median excess kept after scaffold removal | coarse, consolidate decimated: 0.40 | coarse_b3 0.59; act_sh_b3 0.65 |
+| Jev v3 pooled EP per 5-min transition (block-flip p) | – | 0.0069 (p 0.005); argmax 0.0027 (DB p 0.124) |
+| Jev v3 per agent: share above flip null (n) | – | 0.42 (12); descriptive (soft tests nearly blind per agent) |
+
+The window-level burn-in variants (v3s_b1, b1c) are selection artifacts (card, Round 1b) and are not reported here.
+
+## Native test (round 1b): loops vs progress (H14-R2)
+*Prediction written 2026-10-04 before running (card, "Round 1b", N3).* #38–#40 are the loop-heavy weeks (H12's self-repetition). Pooled Jev v3 soft EP per transition on transitions whose two windows are both *productive* (git-printed commit or push, or progress score ≥ 3) exceeds that on transitions whose windows are both *stuck* (p_blocked ≥ 0.5 or longest_run ≥ 5), with the agent-day bootstrap CI of the difference above 0, in ≥ 2 of the 3 periods. Credence 0.4.
+
+*Result (`analysis/native_r1b.py`):* productive 0.0307 (305 transitions, 879 windows) vs stuck 0.0312 (602 transitions, 1594 windows); difference -0.0004, 95% CI [-0.090, 0.194]. **Does not hold here**; across #38–#40 the prediction holds in 0/3 (failed). Stuck windows are not near-reversible.

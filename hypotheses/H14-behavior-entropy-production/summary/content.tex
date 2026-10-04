@@ -1,4 +1,4 @@
-\hwhat{Is each agent's behavior statistically irreversible? Does each model family have its own arrow of time (HH19)? Is the swarm more irreversible than the sum of its agents (HH67)? Round 1 (exploratory, non-holdout) covered 9 goal periods: \#27 (regime I), and \#37--\#44 and \#51 (regime III). It built categorical states from computer-use turns and agent events. On 6 coarse states (browse, type, shell, chat, idle, consolidate), regime-III arrows are real but small: median 0.002--0.010 nats/transition. At least 80\% of agents beat a detailed-balance null only in \#51 (29/30) and \#27 (10/10, with arrows 7--29$\times$ larger). On 11 fine action classes, 80--100\% of agents are irreversible in every period. Removing the scaffold's consolidation step removes 52--100\% of the coarse excess. There is no family effect (stratified $p=0.89$), only a weak per-agent trait ($\rho=0.13$--$0.24$, $p\le0.02$), and no collective term after Holm. Verdicts: 7 failed, 2 mixed. Holdout not run.}
+\hwhat{Is each agent's behavior irreversible, does each model family have its own arrow of time (HH19), and is the swarm more irreversible than its agents (HH67)? Round 1 covered 9 periods (\#27 in regime I; \#37--\#44, \#51 in regime III). On 6 coarse states arrows are small (0.002--0.010 nats/transition) and mostly the scaffold's consolidation step; regime I was 7--29$\times$ larger; no family or collective term. Round 1b used the improved data: shell sub-classes from the fixed \texttt{bash\_head}, an agent-only chain with a burn-in after scaffold resets, and Jev v3.1 semantic states. Every agent's fine arrow is now irreversible (9/9 periods) and survives scaffold removal (41--104\% kept); the regime contrast vanishes on every corrected chain; semantic states carry a small pooled arrow (7/9) unrelated to output. Natives (NE43, NE14, loops vs progress) gave no support. Holdout not run.}
 
 \hmodel{Kinetic Potts (models 02, 10). $x_i(t)\in\{1..q\}$ is agent $i$'s behavior state per turn (single agent) or per 1-min bin (swarm). $P_{ab}$ and $\pi_a$ are its transition matrix and occupancies. $\Sigma_i$ is the entropy production per transition: the pair KL, a lower bound for non-Markov agents. It is estimated with the Aguilera--Ito--Kolchinsky dual on antisymmetrized transition indicators $g_{ab}$, cross-fitted by day (Newton step $\hat\Sigma_N$). $J_{ij}^{ab}$ are cross-agent couplings, $\Delta\Sigma$ is the collective increase of the bound, and $A_{abc}$ a cycle affinity.}
 
@@ -12,6 +12,28 @@ A_{abc}=\ln\dfrac{P_{ab}P_{bc}P_{ca}}{P_{ac}P_{cb}P_{ba}}
 
 \hobs{../figures/summary_obs.pdf}{(a) Share of agents whose state sequence beats a detailed-balance surrogate (same occupancies and symmetric transition counts, currents removed). Almost all agents do on fine action classes; on the 6 coarse states only a minority do, except in the long \#51 window and in regime I (\#27). (b) Median excess irreversibility. Fine micro-workflow carries about 10$\times$ the coarse arrow, and most of the coarse arrow vanishes when the scaffold's consolidation step is removed.}
 
-\htelos{Mostly a careful measurement of the scaffold. The strongest arrows of time are GUI and tool micro-workflow (click, type, key), which is trivially irreversible. The coarse arrow is set by when the harness forces consolidation, or by regime I's session structure. Families don't differ, and there is no swarm-level irreversibility at a detectable size, so ``irreversibility as a superagent signature'' found nothing. What is practical: a calibrated detailed-balance null (shuffle nulls overstate irreversibility); a per-agent irreversibility score weakly stable across weeks (a fingerprint candidate); and a warning that cross-agent EP comparisons need null-subtracted estimators. An operator would change nothing yet. The Jev semantic states are the remaining chance for an agent-chosen arrow.}
+\htelos{Mostly a careful measurement of the harness, now with one agent-level residue. The coarse arrow and the regime-I/III contrast are scaffold structure (sessions, consolidation). What survives removing the scaffold is fine tool workflow (e.g.\ read $\to$ edit $\to$ commit), irreversible in every agent; it is a per-agent fingerprint, not a steering handle. Semantic irreversibility is real but small and does not track output or progress, so EP is not a ``useful work'' meter. Practical lessons: use a calibrated detailed-balance or block-flip null, null-subtract before comparing agents, and never apply a reset burn-in on coarse windows (it manufactures arrows). An operator would change nothing.}
 
-\hbottom{Agent behavior is irreversible mainly at the level of fine tool actions and where the scaffold imposes order; per-family arrows (HH19) and collective irreversibility (HH67) were not found.}
+\hbottom{Every agent's fine tool workflow is irreversible even with the scaffold removed, but the coarse arrow and the regime contrast are scaffold structure, and no family, collective or ``useful-work'' arrow appears.}
+
+\hresults{\footnotesize\begin{tabular}{@{}p{0.34\columnwidth}p{0.44\columnwidth}l@{}}
+\hline
+prediction (round 1b) & observed & verdict\\\hline
+fine (shell sub-classes) $\ge$80\% irreversible & 100\% of agents in 9/9 & holds\\
+coarse arrow mostly scaffold ($\ge$6/8) & 5/8 keep $<$50\% after removal & failed (narrow)\\
+fine arrow survives scaffold removal & kept 41--104\%; 75--100\% of agents & holds\\
+pooled Jev v3 arrow (G38, G51) & $p\le0.005$; 7/9 periods & holds\\
+regime I $\ge2\times$ (v3 states) & ratios 0.4--4.4 & failed\\
+lab $\eta^2$ (fine, scaffold-free) & $p$ 0.35; Anthropic$>$OpenAI 8/8, $p$ 0.04 & failed / fragile\\
+v3 EP tracks output & $\rho$ $+0.14$, $-0.34$, $-0.16$ & failed\\
+N1 NE43 inside placebo range & 3/4 changes inside & failed (marg.)\\
+N2 NE14: coarse drops more than v3 & 0.25 vs 0.72 (CIs span 1) & mixed\\
+N3 productive $>$ stuck EP & 0/3 & failed\\
+\hline
+\end{tabular}}
+
+\hobsb{../figures/r1b_summary.pdf}{(a) Share of agents beating the detailed-balance null per period. Fine classes with shell sub-classes (triangles) are irreversible for everyone and stay so with the scaffold removed (diamonds); the coarse arrow (dots) mostly does not survive removal (squares). (b) Pooled Jev v3 entropy production per 5-min transition (bars) and the block-flip null's 95th percentile: regime I (\#27, blue) is not above regime III.}
+
+\hcaveats{Soft-label observables attenuate EP roughly by the square of label accuracy, so per-agent v3 tests are nearly blind and only pooled tests are primary. A reset burn-in on 5-min windows was pre-registered and turned out to be a selection artifact (resets start activity bursts); it is reported as invalid. Newton blows up for a few strongly asymmetric agents (one G40 value 16.5), which drives the fragile Anthropic $>$ OpenAI result. NE14 has one pre-change day; NE43 windows are 5 days. Non-Markov agents make all values lower bounds.}
+
+\hnext{Count-matched within-agent EP across goal kickoffs (H56's design) on act\_sh; HMM-denoised semantic states before EP.}

@@ -1,13 +1,14 @@
 {
- "complete": 40,
- "faithfulness": 1.0,
- "usefulness": 1.5,
- "rationale": {
-  "complete": "Round 1 is done: dated predictions, synthetic validation, 27 per-period verdicts, scorecard and a guarded confirmatory script (dry-run only). Still to do: the holdout run, the per-agent or partially pooled re-analysis, and the content-level test on Jev states, which is the hypothesis' real target.",
-  "faithfulness": "The MSM beats occupancy-only and sticky-only rivals on held-out days, but the core claims failed on action-class states. The chain is not Markov (CK 0/27, ITS rise x4-7); sets beyond the sojourn null pass in 3/8 primary periods; agent-mixture inflation is as large as that excess; t2* does not track stuckness; the regime contrast and NE07 went the wrong way. Scorecard A1 B0 C1 D0 E0 F1 G1 H1 I0.",
-  "usefulness": "t2* and the slow-set map are cheap diagnostics anyone could compute from swarm logs, but they flag tool modality and idling, not stuck agents. The transferable payoff is methodological: non-Markovianity at minute scale, mixture-inflated pooled MSMs, and a 4-14x low bias from noisy LLM-labelled states unless a shifted estimator is used."
- },
- "one_line": "Action-class behavior is non-Markov; slow sets are GUI/shell modes and idling; t2* doesn't flag stuck periods",
- "rated_by": "calibrated by coordinator 2026-10-04 (from H17 agent (suggested))",
- "updated": "2026-10-03"
+  "complete": 45,
+  "faithfulness": 1.0,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1 (action classes) and round 1b (Jev v3.1 soft states, real failures, synthetic checks of the soft-state tools, 3 native tests) are done. Still open: the holdout run, an HMM with agent-day random effects, and content-level states for theory spirals.",
+    "faithfulness": "The action-class MSM beats occupancy-only and sticky-only rivals on held-out days, but every core claim failed on both state spaces: non-Markov, slow sets are acting vs waiting (R4) plus agent mixture (R2), t2* does not track stuckness (wrong sign on v3), the regime contrast is reversed, and the unfitted relaxation after forced erasures misses by x12. Scorecard A1 B0 C1 D0 E0 F1 G1 H1 I0.",
+    "usefulness": "Cheap diagnostics (t2*, the slow-set map) flag tool modality and waiting, not stuck agents. Transferable lessons: minute-scale behavior is non-Markov; pooled MSMs manufacture slow modes; soft LLM labels need >= 15k windows for timescales, and argmax-run sojourn nulls are invalid on noisy labels. p_blocked marks low-output weeks inside regime III only."
+  },
+  "one_line": "Behavior's slow mode is acting vs waiting plus agent heterogeneity, on action classes and Jev states; t2* doesn't flag stuck periods",
+  "rated_by": "H17 re-evaluation agent RE-B1 (suggested; round-1 values were coordinator-calibrated)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)"
 }
