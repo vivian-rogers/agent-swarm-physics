@@ -69,3 +69,10 @@ Slots are capped at 20 concurrent agents; queued work launches as slots free, da
 ### Sidecars available now (2026-10-04), so the re-evaluation need not wait for DQ7
 - `activity_bins_fixed.parquet` (DQ8) and `outages_fixed/` (`outages.py --fixed`: joint silences 14.3% → 5.3% of non-holdout minutes; outage runs 3,590 → 682). Re-evaluation agents use these; DQ7 later swaps them into the main tables.
 
+### Re-evaluation progress
+| Agent | Hypotheses | Status |
+| --- | --- | --- |
+| RE-A1 | H38, H12, H25 | running (2026-10-04) |
+| RE-A2 | H02, H19, H03 | running (2026-10-04) |
+| next | H04, H08, H18, H29, H30 (visibility and response); H01, H10, H13, H20, H21, H22, H24, H26, H36 (content); H11, H15, H27, H31, H33, H35 (projects and outcomes); H14, H16, H17, H39 (behavior states, after DQ3); H05, H06, H07, H09, H23, H28, H32, H34 | queued, 2–3 hypotheses per agent as slots free |
+
