@@ -125,8 +125,8 @@ def static():
     ax.text(1.3, p_kr[0] * 1.18, "one depth (Kramers): memoryless", fontsize=6.3, color=vs.MUTED)
     ax.text(1.4, 0.012, "spread of depths:\nthe trap ages", fontsize=6.3, color=TRAP, va="top")
     ax.text(25, odds_mult(p_age, OR_KICK)[100] * 1.25, "with one kick (odds ×1.54)", fontsize=6.3, color=KICK)
-    ax.set_xlabel("trap age (gates)")
-    ax.set_ylabel("escape probability per gate")
+    ax.set_xlabel("trap age (pause points)")
+    ax.set_ylabel("escape probability per pause point")
     ax.set_title("(a) aging vs Kramers (simulation)", loc="left")
 
     # (b) G51 data
@@ -142,10 +142,10 @@ def static():
     ax.fill_between(mid[ok_k], ci["kick"][0][ok_k], ci["kick"][1][ok_k], color=KICK, alpha=0.25, lw=0)
     ax.set_xscale("log")
     ax.set_ylim(0, 1)
-    ax.set_xlabel("trap age at the gate (min)")
-    ax.set_ylabel("share of gates escaped")
-    ax.set_title(f"(b) G51 idle gates (n = {len(g):,})", loc="left")
-    ax.legend(handles=[Line2D([], [], color=KICK, marker="s", ms=3, label="directed read at gate"),
+    ax.set_xlabel("trap age at the pause point (min)")
+    ax.set_ylabel("share of pause points escaped")
+    ax.set_title(f"(b) G51 pause points (n = {len(g):,})", loc="left")
+    ax.legend(handles=[Line2D([], [], color=KICK, marker="s", ms=3, label="directed read at pause point"),
                        Line2D([], [], color=TRAP, marker="o", ms=3, label="no directed read"),
                        Line2D([], [], color=vs.NULL, lw=5, label="ages shuffled within agent")],
               loc="upper right", fontsize=6.3, handlelength=1.4, borderaxespad=0.2)
@@ -234,7 +234,7 @@ def anim():
             if tk - 0.4 <= age < tk + 0.9:
                 kick_arrow.xy = (0.9, U(0.9, depth) + 0.6); kick_arrow.set_position((-0.4, U(0, depth) + 1.3))
                 kick_arrow.set_visible(True)
-                kick_txt.set_position((0.9, U(0.9, depth) + 0.8)); kick_txt.set_text("directed kick at a gate")
+                kick_txt.set_position((0.9, U(0.9, depth) + 0.8)); kick_txt.set_text("directed kick at a pause point")
             else:
                 kick_arrow.set_visible(False); kick_txt.set_text("")
             m = tt <= min(age, tk)

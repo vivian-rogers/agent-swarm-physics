@@ -228,7 +228,7 @@ def fig_static():
     ax.set_xticks(range(7))
     ax.set_xlabel("hop (recipient's calls after the message)")
     ax.set_ylabel("extra P(read-out call is talk)")
-    ax.set_title("(c) the coupling is gated", loc="left")
+    ax.set_title("(c) the coupling acts at the read-out call", loc="left")
     ax.legend(loc="center right", bbox_to_anchor=(1.0, 0.42), fontsize=6, handlelength=1.5)
     ax.text(3.0, 0.0062, "hop 0 = the call in flight at the post", fontsize=5.8, color=vs.INK2, ha="center")
     vs.save(fig, HERE / "fig")

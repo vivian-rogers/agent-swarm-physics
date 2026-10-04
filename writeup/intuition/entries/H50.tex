@@ -3,8 +3,7 @@
 \section{H50: Activity moves with the scheduler; talk moves one read-out call at a time}
 
 \textbf{The question:}
-When agents co-move, is a common input hitting all of them (a field), or do they read each other (a coupling)?
-Can the lag between input and response tell the two apart?
+When agents co-move, does a common input hit all of them (a field), or do they read each other (a coupling)? Can the lag tell?
 
 \textbf{The intuition:}
 Agents act only at model calls.
@@ -15,7 +14,6 @@ The message enters a recipient's context only at its next call, the read-out cal
 So coupling lags come in whole call cycles, or hops.
 Hop 0 is the call already in flight, which cannot see the message; hop 1 is the read-out call.
 The test is a regression discontinuity: it compares calls that start just after a message with calls that start just before it.
-A field gives no step there; a coupling gives a step at hop 1.
 
 \textbf{What we measured:}
 The read-out jump $J_1$ is the extra chance that a recipient's hop-1 call is a talk call, minus a shifted-time placebo.
@@ -53,12 +51,9 @@ $J_1>0$ in 45/71 units and $J_1<0$ in none; the onset is at hop 1 in all 45.
 Pooled, $J_1\approx0.034$ (regime I) and 0.019 (regime III), which is $+25\%$ and $+44\%$ over the base talk rate.
 The talk call replaces a work call; the idle share does not change.
 In regime III the coupling acts only on named messages: $J_1=0.17$ for a message that names the recipient, 0.004 otherwise.
-The proposed split by regime (HH167) fails.
 At NE43, switching off the nudger leaves peer coupling ($\times0.69$) and activity co-movement in place.
-Scope: 71 units, 35 periods.
-The claim ``activity co-movement is the scheduler's field; talk is a coupling at the hop-1 read-out call'' stands\cred{0.85}.
+Over 71 units, the claim ``activity co-movement is the scheduler's field; talk is a coupling at the hop-1 read-out call'' stands\cred{0.85}.
 Its expected usefulness is EU~2.98 (value if true 3.5; two raters, one blind).
-The card and \texttt{meta.json} agree.
 
 \textbf{What it means:}
 For an operator: do not read activity synchrony as influence.
@@ -72,8 +67,6 @@ Regime-I call starts are placed from latency; the jump holds on logged starts (\
 The rising regime-I kernel beyond hop 2 has no synthetic validation.
 Per-unit intervals are mildly anti-conservative (about 9\% false positives in synthetic data).
 The field and coupling shares are model-based and do not add up, because coupling amplifies field-driven talk.
-Room changes and roster joins confound NE43, and the \#51 relay tests have about 100 pairs.
+Room changes and roster joins confound NE43.
 Several numeric predictions failed: the nudge onset, the regime-I field share (0.51 against a predicted $\le0.2$) and the corner frequency.
-The content channel is not done.
-The fragile flag is not set.
-No confirmation test on reserved goal periods has run.
+The content channel is not done, the fragile flag is not set, and no confirmation test on reserved goal periods has run.

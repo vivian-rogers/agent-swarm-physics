@@ -9,29 +9,24 @@ How much output does each wipe cost?
 
 \textbf{The intuition:}
 Treat each model call as a spin with many states (write, run, read, look, talk, idle).
-Three fields set its choice: a baseline field (what the agent does with no task in mind), a room field and a task field.
-The context window holds the task field.
-The wipe is a quench, a sudden change of a control parameter: here it sets the task field to zero.
+Three fields set its choice: a baseline field (the agent's habit with no task in mind), a room field and a task field in the context.
+The wipe is a quench (a sudden change of a control parameter) that sets the task field to zero.
 A \emph{field quench} shifts the mix of calls toward reading, and the task field then grows back over a few calls.
 A \emph{temperature pulse} makes every choice more random, so the entropy of the call mix rises.
-Linear response, the rule that a spin with a weak self-field follows an outside field more easily, adds one prediction.
-An agent with no task field should follow the room more closely after a wipe.
+Linear response (a spin with a weak self-field follows an outside field more easily) predicts that a wiped agent follows the room more.
 
 \textbf{What we measured:}
-The unit is one goal period: nine regime-III periods outside the reserved data (G36--G51), with 1.24M calls, 21{,}165 forced and 16{,}357 voluntary resets.
+The data are nine regime-III goal periods outside the reserved data (G36--G51): 1.24M calls, 21{,}165 forced and 16{,}357 voluntary resets.
 The thrash index $\Theta_c$ is the rise in the read share of non-write calls over calls $+1\ldots+5$.
 It conditions on the agent and on the category of the previous call.
 The write dip $\Omega$ compares writes over calls $+1\ldots+10$ with calls $-20\ldots-11$; DQ4 work commits give a second output measure.
-The null is a set of pseudo-erasures: no-reset boundaries at call 21 or 31 of the same segments.
-They match the hour of day by construction (KS distance $\le0.04$).
+The null is a set of pseudo-erasures: no-reset boundaries at call 21 or 31 of the same segments, at the same hours.
 \emph{Scheduler field:} removed, because each event compares two sides of one reset within one agent-day.
-\emph{External drive:} removed, because the cap, not the task state, times a forced wipe.
-The forced pre-trend ($+7\%$) equals the no-reset band.
+\emph{External drive:} removed, because the cap, not the task state, times a forced wipe; its pre-trend equals the null band.
 \emph{Shared model prior:} removed by the conditioning on agent and previous call; the effect holds in Anthropic, OpenAI and Google agents.
 \emph{Common input:} the reply test is a difference-in-differences against pseudo-erasures, so a common response cancels.
 \emph{Synthetic check:} three planted worlds (thrash, pure output dip, no effect) on real call skeletons.
 At G51 counts the pipeline classifies all three correctly in 100\% of replicates.
-The check also showed that the raw index calls a pure dip ``thrash''; hence the conditioning in $\Theta_c$.
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{H44-context-wipe/fig.pdf}
@@ -46,17 +41,14 @@ Animation: \texttt{writeup/visuals/H44-context-wipe/anim.mp4}.}
 Re-acquisition is real; thrash is not.
 In G51 the read share rises from 0.22 to 0.47 at the first call and relaxes over 5--7 calls.
 $\Theta_c=+0.079$ [0.071, 0.086], positive in 9/9 periods; the null gives $-0.011$.
-Writes fall 26\% [$-29$, $-23$] (8/9 periods) and work commits fall 38\% [$-41$, $-35$].
-Real command failures rise by 1 percentage point.
+Writes fall 26\% [$-29$, $-23$] (8/9 periods), work commits fall 38\% [$-41$, $-35$], and real failures rise 1 point.
 Per period the wipes cost 3.7--8.7\% of all write calls and 4.8--10.9\% of all work commits.
 The entropy of the call mix \emph{falls} ($-0.027$): the agent reads in an orderly way, with no temperature pulse.
 The reply rate to new room items does not change (rate ratio 0.97 [0.91, 1.04]; G51 0.90).
 Coupling to items read before the wipe falls (ratio 0.60 [0.44, 0.81]).
 A command loop recurs after a wipe in 16\% of cases, against 72\% without one (G38; pooled odds ratio 0.11 [0.05, 0.26], 7 periods).
-Scope: regime III, nine periods.
-The claim ``a forced wipe triggers orderly re-reading, costs 4--11\% of output and breaks loops'' stands\cred{0.88}.
+Within regime III (nine periods), the claim ``a forced wipe triggers orderly re-reading, costs 4--11\% of output and breaks loops'' stands\cred{0.88}.
 Its expected usefulness is EU~3.23 (value if true 3.67; three raters, one blind).
-The card and \texttt{meta.json} agree.
 
 \textbf{What it means:}
 For a scaffold builder, the cap length is a cost/benefit dial.
@@ -64,13 +56,11 @@ A 40-call cap costs about 4--11\% of output and breaks most command loops (odds 
 Point a recovering agent at its working files.
 An agent that first re-reads its files resumes writing 2.6 calls sooner than one that first looks at the screen.
 Do not count on the memory note written at the wipe: its length has no effect on the dip ($\rho=-0.03$).
-Do not expect a freshly wiped agent to be easier for its peers to steer.
+A freshly wiped agent is not easier for its peers to steer.
 
 \textbf{Caveats:}
-A regex classifier assigns the call categories, and nobody has checked it against hand labels.
-GUI browsing cannot be separated from production.
+An unchecked regex classifier assigns the call categories, and it cannot separate GUI browsing from production.
 Writes ramp up through each 40-call segment, so the size of the dip depends on the reference window.
-The re-acquisition paths are the agent's choice, so the ``files first'' result is observational.
+The agent chooses what to re-read, so the ``files first'' result is observational.
 The analysis runs about 12 statistics on nine periods with no correction; G37 has low power.
-The fragile flag is not set.
-No confirmation test on reserved goal periods has run: \texttt{confirm.py} has only run on stand-ins.
+The fragile flag is not set, and no confirmation test on reserved goal periods has run.

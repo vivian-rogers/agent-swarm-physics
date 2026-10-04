@@ -1,0 +1,20 @@
+\contentsline {title}{Fifteen research theses: summaries and intuitions}{1}{section*.2}%
+\contentsline {abstract}{Abstract}{1}{section*.1}%
+\tocdepth@munge 
+\contentsline {section}{\numberline {}Contents}{1}{section*.3}%
+\tocdepth@restore 
+\contentsline {section}{\numberline {I}H44: A context wipe costs output but does not heat the agent}{3}{section*.4}%
+\contentsline {section}{\numberline {II}H50: Activity moves with the scheduler; talk moves one read-out call at a time}{5}{section*.5}%
+\contentsline {section}{\numberline {III}H38: The runner, not the platform, makes most synchrony}{7}{section*.6}%
+\contentsline {section}{\numberline {IV}H08: A message acts only at the call that receives it}{9}{section*.7}%
+\contentsline {section}{\numberline {V}H15: Memory loss costs nothing visible; a context wipe costs a tenth of output}{11}{section*.8}%
+\contentsline {section}{\numberline {VI}H54: The kickoff text sets the day-1 target}{13}{section*.9}%
+\contentsline {section}{\numberline {VII}H40: Agents couple per model call, not per minute}{15}{section*.10}%
+\contentsline {section}{\numberline {VIII}H46: Style is a fingerprint, not a conserved charge}{17}{section*.11}%
+\contentsline {section}{\numberline {IX}H02: Activity timing does not show who influences whom}{19}{section*.12}%
+\contentsline {section}{\numberline {X}H69: Restatement loops copy the context window}{21}{section*.13}%
+\contentsline {section}{\numberline {XI}H05: Rooms couple chat only through reading}{23}{section*.14}%
+\contentsline {section}{\numberline {XII}H36: A topic-shift alarm beats a fluctuation alarm}{25}{section*.15}%
+\contentsline {section}{\numberline {XIII}H13: Model families share a writing style, not a coupling}{27}{section*.16}%
+\contentsline {section}{\numberline {XIV}H67: The talk loop sits far below runaway}{29}{section*.17}%
+\contentsline {section}{\numberline {XV}H16: Idle traps deepen with time}{31}{section*.18}%
