@@ -1,0 +1,35 @@
+\hwhat{I tested whether regime I's update order is a fixed sweep, which keeps equilibrium snapshots but breaks detailed balance. The export has no turn-pointer history, so I audited the call log first: who calls next, on 41 non-holdout regime-I units. No unit is a sweep. All 41 are self-clocked asynchronous: calls of different agents overlap (concurrency median 0.997), order predictability is $\eta_{\rm ord}=0.04$ (a sweep needs $\ge0.5$), and return gaps are burstier than random. Being named lifts the next call only $\times1.13$. A symmetric-coupling kinetic Ising driven by the real order makes no entropy production ($\sigma_{\rm sweep}-\sigma_{\rm rand}$ median $2\times10^{-5}$ nats per call). Measured cross-agent talk EP sits at the floor in 29 of 31 units. Snapshots fit model 01 as well as in regime III. Holdout: not run.}
+
+\hmodel{Models 02 (kinetic Ising, update-rule table) and 15 (EP inference). One step is one model call; $a(t)$ is the calling agent. Spin $s_i=\pm1$: whether agent $i$'s latest call produced chat (talk), or whether it is in computer use (mode). At its call, agent $a$ resamples $s_a$ by heat bath with field $h_a$ and couplings $J_{aj}$; others hold. $\Sigma$: entropy production; $\sigma_\times(L)$: its cross-agent part at lag $L$ calls; $J_s=(J+J^\top)/2$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+P\big(s_a'=+1\mid\mathbf s\big)=\big[1+e^{-2(h_a+\sum_{j\ne a}J_{aj}s_j)}\big]^{-1},\quad a=a(t)\\
+g^{L}_{ij}(t)=s_i(t{+}L)\,s_j(t)-s_i(t)\,s_j(t{+}L)\\
+\sigma_\times(L)=\Sigma_{u\cup g^L}-\Sigma_u\quad(\text{held-out Newton bound})\\
+\text{sweep: }\sigma_\times(1)=0<\sigma_\times(L{\ge}2);\ \ \text{random: }\sigma_\times=0\ \ (J=J^\top)
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Order predictability of the next caller per unit (blue regime I, orange the NE14 units of regimes II/III) against the sweep threshold. Every unit sits below 0.13. (b) Talk EP at lag 4 per unit: real $\sigma_\times$ with 95\% intervals, the block-flip floor (dash) and the scheduler's own prediction $\sigma_{\rm sweep}-\sigma_{\rm rand}$ (orange). The scheduler's term is zero everywhere; two units clear the floor, at the chance rate.}
+
+\htelos{A practical simplification, not a lever. Regime I's scheduler does not create an arrow of time by itself: each agent runs on its own call clock, and the event order is close to random. Kinetic Ising and EP fits on the call clock can therefore treat the update order as random sequential with agent-specific rates; no sweep correction is needed. A scaffold builder who wants detailed balance in a multi-agent loop gets it from independent per-agent clocks; a fixed round robin would add a scheduler arrow that is detectable at lag $\ge2$ calls. The HH's premise rested on a pointer whose history the export does not keep.}
+
+\hbottom{Regime I's turn order is self-clocked asynchronous, not a sweep, and the order alone makes no entropy production; the swarm's regime-I cross-agent irreversibility is at the floor.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.45\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 (HH) sweep in $\ge2/3$ units & \raggedright 0/41 sweep; 41/41 self-clocked & \raggedright failed\tabularnewline
+\raggedright P1b chat-mode calls a sweep & \raggedright 0/41 (36 mixed, 5 random) & \raggedright failed (HH)\tabularnewline
+\raggedright P1c naming lift $\le1.25$ & \raggedright 36/41; max 1.32; none $\ge1.5$ & \raggedright supported\tabularnewline
+\raggedright P2 (HH) snapshots fit model 01 as in regime III & \raggedright $\rho_2$ 0.87 vs 0.88 ($N=4$ subsets) & \raggedright supported (descr.)\tabularnewline
+\raggedright P3 (HH) $\sigma_\times\approx\sigma_{\rm sweep}>0$ & \raggedright $\sigma_{\rm sweep}-\sigma_{\rm rand}$ median $2\times10^{-5}$; $\sigma_\times$ at floor 29/31 & \raggedright failed\tabularnewline
+\raggedright P4 sweep signature & \raggedright absent; above-floor units positive at lag 1 & \raggedright supported\tabularnewline
+\raggedright N1 NE14 class invariant & \raggedright 6/6 self-clocked; concurrency 1.00 both sides & \raggedright supported\tabularnewline
+\raggedright N2 NE09 coupling step & \raggedright RMS $J_s$ $+33\%$, intervals overlap & \raggedright inconclusive\tabularnewline
+\raggedright N3 G27 chat-mode order & \raggedright $\eta_{\rm ord}$ 0.005 vs 0.004 shuffled & \raggedright not a sweep\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic symmetric-$J$ kinetic Ising at G27's step counts (20 worlds per point, mean $\pm$ SD). (a) An exact round robin: lag 1 stays at zero, lags 2 and 4 rise with $J_0$, the sweep signature. (b) The real G27 call order: no EP at any $J_0\le2$, the same as a random order.}
+
+\hcaveats{The turn pointer has no logged history; the audit reconstructs the order from call starts, whose times are partly calibrated (DQ1 ledger). Spins are coarse (talk or mode of the latest call). Fitted regime-I couplings are weak (RMS $J_s\approx0.09$), so even a perfect sweep would make little EP here; the null result on EP is partly a consequence. The block-flip floor alone has a 10--25\% false-positive rate (A1 added the $\sigma_{\rm rand}$ floor). The snapshot clause is trivially high at $N=4$. Family invariance was not checked.}
+
+\hnext{Run an NE09 event study with placebo boundaries (G24 is the one lead). Test whether the $\times1.13$ naming lift lives in chat-mode wake-ups and why it disappears after NE14.}

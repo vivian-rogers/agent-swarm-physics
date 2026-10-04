@@ -1,0 +1,64 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card and predictions before data; synthetic validation (N = 4 on #4/#6 schedules, N = 21 on #51's, plus a dense control world); 9 closed-roster N = 4 units on two clocks with day bootstraps, a shift null and held-out log-likelihood; natives N1 and N2; 238 estimates rows; confirm.py frozen and dry-run (not run). One amendment (A1, stratified variants) after the synthetic, before real data.",
+  "faithfulness": "The HH's 10% claim fails (1/9 units), but the failure is understood and predicted by the synthetic: persistence (J_ii) breaks TAP and MS, and the law held in 9/9 real units. Couplings themselves are at noise level, which limits the benchmark. Scorecard A1 B1 C1 D1 E0 F2 G1 H1 I1.",
+  "usefulness": "A method rule for the project and for anyone fitting kinetic Ising models to agent logs: report J_ii; above ~0.6 use exact or pseudo-likelihood, not TAP/MS; naive MF underestimates couplings by 5-55%."
+ },
+ "one_line": "Mean-field inversions match exact kinetic Ising ML only when agents' own states are not persistent (1/9 real N = 4 units; TAP 0.05, MS 0.03); with J_ii 0.86-1.22 TAP has no solution on 25-75% of rows, MS overshoots up to x3.8 and naive MF shrinks couplings (median error 0.25); same law in synthetic N = 4 and N = 21 worlds.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "exact ML fine; mean-field inversions fail under own-state persistence"
+  }
+ ],
+ "rated_by": "H124 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Mean-field inversions (TAP, Sessak–Monasson, naive) match exact kinetic-Ising ML only when agents' self-coupling is weak (J_ii ≤ 0.6, 1/9 units); with persistent own states TAP fails on 25–75% of rows, MS overestimates couplings up to ×3.8 and naive MF underestimates (shrink 0.45–0.95), as synthetic worlds at N = 4 and 21 predicted before data",
+  "scope": "9 closed-roster units (#2–#8); synthetic N = 4 and 21",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.59,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "mechanism predicted by the synthetic before real data, held 9/9",
+    "x": 1.5,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "replication across units",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "carries to N = 21 (best method agrees 15/16 cells)",
+    "x": 1.2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: off-diagonal ML couplings at noise level in 7/9",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "fit agent couplings by exact (pseudo-)likelihood, not mean-field inversions, whenever agents' own states persist",
+  "magnitude": "medium",
+  "generality": "method (kinetic Ising on LLM swarms)",
+  "expected_usefulness": 0.89,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H124 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

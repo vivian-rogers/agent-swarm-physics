@@ -1,0 +1,35 @@
+\hwhat{With four agents the kinetic Ising likelihood is exact and cheap, so I compared exact maximum likelihood (ML) with three mean-field inversions (naive MF, TAP, Mézard--Sakellariou MS) on nine closed-roster regime-I units, on the per-call talk clock and a 1-min grid. Synthetic worlds on the real \#4/\#6 and \#51 schedules came first. The HH's claim fails: TAP or MS is within 10\% of ML in 1 of 9 units. That unit (4c) is the only one with weak own-state persistence (self-coupling $J_{ii}\le0.6$). Elsewhere ($J_{ii}$ 0.86--1.22) TAP has no solution on 25--75\% of rows, MS overshoots the couplings up to $\times3.8$, and naive MF shrinks them (median error 0.25). The synthetic shows the same law at $N=4$ and $N=21$. Off-diagonal couplings are at noise level in 7/9 units. Holdout: not run.}
+
+\hmodel{Model 02, kinetic Ising. At each call of agent $i$, its talk spin $s_i'=\pm1$ (did the call produce chat) depends on the four latest talk spins, its own included. $J_{ij}$: coupling of $i$ to $j$'s state; $J_{ii}$: persistence of $i$'s own state; $h_i$: field. From $i$'s rows: $m_i'=\langle s_i'\rangle$, $C$ the covariance of $\mathbf s$, $D_i$ the covariance of $s_i'$ with $\mathbf s$. The inversions differ only in the gain $a_i$; TAP has a real solution only when $\sum_jB_{ij}^2(1-m_j^2)\le\frac{4}{27}(1-m_i'^2)$, $B_i=D_iC^{-1}$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+P(s_i'=+1\mid\mathbf s)=\big[1+e^{-2(h_i+\sum_j J_{ij}s_j)}\big]^{-1}\quad(\text{exact ML: logistic})\\
+J_i=a_i^{-1}D_iC^{-1},\qquad a_i^{\rm nMF}=1-m_i'^2\\
+a_i^{\rm TAP}=(1-m_i'^2)\big[1-(1-m_i'^2)\textstyle\sum_jJ_{ij}^2(1-m_j^2)\big]\\
+a_i^{\rm MS}=\langle 1-\tanh^2(g_i+x\sqrt{\Delta_i})\rangle_x,\quad \Delta_i=J_iCJ_i^\top
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Off-diagonal coupling error of each inversion against exact ML, per real unit, against the unit's largest self-coupling (open circles: TAP solved on only some rows; dotted 10\%, dashed 25\%). Only the weak-persistence unit is inside 10\% for all three. (b) Synthetic error against the true $J$ (medians; $N=4$ on the 4c schedule at $\sigma_J=0.3$, $N=21$ on \#51's, pooled over $\sigma_J$): MS and naive MF break as $J_{ii}$ grows; exact ML and the own-spin stratified nMF (A1) hold.}
+
+\htelos{A method rule for this project, with a number. On the call clock, agents' own states persist ($J_{ii}\approx0.9$--1.2), and then TAP and MS are not usable and naive MF underestimates couplings by 5--55\%. Exact per-row logistic ML costs seconds at $N=21$, so large-$N$ kinetic Ising fits here should use it (or pseudo-likelihood) and report $J_{ii}$. Mean-field inversions are acceptable on channels without persistence (1-min talk: MS within 10\% in 6/9 units). For an operator nothing changes; this protects the coupling estimates other hypotheses report.}
+
+\hbottom{Mean-field inversions of the kinetic Ising match exact likelihood only when agents' own states do not persist; on the village's call clock they mostly do, so use exact ML.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.45\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 (HH) TAP or MS within 10\% (G04/G06) & \raggedright 1/4 units (4c: TAP 0.05, MS 0.03) & \raggedright failed\tabularnewline
+\raggedright Kill: none within 25\% & \raggedright 2/4 primary units (threshold); 4/9 all & \raggedright at threshold\tabularnewline
+\raggedright P2 naive MF $>10\%$ & \raggedright 8/9; shrink 0.45--0.95 & \raggedright supported\tabularnewline
+\raggedright P3 MS $\le$ TAP $<$ nMF & \raggedright only 4c; nMF best full-cover in 8/9 & \raggedright failed\tabularnewline
+\raggedright P4 ranking carries to $N=21$ & \raggedright synthetic, best method agrees 15/16 cells & \raggedright supported\tabularnewline
+\raggedright P5 off-diagonal $J$ near null & \raggedright 7/9 inside shift null; ML noise 0.6--1.1 & \raggedright supported\tabularnewline
+\raggedright P6 1-min activity nMF $>25\%$ & \raggedright 7/8 units & \raggedright supported\tabularnewline
+\raggedright N1 coupling lower in \#6 than \#4 & \raggedright no difference ($\bar J$ 0.004--0.05) & \raggedright failed\tabularnewline
+\raggedright N2 ML noise below bias by 8 days & \raggedright bias flat; crossover 16--18 days & \raggedright mixed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_n2.pdf}{Native N2 on G08 (18 days, 20 subsamples per length). The inversions' bias against same-data ML is flat in the number of days, while ML's distance to the full 18-day fit falls from 3.3 to 0.32. Below about 16 days, sampling noise dominates any inversion's bias.}
+
+\hcaveats{The benchmark compares inversions with ML on the same data, and the off-diagonal ML couplings are themselves noise in 7/9 units, so coupling errors partly measure noise handling. The EP error $\varepsilon_\sigma$ is not interpretable (reference EP at noise level). Plefka2[t] (Aguilera 2021) was not implemented. The own-spin stratified variants (A1) were added after the synthetic, before real data. Units with 2--3 days have degenerate intervals.}
+
+\hnext{Repeat the benchmark where couplings are real (regime-III named talk, H50) and add Plefka2[t] once its notes are in the literature folder.}

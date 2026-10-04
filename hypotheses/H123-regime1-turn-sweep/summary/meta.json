@@ -1,0 +1,66 @@
+{
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and predictions before data; scheduler audit first (41 regime-I units + 6 NE14 units); synthetic validation of the sweep signature at G27's size; EP on 31 units x 2 channels with the scheduler's own prediction; model-01 snapshot check; natives NE14, NE09, G27 chat-mode; 744 estimates rows; confirm.py frozen and dry-run (not run). One amendment (A1, floor) before real EP.",
+  "faithfulness": "The HH's model (a sweep) is refuted cleanly: 0/41 units are sweeps, and the symmetric-J sweep prediction is zero. The named alternative (self-clocked asynchronous) holds everywhere, and the sweep signature is identifiable in synthetic worlds, so the negative is powered. Scorecard A1 B2 C1 D1 E1 F2 G1 H2 I1.",
+  "usefulness": "A modelling simplification for every call-clock kinetic Ising or EP fit (treat the order as random sequential with per-agent clocks; no sweep correction) and an audit recipe others can run on their logs. No operator lever."
+ },
+ "one_line": "Regime I's update order is self-clocked asynchronous, not a sweep (41/41 units; order predictability 0.04 vs >= 0.5), so the scheduler alone makes no entropy production (sigma_sweep - sigma_rand ~ 2e-5 nats/call); cross-agent talk EP is at the floor in 29/31 units.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "update order is not a sweep; scheduler makes no EP"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "held-out AIK Newton bound, cross-agent lags 1, 2, 4"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "snapshots pairwise-sufficient as in regime III (descriptive)"
+  }
+ ],
+ "rated_by": "H123 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Regime I's update order is self-clocked asynchronous, not a sweep (41/41 units; order predictability median 0.04 vs ≥ 0.5 for a sweep; calls overlap, concurrency 0.997), so the order alone produces no entropy production (σ_sweep − σ_rand ≈ 2×10⁻⁵ nats per call; synthetic power 0.95–1.0 to detect a real sweep)",
+  "scope": "41 regime-I units; natives NE14, NE09, G27",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.67,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication 41/41 units",
+    "x": 2.0,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic power with the real order",
+    "x": 1.5,
+    "evidence": "card §A1"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "the scheduler's update order is not a source of irreversibility; look for asymmetric coupling instead",
+  "magnitude": "small",
+  "generality": "LLM swarms with self-paced agents",
+  "expected_usefulness": 0.67,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H123 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
