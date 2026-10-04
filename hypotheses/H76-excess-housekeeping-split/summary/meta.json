@@ -29,7 +29,7 @@
   "scope": "G51, G38, G40; natives NE41, NE43",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.78,
+  "credence": 0.73,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -63,13 +63,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 2.0,
   "decision": "trim to the all-present window before reading irreversibility as behavior",
   "magnitude": "material",
   "generality": "scheduled swarms",
-  "expected_usefulness": 1.57,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H76 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.46,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.78,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 4 (blind, 2026-10-04)",
+    "claim": "The swarm's excess behavioral irreversibility (Kolchinsky split of ensemble fluxes on behavior states) sits at the scheduler's day edges, mostly the staggered day end (edge share 0.80-1.00 vs 0.12-0.25 time share in 3/3 periods), and the DQ8 all-present trim removes 81-100% of it. Excluded: kickoff excess and housekeeping (below detection floor, not identifiable), NE43, NE41 pulse.",
+    "credence": 0.67,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "partial calibrated null (block-flip reversible surrogate; own synthetic recovers edges/trim at G51 scale, SD ~0.5, not at G40 scale; one design)",
+      "x": 1.5,
+      "evidence": "Synthetic validation results; A1; scorecard F=1"
+     },
+     {
+      "factor": "partial replication (3/3 regime-III periods, <6 units)",
+      "x": 1.5,
+      "evidence": "P2, P3a outcome rows"
+     },
+     {
+      "factor": "partly robust (pseudocount 0.1 vs 0.5 moves edge/trim shares <=0.02; one labeller only)",
+      "x": 1.5,
+      "evidence": "scorecard B"
+     },
+     {
+      "factor": "penalty: single LLM labeller (Jev v3) and A2 bootstrap-floor/day-inclusion fix after first real pass",
+      "x": 0.9,
+      "evidence": "Amendment A2; scorecard A"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

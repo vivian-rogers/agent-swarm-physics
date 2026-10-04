@@ -53,13 +53,55 @@
   ],
   "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 1.5,
+  "value_if_true": 1.25,
   "decision": "report fitness spread before any preferential-attachment exponent",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 0.82,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H78 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.69,
+  "scientific_value": 2.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.55,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 4 (blind, 2026-10-04)",
+    "claim": "Repo growth order p is not identifiable from DQ4 commit logs at village counts: first-order copying with repo-fitness spread reproduces every observed p-hat (0.7-1.9), so neither herding (kickoff-named repos) nor #51's superlinear p-hat is a growth law. Excluded: Mathis A0 step results, cross-lab and FE variants.",
+    "credence": 0.54,
+    "value_if_true": 1.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.0,
+    "ladder": [
+     {
+      "factor": "identification analysis (synthetic on real schedules: p=0.5 reads ~1, field-only reads 0.5-1.1, fitness spread sigma_A 0.5-1.0 gives 1.2-2.7; one design)",
+      "x": 1.5,
+      "evidence": "A1, A2; Synthesis 1; scorecard F=1"
+     },
+     {
+      "factor": "partial replication (3 testable periods #31, #41, #51 inside neutral or fitness-spread bands; herding on named repos in #31, #33, #41, #40)",
+      "x": 1.5,
+      "evidence": "Results by goal period; Synthesis 2"
+     },
+     {
+      "factor": "partly robust (#51 p-hat stable across E, B, clock, choice form, cross-lab)",
+      "x": 1.5,
+      "evidence": "Synthesis 3; scorecard B"
+     },
+     {
+      "factor": "penalty: fitness-spread null worlds added post hoc after seeing #51 (A2); naming instrument entangled with agents naming repos after the goal",
+      "x": 0.8,
+      "evidence": "Amendment A2; scorecard A"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

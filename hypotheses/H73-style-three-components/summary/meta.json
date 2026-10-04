@@ -58,13 +58,60 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 2.0,
   "decision": "attribute agents by style; don't expect context correction to help",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.59,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H73 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.6,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.8,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 4 (blind, 2026-10-04)",
+    "claim": "Within a goal period, chat style is an agent constant plus noise: the agent constant is the largest unique share in 34/34 periods, context fill and assigned registers add small shares (u_C median 0.08, 0.011 in regime III), and context detrending gives no attribution gain (mean Delta_c -0.007 [-0.017, +0.003], excluding a gain >= +0.01). Excluded: #51 role-register test, G44 leader rank, post hoc PH1-PH3.",
+    "credence": 0.8,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "calibrated null (own synthetic at real counts in 5 periods: context-null size 0.03-0.13, attribution null bias, power 1.0 for u_C; one design incl. NE41 leakage fix)",
+      "x": 2,
+      "evidence": "Synthetic validation table; A1-A4; scorecard F=2"
+     },
+     {
+      "factor": "replication (34/34 periods agent constant largest; attribution gain null-consistent 16/34 positive, sign p 0.70)",
+      "x": 2,
+      "evidence": "P1-P3 outcome table"
+     },
+     {
+      "factor": "partly robust (raw 20-d style, restatement drop, genre controls, p<=1 drop, agent-day ceiling; one feature family only)",
+      "x": 1.5,
+      "evidence": "scorecard F; Results 1-2"
+     },
+     {
+      "factor": "interventions partly consistent (NE41 forced erasure: drift predicts 1.7% of jump; #12 judge register real but small, no attribution gain)",
+      "x": 1.5,
+      "evidence": "N1, N2; NE41 and G12 period READMEs"
+     },
+     {
+      "factor": "penalty: topic-adjacent style features and noisy F3 ceiling (bias up to +0.07/+0.10); stand-in dry run shows small positive Delta_c risk for C3",
+      "x": 0.7,
+      "evidence": "Caveats; Confirmatory predictions dry run"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

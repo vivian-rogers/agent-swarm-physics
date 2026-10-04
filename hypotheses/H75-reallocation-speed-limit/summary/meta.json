@@ -35,7 +35,7 @@
   "scope": "G39, G40, G41, G51; natives G44 (two arms), NE38 + #51 newcomers",
   "direction": "positive",
   "original_verdict": "failed as posed (field-limited slack)",
-  "credence": 0.4,
+  "credence": 0.47,
   "ladder": [
    {
     "factor": "base (post)",
@@ -64,13 +64,56 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.5,
+  "value_if_true": 3.0,
   "decision": "name the target in the kickoff to settle work in minutes, not hours",
   "magnitude": "material",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.01,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H75 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.41,
+  "scientific_value": 2.8,
+  "rater": "adjudicated by the coordinator 2026-10-04 (coordinator vs blind rater 4)",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.4,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 4 (blind, 2026-10-04)",
+    "claim": "A regime-III kickoff that names its target re-allocates the swarm's work commits within 15-30 active min with one switch per moved agent (slack S 1.0-1.4, on the Wasserstein bound), while free-choice kickoffs settle 5-40x slower through churn at the same switch rate. Excluded: cadence elasticity (not identifiable), excess-EP interpretation.",
+    "credence": 0.54,
+    "value_if_true": 4.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "identified (synthetic at village sampling: S and T_e separate instant freeze Z from churn F/A; does not separate field from activity; one design)",
+      "x": 1.5,
+      "evidence": "Synthetic validation results; A1; scorecard F=1"
+     },
+     {
+      "factor": "partial replication (named-target freezes 4/4: G39, G40, G51, G44 #best; free-choice churn 2/2: G41, G44 #rest; <6 units)",
+      "x": 1.5,
+      "evidence": "Results by goal period"
+     },
+     {
+      "factor": "intervention partly consistent (G44 two rooms on the same days, equal switch rate 3.3 vs 3.4/h, x5.7 settling; 4 agents in #best)",
+      "x": 1.5,
+      "evidence": "N1; G44 period README"
+     },
+     {
+      "factor": "penalty: named-vs-free classification of kickoffs made after seeing results; T_e grid-limited at 0.25 h",
+      "x": 0.8,
+      "evidence": "Round 2 redirect H75-R1; scorecard B"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false,
+  "adjudication_note": "The raters agreed on credence and split on V (2.5 vs 4.0). Magnitude is material: settling in 0.25–0.5 h vs 5–40× longer. By rule 7 there is no generality credit (shown only in this scaffold) and no readiness credit (it needs the DQ4 work ledger), so V = 3.0."
  }
 }

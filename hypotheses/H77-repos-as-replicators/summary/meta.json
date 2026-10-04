@@ -29,7 +29,7 @@
   "scope": "6 testable periods; natives NE42, G44",
   "direction": "negative",
   "original_verdict": "failed (selection resolution)",
-  "credence": 0.5,
+  "credence": 0.55,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -53,13 +53,45 @@
   ],
   "mechanism_level": "M0",
   "fragile": false,
-  "value_if_true": 1.5,
+  "value_if_true": 1.25,
   "decision": "don't read repo recruitment as selection",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 0.75,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H77 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 0.69,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.5,
+    "value_if_true": 1.5,
+    "mechanism_level": "M0",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 4 (blind, 2026-10-04)",
+    "claim": "On DQ4 commit labels the top repo's recruitment/departure affinity sigma* is a bookkeeping convention: its size (2-3.7 nats) and in 2/5 periods its sign follow the host-expiry rule, and every testable value lies inside a neutral copying band. Scope: the herding-vs-own separation (kill met, 0.61 +/- 1.23) is unpowered and excluded; the selection-resolution bound is untestable (excluded).",
+    "credence": 0.6,
+    "value_if_true": 1.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "partial calibrated null (neutral copying world on each period's real call schedule through the same label builder; synthetic sigma* bias -1.2 to +0.4, coverage 0.27-1.0)",
+      "x": 1.5,
+      "evidence": "A1; Null/baseline; scorecard F=0 so no identification factor"
+     },
+     {
+      "factor": "partial replication of the convention dependence (sigma* moves 2.0-3.7 nats across E in 4/5 testable periods, sign flips in 2/5); neutral-band units below power not counted (rule 9)",
+      "x": 1.5,
+      "evidence": "Synthesis 1-2"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

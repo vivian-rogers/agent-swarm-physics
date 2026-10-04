@@ -29,7 +29,7 @@
   "scope": "18 periods (4 powered aging periods); natives NE43, blocked spells, #focus",
   "direction": "negative",
   "original_verdict": "failed",
-  "credence": 0.76,
+  "credence": 0.78,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -63,13 +63,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 2.25,
   "decision": "don't flood idle agents with undirected chatter; it holds them at the gate",
   "magnitude": "small",
   "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.51,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H72 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.76,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.76,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 4 (blind, 2026-10-04)",
+    "claim": "In the four periods with powered trap aging (G17, G18, G38, G51), the age slope of idle-gate escape is unchanged by every input-starvation control (rho ~ 0), so trap aging is intrinsic, not input starvation. Excluded as sub-results: beta_s>0 (recent chatter holds agents), NE43, #focus, blocked spells.",
+    "credence": 0.8,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "calibrated null (parametric bootstrap on real G51/G38/G18 designs: rule calls intrinsic aging 'failed' 100%, null 'supported' <=5%; one design)",
+      "x": 2,
+      "evidence": "Amendment A1; scorecard F=2"
+     },
+     {
+      "factor": "partial replication (4/4 powered aging periods, <6 units)",
+      "x": 1.5,
+      "evidence": "Results by goal period; P4"
+     },
+     {
+      "factor": "partly robust (cloglog, h>=0.25 trim, first-day drop, four input definitions, secondary outcome; no data-version check)",
+      "x": 1.5,
+      "evidence": "Impostors table; scorecard F; P8"
+     },
+     {
+      "factor": "rival beaten on held-out data (day-blocked CV: age adds 14.9 vs starvation 1.3 nats/1000 gates in G51)",
+      "x": 1.5,
+      "evidence": "P6; scorecard C"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

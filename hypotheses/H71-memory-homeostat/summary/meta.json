@@ -29,7 +29,7 @@
   "scope": "37 units; natives NE14, NE04, NE16, NE32",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.68,
+  "credence": 0.74,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -62,9 +62,46 @@
   "decision": "treat agent memory size as a regulated agent property, not a lever",
   "magnitude": "small",
   "generality": "agents with context resets",
-  "expected_usefulness": 1.01,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H71 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.11,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.68,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 4 (blind, 2026-10-04)",
+    "claim": "Post-compression memory size relaxes toward an agent-specific set point on the consolidation clock without overshoot (0<phi+<1 in 37/37 units; forced = voluntary), and H09's negative phi is the append/compress two-snapshot sampling artifact. Excluded: the two-timescale model (post hoc), NE04/NE14 gain predictions, the first-order clause (P5 failed).",
+    "credence": 0.8,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "calibrated null (own synthetic on 6 real cycle skeletons: unbiased phi+, RW CI covers 1 in 85-100%, overshoot power 1.0; one design)",
+      "x": 2,
+      "evidence": "card 'Synthetic validation (axis F)'; scorecard F=2"
+     },
+     {
+      "factor": "replication (same sign in 37/37 period units, all three regimes)",
+      "x": 2,
+      "evidence": "Results by goal period; P1 35/37 strict, 37/37 sign"
+     },
+     {
+      "factor": "rival beaten on held-out data (AR(1) beats RW 69%, deadbeat 88% on last 30% of cycles; P2 narrowly missed its 70% bar)",
+      "x": 1.5,
+      "evidence": "Outcome vs prediction P2"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

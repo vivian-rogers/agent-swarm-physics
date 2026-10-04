@@ -23,7 +23,7 @@
   "scope": "G51, G51+post, G31, G41; natives NE32, G38",
   "direction": "negative",
   "original_verdict": "mixed",
-  "credence": 0.64,
+  "credence": 0.68,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -52,13 +52,55 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2,
+  "value_if_true": 1.75,
   "decision": "detect agent vs script output by timing and compression, not assembly index",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 1.29,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H80 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.19,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.64,
+    "value_if_true": 2,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 4 (blind, 2026-10-04)",
+    "claim": "For agent-vs-script commit-window classification, the assembly index (Re-Pair grammar bound) adds no information over compression (Delta AUC -0.007 to +0.001 in G31, G41, G51, G51+post; kill >=0.05 far, assembly-only planted signal detected 20/20). Excluded: compression as an automation detector (fails transfer), motif prior share (P5 failed), NCD.",
+    "credence": 0.72,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "calibrated null / identification (exact index vs brute force on 600 strings; pipeline size 0/20, power 20/20 for an assembly-only signal; one design)",
+      "x": 2,
+      "evidence": "scorecard F=2; Results 1"
+     },
+     {
+      "factor": "partial replication (4 units, in-period ones with one positive stream each)",
+      "x": 1.5,
+      "evidence": "Amendment A1; Results by goal period"
+     },
+     {
+      "factor": "partly robust (day- vs repo-blocked folds; proxy vs exact index Spearman 0.99)",
+      "x": 1.5,
+      "evidence": "scorecard C, F"
+     },
+     {
+      "factor": "penalty: label defined by timing; n_eff = 1 positive stream per in-period unit; short L=16 windows",
+      "x": 0.8,
+      "evidence": "Amendment A1; Notes"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }

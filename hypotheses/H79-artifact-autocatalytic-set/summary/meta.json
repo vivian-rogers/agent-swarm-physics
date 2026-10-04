@@ -29,7 +29,7 @@
   "scope": "G51, G31, G38, G41 (+G40 commons); natives G40, NE29",
   "direction": "negative",
   "original_verdict": "mixed",
-  "credence": 0.65,
+  "credence": 0.72,
   "ladder": [
    {
     "factor": "base (pre)",
@@ -53,13 +53,60 @@
   ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 1.5,
+  "value_if_true": 1.75,
   "decision": "don't credit agent-built automata with collective self-maintenance",
   "magnitude": "small",
   "generality": "any LLM swarm",
-  "expected_usefulness": 0.98,
-  "scientific_value": 3,
-  "rater": "coordinator, updated after round 1b (H79 report); independent rater pending",
-  "rated_at": "2026-10-04"
+  "expected_usefulness": 1.26,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean",
+  "rated_at": "2026-10-04",
+  "raters": [
+   {
+    "rater": "coordinator",
+    "credence": 0.65,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3
+   },
+   {
+    "rater": "independent rater 4 (blind, 2026-10-04)",
+    "claim": "Artifact catalysis in the village is first order: self-catalysis carries 85-99% of maxRAF commits and no period has a catalytic cycle of length 3-6 with >=3 events per edge (G51 below the rewired null, p 0.01), where planted cycles of that support are detected with power 30/30. Excluded: maxRAF coverage (P1 failed; head-only execution), the time arrow (reversed), maxCAF ratio.",
+    "credence": 0.78,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "calibrated null (rewired cross-edge null with self-loops fixed: size 0/30, power 30/30 for supported 3-cycles; parametric background; one design)",
+      "x": 2,
+      "evidence": "Amendment A2; scorecard F"
+     },
+     {
+      "factor": "partial replication (5/5 periods G51, G31, G38, G41, G40; <6 units)",
+      "x": 1.5,
+      "evidence": "Results by goal period; P2, P3a"
+     },
+     {
+      "factor": "partly robust (structure unchanged without python heads and under strict reactants)",
+      "x": 1.5,
+      "evidence": "Results 3, 4b"
+     },
+     {
+      "factor": "intervention partly consistent (NE29 retiree's 120 repos catalyse 0 later commits; G40 cross-wiring goal yields no cross-catalysis; low material)",
+      "x": 1.5,
+      "evidence": "NE29 and G40 period READMEs; scorecard E"
+     },
+     {
+      "factor": "penalty: co-occurrence catalysis edge with head-only execution, edge mostly follows writes",
+      "x": 0.8,
+      "evidence": "Results 4, 4b; scorecard A, B"
+     }
+    ]
+   }
+  ],
+  "adjudicate": false
  }
 }
