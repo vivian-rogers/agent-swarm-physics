@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 2.0,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: dated predictions and nulls, synthetic validation (7 coherence scenarios, A-B-A, detector and leadership worlds), one pre-data amendment, 10 period/NE folders (5 replication, 5 native) with dated predictions and verdicts, robustness (L0/L1, dedup, DQ5 style vectors, DQ6 assigned rooms), post hoc checks labelled, and a confirm script (dry-run reproduces exploration; not run). Missing: holdout run, the read-out (context-ledger) mechanism test, embedding swap.",
+    "faithfulness": "The coherence-length claim passes its rule (6/9 periods, median C_B 0.23) and the boundary follows the channel across NE42's merge/split (DiD 1.0, p 0.001), but the room is not a flat block (G 0.40; 0.18 in #51), the boundary's sharpness tracks topic separation (post hoc), and C_B cannot separate coupling from room drives. The detector and leadership claims failed. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0.",
+    "usefulness": "A modest design rule with evidence: separate rooms decouple content only when the rooms do different things, and merging or splitting rooms moves content coherence within days. Inside big rooms, coherence follows conversation pairs. Negative operator guidance is also useful: no room leads a goal change, and per-room topic alarms add nothing to a swarm alarm at the available events."
+  },
+  "one_line": "Rooms bound content coherence when they do different things (C_B 0.23; NE42 DiD 1.0), but inside rooms it follows conversation, and no room leads a goal change",
+  "rated_by": "H47 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

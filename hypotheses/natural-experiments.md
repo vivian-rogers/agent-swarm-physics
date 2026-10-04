@@ -97,4 +97,5 @@ The list above covers *documented* changes only. Step changes could also be foun
 - **Per-agent goal overrides** for the #38 charity goal.
 - **The whole village in #general for #48–#49** (start and end dates to be set from `rooms_timeline`).
 - **#51's return to a single room** (date to be set from `rooms_timeline`).
+- **Room kickoffs (H47, 2026-10-04):** rooms received identical kickoff text in #36, #37, #39, #40 and #42; only #38 and #44 got room-specific instructions. #focus empties by about 08-24 (matches `period_units`).
 

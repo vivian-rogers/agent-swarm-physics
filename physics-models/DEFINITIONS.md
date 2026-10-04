@@ -232,3 +232,9 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Contagion / adoption event, variant arrival (project switch-in):** an agent's first strict touch of X after ≥ 60 min without one.
 - **Agent state (categorical, on-project multi-label):** the set of projects an agent touched within the last 60 min (an agent can be on several).
 - **Link-attributable share R_link** = π · k_s · λ (links posted per switch × susceptible recipients per link × extra switches per exposure): an upper bound on the causal share when links ride bursts.
+
+### H47 named variants (2026-10-04; see `hypotheses/H47-room-coherence-length/README.md`)
+- **Room contrast C_B:** ρ_cross / ρ_within, the ratio of cross-room to within-room per-pair content correlation (agent_win30 vectors), against a size-preserving room-relabel null. Measures the *global share* of a room's fluctuation, not coupling: coupling amplifies weak global drives.
+- **Conversational tier ratio G:** within-room correlation of pairs that never mention each other ÷ that of pairs that do. G ≈ 1 = broadcast coupling; G < 1 = pairwise (conversation-following) coupling.
+- **Room-localized shift R1_loc / per-room R1:** H36's day-to-day content centroid shift computed per room (R1_loc: localized to the room's own deviation from the swarm).
+- **Room lead index L:** the lag at which one room's content shift leads another's after a swarm-wide event (goal change), with a pooled Stouffer test.
