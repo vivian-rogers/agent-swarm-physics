@@ -1,0 +1,33 @@
+\hwhat{HH359 says that NE42's merge, one week in which \#best and \#rest shared one room, switches the read path between the two groups on and off. A kinetic Ising coupling fitted from talk timing should follow it. It should be near 0 across the wall, positive in the merged week, back near 0 after the split, and carried by read-outs. H119 fits per-pair class couplings on minute talk spins for 11 agents over \#39, \#40 and \#41. It adds a call-clock contrast of read against in-flight messages and four other room switches. \textbf{The cross coupling does not rise:} the merge contrast is $M=-0.02$ [$-0.13$, 0.09] per pair, against a synthetic power of 0.95 at 0.3. Within-room pairs lose their coupling in the merged week as well, and regain it after the split (read minus in-flight 0.47 [0.27, 0.66]). HH359's kill rule fires. The holdout is not run.}
+
+\hmodel{Model 02, kinetic Ising on talk spins with a block-structured $J$. Each pair class $c$ (within, cross) shares one per-pair coupling $J_c$, and recipient fields per (day, 30-min block) absorb the schedule and the goal. Adjacency gating predicts $J_x\approx0$ when the groups sit in different rooms and $J_x\approx J_w$ when they share one. Attention dilution predicts that per-pair coupling falls as the room grows. On the call clock, a read-gated coupling raises talk after messages read just before a call ($J^R$), not after messages posted during it and not yet read ($J^U$).}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\mathrm{logit}\,P(s_i^{t+1}=1)=h_i+\delta_i(b)+K_is_i^t+K'_im_i^t+\textstyle\sum_cJ_c\sum_{j\in c(i)}m_j^t\\
+M=J_x^{(40)}-\tfrac12\big(J_x^{(39)}+J_x^{(41)}\big),\qquad R_m=J_x^{(41)}-J_x^{(39)}\\
+C_{RU}=J^R-J^U\quad(\text{read }[t_c-L,t_c)\ \text{vs. unread }[t_c,t_c+L))
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Per-pair class couplings by week (95\% CI); grey band: the merged week. Cross pairs (orange) never rise, and within pairs (blue) are near 0 until \#41. (b) Daily fits show no step on 05-04 or 05-11. (c) Read minus in-flight on the call clock: no class couples in the merged week; within pairs couple after the split.}
+
+\htelos{For an operator: merging two groups into one room did not make them couple. For a week it removed measurable talk coupling for everyone: read-gated coupling of old room-mates went from 0.29 to 0.08 to 0.47 across \#39, \#40 and \#41. To link two groups, keep rooms small and move or post across instead of merging. A read path is necessary for coupling but not sufficient: in a 14-agent room the per-pair coupling falls below what five 4-hour days resolve.}
+
+\hbottom{The NE42 merge did not switch on a coupling between the two groups; per-pair talk coupling vanished for all pairs in the merged room and returned within the old rooms after the split, which is attention dilution, not adjacency gating.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 synthetic power and size & $M$ power 0.95; $C_{RU}$ power 0.73, size 0.00 & supported\\
+P1 $M>0$ (merge rise) & $-0.019$ [$-0.127$, 0.088]; relabel $p$ 0.43 & failed\\
+P2 no remanence & $R_m$ 0.014 [$-0.14$, 0.17] & trivial\\
+P3 no partition memory & 0.056 [$-0.010$, 0.122] & trivial\\
+P5 daily step at merge & merged 0.002 vs 0.126 ($p$ 0.95) & failed\\
+P6 read-gated cross in \#40 & $C_{RU}$ 0.15 [$-0.19$, 0.48] & failed\\
+P7 switch contrast $S>0$ & 2/4 significant (\#focus); 4/4 sign & partly\\
+HH kill & $M$ CI includes 0 & fires\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Synthetic worlds on the real NE42 skeleton (40 each). (a) The minute estimator detects a gated coupling ($M$) and remanence, but a shared room drive alone also gives $M>0$ in 0.63 of worlds. (b) The call-clock read-minus-in-flight contrast detects coupling and stays silent under a room drive, although $J^U$ alone is positive.}
+
+\hcaveats{11 eligible agents. GPT-5 (the mirror arm) and most movers drop out by the 10-talk-minute rule. The minute estimator resolves per-pair couplings of about 0.2 and above. The absolute $J^R$ and $J^U$ are confounded by call length; only their difference is read. The minute estimator's switch contrast is not specific (room-drive false positives 0.58--0.95), and the read-gated attribution holds at one of five switches. \#40's shared objective coincides with the merge, but coupling fell.}
+
+\hnext{Fit coupling against room size across all one- and two-room weeks (a dilution exponent). Pre-register the dilution null for the held-out \#48--\#49 merge.}

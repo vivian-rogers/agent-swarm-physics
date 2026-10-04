@@ -1,0 +1,70 @@
+{
+ "complete": 45,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; Amendment 0 (trim, thresholds, SE floor) and Amendment 1 (real-skeleton synthetic: size, power, MF, k=3) before real data; 7 replication steps, 4 natives, 109 placebo splits, E1/E1-naive/MF/E2; estimates rows; confirm.py frozen and dry-run (not run). Missing: holdout run; NE35 itself; latency control in E2.",
+  "faithfulness": "J invariant at 8/9 steps and at the only step with a first stage (G42), but the first stage fails at 7/7 rule steps, so most of the test is uninformative; power covers only large rewiring. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0.",
+  "usefulness": "Tells an operator that resets and goal changes do not rewire talk coupling (at |dJ| >= 1.2) and tells analysts that block-field talk J is not a field artifact; small and indirect."
+ },
+ "one_line": "A fitted talk-spin coupling matrix stays at its day-to-day noise level across field steps, including a goal switch that clearly moved the fields; most documented rule changes do not move talk fields beyond nightly changes.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "J invariant where fields move (G42, NE38); most steps lack a field step"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "symmetric J and Frobenius distance as in the HH; same result"
+  }
+ ],
+ "rated_by": "H117 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "At the one step whose talk fields clearly moved (the #41 → #42 goal switch), the kinetic-Ising coupling matrix stayed at its placebo level (Q 0.51, p 0.74), excluding rewiring of ±1.2 logistic units on half the pairs (power 0.85); couplings are stationary day to day at this resolution",
+  "scope": "9 non-holdout field steps; natives NE38, G42",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.52,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic power at the real counts (0.85 at ±1.2)",
+    "x": 1.5,
+    "evidence": "card §P0"
+   },
+   {
+    "factor": "replication across steps (6/7 within placebo)",
+    "x": 1.2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "native: NE38 moved the agent's field, not its couplings",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: only one step moved the fields",
+    "x": 0.7,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "fitted talk couplings are not field artifacts at the ±1.2 scale; changes smaller than that are invisible",
+  "magnitude": "small",
+  "generality": "method (kinetic Ising on LLM swarms)",
+  "expected_usefulness": 0.78,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H117 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

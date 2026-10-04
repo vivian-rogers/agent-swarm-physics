@@ -12,7 +12,7 @@ J_{ij}\propto B\,k^{-\beta}\sim B\,N^{-\beta}\quad(\beta=1:\ \text{literal } J/N
 
 \htelos{Expect per-pair engagement in a shared channel to fall as about $N^{-0.6}$ with room size $N$. Output per turn stays about the same, so a bigger room dilutes engagement and does not add collaboration. A reply goes to the newest pending messages. To raise within-room engagement, split the channel: the gain is about $(k$ ratio$)^{0.6}$, as at the \#35 split. This is a design rule, not a lever. It adds little to ``use fewer, smaller rooms'', and the exponent varies by period (0.52--0.80). The mention signal is now cleaner, because the placebo failure was mostly a visibility bug. It still carries conversation state.}
 
-\hbottom{Attention dilutes sub-linearly ($\hat\beta\approx0.66$ on ledger visibility), so coupling scales as $N^{-0.6}$, not as a literal $J/N$; replies go to the newest messages.}
+\hbottom{Correction (2026-10-04): the all-turn exponent ($\hat\beta\approx0.66$) is not separable from reactive timing (that null gives 0.75--0.80); the identified dilution is \#51's timer-wake batches, $k^{-0.50}\,[0.45, 0.56]$, where the null gives $\approx0$. So coupling scales sub-linearly, not as a literal $J/N$; replies go to the newest messages.}
 
 \hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.31\columnwidth}p{0.49\columnwidth}p{0.17\columnwidth}@{}}
 \textbf{Prediction} & \textbf{Round 1 $\to$ round 1b (ledger $k$)} & \textbf{Verdict (1b)}\\\hline

@@ -22,7 +22,7 @@
 
 % catalogs and holdout
 \node[bx=archFd, below=of proc] (ne) {\textbf{Natural experiments}\\NE01--NE46 (interventions)};
-\node[bx=archHold, below=of pm] (hold) {\textbf{Locked holdout}\\periods + NE windows, ledger};
+\node[bx=archHold, below=of pm] (hold) {\textbf{Held-out test data}\\goal periods set aside,\\untouched until final tests};
 
 % ideas
 \node[wide=archHy, anchor=north west] (hh) at ($(ne.south west)+(0,-3.6mm)$) {%
@@ -34,10 +34,10 @@
 
 % scoring
 \node[wide=archHy, below=of h] (sc) {%
-  \textbf{Scoring}\quad credence ladder (two raters) $\cdot$ faithfulness axes A--I};
+  \textbf{Scoring}\quad credence (faithfulness) $\cdot$ estimated usefulness};
 
 % outputs
-\node[wide=archOut, below=of sc] (out) {\textbf{Constants, levers, phase diagram} $\rightarrow$ write-up, dashboard};
+\node[wide=archOut, below=of sc] (out) {\textbf{Research theses} $\rightarrow$ write-up};
 
 % arrows
 \draw[ar] (raw) -- (proc);
@@ -46,7 +46,7 @@
 \draw[ar] (pm) -- (hold);
 \draw[ar] (hh) -- node[lb, right]{graduates} (h);
 \draw[ar] (ne.west) -- ++(-2.2mm,0) |- node[lb, pos=0.25, rotate=90]{interventions} (h.west);
-\draw[ar, draw=archHold] (hold.east) -- ++(2.2mm,0) |- node[lb, pos=0.25, rotate=-90]{masked} (h.east);
+\draw[ar, draw=archHold] (hold.east) -- ++(2.2mm,0) |- node[lb, pos=0.25, rotate=-90]{kept out} (h.east);
 \draw[ar] (h) -- (sc);
 \draw[ar] (sc) -- (out);
 \end{tikzpicture}

@@ -1,0 +1,64 @@
+{
+ "complete": 45,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; Amendment 0 (trim, thresholds, eligibility) and Amendment 1 (real-skeleton synthetic for E1, E2 and switch units) before real data; NE42 native (weekly, daily, full-J, E2, relabel) and 5 switch units; estimates rows; confirm.py frozen and dry-run (not run). Missing: holdout run; dilution-exponent fit; latency control in E2.",
+  "faithfulness": "HH359 fails by its kill rule with a powered test (0.95 at J 0.3); the informative finding (coupling vanishes for all pairs in the merged room, returns after the split) is supported by two estimators but was not pre-registered as such. Scorecard A1 B1 C1 D1 E1 F2 G0 H1 I0.",
+  "usefulness": "Concrete operator rule: merging rooms dilutes per-pair coupling to zero for a week; read path necessary, not sufficient."
+ },
+ "one_line": "The NE42 room merge did not switch on talk coupling between the two groups; per-pair coupling vanished for all pairs in the merged room and returned within the old rooms after the split.",
+ "models": [
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "J does not follow the merged-week adjacency; dilution instead"
+  }
+ ],
+ "rated_by": "H119 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Merging the rooms (NE42) did not raise cross-group talk coupling (−0.02 [−0.13, 0.09], power 0.95 at J 0.3), and within-room read-gated coupling also fell in the merged week (0.08 vs 0.47 after the split): a read path is necessary but not sufficient, because merging dilutes per-pair coupling",
+  "scope": "NE42 (#39–#41); replication G39, G44, G51",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.54,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic power 0.95",
+    "x": 1.5,
+    "evidence": "card §P0"
+   },
+   {
+    "factor": "known adjacency step as an intervention",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "partial replication (switch contrast right sign 4/4, significant 2/4)",
+    "x": 1.1,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: one event",
+    "x": 0.7,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "merging rooms does not create new couplings; it thins the existing ones",
+  "magnitude": "medium",
+  "generality": "multi-room LLM swarms",
+  "expected_usefulness": 0.8,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H119 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

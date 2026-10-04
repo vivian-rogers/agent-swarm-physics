@@ -333,7 +333,7 @@ def compendium(hs: list[dict], results: dict):
         bg, fg = fn(v)
         return rf"\colorbox[HTML]{{{bg[1:]}}}{{\makebox[2.6em]{{\textcolor[HTML]{{{fg[1:]}}}{{{fmt(v)}}}}}}}"
 
-    built = [h for h in hs if (HYP / h["slug"] / "summary/summary.pdf").exists()]
+    built = sorted([h for h in hs if (HYP / h["slug"] / "summary/summary.pdf").exists()], key=lambda h: int(h["id"][1:]))
     rows = []
     for i, h in enumerate(built):
         r = results.get(h["id"], {})
@@ -371,7 +371,7 @@ def compendium(hs: list[dict], results: dict):
 Two RevTeX pages per hypothesis follow; click a row to jump to it. Ratings are estimates calibrated across hypotheses by the coordinator (rubric: \texttt{{writeup/hypothesis-pages/RUBRIC.md}}).
 \textbf{{Completion}}: estimated progress of the research direction (idea 5\%, round 1 done 35--50\%, holdout run 55--65\%, robustness and causal designs 70--85\%, settled 90--100\%). {legend_seq}
 \textbf{{Credence}} (scoring v2, \texttt{{writeup/scoring/scoring-v2.pdf}}): probability that the scored claim (gray line under each title) survives an independent confirmatory test at its stated scope, built from an evidence ladder; ``!'' marks a fragile claim (its headline changed between data versions). Red = low, gray = 0.5, blue = high.
-\textbf{{EU}} (expected usefulness) = credence $\times$ value if true (0--5: whose decision changes, by how much, how generally); gray $\approx$ 1.5. Six anchors were double-scored by a blind rater (mean $|\Delta p|$ = 0.11). {legend_div}
+\textbf{{EU}} (estimated usefulness) = credence $\times$ value if true (0--5: whose decision changes, by how much, how generally); gray $\approx$ 1.5. Most claims carry two independent scores (coordinator plus a blind rater, log-odds mean; splits beyond $\Delta p>0.25$ or $\Delta V>1$ adjudicated). How credence and faithfulness are built: \texttt{{writeup/credence-faithfulness.pdf}}. Nothing here is holdout-confirmed unless the page says so. The writeup figures (32 hypotheses, six themes) follow the summaries as an appendix. {legend_div}
 \end{{abstract}}
 \maketitle
 {{\footnotesize
@@ -428,6 +428,12 @@ Two RevTeX pages per hypothesis follow; click a row to jump to it. Ratings are e
             w.add_annotation(page_number=page_i, annotation=Link(rect=rect, target_page_index=ids[m.group(5)]))
     for h in built:
         w.add_outline_item(f"{h['id']}: {h['title'][:60]}", starts[h["id"]])
+    vis = ROOT / "writeup/visuals/compendium.pdf"
+    if vis.exists():  # appendix: the writeup figures
+        first = len(w.pages)
+        for pg in PdfReader(vis).pages:
+            w.add_page(pg)
+        w.add_outline_item("Appendix: writeup figures", first)
     with open(ROOT / "writeup/hypotheses-compendium.pdf", "wb") as f:
         w.write(f)
     total = len(w.pages)
@@ -440,8 +446,21 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", help="build one hypothesis page, e.g. H05 (skips the compendium)")
     ap.add_argument("--no-compendium", action="store_true")
+    ap.add_argument("--compendium-only", action="store_true", help="reassemble the compendium from existing pages")
+    ap.add_argument("--include-stubs", action="store_true", help="keep auto-stub pages of unfinished hypotheses")
     args = ap.parse_args()
     hs = collect.hypotheses()
+    if not args.include_stubs:
+        def is_stub(h):
+            c = HYP / h["slug"] / "summary/content.tex"
+            return (not c.exists()) or "AUTO STUB" in c.read_text(errors="replace")[:200]
+        stubs = [h["id"] for h in hs if is_stub(h)]
+    else:
+        stubs = []
+    if args.compendium_only:
+        compendium([h for h in hs if h["id"] not in stubs], {})
+        print("left out (unfinished):", " ".join(stubs))
+        return
     results = {}
     for h in hs:
         if args.only and h["id"] != args.only:
@@ -451,7 +470,7 @@ def main():
         flag = "ERROR " + r["error"] if r["error"] else (f"WARNING {r['pages']} pages" if r["pages"] != 2 else "ok")
         print(f"{h['id']}: {flag}{'  (stub)' if r['stub'] else ''}")
     if not args.only and not args.no_compendium:
-        compendium(hs, results)
+        compendium([h for h in hs if h["id"] not in stubs], results)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,34 @@
+\hwhat{HH355 says that a pure field change (a rule reset, a tool change, a new goal) moves each agent's field $h_i$ but not the couplings $J_{ij}$. A fitted $J$ that jumps at such a step is a field artifact. The target, NE35 in \#32, is held out. H117 fits a kinetic Ising model to minute talk spins on both sides of 9 non-holdout steps (2 days each side). It compares the change in $J$ with 109 placebo splits at ordinary day boundaries. \textbf{$J$ stays at its placebo level, but most steps are not field steps in the data.} The coupling shift $Q$ exceeds the placebo 95th percentile at 1 of 9 steps (NE17, 7 pairs, $p=0.037$, no field shift). The field shift $F$ beats day-to-day changes at one step only: the \#41$\to$\#42 goal switch. There $Q=0.51$ ($p=0.74$). The holdout is not run.}
+
+\hmodel{Model 02, kinetic Ising with parallel updates. A talk spin $s_i(t)=\pm1$ marks whether agent $i$ posted chat in minute $t$. Each agent's next spin is a logistic function of its own spin, the 5-min boxcar $m_j$ of every other agent, and a per-agent field for each (day, 30-min block). The fields absorb the schedule and any field step. Under HH355, $h_i$ moves across a step while $J$ does not. A second estimator works on the call clock. It compares messages read just before a call ($J^R$) with messages posted during it and not yet read ($J^U$).}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\mathrm{logit}\,P(s_i^{t+1}=1)=h_i+\delta_i(b)+K_is_i^t+K'_im_i^t+\textstyle\sum_{j}J_{ij}m_j^t\\
+Q=\big\langle (J^s_{\mathrm{after}}-J^s_{\mathrm{before}})^2/(\sigma^2_a+\sigma^2_b)\big\rangle_{\text{fixed pairs}},\quad J^s=\tfrac12(J_{ij}+J_{ji})\\
+F=\big\langle (\bar h_a-\bar h_b)^2/(\sigma^2_a+\sigma^2_b)\big\rangle_i
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Coupling shift $Q$ at the steps (blue: replication; orange: natives) against placebo splits at ordinary day boundaries (grey; line: 95th percentile), by regime. Only NE17 lies beyond it. (b) $Q$ against the field shift $F$. Steps sit inside the placebo cloud on both axes; G42 (goal switch) has the largest $F$ and a low $Q$.}
+
+\htelos{For an operator: a goal or rule change does not rewire who responds to whom in talk timing. At \#38-type sizes, a change of $\pm1.2$ logistic units on half the pairs would be seen with probability 0.85, and none is seen. Talk couplings carry over a reset. Only room moves changed them, and those changes were small (switched pairs $Q=0.93$ against fixed pairs 0.61). For an analyst: a fitted $J$ on talk spins with block fields is not a field artifact at this resolution. Most documented rule changes, however, do not move talk fields more than an ordinary night does.}
+
+\hbottom{The fitted talk-spin coupling matrix stays at its day-to-day noise level across field steps, including the one goal switch that clearly moved the fields; most documented rule changes are not field steps in the talk data.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 size $\le0.10$; power $\ge0.8$ & size 0.00--0.03; power 0.85--0.88 at $\pm1.2$, 0.25--0.78 at $\pm0.6$ & partly\\
+P1 $Q$ $p>0.05$ at $\ge6/7$ steps & 6/7 (NE17 $p$ 0.037) & supported\\
+P2 field step $F$ at $\ge4/7$ & 0/7 ($p$ 0.37--0.85) & failed\\
+P3 $D_F$ within placebo & 6/7 & supported\\
+P4 read-gated $Q_R$; $J^R>J^U$ & 5/5; $J^R-J^U>0$ on 9/10 sides & supported\\
+P5 goal switches move $J$ more & medians 0.50 vs 0.82 & failed\\
+G42 goal switch & $Q$ 0.51 ($p$ 0.74), $F$ $p$ 0.037 & supported\\
+NE38 one agent's role & its $\Delta\bar h$ rank 1/19, row $Q$ rank 5/19 & supported\\
+HH kill ($\ge2/7$ steps) & 1/7 & not fired\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Synthetic worlds on real step skeletons (80 null and 40 alternative worlds each). The $Q$ test rejects a pure field step at $\le0.03$ and a field step with a stronger common drive at 0.05--0.18. It detects rewiring of $\pm1.2$ on half the pairs at 0.63--0.88; at $\pm0.6$ only regime I reaches 0.7.}
+
+\hcaveats{4--22 eligible agents per step, because agents with fewer than 10 talk minutes per side drop out (including both movers). The regime-III placebo pool has 26 splits, so $p\ge0.037$. NE17's failure rests on 7 pairs. $Q$ cannot see a global rescaling of all couplings. The naive estimator was not more fragile in the synthetic, so the field-leak rival is untested rather than rejected. The absolute $J^R$ and $J^U$ are confounded by call length; only their difference is read. NE35 sits on the regime I$\to$II boundary.}
+
+\hnext{Run the frozen NE35/NE44 confirm after sign-off. Add log latency to the call model. Pool goal switches with fixed rooms hierarchically, using more days per side.}
