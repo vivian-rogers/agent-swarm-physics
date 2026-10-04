@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **Shared-pipeline consolidation started (Vivian):** an agent is moving broadly useful per-hypothesis processing into `infra/shared/` as new modules and tables, without touching running hypotheses: goal fields (H01/H10), behavior states (H14), project states (H11), period units (H01/H03/H18/H22), classified kicks (H04/H16), style features (H13), spectra (H12), copy info (H07), the `bash_head` fix, a `build_all.py` entry point, and later the outages table (H38). Old locations become shims after running agents finish.
 - **H10 (goals are Legendre pushes), round 1: FAILED.**
   - Assigned goals push alignment by 1.4–3.1 free-week SDs, far outside linear response.
   - Free-week fluctuations along the goal do **not** predict who moves (r −0.37, −0.69, +0.20; Stouffer p 0.89 at 95% synthetic power). Across 18 regime-I goal changes the kickoff jump *falls* with pre-period fluctuation (ρ −0.56).
