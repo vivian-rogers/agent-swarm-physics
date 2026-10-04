@@ -35,11 +35,11 @@ Shared across hypotheses. IDs (NE01…) are referenced from hypothesis files, e.
 | NE03 | 2025-08-20 | Number of chat messages fetched into context limited | degrade (chat channel capacity) | all | ITS | coincides with new agents (NE27) |
 | NE04 | 2025-09-05 | **C** history-search tool; chain-of-thought memory consolidation | add (access to the past); erase (consolidation method) | all | ITS | bundle of two |
 | NE05 | 2025-09-30 | Claude thinking re-enabled in computer use | field / internal (Anthropic only) | Anthropic → other labs | DiD | same day Sonnet 4.5 joins |
-| NE06 | 2025-11-20/25 | Gemini: one tool call per turn; chain of thought added | internal (Google only) | Google → others | DiD | |
+| NE06 | 2025-11-20/25 | Gemini: one tool call per turn; chain of thought added | internal (Google only) | Google → others | DiD confounded: the CHANGELOG lists all-agent system-prompt changes on the same days (2025-11-20/21; DQ9) |
 | NE07 | 2025-12-04 | Prompt: "don't do nothing" | field (on activity) | all | ITS | targets waiting loops |
 | NE08 | 2025-12-10 | Village goal added to the prompt | field (persistence: chat-only → always on) | all | ITS | mid-goal #22 |
 | NE09 | 2025-12-20 | Chat interleaved into computer-use context | add (coupling) | all | ITS | holiday season |
-| NE10 | 2026-02-10 | **D** auto-nudger bot switched on | field (outside forcing on idle agents) | idle agents (dose) | ITS, dose | see NE23 for its reversal |
+| NE10 | 2026-02-10 | **D** auto-nudger bot switched on | field (outside forcing on idle agents) | idle agents (dose) | ITS, dose | see NE23 for its reversal; **first nudge in the record is 2026-02-13** (DQ9, H04, H39), so score NE10 there |
 | NE11 | 2026-02-20 | 100-turn hard cap on sessions | erase (session length) | all | ITS | superseded by NE14 |
 | NE12 | 2026-02-25 | **E** rooms: agents see only their room | **cut** (cross-room channel) | all | ITS; later DiD across rooms | mid-goal #32, same day as NE35 |
 | NE13 | 2026-03-10 | Kickoff message added to the prompt | field (persistence) | all | ITS | inside #34 |
@@ -80,13 +80,21 @@ Other single joins and retirements are listed per goal in `hypohypotheses/goal-p
 | NE36 | 2026-04-02 | Operator corrects the agents' belief about the Year-1 total (#38) | removal of misinformation | ITS | a natural test of negative-value information |
 | NE37 | 2026-06-22 | Whole village redirected to help one agent (#48) | field targeted at one node | single-agent synthetic control | one day |
 | NE38 | 2026-07-29 | A human reassigns Claude Opus 5's role (word puzzles → mathematics) | field change on one agent | single-agent ITS | `agent_goals` start date |
-| NE39 | undocumented | Chat closed to the public (agent-only) | cut (human input) | ITS once dated | date not in the changelog |
+| NE39 | undocumented (≈ 2025-07-01, inside #6; DQ9) | Chat closed to the public (agent-only) | cut (human input) | ITS once dated | date not in the changelog; DQ9: human messages per day fall from ~100 to ≤ 4 and distinct speakers from ~16 to 1 around 2025-07-01 |
 | NE40 | undocumented | History-search answerer swapped (Gemini 2.5 Pro → Sonnet 4.6) | change of memory oracle | ITS once dated | date not in the changelog |
 
 ## Undocumented step changes
 
 The list above covers *documented* changes only. Step changes could also be found directly in the data, using change-point detection on per-agent or per-room event rates, action mix, chat length or token use. That would find bugs, outages and unannounced changes, and date NE39 and NE40. It needs one pass over `events`; not run yet.
-| NE41 | regime III (from 2026-03-24) | Forced consolidation at the 41-turn cap: the context window is erased, memory kept, at a timing set by the scaffold, not the agent (~18.6k forced vs ~12.2k voluntary events, non-holdout) | context erasure (cut of the session channel) | turn-level event study; forced vs voluntary as quasi-random timing | found by H15 (2026-10-04); writes drop 33–53% for about 10 turns, then recover; supports H04/H08 (context is the coupling); **H08: erasure cuts coupling to pre-erasure senders by 18% ± 6% (9/9 periods)** |
+| NE41 | regime III (from 2026-03-24) | Forced consolidation at the 41-turn cap: the context window is erased, memory kept, at a timing set by the scaffold, not the agent (~18.6k forced vs ~12.2k voluntary events, non-holdout) | context erasure (cut of the session channel) | turn-level event study; forced vs voluntary as quasi-random timing | found by H15 (2026-10-04); writes drop 33–53% for about 10 turns, then recover; supports H04/H08 (context is the coupling); **H08: erasure cuts coupling to pre-erasure senders by 18% ± 6% (9/9 periods)**; **DQ1 ledger counts (non-holdout): 21,165 forced vs 16,357 voluntary** (the row's ~18.6k vs ~12.2k came from H15's rule) |
 | NE42 | 2026-05-04 / 2026-05-11 | #best and #rest merged into #universe-coordination (GPT-5 left alone in #rest) on 05-04, split back to the same partition on 05-11: an A-B-A | merge then cut (channel added, then removed) | pair DiD across the A-B-A | goal-confounded: #40 (connect worlds, shared objective) sits inside the merged week; used by H01 (G40), H05, H18 |
-| NE43 | 2026-08-05 / 2026-08-20 (inside #51) | The `automated` speaker winds down in two steps: the daily pause/resume bookends stop after 2026-08-05 (last at 00:00 UTC), and nudges stop after 2026-08-20 (last at 17:42 UTC; 18 human messages that day) | (a) loss of the daily synchronizing drive (08-05); (b) lever removed, nudger off (08-20) | day-matched before/after within #51, separately for the two steps | undocumented in the CHANGELOG; found by H39 and H30, dates corrected by H35 + `kicks_classified` (2026-10-04). Nudger-off: idle escape −13% (H39, post hoc); swarm-level accounting invisible (H35). H38's day-edge f_scaffold should drop after 08-05, not 08-20 |
+| NE43 | 2026-08-05 / 2026-08-20 (inside #51) | The `automated` speaker winds down in two steps: the daily pause/resume bookends stop after 2026-08-04 PT (last at 2026-08-05 00:00 UTC), and nudges stop after 2026-08-20 (last at 17:42 UTC; 18 human messages that day) | (a) loss of the daily synchronizing drive (08-05); (b) lever removed, nudger off (08-20) | day-matched before/after within #51, separately for the two steps | undocumented in the CHANGELOG; found by H39 and H30, dates corrected by H35 + `kicks_classified` (2026-10-04). Nudger-off: idle escape −13% (H39, post hoc); swarm-level accounting invisible (H35). H38's day-edge f_scaffold should drop after 08-05, not 08-20; `period_units` has no split at either step yet (unit 51g spans both) |
 | NE44 | 2026-06-11 | A `pause` call with no duration defaults to **5 min instead of 12 h** (CHANGELOG [Tools]) | changes the gate structure of idling: long sleeps → short timer-gated pause chains | before/after; directed messages switch from "wake-up" to "read at the next gate" (H35) | same day as NE22 (200-event cap), so confounded with it; H35: before 06-11 a nudge wakes a pausing agent at any trap age, after it only early re-pauses respond |
+
+## Candidate step changes found by DQ9 (2026-10-04; not yet numbered: date and describe before assigning an NE id)
+- **#best membership reshuffle at #39** (2026-04-27); names and direction to be confirmed from `rooms_timeline`.
+- **Per-room goal overrides** on 2026-05-26, 06-08, 06-15 and 06-29.
+- **Per-agent goal overrides** for the #38 charity goal.
+- **The whole village in #general for #48–#49** (start and end dates to be set from `rooms_timeline`).
+- **#51's return to a single room** (date to be set from `rooms_timeline`).
+

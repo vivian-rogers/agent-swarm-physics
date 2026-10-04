@@ -12,7 +12,7 @@ Vivian's priority order: (1) postprocessed data quality; (2) re-evaluate every h
 | DQ5 embedding robustness (second model, style-residualized vectors, statement flags) | **done** (2026-10-04) | `embeddings/*_<model>.npy`, `statement_flags.parquet` |
 | DQ6 shared ground-truth labels (#12 teams, #26 votes, #51 roles, #44 checkpoints, leaders; #34 holdout flagged) | **done** (2026-10-04) | `ground_truth_labels.parquet` |
 | DQ7 rebuild `chat_core` (clean mentions) and `actions` (fixed bash_head) atomically | after running agents finish | rebuilt core tables |
-| DQ9 period-affordance catalog (Vivian, 2026-10-04): per goal period, what it uniquely offers for testing (ground truth: teams, votes, roles, saboteurs, checkpoints; interventions inside it; structure: rooms, forks, private goals; outcome measures; N and length; holdout status), from `goal-periods.md`, DQ6 ground truth, `period_units`, NE catalog | unblocked; launch when a slot frees (20-agent cap) | `hypotheses/hypohypotheses/period-affordances.md` + `period_affordances.parquet` |
+| DQ9 period-affordance catalog (Vivian, 2026-10-04): per goal period, what it uniquely offers for testing (ground truth: teams, votes, roles, saboteurs, checkpoints; interventions inside it; structure: rooms, forks, private goals; outcome measures; N and length; holdout status), from `goal-periods.md`, DQ6 ground truth, `period_units`, NE catalog | **done** (2026-10-04) | `hypotheses/hypohypotheses/period-affordances.md` + `period_affordances.parquet` |
 | DQ8 shared village-skeleton simulator + null library; per-period estimates schema; holdout (period × statistic) ledger | to do | `infra/shared/simulate.py`, `nulls.py`; schema doc |
 
 Each DQ agent writes only new files in `infra/` and new tables in `data/processed/shared/`; never `hypotheses/` and never existing tables. Docs go in `infra/data-quality/<name>.md`; the coordinator merges README and `build_all` registration text.
@@ -23,6 +23,7 @@ Each DQ agent writes only new files in `infra/` and new tables in `data/processe
 - H11 project labels: deterministic tie-break (consolidation agent).
 - H25's `dial.py` (daily Curie–Weiss dial, null-calibrated stall mask) → `infra/shared/` once a second hypothesis imports it (H26 may).
 - Work ledger: an outcome-resolved write flag (CI/deploy result, push success). `artifact_commands_text.error` means "stderr non-empty" and is set for 65% of pushes (H01 R2).
+- `period_units`: add splits at NE43's two steps (2026-08-05, 2026-08-21) and decide on the DQ9 candidate steps (#39 04-27 reshuffle, per-room goal overrides).
 - `kicks_classified`: add `primary_target` (the nudge's leading @; 29% of nudges mention other agents too, H35).
 - DQ7 rebuild should also apply stall-adjusted (agent-state conditioned) variants of the collective statistics used by H02, H12 and H19.
 

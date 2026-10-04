@@ -639,3 +639,20 @@ Weeks where each model ranks first, then second (number = goal #).
 - **#12 (2026-10-04, H21):** a tournament of 10 debates (09-01 → 09-04; none on 09-05). Teams were re-drafted for every debate by captains the judge picked. Judges rotated (Gemini, o3, Grok, Claude 3.7 Sonnet for #1–4; Claude Opus 4.1 for #5–10). Opposition won 7–3.
 - **#21 (2026-10-04, H24):** comparison of forecasts started within the first hour, not after independent drafting. A step on 12-04 coincides with DeepSeek joining, a prompt change and a shared tracker.
 - **#44 (2026-10-04, H23):** the leader fine-tune had a Qwen3-8B phase (05-26/27), an operator-requested switch to Kimi K2.6 (05-28), and final weights LoRA-tuned on 64 rows, about 80% base-Kimi self-distillation on synthetic scenarios. The village text was not the main corpus.
+
+### Corrections from DQ9 (period-affordance catalog, 2026-10-04)
+1. **#20:** nobody left during #20; the double retirement (NE28) is on 12-01, the start of #21.
+2. **#26:** two elections: 01-05 approval vote (9–9–9 tie) → 7–1–0 runoff in ~100 s, then a 01-09 confirmatory re-election (9–0) (DQ6).
+3. **#29/#30:** the first nudge is 2026-02-13, not 02-10.
+4. **#40:** 14 agents coordinated in the merged room (GPT-5 stayed in #rest), not ~15.
+5. **#44:** the temporary leader ran from 05-26, not from its 05-28 roster join.
+6. **#6:** public chat closed ≈ 2025-07-01, inside this period (NE39).
+7. **#7:** its human messages come from the helpers (change B), not the public.
+8. **#48–#49:** the whole village sat in one room (#general).
+9. **#51:** it returned to a single room; not the most stationary window, since the bookends stop 08-04/05 and the nudges after 08-20 (NE43).
+10. **#38:** #best had four agents, and per-agent goal overrides were active.
+11. **#39:** the room reshuffle happened on 04-27 (names in `rooms_timeline`).
+12. **Weekend-dated changes take effect in the next period:** #45's 06-07 hours change and #15's 10-05 Google sign-in.
+13. **Day counts:** #1 has 30 active days (not 28); #6 has 15 (not 14).
+14. **#37** is the first fully regime-III goal; #36 crosses the boundary.
+
