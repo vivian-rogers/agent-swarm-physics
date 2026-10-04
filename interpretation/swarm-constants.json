@@ -485,22 +485,22 @@
   {
    "symbol": "Δρ₁",
    "name": "collective talk memory excess over mean-field Glauber",
-   "value": "period median +0.077; #51 +0.067 [0.034, 0.100]; content Δg₁ median −0.17 (content acts as a field)",
+   "value": "period median +0.077; #51 +0.067 [0.034, 0.100]; content Δg₁ median −0.17 (content acts as a field); round 2 W0-corrected after scheduler removal (V5): median +0.052, #51 +0.042 [0.014, 0.070]; 92% of lag-1 covariance within rooms (Π ≈ 15)",
    "kind": "consistency test",
    "scope": "6 resolved regime-II/III periods (post hoc statistic)",
    "model": "02",
-   "source": "H99",
-   "meaning": "The collective mode stays correlated longer than its gain predicts; a slow common drive is not excluded."
+   "source": "H99, H99 r2",
+   "meaning": "The collective memory is read-out coupling within rooms, matching H67's hop-1 gain; not a slow common drive."
   },
   {
    "symbol": "R_Onsager",
    "name": "nudge response over the Onsager-regression prediction",
-   "value": "×9.5 [7.0, 12.3] at 30 min; #4c human-message decay λ 0.54 vs predicted 0.15",
+   "value": "WITHDRAWN (H99 round 2): the ×9.5 ratio did not survive the corrected masks; nudge talk-per-call Ω 1.7 [0.8, 2.7], human-message Ω 2.5 [1.6, 3.4] (post hoc)",
    "kind": "FDT violation",
    "scope": "#51 (H04 kernel)",
    "model": "02",
-   "source": "H99",
-   "meaning": "Kicks outlive the fluctuation clock about tenfold: fluctuations do not predict response."
+   "source": "H99, H99 r2",
+   "meaning": "Kicks do not clearly outlive the fluctuation clock once masks and centring are fixed."
   },
   {
    "symbol": "ρ_F",
@@ -711,6 +711,26 @@
    "model": "09",
    "source": "H114",
    "meaning": "Replies beget replies within a thread; no Griffiths phase from rare strong pairs."
+  },
+  {
+   "symbol": "g₁_room",
+   "name": "room-gated read-out gain on the call clock",
+   "value": "0.113 [0.077, 0.149] (regime III); per read named message +0.073 [0.063, 0.084], unnamed +0.0017; named one call later +0.025",
+   "kind": "coupling",
+   "scope": "regime III",
+   "model": "02",
+   "source": "H99 r2",
+   "meaning": "Named messages couple at the next call (and weakly one call later); unnamed messages barely do."
+  },
+  {
+   "symbol": "φ_inflight",
+   "name": "negative in-flight field",
+   "value": "−0.0084 per message in flight near a call; −0.0048 cross-room in flight",
+   "kind": "field",
+   "scope": "regime III",
+   "model": "02",
+   "source": "H99 r2",
+   "meaning": "Unreadable messages near a call lower talk (turn-taking or API contention); in-flight-gated gains overstate coupling ~×2."
   }
  ]
 }

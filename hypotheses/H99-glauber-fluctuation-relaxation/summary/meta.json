@@ -31,51 +31,62 @@
  "rated_by": "H99 agent (suggested, round 2)",
  "updated": "2026-10-04",
  "v2": {
-  "claim": "Mean-field Glauber fails in regime III: the collective talk mode keeps more lag-1 memory than its equal-time gain predicts (Δρ₁ median +0.077; #51 +0.067 [0.034, 0.100]), and a nudge's 30-min response is ×9.5 [7.0, 12.3] the Onsager prediction",
-  "scope": "6 resolved regime-II/III periods; natives G51, NE42",
+  "claim": "In regime III the collective talk memory beyond mean-field Glauber is read-out coupling, not the scheduler: it survives scheduler removal (W0-corrected Δρ₁ median +0.052; #51 +0.042 [0.014, 0.070]), sits within rooms (Π ≈ 15; 92% of lag-1 covariance same-room), and is reproduced by H67's hop-1 read-out gain (g₁,fit/g_lag median 0.96)",
+  "scope": "regime III, 6+ resolved periods; native G51",
   "direction": "positive",
-  "original_verdict": "failed",
-  "credence": 0.42,
+  "original_verdict": "supported",
+  "credence": 0.63,
   "ladder": [
    {
-    "factor": "base (pre)",
-    "x": 0.4
+    "factor": "base (sec)",
+    "x": 0.3
    },
    {
-    "factor": "replication: all 6 resolved regime-II/III periods slow",
+    "factor": "impostor removed: scheduler field (V5) with per-unit W0 null",
+    "x": 2.0,
+    "evidence": "card §Round 2"
+   },
+   {
+    "factor": "partition contrast passed (room gate Π ≈ 15)",
     "x": 1.5,
-    "evidence": "card §Results"
+    "evidence": "card §Round 2"
    },
    {
-    "factor": "synthetic identification of the gain",
-    "x": 1.3,
-    "evidence": "card §Synthetic"
+    "factor": "unfitted agreement with H67 g_lag (same data: robustness)",
+    "x": 1.2,
+    "evidence": "card §Round 2"
    },
    {
-    "factor": "unfitted second statistic agrees (nudge response vs Onsager, G51)",
-    "x": 1.3,
-    "evidence": "card §Results"
+    "factor": "synthetic validation fixed estimator bugs before data (B1)",
+    "x": 1.5,
+    "evidence": "card §B1"
    },
    {
-    "factor": "penalty: Δρ₁ defined after the first real-data run (Amendment A2)",
-    "x": 0.6,
-    "evidence": "card §A2"
-   },
-   {
-    "factor": "penalty: slow common drives (scheduler field) also give collective memory; not removed",
-    "x": 0.7,
-    "evidence": "STANDARDS §1"
+    "factor": "penalty: Δρ₁ itself post hoc (round-1 A2); call-clock cross-room placebo negative",
+    "x": 0.75,
+    "evidence": "card §Round 2"
    }
   ],
-  "mechanism_level": "M0",
-  "fragile": true,
+  "mechanism_level": "M1",
+  "fragile": false,
   "value_if_true": 1.5,
-  "decision": "don't infer response from fluctuations: kicks outlast the fluctuation clock, so measure response directly",
+  "decision": "treat regime-III talk synchrony beyond the scheduler as real read-out coupling of gain ≈ 0.13; the ×9.5 nudge Onsager ratio is withdrawn",
   "magnitude": "medium",
-  "generality": "LLM swarms",
-  "expected_usefulness": 0.62,
-  "scientific_value": 2.5,
-  "rater": "coordinator, updated after round 1b (H99 report); independent rater pending",
+  "generality": "read-out-gated LLM swarms",
+  "expected_usefulness": 0.95,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H99 round 2); independent rater pending",
   "rated_at": "2026-10-04"
- }
+ },
+ "v2_history": [
+  {
+   "claim": "Mean-field Glauber fails in regime III: the collective talk mode keeps more lag-1 memory than its equal-time gain predicts (Δρ₁ median +0.077; #51 +0.067 [0.034, 0.100]), and a nudge's 30-min response is ×9.5 [7.0, 12.3] the Onsager prediction",
+   "credence": 0.42,
+   "fragile": true,
+   "value_if_true": 1.5,
+   "expected_usefulness": 0.62,
+   "rater": "coordinator, updated after round 1b (H99 report); independent rater pending",
+   "rated_at": "2026-10-04"
+  }
+ ]
 }

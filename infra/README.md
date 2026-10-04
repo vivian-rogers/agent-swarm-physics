@@ -313,6 +313,9 @@ Two builders and two libraries are now shared, and `semantic_kappa` is extended.
 
 ## Known issues
 
+- **Minute-grid synchrony and memory statistics need a per-unit W0 reference** (independent talk at the unit's real calls; H99 r2): block centring biases lag-1 autocorrelations by about −1/30, re-centring inside masked or fragmented blocks fakes negative memory (down to −0.19), and occupancy-cell centring fakes −0.05.
+- **A room partition does not exclude a room-local drive** (H99 r2): pair it with an in-flight contrast. In regime III, unreadable messages near a call carry a negative talk association (−0.005 to −0.008 per message), so in-flight-gated gains overstate coupling ~×2; prefer cross-room-gated gains.
+- **A swarm-wide 15-min mask after every nudge removes 60–75% of #51 minutes** (H99 r2); use 5 min.
 - **A rate-vs-N slope of a slow collective mode cannot be identified within one village** (H106: one trajectory, oracle SD 0.45; regime-I N is collinear with calendar time).
 - **`estimates.py` rejects `local:` rows whose first/last day spans held-out days** (H106). Write such rows with `goal_no=None, holdout=False`.
 - **Wall-clock talk counts carry a shared call-density field** (H111: Φ 1.28 with no coupling planted on unit 41). Use the per-call residual clock. Circular block-shift nulls change private variance when talk-per-call drifts within a day, so F/F_shift ≠ Φ.
