@@ -1,6 +1,7 @@
 # H29 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed; gte failed)
 **Role:** exploratory (counted; the largest two-room unit)
 **Period:** regime III · mode C · 14 recipients in the network · #best (~4) / #rest (~10); joins 04-17, 04-22 · 17 non-holdout days.
 
@@ -35,3 +36,17 @@ Figures: `../../figures/h29_summary.pdf` (all periods). Data: `data/processed/H2
 
 ## Notes
 - 2026-10-04: pre-registered pipeline (`explore.py`) and Amendment 2 (`posthoc.py`, post hoc) run. Invisible rows from call windows > 30 s: 0.45 (the H18 visibility rule misclassifies messages that arrive during a PAUSE or a long tool call).
+
+## Round 1b (improved data, 2026-10-04)
+Context-ledger visibility (DQ1) instead of H18's call-start rule; both embedding models; the DQ2 reply-graph network. Numbers in `data/processed/H29-driver-nodes/r1b/G38/` (bge) and `r1b_gte/G38/` (gte). Rule unchanged.
+
+| Statistic | Round 1 | Round 1b bge | Round 1b gte |
+| --- | --- | --- | --- |
+| κ (pre-registered) | -0.063 [-0.081, -0.041] | -0.042 [-0.065, -0.019] | -0.038 [-0.059, -0.015] |
+| boundary jump (matched age) | -0.014 [-0.044, 0.024] | 0.010 [-0.019, 0.047] | 0.025 [-0.006, 0.059] |
+| named like-for-like | -0.067 [-0.147, 0.009] | -0.073 [-0.152, 0.011] | -0.008 [-0.134, 0.075] |
+| unnamed like-for-like | -0.002 [-0.045, 0.047] | 0.021 [-0.007, 0.063] | 0.026 [-0.007, 0.067] |
+| split-half D (pre-registered / post hoc) | -0.21 / -0.31 | 0.29 / 0.27 | 0.47 / 0.22 |
+| held-out V2 ρ(D, H) (pre-registered / post hoc) | 0.28 / -0.08 | 0.15 / -0.11 | 0.12 / 0.37 |
+| reply network: split-half D^rep · held-out ρ(D^rep, H) | – | 0.83 · 0.63 | 0.83 · 0.49 |
+| reply-parent premium (matched age) | – | 0.111 [0.090, 0.130] | 0.120 [0.100, 0.140] |

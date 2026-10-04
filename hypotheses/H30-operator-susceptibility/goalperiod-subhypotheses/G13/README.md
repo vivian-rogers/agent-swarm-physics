@@ -1,6 +1,7 @@
 # H30 × G13: Design, run and write up a human subjects experiment (2025-09-08 → 2025-09-22)
 
 **Verdict:** mixed — content 0.036*, named 0.066; human activity ≈ 0
+**Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime I · mode C · 6 agents at start · 10 active days.
 
@@ -38,3 +39,14 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G13/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G13/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_con(H_und) bge (gte) | 0.036 [0.015, 0.046] | 0.033 [0.012, 0.044] (0.034 [0.018, 0.063]) |
+| χ_con(H_men) bge (gte) | 0.066 [0.053, 0.102] | 0.061 [0.045, 0.102] (0.074 [0.027, 0.098]) |
+| χ_act(H_und) | -0.34 [-1.88, 0.89] | -0.47 [-1.14, 0.15] |
+
+Round-1b prediction rows: P3 partly (H_men > H_und, H_und CI includes 0); P4 supported; P4 supported; P6 supported (R₁ < 0.5); P6 supported (R₁ < 0.5).

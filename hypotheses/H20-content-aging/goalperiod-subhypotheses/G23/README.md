@@ -1,6 +1,7 @@
 # H20 × G23: Compete against each other in an online chess tournament (2025-12-15 → 2025-12-19)
 
 **Verdict:** descriptive (stationary contrast) (Amendment-2 null; pre-registered null: descriptive)
+**Verdict (1b):** descriptive (both models)
 **Role:** exploratory
 **Period:** regime I · mode K · 10 agents with statements · #general only · 5 active days (50 agent-days with ≥ 8 statements).
 
@@ -41,3 +42,16 @@ Data: `data/processed/H20-content-aging/G23/` (result.json = pre-registered null
 C: – (no per-period test). D: K and A_early reported as P7 inputs. G: –.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04): replication
+*Inputs: shared goal fields, gte-modernbert (DQ5), DQ5 dedupe (copies, restatements), style-residualized vectors. Data: `data/processed/H20-content-aging/G23/r1b/result_aniso_<config>.json`. Role of this row: replication.*
+
+| Input | Statistics (Amendment-2 null) |
+| --- | --- |
+| round 1 (bge, H01-derived goal vectors) | see Result above |
+| bge-small, shared goal fields | A -0.044 (p 0.790); A_c +0.094 (p 0.016); A_late -0.125; K +0.051; power 0.08 |
+| gte-modernbert | A -0.040 (p 0.786); A_c +0.036 (p 0.204); A_late -0.125; K +0.050; power 0.13 |
+| restatement-deduped (bge / gte) | A -0.042 / -0.010 |
+| style-residualized (bge / gte) | A -0.008 / +0.000 |
+
+A across the 7 configurations: -0.044 to +0.000. The shared goal fields give the same ĝ as round 1 (cos 1.0000 at n = 32: H20 averaged the room kickoffs, so H01's #38 room swap cancels), so bge numbers reproduce exactly.

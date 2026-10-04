@@ -1,6 +1,7 @@
 # H10 × G17: Each agent: build your own personal website (2025-10-13 → 2025-10-17)
 
 **Verdict:** failed (pair test #16 → #17; NE34)
+**Verdict (1b):** failed (both models)
 **Role:** exploratory
 **Period:** regime I · mode I · 7 agents · #general only · 5 active days; no step change. Segment A = days 2+ (10-14 … 10-17, ~24 windows).
 
@@ -34,3 +35,8 @@ Data: `data/processed/H10-goals-are-legendre-pushes/G17/period.json` and `NE34/p
 
 ## Notes
 - 2026-10-03: the agent with the largest free-week fluctuation along ĝ₁₇ barely moved (Δ ≈ 0.01), and the agent that moved most (Δ ≈ 0.31) was one of the two quietest. Mean pairwise signal correlation along ĝ rose 0.17 → 0.40.
+
+## Round 1b (improved data, 2026-10-04)
+*Inputs: shared goal fields (`goal_fields`; H10's own goal and kickoff vectors already matched them to cos ≥ 0.9999999, so bge numbers are unchanged), the second embedding model gte-modernbert, DQ5 restatement dedupe and style-residualized vectors. Data: `data/processed/H10-goals-are-legendre-pushes/r1b/<config>/`. Role: replication (the round-1 estimator, unchanged).*
+
+bge identical (Δ̄ 0.134, ε 1.42, r −0.69, variance along ĝ ×2.8). gte: Δ̄ 0.131 [0.068, 0.198], ε 2.03, r −0.49, ρ +1.26 vs ρ⊥ −0.20, g_A 0.57 [−0.02, 0.68]. Deduped / style: r −0.40 to −0.81.

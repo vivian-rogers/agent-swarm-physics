@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Role:** exploratory (round 1, non-holdout); secondary
+**Verdict (1b):** mixed (round-1 statistics unchanged; no strictly isolated first nudges; 2026-10-04)
 **Period:** regime III · mode I · 15 agents · nudges 59. Data: `data/processed/H35-nudger-maxwell-demon/G41/`.
 
 ## Why this period

@@ -1,6 +1,7 @@
 # H22 × G51d: Each agent: Maximize your assigned goal! — unit 51d (2026-08-25 → 09-02)
 
 **Verdict:** inconclusive
+**Verdict (1b):** inconclusive (round 1: inconclusive)
 **Role:** exploratory
 **Period:** regime III · mode I/K · 27 → 29 agents · one room · 7 days. GLM-5.3 Flash joins 08-28 (Press baron from 08-31), Fable 5.1 joins 09-01 (AI safety researcher).
 
@@ -62,3 +63,17 @@ Data: `data/processed/H22-private-goals-spin-glass/G51/<unit>/results.json`; fig
 ## Notes
 - Data: `data/processed/H22-private-goals-spin-glass/G51/51d/`. Figure: `figures/H22_G51d.pdf`.
 - Card: `../../README.md` (Observables, Null, Prediction, Amendment 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the corrected inputs (card section "Round 1b"); round-1 numbers kept above.* DQ6 ground-truth roles (Opus 5's first role recovered), DQ5 statement vectors in two models (bge, gte), DQ5 `style_resid_period` vectors ("styp"), restatements removed ("dedup"), `activity_bins_fixed` for talk spins, and the DQ2 stance channel with the calibrated agent-field null. Data: `data/processed/H22-private-goals-spin-glass/r1b/`.
+
+| Unit | Variant | heterogeneity ρ_split | τ₃(dc) | T_SR / pairs (p>) | T_OP | W (p) | talk ρ_split (p) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 51d | round 1 | 0.12 (p 0.233) | -0.12 | -0.002 / 1 (p> 0.486) | 0.008 | 0.69 (p 0.79) | 0.12 (p 0.292) |
+| 51d | bge | 0.12 (p 0.233) | -0.12 | -0.002 / 1 (p> 0.486) | 0.008 | 0.68 (p 0.79) | 0.34 (p 0.003) |
+| 51d | gte | 0.34 (p 0.020) | 1.55 | 0.002 / 1 (p> 0.400) | -0.004 | 0.79 (p 0.67) | 0.34 (p 0.003) |
+| 51d | bge styp | 0.08 (p 0.309) | -0.32 | 0.016 / 1 (p> 0.296) | 0.004 | 0.56 (p 0.89) | 0.34 (p 0.003) |
+| 51d | gte styp | 0.31 (p 0.040) | 1.39 | 0.013 / 1 (p> 0.365) | -0.006 | 1.01 (p 0.45) | 0.34 (p 0.003) |
+| 51d | bge dedup | 0.11 (p 0.249) | -0.12 | -0.002 / 1 (p> 0.473) | 0.009 | 0.72 (p 0.76) | 0.34 (p 0.003) |
+| 51d | **stance (DQ2)** | dc split-half 0.43 (agent-field p 0.005) | 0.05 [-0.02, 0.23] | 0.011 / 4 (p> 0.513) | 0.224 | – | neg. pairs 33 vs 6.7 |
+

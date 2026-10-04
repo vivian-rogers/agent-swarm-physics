@@ -6,6 +6,12 @@ random-effects summaries of the per-unit estimates.
 
 Usage: uv run python hypotheses/H13-family-fields/analysis/explore.py [--fast] [--units 37,41]
 Reads data/processed/H13-family-fields/G<NN>/u<unit>_*; writes G<NN>/results_u<unit>.json and explore.json.
+
+Round 1b (2026-10-04; the default above is the unchanged round-1 path):
+  ... explore.py --base data/processed/H13-family-fields/r1b/<model>_<dedupe> [--style own|period]
+--style own uses H13's within-unit style residualization (S-a, pre-registered); --style period uses the shared DQ5
+style_resid_period vectors (u*_agent_day_styp.npy) as the a2 rival. Results go to <base>/G<NN>/results_u<unit>[_styp].json
+and <base>/explore[_styp].json.
 """
 from __future__ import annotations
 
@@ -28,6 +34,9 @@ ROOT = HERE.parents[2]
 DATA = ROOT / "data/processed/H13-family-fields"
 SH = ROOT / "data/processed/shared"
 FAST = "--fast" in sys.argv
+BASE = (ROOT / sys.argv[sys.argv.index("--base") + 1]) if "--base" in sys.argv else DATA
+STYLE = sys.argv[sys.argv.index("--style") + 1] if "--style" in sys.argv else "own"
+SFX = "" if STYLE == "own" else "_styp"
 NP_FIELD = 1000 if FAST else 5000
 NP = 400 if FAST else 2000
 NBOOT = 100 if FAST else 500
@@ -51,7 +60,7 @@ def load_unit(meta, u, base=DATA):
     g = meta[u]["gdir"]
     ad = pl.read_parquet(base / g / f"u{u}_agent_day.parquet")
     Vr = np.load(base / g / f"u{u}_agent_day_raw.npy").astype(np.float64)
-    Vs = np.load(base / g / f"u{u}_agent_day_sty.npy").astype(np.float64)
+    Vs = np.load(base / g / f"u{u}_agent_day_{'sty' if STYLE == 'own' else 'styp'}.npy").astype(np.float64)
     w = pl.read_parquet(base / g / f"u{u}_win30.parquet")
     Vw = np.load(base / g / f"u{u}_win30_raw.npy").astype(np.float64)
     tp = pl.read_parquet(base / g / f"u{u}_talk_pairday.parquet") if (base / g / f"u{u}_talk_pairday.parquet").exists() else None
@@ -215,7 +224,7 @@ def embed_matrix(Y, ags_y, ags):
 def run_unit(meta, u, lab_of, rng, base=DATA):
     t0 = time.time()
     m = meta[u]
-    guard(m["days"], m["goal_no"]) if base == DATA else None
+    guard(m["days"], m["goal_no"]) if "confirm" not in str(base) else None
     ad, Vr, Vs, w, Vw, tp = load_unit(meta, u, base)
     roles = m.get("roles", {})
     res = {"unit": u, "gdir": m["gdir"], "goal_no": m["goal_no"], "regime": m["regime"], "n_days": len(m["days"]),
@@ -361,7 +370,7 @@ def cross_unit(results, meta, lab_of, name_of, rng):
         if lab_of[a] not in flds:
             continue
         # newcomer vector: first <= 3 eligible days in its first unit
-        ad, Vr, *_ = load_unit(meta, u)
+        ad, Vr, *_ = load_unit(meta, u, BASE)
         mm = (ad["n"] >= 3).to_numpy()
         a_ad = ad.filter(pl.Series(mm))
         X = Vr[mm]
@@ -387,7 +396,7 @@ def cross_unit(results, meta, lab_of, name_of, rng):
     print("d2 newcomers:", out["d2"]["accuracy"], "chance", chance, "n", len(d2), flush=True)
     # (d3) NE32: GPT-5.6 triplet on 07-09 vs incumbent family fields of 51b (excluding 07-09/07-10)
     if "51b" in results:
-        ad, Vr, *_ = load_unit(meta, "51b")
+        ad, Vr, *_ = load_unit(meta, "51b", BASE)
         mm = (ad["n"] >= 3).to_numpy()
         a_ad = ad.filter(pl.Series(mm)); X = Vr[mm]
         D = L.day_demean(X, a_ad["pt_date"].to_numpy(), a_ad["agent"].to_numpy())
@@ -460,14 +469,14 @@ def clean(o):
 def main():
     t0 = time.time()
     rng = np.random.default_rng(20261004)
-    meta = json.loads((DATA / "units.json").read_text())
+    meta = json.loads((BASE / "units.json").read_text())
     lab_of, name_of = roster()
     sel = sys.argv[sys.argv.index("--units") + 1].split(",") if "--units" in sys.argv else COUNTED + DESCRIPTIVE
     results = {}
     for u in sel:
-        results[u] = run_unit(meta, u, lab_of, rng)
+        results[u] = run_unit(meta, u, lab_of, rng, base=BASE)
         r = {k: v for k, v in results[u].items() if not k.startswith("_")}
-        (DATA / meta[u]["gdir"] / f"results_u{u}.json").write_text(json.dumps(clean(r), indent=1))
+        (BASE / meta[u]["gdir"] / f"results_u{u}{SFX}.json").write_text(json.dumps(clean(r), indent=1))
     out = {"units": {u: {k: v for k, v in r.items() if not k.startswith("_")} for u, r in results.items()}}
     if "--units" not in sys.argv:
         out["cross"] = cross_unit(results, meta, lab_of, name_of, rng)
@@ -476,11 +485,11 @@ def main():
             if "mu" in v:
                 print(f"meta {k}: mu={v['mu']:.4f} [{v['lo']:.4f}, {v['hi']:.4f}] I2={v['I2']:.2f} k={v['k']}", flush=True)
         # keep unit-normalized agent fields for the confirmatory transfer test (regime III, counted units)
-        np.savez_compressed(DATA / "agent_fields_explore.npz",
+        np.savez_compressed(BASE / f"agent_fields_explore{SFX}.npz",
                             **{f"u{u}": np.array([[a] + v for a, v in results[u]["_H"].items()]) for u in results})
     out["seconds"] = round(time.time() - t0, 1)
-    out["settings"] = {"NP_FIELD": NP_FIELD, "NP": NP, "NBOOT": NBOOT, "fast": FAST}
-    (DATA / ("explore_fast.json" if FAST else "explore.json")).write_text(json.dumps(clean(out), indent=1))
+    out["settings"] = {"NP_FIELD": NP_FIELD, "NP": NP, "NBOOT": NBOOT, "fast": FAST, "base": str(BASE), "style": STYLE}
+    (BASE / (f"explore_fast{SFX}.json" if FAST else f"explore{SFX}.json")).write_text(json.dumps(clean(out), indent=1))
     print("done", out["seconds"], "s")
 
 

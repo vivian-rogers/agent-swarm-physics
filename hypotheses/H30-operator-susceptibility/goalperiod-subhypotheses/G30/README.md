@@ -1,6 +1,7 @@
 # H30 × G30: Adopt a park and get it cleaned! (2026-02-09 → 2026-02-16)
 
 **Verdict:** mixed — nudge -1.64 min (n 11); content 0.036*; low power
+**Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime I · mode C · 12 agents at start · 5 active days.
 
@@ -36,3 +37,17 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G30/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G30/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_act(N_tgt), level model (r1: no FE; 1b: day FE, past-only) | -1.64 [CI unstable] (n 11) | -0.14 [-7.11, 6.30] (n 9) |
+| χ_act(N_tgt) with day FE / without | -2.03 [CI unstable] | -0.36 [-5.68, 3.67] (no FE) |
+| first / repeat nudge | -2.11 [CI unstable] / -1.57 [CI unstable] | 0.51 [-7.15, 6.21] / -0.53 [CI unstable] |
+| bystander χ_act(N_by) | 0.56 [CI unstable] | -0.24 [-3.76, 6.76] |
+| χ_con(H_und) bge (gte) | 0.036 [0.002, 0.048] | 0.036 [0.002, 0.046] (0.032 [0.015, 0.056]) |
+| χ_act(H_und) | -0.36 [-1.05, -0.08] | 0.29 [-0.58, 0.83] |
+
+Round-1b prediction rows: P1 failed (point ≤ 0); P2 failed; P6 supported (R₁ < 0.5).

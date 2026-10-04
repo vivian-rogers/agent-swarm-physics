@@ -1,6 +1,7 @@
 # H21: The debate week (#12) is a two-sublattice antiferromagnet
 
 **Status:** running. Exploratory round 1 done 2026-10-03: **primary prediction failed.** There is no full-vector two-sublattice order, but a weak staggered moment along the motion's a-priori stance axis. #34 confirm script written, not run. Promoted 2026-10-03 by Vivian from HH103.
+**Round 1b (2026-10-04, section below): two-sublattice order is supported in reply stance, not in content.** The content null holds in both embedding models and every input variant. In DQ2 reply stance the drafted teams order as two sublattices (Δ_stance 0.72, 10/10 debates, beyond the calibrated agent-field null; teams recovered 8/10), the same agent pair turns hostile only when drafted onto opposite sides (16/18 pairs), and the order switches off at the verdict. Where nobody assigns sides (#26 vote, #33 news debate) no camps form. A coupling beyond the assigned field is still not shown.
 **Fields:** stat mech, sociophysics
 **Origin:** HH103 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Agent (roster agent), Regime (I), Agent state, **variant vector** (`physics-models/DEFINITIONS.md`), here the sub-variant *"agent state (vector, masked window mean)"* defined below (proposed for DEFINITIONS.md; not added there, edit scope). Agent state, **variant categorical** for the team label (σ_i ∈ {Gov, Opp, judge, bench} per debate). Driving / external field (goal and motion text; the verdict).
@@ -146,6 +147,17 @@ Credences are mine, given only the structure above.
 - **"Coupled antiferromagnet"** additionally requires coupling evidence beyond the assigned staggered field: P7 significant (ρ < 0), or remanence R > 0 together with ρ ≤ 0.
 - **Expected outcome:** two-sublattice order supported, but **"staggered paramagnet" not rejected**. The sides are assigned, so h_s alone can produce the order. Post-verdict remanence can come from single-agent inertia (reflecting on one's own case) without any coupling, so R > 0 alone is not coupling evidence.
 
+### Round-1b pre-registration: a stance channel next to the content channel (2026-10-04 07:14 UTC, before any round-1b statistic)
+**Seen before writing:** round 1; H37's #12 stance results (its own Jev labels: opponents −0.13 vs teammates +0.32, AUC 0.74, 7/10 teams); DQ2's #12 check on its labels (opposite-team "opposes" 33% vs 6%, soft sign −0.18 vs +0.31). So the stance-channel expectations below are informed replications, not blind predictions. P1–P7 above are unchanged and are re-run on the content channel with the second embedding model (gte, masked text re-embedded), the shared style-residualized vectors and the dedupe flags.
+
+**Stance spin of a reply** (DQ2 `reply_pairs`, `pair_set = cand`, labelled; B and A debaters of the same debate, B inside the phase): s = p_supports − p_opposes, weighted by p_reply (soft); hard class +1 / 0 / −1 for the calibrated null.
+- **S1 (P1 in stance).** Δ_stance = mean s over same-team replies − mean s over opposite-team replies, equal weight per debate, > 0 with team-permutation p < 0.01 **and** above the 95th percentile of the calibrated agent-field null (`infra/shared/nulls.py: agent_field_null`, ordered logit with speaker and target fields, 500 simulations). Credence 0.9.
+- **S2 (P2 in stance).** The ground-state two-camp split of each debate's stance graph (debaters only, true block sizes, exact enumeration) equals the true teams in ≥ 4/10 debates (Poisson-binomial p < 0.01). Credence 0.7.
+- **S3 (P6 in stance).** In the post-verdict window Δ_stance falls below half its debate value. Credence 0.7.
+- **S4 (beyond topic, H37's O2 on DQ2 labels).** On the same replies, AUC of stance for same vs opposite team ≥ 0.65 while the content cosine (masked bge and gte) gives AUC in [0.4, 0.6]. Credence 0.75.
+- **Content channel under the new inputs.** P1 still fails (credence 0.85); the a-priori text-axis tilt stays positive in gte (credence 0.6).
+- **Verdict rule for 1b:** "two-sublattice order: supported (exploratory)" now needs P1 **or** S1, plus P2 **or** S2, plus P5; "coupled antiferromagnet" still needs a coupling signature beyond the assigned field (P7, or the G12 native within-pair contrast in stance).
+
 ## Confirmatory test (#34, 🔒, written 2026-10-03, not run)
 `analysis/confirm_g34.py` refuses to run without `--confirm --i-understand-this-uses-the-locked-holdout`. `--dry-run` runs every code path on non-holdout stand-ins: the label rule on #33, and detection on #12 with a seeded random 1–2-member minority of each Opposition as stand-in "saboteurs". It asserts that no holdout row is read.
 
@@ -173,7 +185,7 @@ Credences are mine, given only the structure above.
   H21's statistic is different from all of these: hidden-role labels and a sublattice-recovery AUC, which nobody computes. If H01 or H12 run first, H21 shares their modality (chat embeddings) but not their statistic. Under the 2026-10-03 reuse policy that is allowed with disclosure in both cards and in LOG.md, provided no one has examined the saboteur labels.
 
 ## Faithfulness scorecard
-Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness". Scored for the **coupled two-sublattice antiferromagnet** on masked content vectors in G12.
+Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness". Scored for the **coupled two-sublattice antiferromagnet** on masked content vectors in G12 (round 1); round-1b scores (marked) use the DQ2 stance mapping, evidence in the Round 1b section.
 **Rival models:** staggered paramagnet (assigned sides only); family (lab) fields; role vocabulary; ferromagnetic topic order in the motion's uniform field.
 **Locked holdout used for confirmation:** none yet. #34 is planned (`analysis/confirm_g34.py`, not run).
 
@@ -181,18 +193,21 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | --- | --- | --- | --- |
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Spins: masked, whitened, agent-centred chat window means. Teams: verified labels with message ids. Phases: a rule fixed before outcomes. Family field handled by agent-centring and pair fixed effects. One regime, one embedding model; masking is a design choice. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | No stationarity or equilibrium audit. χ_s from fluctuations assumes FDT, which is untested. |
-| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | The full-vector AF statistics do **not** beat the team-permutation or rotation nulls (Δ̄ p = 0.34, m_s p = 0.27). Only the a-priori text-axis staggered moment beats its permutation null (p = 0.002; 9/10 debates; each debate is an independent block). |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | Teams not recovered (1/10, chance 1.5). AF fluctuation signature absent: ρ = +0.53 at 3 min (common drive), not robust across bin widths. |
-| E interventional | predicts the change across a natural experiment | 0 | Pre-registered verdict test untestable (no order on the LOAO axis to collapse); judge check 3/10. Post-hoc: on the text axis the order *flips* after the verdict, contradicting the "no flip" prediction. The uniform topic field switching off at the verdict (8/8) is descriptive. |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Synthetic at G12's exact design: power curves, calibration of every null, three estimator biases found and fixed before the real run, real-noise injection. But the real null is about 2× wider than either synthetic noise model (missing family co-variation), so power was overstated. No embedding-model swap. |
-| G ground truth | agrees with known structure | 1 | The known teams are *not* recovered from full vectors (0). The a-priori stance axis does separate the known sides (9/10 debates). |
-| H comparative | beats the named rivals | 0 | The data favour uniform topic order + family co-variation + a weak 1-D staggered field. The coupled AF beats neither the staggered paramagnet nor topic order. |
+| C adequacy | beats the null hierarchy, day-blocked held-out data | 2 (1b, stance; round 1: 1) | The full-vector AF statistics do **not** beat the team-permutation or rotation nulls (Δ̄ p = 0.34, m_s p = 0.27). Only the a-priori text-axis staggered moment beats its permutation null (p = 0.002; 9/10 debates; each debate is an independent block). |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 (1b; round 1: 0) | Teams not recovered (1/10, chance 1.5). AF fluctuation signature absent: ρ = +0.53 at 3 min (common drive), not robust across bin widths. |
+| E interventional | predicts the change across a natural experiment | 1 (1b; round 1: 0) | Pre-registered verdict test untestable (no order on the LOAO axis to collapse); judge check 3/10. Post-hoc: on the text axis the order *flips* after the verdict, contradicting the "no flip" prediction. The uniform topic field switching off at the verdict (8/8) is descriptive. |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 (1b; round 1: 1) | Synthetic at G12's exact design: power curves, calibration of every null, three estimator biases found and fixed before the real run, real-noise injection. But the real null is about 2× wider than either synthetic noise model (missing family co-variation), so power was overstated. No embedding-model swap. |
+| G ground truth | agrees with known structure | 2 (1b, stance; round 1: 1) | The known teams are *not* recovered from full vectors (0). The a-priori stance axis does separate the known sides (9/10 debates). |
+| H comparative | beats the named rivals | 1 (1b; round 1: 0) | The data favour uniform topic order + family co-variation + a weak 1-D staggered field. The coupled AF beats neither the staggered paramagnet nor topic order. |
 | I transfer | holds in other same-mode periods, including the holdout | 0 | #34 not run. |
 
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
 | [G12](goalperiod-subhypotheses/G12/README.md) | exploratory | **failed** (AF); descriptive: weak 1-D staggered moment | Δ̄ = 0.028 [−0.10, 0.17], p = 0.34; teams recovered 1/10 (chance 1.5); text-axis σ = 0.092, p = 0.002 (9/10); post-verdict flip −0.36 (post hoc, 7/9); topic order on/off 0.42 → 0.01 |
+| [G12](goalperiod-subhypotheses/G12/README.md) round 1b | exploratory + native | **supported in stance** | Δ_stance 0.72 (10/10; agent-field p 0.002); teams 8/10 (chance 1.0); within-pair −0.68 (16/18); post-verdict −0.01; content Δ̄ +0.028 (bge) / −0.028 (gte) |
+| [G26](goalperiod-subhypotheses/G26/README.md) | native (1b) | failed (as predicted) | ballot camps vs stance r 0.000 (p 0.51); content −0.07 / +0.08 |
+| [G33](goalperiod-subhypotheses/G33/README.md) | native (1b) | failed (as predicted) | mean stance +0.50; camps p 0.10 vs agent-field null; 1 negative pair (null 1.2) |
 | #34 🔒 | confirmatory (planned) | not run | `analysis/confirm_g34.py`; dry run OK on #33 / #12 stand-ins |
 
 ## Results
@@ -267,6 +282,51 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - Fit the honest model explicitly: uniform field, family exchange matrix, 1-D staggered field μ.
 - Test the post-role reversal on other role-play periods (proposed HH; #26, #51 non-holdout days).
 - Decide whether #34 is worth spending: credence of SUPPORTED is now about 10%.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of round 1's pre-registered statistics (P1–P7 unchanged) on corrected inputs, plus the stance channel (S1–S4, pre-registered above at 07:14 UTC with the H37/DQ2 results disclosed) and three period-native tests (G12 re-drafting, G26 ballots, G33 unassigned debate; predictions written 07:14 UTC in their folders before running). #34 untouched; `confirm_g34.py` not run.*
+
+**What changed in the inputs.**
+- **DQ6 ground truth:** H21's #12 labels agree exactly with `ground_truth_labels` (10/10 debates: teams, judges, winners; phase boundaries identical to the second). Nothing to change.
+- **Second embedding model:** the masked texts were re-embedded with gte-modernbert on CPU (`scheme/build_g12.py --model gte_modernbert`; CPU vs stored cosine 1.000 on unmasked probes) → `emb_masked_gte_modernbert.npy`, `motions_gte_modernbert.npz`.
+- **Other content inputs:** unmasked shared embeddings (both models), DQ5 `style_resid_period` vectors (both models), statements flagged as restatements or copies removed.
+- **Stance (DQ2):** `reply_pairs` (`pair_set = cand`, labelled) between two debaters of the same debate; soft stance p_supports − p_opposes weighted by p_reply; hard classes for the calibrated agent-field null (`infra/shared/nulls.py: agent_field_null`, 500 simulations).
+- Code (old paths unchanged): `g12_analysis.CONFIG` (model, source, dedupe), new `analysis/r1b.py`, `r1b_figures.py`, `r1b_estimates.py`. Outputs: `data/processed/H21-debate-antiferromagnet/r1b/`.
+
+**Old vs new, content channel (P1–P7).**
+
+| Statistic | Round 1 (bge, masked) | bge masked (1b) | gte masked | DQ5 style-residualized (bge / gte) | restatements removed (bge / gte) |
+| --- | --- | --- | --- | --- | --- |
+| P1 Δ̄ (team-permutation p) | 0.028 (0.34) | 0.028 (0.34) | −0.028 (0.63) | 0.019 (0.37) / −0.000 (0.49) | 0.008 (0.43) / −0.041 (0.69) |
+| P2 teams recovered (of 10; chance 1.5) | 1 | 1 | 1 | 1 / 0 | 1 / 0 |
+| P3 LOAO m_s (p) | 0.032 (0.27) | 0.032 (0.27) | 0.012 (0.44) | 0.023 (0.26) / 0.025 (0.28) | 0.014 (0.40) / −0.009 (0.62) |
+| P4d a-priori text axis σ (p; positive debates) | 0.092 (0.002; 9/10) | same | 0.055 (0.065; 8/10) | 0.057 (0.010; 9) / 0.031 (0.15; 7) | 0.089 (0.003) / 0.047 (0.086) |
+| statement-level Gov − Opp on the axis (p) | 0.43 (0.0008) | 0.43 (0.001) | 0.22 (0.039) | 0.04 (0.006) / 0.01 (0.30) | 0.40 / 0.18 |
+| post-verdict reversal (post Gov − Opp; debates negative) | −0.36 (7/9) | −0.36 (7/9) | −0.20 (6/9) | −0.07 (8/9) / −0.03 (6/9) | −0.31 (7/9) / −0.20 (6/9) |
+| P5 pair-FE b_team (p) | 0.047 (0.19) | 0.047 (0.19) | −0.013 (0.59) | 0.084 (0.038) / 0.073 (0.072) | 0.054 / −0.021 |
+| P7 sublattice ρ at 3 min | +0.53 | +0.53 | +0.33 | +0.15 / +0.02 | +0.32 / +0.21 |
+| topic order M_u·ĝ, deb → post | 0.42 → 0.01 | 0.42 → 0.01 | 0.55 → 0.10 | 0.37 → −0.01 / 0.51 → 0.07 | 0.44 → 0.02 / 0.56 → 0.10 |
+
+Unmasked inputs give the same picture (Δ̄ 0.017 bge, −0.046 gte). **The content null is model- and preprocessing-robust;** the text-axis tilt is weaker in gte (negation is still poorly encoded), and the post-verdict reversal survives in both models at the statement level.
+
+**Stance channel (S1–S4).** 478 debater-to-debater replies in debate phases (264 within teams, 214 across).
+
+| Prediction | Observed | Verdict |
+| --- | --- | --- |
+| S1 Δ_stance > 0 beyond team permutation (p < 0.01) and the agent-field null | soft stance +0.41 within vs −0.32 across ("opposes" 6% vs 36%); **Δ_stance = 0.72**, 10/10 debates, team permutation p < 10⁻⁴ (null 95th pct 0.28); hard labels 0.50 vs agent-field null mean 0.05 (95th pct 0.18), p = 0.002 | **pass** |
+| S2 teams recovered from the stance graph ≥ 4/10 | **8/10** (chance 1.0, p = 4×10⁻⁷); misses #9 and #10 (7 and 5 observed pairs) | **pass** |
+| S3 order switches off after the verdict | post-verdict Δ = −0.01 (9 debates) vs 0.67 during the same debates; pre-phase Δ already 0.44 | **pass** |
+| S4 stance AUC ≥ 0.65, content AUC in [0.4, 0.6] on the same replies | stance 0.79 raw / 0.75 agent-adjusted; content 0.54 / 0.57 (bge), 0.51 / 0.54 (gte) | **pass** |
+
+**Native tests.**
+- **G12, re-drafting within pairs: supported.** For the 18 pairs seen both as teammates and as opponents, stance is lower as opponents in 16 (mean −0.68; sign flip p 0.0002; hard labels −0.58 vs agent-field null 5th percentile −0.17, p 0.002), while content shows no contrast (bge −0.046, gte +0.024, n.s.). The hostility follows the assignment, not the pair.
+- **G26, ballots as camps: failed, as predicted.** Ballot dissimilarity does not predict stance (Mantel r 0.000, p 0.51) or content (−0.07 / +0.08) during the contest, nor afterwards.
+- **G33, unassigned "debate": failed, as predicted.** Mean stance +0.50, "opposes" 6.3% (noise floor), no camps beyond agent fields (p 0.10), 1 negative pair (null 1.2).
+
+**Which verdicts change.** By the 1b rule (P1 or S1, P2 or S2, P5), **two-sublattice order is supported (exploratory) in the stance channel**; P5's intent (not labs or pair affinity) is met by the within-pair contrast. In content P1–P4 still fail. The pre-registered 1b rule also lists the within-pair contrast as coupling evidence; on reflection I do not use it that way: stance measures whether two agents' positions agree, so an assigned staggered field alone predicts opposite-team hostility, and the within-pair design removes pair constants, not the field. **"Coupled antiferromagnet" therefore stays not shown** (P7 is still positive, common drive). G12 Verdict (1b): supported in stance. The post-verdict reversal (round 1, post hoc) is seen on the content stance axis in both models but not in reply stance (Δ ≈ 0 after the verdict: relaxation, not reversal), matching H37.
+
+**Scorecard after 1b** (now scored on the stance mapping, content kept as the failed mapping): C 1 → 2 (stance order beats team permutation and the calibrated agent-field null, per debate), D 0 → 1 (teams recovered 8/10, unfitted; no AF fluctuation signature), E 0 → 1 (ten field switch-offs at known verdict instants: stance order off within 10 min), F 1 → 2 (content null robust across two lineages and five input variants; stance null calibrated, H37 size 0.04), G 1 → 2 (drafted teams recovered; within-pair contrast), H 0 → 1 (stance beats topic and pair affinity; the staggered paramagnet is still not separated from coupling). A 1, B 0, I 0 unchanged (#34 not run; no non-holdout period with assigned teams).
+**Figure:** `figures/r1b_stance_vs_content.pdf`. **Estimates:** 28 rows in `per_period_estimates`.
 
 ## Notes
 - **From H37 (2026-10-04):** stance spins do find the #12 antiferromagnet that topic missed: opponents −0.13 vs teammates +0.32 (AUC 0.74 vs 0.48 for topic), teams recovered exactly in 7/10 debates, contrast gone within 10 min of the verdict. H21's null was a topic-channel result. H37's planned #34 confirmatory run (`confirm_g34.py`, not run) reuses H21's saboteur ground-truth rule with a new modality, which must be disclosed when run.

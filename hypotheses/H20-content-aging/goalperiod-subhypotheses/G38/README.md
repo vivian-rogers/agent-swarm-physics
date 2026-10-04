@@ -1,6 +1,7 @@
 # H20 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
 **Verdict:** mixed (interrupted aging: no late slowing) (Amendment-2 null; pre-registered null: mixed)
+**Verdict (1b):** mixed (both models, all configs)
 **Role:** exploratory
 **Period:** regime III · mode C · 14 agents with statements · 2 rooms with agent statements · 17 active days (208 agent-days with ≥ 8 statements). Step changes inside (kept in one unit; tested as rejuvenation, exception (c)): 2026-04-14, 2026-04-20.
 
@@ -49,3 +50,16 @@ C (beats the stationary null): 1 — A p = 0.002, A_c p = 0.002. D (unfitted sig
 
 ## Notes
 - 2026-10-03: the lag-1 correlation rises over the first four days after kickoff (0.66 → 0.87) and is flat at ≈ 0.9 afterwards: a kickoff relaxation with τ_q ≈ 2 active days (interrupted aging), not slowing with age. MQ wins the LODO-CV by a factor 2–5. Day 1 carried the operator's Year-1 correction (NE36). NE17/NE18 cause no rejuvenation.
+
+## Round 1b (improved data, 2026-10-04): replication
+*Inputs: shared goal fields, gte-modernbert (DQ5), DQ5 dedupe (copies, restatements), style-residualized vectors. Data: `data/processed/H20-content-aging/G38/r1b/result_aniso_<config>.json`. Role of this row: replication.*
+
+| Input | Statistics (Amendment-2 null) |
+| --- | --- |
+| round 1 (bge, H01-derived goal vectors) | see Result above |
+| bge-small, shared goal fields | A +0.102 (p 0.002); A_c +0.072 (p 0.002); A_late -0.043; K +0.117; μ̂ +1.36 [+0.86, +1.84]; power 0.48 |
+| gte-modernbert | A +0.100 (p 0.002); A_c +0.087 (p 0.002); A_late -0.056; K +0.069; μ̂ +1.21 [+0.76, +1.78]; power 0.59 |
+| restatement-deduped (bge / gte) | A +0.092 / +0.087 |
+| style-residualized (bge / gte) | A +0.093 / +0.091 |
+
+A across the 7 configurations: +0.087 to +0.105. The shared goal fields give the same ĝ as round 1 (cos 1.0000 at n = 32: H20 averaged the room kickoffs, so H01's #38 room swap cancels), so bge numbers reproduce exactly.

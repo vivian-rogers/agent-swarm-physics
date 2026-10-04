@@ -4,6 +4,10 @@ Reads data/processed/H22-private-goals-spin-glass/G<NN>/<unit>/ (scheme/build.py
 matrices.npz per unit there. `run_unit` is shared with confirm_tail.py so both use identical code paths.
 
 Usage: uv run python hypotheses/H22-private-goals-spin-glass/analysis/explore.py [unit ...]
+
+Round 1b (2026-10-04; the call above is the unchanged round-1 path):
+  ... explore.py --base data/processed/H22-private-goals-spin-glass/r1b/<variant> [--units 51b,pu51e,...]
+reads and writes under <base> (built by scheme/build.py --r1b); shared #51 units (pu51*) are known as well.
 """
 from __future__ import annotations
 
@@ -28,7 +32,7 @@ sys.path.insert(0, str(HERE.parent / "scheme"))
 sys.path.insert(0, str(ROOT / "hypotheses/H05-rooms-cut/analysis"))
 import h22lib as L  # noqa: E402
 import role_relations as RR  # noqa: E402
-from build import UNITS  # noqa: E402
+from build import UNITS, shared_units_51  # noqa: E402
 from mf_blocks import block_J  # noqa: E402  (H05's block mean field, reused by import)
 
 DATA = ROOT / "data/processed/H22-private-goals-spin-glass"
@@ -36,10 +40,12 @@ COUNTED_51 = ("51b", "51c", "51d")
 CONTRAST = ("38a", "38b", "38c", "40", "44")
 FOCUS_AGENTS = (6, 29)  # #focus room in 51c (excluded from couplings, as in H13)
 SEED = 20261004
+BASE = (ROOT / sys.argv[sys.argv.index("--base") + 1]) if "--base" in sys.argv else DATA
+ALL_UNITS = {**UNITS, **shared_units_51()} if "--base" in sys.argv else UNITS
 
 
 def load_unit(period, name):
-    p = DATA / period / name
+    p = BASE / period / name
     meta = json.loads((p / "meta.json").read_text())
     ag = pl.read_parquet(p / "agents.parquet")
     wi = pl.read_parquet(p / "win_index.parquet"); wv = np.load(p / "win_vec.npy").astype(np.float64)
@@ -155,12 +161,12 @@ def mf_role_blocks(Jt, k_agents, roles, talk_rate):
 
 
 def run_unit(name, units=None, nboot=500, nnull=300, quick=False):
-    units = units or UNITS
+    units = units or ALL_UNITS
     period, a, b = units[name]
     rng = np.random.default_rng(SEED + zlib.crc32(name.encode()) % 1000)
     meta, ag, wi, wv, di, dv, tk = load_unit(period, name)
     D = len(meta["days"])
-    excl = FOCUS_AGENTS if name == "51c" else ()
+    excl = FOCUS_AGENTS if name in ("51c", "pu51g") else ()
     keep, thr_w = eligible(meta, ag, wi, di, exclude=excl)
     code = ag["agent"].to_numpy(); labs_all = ag["lab"].fill_null("?").to_numpy()
     roles_all = ag["role"].to_list()
@@ -236,7 +242,7 @@ def run_unit(name, units=None, nboot=500, nnull=300, quick=False):
                     variants["largest_room"]["frustration"] = L.frustration_block(m3, rng, nperm=1000, gs=False)["shuffle"]
     out["variants"] = variants
     # save
-    p = DATA / period / name
+    p = BASE / period / name
     mats = {}
     mats["Jc_pair"] = st.J(np.ones(Dp, bool)); mats["Jc_pair_agents"] = code[keep]
     if "J_full" in mc:
@@ -261,7 +267,10 @@ def _js(x):
 
 
 def main():
-    names = sys.argv[1:] or list(UNITS)
+    if "--base" in sys.argv:
+        names = sys.argv[sys.argv.index("--units") + 1].split(",") if "--units" in sys.argv else list(ALL_UNITS)
+    else:
+        names = sys.argv[1:] or list(UNITS)
     t0 = time.time()
     for n in names:
         r = run_unit(n)

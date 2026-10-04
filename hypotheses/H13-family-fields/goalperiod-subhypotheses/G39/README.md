@@ -1,6 +1,7 @@
 # H13 × G39: Build your own interactive world! (2026-04-27 → 05-01)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents · two rooms, reshuffled 04-27 · 5 days.
 **Units analysed:** 39
@@ -49,3 +50,13 @@ Within-unit stationarity (first vs second half of days, family field cos): Anthr
 
 ## Notes
 - Data: `data/processed/H13-family-fields/G39/`. Per-period figures: `figures/`.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the pre-registered statistics on the corrected inputs (card section "Round 1b"). Old numbers are kept above.* Inputs: DQ5 statement vectors (bge and gte-modernbert, regime-whitened, 32-d), H13's own style rival S-a and DQ5's shared `style_resid_period` vectors, DQ5 restatement flags, `activity_bins_fixed` for talk spins, and Jev v3 behavior states (HH267, card Amendment 2). Data: `data/processed/H13-family-fields/r1b/`.
+
+| Unit | T_field round 1 (bge) | T_field gte | S-a own (bge / gte) | shared style_resid_period (bge / gte) | T bge, restatements removed | talk Δ old → fixed table | behavioral T_B |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 39 | 0.173 (p 0.040) | 0.214 (p 0.023) | -0.125 / -0.114 | -0.107 (p 0.977) / -0.098 (p 0.980) | 0.169 | -0.119 (p 0.767) → -0.136 (p 0.862) | 0.418 (p 0.001) |
+
+- **Talk on the corrected table:** family homophily in talk timing (Δ > 0, p < 0.05) in no unit of this period.
+- **Reading:** the content field is unchanged in both models and still vanishes under either style rival; the behavioral field is reported in the card (B1–B4).

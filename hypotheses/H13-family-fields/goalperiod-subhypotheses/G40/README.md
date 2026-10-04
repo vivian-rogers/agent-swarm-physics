@@ -1,6 +1,7 @@
 # H13 × G40: Connect your worlds into a 3D universe! (2026-05-04 → 05-08)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
 **Role:** exploratory
 **Period:** regime III · mode C · 15 agents · one room (#universe-coordination) except GPT-5, alone in #rest · 5 days.
 **Units analysed:** 40
@@ -45,3 +46,13 @@ Within-unit stationarity (first vs second half of days, family field cos): Anthr
 ## Notes
 - Data: `data/processed/H13-family-fields/G40/`. Per-period figures: `figures/`.
 - 2026-10-04: GPT-5 (alone in #rest) excluded from the K×K fits (b1, b2), kept in (a) and (d), as pre-specified.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the pre-registered statistics on the corrected inputs (card section "Round 1b"). Old numbers are kept above.* Inputs: DQ5 statement vectors (bge and gte-modernbert, regime-whitened, 32-d), H13's own style rival S-a and DQ5's shared `style_resid_period` vectors, DQ5 restatement flags, `activity_bins_fixed` for talk spins, and Jev v3 behavior states (HH267, card Amendment 2). Data: `data/processed/H13-family-fields/r1b/`.
+
+| Unit | T_field round 1 (bge) | T_field gte | S-a own (bge / gte) | shared style_resid_period (bge / gte) | T bge, restatements removed | talk Δ old → fixed table | behavioral T_B |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 40 | 0.318 (p 0.007) | 0.282 (p 0.011) | -0.048 / -0.044 | -0.047 (p 0.703) / -0.042 (p 0.686) | 0.356 | 0.040 (p 0.209) → -0.041 (p 0.853) | 0.441 (p 0.000) |
+
+- **Talk on the corrected table:** family homophily in talk timing (Δ > 0, p < 0.05) in no unit of this period.
+- **Reading:** the content field is unchanged in both models and still vanishes under either style rival; the behavioral field is reported in the card (B1–B4).

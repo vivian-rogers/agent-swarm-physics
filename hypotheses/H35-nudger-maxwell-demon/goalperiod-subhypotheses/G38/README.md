@@ -1,7 +1,8 @@
 # H35 × G38: Choose a charity and raise money (2026-04-02 → 2026-04-24)
 
 **Verdict:** mixed
-**Role:** exploratory (round 1, non-holdout); secondary
+**Role:** native (round 1b native test below) · round 1: exploratory (round 1, non-holdout); secondary
+**Verdict (1b):** failed (native N1 as worded: sustained ATT 0.058 < G51's 0.094; 2026-10-04)
 **Period:** regime III · mode C · 12 agents · nudges 108. Data: `data/processed/H35-nudger-maxwell-demon/G38/`.
 
 ## Why this period
@@ -31,6 +32,18 @@
 | value per nudge (escapes): random-gate / logged / once at k=1 / k=2 | 0.494 / 0.455 / 0.299 / 0.463 (ratios to logged 0.66, 1.02) |  |  |
 
 Data: `data/processed/H35-nudger-maxwell-demon/G38/results.json` (built 2026-10-03).
+
+## Round 1b native test (NE44 contrast: long-pause regime)
+*Role of this section: native (round 1b), in addition to round 1.*
+*Prediction written 2026-10-04, before computing any round-1b outcome around a nudge.* G38 runs under the 12-h pause default (NE44 changed it to 5 min on 06-11, inside the holdout, so the step itself is untestable); a nudge here wakes an agent out of a long sleep at any trap age (round 1). If waking from a long sleep restarts real work, the sustained-run response should be larger here than in the short-pause G51, where agents are read at the next 5-min gate.
+- **N1:** first-nudge ATT on sustained runs in G38 > the G51 estimate (point comparison; sign only, low power: ~100 nudges, few strictly isolated first nudges).
+- **N2:** first-nudge ATT on work commits (60 min) has a positive point estimate in G38.
+- Counts against the wake-up reading: G38 sustained ATT ≤ G51's.
+
+**Result (round 1b native, run 2026-10-04; `G38/r1b/`).** 25 strictly isolated first nudges (19 with 60-min windows).
+- **N1 fails as worded:** sustained ATT +0.058 [+0.011, +0.132] in G38 vs +0.094 in G51 (point lower). Post hoc rate DiD reverses the order (G38 +1.26 runs/h [−0.82, +3.27] vs G51 +0.29), with very wide CIs.
+- **N2 fails as worded:** work-commit ATT (60 min) −0.98 [−1.95, −0.03]; placebo −0.38 (not clean); post hoc DiD +0.54 commits/h [−0.73, +1.73].
+- Glance +0.037 [0.000, +0.106]. Native verdict: **failed** as worded; the long-pause wake-up may restart work (DiD points), but 25 nudges cannot show it.
 
 ## Scorecard (period-specific axes)
 C 1 · D 0 (P3 failed) · E 0 · G 1 (H09: only @-mentions get through a pause, seen here as the wake-up effect).

@@ -1,4 +1,5 @@
-\hwhat{We measured the two-time correlation $C(t_w+\tau,t_w)$ of each agent's day-mean content embedding ($t_w$ = active days since kickoff) in 29 non-holdout goal periods. The aging slope $A$ at fixed lag ($t_w\ge2$) was tested against a fitted stationary swarm model. Synthetic check at village sampling: size 0.03--0.07, power 0.33--0.44 against $\mu=0.5$ aging. The pre-registered isotropic null was 2--3$\times$ too narrow on real data (content fluctuates in 5--12 of 32 dimensions); a post-hoc null with the fitted shape fixed it. \textbf{No aging:} random-effects $A$ over long and medium goals is $+0.021\pm0.021$. The one strong effect (\#38) is a kickoff relaxation: lag-1 $C$ rises 0.66$\to$0.87 in four days, then stays flat. In \#51, $\mu=0.5$ aging is rejected. Holidays drive the short-week outliers. Holdout not run.}
+\hwhat{We measured the two-time correlation $C(t_w+\tau,t_w)$ of each agent's day-mean content embedding ($t_w$ = active days since kickoff) in 29 non-holdout goal periods. The aging slope $A$ at fixed lag ($t_w\ge2$) was tested against a fitted stationary swarm model; the pre-registered isotropic null was 2--3$\times$ too narrow (content fluctuates in 5--12 of 32 dimensions), so a null with the fitted shape was used. \textbf{No aging:} random-effects $A$ over long and medium goals is $+0.021\pm0.021$. \#38 shows a kickoff relaxation (lag-1 $C$ 0.66$\to$0.87 in four days, then flat); in \#51 $\mu=0.5$ aging is rejected. \textbf{Round 1b} (second embedding model, dedupe, style residualization, shared goal vectors): every verdict reproduces in all 7 input configurations; style residualization halves $A$ and removes \#51's weak late slowing. Natives: newcomers relax on their own clock without aging; drive withdrawal and a spontaneous rivalry$\to$collaboration turn leave content correlation intact. Holdout not run.}
+
 \hmodel{Models 01 (SK-type glassy aging) and 11 (vector spins). Spin: agent $i$'s day state $\bar x_{it}$, the mean of its unit-normalized, regime-whitened ($n=32$) statement embeddings (own chat and plans); $v_{it}$ is its sampling noise. $q$: plateau (style and goal content); $c_0$: short-lag ceiling; $\tau_0$: relaxation time; $\mu$: aging exponent of the Box-Cox clock $s_\mu$ ($\mu=0$ stationary, $\mu=1$ simple aging). Rival: a kickoff transient decaying in $\tau_q$ days. $n_{\rm eff}$: dimension of the day-to-day fluctuations.}
 \hmath{\vspace{-8pt}
 \begin{gather*}
@@ -9,4 +10,23 @@ A=\partial C/\partial\ln t_w\,\big|_{\tau},\qquad \mathrm{Var}\,C(t,t')\propto 1
 \end{gather*}\vspace{-6pt}}
 \hobs{../figures/summary_obs.pdf}{Left: in \#38, the agent-averaged correlation between an agent's content on day $t_w$ and on day $t_w+\tau$ climbs for four active days after the kickoff, then stays flat. A quench relaxes; the system does not slow with age. Right: the aging slope $A$ as a z-score against the stationary null, for long (blue) and medium (aqua) goals. Open circles: the pre-registered isotropic null (too narrow). Filled: the null with the fitted fluctuation shape. Only \#38 (up) and \#20 (Thanksgiving, down) stand out.}
 \htelos{Mostly a negative result, mildly useful. An operator worried that a long-running swarm ``rigidifies'' as its goal ages can relax a little: at day resolution, content turnover does not slow in week three versus week one (weak aging is not excluded). The practical number is the settling time after a big kickoff, about four active days, seen once (\#38). The more transferable lesson is methodological: embedding similarity statistics on swarm logs need nulls with the empirical, low-dimensional fluctuation shape, or they are 2--3$\times$ overconfident. As physics, aging finds nothing to grip: daily re-prompting with a fixed goal acts like a strong pinning field.}
-\hbottom{LLM-swarm content shows no detectable aging at day resolution: after a few days' kickoff relaxation it decorrelates at an age-independent rate, and only a null calibrated to the low-dimensional fluctuation shape says so honestly.}
+\hbottom{LLM-swarm content shows no detectable aging at day resolution, in either embedding model: after a few days' kickoff relaxation it decorrelates at an age-independent rate, and only a null calibrated to the low-dimensional fluctuation shape says so honestly.}
+
+\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.53\columnwidth}p{0.11\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 $\to$ 1b (bge / gte)} & \textbf{Verdict}\\\hline
+P2 aging in $\ge2/4$ long goals & 1/4 (\#38) $\to$ 1/4 / 1/4 & $\times$\\
+RE $A$, long + medium & $+0.021\pm0.021$ $\to$ $+0.020$ / $+0.022$; style $+0.008$ & $\times$\\
+P4 late slowing where $A>0$ & \#38 $A_{\rm late}$ $-0.04$ $\to$ $-0.04$ / $-0.06$ & $\times$\\
+\#51 $\mu=0.5$ rejected & power 1.00 $\to$ $\ge0.98$ in all configs & $\checkmark$\\
+\#51 weak $\hat\mu>0$ (descriptive) & 0.22 [0.07, 0.41] $\to$ 0.16 [0.00, 0.37]; style CI $\ni0$ & gone\\
+Calibration (robust z-SD) & 1.07 $\to$ 1.07 / 0.91 & $\checkmark$\\
+G51 newcomers: onboarding $K>0$ & 3 of 5 joiners; no own-clock aging & $\sim$\\
+G27 mid-period switch & $B_{\max}$ $p$ 0.48 / 0.21 & d\\
+NE43 drives withdrawn & 08-05 dip $-0.022$ inside placebo; 08-21 none & $\sim$\\
+\end{tabular}}}
+
+\hobsb{../figures/r1b_models.pdf}{(a) Aging slope per long and medium goal, bge (blue) vs gte (orange), filled base, open style-residualized: the models agree, style shrinks \#51 and \#19. (b) \#38: lag-1 correlation rises for about four active days (shaded) and then stays flat in both models (dashed: style-residualized).}
+
+\hcaveats{Day resolution only; weak sub-aging ($\mu\lesssim0.3$) cannot be excluded outside \#51. The calibrated null was chosen after seeing real data, and NE43 shows it is too narrow for step statistics at ordinary day boundaries. Short periods: the null is anti-conservative and holidays dominate. Onboarding transients rest on 5 joiners.}
+
+\hnext{Sub-day two-time functions on the active-hour clock (link to H48's $\tau\approx2$--5 h) and an empirical-placebo null for boundary tests.}

@@ -3,6 +3,7 @@
 
 **Verdict:** mixed
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** supported (V* V_eng; MN -0.50 (z -0.7); 2026-10-04, `r1b/results.json`)
 **Period:** regime I · 6 agents with a viability value · 25 non-holdout active days.
 
 ## Why this period

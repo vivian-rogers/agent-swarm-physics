@@ -1,6 +1,6 @@
 # H10: Goals are Legendre pushes: a swarm's response to an assigned goal is predictable from its unforced fluctuations
 
-**Status:** round 1 done (2026-10-03): **failed** in exploration. Goals are not small Legendre pushes in the village: free-week fluctuations do not predict who follows the goal, and the variance moves the wrong way. Confirmatory script written, not run.
+**Status:** round 1 done (2026-10-03): **failed** in exploration. Goals are not small Legendre pushes in the village: free-week fluctuations do not predict who follows the goal, and the variance moves the wrong way. **Round 1b (improved data, 2026-10-04): still failed, in both embedding models.** P1 fails in all 8 input configurations (bge and gte-modernbert × base / restatement-deduped / style-residualized; Stouffer p 0.84–0.96); the shared goal vectors change nothing (H10's own matched them). Natives: #26's agent-set goal moves agents about 1 SD but P1 is wrong-signed again (failed); NE38's single-agent reassignment is a quench 10–20 SDs deep that no tilt can reach (mixed by the control rule); #44's assigned room moves along its own kickoff and the self-chosen room does not (mixed, model-dependent). Confirmatory script written, not run.
 **Fields:** stat mech, info theory
 **Origin:** HH49 + HH85 (shortlist 2, item 1) (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** agent; regime (never pooled across; every pair lies inside one regime); driving / external field (the village goal, here as a *linear* field along ĝ); agent state, variant *vector (for model 11)*, operationalized as the **statement-mean projection** below (proposed as a named variant, see Notes); goal period as the unit of analysis, with exception (c) for the free → assigned transitions.
@@ -128,6 +128,11 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | [G31](goalperiod-subhypotheses/G31/README.md) (31a, free) | exploratory | descriptive | along ĝ₁₂/ĝ₁₇ only (ĝ₃₂ kept blind): g = 0.71 / 0.55, R⊥ = 3.9 |
 | [G37](goalperiod-subhypotheses/G37/README.md) (free) | exploratory | descriptive | along ĝ₃₈: γ = −0.11, unimodal, g = 0.62 |
 | [G38](goalperiod-subhypotheses/G38/README.md) (38a) | exploratory | mixed | Δ̄ = 0.11, ε = 1.92, r = +0.20 (p = 0.27; sign unstable), ramps for 10 days |
+| [G44](goalperiod-subhypotheses/G44/README.md) (#42 → #44, per room) | native (1b) | mixed | #best along its own kickoff Δ̄ +0.18 (bge) / +0.24 (gte), ε 0.97 / 1.55; #rest along its own kickoff ≈ 0; room difference +0.17 [+0.11, +0.23] in both; no dispersal |
+| [NE38](goalperiod-subhypotheses/NE38/README.md) (Opus 5 reassigned) | native (1b) | mixed | ε 10.2 (bge) / 20.3 (gte); post mean beyond every pre window (no tilt reaches it); other agents ≈ 0; one incumbent drifted −3.1 / −1.0 SD |
+| [G26](goalperiod-subhypotheses/G26/README.md) (#25 → #26, leader's goal) | native (1b) | failed | push along the leader's announcement ε 1.06 / 0.93; P1 r −0.14 / −0.63 |
+
+*Round 1b verdicts* (`**Verdict (1b):**` in each folder): NE34 failed, G12 failed, G17 failed (both models); G38 mixed (bge mixed, gte failed); G11, G16, G31, G37 descriptive.
 
 ## Outcome vs prediction
 | Prediction (2026-10-03, + Amendment 1) | Credence before | Outcome | Verdict |
@@ -203,6 +208,49 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - 2026-10-03: calibration (random directions, non-test periods) and synthetic validation; Amendment 1 (P2 perturbative range, P3/P4 descriptive, P4 shrinkage) before any real-data statistic along a goal direction.
 - 2026-10-03: exploratory round 1 run: **failed**. Confirmatory script written, dry-run checked, not run. Period folders moved to `goalperiod-subhypotheses/` (coordinator's request).
 - Proposed for DEFINITIONS.md: "agent state (vector, statement-mean projection)", "goal field direction ĝ", "push size ε", "loop gain (window-level, along a direction)". Text is in the round-1 hand-back.
+- 2026-10-04: round 1b (re-evaluation agent RE-C1): corrected inputs in 8 configurations, natives G44 / NE38 / G26 (predictions dated in the folders before running), per-period estimates; verdict unchanged (failed). Section "Round 1b" above.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation wave (Vivian's priority 2), two-layer design (`infra/data-quality/QUEUE.md`). Replication: the round-1 estimators rerun unchanged on corrected inputs; native: three new period-specific tests (DQ9 cross-index), predictions dated in their folders before running. Holdout untouched: #23 still unused on either side, nothing along ĝ₃₂, `confirm.py` not run.*
+
+**What changed.**
+- **Goal vectors:** the shared goal fields (`infra/shared/goal_fields.py`, `embeddings/goals.parquet`). H10 built its own goal and kickoff vectors with the same rule; they match the shared ones to cos ≥ 0.9999999 in every period (`r1b/check.json`), so every bge number reproduces exactly (pairs, robustness, kickoffs, period descriptives). The H01 #38 room swap never touched H10 (its kickoff vector pools all rooms).
+- **Second embedding model:** gte-modernbert (DQ5), whitened per regime in its own basis (64-d, nested), with its own goal vectors.
+- **Dedupe (DQ5 `statement_flags`):** copies (`self_repeat_both`, 10.5% of H10's statements) and restatements (either model's flag, ~15%).
+- **Style:** `statements_style_resid_period32` for both models, because P1 is a per-agent statistic and agent style enters μᵢ and κ2ᵢ.
+- **Activity:** not used by H10 (no change from the `activity_bins` fix).
+- Code: `scheme/build_r1b.py`; `analysis/h10data.py: configure()` (defaults reproduce round 1); `run_pairs.py`, `kickoffs.py`, `periods.py` take `--emb --goals --dedupe --style`; natives `analysis/natives_r1b.py`; `analysis/r1b_figures.py`, `analysis/r1b_estimates.py`.
+
+**Replication, old vs new** (pairs #11 → #12a, #16 → #17, #37 → #38a):
+
+| Statistic | Round 1 (bge) | 1b bge-small | 1b gte-modernbert | 1b deduped (bge / gte) | 1b style-resid (bge / gte) |
+| --- | --- | --- | --- | --- | --- |
+| P1 r | −0.37, −0.69, +0.20 | same | −0.53, −0.49, −0.09 | −0.32, −0.69, +0.15 / −0.56, −0.40, −0.16 | −0.66, −0.60, +0.33 / −0.05, −0.81, +0.26 |
+| P1 combined | Stouffer 0.89, **failed** | 0.89, failed | 0.96, failed | 0.90 / 0.93, failed | 0.87 / 0.84, failed |
+| push ε | 3.06, 1.42, 1.92 | same | 3.00, 2.03, 0.69 | 3.46, 1.43, 1.45 / 3.26, 1.41, 0.66 | 3.62, 1.78, 1.28 / 3.21, 2.38, 0.70 |
+| ρ along ĝ (ρ⊥) | +2.04, +1.03, +0.66 (≈ −0.13) | same | +1.67, +1.26, +0.09 (−0.02 to −0.22) | +2.23, +0.87, +0.35 / +1.81, +1.14, +0.02 | +1.96, +0.78, +0.84 / +1.59, +0.94, −0.03 |
+| convergence slope (#11 → #12a) | −1.41 | same | −1.25 | −1.33 / −1.16 | −1.51 / −0.97 |
+| kickoffs: jump > 0 | 19/19 | 19/19 | 19/19 | 19/19 / 19/19 | 19/19 / 19/19 |
+| kickoffs: Spearman (regime I) | −0.56 (p 0.015) | −0.56 | −0.59 (p 0.010) | −0.61 / −0.48 | −0.55 / −0.30 (p 0.23) |
+
+- **Verdict: unchanged, failed.** P1 fails in every configuration, negative in both regime-I pairs throughout (regime-I robustness variants with r < 0: 11/12 bge, 10/12 gte).
+- **Model-dependent:** (i) the #37 → #38a push is small in gte (ε 0.69 vs 1.92) and its would-be variance test passes there (ρ −0.18, not counted under Amendment 1), so the regime-III variance is tilt-compatible under gte while P1 still fails; (ii) the free-week shape and drift (#11 two-component and drifting under bge, single-well and stationary under gte); (iii) window-level loop gains along ĝ run lower in gte (free weeks 0.37–0.48 vs 0.51–0.62).
+- **Robust:** field-specific dispersal in both regime-I pairs (ρ 0.8–2.2 along ĝ, transverse ≈ 0), the common-target convergence in #11 → #12a, a push at every change into an assigned goal, and the wrong-signed cross-transition fluctuation–response (except under gte + style).
+
+**Native layer** (new in 1b; predictions in the folders, written before the runs):
+
+| Native test | Design | bge-small | gte-modernbert | Verdict |
+| --- | --- | --- | --- | --- |
+| [G44](goalperiod-subhypotheses/G44/README.md) assigned vs self-chosen room | #42 → #44 days 2+, each room along its own room kickoff | #best Δ̄ +0.18 [+0.13, +0.24], ε 0.97; #rest −0.05; room difference +0.17 [+0.11, +0.23] | #best +0.24, ε 1.55; #rest +0.02; difference +0.17 [+0.11, +0.24] | mixed (bge misses ε > 1 by 0.03) |
+| [NE38](goalperiod-subhypotheses/NE38/README.md) one agent's goal reassigned | Opus 5's window distribution along its new goal, before vs after; tilt check | ε 10.2; post mean 0.47 > every pre window (max 0.17): unreachable by any tilt | ε 20.3; unreachable | mixed (the incumbent control drifted −3.1 / −1.0 SD) |
+| [G26](goalperiod-subhypotheses/G26/README.md) agent-set goal | #25 → #26 along the elected leader's announcement | ε 1.06; P1 r −0.14 | ε 0.93; r −0.63 | failed |
+
+- **What the natives add.** A single agent's goal change is the cleanest Legendre test in the record, and it fails in the strongest way: the post-change content lies outside the support of the pre-change distribution, so P_A ∝ P_F e^{λy} cannot hold for any λ. An agent-written goal does act as a field over days (≈ 1 SD, similar to the operator's election kickoff), but who moves is again not ordered by unforced fluctuations. #44 shows the field is room-specific and needs an operator-written target: the room told to pick its own goal shows no push along its instruction.
+- **Not reproduced:** the round-1 dispersal signature in #44's assigned room (its variance along ĝ fell at ε ≈ 1).
+
+**Scorecard after 1b** (changes only): A stays 1 (embedding-model swap and style residualization done and P1 robust to both, but invariance across families is not established); E stays 0 (NE38 is a natural experiment the tilt fails, not a partial pass); G stays 1 (#44: the field follows the assigned room, an instrument-level check). Other axes unchanged. Ratings: complete 40 → 50 (round 1b with both models and three natives), faithfulness 1.0 (unchanged), usefulness 1.5 (unchanged).
+
+**Per-period estimates:** 36 rows written with `write_estimates` (`loop_gain_g_along_goal`, `goal_alignment_mean`, `fluct_kappa2_along_goal` for the six pair segments, channels `content_bge_small` and `content_gte_modernbert`, role replication). The pair, kickoff and native statistics span two segments, which the per-period schema excludes.
 
 ## Round 2 redirects (2026-10-04)
 *From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*

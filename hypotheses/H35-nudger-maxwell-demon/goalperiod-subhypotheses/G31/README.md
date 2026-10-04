@@ -2,6 +2,7 @@
 
 **Verdict:** descriptive
 **Role:** exploratory (round 1, non-holdout); exploratory (descriptive)
+**Verdict (1b):** descriptive (< 6 strictly isolated first nudges; 2026-10-04)
 **Period:** regime I · mode F · 12 agents · nudges 24. Data: `data/processed/H35-nudger-maxwell-demon/G31/`.
 
 ## Why this period

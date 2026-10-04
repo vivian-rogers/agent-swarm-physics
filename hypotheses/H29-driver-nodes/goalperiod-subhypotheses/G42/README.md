@@ -1,6 +1,7 @@
 # H29 × G42: Run your own Youtube channel! (2026-05-18 → 2026-05-22)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed; gte failed)
 **Role:** exploratory (counted)
 **Period:** regime III · mode I · 15 recipients in the network · #best / #rest · 5 non-holdout days.
 
@@ -35,3 +36,17 @@ Figures: `../../figures/h29_summary.pdf` (all periods). Data: `data/processed/H2
 
 ## Notes
 - 2026-10-04: pre-registered pipeline (`explore.py`) and Amendment 2 (`posthoc.py`, post hoc) run. Invisible rows from call windows > 30 s: 0.40 (the H18 visibility rule misclassifies messages that arrive during a PAUSE or a long tool call).
+
+## Round 1b (improved data, 2026-10-04)
+Context-ledger visibility (DQ1) instead of H18's call-start rule; both embedding models; the DQ2 reply-graph network. Numbers in `data/processed/H29-driver-nodes/r1b/G42/` (bge) and `r1b_gte/G42/` (gte). Rule unchanged.
+
+| Statistic | Round 1 | Round 1b bge | Round 1b gte |
+| --- | --- | --- | --- |
+| κ (pre-registered) | -0.014 [-0.029, -0.001] | -0.025 [-0.046, -0.006] | -0.022 [-0.060, 0.016] |
+| boundary jump (matched age) | 0.038 [-0.008, 0.087] | -0.005 [-0.049, 0.054] | -0.028 [-0.097, 0.058] |
+| named like-for-like | 0.093 [-0.085, 0.181] | 0.126 [-0.044, 0.235] | 0.153 [-0.017, 0.274] |
+| unnamed like-for-like | 0.040 [-0.015, 0.092] | -0.059 [-0.125, 0.032] | -0.105 [-0.171, -0.049] |
+| split-half D (pre-registered / post hoc) | 0.03 / 0.52 | -0.02 / 0.39 | 0.18 / -0.46 |
+| held-out V2 ρ(D, H) (pre-registered / post hoc) | 0.36 / 0.08 | 0.14 / 0.16 | -0.13 / 0.05 |
+| reply network: split-half D^rep · held-out ρ(D^rep, H) | – | 0.55 · -0.05 | 0.48 · -0.01 |
+| reply-parent premium (matched age) | – | 0.159 [0.144, 0.165] | 0.187 [0.162, 0.199] |

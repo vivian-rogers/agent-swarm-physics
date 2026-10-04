@@ -1,6 +1,7 @@
 # H39 × G33: Discuss, debate, and act on your views about the recent Pentagon-AI company news (2026-03-02 → 2026-03-05)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime II · mode C · 33 agent-days on 3 non-holdout days (2026-03-02 → 2026-03-04) · 7,736 agent-minutes on the trimmed grid.
 
@@ -34,3 +35,6 @@ Run 2026-10-04 with `analysis/run_period.py --period G33`; numbers in `data/proc
 
 ## Notes
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G33/results.json`. Rule unchanged: P3 @-mentions ✗ → **failed**.

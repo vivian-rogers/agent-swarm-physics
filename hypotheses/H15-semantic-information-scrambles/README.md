@@ -1,6 +1,6 @@
 # H15: Semantic information through natural scrambles: which information keeps agents and the swarm viable
 
-**Status:** **exploratory round 1 done (2026-10-03, non-holdout only).** The pre-registered "memory is load-bearing" predictions failed: no detectable day-scale viability cost of losing up to ~80% of memory (P1) or of starting with an empty memory (P4); the rewrite control behaved (P3). The pre-registered context test (P5) came out significantly opposite because of a task-phase confound; a post-hoc estimate that uses only the exogenous timing of forced consolidations finds that erasing the context window cuts write output by 33–53% for ~10 turns in 8/9 regime III periods. D2.6 (choosing V) was inconclusive in both regimes. Confirmatory script `analysis/confirm_ne30.py` written, dry-run only, **not run**. Pre-registration (mapping, viability-choice procedure, observables, null, predictions) was written **before any outcome around a scramble event was computed**; amendments are dated in Notes.
+**Status:** **round 1b done (2026-10-04, improved data; see "Round 1b" below):** on the work ledger, real failures and the context ledger the day-scale nulls stand (memory loss +0.29 SD on V*, newcomers +0.20, artifact switches −0.00 on work commits), and the forced-erasure cost is now an output number: −39% work commits for ten calls (7/9 periods), about 10% of a forced segment's work, unaffected by what the agent saves to memory (NE41 native, supported). D2.6 re-chose V* (I: V_eng, III: V_rel); V_files (distinct files per hour, outside the pre-registered pool) is the first homeostatic candidate. Natives: NE41 supported, NE16 mixed, NE29 supported. **Exploratory round 1 done (2026-10-03, non-holdout only).** The pre-registered "memory is load-bearing" predictions failed: no detectable day-scale viability cost of losing up to ~80% of memory (P1) or of starting with an empty memory (P4); the rewrite control behaved (P3). The pre-registered context test (P5) came out significantly opposite because of a task-phase confound; a post-hoc estimate that uses only the exogenous timing of forced consolidations finds that erasing the context window cuts write output by 33–53% for ~10 turns in 8/9 regime III periods. D2.6 (choosing V) was inconclusive in both regimes. Confirmatory script `analysis/confirm_ne30.py` written, dry-run only, **not run**. Pre-registration (mapping, viability-choice procedure, observables, null, predictions) was written **before any outcome around a scramble event was computed**; amendments are dated in Notes.
 **Fields:** info theory, thermodynamics
 **Origin:** HH43 → H01 D4.1.b (shortlist 2, item 9); Kolchinsky–Wolpert semantic information (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Literature:** [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md) (the framework); Sowinski et al. 2023 (plateau-then-collapse; via `physics-models/04-semantic-information`).
@@ -138,14 +138,14 @@ Scored for round 1 (exploratory, non-holdout). Mapping = agent-level KW with era
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | AR(1)+noise for the same-day residual checked with pooled autocovariances: regime I/II u is white (r₁ ≈ 0), regime III r₁ = 0.23 (V_eng), 0.46 (V_rel) with r₂/r₁ ≈ ρ. Stationarity within a period assumed, not tested; no Markov-order test. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Nulls: same-day differencing (shared field), unit-pooled placebo days (calibrated, A1), selection pre-trends. Only the context-erasure dip (post-hoc) clears them decisively; no memory scramble does. No day-blocked held-out likelihood. |
 | D unfitted predictions | unfitted statistics and the model's signature | 0 | The KW signature (plateau-then-collapse, P2) is untestable here: ML doses are truncated at 0.5, n = 12, and the synthetic power to prefer a hockey stick is 9%. |
-| E interventional | predicts the change across a natural experiment | 0 | Pre-registered interventional predictions failed: P1 (memory loss), P4 (newcomers), P5 (forced vs voluntary, significantly opposite). The post-hoc forced-consolidation estimate (an exogenous intervention: the 41-turn cap) is consistent across 8/9 periods but was not predicted; it becomes E evidence only if C3 confirms it. |
+| E interventional | predicts the change across a natural experiment | 1 | **Round 1b (2026-10-04): 0 → 1.** NE41 native: the forced-erasure work dip (−0.39, 7/9 periods) and its independence from the memory dose held as dated predictions on the DQ1 ledger and DQ4 work commits; NE29 accounting null held. Round 1: pre-registered interventional predictions failed: P1 (memory loss), P4 (newcomers), P5 (forced vs voluntary, significantly opposite). The post-hoc forced-consolidation estimate (an exogenous intervention: the 41-turn cap) is consistent across 8/9 periods but was not predicted; it becomes E evidence only if C3 confirms it. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Synthetic on the real skeleton (150 reps): null calibrated (5%), bias and coverage per counterfactual, power 41% (ML, −0.41 SD), 35% (MN), 17% (CC); a transient slump around a reset is not identifiable (bias −0.57; pre-trend catches ~30%); plateau unidentifiable. Results agree across kal / ar1 / did. |
 | G ground truth | agrees with known structure | 1 | The rewrite negative control is null (P3). The forced cap appears as the 41-turn spike and the write-rate collapse at every consolidation. The D2.6 procedure found no homeostatic V, so it has not been validated against a known homeostatic variable. |
 | H comparative | beats the named rivals | 1 | R1 ("memory decorative at the day scale") beats the memory variant (P1, P4). R2 (chat carrier) vs memory can't be decided (3 usable chat cuts; P8 point estimates favor R2, CIs overlap). R3 (selection) partly present (pre-trend z −1.4). The context variant beats R1 at the 10-turn scale (post-hoc). |
 | I transfer | holds in other same-mode periods, including the holdout | 1 | The context-erasure dip holds in 8/9 regime III periods; the memory nulls hold across periods with events. Holdout not used. |
 
 ## Results by goal period
-Verdicts follow the pre-registered rule in each folder (V* only). Most regime III "failed" verdicts come from P5 (the forced-minus-voluntary contrast, significantly opposite); the post-hoc forced-erasure dip is shown alongside. Periods marked n/a had catalogued events that could not be estimated (first days of a period, < 4 non-event days, too few agents).
+**Round 1b (2026-10-04):** each folder now has a `**Verdict (1b):**` line (same rule on the re-chosen V*; summary in "Round 1b" below); the table keeps the round-1 verdicts. Verdicts follow the pre-registered rule in each folder (V* only). Most regime III "failed" verdicts come from P5 (the forced-minus-voluntary contrast, significantly opposite); the post-hoc forced-erasure dip is shown alongside. Periods marked n/a had catalogued events that could not be estimated (first days of a period, < 4 non-event days, too few agents).
 
 | Period | Role | Verdict | Key numbers (V*, effect in SD vs unit-pooled placebo; z) |
 | --- | --- | --- | --- |
@@ -183,6 +183,9 @@ Verdicts follow the pre-registered rule in each folder (V* only). Most regime II
 | [NE18](goalperiod-subhypotheses/NE18/README.md) | exploratory | not supported | slope of Δu on pre-search rate: V* −0.15 (p 0.80), V_out +0.21 (p 0.40), n 12 |
 | [NE27](goalperiod-subhypotheses/NE27/README.md) | exploratory | supported on V* (fragile) | 3 newcomers, V_rel deficit −0.17 (z −2.1; tight 4-incumbent null); V_eng +0.35 (z +1.1) |
 | [NE30](goalperiod-subhypotheses/NE30/README.md) | confirmatory (locked holdout) | pending (confirmatory, not run) | criteria C1–C5 in `NE30/README.md`; dry run passes on stand-ins |
+| [NE41](goalperiod-subhypotheses/NE41/README.md) | **native** (round 1b) | supported | forced-erasure work dip −0.39 [−0.42, −0.35] (7/9); ρ(stored memory dose, dip) +0.01; high − low dose tercile −0.05 [−0.10, +0.01] |
+| [NE16](goalperiod-subhypotheses/NE16/README.md) | **native** (round 1b) | mixed | memory written at 99% of forced consolidations before and after the fix (manipulation negligible); 36c − 36b write-evidence dip −0.19 [−0.43, +0.12] |
+| [NE29](goalperiod-subhypotheses/NE29/README.md) | **native** (round 1b) | supported | incumbents' work commits on the retirement day z +0.13; retiree made 2.3% of #30–#31 commits |
 
 ## Results
 *Exploratory round 1, 2026-10-03, non-holdout days only (282 active days; 3,173 agent-days). Scripts: `scheme/build.py`, `analysis/choose_v.py`, `analysis/synthetic.py`, `analysis/run_scrambles.py`, `analysis/write_period_folders.py`, `analysis/figures.py`. Numbers: `data/processed/H15-semantic-information-scrambles/{v_choice,synthetic,results}.json`. Figures: `figures/F0_summary.pdf` (one page), F1 synthetic, F2 viability choice, F3 event studies, F4 context erasure, F5 value by store.*
@@ -247,6 +250,72 @@ No candidate is both displaced by goal changes beyond placebo and restored by da
 - The forced-vs-voluntary contrast is confounded by task phase: voluntary consolidations follow write bursts (visible in the pre-window, F4) and start new tasks. The post-hoc exogenous-timing comparison was chosen after seeing this; it needs the holdout (C3).
 - V_out counts write *turns*, not their value; V_eng counts acting, not achieving; Jev progress scores were not used (draft only). Agent narration was not used.
 - Memory "information" is a hashed-line and size proxy. Paraphrase looks like loss to the line hash (the rewrite control suggests that's harmless here).
+
+## Round 1b (improved data, 2026-10-04)
+
+### Pre-registered additions (written 2026-10-04, before running them)
+*Written after the round-1b rerun of the round-1 pipeline (`H15_ROUND=r1b`: `build.py`, `choose_v.py`, `run_scrambles.py`) and before computing any artifact-switch outcome or any native-test statistic. The round-1 predictions P1–P10 are unchanged.*
+- **AS, artifact-store scramble (HH261).** Detection from repo identity only: an agent's commit day where ≥ 50% of its DQ4 work commits go to repos it did not commit to in the previous 14 days, after ≥ 2 commit days in its previous 5 active days (172 events, #30 on). Matched control: commit days with all commits in already-used repos (CONT, 998), so both arms are conditioned on committing that day. Estimator as O1 (kal counterfactual over the 5 pre days, post = days +1, +2, event day excluded), effect = mean(AS) − mean(CONT) per period, DerSimonian–Laird across periods.
+  - **P11 (HH261):** ΔV_AS < 0 on V_out (work commits per hour) and V_files, meta z ≤ −2; and |κ_AS| > |κ_ML| on V_out (losing the artifact context costs more than losing memory).
+  - Counts against: meta z > −1 on V_out, or ΔV_AS ≥ ΔV_ML.
+  - Caveat written now: switches are chosen by the agent (like voluntary consolidations), so a negative ΔV can also mean that agents switch when a task ends, and a positive one that they switch toward productive work. There is no non-holdout involuntary artifact scramble (NE24 is held out).
+- **Native tests:** `goalperiod-subhypotheses/NE41/` (does the memory written at the wipe moderate the work dip?), `NE16/` (erasure with memory updates blocked vs allowed), `NE29/` (the longest memory lineage retired). Predictions are in those folders, dated before their runs.
+
+### What changed
+Everything runs behind `H15_ROUND=r1b` (`scheme/h15common.py`); the default `r1` path reproduces round 1 unchanged. Outputs: `data/processed/H15-semantic-information-scrambles/r1b/` (`results.json`, `v_choice.json`, `r1b_extra.json`, `calls.parquet`, `artifact_switches.parquet`); figures in `figures/r1b/`. Scripts: `scheme/build.py`, `analysis/choose_v.py`, `analysis/run_scrambles.py` (all switched), `analysis/r1b_extra.py` (new).
+- **V_out = DQ4 agent work commits per window hour** (`canonical & ~imported & author_kind == "agent" & ~automated`), null before #30 (earlier zeros are ambiguous). Write turns are kept as `V_out_turns` (ρ 0.80 with work commits from #30 on). New: **V_files** (distinct files per hour) and **V_prog** (mean Jev v3 `progress_score`), reported but not in the pre-registered D2.6 pool.
+- **V_rel = 1 − real-failure fraction** (DQ3 `turn_outcomes.failed` on bash/type turns; `error_class` platform failures on GUI turns). Round 1 counted `actions.error`, which is stderr (mean "reliability" 0.92–0.96 → 0.96–0.98).
+- **V_eng on `activity_bins_fixed`** (ρ 0.73 with the buggy table; regime-III engagement 0.41 → 0.56).
+- **Context erasure on the DQ1 ledger:** `reset_forced` (21,165 events, exactly the ledger count) vs `reset_consol & ~reset_forced` with ≥ 10 pre calls (12,950); outcomes per call (work commits mapped forward ≤ 10 min, 60,129 of 60,151 mapped; real failures; write evidence). Round 1 used its own turn counts and write turns.
+- Scramble catalog unchanged (ML 16, MG 22, MR 84, MN 20, CC 10: detection uses memory, roster and exposure only). New AS catalog (172 switches, 998 continuation days).
+
+### D2.6 rerun (viability choice)
+| Regime | Round 1 V* | Round 1b V* | Notes |
+| --- | --- | --- | --- |
+| I (17 shocks) | V_rel (stderr), inconclusive | **V_eng**, inconclusive | V_out (work) ineligible: only #30–#31 have dense git |
+| III (5 shocks) | V_eng, inconclusive | **V_rel (real failures)**, inconclusive | V_rel displaced 1.00 (p95 0.49) and recovers R +0.38 (p95 +0.01) but < 0.5 |
+
+Out of the pre-registered pool, **V_files is homeostatic in regime III** (displacement 0.20 > p95 0.19; recovery R +0.66 > p95 +0.02 and ≥ 0.5): after a goal change the number of distinct files an agent touches per hour moves and is restored by day 3. It is the first variable in this project that passes D2.6, on 5 shocks, and it was added after round 1, so it is a lead, not a result.
+
+### Round 1 vs round 1b (same estimators, non-holdout)
+| | Prediction | Round 1 | Round 1b | Verdict (1b) |
+| --- | --- | --- | --- | --- |
+| P1 | ΔV_ML ≤ −0.25, meta z ≤ −2 (V*) | −0.55 [−1.78, +0.68], z −0.9 | **+0.29** [−0.05, +0.63], z +1.7 | failed (unchanged) |
+| | ML on work output | +0.12 [−0.26, +0.50] (write turns) | +0.13 [−0.25, +0.50] (work commits) | |
+| P2 | hockey stick | untestable | untestable (doses unchanged) | untestable |
+| P3 | \|ΔV_MR\| < 0.15, \|z\| < 2 | −0.10, z −1.1 | +0.21 [−0.06, +0.49], z +1.5 | holds by the falsifier (\|z\| < 2); point now outside the 0.15 band |
+| P4 | MN deficit ≤ −0.3 | +0.15 [−0.18, +0.47] | +0.20 [−0.13, +0.54]; work −0.13 [−0.63, +0.38]; V_prog **+0.31** [+0.06, +0.56] | failed (newcomers progress *more*) |
+| P5 | CF − CV < 0 (writes) | +0.0097 [+0.0058, +0.0134], z +4.9 | work commits/call +0.0066 [+0.0011, +0.0121], z +2.3 (CI > 0 in 2/9) | failed, opposite (task-phase confound, weaker) |
+| P5′ | (post hoc) forced dip | writes −0.44 [−0.49, −0.39], 8/9 | **work commits −0.39 [−0.42, −0.35], 7/9**; write evidence −0.26 [−0.30, −0.23], 8/9; real failures +0.27 [+0.12, +0.42] | replicated on independent timing and output data (NE41 N3, dated) |
+| P6 | \|ΔV_CC\| < 0.3 on V_out | −0.72 [−1.28, −0.16], z −2.4 | −0.59 [−1.10, −0.09], z −2.3 (3 events) | falsified by rule (3 events) |
+| P7 | NE18 slope > 0 | V* −0.15 (p 0.80) | V* −0.003 (p 0.99); V_out −0.02 (p 0.95) | not supported |
+| P8 | \|κ_mem\| > \|κ_chat\| (V_out) | +0.21 vs −0.91 | +0.22 vs −0.74 | not supported (favours R2; CIs overlap) |
+| P9 | ML pre-trend z ≤ −1.5 | −0.18, z −1.4 | −0.02, z −0.3 | not met (no selection visible) |
+| P10 | no newcomer spillover (V*) | +0.01 [−0.20, +0.22] | +0.02 [−0.06, +0.11]; on work +0.22 [+0.04, +0.40] (k 2) | holds on V* |
+| P11 | ΔV_AS < 0, z ≤ −2; \|κ_AS\| > \|κ_ML\| (new) | — | V_out **−0.00** [−0.17, +0.17] (k 2); V_files +0.15 (n.s.); κ_AS ≈ 0 vs κ_ML 0.22 | **failed** |
+
+- **Artifact switches (P11).** 118 of the 172 switches fall on a goal period's first day (a new goal means a new repo), where the within-period estimator has no pre window and the goal change confounds them; only #38 and #51 have mid-period switches (54 estimable). Those cost nothing measurable against continuation days (#51: −0.01 SD, z −0.1; #38 +0.06). Losing the repo you were working in does not cost more than losing memory, at least when the agent chooses the switch.
+- **Context erasure is the one robust scramble.** On the ledger's per-call timing and the git ledger's output, a forced wipe costs −39% work commits for ten calls, −26% write-evidence calls, and raises real failures +27%; the lost work is 2.5–13% of a forced segment's output (median ≈ 10%), matching H44 (4–11%). Memory written at the wipe does nothing (NE41: ρ +0.01; high- vs low-dose tercile −0.05 [−0.10, +0.01]).
+- **Natives:** NE41 **supported** (N1–N3), NE16 **mixed** (the "never update memory" instruction had not stopped memory writes: 99% of forced consolidations wrote memory before and after; the dip did not shrink after the fix, −0.19 [−0.43, +0.12]), NE29 **supported** (losing the longest memory lineage: incumbents' work z +0.13; the retiree made 2.3% of commits).
+- **Period verdicts (replication; V* re-chosen):** supported 5 → 2, failed 7 → 3, mixed 5 → 13, descriptive 3 → 3. The changes come from the re-chosen V* (regime III now V_rel, regime I V_eng) and from the forced-minus-voluntary contrast losing significance on work commits in 7/9 periods; they are replications, not new evidence.
+
+### Scorecard (round 1b)
+| Axis | Round 1 | Round 1b | Why |
+| --- | --- | --- | --- |
+| A | 1 | 1 | corrected measures (work ledger, real failures); V_out still undefined before #30, V* still regime-dependent |
+| B | 1 | 1 | unchanged |
+| C | 1 | 1 | the erasure dip clears the nulls; no memory or artifact scramble does |
+| D | 0 | 0 | KW signature (plateau, η) still untestable |
+| E | 0 | **1** | NE41 native: the forced-erasure dip and the no-buffering dose result hold with dated predictions on independent timing (ledger) and output (git) data; NE29 accounting null holds. Not 2: post hoc in origin, holdout not run |
+| F | 1 | 1 | no new synthetic (round-1 design choices reused) |
+| G | 1 | 1 | the 21,165 forced count reproduces the ledger; cap cost matches H44 |
+| H | 1 | 1 | R1 (memory decorative) wins again; HH261's artifact-store rival fails |
+| I | 1 | 1 | dip on work commits in 7/9, write evidence 8/9 periods |
+
+**Scorecard (1b): A1 B1 C1 D0 E1 F1 G1 H1 I1.** Ratings (suggested): completeness 40 → 55, faithfulness 1.5 → 1.5, usefulness 2.5 → 2.5.
+
+### What the work ledger changes about "viability"
+Round 1's functional V counted write *turns*; on #30+ days work commits correlate 0.80 with them, so day-scale conclusions barely move (memory loss +0.12 → +0.13 SD on output). What changes is the reliability candidate (stderr → real failures) and therefore V* in both regimes, and the erasure numbers become output numbers: the 41-turn cap costs about a tenth of each agent's committed work, and the memory file written at the wipe does not recover it. The one homeostatic variable found so far (V_files) is an artifact-side output, which points the same way as H01 round 2: what an agent maintains is its artifact's growth, not its memory or its chat.
 
 ## Links to other hypotheses
 Takes over H01 D4 (D4.1.b first); H01 D2.6 chooses the viability function; H08 (context is the coupling) supplies the mechanism; H09 (memory set point, `consolidation_inflow`); H04 (messages act through unread context); H05 (room events).

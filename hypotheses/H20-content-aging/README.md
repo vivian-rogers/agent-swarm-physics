@@ -1,6 +1,6 @@
 # H20: Aging: day-to-day content autocorrelation depends on time since kickoff, not just the lag
 
-**Status:** exploratory round 1 done (2026-10-03), mixed, leaning refuted. There is no aging in 29 non-holdout goal periods. The one strong age effect (#38) is a kickoff relaxation lasting about 4 active days, after which content is stationary. Observables, null and predictions were written before any real-data run; Amendment 1 after the synthetic, Amendment 2 (calibrated null) after the real-data calibration check. Holdout not run.
+**Status:** exploratory round 1 done (2026-10-03), mixed, leaning refuted. There is no aging in 29 non-holdout goal periods. The one strong age effect (#38) is a kickoff relaxation lasting about 4 active days, after which content is stationary. **Round 1b (improved data, 2026-10-04): unchanged in both embedding models.** Every period verdict and the card verdict (mixed; random-effects A +0.020 bge, +0.022 gte) reproduce in all 7 input configurations; style residualization halves A (+0.008) and removes #51's weak late slowing. Natives: newcomers in #51 show onboarding transients but no own-clock aging (mixed); #27's rivalry → collaboration turn leaves no block structure (descriptive); drive withdrawal (NE43) does not rejuvenate content (mixed: one small dip inside the placebo band). Observables, null and predictions were written before any real-data run; Amendment 1 after the synthetic, Amendment 2 (calibrated null) after the real-data calibration check. Holdout not run.
 **Fields:** stat mech, dynamics
 **Origin:** HH101 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** agent (the Claude Code agent excluded); regime (whitening per regime; no analyzed period crosses a regime boundary, so #36 is excluded); driving / external field (the village goal ĝ, and in #51 each agent's assigned goal ĝ_i); agent state, variant *vector (for model 11)*, operationalized at day resolution as the **agent-day statement mean** below (proposed as a named variant, see Notes); activity time, operationalized as the **active-day clock** (days of the period with village activity; weekends and holidays don't count). Goal period as the unit of analysis; named exceptions: (c) for rejuvenation at step changes inside #38/#51, (d) for the short-period contrast (partial pooling of a matched-window statistic), (a) for the shared embedding basis and ĝ.
@@ -189,6 +189,9 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | [G41](goalperiod-subhypotheses/G41/README.md) | short, T = 5, N = 15 | descriptive: stationary contrast (pre-registered null: descriptive) | A +0.240 (p 0.034); A_c +0.205 (p 0.010); A_late +0.126; K -0.044; power 0.14 |
 | [G42](goalperiod-subhypotheses/G42/README.md) | short, T = 5, N = 16 | descriptive: stationary contrast (pre-registered null: descriptive) | A +0.035 (p 0.204); A_c +0.071 (p 0.100); A_late +0.042; K +0.036; power 0.06 |
 | [G44](goalperiod-subhypotheses/G44/README.md) | short, T = 4, N = 18 | descriptive: stationary contrast (pre-registered null: descriptive) | A +0.081 (p 0.253); A_c +0.081 (p 0.224); A_late –; K -0.021; power 0.07 |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) (#51 drive withdrawal) | native (1b) | mixed: bookend step dips C by 0.022 (stationary-null p 0.016 bge / 0.008 gte) but sits inside the placebo of ordinary #51 boundaries (21–24% as low); nudger step: no break | see folder |
+
+*Round 1b* (`**Verdict (1b):**` lines in every folder): all 29 replication verdicts unchanged in both models and all 7 input configurations. G51 also carries the native newcomer-clock test (mixed) and G27 the native block test (descriptive).
 
 ## Results
 *Exploratory round 1: 29 non-holdout goal periods (4 long, 6 medium, 19 short); no holdout row read. Numbers come from `data/processed/H20-content-aging/summary.json` (`analysis/summarize.py`); per-period detail is in the G folders; pipeline `analysis/run_periods.py` (`--null iso` pre-registered, `--null aniso` Amendment 2). Figures: [`figures/H20_summary.pdf`](figures/H20_summary.pdf) (one page), [`figures/forest_A.pdf`](figures/forest_A.pdf), [`figures/mu_and_power.pdf`](figures/mu_and_power.pdf), [`figures/synthetic_validation.pdf`](figures/synthetic_validation.pdf), [`figures/summary_obs.pdf`](figures/summary_obs.pdf), and `G<NN>/figures/aging_G<NN>.pdf`.*
@@ -263,6 +266,49 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - 2026-10-03: real-data calibration failure found after the first run (z-overdispersion; low-dimensional fluctuations); Amendment 2 written and validated on synthetic data; both nulls reported.
 - 2026-10-03: confirmatory rules fixed in `analysis/confirm_h20.py` (not run; dry run on stand-ins only).
 - Proposed shared changes (not made): move the goal/kickoff embedding vectors (H01's `goals_raw.npy` + `goals.parquet`) into `infra/shared/embeddings/`; add the two named variants above and an "anisotropic null" pitfall to `physics-models/11-vector-spins` (embedding two-time and overlap statistics need nulls with the empirical fluctuation shape; isotropic surrogates are 2–3× too narrow).
+- 2026-10-04: round 1b (re-evaluation agent RE-C1): 29 periods in 7 input configurations, natives G51 (newcomer clock), G27 (block switch), NE43 (drive withdrawal), per-period estimates; all verdicts unchanged. New pitfall for the shared list: fitted stationary nulls are too narrow for step tests at ordinary day boundaries (NE43 placebo).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation wave, two-layer design (`infra/data-quality/QUEUE.md`): replication of the round-1 estimators on corrected inputs, plus three native tests with predictions dated in their folders before running. Holdout untouched (`confirm_h20.py` not run).*
+
+**What changed.**
+- **Goal vectors:** shared goal fields instead of H01's `goals_raw.npy`. H01's #38 rows carry swapped room labels, but H20's ĝ averages the room kickoffs, so the swap cancels; every period's ĝ has cos 1.0000 with the shared one at n = 32 (`r1b/check.json`), including #36–#42, whose room kickoffs are the same text in every room. V-g (A_g, P3) is therefore unchanged; bge numbers reproduce to the last digit.
+- **Second model:** gte-modernbert, whitened per regime in its own basis (64-d). **Dedupe:** DQ5 copies (`self_repeat_both`, 10.6% of H20's statements) and restatements (either model, 13.1%). **Style:** within-period style-residualized 32-d vectors (agent style sits in the plateau q). **Activity:** not used.
+- Code: `scheme/build_r1b.py`; `analysis/h20lib.py: configure()` (default = round 1); `run_periods.py --r1b / --emb / --dedupe / --style`; `summarize.py --r1b <tags>`; natives `analysis/natives_r1b.py`; `r1b_figures.py`, `r1b_estimates.py`.
+
+**Replication, old vs new** (Amendment-2 null; the pre-registered isotropic null in gte gives robust z-SD 2.09, as in round 1, 2.07):
+
+| Statistic | Round 1 (bge) | 1b bge-small | 1b gte-modernbert | deduped (bge / gte) | copies only (bge) | style-resid (bge / gte) |
+| --- | --- | --- | --- | --- | --- | --- |
+| RE aging slope A, 10 long + medium | +0.021 ± 0.021 (I² 0.45) | +0.020 ± 0.021 | +0.022 ± 0.021 (I² 0.44) | +0.017 / +0.016 | +0.016 | +0.008 ± 0.017 / +0.009 ± 0.017 (I² 0.24) |
+| RE A_late | −0.066 ± 0.080 | same | −0.078 ± 0.077 | −0.045 / −0.054 | −0.054 | −0.032 / −0.070 |
+| RE μ̂ | +0.30 ± 0.31 | same | +0.24 ± 0.28 | +0.26 / +0.18 | +0.27 | +0.23 / +0.22 |
+| RE K (all 29) | +0.012 ± 0.014 | same | −0.010 ± 0.019 | +0.004 / −0.011 | +0.010 | +0.014 / −0.015 |
+| calibration, robust z-SD | 1.07 | 1.07 | 0.91 | 0.88 / 0.86 | 0.95 | 0.87 / 0.97 |
+| #38: A (p); A_late; K | +0.102 (0.002); −0.043; +0.117 | same | +0.100 (0.002); −0.056; +0.069 | +0.092 / +0.087 (p ≤ 0.004) | +0.105 | +0.093 (0.014); +0.091 (0.006); K +0.061 / +0.004 |
+| #38 lag-1 C, days 1 → 4 → plateau | 0.66 → 0.87 → 0.90 | same | 0.72 → 0.85 → 0.90 | 0.63 → 0.87 | | 0.62 → 0.82 → 0.85 / 0.69 → 0.81 → 0.85 |
+| #51: A (p); μ̂ [90% CI]; chat-only A | +0.012 (0.078); 0.22 [0.07, 0.41]; −0.001 | same | +0.007 (0.19); 0.16 [0.00, 0.37]; −0.006 | +0.009 / +0.003 | +0.009 | −0.001 to +0.009; 0.16 [−0.03, 0.33] / 0.04 [−0.18, 0.24] |
+| card verdict | mixed | mixed | mixed | mixed / mixed | mixed | mixed / mixed |
+
+- **Verdicts: unchanged everywhere.** All 29 period verdicts are identical across the 7 configurations (#4, #8 underpowered; #38 interrupted aging; #51 μ = 0.5 aging rejected, design power ≥ 0.98; #20 failed, faster with age around Thanksgiving). Card verdict mixed in every configuration (failed under the pre-registered null's literal rule, as in round 1).
+- **Model-dependent:** the cross-period kickoff transient K (sign flips: +0.012 bge, −0.010 gte, both ≈ 0), #4's K (−0.08 vs −0.19), and #6's A (+0.07 vs +0.01). #38's front-loaded relaxation is model-robust (A ≈ +0.10, A_late < 0 in both).
+- **Style-dependent:** residualizing style halves the RE aging slope and its heterogeneity (I² 0.45 → 0.24), lowers #51's plateau q (0.50 → 0.42), and removes #51's weak late slowing (μ̂ CI now includes 0 in both models). Round 1's "weak sub-aging in #51's intention stream" was partly agent style drifting with context position (H46). #38's day-1 transient K is mostly style under gte (0.069 → 0.004), but its multi-day relaxation (A, lag-1 C) is not.
+- **Dedupe:** restatements and copies move nothing beyond ±0.01 in A. Within-day self-repetition does not bias the noise-corrected two-time function.
+
+**Native layer** (new in 1b):
+
+| Native test | Design | bge-small | gte-modernbert | Verdict |
+| --- | --- | --- | --- | --- |
+| [G51](goalperiod-subhypotheses/G51/README.md) newcomers' own clock | onboarding transient K_i on each joiner's own clock vs a random-start placebo (398 incumbent draws); own-clock A_i | K > 0 in 3 of 5; median +0.16 vs placebo q90 +0.16; A_i median −0.010 (p 0.50) | 3 of 5; +0.20 vs +0.16; A_i +0.026 (p 0.16) | mixed (N1a fails on the count; no own-clock aging) |
+| [G27](goalperiod-subhypotheses/G27/README.md) spontaneous mid-period switch | block structure B_max in C(d, d′) vs the Amendment-2 null; calibration on 9 other periods | B_max +0.040, p 0.48 | +0.065, p 0.21 | descriptive (no switch at day resolution; calibration 1–2 of 9) |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) drive withdrawal in #51 | lag-matched straddling minus non-straddling C at 08-05 (bookends end) and 08-21 (nudges end) | −0.022 (null p 0.016; placebo 21%); +0.021 | −0.022 (p 0.008; 24%); +0.019 | mixed |
+
+- **What the natives add.** Newcomers relax on their own clock when they arrive from an isolated onboarding room (post hoc: the three clear transients are the GPT-5.6 trio and Grok 4.5), then stay stationary; no agent ages on its own clock. A spontaneous behavioral regime change (#27) and the withdrawal of two operator drives (NE43) leave content correlation essentially untouched. The one dip (08-05, which is also the day #focus opened) beats the fitted stationary null but not ordinary #51 day boundaries: **the Amendment-2 null is too narrow for boundary statistics** (no day-specific events), a pitfall for any step test on two-time functions.
+- Reconciliation with H48 and H54: H48's settling τ ≈ 4.5 h (bge) / 1.9 h (gte) at active-hour resolution and H20's #38 relaxation over ~4 active days measure different things (H48: the kickoff-direction excess; H20: day-to-day self-similarity of each agent's content); both say "settle, then stationary". H54's plateau of kickoff alignment and the private-goal pinning in #51 match H20's high plateau q (0.42–0.51) with no aging.
+
+**Scorecard after 1b** (changes only): A stays 1 (model swap, dedupe and style residualization all done and agree; family invariance not separately tested); E stays 0 (NE43 and #27 give no rejuvenation, consistent with "no aging", not a model success); F stays 1 (robustness to preprocessing now verified in both models; power unchanged). Ratings (suggested): complete 40 → 50, faithfulness 1.0 (unchanged), usefulness 1.5 (unchanged).
+
+**Per-period estimates:** 318 rows via `write_estimates` (A, A_c, A_late, K, μ̂, plateau q per period, both models as channels `content_bge_small` / `content_gte_modernbert`, role replication; plus the native rows: joiners' K, #27 B_max, NE43 step statistics).
 
 ## Round 2 redirects (2026-10-04)
 *From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*

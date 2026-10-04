@@ -2,6 +2,7 @@
 
 **Verdict:** not supported (n.s., signs mixed)
 **Role:** exploratory (round 1, non-holdout); inside goal #38 (`../G38/`).
+**Verdict (1b):** not supported (V_out slope −0.02, p 0.95; 2026-10-04)
 
 ## Why this NE
 NE18 *adds* capacity to the channel from the village's stored past into the agent (an anti-scramble). If information retrieved by search is load-bearing, agents who use search more should gain viability after the widening.

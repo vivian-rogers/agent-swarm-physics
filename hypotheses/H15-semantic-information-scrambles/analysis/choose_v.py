@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scheme"))
-from h15common import FIG, OUT, SEED, SH, V_CANDIDATES, V_LABEL, calendar_nonholdout, write_provenance  # noqa: E402
+from h15common import FIG, OUT, ROUND, SEED, SH, V_CANDIDATES, V_LABEL, V_PREREG, calendar_nonholdout, write_provenance  # noqa: E402
 
 import matplotlib  # noqa: E402
 matplotlib.use("Agg")
@@ -112,15 +112,26 @@ for r in ("I", "III"):
         else:
             c["homeostatic"], c["score"] = False, float("nan")
         res[r]["candidates"][V] = c
-    cands = res[r]["candidates"]
+    cands_all = res[r]["candidates"]
+    # round 1b: V* is chosen from the pre-registered five (corrected definitions); V_prog / V_files are reported only
+    cands = {V: c for V, c in cands_all.items() if V in V_PREREG}
     homeo = [V for V, c in cands.items() if c["homeostatic"]]
     pool = homeo or [V for V, c in cands.items() if c["eligible"] and np.isfinite(c["score"])]
     best = max(pool, key=lambda V: cands[V]["score"]) if pool else None
     res[r]["chosen"] = best
     res[r]["d26_conclusive"] = bool(homeo)
+    if ROUND == "r1b":
+        homeo_all = [V for V, c in cands_all.items() if c["homeostatic"]]
+        pool_all = homeo_all or [V for V, c in cands_all.items() if c["eligible"] and np.isfinite(c["score"])]
+        res[r]["chosen_incl_new"] = max(pool_all, key=lambda V: cands_all[V]["score"]) if pool_all else None
+        res[r]["homeostatic_incl_new"] = homeo_all
+    cands = cands_all
     print(r, "shocks", len(shocks[r]), "chosen", best, "conclusive", bool(homeo))
     for V, c in cands.items():
         rr = c["real"] or {}
+        if c["placebo_delta_p95"] is None or c["placebo_R_p95"] is None:
+            print(f"  {V:6s} elig {c['eligible']!s:5s} (too few values for the placebo)")
+            continue
         print(f"  {V:6s} elig {c['eligible']!s:5s} delta {rr.get('delta', float('nan')):.3f} (p95 {c['placebo_delta_p95']:.3f})"
               f"  R {rr.get('R', float('nan')):+.3f} (p95 {c['placebo_R_p95']:+.3f}, med {c['placebo_R_median']:+.3f})"
               f"  n {rr.get('n')}  homeo {c['homeostatic']}")
@@ -135,7 +146,7 @@ for ax, r in zip(axs, ("I", "III")):
     cands = res[r]["candidates"]
     for i, V in enumerate(V_CANDIDATES):
         c = cands[V]
-        if not c["real"] or not c["placebo_delta_median"]:
+        if not c["real"] or not c["placebo_delta_median"] or c["placebo_delta_p95"] is None or c["placebo_R_p95"] is None:
             continue
         col = "#2a6f97" if V == res[r]["chosen"] else "#999999"
         ax.scatter(c["real"]["delta"] / c["placebo_delta_median"], c["real"]["R"], color=col, s=40, zorder=3)

@@ -2,6 +2,7 @@
 
 **Verdict:** n/a
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** n/a (pre-#30: work-ledger zeros ambiguous; 2026-10-04)
 **Period:** regime I · mode I (individual) · N = 7 at start · 5 non-holdout days with PR10 · 32 agent-days with PR10 (7 agents with ≥ 3 days) · write turns on 66% of those agent-days.
 
 ## Why this period

@@ -1,4 +1,4 @@
-\hwhat{Tested on \#12: 10 debates, each with its own judge, motion and re-drafted teams, derived from the record; predictions dated before the run. \textbf{The pre-registered two-sublattice test failed}: within- minus cross-team cosine of masked, whitened, agent-centred content vectors $\bar\Delta=0.028$ ($p=0.34$); the true split was the best split in 1/10 debates (chance 1.5); same-lab pairs out-align team-mates. Order exists only along the motion's \emph{a-priori} support-minus-oppose axis: Government sits on the support side ($\sigma=0.092$, $p=0.002$, 9/10), a field about 0.2 of statement noise. The motion topic is a uniform field, off after the verdict (8/8). Post hoc, the stance tilt \emph{reverses} after the verdict (7/9). \#34 holdout: not run.}
+\hwhat{Tested on \#12: 10 debates with their own judge, motion and re-drafted teams (labels equal DQ6's ground truth). \textbf{In content the pre-registered two-sublattice test failed}: within- minus cross-team cosine $\bar\Delta=0.028$ ($p=0.34$), 1/10 teams recovered; \textbf{round 1b} repeats this with a second embedding model, style-residualized and deduplicated inputs ($\bar\Delta$ $-0.05$ to $+0.03$). Only a faint tilt along the motion's support-minus-oppose axis remains (bge $p=0.002$, gte $p=0.07$). \textbf{In reply stance (DQ2) the teams do order}: teammates $+0.41$, opponents $-0.32$; $\Delta=0.72$ in 10/10 debates, beyond a calibrated agent-field null ($p=0.002$); teams recovered in 8/10; the same pair turns hostile only when drafted apart (16/18); the order is gone after the verdict. Where nobody assigns sides (\#26 vote, \#33 news debate) no camps form. \#34 holdout not run.}
 
 \hmodel{Models 11, 10, 01. Spin $\mathbf s_i$: debater $i$'s masked, whitened ($n=32$), agent-centred chat mean in a debate. Sublattices $A$ = Government ($\varepsilon_i=+1$), $B$ = Opposition. Fields: motion topic $h_u\hat g$ (uniform), assigned sides $h_s\hat a$ (staggered), family $\mathbf h_i$, verdict $h_v$ toward winner $W$. Couplings $k_{\rm in}$ (team ferro), $k_{\rm out}$ (cross antiferro). $\rho$: correlation of sublattice fluctuations.}
 
@@ -10,6 +10,26 @@ H=-\tfrac{k_{\rm in}}{N}\textstyle\sum_{i\sim j}\mathbf s_i\!\cdot\!\mathbf s_j+
 
 \hobs{../figures/summary_obs.pdf}{(a) Per debate, within-minus-cross cosine for every possible team split (gray) and the true split (large dot; blue if best): the true split is unremarkable, so no two-sublattice order in full content vectors. (b) On the motion's a-priori stance axis Government sits slightly on the support side during debates (9/10) and, post hoc, swings to the other side after the verdict (7/9).}
 
-\htelos{Candidly: assigned teams, the strongest public faction structure the village ever had, are invisible as factions in embedding space; topic and model family swamp side. Detecting hidden teams from generic embeddings looks hopeless, and the \#34 saboteur test is a long shot. Useful warning: clustering agent messages finds labs and topics, not coalitions. What carries signal is a hand-built axis for the question, which is ordinary stance detection. The post-verdict reversal hints that role-play stances do not persist (post hoc).}
+\htelos{Practical lesson: look for factions in reply stance, not in embeddings. Clustering messages finds labs and topics, never even the assigned teams; a cheap zero-shot stance label on reply pairs, read in aggregate against an agent-field null, recovers 8 of 10 drafted teams. The flip side matters as much: agents built on these models do not form camps on their own, not over a contested vote and not in a debate about the news. Opposition appears where a protocol assigns it and disappears when the protocol ends. For an operator, that makes a stance-based faction alarm useful mainly as a check that assigned roles are being played, and a sign of something unusual when it fires unassigned.}
 
-\hbottom{The debate week is a ferromagnet in the motion's topic with family co-variation and only a faint one-dimensional staggered tilt along the stance axis, not a two-sublattice antiferromagnet.}
+\hbottom{In what they talk about the debaters form a ferromagnet in the motion's topic; in how they reply, the drafted teams form two sublattices that the assignment switches on and the verdict switches off, and no camps form where nobody assigns sides.}
+
+\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.28\columnwidth}p{0.59\columnwidth}p{0.11\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b} & \textbf{Verdict}\\\hline
+P1 content order & $\bar\Delta$ 0.028 $\to$ $-0.05$..$+0.03$ (2 models, 5 inputs) & $\times$\\
+P2 teams from content & 1/10 $\to$ 0--1/10 & $\times$\\
+P4d text-axis tilt & $\sigma$ 0.092 ($p$ 0.002) $\to$ gte 0.055 ($p$ 0.07) & $\sim$\\
+P7 AF fluctuations & $\rho$ $+0.53$ $\to$ $+0.02$..$+0.53$ (never negative) & $\times$\\
+S1 stance order & $\Delta$ 0.72, 10/10; agent-field $p$ 0.002 & $\checkmark$\\
+S2 teams from stance & 8/10 (chance 1.0) & $\checkmark$\\
+S3 off after verdict & $-0.01$ vs 0.67 during debates & $\checkmark$\\
+G12 within-pair (native) & stance $-0.68$ (16/18); content $\approx0$ & $\checkmark$\\
+G26 / G33 (native) & no ballot camps; no unassigned camps & $\times$ (as predicted)\\
+\end{tabular}}}
+
+\hobsb{../figures/r1b_stance_vs_content.pdf}{(a) Teammates minus opponents per debate: content cosine in two embedding models (gray, violet) scatters around zero; reply stance (orange) is positive in every debate. (b) The same agent pair across re-drafts: stance as opponents minus as teammates is negative for 16 of 18 pairs.}
+
+\hcaveats{Stance labels are zero-shot (DQ2: pair-level ``opposes'' precision 0.08), so only aggregates are read, and the agent-field null assumes replies independent given agents. Stance measures agreement of positions, so an assigned staggered field alone predicts the order: coupling beyond the assignment is not shown (content fluctuations stay positive). Seven agents, four days, regime I. \#26 has 9 voters with near-identical ballots (low power). \#34 untouched.}
+
+\hnext{Test whether stance order needs the protocol: debates where sides are self-chosen, or a role switch mid-debate; a reply-level kinetic model to separate a field from coupling.}
+

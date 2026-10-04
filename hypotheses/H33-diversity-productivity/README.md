@@ -1,6 +1,6 @@
 # H33: The diversity–productivity curve is an inverted U: the swarm's operating point
 
-**Status:** round 1 (exploratory) done 2026-10-04: **not supported.** No inverted U between agent-day content diversity (PR10, self-repeats removed) and write output in 17 non-holdout periods; the null wins (pre-registered rule label: mixed). No operating point. `analysis/confirm.py` written and dry-run, not run. Low priority (Vivian): lean test.
+**Status:** **round 1b done (2026-10-04, improved data):** on DQ4 work commits (#30+, 12 units, 1,290 agent-days), fixed activity bins and both embedding models the null stands (b₁ +0.032, p 0.17; b₂ −0.040, p 0.31; curvature worsens CV). A right-side drop in some bge specs is a #51 tail effect. Natives: G51 mixed (rival pairs null; 4-agent support class concave), G39 and G42 support the null reading. Round 1 (exploratory) done 2026-10-04: **not supported.** No inverted U between agent-day content diversity (PR10, self-repeats removed) and write output in 17 non-holdout periods; the null wins (pre-registered rule label: mixed). No operating point. `analysis/confirm.py` written and dry-run, not run. Low priority (Vivian): lean test.
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH119 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); companions HH105 (loops, not consensus, collapse dimensionality) and HH113 (stuckness predicts output collapse).
 **Definitions used:** Agent; Regime (whitening is per regime; never pooled across 2026-03-24 without a unit split); Agent state, variant *vector* (whitened statement vectors, d = 32); Driving / external field (absorbed by day fixed effects). New named variant proposed for `DEFINITIONS.md` (H33 may not edit it): **"effective dimensionality (agent-day, self-deduplicated, rarefied PR)"**, defined under Observables; it is H12's bias-corrected participation ratio applied to one agent's day after H12's self-repeat removal.
@@ -92,7 +92,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 **Calibrated prior (written down so the outcome can be scored against it):** inverted U supported ≈ 20%; monotone increasing or saturating (R1) ≈ 35%; flat ≈ 35%; monotone decreasing ≈ 10%. My point prediction is that **P1 fails**: the low-diversity (loop) side underperforms (b₁ > 0) but the high-diversity side does not (b₂ n.s.), so the curve saturates rather than turns over, and the operator-facing result is a low-side threshold, not an optimum. P6 more likely than not holds (≈ 60%). Power will be the main limitation: agent-day PR at n = 10 is noisy, and errors in x attenuate curvature more than slope.
 
 ## Results by goal period
-Exploratory, non-holdout, eligible units only. b₁ / b₂: two-lines slopes below / above the pooled breakpoint x_c = 15.97 (log(1 + write turns) per PR10 unit; agent and day FE plus activity controls; CR1 by agent, t(G − 1)). Figures in each folder.
+**Round 1b (2026-10-04):** each folder has a `**Verdict (1b):**` line on work commits (summary in "Round 1b" below); G39, G42, G51 also carry native tests (`**Role:** native`). The table keeps round 1. Exploratory, non-holdout, eligible units only. b₁ / b₂: two-lines slopes below / above the pooled breakpoint x_c = 15.97 (log(1 + write turns) per PR10 unit; agent and day FE plus activity controls; CR1 by agent, t(G − 1)). Figures in each folder.
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
@@ -160,6 +160,43 @@ Ineligible under the pre-registered rule (listed, not tested): #2–#8, #10–#1
 - **Multiplicity.** 7 predictions, 11 robustness specs, 17 periods. One robustness spec at p = 0.014 and two per-period self-repetition slopes at p < 0.05 are about what chance produces.
 - Day fixed effects remove swarm-level co-variation by design; the swarm-day test (141 days) is the only swarm-level check and is weak. Agent narration and Jev scores were not used.
 - #36b's self-repetition slope (+10.9) is degenerate: almost no self-repeats in that unit.
+
+## Round 1b (improved data, 2026-10-04)
+
+### What changed
+Behind `H33_ROUND=r1b` (`scheme/h33common.py`); the default path reproduces round 1. Outputs in `data/processed/H33-diversity-productivity/r1b/` (`results.json`, `native.json`, per-period tables, `eligibility.parquet`); figures in `figures/r1b/` and `G<NN>/figures/*_r1b.pdf`. Scripts: `scheme/build.py` (`build_r1b`), `analysis/evaluate.py` (switched), `analysis/r1b_native.py` (new).
+- **Productivity = log(1 + DQ4 agent work commits)** (`canonical & ~imported & author_kind == "agent" & ~automated`; 112k automated agent-identity commits excluded). Secondary: distinct files, lines changed without bulk commits (line stats cover 56%), and the round-1 write turns on the same rows. Half-day split on commit times.
+- **Units from #30 on** (the ledger is dense from #30; earlier zeros are ambiguous). The eligibility rule is unchanged except that the "output > 0 on ≥ 20% of agent-days" clause uses work commits: **12 eligible units** (#30, #31, #33, #35, #36b, #38–#42, #44, #51; 1,290 agent-days with PR10) instead of 17 (1,592). #17–#20 and #25 drop out; work commits and write turns correlate 0.77 on the rows kept.
+- **Engaged-minute control from `activity_bins_fixed`** (ρ 0.75 with the buggy table).
+- **Diversity under both embedding models and three dedups** (DQ5 `statements_white32_<model>`, `statement_flags`): H12's rule per model (`self_repeat_bge` / `self_repeat_gte`), copies only (`self_repeat_both`), restatements (either flag). PR10 under bge (DQ5 white32) correlates 0.93 with round 1's PR10, and 0.77–0.79 with gte. The round-1 PR columns (statements and embeddings unchanged) are carried over.
+
+### Round 1 vs round 1b
+| | Prediction | Round 1 (write turns, 17 units) | Round 1b (work commits, 12 units) | Verdict (1b) |
+| --- | --- | --- | --- | --- |
+| P1 | inverted U: b₁ > 0, b₂ < 0, both p < 0.05, interior max | b₁ +0.035 (p 0.26), b₂ −0.035 (p 0.35), x_c 15.97; max 16.4 | b₁ +0.032 (p 0.17), b₂ −0.040 (p 0.31), x_c 17.66; spline max 17.3 (interior), flat region 16.1–29.2; quadratic vertex 25.9 | **failed** |
+| P2 | meta signs and ≥ half of periods with the pattern | meta b₂ +0.028 (wrong sign); 3/14 | meta b₁ +0.003 (p 0.89), **b₂ +0.017 (wrong sign)**; pattern 4/8; verdicts 1 supported (#38), 3 mixed, 4 failed, 4 n/a | **failed** |
+| P3 | curved beats linear in day-blocked CV | linear 0.9447 < quad 0.9471 < spline 0.9521; linear vs FE −0.2% | linear 0.9503 < quad 0.9529 < spline 0.9554 (5/5 seeds); linear vs FE −0.4% | **failed** |
+| P4 | β_rev not significant alone | fwd +0.023 std (p 0.36), rev +0.031 (p 0.30) | fwd +0.022 (p 0.42), rev +0.045 (p 0.22) | not failed, uninformative |
+| P5 | slopes shrink < 50% with activity controls | b₁ shrinks 18% | b₁ +0.032 → +0.032 (no shrink) | not failed, moot |
+| P6 | self-repetition → output < 0 (p < 0.05) | +0.17 (p 0.84) | +0.97 (p 0.48); per-period meta −1.50 ± 0.98 (p 0.13): negative in #31 (p 0.003), #35 (p 0.0005), #42 (p 0.03) | **failed** (heterogeneous) |
+| P7 | swarm-day same pattern | b₁ −0.22 (p 0.025) | b₁ −0.25 (p < 0.001, 101 days), b₂ +0.01 | **failed** |
+
+**Robustness (13 specs; P1 rule):**
+- Outcomes: distinct files b₁ +0.033 (p 0.19), b₂ −0.047 (p 0.24); lines (no bulk) linear +0.054 (p 0.017), no curvature; write turns on the same rows b₁ +0.051 (p 0.20). No outcome passes P1.
+- **Diversity variants:** every variant has b₂ < 0. It is significant for bge with H12's dedup on DQ5 vectors (−0.119, p 0.034), bge without restatements (−0.142, p 0.003) and PR15 (−0.139, p 0.001; PR15 passes P1 with b₁ +0.053, p 0.033). Under gte it is not significant (−0.048 to −0.138, p 0.06–0.28). **Post hoc (`r1b_native.py`): without #51 every right-side slope vanishes** (bge restate +0.014, PR15 −0.005, bge H12 +0.013), while dropping #38 leaves them; this is the round-1 "#51 tail" lead (C5), now seen in more specs, not a swarm-wide high-diversity penalty, and it is model-dependent.
+- Without #51 the curve is flat (b₁ +0.018, b₂ −0.008); regime III alone b₁ +0.033 (p 0.19), b₂ −0.055 (p 0.22).
+
+**Natives (predictions dated before the run, in the folders):**
+- **G51** (DQ6 roles): **mixed.** Same-role rival pairs on the same day show no diversity–output relation (87 pair-days, 8 pairs: linear p 0.21, quadratic p 0.58), but the 4-agent "support" role class is concave (quadratic −0.0047, p 0.0005, vertex PR10 ≈ 12.5; t(3) reference, one of three classes).
+- **G39** (one world per agent): **supported** (null reading): ρ(mean PR10, work commits) +0.10, with files +0.19 (10 agents), within-agent slope p 0.83.
+- **G42** (videos per agent, link-based): **supported** (null reading): ρ(mean PR10, videos first linked) +0.10 (p 0.76).
+
+**Verdict changes.** Card-level: still **not supported**, the null wins (pre-registered label: mixed, as before). Per period (round 1 → 1b): #38 mixed → **supported** (b₂ −0.166, p 0.0005); #36b failed → mixed; #44 failed → mixed; #51 mixed → mixed; #33, #35, #41, #42 failed → failed; #30, #31 failed → n/a (too few agent-days above the new breakpoint); #39, #40 n/a → n/a; #17 n/a, #18–#20 failed, #25 mixed → n/a (pre-#30). One supported period out of 8 estimable is about what the per-period rule gives by chance (null false-positive rate of the sign rule ≈ 10% per period).
+
+**Scorecard (1b): A1 B1 C0 D0 E0 F1 G0 H0 I0** (unchanged). F gains the embedding swap that round 1 lacked (agent-day PR is moderately model-dependent, ρ 0.77; the null is not), but no new synthetic. Ratings (suggested): completeness 40 → 50, faithfulness 0.5, usefulness 1.5.
+
+### What the work ledger changes about "productivity"
+Write turns counted repeated pushes and missed GitLab API writes; the ledger counts commits that landed, without the 112k automated ones. On the rows both measures cover they correlate 0.77, and every round-1 conclusion survives: content diversity carries no usable information about committed output (CV gain 0.4% for a linear term, curvature hurts). The ledger shrinks the sample to the git-dense era (#30+) and makes the one apparent signal (a high-diversity penalty in some bge specs) visibly a #51 property. Productivity now also has an attributable, period-native check (G39: own worlds; G42: own videos), and both agree with the null.
 
 ## Amendments
 1. **2026-10-04, before any outcome was examined.** (a) The first eligibility count included NaN PR values stored as non-null; fixed in `scheme/build.py` (NaN → null) and eligibility recomputed. Same rule, same 17 units. (b) Measured the within-agent split-half reliability of PR10 (0.55) and TV10 (0.78) (`analysis/reliability.py`, x side only) and used it in the synthetic. (c) Synthetic shapes: replaced an unbounded exponential "saturating" curve with a bounded plateau and a log curve, and clipped x to its 2nd–98th percentile inside every shape, so tails can't dominate. (d) The per-period "spline maximum" check uses a 3-df spline; stated in each G folder's prediction before the run.

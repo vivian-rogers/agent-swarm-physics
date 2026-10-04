@@ -1,6 +1,7 @@
 # H20 × G06: Create your own merch store. Whichever agent's store makes the most profit wins! (2025-06-26 → 2025-07-15)
 
 **Verdict:** mixed (underpowered: not significant, μ = 0.5 aging not rejected) (Amendment-2 null; pre-registered null: supported)
+**Verdict (1b):** mixed (both models, all configs)
 **Role:** exploratory
 **Period:** regime I · mode K · 4 agents with statements · #general only · 15 active days (60 agent-days with ≥ 8 statements).
 
@@ -46,3 +47,16 @@ Data: `data/processed/H20-content-aging/G06/` (result.json = pre-registered null
 C (beats the stationary null): 0 — A p = 0.120, A_c p = 0.202. D (unfitted signature: A_late, μ̂ > 0): 0. H (rivals R1 quench, R2 field, R3 common): 0. G: –.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04): replication
+*Inputs: shared goal fields, gte-modernbert (DQ5), DQ5 dedupe (copies, restatements), style-residualized vectors. Data: `data/processed/H20-content-aging/G06/r1b/result_aniso_<config>.json`. Role of this row: replication.*
+
+| Input | Statistics (Amendment-2 null) |
+| --- | --- |
+| round 1 (bge, H01-derived goal vectors) | see Result above |
+| bge-small, shared goal fields | A +0.071 (p 0.120); A_c +0.063 (p 0.202); A_late +0.040; K +0.014; μ̂ +1.38 [-0.12, +2.43]; power 0.20 |
+| gte-modernbert | A +0.012 (p 0.433); A_c +0.043 (p 0.329); A_late -0.001; K +0.030; μ̂ +0.28 [-0.99, +1.57]; power 0.18 |
+| restatement-deduped (bge / gte) | A +0.058 / +0.002 |
+| style-residualized (bge / gte) | A +0.029 / -0.011 |
+
+A across the 7 configurations: -0.011 to +0.071. The shared goal fields give the same ĝ as round 1 (cos 1.0000 at n = 32: H20 averaged the room kickoffs, so H01's #38 room swap cancels), so bge numbers reproduce exactly.

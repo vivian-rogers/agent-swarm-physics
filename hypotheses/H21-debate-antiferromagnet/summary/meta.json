@@ -1,42 +1,77 @@
 {
-  "complete": 50,
-  "faithfulness": 2.0,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 plus round 1b: DQ6 check, second embedding model on masked text, style-residualized and deduplicated inputs, DQ2 stance channel with the calibrated agent-field null, three native tests (G12 re-drafting, G26 ballots, G33 unassigned debate). #34 not run.",
-    "faithfulness": "Two-sublattice order is supported in reply stance (beats team permutation and the calibrated agent-field null; teams recovered 8/10; within-pair contrast 16/18; switches off at the verdict) but absent in content in every variant. Coupling beyond the assigned field is not shown, so the coupled-antiferromagnet model is not reached.",
-    "usefulness": "A validated faction check on assigned conflict (stance on reply pairs, aggregated, against an agent-field null) and a clear negative: no camps form without assignment (#26, #33). Useful as a role-adherence monitor; not a steering lever."
-  },
-  "one_line": "Debate teams are invisible in content but order as two sublattices in reply stance, switched on by the assignment and off at the verdict; no unassigned camps",
-  "rated_by": "RE-C2 round-1b agent (suggested)",
-  "updated": "2026-10-04",
-  "v2": {
-    "claim": "No antiferromagnetic order in debate content (topic channel); stance carries it (H37)",
-    "original_verdict": "failed",
-    "credence": 0.67,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "ground truth agrees",
-        "x": 1.5
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      }
-    ],
-    "mechanism_level": "M0",
-    "fragile": false,
-    "value_if_true": 1,
-    "decision": "none",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 0.67,
-    "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 2.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 plus round 1b: DQ6 check, second embedding model on masked text, style-residualized and deduplicated inputs, DQ2 stance channel with the calibrated agent-field null, three native tests (G12 re-drafting, G26 ballots, G33 unassigned debate). #34 not run.",
+  "faithfulness": "Two-sublattice order is supported in reply stance (beats team permutation and the calibrated agent-field null; teams recovered 8/10; within-pair contrast 16/18; switches off at the verdict) but absent in content in every variant. Coupling beyond the assigned field is not shown, so the coupled-antiferromagnet model is not reached.",
+  "usefulness": "A validated faction check on assigned conflict (stance on reply pairs, aggregated, against an agent-field null) and a clear negative: no camps form without assignment (#26, #33). Useful as a role-adherence monitor; not a steering lever."
+ },
+ "one_line": "Debate teams are invisible in content but order as two sublattices in reply stance, switched on by the assignment and off at the verdict; no unassigned camps",
+ "rated_by": "RE-C2 round-1b agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Assigned debate sides show two-sublattice order in stance (replies), not in content; assignment alone explains it",
+  "scope": "10 debates; G12 re-drafting; G26, G33 as negative controls",
+  "direction": "positive",
+  "original_verdict": "failed (antiferromagnet)",
+  "credence": 0.86,
+  "ladder": [
+   {
+    "factor": "base (sec)",
+    "x": 0.3
+   },
+   {
+    "factor": "calibrated null (agent-field)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "replication (10/10 debates; 16/18 pairs in G12)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "robust (content null in every variant)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "ground truth agrees (DQ6)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "rival beaten (stance AUC 0.75 vs content 0.55)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "penalty: LLM stance labels",
+    "x": 0.8,
+    "evidence": "DQ2"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "read debate roles from stance, not topic",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.29,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (RE-C2); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "No antiferromagnetic order in debate content (topic channel); stance carries it (H37)",
+   "credence": 0.67,
+   "fragile": false,
+   "value_if_true": 1,
+   "expected_usefulness": 0.67,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

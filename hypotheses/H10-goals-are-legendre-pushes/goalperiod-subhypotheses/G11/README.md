@@ -1,6 +1,7 @@
 # H10 × G11: Pursue whatever you'd like to (2025-08-25 → 2025-08-29)
 
 **Verdict:** descriptive (F1 ✗ by BIC, F2 ✗ marginal, F3 ✗ drift)
+**Verdict (1b):** descriptive (both models)
 **Role:** exploratory
 **Period:** regime I · mode F · 7 agents · #general only · 5 active days (30 windows of 30 min). No step change inside.
 
@@ -31,3 +32,8 @@ Data: `data/processed/H10-goals-are-legendre-pushes/G11/period.json`. Figure: [`
 
 ## Notes
 - 2026-10-03: the drift violates the stationarity assumption of the pair test's free-week F(m). The variance estimate along ĝ₁₂ includes this slow trend, which, if anything, *inflates* κ2^F (making the tilt's predicted variance larger, not smaller).
+
+## Round 1b (improved data, 2026-10-04)
+*Inputs: shared goal fields (`goal_fields`; H10's own goal and kickoff vectors already matched them to cos ≥ 0.9999999, so bge numbers are unchanged), the second embedding model gte-modernbert, DQ5 restatement dedupe and style-residualized vectors. Data: `data/processed/H10-goals-are-legendre-pushes/r1b/<config>/`. Role: replication (the round-1 estimator, unchanged).*
+
+bge (shared goals) identical to round 1: γ −0.51, BIC prefers 2 components, g 0.55 [0.21, 0.64], drift −0.018/day [−0.032, −0.005]. gte: γ −0.48, single well (F1 ✓), g 0.41 [−1.64, 0.63], no drift (−0.001 [−0.020, +0.018]). The round-1 stationarity failure of #11 (F3) is not reproduced in gte.

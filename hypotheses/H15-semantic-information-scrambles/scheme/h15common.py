@@ -26,8 +26,15 @@ from common import REVISION, git_commit, holdout_mask, load_holdout  # noqa: E40
 
 SH = ROOT / "data/processed/shared"
 EMB = SH / "embeddings"
-OUT = ROOT / "data/processed/H15-semantic-information-scrambles"
-FIG = HYP / "figures"
+BS = ROOT / "data/processed/behavior_states"
+# Round switch (2026-10-04). H15_ROUND=r1 (default) reproduces round 1 exactly; H15_ROUND=r1b uses the improved
+# shared data (work ledger, real failures, activity_bins_fixed, context-ledger erasure timing, v3 progress) and writes
+# everything under <OUT_R1>/r1b and figures/r1b, so round-1 outputs stay untouched.
+ROUND = os.environ.get("H15_ROUND", "r1")
+assert ROUND in ("r1", "r1b"), ROUND
+OUT_R1 = ROOT / "data/processed/H15-semantic-information-scrambles"
+OUT = OUT_R1 / "r1b" if ROUND == "r1b" else OUT_R1
+FIG = HYP / "figures" / "r1b" if ROUND == "r1b" else HYP / "figures"
 SEED = 20261003
 UTC = dt.timezone.utc
 
@@ -35,10 +42,19 @@ CLAUDE_CODE_AGENT = 19
 # Write verbs = functional output (D2.3.a).
 WRITE_VERBS = ["git push", "git commit", "deploy", "gh pr create", "gh pr merge", "gh repo create",
                "glab mr create", "glab mr merge", "glab repo create", "glab project create"]
-V_CANDIDATES = ["V_out", "V_eng", "V_rel", "V_ord", "V_coh"]
+V_PREREG = ["V_out", "V_eng", "V_rel", "V_ord", "V_coh"]     # the pre-registered D2.6 candidate set
+V_CANDIDATES = V_PREREG + (["V_prog", "V_files"] if ROUND == "r1b" else [])
 V_LABEL = {"V_out": "write turns / h (functional)", "V_eng": "engaged-minute fraction (structural)",
            "V_rel": "1 - error fraction (reliability)", "V_ord": "-H(action mix) (order, KW -S)",
            "V_coh": "plan coherence (order)"}
+if ROUND == "r1b":
+    V_LABEL.update({"V_out": "agent work commits / h (functional; DQ4 ledger, #30 on)",
+                    "V_eng": "engaged-minute fraction (activity_bins_fixed)",
+                    "V_rel": "1 - real-failure fraction (DQ3 turn_outcomes; platform errors on GUI turns)",
+                    "V_prog": "mean Jev v3 progress_score (labelled active 5-min windows)",
+                    "V_files": "distinct files touched by work commits / h (#30 on)"})
+WORK_FROM = "2026-02-09"   # first day of #30: the work ledger is dense from here; earlier zeros are ambiguous
+PLATFORM_ERR = ["timeout", "vm", "resource", "network", "tool_use"]   # error_class values that are real failures
 
 # Analysis units: goal periods; #36 is split at the 2026-03-24 regime boundary (NE14 F).
 UNIT_SPLITS = {36: ["2026-03-24"]}

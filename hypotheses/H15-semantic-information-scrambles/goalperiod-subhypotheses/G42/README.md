@@ -3,6 +3,7 @@
 
 **Verdict:** failed
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** mixed (V* V_rel; forced work dip -0.44; 2026-10-04, `r1b/results.json`)
 **Period:** regime III · 16 agents with a viability value · 5 non-holdout active days.
 
 ## Why this period

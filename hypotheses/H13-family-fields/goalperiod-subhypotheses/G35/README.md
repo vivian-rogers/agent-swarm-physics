@@ -1,7 +1,8 @@
 # H13 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 03-20)
 
 **Verdict:** mixed
-**Role:** exploratory
+**Verdict (1b):** mixed (round 1: mixed; same in both embedding models; native: mixed)
+**Role:** exploratory (round 1); native (round 1b: room × lab crossed, behavior channel)
 **Period:** regime II · mode C · 13 agents · two rooms (#best: GPT-5.4, Opus 4.6, Gemini 3.1 Pro; #rest: the other 10) · 5 days.
 **Units analysed:** 35
 
@@ -45,6 +46,24 @@ Data: `data/processed/H13-family-fields/G35/results_u<unit>.json`; figure: `figu
 
 Within-unit stationarity (first vs second half of days, family field cos): Anthropic 0.74, OpenAI 0.85, Google 0.54
 
+## Native test (round 1b): room × lab crossed in the behavior channel
+*Written 2026-10-04 07:13 UTC, before computing any behavioral statistic on #35.* Design facts seen: round 1's content results above (field lab ≥ room; co-movement room > lab), and the room × lab cross-tab (#best holds one agent from each of OpenAI, Anthropic and Google).
+
+- **Why native.** #35 is the one period where the operator split the village into two rooms with lab crossed by design and both rooms doing the *same kind of task* (evolving forks of one RPG). So a room field in behavior should be small, and family and room separate cleanly. If families live in behavior (HH267), lab should organize behavior across rooms while style-free words carry no family term.
+- **Observable.** H_i^B (card Amendment 2) over the 5 days; pair outcome y_B = cos(H_i^B, H_j^B). Pair OLS y = c + b_lab·same_lab + b_room·same_room (H13's `famroom`, node permutations 2,000 each). Same for style-residualized content (shared `style_resid_period`, bge and gte) as the word-channel comparison.
+- **Prediction.** Behavior: b_lab > 0 at p < 0.05 and b_lab > b_room (credence 0.45: 45 pairs, 6 same-lab cross-room pairs). Style-residualized content: b_lab n.s. (credence 0.7), b_room > 0 (credence 0.6).
+- **Counts against HH267:** behavioral b_lab ≤ 0 or n.s. while round 1's raw content b_lab stays significant.
+
+**Native result** (run after the prediction; `analysis/r1b_behavior.py`, `r1b/behavior.json` → `native_G35`; 12 agents with behavior fields, 36 pairs, 5 same-lab cross-room pairs):
+
+| Prediction | Observed | Verdict |
+| --- | --- | --- |
+| Behavior: b_lab > 0 at p < 0.05 and b_lab > b_room | b_lab = +0.125 (node-permutation p 0.21), b_room = −0.046 (p 0.57); behavioral T_B = 0.125 (p 0.11), leave-one-out 0.55 (p 0.17) | **fail** (direction as predicted, not significant) |
+| Style-free words: b_lab n.s. | +0.024 (p 0.35) bge; +0.055 (p 0.26) gte | pass |
+| Style-free words: b_room > 0 | +0.214 (p 0.018) bge; +0.235 (p 0.009) gte | pass |
+
+**Native verdict: mixed.** Once style is removed, words in #35 follow rooms (the forks) and carry no family term; behavior leans the other way (family, not room) but is not significant with 5 same-lab cross-room pairs. Across all ten two-room units the behavioral family term is clearer: random-effects b_lab = 0.14 [0.06, 0.22] vs b_room = 0.03 [−0.05, 0.11] (lab > room in 7/10; card, Round 1b).
+
 ## Scorecard (period-specific axes)
 - **C (adequacy):** family field beats the lab-permutation null in 35; it does not beat the style rival (S-a) in any unit. Score 1.
 - **G (ground truth):** family identity recovered by leave-one-out classification in 35; rooms recovered as the dominant coupling grouping (35).
@@ -52,3 +71,13 @@ Within-unit stationarity (first vs second half of days, family field cos): Anthr
 
 ## Notes
 - Data: `data/processed/H13-family-fields/G35/`. Per-period figures: `figures/`.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the pre-registered statistics on the corrected inputs (card section "Round 1b"). Old numbers are kept above.* Inputs: DQ5 statement vectors (bge and gte-modernbert, regime-whitened, 32-d), H13's own style rival S-a and DQ5's shared `style_resid_period` vectors, DQ5 restatement flags, `activity_bins_fixed` for talk spins, and Jev v3 behavior states (HH267, card Amendment 2). Data: `data/processed/H13-family-fields/r1b/`.
+
+| Unit | T_field round 1 (bge) | T_field gte | S-a own (bge / gte) | shared style_resid_period (bge / gte) | T bge, restatements removed | talk Δ old → fixed table | behavioral T_B |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 35 | 0.323 (p 0.000) | 0.347 (p 0.001) | 0.058 / 0.061 | 0.058 (p 0.158) / 0.061 (p 0.154) | 0.327 | 0.029 (p 0.240) → 0.023 (p 0.184) | 0.125 (p 0.108) |
+
+- **Talk on the corrected table:** family homophily in talk timing (Δ > 0, p < 0.05) in no unit of this period.
+- **Reading:** the content field is unchanged in both models and still vanishes under either style rival; the behavioral field is reported in the card (B1–B4).

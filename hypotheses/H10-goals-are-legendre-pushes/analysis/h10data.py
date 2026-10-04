@@ -40,18 +40,67 @@ def guard(goal_nos):
 
 _cache = {}
 
+# ---------------------------------------------------------------- round 1b switch (2026-10-04)
+# Default = the round-1 path (H10's own bge statement coordinates and goal vectors), so every round-1 script runs
+# unchanged. configure() selects the corrected inputs built by scheme/build_r1b.py:
+#   emb     bge_small | gte_modernbert      statement + goal embedding model (DQ5)
+#   goals   h10 | shared                    H10's own goal/kickoff vectors or shared embeddings/goals (goal_fields)
+#   dedupe  none | copies | restate         drop DQ5 self-repeats: copies = self_repeat_both; restate = either model
+#   style   False | True                    style-residualized (within goal period) 32-d vectors (n <= 32 only)
+R1B = DATA / "r1b"
+CFG = {"emb": "bge_small", "goals": "h10", "dedupe": "none", "style": False}
+
+
+def configure(emb: str = "bge_small", goals: str = "h10", dedupe: str = "none", style: bool = False):
+    if emb != "bge_small" and goals == "h10":
+        raise ValueError("H10's own goal vectors are bge-only; use goals='shared' with gte")
+    CFG.update(emb=emb, goals=goals, dedupe=dedupe, style=bool(style))
+    _cache.clear()
+
+
+def cfg_tag() -> str:
+    t = f"{CFG['emb']}_{CFG['goals']}"
+    if CFG["dedupe"] != "none":
+        t += f"_dd-{CFG['dedupe']}"
+    if CFG["style"]:
+        t += "_style"
+    return t
+
+
+def out_root() -> Path:
+    """Round-1 outputs live in DATA; round-1b configurations under DATA/r1b/<tag>/."""
+    return DATA if CFG == {"emb": "bge_small", "goals": "h10", "dedupe": "none", "style": False} else R1B / cfg_tag()
+
 
 def statements():
     if "st" not in _cache:
-        _cache["st"] = pl.read_parquet(DATA / "statements.parquet")
-        _cache["Z"] = np.load(DATA / "stmt_w64.npy", mmap_mode="r")
+        st = pl.read_parquet(DATA / "statements.parquet")
+        if CFG["dedupe"] != "none":
+            fl = pl.read_parquet(R1B / "flags.parquet")
+            drop = (fl["self_repeat_both"] if CFG["dedupe"] == "copies"
+                    else (fl["self_repeat_bge"] | fl["self_repeat_gte"])).to_numpy()
+            st = st.filter(pl.Series(~drop[st["row"].to_numpy()]))
+        _cache["st"] = st
+        if CFG["style"]:
+            _cache["Z"] = np.load(R1B / f"stmt_sr32_{CFG['emb']}.npy", mmap_mode="r")
+        elif CFG["emb"] == "bge_small":
+            _cache["Z"] = np.load(DATA / "stmt_w64.npy", mmap_mode="r")
+        else:
+            _cache["Z"] = np.load(R1B / f"stmt_w64_{CFG['emb']}.npy", mmap_mode="r")
     return _cache["st"], _cache["Z"]
 
 
+def _whitener(regime: str, n: int):
+    if CFG["emb"] == "bge_small":
+        return load_whitener(regime, n)
+    import embed_models as EM
+    return EM.load_whitener(regime, n, CFG["emb"])
+
+
 def goal_direction(goal_no: int, regime: str, n: int = 32, variant: str = "combined") -> np.ndarray:
-    gz = np.load(DATA / "goal_vecs.npz")
+    gz = np.load(DATA / "goal_vecs.npz") if CFG["goals"] == "h10" else np.load(R1B / f"goal_vecs_{CFG['emb']}.npz")
     i = int(np.flatnonzero(gz["goal_no"] == goal_no)[0])
-    W = load_whitener(regime, n)
+    W = _whitener(regime, n)
     gv = W(gz["goal_raw"][i][None])[0]
     gv /= np.linalg.norm(gv)
     kr = gz["kick_raw"][i]
@@ -69,6 +118,8 @@ def load_period(goal_no: int, n: int = 32, days=None, win_min: int = 30):
     """Statements of one goal period (optionally a day range), unit vectors in the first n whitened dims."""
     guard([goal_no])
     st, Z = statements()
+    if n > Z.shape[1]:
+        raise ValueError(f"n = {n} > {Z.shape[1]} stored dimensions for this configuration")
     s = st.filter((pl.col("goal_no") == goal_no) & pl.col("win30").is_not_null())
     if goal_no in UNIT_END:
         s = s.filter(pl.col("pt_date") <= UNIT_END[goal_no])

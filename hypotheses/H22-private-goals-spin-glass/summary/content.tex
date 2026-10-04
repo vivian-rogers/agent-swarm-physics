@@ -1,4 +1,4 @@
-\hwhat{Do \#51's private, partly conflicting roles make the swarm a spin glass? Tested on sub-periods 51a--e (45 non-holdout days) against shared-objective weeks \#38, \#40, \#44, after synthetic validation (the balance index separates factions from random signs; SK and a heterogeneous ferromagnet cannot be told apart under common drive). Content couplings are real in 51b and 51c ($\rho_{\rm split}=0.46$, $p=0.003$) but 85--94\% positive ($\hat\kappa=4$--10); the balance index is indeterminate. Same-role rivals co-move \emph{more} than unrelated pairs ($T_{\rm SR}=+0.048$, $p=0.02$), the homophily rival. Positions persist ($M=0.5$--0.75) without collective switching ($W\approx1$). Contrast weeks are no less ferromagnetic; talk couplings sit at the noise floor. Holdout test (\#51 tail) written, \textbf{not run}.}
+\hwhat{Do \#51's private, partly conflicting roles make the swarm a spin glass? Tested on 51a--e (45 non-holdout days) against shared-objective weeks \#38, \#40, \#44. Content couplings are real in 51b and 51c ($\rho_{\rm split}=0.46$, $p=0.003$) but mostly positive; the content balance index is indeterminate; positions persist without collective switching ($W\approx1$). Same-role rivals co-move \emph{more} than unrelated pairs ($T_{\rm SR}=+0.048$, $p=0.02$). \textbf{Round 1b} (DQ6 roles incl.\ Opus~5's recovered role, two embedding models, style residuals, dedupe, corrected talk, shared unit splits, a DQ2 stance channel) keeps this in every variant ($T_{\rm SR}$ +0.04 to +0.06, $p\le0.05$). Stance is ferromagnetic (mean 0.6) with unbalanced residuals ($\tau_3^{\rm dc}$ 0.05--0.25) but no hostility between rivals or opposed roles. Natives: Opus~5's role change and chess opponents show no antagonism. Holdout \textbf{not run}.}
 
 \hmodel{Models 01 (SK) and 11 (O($n$) spins). Spin $\mathbf s_i$: agent $i$'s whitened chat embedding per 30-min window ($n=32$). Fields: day field $\mathbf m_d$; static field $\mathbf H_i$ (role, lab, style). $J_{ij}$: correlation of within-day fluctuations $\mathbf x_i,\mathbf x_j$ minus a cross-day surrogate; $A,B,C$: day folds. $\kappa$: SK ratio $J_0/J$; $\tau_3$: gauge-invariant balance (SK $\approx0$, factions $\approx0.5$); $q$: overlap of day-demeaned states $\hat{\boldsymbol\delta}$; $W$: its synchrony beyond per-agent shifts.}
 
@@ -13,4 +13,24 @@ q(d,d')=\tfrac1N\textstyle\sum_i\hat{\boldsymbol\delta}_{i,d}\!\cdot\!\hat{\bold
 
 \htelos{Practically, little. ``Spin glass'' was the exciting reading of mixed-motive swarms: frustrated, history-dependent, hard to steer. The data say something duller and more usable. Assigned roles act as fixed fields that pin each agent's topic, the shared room adds a weak positive pull, and same-objective agents drift together. For an operator, roles, not inter-agent conflict, set what such a swarm talks about, and there are no hidden collective states to escape. Caveat: embeddings measure topic, not stance, so strategic opposition could be invisible here. The diagnostics port to other logs; the spin-glass vocabulary is not earned.}
 
-\hbottom{\#51 is not a spin glass: private roles make it a random-field system with weak, mostly positive coupling, where rivals align rather than repel and the swarm never switches collectively.}
+\hbottom{\#51 is not a spin glass: private roles make it a random-field system with weak, mostly positive coupling in both topic and stance, where rivals align rather than repel and the swarm never switches collectively.}
+
+\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.27\columnwidth}p{0.60\columnwidth}p{0.11\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b (51b / 51c / 51d)} & \textbf{Verdict}\\\hline
+P1 real couplings & content 2/3 $\to$ 2/3 (bge), 3/3 (gte); stance 3/3 beyond agent fields & $\checkmark$\\
+P2 $\kappa<1$ & 5.2 / 3.9 / 9.7; stance mean $+0.6$ & $\times$\\
+P3 $\tau_3^{\rm dc}<0.25$ & content indeterminate (both models); stance 0.25 / 0.23 / 0.05 & stance $\checkmark$\\
+P4 rivals repel & RE $T_{\rm SR}$ $+0.048$ $\to$ $+0.042$ (gte), $+0.052$ (style-res.); stance $+0.09$ n.s. & $\times$ (rival)\\
+P4 opposed roles & content $\approx0$; stance $+0.11$ / $-0.34$ / $+0.22$ (2 pairs) & $\times$\\
+P5 collective states & $W$ 1.16 / 1.15 / 0.69; gte 51c 1.61 ($p$ 0.02) & $\times$\\
+Talk (secondary) & noise floor $\to$ heterogeneous on the fixed table; $T_{\rm SR}\approx0$ & new\\
+NE38 (native) & field leaves rivals ($p$ 0.004); coupling DiD $-0.27$ n.s. & $\times$\\
+G23 chess (native) & opponents' stance $-0.005$; content $+0.03$ n.s. & $\times$\\
+\end{tabular}}}
+
+\hobsb{../figures/r1b_rivals_channels.pdf}{(a) Rival contrast $T_{\rm SR}$ per unit in content (two models and style-residualized) and stance; bars: role-permutation sd. Positive almost everywhere; the one negative stance value (pu51e, where Opus~5 is a game dev) is not significant. (b) NE38: Opus~5's alignment with and coupling to its game-dev rivals while it was one of them, and after.}
+
+\hcaveats{$\tau_3^{\rm dc}$ cannot separate SK from a heterogeneous ferromagnet (Amendment 1), so the unbalanced stance residuals are not glass evidence. Per-pair negative-stance counts assume replies independent within a pair, so threads inflate them; they are not enriched in conflict classes. Few testable rival pairs (3--5 per unit; one in most shared splits). The NE38 coupling result uses a threshold chosen after seeing the coverage. Stance labels are reliable only in aggregate (pair-level ``opposes'' precision 0.08). Holdout untouched.}
+
+\hnext{Lagged (kinetic) couplings to separate the room's common drive from coupling; a reply-level stance model with role-time covariates.}
+

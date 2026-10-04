@@ -1,6 +1,7 @@
 # H13 × G44: Finetune your leader! (2026-05-26 → 05-29)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1: failed; same in both embedding models)
 **Role:** exploratory
 **Period:** regime III · mode D/C · 16–18 agents (Opus 4.8 and the temporary Fine-tuned Leader join) · two rooms with different tasks (#best fine-tunes a Kimi leader; #rest picks creative work) · 4 days. The fine-tuned leader is its own lab label ('Fine-tuned (Kimi)').
 **Units analysed:** 44
@@ -51,3 +52,13 @@ Within-unit stationarity (first vs second half of days, family field cos): Anthr
 ## Notes
 - Data: `data/processed/H13-family-fields/G44/`. Per-period figures: `figures/`.
 - 2026-10-04: the 'Fine-tuned (Kimi)' agent is its own lab label (a singleton).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the pre-registered statistics on the corrected inputs (card section "Round 1b"). Old numbers are kept above.* Inputs: DQ5 statement vectors (bge and gte-modernbert, regime-whitened, 32-d), H13's own style rival S-a and DQ5's shared `style_resid_period` vectors, DQ5 restatement flags, `activity_bins_fixed` for talk spins, and Jev v3 behavior states (HH267, card Amendment 2). Data: `data/processed/H13-family-fields/r1b/`.
+
+| Unit | T_field round 1 (bge) | T_field gte | S-a own (bge / gte) | shared style_resid_period (bge / gte) | T bge, restatements removed | talk Δ old → fixed table | behavioral T_B |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 44 | 0.065 (p 0.185) | 0.049 (p 0.241) | 0.051 / 0.018 | 0.054 (p 0.219) / 0.020 (p 0.328) | 0.063 | -0.008 (p 0.501) → -0.011 (p 0.514) | 0.114 (p 0.057) |
+
+- **Talk on the corrected table:** family homophily in talk timing (Δ > 0, p < 0.05) in no unit of this period.
+- **Reading:** the content field is unchanged in both models and still vanishes under either style rival; the behavioral field is reported in the card (B1–B4).

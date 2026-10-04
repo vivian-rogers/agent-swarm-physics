@@ -1,6 +1,7 @@
 # H22 × G51a: Each agent: Maximize your assigned goal! — unit 51a (2026-07-06 → 07-08)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (round 1: descriptive)
 **Role:** exploratory
 **Period:** regime III · mode I/K (private roles, NE26 starts) · 21 agents, 8 h/day (07-07 ran ≈ 17 h) · one room (#general) · 3 days; day-thirds used as pseudo-days (Amendment 1).
 
@@ -59,3 +60,17 @@ Data: `data/processed/H22-private-goals-spin-glass/G51/<unit>/results.json`; fig
 ## Notes
 - Data: `data/processed/H22-private-goals-spin-glass/G51/51a/`. Figure: `figures/H22_G51a.pdf`.
 - Card: `../../README.md` (Observables, Null, Prediction, Amendment 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the corrected inputs (card section "Round 1b"); round-1 numbers kept above.* DQ6 ground-truth roles (Opus 5's first role recovered), DQ5 statement vectors in two models (bge, gte), DQ5 `style_resid_period` vectors ("styp"), restatements removed ("dedup"), `activity_bins_fixed` for talk spins, and the DQ2 stance channel with the calibrated agent-field null. Data: `data/processed/H22-private-goals-spin-glass/r1b/`.
+
+| Unit | Variant | heterogeneity ρ_split | τ₃(dc) | T_SR / pairs (p>) | T_OP | W (p) | talk ρ_split (p) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 51a | round 1 | -0.05 (p 0.598) | 1.33 | – / 0 (p> –) | -0.131 | – (p –) | -0.12 (p 0.827) |
+| 51a | bge | -0.05 (p 0.598) | 1.33 | – / 0 (p> –) | -0.131 | – (p –) | 0.06 (p 0.365) |
+| 51a | gte | 0.06 (p 0.429) | -0.90 | – / 0 (p> –) | -0.037 | – (p –) | 0.06 (p 0.365) |
+| 51a | bge styp | -0.11 (p 0.711) | 3.59 | – / 0 (p> –) | -0.158 | – (p –) | 0.06 (p 0.365) |
+| 51a | gte styp | -0.03 (p 0.628) | nan | – / 0 (p> –) | -0.055 | – (p –) | 0.06 (p 0.365) |
+| 51a | bge dedup | -0.03 (p 0.542) | 1.10 | – / 0 (p> –) | -0.131 | – (p –) | 0.06 (p 0.365) |
+| 51a | **stance (DQ2)** | dc split-half 0.09 (agent-field p 0.199) | -0.63 [-0.63, -0.63] | 0.146 / 3 (p> 0.299) | 0.078 | – | neg. pairs 19 vs 4.7 |
+

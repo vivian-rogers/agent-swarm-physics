@@ -1,7 +1,8 @@
 # H21 × G12: Form two teams and debate each other, while one agent judges (2025-09-01 → 09-05)
 
 **Verdict:** failed (coupled two-sublattice antiferromagnet); descriptive: weak one-dimensional staggered moment along the motion's stance axis, and a uniform topic field that switches off at the verdict
-**Role:** exploratory (not held out)
+**Verdict (1b):** supported in stance (two-sublattice order; content still failed; native: supported)
+**Role:** exploratory (round 1, not held out); native (round 1b: re-drafting as a within-pair design)
 **Period:** regime I · mode M (teams) · 7 agents · one room (#general) · 5 days (debates on 4). Labs: Anthropic ×3 (Claude 3.7 Sonnet, Claude Opus 4, Claude Opus 4.1), OpenAI ×2 (o3, GPT-5), Google (Gemini 2.5 Pro), xAI (Grok 4). Splits inside the period: 09-03 (village day number added to the prompt) and 09-05 (history search tool, chain-of-thought memory). No debate was held on 09-05, so the second change touches no debate.
 
 ## Why this period
@@ -92,6 +93,32 @@ Figures in `figures/`:
 | *post hoc* same-lab vs different-lab pair cosine | +0.20 | exact p = 0.10 (420 relabelings) | family > team |
 
 **Reading.** During a debate the debaters share strong uniform order along the motion's topic. Family co-variation is larger than team co-variation. The assigned side tilts each debater only slightly along a single stance direction: μ ≈ 0.2 of the per-dimension statement noise, below the full-vector test's reach (about 0.5). There is no antiferromagnetic coupling signature. After the verdict the topic order switches off and (post hoc) the stance tilt reverses: each side concedes toward the other.
+
+## Native test (round 1b): re-drafting separates the team coupling from the pair
+*Written 2026-10-04 07:14 UTC, before computing any within-pair statistic.* Seen before: round 1 above; H37's #12 stance results (opponents −0.13 vs teammates +0.32; 7/10 teams recovered; contrast gone after the verdict); DQ2's #12 check (opposite-team "opposes" 33% vs 6%); DQ6's #12 team, judge, result and phase rows.
+
+- **Why native.** Teams were re-drafted for every debate (except #7 = #6), so the same two agents are teammates in some debates and opponents in others. A within-pair contrast removes everything fixed about the pair (shared family, habitual friendliness, each agent's agreeableness): what is left is the coupling that the team assignment switches on. No other period moves the same agents across sides.
+- **Observable (stance channel).** DQ2 `reply_pairs` (`pair_set = cand`, labelled), B and A both debaters of the same debate, B in that debate's `deb` phase; soft stance s = p_reply · (p_supports − p_opposes) / Σ p_reply. For each unordered pair seen as teammates in ≥ 1 debate and as opponents in ≥ 1 debate, with ≥ 1 reply between them in each condition: c_ij = s̄(opponents) − s̄(teammates).
+- **Observable (content channel).** Per debate, H21's spins (masked, whitened, agent-centred, debate-centred window means; bge and gte): c_ij^content = mean cos as opponents − mean cos as teammates.
+- **Nulls.** Exact sign-flip permutation over pairs (condition labels swapped within a pair); the calibrated agent-field null (ordered logit with speaker and target fields fitted on all debate replies, `infra/shared/nulls.py: agent_field_null`, 500 simulations of hard labels on the real reply structure; the within-pair contrast recomputed on hard labels).
+- **Prediction.** Stance: mean c < 0 with sign-flip p < 0.05 and below the agent-field null's 5th percentile (credence 0.7). Content: |mean c^content| < 0.05 and p > 0.05 in both models (credence 0.6).
+- **Reading.** Stance pass + content null = the antiferromagnet is a coupling switched on by the assignment, and lives in stance, not topic. Stance null = H37's contrast came from agent or pair composition, not from the assignment.
+
+**Native result** (run 2026-10-04 after the prediction; `analysis/r1b.py` → `data/processed/H21-debate-antiferromagnet/r1b/r1b.json`, `native_G12`):
+
+| Prediction | Observed | Null | Verdict |
+| --- | --- | --- | --- |
+| Stance: same pair is more negative as opponents than as teammates | 18 pairs seen in both conditions; mean c = **−0.68**, negative in 16/18; hard labels −0.58 | sign flip p = 0.0002; agent-field null mean −0.006, 5th percentile −0.17, p = 0.002 | **pass** |
+| Content: no within-pair contrast | bge −0.046 (19 pairs, p 0.35); gte +0.024 (p 0.59) | sign flip | **pass** |
+
+**Native verdict: supported.** The opposition is switched on by the team assignment, not carried by the pair (family, habitual friendliness) or by agents' agreeableness, and it lives in stance only.
+
+## Round 1b (improved data, 2026-10-04)
+*Replication on corrected inputs; round-1 numbers kept above. Details and the old-vs-new table: card section "Round 1b".*
+
+- **DQ6:** H21's labels equal the shared ground truth exactly (teams, judges, winners; phase boundaries to the second).
+- **Content channel (P1–P7), every variant fails P1:** Δ̄ = +0.028 (bge, masked; p 0.34), −0.028 (gte, masked; p 0.63), −0.046 to +0.019 for unmasked, DQ5 style-residualized and deduplicated inputs; teams recovered 0–1/10. The a-priori stance-axis tilt holds in bge (σ 0.092, p 0.002, 9/10) and weakens in gte (0.055, p 0.065, 8/10); the post-verdict reversal holds (statement level 7/9 debates negative in bge, 6/9 in gte). Topic order on → off at the verdict in both models (0.42 → 0.01; gte 0.55 → 0.10).
+- **Stance channel (DQ2, new):** 478 debater-to-debater replies in debate phases; soft stance +0.41 within teams vs −0.32 across ('opposes' 6% vs 36%). Δ_stance = 0.72, positive in 10/10 debates (team permutation p < 10⁻⁴); hard-label Δ 0.50 vs the calibrated agent-field null (mean 0.05, 95th percentile 0.18; p 0.002). Teams recovered exactly in **8/10** debates from the stance graph (chance 1.0, p 4×10⁻⁷). After the verdict Δ = −0.01 (switched off). AUC stance 0.75 (agent-adjusted) vs content 0.57 (bge) / 0.54 (gte).
 
 ## Scorecard (period-specific axes)
 | Axis | Score | Why |

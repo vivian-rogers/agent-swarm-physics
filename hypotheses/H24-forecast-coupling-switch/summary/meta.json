@@ -1,38 +1,67 @@
 {
-  "complete": 50,
-  "faithfulness": 1.5,
-  "usefulness": 1.5,
-  "rationale": {
-    "complete": "Round 1 plus round 1b (2026-10-04): 13 input configurations (shared and multi-direction goal field, bge and gte-modernbert for statements and documents, dedupe incl. cross-agent echoes, style residualization) and two native tests (G21 pair-level reading DiD, G41 one kickoff two rooms) with dated predictions; per-period estimates written. #14 confirmatory not run.",
-    "faithfulness": "The literal swarm-level step fails in all configurations (model-dependent reason: none under bge, a generic kickoff-day-sized step under gte). The pair-level version passes in both models (reading pulls the reader toward the owner by ~0.03; weaker after style residualization) and #41 shows room-local divergence after a shared kickoff: D and E move to 1. Single period, no holdout.",
-    "usefulness": "For forecast aggregation: an independent-draft phase protects no diversity (alignment is set at kickoff), and coupling enters pairwise through what agents read, so reading graphs, not phase schedules, are the lever to watch. Small effects, one week."
-  },
-  "one_line": "Forecast week: the coupling switch was real but early; alignment didn't jump and herding was an artifact",
-  "rated_by": "RE-C1 re-evaluation agent (suggested)",
-  "updated": "2026-10-04",
-  "v2": {
-    "claim": "The forecast-week coupling switch was real but early; alignment didn't jump",
-    "original_verdict": "mixed",
-    "credence": 0.29,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "single powered unit",
-        "x": 0.6
-      }
-    ],
-    "mechanism_level": "M0",
-    "fragile": false,
-    "value_if_true": 1,
-    "decision": "none",
-    "magnitude": "small",
-    "generality": "this scaffold",
-    "expected_usefulness": 0.29,
-    "scientific_value": 1,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 plus round 1b (2026-10-04): 13 input configurations (shared and multi-direction goal field, bge and gte-modernbert for statements and documents, dedupe incl. cross-agent echoes, style residualization) and two native tests (G21 pair-level reading DiD, G41 one kickoff two rooms) with dated predictions; per-period estimates written. #14 confirmatory not run.",
+  "faithfulness": "The literal swarm-level step fails in all configurations (model-dependent reason: none under bge, a generic kickoff-day-sized step under gte). The pair-level version passes in both models (reading pulls the reader toward the owner by ~0.03; weaker after style residualization) and #41 shows room-local divergence after a shared kickoff: D and E move to 1. Single period, no holdout.",
+  "usefulness": "For forecast aggregation: an independent-draft phase protects no diversity (alignment is set at kickoff), and coupling enters pairwise through what agents read, so reading graphs, not phase schedules, are the lever to watch. Small effects, one week."
+ },
+ "one_line": "Forecast week: the coupling switch was real but early; alignment didn't jump and herding was an artifact",
+ "rated_by": "RE-C1 re-evaluation agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "In the forecast week, reading a teammate's document moves an agent's statements toward that teammate; there is no aggregate coupling switch-on",
+  "scope": "G21 (pair DiD), G41",
+  "direction": "positive",
+  "original_verdict": "failed (switch-on)",
+  "credence": 0.35,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "single powered unit (G21)",
+    "x": 0.6,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "intervention-like design (reading-event DiD)",
+    "x": 1.5,
+    "evidence": "native G21"
+   },
+   {
+    "factor": "partly robust (both models; fades under style resid.)",
+    "x": 1.3,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "penalty: style-dependent",
+    "x": 0.7,
+    "evidence": "card §Round 1b"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": true,
+  "value_if_true": 2,
+  "decision": "share documents to align teams",
+  "magnitude": "small",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 0.71,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (RE-C1); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "The forecast-week coupling switch was real but early; alignment didn't jump",
+   "credence": 0.29,
+   "fragile": false,
+   "value_if_true": 1,
+   "expected_usefulness": 0.29,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

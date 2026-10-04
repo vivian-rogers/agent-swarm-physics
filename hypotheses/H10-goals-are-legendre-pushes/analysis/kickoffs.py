@@ -21,6 +21,7 @@ import numpy as np  # noqa: E402
 import polars as pl  # noqa: E402
 from scipy.stats import spearmanr  # noqa: E402
 
+import h10data  # noqa: E402
 from h10data import DATA, HERE, ROOT, UNTOUCHED, goal_direction, save_json, statements  # noqa: E402
 from h10lib import agent_stats, aggregate, random_transverse  # noqa: E402
 import sys  # noqa: E402
@@ -44,6 +45,16 @@ def unit_vectors(rows, Z, n=32):
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    # round 1b (2026-10-04): corrected inputs; defaults reproduce round 1
+    ap.add_argument("--emb", default="bge_small", choices=["bge_small", "gte_modernbert"])
+    ap.add_argument("--goals", default="h10", choices=["h10", "shared"])
+    ap.add_argument("--dedupe", default="none", choices=["none", "copies", "restate"])
+    ap.add_argument("--style", action="store_true")
+    args = ap.parse_args()
+    h10data.configure(args.emb, args.goals, args.dedupe, args.style)
+    out_dir = h10data.out_root() / "NE34"
     st, Z = statements()
     st = st.filter(pl.col("win30").is_not_null())
     held = set(load_holdout()["goal_periods_held_out"]) | UNTOUCHED
@@ -116,7 +127,9 @@ def main():
             rho, p = spearmanr(d["v"].to_numpy(), d["Dm"].to_numpy())
             res[f"spearman_{reg}"] = {"rho": float(rho), "p_two_sided": float(p), "n": d.height}
     print({k: v for k, v in res.items() if k != "transitions"})
-    save_json({**res, "course": course}, DATA / "NE34" / "kickoffs.json")
+    save_json({**res, "course": course}, out_dir / "kickoffs.json")
+    if out_dir != DATA / "NE34":
+        return
 
     fig, ax = plt.subplots(1, 2, figsize=(7.2, 2.9))
     for reg, col in (("I", "#2a78d6"), ("II", "#eb6834"), ("III", "#1baf7a")):

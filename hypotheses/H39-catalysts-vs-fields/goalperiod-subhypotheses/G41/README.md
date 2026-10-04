@@ -1,6 +1,7 @@
 # H39 × G41: Perform novel research! (2026-05-11 → 2026-05-18)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed); nudge K +0.47 (n 5)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode I · 75 agent-days on 5 non-holdout days (2026-05-11 → 2026-05-15) · 17,699 agent-minutes on the trimmed grid.
 
@@ -48,3 +49,6 @@ Content (O6), drift toward the kick message in SD units of the controls' drift, 
 ## Notes
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
 - Erasure: the full B4/B6 chain mixes in the consolidation clock (consolidate is depleted right after any consolidation); the no-consolidate chain (A2) is the cleaner read.
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G41/results.json`. Rule unchanged: P3 @-mentions ✗; P4 erasure ✗ → **failed**. V4 nudges: n 7, K +0.715, Δπ_wait -0.140.

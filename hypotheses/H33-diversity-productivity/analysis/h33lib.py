@@ -253,11 +253,13 @@ def cv_day_blocked(y, x, controls, au, day, k=5, seed=0, spline_df=4):
 
 
 # ------------------------------------------------------------------------------------------ data
-def eligibility(ad, x_col: str = "pr10"):
-    """The card's pre-registered period eligibility rule, applied to an agent_day frame."""
+def eligibility(ad, x_col: str = "pr10", y_col: str | None = None):
+    """The card's pre-registered period eligibility rule, applied to an agent_day frame. Round 1b: the output share is
+    computed on the primary outcome (work commits) and units before #30 are excluded (ambiguous zeros)."""
     import polars as pl
-    x = ad.filter(pl.col(x_col).is_not_null())
-    per = x.group_by("unit").agg(pl.len().alias("n_ad"), (pl.col("writes") > 0).mean().alias("share_w"),
+    y_col = y_col or C.Y_PRIMARY
+    x = ad.filter(pl.col(x_col).is_not_null() & (pl.col("goal_no") >= C.MIN_GOAL))
+    per = x.group_by("unit").agg(pl.len().alias("n_ad"), (pl.col(y_col) > 0).mean().alias("share_w"),
                                  pl.col("regime").first(), pl.col("agent").n_unique().alias("n_agents"),
                                  pl.col("pt_date").n_unique().alias("n_days"))
     ag = x.group_by("unit", "agent").len().filter(pl.col("len") >= 3).group_by("unit").len().rename({"len": "agents3"})

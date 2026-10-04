@@ -1,49 +1,75 @@
 {
-  "complete": 50,
-  "faithfulness": 1.5,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 plus round 1b: re-run on two embedding models, two style rivals, dedupe and the corrected talk table; behavioral family test (HH267) and three native tests (NE06, NE32, G35). Holdout C1-C6 not run.",
-    "faithfulness": "Unchanged reading, now model-robust: the family field exists (stable across periods) but is style; no family coupling. The behavioral channel fails its count rule (3/15) and only adds a weak, possibly harness-borne field.",
-    "usefulness": "Style residualization is required before any embedding-alignment metric (now shown in two embedding models); no vendor homophily at this sampling; the NE06 log finding (one-call-per-turn hit all agents) corrects the NE catalog. Nothing here steers a swarm."
-  },
-  "one_line": "Model families share a stable content field that is writing style (both embedding models); behavior carries only a weak family trace; no family homophily; rooms carry coupling.",
-  "rated_by": "RE-C2 round-1b agent (suggested; faithfulness and usefulness unchanged from the coordinator's calibration)",
-  "updated": "2026-10-04",
-  "suggested": {
-    "faithfulness": 2.0
-  },
-  "v2": {
-    "claim": "Model-family content fields are writing style",
-    "original_verdict": "refuted (fields as positions)",
-    "credence": 0.84,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "calibrated null",
-        "x": 2
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "robust to data/instruments",
-        "x": 2
-      }
-    ],
-    "mechanism_level": "M1",
-    "fragile": false,
-    "value_if_true": 2,
-    "decision": "don't infer family 'ideology' from content; fingerprinting",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 1.68,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 plus round 1b: re-run on two embedding models, two style rivals, dedupe and the corrected talk table; behavioral family test (HH267) and three native tests (NE06, NE32, G35). Holdout C1-C6 not run.",
+  "faithfulness": "Unchanged reading, now model-robust: the family field exists (stable across periods) but is style; no family coupling. The behavioral channel fails its count rule (3/15) and only adds a weak, possibly harness-borne field.",
+  "usefulness": "Style residualization is required before any embedding-alignment metric (now shown in two embedding models); no vendor homophily at this sampling; the NE06 log finding (one-call-per-turn hit all agents) corrects the NE catalog. Nothing here steers a swarm."
+ },
+ "one_line": "Model families share a stable content field that is writing style (both embedding models); behavior carries only a weak family trace; no family homophily; rooms carry coupling.",
+ "rated_by": "RE-C2 round-1b agent (suggested; faithfulness and usefulness unchanged from the coordinator's calibration)",
+ "updated": "2026-10-04",
+ "suggested": {
+  "faithfulness": 2.0
+ },
+ "v2": {
+  "claim": "Model-family content fields are writing style; behavior carries only a weak family trace (tooling-like)",
+  "scope": "15 units; natives NE06, NE32, G35",
+  "direction": "positive",
+  "original_verdict": "refuted (fields as positions)",
+  "credence": 0.92,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "calibrated null",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "replication (8–9/15 units, both models)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "robust to data/instruments",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "rival beaten (style explains field, 0/8 survive)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "quasi-intervention (G35 room × lab crossed)",
+    "x": 1.5,
+    "evidence": "native G35"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2,
+  "decision": "don't infer family 'ideology' from content; fingerprinting",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 1.85,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (RE-C2); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "Model-family content fields are writing style",
+   "credence": 0.84,
+   "fragile": false,
+   "value_if_true": 2,
+   "expected_usefulness": 1.68,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

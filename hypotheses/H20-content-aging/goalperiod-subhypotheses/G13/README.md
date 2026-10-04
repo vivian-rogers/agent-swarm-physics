@@ -1,6 +1,7 @@
 # H20 × G13: Design, run and write up a human subjects experiment (2025-09-08 → 2025-09-19)
 
 **Verdict:** mixed (underpowered: not significant, μ = 0.5 aging not rejected) (Amendment-2 null; pre-registered null: mixed)
+**Verdict (1b):** mixed (both models, all configs)
 **Role:** exploratory
 **Period:** regime I · mode C · 6 agents with statements · #general only · 10 active days (60 agent-days with ≥ 8 statements).
 
@@ -46,3 +47,16 @@ Data: `data/processed/H20-content-aging/G13/` (result.json = pre-registered null
 C (beats the stationary null): 0 — A p = 0.473, A_c p = 0.208. D (unfitted signature: A_late, μ̂ > 0): 0. H (rivals R1 quench, R2 field, R3 common): 0. G: –.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04): replication
+*Inputs: shared goal fields, gte-modernbert (DQ5), DQ5 dedupe (copies, restatements), style-residualized vectors. Data: `data/processed/H20-content-aging/G13/r1b/result_aniso_<config>.json`. Role of this row: replication.*
+
+| Input | Statistics (Amendment-2 null) |
+| --- | --- |
+| round 1 (bge, H01-derived goal vectors) | see Result above |
+| bge-small, shared goal fields | A -0.002 (p 0.473); A_c +0.040 (p 0.208); A_late -0.825; K -0.047; μ̂ -0.13 [-2.75, +1.59]; power 0.19 |
+| gte-modernbert | A +0.007 (p 0.495); A_c +0.096 (p 0.032); A_late -0.768; K -0.056; μ̂ -0.07 [-2.14, +1.68]; power 0.22 |
+| restatement-deduped (bge / gte) | A -0.021 / -0.026 |
+| style-residualized (bge / gte) | A -0.015 / -0.012 |
+
+A across the 7 configurations: -0.026 to +0.007. The shared goal fields give the same ĝ as round 1 (cos 1.0000 at n = 32: H20 averaged the room kickoffs, so H01's #38 room swap cancels), so bge numbers reproduce exactly.

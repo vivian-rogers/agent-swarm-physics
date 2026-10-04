@@ -4,6 +4,7 @@
 - **Families carry a stable content field, but it is writing style.** The field shows in 9/15 periods and is invariant across periods. It does not survive style residualization in any period.
 - **Families do not couple by family.** Talk-timing and content co-movement show no family homophily.
 - **Coupling follows rooms.**
+- **Round 1b (2026-10-04, section below):** all of this replicates with the second embedding model, both style rivals, dedupe and the corrected talk table (talk CI 2.3× narrower). The behavioral family test (HH267) **failed** by its rule (3/15 units; RE 0.075 [0.030, 0.121]): families leave only a weak, work-habit-shaped trace in behavior. Natives: NE06 uninformative (the change was village-wide), NE32 failed, G35 mixed.
 
 Confirmatory script written, not run. Predictions were written 2026-10-03 23:50 UTC, before any real-data run (below).
 **Fields:** stat mech, sociophysics, info theory
@@ -140,9 +141,9 @@ Scored for exploratory round 1 (non-holdout; 15 counted units plus 51e). Mapping
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Lab from `roster.lab`, content from regime-whitened chat embeddings, talk spins from `activity_bins`; assumptions listed under Model and Observables. **Not family-invariant by construction:** the content state carries each family's writing style (style features alone separate families in 14/15 units). Regime II and III bases differ, so #35 is outside the cross-period checks. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Within-unit split-half stability of family fields: cos 0.31–0.85 (most > 0.5). The equal-time mean-field inversion assumes quasi-equilibrium; no Markov-order or update-order audit for talk spins. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | The family field beats the lab-permutation null in 9/15 units (RE T = 0.080 [0.024, 0.137]). It does **not** beat the strongest relevant null, the style field (S-a: 0/15). Family coupling never beats its null (as predicted). No held-out-day likelihood comparison. |
-| D unfitted predictions | unfitted statistics and the model's signature | 1 | Leave-one-agent-out family classification beats chance in 7/15 units. Newcomers classified by earlier units' family fields: 4/11 vs 14% chance (p = 0.06). NE32 triplet: 1/3 aligns with the OpenAI field (descriptive). |
-| E interventional | predicts the change across a natural experiment | 0 | No natural experiment was used as an intervention. Family-specific step changes are either held out (NE20) or in regime I (NE05, NE06). |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | `analysis/synthetic.py` F1–F5. All tests have nominal size; power is reported at village N and sampling. The synthetic run exposed and fixed two estimator flaws before real data (invariance baseline; window-demeaned co-movement). Not done: embedding-model swap, whitening dimension. |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 | Leave-one-agent-out family classification beats chance in 7/15 units. Newcomers classified by earlier units' family fields: 4/11 vs 14% chance (p = 0.06). NE32 triplet: 1/3 aligns with the OpenAI field (descriptive). Round 1b: by behavior, newcomers 3/9 (chance 0.15, p 0.14). |
+| E interventional | predicts the change across a natural experiment | 0 | Round 1: none used. **Round 1b:** NE06 (Google-only scaffold change, #20) attempted on behavior and content: no Google-specific shift, and the manipulation itself is village-wide in the logs (actions per turn halved for every agent), so no family-specific intervention exists outside the holdout (NE20). |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 (1b; round 1: 1) | `analysis/synthetic.py` F1–F5. All tests have nominal size; power is reported at village N and sampling. The synthetic run exposed and fixed two estimator flaws before real data (invariance baseline; window-demeaned co-movement). **Round 1b:** every content result replicates with gte-modernbert (a different lineage), with DQ5's shared style residuals and after removing restatements or copies. Not done: whitening dimension. |
 | G ground truth | agrees with known structure | 1 | Families are recoverable from content (7/15) and from style features (10/15). Rooms come out as the coupling blocks (co-movement b_room > b_lab 9/10; talk b_room p < 0.05 5/10), consistent with H05. |
 | H comparative | beats the named rivals | 0 | For H13 as stated (a family *position* field, family coupling), the rivals win: the style rival absorbs the field (S-a 0/15; S-b leaves a period-specific part in only 3/14), and the room rival carries the coupling. The reframed reading (a stable, style-borne family field) is consistent with every rival comparison. |
 | I transfer | holds in other same-mode periods, including the holdout | 1 | The family field is invariant across regime III periods (split-half cos 0.84 / 0.93 / 0.88 vs a regrouping null of 0.76, p = 0.008). Holdout transfer (C3) written, not run. |
@@ -245,12 +246,26 @@ None of these contrasts families or rooms. Changes:
   - Otherwise **inconclusive**. C4 and C6 are secondary.
 - **Power caveats.** Only 3–4 two-room held-out units, so C2-room and C6 rest on few units. The one-room held-out units (49, 50b, 51t) carry most of the C5 talk test.
 
+### Amendment 2: round-1b pre-registration of the behavioral family test (HH267) (2026-10-04 07:12 UTC, before any behavioral statistic was computed)
+**What I had seen:** the round-1 results above; DQ5's style check (`style_resid_check.json`: shared `style_resid_period` leaves 1/16 units significant in both models); H46 (style drifts with context and resets at erasure; style shifts under assigned registers); H09 E3 (family explains 41–77% of between-agent variance in *action statistics*, a prior for this test); H56 (family differences in turn-level statistics survive scaffold removal, η² 0.40); the `behavior_states_v3` schema and validation notes. I have not computed any behavioral statistic by agent or family.
+
+**Behavior state of an agent-day** (*agent state (behavior, agent-day)*, proposed as a named variant): from `behavior_states_v3` windows that are active and labelled, the mean of the 11 state probabilities `p_*` (Jev v3.1; probability vectors, not argmax), plus four rates: log(1 + actions per active window), real failure rate n_errors / n_actions (smoothed with 1 pseudo-failure in 15 actions, the village mean), log(1 + successful commits per window), log(1 + file writes per window). Agent-days need ≥ 6 active labelled windows (30 min). Each of the 15 features is z-scored within the unit; the agent-day vector is day-demeaned exactly like the content state (a1), and H_i^B is the agent's mean over ≥ 2 days. Variant *B+tools*: three more features, the agent-day shares of bash, GUI (click/key/scroll/type/mouse) and other tool calls (`actions.action`).
+
+**Predictions (applied to the same 15 counted units; replication, templated):**
+- **B1 (behavioral family field exists).** T_field^B > 0 with lab-permutation p < 0.05 in ≥ 2/3 of counted units, and its RE summary CI excludes 0. Credence 0.65.
+- **B2 (it is not style).** In a pair regression of behavior-field alignment cos(H_i^B, H_j^B) on same-lab with the agents' style-feature similarity (cosine of mean standardized 20-feature vectors) as a covariate, b_lab > 0 at node-permutation p < 0.05 in ≥ 1/2 of counted units and the RE of b_lab excludes 0. Credence 0.5.
+- **B3 (invariance).** Family-level split-half cos of behavioral family fields over regime III units ≥ 0.5 and above the fixed random-regrouping null (p < 0.05). Credence 0.5.
+- **B4 (behavior carries family better than style-free words).** Leave-one-agent-out family classification from H^B beats the lab-permutation null in ≥ 1/2 of units, and beats the classification from style-residualized content (shared `style_resid_period`, bge) in more units than it loses. Credence 0.5.
+- **Descriptive:** per-feature family η² (which behaviors carry the field); failure-rate family contrast; behavior vs room in two-room units (b_lab vs b_room, as P7).
+- **Overall reading (fixed now):** HH267 "family fields live in behavior, not words" is **supported** if B1 and B2 pass, **failed** if B1 fails, otherwise mixed. Natives (NE06, NE32, G35) are written in their folders.
+- **Caveats stated in advance:** Jev reads window evidence that can include the agent's own narration, so family writing style could leak into state labels; family-specific harness behavior (e.g. NE20's Anthropic one-call-per-turn change, held out) would appear as a behavioral family field without any model disposition; in #51, roles shape behavior (same-role pairs are dropped, as in a1).
+
 ## Results by goal period
-One folder per goal period; verdict rule in `analysis/period_results.py` (failed = no unit detects a family field; mixed = a style-borne field is detected and the no-family-coupling predictions hold; no period can be 'supported' because P2 failed everywhere). T = T_field (a1), S-a = style-residualized T_field, talk/content Δ = J_in − J_out (lab-permutation p), y2 = room-adjusted content-field regression (two-room units).
+One folder per goal period (round-1b `Verdict (1b)` lines in each; unchanged); verdict rule in `analysis/period_results.py` (failed = no unit detects a family field; mixed = a style-borne field is detected and the no-family-coupling predictions hold; no period can be 'supported' because P2 failed everywhere). T = T_field (a1), S-a = style-residualized T_field, talk/content Δ = J_in − J_out (lab-permutation p), y2 = room-adjusted content-field regression (two-room units).
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory | mixed | 35: T 0.32 (p 0.000), S-a 0.06 (p 0.16); talk Δ 0.029 (p 0.24); content Δ -0.028 (p 0.49); y2 b_lab/b_room 0.31/0.25 |
+| [G35](goalperiod-subhypotheses/G35/README.md) | exploratory; native (1b) | mixed; 1b mixed (native: style-free words follow rooms, behavior b_lab +0.125 n.s.) | 35: T 0.32 (p 0.000), S-a 0.06 (p 0.16); talk Δ 0.029 (p 0.24); content Δ -0.028 (p 0.49); y2 b_lab/b_room 0.31/0.25 |
 | [G36](goalperiod-subhypotheses/G36/README.md) | exploratory | mixed | 36b: T 0.38 (p 0.005), S-a 0.01 (p 0.41); talk Δ 0.049 (p 0.28); content Δ -0.027 (p 0.62); y2 b_lab/b_room 0.43/0.19 |
 | [G37](goalperiod-subhypotheses/G37/README.md) | exploratory | failed | 37: T -0.08 (p 0.784), S-a 0.03 (p 0.31); talk Δ -0.029 (p 0.41); content Δ -0.655 (p 0.75); y2 b_lab/b_room -0.08/0.35 |
 | [G38](goalperiod-subhypotheses/G38/README.md) | exploratory | mixed | 38a: T 0.11 (p 0.179), S-a -0.01 (p 0.43); talk Δ -0.035 (p 0.72); content Δ -0.060 (p 0.58); y2 b_lab/b_room 0.18/0.89<br>38b: T -0.03 (p 0.455), S-a -0.08 (p 0.77); talk Δ -0.486 (p 0.99); content Δ -0.001 (p 0.30); y2 b_lab/b_room 0.08/0.89<br>38c: T 0.12 (p 0.156), S-a 0.01 (p 0.38); talk Δ -0.041 (p 0.56); content Δ -0.047 (p 0.61); y2 b_lab/b_room 0.14/0.86 |
@@ -260,6 +275,8 @@ One folder per goal period; verdict rule in `analysis/period_results.py` (failed
 | [G42](goalperiod-subhypotheses/G42/README.md) | exploratory | mixed | 42: T 0.22 (p 0.009), S-a 0.06 (p 0.18); talk Δ -0.307 (p 0.90); content Δ -0.033 (p 0.50); y2 b_lab/b_room 0.16/0.33 |
 | [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | failed | 44: T 0.06 (p 0.185), S-a 0.05 (p 0.23); talk Δ -0.008 (p 0.50); content Δ -0.028 (p 0.34); y2 b_lab/b_room 0.06/0.72 |
 | [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | mixed | 51a: T 0.06 (p 0.047), S-a 0.02 (p 0.21); talk Δ 0.084 (p 0.01); content Δ -0.005 (p 0.40)<br>51b: T 0.07 (p 0.009), S-a -0.01 (p 0.61); talk Δ 0.026 (p 0.23); content Δ -0.002 (p 0.29)<br>51c: T 0.09 (p 0.002), S-a 0.04 (p 0.06); talk Δ -0.010 (p 0.51); content Δ -0.001 (p 0.17)<br>51d: T 0.01 (p 0.379), S-a -0.03 (p 0.86); talk Δ -0.053 (p 0.68); content Δ -0.008 (p 0.40)<br>51e: T 0.01 (p 0.341), S-a -0.03 (p 0.79); talk Δ -0.116 (p 0.86); content Δ -0.049 (p 0.76) |
+| [NE06](goalperiod-subhypotheses/NE06/README.md) (#20) | native (1b) | failed | Google behavior DiD percentile 0.69 (36 relabelings); manipulation absent: actions per turn halved for all agents on 11-20 |
+| [NE32](goalperiod-subhypotheses/NE32/README.md) (#51 newcomers) | native (1b) | failed | behavior classifies 3/9 newcomers (chance 0.15, p 0.14); style-free words 2/9 |
 
 ## Results
 
@@ -353,6 +370,55 @@ One folder per goal period; verdict rule in `analysis/period_results.py` (failed
 4. Family-specific natural experiments as interventions on the field: NE20 (Anthropic one tool call per turn, 06-03, holdout); NE05/NE06 in regime I. Does the style field move?
 5. Family *susceptibility*: response to the goal field at kickoffs by family (H01 D6.1.a). This is a dynamic field response, which a static-field analysis cannot see.
 6. Event-time (reply / Hawkes) family-block coupling for more power than 1-min spins.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of round 1's pre-registered statistics (P1–P8 unchanged) on the corrected inputs, plus the behavioral family test (HH267; Amendment 2, written 07:12 UTC before any behavioral statistic) and three period-native tests (NE06, NE32, G35; predictions written 07:13 UTC in their folders before running). Non-holdout only, asserted in every script; `confirm.py` not run.*
+
+**What changed in the inputs.**
+- **Embeddings (DQ5):** statement vectors now come from the shared statement-level files (`statements_white32_<model>`), for bge-small (identical to round 1's own whitening: agent-day cosine 1.000) and the second model gte-modernbert. Style rivals: H13's own within-unit S-a (pre-registered) and DQ5's shared `style_resid_period` vectors. Dedupe: DQ5 restatement flags (either model) and copy flags (both models).
+- **Talk spins** from `activity_bins_fixed` (DQ8): 13–40% more pair-days pass the ≥ 4-flip rule.
+- **Behavior (DQ3):** Jev v3.1 state probabilities and real failure rates (`n_errors`, not stderr) per agent-day, plus commit and file-write rates; tool mix from `actions`.
+- Code (old paths unchanged): `scheme/build.py --r1b --model … --dedupe …`, `analysis/explore.py --base … --style own|period`, new `analysis/r1b_behavior.py`, `r1b_summary.py`, `r1b_periods.py`, `r1b_figures.py`. Outputs: `data/processed/H13-family-fields/r1b/` (14 MB). DQ5's own check of H13's estimator on its agent-day table (`embeddings/style_resid_check.json`: 8/16 units → 1/16 under `style_resid_period`, both models) agrees with the numbers below.
+
+**Old vs new (content and talk channels).**
+
+| Prediction | Round 1 (bge, own S-a, old talk table) | Round 1b bge | Round 1b gte | Notes |
+| --- | --- | --- | --- | --- |
+| P1 family field (count; RE T) | 9/15; 0.080 [0.024, 0.137] | 9/15; 0.080 [0.024, 0.137] | 8/15; 0.085 [0.040, 0.131] | restatements removed: 9/15, 0.084 (bge); 8/15, 0.088 (gte) |
+| P2 survives own S-a (count in P1 units; RE) | 0/9; −0.001 [−0.037, 0.035] | 0/9; −0.001 | 0/8; −0.001 | — |
+| P2 survives shared `style_resid_period` | – | 1/9 (51c); 0.009 [−0.030, 0.047]; retention 0.09 | 0/8; 0.015 [−0.022, 0.052]; retention 0.07 | DQ5 check: 1/16 in both models |
+| P3 family invariance (median cos vs regrouping null) | 0.88 vs 0.76, p 0.008 | 0.88 vs 0.76, p 0.006 | 0.90 vs 0.74, p 0.001 | agent level 0.81 / 0.80 |
+| P4 period-specific family part | 3/14 | 3/14 | 1/14 | — |
+| P5 talk homophily, one-room (n.s. count; RE Δ) | 4/5; 0.029 [−0.032, 0.089] | 4/5; 0.008 [−0.025, 0.041] | (same spins) | 51a still Δ = 0.080, p 0.008 |
+| P5 talk, all units RE Δ; two-room b_lab n.s. | 0.002 [−0.040, 0.045]; 10/10 | −0.003 [−0.021, 0.016]; 10/10 | — | CI 2.3× narrower |
+| P6 content co-movement | 1/15; −0.002 | 1/15; −0.002 | 1/15; +0.005 | — |
+| P7 y1 talk room > lab | 8/10 | 10/10 | — | — |
+| P7 y2 field b_lab / b_room p < 0.05 | 7/10 / 9/10 | 7/10 / 9/10 | 6/10 / 9/10 | — |
+| P7 y3 co-movement room > lab | 9/10 | 9/10 | 10/10 | — |
+| P8 LOO; newcomers (d2) | 7/15; 4/11 | 7/15; 4/11 | 7/15; 4/11 | lexical tests unchanged (no embeddings) |
+
+**Behavioral family test (HH267, Amendment 2).** Fifteen behavior features per agent-day (11 Jev v3.1 state probabilities, actions, real failures, commits and file writes per window), z-scored within the unit, day-demeaned, agent means over ≥ 2 days; same estimators and nulls as a1.
+
+| Prediction | Observed | Verdict |
+| --- | --- | --- |
+| B1 behavioral field: p < 0.05 in ≥ 2/3 of units and RE CI > 0 | **3/15** (36b at p = 0.050, 39, 40; 44 and 51a at 0.052–0.057); RE T_B = 0.075 [0.030, 0.121], I² = 0. With tool mix: 3/15, RE 0.088 [0.039, 0.137] | **fail** (count); RE positive |
+| B2 not style: b_lab given style similarity, p < 0.05 in ≥ 1/2; RE > 0 | 4/15 (39, 40, 42, 44); RE 0.038 [−0.009, 0.085] | **fail** |
+| B3 invariance across regime III units | family median 0.89 vs regrouping null 0.80, p = 0.047; agent level 0.91 | pass (marginal) |
+| B4 LOO beats null in ≥ 1/2; beats style-free words in more units than it loses | LOO 4/15 (38c, 39, 40, 41); behavior > style-free words (bge) in 12/15 units, < in 2 | mixed |
+| descriptive: family vs room (two-room units) | behavior b_lab RE 0.14 [0.06, 0.22] vs b_room 0.03 [−0.05, 0.11]; lab > room 7/10; style-free words: b_lab ≈ 0, b_room 9/10 (round 1 post hoc) | — |
+| descriptive: which behaviors | the field is concentrated in #39/#40 (worlds and their merge): file writes per window (η² 0.84 / 0.73), execute-task, verify-report and monitor-wait occupancy, commits; in #35 failure rate and debug-recover (η² 0.62 / 0.60); nothing in #51 (roles dominate) | — |
+
+**HH267 verdict (rule fixed in Amendment 2): failed** (B1 fails). Families do not carry a strong behavioral field either; there is a weak one (RE ≈ 0.08, stable across periods, room-independent, beats style-free words in classification) that lives mostly in work habits such as file-write and commit cadence in build weeks. That is plausibly partly harness (tool conventions per provider) rather than model disposition, which NE06 could not separate (below).
+
+**Native tests.**
+- **NE06 (Google-only scaffold change in #20): failed / uninformative.** Google's behavior change across step 1 is ordinary (percentile 0.69 of 36 relabelings), and the manipulation check fails: actions per turn halved for *every* agent on 11-20 (others 3.63 → 1.80; Gemini 3.56/2.85 → 1.82/1.86). In the logs NE06 is a village-wide turn-structure change (DQ9's confound), so it is no family-specific intervention.
+- **NE32 (newcomers to #51 classified by incumbents' behavioral family fields): failed.** 3/9 classifiable newcomers (chance 0.15, p 0.14); style-free words 2/9 (bge), 1/9 (gte). The GPT-5.6 triplet is not recognised as OpenAI by behavior; on its isolated day Terra matches both the OpenAI field and its same-family role-mate, Luna matches its role-mate (DeepSeek) better than the OpenAI field.
+- **G35 (#35, room × lab crossed): mixed.** Style-free words follow rooms (b_room 0.21/0.24, p 0.018/0.009) with no lab term (as predicted); behavior has b_lab +0.125 > b_room −0.046 but n.s. (p 0.21; 5 same-lab cross-room pairs).
+
+**Which verdicts change.** None of the round-1 period verdicts change (`**Verdict (1b):**` lines added in G35–G51: same rule, same counts in both models). The card-level readings hold and are now model-robust: a stable family content field (P1 RE, P3) that is writing style (P2 fails under both style rivals and both models), no family coupling (P5 tighter on the fixed table, P6), rooms carry coupling (P7). New: HH267 fails; a weak behavioral family field exists.
+
+**Scorecard after 1b.** F 1 → 2 (content results replicate across two embedding lineages, two style rivals and two dedupe rules, on top of the synthetic F1–F5). E stays 0 (NE06 attempted; not family-specific in the data). D stays 1 (behavioral newcomer test 3/9, n.s.). C, G, H, I unchanged (behavior adds a positive RE but no count pass; the style rival still wins for a family *position* field).
+**Figure:** `figures/r1b_behavior_vs_words.pdf`. **Estimates:** 131 rows in `per_period_estimates` (content T and style-residualized T in both models, talk Δ on the fixed table, behavioral T_B, natives).
 
 ## Notes
 - 2026-10-03: promoted from shortlist 2 (HH10 + HH75 + HH89 (shortlist 2, item 4)).

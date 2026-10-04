@@ -48,6 +48,7 @@ sys.path.insert(0, str(ROOT / "infra/shared"))
 from common import REVISION, git_commit, holdout_mask  # noqa: E402
 
 OUT = ROOT / "data/processed/H29-driver-nodes"
+LSH = ROOT / "data/processed/shared"
 GUARD_S = 1.0
 KIND = {"agent": 0, "human": 1, "automated": 2}
 
@@ -72,6 +73,11 @@ UNITS = {
     "G51c": dict(goal=51, dates=("2026-08-05", "2026-08-25"), role="exploratory", rooms="#general + #focus"),
     "G51d": dict(goal=51, dates=("2026-08-25", "2026-09-03"), role="exploratory", rooms="#general"),
     "G51e": dict(goal=51, dates=("2026-09-03", "2026-09-07"), role="exploratory (short)", rooms="#general"),
+}
+# Round-1b native units (ledger visibility only; analysis/r1b_extra.py): designated / elected leaders.
+NATIVE_UNITS = {
+    "G26": dict(goal=26, dates=("2026-01-05", "2026-01-10"), role="native (elected leader)", rooms="#general"),
+    "G35": dict(goal=35, dates=("2026-03-16", "2026-03-21"), role="native (designated daily leaders)", rooms="#best / #rest"),
 }
 # Confirmation units (locked holdout; only analysis/confirm.py may build them, with its flags).
 HOLDOUT_UNITS = {
@@ -185,6 +191,127 @@ def build_unit(sh, name: str, u: dict, allow_holdout: bool = False, only_holdout
     return dict(turns=turns_df, rows=rows_df, msgs=msgs_df, meta=meta)
 
 
+def build_unit_ledger(sh, name: str, u: dict, allow_holdout: bool = False, only_holdout: bool = False, verbose=True):
+    """Round 1b (2026-10-04): the same turns / rows / msgs tables with the DQ1 context ledger's visibility rule
+    instead of H18's call-start rule (which mislabels 65-70% of "invisible" messages: PAUSE windows, long tool calls,
+    first calls of the day).
+
+    - talk turn tau_n of recipient j: j's n-th chat message of the PT day, matched to the model call that produced it
+      (AGENT_TALK event time between the call's t_first and t_log; DQ2's `ledger_call_starts` rule); s(tau) = that
+      call's context-assembly time `call_windows.t_call`;
+    - visible set V(tau_n): the ledger items (message, recipient j) whose receiving call lies after tau_{n-1}'s call
+      and up to and including tau_n's call, i.e. messages posted in j's room in [t_call(c_{n-1}), t_call(c_n));
+    - invisible set I(tau_n): items of the call right after c_n that were posted before tau_n itself (during tau_n's
+      own generation). Under the ledger these are all strictly invisible (no 30-s call-window filter is needed);
+    - turns whose call equals the previous talk's call contribute no rows."""
+    days = unit_days(sh, u, allow_holdout, only_holdout)
+    if not days:
+        return None
+    chat = sh.chat.filter(pl.col("pt_date").is_in(days))
+    tl = h18.room_lookup(sh)
+    ros = sh.roster.filter(~pl.col("claude_code"))
+    on_roster = {d: [int(r["agent"]) for r in ros.iter_rows(named=True)
+                     if r["joined"] <= d and (r["left"] is None or d < r["left"])] for d in days}
+    m_t = h18._ns(chat["t"])
+    m_msg = chat["msg"].to_numpy()
+    m_kind = chat["speaker_kind"].cast(pl.Utf8).replace_strict(KIND, default=3).to_numpy().astype(np.int8)
+    m_sender = chat["agent"].fill_null(-1).to_numpy().astype(np.int16)
+    m_day = chat["pt_date"].to_numpy()
+    m_ment = [set(x or []) for x in chat["mentions_roster"].to_list()]
+    m_room = chat["room"].fill_null(-1).to_numpy().astype(np.int16)
+    pos_by_id = {mid: i for i, mid in enumerate(chat["message_id"].to_list())}
+    # calls of the unit's days
+    cw = (pl.scan_parquet(LSH / "call_windows.parquet").filter(pl.col("pt_date").is_in(days))
+          .select("turn_id", "agent", "pt_date", "t_call", "t_first", "t_log").collect().sort("agent", "t_call"))
+    if not allow_holdout and cw.height:
+        hm = holdout_mask(cw["pt_date"].unique().to_list(), [u["goal"]] * cw["pt_date"].n_unique())
+        assert not any(hm), "holdout day in ledger calls"
+    # talk turn -> its call (DQ2 rule)
+    ev = (sh.ev.filter(pl.col("pt_date").is_in(days) & (pl.col("action_type") == "AGENT_TALK")).select("t", "agent"))
+    evt = pl.read_parquet(LSH / "events_core.parquet", columns=["t", "message_id", "action_type"]).filter(
+        pl.col("action_type") == "AGENT_TALK").select("message_id", pl.col("t").alias("t_ev"))
+    talks = (chat.filter(pl.col("speaker_kind").cast(pl.Utf8) == "agent").select("msg", "message_id", "agent", "t", "pt_date")
+             .join(evt, on="message_id", how="left").with_columns(pl.col("t_ev").fill_null(pl.col("t"))).sort("t_ev"))
+    j = talks.join_asof(cw.sort("t_first").select("agent", "turn_id", "t_call", "t_first", "t_log"), left_on="t_ev",
+                        right_on="t_first", by="agent", strategy="backward")
+    j = j.with_columns(pl.when(pl.col("t_ev") <= pl.col("t_log")).then(pl.col("turn_id")).otherwise(None).alias("turn_id"))
+    n_unmatched = int(j["turn_id"].is_null().sum())
+    j = j.filter(pl.col("turn_id").is_not_null())
+    # call order per agent
+    cw = cw.with_columns(pl.int_range(pl.len()).over("agent").alias("cpos"))
+    cpos = dict(zip(cw["turn_id"].to_list(), cw["cpos"].to_list()))
+    ctime = dict(zip(cw["turn_id"].to_list(), h18._ns(cw["t_call"]).tolist()))
+    calls_by_agent = {int(a): g["turn_id"].to_numpy() for (a,), g in cw.group_by(["agent"], maintain_order=True)}
+    # ledger items of these calls
+    it = (pl.scan_parquet(LSH / "context_ledger_items.parquet").filter(pl.col("turn_id").is_in(cw["turn_id"].implode()))
+          .select("turn_id", "message_id", "uncertain").collect())
+    items = {}
+    for tid, g in it.group_by(["turn_id"]):
+        idx = [pos_by_id[x] for x in g["message_id"].to_list() if x in pos_by_id]
+        items[int(tid[0])] = (np.array(idx, np.int64), g["uncertain"].to_numpy()[[k for k, x in enumerate(g["message_id"].to_list()) if x in pos_by_id]])
+    day_idx = {d: i for i, d in enumerate(days)}
+    trows, rrows = [], []
+    tid_out = 0
+    n_same_call = 0
+    for (a, d), g in j.sort("t_ev").group_by(["agent", "pt_date"], maintain_order=True):
+        a = int(a)
+        if a in sh.cc or a not in on_roster.get(d, []):
+            continue
+        g = g.sort("t_ev")
+        if g.height < 2:
+            continue
+        tids = g["turn_id"].to_numpy()
+        tmsg = g["msg"].to_numpy()
+        tt = h18._ns(g["t"])
+        rooms_now = h18.room_at(tl, a, tt)
+        R = np.stack([h18.room_at(tl, b, tt) for b in on_roster[d]])
+        nroom = (R == rooms_now[None, :]).sum(0).astype(np.int16)
+        calls = calls_by_agent[a]
+        for n in range(1, len(tids)):
+            cp, cn = cpos[int(tids[n - 1])], cpos[int(tids[n])]
+            if cn <= cp:
+                n_same_call += 1
+                continue
+            trows.append((tid_out, a, d, day_idx[d], int(tmsg[n]), int(tmsg[n - 1]), int(tt[n]), int(ctime[int(tids[n])]),
+                          int(ctime[int(tids[n - 1])]), int(rooms_now[n]), int(nroom[n])))
+            for c in calls[cp + 1: cn + 1]:
+                ix, unc = items.get(int(c), (np.zeros(0, np.int64), np.zeros(0, bool)))
+                for q, uu in zip(ix, unc):
+                    if m_sender[q] == a:
+                        continue
+                    rrows.append((tid_out, int(m_msg[q]), int(m_kind[q]), int(m_sender[q]), True, a in m_ment[q], bool(uu)))
+            if cn + 1 < len(calls):
+                ix, unc = items.get(int(calls[cn + 1]), (np.zeros(0, np.int64), np.zeros(0, bool)))
+                for q, uu in zip(ix, unc):
+                    if m_sender[q] == a or m_t[q] >= tt[n]:
+                        continue
+                    rrows.append((tid_out, int(m_msg[q]), int(m_kind[q]), int(m_sender[q]), False, a in m_ment[q], bool(uu)))
+            tid_out += 1
+    if not trows:
+        return None
+    turns_df = pl.DataFrame(trows, orient="row", schema={
+        "talk_id": pl.Int32, "agent": pl.Int16, "pt_date": pl.Utf8, "day_idx": pl.Int16, "msg": pl.UInt32,
+        "prev_msg": pl.UInt32, "t_us": pl.Int64, "s_us": pl.Int64, "s_prev_us": pl.Int64, "room": pl.Int16,
+        "n_room": pl.Int16})
+    rows_df = pl.DataFrame(rrows, orient="row", schema={
+        "talk_id": pl.Int32, "msg": pl.UInt32, "kind": pl.Int8, "sender": pl.Int16, "vis": pl.Boolean,
+        "ment_j": pl.Boolean, "uncertain": pl.Boolean})
+    msgs_df = pl.DataFrame({"msg": m_msg.astype(np.uint32), "t_us": m_t, "pt_date": m_day, "kind": m_kind,
+                            "sender": m_sender, "room": m_room}).with_columns(
+        pl.Series("mentions", [sorted(x) for x in m_ment], dtype=pl.List(pl.Int16)))
+    agents = sorted(set(turns_df["agent"].to_list()))
+    meta = dict(unit=name, goal=u["goal"], days=days, n_days=len(days), agents=agents, n_agents=len(agents),
+                roster_size={d: len(on_roster[d]) for d in days}, median_n_room=float(turns_df["n_room"].median()),
+                rooms=u["rooms"], role=u["role"], visibility="context ledger (DQ1)", talk_unmatched_to_call=n_unmatched,
+                turns_same_call_as_previous=n_same_call)
+    if verbose:
+        nv = rows_df.filter(pl.col("vis")).height
+        ni = rows_df.filter(~pl.col("vis")).height
+        print(f"{name} [ledger]: {len(days)} days, {len(agents)} recipients, {turns_df.height} turns, {nv} visible rows, "
+              f"{ni} invisible rows, unmatched talks {n_unmatched}, same-call turns {n_same_call}", flush=True)
+    return dict(turns=turns_df, rows=rows_df, msgs=msgs_df, meta=meta)
+
+
 def write_unit(name: str, res: dict, root: Path = OUT):
     d = root / name
     d.mkdir(parents=True, exist_ok=True)
@@ -211,19 +338,24 @@ def write_provenance(units: list[str], root: Path = OUT, extra: dict | None = No
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--unit", default=None)
+    ap.add_argument("--data", default="r1", choices=["r1", "r1b"],
+                    help="r1: H18 call-start visibility (round 1); r1b: DQ1 context-ledger visibility -> OUT/r1b/")
     a = ap.parse_args()
-    names = [a.unit] if a.unit else list(UNITS)
+    allu = {**UNITS, **(NATIVE_UNITS if a.data == "r1b" else {})}
+    names = [a.unit] if a.unit else list(allu)
     for n in names:
-        if n not in UNITS:
+        if n not in allu:
             raise SystemExit(f"{n} is not an exploratory unit (holdout units are built only by analysis/confirm.py)")
     t = time.time()
     sh = h18.Shared()
     print(f"loaded shared tables {time.time() - t:.0f}s", flush=True)
+    root = OUT if a.data == "r1" else OUT / "r1b"
     for n in names:
-        res = build_unit(sh, n, UNITS[n])
+        res = (build_unit if a.data == "r1" else build_unit_ledger)(sh, n, allu[n])
         if res is not None:
-            write_unit(n, res)
-    write_provenance(list(UNITS))
+            write_unit(n, res, root=root)
+    write_provenance(list(UNITS), root=root,
+                     extra=None if a.data == "r1" else {"visibility": "DQ1 context ledger (call_windows, context_ledger_items)"})
     print(f"done {time.time() - t:.0f}s")
 
 

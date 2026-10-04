@@ -1,47 +1,73 @@
 {
-  "complete": 42,
-  "faithfulness": 2.0,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 done: dated predictions, synthetic validation at three village samplings (found and fixed three biases), 16 per-period folders, cross-period synthesis, scorecard, operator API (gauge.py) with self-test, confirmatory script written and dry-run. Holdout not run; embedding swap and situational chi not done.",
-    "faithfulness": "Period-level linear response beats its nulls in two channels (G51 nudge->activity; human->content in 6/8 periods, transfers across regimes), with validated estimators. HH116's core claim (a daily-varying, aging susceptibility) is not supported: rival R1 (constant chi) wins at day scale; P3 and P8 failed; nudge activity is resolved in one period only and its level is specification-sensitive. Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I1; no holdout.",
-    "usefulness": "Computable from any swarm's logs (gauge.py), and it yields near-actionable rules: the first nudge works and repeats don't; don't nudge into swarm-wide lulls; nudges don't spread to room-mates; name the agent and add new content to steer what it writes. Also a methods warning about H04's isolation bias. The daily gauge itself is not usable, which caps it below a validated monitor."
-  },
-  "one_line": "A period-level chi_op exists (nudges add ~1 active min for their target, first nudges only; human messages steer content +0.03), but the daily steerability gauge is noise.",
-  "rated_by": "H30 agent (suggested)",
-  "updated": "2026-10-03",
-  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
-  "v2": {
-    "claim": "A period-level \u03c7_op exists (first nudges, human content pull); no daily steerability gauge",
-    "original_verdict": "mixed",
-    "credence": 0.55,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "single powered unit",
-        "x": 0.6
-      },
-      {
-        "factor": "cross-hypothesis replication",
-        "x": 2
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      }
-    ],
-    "mechanism_level": "M0",
-    "fragile": false,
-    "value_if_true": 2,
-    "decision": "steering expectations",
-    "magnitude": "small",
-    "generality": "read-out-gated swarms",
-    "expected_usefulness": 1.09,
-    "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 2.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 plus round 1b: 16 periods re-run on fixed bins with leading-@ targets, receiving-call timing, past-only day-FE controls and two embedding models; input decomposition; three dated native tests (#5 dilution, NE44, NE10). Holdout not run; confirm.py needs re-freezing.",
+  "faithfulness": "Nudge->activity now resolved in G51 and G38 (P1, P2, P5, P11 pass) and agrees with RE-V1's corrected H04 A30; human->content robust across models. Daily-state claim (HH116) still unsupported; P3, P8 and all three natives fail (NE44 reversed). Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I1.",
+  "usefulness": "Rules sharpened and one reversed: one nudge ~1 min, first ~1.2, repeats ~0.4; nudging into lulls works; short pause defaults make nudges more effective; name the agent to steer content. No usable daily gauge."
+ },
+ "one_line": "A period-level chi_op exists: ~1 extra active minute per nudge once dropped events are restored (G51 and G38), human messages steer content +0.02-0.04; no trackable daily gauge; lull nudges work.",
+ "rated_by": "H30 round-1b agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
+ "v2": {
+  "claim": "A first nudge adds ~1 active minute to its target (χ_act ≈ 1.0 in G51 and G38) and works in swarm-wide lulls; human content pull ≈ 0.02–0.04; no daily steerability gauge",
+  "scope": "G51, G38 (powered); natives #5, NE44, NE10",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.64,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (2 powered periods agree; count rule 5/10 fails)",
+    "x": 1.5,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "cross-hypothesis replication (H04 1.16, H35 1.45)",
+    "x": 2,
+    "evidence": "H04, H35"
+   },
+   {
+    "factor": "calibrated null (bystander P11 nulls pass)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "changed under a data fix (G38 sign; lull rule reversed)",
+    "x": 0.3,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": true,
+  "value_if_true": 2,
+  "decision": "nudge targeting and timing (lulls are fine)",
+  "magnitude": "negligible",
+  "generality": "read-out-gated swarms",
+  "expected_usefulness": 1.29,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (RE-V2); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "A period-level χ_op exists (first nudges, human content pull); no daily steerability gauge",
+   "credence": 0.55,
+   "fragile": false,
+   "value_if_true": 2,
+   "expected_usefulness": 1.09,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

@@ -1,6 +1,7 @@
 # H30 × G42: Run your own Youtube channel! (2026-05-18 → 2026-05-25)
 
 **Verdict:** mixed — nudge 0.57 min (n 18); low power
+**Verdict (1b):** failed (r1 mixed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents at start · 5 active days.
 
@@ -35,3 +36,16 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G42/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G42/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_act(N_tgt), level model (r1: no FE; 1b: day FE, past-only) | 0.57 [-1.76, 2.12] (n 18) | -0.55 [-2.29, 1.74] (n 15) |
+| χ_act(N_tgt) with day FE / without | -0.45 [-2.96, 1.21] | -0.73 [-2.54, 1.35] (no FE) |
+| first / repeat nudge | -0.75 [-4.71, 1.36] / 0.14 [-3.04, 3.75] | -0.54 [-2.68, 3.02] / -0.15 [-2.65, 2.52] |
+| bystander χ_act(N_by) | 0.36 [0.03, 0.72] | 0.16 [-0.29, 0.45] |
+| χ_act(H_und) | -2.16 [-25.14, 22.82] | -0.62 [-7.48, 8.01] |
+
+Round-1b prediction rows: P1 failed (point ≤ 0); P2 failed.

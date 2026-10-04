@@ -2,6 +2,7 @@
 
 **Verdict:** failed
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** failed (work commits: b₁ -0.076, b₂ +0.206 (p 0.334); 2026-10-04)
 **Period:** regime II · mode C (shared objective) · N = 12 at start · 3 non-holdout days with PR10 · 31 agent-days with PR10 (10 agents with ≥ 3 days) · write turns on 97% of those agent-days.
 
 ## Why this period

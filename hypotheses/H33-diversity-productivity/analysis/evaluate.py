@@ -106,7 +106,8 @@ def half_day(ad_all, el):
     Z = np.column_stack([np.log(h["n_chat_raw"].to_numpy().astype(float)), np.log1p(h["engaged_min"].to_numpy().astype(float))])
     D = H.Design([au, day], au, Z)
     pam, ppm = h["pr6_am"].to_numpy().astype(float), h["pr6_pm"].to_numpy().astype(float)
-    wam, wpm = np.log1p(h["writes_am"].to_numpy().astype(float)), np.log1p(h["writes_pm"].to_numpy().astype(float))
+    am_c, pm_c = ("commits_w_am", "commits_w_pm") if C.ROUND == "r1b" else ("writes_am", "writes_pm")
+    wam, wpm = np.log1p(h[am_c].to_numpy().astype(float)), np.log1p(h[pm_c].to_numpy().astype(float))
     sd = lambda v: float(D.dm(v).std())  # noqa: E731
     # forward: diversity (am) -> output (pm) | output (am)
     bf, Vf, _, G = D.fit(D.dm(wpm), D.dm(np.column_stack([pam, wam])))
@@ -128,7 +129,7 @@ def swarm(el):
     sw = C.load_swarm_day().filter(pl.col("unit").is_in(el) & pl.col("prday_dd").is_not_null()).sort("pt_date")
     C.refuse_holdout(sw["pt_date"].unique().to_list(), "swarm-day rows")
     x = sw["prday_dd"].to_numpy().astype(float)
-    y = np.log1p(sw["writes_per_agent"].to_numpy().astype(float))
+    y = np.log1p(sw["commits_per_agent" if C.ROUND == "r1b" else "writes_per_agent"].to_numpy().astype(float))
     un = H.codes(sw["unit"].to_numpy())
     D = H.Design([un], un, None)
     y_dm = D.dm(y)
@@ -172,8 +173,8 @@ def figures(res, sp, D, y_dm, x, per, ad):
     ax.text(tl["xc"] + 0.2, ax.get_ylim()[0] + 0.05 * (ax.get_ylim()[1] - ax.get_ylim()[0]), f"$x_c$={tl['xc']:.1f}",
             color="#e15759", fontsize=7.5)
     ax.set_xlabel("agent-day content PR10 (self-repeats removed)", fontsize=8.5)
-    ax.set_ylabel("partial residual, log(1+write turns)", fontsize=8.5)
-    ax.set_title(f"(a) pooled, {res['pooled']['n']} agent-days, 17 periods\n"
+    ax.set_ylabel("partial residual, log(1+" + ("work commits" if C.ROUND == "r1b" else "write turns") + ")", fontsize=8.5)
+    ax.set_title(f"(a) pooled, {res['pooled']['n']} agent-days, {len(res['units'])} periods\n"
                  f"b$_1$={tl['b1']:+.3f} (p {tl['p1']:.2f}), b$_2$={tl['b2']:+.3f} (p {tl['p2']:.2f})", fontsize=8.5)
     ax.legend(fontsize=7, frameon=False, loc="upper left")
     ax.tick_params(labelsize=7.5)
@@ -218,14 +219,15 @@ def figures(res, sp, D, y_dm, x, per, ad):
         ax.set_xlabel("PR10", fontsize=8); ax.set_ylabel("partial resid. log(1+writes)", fontsize=7.5)
         ax.tick_params(labelsize=7)
         fig.tight_layout()
-        fig.savefig(C.HYP / "goalperiod-subhypotheses" / f"G{g:02d}" / "figures" / f"G{g:02d}_curve.pdf")
+        (C.HYP / "goalperiod-subhypotheses" / f"G{g:02d}" / "figures").mkdir(parents=True, exist_ok=True)
+        fig.savefig(C.HYP / "goalperiod-subhypotheses" / f"G{g:02d}" / "figures" / f"G{g:02d}_curve{C.SFX}.pdf")
         plt.close(fig)
 
 
 def main():
     el = pl.read_parquet(C.OUT / "eligibility.parquet").filter("eligible")["unit"].to_list()
-    ad, x, y, Z, au, day = H.load_pooled("pr10", "writes")
-    res = {"run_date": RUN_DATE, "units": el}
+    ad, x, y, Z, au, day = H.load_pooled("pr10", C.Y_PRIMARY)
+    res = {"run_date": RUN_DATE, "units": el, "round": C.ROUND, "y_primary": C.Y_PRIMARY}
     # T1 primary
     pooled, sp, D, y_dm = shape_block(x, y, Z, au, day, boot=200, seed=C.SEED)
     res["pooled"] = pooled
@@ -262,11 +264,11 @@ def main():
     res["swarm"] = swarm(el)
     # Robustness
     rob = {}
-    for ycol in ("commits", "deploys", "artifacts_adv", "writes_clean"):
+    for ycol in C.Y_ROBUST:
         a2, x2, y2, Z2, au2, d2 = H.load_pooled("pr10", ycol)
         rob[f"y={ycol}"] = shape_block(x2, y2, Z2, au2, d2)[0]
-    for xcol in ("tv10", "pr6", "pr15"):
-        a2, x2, y2, Z2, au2, d2 = H.load_pooled(xcol, "writes")
+    for xcol in C.X_ROBUST:
+        a2, x2, y2, Z2, au2, d2 = H.load_pooled(xcol, C.Y_PRIMARY)
         rob[f"x={xcol}"] = shape_block(x2, y2, Z2, au2, d2)[0]
     m = ad["unit"].to_numpy() != "51"
     rob["without_51"] = shape_block(x[m], y[m], Z[m], H.codes(au[m]), H.codes(day[m]))[0]

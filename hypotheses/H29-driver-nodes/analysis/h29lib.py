@@ -35,8 +35,16 @@ from scipy.stats import spearmanr  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[3]
 HYP = ROOT / "hypotheses/H29-driver-nodes"
-OUT = ROOT / "data/processed/H29-driver-nodes"
+OUT_BASE = ROOT / "data/processed/H29-driver-nodes"
 SH = ROOT / "data/processed/shared"
+# Round 1b switches (2026-10-04), read from the environment so every script runs unchanged:
+#   H29_DATA = r1 (default; H18 call-start visibility, round 1) | r1b (DQ1 context-ledger visibility; units in OUT_BASE/r1b)
+#   H29_EMB  = bge_small (default) | gte_modernbert (DQ5 second model)
+DATA_VERSION = os.environ.get("H29_DATA", "r1")
+EMB_MODEL = os.environ.get("H29_EMB", "bge_small")
+DATA = OUT_BASE if DATA_VERSION == "r1" else OUT_BASE / "r1b"
+OUT = OUT_BASE if (DATA_VERSION == "r1" and EMB_MODEL == "bge_small") else (
+    OUT_BASE / (("r1b" if DATA_VERSION == "r1b" else "r1") + ("" if EMB_MODEL == "bge_small" else "_gte")))
 FIG = HYP / "figures"
 SEED = 20261004
 sys.path.insert(0, str(ROOT / "infra/shared"))
@@ -53,12 +61,15 @@ SPREAD_H = 2.0         # horizon of the observed swarm spread (hours)
 class Emb:
     """Map chat_core row index (msg) -> unit-normalized whitened vector (regime III, 32 dims) or raw centered."""
 
-    def __init__(self, regime: str = "III", dim: int = 32):
+    def __init__(self, regime: str = "III", dim: int = 32, model: str | None = None):
+        from embed_models import emb_path, load_whitener as load_whitener_m
+        model = model or EMB_MODEL
         ci = pl.read_parquet(SH / "embeddings/chat_index.parquet").with_row_index("erow")
         chat = pl.read_parquet(SH / "chat_core.parquet", columns=["message_id"]).with_row_index("msg")
         self.erow = chat.join(ci, on="message_id", how="left").sort("msg")["erow"].fill_null(-1).to_numpy().astype(np.int64)
-        self.E = np.load(SH / "embeddings/chat_bge_small.npy", mmap_mode="r")
-        self.W = load_whitener(regime, dim)
+        self.E = np.load(emb_path("chat", model), mmap_mode="r")
+        self.W = load_whitener_m(regime, dim, model)
+        self.model = model
 
     def vectors(self, msgs: np.ndarray, kind: str = "white") -> np.ndarray:
         msgs = np.asarray(msgs, dtype=np.int64)
@@ -85,7 +96,9 @@ class Emb:
 
 # ----------------------------------------------------------------------------- unit data
 
-def load_unit(name: str, root: Path = OUT) -> dict:
+def load_unit(name: str, root: Path | None = None) -> dict:
+    root = DATA if root is None else root
+    (OUT / name).mkdir(parents=True, exist_ok=True)
     d = root / name
     U = {k: pl.read_parquet(d / f"{k}.parquet") for k in ("turns", "rows", "msgs")}
     U["meta"] = json.loads((d / "meta.json").read_text())
@@ -609,7 +622,8 @@ def hourly_spread(hs: pl.DataFrame, agents: list[int], hours: float, day_set: se
 # ----------------------------------------------------------------------------- Amendment 2 (post hoc): visibility boundary
 
 DT_BINS_RD = (0.0, 10.0, 20.0, 30.0)          # seconds before the talk, matched bins for the boundary test
-C_MAX_S = 30.0                                 # 'truly invisible': turns whose whole call window is <= 30 s
+C_MAX_S = 30.0 if DATA_VERSION == "r1" else float("inf")   # 'truly invisible': call window <= 30 s (round 1, H18 rule);
+                                                           # under the ledger every invisible row is strictly invisible
 DT_BINS_ADJ = (0, 10, 20, 30, 60, 120, 240, 480, 960, 1920, 1e12)
 
 
@@ -844,9 +858,10 @@ def write_provenance(entry: str, built_by: str, params: dict, root: Path = OUT):
         prov = {"scheme": prov}
     prov[entry] = {"built_by": built_by, "git_commit": git_commit(),
                    "inputs": [{"source": "ai-village", "revision": REVISION,
-                               "tables": ["H29 scheme outputs", "shared/embeddings/chat_bge_small", "shared/embeddings/chat_index",
-                                          "shared/embeddings/whitening_III", "shared/calendar"]}],
-                   "params": params, "built_at": dt.datetime.now(dt.timezone.utc).isoformat()}
+                               "tables": ["H29 scheme outputs", f"shared/embeddings/chat_{EMB_MODEL}", "shared/embeddings/chat_index",
+                                          "shared/embeddings/whitening[_model]_III", "shared/calendar"]}],
+                   "params": {**params, "data_version": DATA_VERSION, "embedding": EMB_MODEL},
+                   "built_at": dt.datetime.now(dt.timezone.utc).isoformat()}
     p.write_text(json.dumps(prov, indent=1, default=str))
 
 

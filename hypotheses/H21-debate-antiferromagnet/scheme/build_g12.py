@@ -17,6 +17,10 @@ No text is written. Masked text exists only in memory.
 
 Usage: uv run --offline --with sentence-transformers python hypotheses/H21-debate-antiferromagnet/scheme/build_g12.py
 (env: HF_HUB_OFFLINE=1; <= 2 threads)
+
+Round 1b (2026-10-04): ... build_g12.py --model gte_modernbert re-embeds the same masked texts with DQ5's second model
+(Alibaba-NLP/gte-modernbert-base, pinned revision, CPU) and writes emb_masked_gte_modernbert.npy and
+motions_gte_modernbert.npz next to the round-1 files; statements.parquet and the labels are not touched.
 """
 from __future__ import annotations
 
@@ -65,7 +69,56 @@ def extract_motion(text: str) -> str | None:
     return None
 
 
+def embed_gte_only():
+    """Round 1b: masked texts and motion templates re-embedded with gte-modernbert (CPU, 2 threads). Reads the round-1
+    statements.parquet so rows align with emb_masked.npy."""
+    sys.path.insert(0, str(ROOT / "infra/shared"))
+    from embed_models import MODELS
+    spec = MODELS["gte_modernbert"]
+    lab = json.loads(LABELS.read_text())
+    held = [d for d in lab["debates"] if d["held"]]
+    st = pl.read_parquet(OUT / "statements.parquet")
+    roster = pl.read_parquet(SH / "roster.parquet").select("agent", "name")
+    motion_ids = {d["debate"]: d["motion_message_id"] for d in held if d.get("motion_message_id")}
+    text = dict(pl.read_parquet(SH / "chat_text.parquet", columns=["message_id", "text"])
+                .filter(pl.col("message_id").is_in(st["message_id"].to_list() + list(motion_ids.values()))).iter_rows())
+    mask = build_masker(sorted(set(st["name"].to_list())))
+    masked = [mask(text.get(m) or "")[:2000] for m in st["message_id"].to_list()]
+    import torch
+    torch.set_num_threads(2)
+    from sentence_transformers import SentenceTransformer
+    model = SentenceTransformer(spec["hf"], revision=spec["revision"], device="cpu")
+    model.max_seq_length = 256
+    E = model.encode(masked, batch_size=16, normalize_embeddings=True, convert_to_numpy=True, show_progress_bar=False)
+    Es = np.load(SH / "embeddings/chat_gte_modernbert.npy", mmap_mode="r")
+    probe = list(range(0, st.height, max(1, st.height // 40)))
+    Eu = model.encode([(text.get(st["message_id"][i]) or "")[:2000] for i in probe], normalize_embeddings=True,
+                      convert_to_numpy=True, show_progress_bar=False)
+    cos_check = float(np.mean(np.sum(Eu * np.asarray(Es[st["chat_row"].to_numpy()[probe]], dtype=np.float32), axis=1)))
+    print(f"gte CPU vs stored (MPS) cosine on unmasked probe: {cos_check:.4f}")
+    mot = {}
+    for d in held:
+        mtxt = extract_motion(text.get(motion_ids.get(d["debate"])) or "")
+        if not mtxt:
+            continue
+        m = mask(mtxt)
+        mot[d["debate"]] = model.encode([m, f"I strongly support the motion: {m}. This should happen.",
+                                         f"I strongly oppose the motion: {m}. This should not happen."],
+                                        normalize_embeddings=True, convert_to_numpy=True, show_progress_bar=False)
+    np.save(OUT / "emb_masked_gte_modernbert.npy", E.astype(np.float16))
+    np.savez(OUT / "motions_gte_modernbert.npz", debates=np.array(sorted(mot)),
+             emb=np.stack([mot[k] for k in sorted(mot)]).astype(np.float32))
+    prov = json.loads((OUT / "_provenance.json").read_text())
+    prov.setdefault("round_1b", {})["gte_modernbert"] = {"model": spec["hf"], "revision": spec["revision"], "device": "cpu",
+                                                         "cpu_vs_stored_cos": cos_check, "n_messages": st.height,
+                                                         "built_at": dt.datetime.now(dt.timezone.utc).isoformat(),
+                                                         "git_commit": git_commit()}
+    (OUT / "_provenance.json").write_text(json.dumps(prov, indent=1))
+
+
 def main():
+    if "--model" in sys.argv and sys.argv[sys.argv.index("--model") + 1] == "gte_modernbert":
+        return embed_gte_only()
     lab = json.loads(LABELS.read_text())
     debates = lab["debates"]
     roster = pl.read_parquet(SH / "roster.parquet").select("agent", "name", "lab")

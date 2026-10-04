@@ -1,7 +1,8 @@
 # H33 × G42: Run your own Youtube channel! (2026-05-18 → 2026-05-25)
 
 **Verdict:** failed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** native (round 1b native test below) · round 1: exploratory (round 1, non-holdout)
+**Verdict (1b):** failed (work commits: b₁ -0.044, b₂ +0.425 (p 0.168); 2026-10-04)
 **Period:** regime III · mode I (individual) · N = 15 at start · 5 non-holdout days with PR10 · 46 agent-days with PR10 (8 agents with ≥ 3 days) · write turns on 85% of those agent-days.
 
 ## Why this period
@@ -32,6 +33,18 @@ Agent-days 46 · agents 13 · outcome log(1 + write turns), mean writes/agent-da
 **Verdict: failed.** spline maximum at the edge of the period's PR10 range (U-shaped signs)
 
 Figure: `figures/G42_curve.pdf` (binned partial residuals and spline).
+
+## Round 1b native test (videos per agent; link-based outcome)
+*Role of this section: native (round 1b), in addition to the round-1 replication above.*
+*Prediction written 2026-10-04, before computing any #42 statistic on the round-1b tables.* #42 asked each agent for YouTube videos, a non-git output: DQ4 `work_outcomes.youtube_videos_first_linked` credits a new video id to the agent that first linked it (reliability `link`; ownership unverified, one agent first-linked 48). This tests whether the null on git output also holds for the goal's own deliverable.
+- **N1:** Spearman ρ between an agent's #42 mean PR10 and its videos first linked: |ρ| < 0.55 (n.s.); the same for work commits.
+- **N2:** the agent with the most first-linked videos is not at the top or bottom PR10 decile of #42 agents (descriptive only).
+- Counts against: ρ with p < 0.05 in either direction.
+
+**Result (round 1b native, run 2026-10-04; `native.json` → `G42`).** 12 agents with ≥ 2 PR10 days.
+- **N1 holds:** ρ(mean PR10, videos first linked) +0.10 (p 0.76); ρ with work commits −0.17 (p 0.60). Within agent the PR10 slope is −0.36 (p 0.057).
+- **N2:** the agent with the most first-linked videos sits at the 42nd percentile of #42 mean PR10 (middle).
+- The goal's own deliverable (videos, link-based, ownership unverified) is no more related to diversity than git output. Verdict for the native test: **supported** (null reading).
 
 ## Scorecard (period-specific axes)
 <!-- SCORECARD -->

@@ -1,6 +1,7 @@
 # H22 × G40: shared-objective contrast (40; 2026-05-04 → 05-08)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (round 1: descriptive)
 **Role:** exploratory (contrast)
 **Period:** regime III · mode C (connect worlds into one 3D universe) · 15 agents · #best, #rest plus #universe-coordination · 5 days (day-thirds as pseudo-days).
 
@@ -49,3 +50,17 @@ Data: `data/processed/H22-private-goals-spin-glass/G40/<unit>/results.json`; fig
 ## Notes
 - Data: `data/processed/H22-private-goals-spin-glass/G40/<unit>/`. Figure: `figures/H22_G40.pdf`.
 - Card: `../../README.md` (Observables, Null, Prediction, Amendment 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the corrected inputs (card section "Round 1b"); round-1 numbers kept above.* DQ6 ground-truth roles (Opus 5's first role recovered), DQ5 statement vectors in two models (bge, gte), DQ5 `style_resid_period` vectors ("styp"), restatements removed ("dedup"), `activity_bins_fixed` for talk spins, and the DQ2 stance channel with the calibrated agent-field null. Data: `data/processed/H22-private-goals-spin-glass/r1b/`.
+
+| Unit | Variant | heterogeneity ρ_split | τ₃(dc) | T_SR / pairs (p>) | T_OP | W (p) | talk ρ_split (p) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 40 | round 1 | 0.31 (p 0.050) | nan | – / None (p> –) | – | 1.48 (p 0.18) | 0.13 (p 0.286) |
+| 40 | bge | 0.31 (p 0.050) | nan | – / None (p> –) | – | 1.46 (p 0.19) | 0.21 (p 0.146) |
+| 40 | gte | 0.33 (p 0.043) | nan | – / None (p> –) | – | 2.51 (p 0.02) | 0.21 (p 0.146) |
+| 40 | bge styp | 0.32 (p 0.037) | 1.56 | – / None (p> –) | – | 0.34 (p 0.92) | 0.21 (p 0.146) |
+| 40 | gte styp | 0.42 (p 0.010) | nan | – / None (p> –) | – | 1.09 (p 0.36) | 0.21 (p 0.146) |
+| 40 | bge dedup | 0.26 (p 0.143) | 1.23 | – / None (p> –) | – | 2.11 (p 0.06) | 0.21 (p 0.143) |
+| 40 | **stance (DQ2)** | dc split-half 0.20 (agent-field p 0.179) | -0.82 [-14858.19, 2.97] | – / None (p> –) | – | – | neg. pairs 8 vs 1.6 |
+

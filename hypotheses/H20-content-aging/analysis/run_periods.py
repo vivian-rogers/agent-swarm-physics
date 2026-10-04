@@ -150,10 +150,11 @@ def analyze(g: int, rng, fast=False):
     Cg, npg = L.two_time(xg, vg, okg)
     # robustness variants
     rob = {}
-    for name, (xx, vv, nn, oo, nd) in {
-            "chat": (*L.states(P, "chat", 32), 32),
-            "n16": (*L.states(P, "raw", 16), 16),
-            "n64": (*L.states(P, "raw", 64), 64)}.items():
+    variants = {"chat": (*L.states(P, "chat", 32), 32)}
+    if not L.CFG["style"]:          # style-residualized vectors are 32-d only (round 1b)
+        variants["n16"] = (*L.states(P, "raw", 16), 16)
+        variants["n64"] = (*L.states(P, "raw", 64), 64)
+    for name, (xx, vv, nn, oo, nd) in variants.items():
         if oo.sum() < 4:
             continue
         r, *_ = null_test(xx, vv, nn, oo, wk, T, rng, int(B_VAR * f), with_derived=False, ndim=nd)
@@ -262,12 +263,18 @@ def analyze(g: int, rng, fast=False):
 
     # verdict ingredients (card rule; applied in summarize.py)
     out_dir = (hc.OUT if DEBUG_DIR is None else DEBUG_DIR) / f"G{g:02d}"
+    tag = L.cfg_tag()
+    if tag != "r1":                 # round 1b configurations: G<NN>/r1b/*_<tag>.*
+        out_dir = out_dir / "r1b"
     out_dir.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(out_dir / "matrices.npz", C=C, npair=npair, Cg=Cg, npg=npg, Cc=Cc, npc=npc, Cm=Cm, npm=npm,
-                        Crare=Crare, d_cal=P.d_cal, wk=wk)
+    np.savez_compressed(out_dir / ("matrices.npz" if tag == "r1" else f"matrices_{tag}.npz"), C=C, npair=npair, Cg=Cg,
+                        npg=npg, Cc=Cc, npc=npc, Cm=Cm, npm=npm, Crare=Crare, d_cal=P.d_cal, wk=wk)
     res["runtime_s"] = round(time.time() - t0, 1)
     res["null_kind"] = NULL_KIND
+    res["config"] = dict(L.CFG)
     fn = "result.json" if NULL_KIND == "iso" else "result_aniso.json"
+    if tag != "r1":
+        fn = fn.replace(".json", f"_{tag}.json")
     (out_dir / fn).write_text(json.dumps(res, indent=1, default=float))
     print(f"G{g:02d}: T={T} A={main['stats']['A']['obs']:+.4f} p={main['stats']['A']['p_upper']:.3f} "
           f"A_g={res['g']['stats']['A']['obs']:+.4f} p={res['g']['stats']['A']['p_upper']:.3f} "
@@ -283,7 +290,15 @@ def main():
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--fast", action="store_true", help="fewer bootstrap draws (debugging only)")
     ap.add_argument("--null", default="iso", choices=["iso", "aniso"])
+    # round 1b (2026-10-04): any of these switches to the corrected inputs (shared goal fields; scheme/build_r1b.py)
+    ap.add_argument("--r1b", action="store_true", help="corrected inputs with the defaults below")
+    ap.add_argument("--emb", default=None, choices=["bge_small", "gte_modernbert"])
+    ap.add_argument("--dedupe", default="none", choices=["none", "copies", "restate"])
+    ap.add_argument("--style", action="store_true")
     args = ap.parse_args()
+    if args.r1b or args.emb or args.dedupe != "none" or args.style:
+        L.configure(args.emb or "bge_small", args.dedupe, args.style)
+    print("config", L.cfg_tag(), flush=True)
     global NULL_KIND
     NULL_KIND = args.null
     if args.all:
@@ -300,6 +315,8 @@ def main():
         analyze(g, rng, fast=args.fast)
     if DEBUG_DIR is not None:
         return
+    if L.cfg_tag() != "r1":
+        return                      # round-1b runs record their config inside each result file
     hc.write_provenance({"null": NULL_KIND, "B_main": B_MAIN, "B_var": B_VAR, "B_mu": B_MU, "B_pow": B_POW, "n_dim": 32,
                          "min_stmts": hc.MIN_STMTS, "periods": pers},
                         ["H20/statements.parquet", "H20/stmt_w64.npy", "H20/days.parquet", "H20/goal_dirs",

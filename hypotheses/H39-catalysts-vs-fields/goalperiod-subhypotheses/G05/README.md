@@ -1,6 +1,7 @@
 # H39 × G05: Holiday: do whatever you like! Next goal will begin soon (2025-06-19 → 2025-06-26)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (r1 descriptive)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode F · 20 agent-days on 5 non-holdout days (2025-06-19 → 2025-06-25) · 2,336 agent-minutes on the trimmed grid.
 
@@ -34,3 +35,6 @@ Run 2026-10-04 with `analysis/run_period.py --period G05`; numbers in `data/proc
 
 ## Notes
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G05/results.json`. Rule unchanged: no powered class → **descriptive**.

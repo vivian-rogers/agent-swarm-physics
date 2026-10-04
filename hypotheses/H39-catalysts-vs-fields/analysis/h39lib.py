@@ -43,6 +43,12 @@ LAMBDA = 1.0            # pseudo-transitions per row (shrinkage toward the unit'
 MIN_EP = 20             # powered unit threshold (episodes)
 THR = 0.10              # effect-size threshold for phi_exc and |K|
 
+# Round 1b (2026-10-04): DQ8 `nulls.lever_design` rules. Round 1 required the whole W-minute window to fit inside the
+# agent's present span for episodes and controls (conditioning on future presence); with presence_cut the window only
+# needs one transition and is cut at the end of presence (transition counts were already cut there; occupancy now too).
+# Past-only eligibility and next-kick cuts for transition statistics are unchanged (they already follow lever_design).
+LEVER = {"presence_cut": False}
+
 
 # =============================================================================== unit container
 
@@ -118,6 +124,9 @@ class Unit:
         return self.cum[end] - self.cum[g + 1]
 
     def win_occ(self, g: np.ndarray, W: int) -> np.ndarray:
+        if LEVER["presence_cut"]:
+            end = np.minimum(g + W, self.seg_end[self.seg_of[g]] - 1)
+            return self.ocum[end + 1] - self.ocum[g + 1]
         return self.ocum[g + W + 1] - self.ocum[g + 1]
 
     def busy_in(self, lo_off: int, hi_off: int) -> np.ndarray:
@@ -130,6 +139,71 @@ class Unit:
         m = hi >= lo
         out[m] = self.busy_cum[hi[m] + 1] - self.busy_cum[lo[m]]
         return out
+
+
+class SoftUnit(Unit):
+    """Unit on soft states (round 1b: Jev v3.1 behavior-state probability vectors, 5-min windows).
+
+    P: (n, q) per-window probabilities (rows sum to 1). Soft transition counts C_ij = p_t(i) p_{t+1}(j) (DQ3: use the
+    probability vectors, not the argmax, for Markov statistics). Convention differs from Unit in one place: the
+    transition (t-1 -> t) is stored at index t, so with an event placed at the last pre-kick window g the window
+    statistics win_counts_trunc(g, W) start with the transition out of the pre-kick window into the kick window.
+    Strata (start state, dwell age) use the argmax of window g, which is fully before the kick."""
+
+    def __init__(self, P: np.ndarray, **kw):
+        self.P = np.asarray(P, np.float64)
+        super().__init__(**kw)
+
+    def __post_init__(self):
+        n = len(self.x)
+        q = self.q
+        self.agent = np.repeat(self.seg_agent, self.seg_end - self.seg_start).astype(np.int32)
+        self.day = np.repeat(self.seg_day, self.seg_end - self.seg_start).astype(np.int32)
+        self.seg_of = np.repeat(np.arange(len(self.seg_start)), self.seg_end - self.seg_start)
+        self.pos = np.arange(n) - self.seg_start[self.seg_of]
+        self.left = self.seg_end[self.seg_of] - 1 - np.arange(n)
+        if self.busy is None:
+            self.busy = np.zeros(n, bool)
+        T = np.zeros((n + 1, q * q))
+        ok = self.pos >= 1                                   # transition into t from t-1 within the segment
+        idx = np.flatnonzero(ok)
+        if len(idx):
+            T[idx + 1] = (self.P[idx - 1][:, :, None] * self.P[idx][:, None, :]).reshape(len(idx), q * q)
+        self.cum = np.cumsum(T, axis=0)
+        oc = np.zeros((n + 1, q))
+        oc[1:] = self.P
+        self.ocum = np.cumsum(oc, axis=0)
+        same = np.r_[False, (self.x[1:] == self.x[:-1]) & (self.pos[1:] > 0)]
+        brk = ~same
+        run_id = np.cumsum(brk) - 1
+        run_start = np.flatnonzero(brk)
+        self.age = (np.arange(n) - run_start[run_id] + 1).astype(np.int32)
+        self.agebin = (np.searchsorted(np.array([1, 2, 3, 6]), self.age, side="right") - 1).astype(np.int8)
+        self.busy_cum = np.r_[0, np.cumsum(self.busy.astype(np.int32))]
+        if self.swarm is None:
+            self.swarm = np.zeros(n, np.int8)
+        self.tt = np.full(n, -1, np.int64)
+
+
+def build_soft_unit(Ps: list[np.ndarray], agents: list[int], days: list[int], thirds: list[np.ndarray], q: int,
+                    events: dict | None = None, busy: list[np.ndarray] | None = None,
+                    swarm: list[np.ndarray] | None = None) -> SoftUnit:
+    """Ps: per agent-day (n_w, q) probability arrays; events: class -> list (per segment) of local window indices
+    (already shifted to the last pre-kick window); busy likewise; swarm: per segment int8 bins."""
+    lens = np.array([len(p) for p in Ps], np.int64)
+    st = np.r_[0, np.cumsum(lens)[:-1]].astype(np.int64)
+    en = st + lens
+    P = np.concatenate(Ps) if Ps else np.zeros((0, q))
+    x = P.argmax(1).astype(np.int8) if len(P) else np.zeros(0, np.int8)
+    ev = {}
+    for c, per_seg in (events or {}).items():
+        gl = [st[k] + np.asarray(a, np.int64)[(np.asarray(a) >= 0) & (np.asarray(a) < lens[k])] for k, a in enumerate(per_seg)]
+        ev[c] = np.sort(np.concatenate(gl)) if gl else np.zeros(0, np.int64)
+    b = np.concatenate(busy).astype(bool) if busy is not None else None
+    sw = np.concatenate(swarm).astype(np.int8) if swarm is not None else None
+    return SoftUnit(P, q=q, x=x, seg_start=st, seg_end=en, seg_agent=np.asarray(agents, np.int32),
+                    seg_day=np.asarray(days, np.int32), third=np.concatenate(thirds).astype(np.int8), events=ev, busy=b,
+                    swarm=sw)
 
 
 def swarm_bins(seqs, days, offsets, active_states) -> list[np.ndarray]:
@@ -256,7 +330,8 @@ def control_pool(U: Unit, W: int, quiet: int = QUIET):
     """Boolean mask of control-eligible minutes: window inside the segment, valid state, no busy minute in
     [g-quiet, g] (past only: requiring a kick-free *future* would select agents that escaped on their own,
     because the nudger targets agents that stay idle; found in the synthetic null, 2026-10-04)."""
-    ok = (U.left >= W + 1) & (U.x >= 0)
+    need = 1 if LEVER["presence_cut"] else W + 1
+    ok = (U.left >= need) & (U.x >= 0)
     ok &= U.busy_in(-quiet, 0) == 0
     return ok
 
@@ -319,7 +394,8 @@ def episodes_for(U: Unit, cls: str, W: int, quiet: int = QUIET, start_override: 
     g = np.unique(U.events.get(cls, np.zeros(0, np.int64)))
     if len(g) == 0:
         return g
-    ok = (U.left[g] >= W + 1) & (U.x[g] >= 0)
+    need = 1 if LEVER["presence_cut"] else W + 1
+    ok = (U.left[g] >= need) & (U.x[g] >= 0)
     ok &= U.busy_in(-quiet, -1)[g] == 0
     # same-minute events of other classes
     others = [np.unique(v) for c, v in U.events.items()
@@ -330,7 +406,7 @@ def episodes_for(U: Unit, cls: str, W: int, quiet: int = QUIET, start_override: 
     return g[ok]
 
 
-KICK_CLASSES = ("N_tgt", "H_men", "H_und", "A_men")
+KICK_CLASSES = ("N_tgt", "H_men", "H_und", "A_men", "N_oth")   # N_oth (round 1b): named in a nudge, not its leading @
 COMPONENTS = {"H_any": ("H_men", "H_und")}
 
 

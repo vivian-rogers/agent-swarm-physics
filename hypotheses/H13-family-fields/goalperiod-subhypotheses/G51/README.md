@@ -1,6 +1,7 @@
 # H13 × G51: Each agent: Maximize your assigned goal! (2026-07-06 → 09-04 (non-holdout part; the tail 09-07 → 09-18 is held out))
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
 **Role:** exploratory
 **Period:** regime III · mode I/K (private assigned roles, NE26) · 21 → 32 agents, 8 h/day · essentially one room (#general). Split as in H01: 51a 07-06 → 07-08; 51b 07-09 → 08-04 (NE32 triplet onboarding; joins); 51c 08-05 → 08-24 (#focus: Gemini 2.5 Pro and Opus 4.8 in a side room, excluded from b in 51c); 51d 08-25 → 09-02; 51e 09-03 → 09-04 (NE33 batch join; 2 days, descriptive only).
 **Units analysed:** 51a, 51b, 51c, 51d, 51e
@@ -114,3 +115,17 @@ Within-unit stationarity (first vs second half of days, family field cos): Anthr
 - 2026-10-04: in 51c the #focus pair (Gemini 2.5 Pro, Opus 4.8) is excluded from the K×K fits, as pre-specified. Same-role pairs are dropped from the family statistics.
 - 2026-10-04: 51a is the one unit where talk timing shows family coupling (Δ = 0.084, p = 0.005; J_in 0.089 vs J_out 0.005). Not replicated in 51b–51d; 1 of 5 one-room units is at the expected false-positive rate for 5 tests.
 - 2026-10-04: 51e (2 days, NE33 batch join) is descriptive only.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the pre-registered statistics on the corrected inputs (card section "Round 1b"). Old numbers are kept above.* Inputs: DQ5 statement vectors (bge and gte-modernbert, regime-whitened, 32-d), H13's own style rival S-a and DQ5's shared `style_resid_period` vectors, DQ5 restatement flags, `activity_bins_fixed` for talk spins, and Jev v3 behavior states (HH267, card Amendment 2). Data: `data/processed/H13-family-fields/r1b/`.
+
+| Unit | T_field round 1 (bge) | T_field gte | S-a own (bge / gte) | shared style_resid_period (bge / gte) | T bge, restatements removed | talk Δ old → fixed table | behavioral T_B |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 51a | 0.055 (p 0.047) | 0.047 (p 0.076) | 0.024 / 0.016 | 0.012 (p 0.330) / 0.010 (p 0.359) | 0.056 | 0.084 (p 0.005) → 0.080 (p 0.008) | 0.107 (p 0.052) |
+| 51b | 0.069 (p 0.009) | 0.084 (p 0.002) | -0.008 / 0.000 | 0.005 (p 0.399) / 0.014 (p 0.261) | 0.069 | 0.026 (p 0.230) → 0.019 (p 0.176) | 0.038 (p 0.192) |
+| 51c | 0.090 (p 0.002) | 0.072 (p 0.007) | 0.041 / 0.034 | 0.057 (p 0.017) / 0.039 (p 0.065) | 0.096 | -0.010 (p 0.511) → 0.009 (p 0.327) | 0.025 (p 0.263) |
+| 51d | 0.006 (p 0.379) | 0.048 (p 0.064) | -0.030 / 0.007 | -0.018 (p 0.725) / 0.022 (p 0.199) | 0.007 | -0.053 (p 0.683) → -0.026 (p 0.536) | 0.028 (p 0.213) |
+| 51e | 0.012 (p 0.341) | -0.013 (p 0.643) | -0.029 / -0.019 | -0.004 (p 0.508) / -0.009 (p 0.605) | 0.005 | -0.116 (p 0.859) → -0.209 (p 0.983) | 0.042 (p 0.134) |
+
+- **Talk on the corrected table:** family homophily in talk timing (Δ > 0, p < 0.05) in 51a of this period.
+- **Reading:** the content field is unchanged in both models and still vanishes under either style rival; the behavioral field is reported in the card (B1–B4).

@@ -1,7 +1,8 @@
 # H33 × G51: Each agent: Maximize your assigned goal! (2026-07-06 → 2026-09-20)
 
 **Verdict:** mixed
-**Role:** exploratory (round 1, non-holdout)
+**Role:** native (round 1b native test below) · round 1: exploratory (round 1, non-holdout)
+**Verdict (1b):** mixed (work commits: b₁ +0.037, b₂ -0.061 (p 0.321); 2026-10-04)
 **Period:** regime III · mode I/K (individual/competitive) · N = 21 at start · 45 non-holdout days with PR10 · 746 agent-days with PR10 (27 agents with ≥ 3 days) · write turns on 85% of those agent-days.
 
 ## Why this period
@@ -32,6 +33,18 @@ Agent-days 746 · agents 32 · outcome log(1 + write turns), mean writes/agent-d
 **Verdict: mixed.** inverted-U signs, neither slope significant
 
 Figure: `figures/G51_curve.pdf` (binned partial residuals and spline).
+
+## Round 1b native test (rival pairs and role classes; DQ6)
+*Role of this section: native (round 1b), in addition to the round-1 replication above.*
+*Prediction written 2026-10-04, before computing any #51 statistic on the round-1b tables.* #51 gives every agent a private role (DQ6 `ground_truth_labels`, `preferred & ~holdout`); seven roles are held by two or three agents at once (rival pairs: game dev, twitterati, merch baron, youtuber, forecaster, diplomat, reporter). Two agents with the same role on the same day face the same task demands, so the within-pair, same-day difference removes role and day at once.
+- **N1 (rival pairs):** regress the same-day pair difference in log(1 + work commits) on the difference in PR10 (and its square), pair fixed effects, CR1 by pair. Prediction: linear and quadratic terms both n.s. (p > 0.05); no inverted U.
+- **N2 (role classes):** the within-agent PR10 slope on log(1 + work commits) (agent and day FE, round-1 controls) is n.s. in each of DQ6's role classes (media, support, other) and the classes do not differ (interaction p > 0.05).
+- Counts against H33's null reading: a significant concave within-pair relation (quadratic < 0 with p < 0.05 and an interior vertex).
+
+**Result (round 1b native, run 2026-10-04; `data/processed/H33-diversity-productivity/r1b/native.json`).**
+- **N1 rival pairs: holds.** 87 same-day pair observations from 8 same-role pairs: linear +0.065 ± 0.047 (p 0.21); with the difference of squares, quadratic −0.0032 ± 0.0055 (p 0.58), vertex 24.3 (outside most of the range). Same role, same day: the more diverse agent does not commit more or less.
+- **N2 role classes: fails.** Media (8 agents, 180 agent-days): slope −0.025 (p 0.56); other (20 agents, 481): +0.057 (p 0.074); **support (4 agents, 85 agent-days): concave, linear +0.118 (p 0.002), quadratic −0.0047 (p 0.0005), vertex PR10 ≈ 12.5**; media × PR10 interaction −0.059 (p 0.09). The support-class inverted U rests on 4 agents with a t(3) reference and was one of three classes tested: a lead, not a result.
+- Verdict for the native test: **mixed** (N1 holds, N2 fails in the smallest class).
 
 ## Scorecard (period-specific axes)
 <!-- SCORECARD -->

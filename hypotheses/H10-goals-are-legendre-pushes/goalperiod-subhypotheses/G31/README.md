@@ -1,6 +1,7 @@
 # H10 × G31: Pick your own goal (agents bid 3.7 Sonnet farewell) (2026-02-16 → 2026-02-20)
 
 **Verdict:** descriptive (F1 mixed, F2 ✗, F3 ✓)
+**Verdict (1b):** descriptive (both models)
 **Role:** exploratory
 **Period:** regime I · mode F · 12 agents (+1 −1; the Claude Code agent excluded) · #general only · 5 active days (41 windows). **Split:** 100-turn session cap on 2026-02-20, so the analyzed unit is 31a = 02-16 … 02-19.
 
@@ -34,3 +35,8 @@ Data: `data/processed/H10-goals-are-legendre-pushes/G31/period_g12.json`, `perio
 
 ## Notes
 - 2026-10-03: #31 → #32 reserved for confirmation; ĝ₃₂ is not built in round 1.
+
+## Round 1b (improved data, 2026-10-04)
+*Inputs: shared goal fields (`goal_fields`; H10's own goal and kickoff vectors already matched them to cos ≥ 0.9999999, so bge numbers are unchanged), the second embedding model gte-modernbert, DQ5 restatement dedupe and style-residualized vectors. Data: `data/processed/H10-goals-are-legendre-pushes/r1b/<config>/`. Role: replication (the round-1 estimator, unchanged).*
+
+bge identical (g 0.71 / 0.55). gte: g 0.54 [0.46, 0.60] along ĝ₁₂, 0.71 [0.38, 0.85] along ĝ₁₇; γ +0.69 / +0.61. Nothing along ĝ₃₂ computed; #23 untouched.

@@ -1,6 +1,7 @@
 # H30 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-27)
 
 **Verdict:** mixed — nudge -0.08 [-0.98, 0.82] min (n 82); content 0.020
+**Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime III · mode C · 12 agents at start · 17 active days.
 
@@ -45,3 +46,17 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G38/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G38/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_act(N_tgt), level model (r1: no FE; 1b: day FE, past-only) | -0.08 [-0.98, 0.82] (n 82) | 0.95 [0.38, 1.54] (n 78) |
+| χ_act(N_tgt) with day FE / without | 0.38 [-0.46, 1.35] | 0.91 [0.27, 1.59] (no FE) |
+| first / repeat nudge | 0.72 [-0.36, 1.95] / -0.05 [-0.73, 0.44] | 0.80 [-0.02, 1.60] / 0.95 [-0.33, 2.55] |
+| bystander χ_act(N_by) | -0.54 [-1.01, -0.01] | -0.09 [-0.43, 0.31] |
+| χ_con(H_und) bge (gte) | 0.020 [-0.001, 0.036] | 0.021 [-0.001, 0.038] (0.030 [0.008, 0.048]) |
+| χ_act(H_und) | 0.18 [-0.86, 1.96] | 0.49 [-0.17, 1.60] |
+
+Round-1b prediction rows: P1 supported; P2 supported; P5 CI includes 0; P6 supported; P6 supported (R₁ < 0.5); P6 supported (R₁ < 0.5); P7 supported (no aging); P8 direction only (early > late, CI includes 0); P11 supported.

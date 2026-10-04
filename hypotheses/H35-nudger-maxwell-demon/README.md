@@ -1,6 +1,6 @@
 # H35: The nudger is a measurably inefficient Maxwell demon
 
-**Status:** exploratory round 1 done (2026-10-03; 13 non-holdout goal periods + NE10 + an undocumented nudger stop inside #51). **The nudger is an inefficient demon, in a stronger form than predicted, and only in the short-pause scaffold.**
+**Status:** **round 1b done (2026-10-04, work ledger + DQ1 sustained runs):** the nudger buys glances (+0.08, near-efficient, η_SU 0.88), not work: sustained runs and work commits per nudge are zero after placebo differencing (+0.22 commits/h [−0.29, +0.82]), the trap-age response is flat for work and the once-early policy gain (×2.3 active minutes) does not carry over to commits. NE10 and NE43 are invisible in work. Round-1 numbers below reproduce unchanged. Exploratory round 1 done (2026-10-03; 13 non-holdout goal periods + NE10 + an undocumented nudger stop inside #51). **The nudger is an inefficient demon, in a stronger form than predicted, and only in the short-pause scaffold.**
 - **Information used:** 1.42 bits of agent state per nudge (G51), out of 10.7 bits of decision entropy per nudge. Trap age (length of the pause chain) carries most of it.
 - **Work bought:** 1.45 [0.72, 2.20] extra active minutes per first nudge (H04: 1.54). That is 0.5% of the swarm's active agent-minutes.
 - **Efficiency (G51, trap-age space):** η_SU = 0.38 [−0.08, 0.68] of the work the same bits could buy; η_KW = 0.15 of the bits were needed; κ = 0.49 extra active min per bit per nudge. Among agents already pausing, its choice is *worse than random* (−0.04 to −0.08 escapes per nudge): 38% of nudges go to chains ≥ 10 pauses deep, where a nudge buys 0.5 min, against 2.2–2.6 min at k = 1–9.
@@ -275,6 +275,38 @@ Verdict rules are in each folder; small periods are descriptive (P1 scored only 
 - *Post hoc.* A1–A3 above (null for marginal information terms; minute-level and coarse efficiency spaces; H04-isolation variant). Scored verdicts use the predictions as written.
 
 **One-page figure summary** (`figures/summary_obs.pdf`). (a) The G51 information–work plane in trap-age space. The frontier V*(R) at the logged budget and the Donsker–Varadhan ceiling bound what any policy using R bits per nudge can buy beyond random nudging. The logged nudger (1.04 bits, +0.50 min) sits far below the frontier (+1.32 min at the same bits); nudging only at k = 2–3 reaches the frontier's end (+2.0 min); nudging only deep traps is worse than random. (b) The share of nudges by trap age against the response per nudge: the nudger's mass sits where the response is lowest.
+
+## Round 1b (improved data, 2026-10-04)
+
+### What changed
+- **Inputs:** H35 already used the leading-@ target and never read `activity_bins` (active rows come from `events_core` + `actions` via `h16lib`), so the round-1 grids, information and A30 numbers reproduce exactly (bits per nudge 1.42; first-nudge A30 +1.45 [0.73, 2.30]). No round-1 primary statistic changes.
+- **New outcomes** (`analysis/r1b_outcomes.py`; outputs `data/processed/H35-nudger-maxwell-demon/<period>/r1b/`, `r1b/r1b_summary.json`): **glance** (any active row in 30 min), **sustained** (a run of ≥ 3 consecutive active DQ1 ledger calls starts within 30 min; H43's definition), **work** (DQ4 agent work commits in 30/60 min, automated commits excluded). Same past-only matched design, strata, trap-age bins and frontier code; gate model refit on a sustained run within 15 min of the pause expiry.
+- **Post hoc (`--did`):** the matched design fails its placebo window for sustained runs (+0.058) and work commits (−0.35): nudged agents had just finished a burst. A rate difference-in-differences (post rate − placebo rate) is reported next to the matched ATT, labelled post hoc.
+
+### Round 1 vs round 1b (G51)
+| Quantity | Round 1 (active minutes) | Round 1b |
+| --- | --- | --- |
+| bits per nudge | 1.42 | 1.42 (unchanged) |
+| work per first nudge | +1.45 active min [0.73, 2.20] | glance +0.082 [+0.035, +0.132] (placebo clean); sustained runs +0.29/h [−0.16, +0.70] (DiD); work commits **+0.22/h [−0.29, +0.82]** (DiD; matched −1.16, placebo not clean) |
+| η_SU / η_KW (trap-age space) | 0.38 [−0.08, 0.68] / 0.15 | glance 0.88 [0.26, 0.97] / 0.79; sustained: flat response, η undefined (ΔV = 0); work (DiD) 0.19 [−1.39, 0.70] / 0.05 [0, 0.43] |
+| κ | 0.49 active min per bit per nudge | glance 0.033 per bit; work 0.006 commits/h per bit (n.s.) |
+| once-early (k = 2–3) / logged | ×2.30 [1.71, 4.75] | active min ×2.30 (same); glance ×0.92; work ×1.29 (CI spans 0); gate sustained ×1.03 |
+| response k 1–9 minus k ≥ 10 | +1.87 min [0.33, 3.60] | glance −0.05 (deep traps glance most); sustained +0.04 [−0.03, +0.13] |
+| share of swarm output bought | 0.5% of active minutes | ≈ 0.4% of work commits (upper CI 1.5%) |
+
+### Natives (predictions dated before the run, in the folders)
+- **G51** (work on three definitions): **mixed.** Glance > 0 as predicted; the sustained and work clauses fail as worded because the pre-registered design fails its placebo for them; after differencing both are zero, the trap-age response is flat and the once-early gain vanishes for work, as predicted in substance.
+- **G38** (NE44 contrast, long pauses): **failed as worded** (sustained 0.058 vs G51 0.094); post hoc DiD reverses the order (+1.26 vs +0.29 runs/h, CIs wide).
+- **NE10** (first nudges, work ledger): **supported** (work z +0.92; no strictly isolated first nudges for the per-nudge test).
+- **NE43** (two steps, work ledger): **supported** (nudger off −0.03 day-SD; bookends off −0.49 day-SD).
+
+### Verdict changes and scorecard
+- Card-level claim narrows: **the nudger is an inefficient demon for activity (glances, active minutes) and a worthless one for work.** Its bits buy glances near-efficiently (η_SU 0.88), active minutes at 38% efficiency, and no measurable committed work or sustained runs; the once-early policy (×2.3 active minutes) should not be sold as a work lever. This agrees with H43 (glance ×1.75, no sustained escape) and H39 (catalytic glance).
+- Period verdicts: G51 mixed → mixed; G38 mixed → failed (native, as worded); G41 mixed (unchanged); NE10 supported → supported (now in work); NE43 mixed → supported (work: both steps invisible); small periods descriptive.
+- **Scorecard (1b): all 1s (unchanged).** B is weaker than it looked: selection on observables fails for sustained and work outcomes (placebo). D gains a held prediction (H43's glance-not-work, confirmed after differencing). Ratings (suggested): completeness 45 → 55, faithfulness 2.0 → 2.0, **usefulness 2.5 → 2.0** (the policy buys glances, not output).
+
+### What the work ledger changes
+Round 1's "work" was active minutes, which a glance inflates. Measured as commits that land, a nudge buys nothing detectable (≈ 0.4% of commits at most), and neither the nudger's switch-on (NE10) nor its two-step shutdown (NE43) moves the swarm's committed work. The demon accounting still works; what it accounts for is attention, not production.
 
 ## Notes
 - **From RE-V1 (2026-10-04):** the ledger shows no early wakes at nudge-receiving calls before or after 06-11 (NE44). The pre-06-11 "nudge wakes a pausing agent at any trap age" pattern reflects fewer targets being mid-pause (38% vs 73%), not wake-on-message. H04's corrected nudge effect in #51: A30 1.16 [0.75, 1.57] (first 1.38, repeats 0.90).

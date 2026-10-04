@@ -19,6 +19,53 @@ from scipy.optimize import least_squares  # noqa: E402
 
 EPS = 1e-12
 
+# ---------------------------------------------------------------- round 1b switch (2026-10-04)
+# Default = round 1 (H20's own bge statement coordinates and the H01-derived goal vectors). configure() selects the
+# corrected inputs built by scheme/build_r1b.py (data/processed/H20-content-aging/r1b/):
+#   emb     bge_small | gte_modernbert   statement + goal embedding model (DQ5)
+#   dedupe  none | copies | restate      drop DQ5 self-repeats: copies = self_repeat_both; restate = either model's flag
+#   style   False | True                 style-residualized (within goal period) 32-d vectors (no n = 16 / 64 variants)
+# With configure() the goal directions always come from the shared goal fields (goal_fields).
+CFG = {"input": "r1", "emb": "bge_small", "dedupe": "none", "style": False}
+R1B = hc.OUT / "r1b"
+
+
+def configure(emb: str = "bge_small", dedupe: str = "none", style: bool = False):
+    CFG.update(input="r1b", emb=emb, dedupe=dedupe, style=bool(style))
+
+
+def cfg_tag() -> str:
+    if CFG["input"] == "r1":
+        return "r1"
+    t = CFG["emb"]
+    if CFG["dedupe"] != "none":
+        t += f"_dd-{CFG['dedupe']}"
+    if CFG["style"]:
+        t += "_style"
+    return t
+
+
+def _whitener(regime: str, n: int):
+    if CFG["input"] == "r1" or CFG["emb"] == "bge_small":
+        return hc.common.load_whitener(regime, n)
+    import embed_models as EM
+    return EM.load_whitener(regime, n, CFG["emb"])
+
+
+def load_inputs():
+    """(statements with row index, Z, days) for the current configuration."""
+    days = pl.read_parquet(hc.OUT / "days.parquet")
+    if CFG["input"] == "r1":
+        return (pl.read_parquet(hc.OUT / "statements.parquet").with_row_index("row"),
+                np.load(hc.OUT / "stmt_w64.npy", mmap_mode="r"), days)
+    st = pl.read_parquet(R1B / "statements.parquet").with_row_index("row")
+    if CFG["dedupe"] == "copies":
+        st = st.filter(~pl.col("self_repeat_both"))
+    elif CFG["dedupe"] == "restate":
+        st = st.filter(~(pl.col("self_repeat_bge") | pl.col("self_repeat_gte")))
+    Z = np.load(R1B / (f"stmt_sr32_{CFG['emb']}.npy" if CFG["style"] else f"stmt_w64_{CFG['emb']}.npy"), mmap_mode="r")
+    return st, Z, days
+
 
 # ----------------------------------------------------------------------------------------------
 # Period data
@@ -43,12 +90,11 @@ class Period:
 def load_period(g: int, statements: pl.DataFrame | None = None, Z64: np.ndarray | None = None,
                 days: pl.DataFrame | None = None, allow_holdout: bool = False) -> Period:
     """Load one goal period from data/processed/H20-content-aging (non-holdout data only)."""
-    if statements is None:
-        statements = pl.read_parquet(hc.OUT / "statements.parquet").with_row_index("row")
-    if Z64 is None:
-        Z64 = np.load(hc.OUT / "stmt_w64.npy", mmap_mode="r")
-    if days is None:
-        days = pl.read_parquet(hc.OUT / "days.parquet")
+    if statements is None or Z64 is None or days is None:
+        s0, z0, d0 = load_inputs()
+        statements = s0 if statements is None else statements
+        Z64 = z0 if Z64 is None else Z64
+        days = d0 if days is None else days
     st = statements.filter(pl.col("goal_no") == g)
     if "row" not in st.columns:
         raise ValueError("statements need a row index")
@@ -65,18 +111,22 @@ def load_period(g: int, statements: pl.DataFrame | None = None, Z64: np.ndarray 
     P = Period(g=g, regime=st["regime"][0], T=T, agents=agents, wk_gap=dd["weekend_gap"].to_numpy().astype(bool),
                d_cal=dd["d_cal"].to_numpy().astype(float), pt_dates=dd["pt_date"].to_list(), a_idx=a_idx, k_idx=k_idx,
                kind=st["kind"].to_numpy(), Z=Z, held=dd["holdout"].to_numpy().astype(bool))
-    P.goal_dirs = load_goal_dirs(g, P.regime, agents)
+    P.goal_dirs = load_goal_dirs(g, P.regime, agents, dims=tuple(n for n in (16, 32, 64) if n <= Z.shape[1]))
     return P
 
 
 def load_goal_dirs(g: int, regime: str, agents: np.ndarray, dims=(16, 32, 64)) -> dict:
     """ĝ = unit(unit(W goal) + unit(mean_rooms unit(W kickoff))) per dim; agent goals (#51) per agent."""
-    meta = pl.read_parquet(hc.OUT / "goal_dirs.parquet")
-    raw = np.load(hc.OUT / "goal_raw.npy")
+    if CFG["input"] == "r1":
+        meta = pl.read_parquet(hc.OUT / "goal_dirs.parquet")
+        raw = np.load(hc.OUT / "goal_raw.npy")
+    else:
+        meta = pl.read_parquet(R1B / "goal_dirs.parquet")
+        raw = np.load(R1B / f"goal_raw_{CFG['emb']}.npy")
     out = {}
     m = meta.filter(pl.col("goal_no") == g)
     for n in dims:
-        W = hc.common.load_whitener(regime, n)
+        W = _whitener(regime, n)
         gv = m.filter(pl.col("kind") == "goal")["row"].to_list()
         kv = m.filter(pl.col("kind") == "kickoff")["row"].to_list()
         parts = []
@@ -126,6 +176,8 @@ def agent_day_stats(Z, a_idx, k_idx, A, T, n_min=hc.MIN_STMTS):
 
 def transform(P: Period, variant: str = "raw", n: int = 32, rng=None):
     """Statement transform -> (Zt, a_idx, k_idx). variants: raw, g (field removed), chat."""
+    if n > P.Z.shape[1]:
+        raise ValueError(f"n = {n} > {P.Z.shape[1]} stored dimensions")
     Zn = P.Z[:, :n]
     Zn = Zn / np.maximum(np.linalg.norm(Zn, axis=1, keepdims=True), EPS)
     a_idx, k_idx = P.a_idx, P.k_idx

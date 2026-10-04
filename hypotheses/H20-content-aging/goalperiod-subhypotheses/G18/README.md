@@ -1,6 +1,7 @@
 # H20 × G18: Reduce global poverty as much as you can (2025-10-20 → 2025-10-31)
 
 **Verdict:** mixed (underpowered: not significant, μ = 0.5 aging not rejected) (Amendment-2 null; pre-registered null: mixed)
+**Verdict (1b):** mixed (both models, all configs)
 **Role:** exploratory
 **Period:** regime I · mode C · 8 agents with statements · #general only · 10 active days (74 agent-days with ≥ 8 statements).
 
@@ -46,3 +47,16 @@ Data: `data/processed/H20-content-aging/G18/` (result.json = pre-registered null
 C (beats the stationary null): 0 — A p = 0.611, A_c p = 0.928. D (unfitted signature: A_late, μ̂ > 0): 0. H (rivals R1 quench, R2 field, R3 common): 0. G: –.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04): replication
+*Inputs: shared goal fields, gte-modernbert (DQ5), DQ5 dedupe (copies, restatements), style-residualized vectors. Data: `data/processed/H20-content-aging/G18/r1b/result_aniso_<config>.json`. Role of this row: replication.*
+
+| Input | Statistics (Amendment-2 null) |
+| --- | --- |
+| round 1 (bge, H01-derived goal vectors) | see Result above |
+| bge-small, shared goal fields | A -0.038 (p 0.611); A_c -0.118 (p 0.928); A_late +0.784; K -0.003; μ̂ -0.05 [-3.00, +2.12]; power 0.18 |
+| gte-modernbert | A -0.003 (p 0.547); A_c -0.077 (p 0.880); A_late +0.242; K -0.065; μ̂ -0.01 [-2.92, +1.95]; power 0.15 |
+| restatement-deduped (bge / gte) | A -0.055 / -0.021 |
+| style-residualized (bge / gte) | A -0.053 / -0.009 |
+
+A across the 7 configurations: -0.055 to -0.003. The shared goal fields give the same ĝ as round 1 (cos 1.0000 at n = 32: H20 averaged the room kickoffs, so H01's #38 room swap cancels), so bge numbers reproduce exactly.

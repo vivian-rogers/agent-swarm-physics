@@ -1,6 +1,7 @@
 # H22 × G38: shared-objective contrast (38a / 38b / 38c; 2026-04-02 → 04-24)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (round 1: descriptive)
 **Role:** exploratory (contrast)
 **Period:** regime III · mode C (charity fundraiser, operator-specified) · 12 → 14 agents · two rooms (#best, #rest) · 17 days, split at 04-14 (NE17 outreach approval) and 04-20 (NE18 history search): 38a 8 days (counted, low power), 38b 4 days, 38c 5 days (day-thirds as pseudo-days).
 
@@ -82,3 +83,29 @@ Data: `data/processed/H22-private-goals-spin-glass/G38/<unit>/results.json`; fig
 ## Notes
 - Data: `data/processed/H22-private-goals-spin-glass/G38/<unit>/`. Figure: `figures/H22_G38.pdf`.
 - Card: `../../README.md` (Observables, Null, Prediction, Amendment 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the corrected inputs (card section "Round 1b"); round-1 numbers kept above.* DQ6 ground-truth roles (Opus 5's first role recovered), DQ5 statement vectors in two models (bge, gte), DQ5 `style_resid_period` vectors ("styp"), restatements removed ("dedup"), `activity_bins_fixed` for talk spins, and the DQ2 stance channel with the calibrated agent-field null. Data: `data/processed/H22-private-goals-spin-glass/r1b/`.
+
+| Unit | Variant | heterogeneity ρ_split | τ₃(dc) | T_SR / pairs (p>) | T_OP | W (p) | talk ρ_split (p) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 38a | round 1 | 0.56 (p 0.023) | 1.03 | – / None (p> –) | – | 3.14 (p 0.00) | -0.20 (p 0.877) |
+| 38a | bge | 0.56 (p 0.023) | 1.03 | – / None (p> –) | – | 3.14 (p 0.00) | 0.34 (p 0.030) |
+| 38a | gte | 0.65 (p 0.010) | 0.83 | – / None (p> –) | – | 2.75 (p 0.00) | 0.34 (p 0.030) |
+| 38a | bge styp | 0.69 (p 0.007) | 0.81 | – / None (p> –) | – | 2.32 (p 0.01) | 0.34 (p 0.030) |
+| 38a | gte styp | 0.61 (p 0.020) | 0.93 | – / None (p> –) | – | 2.11 (p 0.01) | 0.34 (p 0.030) |
+| 38a | bge dedup | 0.72 (p 0.007) | 0.80 | – / None (p> –) | – | 3.52 (p 0.00) | 0.44 (p 0.043) |
+| 38a | **stance (DQ2)** | dc split-half 0.68 (agent-field p 0.005) | 0.64 [0.54, 0.69] | – / None (p> –) | – | – | neg. pairs 3 vs 0.2 |
+| 38b | round 1 | 0.24 (p 0.276) | 0.07 | – / None (p> –) | – | 0.72 (p 0.59) | -0.17 (p 0.641) |
+| 38b | bge | 0.24 (p 0.276) | 0.07 | – / None (p> –) | – | 0.72 (p 0.59) | -0.13 (p 0.648) |
+| 38b | gte | 0.12 (p 0.382) | 1.68 | – / None (p> –) | – | 0.25 (p 0.90) | -0.13 (p 0.648) |
+| 38b | bge styp | 0.25 (p 0.243) | 0.12 | – / None (p> –) | – | 0.11 (p 0.96) | -0.13 (p 0.648) |
+| 38b | gte styp | 0.42 (p 0.113) | 1.26 | – / None (p> –) | – | 0.38 (p 0.79) | -0.13 (p 0.648) |
+| 38b | bge dedup | 0.02 (p 0.517) | -0.26 | – / None (p> –) | – | 0.70 (p 0.55) | -0.58 (p 0.870) |
+| 38c | round 1 | -0.58 (p 0.937) | nan | – / None (p> –) | – | 0.68 (p 0.65) | -0.22 (p 0.757) |
+| 38c | bge | -0.58 (p 0.937) | nan | – / None (p> –) | – | 0.68 (p 0.65) | -0.34 (p 0.887) |
+| 38c | gte | -0.39 (p 0.834) | nan | – / None (p> –) | – | 0.50 (p 0.87) | -0.34 (p 0.887) |
+| 38c | bge styp | -0.52 (p 0.930) | nan | – / None (p> –) | – | 1.53 (p 0.19) | -0.34 (p 0.887) |
+| 38c | gte styp | -0.26 (p 0.738) | nan | – / None (p> –) | – | 1.22 (p 0.30) | -0.34 (p 0.887) |
+| 38c | bge dedup | – (p –) | – | – / None (p> –) | – | – (p –) | – (p –) |
+

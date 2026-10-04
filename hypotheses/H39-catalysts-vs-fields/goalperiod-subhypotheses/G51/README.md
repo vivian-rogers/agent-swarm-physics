@@ -1,6 +1,7 @@
 # H39 × G51: Each agent: Maximize your assigned goal! (2026-07-06 → 2026-09-20)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (r1 mixed); nudge K +0.16 (n 242)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode I/K · 1192 agent-days on 45 non-holdout days (2026-07-06 → 2026-09-04) · 565,242 agent-minutes on the trimmed grid.
 
@@ -60,3 +61,6 @@ P9 (neither) ✓. With the nudger off, idle escape is lower (−0.12 to −0.14,
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
 - **2026-10-04, post hoc discovery, prediction written before running it.** The automated speaker (nudges *and* the daily pause/resume bookends) is silent from **2026-08-21** on; the last nudges are on 08-20 (7 that day, ~30/day before). Not in the CHANGELOG. This is a second, non-holdout "nudger off" switch inside one goal (proposed as a new NE). **P9:** a swarm-level step at 08-21 (2 + 2 days: 08-19, 08-20 → 08-21, 08-24; and 5 + 5 days) is *neither* on B4: nudged windows cover only ~5% of agent time (≈ 1 episode per agent-day × ~22 min), so the expected idle-share change is ≈ +0.003; idle share, idle escape and K inside the G51 day-boundary placebo band. A detectable rise in the idle share would mean the nudger's aggregate effect is much larger than its per-episode effect implies (e.g. agents anticipate nudges).
 - Erasure: the full B4/B6 chain mixes in the consolidation clock (consolidate is depleted right after any consolidation); the no-consolidate chain (A2) is the cleaner read.
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G51/results.json`. Rule unchanged: P1 nudges ✓; P2 human messages ✗; P3 @-mentions ✗; P4 erasure ✗ → **mixed**. V4 nudges: n 199, K +0.277, Δπ_wait -0.071.

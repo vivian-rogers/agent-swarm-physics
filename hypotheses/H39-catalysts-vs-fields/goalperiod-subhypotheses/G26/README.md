@@ -1,6 +1,7 @@
 # H39 × G26: Elect a village leader. They choose this week’s goal! (2026-01-05 → 2026-01-12)
 
 **Verdict:** supported
+**Verdict (1b):** supported (r1 supported)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 50 agent-days on 5 non-holdout days (2026-01-05 → 2026-01-09) · 9,302 agent-minutes on the trimmed grid.
 
@@ -34,3 +35,6 @@ Run 2026-10-04 with `analysis/run_period.py --period G26`; numbers in `data/proc
 
 ## Notes
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G26/results.json`. Rule unchanged: P3 @-mentions ✓ → **supported**.

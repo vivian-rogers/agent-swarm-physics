@@ -15,6 +15,7 @@
   - Structural controllability is uninformative (N_D ≈ N on the sparse significant graph, 1 on the dense one).
   - Steering-cost scaling is model-only: median agent ∝ N^2.7 [2.2, 3.4]; best driver flat.
 - Scorecard A1 B1 C1 D0 E0 F1 G1 H0 I0. Not promoted. `analysis/confirm.py` (G47 and the #51 tail; G45 optional) written and dry-run, not run.
+- **Round 1b (improved data, 2026-10-04):** on the DQ1 context-ledger visibility rule (both embedding models) the pre-registered κ is **still negative in 7/9 (bge) / 6/9 (gte) counted units**, so the round-1 failure is not mainly the contaminated placebo: messages posted during the recipient's own call are answered together with it (co-response). The matched-age boundary test replicates (CI > 0 in 4/9 bge, 5/9 gte) and **address gating is sharper**: in #51 named recipients move 0.04–0.08 of the gap per message, unnamed ones 0.00–0.013 (CI includes 0 in G51b–d under bge). **New: a reply-graph network (DQ2) gives a reproducible driver ranking** (split-half median 0.65) that weakly predicts held-out swarm spread (pooled ρ 0.23 [0.05, 0.39] bge, 0.12 [−0.06, 0.29] gte; volume ≈ 0), where the content-pull network still predicts nothing (−0.01 / 0.09). Natives: NE38 supported (the operator's reassignment moved Opus 5 strongly, 96th–100th percentile, and did not relay to bystanders); #35 mixed (designated leaders get 1.4× more replies per message, no broadcast pull, no extra volume); #26 failed (the elected leader's reply attention did not rise more than others'; its broadcast pull rose most, rank 10/10, regime I). Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0.
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH110 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population N(t); Regime; Driving / external field (human messages); Agent state, variant vector (statement embedding, whitened, unit-normalized; H01's named variant at the statement level); Interaction, variant broadcast, restricted to H18's *pending set* (proposed there as "Interaction (addressed, pending-sender)"; here the unaddressed version). New terms defined under Observables and proposed for the shared file: **influence coupling (content pull)**, **driver score (mean-output Gramian)**, **net influence current (out − in strength)**.
@@ -160,11 +161,11 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Every variable comes from shared tables (exposure, call starts, embeddings, mentions). But the imported visibility rule fails for long call windows: 39–70% of "invisible" rows come from PAUSE or long tool calls. The response measure mixes influence with co-response at short lags. Not invariant: the two-room era has too few near-boundary rows. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | A visibility/update-order audit was done, and it found the flaw. Split-half stationarity of the network fails in most units. No Markov-order test. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Pre-registered κ fails (negative in 7/9). Post hoc, the matched-age boundary test beats the truly-invisible null in 4/9 counted units, plus 2 descriptive (day-block bootstrap); named recipients like-for-like in 5/5 #51 segments. Post hoc, so capped at 1. |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | The model's signature fails: held-out swarm spread is not predicted (pooled ρ 0.09 / 0.04), and the human-message test P9b fails. The only P2-type prediction that passed concerns placebo contamination. |
-| E interventional | predicts the change across a natural experiment | 0 | No NE used. Human messages as quasi-interventions: no driver-tercile effect (98 messages, CI spans 0). |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 | Round 1: 0 (held-out spread not predicted, pooled ρ 0.09 / 0.04; P9b failed). **Round 1b:** the content-pull network still predicts nothing (−0.07 / 0.04), but the reply-graph network's driver score (net reply current) predicts the unfitted held-out 2-h spread in 6/9 (bge) / 7/9 (gte) units, pooled 0.23 [0.05, 0.39] / 0.12 [−0.06, 0.29]; network defined in round 1b, validator noisy. |
+| E interventional | predicts the change across a natural experiment | 1 | Round 1: 0. **Round 1b native NE38:** the operator's reassignment of Opus 5 moved the named agent to the 96th–100th percentile of named-message pulls and did not relay to its 19 room-mates (71st / 92nd percentile), as the address-gated model predicts. Single event. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | **Synthetic:** κ never false-positive; ranking recovery ρ 0.47–0.79 (0.32 in the over-coupled G51b regime); robust to nonlinearity. **Preprocessing:** rankings are robust to Γ and baseline (≥ 0.9) but only partly to raw 384-d vectors (0.15–0.99). **Fitted magnitude (post hoc):** in G51b recovery is 0.64 and real split-half (0.87) exceeds the model's (0.63). In the two-room weeks real split-half falls below what a true model gives. |
 | G ground truth | agrees with known structure | 1 | Recovers H04's named-agent structure in content (named ≫ unnamed). Rooms: per-recipient pull is higher in the smaller room in 6/7 units (H18), but confounded by composition (#best). No leader ground truth outside the holdout. |
-| H comparative | beats the named rivals | 0 | On held-out spread the driver score does not beat volume (R2) or out-strength (R4): pooled 0.09 vs −0.06 / −0.01, overlapping CIs. At the influence level, R3 (named-only) is closest to the data. R5 (H32) not yet available. |
+| H comparative | beats the named rivals | 1 | Round 1: 0 (driver score did not beat volume R2 or out-strength R4). **Round 1b:** the reply-graph score beats volume and reply in-rate on held-out spread (0.23 vs −0.06 / −0.06 bge; 0.12 vs 0.00 / −0.04 gte); R3 (named-only) still describes the content pull best (unnamed jump ≈ 0 on the ledger). |
 | I transfer | holds in other same-mode periods, including the holdout | 0 | Holdout not run. Strongly heterogeneous across the two-room era and #51. |
 
 ## Prediction
@@ -225,7 +226,7 @@ Synthetic design (`analysis/synthetic.py` → `data/processed/H29-driver-nodes/s
   5. **Post-hoc recovery check at the fitted magnitude.** After the real fit, re-run the synthetic at each unit's fitted κ and heterogeneity. This tells whether that unit's ranking is identifiable. Disclosed as post hoc.
 
 ## Results by goal period
-Verdict rule:
+Verdict rule (round-1b verdicts on ledger visibility are in each folder's `Verdict (1b)` line; they are unchanged for every unit under bge, and G40 becomes mixed under gte):
 - **mixed:** the post hoc boundary test detects influence, but the driver ranking is not validated;
 - **failed:** neither;
 - **descriptive:** units shorter than 4 days.
@@ -250,6 +251,9 @@ Key numbers:
 | [G51c](goalperiod-subhypotheses/G51c/README.md) | exploratory (counted) | mixed | κ -0.027 [-0.035, -0.021]; post hoc jump 0.025 [0.013, 0.038] (named 0.05, unnamed 0.011); split-half D -0.09/0.38; V2 0.17 |
 | [G51d](goalperiod-subhypotheses/G51d/README.md) | exploratory (counted) | mixed | κ -0.013 [-0.024, -0.004]; post hoc jump 0.033 [0.019, 0.044] (named 0.09, unnamed 0.018); split-half D 0.05/-0.18; V2 0.14 |
 | [G51e](goalperiod-subhypotheses/G51e/README.md) | descriptive | descriptive | κ -0.012 [-0.016, -0.010]; post hoc jump 0.013 [0.010, 0.015] (named 0.03, unnamed 0.009); split-half D -0.05/0.33; V2 0.11 |
+| [NE38](goalperiod-subhypotheses/NE38/README.md) | native (round 1b) | supported | operator reassignment of Opus 5: target pull 96th/100th pct (bge/gte), bystanders 71st/92nd pct (no relay) |
+| [G35](goalperiod-subhypotheses/G35/README.md) | native (round 1b) | mixed | designated leaders: replies per message ×1.39 [1.09, 1.69]; volume ×0.97; broadcast pull ×1.09 [0.76, 1.41] |
+| [G26](goalperiod-subhypotheses/G26/README.md) | native (round 1b) | failed | elected leader: reply-attention DiD −0.20 (rank 5/10); broadcast-pull DiD +0.08 (rank 10/10) |
 
 ## Results
 Scripts:
@@ -330,9 +334,65 @@ Outputs are in `data/processed/H29-driver-nodes/` (`summary.json`, per-unit `res
 - **e:** model steering cost vs N: median agent ∝ N^2.7; best driver flat (a one-room hub).
 - **f:** synthetic. When the model is true, the driver score beats out-strength and volume at finding the right injection point.
 
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the round-1 pipeline (`explore.py`, `posthoc.py`, `summarize.py`) on corrected inputs, plus the reply-graph network and three period-native tests. Predictions P1–P10 and the per-period rule are unchanged; native predictions were written in their folders at 07:31 UTC, before any native statistic was computed.*
+
+**What changed in the inputs.**
+- **Visibility (DQ1 context ledger).** Round 1 imported H18's call-start rule; 39–70% of its "invisible" rows were messages that arrived during a PAUSE or long tool call and *were* read by the next call. Round 1b matches each talk turn to its model call (AGENT_TALK time between the call's `t_first` and `t_log`, DQ2's rule) and takes V(τ_n) = the ledger items received by the calls after τ_{n−1}'s call up to τ_n's call, I(τ_n) = items of the next call posted before τ_n itself. Every invisible row is now strictly invisible, so the boundary test needs no 30-s call-window filter (`C_MAX_S = ∞`). Effect on rows (G41): invisible 867 → 566; share of invisible rows from call windows > 30 s 0.43 → 0.23 (the remaining ones are long generations, still unseen). every talk turn matched its call except 153 in #35.
+- **Second embedding model (DQ5).** Everything is run with bge-small (primary) and gte-modernbert (each whitened in its own regime basis).
+- **Reply graph (DQ2).** A new influence network from `reply_graph` (hard parent counts; `reply_pairs` with `pair_set = cand` for the parent premium): A^rep_ij = c × (replies by j to i's messages per active hour), with c = the unit's field-corrected pull of reply-parent rows; the same Gramian, split-half and held-out V2 validation as round 1. **This network is a round-1b design choice (the re-evaluation brief), not a pre-registered one.**
+- Code: `scheme/build.py --data r1b` (new `build_unit_ledger`; the old path is the default and unchanged), `H29_DATA=r1b` / `H29_EMB=gte_modernbert` switches in `h29lib.py`, new `analysis/r1b_extra.py`. Outputs: `data/processed/H29-driver-nodes/r1b/` (ledger units; bge results) and `r1b_gte/` (gte results).
+
+**Old vs new (counted units G38–G51d unless stated).**
+
+| Statistic | Round 1 (H18 visibility, bge) | Round 1b, bge | Round 1b, gte |
+| --- | --- | --- | --- |
+| P1 κ > 0 (CI) · κ < 0 (CI) | 0/9 · 7/9 | 1/9 (G39) · 7/9 | 0/9 · 6/9 |
+| P2 contamination / field-corrected pull, median | 1.70 | 1.90 | 1.79 |
+| post hoc boundary jump CI > 0 | 4/9 (G39, G51b–d) + 2 short | 4/9 (same) + 2 short | 5/9 (+G40) + 2 short |
+| #51 named like-for-like jump (G51b, c, d) | 0.084, 0.053, 0.087 | 0.069, 0.049, 0.056 | 0.079, 0.068, 0.068 |
+| #51 unnamed like-for-like jump (G51b, c, d) | 0.013*, 0.011, 0.018* | 0.007, 0.002, 0.012 (all CI ∋ 0) | 0.013*, −0.001, 0.007* |
+| P5 split-half D (pre-registered), median · G38 / G51b / G51c | 0.05 · −0.21 / 0.17 / −0.09 | 0.29 · 0.29 / 0.45 / 0.00 | 0.18 · 0.47 / 0.43 / 0.13 |
+| P5 post hoc network split-half median | 0.17 | 0.30 | 0.22 |
+| P6 held-out ρ(D, H) pooled, pre-registered · post hoc | 0.09 · 0.04 | −0.07 · −0.01 | 0.04 · 0.09 |
+| validator H split-half, median | 0.10 | 0.10 | 0.01 |
+| P8 η (pre-registered E*) | 2.15 [1.62, 2.64] | 1.98 [1.42, 2.53] | 1.94 [0.88, 2.79] |
+| P10 named ≥ 2× unnamed (pre-registered κ subsets) · unnamed κ ≤ 0 | 7/9 · 8/9 | 7/9 · 7/9 | 8/9 · 8/9 |
+| **reply network:** split-half of D^rep, median | – | **0.65** | **0.66** |
+| **reply network:** held-out ρ(D^rep, H) pooled · > 0 | – | **0.23 [0.05, 0.39] · 6/9** | **0.12 [−0.06, 0.29] · 7/9** |
+| reply network rivals: in-rate · volume (pooled ρ) | – | −0.06 · −0.06 | −0.04 · 0.00 |
+| reply-parent premium (parent minus other visible rows, matched age) | – | 0.11–0.17 (all CI > 0) | 0.12–0.19 (all CI > 0) |
+
+\* CI excludes 0.
+
+**What the corrected visibility says about P1.** The ledger removes the pause/long-call contamination, yet κ stays negative in 7/9 units and the placebo pull still exceeds the visible pull (median ratio 1.9). So the round-1 failure is mostly the second diagnosed cause: messages posted *during* the recipient's own generation are co-responses to the same prior turn (they sit closest in time and share its topic), not influence that leaked into the placebo. P1 stays failed; the diagnosis is sharpened (Amendment 2's matched-age boundary test is the right estimator, and it replicates).
+
+**Address gating is sharper, not weaker.** Under the ledger the unnamed like-for-like jump in #51 shrinks to 0.00–0.013 (CI includes 0 in G51b–d under bge; gte 0.007–0.013 in G51b and G51d), while the named jump stays 0.05–0.08 in every #51 segment and both models. Named/unnamed ≈ 5–25×. The two-room weeks remain underpowered.
+
+**A reply-graph network gives a usable ranking.** The content-pull network still fails both reliability (pre-registered split-half median 0.29, ≥ 0.4 only in G51b) and validity (held-out ρ ≈ 0). The reply network is reproducible (split-half 0.29–0.91, median 0.65) and its Gramian score, which reduces to the **net reply current** (replies received minus replies given, propagated), predicts the held-out 2-h swarm spread in 6/9 (bge) / 7/9 (gte) counted units, pooled 0.23 [0.05, 0.39] / 0.12 [−0.06, 0.29], inside Amendment 1.3's "consistent with a true model" band (0.15–0.3) under bge. Neither raw reply in-rate nor message volume predicts it (pooled ≈ 0). Caveats: the validator itself replicates poorly (median 0.10 / 0.01), the network was chosen in round 1b, and the reply-parent premium (0.11–0.19) is partly built in, because DQ2 ranks parent candidates partly by content similarity and Jev judges replies from text (a reply is *about* its parent). It is a consistency check, not separate evidence of influence.
+
+**Native tests (layer 2).**
+
+| Folder | Design | Prediction (07:31 UTC) | Result | Verdict |
+| --- | --- | --- | --- | --- |
+| [NE38](goalperiod-subhypotheses/NE38/README.md) | the operator's role reassignment of Claude Opus 5 (07-29 16:50), vs 52 other named human messages in G51b–d | target pull ≥ 75th pct; bystander spread inside the 5th–95th pct | target 95.6th (bge) / 100th (gte) pct (displacement 0.28 / 0.34); bystanders 70.6th / 92.2nd pct | **supported** |
+| [G35](goalperiod-subhypotheses/G35/README.md) | designated daily leaders (6 agent-days), within-agent | replies per message × ≥ 1.3 and volume × ≥ 1.2; broadcast pull ratio CI ∋ 1 | replies × 1.39 [1.09, 1.69]; volume × 0.97 [0.77, 1.20]; broadcast pull × 1.09 [0.76, 1.41] (gte 1.10 [0.91, 1.25]) | **mixed** (attention yes, volume no, broadcast influence no) |
+| [G26](goalperiod-subhypotheses/G26/README.md) | elected leader (agent 17) before vs after 01-05 19:35, DiD vs the other 9 | reply attention DiD > 0; broadcast pull DiD CI ∋ 0 | reply attention DiD −0.20 (rank 5/10); broadcast pull DiD +0.08 (bge) / +0.07 (gte), the largest of 10 (rank p ≈ 0.1) | **failed** (by the reply clause) |
+
+Reading: an operator message is a strong content field on the agent it names and does not relay (NE38, as predicted from round 1's synthesis); designated or elected leadership buys attention (more replies per message, #35) without making the leader a broadcast driver in regime II; in regime I the elected leader's broadcast pull rose more than anyone's, consistent with H50's finding that unaddressed messages couple in regime I but not in III.
+
+**Which verdicts change.** Card level: P1 failed (unchanged; now diagnosed as co-response rather than placebo contamination); P5 moves from failed to **partly supported** (pre-registered median 0.29 ≥ 0.2, but ≥ 0.4 only in G51b of the three named units); P6 failed (unchanged for the pre-registered network); P10 first part 7/9 (bge) / 8/9 (gte), second part still fails (unnamed κ ≤ 0 in 7–8/9); the post hoc address-gating finding is confirmed on corrected visibility and a second model. Per period (rule unchanged, bge): G39, G51b, G51c, G51d stay mixed; the other counted units stay failed; G42 and G44 now carry a negative *unnamed* jump (G44 −0.026 [−0.034, −0.004]). **Verdict (1b)** lines are in each period README.
+
+**Scorecard after 1b:** A 1 (ledger visibility fixes the mapping flaw; co-response still contaminates the response measure); B 1; C 1 (boundary test beats the strictly-invisible null in 4–5/9; post hoc); **D 0 → 1** (the reply-network ranking predicts an unfitted held-out statistic, pooled 0.23 under bge, though defined in round 1b); **E 0 → 1** (NE38: the operator intervention behaves as the address-gated model predicts); F 1; G 1 (#35 leaders get attention, not broadcast influence); **H 0 → 1** (reply-network score beats volume and in-rate on held-out spread); I 0 (holdout not run; two-room weeks underpowered). **A1 B1 C1 D1 E1 F1 G1 H1 I0.**
+
+**Operator rule, revised.** (1) To move one agent, name it (named/unnamed ≈ 5–25× in #51 on ledger visibility). (2) An operator message to one agent stays with that agent (NE38). (3) If a relay must be chosen, rank agents by net reply current (replies received minus given) from the reply graph, not by volume or content-pull "driver" scores; expect a weak edge (held-out ρ ≈ 0.1–0.2). (4) Designating a leader buys replies, not reach.
+
+**Disclosure.** A probe for the leading-@ nudge rule (shared with H30/H39 work) printed per-period nudge *counts* including held-out periods (#32, #34, #45–#50, #51 tail); no outcome was computed on them.
+
 ## Notes
 - 2026-10-04: promoted from HH110 by Vivian (usefulness-first batch); wave 1.
 - 2026-10-04 ~01:45 UTC: observables, nulls, rivals and predictions written before any real-data pull statistic.
 - 2026-10-04 ~02:20 UTC: Amendment 1 (synthetic-based) written before any real-data run; per-period folders with dated predictions written ~02:25 UTC.
 - 2026-10-04: first real-data run (explore.py); P1 failed in the opposite direction; diagnosis and Amendment 2 (post hoc: boundary test, like-for-like named controls, proximity-adjusted network, recovery at fitted magnitude). `confirm.py` written and dry-run on G38/G51d stand-ins (C1 pass, C1b fail, C2–C4 pass, C5 fail, C6 pass on stand-ins); not run on the holdout.
 - **Proposed shared changes** (not made; outside H29's edit scope): DEFINITIONS.md entries for *influence coupling (content pull)*, *visibility jump (boundary test)*, *driver score (mean-output Gramian)*, *net influence current*; an infra/README Known issue: the H18 call-start visibility rule misclassifies messages arriving during PAUSE or long tool calls (39–70% of "invisible" rows in regime III); a `call_windows` shared table with model-call starts if any log field allows it.
+- 2026-10-04: round 1b on the context ledger, both embedding models and the DQ2 reply graph (`r1b_extra.py`), natives NE38 / G35 / G26; ~15 min of compute on ≤ 2 processes; disk +4.5 MB in `data/processed/H29-driver-nodes/r1b*/`.

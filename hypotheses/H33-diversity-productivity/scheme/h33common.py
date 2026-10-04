@@ -25,8 +25,21 @@ HYP = HERE.parent
 ROOT = HYP.parents[1]
 SH = ROOT / "data/processed/shared"
 EMB = SH / "embeddings"
-OUT = ROOT / "data/processed/H33-diversity-productivity"
-FIG = HYP / "figures"
+# Round switch (2026-10-04). H33_ROUND=r1 (default) reproduces round 1; H33_ROUND=r1b = improved data: productivity from
+# the DQ4 work ledger (agent work commits, distinct files; #30 on), activity_bins_fixed controls, diversity with both
+# embedding models (DQ5 white32) and three dedups. Outputs under <OUT_R1>/r1b, figures under figures/r1b.
+ROUND = os.environ.get("H33_ROUND", "r1")
+assert ROUND in ("r1", "r1b"), ROUND
+OUT_R1 = ROOT / "data/processed/H33-diversity-productivity"
+OUT = OUT_R1 / "r1b" if ROUND == "r1b" else OUT_R1
+FIG = HYP / "figures" / "r1b" if ROUND == "r1b" else HYP / "figures"
+SFX = "_r1b" if ROUND == "r1b" else ""
+Y_PRIMARY = "commits_w" if ROUND == "r1b" else "writes"          # log(1 + y) is the outcome
+Y_ROBUST = (("files_w", "lines_nb", "writes", "commits") if ROUND == "r1b"
+            else ("commits", "deploys", "artifacts_adv", "writes_clean"))
+X_ROBUST = (("tv10", "pr6", "pr15", "pr10_bge_w", "pr10_gte", "pr10_bge_copies", "pr10_bge_restate", "pr10_gte_copies",
+             "pr10_gte_restate") if ROUND == "r1b" else ("tv10", "pr6", "pr15"))
+MIN_GOAL = 30 if ROUND == "r1b" else 0       # work ledger dense from #30; earlier zeros are ambiguous
 SEED = 20261004
 CLAUDE_CODE_AGENT = 19
 

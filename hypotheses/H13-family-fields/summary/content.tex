@@ -1,4 +1,4 @@
-\hwhat{15 counted units (regime II--III goal periods \#35--\#44 and \#51, non-holdout; $N=10$--27 agents, 57k chat statements). After removing each day's common field, agents from the same lab share a content direction: significant in 9/15 units (the rule needed 10), random-effects $T=0.08$ [0.02, 0.14], and stable across periods (family split-half cosine 0.88 vs a 0.76 regrouping null, $p=0.008$). \textbf{But it is writing style:} regressing out 20 style features (length, bullets, punctuation, pronouns) leaves it in 0/9 units (median retention 3\%), and the style features alone identify families in 14/15. No period-specific family stance (3/14). \textbf{No family coupling:} family-block mean-field couplings in talk timing (RE $\Delta=0.002$) and 30-min content co-movement ($-0.002$) are flat. \textbf{Rooms carry the coupling:} room beats lab in 8/10 (talk) and 9/10 (co-movement) two-room units. Newcomers are classified by family field at 4/11 (chance 14\%). Holdout script frozen, not run.}
+\hwhat{15 counted units (\#35--\#44, \#51; non-holdout; $N=10$--27). After removing each day's common field, same-lab agents share a content direction: 9/15 units, random-effects $T=0.08$ [0.02, 0.14], stable across periods (split-half 0.88 vs 0.76, $p=0.008$). \textbf{It is writing style:} it survives style residualization in 0/9 units. \textbf{No family coupling} in talk timing or content co-movement; \textbf{rooms carry coupling}. \textbf{Round 1b} (second embedding model, DQ5 style residuals, dedupe, corrected talk table) reproduces every number; the talk null is 2.3$\times$ tighter. The new behavioral test (Jev v3 states, real failures, commit and write rates) \textbf{failed} its rule: 3/15 units, RE $T_B=0.075$ [0.03, 0.12], a weak work-habit trace. Natives: NE06 (Google-only change) is village-wide in the logs; newcomers 3/9 by behavior ($p=0.14$); \#35 mixed. Holdout not run.}
 
 \hmodel{Model 11 (vector spins) plus models 01/02 in $K$-block mean field. $v_{i,d}$: agent $i$'s mean whitened chat embedding on day $d$; $g_d$: day (goal) field, estimated by the day mean $m_d$; $h_f$: field of lab $f(i)$; $a_i$: agent offset; $x_{i,d}$: fluctuations, coupled through a $K\times K$ family matrix ($K=2$--5 multi-member labs); $\varepsilon$: sampling noise. $H_i$: agent field. $C$: talk-spin or co-movement correlation matrix. $y_{ij}$: a pair outcome; $r(i)$: agent's room.}
 
@@ -13,4 +13,24 @@ y_{ij}=c+b_{\rm lab}[f(i)=f(j)]+b_{\rm room}[r(i)=r(j)]
 
 \htelos{For anyone mixing vendors in one swarm: models from the same lab sound alike, and that is nearly all there is. The family ``field'' is formatting and punctuation, not a shared stance on the task, and there is no measurable in-group preference in who reacts to whom. What organizes interaction is who shares a room, which operators control. Two practical consequences, both modest. Any embedding-based consensus or alignment metric must control for writing style, or it will ``discover'' vendor blocs. Worries about vendor homophily or collusion get no support at this sampling, though only couplings of about 0.1 or larger are excluded. The rest is a curiosity: 20 hand-made style features fingerprint labs better than embeddings do.}
 
-\hbottom{Model families differ in how they write, not in what they think or whom they follow; rooms, not vendors, set who couples with whom.}
+\hbottom{Model families differ in how they write and only faintly in what they do, not in what they think or whom they follow; rooms, not vendors, set who couples with whom.}
+
+\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.32\columnwidth}p{0.55\columnwidth}p{0.11\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b (bge; gte)} & \textbf{Verdict}\\\hline
+P1 family field & 9/15, RE 0.080 $\to$ 9/15, 0.080; gte 8/15, 0.085 & mixed\\
+P2 not only style & 0/9 $\to$ 0/9 (own S-a); 1/9, 0/8 (DQ5 residuals) & $\times$\\
+P3 family invariance & 0.88 vs 0.76 $\to$ 0.88 / 0.90 vs 0.76 / 0.74 & $\checkmark$\\
+P5 no talk homophily & RE 0.002 [$-$0.04, 0.05] $\to$ $-$0.003 [$-$0.02, 0.02] & $\checkmark$\\
+P6 no content homophily & 1/15 $\to$ 1/15 (both models) & $\checkmark$\\
+P7 rooms carry coupling & talk 8 $\to$ 10/10; co-movement 9/10, gte 10/10 & $\checkmark$\\
+B1 behavioral field (HH267) & 3/15; RE $T_B$ 0.075 [0.03, 0.12] & $\times$\\
+B2 behavior beyond style & 4/15; RE 0.038 [$-$0.01, 0.09] & $\times$\\
+NE06 / NE32 / G35 (native) & village-wide change / 3 of 9 / words follow rooms & $\times$ / $\times$ / $\sim$\\
+\end{tabular}}}
+
+\hobsb{../figures/r1b_behavior_vs_words.pdf}{(a) Family field per unit in three channels: raw words (gray), words after DQ5 style residualization (blue) and behavior (orange); filled = $p<0.05$. Style-free words carry nothing; behavior carries a little, mostly in the build weeks \#39--\#40. (b) Two-room units: the same-lab coefficient with room held fixed; behavior keeps a family term (RE 0.14), style-free words do not.}
+
+\hcaveats{The behavioral field may be harness rather than disposition: it lives in file-write and commit cadence, which follow each provider's tool conventions, and NE06 could not separate the two because the change hit every agent. Jev's labels read window evidence that can include an agent's narration. In \#51 roles dominate behavior (same-role pairs dropped). The ``no coupling'' results exclude only couplings $\gtrsim 0.1$. Holdout (C1--C6) untouched.}
+
+\hnext{Test the behavioral field against a harness covariate (tool-call conventions per provider); use NE20 (Anthropic one call per turn, holdout) only if the confirmatory run is approved.}
+

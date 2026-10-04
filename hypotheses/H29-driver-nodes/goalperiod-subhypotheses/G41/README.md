@@ -1,6 +1,7 @@
 # H29 × G41: Perform novel research! (2026-05-11 → 2026-05-15)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed; gte failed)
 **Role:** exploratory (counted)
 **Period:** regime III · mode I · 14 recipients in the network · #best / #rest (split back 05-11) · 5 non-holdout days.
 
@@ -35,3 +36,17 @@ Figures: `../../figures/h29_summary.pdf` (all periods). Data: `data/processed/H2
 
 ## Notes
 - 2026-10-04: pre-registered pipeline (`explore.py`) and Amendment 2 (`posthoc.py`, post hoc) run. Invisible rows from call windows > 30 s: 0.43 (the H18 visibility rule misclassifies messages that arrive during a PAUSE or a long tool call).
+
+## Round 1b (improved data, 2026-10-04)
+Context-ledger visibility (DQ1) instead of H18's call-start rule; both embedding models; the DQ2 reply-graph network. Numbers in `data/processed/H29-driver-nodes/r1b/G41/` (bge) and `r1b_gte/G41/` (gte). Rule unchanged.
+
+| Statistic | Round 1 | Round 1b bge | Round 1b gte |
+| --- | --- | --- | --- |
+| κ (pre-registered) | -0.037 [-0.051, -0.020] | -0.035 [-0.039, -0.020] | -0.031 [-0.034, -0.017] |
+| boundary jump (matched age) | -0.022 [-0.057, 0.029] | -0.000 [-0.024, 0.036] | 0.018 [-0.008, 0.067] |
+| named like-for-like | -0.023 [-0.053, -0.001] | -0.002 [-0.060, 0.082] | 0.056 [0.000, 0.154] |
+| unnamed like-for-like | -0.024 [-0.062, 0.032] | -0.001 [-0.021, 0.042] | 0.007 [-0.024, 0.062] |
+| split-half D (pre-registered / post hoc) | 0.51 / -0.04 | 0.20 / 0.26 | -0.18 / 0.19 |
+| held-out V2 ρ(D, H) (pre-registered / post hoc) | 0.01 / 0.07 | 0.28 / -0.14 | 0.19 / 0.16 |
+| reply network: split-half D^rep · held-out ρ(D^rep, H) | – | 0.59 · 0.63 | 0.57 · 0.31 |
+| reply-parent premium (matched age) | – | 0.142 [0.133, 0.153] | 0.159 [0.148, 0.173] |

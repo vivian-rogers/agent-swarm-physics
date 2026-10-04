@@ -7,6 +7,12 @@ Outputs: data/processed/H21-debate-antiferromagnet/G12/results.json, per_debate.
 figures in hypotheses/H21-debate-antiferromagnet/goalperiod-subhypotheses/G12/figures/.
 
 Usage: uv run python hypotheses/H21-debate-antiferromagnet/analysis/g12_analysis.py
+
+Round 1b (2026-10-04): CONFIG (module level, default = the round-1 path) switches the content inputs:
+  model   bge_small (round 1) | gte_modernbert (DQ5's second model; masked texts re-embedded by build_g12.py --model)
+  source  masked (round 1) | unmasked (shared chat_<model>.npy) | styp (shared DQ5 style_resid_period, 32-d, unmasked)
+  dedupe  none | copies (statement_flags.self_repeat_both) | restatements (self_repeat in either model)
+analysis/r1b.py sets CONFIG and calls run(); this script's own main() is unchanged.
 """
 from __future__ import annotations
 
@@ -36,19 +42,49 @@ DATA = ROOT / "data/processed/H21-debate-antiferromagnet/G12"
 SH = ROOT / "data/processed/shared"
 FIG = HERE.parent / "goalperiod-subhypotheses/G12/figures"
 RNG = 20261003
+CONFIG = {"model": "bge_small", "source": "masked", "dedupe": "none"}
+
+
+def _whitener(dim):
+    if CONFIG["model"] == "bge_small":
+        return load_whitener("I", dim)
+    from embed_models import load_whitener as lw
+    return lw("I", dim, CONFIG["model"])
+
+
+def _motions():
+    return np.load(DATA / ("motions.npz" if CONFIG["model"] == "bge_small" else f"motions_{CONFIG['model']}.npz"))
 
 
 def load(dim=32, masked=True):
     st_pl = pl.read_parquet(DATA / "statements.parquet")
     cal = pl.read_parquet(SH / "calendar.parquet").filter(pl.col("goal_no") == 12)
     assert not any(holdout_mask(cal["pt_date"].to_list(), cal["goal_no"].to_list()))
-    W = load_whitener("I", dim)
-    if masked:
-        E = np.load(DATA / "emb_masked.npy").astype(np.float32)
+    W = _whitener(dim)
+    mdl, src = CONFIG["model"], CONFIG["source"]
+    if src == "styp":
+        assert dim == 32, "styp vectors are 32-d"
+        sti = pl.read_parquet(SH / "embeddings/statements.parquet", columns=["kind", "src_row"]).with_row_index("srow")
+        srow = st_pl.select("chat_row").join(sti.filter(pl.col("kind") == "chat").select("srow", pl.col("src_row").alias("chat_row")),
+                                             on="chat_row", how="left", maintain_order="left")["srow"].to_numpy()
+        V = np.load(SH / f"embeddings/statements_style_resid_period32_{mdl}.npy", mmap_mode="r")
+        X = np.asarray(V[srow], dtype=np.float64)
     else:
-        Es = np.load(SH / "embeddings/chat_bge_small.npy", mmap_mode="r")
-        E = np.asarray(Es[st_pl["chat_row"].to_numpy()], dtype=np.float32)
-    X = W(E).astype(np.float64)
+        if masked and src == "masked":
+            E = np.load(DATA / ("emb_masked.npy" if mdl == "bge_small" else f"emb_masked_{mdl}.npy")).astype(np.float32)
+        else:
+            Es = np.load(SH / f"embeddings/chat_{mdl}.npy", mmap_mode="r")
+            E = np.asarray(Es[st_pl["chat_row"].to_numpy()], dtype=np.float32)
+        X = W(E).astype(np.float64)
+    if CONFIG["dedupe"] != "none":
+        sti = pl.read_parquet(SH / "embeddings/statements.parquet", columns=["kind", "src_row"]).with_row_index("srow")
+        fl = pl.read_parquet(SH / "statement_flags.parquet", columns=["srow", "self_repeat", "self_repeat_both"])
+        col = {"copies": "self_repeat_both", "restatements": "self_repeat"}[CONFIG["dedupe"]]
+        flag = st_pl.select("chat_row").join(
+            sti.filter(pl.col("kind") == "chat").join(fl, on="srow").select(pl.col("src_row").alias("chat_row"), pl.col(col).alias("f")),
+            on="chat_row", how="left", maintain_order="left")["f"].fill_null(False).to_numpy()
+        keep = ~flag
+        st_pl, X = st_pl.filter(pl.Series(keep)), X[keep]
     deb = json.loads((DATA / "debates_resolved.json").read_text())
     name2a = dict(zip(st_pl["name"], st_pl["agent"]))
     t0 = st_pl["t"].min()
@@ -67,8 +103,8 @@ def load(dim=32, masked=True):
 def magnetizations(X, st, debates, phase, Xc):
     """Uniform vs staggered magnetisation (agent-centred unit spins, NOT debate-centred) and topic alignment."""
     out = []
-    mot = np.load(DATA / "motions.npz")
-    W = load_whitener("I", X.shape[1])
+    mot = _motions()
+    W = _whitener(X.shape[1])
     topic = {int(d): L.unit(W(e[0][None])[0]) for d, e in zip(mot["debates"], mot["emb"])}
     for deb in debates:
         members = deb["gov"] + deb["opp"]
@@ -135,7 +171,7 @@ def run(dim=32, masked=True, min_n=2, weights=None, phase="deb", full=True):
                             "delta_q95": float(np.quantile(nd, 0.95)), "ms_q95": float(np.quantile(nm, 0.95))}
     res["generic"] = C.generic_tests(Wd, 50000, RNG)
     # a-priori text axes: pro-minus-con templates of the motion; and with the cross-debate template mean removed
-    mot = np.load(DATA / "motions.npz")
+    mot = _motions()
     ax_raw = {int(d): W(e[1][None])[0] - W(e[2][None])[0] for d, e in zip(mot["debates"], mot["emb"])}
     gmean = np.mean([L.unit(v) for v in ax_raw.values()], axis=0)
     ax_spec = {d: L.unit(v) - (L.unit(v) @ L.unit(gmean)) * L.unit(gmean) for d, v in ax_raw.items()}

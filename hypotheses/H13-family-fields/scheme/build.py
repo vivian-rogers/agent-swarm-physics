@@ -12,6 +12,14 @@ No message text is written; only counts and vectors.
 
 Usage: uv run python hypotheses/H13-family-fields/scheme/build.py [--units 35,36b,...]
 The confirmatory script imports build_units(..., allow_holdout=True, out=<confirm dir>); exploration asserts no holdout.
+
+Round 1b (improved data, 2026-10-04), the old path above stays the default:
+  ... build.py --r1b [--model bge_small|gte_modernbert] [--dedupe none|copies|restatements] [--talk fixed|old]
+writes data/processed/H13-family-fields/r1b/<model>_<dedupe>/ with the same files plus u<unit>_agent_day_styp.npy
+(shared DQ5 style_resid_period vectors). Statement vectors come from the shared DQ5 statement-level files
+(statements_white32_<model>.npy: regime-whitened, unit-normalized; for bge identical to the old own whitening),
+talk spins from activity_bins_fixed (DQ8) unless --talk old, and dedupe drops statements flagged by DQ5's
+statement_flags (copies = self_repeat_both, restatements = self_repeat in either model).
 """
 from __future__ import annotations
 
@@ -149,8 +157,8 @@ def corr_cols(X, Y):
     return C
 
 
-def talk_pairdays(days, agent_room):
-    ab = pl.read_parquet(SH / "activity_bins.parquet", columns=["pt_date", "minute", "agent", "state"]) \
+def talk_pairdays(days, agent_room, table="activity_bins"):
+    ab = pl.read_parquet(SH / f"{table}.parquet", columns=["pt_date", "minute", "agent", "state"]) \
            .filter(pl.col("pt_date").is_in(days))
     agents = np.array(sorted(ab["agent"].unique().to_list()))
     N = len(agents)
@@ -192,11 +200,27 @@ def talk_pairdays(days, agent_room):
 
 
 # ----------------------------------------------------------------------------- main build
-def build_units(units: dict, out: Path, allow_holdout=False, tag="explore"):
+def build_units(units: dict, out: Path, allow_holdout=False, tag="explore", model=None, dedupe="none",
+                talk_table="activity_bins"):
+    """model=None: the round-1 path (own whitening of chat_bge_small). model in {bge_small, gte_modernbert}: round 1b,
+    shared DQ5 statement-level white32 vectors, plus the shared style_resid_period vectors (u*_agent_day_styp.npy)."""
     t0 = time.time()
     out.mkdir(parents=True, exist_ok=True)
     roster = pl.read_parquet(SH / "roster.parquet", columns=["agent", "lab", "name"])
     st = pl.read_parquet(ED / "statements.parquet").with_row_index("srow").filter(pl.col("kind") == "chat")
+    if dedupe != "none":
+        fl = pl.read_parquet(SH / "statement_flags.parquet", columns=["srow", "self_repeat", "self_repeat_both"])
+        col = {"copies": "self_repeat_both", "restatements": "self_repeat"}[dedupe]
+        drop = fl.filter(pl.col(col))["srow"]
+        n0 = st.height
+        st = st.filter(~pl.col("srow").is_in(drop))
+        print(f"[{tag}] dedupe={dedupe}: dropped {n0 - st.height} of {n0} chat statements", flush=True)
+    if model is not None:
+        sys.path.insert(0, str(ROOT / "infra/shared"))
+        from embed_models import MODELS  # noqa: E402
+        sfx = MODELS[model]["suffix"]
+        W32 = np.load(ED / f"statements_white32_{sfx}.npy", mmap_mode="r")
+        WSP = np.load(ED / f"statements_style_resid_period32_{sfx}.npy", mmap_mode="r")
     cidx = pl.read_parquet(ED / "chat_index.parquet").with_row_index("src_row")
     Ec = np.load(ED / "chat_bge_small.npy", mmap_mode="r")
     meta = {}
@@ -212,10 +236,16 @@ def build_units(units: dict, out: Path, allow_holdout=False, tag="explore"):
         feats = text_features(txt)
         del txt
         s = s.join(feats, on="message_id", how="left")
-        if reg not in whit:
-            whit[reg] = load_whitener(reg, DIM)
-        Z = whit[reg](np.asarray(Ec[s["src_row"].to_numpy()], dtype=np.float32))
-        U = Z / np.linalg.norm(Z, axis=1, keepdims=True)
+        if model is None:
+            if reg not in whit:
+                whit[reg] = load_whitener(reg, DIM)
+            Z = whit[reg](np.asarray(Ec[s["src_row"].to_numpy()], dtype=np.float32))
+            U = Z / np.linalg.norm(Z, axis=1, keepdims=True)
+        else:
+            U = np.asarray(W32[s["srow"].to_numpy()], dtype=np.float32)
+            U = U / np.linalg.norm(U, axis=1, keepdims=True)
+            Usp = np.asarray(WSP[s["srow"].to_numpy()], dtype=np.float32)
+            Usp = Usp / np.where(np.linalg.norm(Usp, axis=1, keepdims=True) > 0, np.linalg.norm(Usp, axis=1, keepdims=True), 1)
         # within-unit style residualization (OLS on standardized style features, all agents' statements)
         F = s.select([f"f_{k}" for k in STYLE]).to_numpy().astype(np.float64)
         F = np.nan_to_num(F)
@@ -242,6 +272,8 @@ def build_units(units: dict, out: Path, allow_holdout=False, tag="explore"):
         ad.drop("row").write_parquet(gd / f"u{u}_agent_day.parquet", compression="zstd")
         np.save(gd / f"u{u}_agent_day_raw.npy", Vr)
         np.save(gd / f"u{u}_agent_day_sty.npy", Vs)
+        if model is not None:
+            np.save(gd / f"u{u}_agent_day_styp.npy", np.stack([Usp[r].mean(0) for r in ad["row"].to_list()]).astype(np.float32))
         # agent x 30-min window
         w = (s.filter(pl.col("win30").is_not_null()).group_by("agent", "pt_date", "win30", maintain_order=True)
              .agg(pl.col("row"), pl.len().alias("n"), pl.col("room").mode().first().alias("room"))
@@ -252,7 +284,7 @@ def build_units(units: dict, out: Path, allow_holdout=False, tag="explore"):
         # talk spins
         agent_room = {(int(x), d): int(r) for x, d, r, p in ad.select("agent", "pt_date", "room", "purity").iter_rows()
                       if r is not None}
-        tp = talk_pairdays(days, agent_room)
+        tp = talk_pairdays(days, agent_room, talk_table)
         if tp is not None:
             tp.write_parquet(gd / f"u{u}_talk_pairday.parquet", compression="zstd")
         meta[u] = {"gdir": gdir, "goal_no": goal, "regime": reg, "days": days, "n_statements": int(s.height),
@@ -261,7 +293,8 @@ def build_units(units: dict, out: Path, allow_holdout=False, tag="explore"):
         print(f"[{tag}] unit {u}: {len(days)} days, {s.height} statements, {ad.height} agent-days, "
               f"style R2 {r2_style:.3f}, {time.time() - t0:.0f}s", flush=True)
     (out / "units.json").write_text(json.dumps(meta, indent=1))
-    prov = {"built_by": "hypotheses/H13-family-fields/scheme/build.py", "git_commit": git_commit(),
+    r1b = {"model": model, "dedupe": dedupe, "talk_table": talk_table} if model is not None else None
+    prov = {"built_by": "hypotheses/H13-family-fields/scheme/build.py", "git_commit": git_commit(), "round_1b": r1b,
             "inputs": [{"source": "ai-village", "revision": REVISION,
                         "tables": ["shared/embeddings/statements", "shared/embeddings/chat_bge_small.npy",
                                    "shared/embeddings/whitening_<regime>.npz", "shared/chat_text (counts only)",
@@ -274,6 +307,16 @@ def build_units(units: dict, out: Path, allow_holdout=False, tag="explore"):
     return meta
 
 
+def _arg(name, default):
+    return sys.argv[sys.argv.index(name) + 1] if name in sys.argv else default
+
+
 if __name__ == "__main__":
     sel = sys.argv[sys.argv.index("--units") + 1].split(",") if "--units" in sys.argv else list(UNITS)
-    build_units({u: UNITS[u] for u in sel}, DATA)
+    if "--r1b" in sys.argv:
+        mdl, ded = _arg("--model", "bge_small"), _arg("--dedupe", "none")
+        tt = "activity_bins_fixed" if _arg("--talk", "fixed") == "fixed" else "activity_bins"
+        build_units({u: UNITS[u] for u in sel}, DATA / "r1b" / f"{mdl}_{ded}", tag=f"r1b {mdl} {ded}", model=mdl,
+                    dedupe=ded, talk_table=tt)
+    else:
+        build_units({u: UNITS[u] for u in sel}, DATA)

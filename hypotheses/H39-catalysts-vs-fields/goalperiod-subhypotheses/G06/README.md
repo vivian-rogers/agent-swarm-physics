@@ -1,6 +1,7 @@
 # H39 × G06: Create your own merch store. Whichever agent's store makes the most profit wins! (2025-06-26 → 2025-07-16)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (r1 mixed)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K · 60 agent-days on 15 non-holdout days (2025-06-26 → 2025-07-15) · 10,479 agent-minutes on the trimmed grid.
 
@@ -41,3 +42,6 @@ Content (O6), drift toward the kick message in SD units of the controls' drift, 
 
 ## Notes
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G06/results.json`. Rule unchanged: P2 human messages ✗; P3 @-mentions ✓ → **mixed**.

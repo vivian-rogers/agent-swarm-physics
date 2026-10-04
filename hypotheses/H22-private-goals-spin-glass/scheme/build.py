@@ -12,6 +12,14 @@ No text is written. Holdout days are refused unless build_unit(..., allow_holdou
 confirmatory script (which itself requires its flags).
 
 Usage: uv run python hypotheses/H22-private-goals-spin-glass/scheme/build.py
+
+Round 1b (improved data, 2026-10-04; the call above is the unchanged round-1 path):
+  ... build.py --r1b [--model bge_small|gte_modernbert] [--vectors white32|styp] [--dedupe none|copies|restatements]
+               [--units h22|shared|all]
+writes data/processed/H22-private-goals-spin-glass/r1b/<model>_<vectors>_<dedupe>/G<NN>/<unit>/ with the same files.
+Round-1b inputs: DQ5 statement-level vectors (statements_white32_<model> or statements_style_resid_period32_<model>),
+DQ5 dedupe flags, activity_bins_fixed for talk (DQ8), and DQ6 ground-truth roles (role_relations.load_role_spells_gt).
+--units shared adds the shared period_units splits of #51 with >= 3 days (names pu51a, pu51c, ...), next to H22's own.
 """
 from __future__ import annotations
 
@@ -42,6 +50,16 @@ UNITS = {
     "40": ("G40", "2026-05-04", "2026-05-08"), "44": ("G44", "2026-05-26", "2026-05-29"),
 }
 CONFIRM_UNITS = {"51T": ("G51", "2026-09-07", "2026-09-18")}  # locked holdout: confirm_tail.py only
+
+
+def shared_units_51(min_days=3):
+    """Round 1b: shared period_units splits of #51 (non-holdout, >= min_days active days), as H22-style unit specs."""
+    pu = pl.read_parquet(SHARED / "period_units.parquet").filter((pl.col("goal_no") == 51) & ~pl.col("holdout"))
+    return {f"pu{r['unit_id']}": ("G51", r["first_day"], r["last_day"]) for r in pu.iter_rows(named=True)
+            if r["n_days"] >= min_days}
+
+
+R1B = {"model": None, "vectors": "white32", "dedupe": "none", "talk": "activity_bins", "roles": "agent_goals"}
 
 
 def unit_days(a, b):
@@ -101,7 +119,7 @@ def talk_arrays(ab_days, agents, days, thirds=False):
     return c.astype(np.float32), cs.astype(np.float32)
 
 
-def build_unit(name, allow_holdout=False, units=None):
+def build_unit(name, allow_holdout=False, units=None, out_root=None):
     units = units or {**UNITS, **CONFIRM_UNITS}
     period, a, b = units[name]
     cal = unit_days(a, b)
@@ -112,20 +130,29 @@ def build_unit(name, allow_holdout=False, units=None):
     if not allow_holdout and name in CONFIRM_UNITS:
         raise SystemExit(f"unit {name} is the locked holdout; refusing")
     t0 = time.time()
-    out = DATA / period / name
+    out = (out_root or DATA) / period / name
     out.mkdir(parents=True, exist_ok=True)
     wpd = [int(math.ceil(w / 1800)) for w in cal["window_s"].to_list()]
     dix = {d: k for k, d in enumerate(days)}
 
-    st = (pl.read_parquet(ED / "statements.parquet")
+    st = (pl.read_parquet(ED / "statements.parquet").with_row_index("srow")
           .filter((pl.col("kind") == "chat") & pl.col("pt_date").is_in(days))
           .sort("t"))
-    E = np.load(ED / "chat_bge_small.npy", mmap_mode="r")
-    W = load_whitener("III", 32)
-    Z = W(np.asarray(E[st["src_row"].to_numpy()], dtype=np.float32))
-    Z = Z / np.linalg.norm(Z, axis=1, keepdims=True)
+    if R1B["dedupe"] != "none":
+        fl = pl.read_parquet(SHARED / "statement_flags.parquet", columns=["srow", "self_repeat", "self_repeat_both"])
+        col = {"copies": "self_repeat_both", "restatements": "self_repeat"}[R1B["dedupe"]]
+        st = st.filter(~pl.col("srow").is_in(fl.filter(pl.col(col))["srow"]))
+    if R1B["model"] is None:
+        E = np.load(ED / "chat_bge_small.npy", mmap_mode="r")
+        W = load_whitener("III", 32)
+        Z = W(np.asarray(E[st["src_row"].to_numpy()], dtype=np.float32))
+    else:
+        sfx = {"bge_small": "bge_small", "gte_modernbert": "gte_modernbert"}[R1B["model"]]
+        kind = "white32" if R1B["vectors"] == "white32" else "style_resid_period32"
+        Z = np.asarray(np.load(ED / f"statements_{kind}_{sfx}.npy", mmap_mode="r")[st["srow"].to_numpy()], dtype=np.float32)
+    Z = Z / np.where(np.linalg.norm(Z, axis=1, keepdims=True) > 0, np.linalg.norm(Z, axis=1, keepdims=True), 1)
     roster = pl.read_parquet(SHARED / "roster.parquet")
-    ab = pl.read_parquet(SHARED / "activity_bins.parquet", columns=["pt_date", "minute", "agent", "state"]).filter(pl.col("pt_date").is_in(days))
+    ab = pl.read_parquet(SHARED / f"{R1B['talk']}.parquet", columns=["pt_date", "minute", "agent", "state"]).filter(pl.col("pt_date").is_in(days))
     agents = sorted(set(st["agent"].unique().to_list()) | set(ab["agent"].unique().to_list()))
     aidx = {x: k for k, x in enumerate(agents)}
     ag = st["agent"].to_numpy(); dd = np.array([dix[x] for x in st["pt_date"].to_list()])
@@ -168,7 +195,7 @@ def build_unit(name, allow_holdout=False, units=None):
              .agg(pl.col("room").first().alias("room_mode"), (pl.col("len").first() / pl.col("len").sum()).alias("purity")))
     rm = {x: (r, p) for x, r, p in rmode.iter_rows()}
     rid = dict(zip(roster["agent_id"].to_list(), roster["agent"].to_list()))
-    spells = RR.load_role_spells(rid)
+    spells = RR.load_role_spells_gt() if R1B["roles"] == "gt" else RR.load_role_spells(rid)
     present = {x: sorted({days[k[1]] for k in di if agents[k[0]] == x}) for x in agents}
     roles = RR.unit_roles(spells, agents, days, present) if period == "G51" else {x: None for x in agents}
     ro = roster.filter(pl.col("agent").is_in(agents)).select("agent", "name", "lab")
@@ -190,14 +217,14 @@ def build_unit(name, allow_holdout=False, units=None):
             "n_statements": st.height, "n_windows": len(wi), "n_agent_days": len(di), "holdout": bool(any(held)),
             "built_s": round(time.time() - t0, 1)}
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
-    prov_path = DATA / "_provenance.json"
+    prov_path = (out_root or DATA) / "_provenance.json"
     prov = json.loads(prov_path.read_text()) if prov_path.exists() else {}
     prov[f"{period}/{name}"] = {"built_by": "hypotheses/H22-private-goals-spin-glass/scheme/build.py", "git_commit": git_commit(),
                                 "inputs": [{"source": "ai-village", "revision": REVISION,
                                             "tables": ["embeddings/statements", "embeddings/chat_bge_small", "whitening_III",
                                                        "activity_bins", "calendar", "roster", "raw agent_goals"]}],
                                 "params": {"whitener": "III", "dim": 32, "win_min": 30, "halves": "time split",
-                                           "talk_min_minutes": 4, "days": [a, b]},
+                                           "talk_min_minutes": 4, "days": [a, b], "round_1b": dict(R1B)},
                                 "built_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     prov_path.write_text(json.dumps(prov, indent=1))
     print(f"{name}: {len(days)} days, {len(agents)} agents, {st.height} statements, {len(wi)} windows "
@@ -205,7 +232,23 @@ def build_unit(name, allow_holdout=False, units=None):
     return meta
 
 
+def _arg(name, default):
+    return sys.argv[sys.argv.index(name) + 1] if name in sys.argv else default
+
+
+def r1b_root():
+    return DATA / "r1b" / f"{R1B['model']}_{R1B['vectors']}_{R1B['dedupe']}"
+
+
 def main():
+    if "--r1b" in sys.argv:
+        R1B.update(model=_arg("--model", "bge_small"), vectors=_arg("--vectors", "white32"), dedupe=_arg("--dedupe", "none"),
+                   talk="activity_bins_fixed", roles="gt")
+        which = _arg("--units", "all")
+        units = {**(UNITS if which in ("h22", "all") else {}), **(shared_units_51() if which in ("shared", "all") else {})}
+        for name in units:
+            build_unit(name, units=units, out_root=r1b_root())
+        return
     for name in UNITS:
         build_unit(name)
 

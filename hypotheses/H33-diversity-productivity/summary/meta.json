@@ -1,42 +1,67 @@
 {
-  "complete": 40,
-  "faithfulness": 0.5,
-  "usefulness": 1.5,
-  "rationale": {
-    "complete": "Round 1 done: pre-registration, synthetic validation at the real design (with measured reliability), 17 per-period verdicts, rivals, robustness, post hoc checks and a dry-run confirm script. Holdout, an embedding swap and an hour-scale design are missing; the direction is low priority.",
-    "faithfulness": "The core prediction failed. No inverted U (both slopes n.s.); PR10 does not beat FE + controls in day-blocked CV (C = 0); 0/14 periods supported, and the meta right slope has the wrong sign. The test had about 80% power for a 0.4-SD inverted U, so this is a fairly well-understood null, not just an untested one.",
-    "usefulness": "A negative result about a plausible operator metric: within-agent daily content diversity is not a lever or monitor for output, with a computed bound (at most about 9% fewer write turns at the 90th percentile vs the best). It retires a dashboard idea but offers no knob."
-  },
-  "one_line": "No diversity-productivity optimum: agent-day content PR carries no usable information about write output (flat above PR10 = 14).",
-  "rated_by": "H33 agent (suggested)",
-  "updated": "2026-10-04",
-  "v2": {
-    "claim": "No diversity-productivity optimum",
-    "original_verdict": "failed",
-    "credence": 0.48,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "penalty (labels/post hoc/multiplicity)",
-        "x": 0.7
-      }
-    ],
-    "mechanism_level": "M0",
-    "fragile": false,
-    "value_if_true": 1.5,
-    "decision": "none",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 0.72,
-    "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 0.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: pre-registration, synthetic validation at the real design (with measured reliability), 17 per-period verdicts, rivals, robustness, post hoc checks and a dry-run confirm script. Holdout, an embedding swap and an hour-scale design are missing; the direction is low priority. Round 1b: work-ledger outcome, fixed activity bins, both embedding models x three dedups, natives G51 (rival pairs, roles), G39, G42.",
+  "faithfulness": "The core prediction failed. No inverted U (both slopes n.s.); PR10 does not beat FE + controls in day-blocked CV (C = 0); 0/14 periods supported, and the meta right slope has the wrong sign. The test had about 80% power for a 0.4-SD inverted U, so this is a fairly well-understood null, not just an untested one.",
+  "usefulness": "A negative result about a plausible operator metric: within-agent daily content diversity is not a lever or monitor for output, with a computed bound (at most about 9% fewer write turns at the 90th percentile vs the best). It retires a dashboard idea but offers no knob."
+ },
+ "one_line": "No diversity-productivity optimum, in write turns or in work commits that landed; the only right-side drop is a #51 tail effect seen by one embedding model.",
+ "rated_by": "H33 round-1b agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "No diversity–productivity optimum on committed work; the #51 tail is model-dependent",
+  "scope": "12 periods, 1,290 agent-days; natives G51, G39, G42",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.57,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "robust (8 embedding/dedupe variants)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "weak power for a negative claim",
+    "x": 0.7,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "penalty: multiplicity",
+    "x": 0.7,
+    "evidence": "card §Round 1b"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "none",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 0.85,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (RE-O1); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "No diversity-productivity optimum",
+   "credence": 0.48,
+   "fragile": false,
+   "value_if_true": 1.5,
+   "expected_usefulness": 0.72,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

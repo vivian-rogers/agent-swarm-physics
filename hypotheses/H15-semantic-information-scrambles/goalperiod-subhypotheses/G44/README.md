@@ -3,6 +3,7 @@
 
 **Verdict:** supported
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** supported (V* V_rel; forced work dip -0.41; 2026-10-04, `r1b/results.json`)
 **Period:** regime III · 18 agents with a viability value · 4 non-holdout active days.
 
 ## Why this period

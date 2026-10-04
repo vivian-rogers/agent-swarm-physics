@@ -1,7 +1,8 @@
 # H35 × G51: Each agent: maximize your assigned goal (2026-07-06 → 2026-08-19 (nudger on); off-step 08-21 → 09-02)
 
 **Verdict:** mixed
-**Role:** exploratory (round 1, non-holdout); primary
+**Role:** native (round 1b native test below) · round 1: exploratory (round 1, non-holdout); primary
+**Verdict (1b):** mixed (glance +0.08; sustained/work n.s. after placebo differencing; 2026-10-04)
 **Period:** regime III · mode P (I/K) · 21–32 agents · nudges 728. Data: `data/processed/H35-nudger-maxwell-demon/G51/`.
 
 ## Why this period
@@ -47,6 +48,29 @@ primary: 728 nudges, 8-h days, plus the undocumented nudger stop on 08-20.
 | value per nudge (escapes): random-gate / logged / once at k=1 / k=2 | 0.220 / 0.144 / 0.313 / 0.289 (ratios to logged 2.18, 2.01) |  |  |
 
 Data: `data/processed/H35-nudger-maxwell-demon/G51/results.json` (built 2026-10-03).
+
+## Round 1b native test (work bought, on three outcome definitions)
+*Role of this section: native (round 1b), in addition to round 1.*
+*Prediction written 2026-10-04, before computing any round-1b outcome (sustained runs, work commits) around a nudge.* What was known: H43's side finding (a first nudge after a 30-min quiet spell raises "any activity within 15 min" ×1.75 but not a sustained run of ≥ 3 active calls; lnHR 0.07) and H44/H50 on day-edge synchrony. Same past-only matched design, strata and trap-age bins as round 1; new outcomes per agent-minute epoch: **glance** (any active row in the next 30 min), **sustained** (a run of ≥ 3 consecutive active DQ1 ledger calls starts in the next 30 min) and **work** (DQ4 agent work commits in the next 30 and 60 min).
+- **N1 (glance vs work):** first-nudge ATT on glance > 0 with a CI excluding 0; on sustained, point ≤ 0.05 or CI including 0; on work commits in 60 min, CI including 0 (point < 0.10 commits per nudge).
+- **N2 (demon in work space):** in trap-age space the response on sustained runs and on work commits is flat (k 1–9 minus k ≥ 10 CI including 0), so the value of the nudger's information for *work* is ≈ 0 and η_SU, η_KW are undefined or have CIs spanning 0–1; the once-early (k = 2–3) policy's work-commit ratio over logged has a CI including 1.
+- **N3 (accounting):** nudge-bought work commits (first-nudge ATT × nudges) are ≤ 1% of G51's work commits.
+- What would change the card: a sustained-run or work-commit ATT with a CI excluding 0, which would make the once-early policy a work lever rather than a glance lever.
+
+**Result (round 1b native, run 2026-10-04; `data/processed/H35-nudger-maxwell-demon/G51/r1b/results_r1b.json`, `results_r1b_did.json`).** 235 strictly isolated first nudges (222 with a full 60-min window); round-1 active minutes reproduce exactly (A30 +1.45 [0.73, 2.30]: the grids are unchanged, see card).
+
+| Outcome (per first nudge) | Matched ATT | Placebo window | Post hoc rate DiD |
+| --- | --- | --- | --- |
+| glance (any active row, 30 min) | **+0.082** [+0.035, +0.132] (control 0.76) | +0.008 [−0.027, +0.041] (clean) | — |
+| sustained run starts (≥ 3 active calls, 30 min) | +0.094 [+0.042, +0.151] (control 0.61) | **+0.058** [+0.015, +0.100] (not clean) | +0.29 runs/h [−0.16, +0.70] |
+| work commits, 60 min | −1.16 [−1.82, −0.60] (control 4.2) | **−0.35** [−0.52, −0.17] (not clean) | +0.22 commits/h [−0.29, +0.82] |
+
+- **N1:** glance clause holds; the sustained and work clauses **fail as worded** (CIs exclude 0) because the past-only design fails its placebo for these outcomes: nudged agents had just finished a burst (more run starts, fewer commits in the 15 min before). The post hoc rate DiD (label: post hoc) puts both at zero, as predicted in substance.
+- **N2 holds:** sustained response is flat over trap age (k 1–9 minus k ≥ 10: +0.04 [−0.03, +0.13]; after differencing every bin shrinks to the same value, τ² = 0, so ΔV = 0 and η_SU is undefined). Work-commit DiD: ΔV +0.007/h per nudge, η_SU 0.19 [−1.39, 0.70], η_KW 0.05 [0, 0.43]; once-early (k = 2–3) / logged 1.29 with a CI spanning −20 … +18.
+- **N3 holds:** nudge-bought commits (DiD) ≈ 0.22 × 656 nudges ≈ 0.4% of G51's 35,430 work commits (upper CI 1.5%).
+- For glances alone the nudger is nearly efficient: η_SU 0.88 [0.26, 0.97], η_KW 0.79; the best bin for glances is k ≥ 10 (deep traps glance most), the opposite of active minutes.
+- Gate level (a sustained run within 15 min of the pause expiry): card model nudge +0.90 ± 0.17 (log-odds), nudge × ln k −0.16 ± 0.11 (n.s.); η_SU −0.01, once(k = 2)/logged 1.03: targeting buys no extra sustained work.
+- Native verdict: **mixed** (substance as predicted; two clauses fail as worded because of selection).
 
 ## Scorecard (period-specific axes)
 C 1 (beats the random-nudging and permutation nulls; placebo window clean for the strict design) · D 1 (response heterogeneity and the off-step accounting predicted before the run) · E 1 (off-step accounting matches; the gate DiD is not attributable) · G 1 (H04's nudge A30 reproduced, 1.45 vs 1.54; H16's gate response).

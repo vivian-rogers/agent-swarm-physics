@@ -1,42 +1,67 @@
 {
-  "complete": 50,
-  "faithfulness": 1.0,
-  "usefulness": 1.5,
-  "rationale": {
-    "complete": "Round 1 plus round 1b (2026-10-04): all 29 periods rerun in 7 input configurations (bge and gte-modernbert, DQ5 dedupe, style residualization, shared goal vectors) and three native tests (G51 newcomer clock, G27 block switch, NE43 drive withdrawal) with dated predictions; per-period estimates written. Holdout not run; sub-day clocks remain round-2 work.",
-    "faithfulness": "The core prediction (aging) fails in both embedding models and every configuration; #38 is the quench rival; #51 rejects mu = 0.5 aging; style residualization removes even #51's weak late slowing. Natives add no rejuvenation. Scorecard unchanged (A1 B1 C1 D0 E0 F1 G1 H0 I0).",
-    "usefulness": "A model-robust settling picture (settle within days, then stationary; newcomers relax on their own clock) and a methods warning that now extends to step tests (fitted stationary nulls are too narrow at ordinary day boundaries). Reassurance, not a lever."
-  },
-  "one_line": "No aging: swarm content settles within ~4 days of a kickoff, then decorrelates at an age-independent rate",
-  "rated_by": "RE-C1 re-evaluation agent (suggested)",
-  "updated": "2026-10-04",
-  "v2": {
-    "claim": "No aging: content settles within days then decorrelates at an age-independent rate",
-    "original_verdict": "failed (aging)",
-    "credence": 0.4,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "replication",
-        "x": 2
-      },
-      {
-        "factor": "not identifiable / underpowered",
-        "x": 0.5
-      }
-    ],
-    "mechanism_level": "M0",
-    "fragile": false,
-    "value_if_true": 1.5,
-    "decision": "monitoring cadence",
-    "magnitude": "small",
-    "generality": "any LLM swarm",
-    "expected_usefulness": 0.6,
-    "scientific_value": 2,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 50,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 plus round 1b (2026-10-04): all 29 periods rerun in 7 input configurations (bge and gte-modernbert, DQ5 dedupe, style residualization, shared goal vectors) and three native tests (G51 newcomer clock, G27 block switch, NE43 drive withdrawal) with dated predictions; per-period estimates written. Holdout not run; sub-day clocks remain round-2 work.",
+  "faithfulness": "The core prediction (aging) fails in both embedding models and every configuration; #38 is the quench rival; #51 rejects mu = 0.5 aging; style residualization removes even #51's weak late slowing. Natives add no rejuvenation. Scorecard unchanged (A1 B1 C1 D0 E0 F1 G1 H0 I0).",
+  "usefulness": "A model-robust settling picture (settle within days, then stationary; newcomers relax on their own clock) and a methods warning that now extends to step tests (fitted stationary nulls are too narrow at ordinary day boundaries). Reassurance, not a lever."
+ },
+ "one_line": "No aging: swarm content settles within ~4 days of a kickoff, then decorrelates at an age-independent rate",
+ "rated_by": "RE-C1 re-evaluation agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Content does not age: it settles within days, then decorrelates at an age-independent rate",
+  "scope": "35 periods (random effects); #38, #51 detail",
+  "direction": "negative",
+  "original_verdict": "mixed, leaning refuted",
+  "credence": 0.48,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (29 period verdicts)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "robust (verdicts identical in 7 configs)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "null mis-sized (isotropic null fails, Amendment 2)",
+    "x": 0.7,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "underpowered for weak aging",
+    "x": 0.5,
+    "evidence": "A CI; style halves A"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "monitoring cadence",
+  "magnitude": "small",
+  "generality": "any LLM swarm",
+  "expected_usefulness": 0.72,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (RE-C1); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "No aging: content settles within days then decorrelates at an age-independent rate",
+   "credence": 0.4,
+   "fragile": false,
+   "value_if_true": 1.5,
+   "expected_usefulness": 0.6,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

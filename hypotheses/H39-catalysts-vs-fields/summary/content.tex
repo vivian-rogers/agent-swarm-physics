@@ -1,4 +1,4 @@
-\hwhat{Each operator lever was split into a \emph{field} part (it shifts which behavior states agents occupy) and a \emph{catalytic} part (it changes escape rates at fixed occupancy). Point levers used matched windows in 32 non-holdout periods; steps (26 kickoffs, 10 scaffold changes, room changes) used day-boundary placebos. A synthetic check came first: catalysts are recoverable from ${\sim}$30 kicks, fields only from hundreds. No lever is a pure catalyst. Nudges are \emph{both}: idle escape $\times$1.4--1.6, the stationary idle share falls 0.07 in G51, and catalytic fraction $\rho=0.51$. That rejects HH52's ``catalyst''. Human messages are fields: chat$\to$work in regime I, nothing in G51. @-mentions move content toward the message ($+0.32$ SD) but not behavior. Forced context erasure is an anti-catalytic field toward work (idle down in 8/8 periods). Kickoffs tilt content only in regime III. Scaffold steps: mostly nothing. Holdout not run.}
+\hwhat{Which operator levers change \emph{what} agents do (fields: stationary occupancy shifts) and which only speed them up (catalysts: escape at fixed occupancy)? Matched-window kinetic decomposition of behavior-state chains around nudges, human messages, @-mentions and context erasures in 32 non-holdout periods, plus step levers. \textbf{Round 1b} used the nudge's leading @ as its only target, DQ8's presence-cut lever design, and Jev v3.1 behavior states as a second state space (V4). \textbf{Nudges are both}, now in two state spaces: B4 $K=+0.13$, idle share $-0.048$ (CI now excludes 0); V4 $K=+0.25$, waiting share $-0.08$, waiting escape $\times1.6$. Human messages are fields; @-mentions steer content (+0.33 SD), not behavior. Forced erasure is a field toward work in both state spaces (its $K$ flips sign between them). Natives: switching the nudger off is a catalytic loss in both state spaces (NE43); nudges are not more catalytic under the 12-h pause default (NE44). Holdout not run.}
 
 \hmodel{Models 02/10: a kinetic Potts (Markov-jump) agent over states $s\in\{$work, chat, idle, consolidate$\}$ with Arrhenius rates $k_{ij}$, well depths $G_i$ and symmetric barriers $B_{ij}$. A field $h$ tilts the wells; a catalyst $c$ lowers the barriers. Measured per lever: kicked and control transition matrices $T^K,T^C$ in matched 30-min windows, their stationary distributions $\pi^K,\pi^C$, the escape probability $e_s=1-T_{ss}$, the field index $\phi$, the catalytic index $K$, and the catalytic fraction $\rho$.}
 
@@ -16,17 +16,20 @@ K=\ln\Big(\textstyle\sum_s\pi^C_s e^K_s\big/\sum_s\pi^C_s e^C_s\Big)
 
 \hbottom{No operator lever is a pure catalyst: nudges both unstick and tilt agents, while human messages, mentions, erasures and goals act mainly as fields, on activity or on content depending on the regime.}
 
-\hresults{\begin{itemize}\setlength{\itemsep}{1pt}\setlength{\parskip}{0pt}
-\item \textbf{P1 nudges = both} (mostly \checkmark): $K=+0.15$ [0.07, 0.23]; idle escape $\times1.4$ (G51 $\times1.57$); G51 $\Delta\pi_{\rm idle}=-0.07$ [$-0.11,-0.04$]; $\rho=0.51$. Pooled idle CI spans 0.
-\item \textbf{P2 human = both, toward chat} ($\times$): a field (P 0.94) pointing chat$\to$work in regime I; nothing in G51.
-\item \textbf{P3 mentions = field toward chat} (mixed): no consistent behavior direction; content drift toward the message $+0.32$ SD.
-\item \textbf{P4 erasure: browse up, type down} ($\times$): idle $-0.13$, work $+0.13$, $K=-0.15$; idle down in 8/8 periods.
-\item \textbf{P5 kickoffs = content field} (3/4): 4/6 regime-III vs 0/13 regime-I kickoffs; behavior quiet.
-\item \textbf{P6 rooms} (inconclusive); \textbf{P7 scaffold} (mixed: 0/4 prompts, NE16 not catalytic, NE03 catalytic).
-\item \textbf{P9 nudger off 08-21} (post hoc, \checkmark): neither; idle escape $-13\%$, occupancy flat.
-\end{itemize}}
+\hresults{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.25\columnwidth}p{0.57\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 $\to$ 1b (B4; V4)} & \textbf{Verdict}\\
+P1 nudges: both, idle down & both; $K$ 0.15 $\to$ 0.13; $\Delta\pi_{\rm idle}$ $-0.043$ (n.s.) $\to$ $-0.048$*; V4 both, $K$ 0.25*, $\Delta\pi_{\rm wait}$ $-0.08$* & 4/5 B4; 5/5 V4\\
+P2 human: both, toward chat & field (P 0.92); chat $-0.03$; V4 field/both & $\times$\\
+P3 mentions: field to chat & field P 0.76 $\to$ 0.50 (neither 0.46); no direction & mixed\\
+P4 erasure: browse up, $|K|<0.1$ & A2 chain $K$ $-0.15$, idle $-0.11$, work $+0.11$; V4 $K$ $+0.27$ & $\times$\\
+P5--P8 steps & unchanged (B4 states unaffected by the bin bug) & as round 1\\
+ITT (lever\_design) & nudge work/chat share $+0.020$ [0.010, 0.030] & --\\
+Native NE43 & nudger off: catalytic loss (B4, V4); bookends off: B4 neither, V4 both & mixed\\
+Native NE44 & 12-h escape 0.14 vs 5-min 0.40 & $\times$\\
+Native NE10 (V4) & neither; wait share +0.02 & mixed\\
+\end{tabular}}
 
-\hobsb{../figures/synthetic_validation.pdf}{Synthetic validation at village sampling. (a) Share of replicates assigning each planted lever to each class: at G51 scale fields and catalysts are recovered (0.94--1.00); in a 5-day period catalysts still are, fields mostly are not. (b) The transient fallacy: a pure catalyst lowers the 30-min idle share without moving the stationary one.}
+\hobsb{../figures/summary_obs_r1b.pdf}{Round 1b. (a) The lever plane: round 1 (open), round 1b on B4 (filled) and on Jev v3.1 states (triangles); nudges stay in the ``both'' corner in both state spaces, erasure is a field with state-space-dependent catalysis. (b) Native steps inside \#51 and at NE10: percentiles of idle/wait escape and occupancy among same-shape day-boundary placebos; the nudger switch-off sits at the bottom of the escape distribution with occupancy inside the band.}
 
 \hcaveats{The nudge class rests on one period (G51; G38 has the same signs but is not significant). Fields are invisible below ${\sim}$100 episodes, so ``catalyst'' or ``neither'' in small periods does not exclude a field. The field/catalyst split depends on a load-distribution convention; $|K|<0.10$ is not interpretable. B4 states mean different things in regimes I and III. Mentions are partly common-cause. Design choices made after seeing data are flagged: the no-consolidate erasure chain, the content-TV check, and the post hoc P9 switch-off. 28 class-level tests: the nudge field alone does not survive Bonferroni.}
 

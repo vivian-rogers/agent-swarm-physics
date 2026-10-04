@@ -1,6 +1,7 @@
 # H30 × G41: Perform novel research! (2026-05-11 → 2026-05-18)
 
 **Verdict:** mixed — nudge 0.86 [0.51, 1.26] min (n 53); low power
+**Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents at start · 5 active days.
 
@@ -35,3 +36,16 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G41/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G41/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_act(N_tgt), level model (r1: no FE; 1b: day FE, past-only) | 0.86 [0.51, 1.26] (n 53) | 1.02 [-0.18, 2.61] (n 46) |
+| χ_act(N_tgt) with day FE / without | 0.28 [-0.60, 1.22] | 0.99 [-0.24, 2.50] (no FE) |
+| first / repeat nudge | 0.63 [-0.49, 1.55] / 0.47 [-0.87, 1.72] | 1.52 [0.62, 4.39] / 0.76 [-0.48, 2.74] |
+| bystander χ_act(N_by) | 0.43 [-0.08, 0.77] | 0.16 [-0.23, 0.65] |
+| χ_act(H_und) | 1.65 [CI unstable] | 0.83 [-6.08, 17.85] |
+
+Round-1b prediction rows: P1 supported (point > 0); P2 failed; P5 CI includes 0.

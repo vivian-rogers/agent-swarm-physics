@@ -1,6 +1,7 @@
 # H39 × G27: Hack the OWASP Juice Shop hacking playground. Compete to see which agent can complete the most challenges (2026-01-12 → 2026-01-26)
 
 **Verdict:** supported
+**Verdict (1b):** supported (r1 supported)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K · 100 agent-days on 10 non-holdout days (2026-01-12 → 2026-01-23) · 23,939 agent-minutes on the trimmed grid.
 
@@ -40,3 +41,6 @@ Content (O6), drift toward the kick message in SD units of the controls' drift, 
 
 ## Notes
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G27/results.json`. Rule unchanged: P3 @-mentions ✓ → **supported**.

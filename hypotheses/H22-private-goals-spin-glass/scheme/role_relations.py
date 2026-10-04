@@ -77,6 +77,23 @@ def load_role_spells(roster_ids: dict[str, int]):
     return out
 
 
+def load_role_spells_gt():
+    """Round 1b: role spells from the shared DQ6 ground truth (goal 51, label_kind role, preferred & ~holdout), which
+    recovers Claude Opus 5's first role (game dev, 07-24 -> 07-29) that agent_goals overwrote. Same tuple format as
+    load_role_spells; dates are PT; spells are ordered by start so role_on gives the later spell on a switch day."""
+    import polars as pl
+    from zoneinfo import ZoneInfo
+    PT = ZoneInfo("America/Los_Angeles")
+    g = pl.read_parquet(ROOT / "data/processed/shared/ground_truth_labels.parquet").filter(
+        (pl.col("goal_no") == 51) & (pl.col("label_kind") == "role") & pl.col("preferred") & ~pl.col("holdout")
+        & pl.col("value").is_not_null()).sort("t_valid_from")
+    out = []
+    for a, v, f, t in g.select("agent", "value", "t_valid_from", "t_valid_to").iter_rows():
+        ptd = lambda x: x.astimezone(PT).date().isoformat() if x is not None else None
+        out.append((int(a), str(v).strip().lower(), ptd(f), ptd(t)))
+    return out
+
+
 def role_on(spells, agent: int, day: str) -> str | None:
     best = None
     for a, role, s, e in spells:

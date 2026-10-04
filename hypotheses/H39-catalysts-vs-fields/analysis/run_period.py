@@ -44,7 +44,10 @@ def period_days(goal_no: int, cal: pl.DataFrame) -> list[str]:
 
 
 def load_period(days: list[str], cal: pl.DataFrame, allow_holdout: bool = False, states: pl.DataFrame | None = None,
-                kicks: pl.DataFrame | None = None, erasures: pl.DataFrame | None = None):
+                kicks: pl.DataFrame | None = None, erasures: pl.DataFrame | None = None, busy_only: tuple = (),
+                time_col: str = "t"):
+    """busy_only (round 1b): kick classes that mark busy minutes but are not analyzed (N_oth: named second in a
+    nudge). time_col: "t" (posting time) or "t_rc" (receiving call, round-1b timing sensitivity)."""
     """Per agent-day trimmed sequences + kick / erasure minutes. Returns a dict of lists (segment order)."""
     if states is None:
         states = pl.read_parquet(L.OUT / "states_b6.parquet")
@@ -53,6 +56,8 @@ def load_period(days: list[str], cal: pl.DataFrame, allow_holdout: bool = False,
     if kicks is None:
         kicks = pl.read_parquet(L.OUT / "kicks.parquet")
     kk = kicks.filter(pl.col("pt_date").is_in(days))
+    if time_col != "t":
+        kk = kk.filter(pl.col(time_col).is_not_null()).with_columns(pl.col(time_col).alias("t"))
     ws = pl.DataFrame({"pt_date": list(win), "win_start": [win[d][0] for d in win]})
     kk = kk.join(ws, on="pt_date").with_columns(((pl.col("t") - pl.col("win_start")).dt.total_seconds() // 60).cast(pl.Int32).alias("minute"))
     kgroups = {k: g for k, g in kk.group_by(["pt_date", "agent"])}
@@ -107,6 +112,10 @@ def load_period(days: list[str], cal: pl.DataFrame, allow_holdout: bool = False,
                 rows.setdefault((c, int(lm)), int(e))
                 if c in ("H_men", "H_und"):
                     rows.setdefault(("H_any", int(lm)), int(e))
+        if kg is not None:
+            for c in busy_only:
+                loc = kg.filter(pl.col("cls").cast(pl.Utf8) == c)["minute"].to_numpy() - lo
+                b[loc[(loc >= 0) & (loc < len(x))]] = True
         seg["busy"].append(b)
         seg["kick_rows"].append(rows)
         eb = b.copy()
@@ -140,7 +149,8 @@ def erasure_episodes(U: L.Unit, kind: str, W: int, quiet: int, cons_state: int):
     g = np.unique(U.events.get(kind, np.zeros(0, np.int64)))
     if len(g) == 0:
         return g, g, g
-    ok = (U.left[g] >= W + 1) & (U.busy_in(-quiet, -1)[g] == 0)
+    need = 1 if L.LEVER["presence_cut"] else W + 1      # round 1b: same presence rule as the controls
+    ok = (U.left[g] >= need) & (U.busy_in(-quiet, -1)[g] == 0)
     g = g[ok]
     s0, ab, keep = [], [], []
     for gi in g:
@@ -246,14 +256,21 @@ def content_drift(seg, days, cal, regime: str, classes, U4: L.Unit, W: int, rng,
     return out
 
 
-def run(period: str, quick: bool = False, W: int = L.W_DEFAULT):
+def run(period: str, quick: bool = False, W: int = L.W_DEFAULT, data: str = "r1"):
+    """data = "r1" (round 1, default) or "r1b" (round 1b, 2026-10-04: leading-@ nudge targets, DQ8 lever_design
+    presence cut, a receiving-call timing sensitivity for nudges, and the Jev v3.1 state space; outputs in
+    OUT/r1b/<period>/). Behavior states are H14's minute grid in both (it never read activity_bins)."""
     t0 = time.time()
+    r1b = data == "r1b"
+    L.LEVER["presence_cut"] = r1b
+    odir = (L.OUT / "r1b" / period) if r1b else (L.OUT / period)
     gno = int(period[1:3])
     cal = pl.read_parquet(SH / "calendar.parquet")
     days = period_days(gno, cal)
     regime = str(cal.filter(pl.col("pt_date") == days[0])["regime"][0])
     er = pl.read_parquet(L.OUT / "erasures.parquet") if regime == "III" else None
-    seg = load_period(days, cal, erasures=er)
+    kicks = pl.read_parquet(L.OUT / "r1b" / "kicks_r1b.parquet") if r1b else None
+    seg = load_period(days, cal, erasures=er, kicks=kicks, busy_only=("N_oth",) if r1b else ())
     B, P = (100, 50) if quick else (300, 200)
     rng = np.random.default_rng(L.SEED + gno)
     res = dict(period=period, goal_no=gno, regime=regime, days=days, n_agent_days=len(seg["b6"]), W=W,
@@ -292,6 +309,27 @@ def run(period: str, quick: bool = False, W: int = L.W_DEFAULT):
                                  keep_draws=not q6, keep_states=keep)
                 res["erasure"][f"{kind}_{'b6' if q6 else 'b4'}_nocons"] = r2
                 print(f"  {period} erasure {kind} {'b6' if q6 else 'b4'}: n_ep {r.get('n_ep')} K {r.get('K', float('nan')):.3f} pF {r.get('p_F', float('nan')):.3f}; no-cons K {r2.get('K', float('nan')):.3f}", flush=True)
+    # ---- round 1b: receiving-call timing sensitivity (nudges, mentions, human messages) and the v3 state space
+    if r1b:
+        seg_rc = load_period(days, cal, kicks=kicks, busy_only=("N_oth",), time_col="t_rc")
+        U4rc = make_units(seg_rc)
+        res["sens_rc"] = {}
+        for c in ("N_tgt", "H_any", "A_men"):
+            rr = L.run_point(U4rc, c, W=W, B=max(B // 2, 50), P=max(P // 2, 50), seed=L.SEED + gno + 3)
+            res["sens_rc"][c] = {k: rr.get(k) for k in ("n_ep", "K", "K_ci", "phi", "phi_exc", "p_F", "dpi", "dpi_ci", "esc",
+                                                         "esc_ci", "docc", "status")}
+        # lever_design cross-check (DQ8 nulls.lever_design): intention-to-treat mean activity (work or chat) over the
+        # 30 min after a kick to an inactive agent vs same-agent past-only controls, presence-masked, uncut windows
+        try:
+            res["lever_design"] = lever_design_check(seg, W)
+        except Exception as e:  # pragma: no cover
+            res["lever_design"] = {"status": f"error {e!r}"}
+        import v3states as V3
+        try:
+            res["v4"] = V3.run_v3(days, cal, kicks, er, regime, gno, B=B, P=P)
+        except Exception as e:  # pragma: no cover
+            res["v4"] = {"status": f"error {e!r}"}
+        print(f"  {period} v4 done ({time.time() - t0:.0f}s)", flush=True)
     # ---- content drift / diffusion toward the kick message
     try:
         res["content"] = content_drift(seg, days, cal, regime, ("N_tgt", "H_any", "H_men", "A_men"), U4, W, rng,
@@ -299,7 +337,8 @@ def run(period: str, quick: bool = False, W: int = L.W_DEFAULT):
     except Exception as e:  # pragma: no cover
         res["content"] = {"status": f"error {e!r}"}
     res["runtime_s"] = time.time() - t0
-    L.jdump(res, L.OUT / period / "results.json")
+    res["data"] = data
+    L.jdump(res, odir / "results.json")
     # keep bootstrap draws (small) for class probabilities
     draws = {}
     for c, r in res["b4"].items():
@@ -308,14 +347,66 @@ def run(period: str, quick: bool = False, W: int = L.W_DEFAULT):
     for k, r in res.get("erasure", {}).items():
         if "_boot" in r:
             draws[f"erasure_{k}"] = {kk: np.asarray(v, np.float32) for kk, v in r["_boot"].items()}
-    np.savez_compressed(L.OUT / period / "boot_draws.npz", **{f"{c}__{k}": v for c, d in draws.items() for k, v in d.items()})
+    for c, r in (res.get("v4") or {}).items():
+        if isinstance(r, dict) and "_boot" in r:
+            draws[f"v4_{c}"] = {k: np.asarray(v, np.float32) for k, v in r["_boot"].items()}
+    np.savez_compressed(odir / "boot_draws.npz", **{f"{c}__{k}": v for c, d in draws.items() for k, v in d.items()})
     print(f"{period} done in {time.time() - t0:.0f}s", flush=True)
     return res
+
+
+def lever_design_check(seg, W: int) -> dict:
+    """DQ8 `nulls.lever_design` on the B4 grid: kicks = episodes of each class; act = work or chat; present = the
+    trimmed span. Returns the mean ITT difference (episode minus its controls) with a day-block bootstrap CI."""
+    sys.path.insert(0, str(ROOT / "infra/shared"))
+    import nulls as NL
+    out = {}
+    days = sorted(set(seg["day"]))
+    for c in ("N_tgt", "H_any", "A_men"):
+        kicks_by_day, act_by_day, pres_by_day = [], [], []
+        for d in days:
+            ks = [k for k in range(len(seg["b6"])) if seg["day"][k] == d]
+            if not ks:
+                continue
+            lo = min(seg["first"][k] for k in ks)
+            hi = max(seg["first"][k] + len(seg["b6"][k]) for k in ks)
+            T, N = hi - lo, len(ks)
+            A = np.zeros((T, N), bool)
+            Pm = np.zeros((T, N), bool)
+            kl = []
+            for j, k in enumerate(ks):
+                x = B6_TO_B4[seg["b6"][k]]
+                o = seg["first"][k] - lo
+                A[o:o + len(x), j] = x <= 1
+                Pm[o:o + len(x), j] = True
+                for m in seg["ev"][c][k]:
+                    kl.append((int(m + o), j))
+            kicks_by_day.append(kl)
+            act_by_day.append(A)
+            pres_by_day.append(Pm)
+        r = NL.lever_design(kicks_by_day, act_by_day, W=W, quiet=L.QUIET, R=10, rng=np.random.default_rng(L.SEED),
+                            present=pres_by_day)
+        ye, yc, dd = np.asarray(r["y_ep"]), np.asarray(r["y_ctrl"]), np.asarray(r["day"])
+        if len(ye) < 5:
+            out[c] = {"n_ep": int(len(ye)), "status": "too few"}
+            continue
+        diff = ye - yc
+        ud, inv = np.unique(dd, return_inverse=True)
+        rng = np.random.default_rng(L.SEED + 5)
+        bs = []
+        for _ in range(500):
+            cnt = np.bincount(rng.integers(0, len(ud), len(ud)), minlength=len(ud))[inv]
+            if cnt.sum():
+                bs.append(float(np.sum(cnt * diff) / cnt.sum()))
+        out[c] = {"n_ep": int(len(ye)), "mean_kick": float(ye.mean()), "mean_ctrl": float(yc.mean()),
+                  "diff": float(diff.mean()), "diff_ci": np.percentile(bs, [2.5, 97.5]).tolist(), "status": "ok"}
+    return out
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--period", required=True)
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--data", default="r1", choices=["r1", "r1b"])
     a = ap.parse_args()
-    run(a.period, a.quick)
+    run(a.period, a.quick, data=a.data)

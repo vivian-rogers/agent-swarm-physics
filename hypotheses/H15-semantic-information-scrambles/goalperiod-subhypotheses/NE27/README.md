@@ -2,6 +2,7 @@
 
 **Verdict:** supported on V* (small, fragile)
 **Role:** exploratory (round 1, non-holdout); the three newcomers are MN events in `../G10/`.
+**Verdict (1b):** not supported (newcomers' V_eng +0.49, z +1.5; 2026-10-04)
 
 ## Why this NE
 Three agents with empty memories join at once (N 4 → 7) on the day goal #10 starts. In KW terms each is a full erasure of stored information (δ = 1). The batch also dilutes the swarm (H01 D5.2.b).

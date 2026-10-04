@@ -1,6 +1,7 @@
 # H29 × G51b: Each agent: Maximize your assigned goal! (2026-07-09 → 2026-08-04)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (r1 mixed; gte mixed)
 **Role:** exploratory (counted)
 **Period:** regime III · mode P · 27 recipients in the network · #general (isolated GPT-5.6 rooms 07-09/10) · 19 non-holdout days.
 
@@ -34,3 +35,17 @@ Figures: `../../figures/h29_summary.pdf` (all periods). Data: `data/processed/H2
 
 ## Notes
 - 2026-10-04: pre-registered pipeline (`explore.py`) and Amendment 2 (`posthoc.py`, post hoc) run. Invisible rows from call windows > 30 s: 0.70 (the H18 visibility rule misclassifies messages that arrive during a PAUSE or a long tool call).
+
+## Round 1b (improved data, 2026-10-04)
+Context-ledger visibility (DQ1) instead of H18's call-start rule; both embedding models; the DQ2 reply-graph network. Numbers in `data/processed/H29-driver-nodes/r1b/G51b/` (bge) and `r1b_gte/G51b/` (gte). Rule unchanged.
+
+| Statistic | Round 1 | Round 1b bge | Round 1b gte |
+| --- | --- | --- | --- |
+| κ (pre-registered) | -0.019 [-0.023, -0.014] | -0.015 [-0.019, -0.010] | -0.016 [-0.022, -0.010] |
+| boundary jump (matched age) | 0.033 [0.023, 0.043] | 0.023 [0.014, 0.033] | 0.029 [0.019, 0.042] |
+| named like-for-like | 0.084 [0.066, 0.105] | 0.069 [0.051, 0.090] | 0.079 [0.053, 0.106] |
+| unnamed like-for-like | 0.013 [0.004, 0.021] | 0.007 [-0.001, 0.017] | 0.013 [0.002, 0.025] |
+| split-half D (pre-registered / post hoc) | 0.17 / 0.87 | 0.45 / 0.86 | 0.43 / 0.87 |
+| held-out V2 ρ(D, H) (pre-registered / post hoc) | -0.32 / 0.05 | -0.08 / 0.05 | -0.09 / 0.06 |
+| reply network: split-half D^rep · held-out ρ(D^rep, H) | – | 0.91 · 0.25 | 0.91 · 0.07 |
+| reply-parent premium (matched age) | – | 0.166 [0.156, 0.175] | 0.193 [0.183, 0.203] |

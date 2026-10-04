@@ -1,6 +1,7 @@
 # H30 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-23)
 
 **Verdict:** failed — nudge -0.75 min (n 6); low power
+**Verdict (1b):** failed (r1 failed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime II · mode C · 13 agents at start · 5 active days.
 
@@ -35,3 +36,15 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G35/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G35/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_act(N_tgt), level model (r1: no FE; 1b: day FE, past-only) | -0.75 [-5.67, 0.22] (n 6) | -4.19 [-13.30, 0.13] (n 5) |
+| χ_act(N_tgt) with day FE / without | -1.62 [-5.46, 0.24] | -3.90 [-13.09, 0.71] (no FE) |
+| first / repeat nudge | -1.59 [-5.45, 0.24] / – | -4.18 [-13.29, 0.13] / – |
+| bystander χ_act(N_by) | 0.94 [-0.02, 2.69] | 0.35 [-0.29, 1.91] |
+
+Round-1b prediction rows: P1 failed (point ≤ 0); P2 failed.

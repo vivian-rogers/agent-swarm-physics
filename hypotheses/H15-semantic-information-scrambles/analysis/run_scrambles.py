@@ -17,7 +17,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from h15lib import (METHODS, Panel, agent_mu, autocov_params, cluster_boot_diff, dl_meta, event_delta,  # noqa: E402
                     hockey_vs_linear, period_test, placebo_deltas, residual_panel, spearman, unit_placebo_pool)
-from h15common import OUT, SEED, SH, V_CANDIDATES, calendar_nonholdout, refuse_holdout, write_provenance  # noqa: E402
+from h15common import OUT, OUT_R1, ROUND, SEED, SH, V_CANDIDATES, calendar_nonholdout, refuse_holdout, write_provenance  # noqa: E402
 
 import numpy as np  # noqa: E402
 import polars as pl  # noqa: E402
@@ -34,7 +34,8 @@ ad = pl.read_parquet(OUT / "agent_day.parquet")
 cat = pl.read_parquet(OUT / "scramble_catalog.parquet")
 ce = pl.read_parquet(OUT / "consolidations.parquet")
 vch = json.loads((OUT / "v_choice.json").read_text())
-syn = json.loads((OUT / "synthetic.json").read_text())
+# synthetic.json holds design choices fixed in round 1 (primary counterfactual, turn contrast); round 1b reuses them
+syn = json.loads(((OUT / "synthetic.json") if (OUT / "synthetic.json").exists() else (OUT_R1 / "synthetic.json")).read_text())
 refuse_holdout(ad["pt_date"].unique().to_list(), "agent_day")
 refuse_holdout(cat["pt_date"].to_list(), "catalog")
 refuse_holdout(ce["pt_date"].unique().to_list(), "consolidations")
@@ -199,9 +200,12 @@ def run_spill(rp):
 
 def run_ctx():
     """Context erasure: dip after forced vs voluntary consolidations, per unit, writes and errors."""
-    base = ad.select("agent", "pt_date", (pl.col("n_writes") / pl.col("n_turns")).alias("w_base"),
-                     (1 - pl.col("V_rel")).alias("e_base"))
-    c = ce.join(base, on=["agent", "pt_date"], how="left").filter(pl.col("kind").is_in(["CF", "CV"]))
+    if "w_base" in ce.columns:  # round 1b: ledger calls; w = work commits per call, e = real failure per call
+        c = ce.filter(pl.col("kind").is_in(["CF", "CV"]))
+    else:
+        base = ad.select("agent", "pt_date", (pl.col("n_writes") / pl.col("n_turns")).alias("w_base"),
+                         (1 - pl.col("V_rel")).alias("e_base"))
+        c = ce.join(base, on=["agent", "pt_date"], how="left").filter(pl.col("kind").is_in(["CF", "CV"]))
     c = c.with_columns((pl.col("agent").cast(pl.Utf8) + "_" + pl.col("pt_date")).alias("cl"))
     out = {}
     for u in sorted(c["unit"].unique().to_list(), key=lambda u: (int(re.match(r"\d+", u).group()), u)):

@@ -1,6 +1,6 @@
 # H24: In the forecast week (#21), switching from independent drafts to comparison switches the coupling on
 
-**Status:** exploratory round 1 done (2026-10-03). The literal H24 (an alignment step at switch-on) **failed** in G21. The reformulated H24′ is mixed: a coupling ramp over the week (descriptive, confounded), and numeric herding that does not survive an extraction audit. Confirmatory #14 written, not run.
+**Status:** exploratory round 1 done (2026-10-03). The literal H24 (an alignment step at switch-on) **failed** in G21. The reformulated H24′ is mixed: a coupling ramp over the week (descriptive, confounded), and numeric herding that does not survive an extraction audit. **Round 1b (improved data, 2026-10-04): the literal H24 still fails in all 13 input configurations, but the reason is model-dependent** (no step under bge; under gte a +0.16 step that ordinary kickoff days match). Natives: reading a teammate's document pulls the reader's statements toward that teammate by ~0.03 (supported in both models, weaker after style residualization); in #41 one kickoff split into two rooms yields no room gap among independent first statements and a gap that grows over the week (mixed). Confirmatory #14 written, not run.
 **Fields:** stat mech, info theory
 **Origin:** HH28 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** agent; regime (all of #21 is regime I, one room); driving / external field (the goal + kickoff direction ĝ); agent state, variant *vector (for model 11)* (whitened, unit-normalized bge-small statement embeddings, regime-I basis, n = 32); interaction (broadcast: everyone is in #general); goal period as the unit of analysis, split at the switch-on and at the 12-04 step changes. Proposed new named variant: **coupling switch-on (document access)**, see "Switch-on" below and the suggested DEFINITIONS.md entry in Notes.
@@ -108,8 +108,8 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Every variable is defined from fields: the switch-on rule from intentions and the models' own reasoning; content from whitened embeddings; numbers from chat and typed documents. Assumptions listed. Not checked for invariance across model families (style); numeric attribution needed a hand audit. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | Not tested. The kickoff transient (non-stationarity in the pre window) is handled by the N2 placebo, not modelled. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | The alignment *levels* beat the per-agent rotation null (A_res ≈ 0.33 vs q95 ≈ 0.03). The predicted *step* does not beat the within-period (N1) or kickoff-matched (N2) placebos. |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | The signature (a step at τ_i, a rise in snapshot βJ₀/n) is absent. Numeric herding vanishes after the audit. |
-| E interventional | predicts the change across a natural experiment | 0 | The switch-on is a dated, record-confirmed natural experiment, and its predicted alignment change is absent. |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 | Round 1b: the pair-level reading DiD (an unfitted prediction) holds in both models (+0.036, p 0.035 / +0.030, p 0.038), weaker after style residualization. Round 1: the signature (a step at τ_i, a rise in snapshot βJ₀/n) is absent. Numeric herding vanishes after the audit. |
+| E interventional | predicts the change across a natural experiment | 1 | Round 1b: dated reading events (who opened whose document) are directed natural experiments and the reader's content follows the owner's. Round 1: the swarm-level switch-on is a dated, record-confirmed natural experiment, and its predicted alignment change is absent. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Synthetic world with #21's real statement times and τ_i:<br>• rule size 0.07–0.08;<br>• power 0.38–0.59 at βJ₀/n ≈ 0.35 and 0.71–0.77 at ≈ 0.55;<br>• the snapshot βJ₀ is inflated by field leakage (0.34 at zero coupling);<br>• κ is inflated by extraction noise (size 0.32), which the audit then found in practice.<br>Robust to k; not to dimension (n = 64 gives a step) or the ĝ definition. No embedding-model swap. |
 | G ground truth | agrees with known structure | 1 | The switch-on times agree across three channels (intentions, screen descriptions, mention share 7% → 74%). The GPT-5 document control (N = 1, 4 post statements) did not behave as predicted. |
 | H comparative | beats the named rivals | 0 | The rival (a decaying common field with no coupling step) explains day 1 as well or better: raw ΔA < 0 as on generic kickoff days, residual ΔA ≈ 0. Divergence-seeking (κ < 0) is not supported either. |
@@ -166,6 +166,8 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
 | [G21](goalperiod-subhypotheses/G21/README.md) | exploratory | failed (literal H24); ramp descriptive | τ\* = 50 min after open. ΔA_res at τ_i +0.010 [−0.047, +0.086] vs placebo q90 0.12 / 0.11. A_res ≈ 0.33 before and after (rotation q95 ≈ 0.03). Snapshot βJ₀/n 0.67 → 0.67. Documents +0.128 [+0.06, +0.18]. Ramp ρ = 0.73. Hand-verified κ = 0.25 (p = 0.17). |
+| [G21](goalperiod-subhypotheses/G21/README.md) round 1b | replication + native (1b) | mixed | ΔA_res at τᵢ −0.011 (bge) / +0.160 (gte) vs N2 q90 0.10 / 0.18: P1 fails in all 13 configs; pair-level reading DiD +0.036 (p 0.035) / +0.030 (p 0.038), style-resid p 0.14 / 0.08 |
+| [G41](goalperiod-subhypotheses/G41/README.md) (one kickoff, two rooms) | native (1b) | mixed | independent drafts ΔW −0.09 / −0.08 (n.s.); day-1 blocks up to +0.32 / +0.40; by day 4 cross-room alignment ≈ 0, ΔW +0.25 / +0.32 |
 
 ## Results
 **Exploratory round 1 (2026-10-03; G21 only, non-holdout; holdout asserted absent in every script).**
@@ -226,6 +228,46 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - 2026-10-03: switch-on audit done before any outcome. The switch is on day 1 (τ\* = 50 min after open), not mid-week. Card reformulated (H24′ ramp) before analysis.
 - 2026-10-03: round 1 done (see Results). Disk: 7.9 MB in `data/processed/H24-forecast-coupling-switch/`.
 - Suggested DEFINITIONS.md variant (not added; outside this card's edit scope): **coupling switch-on (document access)**. τ_i = the start of the agent's first session whose self-written intention plans to read or compare teammates' work, confirmed within 60 min by a reasoning sentence describing another agent's document on screen (`scheme/h24lib.py`).
+- 2026-10-04: round 1b (re-evaluation agent RE-C1): 13 input configurations, natives G21 (pair-level reading DiD) and G41 (one kickoff, two rooms), per-period estimates; literal H24 still failed; scorecard D and E 0 → 1 from the pair-level native.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation wave, two-layer design (`infra/data-quality/QUEUE.md`): the round-1 statistics rerun on corrected inputs (replication), plus two native tests with predictions dated in their folders before running. Holdout untouched (`confirm.py`, #14, not run).*
+
+**What changed.**
+- **Goal vectors:** H24 did not read H01's file; it embedded its own goal + kickoff. Against the shared goal fields its #21 ĝ has cos 0.96 (goal part 1.00, kickoff part 0.88: a different boilerplate filter and a one-string embedding truncated at 256 tokens, vs the shared mean of chunk embeddings); the 23 N2 placebo weeks' ĝ have cos 0.78–1.00. Round 1b uses the shared vectors for #21 and all placebo weeks.
+- **Multi-direction field** (vector-spins pitfall: one-direction removal leaks field into "coupling"): ĝ plus every goal-text and kickoff chunk direction (7 directions for #21, 3 for #41), both models.
+- **Second model:** gte-modernbert for statements (shared) and for the 1,889 document chunks (re-embedded from the sidecar; the re-chunking reproduces round 1 exactly).
+- **Dedupe:** #21 is unusually repetitive (DQ5 flags: 28% self-repeats, 9% cross-agent echoes under bge); variants drop restatements (either model) and, additionally, cross-agent echoes. **Style:** within-period style-residualized statement vectors (family style can align agents).
+- **Activity:** H24 never used `activity_bins` (its switch-on comes from intentions and the models' screen descriptions), so the event-drop fix does not touch it.
+- Code: `scheme/build_r1b.py`, `scheme/build_r1b_g41.py`; `analysis/explore.py --emb --goals --field --dedupe --style` (defaults reproduce round 1; round-1b outputs `G21/r1b/explore_<config>.json`); `analysis/r1b_report.py`, `natives_r1b.py`, `r1b_figures.py`, `r1b_estimates.py`.
+
+**Replication, old vs new** (13 configurations; full table in [`G21`](goalperiod-subhypotheses/G21/README.md)):
+
+| Prediction | Round 1 (bge, H24 ĝ) | 1b bge-small (shared ĝ) | 1b gte-modernbert | range over dedupe / style / multi-field | Verdict 1b |
+| --- | --- | --- | --- | --- | --- |
+| P1 ΔA_res > q90 of N1 and N2 | +0.010 vs 0.122 / 0.112 | −0.011 vs 0.110 / 0.100 | +0.160 [+0.10, +0.24] vs 0.107 / 0.180 | bge −0.01 to +0.09; gte +0.15 to +0.18 (N2 q90 0.17–0.20) | **failed** in all 13 |
+| P2 documents ΔA_res > 0 | +0.128 | +0.164 [+0.10, +0.21] | +0.075 [+0.02, +0.13] | bge +0.16 to +0.18; gte +0.07 to +0.09 | supported (both) |
+| P3 βJ₀/n rises | 0.67 → 0.67 | 0.69 → 0.68 | 0.69 → 0.76 (Δ CI [+0.05, +0.13]) | | model-dependent (upper bound) |
+| P6 ramp ρ > 0 | 0.73 (p 0.025) | 0.47 (p 0.21) | 0.60 (p 0.09) | 0.50–0.75 | holds in sign, significance model-dependent |
+| levels A_pre vs rotation q95 | 0.33 vs 0.03 | 0.36 vs 0.02 | 0.38 vs 0.07 | 0.34–0.42 vs 0.02–0.10 | robust |
+
+- **The verdict stands, the reason shifts.** Under bge there is no step at the switch-on; under gte residual alignment does step up by 0.16, but the 23 kickoff-matched placebo days show steps as large under gte too (q90 0.18). So "no coupling step beyond generic kickoff-day dynamics" is model-robust, while "no step at all" was a bge-specific statement.
+- Removing the field along 7 directions instead of 1 leaves residual alignment at the same level (0.38–0.42): the first-hour alignment is not carried by the kickoff text's own directions, so either it is a shared prior or the always-on chat channel.
+- Dedupe (dropping a third of #21's statements) and style residualization change no verdict.
+- P4 numeric herding does not depend on embeddings: failed after audit, as in round 1.
+
+**Native layer** (new in 1b):
+
+| Native test | Design | bge-small | gte-modernbert | Verdict |
+| --- | --- | --- | --- | --- |
+| [G21](goalperiod-subhypotheses/G21/README.md) pair-level reading DiD | does i's content move toward j's after i reads j's document, vs agents i did not read (102 events; owner-permutation null) | statements +0.036 (p 0.035); documents +0.016 (p 0.26) | +0.030 (p 0.038); +0.004 (p 0.43) | supported (statements; style-resid p 0.08–0.14) |
+| [G41](goalperiod-subhypotheses/G41/README.md) one kickoff, two rooms | within- minus cross-room alignment by block and day; independent first statements via the context ledger; room-permutation null | drafts −0.09 (n.s.); block 1 +0.11 (p 0.04); days +0.10 → +0.25; day 2 just below q95 | drafts −0.08; block 1 +0.07 (n.s.); day-1 trend ρ 0.79; days +0.14 → +0.32 | mixed |
+
+- **What the natives add.** Coupling exists but it is pairwise and gated by reading: after an agent opens a teammate's document, its next hour of statements moves toward that teammate by ~0.03 in cosine, relative to teammates it did not read. That is small enough to vanish in a swarm-level alignment statistic, which is why the literal H24 fails. In #41 a single kickoff produced two room cultures: no gap in the first independent statements, then a within-room / cross-room gap that grows over days until the rooms share nothing (cross-room alignment ≈ 0 by day 3–4), robust to style. That is the field-vs-coupling separation the card asked for, read in favor of room-local coupling, but the earliest window cannot separate fast coupling from room composition (everyone reads their room-mates within a minute).
+
+**Scorecard after 1b:** A 1 (unchanged; embedding swap and style residualization done, the step statistic is model-dependent); C 1 (levels beat the rotation null in every configuration; the step still does not beat N2); D 0 → 1 (an unfitted pair-level prediction, reading pulls the reader toward the owner, holds in both models; weakened by style); E 0 → 1 (the reading event is a dated, directed natural experiment and the pair-level effect follows it); G 1; H 0 (the decaying-field rival still explains the swarm-level day 1); I 0. Ratings (suggested): complete 40 → 50, faithfulness 1.0 → 1.5, usefulness 1.5 (unchanged).
+
+**Per-period estimates:** 22 rows via `write_estimates` (switch-on step, pre-switch level, document step, ramp ρ, pair DiD for statements and documents in G21; daily room gap ΔW in G41; channels `content_bge_small` / `content_gte_modernbert`).
 
 ## Round 2 redirects (2026-10-04)
 *From the round-1 reflection (`writeup/round1-reflection/round1-reflection.pdf`).*

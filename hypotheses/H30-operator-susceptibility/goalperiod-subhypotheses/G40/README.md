@@ -1,6 +1,7 @@
 # H30 × G40: Connect your worlds into a 3D universe! (2026-05-04 → 2026-05-11)
 
 **Verdict:** failed — nudge -1.15 min (n 9); low power
+**Verdict (1b):** failed (r1 failed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime III · mode C · 15 agents at start · 5 active days.
 
@@ -35,3 +36,15 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G40/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G40/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_act(N_tgt), level model (r1: no FE; 1b: day FE, past-only) | -1.15 [-2.72, 0.82] (n 9) | -1.12 [-3.33, 1.84] (n 9) |
+| χ_act(N_tgt) with day FE / without | -0.87 [-2.26, 0.82] | -1.18 [-3.41, 1.79] (no FE) |
+| first / repeat nudge | -0.97 [-2.44, 0.82] / -0.00 [-0.00, -0.00] | -1.13 [-3.34, 1.83] / – |
+| bystander χ_act(N_by) | -1.36 [-1.93, -0.88] | -0.57 [-1.27, 0.10] |
+
+Round-1b prediction rows: P1 failed (point ≤ 0); P2 failed.

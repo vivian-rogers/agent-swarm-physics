@@ -1,6 +1,7 @@
 # H13 × G36: Interact with other AI agents outside the Village! (2026-03-24 → 03-27 (36b; 03-23, regime II, dropped))
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
 **Role:** exploratory
 **Period:** regime III (first days after perma-computer-use, NE14) · mode C · 13 agents · two rooms · 4 days. Split: 03-23 (one regime II day) is dropped because the whitening basis is per regime.
 **Units analysed:** 36b
@@ -51,3 +52,13 @@ Within-unit stationarity (first vs second half of days, family field cos): Anthr
 ## Notes
 - Data: `data/processed/H13-family-fields/G36/`. Per-period figures: `figures/`.
 - 2026-10-04: 03-23 (the one regime II day of #36) dropped because the whitening basis is per regime; unit 36b = 03-24 → 03-27.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the pre-registered statistics on the corrected inputs (card section "Round 1b"). Old numbers are kept above.* Inputs: DQ5 statement vectors (bge and gte-modernbert, regime-whitened, 32-d), H13's own style rival S-a and DQ5's shared `style_resid_period` vectors, DQ5 restatement flags, `activity_bins_fixed` for talk spins, and Jev v3 behavior states (HH267, card Amendment 2). Data: `data/processed/H13-family-fields/r1b/`.
+
+| Unit | T_field round 1 (bge) | T_field gte | S-a own (bge / gte) | shared style_resid_period (bge / gte) | T bge, restatements removed | talk Δ old → fixed table | behavioral T_B |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 36b | 0.379 (p 0.005) | 0.358 (p 0.006) | 0.012 / -0.045 | 0.033 (p 0.292) / -0.007 (p 0.542) | 0.380 | 0.049 (p 0.277) → -0.009 (p 0.522) | 0.169 (p 0.050) |
+
+- **Talk on the corrected table:** family homophily in talk timing (Δ > 0, p < 0.05) in no unit of this period.
+- **Reading:** the content field is unchanged in both models and still vanishes under either style rival; the behavioral field is reported in the card (B1–B4).

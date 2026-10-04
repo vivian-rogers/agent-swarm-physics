@@ -1,6 +1,7 @@
 # H10 × NE34: goal changes as field steps (free → assigned pairs and kickoffs)
 
 **Verdict:** failed (P1 fails in combination: r > 0 in 1/3 pairs, Stouffer p = 0.89; P2 untestable, every push non-perturbative)
+**Verdict (1b):** failed (both models)
 **Role:** exploratory
 **Period:** spans goal periods (exception (c), the transition is the object). Three primary pairs: #11 → #12a, #16 → #17, #37 → #38a; secondary pairs #3 → #4, #5 → #6 (N = 4); kickoff event study at every non-holdout, within-regime goal change (#23 excluded, to keep #22 → #23 blind).
 
@@ -104,3 +105,18 @@ P1's negative sign in the regime-I pairs survives every variant except #11 → #
 
 ## Notes
 - 2026-10-03: the confirmatory script (`../../analysis/confirm.py`, dry-run on #16 → #17 and #11 → #12a) reproduces these pair numbers exactly through an independent build path (shared tables, goal and kickoff texts re-embedded on the fly).
+
+## Round 1b (improved data, 2026-10-04)
+*Inputs: shared goal fields (`goal_fields`; H10's own goal and kickoff vectors already matched them to cos ≥ 0.9999999, so bge numbers are unchanged), the second embedding model gte-modernbert, DQ5 restatement dedupe and style-residualized vectors. Data: `data/processed/H10-goals-are-legendre-pushes/r1b/<config>/`. Role: replication (the round-1 estimator, unchanged).*
+
+| Statistic | round 1 (bge) | bge, shared goals | gte-modernbert | other configs |
+| --- | --- | --- | --- | --- |
+| P1 r per pair (#11→12a, #16→17, #37→38a) | −0.37, −0.69, +0.20 | identical | −0.53, −0.49, −0.09 | dedupe bge −0.32/−0.69/+0.15, gte −0.56/−0.40/−0.16; style bge −0.66/−0.60/+0.33, gte −0.05/−0.81/+0.26 |
+| P1 combined (Stouffer p, verdict) | 0.89, failed | 0.89, failed | 0.96, failed | 0.84–0.93, failed in all |
+| push ε | 3.06, 1.42, 1.92 | identical | 3.00, 2.03, 0.69 | 1.3–3.6 in regime I |
+| variance along ĝ, ρ (transverse ρ⊥) | +2.04/+1.03/+0.66 (≈ −0.13) | identical | +1.67/+1.26/+0.09 (−0.02 to −0.22) | regime-I dispersal in all; #37→38 dispersal vanishes in gte (ρ +0.09) |
+| regime-I robustness variants with r < 0 | 11/12 | 11/12 | 10/12 | |
+| kickoffs: jump > 0 into assigned goals | 19/19 | 19/19 | 19/19 | 19/19 in all |
+| kickoffs: Spearman(jump, pre-fluctuation), regime I | −0.56 (p 0.015) | −0.56 | −0.59 (p 0.010) | dedupe −0.61/−0.48; style −0.55 (bge), −0.30 (gte, p 0.23) |
+
+Combined verdict unchanged: **failed**. Model-dependent detail: in gte the #37 → #38a push is small (ε 0.69, inside the range where the synthetic says the first-order tilt is unbiased), and its would-be P2 (not counted, Amendment 1) is supported (ρ −0.18 [−0.53, +0.21]): the regime-III variance is tilt-compatible under gte, while P1 still fails there.

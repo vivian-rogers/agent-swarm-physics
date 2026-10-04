@@ -13,6 +13,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
+import h10data  # noqa: E402
 from h10data import DATA, HERE, PAIRS, goal_direction, load_period, save_json, segment  # noqa: E402
 from h10lib import agent_stats, day_weights, random_transverse, swarm_stats  # noqa: E402
 
@@ -110,6 +111,8 @@ def describe(seg, rng, n_boot):
 
 
 def fig_period(name, res, title, path):
+    if h10data.out_root() != DATA:      # round-1b configurations: numbers only, round-1 figures kept
+        return
     fig, ax = plt.subplots(1, 2, figsize=(7.2, 2.8))
     d = res["dev_std"]
     ax[0].hist(d, bins=30, density=True, color="#2a78d6", alpha=0.75)
@@ -132,7 +135,14 @@ def fig_period(name, res, title, path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--boot", type=int, default=500)
+    # round 1b (2026-10-04): corrected inputs; defaults reproduce round 1
+    ap.add_argument("--emb", default="bge_small", choices=["bge_small", "gte_modernbert"])
+    ap.add_argument("--goals", default="h10", choices=["h10", "shared"])
+    ap.add_argument("--dedupe", default="none", choices=["none", "copies", "restate"])
+    ap.add_argument("--style", action="store_true")
     args = ap.parse_args()
+    h10data.configure(args.emb, args.goals, args.dedupe, args.style)
+    OUTR = h10data.out_root()
     rng = np.random.default_rng(11)
     summary = {}
     for gno, (nxt, gnext, reg) in FREE.items():
@@ -141,7 +151,7 @@ def main():
         P = load_period(gno)
         res = describe(segment(P, U), rng, args.boot)
         res["direction"] = f"g_{gnext}"; res["days"] = P["days"]
-        save_json(res, DATA / f"G{gno:02d}" / "period.json")
+        save_json(res, OUTR / f"G{gno:02d}" / "period.json")
         fig_period(f"G{gno}", res, f"#{gno} (free) along ĝ of #{gnext}", HYP / "goalperiod-subhypotheses" / f"G{gno:02d}" / "figures" / "shape_and_drift.pdf")
         summary[f"G{gno}"] = {k: res.get(k) for k in ("n_agents", "n_win", "gamma", "eta", "F1_unimodal", "g", "g_ci90",
                                                        "g_perp_median", "slope", "slope_ci90", "mu_mean", "k2_mean")}
@@ -153,7 +163,7 @@ def main():
         U = random_transverse(g, 50, np.random.default_rng(0))
         res = describe(segment(P, U), rng, args.boot)
         res["direction"] = f"g_{gnext}"; res["days"] = P["days"]
-        save_json(res, DATA / "G31" / f"period_g{gnext}.json")
+        save_json(res, OUTR / "G31" / f"period_g{gnext}.json")
         if gnext == 12:
             fig_period("G31", res, "#31a (free) along ĝ of #12 (not #32: held out)", HYP / "goalperiod-subhypotheses" / "G31" / "figures" / "shape_and_drift.pdf")
         summary[f"G31:g{gnext}"] = {k: res.get(k) for k in ("n_agents", "n_win", "gamma", "eta", "F1_unimodal", "g", "g_ci90",
@@ -176,13 +186,13 @@ def main():
         res["A1_free_mean"] = resF["mu_mean"]
         res["A1_all_days_above"] = bool(all(v[0] > resF["mu_mean"] for k, v in res["daily"].items() if int(k) >= 1))
         res["days"] = Pall["days"]
-        save_json(res, DATA / f"G{gno:02d}" / "period.json")
+        save_json(res, OUTR / f"G{gno:02d}" / "period.json")
         fig_period(f"G{gno}", res, f"#{gno} (assigned) along its own ĝ; day 1 = kickoff day", HYP / "goalperiod-subhypotheses" / f"G{gno:02d}" / "figures" / "shape_and_drift.pdf")
         summary[f"G{gno}"] = {"A1_all_days_above": res["A1_all_days_above"], "A1_free_mean": res["A1_free_mean"],
                               "daily": res["daily"], "A2_day1_minus_rest": res["A2_day1_minus_rest"],
                               "A_segment": res["A_segment"], "g_unit": res.get("g"), "gamma_unit": res["gamma"]}
         print(f"G{gno}", summary[f"G{gno}"], flush=True)
-    save_json(summary, DATA / "periods_summary.json")
+    save_json(summary, OUTR / "periods_summary.json")
 
 
 if __name__ == "__main__":

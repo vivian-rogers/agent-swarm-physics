@@ -2,7 +2,9 @@
 
 **Status:** exploratory round 1 **done (2026-10-04): not supported; leans failed.**
 
-The #51 content couplings are real but mostly positive, and same-role rivals co-move *more*, not less (the homophily rival). The balance index is indeterminate, and there are no collective metastable states. Observables, nulls and predictions were written 2026-10-04 00:15 UTC, and Amendment 1 (synthetic-based) at 00:42 UTC, both before any real-data run. The confirmatory script for the #51 tail is written, not run.
+The #51 content couplings are real but mostly positive, and same-role rivals co-move *more*, not less (the homophily rival).
+
+**Round 1b (2026-10-04, section below): failed, robustly.** Rival homophily holds in both embedding models, after style residualization and dedupe, and on the shared #51 splits (RE T_SR +0.04 to +0.06, p 0.01–0.05). In the new stance channel (DQ2) the swarm is ferromagnetic (mean stance ≈ 0.6), residual couplings are heterogeneous and unbalanced (τ₃(dc) 0.05–0.25) but rivals and opposed roles are not hostile. Natives: NE38 (Opus 5's role change) and G23 (chess opponents) show no antagonism. The balance index is indeterminate, and there are no collective metastable states. Observables, nulls and predictions were written 2026-10-04 00:15 UTC, and Amendment 1 (synthetic-based) at 00:42 UTC, both before any real-data run. The confirmatory script for the #51 tail is written, not run.
 **Fields:** stat mech, sociophysics
 **Origin:** HH102 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population; Regime; Driving / external field; Interaction (broadcast); Agent state, variant vector, in H01's named form **agent state (vector), whitened statement mean**. H13's operational *talk spin* (+1 in a 1-min bin where `activity_bins.state == 4`, else −1). Five terms not yet in DEFINITIONS.md are defined below under Observables and proposed for the shared file: *coupling (content co-movement, within-day)*, *coupling (talk, excess)*, *frustration index (triangle)*, *balance index τ₃*, *overlap (day-to-day content)*.
@@ -171,15 +173,15 @@ Statistics, for J = J^c (primary) and J^t (secondary):
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
 **Rival models:** random-field paramagnet (roles as fields, no coupling); ferromagnet / common drive; Mattis / balanced factions; homophily-engagement (rivals co-move positively).
 **Locked holdout used for confirmation:** none yet. `analysis/confirm_tail.py` (#51 tail, 09-07 → 09-18) is written, not run. `--dry-run` on the non-holdout stand-in 08-25 → 09-04 works. Predictions: see "Confirmatory predictions" below.
-**Overall A–I:** A1 B1 C1 D0 E0 F1 G1 H0 I0 (not promoted).
+**Overall A–I:** A1 B1 C1 D1 E1 F1 G1 H0 I0 after round 1b (round 1: D0 E0; not promoted).
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Spins, fields and couplings are defined from whitened chat embeddings, 30-min windows and talk spins (magnet dictionary); assumptions are listed. Weakness: "conflict" is mapped onto anti-co-movement in *topic* space, which competing agents need not show (caveat 3). Family invariance checked only as a lab×lab block residual. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Day-blocked cross-fitting; within-unit stationarity assumed, not tested. Equal-time couplings read as equilibrium J without an FDT check; no update-order audit. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Content-coupling heterogeneity beats the per-agent day-permutation null in 51b and 51c (ρ_split 0.46, p = 0.003; cross-fitted by day). None of the H22-specific statistics beats its null in the predicted direction. |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | Glass signatures absent: τ₃(dc) indeterminate; T_SR > 0 (opposite sign, meta p = 0.02); W ≈ 1 in all counted units. |
-| E interventional | predicts the change across a natural experiment | 0 | Not tested. NE33 (51e) and NE38 (inside 51b) are descriptive only. |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 (1b; round 1: 0) | Content: glass signatures absent (τ₃(dc) indeterminate; T_SR > 0, meta p = 0.02; W ≈ 1). **Round 1b, stance:** residual stance couplings are unbalanced (τ₃(dc) 0.25 / 0.23 / 0.05, CI upper < 0.5 in 3/3), the predicted signature, but conflict-coded pairs are not negative and τ₃(dc) cannot separate SK from a heterogeneous ferromagnet. |
+| E interventional | predicts the change across a natural experiment | 1 (1b; round 1: 0) | **Round 1b, NE38:** Opus 5's role change moves its content field off its former rivals' field (placebo 0.004); its coupling to them falls (homophily sign; variant threshold, n.s.), the opposite of H22's prediction. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | **Identifiable:** heterogeneity, factions vs random signs (τ₃(dc)), collective switching (W) and the treatment test, all at #51 sampling. **Not identifiable:** SK vs heterogeneous ferro, or κ under common drive. Weighted / ground-state frustration vs sign-shuffle is non-specific. Contrast units are near-powerless. No embedding swap yet. |
 | G ground truth | agrees with known structure | 1 | Same-role pairs share a content field (static alignment, role permutation p = 0.0002 / 0.010 / 0.026 in 51b / c / d). Two-room contrast weeks show balanced room blocks (τ₃(dc) ≈ 1), and #44's overlap synchrony vanishes once per-room day fields are removed. |
 | H comparative | beats the named rivals | 0 | The rivals fit better: homophily (T_SR > 0), and a random-field system with positive mean coupling (κ̂ 4–10, M 0.5–0.75 with W ≈ 1). |
@@ -260,6 +262,14 @@ It changed the estimators as follows.
      - family content co-movement Δ ≈ 0 (n.s.) in 51a–51e.
    - It showed no H22 statistic (no signs, frustration, role contrast or overlaps). Predictions were not changed afterwards.
 
+### Round-1b pre-registration: stance channel, ground-truth roles, shared units (2026-10-04 07:14 UTC, before any round-1b statistic)
+**Seen before writing:** round 1; H37's #51 results on its own labels (T_SR(stance) +0.085, p_less 0.81; T_OP +0.02; 10 negative pairs vs 0.33 expected under the calibrated null, none in conflict classes); DQ2's descriptive #51 class shares of "opposes" (OP 3.9%, U 5.6%, SY 4.1%, NC 7.7%, SR 10%; pair-level "opposes" precision 0.08); DQ6 (Opus 5's first role: game dev 07-24 → 07-29, so pairs with Opus 4.7 and GPT-5.5 are same-role rivals for those days). P1–P6 above are unchanged; they are re-run with DQ6 roles (time-resolved, `preferred & ~holdout`), the second embedding model (gte white32), the shared style-residualized vectors (`style_resid_period`: role claims), the dedupe flags, `activity_bins_fixed` for talk, and on both H22's units and the shared `period_units` splits of #51.
+
+**Stance coupling** J^s_ij (DQ2 `reply_pairs`, `pair_set = cand`, labelled, both directions): mean of s = p_supports − p_opposes weighted by p_reply, pairs with ≥ 3 replies; cross-fitted folds by day for the moment statistics.
+- **P3s (frustration in stance).** τ₃(dc) of J^s < 0.25 with CI upper < 0.5 (glass); also the camp score and negative-pair count against the calibrated agent-field null (`infra/shared/nulls.py: agent_field_null`). Credence of a glass reading 0.1.
+- **P4s (conflict in stance).** T_SR(J^s) < 0 and T_OP(J^s) < 0, role-permutation p_less < 0.05, family-adjusted. Credence 0.2 (T_SR) and 0.15 (T_OP). The homophily rival predicts T_SR(J^s) ≥ 0.
+- **Verdict rule for 1b:** unchanged (failed if T_SR > 0 significantly or P3 fails with P1 passing); a significantly negative T_SR or T_OP in stance would move the reading to "conflict lives in stance" even if content stays homophilous.
+
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
@@ -271,6 +281,8 @@ It changed the estimators as follows.
 | [G38](goalperiod-subhypotheses/G38/README.md) (38a / 38b / 38c) | exploratory (contrast) | descriptive | 38a: ρ_split 0.56 (p 0.02), κ̂ 3.0, τ₃ 0.46, τ₃(dc) 1.03 (room blocks), W 3.14 (p 0.001; with per-room day fields 1.98, p 0.018, post hoc); 38b, 38c at the noise floor |
 | [G40](goalperiod-subhypotheses/G40/README.md) | exploratory (contrast) | descriptive | ρ_split 0.31 (p 0.050), κ̂ 6.9, τ₃ 0.51, p_neg 0.06; W 1.48 (p 0.18) |
 | [G44](goalperiod-subhypotheses/G44/README.md) | exploratory (contrast) | descriptive | ρ_split 0.59 (p 0.003), κ̂ 2.8, τ₃ 0.47, τ₃(dc) 0.95 (room blocks); W 3.99 (p 0.006) → 1.03 (p 0.39) with per-room day fields (post hoc) |
+| [NE38](goalperiod-subhypotheses/NE38/README.md) (Opus 5's role change) | native (1b) | failed | field leaves the rivals (alignment 0.51 → −0.06, placebo 0.004); coupling DiD −0.27 (bge) / −0.13 (gte), homophily sign, n.s.; pre-registered threshold untestable |
+| [G23](goalperiod-subhypotheses/G23/README.md) (chess) | native (1b) | failed | 21 opponent pairs: stance contrast −0.005 (p_less 0.42); content +0.030 (p> 0.08) |
 
 ## Results
 *Round 1, 2026-10-04. Code: `analysis/explore.py` (per unit), `analysis/summarize.py` (cross-unit), `analysis/period_cards.py` (period folders in `goalperiod-subhypotheses/`). Data: `data/processed/H22-private-goals-spin-glass/G<NN>/<unit>/results.json`, `summary.json`. Figures: `figures/summary.pdf` (one-page summary), `figures/summary_obs.pdf`, `figures/synthetic_validation.pdf`, and `goalperiod-subhypotheses/G*/figures/`.*
@@ -367,6 +379,45 @@ Run only with Vivian's sign-off (`--confirm --i-understand-this-uses-the-locked-
 - **Lagged (kinetic) content couplings** (window VAR, model 11 dynamics), to separate endogenous broadcast coupling from exogenous drive and so identify J₀.
 - **Treat #51 as a random-field problem:** field strength (q_∞, static role alignment) vs coupling (J̄, σ_J). Use NE38 (Opus 5's role reassignment) as a field-step intervention (axis E): does that agent's position jump to the new role field with no change in couplings?
 - **Robustness:** embedding swap; with H20, test whether the high M is aging (t_w dependence).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of round 1's statistics (P1–P6 and the verdict rule unchanged) on corrected inputs, a stance channel next to the content channel (pre-registered above at 07:14 UTC), both H22's and the shared `period_units` splits of #51, and two period-native tests (NE38, G23; predictions written 07:15 UTC in their folders before running). Non-holdout only; `confirm_tail.py` not run.*
+
+**What changed in the inputs.**
+- **DQ6 ground-truth roles** (`role_relations.load_role_spells_gt`, `preferred & ~holdout`), with Claude Opus 5's recovered first role (game dev, 07-24 → 07-29). Rival pairs are time-bounded by the role rows; a unit's role is the one held on most of the agent's present days (unchanged rule). **In H22's own units this changes nothing:** Opus 5 is present on 9 of 51b's 19 days and fails the population rule (≥ half the days), so the two new rival pairs never enter 51b. They enter in the shared split pu51e (07-24 → 07-28, Opus 5 = game dev) and in the NE38 native test.
+- **DQ5:** statement vectors from the shared files in two models (bge white32 = round 1 exactly; gte-modernbert), DQ5 `style_resid_period` vectors (the recommended input for role claims), restatements removed.
+- **Talk spins** from `activity_bins_fixed` (DQ8).
+- **Stance (DQ2):** `reply_pairs` (cand, labelled, agent → agent), soft stance p_supports − p_opposes weighted by p_reply, pairs with ≥ 3 replies; graph statistics against H37's calibrated ordered-logit agent-field null (`infra/shared/nulls.py`).
+- Code (old paths unchanged): `scheme/build.py --r1b --model … --vectors white32|styp --dedupe … --units h22|shared|all`, `analysis/explore.py --base …`, new `analysis/r1b_stance_native.py`, `r1b_summary.py`, `r1b_periods.py`, `r1b_figures.py`. Outputs: `data/processed/H22-private-goals-spin-glass/r1b/` (19 MB).
+
+**Old vs new, counted #51 units 51b / 51c / 51d.**
+
+| Prediction | Round 1 (bge, agent_goals roles, old talk) | Round 1b content: bge; gte; bge style-residualized | Round 1b stance (DQ2) |
+| --- | --- | --- | --- |
+| P1 heterogeneous couplings | ρ_split 0.46 / 0.46 / 0.12 (pass 2/3) | bge identical; gte 0.46 / 0.42 / 0.34 (3/3); styp 0.47 / 0.42 / 0.08 | double-centred split-half 0.43 / 0.39 / 0.43 vs agent-field null 0.02–0.04 (p 0.005 each): **3/3** |
+| P2 κ < 1 | 5.2 / 3.9 / 9.7 | gte 5.8 / 5.0 / 4.2 | raw τ₃ 0.76 / 0.62 / 0.62; mean soft stance 0.61 / 0.65 / 0.57 (ferromagnetic) |
+| P3 τ₃(dc) < 0.25, CI upper < 0.5 | 0.22 [−0.21, 1.04] / −0.13 / −0.12: indeterminate | gte 0.36 / 0.57 / 1.55: indeterminate | **0.25 [0.08, 0.38] / 0.23 [0.06, 0.36] / 0.05 [−0.02, 0.23]: pass 3/3** (51b at 0.2498) |
+| P4 T_SR < 0 (family-adjusted) | +0.066 (p> 0.013) / +0.036 / −0.002; RE **+0.048 [0.007, 0.089]**, p 0.02 | RE bge +0.048 (p 0.02); gte **+0.042 [0.000, 0.084]** (p 0.048); styp bge +0.052 [0.011, 0.092] (p 0.012); styp gte +0.043 (p 0.037); restatements removed +0.041 (p 0.049) | +0.086 (5 pairs) / +0.127 (5) / +0.011 (4); RE +0.086 [−0.11, 0.28]; pooled #51 +0.158 (6 pairs, p> 0.12) |
+| P4 T_OP < 0 | −0.048 / −0.014 / +0.008 | gte +0.005 / −0.030 / −0.004 | +0.11 / −0.34 / +0.22 (2 pairs each); pooled +0.056 |
+| P4 T_SY > 0 | +0.003 / +0.014 / +0.015 | similar | −0.03 / −0.10 / −0.03 |
+| P5 W > 1 (p < 0.05), M > 0.2 | W 1.16 / 1.15 / 0.69; fail 0/3 | bge same; **gte 51c W 1.61, p 0.02 (M 0.71): 1/3**, also pu51g (1.67, p 0.02) | — |
+| P6 #51 more frustrated than contrast weeks | no (descriptive) | gte 38a τ₃(dc) 0.83, #44 0.75 (room blocks) | τ₃(dc) #51 0.05–0.25 vs 38a 0.64 [0.54, 0.69], #44 0.81 [0.70, 0.86] (room-split weeks, few pairs) |
+| Talk heterogeneity (secondary) | noise floor (p 0.09–0.29) | **fixed table: ρ_split 0.45 (p 0.003) / 0.14 (p 0.047) / 0.34 (p 0.003)**; talk T_SR −0.004 / +0.010 / +0.032 | — |
+
+**Shared #51 splits (pu51c … pu51h, 3–13 days, one rival pair per short unit typically):** RE T_SR +0.060 [−0.003, 0.123] (bge), +0.052 [0.005, 0.100] (gte), +0.060 [0.001, 0.119] (bge style-residualized). In **pu51e**, where DQ6 adds Opus 5's two rival pairs, content T_SR is +0.076 (one pair with enough shared windows) and stance T_SR −0.18 (5 pairs, p< 0.16, n.s.).
+
+**Stance graph beyond agent fields (descriptive).** Negative pairs (two-way-FE residual z < −2): 70 / 54 / 33 vs 8 / 7 / 7 under the calibrated null; **not** enriched in conflict classes (SR + OP: 2/70, 2/54, 0/33; Fisher p 0.57 / 0.55 / 1); 12 / 9 / 12 involve support roles (coach, psychologist, helper). The per-pair test assumes replies independent within a pair (as the null does), so thread clustering inflates the count. The camp score beats the agent-field null in 51b (p 0.005), not in 51c/51d (0.07 / 0.06); the agent-field null has no pair structure at all, so this reflects pair heterogeneity, not factions (τ₃(dc) says unbalanced).
+
+**Natives.**
+- **NE38 (Opus 5's role change): failed for H22.** Primary (≥ 5 shared windows) untestable: after the change Opus 5 shares 0 windows with Opus 4.7 and 4 with GPT-5.5 (8 and 25 before). Disclosed variant (Amendment 1's ≥ 2-window rule): DiD −0.27 (bge, placebo percentile 0.06), −0.13 (gte, 0.18), the homophily sign. Manipulation check passes: alignment with the rivals' field 0.51 → −0.06, placebo 0.004. Before the change Opus 5 co-moved and replied most warmly with its rivals (stance 0.72 vs 0.57; 90 replies); after it, 3 replies.
+- **G23 (chess opponents, 21 pairs from shared game links): failed.** Stance contrast −0.005 (p_less 0.42); content +0.030 (bge, p> 0.08), +0.020 (gte): no antagonism between explicit zero-sum opponents.
+
+**Verdict (1b).** **Failed** by the card's rule, now robustly: same-role rivals co-move *more* than unrelated pairs in every content variant (both models, style-residualized, deduplicated, both unit splits), and in stance they are friendlier, not hostile (n.s.). The stance channel adds one thing round 1 could not see: residual stance couplings are heterogeneous and **unbalanced** (τ₃(dc) 0.05–0.25, the "glass side"), but Amendment 1 established that τ₃(dc) cannot tell SK from a heterogeneous ferromagnet, and the conflict-coded pairs carry no negative sign (P4s fails). So #51 is a positive-mean, heterogeneous (random-field) ferromagnet in both channels; conflict-coded incentives do not produce conflict couplings. Talk couplings are no longer at the noise floor on the corrected table (H02's talk null was partly the event-drop bug).
+
+**Period verdicts:** unchanged (`**Verdict (1b):**` lines added in G51a–G51e, G38, G40, G44). Natives NE38 and G23: failed.
+
+**Scorecard after 1b.** D 0 → 1 (the stance balance signature appears unfitted in 3/3 counted units, but without conflict-coded signs). E 0 → 1 (NE38 used as a dated field step: field response clear, coupling response homophily-sign, n.s.). F stays 1 (second model and style residuals done; τ₃(dc) and W are model-dependent). C, G, H, I unchanged (the homophily rival still wins; G23 adds a known-structure test with no antagonism).
+**Figure:** `figures/r1b_rivals_channels.pdf`. **Estimates:** 161 rows in `per_period_estimates` (ρ_split, T_SR, τ₃(dc) per unit and model, stance T_SR and negative-pair counts, natives).
 
 ## Notes
 - **From DQ6 (2026-10-04):** `agent_goals` overwrote Claude Opus 5's first #51 role (game dev, 07-24 → 07-29, then Mathematician at NE38), so this card treated it as roleless for those days. That adds two rival pairs. Use `ground_truth_labels` (`preferred`) in the re-evaluation.

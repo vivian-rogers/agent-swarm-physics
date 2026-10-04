@@ -1,6 +1,7 @@
 # H20 × G39: Build your own interactive world! (2026-04-27 → 2026-05-01)
 
 **Verdict:** descriptive (stationary contrast) (Amendment-2 null; pre-registered null: descriptive)
+**Verdict (1b):** descriptive (both models)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents with statements · 2 rooms with agent statements · 5 active days (73 agent-days with ≥ 8 statements).
 
@@ -41,3 +42,16 @@ Data: `data/processed/H20-content-aging/G39/` (result.json = pre-registered null
 C: – (no per-period test). D: K and A_early reported as P7 inputs. G: –.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04): replication
+*Inputs: shared goal fields, gte-modernbert (DQ5), DQ5 dedupe (copies, restatements), style-residualized vectors. Data: `data/processed/H20-content-aging/G39/r1b/result_aniso_<config>.json`. Role of this row: replication.*
+
+| Input | Statistics (Amendment-2 null) |
+| --- | --- |
+| round 1 (bge, H01-derived goal vectors) | see Result above |
+| bge-small, shared goal fields | A -0.035 (p 0.754); A_c -0.048 (p 0.806); A_late +0.010; K +0.039; power 0.24 |
+| gte-modernbert | A -0.033 (p 0.741); A_c -0.006 (p 0.517); A_late -0.027; K +0.011; power 0.22 |
+| restatement-deduped (bge / gte) | A -0.072 / -0.047 |
+| style-residualized (bge / gte) | A -0.046 / +0.002 |
+
+A across the 7 configurations: -0.072 to +0.002. The shared goal fields give the same ĝ as round 1 (cos 1.0000 at n = 32: H20 averaged the room kickoffs, so H01's #38 room swap cancels), so bge numbers reproduce exactly.

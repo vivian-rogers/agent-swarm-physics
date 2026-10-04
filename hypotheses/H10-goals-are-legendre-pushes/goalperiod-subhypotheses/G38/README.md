@@ -1,6 +1,7 @@
 # H10 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
 **Verdict:** mixed (pair test #37 → #38a; NE34)
+**Verdict (1b):** mixed (bge mixed, gte failed)
 **Role:** exploratory
 **Period:** regime III · mode C · 12 agents at start (+2 joins) · #best / #rest · 17 active days. **Splits:** NE17 (outreach approval, 04-14) and NE18 (history search, 04-20); the analyzed unit is 38a = 04-02 … 04-13; segment A = days 2+ (04-03 … 04-13). Day 1 also carries NE36 (operator corrects the Year-1 total).
 
@@ -34,3 +35,8 @@ Data: `data/processed/H10-goals-are-legendre-pushes/G38/period.json` and `NE34/p
 
 ## Notes
 - 2026-10-03: #38's alignment with its goal is still rising 10 days in; NE36 (operator correction on day 1) and per-room kickoffs complicate ĝ. The free week #37 is only 3 days with median 3 statements per agent-window.
+
+## Round 1b (improved data, 2026-10-04)
+*Inputs: shared goal fields (`goal_fields`; H10's own goal and kickoff vectors already matched them to cos ≥ 0.9999999, so bge numbers are unchanged), the second embedding model gte-modernbert, DQ5 restatement dedupe and style-residualized vectors. Data: `data/processed/H10-goals-are-legendre-pushes/r1b/<config>/`. Role: replication (the round-1 estimator, unchanged).*
+
+bge identical (Δ̄ 0.112, ε 1.92, r +0.20, ramp +0.020/day [0.010, 0.028]). gte: Δ̄ 0.061 [0.043, 0.078], ε 0.69, r −0.09 (pair verdict failed), ρ −0.18 [−0.53, +0.21] (the tilt's variance prediction would pass; not counted, Amendment 1), g_A 0.25 [−0.79, 0.46], ramp +0.008/day [−0.003, +0.017] (no longer clearly ramping), day 1 above days 2+ by +0.03 (bge −0.04). The #38 room-kickoff swap in H01's file does not touch H10, which used its own (correct) all-room kickoff.

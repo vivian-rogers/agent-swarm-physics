@@ -7,14 +7,25 @@ Builds data/processed/H15-semantic-information-scrambles/ from the shared tables
   consolidation_profile.parquet  mean write/error rate by turn offset (-20..+20) per unit x kind
 
 Run:  uv run python hypotheses/H15-semantic-information-scrambles/scheme/build.py
+      H15_ROUND=r1b uv run python ...  (round 1b, improved data; writes <OUT>/r1b; see r1b_* functions below)
 Holdout days are dropped before any detection (refuse_holdout asserts it).
+
+Round 1b (2026-10-04) changes, all behind ROUND == "r1b" (round 1 stays runnable and unchanged):
+  activity_bins -> activity_bins_fixed (DQ8 event-drop fix);
+  V_out = agent work commits per window hour (DQ4 ledger: canonical & ~imported & agent & ~automated), null before #30;
+  V_files = distinct files per window hour (#30 on); V_out_turns keeps the round-1 write-turn measure for comparison;
+  V_rel = 1 - real-failure fraction (DQ3 turn_outcomes.failed for bash/type; error_class platform failures otherwise);
+  V_prog = mean Jev v3 progress_score per agent-day (>= 3 labelled active windows);
+  consolidations from the DQ1 context ledger (reset_forced / reset_consol per call; outcomes per call: work commits
+  mapped forward <= 10 min, real failures, write evidence);
+  artifact_switches.parquet: HH261 artifact-store scramble (AS) and continuation days (CONT), from repo identity only.
 """
 from __future__ import annotations
 
 import time
 
-from h15common import (CLAUDE_CODE_AGENT, EMB, OUT, SH, WRITE_VERBS, calendar_nonholdout, holdout_days,
-                       pt_date_expr, refuse_holdout, unit_expr, write_provenance)
+from h15common import (BS, CLAUDE_CODE_AGENT, EMB, OUT, OUT_R1, PLATFORM_ERR, ROUND, SH, WORK_FROM, WRITE_VERBS,
+                       calendar_nonholdout, holdout_days, pt_date_expr, refuse_holdout, unit_expr, write_provenance)
 
 import numpy as np  # noqa: E402
 import polars as pl  # noqa: E402
@@ -38,7 +49,8 @@ def build(cal_in: pl.DataFrame, hold: set, out, guard: bool = True):
     calj = cal.select("pt_date", "goal_no", "regime", "unit", "win_start", "win_end", "win_h")
     roster = pl.read_parquet(SH / "roster.parquet")
 
-    ab = (pl.scan_parquet(SH / "activity_bins.parquet")
+    AB = SH / ("activity_bins_fixed.parquet" if ROUND == "r1b" else "activity_bins.parquet")
+    ab = (pl.scan_parquet(AB)
           .filter(pl.col("pt_date").is_in(list(DAYS)) & (pl.col("agent") != CLAUDE_CODE_AGENT))
           .group_by("pt_date", "agent")
           .agg(pl.len().alias("n_min"), (pl.col("state") >= 3).mean().alias("V_eng"),
@@ -142,17 +154,21 @@ def build(cal_in: pl.DataFrame, hold: set, out, guard: bool = True):
                         .alias("expo_share"),
                         (pl.col("n_exposed_all") / pl.col("win_h")).alias("inflow_per_h")))
     # tenure in calendar days and in active days (from roster join; first activity from the full calendar of activity)
-    first_act = (pl.scan_parquet(SH / "activity_bins.parquet").filter(pl.col("state") >= 2)
+    first_act = (pl.scan_parquet(AB).filter(pl.col("state") >= 2)
                  .group_by("agent").agg(pl.col("pt_date").min().alias("first_active")).collect())
     ad = (ad.join(roster.select("agent", "name", "lab", "joined", "left"), on="agent", how="left")
           .join(first_act, on="agent", how="left")
           .with_columns(((pl.col("pt_date").str.to_date() - pl.col("joined").str.to_date()).dt.total_days()).alias("tenure_d"))
           .sort("agent", "pt_date"))
+    extra = []
+    if ROUND == "r1b":
+        ad = r1b_viability(ad, DAYS)
+        extra = ["V_prog", "V_files", "V_out_turns", "V_rel_stderr", "n_work", "n_files", "n_fail_real", "n_prog"]
     ad = ad.select("pt_date", "agent", "name", "lab", "goal_no", "unit", "regime", "win_h", "n_min", "tenure_d",
                    "first_active", "V_out", "V_eng", "V_rel", "V_ord", "V_coh", "n_writes", "n_turns", "n_actions",
                    "n_int_pairs", "talk_frac", "idle_frac", "expo_share", "inflow_per_h", "n_exposed_agent",
                    "n_agent_msgs", "room", "main_room", "in_main_room", "n_main", "n_snap", "mem_chars_med",
-                   "mem_jacc_mean")
+                   "mem_jacc_mean", *extra)
     ad = ad.with_columns(pl.col("regime").cast(pl.Utf8), pl.col("V_out").cast(pl.Float32), pl.col("V_eng").cast(pl.Float32),
                          pl.col("V_rel").cast(pl.Float32), pl.col("V_ord").cast(pl.Float32), pl.col("V_coh").cast(pl.Float32),
                          pl.col("expo_share").cast(pl.Float32), pl.col("inflow_per_h").cast(pl.Float32))
@@ -278,6 +294,24 @@ def build(cal_in: pl.DataFrame, hold: set, out, guard: bool = True):
     log(f"catalog: {catalog.group_by('type').agg(pl.len()).sort('type').rows()}")
 
     # ============================================================================= consolidations (regime III)
+    if ROUND == "r1b":
+        ce = r1b_consolidations(cal, ms_all, out, guard)
+        sw = r1b_artifact_switches(cal, out, guard)
+        if guard:
+            write_provenance("build", ["memory_stats", "events_core", "actions", "actions_bash_head_fixed",
+                                       "behavior_states/turn_outcomes", "behavior_states_v3", "work_daily", "work_commits",
+                                       "context_ledger_turns", "activity_bins_fixed", "exposure", "chat_core",
+                                       "rooms_timeline", "roster", "calendar", "intentions",
+                                       "embeddings/intentions_bge_small"],
+                             {"round": "r1b", "holdout": "dropped before detection",
+                              "work": "canonical & ~imported & author_kind=='agent' & ~automated; from " + WORK_FROM,
+                              "V_rel": "turn_outcomes.failed (bash/type) | error_class in " + ",".join(PLATFORM_ERR),
+                              "CF": "context ledger reset_forced", "CV": "reset_consol & ~reset_forced, pre >= 10 calls",
+                              "call_work": "work commit -> first call of the author with t_log >= t (<= 10 min)",
+                              "AS": "day share of work commits in repos new to the agent (14 d) >= 0.5; >= 2 commit days "
+                                    "in previous 5 active days; CONT = commit day with share 0"})
+        log("done (r1b)")
+        return {"agent_day": ad, "catalog": catalog, "consolidations": ce, "switches": sw}
     r3days = set(cal.filter(pl.col("regime") == "III")["pt_date"].to_list())
     wset = writes.select("agent", "t").with_columns(pl.lit(1, pl.Int8).alias("w"))
     turns = (act.filter(pl.col("pt_date").is_in(list(r3days)))
@@ -361,6 +395,203 @@ def build(cal_in: pl.DataFrame, hold: set, out, guard: bool = True):
     log("done")
 
     return {"agent_day": ad, "catalog": catalog, "consolidations": ce}
+
+
+# ============================================================================= round 1b helpers
+def work_commits_agent(days: set, guard: bool = True) -> pl.DataFrame:
+    """DQ4 agent work commits (canonical & ~imported & agent author & ~automated) on `days`, from #30 on."""
+    return (pl.scan_parquet(SH / "work_commits.parquet")
+            .filter(pl.col("canonical") & ~pl.col("imported") & (pl.col("author_kind") == "agent") & ~pl.col("automated")
+                    & (~pl.col("holdout") if guard else pl.lit(True)) & pl.col("pt_date").is_in(list(days))
+                    & (pl.col("pt_date") >= WORK_FROM) & pl.col("author_agent").is_not_null())
+            .select("t", "pt_date", pl.col("author_agent").alias("agent"), pl.col("repo").cast(pl.Utf8), "n_files")
+            .collect())
+
+
+def r1b_viability(ad: pl.DataFrame, days: set) -> pl.DataFrame:
+    """Replace V_out / V_rel with the corrected measures; add V_files, V_prog (round 1b)."""
+    wd = (pl.read_parquet(SH / "work_daily.parquet")
+          .filter((pl.col("level") == "agent") & pl.col("pt_date").is_in(list(days)) & ~pl.col("holdout"))
+          .select("pt_date", "agent", pl.col("commits").alias("n_work"), pl.col("distinct_files").alias("n_files")))
+    # real failures per agent-day (computer-use turns, pause mirror excluded, as round 1's n_turns)
+    act = (pl.scan_parquet(SH / "actions.parquet").select("t", "agent", "action").with_row_index("row")
+           .filter(pl.col("action") != "pause").with_columns(pt_date_expr("t").alias("pt_date"))
+           .filter(pl.col("pt_date").is_in(list(days))).collect())
+    ec = pl.read_parquet(SH / "actions_bash_head_fixed.parquet", columns=["row", "error_class"])
+    to = (pl.read_parquet(BS / "turn_outcomes.parquet", columns=["t", "agent", "failed", "stderr"])
+          .unique(["agent", "t"], keep="first"))
+    act = act.join(ec, on="row", how="left").join(to, on=["agent", "t"], how="left")
+    act = act.with_columns(pl.when(pl.col("failed").is_not_null()).then(pl.col("failed"))
+                           .otherwise(pl.col("error_class").cast(pl.Utf8).is_in(PLATFORM_ERR)).alias("real_fail"))
+    rel = act.group_by("pt_date", "agent").agg(pl.len().alias("n_turns_r"), pl.col("real_fail").sum().alias("n_fail_real"))
+    bs3 = (pl.scan_parquet(SH / "behavior_states_v3.parquet")
+           .filter(pl.col("labeled") & pl.col("active") & ~pl.col("holdout") & pl.col("pt_date").is_in(list(days))
+                   & pl.col("progress_score").is_not_null())
+           .group_by("pt_date", "agent").agg(pl.col("progress_score").mean().alias("V_prog"), pl.len().alias("n_prog"))
+           .collect())
+    ad = (ad.rename({"V_out": "V_out_turns", "V_rel": "V_rel_stderr"})
+          .join(wd, on=["pt_date", "agent"], how="left").join(rel, on=["pt_date", "agent"], how="left")
+          .join(bs3, on=["pt_date", "agent"], how="left")
+          .with_columns(pl.col("n_work").fill_null(0), pl.col("n_files").fill_null(0), pl.col("n_fail_real").fill_null(0))
+          .with_columns(pl.when(pl.col("pt_date") >= WORK_FROM).then(pl.col("n_work") / pl.col("win_h")).otherwise(None)
+                        .alias("V_out"),
+                        pl.when(pl.col("pt_date") >= WORK_FROM).then(pl.col("n_files") / pl.col("win_h")).otherwise(None)
+                        .alias("V_files"),
+                        pl.when(pl.col("n_turns_r") >= 20).then(1 - pl.col("n_fail_real") / pl.col("n_turns_r"))
+                        .otherwise(None).alias("V_rel"),
+                        pl.when(pl.col("n_prog") >= 3).then(pl.col("V_prog")).otherwise(None).alias("V_prog")))
+    return ad.with_columns([pl.col(c).cast(pl.Float32) for c in ("V_prog", "V_files", "V_out_turns", "V_rel_stderr")])
+
+
+def r1b_calls(days: set, guard: bool = True) -> pl.DataFrame:
+    """Regime-III computer-use calls from the DQ1 context ledger with per-call outcomes (no text):
+    n_work (agent work commits mapped forward to the first call with t_log >= commit time, <= 10 min),
+    fail (any real failure among the call's action rows), wev (write evidence: commit/push/file/API write/deploy)."""
+    calls = (pl.scan_parquet(SH / "context_ledger_turns.parquet")
+             .filter((pl.col("regime") == "III") & (pl.col("ctx_mode") == "cu") & pl.col("pt_date").is_in(list(days))
+                     & (~pl.col("holdout") if guard else pl.lit(True)))
+             .select("turn_id", "agent", "pt_date", "t_call", "t_first", "t_log", "kind", "ctx_pos", "reset_consol",
+                     "reset_forced", "reset_session", "first_of_day", "prev_seg_len").collect())
+    t0 = pl.datetime(2026, 3, 24, 7, time_zone="UTC")
+    a = (pl.scan_parquet(SH / "actions.parquet").select("t", "agent", "action").with_row_index("row")
+         .filter(pl.col("t") >= t0).collect())
+    ec = pl.read_parquet(SH / "actions_bash_head_fixed.parquet", columns=["row", "error_class"])
+    to = (pl.read_parquet(BS / "turn_outcomes.parquet",
+                          columns=["t", "agent", "failed", "commit_ok", "push_ok", "file_write", "api_write", "deploy"])
+          .filter(pl.col("t") >= t0).unique(["agent", "t"], keep="first"))
+    a = a.join(ec, on="row", how="left").join(to, on=["agent", "t"], how="left").with_columns(
+        pl.when(pl.col("failed").is_not_null()).then(pl.col("failed"))
+        .otherwise(pl.col("error_class").cast(pl.Utf8).is_in(PLATFORM_ERR)).alias("fail"),
+        (pl.col("commit_ok").fill_null(False) | pl.col("push_ok").fill_null(False) | pl.col("file_write").fill_null(False)
+         | pl.col("api_write").fill_null(False) | pl.col("deploy").fill_null(False)).alias("wev"))
+    keys = calls.select("turn_id", "agent", "t_first", "t_log").sort("t_first")
+    m = (a.sort("t").join_asof(keys, left_on="t", right_on="t_first", by="agent", strategy="backward")
+         .filter(pl.col("turn_id").is_not_null() & (pl.col("t") <= pl.col("t_log") + pl.duration(seconds=1))))
+    agg = m.group_by("turn_id").agg(pl.col("fail").any().cast(pl.Int8).alias("fail"),
+                                    pl.col("wev").any().cast(pl.Int8).alias("wev"))
+    calls = calls.join(agg, on="turn_id", how="left").with_columns(pl.col("fail").fill_null(0), pl.col("wev").fill_null(0))
+    wc = work_commits_agent(days, guard).select("t", "agent").sort("t")
+    wm = wc.join_asof(calls.select("turn_id", "agent", "t_log").sort("t_log"), left_on="t", right_on="t_log",
+                      by="agent", strategy="forward", tolerance="10m")
+    wcnt = wm.drop_nulls("turn_id").group_by("turn_id").agg(pl.len().cast(pl.Int16).alias("w"))
+    calls = calls.join(wcnt, on="turn_id", how="left").with_columns(pl.col("w").fill_null(0))
+    calls = calls.sort("agent", "t_first").with_columns(pl.int_range(pl.len()).over("agent", "pt_date").alias("seq"))
+    rst = pl.col("reset_consol") | pl.col("reset_session") | pl.col("first_of_day") | (pl.col("seq") == 0)
+    calls = calls.with_columns(rst.alias("is_reset"))
+    calls = calls.with_columns(pl.col("is_reset").cast(pl.Int32).cum_sum().over("agent", "pt_date").alias("seg"))
+    calls = calls.with_columns(pl.int_range(pl.len()).over("agent", "pt_date", "seg").alias("pos"),
+                               pl.len().over("agent", "pt_date", "seg").alias("seg_len"))
+    calls = calls.with_columns((pl.col("seg_len") - pl.col("pos")).alias("rpos"))
+    log(f"r1b calls {calls.height}; work commits mapped {int(calls['w'].sum())} of {wc.height}")
+    return calls
+
+
+def r1b_consolidations(cal: pl.DataFrame, ms_all: pl.DataFrame, out, guard: bool = True) -> pl.DataFrame:
+    """CF / CV segments from the context ledger with the round-1 column layout (w = work commits per call,
+    e = real failure per call) plus write evidence (v) and agent-day call-base rates."""
+    r3days = set(cal.filter(pl.col("regime") == "III")["pt_date"].to_list())
+    tt = r1b_calls(r3days, guard)
+    tt.select("agent", "pt_date", "t_call", "seq", "seg", "pos", "seg_len", "is_reset", "reset_forced", "reset_consol",
+              "ctx_pos", "w", "fail", "wev").write_parquet(out / "calls.parquet", compression="zstd")
+    base = tt.group_by("agent", "pt_date").agg(pl.col("w").mean().alias("w_base"), pl.col("fail").mean().alias("e_base"),
+                                               pl.col("wev").mean().alias("v_base"), pl.len().alias("n_calls_day"))
+    win = lambda f, sfx: (tt.filter(f).group_by("agent", "pt_date", "seg")  # noqa: E731
+                          .agg(pl.col("w").mean().alias("w_" + sfx), pl.col("fail").mean().alias("e_" + sfx),
+                               pl.col("wev").mean().alias("v_" + sfx), pl.len().alias("n_" + sfx)))
+    pre = win(pl.col("rpos") <= 10, "pre").with_columns((pl.col("seg") + 1).alias("seg"))
+    far = win(pl.col("rpos").is_between(11, 20), "far").with_columns((pl.col("seg") + 1).alias("seg"))
+    post = win(pl.col("pos") < 10, "post")
+    seglen = tt.group_by("agent", "pt_date", "seg").agg(pl.col("seg_len").first())
+    ce = (tt.filter(pl.col("reset_consol") & (pl.col("pos") == 0))
+          .select("agent", "pt_date", "seg", pl.col("t_call").alias("t"), "reset_forced", "prev_seg_len")
+          .join(seglen.rename({"seg_len": "seg_len_pre"}).with_columns((pl.col("seg") + 1).alias("seg")),
+                on=["agent", "pt_date", "seg"], how="left")
+          .join(seglen.rename({"seg_len": "seg_len_post"}), on=["agent", "pt_date", "seg"], how="left")
+          .join(pre, on=["agent", "pt_date", "seg"], how="left").join(far, on=["agent", "pt_date", "seg"], how="left")
+          .join(post, on=["agent", "pt_date", "seg"], how="left")
+          .join(base, on=["agent", "pt_date"], how="left"))
+    ce = ce.with_columns(pl.when(pl.col("reset_forced")).then(pl.lit("CF"))
+                         .when(pl.col("seg_len_pre") >= 10).then(pl.lit("CV")).otherwise(pl.lit("other")).alias("kind"))
+    msn = ms_all.select("agent", pl.col("t").alias("t_mem"), "n_chars", "n_lines", "lines_added", "lines_removed",
+                        "lines_kept", "jaccard_prev").sort("t_mem")
+    ce = (ce.sort("t").join_asof(msn, left_on="t", right_on="t_mem", by="agent", strategy="backward", tolerance="600s")
+          .with_columns((pl.col("lines_added") / pl.col("n_lines").clip(1, None)).alias("stored_dose"),
+                        (pl.col("lines_removed") / (pl.col("lines_kept") + pl.col("lines_removed")).clip(1, None))
+                        .alias("removed_frac")))
+    ce = (ce.join(cal.select("pt_date", "goal_no", "unit"), on="pt_date", how="left")
+          .select("agent", "t", "pt_date", "goal_no", "unit", "kind", "seg_len_pre", "seg_len_post", "prev_seg_len",
+                  "w_pre", "w_post", "e_pre", "e_post", "n_pre", "n_post", "w_far", "e_far", "n_far", "v_pre", "v_post",
+                  "v_far", "w_base", "e_base", "v_base", "n_calls_day", "n_chars", "n_lines", "lines_added",
+                  "lines_removed", "stored_dose", "removed_frac", "jaccard_prev"))
+    if guard:
+        refuse_holdout(ce["pt_date"].unique().to_list(), "consolidations")
+    ce.write_parquet(out / "consolidations.parquet", compression="zstd")
+    log(f"r1b consolidations {ce.height} ({ce.group_by('kind').agg(pl.len()).sort('kind').rows()})")
+    # profile by call offset (-20..-1 before, +1..+20 after) per unit x kind
+    ck = ce.select("agent", "pt_date", pl.col("t").alias("tc"), "kind", "unit")
+    segk = (tt.filter(pl.col("reset_consol") & (pl.col("pos") == 0)).select("agent", "pt_date", "seg", pl.col("t_call").alias("tc"))
+            .join(ck, on=["agent", "pt_date", "tc"], how="inner"))
+    before = (tt.filter(pl.col("rpos") <= 20).with_columns((-pl.col("rpos")).alias("off"), (pl.col("seg") + 1).alias("cseg"))
+              .join(segk.select("agent", "pt_date", pl.col("seg").alias("cseg"), "kind", "unit"), on=["agent", "pt_date", "cseg"]))
+    after = (tt.filter(pl.col("pos") < 20).with_columns((pl.col("pos") + 1).alias("off"), pl.col("seg").alias("cseg"))
+             .join(segk.select("agent", "pt_date", pl.col("seg").alias("cseg"), "kind", "unit"), on=["agent", "pt_date", "cseg"]))
+    prof = (pl.concat([before.select("unit", "kind", "off", "w", "fail", "wev"), after.select("unit", "kind", "off", "w", "fail", "wev")])
+            .group_by("unit", "kind", "off").agg(pl.col("w").mean().alias("w_rate"), pl.col("fail").mean().alias("e_rate"),
+                                                 pl.col("wev").mean().alias("v_rate"), pl.len().alias("n"))
+            .sort("unit", "kind", "off"))
+    prof.write_parquet(out / "consolidation_profile.parquet", compression="zstd")
+    return ce
+
+
+def r1b_artifact_switches(cal: pl.DataFrame, out, guard: bool = True) -> pl.DataFrame:
+    """HH261 artifact-store scramble from repo identity only (pre-registered 2026-10-04, card Round 1b).
+    Per agent and commit day d (>= 1 work commit): dose = share of d's work commits in repos the agent did not commit
+    to in the previous 14 calendar days (non-holdout history). AS event: dose >= 0.5, the agent committed on >= 2 of
+    its previous 5 active days, no AS event in its previous 3 active days. CONT (matched control days): commit days
+    with dose 0 and the same history requirement."""
+    days = set(cal["pt_date"].to_list())
+    wc = work_commits_agent(days, guard)
+    act_days = (pl.read_parquet(out / "agent_day.parquet", columns=["agent", "pt_date"]))
+    per = wc.group_by("agent", "pt_date", "repo").agg(pl.len().alias("c"))
+    rows = []
+    for (a,), g in per.group_by(["agent"], maintain_order=True):
+        seq = sorted(act_days.filter(pl.col("agent") == a)["pt_date"].to_list())
+        byday = {}
+        for d, r, c in g.select("pt_date", "repo", "c").iter_rows():
+            byday.setdefault(d, {})[r] = c
+        last_as = -99
+        for i, d in enumerate(seq):
+            if d not in byday or d < WORK_FROM:
+                continue
+            dd = np.datetime64(d)
+            hist = set()
+            for d2, rr in byday.items():
+                if dd - np.timedelta64(14, "D") <= np.datetime64(d2) < dd:
+                    hist |= set(rr)
+            prev5 = seq[max(0, i - 5):i]
+            n_commit_days = sum(1 for x in prev5 if x in byday)
+            if n_commit_days < 2:
+                continue
+            tot = sum(byday[d].values())
+            new = sum(c for r, c in byday[d].items() if r not in hist)
+            dose = new / tot
+            kind = "AS" if (dose >= 0.5 and i - last_as > 3) else ("CONT" if dose == 0 else None)
+            if kind == "AS":
+                last_as = i
+            if kind:
+                rows.append({"type": kind, "agent": int(a), "pt_date": d, "dose": float(dose), "n_commits_day": int(tot),
+                             "n_repos_day": len(byday[d]), "n_new_repos": sum(1 for r in byday[d] if r not in hist),
+                             "hist_repos": len(hist), "commit_days_prev5": n_commit_days})
+    sw = pl.DataFrame(rows, schema={"type": pl.Utf8, "agent": pl.Int8, "pt_date": pl.Utf8, "dose": pl.Float64,
+                                    "n_commits_day": pl.Int32, "n_repos_day": pl.Int16, "n_new_repos": pl.Int16,
+                                    "hist_repos": pl.Int16, "commit_days_prev5": pl.Int8})
+    sw = sw.join(cal.select("pt_date", "goal_no", "regime", "unit"), on="pt_date", how="left").with_columns(
+        pl.col("regime").cast(pl.Utf8)).sort("type", "pt_date", "agent")
+    if guard:
+        refuse_holdout(sw["pt_date"].to_list(), "artifact_switches")
+    sw.write_parquet(out / "artifact_switches.parquet", compression="zstd")
+    log(f"r1b artifact switches: {sw.group_by('type').agg(pl.len()).sort('type').rows()}")
+    return sw
 
 
 if __name__ == "__main__":

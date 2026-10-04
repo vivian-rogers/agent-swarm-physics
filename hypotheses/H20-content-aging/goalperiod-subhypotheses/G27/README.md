@@ -1,7 +1,8 @@
 # H20 × G27: Hack the OWASP Juice Shop hacking playground. Compete to see which agent can complete the most challenges (2026-01-12 → 2026-01-23)
 
 **Verdict:** mixed (underpowered: not significant, μ = 0.5 aging not rejected) (Amendment-2 null; pre-registered null: mixed)
-**Role:** exploratory
+**Verdict (1b):** mixed (replication); native: descriptive
+**Role:** native (round 1b: mid-period switch as block structure; also carries the replication row; round 1 was exploratory)
 **Period:** regime I · mode K · 10 agents with statements · #general only · 10 active days (100 agent-days with ≥ 8 statements).
 
 ## Why this period
@@ -46,3 +47,34 @@ Data: `data/processed/H20-content-aging/G27/` (result.json = pre-registered null
 C (beats the stationary null): 0 — A p = 0.511, A_c p = 0.964. D (unfitted signature: A_late, μ̂ > 0): 0. H (rivals R1 quench, R2 field, R3 common): 0. G: –.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04): replication
+*Inputs: shared goal fields, gte-modernbert (DQ5), DQ5 dedupe (copies, restatements), style-residualized vectors. Data: `data/processed/H20-content-aging/G27/r1b/result_aniso_<config>.json`. Role of this row: replication.*
+
+| Input | Statistics (Amendment-2 null) |
+| --- | --- |
+| round 1 (bge, H01-derived goal vectors) | see Result above |
+| bge-small, shared goal fields | A -0.002 (p 0.511); A_c -0.099 (p 0.964); A_late +0.104; K +0.049; μ̂ -0.14 [-3.00, +3.00]; power 0.15 |
+| gte-modernbert | A +0.012 (p 0.389); A_c -0.036 (p 0.780); A_late +0.006; K +0.018; μ̂ +0.04 [-3.00, +3.00]; power 0.06 |
+| restatement-deduped (bge / gte) | A -0.002 / +0.015 |
+| style-residualized (bge / gte) | A -0.017 / +0.011 |
+
+A across the 7 configurations: -0.017 to +0.015. The shared goal fields give the same ĝ as round 1 (cos 1.0000 at n = 32: H20 averaged the room kickoffs, so H01's #38 room swap cancels), so bge numbers reproduce exactly.
+
+## Round 1b native test: a spontaneous mid-period switch (rivalry → collaboration)
+*Prediction written 2026-10-04 07:25 UTC, before computing any block statistic. Seen before: the round-1 numbers above (A −0.002, A_c −0.099 with p 0.964, A_late +0.104) and DQ9's note that the week turned from rivalry into collaboration without an operator change (switch date not recorded).*
+- **Design.** A regime switch inside a period is neither aging nor stationary relaxation: it shows up as **block structure** in C(d, d′) (pairs on the same side of the switch more similar than pairs straddling it, at the same lag). For each split day s = 3…T − 2, B(s) = lag-weighted mean over τ of [mean C of non-straddling pairs − mean C of straddling pairs at lag τ]; B_max = max_s B(s), with ŝ = argmax. **Null:** the Amendment-2 stationary swarm model fitted to the period (estimated latent shapes, real counts), 500 draws, the same max over s. Statistics on raw C and on V-c (swarm-common removed), both models.
+- **Calibration (descriptive):** the same B_max test on the other long and medium periods; under a calibrated null about 1 in 20 should exceed the 95th percentile, apart from periods with catalogued steps (#38: NE17/NE18).
+- **N2a.** In #27, raw B_max exceeds the null's 95th percentile in both models. Credence 0.45.
+- **N2b.** Given N2a, ŝ falls on days 4–7. Credence 0.5.
+- **Verdict rule (native):** "switch, not aging" (**failed** for H20's aging claim, a rejuvenation-type structure instead) if N2a holds; **descriptive** (stationary within power) if B_max is inside the null in both models.
+
+**Result (native, run 2026-10-04 after the prediction; `r1b/natives_<model>.json`).**
+
+| Statistic | bge-small | gte-modernbert |
+| --- | --- | --- |
+| raw C: B_max (ŝ) | +0.040 (day 3), p 0.48, null q95 0.118 | +0.065 (day 6), p 0.21, q95 0.112 |
+| swarm-common removed: B_max (ŝ) | +0.082 (day 6), p 0.15, q95 0.099 | +0.031 (day 6), p 0.78, q95 0.102 |
+| calibration: other long / medium periods with raw p < 0.05 | 1 of 9 (#38, ŝ = day 3: the kickoff relaxation) | 2 of 9 (#38; #51 at p 0.045) |
+
+N2a fails in both models (N2b not reached). **Native verdict: descriptive** (stationary within power). The rivalry → collaboration turn that the summary describes leaves no block structure in content at day resolution; the common-removed statistic points at day 6 in both models but stays inside the null. The calibration run is close to nominal (1–2 of 9 at α = 0.05, one of them #38's known kickoff relaxation).

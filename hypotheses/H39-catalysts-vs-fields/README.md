@@ -1,6 +1,7 @@
 # H39: Catalysts vs. fields
 
 **Status:** exploratory round 1 done (2026-10-04, UTC; 32 non-holdout goal periods for point levers, 26 kickoffs, 10 scaffold steps, 2 room steps, 1 post hoc step). Design, observables, nulls and predictions P1–P8 were written before any real-data statistic; synthetic validation (axis F) came first. **Headline:** no lever is a pure catalyst. **Nudges are both:** they raise idle escape ×1.4–1.6 and also lower the stationary idle share (G51 −0.07), with catalytic fraction ρ ≈ 0.5; HH52's "catalyst, π unchanged" is rejected per episode. **Human messages are fields:** in regime I they move agents from chat to computer work; in G51 they move content toward the message but not behavior. **@-mentions steer content, not behavior** (no behavior effect in the best-powered periods). **Forced context erasure** is an anti-catalytic field toward work (idle share down in 8/8 regime-III periods). **Goal kickoffs** tilt content only in regime III. Scaffold steps are mostly undetectable. Confirmatory script written and dry-run on stand-ins; **not run**.
+- **Round 1b (improved data, 2026-10-04):** with leading-@ nudge targets, DQ8 lever_design windows (presence-cut, past-only) and the Jev v3.1 states as a second state space, **the nudge verdict (both) holds and strengthens**: B4 K +0.13 [0.04, 0.21], idle share now −0.048 [−0.076, −0.019] pooled (round 1's CI spanned 0), ρ 0.51; on v3 states (V4) K +0.25 [0.17, 0.32], wait share −0.08, wait escape +0.46: P1 passes all clauses there. Human messages stay fields; @-mentions stay directionless (P(field) 0.76 → 0.50); erasure stays a field toward work in both state spaces, but its K flips sign between B4 (−0.15) and V4 (+0.27). B4 never used `activity_bins` (H14's grid), so the event-drop bug did not touch it. Natives: NE43 mixed (the nudger stop is a catalytic loss in both state spaces; the bookend stop is neutral on B4 but not on V4, confounded with the #focus room); NE44 failed (nudge catalysis is not larger under the 12-h pause default); NE10 mixed on V4. Scorecard unchanged.
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH52 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); related HH116 (operator susceptibility, H30), HH124 (nudger as Maxwell demon, H35), HH53 (traps, H16).
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime; Action; Agent state (categorical: action class), in H14's coarse scheme ("Action (turn-merged)" records, minute grid); Agent state (vector): the agent's 30-min embedding vector (`embeddings/agent_win30`); Interaction (broadcast) for room messages and Interaction (addressed) for mentions; Driving / external field (goals, human messages, nudges). New named terms proposed for DEFINITIONS.md (owner to add): **"field effect (occupancy shift)"**, **"catalytic effect (escape at fixed occupancy)"**, **"lever episode"** (defined below).
@@ -196,6 +197,8 @@ Verdict rule (per period, dated in each folder): every powered class matches its
 | [NE18](goalperiod-subhypotheses/NE18/README.md) | exploratory (spanning) | supported | behavior neither; content catalyst |
 | [NE03](goalperiod-subhypotheses/NE03/README.md) | exploratory (spanning) | failed | catalyst K +0.135 (98th pct; predicted neither) |
 | [NE06](goalperiod-subhypotheses/NE06/README.md) | exploratory (spanning) | supported | neither (as predicted) |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) | native (round 1b) | mixed | nudger off: catalytic loss in B4 and V4 (escape ≤ 12.5th pct, no field); bookends off: B4 neither, V4 both (#focus confound) |
+| [NE44](goalperiod-subhypotheses/NE44/README.md) | native (round 1b) | failed | nudge idle-escape 12-h 0.14 vs G51 0.40 (Δ −0.26, n.s.) |
 ## Results
 ### Exploratory round 1 (2026-10-04; non-holdout only)
 - **Scripts:** `scheme/build.py`; `analysis/h39lib.py` (estimators); `analysis/synthetic.py` and `synthetic_figure.py`; `analysis/run_period.py` (one goal period) and `run_all.py`; `analysis/run_steps.py` (kickoffs, rooms, scaffold); `analysis/run_autooff.py` (post hoc P9); `analysis/summarize.py`; `analysis/figures.py`; `analysis/write_period_folders.py` + `write_results.py`; `analysis/confirm.py`.
@@ -267,6 +270,46 @@ Pooled over powered units (≥ 20 episodes). φ_exc: placebo-corrected RMS shift
   - mentions point nowhere on average;
   - erasure trades idle for work.
 
+## Round 1b (improved data, 2026-10-04)
+*Re-run on corrected inputs plus a second state space and three period-native tests (`scheme/build.py --r1b`, `analysis/run_period.py --data r1b`, `analysis/v3states.py`, `analysis/r1b_native.py`, `analysis/r1b_summary.py`; outputs in `data/processed/H39-catalysts-vs-fields/r1b/`). Predictions P1–P9, the classification rule and the per-period rule are unchanged; native predictions were dated in their folders at 07:31 UTC.*
+
+**What changed.**
+- **Activity bins:** H39's B4/B6 states come from H14's minute grid, which computes minutes directly from event times and never read `activity_bins`; the event-drop bug does not affect them (checked in code). No change needed.
+- **Nudge target = leading @:** 1,070 N_tgt exposures (round 1: 1,398); the 328 agents named second become `N_oth`, which marks busy minutes but is not an episode.
+- **DQ8 `lever_design`:** past-only eligibility and next-kick cuts for transition statistics were already in place; round 1 additionally required the whole 30-min window inside the agent's present span (conditioning on future presence). Round 1b only requires one transition and cuts windows at the end of presence (episodes, controls and erasures alike). Cross-check with `nulls.lever_design` itself (ITT mean work/chat share over 30 min, presence-masked, uncut).
+- **Second state space (DQ3 v3.1):** 5-min windows, probability vectors lumped to V4 = work (execute, research, debug, verify, communicate_external), coord (plan_coordinate, social, meta), wait (idle, monitor_wait, plus in-span windows with no activity), maint (self_maintenance); soft transitions p_t(i)p_{t+1}(j); W = 6 windows; strata on the argmax of the last pre-kick window.
+- **Receiving-call timing** (DQ1) as a sensitivity for kicks.
+
+**Old vs new (class level, pooled over powered units).**
+
+| Lever | Round 1 (B4) | Round 1b (B4) | Round 1b (V4, v3 states) |
+| --- | --- | --- | --- |
+| Nudge class (P) · K · φ_exc | both (0.81) · +0.150 [0.07, 0.23] · 0.14 | both (0.64) · +0.126 [0.04, 0.21] · 0.12 | **both (0.98) · +0.246 [0.17, 0.32] · 0.18** |
+| Nudge Δπ idle/wait · idle/wait escape | −0.043 [−0.109, 0.023] · +0.34 [0.09, 0.59] | **−0.048 [−0.076, −0.019]** · +0.24 [−0.10, 0.58] | −0.082 [−0.122, −0.042] · +0.46 [0.37, 0.54] |
+| Human (any) class · K · φ_exc | field (0.93) · +0.03 · 0.33 | field (0.92) · +0.04 · 0.35 | field (0.35) / both (0.50) · +0.17 · 0.28 |
+| @-mention class · K · φ_exc | field (0.76) · +0.044 · 0.15 | field (0.50; neither 0.46) · +0.044 · 0.16 | field (0.88) · +0.035 · 0.17 |
+| Erasure CF, no-consolidate chain: K · Δπ idle · Δπ work | −0.148 · −0.126 · +0.128 | −0.147 · −0.110 · +0.110 | (V4) K **+0.268** · wait −0.214 · work +0.165 |
+| ITT (`lever_design`) work/chat share, 30 min | – | nudge +0.020 [0.010, 0.030]; human +0.016 (n.s.); mention +0.007 (n.s.) | – |
+| Nudge K at the receiving call (G51 · G38) | – | +0.065 · +0.058 (the read-out minute itself falls outside the window) | – |
+| Content drift toward the message (SD): mention · human | +0.32 · +0.27 | +0.33 [0.20, 0.46] · +0.30 [0.16, 0.43] | – |
+| Per-period verdicts supported / mixed / failed / descriptive | 3 / 4 / 23 / 2 | 5 / 4 / 21 / 2 (G04 → mixed, G44 → failed; G19, G20, G31 → supported) | – |
+
+**Which verdicts change.** P1 nudges: still 4/5 clauses on B4, but a different clause now fails (pooled idle share now excludes 0; idle escape now spans 0); **on V4 all five clauses pass** (both, Δπ_wait < 0, escape up, K > 0, ρ 0.57). P2 failed (unchanged). P3 mixed (unchanged; mentions are fields with no direction, now nearly "neither"). P4 failed (unchanged on the pre-registered chains); the erasure *field* (work up, idle/wait down) is robust across state spaces, its *catalysis* is not (K −0.15 on B4's A2 chain, +0.27 on V4): the H44 note (orderly re-reading, Jev labels those windows as executing) explains the V4 sign. The receiving-call sensitivity shows why nudge catalysis needs posting-time windows: the escape happens at the read-out call itself (H43, RE-V1), which a window starting after the kick minute excludes.
+
+**Native tests (layer 2).**
+
+| Folder | Design | Result | Verdict |
+| --- | --- | --- | --- |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) | bookends off (08-05) and nudger off (08-21), 5+5 days, B4 and V4 vs within-#51 day boundaries | S1: B4 neither (K +0.00); V4 both (K +0.30, wait share and wait escape at the 100th pct; #focus room opens the same day). S2: B4 neither, idle escape 12.5th pct, no field; V4 catalyst K −0.13, wait escape 0th pct, no field | **mixed** (N2 holds in both families; N1 only on B4) |
+| [NE44](goalperiod-subhypotheses/NE44/README.md) | nudge idle escape, 12-h pause default (G37–G44 pooled) vs G51 | escape ln ratio 0.14 [−0.35, 0.64] vs 0.40: Δ −0.26 [−0.78, 0.26]; Δπ_idle −0.037 vs −0.058 | **failed** (reversed, n.s.) |
+| [NE10](goalperiod-subhypotheses/NE10/README.md) | nudger on (02-13) on V4 | V4 neither, Δπ_wait +0.023 (predicted < 0) | **mixed** |
+
+**Scorecard after 1b** (unchanged scores, evidence updated): A 1 (B4 unaffected by the activity bug; V4 adds a semantically richer state space); B 1; C 1; D 1 (the escape-only signature for nudges now holds on both state spaces); E 1 (NE43: the nudger stop is a catalytic loss in both families, as round 1 leaned; NE44 failed; NE10 mixed); F 1; G 1 (agrees with RE-V1/H43: response at the receiving call; with H44 on erasure); H 1; I 1. **A1 B1 C1 D1 E1 F1 G1 H1 I1.**
+
+**Operator reading, revised.** A nudge is both a catalyst and a field in two independent state spaces: it raises escape from waiting and lowers the waiting share (V4: −8 points while it acts). Switching the nudger off removes catalysis, not a field. Human messages are fields (what agents do), mentions steer content not behavior, context resets push agents toward work in both state spaces.
+
+**Disclosure.** A probe for the leading-@ rule printed per-period nudge counts including held-out periods; no outcome was computed there.
+
 ## Confirmatory predictions (C-*; written 2026-10-04 after round 1; not run)
 Script: `analysis/confirm.py`. It refuses to run without `--confirm --i-understand-this-uses-the-locked-holdout`.
 - **Dry run.** `--dry-run` uses non-holdout stand-ins and wrote `confirm_dryrun/` (stand-in values only):
@@ -307,3 +350,4 @@ Script: `analysis/confirm.py`. It refuses to run without `--confirm --i-understa
 - 2026-10-04: **Amendment A2** (after a quick G38 test run, before the full run). Erasure is also scored on the work/chat/idle chain without the consolidate state, because the consolidation clock mechanically depletes transitions into consolidate right after any consolidation. Both chains are reported; P4 is scored on the pre-registered chains.
 - 2026-10-04: **Data finding.** The `automated` speaker (nudges and daily bookends) is silent from 2026-08-21 (last nudges 08-20); this is not in the CHANGELOG. Proposed as a new NE (nudger off inside #51, non-holdout) and used for P9.
 - 2026-10-04: round 1 done. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I1. Not promoted. Disk: 6.2 MB in `data/processed/H39-catalysts-vs-fields/`. Summary pages follow the updated two-page rubric (page-2 macros written).
+- 2026-10-04: round 1b (leading-@ targets, lever_design presence cut, v3.1 states as V4, receiving-call sensitivity, natives NE43 / NE44 / NE10); ~15 min of compute on ≤ 2 processes; disk +5.6 MB in `data/processed/H39-catalysts-vs-fields/r1b/`.

@@ -1,6 +1,7 @@
 # H10 × G12: Form two teams and debate each other, while one agent judges (2025-09-01 → 2025-09-05)
 
 **Verdict:** failed (pair test #11 → #12a; NE34)
+**Verdict (1b):** failed (both models)
 **Role:** exploratory
 **Period:** regime I · mode M · 7 agents · #general only · 5 active days. **Split:** scaffold change C (history search + CoT memory) on 2025-09-05, so the analyzed unit is 12a = 09-01 … 09-04; segment A = days 2+ (09-02 … 09-04, ~18 windows).
 
@@ -34,3 +35,8 @@ Data: `data/processed/H10-goals-are-legendre-pushes/G12/period.json` and `NE34/p
 
 ## Notes
 - 2026-10-03: mean pairwise signal correlation along ĝ rose 0.20 → 0.64: in 12a the agents move on and off the goal direction together (debate rounds).
+
+## Round 1b (improved data, 2026-10-04)
+*Inputs: shared goal fields (`goal_fields`; H10's own goal and kickoff vectors already matched them to cos ≥ 0.9999999, so bge numbers are unchanged), the second embedding model gte-modernbert, DQ5 restatement dedupe and style-residualized vectors. Data: `data/processed/H10-goals-are-legendre-pushes/r1b/<config>/`. Role: replication (the round-1 estimator, unchanged).*
+
+bge identical to round 1 (Δ̄ 0.203, ε 3.06, r −0.37, convergence slope −1.41, g_A 0.79). gte: Δ̄ 0.235 [0.170, 0.296], ε 3.00, r −0.53, slope −1.25, g_A 0.81 [0.79, 0.82]; day 1 minus days 2+ +0.18 (bge +0.16); the day-2–4 relaxation slope is −0.016/day [−0.038, +0.002] in gte vs −0.033 in bge. Deduped and style-residualized: r −0.32 to −0.66 (bge), −0.05 to −0.56 (gte).

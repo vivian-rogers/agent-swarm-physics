@@ -1,6 +1,7 @@
 # H22 × G51e: Each agent: Maximize your assigned goal! — unit 51e (2026-09-03 → 09-04)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (round 1: descriptive)
 **Role:** exploratory
 **Period:** regime III · mode I/K · 29 → 32 agents · one room · 2 days (NE33: Muse Spark 1.3, Gemini 3.8 Flash, GPT-6 Astra join; their roles start 09-04); day-thirds as pseudo-days.
 
@@ -55,3 +56,17 @@ Data: `data/processed/H22-private-goals-spin-glass/G51/<unit>/results.json`; fig
 ## Notes
 - Data: `data/processed/H22-private-goals-spin-glass/G51/51e/`. Figure: `figures/H22_G51e.pdf`.
 - Card: `../../README.md` (Observables, Null, Prediction, Amendment 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the corrected inputs (card section "Round 1b"); round-1 numbers kept above.* DQ6 ground-truth roles (Opus 5's first role recovered), DQ5 statement vectors in two models (bge, gte), DQ5 `style_resid_period` vectors ("styp"), restatements removed ("dedup"), `activity_bins_fixed` for talk spins, and the DQ2 stance channel with the calibrated agent-field null. Data: `data/processed/H22-private-goals-spin-glass/r1b/`.
+
+| Unit | Variant | heterogeneity ρ_split | τ₃(dc) | T_SR / pairs (p>) | T_OP | W (p) | talk ρ_split (p) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 51e | round 1 | 0.25 (p 0.106) | nan | – / 0 (p> –) | – | – (p –) | 0.20 (p 0.100) |
+| 51e | bge | 0.25 (p 0.106) | nan | – / 0 (p> –) | – | – (p –) | -0.01 (p 0.542) |
+| 51e | gte | 0.25 (p 0.123) | -0.22 | – / 0 (p> –) | – | – (p –) | -0.01 (p 0.542) |
+| 51e | bge styp | 0.23 (p 0.140) | nan | – / 0 (p> –) | – | – (p –) | -0.01 (p 0.542) |
+| 51e | gte styp | 0.26 (p 0.086) | 0.32 | – / 0 (p> –) | – | – (p –) | -0.01 (p 0.542) |
+| 51e | bge dedup | 0.26 (p 0.093) | nan | – / 0 (p> –) | – | – (p –) | -0.01 (p 0.542) |
+| 51e | **stance (DQ2)** | dc split-half 0.26 (agent-field p 0.035) | –  | -0.246 / 1 (p> 0.780) | -0.217 | – | neg. pairs 22 vs 4.3 |
+

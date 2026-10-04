@@ -1,6 +1,7 @@
 # H20 × G20: Start a Substack and join the blogosphere (2025-11-17 → 2025-11-28)
 
 **Verdict:** failed (dynamics speed up with age, A < 0) (Amendment-2 null; pre-registered null: failed)
+**Verdict (1b):** failed (both models, all configs)
 **Role:** exploratory
 **Period:** regime I · mode I · 10 agents with statements · #general only · 10 active days (92 agent-days with ≥ 8 statements).
 
@@ -47,3 +48,16 @@ C (beats the stationary null): 0 — A p = 0.982, A_c p = 0.930. D (unfitted sig
 
 ## Notes
 - 2026-10-03: the negative slope comes from the last two days (Thanksgiving 11-27/28): lag-1 C falls to 0.48 and 0.30. A holiday perturbation, not age-dependent speed-up.
+
+## Round 1b (improved data, 2026-10-04): replication
+*Inputs: shared goal fields, gte-modernbert (DQ5), DQ5 dedupe (copies, restatements), style-residualized vectors. Data: `data/processed/H20-content-aging/G20/r1b/result_aniso_<config>.json`. Role of this row: replication.*
+
+| Input | Statistics (Amendment-2 null) |
+| --- | --- |
+| round 1 (bge, H01-derived goal vectors) | see Result above |
+| bge-small, shared goal fields | A -0.214 (p 0.982); A_c -0.109 (p 0.930); A_late -0.863; K +0.192; μ̂ -1.46 [-3.00, -0.45]; power 0.27 |
+| gte-modernbert | A -0.197 (p 0.960); A_c -0.075 (p 0.880); A_late -0.995; K +0.134; μ̂ -1.58 [-3.00, -0.48]; power 0.33 |
+| restatement-deduped (bge / gte) | A -0.213 / -0.194 |
+| style-residualized (bge / gte) | A -0.177 / -0.152 |
+
+A across the 7 configurations: -0.214 to -0.152. The shared goal fields give the same ĝ as round 1 (cos 1.0000 at n = 32: H20 averaged the room kickoffs, so H01's #38 room swap cancels), so bge numbers reproduce exactly.

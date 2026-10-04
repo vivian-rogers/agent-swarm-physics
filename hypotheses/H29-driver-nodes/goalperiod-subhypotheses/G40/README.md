@@ -1,6 +1,7 @@
 # H29 × G40: Connect your worlds into a 3D universe! (2026-05-04 → 2026-05-08)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed; gte mixed)
 **Role:** exploratory (counted)
 **Period:** regime III · mode C · 14 recipients in the network · merged into #universe-coordination (one room) · 5 non-holdout days.
 
@@ -34,3 +35,17 @@ Figures: `../../figures/h29_summary.pdf` (all periods). Data: `data/processed/H2
 
 ## Notes
 - 2026-10-04: pre-registered pipeline (`explore.py`) and Amendment 2 (`posthoc.py`, post hoc) run. Invisible rows from call windows > 30 s: 0.24 (the H18 visibility rule misclassifies messages that arrive during a PAUSE or a long tool call).
+
+## Round 1b (improved data, 2026-10-04)
+Context-ledger visibility (DQ1) instead of H18's call-start rule; both embedding models; the DQ2 reply-graph network. Numbers in `data/processed/H29-driver-nodes/r1b/G40/` (bge) and `r1b_gte/G40/` (gte). Rule unchanged.
+
+| Statistic | Round 1 | Round 1b bge | Round 1b gte |
+| --- | --- | --- | --- |
+| κ (pre-registered) | -0.003 [-0.017, 0.016] | 0.003 [-0.017, 0.025] | 0.005 [-0.018, 0.029] |
+| boundary jump (matched age) | 0.016 [-0.025, 0.047] | 0.016 [-0.016, 0.052] | 0.037 [0.000, 0.075] |
+| named like-for-like | -0.054 [-0.158, 0.184] | -0.061 [-0.108, 0.118] | -0.011 [-0.047, 0.110] |
+| unnamed like-for-like | 0.015 [-0.038, 0.042] | 0.017 [-0.020, 0.047] | 0.038 [0.000, 0.074] |
+| split-half D (pre-registered / post hoc) | 0.01 / 0.17 | 0.01 / 0.30 | 0.32 / 0.50 |
+| held-out V2 ρ(D, H) (pre-registered / post hoc) | -0.08 / 0.04 | -0.06 / 0.13 | 0.03 / -0.00 |
+| reply network: split-half D^rep · held-out ρ(D^rep, H) | – | 0.63 · -0.09 | 0.66 · 0.03 |
+| reply-parent premium (matched age) | – | 0.152 [0.126, 0.175] | 0.165 [0.137, 0.188] |

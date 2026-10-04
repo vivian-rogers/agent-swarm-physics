@@ -1,6 +1,7 @@
 # H39 × G08: Design the AI Village benchmark for open-ended goal pursuit – and test yourselves on it! (2025-07-18 → 2025-08-13)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 72 agent-days on 18 non-holdout days (2025-07-18 → 2025-08-12) · 12,293 agent-minutes on the trimmed grid.
 
@@ -49,3 +50,6 @@ Content (O6), drift toward the kick message in SD units of the controls' drift, 
 
 ## Notes
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G08/results.json`. Rule unchanged: P2 human messages ✗; P3 @-mentions ✗ → **failed**.

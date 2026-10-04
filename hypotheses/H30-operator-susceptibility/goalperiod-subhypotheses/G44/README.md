@@ -1,6 +1,7 @@
 # H30 × G44: Finetune your leader! (2026-05-26 → 2026-06-01)
 
 **Verdict:** mixed — nudge -0.32 min (n 24); content 0.016; low power
+**Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime III · mode C · 16 agents at start · 4 active days.
 
@@ -38,3 +39,18 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G44/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G44/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_act(N_tgt), level model (r1: no FE; 1b: day FE, past-only) | -0.32 [-1.19, 0.70] (n 24) | 0.01 [-0.83, 1.65] (n 21) |
+| χ_act(N_tgt) with day FE / without | -0.21 [-1.41, 0.54] | 0.32 [-0.51, 1.98] (no FE) |
+| first / repeat nudge | -0.11 [-1.53, 0.80] / 0.07 [-6.00, 1.53] | 0.10 [-0.37, 1.59] / -2.90 [-5.16, 0.19] |
+| bystander χ_act(N_by) | 0.46 [0.05, 1.44] | 0.07 [-0.26, 0.89] |
+| χ_con(H_und) bge (gte) | 0.016 [-0.041, 0.030] | 0.012 [-0.037, 0.023] (0.016 [-0.052, 0.026]) |
+| χ_con(H_men) bge (gte) | 0.043 [-0.027, 0.069] | 0.039 [-0.020, 0.057] (-0.030 [-0.065, 0.044]) |
+| χ_act(H_und) | 0.62 [0.23, 3.15] | 0.01 [-0.90, 0.65] |
+
+Round-1b prediction rows: P1 supported (point > 0); P2 supported; P3 partly (H_men > H_und, H_und CI includes 0); P4 not supported (CI includes 0); P4 not supported (CI includes 0); P6 supported (R₁ < 0.5).

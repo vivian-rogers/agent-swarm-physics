@@ -1,7 +1,8 @@
 # H35 × NE10: the auto-nudger switched on (CHANGELOG 2026-02-10; first nudge 2026-02-13, inside #30)
 
 **Verdict:** supported (accounting only; low information)
-**Role:** exploratory (natural experiment, non-holdout)
+**Role:** native (round 1b native test below) · round 1: exploratory (natural experiment, non-holdout)
+**Verdict (1b):** supported (switch-on invisible in work, z +0.92; 2026-10-04)
 **Period:** regime I · before = #27 (01-12 → 01-23) + #30's nudge-free days 02-09 → 02-12 (#28, #29 held out); after = 02-13 (#30) + #31 (02-16 → 02-19; 02-20 = NE11 excluded). Data: `data/processed/H35-nudger-maxwell-demon/NE10/`.
 
 ## Why this period
@@ -22,6 +23,17 @@ The only documented switch-on of the nudger outside the holdout. H04 found the e
 | information used | G30 b = 0.64 (9 nudges, above null); G31 b = 0.20 (11 nudges, not above) | ≥ 15 nudges needed to score | n/a (too few) |
 
 **Reading.** The switch-on bought at most a few tenths of a percent of agent-minutes, an order of magnitude below what the day-to-day noise lets one see. So NE10 cannot show the nudger's work at swarm level, and H04's lower escape hazard after the switch-on must come from the confounds it lists (goal changes, two roster joins), not from the nudges. Data: `data/processed/H35-nudger-maxwell-demon/NE10/ne10_results.json`.
+
+## Round 1b native test (first nudges ever, with work commits)
+*Role of this section: native (round 1b), in addition to round 1.*
+*Prediction written 2026-10-04, before computing any round-1b outcome on 02-13.* The 12 nudges of 02-13 are the first in the record (no habituation; the work ledger is already dense in #30).
+- **N1:** swarm work commits per active agent on 02-13, log(1 + ·) minus the mean of 02-10..02-12, is within ±2 SD of the same day-contrast at other #30–#44 non-holdout days (|z| < 2): the switch-on is invisible in work, as the round-1 accounting predicted for activity.
+- **N2 (descriptive; n = 12):** first-nudge glance ATT positive; work-commit ATT (60 min) with a CI including 0.
+
+**Result (round 1b native, run 2026-10-04; `r1b/r1b_summary.json` → `NE10`).**
+- **N1 holds:** log(1 + work commits per active agent) on 02-13 minus 02-10..02-12: +0.30 vs null +0.05 ± 0.28 (72 day-contrasts, #30–#44 and #51): z +0.92.
+- **N2 n/a:** strict past-only isolation leaves 0 first nudges (all 12 nudges fell on 02-13 among already-kicked agents).
+- Native verdict: **supported** (the switch-on is invisible in work, as the accounting predicts).
 
 ## Scorecard (period-specific axes)
 E 1 (the per-nudge accounting predicts an undetectable swarm-level change, and none is seen; a weak test, since a null is easy to get) · D 1 (accounting is an unfitted prediction).

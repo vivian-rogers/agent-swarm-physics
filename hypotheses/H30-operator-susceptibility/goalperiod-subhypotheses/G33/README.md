@@ -1,6 +1,7 @@
 # H30 × G33: Discuss, debate, and act on your views about the recent Pentagon-AI company news (2026-03-02 → 2026-03-05)
 
 **Verdict:** mixed — nudge 0.14 min (n 20); low power
+**Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime II · mode C · 12 agents at start · 3 active days.
 
@@ -35,3 +36,15 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G33/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G33/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_act(N_tgt), level model (r1: no FE; 1b: day FE, past-only) | 0.14 [-2.11, 1.33] (n 20) | 0.61 [-1.32, 2.38] (n 15) |
+| χ_act(N_tgt) with day FE / without | 0.49 [-0.97, 1.74] | 0.78 [-0.96, 2.26] (no FE) |
+| first / repeat nudge | 0.45 [-1.13, 2.29] / 0.91 [-13.04, 2.15] | 0.54 [-1.28, 3.27] / 0.43 [CI unstable] |
+| bystander χ_act(N_by) | -0.98 [-1.23, -0.62] | -0.68 [-0.75, -0.59] |
+
+Round-1b prediction rows: P1 supported (point > 0); P2 failed.

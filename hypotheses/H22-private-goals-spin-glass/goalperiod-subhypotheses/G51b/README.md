@@ -1,6 +1,7 @@
 # H22 × G51b: Each agent: Maximize your assigned goal! — unit 51b (2026-07-09 → 08-04)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1: failed; rival homophily in every content variant)
 **Role:** exploratory
 **Period:** regime III · mode I/K · 24 → 27 agents · one room (#general; GPT-5.6 triplet isolated on 07-09, Grok 4.5 onboarding room 07-10, side room 07-24) · 19 days. Single joins inside (Grok 4.5 07-10, Kimi K3 07-17, Opus 5 07-24) handled by the population rule; NE38 (Opus 5's role restart, 07-29) inside.
 
@@ -62,3 +63,17 @@ Data: `data/processed/H22-private-goals-spin-glass/G51/<unit>/results.json`; fig
 ## Notes
 - Data: `data/processed/H22-private-goals-spin-glass/G51/51b/`. Figure: `figures/H22_G51b.pdf`.
 - Card: `../../README.md` (Observables, Null, Prediction, Amendment 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the corrected inputs (card section "Round 1b"); round-1 numbers kept above.* DQ6 ground-truth roles (Opus 5's first role recovered), DQ5 statement vectors in two models (bge, gte), DQ5 `style_resid_period` vectors ("styp"), restatements removed ("dedup"), `activity_bins_fixed` for talk spins, and the DQ2 stance channel with the calibrated agent-field null. Data: `data/processed/H22-private-goals-spin-glass/r1b/`.
+
+| Unit | Variant | heterogeneity ρ_split | τ₃(dc) | T_SR / pairs (p>) | T_OP | W (p) | talk ρ_split (p) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 51b | round 1 | 0.46 (p 0.003) | 0.22 | 0.066 / 3 (p> 0.013) | -0.048 | 1.16 (p 0.21) | 0.09 (p 0.100) |
+| 51b | bge | 0.46 (p 0.003) | 0.22 | 0.066 / 3 (p> 0.013) | -0.048 | 1.16 (p 0.21) | 0.45 (p 0.003) |
+| 51b | gte | 0.46 (p 0.003) | 0.36 | 0.046 / 3 (p> 0.054) | 0.005 | 1.14 (p 0.24) | 0.45 (p 0.003) |
+| 51b | bge styp | 0.47 (p 0.003) | 0.31 | 0.069 / 3 (p> 0.013) | -0.038 | 0.99 (p 0.48) | 0.45 (p 0.003) |
+| 51b | gte styp | 0.46 (p 0.003) | 0.37 | 0.048 / 3 (p> 0.045) | 0.012 | 1.08 (p 0.31) | 0.45 (p 0.003) |
+| 51b | bge dedup | 0.47 (p 0.003) | 0.26 | 0.063 / 3 (p> 0.020) | -0.064 | 1.17 (p 0.20) | 0.45 (p 0.003) |
+| 51b | **stance (DQ2)** | dc split-half 0.43 (agent-field p 0.005) | 0.25 [0.08, 0.38] | 0.086 / 5 (p> 0.330) | 0.109 | – | neg. pairs 70 vs 8.1 |
+

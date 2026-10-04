@@ -72,27 +72,37 @@ def h04_crosscheck(days: list[str], msgs: pl.DataFrame) -> dict:
 
 def run_period(p: str, kicks: pl.DataFrame | None = None, content: pl.DataFrame | None = None, days: list[str] | None = None,
                allow_holdout: bool = False, out_dir: Path | None = None, fig_dir: Path | None = None, do_h04: bool = True,
-               n_swap: int = N_SWAP) -> dict:
+               n_swap: int = N_SWAP, data: str = "r1") -> dict:
+    """data = "r1" (round 1, default; reproduces round 1) or "r1b" (round 1b, 2026-10-04: fixed activity bins, leading-@
+    nudge targets, kicks at the receiving call with strata through m - 1 plus a call-at-m indicator, past-only kick
+    adjustment (no future-kick regressors), day fixed effect primary for levels; content also with gte-modernbert)."""
     t0 = time.time()
-    out_dir = out_dir or (OUT / p)
+    r1b = data == "r1b"
+    out_dir = out_dir or (out_root(data) / p)
     fig_dir = fig_dir or (HYP / "goalperiod-subhypotheses" / p / "figures")
     info = json.loads((out_dir / "build.json").read_text())
     days = days or info["days"]
     if not allow_holdout:
         assert_no_holdout(days)
-    panels, meta = load_panels(days, allow_holdout=allow_holdout)
+    panels, meta = load_panels(days, allow_holdout=allow_holdout, data=data)
     kicks = kicks if kicks is not None else pl.read_parquet(out_dir / "kicks.parquet")
     content = content if content is not None else pl.read_parquet(out_dir / "content.parquet")
     nd = len(panels)
     R = {"period": p, "regime": info["regime"], "n_days": nd, "n_kicks": info["n_kicks"], "n_messages": info["n_messages"],
-         "n_pairs": info["n_pairs_both_sides"], "notes": []}
+         "n_pairs": info["n_pairs_both_sides"], "notes": [], "data": data}
     W = boot_weights(nd, B)
     pres = {pp.day: {int(a): i for i, a in enumerate(pp.agents)} for pp in panels}
+    STRATA = "r1b" if r1b else "full"
+    PCLS = () if r1b else POST_CLASSES
 
     # ------------------------------------------------------------------ activity channel
-    base = build_base(panels, kicks=kicks)
-    X = kick_columns(base, kicks)
+    base = build_base(panels, kicks=kicks, strata=STRATA)
+    X = kick_columns(base, kicks, post_classes=PCLS)
     fit = fit_activity(base, X)
+    if r1b:   # sensitivity: A1's adjustment for future undirected kicks (round 1's specification) on the new inputs
+        Xf = kick_columns(base, kicks, post_classes=POST_CLASSES)
+        R["act_futadj"] = {c: v for c, v in period_ci(fit_activity(base, Xf), W).items() if c in CLASSES}
+        R["act_futadj_nofe"] = {c: v for c, v in period_ci(fit_activity(base, Xf, fe2=None), W).items() if c in CLASSES}
     pc = period_ci(fit, W)
     R["act"] = {c: pc.get(c) for c in CLASSES}
     R["act_n"] = {c: pc.get(c + "_n") for c in CLASSES}
@@ -112,16 +122,17 @@ def run_period(p: str, kicks: pl.DataFrame | None = None, content: pl.DataFrame 
     R["act_outage_masked"] = {c: (float(fo.beta[j]) if np.isfinite(fo.beta[j]) else None) for j, c in enumerate(CLASSES)}
     R["act_outage_masked_ci"] = {c: v for c, v in period_ci(fo, W).items() if c in CLASSES}
     R["outage_share_cells"] = float(1 - base.out_ok.mean())
-    pre_cols = len(CLASSES) + len(POST_CLASSES)
+    pre_cols = len(CLASSES) + len([c for c in PCLS if c in CLASSES])
     Kpast = X[:, pre_cols + CLASSES.index("N_tgt")] + X[:, pre_cols + CLASSES.index("H_men")]
     first, rep = {}, {}
     for lab_, msk in (("first", Kpast == 0), ("repeat", Kpast > 0)):
         ff = fit_activity(base, X, mask=msk)
         R[f"act_{lab_}"] = {c: v for c, v in period_ci(ff, W).items() if c in ("N_tgt", "N_by", "H_men", "H_und")}
         R[f"act_{lab_}_n"] = ff.n_kicks
-    bh = build_base(panels, kicks=kicks, strata="h04")
-    fh = fit_activity(bh, kick_columns(bh, kicks))
-    R["act_h04strata"] = {c: (float(fh.beta[j]) if np.isfinite(fh.beta[j]) else None) for j, c in enumerate(CLASSES)}
+    if not r1b:
+        bh = build_base(panels, kicks=kicks, strata="h04")
+        fh = fit_activity(bh, kick_columns(bh, kicks))
+        R["act_h04strata"] = {c: (float(fh.beta[j]) if np.isfinite(fh.beta[j]) else None) for j, c in enumerate(CLASSES)}
     # baseline: mean Y (expected active minutes in 30 min) among targeted cells' strata -> relative response
     R["baseline_Y_mean"] = float(base.Y.mean())
     # day-swap null
@@ -131,8 +142,8 @@ def run_period(p: str, kicks: pl.DataFrame | None = None, content: pl.DataFrame 
         ks = day_swap(kicks, pres, rng)
         if ks.height == 0:
             break
-        b2 = build_base(panels, kicks=ks)
-        f2 = fit_activity(b2, kick_columns(b2, ks))
+        b2 = build_base(panels, kicks=ks, strata=STRATA)
+        f2 = fit_activity(b2, kick_columns(b2, ks, post_classes=PCLS))
         for j, c in enumerate(CLASSES):
             if np.isfinite(f2.beta[j]):
                 sw[c].append(float(f2.beta[j]))
@@ -192,6 +203,17 @@ def run_period(p: str, kicks: pl.DataFrame | None = None, content: pl.DataFrame 
                   "u_perp_norm": float(sub["u_perp_norm"].drop_nans().mean()),
                   "a_pre_mean": float(sub["a_pre"].drop_nans().mean())}
     R["con"] = con
+    if r1b and (out_dir / "content_gte.parquet").exists():   # DQ5 second embedding model (robustness)
+        cg = pl.read_parquet(out_dir / "content_gte.parquet")
+        con_g = {}
+        for c in CLASSES:
+            sub = cg.filter((pl.col("cls") == c) & pl.col("chi_orth").is_not_nan())
+            if sub.height < 10:
+                continue
+            con_g[c] = {"n": sub.height, "orth": boot_mean_by_day(sub, "chi_orth", np.arange(nd), W),
+                        "pseudo_null_orth": boot_mean_by_day(sub.filter(pl.col("chi_orth_null").is_not_nan()), "chi_orth_null",
+                                                             np.arange(nd), W)}
+        R["con_gte"] = con_g
 
     # ------------------------------------------------------------------ daily gauge + stability
     dly_act = daily_activity(fit).with_columns(pl.lit("act").alias("channel"))
@@ -317,7 +339,7 @@ def run_period(p: str, kicks: pl.DataFrame | None = None, content: pl.DataFrame 
         ks = kicks.with_columns(pl.Series("phase", kph)).with_columns(
             pl.when(pl.col("cls") == "N_tgt").then(pl.lit("N_tgt_f") + pl.col("phase").cast(pl.Utf8)).otherwise(pl.col("cls")).alias("cls"))
         FC = ("N_tgt_f0", "N_tgt_f1", "N_tgt_f2", "N_tgt_f3", "N_by", "H_men", "H_und")
-        Xf = kick_columns(base, ks, classes=FC)
+        Xf = kick_columns(base, ks, classes=FC, post_classes=PCLS)
         ff = fit_activity(base, Xf, classes=FC, strata_extra=ph)
         pcf = period_ci(ff, W)
         rows_ = {c: boot_rows(ff, W, c) for c in FC[:3] if c in pcf}
@@ -330,7 +352,7 @@ def run_period(p: str, kicks: pl.DataFrame | None = None, content: pl.DataFrame 
         R["fill_phase"] = {"error": str(ex)[:200]}
 
     # ------------------------------------------------------------------ H04 cross-check
-    if do_h04:
+    if do_h04 and not r1b:   # h04lib reads the old activity_bins; not part of round 1b
         try:
             msgs = load_operator_messages(days)
             R["h04_crosscheck"] = h04_crosscheck(days, msgs)
@@ -357,7 +379,9 @@ def verdicts(p: str, R: dict) -> dict:
         rows.append({"id": id_, "observed": obs, "null": null, "verdict": verdict})
 
     act_fe = act
-    act = R.get("act_nofe", act)   # levels: pre-registered model (no day FE); day-FE values shown as sensitivity
+    if R.get("data") != "r1b":
+        act = R.get("act_nofe", act)   # round 1 levels: pre-registered model (no day FE); day-FE values as sensitivity
+    # round 1b levels: past-only kick adjustment with a day fixed effect (re-evaluation brief); no-FE as sensitivity
     a = act.get("N_tgt")
     if a and R["act_n"].get("N_tgt", 0) >= 5:
         nulls = f"day-swap {fci(sw.get('N_tgt'))}" if sw.get("N_tgt") else ""
@@ -378,8 +402,10 @@ def verdicts(p: str, R: dict) -> dict:
         om = R.get("act_outage_masked_ci", {}).get("N_tgt")
         dfe = act_fe.get("N_tgt")
         ls_ = R.get("lull_split", {})
-        add("P1 χ_act(N_tgt), min per nudge (pre-registered model)",
-            f"{fci(a)} (n = {R['act_n']['N_tgt']}); with day FE (A2) {fci(dfe)}: first nudge in 30 min {fci(fr)}, repeat {fci(rp)}, "
+        lvl = "round 1b: receiving call, past-only, day FE" if R.get("data") == "r1b" else "pre-registered model"
+        alt = f"no day FE {fci(R.get('act_nofe', {}).get('N_tgt'))}" if R.get("data") == "r1b" else f"with day FE (A2) {fci(dfe)}"
+        add(f"P1 χ_act(N_tgt), min per nudge ({lvl})",
+            f"{fci(a)} (n = {R['act_n']['N_tgt']}); {alt}: first nudge in 30 min {fci(fr)}, repeat {fci(rp)}, "
             f"outage-masked {fci(om)}, swarm lull {fci(ls_.get('lull', {}).get('N_tgt'))} vs not {fci(ls_.get('no_lull', {}).get('N_tgt'))}",
             nulls, v)
     b = act.get("N_by")
@@ -388,7 +414,7 @@ def verdicts(p: str, R: dict) -> dict:
         coll = R["collective"].get("nudge", {})
         bfe = act_fe.get("N_by"); cfe = R.get("collective_dayfe", {}).get("nudge", {})
         ls_ = R.get("lull_split", {})
-        add("P2 χ_act(N_by) per bystander; χ_coll per nudge (pre-registered model)",
+        add("P2 χ_act(N_by) per bystander; χ_coll per nudge (" + ("round 1b: day FE" if R.get("data") == "r1b" else "pre-registered model") + ")",
             f"{fci(b)}; χ_coll {fci(coll.get('chi_coll_per_msg'))} ({fnum(coll.get('bystanders_per_msg'), 1)} bystanders/nudge); "
             f"with day FE {fci(bfe)}, χ_coll {fci(cfe.get('chi_coll_per_msg'))}; day FE within swarm lulls "
             f"{fci(ls_.get('lull', {}).get('N_by'))} / outside {fci(ls_.get('no_lull', {}).get('N_by'))}",
@@ -550,10 +576,12 @@ if __name__ == "__main__":
     ap.add_argument("--period", default=None)
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--no-h04", action="store_true")
+    ap.add_argument("--data", default="r1", choices=["r1", "r1b"])
     a = ap.parse_args()
     todo = PERIODS if a.all else [a.period]
     for p in todo:
-        R = run_period(p, do_h04=not a.no_h04)
+        R = run_period(p, do_h04=not a.no_h04, data=a.data,
+                       fig_dir=(HYP / "goalperiod-subhypotheses" / p / "figures" / ("r1b" if a.data == "r1b" else "")))
         print(p, R["secs"], "s;", R["verdict"]["overall"], flush=True)
         for r in R["verdict"]["rows"]:
             print("   ", r["id"], "|", r["observed"], "|", r["verdict"], flush=True)

@@ -1,6 +1,7 @@
 # H13 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 04-24)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
 **Role:** exploratory
 **Period:** regime III · mode C · 12–14 agents (Opus 4.7 joins 04-17, Kimi K2.6 04-22) · two rooms · 17 days. Split at NE17 (04-14, outreach approval) and NE18 (04-20, history search) into 38a (8 days), 38b (4), 38c (5), as in H01.
 **Units analysed:** 38a, 38b, 38c
@@ -95,3 +96,15 @@ Within-unit stationarity (first vs second half of days, family field cos): Anthr
 - Data: `data/processed/H13-family-fields/G38/`. Per-period figures: `figures/`.
 - 2026-10-04: 2026-04-22 (38c) had only 9 talk-minutes in the whole village (a quiet or broken day); the talk table has 4 of 5 days for 38c.
 - 2026-10-04: one Google agent fails eligibility (≥ 2 days with ≥ 3 chat statements) in 38a–c, so K = 2 (Anthropic, OpenAI). a1 is n.s. in all three sub-units, while the room-adjusted y2 b_lab is significant in 38a and 38c (the large room field, b_room ≈ 0.86–0.89, inflates the variance of T_field). Counting y2 b_lab as detection was decided after seeing the data (see the card's deviations); under an a1-only rule this period would be 'failed'.
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the pre-registered statistics on the corrected inputs (card section "Round 1b"). Old numbers are kept above.* Inputs: DQ5 statement vectors (bge and gte-modernbert, regime-whitened, 32-d), H13's own style rival S-a and DQ5's shared `style_resid_period` vectors, DQ5 restatement flags, `activity_bins_fixed` for talk spins, and Jev v3 behavior states (HH267, card Amendment 2). Data: `data/processed/H13-family-fields/r1b/`.
+
+| Unit | T_field round 1 (bge) | T_field gte | S-a own (bge / gte) | shared style_resid_period (bge / gte) | T bge, restatements removed | talk Δ old → fixed table | behavioral T_B |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 38a | 0.114 (p 0.179) | 0.150 (p 0.140) | -0.015 / 0.022 | -0.024 (p 0.461) / -0.008 (p 0.401) | 0.116 | -0.035 (p 0.723) → -0.009 (p 0.542) | 0.029 (p 0.352) |
+| 38b | -0.027 (p 0.455) | 0.018 (p 0.336) | -0.078 / -0.072 | -0.001 (p 0.450) / 0.068 (p 0.182) | -0.010 | -0.486 (p 0.985) → -0.057 (p 0.748) | 0.073 (p 0.174) |
+| 38c | 0.119 (p 0.156) | 0.182 (p 0.094) | 0.011 / 0.148 | 0.119 (p 0.106) / 0.213 (p 0.042) | 0.120 | -0.041 (p 0.563) → -0.184 (p 0.861) | 0.103 (p 0.080) |
+
+- **Talk on the corrected table:** family homophily in talk timing (Δ > 0, p < 0.05) in no unit of this period.
+- **Reading:** the content field is unchanged in both models and still vanishes under either style rival; the behavioral field is reported in the card (B1–B4).

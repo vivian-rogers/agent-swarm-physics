@@ -2,6 +2,7 @@
 
 **Verdict:** failed
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** failed (work commits: b₁ +0.007, b₂ +0.508 (p 0.008); 2026-10-04)
 **Period:** regime III · mode I (individual) · N = 15 at start · 5 non-holdout days with PR10 · 54 agent-days with PR10 (10 agents with ≥ 3 days) · write turns on 100% of those agent-days.
 
 ## Why this period

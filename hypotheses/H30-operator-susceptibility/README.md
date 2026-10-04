@@ -7,6 +7,7 @@
 - **H04's nudge A30 (1.5–1.7) is inflated** by its isolation rule, which conditions on the nudger *not* re-firing (52% of G51 nudges are re-fired within 60 min).
 
 `confirm.py` is written and dry-run on stand-ins; **not run**.
+- **Round 1b (improved data, 2026-10-04):** on the fixed activity bins, with the nudge's leading @ as its only target, kicks timed at the receiving call (DQ1 ledger) and past-only controls with a day fixed effect, **the nudge response roughly doubles and is now resolved in both large periods**: G51 0.98 [0.63, 1.37] (round 1: 0.59), G38 0.95 [0.38, 1.54] (round 1: −0.08); P1 passes. Most of the change is the event-drop fix (G51 0.59 → 1.29 with fixed bins alone). First nudges 1.21, repeats 0.44 [−0.19, 1.10]. **Round 1's "don't nudge into a swarm-wide lull" reverses** (lull 1.74 [0.94, 2.63] vs 0.72): it was an artifact of the dropped events. Human content steering is unchanged and holds under a second embedding model (0.024 room-mates, 0.041 named). The daily gauge now shows some day-to-day variation in G51 (permutation p 0.026, R₁ 0.48) but no persistence (lag-1 0.08): P6 fails as written, HH116's falsifier is still not met. Natives: #5 dilution failed by its rule (the first three dose bins fall 0.025 → 0.013, the 8+ bin is noisy), NE44 failed in reverse (nudges buy more under the 5-min pause default), NE10 failed (low power). Scorecard unchanged (A1 B1 C1 D1 E0 F1 G1 H1 I1).
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH116 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); HH117 (context sawtooth) and HH98 (family steerability) as sub-questions; HH52 (catalyst vs field) for reading the two channels.
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime; Population N(t) (active-population variant: ≥ 1 active minute that day); Driving / external field (human messages; automated nudges); Interaction (broadcast) for room recipients and Interaction (addressed) for named agents; Agent state (vector), whitened statement variant (per-regime whitening, n = 32). New operational terms (operator kick classes, activity susceptibility χ_act, content susceptibility χ_con, context fill) are defined below and proposed as named variants in the round-1 report (DEFINITIONS.md is not edited here).
@@ -195,7 +196,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 6. **H04 isolation check:** H04's isolation rule applied inside the H30 model, on real data and on synthetic swarms.
 
 ## Results by goal period
-Verdict rule (per period): all rows supported → supported; none → failed; else mixed. Low-power periods (≤ 5 days or < 30 nudge kicks) are flagged. In the G-folder verdict lines, `*` marks a content CI excluding 0. Activity numbers use the pre-registered model; content uses the orthogonalized estimator (A1).
+Verdict rule (per period): all rows supported → supported; none → failed; else mixed. Round-1b verdicts are in each folder's `Verdict (1b)` line (changes: G39 failed → mixed; G31, G42 mixed → failed); G05 also carries the #5 dilution native test (failed). Low-power periods (≤ 5 days or < 30 nudge kicks) are flagged. In the G-folder verdict lines, `*` marks a content CI excluding 0. Activity numbers use the pre-registered model; content uses the orthogonalized estimator (A1).
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
@@ -215,6 +216,8 @@ Verdict rule (per period): all rows supported → supported; none → failed; el
 | [G42](goalperiod-subhypotheses/G42/README.md) | exploratory, regime III | mixed (low power) | nudge 0.57 [−1.76, 2.12] (n 18) |
 | [G44](goalperiod-subhypotheses/G44/README.md) | exploratory, regime III (4 d) | mixed (low power) | nudge −0.32 [−1.19, 0.70]; human H_und activity 0.62 [0.23, 3.15]; content n.s. |
 | [G51](goalperiod-subhypotheses/G51/README.md) | exploratory, regime III (45 d, 8 h) | mixed | nudge 0.59 [0.24, 0.93] (n 875; day FE 1.04; first 1.36, repeat 0.26); bystander 0.13 [−0.11, 0.38]; content H_und 0.025 [0.014, 0.033], H_men 0.063 [0.043, 0.101]; nudge content 0.003; daily gauge p 0.08, R₁ 0.28, lag-1 −0.09; no aging, no fill effect, no lab effect |
+| [NE44](goalperiod-subhypotheses/NE44/README.md) | native (round 1b) | failed | 12-h pause default pooled 0.57 [0.04, 1.10] vs G51 0.98: Δ −0.41 [−1.05, 0.24]; first nudges Δ −0.69 [−1.36, −0.02] (reversed) |
+| [NE10](goalperiod-subhypotheses/NE10/README.md) | native (round 1b) | failed (low power) | first nudges ever + first fortnight pooled −0.42 [−1.27, 0.42] (22 kicks) |
 
 ## Results
 ### Exploratory round 1 (2026-10-03; non-holdout; 16 goal periods)
@@ -316,6 +319,71 @@ The tail may contain no nudges (automated messages stop on 08-20 in the non-hold
 - **Overall rule:** supported if every testable primary passes; failed if none does; otherwise mixed.
 - **Dry run (stand-ins, not evidence):** C-act fail (pooled 0.22 [−0.65, 1.10]); C51-2 fail (one day carries all the stand-in's human pairs; degenerate CI); C4650-1 n/a (too few human pairs in G41/G42). Expected power: C51-2 good if the tail has ~2.5 human messages a day; C-act weak unless the tail has nudges.
 
+## Round 1b (improved data, 2026-10-04)
+*Re-run of the round-1 pipeline on corrected inputs (`scheme/build.py --data r1b`, `analysis/run_period.py --data r1b`, `analysis/r1b_extra.py`), with three period-native tests. Predictions P1–P11, the usefulness rule and the per-period verdict rule are unchanged; native predictions were written in their folders at 07:31 UTC, before any round-1b statistic on those periods.*
+
+**What changed in the inputs.**
+- **Activity:** `activity_bins_fixed` (round 1's table dropped about half of all events, DQ8). Outage masks are recomputed from it.
+- **Nudge target = the leading @** (H35; `infra/README.md` Known issue). In G51, 239 named-second exposures that round 1 counted as targets become bystanders; 723 of 729 nudges reach their target's receiving call (6 never read).
+- **Kick time = the receiving call** (DQ1 `context_ledger_items` → `call_windows.t_call`), and recipients come from the ledger instead of `exposure`. Median read-out wait for nudges: 122 s in G51, 25–75 s elsewhere. Pairs read on a later day than posted are dropped (266 of 19,947 items in G51).
+- **Design:** strata use history through m − 1 only, plus an indicator that a model call starts at m (kicked cells always sit on a receiving call, so they are compared with call minutes); the outcome counts active minutes from the receiving call itself (τ = 0 … 29); **past-only kick adjustment** (round 1's A1 regressors for future undirected kicks are dropped, DQ8 `lever_design`), **day fixed effect primary for levels** (round 1 used the no-FE model for levels). The A1 variant and the no-FE model are reported as sensitivities.
+- **Content:** pre/post windows at the receiving call; bge-small (primary) and gte-modernbert.
+- H04's cross-check (`h04lib`, old activity table) is not part of round 1b. Old paths run unchanged by default; round-1b outputs are in `data/processed/H30-operator-susceptibility/r1b/`.
+
+**What moved the G51 nudge response** (decomposition, `r1b/decomposition.json`; day FE / no FE):
+
+| Step | G51 | G38 |
+| --- | --- | --- |
+| (a) round 1 | 1.04 [0.77, 1.33] / 0.59 [0.24, 0.93] | 0.38 / −0.08 |
+| (b) + fixed activity bins | 1.43 [1.15, 1.77] / 1.29 [1.00, 1.64] | 0.78 [0.16, 1.57] / 0.74 |
+| (c) + leading @ and ledger recipients (posting minute) | 1.58 / 1.40 | 0.68 / 0.64 |
+| (d) + receiving-call timing (A1 future-undirected adjustment kept) | 1.56 / 1.16 | 1.03 / 0.96 |
+| (e) + past-only adjustment = **round 1b** | **0.98 [0.63, 1.37]** / 1.07 [0.73, 1.47] | **0.95 [0.38, 1.54]** / 0.91 |
+
+The event-drop fix carries most of the change (dropping half the events shrinks every active-minute count, and with it the response). With past-only controls the day-FE and no-FE levels agree (0.98 vs 1.07); the A1 future-kick regressors interact with the day FE (1.56), which is one more reason not to condition on future kicks. **Honest level: ≈ 1.0 extra active minute per nudge in G51 and G38**, matching RE-V1's corrected H04 A30 in #51 (1.16 [0.75, 1.57]).
+
+**Old vs new.**
+
+| Prediction / statistic | Round 1 | Round 1b | Verdict 1b (round 1) |
+| --- | --- | --- | --- |
+| P1 χ_act(N_tgt), G51 · G38 | 0.59 [0.24, 0.93] · −0.08 [−0.98, 0.82] | **0.98 [0.63, 1.37] · 0.95 [0.38, 1.54]** | **supported** (G51 only) |
+| P1 low-power periods with point > 0 | 4/9 | 5/10 (G33, G37*, G39, G41, G44) | count rule fails (fails) |
+| random-effects χ_act: regime III all · III excl. G51 · I/II | 0.37 [−0.06, 0.79] · 0.15 · 0.40 | **0.76 [0.39, 1.14] · 0.57 [0.04, 1.10]** · −0.29 [−1.06, 0.47] | – |
+| G51 first · repeat nudge (day FE) | 1.36 [0.98, 1.75] · 0.26 [−0.13, 0.63] | 1.21 [0.80, 1.66] (n 478) · 0.44 [−0.19, 1.10] (n 180) | – |
+| G51 nudge during a swarm lull · not | 0.18 [−0.07, 0.50] · 0.84 [0.52, 1.18] | **1.74 [0.94, 2.63] · 0.72 [0.34, 1.15]** | reversed |
+| P2 bystanders G51 · G38 | 0.13 [−0.11, 0.38] · −0.54 [−1.01, −0.01] | −0.01 [−0.09, 0.08] · −0.09 [−0.43, 0.31] | **supported** in both (G51 only) |
+| P3 human → activity (regime I) | H_und ≤ 0; H_men never > H_und | H_und 0.02–0.15 (CIs ∋ 0); H_men > H_und in G06, G13 only | failed (failed) |
+| P4 human → content, pooled H_und · H_men (bge) | 0.026 [0.021, 0.030] · 0.046 [0.036, 0.057]; CI > 0 in 6/8 | 0.024 [0.021, 0.027] · 0.041 [0.034, 0.048]; 6/9 | supported (supported) |
+| P4 second model (gte) H_und · H_men | – | 0.024 [0.021, 0.028] · 0.044 [0.028, 0.060]; 7/9 | supported |
+| P5 nudge → content, G51 | 0.003 [0.000, 0.005] | 0.002 [−0.001, 0.005] | **supported** (CI clause failed) |
+| P6 G51 daily χ_act: message-cluster permutation p · R₁ · lag-1 | 0.08 · 0.28 · −0.09 | **0.026 · 0.48** · 0.08 (p 0.22) | **failed as written** (supported) |
+| P6 SE-based window reliability, w = 2 / 3 / 5 / 10 days (G51) | 0.21 / 0.08 / 0.32 / 0.41 | 0.62 / 0.74 / 0.72 / 0.35 | see text |
+| P7 aging slope, G51 (day FE) | −0.019 [−0.049, 0.012] | 0.020 [−0.027, 0.067] | supported (supported) |
+| P8 context fill, early · late (G51, phase-matched) | 0.94 · 1.00 | 0.66 [0.32, 1.04] · 1.49 [−0.01, 3.12] | failed (failed) |
+| P10 lab differences (G51) | none Holm-significant | none (DeepSeek 1.95, Anthropic 1.51, OpenAI 0.71, Google −0.33; Holm p ≥ 0.17) | supported (supported) |
+| P11 nulls: pre-window placebo G51 · G38; day-swap G51 | 0.11 · −0.59; 0.03 | 0.02 · 0.05; 0.06 [−0.15, 0.29] | **supported** in both (G51 only) |
+| per-period verdicts mixed / failed | 13 / 3 | 12 / 4 (G39 failed → mixed; G31, G42 mixed → failed) | – |
+
+\* CI excludes 0.
+
+**P6 and the usefulness rule.** With the fixed bins the G51 daily nudge gauge has detectable day-to-day variation (message-cluster permutation p 0.026; within-agent p 0.064; R₁ 0.48), so P6 fails as written. It still does not persist (lag-1 0.08, p 0.22), and R₁ stays below 0.5, so HH116's falsifier (R₁ ≥ 0.5 with rejection in ≥ 2 periods and positive lag-1) is not met. The SE-based window reliabilities now exceed 0.5 for 2–5-day windows, but the same statistic gives 0.68–0.89 in G38, where the calibrated permutation finds no day signal at all (p 0.77, R₁ 0): it inherits Cochran's over-rejection (synthetic validation), so I do not count it. **Usefulness verdict unchanged: a period-level constant, now ≈ 1 minute per nudge in both large periods.**
+
+**Native tests (layer 2).**
+
+| Folder | Design | Prediction | Result | Verdict |
+| --- | --- | --- | --- | --- |
+| [G05](goalperiod-subhypotheses/G05/README.md) | #5 human dose: per-message χ_con by the number of human messages read in the same call (k_h) | slope < 0 (CI), ratio k=1 / k≥8 ≥ 2 | bins 1 / 2–3 / 4–7 / 8+: 0.025 / 0.020 / 0.013 / 0.047 (n 1,501 / 1,207 / 435 / 196); slope +0.19 [−1.17, 0.46]; gte the same shape; named > unnamed in both bins with data | **failed** by the rule (monotone 1/k^0.4-like fall over the three well-sampled bins; the 8+ bin is noisy) |
+| [NE44](goalperiod-subhypotheses/NE44/README.md) | χ_act(N_tgt) under the 12-h pause default (G37–G44, pooled) vs 5-min (G51) | Δ > 0 | 12-h 0.57 [0.04, 1.10] vs G51 0.98: Δ −0.41 [−1.05, 0.24]; first nudges Δ −0.69 [−1.36, −0.02] | **failed** (reversed) |
+| [NE10](goalperiod-subhypotheses/NE10/README.md) | first nudges ever (G30) and the first fortnight (G31) vs G51 first nudges | pooled point > 0, no novelty premium | pooled −0.42 [−1.27, 0.42] (9 + 13 kicks); G51 first 1.21 | **failed** (low power) |
+
+Reading: nudges are not a novelty effect (NE10) and they buy *more* under the short pause default (NE44), consistent with RE-V1 (no early wakes at nudge-receiving calls before or after NE44; the response is immediate at the receiving call) and with H43 (nudges make idle agents glance; the 5-min scaffold provides more gates to glance at). A long pause default makes agents sleep through some nudges' effect window rather than waking them for sustained work.
+
+**Scorecard after 1b** (scores unchanged, evidence updated): A 1; B 1 (saturation still: first 1.21 vs repeat 0.44); C 1 (χ_act beats the day-swap and zero nulls in G51 *and* G38 now; the daily gauge still does not predict the next day); D 1 (bystanders ≈ 0 and pre-window placebo within bounds in both large periods; P5 passes; the fill signature is absent); E 0 (NE44 reversed; NE10 underpowered); F 1; G 1 (agrees with RE-V1's corrected H04 number and with H43's read-out timing); H 1; I 1 (nudge → activity now resolved in two periods and pooled regime III excluding G51, 0.57 [0.04, 1.10]; holdout not run). **A1 B1 C1 D1 E0 F1 G1 H1 I1.**
+
+**Operator rules, revised.** (1) One nudge buys about a minute of extra activity from the receiving call on, in both regime-III eras; the first nudge of an episode about 1.2 min, repeats about 0.4 (CI includes 0). (2) **Nudging during a swarm-wide lull is fine, even better** (round 1's warning was a data artifact). (3) Room-mates don't respond to others' nudges. (4) Short scaffold pauses make nudges more effective, not less (NE44). (5) To steer what an agent writes, name it and add new content (+0.04 vs +0.02 for room-mates, both embedding models); when many human messages arrive at once, each one's pull falls over 1–7 messages.
+
+**Disclosure.** A probe for the leading-@ rule printed per-period nudge counts including held-out periods (#32, #34, #45–#50, #51 tail); no outcome was computed there.
+
 ## Round 2 redirects
 **What the direction is really after:** a trustworthy answer to "will my next message change what this swarm does?". Round 1 says it is per situation, not a daily state.
 - **H30-R1. Situational χ instead of daily χ.** Estimate χ_act and χ_con by message situation (first vs repeat, swarm lull vs active, target idle duration, named vs room) with hierarchical pooling across periods. These are the levers round 1 found; test them in G51 with day-blocked cross-validation.
@@ -333,3 +401,4 @@ The tail may contain no nudges (automated messages stop on 08-20 in the non-hold
   - 52% of G51 nudges are followed by another directed kick to the same agent within 60 min;
   - ~5% of nudges land in the last 30 min of the day.
 - 2026-10-03: the session was interrupted by an API limit after the confirmatory dry run. Nothing was lost (all period runs had finished); the card and summary were completed on resume.
+- 2026-10-04: round 1b on fixed activity bins, leading-@ targets, receiving-call timing, past-only controls with day FE, two embedding models; natives G05 (#5 dilution), NE44, NE10; ~25 min of compute on ≤ 2 processes; disk +6.5 MB in `data/processed/H30-operator-susceptibility/r1b/`.

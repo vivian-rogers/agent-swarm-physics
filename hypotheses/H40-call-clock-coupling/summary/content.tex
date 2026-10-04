@@ -1,0 +1,36 @@
+\hwhat{Do agents respond to each other per model call or per minute? On 33 non-holdout periods I fitted a reply-hazard model on each recipient's real call schedule (context ledger, DQ2 reply labels), after checking on simulated replies that it tells the two clocks apart. In the computer-use scaffold (regimes II--III, 11 periods) coupling runs on the call clock: a call that spans more wall time carries no more reply hazard ($\eta=0.00\pm0.05$ in G51; $-0.03$ at timer wakes fixed in advance). In G51 per-call coupling is flat in cadence ($s=+0.11$ [$-0.03$, 0.25]) and set by model family, while per-hour coupling scales with call rate (slope 1.0): slow agents are heavy spins. In regime I (22 periods) it fails: $\eta=+0.51$ [0.41, 0.61]. Natives: G51 yes, NE41 mixed, G18 and NE14 no. Holdout: not run.}
+
+\hmodel{Models 02 (kinetic Ising, Glauber attempt rates) and 09. Each model call $c$ of recipient $i$ is an update attempt; after reading message $m$ at call 1, $i$ replies at call $n$ with hazard $h_n$. $\alpha_i$: per-call coupling. $e_n$: wall time call $n$ spans; $a_n$: age of $m$; $b_n$: newer messages (burial); $k_n$: batch size. $\eta$: exposure-time elasticity (0 call clock, 1 wall clock). $r_i$: call rate. $\varepsilon(T)$: cadence elasticity of replying within $T$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\mathrm{cloglog}\,h_n=\alpha_i+\phi\ln n+\psi\ln a_n+\chi\ln(1{+}b_n)+\eta\ln e_n+\delta\ln(1{+}k_n)+\dots\\
+\text{wall clock: } h_n=1-e^{-\lambda e_n}\ \Rightarrow\ \eta=1;\qquad \text{call clock: }\eta=0\\
+J^{\mathrm{hour}}_i=J^{\mathrm{call}}_i\,r_i^{\,1-\eta},\qquad \alpha_i=c+s\ln r_i\ \ (s=0:\ \text{per-call invariant})\\
+\varepsilon(T)=\partial\ln P(\text{reply}\le T)/\partial\ln(\text{speed-up})
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) $\eta$ per goal period: regime-I periods sit between the clocks, regime II--III at the call clock (0). (b) G51, 243 agent$\times$unit points: per-call coupling (blue, model intercepts) is flat in call rate; per-hour coupling (orange, intercept $+\ln r$) rises with slope $\approx1$. Lines: fitted slopes.}
+
+\htelos{Useful, with a regime caveat. In a computer-use agent loop, an agent's wall-time responsiveness to others is its per-call coupling (a model-family trait) times how often it calls the model. Long tool calls, long pauses and slow models make agents ``heavy'': in G51 the slowest fifth answer within 5 minutes 8$\times$ less often than the fastest. Halving call intervals raises 5-min coupling by about 50\% (G51 32\%), less at 30 min. So cadence is a coupling knob an operator can turn without touching prompts, e.g. short pause timers for coordinators, or long batch jobs to decouple an agent. It does not transfer to a scheduler-driven chat loop (regime I), where time itself carries part of the coupling. Mostly observational; the clean cadence intervention (NE20) is in the holdout.}
+
+\hbottom{In the computer-use scaffold agents couple per model call, not per minute, so per-hour coupling is per-call coupling (a family trait) times call rate and slow-cadence agents are heavy spins; the regime-I chat scaffold breaks this.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.31\columnwidth}p{0.47\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright P1 pooled $\eta\in[-0.25,0.25]$ & \raggedright $+0.30$ [0.17, 0.43]; II $-0.01$, III $-0.16$, I $+0.51$ & \raggedright fail; II--III yes\tabularnewline
+\raggedright P2 decay per call (III) & \raggedright $\phi=-0.60$, $\psi=-0.19$; 6/8 & \raggedright yes\tabularnewline
+\raggedright P3 $s\approx0$, excl.\ $-1$ & \raggedright pooled $-0.12$ [$-0.28$, 0.04]; G51 $+0.11$ & \raggedright yes\tabularnewline
+\raggedright P3 per-hour slope $\ge0.5$ & \raggedright III $+0.74$; I $0.00$ & \raggedright III only\tabularnewline
+\raggedright P4 held-out call $>$ wall & \raggedright 33/33 & \raggedright yes\tabularnewline
+\raggedright P5 collapse in calls & \raggedright 21/33 & \raggedright no (marginal)\tabularnewline
+\raggedright P6 $\varepsilon(5)\in[0.5,1]$, $\varepsilon(30)$ lower & \raggedright 0.57 [0.36, 0.78]; 0.47 & \raggedright yes\tabularnewline
+\raggedright N1 G51 pause dose, heavy spins & \raggedright $\eta_1=-0.03$; R$^2$ cadence 0.50 vs family 0.33 & \raggedright yes\tabularnewline
+\raggedright N2 NE41 no catch-up & \raggedright read-out $\times0.44$; ratio 1.86 (band fail) & \raggedright mixed\tabularnewline
+\raggedright N3 G18 / N4 NE14 & \raggedright $\eta=0.81$ / 1 of 11 agents & \raggedright no / no\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_compact.pdf}{Synthetic replies on the real schedules of G18, G31, G38 and G51c, with call starts jittered within their bounds. $\hat\eta$ recovers 0, 1 and 0.5 (bias $\le$0.05, power 1.0 against the wrong clock), and is unmoved by agent couplings correlated with cadence (S4) or detection loss (S5). The between-agent slope is recovered (S4: 0.5) but noisy per period.}
+
+\hcaveats{Regime I is unexplained: positive $\eta$ survives logged start times and short spans, but endogenous generation time is untested. Cadence is partly chosen: only the pause-timer dose is quasi-exogenous. The cross-sectional G51 slope (1.0) exceeds the model's speed-up elasticity (0.40): composition, not only cadence. Reply labels are DQ2 primary parents (one per message), which undercounts multi-target replies, most for big batches. The NE41 ratio failed for recency reasons found post hoc. Two post hoc checks; no holdout run.}
+
+\hnext{Run \texttt{confirm.py} (NE20 one-tool-call DiD is the cleanest cadence intervention). Decompose regime-I chat spans into generation and scheduler wait. Repeat on the content channel (H29 boundary pull on the ledger).}

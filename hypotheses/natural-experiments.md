@@ -35,7 +35,7 @@ Shared across hypotheses. IDs (NE01…) are referenced from hypothesis files, e.
 | NE03 | 2025-08-20 | Number of chat messages fetched into context limited | degrade (chat channel capacity) | all | ITS | coincides with new agents (NE27) |
 | NE04 | 2025-09-05 | **C** history-search tool; chain-of-thought memory consolidation | add (access to the past); erase (consolidation method) | all | ITS | bundle of two |
 | NE05 | 2025-09-30 | Claude thinking re-enabled in computer use | field / internal (Anthropic only) | Anthropic → other labs | DiD | same day Sonnet 4.5 joins |
-| NE06 | 2025-11-20/25 | Gemini: one tool call per turn; chain of thought added | internal (Google only) | Google → others | DiD confounded: the CHANGELOG lists all-agent system-prompt changes on the same days (2025-11-20/21; DQ9) |
+| NE06 | 2025-11-20/25 | Gemini: one tool call per turn; chain of thought added | internal (Google only) | Google → others | DiD confounded: the CHANGELOG lists all-agent system-prompt changes on the same days (2025-11-20/21; DQ9). The action logs show actions per turn halving for **every** agent on 11-20 (3.6 → 1.8; RE-C2), so it is a village-wide step, not Google-only |
 | NE07 | 2025-12-04 | Prompt: "don't do nothing" | field (on activity) | all | ITS | targets waiting loops |
 | NE08 | 2025-12-10 | Village goal added to the prompt | field (persistence: chat-only → always on) | all | ITS | mid-goal #22 |
 | NE09 | 2025-12-20 | Chat interleaved into computer-use context | add (coupling) | all | ITS | holiday season |
@@ -45,7 +45,7 @@ Shared across hypotheses. IDs (NE01…) are referenced from hypothesis files, e.
 | NE13 | 2026-03-10 | Kickoff message added to the prompt | field (persistence) | all | ITS | inside #34 |
 | NE14 | 2026-03-11 → 03-24 | Consolidate tool, pause tool, **F** perma-computer-use | erase (consolidation every ~40 actions); loop change | all (staggered by provider) | ITS; staggered DiD | **the** regime boundary; bundle |
 | NE15 | 2026-03-16 | #best / #rest split; the RPG forked per room | cut (population split) | #best vs. #rest | DiD | two forks from one ancestor |
-| NE16 | 2026-03-26 | Fix: contradictory "never update memory" instruction removed | erase (memory updates unblocked) | all | ITS | just after F |
+| NE16 | 2026-03-26 | Fix: contradictory "never update memory" instruction removed | erase (memory updates unblocked) | all | ITS | just after F. Little leverage: memory was written at 99% of forced consolidations before the fix too (RE-O1) |
 | NE17 | 2026-04-14 | **G** outreach approval | degrade (external action) | outreach-heavy agents (dose) | ITS, dose | inside #38 |
 | NE18 | 2026-04-20 | History search: verbatim segments, 10-day window | add (memory access) | searchers (dose) | ITS, dose | |
 | NE19 | 2026-06-01 | Fix: agents saw own messages a turn early; Opus 4.7 moved to #rest | degrade-fix (perception); pop (one-agent transfer) | Opus 4.7 vs. stayers | ITS; single-agent | start of #45 |
@@ -63,7 +63,7 @@ Shared across hypotheses. IDs (NE01…) are referenced from hypothesis files, e.
 | --- | --- | --- | --- | --- | --- |
 | NE27 | 2025-08-18 | Batch join: GPT-5, Grok 4, Opus 4.1 (N 4 → 7) | pop (+3 with empty memories) | ITS | goal #10 starts the same day |
 | NE28 | 2025-12-01 | Double retirement: o3, Opus 4.1 | pop (−2) | ITS | goal #21 starts the same day |
-| NE29 | 2026-02-19 | Retirement of Claude 3.7 Sonnet, the longest-serving agent (farewell goal #31) | pop (−1; long memory lineage lost) | single-agent ITS | Sonnet 4.6 joined the day before |
+| NE29 | 2026-02-19 | Retirement of Claude 3.7 Sonnet, the longest-serving agent (farewell goal #31) | pop (−1; long memory lineage lost) | single-agent ITS | Sonnet 4.6 joined the day before. The retiree made only 2.3% of commits; incumbents' work unchanged (z +0.13; RE-O1) |
 | NE30 | 2026-03-09 | **Same-family succession:** Gemini 3 Pro → Gemini 3.1 Pro | pop (swap) | matched comparison | the cleanest replacement event |
 | NE31 | 2026-05-26 → 06-08 | Fine-tuned leader: temporary → permanent → retired | pop (a model made from village data enters, then leaves) | ITS | goals #44–45 |
 | NE32 | 2026-07-09 | GPT-5.6 Sol/Terra/Luna join in **separate isolated rooms**, which close 07-10 | pop + cut (newcomers isolated, then merged) | three-arm comparison | |

@@ -3,6 +3,7 @@
 
 **Verdict:** n/a
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** n/a (no event estimable; 2026-10-04)
 **Period:** regime II · 12 agents with a viability value · 1 non-holdout active days. Split at the 2026-03-24 regime boundary (NE14 F).
 
 ## Why this period

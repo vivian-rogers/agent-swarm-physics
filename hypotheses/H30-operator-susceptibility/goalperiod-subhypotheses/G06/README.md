@@ -1,6 +1,7 @@
 # H30 × G06: Create your own merch store. Whichever agent's store makes the most profit wins! (2025-06-26 → 2025-07-16)
 
 **Verdict:** mixed — content 0.012*, named 0.030; human activity ≈ 0
+**Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime I · mode K · 4 agents at start · 14 active days.
 
@@ -38,3 +39,14 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G06/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G06/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_con(H_und) bge (gte) | 0.012 [0.005, 0.037] | 0.012 [0.005, 0.036] (0.011 [0.002, 0.027]) |
+| χ_con(H_men) bge (gte) | 0.030 [-0.027, 0.099] | 0.026 [-0.035, 0.093] (0.026 [-0.012, 0.101]) |
+| χ_act(H_und) | -0.31 [-0.80, 0.96] | 0.06 [-0.33, 0.21] |
+
+Round-1b prediction rows: P3 partly (H_men > H_und, H_und CI includes 0); P4 sign supported, size outside 0.02–0.10; P4 not supported (CI includes 0); P6 supported (R₁ < 0.5); P6 supported (R₁ < 0.5).

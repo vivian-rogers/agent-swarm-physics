@@ -108,13 +108,16 @@ def scorecard_line(g, r, v):
             f"G: –.")
 
 
-def build(kind):
+def build(kind, tag=None):
+    """tag: None = round 1 files; otherwise a round-1b configuration (G<NN>/r1b/result_<kind>_<tag>.json)."""
     fn = "result.json" if kind == "iso" else "result_aniso.json"
     res = {}
     for g in hc.ALL_PERIODS:
-        f = hc.OUT / f"G{g:02d}/{fn}"
+        f = hc.OUT / f"G{g:02d}/{fn}" if tag is None else hc.OUT / f"G{g:02d}/r1b/{fn.replace('.json', f'_{tag}.json')}"
         if f.exists():
             res[g] = json.loads(f.read_text())
+    if not res:
+        return {"rows": []}
     verdicts, rows = {}, []
     for g, r in res.items():
         v = period_verdict(g, r)
@@ -177,7 +180,32 @@ def build(kind):
     return summ
 
 
+def main_r1b(tags):
+    """Round 1b: one summary per configuration, written to r1b/summary_<tag>.json (summary.json is not touched)."""
+    (hc.OUT / "r1b").mkdir(exist_ok=True)
+    for tag in tags:
+        out = {}
+        for kind in ("iso", "aniso"):
+            s = build(kind, tag)
+            if s["rows"]:
+                out[kind] = s
+        if not out:
+            print(tag, "no results"); continue
+        head = out.get("aniso", out.get("iso"))
+        re = head["RE_A_long_medium"]
+        print(f"[{tag}] card {head['card_verdict']} | RE A {re['mean']:+.3f} ± {re['se']:.3f} (I2 {re['I2']:.2f}) | "
+              f"calib z-SD {head['calibration']['z_robust_sd']:.2f} | long: {head['long_verdicts']}")
+        for x in head["rows"]:
+            if x["role"] != "short":
+                print(f"   G{x['g']:02d} {x['verdict']:<11} A {x['A']:+.3f} (p {x['pA']:.3f}) A_c {x['Ac']:+.3f} (p {x['pAc']:.3f}) "
+                      f"A_g {x['Ag']:+.3f} A_late {x['Al']:+.3f} K {x['K']:+.3f} mu {x['mu'] if x['mu'] is None else round(x['mu'], 2)} "
+                      f"pow {x['pow05']:.2f}")
+        (hc.OUT / "r1b" / f"summary_{tag}.json").write_text(json.dumps(out, indent=1, default=float))
+
+
 def main():
+    if len(sys.argv) > 2 and sys.argv[1] == "--r1b":
+        return main_r1b(sys.argv[2].split(","))
     out = {}
     for kind in ("iso", "aniso"):
         s = build(kind)

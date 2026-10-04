@@ -1,6 +1,7 @@
 # H10 × G37: Pick your own goal! (2026-03-30 → 2026-04-01)
 
 **Verdict:** descriptive (F1 ✓, F2 ✗, F3 ✓)
+**Verdict (1b):** descriptive (both models)
 **Role:** exploratory
 **Period:** regime III · mode F · 12 agents (Claude Code agent not present) · #best / #rest · 3 active days (27 windows); statements are sparse (median 3 per agent-window).
 
@@ -30,3 +31,8 @@ Data: `data/processed/H10-goals-are-legendre-pushes/G37/period.json`. Figure: [`
 - **C/D:** none.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Inputs: shared goal fields (`goal_fields`; H10's own goal and kickoff vectors already matched them to cos ≥ 0.9999999, so bge numbers are unchanged), the second embedding model gte-modernbert, DQ5 restatement dedupe and style-residualized vectors. Data: `data/processed/H10-goals-are-legendre-pushes/r1b/<config>/`. Role: replication (the round-1 estimator, unchanged).*
+
+bge identical (γ −0.11, unimodal, g 0.62). gte: γ +0.35, unimodal, g 0.48 [0.19, 0.72], stationary.

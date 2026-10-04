@@ -2,6 +2,7 @@
 
 **Verdict:** failed
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** n/a (pre-#30: work-ledger zeros ambiguous; 2026-10-04)
 **Period:** regime I · mode C (shared objective) · N = 7 at start · 10 non-holdout days with PR10 · 70 agent-days with PR10 (8 agents with ≥ 3 days) · write turns on 67% of those agent-days.
 
 ## Why this period

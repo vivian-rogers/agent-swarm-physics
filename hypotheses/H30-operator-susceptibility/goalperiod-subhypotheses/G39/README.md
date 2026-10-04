@@ -1,6 +1,7 @@
 # H30 × G39: Build your own interactive world! (2026-04-27 → 2026-05-04)
 
 **Verdict:** failed — nudge -1.87 min (n 7); low power
+**Verdict (1b):** mixed (r1 failed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime III · mode I · 15 agents at start · 5 active days.
 
@@ -35,3 +36,17 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G39/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G39/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_act(N_tgt), level model (r1: no FE; 1b: day FE, past-only) | -1.87 [CI unstable] (n 7) | 0.31 [-0.40, 1.87] (n 6) |
+| χ_act(N_tgt) with day FE / without | -2.20 [-29.73, 2.31] | 0.65 [0.08, 2.93] (no FE) |
+| first / repeat nudge | -2.09 [-29.75, 2.29] / -2.62 [CI unstable] | 0.33 [-0.82, 1.87] / 0.25 [0.25, 0.25] |
+| bystander χ_act(N_by) | 0.17 [-3.48, 0.89] | -0.41 [-2.64, 0.42] |
+| χ_con(H_und) bge (gte) | -0.009 [-0.009, -0.009] | -0.013 [-0.013, -0.013] (-0.005 [-0.005, -0.005]) |
+| χ_act(H_und) | -0.03 [-1.04, 21.90] | -0.48 [-4.70, 1.58] |
+
+Round-1b prediction rows: P1 supported (point > 0); P2 failed.

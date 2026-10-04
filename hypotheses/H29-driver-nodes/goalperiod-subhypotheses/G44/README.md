@@ -1,6 +1,7 @@
 # H29 × G44: Finetune your leader! (2026-05-26 → 2026-05-29)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed; gte failed)
 **Role:** exploratory (counted)
 **Period:** regime III · mode C · 17 recipients in the network · #best / #rest; Opus 4.8 and the temporary fine-tuned leader join 05-28 (NE31) · 4 non-holdout days.
 
@@ -35,3 +36,17 @@ Figures: `../../figures/h29_summary.pdf` (all periods). Data: `data/processed/H2
 
 ## Notes
 - 2026-10-04: pre-registered pipeline (`explore.py`) and Amendment 2 (`posthoc.py`, post hoc) run. Invisible rows from call windows > 30 s: 0.39 (the H18 visibility rule misclassifies messages that arrive during a PAUSE or a long tool call).
+
+## Round 1b (improved data, 2026-10-04)
+Context-ledger visibility (DQ1) instead of H18's call-start rule; both embedding models; the DQ2 reply-graph network. Numbers in `data/processed/H29-driver-nodes/r1b/G44/` (bge) and `r1b_gte/G44/` (gte). Rule unchanged.
+
+| Statistic | Round 1 | Round 1b bge | Round 1b gte |
+| --- | --- | --- | --- |
+| κ (pre-registered) | -0.020 [-0.028, -0.012] | -0.024 [-0.029, -0.016] | -0.022 [-0.026, -0.017] |
+| boundary jump (matched age) | 0.004 [-0.021, 0.037] | -0.007 [-0.027, 0.017] | -0.002 [-0.026, 0.042] |
+| named like-for-like | 0.031 [-0.041, 0.099] | 0.055 [-0.060, 0.161] | 0.042 [-0.081, 0.166] |
+| unnamed like-for-like | -0.008 [-0.031, 0.025] | -0.026 [-0.034, -0.004] | -0.014 [-0.034, 0.025] |
+| split-half D (pre-registered / post hoc) | 0.26 / -0.09 | 0.29 / 0.38 | 0.53 / 0.13 |
+| held-out V2 ρ(D, H) (pre-registered / post hoc) | 0.44 / 0.13 | 0.04 / 0.25 | 0.40 / 0.39 |
+| reply network: split-half D^rep · held-out ρ(D^rep, H) | – | 0.65 · 0.18 | 0.65 · 0.10 |
+| reply-parent premium (matched age) | – | 0.156 [0.126, 0.176] | 0.184 [0.146, 0.210] |

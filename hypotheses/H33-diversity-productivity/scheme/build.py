@@ -12,6 +12,7 @@ Usage: uv run python hypotheses/H33-diversity-productivity/scheme/build.py
 """
 from __future__ import annotations
 
+import sys
 import time
 
 import h33common as C  # noqa: I001  (sets thread caps first)
@@ -30,7 +31,114 @@ def log(msg):
 
 
 def main():
+    if C.ROUND == "r1b":
+        build_r1b(C.calendar_nonholdout())
+        return
     build(C.calendar_nonholdout(), C.OUT, guard=True)
+
+
+# ===================================================================================== round 1b (2026-10-04)
+VARIANTS = {  # name: (model, dedup flag expression on statement_flags)
+    "pr10_bge_w": ("bge_small", pl.col("self_repeat_bge")),                               # H12 rule, DQ5 white32
+    "pr10_gte": ("gte_modernbert", pl.col("self_repeat_gte")),                            # same rule, second model
+    "pr10_bge_copies": ("bge_small", pl.col("self_repeat_both")),                          # drop copies only
+    "pr10_gte_copies": ("gte_modernbert", pl.col("self_repeat_both")),
+    "pr10_bge_restate": ("bge_small", pl.col("self_repeat_bge") | pl.col("self_repeat_gte")),  # drop restatements
+    "pr10_gte_restate": ("gte_modernbert", pl.col("self_repeat_bge") | pl.col("self_repeat_gte")),
+}
+
+
+def build_r1b(cal: pl.DataFrame):
+    """Round-1b agent_day / swarm_day: round-1 PR columns (statements and embeddings unchanged; carried from the
+    round-1 tables) + engaged minutes from activity_bins_fixed + DQ4 work outcomes + PR10 under both embedding models
+    and three dedups (DQ5 white32 vectors, statement_flags). Units before #30 are kept in the tables but are not
+    eligible (work-ledger zeros there are ambiguous)."""
+    days = set(cal["pt_date"].to_list())
+    C.refuse_holdout(days, "calendar")
+    out_root = C.OUT
+    out_root.mkdir(parents=True, exist_ok=True)
+    C.FIG.mkdir(parents=True, exist_ok=True)
+    ad = C.load_agent_day(C.OUT_R1)
+    sw1 = C.load_swarm_day(C.OUT_R1)
+    C.refuse_holdout(ad["pt_date"].unique().to_list(), "round-1 agent_day")
+    calj = cal.select("pt_date", (pl.col("win_start") + (pl.col("win_end") - pl.col("win_start")) / 2).alias("t_mid"))
+    # engaged minutes on the fixed activity table
+    ab = (pl.scan_parquet(C.SH / "activity_bins_fixed.parquet")
+          .filter(pl.col("pt_date").is_in(list(days)) & (pl.col("agent") != C.CLAUDE_CODE_AGENT))
+          .group_by("pt_date", "agent").agg(pl.len().alias("n_min_fx"), (pl.col("state") >= 3).sum().alias("engaged_fx"))
+          .collect())
+    # DQ4 work outcomes (agent work commits only: canonical & ~imported & agent & ~automated)
+    wd = (pl.read_parquet(C.SH / "work_daily.parquet")
+          .filter((pl.col("level") == "agent") & pl.col("pt_date").is_in(list(days)) & ~pl.col("holdout"))
+          .select("pt_date", "agent", pl.col("commits").alias("commits_w"), pl.col("distinct_files").alias("files_w"),
+                  pl.col("lines_changed_nobulk").alias("lines_nb"), "new_repos", "repos_touched"))
+    wc = (pl.read_parquet(C.SH / "work_commits.parquet", columns=["t", "pt_date", "author_agent", "author_kind", "canonical",
+                                                                  "imported", "automated", "holdout"])
+          .filter(pl.col("canonical") & ~pl.col("imported") & (pl.col("author_kind") == "agent") & ~pl.col("automated")
+                  & ~pl.col("holdout") & pl.col("pt_date").is_in(list(days)))
+          .join(calj, on="pt_date", how="left")
+          .group_by("pt_date", pl.col("author_agent").alias("agent"))
+          .agg((pl.col("t") < pl.col("t_mid")).sum().alias("commits_w_am"), (pl.col("t") >= pl.col("t_mid")).sum().alias("commits_w_pm")))
+    log(f"work outcomes: {wd.height} agent-days, half-day splits {wc.height}")
+    # PR10 variants
+    st = (pl.read_parquet(C.EMB / "statements.parquet").with_row_index("srow")
+          .filter((pl.col("kind") == "chat") & pl.col("pt_date").is_in(list(days)) & ~pl.col("holdout")
+                  & (pl.col("agent") != C.CLAUDE_CODE_AGENT)))
+    C.refuse_holdout(st["pt_date"].unique().to_list(), "statements")
+    fl = pl.read_parquet(C.SH / "statement_flags.parquet",
+                         columns=["srow", "self_repeat_bge", "self_repeat_gte", "self_repeat_both"])
+    st = st.join(fl, on="srow", how="left")
+    emb = {m: np.load(C.EMB / f"statements_white32_{m}.npy", mmap_mode="r") for m in ("bge_small", "gte_modernbert")}
+    recs = {}
+    sel_cache = {}
+    for name, (model, drop) in VARIANTS.items():
+        kept = st.filter(~drop.fill_null(False))
+        E = emb[model]
+        for (d, a), g in kept.sort("t").group_by(["pt_date", "agent"]):
+            Y = np.asarray(E[g["srow"].to_numpy()], dtype=np.float64)
+            rng = np.random.default_rng([C.SEED, C.stable_seed([d, int(a), name])])
+            r = L12.pr_rarefied(Y, np.zeros(len(Y), dtype=np.int64), C.N_PR, None, C.DRAWS, rng, erank=False)
+            rec = recs.setdefault((d, int(a)), {"pt_date": d, "agent": int(a)})
+            rec[name] = r["pr"]
+            rec[f"n_{name}"] = len(Y)
+        log(f"variant {name}: {kept.height} statements")
+    # self-repetition shares under the new flags
+    srs = st.group_by("pt_date", "agent").agg(pl.len().alias("n_raw_f"), pl.col("self_repeat_both").mean().alias("selfrep_copies"),
+                                              (pl.col("self_repeat_bge") | pl.col("self_repeat_gte")).mean().alias("selfrep_restate"),
+                                              pl.col("self_repeat_gte").mean().alias("selfrep_gte"))
+    prv = pl.DataFrame(list(recs.values())).with_columns(pl.col("agent").cast(pl.Int8))
+    prv = prv.with_columns([pl.col(c).cast(pl.Float32).fill_nan(None) for c in VARIANTS])
+    ad = (ad.join(ab, on=["pt_date", "agent"], how="left").join(wd, on=["pt_date", "agent"], how="left")
+          .join(wc, on=["pt_date", "agent"], how="left").join(prv, on=["pt_date", "agent"], how="left")
+          .join(srs.drop("n_raw_f"), on=["pt_date", "agent"], how="left")
+          .with_columns(pl.col("engaged_min").alias("engaged_min_r1"), pl.col("engaged_fx").fill_null(0).alias("engaged_min"),
+                        *[pl.col(c).fill_null(0).cast(pl.Int32) for c in ("commits_w", "files_w", "commits_w_am", "commits_w_pm",
+                                                                         "new_repos", "repos_touched")],
+                        pl.col("lines_nb").fill_null(0))
+          .drop("engaged_fx", "n_min_fx"))
+    C.refuse_holdout(ad["pt_date"].unique().to_list(), "agent_day r1b")
+    sw = (ad.group_by("pt_date").agg((pl.col("engaged_min") > 0).sum().alias("n_active_fx"), pl.col("commits_w").sum().alias("commits_total"))
+          .with_columns((pl.col("commits_total") / pl.col("n_active_fx").clip(1, None)).alias("commits_per_agent")))
+    sw = sw1.join(sw, on="pt_date", how="left")
+    for u in sorted(ad["unit"].unique().to_list()):
+        od = out_root / C.unit_dir(u).name
+        od.mkdir(parents=True, exist_ok=True)
+        g = int(u.rstrip("abt"))
+        ad.filter(pl.col("goal_no") == g).write_parquet(od / "agent_day.parquet", compression="zstd")
+        sw.filter(pl.col("goal_no") == g).write_parquet(od / "swarm_day.parquet", compression="zstd")
+    sys.path.insert(0, str(C.HYP / "analysis"))
+    import h33lib as H  # noqa: E402  (analysis library; eligibility rule)
+    el = H.eligibility(C.load_agent_day())
+    el.write_parquet(out_root / "eligibility.parquet")
+    log(f"eligible (r1b): {sorted(el.filter('eligible')['unit'].to_list(), key=lambda s: int(s.rstrip('ab')))}")
+    C.write_provenance("hypotheses/H33-diversity-productivity/scheme/build.py",
+                       ["H33 round-1 agent_day/swarm_day (PR columns)", "activity_bins_fixed", "work_daily", "work_commits",
+                        "embeddings/statements", "embeddings/statements_white32_{bge_small,gte_modernbert}", "statement_flags",
+                        "calendar"],
+                       {"round": "r1b", "variants": {k: v[0] for k, v in VARIANTS.items()}, "y_primary": C.Y_PRIMARY,
+                        "work": "canonical & ~imported & author_kind=='agent' & ~automated", "min_goal": C.MIN_GOAL,
+                        "seed": C.SEED}, path=out_root / "_provenance.json")
+    log(f"r1b agent_day {ad.height} rows; done")
 
 
 def build(cal: pl.DataFrame, out_root, guard: bool = True):

@@ -1,6 +1,7 @@
 # H20 × G04: Write a story and celebrate it with 100 people in person (2025-05-15 → 2025-06-18)
 
 **Verdict:** mixed (underpowered: not significant, μ = 0.5 aging not rejected) (Amendment-2 null; pre-registered null: mixed)
+**Verdict (1b):** mixed (both models, all configs)
 **Role:** exploratory
 **Period:** regime I · mode C · 6 agents with statements · #general only · 25 active days (99 agent-days with ≥ 8 statements). Roster swap inside (o4-mini one day; GPT-4.1 out, Claude Opus 4 in); start time moved 05-23.
 
@@ -46,3 +47,16 @@ Data: `data/processed/H20-content-aging/G04/` (result.json = pre-registered null
 C (beats the stationary null): 0 — A p = 0.385, A_c p = 0.240. D (unfitted signature: A_late, μ̂ > 0): 0. H (rivals R1 quench, R2 field, R3 common): 0. G: –.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04): replication
+*Inputs: shared goal fields, gte-modernbert (DQ5), DQ5 dedupe (copies, restatements), style-residualized vectors. Data: `data/processed/H20-content-aging/G04/r1b/result_aniso_<config>.json`. Role of this row: replication.*
+
+| Input | Statistics (Amendment-2 null) |
+| --- | --- |
+| round 1 (bge, H01-derived goal vectors) | see Result above |
+| bge-small, shared goal fields | A +0.021 (p 0.385); A_c +0.052 (p 0.240); A_late +0.028; K -0.078; μ̂ +0.30 [-1.17, +1.58]; power 0.11 |
+| gte-modernbert | A +0.056 (p 0.222); A_c +0.044 (p 0.279); A_late +0.058; K -0.187; μ̂ +0.71 [-0.80, +2.03]; power 0.12 |
+| restatement-deduped (bge / gte) | A +0.010 / +0.045 |
+| style-residualized (bge / gte) | A +0.020 / +0.056 |
+
+A across the 7 configurations: +0.010 to +0.056. The shared goal fields give the same ĝ as round 1 (cos 1.0000 at n = 32: H20 averaged the room kickoffs, so H01's #38 room swap cancels), so bge numbers reproduce exactly.

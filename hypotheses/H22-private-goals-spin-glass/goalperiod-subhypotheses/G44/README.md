@@ -1,6 +1,7 @@
 # H22 × G44: shared-objective contrast (44; 2026-05-26 → 05-29)
 
 **Verdict:** descriptive
+**Verdict (1b):** descriptive (round 1: descriptive)
 **Role:** exploratory (contrast)
 **Period:** regime III · mode C for #best only (fine-tune the leader); #rest chose its own creative goals · 16 → 18 agents · two rooms · 4 days (day-thirds as pseudo-days).
 
@@ -49,3 +50,17 @@ Data: `data/processed/H22-private-goals-spin-glass/G44/<unit>/results.json`; fig
 ## Notes
 - Data: `data/processed/H22-private-goals-spin-glass/G44/<unit>/`. Figure: `figures/H22_G44.pdf`.
 - Card: `../../README.md` (Observables, Null, Prediction, Amendment 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the corrected inputs (card section "Round 1b"); round-1 numbers kept above.* DQ6 ground-truth roles (Opus 5's first role recovered), DQ5 statement vectors in two models (bge, gte), DQ5 `style_resid_period` vectors ("styp"), restatements removed ("dedup"), `activity_bins_fixed` for talk spins, and the DQ2 stance channel with the calibrated agent-field null. Data: `data/processed/H22-private-goals-spin-glass/r1b/`.
+
+| Unit | Variant | heterogeneity ρ_split | τ₃(dc) | T_SR / pairs (p>) | T_OP | W (p) | talk ρ_split (p) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 44 | round 1 | 0.59 (p 0.003) | 0.95 | – / None (p> –) | – | 3.99 (p 0.01) | 0.12 (p 0.223) |
+| 44 | bge | 0.59 (p 0.003) | 0.95 | – / None (p> –) | – | 3.99 (p 0.01) | 0.14 (p 0.159) |
+| 44 | gte | 0.54 (p 0.010) | 0.75 | – / None (p> –) | – | 1.80 (p 0.14) | 0.14 (p 0.159) |
+| 44 | bge styp | 0.57 (p 0.003) | 0.81 | – / None (p> –) | – | 1.48 (p 0.22) | 0.14 (p 0.159) |
+| 44 | gte styp | 0.53 (p 0.007) | 0.52 | – / None (p> –) | – | 0.78 (p 0.54) | 0.14 (p 0.159) |
+| 44 | bge dedup | 0.59 (p 0.003) | 1.01 | – / None (p> –) | – | 4.06 (p 0.00) | 0.14 (p 0.159) |
+| 44 | **stance (DQ2)** | dc split-half 0.23 (agent-field p 0.189) | 0.81 [0.70, 0.86] | – / None (p> –) | – | – | neg. pairs 2 vs 0.2 |
+

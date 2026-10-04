@@ -1,6 +1,7 @@
 # H30 × G51: Each agent: Maximize your assigned goal! (2026-07-06 → 2026-09-20)
 
 **Verdict:** mixed — nudge 0.59 [0.24, 0.93] min (n 875); content 0.025*, named 0.063
+**Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime III · mode I/K · 21 agents at start · 55 active days (non-holdout part only: 07-06 → 09-04; the #51 tail is held out).
 
@@ -49,3 +50,18 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G51/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G51/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_act(N_tgt), level model (r1: no FE; 1b: day FE, past-only) | 0.59 [0.24, 0.93] (n 875) | 0.98 [0.63, 1.37] (n 658) |
+| χ_act(N_tgt) with day FE / without | 1.04 [0.77, 1.33] | 1.07 [0.73, 1.47] (no FE) |
+| first / repeat nudge | 1.36 [0.98, 1.75] / 0.26 [-0.13, 0.63] | 1.21 [0.80, 1.66] / 0.44 [-0.19, 1.10] |
+| bystander χ_act(N_by) | 0.13 [-0.11, 0.38] | -0.01 [-0.09, 0.08] |
+| χ_con(H_und) bge (gte) | 0.025 [0.014, 0.033] | 0.024 [0.014, 0.033] (0.019 [0.010, 0.026]) |
+| χ_con(H_men) bge (gte) | 0.063 [0.043, 0.101] | 0.047 [0.031, 0.071] (0.047 [0.031, 0.079]) |
+| χ_act(H_und) | 0.26 [-0.96, 1.58] | 0.15 [-0.05, 0.33] |
+
+Round-1b prediction rows: P1 supported; P2 supported; P5 supported; P6 failed; P6 supported (R₁ < 0.5); P6 supported (R₁ < 0.5); P6 supported (R₁ < 0.5); P7 supported (no aging); P8 failed (late ≥ early); P10 supported; P11 supported.

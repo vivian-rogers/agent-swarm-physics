@@ -13,6 +13,7 @@ import time
 
 import numpy as np
 
+import h10data
 from h10data import DATA, PAIRS, load_period, pair_segments, save_json, segment
 from h10lib import (agent_cov, agent_stats, analyze_pair, pair_stats, stouffer, swarm_stats, verdict_P1, verdict_P2,
                     verdict_P3, verdict_P4, verdict_pair)
@@ -116,7 +117,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--boot", type=int, default=1000)
     ap.add_argument("--skip-robust", action="store_true")
+    # round 1b (2026-10-04): corrected inputs; defaults reproduce round 1
+    ap.add_argument("--emb", default="bge_small", choices=["bge_small", "gte_modernbert"])
+    ap.add_argument("--goals", default="h10", choices=["h10", "shared"])
+    ap.add_argument("--dedupe", default="none", choices=["none", "copies", "restate"])
+    ap.add_argument("--style", action="store_true")
     args = ap.parse_args()
+    h10data.configure(args.emb, args.goals, args.dedupe, args.style)
+    global OUT
+    OUT = h10data.out_root() / "NE34"
+    print("config", h10data.cfg_tag(), "->", OUT, flush=True)
     rng = np.random.default_rng(20261003)
     t0 = time.time()
     results = {}
@@ -137,10 +147,13 @@ def main():
     rob = {}
     variants = [("n16", dict(n=16)), ("n64", dict(n=64)), ("goal_only", dict(variant="goal")),
                 ("kickoff_only", dict(variant="kickoff")), ("with_day1", dict(include_day1=True)), ("win60", dict(win_min=60))]
+    zdim = h10data.statements()[1].shape[1]
     for key, cfg in PAIRS.items():
         if not cfg["primary"]:
             continue
         for vname, kw in variants:
+            if kw.get("n", 32) > zdim:
+                continue
             r = run_one(key, 200, rng, with_placebo=False, n_rot=500, **kw)
             rob[f"{key}:{vname}"] = {k: r.get(k) for k in ("N", "Dbar", "eps", "lam", "P1_r", "P1_p", "P1_mse_tilt",
                                                             "P1_mse_trans", "P2_rho", "P2_rho_ci90", "P2_rho_perp", "gF",

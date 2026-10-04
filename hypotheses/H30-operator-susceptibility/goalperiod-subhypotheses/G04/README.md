@@ -1,6 +1,7 @@
 # H30 × G04: Write a story and celebrate it with 100 people in person (2025-05-15 → 2025-06-19)
 
 **Verdict:** mixed — content 0.030*, named 0.033; human activity ≈ 0
+**Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
 **Role:** exploratory
 **Period:** regime I · mode C · 4 agents at start · 25 active days.
 
@@ -38,3 +39,14 @@ Daily gauge: `data/processed/H30-operator-susceptibility/G04/daily.parquet`; fig
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
 - 2026-10-03: round-1 results filled in from `results.json`.
+
+## Round 1b (improved data, 2026-10-04)
+Fixed activity bins, leading-@ nudge target, kicks at the DQ1 receiving call, past-only kick adjustment with a day fixed effect, content also with gte-modernbert. Numbers in `data/processed/H30-operator-susceptibility/r1b/G04/results.json`; verdict rule unchanged.
+
+| Statistic | Round 1 | Round 1b |
+| --- | --- | --- |
+| χ_con(H_und) bge (gte) | 0.030 [0.025, 0.035] | 0.027 [0.022, 0.032] (0.028 [0.024, 0.033]) |
+| χ_con(H_men) bge (gte) | 0.033 [0.021, 0.049] | 0.033 [0.020, 0.047] (0.044 [0.031, 0.060]) |
+| χ_act(H_und) | -0.21 [-0.64, 0.17] | 0.15 [-0.09, 0.35] |
+
+Round-1b prediction rows: P3 failed; P4 supported; P4 supported; P6 supported (R₁ < 0.5); P6 supported (R₁ < 0.5).

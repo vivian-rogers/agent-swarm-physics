@@ -1,6 +1,7 @@
 # H39 × G23: Compete against each other in an online chess tournament (2025-12-15 → 2025-12-22)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K · 50 agent-days on 5 non-holdout days (2025-12-15 → 2025-12-19) · 11,903 agent-minutes on the trimmed grid.
 
@@ -40,3 +41,6 @@ Content (O6), drift toward the kick message in SD units of the controls' drift, 
 
 ## Notes
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G23/results.json`. Rule unchanged: P2 human messages ✗; P3 @-mentions ✗ → **failed**.

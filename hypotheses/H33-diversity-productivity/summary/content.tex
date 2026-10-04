@@ -1,4 +1,4 @@
-\hwhat{Does an agent's daily content diversity have an output optimum? For each agent-day: the participation ratio PR10 of its chat (self near-copies removed, rarefied to 10 statements, whitened bge) against $\log(1+\text{write turns})$, within agent and period, with day effects and activity controls. 17 non-holdout periods with logged write verbs, 1592 agent-days. The primary test is Simonsohn's two-lines test, validated first on the real design: 0--7\% false positives, 82\% power for a 0.4-SD inverted U. \textbf{No inverted U:} the slope is $+0.035$ ($p=0.26$) below the breakpoint and $-0.035$ ($p=0.35$) above it, and the curve is flat from PR10 $\approx 14$ up. Per period: 0 supported, 3 mixed, 11 failed, and the meta-analysed right slope has the wrong sign. PR10 improves day-blocked CV by 0.2\%; adding curvature makes it worse. Self-repetition does not predict same-day output either ($p=0.84$). Holdout script frozen, not run.}
+\hwhat{Does an agent's daily content diversity have an output optimum? For each agent-day: the participation ratio PR10 of its chat (self near-copies removed, rarefied to 10 statements, whitened bge) against $\log(1+\text{write turns})$, within agent and period, with day effects and activity controls. 17 non-holdout periods with logged write verbs, 1592 agent-days. The primary test is Simonsohn's two-lines test, validated first on the real design: 0--7\% false positives, 82\% power for a 0.4-SD inverted U. \textbf{No inverted U:} the slope is $+0.035$ ($p=0.26$) below the breakpoint and $-0.035$ ($p=0.35$) above it, and the curve is flat from PR10 $\approx 14$ up. Per period: 0 supported, 3 mixed, 11 failed, and the meta-analysed right slope has the wrong sign. PR10 improves day-blocked CV by 0.2\%; adding curvature makes it worse. Self-repetition does not predict same-day output either ($p=0.84$). \textbf{Round 1b} (work commits, \#30+, both embedding models): the null stands. Holdout script frozen, not run.}
 
 \hmodel{Model 11 (vector spins). Each chat statement is a unit vector in the regime's whitened 32-d bge space. An agent-day's covariance $\Sigma$ has participation ratio PR: 1 is a frozen spin repeating itself, 32 is isotropic (``paramagnetic'') content. H33 claims output peaks at an intermediate PR. Output: write turns (git push or commit, deploy, PR/MR create or merge) per agent-day, $y_{id}=\log(1+\text{writes})$; $\alpha_{iu}$, $\delta_d$: agent$\times$period and day effects; $z$: activity controls; $x_c$: Robin Hood breakpoint; $\nu=n-1$, $n=10$.}
 
@@ -13,4 +13,25 @@ f=b_1(x-x_c)[x<x_c]+b_2(x-x_c)[x\ge x_c]+c\,[x\ge x_c]\\
 
 \htelos{For operators: there is no content-diversity operating point to steer toward. Pushing agents to talk about more things, or fewer, should not be expected to change how much they ship. Write turns at the best PR10 and at the 90th percentile differ by at most about 9\%. The only hint is on the loop side (the bottom decile may write about 25\% less, not significantly), which H12's self-repetition rate catches more directly. Caveats: daily chat PR is half noise, and write turns count activity, not value. A clean null that retires a plausible dashboard metric.}
 
-\hbottom{Agent-day content diversity has no output optimum in this swarm: the curve is flat above PR10 $\approx 14$ and not distinguishable from flat below it, so there is no operating point to target.}
+\hbottom{Agent-day content diversity has no output optimum in this swarm, measured in write turns or in commits that landed: the curve is flat, curvature hurts out of sample, and the only right-side drop is a \#51 property that one embedding model does not see.}
+
+
+\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.55\columnwidth}p{0.12\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Round 1 (write turns) $\to$ 1b (work commits)} & \textbf{Verdict}\\\hline
+P1 inverted U & $b_2$ $-0.035$ ($p$ .35) $\to$ $-0.040$ ($p$ .31); $b_1$ n.s. & $\times$\\
+P2 per period & meta $b_2$ $+0.028\to+0.017$ (wrong sign); 1/8 supported & $\times$\\
+P3 curvature in CV & spline worse than linear (5/5 seeds) both rounds & $\times$\\
+P6 loops cost output & $+0.17\to+0.97$ (n.s.); $-$ in \#31, \#35, \#42 & $\times$\\
+P7 swarm-day & $b_1$ $-0.22\to-0.25$ & $\times$\\
+gte / dedups (new) & $b_2<0$ in all 8 variants; sig.\ in 3 bge specs, none gte; 0 without \#51 & \#51 tail\\
+G51 rival pairs (native) & same role, same day: quad $p=0.58$ & null\\
+G51 role classes (native) & support class (4 agents) concave, $p<.001$ & lead\\
+G39 own worlds (native) & $\rho$(PR10, commits) $+0.10$ & null\\
+G42 videos (native) & $\rho$(PR10, videos) $+0.10$ & null\\
+\end{tabular}}}
+
+\hobsb{../figures/r1b/curve_pooled.pdf}{Round 1b: (a) partial residuals of $\log(1+\text{work commits})$ by PR10 decile, 12 eligible periods from \#30 on, 1,290 agent-days, with the 4-df spline and the two-lines breakpoint; (b) per-period slopes below and above the breakpoint with the random-effects meta (the right slope's meta has the wrong sign).}
+
+\hcaveats{The work ledger is dense only from \#30, so 5 round-1 periods drop out and \#51 is 58\% of the pool. Agent-day PR10 is moderately model-dependent (bge vs gte $\rho=0.77$) and half noise (reliability 0.55). The right-side drop appears in some bge specifications only and vanishes without \#51. The support-class inverted U rests on 4 agents. Commits count landed work, not value.}
+
+\hnext{Leave as a closed null unless the \#51 tail lead (C5) is confirmed on the holdout; if anything, test the support-role curve on the \#51 tail. Hour-scale designs and Jev progress scores are the only untried angles.}

@@ -3,6 +3,7 @@
 
 **Verdict:** descriptive
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** descriptive (V* V_eng; MR -0.69 (z -1.0); 2026-10-04, `r1b/results.json`)
 **Period:** regime I · 4 agents with a viability value · 18 non-holdout active days.
 
 ## Why this period

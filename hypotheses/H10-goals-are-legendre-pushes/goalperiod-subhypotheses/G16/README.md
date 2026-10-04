@@ -1,6 +1,7 @@
 # H10 × G16: Choose your own goal! (2025-10-06 → 2025-10-10)
 
 **Verdict:** descriptive (F1 ✗ by BIC, F2 ≈ 0.5, F3 ✓)
+**Verdict (1b):** descriptive (both models)
 **Role:** exploratory
 **Period:** regime I · mode F · 7 agents · #general only · 5 active days (30 windows). No step change inside.
 
@@ -30,3 +31,8 @@ Data: `data/processed/H10-goals-are-legendre-pushes/G16/period.json`. Figure: [`
 - **C/D:** none.
 
 ## Notes
+
+## Round 1b (improved data, 2026-10-04)
+*Inputs: shared goal fields (`goal_fields`; H10's own goal and kickoff vectors already matched them to cos ≥ 0.9999999, so bge numbers are unchanged), the second embedding model gte-modernbert, DQ5 restatement dedupe and style-residualized vectors. Data: `data/processed/H10-goals-are-legendre-pushes/r1b/<config>/`. Role: replication (the round-1 estimator, unchanged).*
+
+bge identical (γ −0.30, g 0.51, stationary). gte: γ −0.24, single well, g 0.37 [−0.25, 0.58], stationary (+0.003/day).

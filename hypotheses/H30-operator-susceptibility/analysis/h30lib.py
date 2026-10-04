@@ -67,6 +67,7 @@ class Panel:
     agents: np.ndarray       # agent codes (int)
     label: str = ""
     goal_day: int = 0
+    call: np.ndarray | None = None   # (n_agents, n_min) int8: a model call (ledger t_call) starts in this minute (round 1b)
 
     @property
     def n_min(self):
@@ -134,7 +135,11 @@ def outage_minutes(act: np.ndarray, idle: np.ndarray, min_len: int = OUTAGE_MIN)
 
 def build_base(panels: list[Panel], hist: int = HIST, horizon: int = H, kicks: pl.DataFrame | None = None,
                strata: str = "full") -> Base:
-    """strata = "full" (H30: + fine idle duration + direct-kick recency) or "h04" (H04's pre-history strata)."""
+    """strata = "full" (H30: + fine idle duration + direct-kick recency) or "h04" (H04's pre-history strata) or
+    "r1b" (round 1b, kicks timed at the receiving call: history through m - 1 only, since the receiving call at m is
+    already part of the response; + an indicator that a model call starts at m, so kicked cells, which always sit on
+    a receiving call, are compared with call minutes; outcome Y = sum of n over tau = 0..horizon-1, i.e. from the
+    receiving call itself)."""
     parts = {k: [] for k in ("day", "row", "agent", "minute", "stratum", "Y", "Ypre", "pre_ok", "out_ok")}
     shapes, offsets, start = {}, {}, 0
     for p in panels:
@@ -148,7 +153,7 @@ def build_base(panels: list[Panel], hist: int = HIST, horizon: int = H, kicks: p
         m = np.arange(hist, nm - horizon)
         # history through the kick minute itself (sh = 0; the nudger decides on the agent's state in that minute) or,
         # for the H04 variant, through m - 1 (sh = 1)
-        sh = 1 if strata == "h04" else 0
+        sh = 1 if strata in ("h04", "r1b") else 0
         st = np.where(act == 1, 2, np.where(idle == 1, 1, 0))
         idx = np.where(act == 1, np.arange(nm)[None, :], -1)
         last = np.maximum.accumulate(idx, axis=1)           # last active minute <= t
@@ -162,14 +167,19 @@ def build_base(panels: list[Panel], hist: int = HIST, horizon: int = H, kicks: p
         i15 = np.clip(window_sum(idle, -hist + 1 - sh, -sh)[:, m], 0, 15)
         tod = (m * 3 // nm)[None, :].repeat(na, 0)
         loc = ((((st[:, m - sh] * 4 + ACT_BINS[a15]) * 3 + IDLE_BINS[i15]) * N_SINCE + sbin) * N_KREC + krec) * 3 + tod
-        Y = window_sum(act, 1, horizon)[:, m]
+        if strata == "r1b":
+            cm = (p.call if p.call is not None else np.zeros_like(act)).astype(np.int64)
+            loc = loc * 2 + cm[:, m]
+            Y = window_sum(act, 0, horizon - 1)[:, m]
+        else:
+            Y = window_sum(act, 1, horizon)[:, m]
         Yp = window_sum(act, PRE_LO, PRE_HI)[:, m]
         rows = np.arange(na)[:, None].repeat(len(m), 1)
         parts["day"].append(np.full(na * len(m), p.day, np.int32))
         parts["row"].append(rows.ravel().astype(np.int16))
         parts["agent"].append(np.repeat(np.asarray(p.agents), len(m)).astype(np.int32))
         parts["minute"].append(np.tile(m, na).astype(np.int32))
-        parts["stratum"].append((np.repeat(np.asarray(p.agents), len(m)).astype(np.int64) * N_LOCAL + loc.ravel()))
+        parts["stratum"].append((np.repeat(np.asarray(p.agents), len(m)).astype(np.int64) * (2 * N_LOCAL) + loc.ravel()))
         parts["Y"].append(Y.ravel().astype(np.float32))
         parts["Ypre"].append(Yp.ravel().astype(np.float32))
         parts["pre_ok"].append(np.tile(m >= -PRE_LO, na))
@@ -724,13 +734,33 @@ def assert_no_holdout(days: list[str]):
         raise RuntimeError(f"holdout leak: {bad[:5]} ({len(bad)} days)")
 
 
-def load_panels(days: list[str], allow_holdout: bool = False) -> tuple[list[Panel], dict]:
+BINS_TABLE = {"r1": "activity_bins.parquet",        # round 1 (DQ8: drops about half of all events)
+              "r1b": "activity_bins_fixed.parquet"}   # round 1b (2026-10-04): corrected join
+
+
+def out_root(data: str = "r1") -> Path:
+    """Round-1 outputs stay in OUT/<period>; round-1b outputs go to OUT/r1b/<period>."""
+    return OUT if data == "r1" else OUT / "r1b"
+
+
+def call_minutes(days: list[str]) -> dict:
+    """(pt_date, agent) -> sorted minute indices (relative to the calendar win_start) of the agent's model calls
+    (DQ1 `call_windows.t_call`)."""
+    cal = calendar().filter(pl.col("pt_date").is_in(days)).select("pt_date", "win_start")
+    cw = (pl.scan_parquet(SH / "call_windows.parquet").filter(pl.col("pt_date").is_in(days))
+          .select("pt_date", "agent", "t_call").collect().join(cal, on="pt_date", how="inner")
+          .with_columns(((pl.col("t_call") - pl.col("win_start")).dt.total_seconds() // 60).cast(pl.Int32).alias("minute")))
+    return {(d, int(a)): np.unique(g["minute"].to_numpy()) for (d, a), g in cw.group_by(["pt_date", "agent"])}
+
+
+def load_panels(days: list[str], allow_holdout: bool = False, data: str = "r1") -> tuple[list[Panel], dict]:
     if not allow_holdout:
         assert_no_holdout(days)
     cal = calendar().filter(pl.col("pt_date").is_in(days)).sort("pt_date")
     goal_first = {}
-    ab = (pl.scan_parquet(SH / "activity_bins.parquet").filter(pl.col("pt_date").is_in(days))
+    ab = (pl.scan_parquet(SH / BINS_TABLE[data]).filter(pl.col("pt_date").is_in(days))
           .select("pt_date", "minute", "agent", "state").collect().sort("pt_date", "agent", "minute"))
+    cmin = call_minutes(days) if data == "r1b" else None
     meta = {r["pt_date"]: r for r in cal.iter_rows(named=True)}
     panels = []
     for k, d in enumerate(sorted(days)):
@@ -745,7 +775,15 @@ def load_panels(days: list[str], allow_holdout: bool = False) -> tuple[list[Pane
         pres = act.any(1)
         gn = int(meta[d]["goal_no"] or 0)
         goal_first.setdefault(gn, k)
-        panels.append(Panel(day=k, act=act[pres], idle=idle[pres], agents=agents[pres].astype(int), label=d))
+        call = None
+        if cmin is not None:
+            call = np.zeros((int(pres.sum()), nm), np.int8)
+            for i, a in enumerate(agents[pres]):
+                mm = cmin.get((d, int(a)))
+                if mm is not None:
+                    mm = mm[(mm >= 0) & (mm < nm)]
+                    call[i, mm] = 1
+        panels.append(Panel(day=k, act=act[pres], idle=idle[pres], agents=agents[pres].astype(int), label=d, call=call))
     # goal-day index = ordinal among ALL active days of the goal (including any holdout days before it)
     full = calendar().filter(pl.col("window_s") > 0).sort("pt_date")
     for p in panels:
@@ -802,6 +840,109 @@ def build_kicks(panels: list[Panel], msgs: pl.DataFrame) -> pl.DataFrame:
     return pl.DataFrame(rows, schema={"day": pl.Int32, "row": pl.Int32, "agent": pl.Int32, "minute": pl.Int32,
                                       "cls": pl.Utf8, "msg": pl.Int64, "kind": pl.Utf8, "ts": pl.Float64,
                                       "pt_date": pl.Utf8}, orient="row")
+
+
+def leading_targets(message_ids) -> dict:
+    """message_id -> agent code of a nudge's leading @ (H35's rule; `infra/README.md` Known issue "a nudge's target is
+    its leading @"): the text starts with '@' and the longest roster-name match at position 1, among agents on the
+    roster that day, is the target. 29% of nudges name other agents too; those are bystanders here. Text is read in
+    memory only and never written."""
+    from common import mention_regexes
+    ids = list(message_ids)
+    if not ids:
+        return {}
+    chat = pl.read_parquet(SH / "chat_core.parquet", columns=["message_id", "pt_date"]).filter(pl.col("message_id").is_in(ids))
+    txt = pl.read_parquet(SH / "chat_text.parquet", columns=["message_id", "text"]).filter(pl.col("message_id").is_in(ids))
+    chat = chat.join(txt, on="message_id", how="left")
+    ros = pl.read_parquet(SH / "roster.parquet").filter(~pl.col("claude_code"))
+    pats = mention_regexes([{"id": int(a), "name": n} for a, n in ros.select("agent", "name").iter_rows()])
+    span = {int(a): (j, l) for a, j, l in ros.select("agent", "joined", "left").iter_rows()}
+    out = {}
+    for mid, d, text in chat.select("message_id", "pt_date", "text").iter_rows():
+        best, blen = None, 0
+        if text and text.startswith("@"):
+            for a, pat in pats.items():
+                j, l = span[a]
+                if not (j <= d and (l is None or d < l)):
+                    continue
+                mt = pat.match(text, 1)
+                if mt and (mt.end() - mt.start()) > blen:
+                    best, blen = a, mt.end() - mt.start()
+        out[mid] = best
+    return out
+
+
+def load_operator_messages_r1b(days: list[str]) -> pl.DataFrame:
+    """Round 1b operator messages: shared `kicks_classified` (nudge vs pause/resume already separated; bookends
+    dropped), nudge target = the leading @ only, human `named` = clean roster mentions. Same output columns as
+    load_operator_messages (msg = chat_core row), plus `target` (leading @; null for humans)."""
+    kc = (pl.read_parquet(SH / "kicks_classified.parquet")
+          .filter(pl.col("pt_date").is_in(days) & pl.col("kind").cast(pl.Utf8).is_in(["nudge", "human_message"])))
+    if kc["holdout"].any():
+        raise RuntimeError("holdout rows in round-1b operator messages")
+    chat = pl.read_parquet(SH / "chat_core.parquet", columns=["message_id", "regime", "length"]).with_row_index("msg")
+    emb = pl.read_parquet(SH / "embeddings/chat_index.parquet").with_row_index("emb_row")
+    m = (kc.select("message_id", "t", "pt_date", "goal_no", "room", pl.col("kind").cast(pl.Utf8).alias("k0"),
+                   pl.col("targets").alias("named"))
+         .join(chat, on="message_id", how="left").join(emb, on="message_id", how="left"))
+    lt = leading_targets(m.filter(pl.col("k0") == "nudge")["message_id"].to_list())
+    m = m.with_columns(pl.when(pl.col("k0") == "nudge").then(pl.lit("nudge")).otherwise(pl.lit("human")).alias("kind"),
+                       pl.col("message_id").replace_strict(lt, default=None, return_dtype=pl.Int64).alias("target"),
+                       pl.col("named").fill_null(pl.lit([], dtype=pl.List(pl.Int8))),
+                       pl.lit([], dtype=pl.List(pl.Int8)).alias("recipients"))
+    return m.select("msg", "message_id", "t", "pt_date", "goal_no", "regime", "room", "kind", "named", "recipients",
+                    "length", "emb_row", "target").sort("t")
+
+
+def build_kicks_r1b(panels: list[Panel], msgs: pl.DataFrame) -> tuple[pl.DataFrame, dict]:
+    """One row per (message, recipient) at the RECEIVING CALL (DQ1 context ledger: the first call of the recipient
+    that could see the message; `context_ledger_items`). minute / ts are the receiving call's t_call; ts_post is the
+    posting time. Classes: nudge -> N_tgt for its leading @, N_by for every other recipient (including agents named
+    second); human -> H_men if the message names the recipient, else H_und. Messages read on a later day than the
+    receiving call's day window, or by agents absent from that day's panel, are dropped (counted)."""
+    cal = calendar()
+    wstart = dict(zip(cal["pt_date"].to_list(), cal["win_start"].to_list()))
+    pidx = {p.label: p for p in panels}
+    ids = msgs["message_id"].to_list()
+    it = (pl.scan_parquet(SH / "context_ledger_items.parquet").filter(pl.col("message_id").is_in(ids))
+          .select("turn_id", "message_id", "age_s", "ment", "uncertain").collect())
+    cw = (pl.scan_parquet(SH / "call_windows.parquet").filter(pl.col("turn_id").is_in(it["turn_id"].implode()))
+          .select("turn_id", "agent", pl.col("pt_date").alias("rc_date"), "t_call").collect())
+    it = it.join(cw, on="turn_id", how="inner").join(
+        msgs.select("message_id", "msg", "kind", "named", "target", "pt_date", pl.col("t").alias("t_post")), on="message_id", how="inner")
+    rows, cnt = [], {"items": it.height, "other_day": 0, "absent": 0, "outside_window": 0}
+    for r in it.iter_rows(named=True):
+        if r["rc_date"] != r["pt_date"]:
+            cnt["other_day"] += 1
+            continue
+        p = pidx.get(r["pt_date"])
+        if p is None:
+            continue
+        a = int(r["agent"])
+        amap = {int(x): i for i, x in enumerate(p.agents)}
+        if a not in amap:
+            cnt["absent"] += 1
+            continue
+        minute = int((r["t_call"] - wstart[r["pt_date"]]).total_seconds() // 60)
+        if minute < 0 or minute >= p.n_min:
+            cnt["outside_window"] += 1
+            continue
+        if r["kind"] == "nudge":
+            cls = "N_tgt" if (r["target"] is not None and a == int(r["target"])) else "N_by"
+        else:
+            cls = "H_men" if a in set(int(x) for x in (r["named"] or [])) else "H_und"
+        rows.append((p.day, amap[a], a, minute, cls, int(r["msg"]), r["kind"], r["t_call"].timestamp(), p.label,
+                     r["t_post"].timestamp(), float(r["age_s"]), bool(r["uncertain"])))
+    df = pl.DataFrame(rows, schema={"day": pl.Int32, "row": pl.Int32, "agent": pl.Int32, "minute": pl.Int32, "cls": pl.Utf8,
+                                    "msg": pl.Int64, "kind": pl.Utf8, "ts": pl.Float64, "pt_date": pl.Utf8,
+                                    "ts_post": pl.Float64, "age_s": pl.Float64, "uncertain": pl.Boolean}, orient="row")
+    # nudges whose leading target never received them (no receiving call that day)
+    nt = msgs.filter((pl.col("kind") == "nudge") & pl.col("target").is_not_null())
+    got = set(zip(df.filter(pl.col("cls") == "N_tgt")["msg"].to_list(), df.filter(pl.col("cls") == "N_tgt")["agent"].to_list()))
+    cnt["nudges_with_target"] = nt.height
+    cnt["nudges_target_unread"] = int(sum((int(mm), int(tt)) not in got for mm, tt in nt.select("msg", "target").iter_rows()))
+    cnt["nudges_no_leading_target"] = int(msgs.filter((pl.col("kind") == "nudge") & pl.col("target").is_null()).height)
+    return df.sort("day", "minute", "row"), cnt
 
 
 def context_fill(kicks: pl.DataFrame, regime: str) -> pl.DataFrame:
@@ -880,15 +1021,16 @@ def cell_fill_phase(base: Base, panels: list[Panel], regime: str, edges=(14, 28)
     return ph
 
 
-def load_statements(days: list[str], regime: str, allow_holdout: bool = False):
-    """Whitened (32-d), normalized statement vectors per agent for `days` (+/- 1 h margins are inside days)."""
+def load_statements(days: list[str], regime: str, allow_holdout: bool = False, model: str = "bge_small"):
+    """Whitened (32-d), normalized statement vectors per agent for `days` (+/- 1 h margins are inside days).
+    model: bge_small (round 1) or gte_modernbert (DQ5 second model, round 1b robustness)."""
     if not allow_holdout:
         assert_no_holdout(days)
-    from common import load_whitener
+    from embed_models import emb_path, load_whitener
     st = pl.read_parquet(SH / "embeddings/statements.parquet").filter(pl.col("pt_date").is_in(days))
-    Ec = np.load(SH / "embeddings/chat_bge_small.npy", mmap_mode="r")
-    Ei = np.load(SH / "embeddings/intentions_bge_small.npy", mmap_mode="r")
-    W = load_whitener(regime, 32)
+    Ec = np.load(emb_path("chat", model), mmap_mode="r")
+    Ei = np.load(emb_path("intentions", model), mmap_mode="r")
+    W = load_whitener(regime, 32, model)
     kind = st["kind"].to_numpy(); src = st["src_row"].to_numpy()
     E = np.empty((st.height, Ec.shape[1]), np.float32)
     mc = kind == "chat"
@@ -905,11 +1047,11 @@ def load_statements(days: list[str], regime: str, allow_holdout: bool = False):
     return stmt_t, stmt_v, st.height
 
 
-def message_vectors(msgs: pl.DataFrame, regime: str) -> np.ndarray:
+def message_vectors(msgs: pl.DataFrame, regime: str, model: str = "bge_small") -> np.ndarray:
     """(max msg + 1, 32) whitened unit vectors indexed by msg (rows without an embedding stay NaN)."""
-    from common import load_whitener
-    Ec = np.load(SH / "embeddings/chat_bge_small.npy", mmap_mode="r")
-    W = load_whitener(regime, 32)
+    from embed_models import emb_path, load_whitener
+    Ec = np.load(emb_path("chat", model), mmap_mode="r")
+    W = load_whitener(regime, 32, model)
     m = msgs.filter(pl.col("emb_row").is_not_null())
     U = np.full((int(msgs["msg"].max()) + 1, 32), np.nan, np.float32)
     rows = m["emb_row"].to_numpy()

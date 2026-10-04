@@ -1,6 +1,7 @@
 # H20 × G12: Form two teams and debate each other, while one agent judges. Choose your teammates wisely! (2025-09-01 → 2025-09-05)
 
 **Verdict:** descriptive (stationary contrast) (Amendment-2 null; pre-registered null: descriptive)
+**Verdict (1b):** descriptive (both models)
 **Role:** exploratory
 **Period:** regime I · mode M · 7 agents with statements · #general only · 5 active days (35 agent-days with ≥ 8 statements).
 
@@ -42,3 +43,16 @@ C: – (no per-period test). D: K and A_early reported as P7 inputs. G: –.
 
 ## Notes
 - 2026-10-03: the most extreme outlier (A = −0.83); the debate week is structured by day (debate, then judging), so its content is phased, not stationary.
+
+## Round 1b (improved data, 2026-10-04): replication
+*Inputs: shared goal fields, gte-modernbert (DQ5), DQ5 dedupe (copies, restatements), style-residualized vectors. Data: `data/processed/H20-content-aging/G12/r1b/result_aniso_<config>.json`. Role of this row: replication.*
+
+| Input | Statistics (Amendment-2 null) |
+| --- | --- |
+| round 1 (bge, H01-derived goal vectors) | see Result above |
+| bge-small, shared goal fields | A -0.834 (p 1.000); A_c -0.552 (p 1.000); A_late -1.844; K -0.081; power 0.12 |
+| gte-modernbert | A -0.769 (p 0.998); A_c -0.617 (p 1.000); A_late -1.705; K -0.088; power 0.09 |
+| restatement-deduped (bge / gte) | A -0.765 / -0.732 |
+| style-residualized (bge / gte) | A -0.878 / -0.744 |
+
+A across the 7 configurations: -0.878 to -0.732. The shared goal fields give the same ĝ as round 1 (cos 1.0000 at n = 32: H20 averaged the room kickoffs, so H01's #38 room swap cancels), so bge numbers reproduce exactly.

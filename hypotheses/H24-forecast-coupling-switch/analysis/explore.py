@@ -31,22 +31,79 @@ SHIFTS = (60.0, 90.0, 120.0)
 SEED = 20261003
 
 
+# ---------------------------------------------------------------- round 1b switch (2026-10-04)
+# Defaults reproduce round 1. scheme/build_r1b.py provides the corrected inputs:
+#   emb     bge_small | gte_modernbert       statement and document-chunk embeddings (DQ5)
+#   goals   h24 | shared                     H24's own goal + kickoff vector, or the shared goal fields (goal_fields)
+#   field   1d | multi                       remove g-hat only, or g-hat plus every goal-text / kickoff chunk direction
+#   dedupe  none | copies | restate | echo   drop DQ5 self-repeats (copies = both models; restate = either model) or,
+#                                            for echo, also cross-agent echoes flagged by either model
+#   style   style-residualized 32-d statement vectors (documents stay unresidualized)
+CFG = {"emb": "bge_small", "goals": "h24", "field": "1d", "dedupe": "none", "style": False}
+R1B = G / "r1b"
+
+
+def cfg_tag():
+    t = f"{CFG['emb']}_{CFG['goals']}_{CFG['field']}"
+    if CFG["dedupe"] != "none":
+        t += f"_dd-{CFG['dedupe']}"
+    if CFG["style"]:
+        t += "_style"
+    return t
+
+
+def is_r1():
+    return CFG == {"emb": "bge_small", "goals": "h24", "field": "1d", "dedupe": "none", "style": False}
+
+
+def dedupe_mask(fl: pl.DataFrame) -> np.ndarray:
+    """True = keep."""
+    d = CFG["dedupe"]
+    if d == "none":
+        return np.ones(fl.height, bool)
+    if d == "copies":
+        drop = fl["self_repeat_both"]
+    else:
+        drop = fl["self_repeat_bge"] | fl["self_repeat_gte"]
+        if d == "echo":
+            drop = drop | fl["cross_echo_bge"] | fl["cross_echo_gte"]
+    return ~drop.to_numpy()
+
+
 def load():
     S = pl.read_parquet(G / "statements.parquet").with_row_index("i")
-    X = np.load(G / "stmt_w64.npy").astype(np.float32)
+    if CFG["style"]:
+        X = np.load(R1B / f"stmt_sr32_{CFG['emb']}.npy").astype(np.float32)
+    elif CFG["emb"] == "bge_small":
+        X = np.load(G / "stmt_w64.npy").astype(np.float32)
+    else:
+        X = np.load(R1B / f"stmt_w64_{CFG['emb']}.npy").astype(np.float32)
+    if CFG["dedupe"] != "none":
+        keep = dedupe_mask(pl.read_parquet(R1B / "stmt.parquet"))
+        S = S.filter(pl.Series(keep)).drop("i").with_row_index("i")
+        X = X[keep]
     D = pl.read_parquet(G / "docs.parquet").with_row_index("i")
-    Y = np.load(G / "docs_w64.npy").astype(np.float32)
+    Y = np.load(G / "docs_w64.npy" if CFG["emb"] == "bge_small" else R1B / f"docs_w64_{CFG['emb']}.npy").astype(np.float32)
     sw = pl.read_parquet(G / "switch_on.parquet")
-    gv = np.load(G / "goal_vec.npz")
+    gv = dict(np.load(G / "goal_vec.npz")) if CFG["goals"] == "h24" else dict(np.load(R1B / f"field_{CFG['emb']}.npz"))
     cal = pl.read_parquet(OUT / "calendar.parquet").filter(pl.col("goal_no") == 21).sort("pt_date")
     assert not any(holdout_mask(cal["pt_date"].to_list(), cal["goal_no"].to_list()))
     return S, X, D, Y, sw, gv, cal
 
 
 def prep(Xfull, dim, ghat_vecs):
+    dim = min(dim, Xfull.shape[1])
     Z = unit(Xfull[:, :dim].astype(np.float64))
     Zr = unit(project_out(Z, np.array([g[:dim] for g in ghat_vecs])))
     return Z, Zr
+
+
+def field_vecs(gv, gname):
+    """Directions to remove: g-hat (or its goal / kickoff part), plus every chunk direction in field mode 'multi'."""
+    vecs = [gv[gname]]
+    if CFG["field"] == "multi" and "chunks" in gv and len(gv["chunks"]):
+        vecs += list(gv["chunks"])
+    return vecs
 
 
 def day_minutes(df, cal):
@@ -126,27 +183,53 @@ def o1_boot(Z, df, mins, agent_list, tau, k, day, rng, post_to_eod, n_boot=200, 
 def placebo_N2(dim, k, rng, offset):
     """Kickoff-matched placebo weeks: tau = open + offset for every agent, first active day."""
     weeks = pl.read_parquet(H24 / "placebo/placebo_weeks.parquet")
-    gh = np.load(H24 / "placebo/placebo_ghat.npy")
     held = set(load_holdout()["goal_periods_held_out"])
-    st = pl.read_parquet(OUT / "embeddings/statements.parquet")
+    st = pl.read_parquet(OUT / "embeddings/statements.parquet").with_row_index("srow")
     roster = pl.read_parquet(OUT / "roster.parquet", columns=["agent", "claude_code"])
     st = st.join(roster, on="agent").filter(~pl.col("claude_code"))
-    Ec = np.load(OUT / "embeddings/chat_bge_small.npy", mmap_mode="r")
-    Ei = np.load(OUT / "embeddings/intentions_bge_small.npy", mmap_mode="r")
-    W = load_whitener("I", 64)
+    chunk_sets = [None] * weeks.height
+    if is_r1():
+        gh = np.load(H24 / "placebo/placebo_ghat.npy")
+    else:
+        pf = np.load(H24 / "placebo/r1b" / f"field_{CFG['emb']}.npz")
+        pos = {int(g): i for i, g in enumerate(pf["goal_no"])}
+        starts = np.r_[0, np.cumsum(pf["n_chunks"])]
+        keep = [i for i, g in enumerate(weeks["goal_no"].to_list()) if g in pos]
+        weeks = weeks[keep]
+        gh = np.array([pf["ghat"][pos[g]] for g in weeks["goal_no"].to_list()])
+        if CFG["field"] == "multi":
+            chunk_sets = [pf["chunks"][starts[pos[g]]:starts[pos[g] + 1]] for g in weeks["goal_no"].to_list()]
+        else:
+            chunk_sets = [None] * weeks.height
+        if CFG["dedupe"] != "none":
+            fl = pl.read_parquet(OUT / "statement_flags.parquet",
+                                 columns=["srow", "self_repeat_bge", "self_repeat_gte", "self_repeat_both", "cross_echo_bge",
+                                          "cross_echo_gte"]).sort("srow")
+            st = st.filter(pl.Series(dedupe_mask(fl)[st["srow"].to_numpy()]))
+    if CFG["style"]:
+        import embed_models as EM
+        SR = np.load(EM.ED / f"statements_style_resid_period32_{EM.MODELS[CFG['emb']]['suffix']}.npy", mmap_mode="r")
+    sfx = "bge_small" if CFG["emb"] == "bge_small" else CFG["emb"]
+    Ec = np.load(OUT / f"embeddings/chat_{sfx}.npy", mmap_mode="r")
+    Ei = np.load(OUT / f"embeddings/intentions_{sfx}.npy", mmap_mode="r")
+    if CFG["emb"] == "bge_small":
+        W = load_whitener("I", 64)
+    else:
+        import embed_models as EM
+        W = EM.load_whitener("I", 64, CFG["emb"])
     res = []
-    for wk, g in zip(weeks.iter_rows(named=True), gh):
+    for wk, g, chs in zip(weeks.iter_rows(named=True), gh, chunk_sets):
         assert wk["goal_no"] not in held
         sub = st.filter(pl.col("goal_no") == wk["goal_no"], pl.col("pt_date") == wk["pt_date"]).sort("t")
         assert not any(sub["holdout"].to_list())
         if sub.height == 0:
             continue
         kind = sub["kind"].to_numpy(); src = sub["src_row"].to_numpy()
-        E = np.empty((sub.height, 384), dtype=np.float32)
+        E = np.empty((sub.height, Ec.shape[1]), dtype=np.float32)
         m = kind == "chat"
         E[m] = Ec[src[m]]; E[~m] = Ei[src[~m]]
-        X = W(E)
-        Z, Zr = prep(X, dim, [g])
+        X = np.asarray(SR[sub["srow"].to_numpy()], np.float32) if CFG["style"] else W(E)
+        Z, Zr = prep(X, dim, [g] + (list(chs) if chs is not None else []))
         mins = np.array([(t - wk["win_start"]).total_seconds() / 60 for t in sub["t"].to_list()])
         agents = sub["agent"].to_numpy()
         al = sorted(set(agents.tolist()))
@@ -303,7 +386,22 @@ def control_did(Zr, df, mins, switched, tau_star, rng, k=K_ST):
 def main():
     t0 = time.time()
     rng = np.random.default_rng(SEED)
-    if "--numeric-only" in sys.argv:
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--numeric-only", action="store_true")
+    ap.add_argument("--emb", default="bge_small", choices=["bge_small", "gte_modernbert"])
+    ap.add_argument("--goals", default="h24", choices=["h24", "shared"])
+    ap.add_argument("--field", default="1d", choices=["1d", "multi"])
+    ap.add_argument("--dedupe", default="none", choices=["none", "copies", "restate", "echo"])
+    ap.add_argument("--style", action="store_true")
+    args = ap.parse_args()
+    if args.emb != "bge_small" and args.goals == "h24":
+        raise SystemExit("H24's own goal vector is bge-only; use --goals shared with gte")
+    CFG.update(emb=args.emb, goals=args.goals, field=args.field, dedupe=args.dedupe, style=args.style)
+    print("config", cfg_tag(), flush=True)
+    if not is_r1():
+        return main_r1b(rng, t0)
+    if args.numeric_only:
         out = json.loads((G / "explore.json").read_text())
         out["numeric"] = numeric(rng)
         (G / "explore.json").write_text(json.dumps(out, indent=1, default=str))
@@ -349,6 +447,55 @@ def main():
     out["O3"] = {"rho": float(rho), "p": float(p), "n_blocks": len(rp), "step_1204": float(np.mean(c_) - np.mean(b_))}
     (G / "explore.json").write_text(json.dumps(out, indent=1, default=str))
     print(f"done {time.time() - t0:.0f}s", flush=True)
+
+
+def main_r1b(rng, t0):
+    """Round 1b: the round-1 primary statistics (O1 instruments, O2, O3 ramp, O6 control, N1-N3 nulls) on the corrected
+    inputs. Numeric herding (O4) does not depend on embeddings and is not recomputed."""
+    S, X, D, Y, sw, gv, cal = load()
+    days = cal["pt_date"].to_list()
+    switched = sw.filter(pl.col("role") == "switched")["agent"].to_list()
+    tau = dict(zip(sw["agent"].to_list(), sw["tau_offset_min"].to_list()))
+    tau_sw = {a: tau[a] for a in switched}
+    tau_star = float(np.median([tau[a] for a in switched]))
+    mins_S = day_minutes(S, cal); mins_D = day_minutes(D, cal)
+    out = {"config": dict(CFG), "tag": cfg_tag(), "tau_star_min": tau_star, "switched": switched, "seed": SEED, "B": B,
+           "n_statements": S.height}
+    results = {}
+    tags = [(32, "ghat")] + ([(16, "ghat"), (64, "ghat"), (32, "goal"), (32, "kickoff")] if not CFG["style"] else [(16, "ghat")])
+    for dim, gname in tags:
+        fv = field_vecs(gv, gname)
+        Z, Zr = prep(X, dim, fv)
+        Zd, Zdr = prep(Y, dim, fv)
+        tag = f"n{dim}_{gname}"
+        res = {"a_all": run_instrument("all statements", Z, Zr, S, mins_S, switched, tau_sw, K_ST, rng, days)}
+        if tag == "n32_ghat":
+            res["b_forecast"] = run_instrument("forecast statements", Z, Zr, S, mins_S, switched, tau_sw, K_ST, rng, days,
+                                               row_mask=S["forecast"].to_numpy())
+            res["c_docs_all"] = run_instrument("doc chunks (all)", Zd, Zdr, D, mins_D, switched, tau_sw, K_DOC, rng, days,
+                                               post_to_eod=True)
+            res["c_docs_own"] = run_instrument("doc chunks (own)", Zd, Zdr, D, mins_D, switched, tau_sw, K_DOC, rng, days,
+                                               post_to_eod=True, row_mask=~D["names_other"].to_numpy())
+            out["ramp"] = ramp(Zr, Z, S, cal, rng)
+            out["control_did"] = control_did(Zr, S, mins_S, switched, tau_star, rng)
+        results[tag] = res
+        print(tag, "done", f"{time.time() - t0:.0f}s", flush=True)
+    out["O1"] = results
+    out["N2"] = placebo_N2(32, K_ST, rng, tau_star)
+    rp = [r for r in out["ramp"] if not (r["pt_date"] == days[0] and r["block"] == 0)]
+    rho, p = stats.spearmanr([r["idx"] for r in rp], [r["A_res"] for r in rp])
+    b_ = [r["A_res"] for r in rp if r["pt_date"] < "2025-12-04"]; c_ = [r["A_res"] for r in rp if r["pt_date"] >= "2025-12-04"]
+    out["O3"] = {"rho": float(rho), "p": float(p), "n_blocks": len(rp), "step_1204": float(np.mean(c_) - np.mean(b_))}
+    n2 = [r["res"]["dA"] for r in out["N2"]]
+    out["N2_q90"] = float(np.quantile(n2, 0.9)) if n2 else None
+    out["N2_median"] = float(np.median(n2)) if n2 else None
+    R1B.mkdir(parents=True, exist_ok=True)
+    (R1B / f"explore_{cfg_tag()}.json").write_text(json.dumps(out, indent=1, default=str))
+    a = results["n32_ghat"]["a_all"]["res"]
+    print(f"{cfg_tag()}: dA_res {a['dA']:+.3f} CI {a['boot']['dA_ci90']} N1 q90 {a['N1_q90']:.3f} N2 q90 {out['N2_q90']:.3f} "
+          f"A_pre {a['A_pre']:.3f} A_post {a['A_post']:.3f} bJ {a['bJ_pre']:.2f}->{a['bJ_post']:.2f} | docs "
+          f"{results['n32_ghat']['c_docs_all']['res']['dA']:+.3f} | ramp rho {out['O3']['rho']:.2f} | {time.time() - t0:.0f}s",
+          flush=True)
 
 
 if __name__ == "__main__":

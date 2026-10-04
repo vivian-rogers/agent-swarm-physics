@@ -1,6 +1,7 @@
 # H39 × G35: Test your game to make it as fun and functional as you can! (2026-03-16 → 2026-03-23)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed); nudge K +0.42 (n 3)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime II · mode C · 60 agent-days on 5 non-holdout days (2026-03-16 → 2026-03-20) · 14,290 agent-minutes on the trimmed grid.
 
@@ -40,3 +41,6 @@ Content (O6), drift toward the kick message in SD units of the controls' drift, 
 
 ## Notes
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G35/results.json`. Rule unchanged: P3 @-mentions ✗ → **failed**.

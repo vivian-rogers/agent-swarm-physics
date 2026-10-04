@@ -1,43 +1,73 @@
 {
-  "complete": 45,
-  "faithfulness": 2.0,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 done: synthetic validation (rerun with the amended estimator), dated predictions, 13 per-period folders plus NE10 and the undocumented 08-20 nudger stop, scorecard, confirmatory script written and dry-run. Holdout not run; only one powered (short-pause) period.",
-    "faithfulness": "In G51 the demon bookkeeping beats its nulls. Information is above the permutation null, the response is heterogeneous (R0 rejected) and the efficiency is well below 1 (R1 rejected). The predicted information magnitude and agent-blindness failed, and P4 failed as worded (negative value of information among gates, a stronger inefficiency). The response pattern reverses in the long-pause periods. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I1; no holdout.",
-    "usefulness": "A concrete nudge policy (once per pause chain at k = 2-3, only during pauses; x2.3 work per nudge) with a Kolchinsky-style efficiency audit, but counterfactual from logs, one powered period (G51), not holdout-tested, and small stakes (~1% of activity). Calibrated to parity with H05/H30."
-  },
-  "one_line": "The auto-nudger buys 1.45 active min per nudge with 1.4 bits of state but spends them on the deepest traps; nudging once, early in a pause chain, would roughly double to triple the work per nudge.",
-  "rated_by": "H35 agent (suggested)",
-  "updated": "2026-10-03",
-  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 -> 2.5)",
-  "v2": {
-    "claim": "The nudger uses ~1.4 bits/nudge inefficiently; nudging once early buys ~\u00d72.3 work per nudge",
-    "original_verdict": "mixed",
-    "credence": 0.38,
-    "ladder": [
-      {
-        "factor": "base (pre)",
-        "x": 0.4
-      },
-      {
-        "factor": "single powered unit",
-        "x": 0.6
-      },
-      {
-        "factor": "synthetic identification",
-        "x": 1.5
-      }
-    ],
-    "mechanism_level": "M1",
-    "fragile": false,
-    "value_if_true": 2,
-    "decision": "nudge policy",
-    "magnitude": "small",
-    "generality": "scheduled nudgers",
-    "expected_usefulness": 0.75,
-    "scientific_value": 3,
-    "rater": "coordinator first pass (from integrated reports); independent rater pending",
-    "rated_at": "2026-10-04"
+ "complete": 55,
+ "faithfulness": 2.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: synthetic validation (rerun with the amended estimator), dated predictions, 13 per-period folders plus NE10 and the undocumented 08-20 nudger stop, scorecard, confirmatory script written and dry-run. Holdout not run; only one powered (short-pause) period. Round 1b: glance, sustained-run and work-commit outcomes, efficiencies and policy per outcome, natives NE10/NE43 on the work ledger and G38 vs G51.",
+  "faithfulness": "In G51 the demon bookkeeping beats its nulls. Information is above the permutation null, the response is heterogeneous (R0 rejected) and the efficiency is well below 1 (R1 rejected). The predicted information magnitude and agent-blindness failed, and P4 failed as worded (negative value of information among gates, a stronger inefficiency). The response pattern reverses in the long-pause periods. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I1; no holdout.",
+  "usefulness": "The once-early policy still triples active minutes per nudge, but on the work ledger nudges buy no commits or sustained runs, so the lever moves attention, not output (usefulness 2.5 -> 2.0)."
+ },
+ "one_line": "The auto-nudger reads trap age and buys glances (near-efficiently) and active minutes (inefficiently), but no committed work; once-early nudging is an attention lever, not a production lever.",
+ "rated_by": "H35 round-1b agent (suggested)",
+ "updated": "2026-10-04",
+ "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 -> 2.5)",
+ "v2": {
+  "claim": "Nudges buy glances (+0.08 P(active within 30 min) per first nudge), not committed work; switching the nudger on or off doesn't move swarm work",
+  "scope": "G51 (powered), G38; NE10, NE43",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.63,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "single powered unit (G51)",
+    "x": 0.6,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "calibrated null (glance placebo clean)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "intervention consistent (NE10, NE43)",
+    "x": 2,
+    "evidence": "card §Round 1b"
+   },
+   {
+    "factor": "synthetic identification",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "penalty: post-hoc DiD for work",
+    "x": 0.7,
+    "evidence": "card §Round 1b"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": true,
+  "value_if_true": 1.5,
+  "decision": "nudge policy: an attention lever, not a production lever",
+  "magnitude": "negligible",
+  "generality": "scheduled nudgers",
+  "expected_usefulness": 0.94,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (RE-O1); independent rater pending",
+  "rated_at": "2026-10-04"
+ },
+ "v2_history": [
+  {
+   "claim": "The nudger uses ~1.4 bits/nudge inefficiently; nudging once early buys ~×2.3 work per nudge",
+   "credence": 0.38,
+   "fragile": false,
+   "value_if_true": 2,
+   "expected_usefulness": 0.75,
+   "rater": "coordinator first pass (from integrated reports); independent rater pending",
+   "rated_at": "2026-10-04"
   }
+ ]
 }

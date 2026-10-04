@@ -181,8 +181,8 @@ def main():
     S["P10"] = dict(named_unnamed=nu, named_ge2x=ge, unnamed_kappa_le0=unn_le0,
                     unnamed_rd_pos=[u for u in COUNTED if post[u]["rd_unnamed"]["ci"] and post[u]["rd_unnamed"]["ci"][0] > 0])
     # synthetic + recovery summaries
-    S["synthetic"] = json.loads((L.OUT / "synthetic/synthetic_summary.json").read_text())
-    S["posthoc_recovery"] = json.loads((L.OUT / "synthetic/posthoc_recovery_summary.json").read_text())
+    S["synthetic"] = json.loads((L.OUT_BASE / "synthetic/synthetic_summary.json").read_text())
+    S["posthoc_recovery"] = json.loads((L.OUT_BASE / "synthetic/posthoc_recovery_summary.json").read_text())
     L.jdump(S, L.OUT / "summary.json")
     period_results(pre, post, S)
     print(json.dumps({k: v.get("verdict") for k, v in S.items() if isinstance(v, dict) and "verdict" in v}, indent=1))

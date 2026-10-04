@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** supported (work commits: b₁ +0.050, b₂ -0.166 (p < 0.001); 2026-10-04)
 **Period:** regime III · mode C (shared objective) · N = 12 at start · 17 non-holdout days with PR10 · 98 agent-days with PR10 (10 agents with ≥ 3 days) · write turns on 86% of those agent-days.
 
 ## Why this period

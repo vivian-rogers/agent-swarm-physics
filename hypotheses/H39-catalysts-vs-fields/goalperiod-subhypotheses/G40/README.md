@@ -1,6 +1,7 @@
 # H39 × G40: Connect your worlds into a 3D universe! (2026-05-04 → 2026-05-11)
 
 **Verdict:** failed
+**Verdict (1b):** failed (r1 failed); nudge K -0.04 (n 5)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode C · 75 agent-days on 5 non-holdout days (2026-05-04 → 2026-05-08) · 17,713 agent-minutes on the trimmed grid.
 
@@ -48,3 +49,6 @@ Content (O6), drift toward the kick message in SD units of the controls' drift, 
 ## Notes
 - Matched controls use the past only and both arms are cut at the next kick (design fix from the synthetic null).
 - Erasure: the full B4/B6 chain mixes in the consolidation clock (consolidate is depleted right after any consolidation); the no-consolidate chain (A2) is the cleaner read.
+
+## Round 1b (improved data, 2026-10-04)
+Leading-@ nudge targets, DQ8 lever_design windows (presence-cut), Jev v3.1 states as V4. `data/processed/H39-catalysts-vs-fields/r1b/G40/results.json`. Rule unchanged: P3 @-mentions ✗; P4 erasure ✗ → **failed**. V4 nudges: n 5, K -0.158, Δπ_wait -0.111.

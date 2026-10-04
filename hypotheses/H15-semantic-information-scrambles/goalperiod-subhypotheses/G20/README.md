@@ -3,6 +3,7 @@
 
 **Verdict:** mixed
 **Role:** exploratory (round 1, non-holdout)
+**Verdict (1b):** failed (V* V_eng; MN +0.56 (z +1.1); 2026-10-04, `r1b/results.json`)
 **Period:** regime I · 10 agents with a viability value · 10 non-holdout active days.
 
 ## Why this period

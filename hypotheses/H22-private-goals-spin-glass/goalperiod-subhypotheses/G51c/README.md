@@ -1,6 +1,7 @@
 # H22 × G51c: Each agent: Maximize your assigned goal! — unit 51c (2026-08-05 → 08-24)
 
 **Verdict:** inconclusive
+**Verdict (1b):** inconclusive (round 1: inconclusive)
 **Role:** exploratory
 **Period:** regime III · mode I/K · 27 agents · #general plus #focus (Gemini 2.5 Pro and Opus 4.8 moved there, 08-05 → 08-24); those two are excluded from couplings (variant keeps them) · 14 days.
 
@@ -63,3 +64,17 @@ Data: `data/processed/H22-private-goals-spin-glass/G51/<unit>/results.json`; fig
 ## Notes
 - Data: `data/processed/H22-private-goals-spin-glass/G51/51c/`. Figure: `figures/H22_G51c.pdf`.
 - Card: `../../README.md` (Observables, Null, Prediction, Amendment 1).
+
+## Round 1b (improved data, 2026-10-04)
+*Re-run on the corrected inputs (card section "Round 1b"); round-1 numbers kept above.* DQ6 ground-truth roles (Opus 5's first role recovered), DQ5 statement vectors in two models (bge, gte), DQ5 `style_resid_period` vectors ("styp"), restatements removed ("dedup"), `activity_bins_fixed` for talk spins, and the DQ2 stance channel with the calibrated agent-field null. Data: `data/processed/H22-private-goals-spin-glass/r1b/`.
+
+| Unit | Variant | heterogeneity ρ_split | τ₃(dc) | T_SR / pairs (p>) | T_OP | W (p) | talk ρ_split (p) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 51c | round 1 | 0.46 (p 0.003) | -0.13 | 0.036 / 4 (p> 0.175) | -0.014 | 1.15 (p 0.24) | 0.13 (p 0.090) |
+| 51c | bge | 0.46 (p 0.003) | -0.13 | 0.036 / 4 (p> 0.175) | -0.014 | 1.16 (p 0.23) | 0.14 (p 0.047) |
+| 51c | gte | 0.42 (p 0.003) | 0.57 | 0.052 / 4 (p> 0.104) | -0.030 | 1.61 (p 0.02) | 0.14 (p 0.047) |
+| 51c | bge styp | 0.42 (p 0.003) | -0.15 | 0.034 / 4 (p> 0.182) | -0.025 | 1.09 (p 0.31) | 0.14 (p 0.047) |
+| 51c | gte styp | 0.36 (p 0.003) | 0.47 | 0.047 / 4 (p> 0.125) | -0.043 | 1.59 (p 0.02) | 0.14 (p 0.047) |
+| 51c | bge dedup | 0.48 (p 0.003) | 0.33 | 0.018 / 4 (p> 0.300) | 0.009 | 1.10 (p 0.31) | 0.10 (p 0.103) |
+| 51c | **stance (DQ2)** | dc split-half 0.39 (agent-field p 0.005) | 0.23 [0.06, 0.36] | 0.127 / 5 (p> 0.232) | -0.343 | – | neg. pairs 54 vs 6.7 |
+
