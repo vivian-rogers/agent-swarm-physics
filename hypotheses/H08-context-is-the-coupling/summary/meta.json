@@ -1,0 +1,13 @@
+{
+ "complete": 5,
+ "faithfulness": 0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Parked on the day it was opened; C1 predictions and a scheme sketch exist, but nothing has been built or run, and C4-C6 are blocked on non-public prompts.",
+  "faithfulness": "Untested; the supporting evidence (H04, H15, H18) belongs to other hypotheses and was not a test of H08's own predictions.",
+  "usefulness": "The framing names real operator knobs (context assembly, visibility, compaction), and C1-C2 would be computable from token logs, but nothing has been computed and the core claim is close to the scaffold's design."
+ },
+ "one_line": "Parked, untested: is context inclusion the coupling? H04, H15, H18 hint yes; decisive tests need prompts",
+ "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
+ "updated": "2026-10-04"
+}
