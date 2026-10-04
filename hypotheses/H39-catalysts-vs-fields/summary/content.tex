@@ -1,0 +1,33 @@
+\hwhat{Each operator lever was split into a \emph{field} part (it shifts which behavior states agents occupy) and a \emph{catalytic} part (it changes escape rates at fixed occupancy). Point levers used matched windows in 32 non-holdout periods; steps (26 kickoffs, 10 scaffold changes, room changes) used day-boundary placebos. A synthetic check came first: catalysts are recoverable from ${\sim}$30 kicks, fields only from hundreds. No lever is a pure catalyst. Nudges are \emph{both}: idle escape $\times$1.4--1.6, the stationary idle share falls 0.07 in G51, and catalytic fraction $\rho=0.51$. That rejects HH52's ``catalyst''. Human messages are fields: chat$\to$work in regime I, nothing in G51. @-mentions move content toward the message ($+0.32$ SD) but not behavior. Forced context erasure is an anti-catalytic field toward work (idle down in 8/8 periods). Kickoffs tilt content only in regime III. Scaffold steps: mostly nothing. Holdout not run.}
+
+\hmodel{Models 02/10: a kinetic Potts (Markov-jump) agent over states $s\in\{$work, chat, idle, consolidate$\}$ with Arrhenius rates $k_{ij}$, well depths $G_i$ and symmetric barriers $B_{ij}$. A field $h$ tilts the wells; a catalyst $c$ lowers the barriers. Measured per lever: kicked and control transition matrices $T^K,T^C$ in matched 30-min windows, their stationary distributions $\pi^K,\pi^C$, the escape probability $e_s=1-T_{ss}$, the field index $\phi$, the catalytic index $K$, and the catalytic fraction $\rho$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+k_{ij}=\nu\,e^{-(B_{ij}-G_i)/T},\qquad \pi_i\propto e^{-G_i/T}\\
+s_{ij}=\tfrac12(\delta\ln k_{ij}+\delta\ln k_{ji})\quad\text{(catalytic part)}\\
+a_{ij}=\tfrac12(\delta\ln k_{ij}-\delta\ln k_{ji})\quad\text{(field part)}\\
+\phi=\mathrm{SD}_{\pi^C}\!\left[\ln\pi^K_s-\ln\pi^C_s\right],\qquad \rho=|K|/(|K|+\phi_{\rm exc})\\
+K=\ln\Big(\textstyle\sum_s\pi^C_s e^K_s\big/\sum_s\pi^C_s e^C_s\Big)
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Pooled field strength $\phi_{\rm exc}$ (placebo-corrected) against catalytic effect $K$, with 95\% CIs. Dashed line and grey band: the 0.10 thresholds. Only the nudge reaches the ``both'' corner; human messages and erasure are fields, and erasure is anti-catalytic. (b) Where each field points: stationary share changes for work, chat and idle.}
+
+\htelos{Partly useful. An operator gets a concrete rule. To unstick an idle agent, send one directed nudge: escape rises ${\sim}$50\%, and the agent also stays out of idle while it acts. To steer what an agent writes without changing how busy it is, mention it. To change topics, set a goal; that works in the large regime-III village. The physics label is softer than it sounds: the field/catalyst split depends on a convention, the nudge verdict rests on one period (G51), and the effects are individual and diluted. Switching the nudger off (08-21, post hoc) barely moved the swarm. ``Messages always carry a field'' is the robust, slightly deflating lesson. Prompt tweaks, room changes and most fixes showed nothing at day scale. Unconfirmed on the holdout.}
+
+\hbottom{No operator lever is a pure catalyst: nudges both unstick and tilt agents, while human messages, mentions, erasures and goals act mainly as fields, on activity or on content depending on the regime.}
+
+\hresults{\begin{itemize}\setlength{\itemsep}{1pt}\setlength{\parskip}{0pt}
+\item \textbf{P1 nudges = both} (mostly \checkmark): $K=+0.15$ [0.07, 0.23]; idle escape $\times1.4$ (G51 $\times1.57$); G51 $\Delta\pi_{\rm idle}=-0.07$ [$-0.11,-0.04$]; $\rho=0.51$. Pooled idle CI spans 0.
+\item \textbf{P2 human = both, toward chat} ($\times$): a field (P 0.94) pointing chat$\to$work in regime I; nothing in G51.
+\item \textbf{P3 mentions = field toward chat} (mixed): no consistent behavior direction; content drift toward the message $+0.32$ SD.
+\item \textbf{P4 erasure: browse up, type down} ($\times$): idle $-0.13$, work $+0.13$, $K=-0.15$; idle down in 8/8 periods.
+\item \textbf{P5 kickoffs = content field} (3/4): 4/6 regime-III vs 0/13 regime-I kickoffs; behavior quiet.
+\item \textbf{P6 rooms} (inconclusive); \textbf{P7 scaffold} (mixed: 0/4 prompts, NE16 not catalytic, NE03 catalytic).
+\item \textbf{P9 nudger off 08-21} (post hoc, \checkmark): neither; idle escape $-13\%$, occupancy flat.
+\end{itemize}}
+
+\hobsb{../figures/synthetic_validation.pdf}{Synthetic validation at village sampling. (a) Share of replicates assigning each planted lever to each class: at G51 scale fields and catalysts are recovered (0.94--1.00); in a 5-day period catalysts still are, fields mostly are not. (b) The transient fallacy: a pure catalyst lowers the 30-min idle share without moving the stationary one.}
+
+\hcaveats{The nudge class rests on one period (G51; G38 has the same signs but is not significant). Fields are invisible below ${\sim}$100 episodes, so ``catalyst'' or ``neither'' in small periods does not exclude a field. The field/catalyst split depends on a load-distribution convention; $|K|<0.10$ is not interpretable. B4 states mean different things in regimes I and III. Mentions are partly common-cause. Design choices made after seeing data are flagged: the no-consolidate erasure chain, the content-TV check, and the post hoc P9 switch-off. 28 class-level tests: the nudge field alone does not survive Bonferroni.}
+
+\hnext{Run \texttt{confirm.py} after commit (expect low nudge power on \#45--\#50). Agent-centered content states for steps; a dose analysis of nudger re-firing; the 08-21 switch-off as a proper NE with day-matched controls.}

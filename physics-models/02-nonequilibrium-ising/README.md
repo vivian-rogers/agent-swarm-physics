@@ -81,6 +81,7 @@ The fixed-order sweep is the subtle case. Each single-site update satisfies deta
 
 ## Pitfalls
 
+- **Field vs catalyst is convention-dependent, and transients mislead** (H39, 2026-10-04): splitting a lever's rate change into an occupancy shift and a catalytic part depends on how the change is divided between forward and backward rates, and |K| < 0.10 is not interpretable. A pure catalyst lowers the 30-min idle share while the stationary share stays put (the transient fallacy): measure stationary occupancy, not short-window shares.
 - Nonstationarity within a window (new agents, goal changes) can masquerade as irreversibility. Use windows within one regime (`../DEFINITIONS.md`, Regime).
 - Bin width changes everything: too coarse merges cause and effect into the same bin and hides the arrow of time.
 - Causally ordered tool use (open a file, then edit it) is trivially irreversible inside one agent. Decide whether that counts as signal or as nuisance before measuring.

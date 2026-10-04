@@ -183,3 +183,8 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 
 ### H27 named variants (2026-10-04; see `hypotheses/H27-herding-early-warning/README.md`)
 - **Herding onset (project-share step):** on H11 merged project labels, the first window in which project a's share of labelled agents is ≥ 0.5 with ≥ 3 agents on a and ≥ 4 labelled, the mean share over the previous hour was ≤ 0.25, and the mean share over the next hour stays ≥ 0.4. Scorable only with ≥ 6 h of prior record. Compare H31's consensus event (frozen / instant / gradual), which uses a two-window majority rule instead.
+
+### H39 named variants (2026-10-04; see `hypotheses/H39-catalysts-vs-fields/README.md`)
+- **Lever episode:** an isolated kick (nudge, human message, @-mention, erasure, kickoff, step) to an agent, with matched controls eligible on past information only and both arms cut at the next kick.
+- **Field effect (occupancy shift):** a lever's change in the stationary state occupancy of the agent's behavior chain (e.g. idle share), φ_exc ≥ 0.10 to count.
+- **Catalytic effect (escape at fixed occupancy):** a symmetric change in transition rates out of and into a state (K, |K| ≥ 0.10 to count) that leaves stationary occupancy unchanged. Catalytic fraction ρ = share of a lever's effect that is catalytic. The split depends on how a rate change is divided between forward and backward rates.

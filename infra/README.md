@@ -77,6 +77,91 @@ One orjson pass over raw `computer_use_turns` (scan 184 s, 2 processes; build 25
   - The Claude Code stream and memories are not scanned.
 - **Repo clones** used by H07 live in `data/raw/repos/` (bare, `--filter=blob:none`, plus blobs fetched by id; 5.8 MB; re-fetch commands in its `_source.md`).
 
+### Shared pipeline (consolidated 2026-10-03): `infra/shared/build_all.py`
+One entry point runs every shared builder in dependency order, one at a time, each in its own process with thread caps (default 2):
+`scan_tables → build_derived → build_embeddings (skipped when present) → build_agent_vectors → build_mentions_clean → build_artifacts → turn_errors → goal_fields → period_units → behavior_states → project_states → kicks_classified → text_features → outages`.
+- `uv run python infra/shared/build_all.py --list` shows steps, commands and which outputs exist.
+- Options: `--only a,b`, `--from NAME`, `--skip-existing`, `--force-embeddings`, `--dry-run`, `--tests` (runs `infra/shared/tests/test_*.py`), `--threads N`. Per-step timings print at the end and go to `data/processed/shared/build_all.log`.
+- `goal_fields` and `build_embeddings` run under `uv run --with sentence-transformers` (offline HF cache, MPS or CPU).
+
+Every module below was moved out of a hypothesis folder and verified against the original output. The originals still run unchanged and will become thin shims later. All tables cover **all days**, with a `holdout` flag: they are measurements, so **exploration must filter `holdout == False`**. No new text is stored. The new tables total 47 MB.
+
+| Table (data/processed/shared/) | Builder | From | Serves | Verification |
+| --- | --- | --- | --- | --- |
+| `embeddings/goals.parquet` + `goal_vectors.npy` | `goal_fields.py` | H01, H10 | H01, H10, H13, H26 | H10 equal to fp16 (max \|Δ\| 2.4e-4); H01 111/113 rows; H01's 2 #38 room rows are swapped (an H01 bug) |
+| `states_turn`, `states_min` | `behavior_states.py` | H14 | H14, H17, H39 | identical to H14 (non-holdout rows) |
+| `project_states` | `project_states.py` | H11 | H06, H11, H27, H28, H31 | identical in untied windows; ties now deterministic |
+| `period_units`, `period_step_changes` | `period_units.py` | H01/H12/H13, H03/H18, H16, H17, H22 | everyone | one rule; disagreements listed by `--compare` |
+| `kicks_classified` | `kicks_classified.py` | H04, H16 | H04, H08, H16, H30, H35, H39 | H04 human count equal, nudges 1,071 vs 1,070; H16's 5 classes equal |
+| `text_features` | `text_features.py` | H13 | H13 | H13 agent-day aggregates exact |
+| `turn_errors`, `sessions`, `actions_bash_head_fixed` | `turn_errors.py` | H38 | H25, H26, H36, H38 | equal to H38; sidecar aligned to `actions` |
+| `outages`, `stall_minutes`, `reasons` | `outages.py` | H38 (+ H09's idle-spell rule) | H25, H26, H36, H38 | equal to H38; idle spells equal to H09 |
+| (functions) | `spectra.py` | H12 | H12, H33 | tests reproduce H12's synthetic numbers exactly |
+| (functions) | `copy_info.py` | H07 | H07, H23 | tests (analytic cases, equivalence with h07lib) |
+
+Each builder takes `--verify` (or `--compare` for `period_units`) to rerun its check against the original, read-only.
+
+- **`embeddings/goals.parquet`** (249 rows) + **`goal_vectors.npy`** (fp16, 384-d raw bge-small; the mean of unit chunk embeddings, *not* renormalized).
+  - Columns: `gid` (row in the .npy), goal_no, `kind`, room, agent, first_day, win_start, valid_from, valid_to, regime, holdout, n_msgs, n_rooms, n_chunks, n_chars, fallback, `ref` (raw agent_goals id).
+  - `kind` values:
+    - `goal`: the village_goals text in ≤ 700-character chunks (H10).
+    - `goal_whole`: the text as one string (H01).
+    - `kickoff`: all rooms combined (H10).
+    - `kickoff_room`: one row per room (H01).
+    - `agent_goal`: the #51 private role, `name. description` (H01).
+  - Kickoff rule: human messages of ≥ 250 characters within [−10, +45] min of the window start on the goal's first active day. If there are none, the day's longest such message (`fallback`). Sentences about the previous goal are stripped. Goal #2 has no kickoff.
+  - Whiten downstream with `common.load_whitener(regime)`.
+- **`states_turn`** (2.67M rows) / **`states_min`** (1.47M): H14's rule-based action-class states. These are *not* the Jev `behavior_states_draft_*`.
+  - Scaffold artifacts are removed: mirror turns within 2 s of their event, and the forced `mouse_move` after context boundaries.
+  - Gap logging is handled: WAIT and CONSOLIDATE are back-filled from the previous record, and a PAUSE fills forward.
+  - Schemes: `act` (11 fine classes), `coarse` (browse / type / shell / chat / idle / consolidate; −1 = removed), and `lump4` (work / chat / idle / consolidate).
+  - `states_min` adds `in_span`: the minute lies between the agent's first and last record of the day. Outside the span, "idle" is really absent.
+  - `build(days)` returns exactly H14's tables.
+- **`project_states`** (w_min ∈ {15, 30, 60} × sources ∈ {all, action}): the modal project per agent per window, from strict artifact mentions (`how ∈ {url, output, bare}`). Files and sites map to their parent repo.
+  - Columns: goal_no, pt_date, day, win, agent, room (at the window midpoint), `project` (canonical artifact name), n, n_all, `n_tied`, `label` (0 = other, 1..8), holdout.
+  - Labels: the top ≤ 8 projects with ≥ 2% of agent-windows, ranked on the period's non-holdout rows.
+  - Ties go to the most recent mention. **Exact ties** (n_tied > 1; 2.6% of 30-min windows) go to the project first seen earliest in the dataset, then to its name. H11's choice in exact ties varied from run to run (unstable sort).
+  - At W = 30, 633/7,802 labels differ from H11's current files:
+    - 111 rows are tied windows that now pick a different project;
+    - 499 are pure renumbering, among projects within a few agent-windows of each other;
+    - 52 rows (#8, #17, #20, #21, #24, #25, #40) change "other" membership.
+  - Helpers: `window_table(cal, W)` (all windows, for circular shifts) and `projects_table(df)`.
+- **`period_units`** (109 units; 24 of 51 periods split; 30 one-day units) and **`period_step_changes`**. **The one rule:** a goal period's active days split at every step change, where a change dated D starts a unit on the first active day ≥ D. The changes are:
+  - every dated row of `hypotheses/natural-experiments.md`;
+  - roster joins and leaves (Claude Code agent excluded);
+  - changes in the structural room set (rooms that are the modal room of ≥ 2 agents that day);
+  - documented-hours changes;
+  - holdout boundaries;
+  - intra-day restarts: ≥ 60 min with no agent record and ≥ 30 min / ≥ 100 records on both sides (06-18 in #4, 06-29 in #50; such a day is listed in both units).
+
+  Columns: unit_id (`51c`, …), goal_no, seq, start / end (UTC), first_day, last_day, n_days, days, reason, reasons, n_agents (roster agents active in the unit), n_roster, rooms, regime, holdout, n_offgaps (stray-record gaps that don't split).
+- **`kicks_classified`** (105,830 rows): t, `kind`, subkind, targeted, room, speaker, `targets` (from `mentions_roster`), n_targets, `recipients` (from `exposure`), msg, message_id, goal_no, pt_date, holdout, ref. The kinds:
+  - `nudge`: automated message naming roster agents, or @-addressed (3 messages have unparsed targets);
+  - `pause_resume` (subkind `pause` / `resume`): the daily bookends, which never name agents;
+  - `human_message` (subkind `kickoff` / `mention` / `plain`);
+  - `mention`: an agent message naming another roster agent;
+  - `goal_kickoff`: the village_goals start;
+  - `automated_other`: 0 rows.
+
+  H16's (message, recipient) classes are `explode("recipients")` crossed with whether the recipient is in `targets`.
+- **`text_features`** (173,493 agent chat messages; no human or automated rows): H13's 20 style features (`f_*`, Float64), `words`, and 37 marker counts (`m_*`). Keys: message_id, msg, agent, t, pt_date, goal_no, room, holdout.
+- **`turn_errors`** (153,245 rows) / **`sessions`** (78,362 computer-use sessions): H38's error categories for every turn with an `error` or `system` string.
+  - Columns: t, agent, session, `err_cat`, `sys_cat`, pt_date, holdout.
+  - Categories: none / timeout / vm / resource / network / git_info / progress / tool_use / other. The infrastructure categories are timeout, vm, resource and network.
+- **`actions_bash_head_fixed`** (2.51M rows, row-aligned with `actions.parquet`):
+  - Columns: row, t (for an alignment check), `bash_head_fixed`, `error_class`, `system_class`.
+  - **Use `bash_head_fixed` instead of `actions.bash_head`**: regime-III coverage rises from 12.8% to 99.6% (regimes I/II from 96.5% to 99.8%); old non-null heads are unchanged.
+  - **Use `error_class` instead of `actions.error`**: of the flagged turns, 39% are `git_info`, 1.4% `progress` and 16% infrastructure.
+  - Note: a command whose first line is `cd X` (no `&&`) gets head `cd`.
+- **`outages`** (3,590 joint-silence runs), **`stall_minutes`** (98,863 day-minutes), **`reasons`** (561,019 silent agent-minutes with a reason): H38's tables (definitions in `outages.py` and the H38 card). The idle spells are recomputed with H09's rule, so nothing depends on a hypothesis folder. `village_off` marks runs with ≥ 10 min of K = 0.
+- **`spectra.py`** provides:
+  - `corr_eig`, `overlap_eig`, `mp_edge`, `bartlett_tau`;
+  - the `crossday_surrogate` and `circshift_surrogate` nulls;
+  - `spectrum_test`, `lull_filter`, `mode_summary`, `label_separation`;
+  - the participation-ratio estimators `pr_from_samples`, `pr_rarefied` (PR30), `pr_balanced` (PRday) and `between_pr`;
+  - `near_dup_share` and `near_dup_share_by`.
+- **`copy_info.py`** provides `mi_parts`, `decompose` (with the shuffle null), `transform_test` (the conditional null), `vertical`, `horizontal` and `set_stats`.
+
 ## Known issues
 - **`chat_core.mentions` is polluted: use `chat_mentions_clean.parquet` instead** (found by H04; root cause found 2026-10-03). `o1`'s alias set was empty (names under 4 characters were dropped), and the empty regex matched almost every message: 175k of 183k messages carry a spurious `o1`. **Fixed** in `common.mention_regexes` (o1 and o3 case-sensitive; agents with no alias skipped). `infra/shared/build_mentions_clean.py` writes the sidecar `chat_mentions_clean.parquet` (chat_core row order: `message_id`, `mentions_clean`, `mentions_roster` = also restricted to that day's roster); 342k → 168k mentions. chat_core itself is rebuilt by `scan_tables.py` once running analyses finish. Analyses that only looked at mentions of *current* agents were unaffected; anything counting "any mention" or mentions per message was not.
 - **`automated` speaker** covers the daily "pausing / resuming the village" messages as well as the nudger; separate them by text before treating `automated` as nudges.
@@ -101,3 +186,5 @@ One orjson pass over raw `computer_use_turns` (scan 184 s, 2 processes; build 25
 - **Day-level fluctuation statistics fire on roster and day-length changes** and on returns from gaps (H36). A trailing robust z with trimmed SD needs a consistency factor (0.70 at 10 baseline days), or z is inflated about 1.4×.
 - **Sign-shuffle and per-pair FDR nulls are anti-conservative on signed reply graphs** with agent effects removed (H37): 10–28% false alarms under agent effects only, 100% at #51's structure. Use the calibrated ordered-logit agent-field null (`hypotheses/H37-stance-spins/analysis/calibrate.py`; size 0.04).
 - **Jev zero-shot stance over-calls "oppose"** (H37): precision oppose 0.30, neutral 0.96, support 0.65 against blind labels (sign κ ≈ 0.56 population-weighted). Many "opposes" are task corrections or polite declines. Raw negative share has a label-noise floor of about 0.065; never alarm on it alone.
+- **The `automated` speaker goes silent from 2026-08-21** (H39; not in the CHANGELOG): no nudges after 08-20 and no daily pause/resume bookends. Catalogued as NE43. Anything that uses nudges or the operator schedule (H04, H16, H38, H39) must treat #51 after 08-21 as a different regime of drive.
+- **Controls that condition on a kick-free future are biased for targeted levers** (H39 synthetic null): requiring control episodes to stay kick-free afterwards manufactured a field effect at p = 0.01. Select controls on past information only and cut both arms at the next kick.
