@@ -1,0 +1,35 @@
+\hwhat{HH173 claimed content settles after a kickoff once every agent has read every other agent's work: a bulk mixing time on the read-out graph, not whole-graph $\lambda_2$. Using DQ1's context ledger we measured, per goal period, the time until 90\% of room-mate pairs had read each other ($T_{90}$) and the mixing time of the read-out chain. We compared these with the kickoff-remanence settling time $\tau$ (1-h bins, two embedding models) on 27 non-holdout periods, plus four native tests (NE42, \#38, \#51 joins, NE32). Coverage takes minutes ($T_{90}$ median 0.24 active h); settling takes hours ($\tau$ median 4.5 h, about $10\times$). Neither predictor beats a constant across periods (LOPO gains $-0.01$ to $-0.14$). But $\tau$ is detectable in only 11/27 periods, and a noise-calibrated synthetic has no power. \textbf{Inconclusive}; the shallow-coverage version fails on magnitude. Holdout script written, not run.}
+
+\hmodel{Vector spins (model 11) updated only at read-outs. Agent $i$'s content $x_i\in\mathbb{R}^{32}$ (whitened statement mean) is quenched toward the kickoff target $\hat k$ (H54). At each call it averages toward the messages that newly entered its context (ledger batch $B$), with weight $\alpha$. $W_{ij}$: $j$'s messages read by $i$ per active hour; $u_i$: reading-turn rate; $Q$: the read-out chain. Rivals: a field clock (kickoff decays on its own), the agent's own-call clock, the day clock, and $\lambda_2$ (H31).}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+x_i\leftarrow(1-\alpha)\,x_i+\alpha\,\langle x_{s(m)}\rangle_{m\in B},\qquad Q_{ij}=u_i\,\frac{W_{ij}}{\sum_k W_{ik}}-\delta_{ij}u_i\\
+C_k(t)=\Pr_{(i,j)}\big[n_{ij}(t)\ge k\big],\qquad t^{\rm bulk}_{\rm mix}=\operatorname{med}_i\min\{t:\mathrm{TV}(e_ie^{Qt},e_ie^{Q\infty})\le\tfrac14\}\\
+A_{\rm ex}(t)=\langle\cos(v_i,\hat k)\rangle_i-\langle\cos(v_i,\hat k_q)\rangle_{i,q}=A_\infty+(A_0-A_\infty)e^{-t/\tau}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/H48_summary_obs.pdf}{(a) Settling time against coverage time, 11 periods with detected settling. Filled: 90\% of pairs read once; hollow: read five times. Settling sits about $10\times$ above single-read coverage (dashed line $\tau=T_{90}$) and near depth-5 coverage (post hoc). (b) Leave-one-period-out gain over a constant. Both primaries (stars) lose in both models; the bge-only leads (depth-5 coverage, $N$) do not replicate with gte.}
+
+\htelos{One useful negative fact for operators: in broadcast rooms, reading is not the bottleneck. Every agent has seen every room-mate within minutes of a kickoff, yet content keeps relaxing for hours. So merging rooms or raising call rates will not speed convergence on a new goal by giving agents more to read; if read-out drives settling at all, each read moves an agent by about 1/250. Coverage times computed from the ledger are cheap, but they are weakest-link numbers: one silent agent sets a whole room's coverage. The scaling hypothesis itself is unanswered, because per-period settling times are too noisy and too varied in shape to rank 27 periods. As posed, this is a measurement problem more than a finding.}
+
+\hbottom{Agents read each other within minutes but content settles over hours, so settling is not "everyone has read everyone"; whether it scales with a slower read-out time could not be tested at the available noise.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.37\columnwidth}p{0.44\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 $T_{90}$ or $t_{\rm mix}$ beats constant, both models & gains $-0.10/-0.14$, $-0.01/-0.06$; 11 detected ($<12$) & inconclusive\\
+P2 $\tau/T_{90}\in[1/3,3]$ & 10.1 (IQR 2.9--18.6); gte 4.5 & failed\\
+P3 bulk beats worst case & 0/3 pairs & failed\\
+P4 holds within regime & gains $-0.08$, $-0.12$ & failed\\
+P5, P6 robust to model, DQ5 & $\rho$ 0.80, 0.97 & held\\
+P8 settling detected $\ge60\%$ & 41\% bge, 52\% gte & failed\\
+P10 no $\lambda_2$ beats constant & best gain 0.05 & held\\
+NE42 $\tau$ ordered as $T_{90}$ & $\rho$ 0.30 bge, 0.90 gte ($n$ 5) & mixed\\
+\#38 slow-covering room settles later & settles faster (gte $\tau_q$ 1.6 vs 12.3 d) & failed\\
+\#51 newcomers assimilate & 3/11; they individuate & failed\\
+\end{tabular}}
+
+\hobsb{../figures/H48_synthetic.pdf}{Synthetic: vector spins on the real read-out schedules. (a) At the pre-registered noise level, bulk predictors identify read-out truths (RD, RC) with no false positives under a field clock (FD). (b) At noise matched to the real detection rate (post hoc), no predictor passes under any truth, so the real-data null says nothing about scaling.}
+
+\hcaveats{The settling estimate is fragile. A single exponential fits in about half the periods; the rest show fast drops then recovery, multi-day declines, or no kickoff signal (\#51's private goals). H20's day-scale $\tau_q$ exists only in 10 long periods. The bge and gte detected sets overlap in 9 of 16 periods. Coverage counts chat messages only, not artifacts. Regime-I read times use low-confidence call starts. 19 predictors $\times$ 2 models were looked at; only P1 is multiplicity-controlled, so the bge leads are leads. The real-like calibration was chosen after seeing the data.}
+
+\hnext{Round 2: estimate the per-read pull $\alpha$ at message level (H29-style, on ledger read-outs) and predict $\tau=1/(\alpha u)$ directly; build a hierarchical settling estimator that recovers planted $\tau$ at real noise; test depth-5 coverage on the holdout.}

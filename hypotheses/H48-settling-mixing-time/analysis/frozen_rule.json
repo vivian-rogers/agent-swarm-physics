@@ -1,0 +1,73 @@
+{
+ "written": "2026-10-04",
+ "source": "exploration (non-holdout replication periods)",
+ "rules": {
+  "bge_small": {
+   "constant": {
+    "log_tau": 0.9344241599280184,
+    "tau_h": 2.545747092394633,
+    "q10_resid": -1.5179359917589155,
+    "q90_resid": 1.109002053317615
+   },
+   "n_exploration": 11,
+   "periods": [
+    5,
+    10,
+    19,
+    20,
+    21,
+    26,
+    27,
+    35,
+    39,
+    40,
+    41
+   ],
+   "tmix_bulk": {
+    "column": "tmix_batch_bulk",
+    "intercept": 5.717169767012002,
+    "slope": 1.3193628446222534
+   },
+   "T90_k5": {
+    "column": "k5_room_T90",
+    "intercept": 0.3206668711267751,
+    "slope": 0.9417345141035381
+   }
+  },
+  "gte_modernbert": {
+   "constant": {
+    "log_tau": 0.7740167840823714,
+    "tau_h": 2.1684590152799474,
+    "q10_resid": -1.6143512675020069,
+    "q90_resid": 2.10518003286125
+   },
+   "n_exploration": 14,
+   "periods": [
+    5,
+    10,
+    18,
+    20,
+    21,
+    25,
+    27,
+    30,
+    35,
+    38,
+    39,
+    40,
+    41,
+    42
+   ],
+   "tmix_bulk": {
+    "column": "tmix_batch_bulk",
+    "intercept": 3.9679549156699365,
+    "slope": 0.9030035841921861
+   },
+   "T90_k5": {
+    "column": "k5_room_T90",
+    "intercept": 0.5068673818946544,
+    "slope": 0.29370771026235587
+   }
+  }
+ }
+}

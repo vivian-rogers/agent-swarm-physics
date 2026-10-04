@@ -272,3 +272,9 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Wave size (H53):** new adopters within 2 h of the seed.
 - **Call cycle (agent median):** the agent's median interval between model calls (`call_windows`).
 - **Receptive count:** uncommitted agents whose receiving call of the seed falls within one call cycle of posting (`context_ledger_items`).
+
+### H48 named variants (2026-10-04; see `hypotheses/H48-settling-mixing-time/README.md`)
+- **Read-out coverage C_k(t):** the share of ordered room-mate pairs (i, j) where i has read ≥ k of j's messages since the kickoff (`context_ledger_items`). **Coverage time T_q:** active time to C_1 = q (T90 at q = 0.9). Weakest-link: one rarely posting agent sets it.
+- **Bulk vs worst-case mixing time:** relaxation times of the read-out Markov chain (who reads whom, per call), from the bulk of the spectrum vs the slowest mode.
+- **Kickoff remanence at active-hour resolution:** H54's remanence fit with τ in active hours; detectable in ~45% of periods.
+- **Newcomer assimilation gap:** a newcomer's content distance to the room centroid vs days since joining.
