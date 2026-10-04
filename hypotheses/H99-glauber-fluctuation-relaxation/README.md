@@ -1,6 +1,14 @@
 # H99: Fluctuations predict relaxation (mean-field Glauber)
 
-**Status:** exploratory round 1 done (2026-10-04; non-holdout only). **Fluctuations predict relaxation only where they cannot be tested; where talk coupling is real, the collective outlives the prediction.**
+**Status:** exploratory round 2 done (2026-10-04; non-holdout only). **Round 2: the regime-III collective talk memory that mean-field Glauber misses is read-out coupling, not the scheduler.**
+- **Survives scheduler removal:** W0-corrected Δρ₁ after call-window, day-edge, exogenous and activity-field removal is +0.052 (regime-III median); #51 +0.042 [0.014, 0.070]. It does not track c_× (Spearman −0.10).
+- **Respects the gates:** same-room pairs carry the memory (Π ≈ 15; cross-room ≈ 0). On the call clock, reads raise talk at the next call (room-gated g₁ 0.113 [0.077, 0.149]), and unreadable messages lower it. Named messages carry ×10 the effect and keep acting one call later.
+- **Quantitative match:** H67's read-out gain reproduces the minute memory (g₁,fit/g_lag median 0.96).
+- **Single agents:** talk memory on the call clock is slightly negative (−0.048).
+- **Withdrawn:** the ×9.5 nudge Onsager violation; on the receiving call with a matched placebo, A30 = 0.44 [−0.41, 1.23]. Human messages still ring about 2.5 calls of talk (post hoc).
+- Round-2 scorecard A1 B2 C2 D2 E1 F2 G1 H2 I0.
+
+*Round 1 (kept for the record; the ×9.5 bullet is withdrawn by round 2):* **Fluctuations predict relaxation only where they cannot be tested; where talk coupling is real, the collective outlives the prediction.**
 - **Talk has no single-agent memory at minute resolution** (ρ_⊥(1) median 0.006, 70 units), so the HH's log-ratio relaxation time is undefined; a post hoc statistic, the collective memory excess Δρ₁ = ρ_c(1) − ρ_⊥(1)^(1−g_χ), replaces it (Amendment A2).
 - **Regime III fails in the slow direction:** period median Δρ₁ = +0.077; #51 +0.067 [0.034, 0.100]; slow calls in 8 of 15 resolved units. The collective talk mode keeps memory that single agents lack: a delayed (read-out) coupling or a conversation field, as H67 measured, not mean-field Glauber.
 - **Regime I is consistent but powerless** (Δρ₁ median +0.007; 23 of 25 resolved units consistent): at the observed sub-minute agent clock a fast shared field is flagged in only 0–6% of synthetic replicates, so H67's fast-field reading is neither confirmed nor refuted.
@@ -13,8 +21,8 @@
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population N(t) (active variant: agents with ≥ 30 record minutes that day); Regime; Driving / external field; **Loop gain (equal-time, daily dial)** and **Per-pair correlation ρ̄** (H25 named variants; here pooled per unit on the trimmed grid); **Content soft spin (30-min window)** (H25 named variant, with the DQ5 `style_resid_period` vectors in place of whitened means); **Operator kick classes** (H30). **New named variants proposed for DEFINITIONS.md** (not edited here), defined under Model: *collective / transverse mode (mean-field split)*, *fluctuation gain g_χ*, *relaxation gain g_τ*, *fluctuation–relaxation gap Δg*.
 ## Standards (2026-10-04)
 **Question served:** Q2 (field vs coupling by a second, dynamical observable) and Q3 (the collective talk mode's memory is not Glauber).
-**Impostor table:** see "Impostors" below (scheduler removed by design; exogenous field partly; shared priors removed; convergence partly).
-**Inputs:** `activity_bins_fixed`, `outages_fixed/stall_minutes`, DQ5 `style_resid_period` vectors (bge and gte), `kicks_classified`; H04/H59 round-1b kernels read as data. Not used: the context ledger (H67 owns the call-clock estimator).
+**Impostor table:** see "Impostors" below (round 2, talk: scheduler, exogenous field and convergence removed; shared priors removed; content: exogenous and convergence partly).
+**Inputs:** round 2 adds the context ledger (`call_windows`, `context_ledger_turns`/`_items`), `chat_core` + `chat_mentions_clean`, `kicks_receipts`/`kicks_targets`, and H67/H86 rows read as data (behind `scheme/build_r2.py`; round 1 reproduces unchanged). Round 1: `activity_bins_fixed`, `outages_fixed/stall_minutes`, DQ5 `style_resid_period` vectors (bge and gte), `kicks_classified`; H04/H59 round-1b kernels read as data. Not used: the context ledger (H67 owns the call-clock estimator).
 **Two layers:** 34 replication folders (#51 sits in its native folder). Natives: 3 (NE42 mixed, NE14 descriptive, G51 failed).
 **Confirm script:** `analysis/confirm.py` (#22, #28, #43; C1–C4), frozen, guarded, dry-run on stand-ins; not run.
 
@@ -101,10 +109,10 @@ Per unit and channel (per period by random-effects pooling):
 ## Impostors (STANDARDS §1)
 | Impostor | Relevant? | How H99 removes it | Status |
 | --- | --- | --- | --- |
-| Scheduler field | yes | All-present trim (DQ8) and 30-min block centring before any statistic; the block-shift null on the trimmed grid; activity is the control channel where the scheduler is the field. A residual fast scheduler field is exactly what Δg < 0 detects. | removed (by design; residual is the measured object) |
-| Exogenous field (kickoff, goal, operator) | yes | Day-mean centring removes day-constant goal and kickoff content; 30-min block centring removes slow drives; human messages are the measured kicks in the kick layer. A within-day operator burst is a fast field and shows as Δg < 0. No `goal_fields` regression on the binary channels (the block centring is stronger). | partly |
+| Scheduler field | yes | All-present trim (DQ8) and 30-min block centring before any statistic; the block-shift null on the trimmed grid; activity is the control channel where the scheduler is the field. A residual fast scheduler field is exactly what Δg < 0 detects. | removed (round 2: the call-skeleton W0 world gives Δρ₁ ≈ 0; V1–V5 removal leaves +0.05; the room partition excludes a village-wide drive) |
+| Exogenous field (kickoff, goal, operator) | yes | Day-mean centring removes day-constant goal and kickoff content; 30-min block centring removes slow drives; human messages are the measured kicks in the kick layer. A within-day operator burst is a fast field and shows as Δg < 0. No `goal_fields` regression on the binary channels (the block centring is stronger). Round 2: minutes after human, nudge and operator messages and kickoff hours masked (V3), exogenous reads as call-level covariates. | removed (talk, round 2); partly (content) |
 | Shared model priors | partly | Content uses `style_resid_period` vectors centred per agent (family field removed, H13/DQ5). Binary spins are centred per agent within blocks, which removes each agent's talk propensity. | removed |
-| Contemporaneous convergence | partly | g_χ is equal-time and contains convergence; g_τ uses lag-1 pairs. Convergence is a fast common input: it appears as Δg < 0, not as Δg ≈ 0. No in-flight placebo at the call level (H67 owns that estimator). | partly |
+| Contemporaneous convergence | partly | g_χ is equal-time and contains convergence; g_τ uses lag-1 pairs. Convergence is a fast common input: it appears as Δg < 0, not as Δg ≈ 0. Round 2: read vs in-flight at matched lag and cross-room in the same window on the call clock (reads +0.007, in flight −0.008 per message). | removed (talk, round 2); partly (content) |
 
 ## Faithfulness scorecard
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
@@ -339,6 +347,84 @@ Runs: `analysis/r2_synthetic.py` (units 38a, 41, 51c, 51g; 7 worlds × 6 replica
 6. *Kill-rule partition clause.* The room partition rules out only a village-wide drive. The coupling claim needs the call-clock gates: J₁* > 0 (in-flight) with J₀(room) ≈ 0, or named ≥ 5 × unnamed. A room-local drive is beaten only by these.
 7. *J₂ rule.* One-call-delayed coupling is claimed only if the pooled J₂ CI excludes 0 *and* J₂/J₁* ≥ 0.2. W1b gives J₂/J₁* = 0.03, so the ratio guards against the 17% false-call rate.
 8. *R2 simplification.* g₀ = 0 in the indirect inference. A fast field moves Δρ₁ by < 0.01 (W5), below one unit's SE (0.023–0.03).
+
+**Amendment B2 (2026-10-04 ~22:00 UTC, post hoc: after the first R4 run).** The first R4 run left Ω undefined because the activity kernel is ≤ 0 at the receiving minute (#51 nudges: G(0) = −0.07, peak at minute 1). The minute kernels are now normalized at their own peak p = argmax_{k ≤ 2} G(k), as round 1 did, with the spontaneous regression taken from the same lag: Ω = Σ_{k ≥ p} G(k) / [G(p) Σ_{k ≥ p} S(k)/S(p)]. Per-call talk kernels use Ω_call = Σ_n G(n)/G(0), because spontaneous per-call talk memory is ≤ 0 in regime III (below). Every R4 number is labelled post hoc.
+
+#### Round-2 results (2026-10-04 22:10 UTC; exploratory, non-holdout)
+Runs: `analysis/r2_real.py` (69 units; 8 W0 worlds per unit; R2 curves for 29 regime-II/III units), `analysis/r2_kicks.py`, `analysis/r2_summarize.py`, `analysis/r2_figures.py`. Tables: `data/processed/H99-glauber-fluctuation-relaxation/r2/results/` (`units.parquet` → `r2_units.parquet`, `curves.parquet`, `kicks_r4.json`, `r2_summary.json`). Figures: `figures/r2_obs.pdf`, `figures/r2_kernel.pdf`. Estimates: 577 rows in `per_period_estimates` (statistics `r2_*`, role replication; 4 R4 rows role native). Period folders carry a "Round 2" section.
+
+**Scheduler removal (minute grid built from the call skeleton, W0-corrected Δρ₁ᶜ; random-effects pools over units):**
+
+| Variant | Regime III median | Regime III pool | #51 pool | Regime I pool |
+| --- | --- | --- | --- | --- |
+| V0 round-1 estimator | +0.060 | +0.053 [0.031, 0.074] | +0.066 [0.043, 0.090] | −0.015 [−0.034, 0.005] |
+| V1 call-skeleton expectation removed | +0.042 | +0.047 [0.020, 0.074] | +0.060 [0.027, 0.092] | +0.035 [0.019, 0.050] |
+| V2 day edges dropped | +0.054 | +0.055 [0.037, 0.073] | +0.055 [0.033, 0.076] | −0.007 [−0.031, 0.017] |
+| V3 exogenous mask | +0.053 | +0.048 [0.024, 0.072] | +0.058 [0.033, 0.084] | −0.015 [−0.033, 0.002] |
+| V4 act-only field regressed out | +0.047 | +0.044 [0.021, 0.066] | +0.060 [0.039, 0.081] | −0.010 [−0.027, 0.008] |
+| **V5 = all four** | **+0.052** | **+0.051 [0.023, 0.080]** | **+0.042 [0.014, 0.070]** | +0.034 [0.016, 0.053] |
+| V5s (15-min nudge mask, as pre-registered) | +0.057 | +0.060 [0.025, 0.096] | +0.046 [0.006, 0.085] | +0.034 [0.016, 0.053] |
+
+- The call-skeleton grid agrees with the round-1 `activity_bins` grid (unit Δρ₁ r = 0.81; 0.96 in regime III). On the round-1 grid, V5 with the call-grid W0 bias applied gives regime III +0.03 (V0 +0.05).
+- **c_× gauge:** Spearman(Δρ₁ᶜ V5, H86 `taylor_c_shared`) = −0.10 (p 0.64, 24 regime-III units; median c_× 0.005). The memory does not track the shared-field gauge.
+- **Room partition (V5, 13 multi-room regime-III units):** per-pair lag-1 correlation r̄_same = 0.0165 [0.010, 0.023], r̄_cross = 0.0011 [−0.003, 0.005]; difference 0.016 [0.010, 0.022]; Π ≈ 15. Same-room pairs carry a median 92% of the cross-agent lag-1 covariance. W0 gives a difference of 0.002.
+- **Regime I:** V0 is 0, but removing the call-skeleton expectation reveals +0.035. Regime-I reads and in-flight messages raise talk equally (β 0.0019 vs 0.0021; J₁* −0.0001 [−0.0015, 0.0013]), so this memory is field-like (descriptive).
+
+**Call clock (R1; regime III pools over 25 units, per message read or in flight, Δ P(talk)):**
+
+| Window | Named | Unnamed | All |
+| --- | --- | --- | --- |
+| hop 0, in flight (unreadable) | −0.0149 [−0.0201, −0.0096] | −0.0078 [−0.0089, −0.0068] | −0.0084 [−0.0093, −0.0074] |
+| cross-room, same window as hop 1 | – | – | −0.0035 [−0.0057, −0.0013] |
+| cross-room, in flight | – | – | −0.0048 [−0.0073, −0.0023] |
+| hop 1, read at the call | **+0.0734 [0.0626, 0.0843]** | +0.0017 [−0.0002, 0.0035] | +0.0072 [0.0049, 0.0095] |
+| hop 2, read one call earlier | **+0.0251 [0.0200, 0.0302]** | −0.0002 [−0.0004, 0.0001] | +0.0004 [0.0001, 0.0008] |
+
+- **Single-agent memory is resolvable on the call clock, and negative:** ρ_s − W0 = −0.048 (median), CI excluding 0 in 65% of regime-III units (negative in 54%, positive in 12%). A talk call makes the next call slightly less likely to talk (refractory). Regime I: +0.052.
+- **The response sits at hop 1, not hop 0.** Messages around the call that it cannot read carry a negative association, in every room (turn-taking or contention). Read messages carry a positive one. Room-gated read-out gain g₁ = m̄ r̄ (β(R¹) − β(X¹)) = **0.113 [0.077, 0.149]**, matching H67's g_lag (0.13). The in-flight-gated version is 0.228 [0.189, 0.268], inflated by the negative in-flight coefficient (H67's caveat). The room-gated gain is unidentified where one room holds almost every agent (most #51 units: cross-room messages are rare, CIs span ±10). The SE-weighted pool therefore rests on #36–#44 and 51g; the #51 pool is 0.065 [−0.026, 0.156].
+- **Address gate:** named J₁* = 0.087 vs unnamed 0.0087 (×10.0). Against cross-room messages, unnamed reads still couple: J₁(room, unnamed) = 0.0050 [0.0019, 0.0081].
+- **Beyond one call:** named messages keep acting at the next call (β(R²) / β(R¹) = 0.34). Unnamed messages do not (J₂/J₁ = 0.06 overall). One-call-delayed coupling holds for named messages only.
+
+**R2: does H67's gain account for the minute memory?** The hop-1 gain that the skeleton simulator needs to reproduce each unit's minute-grid Δρ₁ is **g₁,fit = 0.135 (median, 24 regime-III units)** against H67's g_lag 0.144. The unit-median ratio is 0.96. In the 19 units with g_lag > 0 at 95%, the ratio is 1.59, and 63% lie within ×2. #51: 0.160 vs 0.149. Validation on the synthetic W1 runs: median fit 0.118 at true 0.13 (79% within ×2) and 0.275 at 0.30 (100%).
+
+**R4: kicks on the receiving call (post hoc, B2).**
+- *#51 nudges* (525 matched target receipts). The activity response peaks one minute after the receiving call. Its 30-min integral is 0.44 [−0.41, 1.23] extra active minutes (round 1, message-aligned: 1.53). Ω = 1.29 with an uninformative CI. The round-1 form A30/(G(p)/(1 − 0.34)) is 2.7 [−3.6, 6.9], against round 1's 9.5 [7.0, 12.3].
+- Talk on the call clock: the receiving call talks 24 pp more. The integrated per-call talk response is Ω_call = 1.71 [0.81, 2.71] times the immediate one.
+- *Human messages, regime III* (1,966 recipient receipts): no resolved activity response. Talk per call Ω_call = 2.53 [1.63, 3.44]: the talk response persists for several calls when spontaneous talk has none. Regime I: 1.20 [−1.25, 3.64].
+
+**Predictions scored:**
+
+| # | Observed | Verdict |
+| --- | --- | --- |
+| Q-R1a single-agent memory resolvable, positive | ρ_s − W0 −0.048; resolved in 65% (mostly negative) | **failed** (sign; 65% < 70%) |
+| Q-R1b response not instantaneous | β(P⁰ named) −0.015 ≤ ⅓ β(R¹ named) 0.073 | supported |
+| Q-R1c kernel outlasts one call, J₂/J₁ ∈ [0.2, 0.8] | all: J₂ 0.0007 [0.0000, 0.0014], ratio 0.06; named: 0.025 [0.020, 0.030], ratio 0.29–0.34 | mixed (named only) |
+| Q-R2 g₁,fit/g_lag ∈ [0.5, 2] | median 0.96 (24 units); 1.59 and 63% within ×2 among resolved | supported |
+| Q-S1 Δρ₁ survives removal | V5 median +0.052; #51 +0.042 [0.014, 0.070] | supported |
+| Q-S2 no tracking of c_× | Spearman −0.10 (p 0.64) | supported |
+| Q-P1 room gate on the minute grid | Π ≈ 15; cross-room r̄(1) 0.001 [−0.003, 0.005] | supported |
+| Q-P2 address and room gates on the call clock | named ×10; but \|β(X¹)\| 0.0035 > unnamed β(R¹) 0.0017 (both placebos negative) | mixed |
+| Q-R4a nudge Ω ≤ 2 | Ω 1.29 (CI uninformative); round-1 form 2.7 [−3.6, 6.9]; A30 0.44 [−0.41, 1.23] | supported (×9.5 withdrawn; post hoc) |
+| Q-R4b human Ω ∈ [0.5, 2] | activity unresolved; talk per call 2.53 [1.63, 3.44] | mixed (post hoc) |
+
+**Kill rules.** *Slow-drive rival:* Q-S1 holds. The room partition rules out a village-wide drive. The call-clock gates rule out a room-local drive: J₀(room) = −0.005 [−0.008, −0.002], not the positive value a room drive gives (W4), and named ≥ 5 × unnamed. **The rival is beaten.** *Coupling claim:* all three conditions hold. *×9.5:* withdrawn.
+
+**Reading.** The round-1 excess was not the scheduler. It survives every removal and does not track c_×. It lives inside rooms. It is carried by reads at the recipient's next call, mostly by named messages, which keep acting one call later. Its size is what H67's read-out gain predicts. Mean-field Glauber fails in regime III for a simple reason: the coupling is delayed by one read-out call, and the 1-min equal-time dial sees only part of it. On its own call clock, an agent's talk has slightly negative memory. The collective memory is therefore entirely interaction. The nudge's apparent Onsager violation was an alignment and placebo artifact. Human messages still ring for about 2.5 calls of talk.
+
+**Scorecard (round 2):** A1 B2 C2 D2 E1 F2 G1 H2 I0.
+- B: update order and clock audited on the call clock.
+- C: W0 nulls and two partition contrasts.
+- D: the minute memory is predicted from H67's independently fitted gain.
+- F: indirect inference validated on real skeletons.
+- H: village-wide drive, room-local drive and fast field all separated.
+
+**Round 3 redirects:**
+- **H99-R6. Holdout.** Run V5 Δρ₁ᶜ, the room partition and g₁,fit/g_lag on #43 (regime III) through a re-frozen `confirm.py`, after Vivian's sign-off.
+- **H99-R7. Named hop-2 kernel.** Fit the full per-call kernel of named messages (hops 1–5) and test it against H40's per-call decay φ.
+- **H99-R8. Negative in-flight field.** Every unreadable message around a call lowers its talk probability, in every room (β −0.005 to −0.008). Identify it: API contention, turn-taking, or a scheduler artefact.
+- **H99-R3** (regime-I power) and **H99-R5** (content) remain open.
+
+**Claim that stands:** In regime III the collective talk memory beyond mean-field Glauber is read-out coupling, not the scheduler. It survives scheduler removal (V5 Δρ₁ᶜ median +0.052; #51 +0.042 [0.014, 0.070]), sits within rooms (Π ≈ 15), and is reproduced by H67's hop-1 read-out gain (g₁,fit/g_lag median 0.96; room-gated call-clock g₁ 0.113 [0.077, 0.149]). *Excluded:* the ×9.5 nudge Onsager violation (withdrawn); one-call-delayed coupling for unnamed messages (not supported); positive single-agent talk memory (failed: negative); R4 numbers (post hoc, B2); all talk statistics stay post hoc in the A2 sense.
 
 ## Round 2 redirects
 - **What the direction is really after:** a dynamical check that tells a coupling from a field without inferring J, on the clock at which agents actually update.

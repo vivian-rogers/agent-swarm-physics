@@ -41,3 +41,31 @@ Data: `natives/g51.json` (H04 and H59 numbers read from their round-1b outputs, 
 D (an unfitted kernel predicted from fluctuations), G (H04/H59 kernels), H (transverse vs collective clock).
 
 ## Notes
+
+## Round 2 (2026-10-04)
+
+*Round-2 tests (card section "Round 2"; predictions written 21:20 UTC and Amendment B1 21:30 UTC, before real data). Exploratory, non-holdout. Talk statistics stay post hoc in the A2 sense.*
+
+| Unit | Δρ₁ V0 (W0-corr.) | Δρ₁ V5 (W0-corr.) | ρ_s − W0 | g₁ room-gated | g₁ in-flight-gated | g₂ room-gated | g₁,fit (R2) | H67 g_lag |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 51a | +0.107 ± 0.020 | +0.123 ± 0.034 | +0.026 [-0.025, +0.082] | +0.187 [-6.793, +13.396] | +0.313 [+0.225, +0.417] | +0.105 [-8.550, +11.390] | +0.41 [+0.32, +0.48] | +0.129 |
+| 51c | +0.053 ± 0.027 | +0.017 ± 0.041 | -0.062 [-0.078, -0.047] | +1.052 [-6.270, +2.101] | +0.266 [+0.218, +0.306] | +0.529 [+0.364, +33.472] | +0.12 [+0.02, +0.31] | +0.160 |
+| 51d | +0.044 ± 0.028 | +0.020 ± 0.037 | -0.061 [-0.083, -0.036] | +0.143 [-0.351, +0.278] | +0.260 [+0.192, +0.320] | +0.072 [-0.527, +0.090] | +0.14 [+0.00, +0.37] | +0.075 |
+| 51e | +0.109 ± 0.028 | +0.049 ± 0.042 | +0.010 [-0.011, +0.030] | +0.487 [+0.285, +22.567] | +0.291 [+0.188, +0.387] | -0.175 [-0.364, +0.242] | +0.38 [+0.31, +0.46] | +0.127 |
+| 51f | +0.024 ± 0.021 | +0.047 ± 0.033 | -0.014 [-0.034, +0.006] | +0.021 [-0.065, +0.103] | +0.303 [+0.207, +0.410] | +0.002 [-0.007, +0.009] | +0.05 [+0.00, +0.21] | +0.123 |
+| 51g | +0.067 ± 0.015 | +0.056 ± 0.021 | +0.015 [-0.001, +0.033] | +0.233 [+0.177, +0.280] | +0.238 [+0.201, +0.274] | +0.023 [-0.007, +0.045] | +0.24 [+0.13, +0.35] | +0.147 |
+| 51h | +0.014 ± 0.038 | -0.022 ± 0.033 | -0.019 [-0.041, +0.004] | +0.272 [-0.131, +0.560] | +0.514 [+0.370, +0.631] | -0.102 [-0.210, -0.034] | +0.05 [+0.00, +0.70] | +0.292 |
+| 51i | +0.014 ± 0.049 | +0.012 ± 0.046 | -0.021 [-0.052, +0.013] | -0.048 [-0.175, +0.084] | +0.297 [+0.144, +0.414] | +0.004 [-0.016, +0.033] | +0.10 [+0.00, +0.36] | +0.156 |
+| 51j | +0.068 ± 0.049 | +0.070 ± 0.074 | -0.013 [-0.059, +0.055] | +0.039 [-0.026, +0.113] | +0.290 [+0.216, +0.403] | -0.000 [-0.014, +0.021] | +0.18 [+0.00, +0.43] | +0.196 |
+| 51k | +0.147 ± 0.043 | +0.129 | +0.149 [+0.091, +0.203] | -0.006 [-0.092, +0.093] | +0.319 [+0.214, +0.415] | +0.026 [+0.013, +0.060] | – | +0.019 |
+| 51l | +0.067 ± 0.091 | +0.088 | +0.160 [+0.074, +0.213] | +0.035 [-0.099, +0.144] | +0.320 [+0.249, +0.369] | +0.007 [-0.019, +0.030] | +0.45 [+0.00, +0.95] | +0.152 |
+
+Regime III. ± is one SE (block bootstrap and W0 spread). Data: `data/processed/H99-glauber-fluctuation-relaxation/r2/results/r2_units.parquet`.
+
+Reading: the collective talk memory survives scheduler removal where it was present in round 1; reads couple at the next call (room-gated g₁ ≈ H67's g_lag), mostly through named messages. See the card for pooled tests.
+
+**Native R4 (post hoc, Amendment B2): nudges on the receiving call.** 525 primary-target receipts matched to same-agent, same-day, same-class placebo calls.
+- Activity response: its peak is one minute after the receiving call. The 30-min integral is 0.44 [−0.41, 1.23] extra active minutes (round 1: 1.53 from H04's message-aligned kernel). Ω = 1.29 (CI uninformative). The round-1 form is 2.7 [−3.6, 6.9].
+- Talk on the call clock: the receiving call talks 24 pp more; Ω_call = 1.71 [0.81, 2.71].
+- **The round-1 ×9.5 is withdrawn.** In most #51 units one room holds almost every agent, so the room-gated g₁ is unidentified there; use the in-flight-gated and named estimates.
+

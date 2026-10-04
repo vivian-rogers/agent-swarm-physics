@@ -27,3 +27,16 @@ Data: `data/processed/H99-glauber-fluctuation-relaxation/results/units_called.pa
 
 ## Scorecard (period-specific axes)
 C: g_χ against independence (bootstrap CI and block-shift null). D: the collective relaxation predicted from fluctuations (Δρ, Δg). H: Glauber against fast-field, slow-field and delayed-coupling readings.
+
+## Round 2 (2026-10-04)
+
+*Round-2 tests (card section "Round 2"; predictions written 21:20 UTC and Amendment B1 21:30 UTC, before real data). Exploratory, non-holdout. Talk statistics stay post hoc in the A2 sense.*
+
+| Unit | Δρ₁ V0 (W0-corr.) | Δρ₁ V5 (W0-corr.) | ρ_s − W0 | g₁ room-gated | g₁ in-flight-gated | g₂ room-gated | g₁,fit (R2) | H67 g_lag |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 42a | +0.174 ± 0.077 | +0.152 ± 0.066 | -0.019 [-0.041, -0.003] | +0.268 [+0.219, +0.320] | +0.223 [+0.166, +0.299] | -0.026 [-0.073, +0.011] | +0.33 [+0.00, +0.47] | +0.199 |
+| 42b | +0.048 ± 0.022 | +0.032 ± 0.038 | -0.022 [-0.047, +0.001] | +0.104 [-0.049, +0.215] | +0.151 [+0.046, +0.244] | +0.017 [-0.036, +0.044] | +0.10 [+0.00, +0.18] | +0.103 |
+
+Regime III. ± is one SE (block bootstrap and W0 spread). Data: `data/processed/H99-glauber-fluctuation-relaxation/r2/results/r2_units.parquet`.
+
+Reading: the collective talk memory survives scheduler removal where it was present in round 1; reads couple at the next call (room-gated g₁ ≈ H67's g_lag), mostly through named messages. See the card for pooled tests.
