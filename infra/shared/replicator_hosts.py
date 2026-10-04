@@ -32,7 +32,6 @@ for _v in ("POLARS_MAX_THREADS", "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL
 
 import datetime as dt  # noqa: E402
 import hashlib  # noqa: E402
-import importlib.util  # noqa: E402
 import sys  # noqa: E402
 from functools import lru_cache  # noqa: E402
 from pathlib import Path  # noqa: E402
@@ -185,10 +184,9 @@ def classify_arrivals(ev: pl.DataFrame) -> pl.DataFrame:
 
 # ============================================================================================ impostor tags
 def kickoff_named(goal_no: int, repos: list[str]) -> dict[str, bool]:
-    """H54's naming rule for each repo (text held in memory only)."""
-    spec = importlib.util.spec_from_file_location("h54_build", ROOT / "hypotheses/H54-kickoff-quench-target/scheme/build.py")
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
+    """H54's naming rule for each repo (text held in memory only). The token helpers are the shared verbatim copy
+    (kickoff_naming.py; 2026-10-04: this used to load H54's scheme/build.py at run time)."""
+    import kickoff_naming as m
     from goal_fields import kickoff_messages, strip_boilerplate
     cal_all = calendar()
     d0 = sorted(cal_all.filter(pl.col("goal_no") == goal_no)["pt_date"].to_list())[0]
@@ -452,3 +450,39 @@ def hashed(df: pl.DataFrame, cols=("repo", "to_repo")) -> pl.DataFrame:
         if c in df.columns:
             df = df.with_columns(pl.col(c).map_elements(rhash, return_dtype=pl.String).alias(c))
     return df
+
+
+# ============================================================================================ verify
+def verify(periods=(31, 33, 40)) -> bool:
+    """Rebuild periods with the defaults and compare with H77's and H78's scheme outputs (data/processed/H7x/G<NN>/
+    events, bins, labs, choice and the repo named flags; repo names hashed). Read-only."""
+    import json
+    res, ok = {}, True
+    for g in periods:
+        d = build_period(g)
+        mine = {"events": hashed(d["events"]), "bins": hashed(d["bins"]), "labs": hashed(d["labs"]),
+                "choice": hashed(choice_sets(d["events"]))}
+        named = {rhash(k): v for k, v in d["named"].items()}
+        for hyp in ("H77-repos-as-replicators", "H78-replicator-growth-order"):
+            base = ROOT / "data/processed" / hyp / f"G{g:02d}"
+            if not base.exists():
+                continue
+            r = {}
+            for k, df in mine.items():
+                old = pl.read_parquet(base / f"{k}.parquet")
+                if k == "labs":   # bin_table's labs rows come out of an unordered group_by: compare as sets
+                    old, df = old.sort(old.columns), df.sort(df.columns)
+                r[k] = "identical" if old.equals(df) else {"rows": [old.height, df.height]}
+            rp = pl.read_parquet(base / "repos.parquet")
+            r["named"] = "identical" if all(named.get(h, False) == v for h, v in rp.select("repo", "named").iter_rows()) else "differ"
+            ok &= all(v == "identical" for v in r.values())
+            res[f"{hyp[:3]}/G{g:02d}"] = r
+    res["ok"] = bool(ok)
+    print(json.dumps(res, indent=1), flush=True)
+    return ok
+
+
+if __name__ == "__main__":
+    if "--verify" in sys.argv:
+        sys.exit(0 if verify() else 1)
+    print(__doc__)

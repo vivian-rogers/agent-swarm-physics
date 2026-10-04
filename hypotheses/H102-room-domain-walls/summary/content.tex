@@ -1,0 +1,33 @@
+\hwhat{HH332 says that rooms doing different things form two content domains. Agents who hop between rooms would sit inside the wall, and the wall would widen with their cross-room read-outs. H102 projects style-residualized content on the inter-room axis in 9 non-holdout units (\#35--\#44 and the \#focus weeks of \#51). It follows the five \#focus hoppers and one \#36 hopper. \textbf{The domains are real; the wall is not.} Where rooms do different work, stayers split into two groups ($D$ 5.3--6.1; relabel 95th percentile $\approx1$). Hoppers stay inside their home domain. The one frequent hopper sits at $s=0.06$ against a stayers' 95th percentile of 0.21. Hopping read-outs have no effect ($\kappa_R$ $-0.014$ [$-0.042$, 0.024]). A hopper's talk follows the room it is speaking in. HH332's kill rule fires. The holdout is not run.}
+
+\hmodel{Model 11 (kinetic soft-spin, $n=32$) read along one axis like an Ising order parameter (model 01). Agent content $\mathbf{x}_i$ relaxes toward the content it reads, with weights $\pi_{ij}$ from the context ledger, and toward its domain field $\mathbf{h}_D$ (room work or instructions). The wall coordinate $s$ is 0 at the home-domain centroid and 1 at the other domain. $p_i$ is the share of read items from the other domain. Coupling predicts $s\approx\kappa p$; a room-local field predicts that $s$ jumps with the room of the statement.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\mathbf{x}_i\leftarrow(1-\lambda)\mathbf{x}_i+\lambda\big[w\textstyle\sum_j\pi_{ij}\mathbf{x}_j+(1-w)(\mathbf{h}_{D(i)}+\mathbf{a}_i)\big]+\boldsymbol{\eta}\\
+s_i=\frac{(\mathbf{x}_i-\mathbf{c}_\mathrm{home})\cdot\mathbf{u}}{(\mathbf{c}_\mathrm{other}-\mathbf{c}_\mathrm{home})\cdot\mathbf{u}},\qquad s_i\approx\kappa\,p_i\\
+D=\frac{\bar z_B-\bar z_A}{\sqrt{(\sigma_A^2+\sigma_B^2)/2}}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Bimodality $D$ per unit (bge solid, gte light); the black line is the relabel 95th percentile with the axis refitted. Instruction weeks, \#41 and the \#focus room separate most. (b) \#51g wall coordinate. Grey: \#general stayers. Blue: hoppers' home-room talk (filled) and their talk inside \#focus (open). Orange: the two \#focus residents' own-room and \#general talk. No agent's home-room talk sits in the wall.}
+
+\htelos{For an operator: to keep two groups' content apart, give them different work ($D\approx5$--6). Identical instructions in separate rooms split less ($D\approx1.5$--2.4). Letting a few agents visit the other room does not blend the domains. At the observed visit rate (about 0.3\% of read items), a visitor's home-room content does not move ($|\kappa|<0.04$ per e-fold of reads). Visitors adapt while present and bring nothing back. To move content across rooms, post into the other room or move an agent there. This is a usable design rule with modest evidence: one frequent hopper and short visits.}
+
+\hbottom{Rooms that do different work form two content domains separated by a sharp, empty wall; hoppers switch domains with the room they speak in and carry nothing home, so bridging agents do not widen the wall.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.35\columnwidth}p{0.47\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 synthetic: $D$ size, $\kappa_R$ power & $D$ size 0; $\kappa_R$ power $\ge0.93$, size 0.05--0.18 & mostly\\
+P1 $D\ge2$ in \#38, \#44, \#35, \#41 & 5.40, 5.31, 1.57 (gte 2.53), 6.10; identical median 1.70 & mostly\\
+P2 hoppers intermediate & Fable 5 0.06 vs stayers p95 0.21; none above & failed\\
+P3 $\kappa_R>0$, $>\kappa_U$, lagged & $-0.014$ [$-0.042$, 0.024]; lag $-0.004$ & failed\\
+P4 wall width grows with reads & Spearman 0.30 ($p$ 0.43); \#38/\#44 $I$ 0.07/0.17 & weak\\
+P5 axis = kickoff direction & $|\cos|$ 0.02 ($p$ 0.95), 0.27 ($p$ 0.14) & failed\\
+P6 \#36 hopper shift $\ge0.3$ & 0.25 (gte 0.20); back to $-0.13$ after & mixed\\
+HH332 kill rule & hoppers not intermediate & failed\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Synthetic worlds on the real \#51g skeleton (40 each). (a) Coupling gives a same-day and a lagged $\kappa_R$. Selection gives a same-day $\kappa_R$ only. An own-field world gives none. (b) Only the own-field world makes hoppers intermediate without a dose.}
+
+\hcaveats{One hopper has $\ge5$ hop-days, and hopping read-outs total about 50 items. The test rules out $\kappa\ge0.1$ per e-fold of reads, not H48's small per-read pull. The \#focus domain has two residents. \#best had three stayers in \#35--\#37, which makes $D$ and the interior occupancy noisy there. The day bootstrap for $\kappa_R$ is liberal (size up to 0.18). Statement-level geometry depends on the embedding model; hopper positions agree to 0.05--0.25 between bge and gte. The ``situational'' reading is post hoc.}
+
+\hnext{Measure on-entry and on-exit switching times per statement with ledger call times. Use NE42's merged week as the all-hopper limit.}

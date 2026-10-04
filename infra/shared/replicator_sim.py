@@ -93,3 +93,64 @@ def simulate(calls: pl.DataFrame, p: float, c: float, beta: float, eps: float, p
                            pl.when(pl.col("kind").is_in(["recruit", "birth"])).then(pl.lit("none")).otherwise(None).alias("cls"),
                            pl.when(pl.col("kind").is_in(["recruit", "birth"])).then(pl.lit(False)).otherwise(None).alias("named"))
     return commits, tev
+
+
+# ============================================================================================ verify
+H78_WORLDS = ["neutral", "conformist", "parabolic", "field", "neutral_eps_lo", "neutral_eps_hi",
+              "fitness05", "fitness10", "fitness15"]   # H78 synthetic.py WORLDS order (seed = 1000 * index + rep)
+
+
+def verify(g: int = 31, tags=("", "_E100"), worlds=("neutral", "conformist"), reps=(0, 1), E: int = 100) -> bool:
+    """Re-run H78's synthetic worlds with the stored calibrated parameters and seeds and compare the per-run statistics
+    (n_rec, p_pooled, p_whole, p_fe, p_clogit, q) with data/processed/H78-replicator-growth-order/synthetic/
+    runs_G<NN><tag>.parquet. Measurement: replicator_hosts.build_from_frames(tag=False, E=E), as H78. Read-only."""
+    import json
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import replicator_fit as F
+    import replicator_hosts as R
+    base = Path(__file__).resolve().parents[2] / "data/processed/H78-replicator-growth-order/synthetic"
+    days = R.period_days(g)
+    calls = R.load_calls(g, days)
+    umap = R.unit_of_day(g)
+    labs = dict(R.roster().select("agent", "lab").iter_rows())
+    res, ok = {}, True
+    for tag in tags:
+        rp, cp = base / f"runs_G{g:02d}{tag}.parquet", base / f"calib_G{g:02d}{tag}.json"
+        if not (rp.exists() and cp.exists()):
+            continue
+        runs = pl.read_parquet(rp)
+        cal = json.loads(cp.read_text())["params"]
+        for wn in worlds:
+            prm = cal[wn]
+            for rep in reps:
+                com, _ = simulate(calls, p=prm["p"], c=prm["c"], beta=prm["beta"], eps=prm["eps"], pi_c=prm["pi_c"],
+                                  sigma_A=prm["sigma_A"], seed=1000 * H78_WORLDS.index(wn) + rep)
+                ev, bt, _ = R.build_from_frames(com, calls, umap, labs, {}, g, days, tag=False, E=E)
+                po = F.period_order(bt)
+                fe = F.poisson_order(bt, fe=True)
+                cl = F.clogit_order(R.choice_sets(ev))
+                q = F.depart_order(bt)
+                mine = {"n_rec": po["n_events"], "p_pooled": po["pooled"]["est"] if po["pooled"] else None,
+                        "p_whole": po["whole"]["est"] if po["whole"] else None, "p_fe": fe["est"] if fe else None,
+                        "p_clogit": cl["est"] if cl else None, "q": q["est"] if q else None}
+                ref = runs.filter((pl.col("world") == wn) & (pl.col("rep") == rep))
+                if ref.height == 0:
+                    continue
+                ref = ref.row(0, named=True)
+                same = all((mine[k] is None and ref[k] is None) or (mine[k] is not None and ref[k] is not None
+                                                                     and abs(float(mine[k]) - float(ref[k])) <= 1e-9)
+                           for k in mine)
+                res[f"G{g:02d}{tag}/{wn}/rep{rep}"] = "identical" if same else {"mine": mine, "ref": {k: ref[k] for k in mine}}
+                ok &= same
+    res["ok"] = bool(ok) and len(res) > 0
+    print(json.dumps(res, indent=1, default=str), flush=True)
+    return res["ok"]
+
+
+if __name__ == "__main__":
+    import sys
+    if "--verify" in sys.argv:
+        sys.exit(0 if verify() else 1)
+    print(__doc__)

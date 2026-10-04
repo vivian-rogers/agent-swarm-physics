@@ -295,7 +295,7 @@ def hypothesis(hdir: Path) -> dict:
 
 
 def hypotheses() -> list[dict]:
-    hs = [hypothesis(d) for d in sorted(HYP.iterdir()) if d.is_dir() and re.match(r"^H\d{2}-", d.name)]
+    hs = [hypothesis(d) for d in sorted(HYP.iterdir()) if d.is_dir() and re.match(r"^H\d{2,}-", d.name)]
     return hs
 
 
@@ -588,7 +588,7 @@ def _build_estimates() -> dict:
         if len(us) == 1:  # a goal with one unit: the unit is the whole goal
             units.pop(us[0]["key"], None)
 
-    slugs = {d.name.split("-")[0]: d.name for d in HYP.iterdir() if d.is_dir() and re.match(r"^H\d{2}-", d.name)}
+    slugs = {d.name.split("-")[0]: d.name for d in HYP.iterdir() if d.is_dir() and re.match(r"^H\d{2,}-", d.name)}
     e = e.with_columns(pl.col("channel").fill_null(""), pl.col("method").fill_null(""))
     skeys = e.select("hypothesis", "statistic", "channel", "method").unique(maintain_order=True)
     sidx = {tuple(r): i for i, r in enumerate(skeys.iter_rows())}

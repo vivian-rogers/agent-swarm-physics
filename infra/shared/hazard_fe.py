@@ -10,7 +10,7 @@ hazard on call or gate rows. The environment has no statsmodels, so these are sm
   block_resample(day_codes, rng)       -> row index of a day-block bootstrap draw
   interleaved_folds(day_codes, k)      -> fold id per row (days sorted, assigned round-robin)
 
-Tests: `uv run python infra/shared/hazard_fe.py --test` recovers planted coefficients on simulated data.
+Tests: `uv run python infra/shared/hazard_fe.py --test` (or `--verify`) recovers planted coefficients on simulated data.
 """
 from __future__ import annotations
 
@@ -158,5 +158,5 @@ def _test():
 
 if __name__ == "__main__":
     import sys
-    if "--test" in sys.argv:
+    if "--test" in sys.argv or "--verify" in sys.argv:   # --verify: the build_all name for this self-check
         _test()

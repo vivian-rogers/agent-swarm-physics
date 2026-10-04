@@ -37,6 +37,16 @@ Steps (outputs in data/processed/shared/):
   null_sizes           DQ8 null size table (expensive, ~4 min)
   per_period_estimates DQ8 per-period estimates backfill
   reply_*              reply_pairs, reply_graph (DQ2: candidates, ledger candidates, validate, compile; no API calls)
+  round-2 consolidation (2026-10-04; each takes --verify against the hypothesis copies it replaced):
+  pending_sets         pending_sets/G<NN>/ (H18 ledger k: talks, pending, invisible, wakes, wake_pending; non-holdout)
+  event_catalog        event_catalog, event_catalog_days (H56's dated step-change catalog; all days, holdout0 flagged)
+  schema_diff          schema_diff/ signatures_daily, signature_dict, search_format, schema_diff_daily (H74; raw pass ~75 s)
+  style_features       style_messages, style_standardization.json, style_ne41_pairs (H46 / H73 style ruler, NE41 pairs)
+  idle_gates           idle_gates/idle_gates.parquet (H60 / H72 gates, trap clocks, in-flight placebo counts)
+  day_matrices         day_matrices/ content_<model>{,_style_resid_period,_restate}.npz, spins.npz, rooms, days (H91 / H92)
+  culture_vectors      culture_vectors/ agentdays, vecs_<model>_<variant>.npy, dirs_<model>, blocks (H81 / H82)
+  libraries (lib: no build step; `--verify` runs their self-checks / reproductions): hazard_fe, semantic_kappa,
+  kickoff_naming, idea_markers, idea_ledger, replicator_hosts, replicator_fit, replicator_sim, read_response
 Tests (--tests): infra/shared/tests/test_*.py
 
 Usage:
@@ -48,6 +58,9 @@ Usage:
   uv run python infra/shared/build_all.py --force-embeddings         re-embed even if the vectors exist
   uv run python infra/shared/build_all.py --dry-run                  print what would run
   uv run python infra/shared/build_all.py --tests                    run the tests after the steps (or alone with --only none)
+  uv run python infra/shared/build_all.py --verify --only pending_sets,read_response
+                                                                     run `<script> --verify` instead of building, for every
+                                                                     selected step whose script has one (libraries included)
   --threads N   thread cap exported to every step (POLARS_MAX_THREADS, OMP/BLAS; default 2)
 Each run appends one line per step to data/processed/shared/build_all.log.
 """
@@ -144,6 +157,50 @@ STEPS = [
     {"name": "reply_validate", "cmd": "py", "script": "reply_threading.py", "args": ["validate"], "outputs": []},
     {"name": "reply_compile", "cmd": "py", "script": "reply_threading.py", "args": ["compile"],
      "outputs": ["reply_pairs.parquet", "reply_graph.parquet"]},
+    # round-2 consolidation (2026-10-04): builders moved out of hypothesis folders; each takes --verify
+    {"name": "pending_sets", "cmd": "py", "script": "pending_sets.py",
+     "deps": ["scan_tables", "build_derived", "build_mentions_clean", "context_ledger", "reply_compile"],
+     "outputs": ["pending_sets/_provenance.json", "pending_sets/G51/talks.parquet", "pending_sets/G51/pending.parquet"]},
+    {"name": "event_catalog", "cmd": "py", "script": "event_catalog.py",
+     "deps": ["build_derived", "period_units", "kicks_classified"],
+     "outputs": ["event_catalog.parquet", "event_catalog_days.parquet"]},
+    {"name": "schema_diff", "cmd": "py", "script": "schema_diff.py", "deps": ["scan_tables", "build_derived", "context_ledger"],
+     "outputs": ["schema_diff/signatures_daily.parquet", "schema_diff/signature_dict.parquet",
+                 "schema_diff/search_format.parquet", "schema_diff/schema_diff_daily.parquet"]},
+    {"name": "style_features", "cmd": "py", "script": "style_features.py",
+     "deps": ["text_features", "build_agent_vectors", "statement_flags", "period_units", "context_ledger"],
+     "outputs": ["style_messages.parquet", "style_standardization.json", "style_ne41_pairs.parquet"]},
+    {"name": "idle_gates", "cmd": "py", "script": "idle_gates.py",
+     "deps": ["scan_tables", "build_derived", "build_embeddings", "statement_flags", "period_units", "context_ledger"],
+     "outputs": ["idle_gates/idle_gates.parquet"]},
+    {"name": "day_matrices", "cmd": "py", "script": "day_matrices.py",
+     "deps": ["build_derived", "period_units", "activity_bins_fixed", "build_agent_vectors", "build_embeddings_v2",
+              "style_resid", "statement_flags"],
+     "outputs": ["day_matrices/content_bge.npz", "day_matrices/content_gte.npz", "day_matrices/spins.npz",
+                 "day_matrices/days.parquet", "day_matrices/rooms.parquet"]},
+    {"name": "culture_vectors", "cmd": "py", "script": "culture_vectors.py",
+     "deps": ["build_agent_vectors", "build_embeddings_v2", "style_resid", "goal_fields", "kicks_classified",
+              "period_units"],
+     "outputs": ["culture_vectors/agentdays.parquet", "culture_vectors/blocks.parquet",
+                 "culture_vectors/dirs_bge_small.npz", "culture_vectors/dirs_gte_modernbert.npz"]},
+    # libraries: nothing to build; registered so that --verify runs their checks and --list shows their deps
+    {"name": "hazard_fe", "cmd": "py", "script": "hazard_fe.py", "lib": True, "deps": [], "outputs": []},
+    {"name": "semantic_kappa", "cmd": "py", "script": "semantic_kappa.py", "lib": True, "deps": [], "outputs": []},
+    {"name": "kickoff_naming", "cmd": "py", "script": "kickoff_naming.py", "lib": True, "deps": ["build_artifacts"],
+     "outputs": []},
+    {"name": "idea_markers", "cmd": "py", "script": "idea_markers.py", "lib": True,
+     "deps": ["scan_tables", "build_artifacts"], "outputs": []},
+    {"name": "idea_ledger", "cmd": "py", "script": "idea_ledger.py", "lib": True,
+     "deps": ["scan_tables", "build_mentions_clean", "context_ledger", "reply_compile"], "outputs": []},
+    {"name": "replicator_hosts", "cmd": "py", "script": "replicator_hosts.py", "lib": True,
+     "deps": ["work_ledger", "context_ledger", "build_artifacts", "goal_fields", "period_units", "kickoff_naming"],
+     "outputs": []},
+    {"name": "replicator_fit", "cmd": "py", "script": "replicator_fit.py", "lib": True, "deps": ["replicator_hosts"],
+     "outputs": []},
+    {"name": "replicator_sim", "cmd": "py", "script": "replicator_sim.py", "lib": True,
+     "deps": ["replicator_hosts", "replicator_fit"], "outputs": []},
+    {"name": "read_response", "cmd": "py", "script": "read_response.py", "lib": True,
+     "deps": ["build_agent_vectors", "build_embeddings_v2", "style_resid", "goal_fields"], "outputs": []},
     {"name": "null_sizes", "cmd": "py", "script": "nulls.py", "args": ["--calibrate", "--reps", "100", "--surr", "49", "--workers", "2"],
      "expensive": True, "outputs": ["null_sizes.parquet"]},
     {"name": "per_period_estimates", "cmd": "py", "script": "estimates.py", "args": ["--backfill"],
@@ -156,6 +213,14 @@ def command(step: dict) -> list[str]:
     path = str(HERE / step["script"])
     base = [sys.executable, path] if step["cmd"] == "py" else ST + [path]
     return base + list(step.get("args", []))
+
+
+def has_verify(step: dict) -> bool:
+    """The step's script takes --verify (steps with extra args share a script with a plain step: verified once there)."""
+    if step.get("args"):
+        return False
+    txt = (HERE / step["script"]).read_text()
+    return '"--verify" in sys.argv' in txt or 'add_argument("--verify"' in txt
 
 
 def outputs_exist(step: dict) -> bool:
@@ -198,6 +263,7 @@ def main():
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--tests", action="store_true")
+    ap.add_argument("--verify", action="store_true", help="run each selected step's `--verify` instead of building it")
     ap.add_argument("--threads", type=int, default=2)
     a = ap.parse_args()
 
@@ -216,8 +282,8 @@ def main():
     if a.list:
         for i, s in enumerate(STEPS, 1):
             cmd = " ".join(Path(c).name if c.endswith(".py") else c for c in command(s))
-            status = "present" if outputs_exist(s) else "missing"
-            print(f"{i:2d}. {s['name']:<21} {status:<8}  {cmd}")
+            status = "library" if s.get("lib") else ("present" if outputs_exist(s) else "missing")
+            print(f"{i:2d}. {s['name']:<21} {status:<8}  {cmd}{'   [--verify]' if has_verify(s) else ''}")
             if s.get("deps"):
                 print(f"      deps: {', '.join(s['deps'])}")
             for o in s["outputs"]:
@@ -229,6 +295,25 @@ def main():
     timings, t_all = [], time.time()
     for s in steps:
         name = s["name"]
+        if a.verify:
+            if not has_verify(s):
+                continue
+            cmd = command(s) + ["--verify"]
+            if a.dry_run:
+                print(f"[{name}] would verify: {' '.join(cmd)}")
+                continue
+            print(f"[{name}] verifying: {' '.join(cmd)}", flush=True)
+            t0 = time.time()
+            r = subprocess.run(cmd, env=env, cwd=ROOT)
+            el = time.time() - t0
+            status = "verified" if r.returncode == 0 else f"failed ({r.returncode})"
+            timings.append((name, status, el))
+            log({"run": run_id, "step": name, "status": status, "mode": "verify", "seconds": round(el, 1)})
+            print(f"[{name}] {status} in {el:.1f}s", flush=True)
+            continue
+        if s.get("lib"):
+            print(f"[{name}] library: nothing to build (run with --verify)", flush=True)
+            continue
         skip = (a.skip_existing and outputs_exist(s)) or (s.get("expensive") and outputs_exist(s) and not a.force_embeddings)
         if skip:
             print(f"[{name}] skipped (outputs present)", flush=True)

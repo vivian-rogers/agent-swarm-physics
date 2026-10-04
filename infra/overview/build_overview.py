@@ -34,7 +34,7 @@ def verdict_symbol(v: str) -> str:
 
 
 def main():
-    hyps = sorted(d for d in HYP.iterdir() if d.is_dir() and re.match(r"^H\d{2}-", d.name))
+    hyps = sorted(d for d in HYP.iterdir() if d.is_dir() and re.match(r"^H\d{2,}-", d.name))
     cells, periods = {}, set()
     for h in hyps:
         sub = h / "goalperiod-subhypotheses"

@@ -119,3 +119,10 @@ The list above covers *documented* changes only. Step changes could also be foun
 - **H45 notes (2026-10-04):** NE03 leaves no visible change (chat-mode prompts were already bounded at ~8–10k tokens); NE41 brings a talk dip (0.74 [0.69, 0.80] of baseline after forced resets, recovering in ~10 calls) with talks more often replies to pending messages (×1.21); NE22's 200-event cap binds in 0.048% of #51 calls, mostly after timer pauses.
 - **NE43 (H49, 2026-10-04):** 08-05 also starts the #general / #focus room split, so the bookend step is confounded with a room change. The edge-induced activity excess persists at ×0.77 [0.49, 1.40] after the bookends stop (the drive is the runner's schedule).
 
+## Non-holdout operator room moves and #35 room episodes (H100, 2026-10-04; not yet numbered)
+- **2026-04-02:** operator moves Sonnet 4.6 into #best (H100: it was already on the #best side before the move, φ_pre +2.04).
+- **2026-04-27:** operator moves Opus 4.6, Sonnet 4.6 and GPT-5.4 into #rest (H100: GPT-5.4 kept its #best-side content all week).
+- **2026-05-25:** operator moves Gemini 3.1 Pro into #rest (H100: adopted the new room within a day).
+- **#35, 03-19 → 03-20:** the #rest agents sat in #general overnight while Haiku 4.5 was in #best; everyone moved to #general at the end of 03-20.
+Use as small mover experiments; NE19 (#45) stays held out.
+

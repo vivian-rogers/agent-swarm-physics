@@ -1,0 +1,35 @@
+\hwhat{HH66 says the \#best/\#rest content difference has two parts: a response to the operator's room field (explicit symmetry breaking) and a spontaneous divergence that stays with the room when members swap. H100 decomposes the room separation in 8 non-holdout two-room periods (\#35--\#44) into composition, field and spontaneous shares. It also follows 5 operator moves. \textbf{The difference is endogenous.} After the members' own constants and the measured field directions are removed, the rooms still differ beyond random groupings in 5/7 regime-III periods ($f_\mathrm{spont}$ 0.58--0.91). Composition is small. The kickoff-text direction carries a chance share, although the two fielded weeks separate most. The divergence does not survive the next goal. One mover adopts its new room within a day, and one keeps its old position all week. The holdout (NE19) is not run.}
+
+\hmodel{Model 11 (soft-spin O($n$), $n=32$ whitened dimensions) with the room as a Potts domain index (model 10). The spin $\mathbf{x}_{i,d}$ is agent $i$'s style-residualized content on day $d$. $\mathbf{g}_d$ is the day field (goal, schedule), $\mathbf{a}_i$ the agent constant, $\mathbf{h}_r$ the operator room field (room kickoff, operator messages) with susceptibility $\chi$, and $\mathbf{m}_r$ the spontaneous room magnetization. $S$ is the split-half room separation and $Q$ its excess over random partitions. The mover index $\varphi$ is $+1$ for a native of the new room.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\mathbf{x}_{i,d}=\mathbf{g}_d+\mathbf{a}_i+\chi\,\mathbf{h}_{r(i,d)}+\mathbf{m}_{r(i,d)}+\boldsymbol{\epsilon}_{i,d}\\
+S=\boldsymbol{\Delta}^{(1)}\!\cdot\boldsymbol{\Delta}^{(2)},\quad Q=S/\langle S\rangle_\mathrm{relabel}\\
+f_\mathrm{comp}=\boldsymbol{\Delta}_{\hat a}\!\cdot\boldsymbol{\Delta}/S,\quad f_\mathrm{field}=\textstyle\sum_k(\boldsymbol{\Delta}^{(1)}\!\cdot\mathbf{u}_k)(\boldsymbol{\Delta}^{(2)}\!\cdot\mathbf{u}_k)/S\\
+\varphi_k=\big[\overline{\mathrm{sim}}(k,\mathrm{new})-\overline{\mathrm{sim}}(k,\mathrm{old})\big]/C_\mathrm{native}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Shares of the room separation per regime-III period (bge). Numbers give $Q_\mathrm{spont}$ for bge and gte (* $p<0.05$). Composition (blue) and the operator-field direction (orange) are small; the endogenous part (green) dominates. (b) Mover index before $\to$ after each operator move. Grey arrows: the post-move native contrast is not significant. Diamonds: composition prediction. Squares: gte.}
+
+\htelos{For an operator, rooms with identical instructions still diverge ($Q_\mathrm{spont}$ 1.8--4.2 in 3/5 such weeks). Different instructions about double the separation ($Q$ 5--7), but the content does not line up with the instruction text, so a text-similarity monitor of ``is each room on its brief'' will miss it. Room identity does not carry over a goal change: regroup freely, nothing persists. A moved agent may align with its new room on day 1 or keep its old project for a week. Check its work, not its room. This is a modest design fact. It says where room differences come from, not how to steer them.}
+
+\hbottom{The \#best/\#rest content split is mostly endogenous and regenerates at each goal; the operator's room instruction triggers a larger split but not along its own text, and composition explains little.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.35\columnwidth}p{0.47\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 synthetic: size, shares, mover power & $Q$ size 0.04; shares separate worlds; power 0.93 at $\rho=1$, 0.45 at 0.3 & mostly\\
+P1 $Q>1$ in $\ge6/8$ & bge 5/8, gte 6/8 & mixed\\
+P2 $f_\mathrm{comp}\le0.3$ & 0.03--0.18 where rooms separate; constants invariant ($r$ 0.49 vs 0.14) & supported\\
+P3 field share $\ge0.15$ in \#38, \#44 & 0.18 (null 0.16), 0.08 (null 0.03); gte 0.00, 0.04 & failed\\
+P4 spontaneous, identical kickoffs & $Q_\mathrm{spont}$ $p<0.05$ in 3/5; \#41 4.23 ($p$ 0.001) & supported\\
+P5 movers adopt new room & 3/5 bge, 2/5 gte; GPT-5.4 carries ($\varphi$ $-3.0$) & mixed\\
+P6 no remanence & $R(\#39,\#41)$ $z$ $-1.6$; all pairs $|z|<2$ & supported\\
+P7 swap-carry null & $R_\mathrm{room}$ $-0.23$, $R_\mathrm{agent}$ $-0.21$ (n.s.) & supported\\
+Post hoc: fielded weeks largest & $Q$ 6.85, 5.09 vs median 1.68 (rank $p$ 0.048) & lead\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Synthetic validation on the real agent-day skeleton (40 worlds per setting). (a) Recovered shares at $\rho=1$ in the composition, field, spontaneous, carried-mover and mixed worlds. (b) Pass rate of the mover rule against room-effect size; carried and composition worlds never pass.}
+
+\hcaveats{Five movers, all at goal starts; at 04-27 the native contrast is marginal ($p$ 0.04--0.10) and the mover test has power 0.45 at $\rho=0.3$. The field is measured as the whitened kickoff-text direction, so a failed P3 does not say the instruction had no effect. The endogenous share includes room drives the members create, such as shared repos and the \#35 forks; coupling through reading is not separated (convergence impostor open). Periods are 3--17 days. The ranking of fielded weeks and the per-mover narratives are post hoc.}
+
+\hnext{Confirm on NE19 (\#45). Measure the field as DQ4 work per room instead of kickoff text. Test movers' drift toward read vs not-yet-read new-room messages at matched age.}

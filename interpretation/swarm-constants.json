@@ -401,6 +401,56 @@
    "model": "01",
    "source": "H91, H92",
    "meaning": "Collective content modes drift slowly every day; the persistent structure is one uniform mode."
+  },
+  {
+   "symbol": "f_spont",
+   "name": "spontaneous share of the room content split",
+   "value": "f_spont 0.58–0.91 (5/7 regime-III periods significant); f_comp 0.03–0.18; Q_spont 1.8–4.2 with identical kickoffs, Q 5–7 with room-specific kickoffs",
+   "kind": "symmetry breaking",
+   "scope": "G35–G44 #best/#rest; both embeddings",
+   "model": "11",
+   "source": "H100",
+   "meaning": "Rooms diverge in content mostly on their own within a goal; the residual may still hold unmeasured room-specific work fields."
+  },
+  {
+   "symbol": "D_dom",
+   "name": "room content bimodality",
+   "value": "D 5.3–6.1 when rooms do different work (#38, #41, #44, #51g); median 1.7 with identical kickoffs",
+   "kind": "order parameter",
+   "scope": "stayers; relabel 95th pct ≈ 1",
+   "model": "11",
+   "source": "H102",
+   "meaning": "Two content domains form when the rooms do different work; there is no wall between them: content follows the room an agent speaks in."
+  },
+  {
+   "symbol": "κ_R",
+   "name": "cross-room read dose on home content",
+   "value": "|κ_R| < 0.04 per e-fold of hopping read-outs (−0.014 [−0.042, 0.024]); power ≥ 0.93 at 0.1",
+   "kind": "coupling",
+   "scope": "#51g hoppers; ~50 #focus items read",
+   "model": "11",
+   "source": "H102",
+   "meaning": "Reading the other room does not carry its content home."
+  },
+  {
+   "symbol": "τ²_agent",
+   "name": "agent content-constant variance",
+   "value": "τ² ≈ 0.0014 per coordinate (reliability across periods r 0.49 bge, 0.45 gte); day noise σ² ≈ 0.0035",
+   "kind": "agent property",
+   "scope": "style_resid bge",
+   "model": "11",
+   "source": "H100",
+   "meaning": "Agents carry a real but small personal content offset across periods."
+  },
+  {
+   "symbol": "t_adopt",
+   "name": "mover adoption time",
+   "value": "≤ 1 day (φ 0.88 on day 1; single mover, Gemini 3.1 Pro 05-25); one mover kept its old side (GPT-5.4 04-27)",
+   "kind": "relaxation",
+   "scope": "3 non-holdout operator moves",
+   "model": "11",
+   "source": "H100",
+   "meaning": "A moved agent usually takes on its new room's content within a day; not universal."
   }
  ]
 }

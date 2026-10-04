@@ -1,0 +1,75 @@
+{
+ "complete": 45,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; structural Amendment 0 and synthetic Amendment 1 before real data; real-skeleton synthetic (D size/power, kappa_R power, selection/field/mixture worlds); 5 replication units and 4 natives in two models, two variants and dedupe; estimates rows; confirm.py frozen with a passing dry run (not run). Missing: holdout run; statement-level switching dynamics; larger dose (NE42).",
+  "faithfulness": "HH332 fails by its own kill rule: hoppers are not intermediate and there is no dose-response (powered at kappa >= 0.1). The domain half holds (D 5-6 where rooms do different work, both models), but that half replicates H47. Scorecard A1 B1 C1 D1 E1 F1 G1 H1 I0.",
+  "usefulness": "A clear design rule for room-based swarms: separate work makes separate content domains, and occasional visitors neither blend them nor carry content home; transfer needs posting or moving agents. Few hoppers limit the evidence."
+ },
+ "one_line": "Rooms with different work are two content domains with a sharp, empty wall; hoppers switch sides with the room they speak in and carry nothing home, so bridging agents do not widen the wall.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "domains yes; hoppers not in the wall; no read dose"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "scalar wall coordinate bimodal; wall width zero"
+  }
+ ],
+ "rated_by": "H102 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Rooms doing different work form two content domains (bimodality D 5.3–6.1 vs 1.7 with identical kickoffs), but there is no wall: what an agent says follows the room it speaks in, and reading the other room does not move home content (|κ_R| < 0.04 per e-fold; power ≥ 0.93 at 0.1)",
+  "scope": "#36, #38, #41, #44, #51g; replication 5 periods",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.48,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic identification (power ≥ 0.93 at κ 0.1)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "powered null on the read dose",
+    "x": 1.4,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "replication of domains (G41, G42 supported)",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: one frequent hopper; ~50 items read inside #focus",
+    "x": 0.6,
+    "evidence": "card §Amendment 0"
+   },
+   {
+    "factor": "penalty: κ test liberal (size 0.05–0.18), fixed post hoc by α 0.01 + lag",
+    "x": 0.85,
+    "evidence": "card §Amendment 1"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "put agents in the room whose content you want; don't expect cross-room reading to carry content home",
+  "magnitude": "small",
+  "generality": "multi-room LLM swarms",
+  "expected_usefulness": 0.72,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H102 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

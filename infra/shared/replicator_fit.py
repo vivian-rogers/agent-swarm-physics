@@ -380,3 +380,64 @@ def period_order(bins: pl.DataFrame, R: str = "R_ff", n: str = "n", offset: str 
         d = d.filter(~pl.col("repo").is_in(list(exclude)))
     test = testable_order(d, R, n)
     return {"units": units, "pooled": pooled, "whole": whole, "testable": bool(test), "n_events": int(d[R].sum())}
+
+
+# ============================================================================================ verify
+def _r4(r):
+    """H78 run.pr: round floats to 4 decimals (units included)."""
+    if r is None:
+        return None
+    out = {k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items() if k != "units"}
+    if "units" in r:
+        out["units"] = {u: {kk: round(vv, 4) if isinstance(vv, float) else vv for kk, vv in x.items()} for u, x in r["units"].items()}
+    return out
+
+
+def _same(a, b, tol=1.5e-4) -> bool:
+    if isinstance(a, dict) and isinstance(b, dict):
+        return a.keys() == b.keys() and all(_same(a[k], b[k], tol) for k in a)
+    if isinstance(a, float) and isinstance(b, (int, float)) and not isinstance(b, bool):
+        return (math.isnan(a) and math.isnan(b)) or abs(a - b) <= tol
+    if isinstance(a, list) and isinstance(b, list):
+        return len(a) == len(b) and all(_same(x, y, tol) for x, y in zip(a, b))
+    return a == b
+
+
+def verify(periods=(31, 33, 40, 41)) -> bool:
+    """Recompute H78's stored estimates (results/G<NN>.json: primary, v1_all, v2_readonly, v3_fe, v4_clogit, v5_contrib,
+    v7_crosslab, v8_first_time, v9_touch) from H78's own period tables (data/processed/H78-replicator-growth-order/
+    G<NN>/), as H78's analysis/run.py does. Read-only; agreement to H78's 4-decimal rounding."""
+    import json
+    from pathlib import Path
+    base = Path(__file__).resolve().parents[2] / "data/processed/H78-replicator-growth-order"
+    res, ok = {}, True
+    for g in periods:
+        d = base / f"G{g:02d}"
+        ref_p = base / "results" / f"G{g:02d}.json"
+        if not (d.exists() and ref_p.exists()):
+            continue
+        ref = json.loads(ref_p.read_text())
+        bins, labs, choice, repos = (pl.read_parquet(d / f"{k}.parquet") for k in ("bins", "labs", "choice", "repos"))
+        named = set(repos.filter(pl.col("named"))["repo"].to_list())
+        b2 = bins.with_columns((pl.col("R_known") + pl.col("R_read") - 0).alias("R_ro"))
+        mine = {"primary": period_order(bins, R="R_ff", exclude=named), "v1_all": period_order(bins, R="R_all"),
+                "v2_readonly": period_order(b2, R="R_ro", exclude=named),
+                "v3_fe": poisson_order(bins.filter(~pl.col("repo").is_in(list(named))), R="R_ff", fe=True),
+                "v4_clogit": clogit_order(choice),
+                "v5_contrib": period_order(bins, R="new_contrib", n="n_cum", exclude=named),
+                "v9_touch": period_order(bins, R="R_ff2", exclude=named),
+                "v8_first_time": period_order(bins, R="new_contrib", exclude=named),
+                "v7_crosslab": lab_order(labs.filter(~pl.col("repo").is_in(list(named))))}
+        r = {k: ("agree_4dp" if _same(_r4(v), ref.get(k)) else "differ") for k, v in mine.items()}
+        ok &= all(v == "agree_4dp" for v in r.values())
+        res[f"G{g:02d}"] = r
+    res["ok"] = bool(ok)
+    print(json.dumps(res, indent=1), flush=True)
+    return ok
+
+
+if __name__ == "__main__":
+    import sys
+    if "--verify" in sys.argv:
+        sys.exit(0 if verify() else 1)
+    print(__doc__)

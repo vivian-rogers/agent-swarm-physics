@@ -269,7 +269,7 @@ def round_two(slug: str) -> str:
     if ess:
         e = re.sub(r"\*\*", "", ess.group(1)).strip()
         items.append(r"\textbf{Essence.} " + tex_escape(e if len(e) < 330 else e[:327] + "..."))
-    for m in re.finditer(r"^- \*\*(H\d{2}-R\d+)\.?\s*(.*?)\*\*\s*(.*)$", sec, re.M):
+    for m in re.finditer(r"^- \*\*(H\d{2,}-R\d+)\.?\s*(.*?)\*\*\s*(.*)$", sec, re.M):
         rid, head, rest = m.group(1), m.group(2).strip(), m.group(3).strip()
         if "superseded" in (head + rest).lower():
             continue
@@ -420,7 +420,7 @@ Two RevTeX pages per hypothesis follow; click a row to jump to it. Ratings are e
             page_i += 1
             ph = float(re.search(r'height="([\d.]+)"', line).group(1))
             pw = float(re.search(r'width="([\d.]+)"', line).group(1))
-        m = re.search(r'<word xMin="([\d.]+)" yMin="([\d.]+)" xMax="([\d.]+)" yMax="([\d.]+)">(H\d{2})</word>', line)
+        m = re.search(r'<word xMin="([\d.]+)" yMin="([\d.]+)" xMax="([\d.]+)" yMax="([\d.]+)">(H\d{2,})</word>', line)
         if m and m.group(5) in ids and m.group(5) not in seen:
             seen.add(m.group(5))
             x0, y0, x1, y1 = (float(m.group(k)) for k in range(1, 5))
