@@ -28,6 +28,15 @@ Status: **nothing has run on the holdout.** The re-frozen scripts (`analysis/con
 
 **Cross-cutting:** the ledger's estimator-family tags block several scripts on family alone (item 6's human pass is pending). Re-tag the ledger, or rule case by case.
 
+## Batch D (H06, H13, H16, H24, H27), re-frozen 2026-10-04
+| Hyp | Recommendation | Your decision |
+| --- | --- | --- |
+| H06 | Adopt. C2/C3 must hold in both models. New C5-r1b (work) and C6-r1b (copying) are secondary. | Keep or drop C5/C6-r1b (likely underpowered on a regime-I free week)? |
+| H13 | Adopt with changes. Every C is scored per model; overall only when both models agree. Fixes the original's crash (item 22). | May C5-r1b's talk statistic be a second activity-modality use on #45–#50, or score it on the #51 tail only? |
+| H16 | Adopt with changes. Real failures, leading-@, ledger recipients. New primary C32-5-r1b. **#45 kick-response family blocked** (H04). | Is the gate kick-odds statistic distinct from H04's kick response (`--reuse-ruling kick_response`)? Score the "no aging" predictions, which have no power check? |
+| H24 | Adopt with changes. Shared ĝ with multi-direction removal, both models. New C4-r1b (reading DiD). | C4-r1b primary or secondary? (#14 has N = 6 and may yield few reading events.) |
+| H27 | Adopt with changes. Ledger-timed links; new C6-r1b (work never leads attention). | Ruling on the overlap with H28's link statistic on #22/#28/#45; demote C5-r1b to secondary? |
+
 ## Standing decisions (from earlier)
 - **First confirmatory runs:** H40 on NE20 (cadence; frozen and dry-run) and H08 (read-out gating).
 - **Re-runs of executed holdout tests** on the fixed tables: H02 (#45), H04 (NE21+NE23 C2/C4/MF-C), H05 (NE12 C3). Each needs a pre-registration amendment.
