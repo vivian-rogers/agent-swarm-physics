@@ -1,13 +1,13 @@
 {
-  "complete": 60,
-  "faithfulness": 1.0,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 (kernels, linearity, FD, Hawkes, mean field) and the pre-registered NE21/NE23 holdout run are done; per-period kernels, a hidden-state (unread-context) model and the H08 follow-up remain.",
-    "faithfulness": "Kernels and Hawkes beat their nulls (C = 1), but no kick type is a validated linear propagator, the field/FDT mapping fails, the mean-field decay prediction fails, and the primary holdout prediction (C1) was falsified in the opposite direction.",
-    "usefulness": "Nudges act only on the named agent after a lag of minutes, mentions act at once, and kickoffs don't change activity level: a near design rule for targeting nudges, with modest non-holdout evidence."
-  },
-  "one_line": "Nudges act only on their target, after minutes of delay; the hours-reversal holdout was falsified in reverse",
-  "rated_by": "summary writer (suggested)",
-  "updated": "2026-10-04"
+ "complete": 60,
+ "faithfulness": 1.0,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 (kernels, linearity, FD, Hawkes, mean field) and the pre-registered NE21/NE23 holdout run are done; per-period kernels, a hidden-state (unread-context) model and the H08 follow-up remain.",
+  "faithfulness": "Kernels and Hawkes beat their nulls (C = 1), but no kick type is a validated linear propagator, the field/FDT mapping fails, the mean-field decay prediction fails, and the primary holdout prediction (C1) was falsified in the opposite direction.",
+  "usefulness": "Nudges act only on the named agent after a lag of minutes, mentions act at once, and kickoffs don't change activity level: a near design rule for targeting nudges, with modest non-holdout evidence."
+ },
+ "one_line": "Nudges act only on their target, after minutes of delay; the hours-reversal holdout was falsified in reverse",
+ "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
+ "updated": "2026-10-04"
 }

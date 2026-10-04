@@ -1,13 +1,13 @@
 {
-  "complete": 42,
-  "faithfulness": 1.5,
-  "usefulness": 2.5,
-  "rationale": {
-    "complete": "Round 1 done for both arms with synthetic validation, per-period verdicts, an NE34 event study, post hoc diagnostics and a frozen confirmatory script; holdout, embedding swap and a validated monitor are still missing.",
-    "faithfulness": "The 'few modes' half holds descriptively (one uniform mode beats MP, T_eff and cross-day nulls, C = 1, D = 1) but is half lulls, and the defining groupthink claim, PR collapse at kickoffs and consensus, failed in the wrong direction.",
-    "usefulness": "Yields a fit-free monitor (self-repetition and cross-agent echo rates, mode strength vs its own baseline) that flagged the looping weeks, but it is post hoc and the groupthink alarm has no positive case to validate against."
-  },
-  "one_line": "One market mode, no kickoff collapse; low-dimensional weeks are agents looping on their own text.",
-  "rated_by": "summary writer (suggested)",
-  "updated": "2026-10-04"
+ "complete": 42,
+ "faithfulness": 1.5,
+ "usefulness": 2.5,
+ "rationale": {
+  "complete": "Round 1 done for both arms with synthetic validation, per-period verdicts, an NE34 event study, post hoc diagnostics and a frozen confirmatory script; holdout, embedding swap and a validated monitor are still missing.",
+  "faithfulness": "The 'few modes' half holds descriptively (one uniform mode beats MP, T_eff and cross-day nulls, C = 1, D = 1) but is half lulls, and the defining groupthink claim, PR collapse at kickoffs and consensus, failed in the wrong direction.",
+  "usefulness": "Yields a fit-free monitor (self-repetition and cross-agent echo rates, mode strength vs its own baseline) that flagged the looping weeks, but it is post hoc and the groupthink alarm has no positive case to validate against."
+ },
+ "one_line": "One market mode, no kickoff collapse; low-dimensional weeks are agents looping on their own text.",
+ "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
+ "updated": "2026-10-04"
 }

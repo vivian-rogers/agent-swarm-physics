@@ -10,6 +10,7 @@ dependencies = [
   "pyarrow",
   "orjson",
   "matplotlib",
+  "pypdf>=6.19.0",
 ]
 
 [tool.uv]

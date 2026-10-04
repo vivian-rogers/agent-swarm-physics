@@ -1,0 +1,16 @@
+\hwhat{Do \#51's private, partly conflicting roles make the swarm a spin glass? Tested on sub-periods 51a--e (45 non-holdout days) against shared-objective weeks \#38, \#40, \#44, after synthetic validation (the balance index separates factions from random signs; SK and a heterogeneous ferromagnet cannot be told apart under common drive). Content couplings are real in 51b and 51c ($\rho_{\rm split}=0.46$, $p=0.003$) but 85--94\% positive ($\hat\kappa=4$--10); the balance index is indeterminate. Same-role rivals co-move \emph{more} than unrelated pairs ($T_{\rm SR}=+0.048$, $p=0.02$), the homophily rival. Positions persist ($M=0.5$--0.75) without collective switching ($W\approx1$). Contrast weeks are no less ferromagnetic; talk couplings sit at the noise floor. Holdout test (\#51 tail) written, \textbf{not run}.}
+
+\hmodel{Models 01 (SK) and 11 (O($n$) spins). Spin $\mathbf s_i$: agent $i$'s whitened chat embedding per 30-min window ($n=32$). Fields: day field $\mathbf m_d$; static field $\mathbf H_i$ (role, lab, style). $J_{ij}$: correlation of within-day fluctuations $\mathbf x_i,\mathbf x_j$ minus a cross-day surrogate; $A,B,C$: day folds. $\kappa$: SK ratio $J_0/J$; $\tau_3$: gauge-invariant balance (SK $\approx0$, factions $\approx0.5$); $q$: overlap of day-demeaned states $\hat{\boldsymbol\delta}$; $W$: its synchrony beyond per-agent shifts.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+P(\{\mathbf s\})\propto\exp\big(\textstyle\sum_{i<j}J_{ij}\,\mathbf s_i\!\cdot\!\mathbf s_j+\sum_i(\mathbf m_d+\mathbf H_i)\!\cdot\!\mathbf s_i\big)\\
+J_{ij}=\operatorname{corr}_w(\mathbf x_i,\mathbf x_j)-\operatorname{corr}^{\rm surr}_w(\mathbf x_i,\mathbf x_j)\\
+\kappa=\sqrt N\,\bar J/\sigma_J,\qquad \tau_3=\operatorname{tr}(J^AJ^BJ^C)/\operatorname{tr}(J^AJ^B)^{3/2}\\
+q(d,d')=\tfrac1N\textstyle\sum_i\hat{\boldsymbol\delta}_{i,d}\!\cdot\!\hat{\boldsymbol\delta}_{i,d'}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Every eligible pair's content coupling in the counted \#51 units (gray), with same-role rivals (blue) and Prankster vs Ethicist/Psychologist pairs (orange): mostly positive, rivals high. (b) Overlap synchrony $W$ at the independent-agent level (gray band), far below a synthetic glass (dashed). High memory $M$ without synchrony: agents hold their own positions; the swarm never jumps between collective states.}
+
+\htelos{Practically, little. ``Spin glass'' was the exciting reading of mixed-motive swarms: frustrated, history-dependent, hard to steer. The data say something duller and more usable. Assigned roles act as fixed fields that pin each agent's topic, the shared room adds a weak positive pull, and same-objective agents drift together. For an operator, roles, not inter-agent conflict, set what such a swarm talks about, and there are no hidden collective states to escape. Caveat: embeddings measure topic, not stance, so strategic opposition could be invisible here. The diagnostics port to other logs; the spin-glass vocabulary is not earned.}
+
+\hbottom{\#51 is not a spin glass: private roles make it a random-field system with weak, mostly positive coupling, where rivals align rather than repel and the swarm never switches collectively.}

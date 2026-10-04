@@ -8,6 +8,6 @@
   "usefulness": "One computable diagnostic with a design implication: the cost of a context reset (~45% of writes for ~10 turns, roughly a tenth of throughput at a 41-turn cadence) suggests a longer cap or task-state carry-over, and shows that the memory write doesn't recover the loss. It isn't validated (post-hoc, holdout pending) and is closer to scaffold engineering than swarm physics; the memory nulls are low-powered."
  },
  "one_line": "Losing memory costs nothing visible in a day; wiping the context window costs ~45% of output for 10 turns",
- "rated_by": "H15 agent (suggested)",
+ "rated_by": "calibrated by coordinator 2026-10-04 (from H15 agent (suggested))",
  "updated": "2026-10-03"
 }

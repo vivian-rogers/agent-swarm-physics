@@ -1,0 +1,13 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 is done: dated predictions, synthetic validation, 27 per-period verdicts, scorecard and a guarded confirmatory script (dry-run only). Still to do: the holdout run, the per-agent or partially pooled re-analysis, and the content-level test on Jev states, which is the hypothesis' real target.",
+  "faithfulness": "The MSM beats occupancy-only and sticky-only rivals on held-out days, but the core claims failed on action-class states. The chain is not Markov (CK 0/27, ITS rise x4-7); sets beyond the sojourn null pass in 3/8 primary periods; agent-mixture inflation is as large as that excess; t2* does not track stuckness; the regime contrast and NE07 went the wrong way. Scorecard A1 B0 C1 D0 E0 F1 G1 H1 I0.",
+  "usefulness": "t2* and the slow-set map are cheap diagnostics anyone could compute from swarm logs, but they flag tool modality and idling, not stuck agents. The transferable payoff is methodological: non-Markovianity at minute scale, mixture-inflated pooled MSMs, and a 4-14x low bias from noisy LLM-labelled states unless a shifted estimator is used."
+ },
+ "one_line": "Action-class behavior is non-Markov; slow sets are GUI/shell modes and idling; t2* doesn't flag stuck periods",
+ "rated_by": "calibrated by coordinator 2026-10-04 (from H17 agent (suggested))",
+ "updated": "2026-10-03"
+}

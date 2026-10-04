@@ -7,6 +7,18 @@ something, or make a decision worth remembering.
 
 ## 2026-10-03
 
+- **H14 (behavior entropy production), round 1:** mostly refuted as posed.
+  - No per-family arrow of time (HH19), no collective irreversibility (HH67), none of the predicted work cycles (HH56).
+  - Agents are irreversible on fine tool actions (80–100% of agents, all periods). The coarse-state arrow is small and 52–100% carried by the scaffold's consolidation step.
+  - Regime I is 7–29× more irreversible per transition. Weak per-agent trait (ρ 0.13–0.24); no lab effect.
+- **H17 (behavior Markov state model), round 1:** action-class behavior is non-Markov (CK test fails 27/27). Slow sets are GUI/shell tool modes and idling, barely beyond a sojourn null. The mixing time t2* doesn't track stuckness (regime III slower than I, reversed). Pooling heterogeneous agents manufactures slow modes.
+- **H22 (#51 spin glass), round 1:** **not a spin glass**.
+  - Couplings are 85–94% positive. Same-role rivals co-move *more* (homophily, not antiferromagnetism). No collective metastable states (synchrony W ≈ 1).
+  - Better described as a random-field system: private roles pin positions, plus a weak positive room pull.
+- **H23 (leader distillation), round 1:** the deployed leader was base Kimi K2.6 LoRA-tuned on 64 rows, 80% Kimi's own replies to synthetic scenarios, not distilled from village text. Word-level and addressing style is copied (×1.4, p = 0.011); phrases and plans are not transmitted; rivals stand.
+  - **Holdout reuse disclosure:** H23 will reuse #45 for confirmation on *message content*, a different modality from H02's activity timing, under the reuse policy in `hypotheses/holdout.md`.
+- **Summary pages and compendium are now RevTeX** (Vivian prefers RevTeX over Markdown for human-facing documents; recorded in CLAUDE.md). The compendium is a RevTeX contents page merged with the 24 one-page summaries via pypdf, with clickable rows and bookmarks. Ratings calibrated (H01 completion 25, H13 faithfulness 1.5, H16 usefulness 2.5).
+- **Period folders moved** into `hypotheses/H<NN>-*/goalperiod-subhypotheses/` (Vivian); `infra/overview/organize_period_folders.py` is the idempotent mover. Dashboard, overview and summaries read the new place.
 - **H24 (forecast-week coupling switch), round 1 done:** the literal hypothesis failed.
   - The document-coupling switch-on in #21 came **50 min** into the week, not mid-week: mentions of teammates went 7% → 74% at it.
   - Residual content alignment did **not** step up (+0.010, inside both placebos). Agents were aligned from the first hour (A_res 0.33 vs rotation null 0.03); alignment ramped over the week (ρ 0.73, confounded).

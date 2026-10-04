@@ -1,0 +1,18 @@
+\hwhat{Is agent behavior a Markov state model (MSM) with a few slow metastable sets, and is its slowest timescale $t_2^*$ a per-period order parameter, slowest in stuck periods? Round 1 (exploratory) fitted MSMs on 6 action classes per active minute in 27 non-holdout periods (17 regime I, 2 regime II, 8 regime III). Synthetic tests showed the estimators recover $t_2$ and planted sets at village sample sizes. On real data: CK fails in 27/27, and $t_2(\tau)$ rises $\times$4--7 from 1 to 15 min, so the chain is not Markov. $t_2^*$ (5--24 min) beats a sojourn-preserving null by only $\times$1.06--1.62, which passes in 3/8 regime-III periods. Pooling agents inflates $t_2^*$ by $\times$1.28. $t_2^*$ does not track errors or output, regime III is \emph{slower} than regime I (reversed), and a ``don't do nothing'' prompt (NE07) lengthened it. Verdicts: 13 mixed, 14 failed. Holdout (\#32, \#45) not run.}
+
+\hmodel{Kinetic Potts / non-equilibrium Markov chain (models 02, 10). State $x_t\in\{$browse, type, shell, chat, idle, consolidate$\}$ per agent-minute (H14 scheme); $C(\tau)$: lagged pair counts within agent-days; $T(\tau)$: non-reversible MLE; $t_k$: implied timescales from eigenvalues $\lambda_k$; $\chi$: PCCA+ memberships (Röblitz--Weber) of $m$ metastable sets; $q^\pm$: forward/backward committors, $\delta=0$ under detailed balance; $p_t$: soft (Jev) posteriors.}
+
+\hmath{\vspace{-5pt}\footnotesize\setlength{\jot}{1pt}
+\begin{gather*}
+T_{ij}(\tau)=C_{ij}(\tau)\big/\textstyle\sum_k C_{ik}(\tau),\quad t_k(\tau)=-\tau/\ln|\lambda_k(T(\tau))|\\
+t_2^*\equiv t_2(\tau_c=5\,\mathrm{min})\\
+\text{CK: }P_{A\to A}(k\tau)\overset{?}{=}\big[\pi_A^{\top}T(\tau)^k\big]_A\\
+T_{\rm cg}=(\chi^{\top}\Pi\chi)^{-1}\chi^{\top}\Pi T\chi,\quad \delta_i=q^+_i-(1-q^-_i)\\
+\lambda_k^{\tau}=\mathrm{eig}\big[C(1)^{-1}C(1{+}\tau)\big],\quad C(\tau)=\textstyle\sum_t p_t\,p_{t+\tau}^{\top}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Slowest implied timescale per goal period at $\tau_c=5$ min. Filled: pooled MSM (95\% agent-day CI). Bars: sojourn-null median (keeps each state's dwell times, shuffles their order). Open: median per-agent $t_2$. The pooled MSM beats the sojourn null in every period, but only modestly, and it sits above the typical agent (agent-mixture inflation). Regime III (red) is slower than regime I (blue). \#37's peak is agents idling before their first and after their last action of the day.}
+
+\htelos{Candidly: on action classes, this is a curiosity with one methodological payoff. The ``metastable sets'' are mostly tool modality (GUI vs.\ shell) and idling, which any log viewer could tell you. Part of the GUI-vs-shell split is GUI-heavy vs.\ shell-heavy agents. $t_2^*$ is a stable, cheap period statistic, but it does not detect stuck periods (no link to error share or output), so an operator gains no monitor. The useful part is negative and transferable: minute-scale agent behavior is strongly non-Markov, pooled MSMs over heterogeneous agents manufacture slow modes, and LLM-labelled states with $\kappa\approx0.5$ would bias timescales low by 4--14$\times$ unless a noise-cancelling estimator is used. Whether content-level (Jev) states show real ``stuck'' attractors is still open.}
+
+\hbottom{Behavior on action classes is a non-Markov mix of tool modes and idling. Its slowest timescale is a stable but uninformative period statistic (not an order parameter for stuckness), and the content-level test awaits the Jev states.}

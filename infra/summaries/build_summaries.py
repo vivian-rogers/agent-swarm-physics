@@ -173,9 +173,9 @@ def period_diagram(h: dict, out: Path):
             ax.plot([a - 0.4, a - 0.4], [y, y + 0.18], color="#52514e", lw=0.8); ax.plot([b + 0.4, b + 0.4], [y, y + 0.18], color="#52514e", lw=0.8)
             x = (a + b) / 2
         else:
-            x = 51
-        ax.text(x, y - 0.12, f"{p['period']} {sym}" + ("  (confirmatory)" if p["role"] == "confirmatory" else ""),
-                ha="center", va="top", fontsize=6, color="#0b0b0b", zorder=4)
+            x = None
+        ax.text(x if x is not None else 51.2, y - 0.12, f"{p['period']} {sym}" + ("  (confirmatory)" if p["role"] == "confirmatory" else ""),
+                ha="center" if x is not None else "right", va="top", fontsize=6, color="#0b0b0b", zorder=4)
     ax.set_xlim(0.4, 51.6)
     ax.set_ylim(-0.25 - 0.9 * len(nes) - (0.35 if nes else 0), ymax + 0.6)
     ax.set_yticks([])
@@ -266,76 +266,108 @@ def build_page(h: dict) -> dict:
 # ----------------------------------------------------------------------------------------- compendium
 
 def compendium(hs: list[dict], results: dict):
+    """RevTeX compendium: color-coded table of contents, then every one-page summary appended."""
+    def cell(v, fn, fmt):
+        if v is None:
+            return r"\textcolor{gray}{--}"
+        bg, fg = fn(v)
+        return rf"\colorbox[HTML]{{{bg[1:]}}}{{\makebox[2.6em]{{\textcolor[HTML]{{{fg[1:]}}}{{{fmt(v)}}}}}}}"
+
+    built = [h for h in hs if (HYP / h["slug"] / "summary/summary.pdf").exists()]
     rows = []
-    page = 3
-    for h in hs:
+    for i, h in enumerate(built):
         r = results.get(h["id"], {})
-        meta = r.get("meta", {})
+        meta = r.get("meta") or (json.loads((HYP / h["slug"] / "summary/meta.json").read_text())
+                                 if (HYP / h["slug"] / "summary/meta.json").exists() else {})
+        stub = r.get("stub", "AUTO STUB" in (HYP / h["slug"] / "summary/content.tex").read_text(errors="replace")[:200])
         c, f, u = ratings(meta)
-        cell = lambda v, fn, fmt: (rf"\cellcolor[HTML]{{{fn(v)[0][1:]}}}\textcolor[HTML]{{{fn(v)[1][1:]}}}{{{fmt(v)}}}" if v is not None else r"\textcolor{gray}{--}")
-        line = (meta.get("one_line") or h["status"])
-        line = line if len(line) < 120 else line[:117] + "…"
-        title = h["title"] if len(h["title"]) < 70 else h["title"][:67] + "…"
-        draft = r" \textcolor{gray}{\scriptsize(draft)}" if r.get("stub") else ""
-        rows.append(rf"\hyperlink{{{h['id']}.1}}{{\textbf{{{h['id']}}}}} & \hyperlink{{{h['id']}.1}}{{{tex_escape(title)}}}{draft}\newline{{\scriptsize\color{{gray}}{tex_escape(line)}}} & "
-                    + cell(c, seq_color, lambda v: f"{v:.0f}\\%") + " & " + cell(f, div_color, lambda v: f"{v:g}") + " & "
-                    + cell(u, div_color, lambda v: f"{v:g}") + rf" & {page} \\")
-        page += 1
-    date = dt.datetime.now().strftime("%Y-%m-%d %H:%M")
-    includes = "\n".join(rf"\includepdf[pages=1,link,linkname={h['id']}]{{../../hypotheses/{h['slug']}/summary/summary.pdf}}" for h in hs
-                         if (HYP / h["slug"] / "summary/summary.pdf").exists())
-    legend_seq = " ".join(rf"\colorbox[HTML]{{{seq_color(p)[0][1:]}}}{{\textcolor[HTML]{{{seq_color(p)[1][1:]}}}{{\scriptsize {p}\%}}}}" for p in (5, 25, 50, 75, 100))
+        line = meta.get("one_line") or h["status"]
+        line = line if len(line) < 120 else line[:117] + "..."
+        title = h["title"] if len(h["title"]) < 72 else h["title"][:69] + "..."
+        draft = r" \textcolor{gray}{\scriptsize(draft)}" if stub else ""
+        rows.append(rf"\textbf{{{h['id']}}} & {tex_escape(title)}{draft}\newline"
+                    rf"{{\scriptsize\color{{gray}}{tex_escape(line)}}} & {cell(c, seq_color, lambda v: f'{v:.0f}' + chr(92) + '%')} & "
+                    rf"{cell(f, div_color, lambda v: f'{v:g}')} & {cell(u, div_color, lambda v: f'{v:g}')} & @@PAGE{i}@@ \\")
+    head = r"\textbf{ID} & \textbf{Hypothesis} & \textbf{Complete} & \textbf{Faithful} & \textbf{Useful} & \textbf{p.}\\ \hline"
+    chunks = [rows[i:i + 12] for i in range(0, len(rows), 12)]
+    tables = "\n".join(r"\begin{center}\begin{tabular}{lp{0.6\textwidth}cccr}\hline " + head + "\n" + "\n".join(ch)
+                       + "\n\\hline\\end{tabular}\\end{center}" for ch in chunks)
+    legend_seq = " ".join(rf"\colorbox[HTML]{{{seq_color(x)[0][1:]}}}{{\textcolor[HTML]{{{seq_color(x)[1][1:]}}}{{\scriptsize {x}\%}}}}" for x in (5, 25, 50, 75, 100))
     legend_div = " ".join(rf"\colorbox[HTML]{{{div_color(v)[0][1:]}}}{{\textcolor[HTML]{{{div_color(v)[1][1:]}}}{{\scriptsize {v:g}}}}}" for v in (0, 1, 2, 2.5, 3, 4, 5))
-    tex = rf"""\documentclass[10pt]{{article}}
-\usepackage[letterpaper,margin=0.6in]{{geometry}}
-\usepackage[T1]{{fontenc}}\usepackage{{lmodern}}
-\usepackage{{pdfpages,booktabs,array,longtable}}
-\usepackage[table]{{xcolor}}
+    includes = "\n".join(rf"\includepdf[pages=1,link,linkname={h['id']}]{{../../hypotheses/{h['slug']}/summary/summary.pdf}}" for h in built)
+    date = dt.datetime.now().strftime("%Y-%m-%d %H:%M")
+    template = rf"""\documentclass[aps,pre,onecolumn,10pt,nofootinbib]{{revtex4-2}}
+\usepackage{{xcolor}}
 \usepackage[hidelinks]{{hyperref}}
-\pagestyle{{plain}}
-\renewcommand{{\arraystretch}}{{1.25}}
+\renewcommand{{\arraystretch}}{{1.2}}
 \begin{{document}}
-{{\sffamily\bfseries\LARGE Agent-swarm physics: hypothesis compendium}}\par\vspace{{4pt}}
-{{\small Living status document, regenerated {date} by \texttt{{infra/summaries/build\_summaries.py}}. Not the paper. One page per hypothesis follows; click a row to jump to it.}}\par\vspace{{6pt}}
-{{\footnotesize\textbf{{Completion}}: estimated progress of the research direction (idea 5\%, round 1 done 35--50\%, holdout run 55--65\%, robustness and causal designs 70--85\%, settled 90--100\%). {legend_seq}\par
+\title{{Agent-swarm physics: hypothesis compendium}}
+\author{{Vivian Rogers, with Claude Opus 5.5}}
+\date[]{{Living status document, regenerated {date}. Not the paper.}}
+\begin{{abstract}}
+One RevTeX page per hypothesis follows; click a row to jump to it. Ratings are estimates calibrated across hypotheses by the coordinator (rubric: \texttt{{writeup/hypothesis-pages/RUBRIC.md}}).
+\textbf{{Completion}}: estimated progress of the research direction (idea 5\%, round 1 done 35--50\%, holdout run 55--65\%, robustness and causal designs 70--85\%, settled 90--100\%). {legend_seq}
 \textbf{{Faithfulness}} (0--5, scoped): how well the model holds for what it claims (3 = descriptive or primary holdout passed; 4 = supported; 5 = faithful and mechanistic).
-\textbf{{Usefulness}} (0--5, unscoped): what an operator or alignment researcher can do with it, true or not (1 = vocabulary only; 2 = a diagnostic; 3 = a validated monitor or design rule; 4 = a steering lever; 5 = a transferable control knob). {legend_div}\par
-Ratings are estimates calibrated across hypotheses by the coordinator; rubric in \texttt{{writeup/hypothesis-pages/RUBRIC.md}}.}}
-\par\vspace{{6pt}}
-\begin{{longtable}}{{@{{}}p{{0.05\textwidth}}p{{0.6\textwidth}}>{{\centering\arraybackslash}}p{{0.075\textwidth}}>{{\centering\arraybackslash}}p{{0.075\textwidth}}>{{\centering\arraybackslash}}p{{0.075\textwidth}}>{{\raggedleft\arraybackslash}}p{{0.04\textwidth}}@{{}}}}
-\toprule
-\textbf{{ID}} & \textbf{{Hypothesis}} & \textbf{{Complete}} & \textbf{{Faithful}} & \textbf{{Useful}} & \textbf{{p.}}\\\midrule\endhead
-{chr(10).join(rows)}
-\bottomrule
-\end{{longtable}}
-\clearpage
-{includes}
+\textbf{{Usefulness}} (0--5, unscoped): what an operator or alignment researcher can do with it, true or not (1 = vocabulary only; 2 = a diagnostic; 3 = a validated monitor or design rule; 4 = a steering lever; 5 = a transferable control knob). {legend_div}
+\end{{abstract}}
+\maketitle
+{{\footnotesize
+@@TABLES@@
+}}
 \end{{document}}
 """
-    (PAGES / "compendium.tex").write_text(tex)
-    for _ in range(2):
-        r = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "compendium.tex"], cwd=PAGES,
-                           capture_output=True, text=True, timeout=300)
-    log = (PAGES / "compendium.log").read_text(errors="replace")
-    if r.returncode != 0:
-        print("compendium FAILED:", (re.findall(r"^! .*", log, re.M) or ["?"])[0])
+
+    def compile_with(toc_pages: int) -> int:
+        tex = template.replace("@@TABLES@@", tables)
+        for i in range(len(built)):
+            tex = tex.replace(f"@@PAGE{i}@@", str(toc_pages + 1 + i))
+        (PAGES / "compendium.tex").write_text(tex)
+        for _ in range(2):
+            r = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "compendium.tex"], cwd=PAGES,
+                               capture_output=True, text=True, timeout=300)
+        log = (PAGES / "compendium.log").read_text(errors="replace")
+        if r.returncode != 0:
+            print("compendium FAILED:", (re.findall(r"^! .*", log, re.M) or ["?"])[0])
+            return -1
+        m = re.search(r"Output written on compendium\.pdf \((\d+) page", log)
+        return int(m.group(1)) if m else 0
+
+    toc = compile_with(1)
+    if toc < 0:
         return
-    # the TOC may run to more than one page; fix the page numbers if it did
-    toc_pages = None
-    m = re.search(r"Output written on compendium\.pdf \((\d+) page", log)
-    total = int(m.group(1)) if m else 0
-    n_inc = includes.count("includepdf")
-    toc_pages = total - n_inc
-    if toc_pages != 2:
-        tex2 = tex
-        for i, h in enumerate(hs):
-            tex2 = tex2.replace(rf" & {3 + i} \\", rf" & {toc_pages + 1 + i} \\", 1)
-        (PAGES / "compendium.tex").write_text(tex2)
-        subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "compendium.tex"], cwd=PAGES, capture_output=True, timeout=300)
-    shutil.copy(PAGES / "compendium.pdf", ROOT / "writeup/hypotheses-compendium.pdf")
-    for ext in (".aux", ".log", ".out"):
+    if toc != 1:
+        compile_with(toc)
+    # merge: RevTeX contents pages + every summary page; then link each contents row to its page
+    from pypdf import PdfReader, PdfWriter
+    from pypdf.annotations import Link
+    w = PdfWriter()
+    for pg in PdfReader(PAGES / "compendium.pdf").pages:
+        w.add_page(pg)
+    for h in built:
+        w.add_page(PdfReader(HYP / h["slug"] / "summary/summary.pdf").pages[0])
+    ids = {h["id"]: toc + i for i, h in enumerate(built)}  # 0-based target page index
+    bbox = subprocess.run(["pdftotext", "-bbox", "-f", "1", "-l", str(toc), str(PAGES / "compendium.pdf"), "-"],
+                          capture_output=True, text=True).stdout
+    page_i, seen = -1, set()
+    for line in bbox.splitlines():
+        if "<page " in line:
+            page_i += 1
+            ph = float(re.search(r'height="([\d.]+)"', line).group(1))
+            pw = float(re.search(r'width="([\d.]+)"', line).group(1))
+        m = re.search(r'<word xMin="([\d.]+)" yMin="([\d.]+)" xMax="([\d.]+)" yMax="([\d.]+)">(H\d{2})</word>', line)
+        if m and m.group(5) in ids and m.group(5) not in seen:
+            seen.add(m.group(5))
+            x0, y0, x1, y1 = (float(m.group(k)) for k in range(1, 5))
+            rect = (x0 - 2, ph - y1 - 12, pw - x0, ph - y0 + 2)  # whole row, two text lines tall
+            w.add_annotation(page_number=page_i, annotation=Link(rect=rect, target_page_index=ids[m.group(5)]))
+    for i, h in enumerate(built):
+        w.add_outline_item(f"{h['id']}: {h['title'][:60]}", toc + i)
+    with open(ROOT / "writeup/hypotheses-compendium.pdf", "wb") as f:
+        w.write(f)
+    total = toc + len(built)
+    for ext in (".aux", ".log", ".out", "Notes.bib", ".bbl", ".blg"):
         (PAGES / f"compendium{ext}").unlink(missing_ok=True)
-    print(f"compendium: {total} pages → writeup/hypotheses-compendium.pdf")
+    print(f"compendium: {total} pages ({toc} contents, {len(seen)} linked rows) → writeup/hypotheses-compendium.pdf")
 
 
 def main():

@@ -1,13 +1,16 @@
 {
-  "complete": 30,
-  "faithfulness": 2.0,
-  "usefulness": 2.0,
-  "rationale": {
-    "complete": "Round 1 is done for the starting set (D3.1.a, D3.2) with per-period verdicts and a scorecard, but the NE15 holdout test has not run and eight of the ten directions are untouched.",
-    "faithfulness": "Rooms robustly beat random partitions and the exposure slope beats the rotation null (C = 1), but both locked size thresholds were narrowly missed, field-dominance and weak-coupling predictions failed, and room fields are not separated from coupling.",
-    "usefulness": "Room-vs-random entropy and within- vs cross-room co-fluctuation are diagnostics anyone can compute on their own logs, but the payoff over simply knowing that rooms and instructions shape content is unclear."
-  },
-  "one_line": "Rooms are more like-minded than random groups but missed both locked sizes; order looks like room fields",
-  "rated_by": "summary writer (suggested)",
-  "updated": "2026-10-04"
+ "complete": 25,
+ "faithfulness": 2.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Only the D3 starting set of a ten-direction programme has run.",
+  "faithfulness": "Rooms robustly beat random partitions and the exposure slope beats the rotation null (C = 1), but both locked size thresholds were narrowly missed, field-dominance and weak-coupling predictions failed, and room fields are not separated from coupling.",
+  "usefulness": "Room-vs-random entropy and within- vs cross-room co-fluctuation are diagnostics anyone can compute on their own logs, but the payoff over simply knowing that rooms and instructions shape content is unclear."
+ },
+ "one_line": "Rooms are more like-minded than random groups but missed both locked sizes; order looks like room fields",
+ "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
+ "updated": "2026-10-04",
+ "suggested": {
+  "complete": 30
+ }
 }

@@ -347,6 +347,7 @@ Setup:
 - Implication for H01 and others: do not read individual J_ij from activity spins. Use mean-field or block statistics, or a talk/mention mapping.
 
 ## Notes
+- 2026-10-04: **#45 will be reused by H23** for confirmation on message content, a different modality from H02's activity timing, under the holdout reuse policy (`../holdout.md`).
 - 2026-10-03: card and predictions written before any real-data analysis. #45 calendar windows (5 days, ~241 bins) and roster (N = 18) were read as sampling design only.
 - 2026-10-03: H02-MF added at the user's request. Its predictions were written before any MF statistic was computed (informed by round-1 results, as stated).
 - **2026-10-03, #45 confirm script frozen** (`analysis/confirm_45.py`; not run).

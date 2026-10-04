@@ -1,0 +1,16 @@
+\hwhat{From the agents' terminals: the deployed leader (agent 28 in \#44, agent 30 in \#45) is base Kimi K2.6 LoRA-tuned on 64 rows, 80\% of them Kimi's own replies to 20 synthetic village scenarios under a leadership prompt; no village chat was a target. On its 16 live \#44 messages (G44, exploratory, not blind) vs 45 same-window messages: corpus-distinctive vocabulary 14.2 vs 10.0 per 100 tokens ($p=0.011$), mostly agent addressing and markup; phrase copy n.s.; lexical copy information 0.012 bits per word. Plans: directive share 0.62 (hand-coded 0.25) vs the corpus's 1.00; excess plan copy $-0.04$ vs a perfect-copy 0.23, transformation information at the null: \emph{not transmitted}, not transformed. Not closer to the corpus than to its base in embeddings; base-echo and latest-chat rivals stand. \#45 test written, \textbf{not run}.}
+
+\hmodel{Model 08 (Kolchinsky \& Corominas-Murtra), distillation variant: a channel from the corpus $X$ to the leader's live output $Y$ on a shared alphabet (word n-grams, or 10 keyword-coded plan acts). Live message $m$ is paired with the corpus rows whose scenario is nearest its context, $p_C(x\mid m)$. $d$: binary KL; $r_x$: probability of reproducing $x$; $a,b$: rates at which the leader and untrained same-room speakers emit corpus n-grams; $c$: copy fraction.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+I(X;Y)=I_{\text{copy}}+I_{\text{transform}}\\
+I_{\text{copy}}=\textstyle\sum_x p(x)\,d\big(r_x\,\|\,p_Y(x)\big)\,\mathbf{1}[r_x>p_Y(x)]\\
+p(x,y)=\tfrac1n\textstyle\sum_m p_C(x\mid m)\,\delta_{y,y_m},\quad c=\textstyle\sum_x p(x,x)\\
+I^{\text{lex}}_{\text{copy}}=d(a\,\|\,b)\ \text{bits per n-gram}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Corpus-distinctive n-grams per 100 tokens (95\% CI): the offline student (sibling checkpoints on training-format prompts) sits far above the room; the live leader keeps about a fifth of that excess, near base Kimi in the same window ($n=6$). (b) Directive share of plan acts: corpus and offline student 100\%; the live leader (hatched: post hoc hand coding) sits near the room.}
+
+\htelos{For anyone distilling a swarm into a leader model, the lesson is mundane: SFT on a few dozen synthetic crisis scenarios carried the surface style (naming agents, markup, terse format) into deployment but not the decision policy, because live situations (routine project work) looked nothing like the training scenarios. That coverage failure is standard ML, not a swarm insight. The decomposition adds one useful distinction (not transmitted vs transformed) and a calibration (the perfect-copy reference), but 16 messages and a coder at $\kappa\approx0.45$ measure little. The real surprise is the pipeline: the ``village distillation'' was the base model distilling itself.}
+
+\hbottom{The fine-tuned leader carried a trace of its corpus's addressing style into the room but none of its plans, which were not transmitted rather than transformed, and its corpus was mostly its own base model talking to itself.}

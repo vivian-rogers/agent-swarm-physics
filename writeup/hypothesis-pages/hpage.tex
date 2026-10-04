@@ -32,22 +32,23 @@
 \newcommand{\makehpage}{%
   \title{\hID: \hTitle}
   \author{Vivian Rogers, with Claude Opus 5.5 \textperiodcentered{} agent-swarm physics \textperiodcentered{} \hDate}
-  \date{}
+  \date[]{}
   \begin{abstract}
   \hBadges\par\vspace{3pt}
   \textbf{Bottom line.} \hBottom\par\vspace{2pt}
-  {\footnotesize\color{inkmuted}Status: \hStatus\enspace(\hStage)}\par\vspace{4pt}
-  \includegraphics[width=\linewidth]{periods.pdf}\par\vspace{1pt}
+  {\footnotesize\color{inkmuted}\hStage}\par\vspace{3pt}
+  \centerline{\includegraphics[width=0.94\linewidth]{periods.pdf}}\par\vspace{1pt}
   {\scriptsize\textbf{Goal periods tested} (\hPeriodSummary). \hlegend\par}
   \end{abstract}
   \maketitle
+  \small
   \section*{What happened}
   \hWhat
   \section*{Physical model}
   \hModel
   \ifx\hMath\empty\else\par\vspace{2pt}\hMath\fi
   \ifx\hObsFile\empty\else
-  \par\medskip\noindent\includegraphics[width=\columnwidth,height=1.85in,keepaspectratio]{\hObsFile}\par\smallskip
+  \par\medskip\noindent\includegraphics[width=\columnwidth,height=1.7in,keepaspectratio]{\hObsFile}\par\smallskip
   {\footnotesize\noindent\textbf{Observables.} \hObsNote\par}
   \fi
   \section*{So what? Practical value for understanding agent swarms}

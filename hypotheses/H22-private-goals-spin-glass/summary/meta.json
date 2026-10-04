@@ -1,0 +1,13 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 is done: synthetic validation, per-period verdicts for five #51 sub-periods and three contrast weeks, scorecard, confirmatory script with dry run. The holdout tail is not run, and the faithful test of conflict (stance spins) and lagged couplings to identify J0 are still to do.",
+  "faithfulness": "The core spin-glass predictions failed or were indeterminate: no random-sign frustration shown, rivals couple positively (meta p = 0.02, the rival direction), and no collective metastable states (W at about 1). Couplings beat only the noise null (C = 1). SK vs heterogeneous ferro is not identifiable under common drive.",
+  "usefulness": "The balance index tau3(dc), the overlap synchrony W and the role-pair contrast can be computed on any swarm's logs. The finding that assigned roles pin topics and same-objective agents align is a weak design hint for mixed-motive swarms, not a validated lever."
+ },
+ "one_line": "#51 is no spin glass: roles pin positions, couplings are mostly positive, rivals co-move, no collective states",
+ "rated_by": "calibrated by coordinator 2026-10-04 (from H22 agent (suggested))",
+ "updated": "2026-10-04"
+}

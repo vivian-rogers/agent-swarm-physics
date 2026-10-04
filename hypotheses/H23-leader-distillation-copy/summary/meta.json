@@ -1,0 +1,13 @@
+{
+ "complete": 40,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 is done on the only non-holdout period (G44): pipeline reconstructed, predictions dated, synthetic validation, verdicts and scorecard. The #45 confirmatory script is written and dry-run but not run, and the plan coder still needs work.",
+  "faithfulness": "Mixed: the vocabulary-copy prediction beats the same-room and base-field nulls (C = 1) and plans were clearly not copied, but the headline 'transforms plans' failed (not transmitted), the leader is not closer to the corpus than to its base in embeddings, and neither rival is rejected; 16 messages, a moderate coder.",
+  "usefulness": "A diagnostic anyone distilling agents could compute (corpus-marker rate vs untrained speakers, plan copy vs a perfect-copy reference), and a cautionary pipeline finding, but the practical lesson (scenario coverage limits what SFT transmits) is standard ML knowledge."
+ },
+ "one_line": "Distilled leader kept a trace of its corpus style but none of its plans; its corpus was Kimi talking to itself",
+ "rated_by": "calibrated by coordinator 2026-10-04 (from H23 agent (suggested))",
+ "updated": "2026-10-03"
+}

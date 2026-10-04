@@ -1,0 +1,13 @@
+{
+ "complete": 45,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 is done: synthetic validation, 9 per-period verdicts, scorecard, and a confirmatory script written and dry-run. The holdout, the Jev-state rerun, the remaining regime-I periods and an NE14 event study are open.",
+  "faithfulness": "The hypothesis as posed failed. There is no per-family arrow (HH19), no collective term (HH67), the predicted work cycles did not appear, and the coarse arrow is carried by the scaffold (rival R1). Single-agent arrows do beat a calibrated detailed-balance null (strongly on fine classes, in long windows, and in regime I), so the result beats some nulls (C = 1) but supports the rivals.",
+  "usefulness": "A computable diagnostic (per-agent irreversibility vs. a detailed-balance surrogate) with a weakly stable agent fingerprint and a methods warning about shuffle nulls. But most of what it measures is the harness (tool micro-order, consolidation cadence), so there is no steering handle."
+ },
+ "one_line": "Irreversibility lives in fine tool actions and scaffold steps; no per-family (HH19) or collective (HH67) arrow",
+ "rated_by": "calibrated by coordinator 2026-10-04 (from H14 agent (suggested))",
+ "updated": "2026-10-03"
+}
