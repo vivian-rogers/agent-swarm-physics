@@ -163,6 +163,7 @@ Common move: where occupancy of coarse states is roughly stationary, invert it, 
   *Models:* 01, 11, 09 · *Periods:* all switches (NE34); NE12
 - **HH66 · #best/#rest: explicit vs. spontaneous symmetry breaking.** The room designation is an operator field. Differences between rooms split into a response to that field and spontaneous divergence, which persists after members swap. *Check:* behavior of agents moved between rooms (NE19 Opus 4.7) vs. room averages; divergence that survives membership changes.
   *Models:* 10, 11, 08 · *Periods:* #35–#51; NE19
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H100.
 - **HH67 · Irreversibility is collective.** Single agents' action sequences are nearly reversible, but the swarm's joint dynamics is irreversible: entropy production in the joint process exceeds the sum over agents. That would be a superagent signature (H01). *Check:* per-agent vs. joint entropy-production bounds (Aguilera hierarchy Σ₁ ≤ Σ₂ ≤ …).
   *Models:* 02, 09 · *Periods:* #51; regime III
 
@@ -209,6 +210,7 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
   *Models:* 01 (mean-field) · *Periods:* all non-holdout; null weeks #10, #17, #20, #39, #41, #42; regime III
 - **HH81 · Mean-field Glauber predicts response kernels (variant of HH31, HH46; H04).** Mean-field dynamics, dm/dt = [−m + tanh(β(J₀m + h))]/τ₀, give a relaxation time τ = τ₀ / (1 − βJ₀(1−m²)). The βJ₀ estimated from fluctuations (HH80) should *predict* how fast responses to kicks decay: a consistency test without learning J. *Check:* predicted vs. measured response decay time per regime.
   *Models:* 02 (mean-field), 09 · *Periods:* non-holdout kicks; NE21 and NE23 for confirmation
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H99.
 - **HH82 · Two-block mean field for rooms (variant of HH33; H05).** Rooms are sublattices with coupling J_in within and J_out across (plus fields), fitted from within- and cross-room covariances only. Prediction: J_out → 0 after rooms arrive; J_in unchanged. *Check:* (J_in, J_out) before vs. after room events.
   *Models:* 01 and 02 (mean-field), 10 · *Periods:* regime III rooms; #40; #51 (#focus); NE12 for confirmation
 - **HH83 · Leader–follower mean field (variant of HH23; H02).** One leader spin coupled to a mean-field population of followers, with 2–3 parameters (J_lf, J_ff, h). It detects leader weeks from the asymmetric response, with no N×N inference. *Check:* fitted J_lf in #26 and #45 vs. ordinary weeks.
@@ -301,6 +303,7 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
   *Models:* 03, 09 · *Periods:* #20, #42, #51
 - **HH123 · Goal switches show hysteresis: a measurable coercive field.** After a goal change, alignment with the *old* goal decays with a lag that grows with how ordered the old state was (H20 saw settling within ~4 days). That gives a coercive field and an inertia time. Practical: whether to "clear" a swarm before reassigning it. *Check:* old-goal alignment decay vs prior order across non-holdout transitions.
   *Models:* 01 (hysteresis), 11 · *Periods:* goal transitions (NE34)
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H96.
 - **HH124 · The nudger is a measurably inefficient Maxwell demon.** Bits of agent-state information used per extra active minute gained (H04/H16 effects), against an optimal-timing benchmark (nudge at the pause gate, once). This is the information-to-work efficiency of operator feedback, and gives a target for a better nudging policy. *Check:* mutual information between nudge timing and agent state vs the activity gained; policy counterfactuals on logged gates.
   *Models:* 04 (Kolchinsky), 02 · *Periods:* regime III; NE10, NE23 (holdout)
 - **HH125 · Conflict lives in stance, not topic: stance spins are antiferromagnetic.** H22 found topic co-movement even among rivals. Agree/undermine labels on reply pairs (Jev) should show negative couplings and frustration where conflict actually is. This links to detecting saboteurs (D8.3). *Check:* signed reply graph from stance labels; frustration index vs topic graph; #51 rival pairs, the #34 saboteurs (holdout).
@@ -315,9 +318,10 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
   *Models:* 11, 10 · *Periods:* #12, #34 (holdout), #38–#44 rooms
 - **HH129 · #51 is a random-field system.** Private roles pin each agent's topic (a random field), and the shared room adds a weak positive mean-field pull. Rivals co-move because they share a niche (H22). A random-field Ising/O(n) model predicts the overlap distribution and the absence of collective switching. *Check:* fit random-field mean-field to #51's content (field from role text, coupling from co-movement); predict the day-to-day overlap and synchrony H22 measured.
   *Models:* 01 (random-field Ising), 11 · *Periods:* #51 non-holdout segments
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H98.
 - **HH130 · Goals act on a two-state order parameter (on-goal vs off-goal), not a continuous alignment.** H10 found goals are quenches: variance along ĝ grows while transverse variance is flat, and agents switch on-goal together. For the occupancy p(t) of on-goal statements, a Legendre tilt *does* predict variance growth while p < ½. That gives the free-energy idea a fair second test in the right variables. *Check:* classify statements on-goal or off-goal; fit a two-state (Ising-like) mean field to p(t) through kickoffs; predict the variance trajectory from free-week fluctuations of p.
   *Models:* 01, 10 · *Periods:* free → assigned pairs (#11→#12, #16→#17, #37→#38); kickoffs (NE34)
-
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H105.
 ## Essence conjectures from the round-1 reflection (2026-10-04)
 - **HH131 · The harness is the Hamiltonian.** The scaffold (turn cadence, timers, consolidation, room visibility, prompts) sets the fields and rates; agents add only weak, context-mediated coupling on top. Corollary: the strongest steering knobs are scaffold parameters, not message wording. *Check:* see the redirected sub-hypotheses that cite E1 in `writeup/round1-reflection/round1-reflection.pdf`.
   *Models:* cross-cutting · *Periods:* all
@@ -542,6 +546,7 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
   *Models:* 10, 11 · *Builds on:* H54, DQ4 · *Lever:* G (outcome as ground truth), H (carry-over rival)
 - **HH246 · A restoring-force law for the quench.** If the kickoff is a field, each agent's day-1 displacement should be proportional to its pre-kickoff distance from the target, with one susceptibility per agent: Δv_i ≈ χ_i (k̂ − v_i,prev). That is an unfitted shape prediction (linear, through the origin) the current analysis doesn't test. *Check:* per-agent day-1 displacement along k̂ vs pre-period distance; linearity, intercept 0, χ stability across kickoffs.
   *Models:* 11, 02 · *Builds on:* H54, H10 · *Lever:* D (unfitted prediction)
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H97.
 - **HH247 · Prompt-held targets persist, chat-held targets decay.** #51's private goals don't decay (H54) while shared kickoffs relax within a day. Prediction: remanence time scales with how often the target text re-enters the agent's context, through the system prompt or memory (persistent) vs chat history (scrolls away). *Check:* context-ledger re-reads of kickoff and goal text per agent vs the fitted remanence τ_K; #51 private goals as the always-in-prompt limit.
   *Models:* 11, 04 · *Builds on:* H54 (HH182), DQ1 · *Lever:* B (mechanism), E (NE38 reassignment)
 - **HH248 · Rooms are only a read-out filter.** H05's room cut works because rooms decide who reads whom. Prediction: conditioned on the number of a pair's messages that actually entered each other's context (ledger), same-room membership adds no coupling. *Check:* pair coupling (reply probability, content pull) on ledger read counts with and without a same-room term; NE15/NE42 as interventions on read counts.
@@ -888,6 +893,7 @@ An egregore claim needs a residual after removing all four, and the viability fu
   - *Models:* 01 · *Builds on:* H49, H11, HH298
 
 *Suggested first picks.*
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H101.
 - **HH309 (scaling) and HH310 (Taylor's law):** cheap, run on shared tables, and test the project's own numbers for consistency.
 - **HH307 (κ channel table):** the flagship Kolchinsky quantity, using natural experiments we have already characterized.
 - **HH316 (biexponential collective memory):** a direct, quantitative egregore test with a clear published comparison.
@@ -952,13 +958,16 @@ These three build on today's results: the kickoff is a field (H54, H75), H82's r
   - *Check:* DQ4 and `project_states` switch times, burst sizes after each step, and a time-shuffled null that keeps the step times.
   - *Kill:* burst sizes are no heavier than the null, or bursts are as frequent between steps as after them.
   - *Models:* 01, 10, 14 · *Builds on:* H54, H75, H53, HH129
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H104.
 - **HH331 · Nights demagnetize: remanence decays per night, not per hour.** Overnight consolidation and erasure act like an AC demagnetization step on the content magnetization.
   - *Prediction:* alignment with the previous period's centroid, and with a finished kickoff, falls in steps at night boundaries by a roughly fixed factor per night. Active-hour clocks fit worse than the night-count clock.
   - *Check:* a clock comparison (nights vs active hours vs wall time) on H82's remanence series, plus a placebo on midday breaks of the same length.
   - *Kill:* active hours fit as well as or better than nights.
   - *Models:* 11, 15 · *Builds on:* H82, H71, H20
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H103.
 - **HH332 · Domain walls between rooms: width set by the bridging agents.** In weeks where rooms get different instructions (#38, #44) or work on different things, content forms two domains with a wall at the room boundary. Agents who hop rooms sit inside the wall.
   - *Prediction:* agent positions along the inter-domain axis are bimodal by room. Hoppers sit at intermediate positions. Wall width (the spread of the hoppers' positions) grows with the number of hopping read-outs. Note: H41 round 1b corrected #51: hoppers leak about half the time, not 97% in cone.
   - *Check:* projection onto the axis between room centroids (DQ5, both models, style-residualized), with hoppers identified from the ledger; compare with a shuffled room assignment.
   - *Kill:* hoppers are not intermediate, or the positions are not bimodal.
   - *Models:* 11, 01 · *Builds on:* H05, H41, H47, HH183
+  *Status (2026-10-04):* approved by Vivian (dashboard) → H102.

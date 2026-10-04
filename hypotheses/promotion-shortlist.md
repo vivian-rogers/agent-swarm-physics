@@ -212,3 +212,13 @@ Vivian picked these from HH107–HH126 and the leftovers. HH92 was already H08's
 | S92 | Project choice as a Brock–Durlauf equilibrium | HH283 | 10, 05 | H93 (launched) |
 | S93 | Work allocation as a max-entropy equilibrium | HH285 | 10, 05 | H94 (launched) |
 | S94 | Speed-limit slack as a kickoff-specificity gauge | HH329 | 15, 11 | H95 (launched) |
+| S95 | Goal switches show hysteresis: a coercive field | HH123 | 11, 15 | H96 (launched) |
+| S96 | A restoring-force law for the kickoff quench | HH246 | 11 | H97 (launched) |
+| S97 | #51 is a random-field system | HH129 | 11, 01 | H98 (launched) |
+| S98 | Fluctuations predict relaxation (mean-field Glauber) | HH81 | 02, 01 | H99 (launched) |
+| S99 | #best/#rest: explicit vs spontaneous symmetry breaking | HH66 | 11, 10 | H100 (launched) |
+| S100 | Pairwise Ising vs full multi-information in co-usage | HH322 | 01, 12 | H101 (launched) |
+| S101 | Domain walls between rooms, set by bridging agents | HH332 | 11, 01 | H102 (launched) |
+| S102 | Nights demagnetize: remanence decays per night | HH331 | 11, 15 | H103 (launched) |
+| S103 | Barkhausen avalanches when a field is stepped | HH330 | 01, 10, 14 | H104 (launched) |
+| S104 | Goals act on a two-state order parameter | HH130 | 01, 11 | H105 (launched) |
