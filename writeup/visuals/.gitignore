@@ -1,0 +1,3 @@
+# animations are rebuilt by each make.py; keep them out of git
+*.mp4
+*.gif
