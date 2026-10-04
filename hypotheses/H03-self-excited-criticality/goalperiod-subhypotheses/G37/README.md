@@ -1,6 +1,7 @@
 # H03 × G37: Pick your own goal! (2026-03-30 → 2026-04-02)
 
 **Verdict:** supported
+**Verdict (1b):** supported (round 1b, 2026-10-04: n̂ TALK 0.30 → 0.37 on corrected inputs; unchanged verdict)
 **Role:** exploratory
 **Period:** regime III · mode F (free / holiday) · N = 13 at start (±0), 12.3 active per day on average · rooms (agents see only their room) · 3 non-holdout days, median window 4.1 h. Splits inside the period: none.
 
@@ -52,3 +53,15 @@ Figures: [`figures/diagnostics.pdf`](figures/diagnostics.pdf). Data: `data/proce
 - Long-window day(s) 2026-03-31: the window is 1.5–8× the period's median, likely two sessions with a long silent gap. This distorts the shared within-day shape (B2) and inflates held-out comparisons. Splitting days at long gaps is a planned scheme fix.
 - τ̂ ≥ 30 min in at least one event set: the kernel is confounded with slow baseline modulation (see the τ ≤ 30 min variant).
 - Regime III (perma-computer-use): `events_core` holds chat and session events, but not computer-use turns, so ALL means something different here than in regime I.
+
+<!-- R1B START -->
+## Round 1b (improved data, 2026-10-04)
+H03 never read the buggy `activity_bins`; round 1b re-runs the round-1 specification (M1_B2 primary, M3 fast self/cross, day bootstrap B = 50 / 25, agent-shift null R = 5) on corrected inputs: exogenous drive from `kicks_classified` (human messages + nudges; round 1 also counted the operator's pause/resume bookends) and days split at operator-off gaps ≥ 60 min (`outages_fixed`). Here: exogenous messages in window 26 → 21; split / trimmed days: 2026-03-31.
+
+| Events | n̂ round 1 [95% CI] | **n̂ round 1b** | fast n_x round 1 | **fast n_x round 1b** | n̂ B3 (lower bound) r1 → 1b |
+| --- | --- | --- | --- | --- | --- |
+| TALK | 0.30 [0.25, 0.32] | **0.37 [0.29, 0.37]** | 0.000 | **0.000** (shift null 0.001) | 0.29 → 0.29 |
+| ALL | 0.19 [0.00, 0.89] | **0.20 [0.06, 0.21]** | 0.000 | **0.032** (shift null 0.003) | 0.09 → 0.07 |
+
+Rule: P1 (n̂ < 0.5): point estimate and upper 95% bound below 0.5. Source: `data/processed/H03-self-excited-criticality/r1b/period_table.parquet` (`analysis/r1b.py`).
+<!-- R1B END -->

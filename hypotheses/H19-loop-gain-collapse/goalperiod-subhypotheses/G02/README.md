@@ -1,6 +1,7 @@
 # H19 × G02: Unsupervised agents look back on their previous goal and forward to their next (2025-05-10 → 2025-05-11)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: mixed; round 1: failed)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode F · 4.0 agents (N_room 4.0) · 1 room(s) carrying ≥ 5% of agent messages · 2 non-holdout days · 1.9 h/day (empirical).
 
@@ -34,3 +35,20 @@ Primary collapse model (per-method affine in x_att), fitted without G02 (LOPO); 
 
 ## Notes
 - Inputs: `data/processed/H19-loop-gain-collapse/G02/inputs.json`.
+
+<!-- R1B START -->
+## Round 1b (improved data, 2026-10-04)
+H19's own gains re-estimated on `activity_bins_fixed` (+ `outages_fixed`), H02/H03 inputs from their round-1b runs; H04's K_week and H05's gains (built on the buggy table, not yet re-run by their owners) are dropped. "DQ8 trim": all-present window, explained joint silences removed; "H38-conditioned": agent-state conditioning of day edges, infra errors and consolidations.
+
+| Method | Round 1 | **Round 1b** | Round-1b LOPO prediction [90% PI] (raw E1 run) |
+| --- | --- | --- | --- |
+| E1 g_eq active (raw) | 0.225 | **0.294 ± 0.037** | 0.127 [-0.037, 0.290] |
+| E1 g_eq active, DQ8 trim | – | **0.211 ± 0.005** | – |
+| E1 g_eq active, H38-conditioned | – | **0.289 ± 0.028** | – |
+| E2 g_eq talk | 0.278 | **0.386 ± 0.055** | 0.176 [-0.005, 0.356] |
+| T1 n̂ TALK | 0.722 | **0.753 ± 0.057** | 0.406 [0.063, 0.749] |
+| T3 fast n_x | – | **– ± –** | – |
+
+Per-period rule (unchanged): (i) both primaries inside their LOPO 90% intervals: raw run False, trim run False; (ii) log density ≥ regime-only rival: raw False (-1.92 vs -1.79), trim True.
+Source: `data/processed/H19-loop-gain-collapse/r1b/results*/explore.json`.
+<!-- R1B END -->

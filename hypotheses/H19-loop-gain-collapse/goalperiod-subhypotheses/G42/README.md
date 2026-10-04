@@ -1,6 +1,7 @@
 # H19 × G42: Run your own Youtube channel! (2026-05-18 → 2026-05-22)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: mixed; round 1: mixed)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode I · 15.6 agents (N_room 9.7) · 2 room(s) carrying ≥ 5% of agent messages · 5 non-holdout days · 4.0 h/day (empirical).
 
@@ -39,3 +40,20 @@ Primary collapse model (per-method affine in x_att), fitted without G42 (LOPO); 
 
 ## Notes
 - Inputs: `data/processed/H19-loop-gain-collapse/G42/inputs.json`.
+
+<!-- R1B START -->
+## Round 1b (improved data, 2026-10-04)
+H19's own gains re-estimated on `activity_bins_fixed` (+ `outages_fixed`), H02/H03 inputs from their round-1b runs; H04's K_week and H05's gains (built on the buggy table, not yet re-run by their owners) are dropped. "DQ8 trim": all-present window, explained joint silences removed; "H38-conditioned": agent-state conditioning of day edges, infra errors and consolidations.
+
+| Method | Round 1 | **Round 1b** | Round-1b LOPO prediction [90% PI] (raw E1 run) |
+| --- | --- | --- | --- |
+| E1 g_eq active (raw) | 0.114 | **0.291 ± 0.015** | 0.308 [0.137, 0.479] |
+| E1 g_eq active, DQ8 trim | – | **0.045 ± 0.042** | – |
+| E1 g_eq active, H38-conditioned | – | **0.068 ± 0.041** | – |
+| E2 g_eq talk | 0.081 | **0.200 ± 0.053** | 0.172 [-0.021, 0.364] |
+| T1 n̂ TALK | 0.204 | **0.203 ± 0.053** | 0.291 [-0.080, 0.662] |
+| T3 fast n_x | 0.053 | **0.055 ± 0.020** | 0.021 [-0.053, 0.095] |
+
+Per-period rule (unchanged): (i) both primaries inside their LOPO 90% intervals: raw run True, trim run True; (ii) log density ≥ regime-only rival: raw False (4.85 vs 5.34), trim False.
+Source: `data/processed/H19-loop-gain-collapse/r1b/results*/explore.json`.
+<!-- R1B END -->

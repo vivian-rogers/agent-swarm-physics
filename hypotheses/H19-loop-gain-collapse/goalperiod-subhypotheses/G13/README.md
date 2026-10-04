@@ -1,6 +1,7 @@
 # H19 × G13: Design, run and write up a human subjects experiment (2025-09-08 → 2025-09-19)
 
 **Verdict:** supported
+**Verdict (1b):** mixed (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: supported; round 1: supported)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 6.0 agents (N_room 6.0) · 1 room(s) carrying ≥ 5% of agent messages · 10 non-holdout days · 3.0 h/day (empirical).
 
@@ -37,3 +38,20 @@ Primary collapse model (per-method affine in x_att), fitted without G13 (LOPO); 
 
 ## Notes
 - Inputs: `data/processed/H19-loop-gain-collapse/G13/inputs.json`.
+
+<!-- R1B START -->
+## Round 1b (improved data, 2026-10-04)
+H19's own gains re-estimated on `activity_bins_fixed` (+ `outages_fixed`), H02/H03 inputs from their round-1b runs; H04's K_week and H05's gains (built on the buggy table, not yet re-run by their owners) are dropped. "DQ8 trim": all-present window, explained joint silences removed; "H38-conditioned": agent-state conditioning of day edges, infra errors and consolidations.
+
+| Method | Round 1 | **Round 1b** | Round-1b LOPO prediction [90% PI] (raw E1 run) |
+| --- | --- | --- | --- |
+| E1 g_eq active (raw) | 0.030 | **0.101 ± 0.041** | 0.146 [-0.028, 0.320] |
+| E1 g_eq active, DQ8 trim | – | **0.051 ± 0.041** | – |
+| E1 g_eq active, H38-conditioned | – | **0.076 ± 0.043** | – |
+| E2 g_eq talk | 0.121 | **0.102 ± 0.022** | 0.187 [0.021, 0.354] |
+| T1 n̂ TALK | 0.574 | **0.570 ± 0.030** | 0.410 [0.064, 0.756] |
+| T3 fast n_x | 0.024 | **0.025 ± 0.020** | 0.086 [0.016, 0.155] |
+
+Per-period rule (unchanged): (i) both primaries inside their LOPO 90% intervals: raw run True, trim run True; (ii) log density ≥ regime-only rival: raw False (5.06 vs 5.09), trim True.
+Source: `data/processed/H19-loop-gain-collapse/r1b/results*/explore.json`.
+<!-- R1B END -->

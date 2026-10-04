@@ -1,13 +1,14 @@
 {
- "complete": 40,
- "faithfulness": 1.0,
- "usefulness": 1.5,
- "rationale": {
-  "complete": "Round 1 done: assembled table, synthetic validation of the decision rule, per-period verdicts and scorecard, plus an amended frozen confirmatory script; the holdout run needs H03/H04 held-out exports, and H10-H18 estimates are not yet ingested.",
-  "faithfulness": "The primary collapse was refuted outright (opposite-sign slopes, loses to regime, era and size rivals out of sample, C = 0, H = 0); only the secondary unfitted mapping P3 and the no-mode-effect P5 hold.",
-  "usefulness": "Mostly a warning that 'loop gain' is channel-specific and a cross-method conversion; the post hoc messages-per-LLM-step knob could matter for steering but is selected after the fact and unconfirmed."
- },
- "one_line": "No common loop-gain curve: activity and talk channels move oppositely; Hawkes-to-Ising mapping holds.",
- "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
- "updated": "2026-10-04"
+  "complete": 50,
+  "faithfulness": 1.0,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Round 1 plus round 1b: re-estimation on the corrected grid with DQ8-trimmed and H38-conditioned gains, NE14 with and without the adjustment, and three period-native tests (#51 N sweep, NE42, NE43). Open: H04/H05 re-runs, a re-frozen confirmatory model, the holdout run, H10-H18 estimates.",
+    "faithfulness": "The pre-registered collapse P1 failed again (regime-only wins, no common positive slope on x_att) and the dilution exponent P4 failed; only the unfitted mapping P3 and P5 hold. The natural-experiment tests split (NE43 held, NE42 and the #51 dilution test failed).",
+    "usefulness": "Corrects a misleading round-1 lesson (opposite channels) into a concrete one: trim day edges before reading any equal-time gain. The post-hoc k_llm curve now spans all six methods, a candidate knob worth pre-registering, though it fails within #51."
+  },
+  "one_line": "No x_att collapse; the round-1 channel split was day edges, and adjusted gains all rise with messages per LLM step (post hoc)",
+  "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)"
 }

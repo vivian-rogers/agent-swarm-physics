@@ -1,13 +1,14 @@
 {
-  "complete": 40,
+  "complete": 50,
   "faithfulness": 1.5,
   "usefulness": 2.0,
   "rationale": {
-    "complete": "Round 1 is done over 35 periods with per-period verdicts, synthetic guards and a scorecard; the holdout predictions are drafted but not locked or run, and the room-aware and reply-vs-wake-up follow-ups are open.",
-    "faithfulness": "Hawkes beats same-baseline Poisson and the fast cross term beats the agent-shift null (C = 1), but every mode and criticality prediction (P1-P6) failed and pooled n-hat is not identified against slow rate modulation.",
-    "usefulness": "A branching ratio with a schedule baseline, plus a fast cross-excitation term, is a cascade-risk diagnostic anyone can compute on their own logs, and the constant-baseline pitfall is a concrete warning; the payoff beyond that is unclear."
+    "complete": "Round 1 over 35 periods plus round 1b: the original specification re-run on corrected inputs (exogenous drive, day splits, both split rules), a DQ8 trimmed surrogate null, and period-native tests (NE43, NE14, #2, #51). Holdout predictions are drafted but not locked; the kernel shape is being fitted by H42.",
+    "faithfulness": "Unchanged by the corrections: every mode and criticality prediction failed, n-hat is not identified against slow modulation, and only the fast cross term beats its null (now also the trimmed null). NE43 held its dated prediction and NE14 was mixed, so E rises to 1, but the hypothesis's central claims remain refuted.",
+    "usefulness": "A branching-ratio diagnostic with a schedule baseline that is robust to the data corrections and to day edges, a constant-baseline pitfall, and a practical fact: removing the operator's messages does not slow this swarm down."
   },
-  "one_line": "Subcritical everywhere (n about 0.2-0.4), no coupling-mode effect; only fast cross-triggering beats nulls",
-  "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
-  "updated": "2026-10-04"
+  "one_line": "Subcritical everywhere and unchanged on corrected inputs; fast cross-triggering survives the trimmed null; drive removal changes nothing",
+  "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)"
 }

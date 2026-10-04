@@ -1,6 +1,6 @@
 # H19: One curve for all periods: per-period loop gains collapse onto a function of an operational control parameter
 
-**Status:** running. **Exploratory round 1 done (2026-10-04): the pre-registered collapse P1 FAILED**, with no common curve: equal-time activity gains rise with x_att while Hawkes talk gains fall, and the regime-only rival wins out of sample. Within the talk channel, the Hawkes and equal-time gains agree with each other and with the derived mapping (P3 supported). A post-hoc talk-channel collapse on k_llm is frozen for confirmation (`analysis/confirm.py`, amended, not run). Not promoted. Predictions were written 2026-10-04 00:03 UTC, before any control parameter was related to any loop gain; not blind to other hypotheses' per-period numbers (disclosed).
+**Status:** running. **Round 1b (2026-10-04, corrected `activity_bins`, DQ8 trim, H38 conditioning): P1 still fails, but round 1's channel opposition is withdrawn: the rising activity gain was the operator's day edges (slope on x_att +0.18 raw → −0.03 trimmed; regime III − I +0.17 → −0.03; NE14 adjusted Δ < 0). Day-edge-adjusted, all six re-estimated methods rise with messages per LLM step (post hoc). H04/H05 inputs dropped until their owners re-run them.** Round 1: **Exploratory round 1 done (2026-10-04): the pre-registered collapse P1 FAILED**, with no common curve: equal-time activity gains rise with x_att while Hawkes talk gains fall, and the regime-only rival wins out of sample. Within the talk channel, the Hawkes and equal-time gains agree with each other and with the derived mapping (P3 supported). A post-hoc talk-channel collapse on k_llm is frozen for confirmation (`analysis/confirm.py`, amended, not run). Not promoted. Predictions were written 2026-10-04 00:03 UTC, before any control parameter was related to any loop gain; not blind to other hypotheses' per-period numbers (disclosed).
 **Fields:** stat mech, sociophysics
 **Origin:** HH100 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Population N(t); Regime; Interaction (broadcast; the shared `exposure` room rule); Action (turn-merged). **New here, proposed for `physics-models/DEFINITIONS.md`** (not edited, outside H19's scope): *loop gain (equal-time)*, *loop gain (Hawkes)*, *attention load k̄* and *agent turn (village)*, defined under Model and Observables.
@@ -89,9 +89,9 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Gaussian REML meta-regression with Knapp–Hartung CIs; per-period SEs from day bootstraps, H03 profile/bootstrap CIs (floor 0.02) and H04 week-to-week spread (an upper bound). Within-period stationarity is inherited from the source hypotheses, not re-audited. Methods share raw events, so summing LOPO ELPD over methods over-counts evidence. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 0 | LOPO (period-blocked) ELPD summed over 9 methods: the collapse beats only the constant (+5.3 nats) and loses to regime-only (−11.5), era (−10.3) and log N (−7.4). |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | **P3 (unfitted cross-method mapping) passes:** g_eq,talk tracks the Hawkes-mapped gain from H03's fast n_x and n_s (ρ = 0.44, p = 0.009), and exceeds it in 91% of periods (median ratio 2.3: common fast fields). The primary collapse signature (one sign) fails. |
-| E interventional | predicts the change across a natural experiment | 0 | Not attempted. NE windows are held out; NE21 was already used by H04. |
+| E interventional | predicts the change across a natural experiment | 1 (round 1b; round 1: 0) | Round 1: not attempted. **Round 1b:** NE43's dated prediction held (the day-edge part of the activity gain does not follow the bookend messages); NE42 (room A-B-A) and NE14 (regime II → III) did not support the round-1 readings. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 | The P1 rule on 150 synthetic data sets per truth, with the real periods, SEs and controls: false "supported" ≤ 0.01 under null, regime, era, log N, opposite-sign and different-control truths; power 0.87 at R² = 0.5 (1.00 at 0.75, 0.23 at 0.25). "Mixed" is uninformative (rivals give it 49–59% of the time). The real verdict is robust to dropping G51, dropping periods under 4 days, and LLM-step turns. |
-| G ground truth | agrees with known structure | 1 | The 2026-03-24 scaffold switch shows up as the main structure. Regime III − I: talk gains fall (n̂ −0.22 [−0.38, −0.06], fast n_x −0.06 [−0.10, −0.03]) while activity co-activation rises (g_eq active +0.11 [+0.05, +0.18], H04 K +0.10 [+0.01, +0.20]), consistent with H02, H03 and H04 separately. |
+| G ground truth | agrees with known structure | 1 | **Round 1b:** the scaffold switch remains the main structure for the talk/Hawkes gains, but the activity rise was day edges (adjusted regime III − I −0.03). Round 1: The 2026-03-24 scaffold switch shows up as the main structure. Regime III − I: talk gains fall (n̂ −0.22 [−0.38, −0.06], fast n_x −0.06 [−0.10, −0.03]) while activity co-activation rises (g_eq active +0.11 [+0.05, +0.18], H04 K +0.10 [+0.01, +0.20]), consistent with H02, H03 and H04 separately. |
 | H comparative | beats the named rivals | 0 | Loses to N1, N2 and N3. The N4 signature (opposite-sign slopes) is present. Nested per-method selection of the best control (N4 as a predictive model) does not win either (ELPD 124.4 vs 147.8 for common x_att and 157.8 for regime-only): selection overfits at 8–35 periods. |
 | I transfer | holds in other same-mode periods, including the holdout | 0 | Not tested; the holdout was not used. |
 
@@ -305,7 +305,66 @@ Adding mode lowers LOPO ELPD for both (−0.7, −1.2).
 - **`summary.pdf`** (one page).
 - Per period: `G<NN>/figures/G<NN>_residuals.png`.
 
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation on the corrected tables (re-evaluation agent RE-A2; exploratory, holdout untouched; `confirm.py` not run). Switches keep round 1 runnable: `H19_DATA=r1b` (inputs and outputs under `data/processed/H19-loop-gain-collapse/r1b/`), `H19_E1=raw|trim|scaf` (which version of H19's own gains enters P1 as E1/E2; results in `r1b/results`, `results_trim`, `results_scaf`). New code: `scheme/geq_r1b.py`, `analysis/r1b_ne14.py`, `r1b_native.py`, `r1b_period_lines.py`.*
+
+**What changed.**
+- **H19's own gains (E1, E2)** re-estimated on `activity_bins_fixed` (the old table dropped about half of all events), each in three versions: **raw** (the pre-registered definition, whole-day grid), **DQ8 trim** (all-present window, explained joint silences removed; 77% of regime-III minutes kept, 91% of regime-I) and **H38-conditioned** (agent-state conditioning of day edges, infra errors and consolidations). Validation: the raw estimator still reproduces H02's round-1b chunks exactly (3×10⁻¹⁶).
+- **Other methods:** H02 and H03 from their round-1b runs (H03 changes little: median |Δn̂| 0.007). H04's `K_week` and H05's two-block gains were built on the buggy table and are not yet re-run by their owners, so they are **dropped** (6 methods instead of 9; `--stale keep` restores them); H04's Hawkes `n_week` reads chat and is kept.
+- **Nulls (DQ8):** per-chunk surrogate z of the raw gain against N1 on the whole grid ("round-1 null") vs N1 after trim + mask ("corrected null"): regime-III activity chunks significant 19/19 → **7/19**; regime I 27/38 → 18/38; talk gains barely move (17/19 → 15/19 in regime III).
+- **Not re-run:** the synthetic validation of the P1 rule (same design; the method set shrank from 9 to 6).
+
+**Old vs new.**
+
+| | Round 1 | Round 1b, raw E1 (pre-registered) | **Round 1b, day-edge-adjusted E1 (DQ8 trim)** | H38-conditioned E1 |
+| --- | --- | --- | --- | --- |
+| E1 g_eq active, median | 0.11 | 0.18 | **0.08** | 0.12 |
+| E1 slope on x_att | **+0.127 [+0.055, +0.198]** | **+0.181 [+0.085, +0.277]** | **−0.030 [−0.105, +0.045]** | −0.004 [−0.106, +0.097] |
+| E1 regime III − I | **+0.113 [+0.049, +0.177]** | **+0.174 [+0.096, +0.253]** | **−0.034 [−0.101, +0.032]** | −0.018 [−0.106, +0.071] |
+| E2 g_eq talk, regime III − I | **−0.073 [−0.141, −0.005]** | −0.043 [−0.125, +0.038] | −0.040 [−0.117, +0.037] | −0.064 |
+| T1 n̂ TALK slope on x_att | −0.160 [−0.365, +0.045] | −0.153 [−0.352, +0.045] | same | same |
+| T3 fast n_x slope on x_att | **−0.059 [−0.101, −0.017]** | **−0.065 [−0.106, −0.023]** | same | same |
+| P1 verdict | failed | **failed** | failed | failed |
+| LOPO ELPD: x_att − regime-only | −11.5 | −8.7 | −7.3 | −7.4 |
+| P2 within-family (E) | failed (min ρ −0.48) | mixed (0.21) | mixed (0.28) | **supported (0.44)** |
+| ρ(E1, H03 n̂ ALL / n̂ TALK / H04 n) | −0.01 / −0.04 / 0.07 | 0.01 / −0.00 / 0.01 | **0.43 / 0.35 / 0.42** | 0.49 / 0.41 / 0.45 |
+| P3 mapping ρ (≥ ĝ_map share) | 0.44 (91%) | 0.37 (94%) | 0.33 (89%) | 0.41 (94%) |
+| P4 per-pair n_x exponent: on k̄ / on N | 0.20 / 1.02 | 0.26 / 1.03 | same | same |
+| P5 mode-C effect | none | none | none | none |
+| scan: control with one sign for all methods | none | none (k_llm 5+/1−) | **k_llm, 6/6 positive and significant** (ΔELPD vs constant +34.9) | k_llm 6/6 (+39.4) |
+| per-period verdicts (supported / mixed / failed) | 12 / 19 / 4 | 9 / 23 / 3 | 11 / 23 / 1 | 9 / 24 / 2 |
+
+**Reading.**
+1. **P1 still fails** on corrected data and under every version of E1: no positive common slope on x_att, and the regime-only rival wins out of sample.
+2. **The round-1 headline ("activity and talk channels move in opposite directions") is withdrawn.** The rising activity gain was the operator's day edges. With them removed, the activity gain is flat in x_att and across regimes, the N4 opposite-sign signature disappears, and the activity gain *agrees* with the Hawkes gains across periods (ρ 0.35–0.49 instead of ≈ 0). NE14 confirms it at the boundary itself (below). Cross-hypothesis: H38 (f_scaffold) and H50 (activity co-movement is mostly the scheduler's field; per-pair activity correlation 0.005 inside the regime-III window) say the same.
+3. **The post-hoc k_llm collapse grows from 5 to 6 methods.** With day-edge-adjusted activity gains, every method's slope on messages delivered per LLM step is positive and significant (activity +0.10 [+0.05, +0.16]). This is still post hoc (k_llm was picked in round 1 from 16 controls after the channel split), H04/H05 are missing, and inside #51 the k_llm relation does not hold (G51 below). **The frozen confirmatory channel model (`results/frozen_channel_model.json`, activity on x_att, fitted on the buggy table) is stale and should be re-frozen from round 1b before any confirmatory run.**
+
+**NE14 (regime II → III) with and without the day-edge adjustment** ([NE14](goalperiod-subhypotheses/NE14/README.md); H38's design, E = g − N1 surrogate mean, ΔE ± 1.96 day-bootstrap SE):
+
+| Activity gain | Old tables | Fixed tables |
+| --- | --- | --- |
+| raw | **+0.145 ± 0.083** | +0.112 ± 0.177 |
+| DQ8 trim | −0.024 ± 0.117 | −0.080 ± 0.214 |
+| H38-conditioned | −0.062 ± 0.132 | −0.140 ± 0.280 |
+| talk, raw / trim | −0.033 / −0.022 | +0.061 / +0.084 (± 0.09–0.11) |
+
+H38's round-1 result reproduces on the old tables. On the fixed tables the raw rise no longer excludes 0 and the adjusted gain falls across the switch. Round 1's "+0.11 regime III − I" becomes +0.17 raw and **−0.03** adjusted in the meta-regression (row above).
+
+**Period-native layer** (predictions dated in the folders before the runs):
+
+| Folder | Design | Prediction | Result | Verdict |
+| --- | --- | --- | --- | --- |
+| [G51](goalperiod-subhypotheses/G51/README.md) | #51 N sweep 21 → 32 (12 shared units) | per-pair fast n_c ∝ (N−1)^−1 (P4 inside one period); trimmed activity gain not rising with N | n_c falls far faster (α at the grid edge, 3.0 [2.5, 3.0]; total n_x → 0 from N = 28); trimmed g rises +0.025/agent (consistent with a fixed per-pair r ≈ 0.005) | failed |
+| [NE42](goalperiod-subhypotheses/NE42/README.md) | A-B-A room merge at N = 15 | talk n_x in #40 0.67–1.5× its neighbours; trimmed activity gain within ±0.07 | talk triggering vanishes in the merged week (n_x, n̂ TALK, g_eq talk ≈ 0); trim +0.11 vs conditioned −0.09 | failed |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) | bookend messages stop (08-05), nudger stops (08-21), #51 at N = 27 | day-edge part of the activity gain unchanged (< 0.05) when the bookends stop | −0.037 ± 0.043; edges are ~¾ of the raw gain on every side | supported |
+| [NE14](goalperiod-subhypotheses/NE14/README.md) | regime II → III, raw vs adjusted | H38: rise vanishes under adjustment | yes (old and fixed tables); adjusted Δ < 0 | failed (for the round-1 reading) |
+
+**Verdict changes.** Card: P1 failed (unchanged); P2 E-family failed → mixed (raw/trim) or supported (conditioned), T-family supported → mixed (minimum ρ 0.40 → 0.37); the channel-opposition reading and the "activity rises in regime III" structure (axis G) are withdrawn. Periods (`**Verdict (1b):**` lines, pre-registered E1 / adjusted E1): with the pre-registered E1, 6 of 35 change (G07 mixed → supported, G11 failed → mixed; G13, G26, G38, G41 supported → mixed); with the adjusted E1, G02 and G40 also move failed → mixed and only G51 stays failed. New native folders G51 (section), NE42, NE43, NE14.
+
+**Scorecard updates (round 1b).** A 1 → 1 (the channel non-invariance of round 1 was partly the day-edge artifact; turn-based controls still change meaning with the scaffold). B 1. C 0 (still loses to regime-only). D 1 (P3 holds: ρ 0.33–0.41). **E 0 → 1** (natural experiments now attempted: NE43's dated prediction held; NE42 and NE14 did not support the dilution models). F 2 (synthetic not re-run; same rule). **G 1 → 1** with a different reason: the scaffold switch is the main structure for the talk/Hawkes gains (n̂ regime III − I −0.21), but no longer for activity. H 0. I 0.
+
 ## Notes
+- **Round 1b (2026-10-04):** H38's note below is confirmed on the fixed tables (regime III − I +0.17 raw → −0.03 trimmed). `results/frozen_channel_model.json` (round-1 data, activity on x_att) is stale; re-freeze from `r1b/` before any confirmatory run. **From H50 (cross-hypothesis):** activity co-movement is mostly the scheduler's field; talk is a real read-out-gated coupling (J₁ 0.034 / 0.019 in regimes I / III).
 - **From H38 (2026-10-04):** the regime-III rise in activity g_eq is mostly a day-edge artifact: +0.125 → +0.017 across periods after agent-state conditioning (H19 reported +0.11). The channel split should be re-run on stall-adjusted gains.
 - 2026-10-03: promoted from HH100.
 - 2026-10-04: round 1 started. Control-parameter table built first, then the card's mapping, observables, nulls and predictions (00:03 UTC), then the estimates assembly, synthetic validation and the real-data fit.

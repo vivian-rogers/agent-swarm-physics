@@ -14,15 +14,19 @@ import numpy as np
 import polars as pl
 
 import h02lib as L
+import r1b_common as RB
 
 ROOT = Path(__file__).resolve().parents[3]
-DATA = ROOT / "data/processed/H02-couplings-are-real"
+DATA = RB.data_dir()   # round 1: data/processed/H02-couplings-are-real; round 1b: .../r1b[/<mask>] (r1b_common)
 
 
 def load_chunks(spin="active", min_bins=30):
     """spin 'active' (state >= 3, pre-registered) or 'talk' (state == 4, post-hoc; agents need >= min_bins talk bins)."""
-    sp = pl.read_parquet(DATA / "spins.parquet")
+    sp = pl.read_parquet(RB.spins_dir() / "spins.parquet")
     thr = {"active": 3, "talk": 4}[spin]
+    has_r = "reason" in sp.columns
+    mk = RB.mask_kind()
+    assert has_r or mk == "none", "masks need the round-1b spins (reason / sched columns)"
     out = {}
     for ch in sp["chunk"].unique().sort().to_list():
         d = sp.filter(pl.col("chunk") == ch)
@@ -36,8 +40,23 @@ def load_chunks(spin="active", min_bins=30):
                .pivot(on="agent", index=["day", "minute"], values="s").sort("day", "minute"))
         S = piv.select([str(a) for a in agents]).to_numpy()
         meta = d.select("goal_no", "mode", "regime").row(0)
-        out[ch] = {"S": S.astype(np.int8), "day": piv["day"].to_numpy(), "minute": piv["minute"].to_numpy(),
-                   "agents": agents, "goal_no": meta[0], "mode": meta[1], "regime": meta[2]}
+        day, minute = piv["day"].to_numpy(), piv["minute"].to_numpy()
+        c = {"S": S.astype(np.int8), "day": day, "minute": minute,
+             "agents": agents, "goal_no": meta[0], "mode": meta[1], "regime": meta[2]}
+        if has_r:
+            # reasons and scheduled flags on the ACTIVE-spin population (masks are defined on activity)
+            rp = (d.pivot(on="agent", index=["day", "minute"], values="reason").sort("day", "minute")
+                  .select([str(a) for a in agents]).to_numpy())
+            R = np.nan_to_num(rp.astype(float), nan=0).astype(np.int8)
+            Sa = (d.with_columns(pl.when(pl.col("state") >= 3).then(1).otherwise(-1).cast(pl.Int8).alias("sa"))
+                  .pivot(on="agent", index=["day", "minute"], values="sa").sort("day", "minute")
+                  .select([str(a) for a in agents]).to_numpy().astype(np.int8))
+            R = np.where(Sa > 0, 0, R).astype(np.int8)
+            sched = (d.group_by("day", "minute").agg(pl.col("sched").any()).sort("day", "minute")["sched"].to_numpy())
+            keep = RB.keep_runs(day, RB.row_mask(Sa, R, sched))
+            c.update({"R": R[keep], "sched": sched[keep], "Sa": Sa[keep], "kept_share": float(keep.mean())})
+            c.update({"S": c["S"][keep], "day": day[keep], "minute": minute[keep]})
+        out[ch] = c
     return out
 
 

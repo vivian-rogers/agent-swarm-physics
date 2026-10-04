@@ -1,6 +1,6 @@
 # H03: Swarm activity is self-exciting, and its criticality is set by the goal's coupling mode
 
-**Status:** running. Exploratory round 1 is complete (2026-10-03, non-holdout data only).
+**Status:** running. **Round 1b (2026-10-04, corrected inputs; H03 never read the buggy `activity_bins`): all round-1 conclusions and all 35 period verdicts unchanged; fast cross-triggering survives the DQ8 corrected null; native tests: NE43 (drive withdrawn) supported, #2 drive-free window supported, NE14 mixed.** Exploratory round 1 is complete (2026-10-03, non-holdout data only).
 - **The mode/criticality claims fail.** S2's predictions P1–P5 are not supported: no period is near critical, n̂ does not depend on coupling mode, and #51 drifts away from criticality, not toward it.
 - **n̂ is not identified.** Pooled n̂ (≈ 0.4) is subcritical in every period but depends on the baseline, and these tests cannot distinguish it from slow rate modulation.
 - **Robust positive result:** fast cross-agent triggering, n_x ≈ 0.07–0.08 at τ ≈ 10–30 s. That is about 4× an agent-shift null, independent of mode, with per-pair strength falling with N.
@@ -126,9 +126,9 @@ Scored per model, mapping and window: 0 = not done or failed, 1 = partial, 2 = p
 | --- | --- | --- | --- |
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Event times, windows, roster and exogenous messages all come from shared tables, and assumptions are listed. Not invariant: in regime III `events_core` lacks computer-use turns, so ALL changes meaning. The M3 at-risk set ignores rooms (after 2026-02-25). |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | **Time-rescaling:** Hawkes KS D is below Poisson's in 69% (TALK) / 71% (ALL) of periods, but Exp(1) is still rejected (p < 0.05) in 60% / 91%, with a heavy QQ tail (long silences). **Stationarity:** within-period stationarity fails: segment I² has median 0.43 / 0.61, and day-bootstrap CIs are much wider than profile CIs. **Scheduler audit:** sub-second compound logging was found and merged. |
-| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | **Same-baseline Poisson:** Hawkes beats it on day-blocked held-out data in 88% / 91% of periods (median Δℓ = 0.019 / 0.028 nats per event). **B3 30-min baseline:** median ≈ 0 for TALK (58% positive); 0.009 for ALL (85% positive). **Strongest null:** no powered test against a Poisson process modulated at 10–30 min (the jitter test has no power). |
+| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | **Round 1b:** fast n_x also beats the DQ8-corrected (trimmed) agent-shift null (0.074 vs 0.011; Wilcoxon p = 2×10⁻⁸). **Same-baseline Poisson:** Hawkes beats it on day-blocked held-out data in 88% / 91% of periods (median Δℓ = 0.019 / 0.028 nats per event). **B3 30-min baseline:** median ≈ 0 for TALK (58% positive); 0.009 for ALL (85% positive). **Strongest null:** no powered test against a Poisson process modulated at 10–30 min (the jitter test has no power). |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | **Model-free bursts:** the tail of 60-s bursts is closer to the Hawkes simulation than to the Poisson one in 71% / 83% of periods, but the pooled differences are tiny. **Signature:** no s^(−3/2) anywhere, consistent with all n̂ being subcritical (reconstructed tail exponents 2.1–4.2). |
-| E interventional | predicts the change across a natural experiment | 0 | Not attempted. NE21/NE23 are held out; NE10 (nudger on, inside #30) is the next step. |
+| E interventional | predicts the change across a natural experiment | 1 (round 1b; round 1: 0) | **Round 1b:** NE43 (drive withdrawn inside #51) supported its dated prediction (n̂ and activity unchanged); NE14 mixed (Hawkes robust to day edges, but n̂ TALK rises at the switch). NE21/NE23 are held out; NE10 (nudger on, inside #30) is still open. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | **Recovery** with real windows and exogenous times: n = 0 → 0.00 (q90 0.024); 0.6 → 0.55; 0.9 → 0.86. **Filimonov–Sornette** reproduced: B0 gives 0.49 on n = 0 data. **Not robust:** to the baseline (median TALK n̂ is 0.61 under B0 and 0.16 under B3), and the pooled stream cannot separate excitation from 10-min modulation (jitter calibration). |
 | G ground truth | agrees with known structure | 0 | Not done. |
 | H comparative | beats the named rivals | 1 | **Poisson:** beaten, as above. **Scheduler-only rival:** cross-excitation improves held-out likelihood in 70% / 88% of periods, and fast n_cross exceeds the agent-shift null (Wilcoxon p = 2×10⁻⁹ / 4×10⁻⁸). **Contagion (model 03):** not compared. |
@@ -300,7 +300,54 @@ Verdict count: C 11 failed, 4 mixed; F 2 supported, 5 mixed, 1 failed; I/K/M 11 
    - slow cross kernels mimic co-modulation;
    - day windows with gaps.
 
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation (re-evaluation agent RE-A2; exploratory, holdout untouched). H42 (read-out Hawkes kernel) is answering the redirected question in parallel and is not duplicated here: this round re-runs round 1's specification on corrected inputs. Code: `analysis/r1b.py` (`build`, `check`, `fit`, `segments`, `native`, `trimnull`, `summary`; `--exo r1 --split none` reproduces round 1's inputs exactly, verified by `check`), `r1b_period_lines.py`, `summary_figure_r1b.py`. Numbers: `data/processed/H03-self-excited-criticality/r1b/` (`period_table.parquet`, `summary.json`, `native.json`, `trim_null.parquet`, `segments.parquet`).*
+
+**What changed.**
+- **H03 never read the buggy `activity_bins`.** Its events come from `events_core`, which the DQ8 join bug did not touch, so none of round 1's event streams were wrong. The corrections are the shared tables added since round 1:
+  - **C1, exogenous drive:** `kicks_classified` human messages + nudges. Round 1 also counted the operator's 662 daily pause/resume bookends as exogenous kicks (in-window exogenous messages 4,892 → 4,674).
+  - **C2, realizations:** days cut at operator-off gaps ≥ 60 min (`outages_fixed`, village_off); 7 days change (the card's "next step 1"), 283 realizations.
+  - **C3, splits:** H03's own step-change segments and the shared `period_units`, both reported.
+- **Bootstrap:** B = 50 (M1) / 25 (M3) instead of 100 / 50, for compute (the machine was at load 140–210).
+- **DQ8 null correction:** the agent-shift surrogates are drawn after cutting each realization to its all-present window (`trimnull`), next to round 1's whole-window shifts.
+
+**Old vs new.**
+
+| | Round 1 | **Round 1b** |
+| --- | --- | --- |
+| median n̂ TALK / ALL (35 periods) | 0.41 / 0.43 | **0.36 / 0.41** (median per-period change 0.007 / 0.003) |
+| periods moved > 0.1 | – | #6 TALK 0.65 → 0.32 (774-min gap on 06-29), #38 TALK 0.32 → 0.14 and ALL 0.57 → 0.37 (214-min gap on 04-16), #51 ALL 0.59 → 0.49 |
+| fast cross-triggering n_x, TALK / ALL (median) | 0.070 / 0.081 | **0.072 / 0.081** |
+| agent-shift null, whole window: median; real > all surrogates; Wilcoxon | 0.017 / 0.024; 80% / 74%; 2×10⁻⁹ | 0.016 / 0.019; 71% / 80%; 7×10⁻⁹ |
+| **corrected null (trim, then shift):** real vs null; real > all; Wilcoxon | – | **0.074 vs 0.011 (TALK), 0.092 vs 0.018 (ALL); 60% / 74%; 2×10⁻⁸ / 1×10⁻⁹** |
+| n̂ TALK on trimmed realizations | – | median 0.353 vs 0.357 untrimmed (median per-period change 0.012) |
+| per-pair fast n_c vs N (ρ) | −0.73 | −0.75 |
+| P1 F subcritical | ✗ (median 0.53, 4/8 ≥ 0.5) | ✗ (0.52, 4/8) |
+| P2 C > F | ✗ (0.32 vs 0.53, p = 0.75) | ✗ (0.29 vs 0.52, p = 0.80) |
+| P3 median n̂_C ≥ 0.7 | ✗ | ✗ |
+| P4 mode survives log N, hours, regime | ✗ (t = −0.19) | ✗ (t = −0.67); log N t = −2.06 |
+| P5 #51 drift up | ✗ (ρ = −0.64) | ✗ (ρ = −0.66 H03 split; −0.70 `period_units`) |
+| P6 fast n_x C > F | ✗ (p = 0.59) | ✗ (0.075 vs 0.073, p = 0.54) |
+| P7 n̂_ALL > n̂_TALK in most periods | weak (54%) | weak (63%) |
+| per-period verdicts | C 11 failed / 4 mixed; F 2 supported / 5 mixed / 1 failed; 11 descriptive; #51 failed | **identical in all 35 periods** |
+
+**Regime II → III ([NE14](goalperiod-subhypotheses/NE14/README.md)), with and without the day-edge adjustment.** n̂ TALK 0.09 → 0.37 (Δ +0.28; trimmed +0.31), n̂ ALL 0.29 → 0.21 (Δ −0.08; trimmed −0.05), fast n_x TALK 0.051 → 0.005 (at its shift null in regime III, before and after trimming). **Trimming changes no Δ by more than 0.03:** the Hawkes estimates are not day-edge artifacts, unlike the equal-time gains (H19 NE14: activity +0.11 → −0.08 under the same trim). But n̂ TALK rises at the boundary, so round 1's lower regime-III n̂ is a slower drift (size, era), not a scaffold step.
+
+**Period-native layer** (predictions dated in the folders before the runs):
+
+| Folder | Design | Prediction | Result | Verdict |
+| --- | --- | --- | --- | --- |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) | #51 at a fixed roster: bookends stop (08-05), nudger stops (08-21) | exogenous share ≤ 2% (≤ 0.5% with no drive); n̂ within 2 SD across steps; talk rate within ±20% | 0.8% / 1.4% / 0.2%; n̂ TALK 0.44 → 0.35 → 0.47 (all within 2 SD); talk rate −11% | supported |
+| [NE14](goalperiod-subhypotheses/NE14/README.md) | regime II → III, raw vs trimmed | n̂ and fast n_x lower in regime III; trim changes Δ < 0.10 | fast n_x and n̂ ALL fall, n̂ TALK rises (+0.28); trim moves Δ ≤ 0.03 | mixed |
+| [G02](goalperiod-subhypotheses/G02/README.md) | the only human- and operator-free window | fast n_x above all 10 shift surrogates by ≥ 0.03 | 0.156 vs null mean 0.026, max 0.105 | supported |
+| [G51](goalperiod-subhypotheses/G51/README.md) | N sweep 21 → 32 under both split rules | ρ(n̂, N) ≤ 0 under both; per-pair n_c falls with N | ρ = −0.66 / −0.70; n_c ρ = −0.78 / −0.69 | supported (P5 fails as in round 1) |
+
+**Reading.** Round 1's conclusions are unchanged on corrected inputs: subcritical everywhere, no coupling-mode effect, n̂ falls with N, and #51 drifts away from criticality under either split rule. The one robust positive (fast cross-agent triggering, ≈ 0.07 per event at 10–30 s, ≈ 4–7× its shift null) **survives the DQ8 corrected null** and exists even in the drive-free #2 window. Two new facts: removing the exogenous drive inside #51 changes neither n̂ nor the activity level (against the strong form of H03-R2), and the regime contrast in n̂ is not a step at the scaffold switch. Cross-hypothesis (H50): talk is a real coupling gated at the recipient's next model call (+25% / +44% over the base talk rate in regimes I / III); its kernel shape is H42's question.
+
+**Scorecard updates (round 1b).** A 1, B 1, C 1, D 1, F 1, H 1, I 0 unchanged. **E 0 → 1:** natural experiments now tested with dated predictions (NE43 supported; NE14 mixed). **G 0 → 0** (no ground-truth labels bear on branching). The C = 1 positive (fast n_x beats the strongest available null) is now shown against the DQ8-corrected null as well.
+
 ## Notes
+- **From H50 (2026-10-04, cross-hypothesis):** talk is a real coupling gated at the recipient's next model call (hop 1; +25% / +44% over the base talk rate in regimes I / III; regime III needs naming). That is the kernel shape behind the fast n_x here; H42 fits it.
 - **From H34 (2026-10-04), answering H03-R3:** content (idea) cascades are subcritical too: R̂ 0.06–0.39 in 32/32 periods, exposure-locked (HR₁₀ CI > 1 in 27/32), no s^−3/2. R̂ is unrelated to H03's activity n̂ (ρ 0.06) but tracks H25's content dial (post hoc).
 - 2026-10-03: Card and predictions written before fitting. Holdout masked via `calendar.holdout` and `infra/shared/common.py: holdout_mask`. Every kickoff lands before its day's window opens (checked from `kicks` vs. `calendar`), so the kickoff bump starts at `win_start` of each goal's first day.
 - 2026-10-03: Slow kernels (τ̂ ≥ 30 min) appeared in 2 (TALK) / 3 (ALL) periods, e.g. #33 TALK τ̂ = 2276 s and #37 ALL 17086 s. They are confounded with the baseline, hence the τ ≤ 30 min variant (same verdicts).

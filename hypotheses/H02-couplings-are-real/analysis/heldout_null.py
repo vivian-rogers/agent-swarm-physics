@@ -20,7 +20,7 @@ from calibrate import load_chunks
 from h02lib import heldout
 
 ROOT = Path(__file__).resolve().parents[3]
-DATA = ROOT / "data/processed/H02-couplings-are-real"
+DATA = __import__("r1b_common").data_dir()   # round 1 or round 1b (+ mask): analysis/r1b_common.py
 K = int(sys.argv[1]) if len(sys.argv) > 1 else 20
 SPIN = sys.argv[2] if len(sys.argv) > 2 else "active"
 BLOCK = int(sys.argv[3]) if len(sys.argv) > 3 else 30   # block length (min) for fields and the N1 null
@@ -56,7 +56,7 @@ def main():
     roster = pl.read_parquet(ROOT / "data/processed/shared/roster.parquet")
     labs = dict(zip(roster["agent"].to_list(), roster["lab"].to_list()))
     jobs = [(ch, c, labs, k) for k, (ch, c) in enumerate(sorted(chunks.items()))]
-    with Pool(3) as p:
+    with Pool(int(os.environ.get("H02_WORKERS", 3))) as p:  # round 1b runs with 2
         res = pl.DataFrame(p.map(job, jobs, chunksize=1))
     suf = ("" if SPIN == "active" else f"_{SPIN}") + ("" if BLOCK == 30 else f"_b{BLOCK}") + (f"_r{REGIME}" if REGIME else "")
     res.write_parquet(DATA / f"heldout_null{suf}.parquet")

@@ -1,6 +1,7 @@
 # H03 × G51: Each agent: Maximize your assigned goal! (2026-07-06 → 2026-09-20)
 
 **Verdict:** failed
+**Verdict (1b):** failed (round 1b, 2026-10-04: n̂ TALK 0.54 → 0.47 on corrected inputs; unchanged verdict)
 **Role:** exploratory
 **Period:** regime III · mode P (private assigned roles; coded I/K) · N = 21 at start (+11), 26.5 active per day on average · rooms (agents see only their room) · 45 non-holdout days, median window 8.1 h. Splits inside the period: 2026-07-09 (NE32: GPT-5.6 Sol/Terra/Luna join in separate isolated r; roster_joined: GPT-5.6 Luna; roster_joined: GPT-5.6 Sol; roster_joined: GPT-5.6 Terra); 2026-07-10 (roster_joined: Grok 4.5); 2026-07-17 (roster_joined: Kimi K3); 2026-07-24 (roster_joined: Claude Opus 5); 2026-07-29 (NE38: A human reassigns Claude Opus 5's role (word puzzl); 2026-08-28 (roster_joined: GLM-5.3 Flash); 2026-09-01 (roster_joined: Claude Fable 5.1); 2026-09-03 (NE33: Batch join: Muse Spark 1.3, Gemini 3.8 Flash, GPT-; roster_joined: Gemini 3.8 Flash; roster_joined: Muse Spark 1.3); 2026-09-04 (NE33: Batch join: Muse Spark 1.3, Gemini 3.8 Flash, GPT-; roster_joined: GPT-6 Astra).
 
@@ -72,3 +73,34 @@ Figures: [`figures/diagnostics.pdf`](figures/diagnostics.pdf). Data: `data/proce
 - Long-window day(s) 2026-07-07, 2026-07-28: the window is 1.5–8× the period's median, likely two sessions with a long silent gap. This distorts the shared within-day shape (B2) and inflates held-out comparisons. Splitting days at long gaps is a planned scheme fix.
 - Days from 2026-09-07 on are the locked holdout (#51 tail, `holdout.json`). They are absent from the processed data and were not analyzed. The whole-period bootstrap was capped at 33 M1 / 16 M3 replicates (cost); the drift test uses segment and block bootstraps.
 - Regime III (perma-computer-use): `events_core` holds chat and session events, but not computer-use turns, so ALL means something different here than in regime I.
+
+## Round 1b native test (2026-10-04): the N sweep under both split rules
+**Role (1b):** native (+ replication)
+**Why native.** #51 sweeps N from 21 to 32 in dated steps at a fixed goal, hours and room (DQ9: the within-period control parameter). Round 1 split it by H03's own step-change rule; the shared `period_units` (51a–51l) splits it differently (it also cuts at the #focus room, 51g/51h), so the P5 test is re-run under both.
+
+*Prediction written 2026-10-04 06:47 UTC, before the round-1b segment fits.*
+- **N51-a (P5 restated).** n̂ TALK does not rise toward 1 with N: Spearman ρ(n̂, N) across segments ≤ 0 under both split rules, and every segment's n̂ < 0.8.
+- **N51-b (attention-limited cross-triggering).** Per-pair fast cross-triggering n_c (M3) falls with N across segments (ρ < 0 under both rules).
+- Counts against: ρ > 0 with p < 0.05 under either rule, or late segments with n̂ ≥ 0.9.
+
+**Result (run 2026-10-04, round-1b inputs).**
+
+| Split rule | Segments | ρ(n̂ TALK, N) | ρ(n̂ ALL, N) | max n̂ TALK | last three n̂ TALK | ρ(per-pair fast n_c, N), TALK |
+| --- | --- | --- | --- | --- | --- | --- |
+| H03 step changes (round 1's rule) | 10 | **−0.66** (p = 0.04) | −0.73 (p = 0.02) | 0.55 | 0.18, 0.23, 0.31 | **−0.78** (p = 0.007) |
+| shared `period_units` (51a–51l) | 12 | **−0.70** (p = 0.01) | −0.71 (p = 0.01) | 0.55 | 0.18, 0.23, 0.31 | **−0.69** (p = 0.01) |
+
+- **N51-a supported, N51-b supported** under both rules: n̂ falls as #51 grows, no segment reaches 0.8, and per-pair fast cross-triggering falls with N (total fast n_x drops from 0.04–0.08 at N = 21–24 to ≈ 0 from N = 27; H19 G51 fits the power law). P5 (drift toward criticality) fails as in round 1; the split rule does not matter. N grows with calendar date, the NE43 drive withdrawal and the #focus room, so "N" here is not separable from era within #51.
+- The whole-period n̂ TALK moves 0.54 → 0.47 in round 1b (two long-window days, 07-07 and 07-28, are now cut at their operator-off gaps).
+
+<!-- R1B START -->
+## Round 1b (improved data, 2026-10-04)
+H03 never read the buggy `activity_bins`; round 1b re-runs the round-1 specification (M1_B2 primary, M3 fast self/cross, day bootstrap B = 50 / 25, agent-shift null R = 5) on corrected inputs: exogenous drive from `kicks_classified` (human messages + nudges; round 1 also counted the operator's pause/resume bookends) and days split at operator-off gaps ≥ 60 min (`outages_fixed`). Here: exogenous messages in window 854 → 831; split / trimmed days: 2026-07-07, 2026-07-10, 2026-07-28.
+
+| Events | n̂ round 1 [95% CI] | **n̂ round 1b** | fast n_x round 1 | **fast n_x round 1b** | n̂ B3 (lower bound) r1 → 1b |
+| --- | --- | --- | --- | --- | --- |
+| TALK | 0.54 [0.44, 0.61] | **0.47 [0.41, 0.50]** | 0.026 | **0.019** (shift null 0.000) | 0.22 → 0.22 |
+| ALL | 0.59 [0.43, 0.62] | **0.49 [0.43, 0.53]** | 0.081 | **0.053** (shift null 0.009) | 0.08 → 0.07 |
+
+Rule: P5 (n̂ rises with N toward 1): segment Spearman ρ = -0.66 (p = 0.039). Source: `data/processed/H03-self-excited-criticality/r1b/period_table.parquet` (`analysis/r1b.py`).
+<!-- R1B END -->

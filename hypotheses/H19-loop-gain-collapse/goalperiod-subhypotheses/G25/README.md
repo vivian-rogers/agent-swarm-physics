@@ -1,6 +1,7 @@
 # H19 × G25: Create a digital museum of 2025 (2025-12-29 → 2026-01-02)
 
 **Verdict:** mixed
+**Verdict (1b):** mixed (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: mixed; round 1: mixed)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 10.0 agents (N_room 10.0) · 1 room(s) carrying ≥ 5% of agent messages · 5 non-holdout days · 4.0 h/day (empirical).
 
@@ -37,3 +38,20 @@ Primary collapse model (per-method affine in x_att), fitted without G25 (LOPO); 
 
 ## Notes
 - Inputs: `data/processed/H19-loop-gain-collapse/G25/inputs.json`.
+
+<!-- R1B START -->
+## Round 1b (improved data, 2026-10-04)
+H19's own gains re-estimated on `activity_bins_fixed` (+ `outages_fixed`), H02/H03 inputs from their round-1b runs; H04's K_week and H05's gains (built on the buggy table, not yet re-run by their owners) are dropped. "DQ8 trim": all-present window, explained joint silences removed; "H38-conditioned": agent-state conditioning of day edges, infra errors and consolidations.
+
+| Method | Round 1 | **Round 1b** | Round-1b LOPO prediction [90% PI] (raw E1 run) |
+| --- | --- | --- | --- |
+| E1 g_eq active (raw) | 0.045 | **0.066 ± 0.030** | 0.172 [0.008, 0.336] |
+| E1 g_eq active, DQ8 trim | – | **-0.002 ± 0.007** | – |
+| E1 g_eq active, H38-conditioned | – | **0.049 ± 0.032** | – |
+| E2 g_eq talk | 0.134 | **0.192 ± 0.023** | 0.182 [0.014, 0.350] |
+| T1 n̂ TALK | 0.379 | **0.357 ± 0.104** | 0.398 [0.015, 0.782] |
+| T3 fast n_x | 0.107 | **0.108 ± 0.020** | 0.073 [0.002, 0.143] |
+
+Per-period rule (unchanged): (i) both primaries inside their LOPO 90% intervals: raw run True, trim run True; (ii) log density ≥ regime-only rival: raw False (5.69 vs 6.11), trim False.
+Source: `data/processed/H19-loop-gain-collapse/r1b/results*/explore.json`.
+<!-- R1B END -->

@@ -9,7 +9,11 @@ Rules (card, "Data scheme"):
   - periods with > 5 active days are split into consecutive 5-day chunks; a trailing chunk is kept if >= 3 days;
   - present population per chunk: an activity_bins row on every day of the chunk AND >= 30 active bins.
 
-Usage: uv run python hypotheses/H02-couplings-are-real/scheme/build_spins.py
+Usage: uv run python hypotheses/H02-couplings-are-real/scheme/build_spins.py [--bins old|fixed]
+  --bins old    (default, round 1) shared activity_bins -> data/processed/H02-couplings-are-real/spins.parquet
+  --bins fixed  (round 1b, 2026-10-04) activity_bins_fixed (DQ8: the old table dropped ~half of all events) plus the
+                outages_fixed sidecar: adds `reason` (silence reason code, 0 when active) and `sched` (operator
+                village-off minute) -> data/processed/H02-couplings-are-real/r1b/spins.parquet
 """
 from __future__ import annotations
 
@@ -33,7 +37,13 @@ CHUNK_DAYS, MIN_TAIL_DAYS, MIN_ACTIVE_BINS = 5, 3, 30
 
 
 def main():
-    OUT.mkdir(parents=True, exist_ok=True)
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--bins", default="old", choices=["old", "fixed"])
+    fixed = ap.parse_args().bins == "fixed"
+    out = OUT / "r1b" if fixed else OUT
+    bins = SHARED / ("activity_bins_fixed.parquet" if fixed else "activity_bins.parquet")
+    out.mkdir(parents=True, exist_ok=True)
     cal = pl.read_parquet(SHARED / "calendar.parquet").select("pt_date", "goal_no", "regime", "holdout")
     goals = MODE_I + MODE_C
     cal = cal.filter(pl.col("goal_no").is_in(goals) & ~pl.col("holdout")).sort("pt_date")
@@ -53,7 +63,7 @@ def main():
                 rows.append({"chunk": f"g{g:02d}c{k}", "goal_no": g, "mode": "I" if g in MODE_I else "C",
                              "regime": reg, "pt_date": d, "day": di})
     sel = pl.DataFrame(rows)
-    ab = (pl.scan_parquet(SHARED / "activity_bins.parquet")
+    ab = (pl.scan_parquet(bins)
           .filter(pl.col("pt_date").is_in(sel["pt_date"].to_list()))
           .select("pt_date", "minute", "agent", "state").collect())
     df = sel.join(ab, on="pt_date", how="inner")
@@ -66,8 +76,17 @@ def main():
             .filter((pl.col("nd") == pl.col("ndays")) & (pl.col("nact") >= MIN_ACTIVE_BINS)))
     df = df.join(pres.select("chunk", "agent"), on=["chunk", "agent"], how="semi")
     df = df.with_columns(pl.col("day").cast(pl.Int8), pl.col("minute").cast(pl.Int16), pl.col("goal_no").cast(pl.Int8))
+    if fixed:
+        rs = (pl.read_parquet(SHARED / "outages_fixed/reasons.parquet")
+              .with_columns(pl.col("minute").cast(pl.Int16)))
+        sm = (pl.read_parquet(SHARED / "outages_fixed/stall_minutes.parquet", columns=["pt_date", "minute", "scheduled"])
+              .with_columns(pl.col("minute").cast(pl.Int16)))
+        df = (df.join(rs, on=["pt_date", "minute", "agent"], how="left")
+              .with_columns(pl.when(pl.col("state") >= 3).then(0).otherwise(pl.col("reason").fill_null(0)).cast(pl.Int8).alias("reason"))
+              .join(sm, on=["pt_date", "minute"], how="left").with_columns(pl.col("scheduled").fill_null(False).alias("sched"))
+              .drop("scheduled"))
     df = df.sort("chunk", "day", "minute", "agent")
-    df.write_parquet(OUT / "spins.parquet", compression="zstd")
+    df.write_parquet(out / "spins.parquet", compression="zstd")
 
     summ = (df.group_by("chunk", "goal_no", "mode", "regime")
             .agg(pl.col("pt_date").n_unique().alias("days"), pl.col("agent").n_unique().alias("N"),
@@ -78,12 +97,13 @@ def main():
     with pl.Config(tbl_rows=50):
         print(summ.join(dropped.select("chunk", "N_roster"), on="chunk"))
 
-    prov_path = OUT / "_provenance.json"
+    prov_path = out / "_provenance.json"
     prov = json.loads(prov_path.read_text()) if prov_path.exists() else {}
     prov["spins"] = {"built_by": "hypotheses/H02-couplings-are-real/scheme/build_spins.py", "git_commit": git_commit(),
                      "inputs": [{"source": "ai-village", "revision": REVISION,
-                                 "tables": ["data/processed/shared/activity_bins.parquet",
-                                            "data/processed/shared/calendar.parquet"]}],
+                                 "tables": [str(bins.relative_to(ROOT)), "data/processed/shared/calendar.parquet"]
+                                 + (["data/processed/shared/outages_fixed/reasons.parquet",
+                                     "data/processed/shared/outages_fixed/stall_minutes.parquet"] if fixed else [])}],
                      "params": {"mode_I": MODE_I, "mode_C": MODE_C, "chunk_days": CHUNK_DAYS,
                                 "min_tail_days": MIN_TAIL_DAYS, "min_active_bins": MIN_ACTIVE_BINS,
                                 "spin": "+1 if state>=3 else -1", "holdout": "excluded (calendar.holdout + holdout_mask)"},

@@ -31,6 +31,7 @@ def main():
     est, ctr, ctrd, methods = E.load()
     out = {}
     for ch, ms in CHANNELS.items():
+        ms = [m for m in ms if m in methods]   # round 1b: stale H04.K_week / H05 inputs may be dropped
         out[ch] = {}
         for x in CANDS[ch]:
             per = {m: L.method_fits(methods[m]["rows"], x, models=("const", "regime", "x", "regime+x")) for m in ms}
@@ -52,13 +53,14 @@ def main():
             print(f"{ch:8s} {x:18s} same sign {rec['same_sign']} ({rec['n_sig_same_sign']}/{len(ms)} sig) | ΔELPD x−regime "
                   f"{rec['x_minus_regime']:+.1f}, regime+x − regime {rec['regimex_minus_regime']:+.1f} | within-regime signs "
                   f"{[round(v['b'], 3) if v else None for v in rec['within_regime'].values()]}")
-    (C.OUT / "results/posthoc_channels.json").write_text(json.dumps(E.jsonable(out), indent=1))
+    (C.RES / "posthoc_channels.json").write_text(json.dumps(E.jsonable(out), indent=1))
     # Freeze the channel model for analysis/confirm.py (amendment 2026-10-04, before any holdout use):
     # talk-channel methods on k_llm, activity-channel methods on x_att_village; regime-only rival per level.
     import datetime as dt
     frozen = {"frozen_at": dt.datetime.now(dt.timezone.utc).isoformat(), "status": "post hoc, frozen for confirmation",
               "channel_x": {"talk": "k_llm", "activity": "x_att_village"}, "methods": {}}
     for ch, ms in CHANNELS.items():
+        ms = [m for m in ms if m in methods]
         x = frozen["channel_x"][ch]
         for m in ms:
             f = L.method_fits(methods[m]["rows"], x, models=("x", "regime"), do_lopo=False)
@@ -67,7 +69,7 @@ def main():
                                     "cov": (fx["cov"] * max(1.0, fx["q"])).tolist(),
                                     "regime_levels": E.regime_levels(methods[m]["rows"], f["regime"]),
                                     "median_se": float(np.median([r["s"] for r in methods[m]["rows"]]))}
-    (C.OUT / "results/frozen_channel_model.json").write_text(json.dumps(E.jsonable(frozen), indent=1))
+    (C.RES / "frozen_channel_model.json").write_text(json.dumps(E.jsonable(frozen), indent=1))
 
 
 if __name__ == "__main__":

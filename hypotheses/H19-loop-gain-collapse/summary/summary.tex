@@ -2,12 +2,34 @@
 \input{../../../writeup/hypothesis-pages/hpage.tex}
 \def\hID{H19}
 \def\hTitle{One curve for all periods: per-period loop gains collapse onto a function of an operational control parameter}
-\def\hStatus{running. Exploratory round 1 done (2026-10-04): the pre-registered collapse P1 FAILED, with no common curve: equal-time activity gains rise with x\_att while Hawkes talk gains fall, and the regime-only rival wins out of sample. Within the talk channel, the H...}
+\def\hStatus{running. Round 1b (2026-10-04, corrected activity\_bins, DQ8 trim, H38 conditioning): P1 still fails, but round 1's channel opposition is withdrawn: the rising activity gain was the operator's day edges (slope on x\_att +0.18 raw $\to$ -0.03 trimmed; regime III -...}
 \def\hStage{level: hypothesis  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-04}
-\def\hBadges{\hbadge{Complete}{40\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{1/5}{e34948}{0b0b0b}\ \hbadge{Usefulness}{1.5/5}{ee8584}{0b0b0b}}
-\def\hPeriodSummary{12 supported, 4 failed, 19 mixed}
+\def\hBadges{\hbadge{Complete}{50\%}{5598e7}{0b0b0b}\ \hbadge{Faithfulness}{1/5}{e34948}{0b0b0b}\ \hbadge{Usefulness}{2/5}{f5bcbb}{0b0b0b}}
+\def\hPeriodSummary{13 supported, 6 failed, 19 mixed}
 \def\hDate{Updated 2026-10-04}
-\def\hFooter{H19-loop-gain-collapse $\cdot$ generated 2026-10-03 18:08 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H19-loop-gain-collapse/README.md $\cdot$ ratings: calibrated by coordinator 2026-10-04 (from summary writer (suggested))}
+\def\hFooter{H19-loop-gain-collapse $\cdot$ generated 2026-10-04 00:26 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H19-loop-gain-collapse/README.md $\cdot$ ratings: RE-A2 re-evaluation agent (suggested), round 1b}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G02 & $\times$ & failed \\
+G03 & $\sim$ & mixed \\
+G04 & $\sim$ & mixed \\
+G05 & $\checkmark$ & supported \\
+G06 & $\checkmark$ & supported \\
+G07 & $\sim$ & mixed \\
+G08 & $\checkmark$ & supported \\
+G10 & $\sim$ & mixed \\
+G11 & $\times$ & failed \\
+G12 & $\sim$ & mixed \\
+G13 & $\checkmark$ & supported \\
+G16 & $\sim$ & mixed \\
+G17 & $\sim$ & mixed \\
+G18 & $\sim$ & mixed \\
+G19 & $\sim$ & mixed \\
+G20 & $\sim$ & mixed \\\multicolumn{3}{l}{\textit{+22 more periods: see the card.}} \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 2 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 0 & H comparative & 0 \\
+D unfitted predictions & 1 & I transfer & 0 \\
+E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} The swarm has two order parameters, talk and work, that trade off.\item \textbf{H19-R1} Talk and work anticorrelate: periods and agents sit in talky or worky phases on a (talk, work) phase diagram.\item \textbf{H19-R2} Goal type (shared vs individual) moves the swarm between the two phases.\item \textbf{H19-R3} Messages per LLM step is the control parameter; pre-register the post-hoc collapse.\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage

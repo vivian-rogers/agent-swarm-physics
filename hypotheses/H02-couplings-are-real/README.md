@@ -1,11 +1,10 @@
 # H02: Inferred couplings reflect real influence
 
-**Status:** **#45 confirmation FAILED (locked holdout, run 2026-10-03):** the Fine-Tuned Leader ranks 4th of 18 by net outgoing influence (z = 0.76; the rule needed rank 1 and z ≥ 2). Before that, exploratory round 1 found:
+**Status:** **Round 1b (2026-10-04, corrected `activity_bins` and DQ8 nulls): pairwise activity couplings stay at the null floor; the regime-III collective coupling of round 1 was the operator's day edges (significant in 2/8 regime-III chunks under the corrected null, against 7/13 in regime I); post-hoc talk-spin couplings transfer across days in regime-III shared-objective weeks.** The executed #45 run read the buggy table; not re-run (Vivian's call; the corrected analogs point the same way). Round 1: **#45 confirmation FAILED (locked holdout, run 2026-10-03):** the Fine-Tuned Leader ranks 4th of 18 by net outgoing influence (z = 0.76; the rule needed rank 1 and z ≥ 2). Before that, exploratory round 1 found:
 - The pipeline is identifiable at village sampling for a strong leader.
 - Pairwise couplings in non-holdout weeks are at null level.
 - A weak equal-time collective coupling exists, concentrated in regime-III shared-objective weeks.
 
-The #45 confirmation is written (`analysis/confirm_45.py`) but not run.
 **Fields:** stat mech, dynamics, info theory
 **Literature:** [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (directed couplings from lagged statistics). Kinetic-Ising inference by per-spin logistic regression (Roudi & Hertz 2011) and equilibrium pseudolikelihood (Aurell & Ekeberg 2012) are cited in the model folders.
 **Definitions used:** Agent; Population, N(t) (variant: *present population*, below); Regime; Driving / external field; Interaction (broadcast). Spin = "active" (below).
@@ -106,11 +105,11 @@ Scored 2026-10-03 after exploratory round 1 (non-holdout only), for the pairwise
 | --- | --- | --- | --- |
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Spin = `activity_bins.state ≥ 3`; assumptions listed. Not invariant across regimes: in regime III, "active" is mostly computer-use turns, and the talk spin gives a different picture (Results 2e). |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Update-order audit: no refractory hole at 0–2 s; consolidations not synchronized (Results 2c). Stationarity handled by block fields. Markov order explored only synthetically (lag 1 vs 5-min boxcar). No time-rescaling test. |
-| C adequacy | beats the null hierarchy, day-blocked held-out data | 0 [MF: 1] | Pairwise J: fraction significant vs N1 is at the calibrated false-positive rate. Leave-one-day-out M3 beats its N1 null (p = 0.048) in only 2/21 chunks. [The mean-field M2 beats N1 in 5/21 chunks, 3 of them regime-III mode C. CW βJ₀ survives matched lull exclusion in 5/21 chunks.] |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 [MF: 0] | CW forward P(K) fails: TVD improves in only 5/13 significant chunks, the low tail is underpredicted 2–5× in 3/13, and the observed kurtosis is higher than CW predicts. |
-| E interventional | predicts the change across a natural experiment | 0 | Not attempted. |
+| C adequacy | beats the null hierarchy, day-blocked held-out data | 0 [MF: 1] (1b: unchanged; MF regime I only) | Pairwise J: fraction significant vs N1 is at the calibrated false-positive rate. Leave-one-day-out M3 beats its N1 null (p = 0.048) in only 2/21 chunks. [The mean-field M2 beats N1 in 5/21 chunks, 3 of them regime-III mode C. CW βJ₀ survives matched lull exclusion in 5/21 chunks.] |
+| D unfitted predictions | unfitted statistics and the model's signature | 0 [MF: 1 in round 1b; round 1: 0] | **Round 1b (corrected null):** CW improves P(K) in 6/9 significant chunks, tails within 2× in 7/9. Round 1: CW forward P(K) fails: TVD improves in only 5/13 significant chunks, the low tail is underpredicted 2–5× in 3/13, and the observed kurtosis is higher than CW predicts. |
+| E interventional | predicts the change across a natural experiment | 0 | Round 1: not attempted. **Round 1b:** NE14 (regime II → III): the collective-coupling rise vanishes under the day-edge adjustment, against the round-1 reading. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Synthetic (N = 18, 241 bins/day, calibrated fields, block drive): edge AUC 0.94 at 5 days; leader top-1 = 1.00 at J_L ≥ 0.3; null false-positive rate 5.8–7.6%. Robustness to preprocessing is weak: only 19% of significant couplings stay significant at 2-min bins, and a lag misspecification costs 25–50 points of leader recovery. |
-| G ground truth | agrees with known structure | 0 | #26's elected leader not detected (rank 8/10). **#45 (locked holdout, 2026-10-03): failed**: the assigned leader ranks 4/18, z = 0.76 (Results 5). |
+| G ground truth | agrees with known structure | 0 | **Round 1b:** #12's team/judge structure not recovered (z = −0.32); 44b fine-tuned leader rank 1 in #best but z = 0.94; #26 leader 10/10 under the corrected null. Round 1: #26's elected leader not detected (rank 8/10). **#45 (locked holdout, 2026-10-03): failed**: the assigned leader ranks 4/18, z = 0.76 (Results 5). |
 | H comparative | beats the named rivals | 0 [MF: 1] | Synthetic: KI-1 beats EQ-PL decisively on leader recovery. Real: pairwise J does not beat the common-drive-only or family/mean-field rivals on held-out days. [The mean field beats independence in regime-III mode C.] |
 | I transfer | holds in other same-mode periods, including the holdout | 0 | #45 holdout run: no leader signal (Results 5). #14/#49 transfer not run. |
 
@@ -346,7 +345,61 @@ Setup:
 - What *is* there is a weak collective co-activation, partly synchronized lulls. Beyond lulls and 10-min fields it survives mainly in regime-III shared-objective weeks (#40, #44). That is the S1 mode contrast, but at the mean-field level.
 - Implication for H01 and others: do not read individual J_ij from activity spins. Use mean-field or block statistics, or a talk/mention mapping.
 
+## Round 1b (improved data, 2026-10-04)
+*Re-evaluation on the corrected tables (re-evaluation agent RE-A2; nothing confirmatory; the #45 holdout run was not repeated). Code: `scheme/build_spins.py --bins fixed`, the switches in `analysis/r1b_common.py` (env `H02_DATA=r1b`, `H02_MASK=none|trim|trim_stall`; the round-1 path is the default and still runs), `analysis/r1b_report.py`, `r1b_native.py`, `r1b_thinning.py`, `r1b_period_lines.py`. Numbers: `data/processed/H02-couplings-are-real/r1b/` (`report.json`, `chunks_1b.parquet`, `native_*.json`, `thinning.parquet`).*
+
+**What changed.**
+- **Inputs:** `activity_bins_fixed` replaces `activity_bins`, which dropped about half of all events through a join-key bug (DQ8). The 21 chunks and their populations are unchanged; the active fraction rises from about 0.5 to 0.55–0.86. Joint silences ("lulls") almost disappear: 7.8% → 1.0% of chunk minutes.
+- **Nulls (DQ8):** on the whole-day grid, H02's N1 block shift rejects 28–34% of independent swarms (staggered day edges look like co-activation). The **corrected null** trims each day to the all-present window and removes H38's explained joint silences *before* drawing surrogates (`trim_stall`; 33–99% of minutes kept, #44 33%). Both nulls are reported. H38's agent-state conditioning ("H38-conditioned", the day-edge adjustment) comes from H19's round-1b estimates on the same chunks.
+- **Not re-run:** the synthetic harness (data-independent; its regime-III calibration moves from active 0.5 / J_self 0.33 to 0.67 / 0.49 on fixed data, `r1b/calibration.json`) and `confirm_45.py`.
+
+**Old vs new (medians over chunks; regime-mode cells I-C / I-I / III-C / III-I).**
+
+| Statistic | Round 1 (buggy bins) | Round 1b, whole grid (round-1 null) | **Round 1b, corrected null** |
+| --- | --- | --- | --- |
+| KI-1 fraction significant vs N1 | 7.8 / 8.4 / 6.1 / 5.7% | 6.7 / 8.8 / 7.6 / 6.7% | **7.1 / 11.3 / 6.7 / 4.8%** |
+| mode C / mode I ratio (reg I; reg III) | 0.92; 1.06 | 0.76; 1.14 | **0.63; 1.40** (all at the null floor) |
+| BH discoveries (all chunks) | 8 | 14 | **8** |
+| held-out: pairwise M3 beats N1 (p < 0.05) | 2/21 | 7/21 | **3/21** |
+| held-out: mean-field M2 beats N1 | 5/21 (III-C 3/5; z21 5.2) | 9/21 (III-C 5/5; z21 5.0) | **2/21 (III-C 1/5; z21 0.15)** |
+| Curie–Weiss βJ₀ | 0.10 / 0.11 / 0.28 / 0.19 | 0.23 / 0.19 / 0.46 / 0.42 | **0.16 / 0.14 / 0.12 / −0.02** |
+| βJ₀ significant (z > 2) | 13/21 (III 8/8) | 17/21 (III 8/8) | **9/21: regime I 7/13, regime III 2/8 (#38c1, #44)** |
+| gain g = βJ₀q, raw → H38-conditioned | – | I 0.12 → 0.10; III 0.29 → 0.04–0.07 | day-edge share of g: regime III 0.74 (conditioned) / 0.92 (trim); regime I 0.20 / 0.49 |
+| forward P(K) in significant chunks: CW better; low tail off > 2× | 5/13; 3/13 | 5/17; 10/17 | **6/9; 2/9** |
+| leader–follower: z_A > 2; J_ff z (regime III) | ≤ 2.9%; 3.5 / 2.4 | ≤ 3.2%; 4.9 / 4.2 | ≤ 6.5%; **0.65 / −0.58** |
+| same-lab enrichment | 1.16 | 0.82 | 0.85 |
+| significant equal-time (EQ-PL) couplings that are negative (RP5: < 30%) | 18% | 6.7% | 33% (few significant) |
+| #26 DeepSeek-V3.2 by I_k | 8/10 (z −0.83) | 8/10 (−0.76) | 10/10 (−1.74) |
+| top z(I_k) per chunk | 0.6–2.8 | 0.9–2.3 | 0.9–2.5 |
+| talk spin (post hoc 2e): KI-1 frac. sig. III-C; BH; held-out M3 vs N1 III-C | too few talkers | 12.2%; 9; 4/5 | **9.7%; 13; 3/5 (median z31 2.45)** |
+
+**Reading.**
+1. **Pairwise activity couplings are still at the null floor**, on corrected data and under either null, in both modes (RP1–RP3, RP6 unchanged ✗). Round 1's central negative stands.
+2. **The regime-III "collective coupling in shared-objective weeks" is withdrawn.** On corrected data the whole-grid βJ₀ even doubles, but almost all of it is the operator's day edges: under the corrected null regime-III βJ₀ is significant in 2/8 chunks (#38c1, #44), the transferable mean-field term (M2) disappears (III-C z21 5.0 → 0.15), and the follower–follower J_ff falls to null. #44 keeps its excess (βJ₀ 0.54, z 3.7), as H38 found. Consistent with H50 (cross-hypothesis): inside the all-present window the per-pair activity correlation is 0.056 (regime I) / 0.005 (regime III).
+3. **What survives is a weak regime-I collective co-activation** (βJ₀ ≈ 0.15, significant in 7/13 regime-I chunks; #10, #17, #18, #19, #26), and its forward prediction of P(K) now mostly works (6/9), because the lull excess that broke it in round 1 was largely an artifact of dropped events.
+4. **Post hoc: talk-spin pairwise couplings transfer across days in regime-III shared-objective weeks** (held-out M3 beats the corrected null in 3/5 III-C chunks; 13 BH discoveries). With the fixed table enough agents talk to test it. This matches H50's finding that talk is a real coupling gated at the recipient's next model call, and H02-R1's redirect (influence lives in messages, not activity timing). Not pre-registered; a lead for round 2.
+
+**Period-native layer** (predictions dated in the folders before the runs):
+
+| Folder | Design | Prediction | Result | Verdict |
+| --- | --- | --- | --- | --- |
+| [G12](goalperiod-subhypotheses/G12/README.md) | #12 debates (team / judge ground truth, teams re-drafted each debate): relation-structured kinetic Ising on talk spins, re-draft permutation null | J_opp − J_same > 0 with z ≥ 2 (expected null, credence 0.65) | −0.041, z = −0.32; judge z = −0.13 | failed |
+| [G44](goalperiod-subhypotheses/G44/README.md) (44b) | the temporary fine-tuned leader among #best, the non-holdout analog of #45 | rank 1 and z ≥ 2 (expected to fail, 0.8) | rank 1/5 but z = 0.94 (whole grid); rank 2/5, z = 0.54 trimmed; village rank 11/17 | failed |
+| [NE14](goalperiod-subhypotheses/NE14/README.md) | regime II → III, βJ₀ with/without the day-edge adjustment (H19's computation) | H38's result: rise vanishes when adjusted | old tables Δg +0.145 ± 0.083 → −0.02 / −0.06; fixed +0.112 ± 0.177 → −0.08 / −0.14 | failed (for "collective coupling rises in regime III") |
+
+**#45 holdout (executed 2026-10-03 on the buggy table; not re-run).** What the corrected numbers imply:
+- Every non-holdout analog points the same way on fixed data: pairwise couplings at the null floor, top z(I_k) 0.9–2.5 (the maximum of N null z's), #26's leader 10/10, and the 44b fine-tuned leader rank 1 in #best at z = 0.94, exactly the #45 pattern (#best rank 1, z = 1.28; village 4/18, z = 0.76).
+- The bug thinned active minutes at a day-specific rate (non-holdout regime-III days keep a median 87% of active agent-minutes, IQR 64–94%, 5% quantile 14%). Synthetic check (`r1b_thinning.py`, see below) of what that does to the frozen rule's power: with the round-1b calibration, thinning cuts the rule's pass rate for a leader with J_L = 0.3 to 5 followers from 0.90 to 0.70 (1.00 → 0.83 at J_L = 0.5; 0.63 → 0.33 at 0.2) and halves the leader's median z (5.5 → 2.7). A true J_L ≥ 0.3 leader would still have shown z below the observed 0.76 in only 0–7% of thinned replicates; a J_L = 0.2 leader in 30%. The bug cost power, mainly against weak leaders; it does not explain a z of 0.76 for a strong one.
+- So the executed FAIL is unlikely to flip on corrected data: the rule could only pass if a leader shifted followers' minute-level activity far more than anything seen in corrected non-holdout weeks, and the closest analog (44b) shows the same null. A corrected re-run would remain a single-period test with the round-1 settings (Vivian's call); the more informative follow-up is H02-R1/R2 (message-level influence; the talk-spin lead above), which #45's reuse policy treats as a different modality.
+
+**Verdict changes.**
+- Card: the exploratory bottom line keeps "pairwise couplings are not influence"; the positive part changes from "weak collective coupling concentrated in regime-III shared-objective weeks" to "weak regime-I collective co-activation; regime III is day edges (except #44); post-hoc talk-spin couplings in III-C".
+- Periods (RP1 rule on the corrected null, `**Verdict (1b):**` lines): G13 mixed → failed, G20 mixed → supported (mode-I threshold 8%, near the 6–8% false-positive rate), G42 supported → failed; the other 12 replications unchanged (G17 supported; 11 failed). New native folders G12 (failed) and NE14 (failed); G44 native test failed. G45 not re-run.
+
+**Scorecard updates (round 1b).** A 1, B 1 unchanged. **C 0 [MF 1]** unchanged (pairwise never beats the corrected null; the mean field beats it in regime I only). **D 0 → [MF 1]**: the unfitted P(K) forward test now passes in 6/9 significant chunks. **E 0 → 0** (NE14 tested; the predicted regime-III rise is absent). F 1 (the thinning check adds to identifiability). **G 0** (#12 structure and the 44b leader not recovered). **H 0 [MF 1]**. I 0. Talk-spin mapping (post hoc): C would be 1 (held-out transfer in III-C).
+
 ## Notes
+- **From H50 (2026-10-04, cross-hypothesis):** activity co-movement is mostly the scheduler's field (day start/stop explains 0.62 / 0.67 of it in regimes I / III); inside the all-present window the per-pair activity correlation is 0.056 / 0.005. Talk is a real coupling gated at the recipient's next model call (J₁ > 0 in 45/71 units). Consistent with round 1b here (trimmed regime-III βJ₀ ≈ 0; post-hoc talk-spin transfer in III-C).
 - **From H38 (2026-10-04):** about two thirds of regime-III activity βJ₀ (median f_scaffold 0.68) is agents starting and stopping together at the operator's daily resume and pause. The regime II → III rise goes away under agent-state conditioning (NE14 +0.15 → +0.01). Regime-I coupling survives (f 0.11), and #44 and the #51 head keep their full excess. Use stall-adjusted βJ₀ in the re-evaluation.
 - 2026-10-04: **#45 will be reused by H23** for confirmation on message content, a different modality from H02's activity timing, under the holdout reuse policy (`../holdout.md`).
 - 2026-10-03: card and predictions written before any real-data analysis. #45 calendar windows (5 days, ~241 bins) and roster (N = 18) were read as sampling design only.

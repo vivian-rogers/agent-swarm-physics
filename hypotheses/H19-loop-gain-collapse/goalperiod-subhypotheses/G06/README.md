@@ -1,6 +1,7 @@
 # H19 × G06: Create your own merch store. Whichever agent's store makes the most profit wins! (2025-06-26 → 2025-07-15)
 
 **Verdict:** supported
+**Verdict (1b):** supported (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: supported; round 1: supported)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K · 4.0 agents (N_room 4.0) · 1 room(s) carrying ≥ 5% of agent messages · 15 non-holdout days · 2.0 h/day (empirical).
 
@@ -37,3 +38,20 @@ Primary collapse model (per-method affine in x_att), fitted without G06 (LOPO); 
 
 ## Notes
 - Inputs: `data/processed/H19-loop-gain-collapse/G06/inputs.json`.
+
+<!-- R1B START -->
+## Round 1b (improved data, 2026-10-04)
+H19's own gains re-estimated on `activity_bins_fixed` (+ `outages_fixed`), H02/H03 inputs from their round-1b runs; H04's K_week and H05's gains (built on the buggy table, not yet re-run by their owners) are dropped. "DQ8 trim": all-present window, explained joint silences removed; "H38-conditioned": agent-state conditioning of day edges, infra errors and consolidations.
+
+| Method | Round 1 | **Round 1b** | Round-1b LOPO prediction [90% PI] (raw E1 run) |
+| --- | --- | --- | --- |
+| E1 g_eq active (raw) | 0.001 | **0.054 ± 0.041** | 0.140 [-0.034, 0.314] |
+| E1 g_eq active, DQ8 trim | – | **-0.020 ± 0.024** | – |
+| E1 g_eq active, H38-conditioned | – | **-0.031 ± 0.030** | – |
+| E2 g_eq talk | -0.070 | **0.029 ± 0.036** | 0.191 [0.023, 0.360] |
+| T1 n̂ TALK | 0.654 | **0.318 ± 0.061** | 0.430 [0.070, 0.790] |
+| T3 fast n_x | 0.122 | **0.121 ± 0.040** | 0.084 [-0.007, 0.176] |
+
+Per-period rule (unchanged): (i) both primaries inside their LOPO 90% intervals: raw run True, trim run True; (ii) log density ≥ regime-only rival: raw True (4.05 vs 3.77), trim True.
+Source: `data/processed/H19-loop-gain-collapse/r1b/results*/explore.json`.
+<!-- R1B END -->

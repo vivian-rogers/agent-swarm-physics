@@ -46,10 +46,19 @@ def jsonable(o):
 
 def load():
     est = pl.read_parquet(C.OUT / "estimates.parquet").filter(~pl.col("validation_only"))
-    ctr = pl.read_parquet(C.OUT / "controls.parquet").with_columns(
+    # round 1b: the DQ8-trimmed / H38-conditioned versions of H19's own gains are not extra P1 methods; with
+    # H19_E1=trim|scaf they replace E1 (geq_active) and E2 (geq_talk), otherwise they are dropped here.
+    sfx = ("_trim", "_scaf")
+    if C.E1_VARIANT != "raw":
+        v = "_" + C.E1_VARIANT
+        est = (est.filter(~pl.col("method").is_in(["H19.geq_active", "H19.geq_talk"]))
+               .with_columns(pl.col("method").str.replace(v + "$", "")))
+    est = est.filter(~pl.col("method").str.ends_with(sfx[0]) & ~pl.col("method").str.ends_with(sfx[1]))
+    est = est.with_columns(pl.when(pl.col("method") == "H19.geq_active").then(True).otherwise(pl.col("primary")).alias("primary"))
+    ctr = pl.read_parquet(C.CTRL / "controls.parquet").with_columns(
         pl.col("N_roster").log().alias("log_N_roster"), (1 + pl.col("k_village")).log().alias("log1p_k_village"),
         (1 / pl.col("m_turn_village")).alias("inv_m_turn_village"))
-    C.assert_no_holdout(pl.read_parquet(C.OUT / "controls_days.parquet")["pt_date"], pl.read_parquet(C.OUT / "controls_days.parquet")["goal_no"])
+    C.assert_no_holdout(pl.read_parquet(C.CTRL / "controls_days.parquet")["pt_date"], pl.read_parquet(C.CTRL / "controls_days.parquet")["goal_no"])
     ctrd = {r["goal_no"]: r for r in ctr.iter_rows(named=True)}
     methods = {}
     for (m,), d in est.group_by(["method"], maintain_order=True):
@@ -339,8 +348,8 @@ def main():
                               "regime_levels": regime_levels(methods[m]["rows"], per[m]["regime"]),
                               "median_se": float(np.median([r["s"] for r in methods[m]["rows"]]))} for m in methods},
               "exploratory_verdict_P1": dec["verdict"]}
-    (C.OUT / "results").mkdir(parents=True, exist_ok=True)
-    (C.OUT / "results/frozen_model.json").write_text(json.dumps(jsonable(frozen), indent=1))
+    C.RES.mkdir(parents=True, exist_ok=True)
+    (C.RES / "frozen_model.json").write_text(json.dumps(jsonable(frozen), indent=1))
 
     R = {"P1": {k: v for k, v in dec.items()}, "per_period": pp, "P2": p2, "cross_family_concordance": cross,
          "residual_concordance": conc_res, "P3": p3, "P4": p4, "P5": p5, "scan_joint": joint.to_dicts(),
@@ -349,11 +358,12 @@ def main():
          "fits": {m: {mod: {"coefs": per[m][mod]["coefs"], "tau2": per[m][mod]["fit"]["tau2"], "q": per[m][mod]["fit"]["q"],
                             "elpd": float(np.nansum(per[m][mod]["lopo"]["lpd"]))} for mod in L.MODELS} for m in methods},
          "n_periods": {m: len(M["rows"]) for m, M in methods.items()}}
-    (C.OUT / "results/explore.json").write_text(json.dumps(jsonable(R), indent=1))
-    sc.write_parquet(C.OUT / "results/scan.parquet")
-    ppq.write_parquet(C.OUT / "results/per_period.parquet")
+    (C.RES / "explore.json").write_text(json.dumps(jsonable(R), indent=1))
+    sc.write_parquet(C.RES / "scan.parquet")
+    ppq.write_parquet(C.RES / "per_period.parquet")
     for (g,), d in ppq.group_by(["goal_no"]):
-        d.write_parquet(C.OUT / C.pname(g) / "residuals.parquet")
+        (C.OUT / C.pname(g)).mkdir(parents=True, exist_ok=True)
+        d.write_parquet(C.OUT / C.pname(g) / f"residuals{'' if C.E1_VARIANT == 'raw' else '_' + C.E1_VARIANT}.parquet")
     C.write_provenance("results", "hypotheses/H19-loop-gain-collapse/analysis/explore.py",
                        [{"source": "data/processed/H19-loop-gain-collapse", "tables": ["estimates.parquet", "controls.parquet", "h03_aux.parquet"]}],
                        {"x_primary": XP, "primaries": PRIMARIES, "scan": SCAN, "models": L.MODELS})

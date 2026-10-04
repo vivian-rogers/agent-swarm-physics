@@ -24,12 +24,12 @@ import h02lib as L
 from calibrate import load_chunks
 
 ROOT = Path(__file__).resolve().parents[3]
-DATA = ROOT / "data/processed/H02-couplings-are-real"
+DATA = __import__("r1b_common").data_dir()   # round 1 or round 1b (+ mask): analysis/r1b_common.py
 SHARED = ROOT / "data/processed/shared"
 NSURR = int(sys.argv[1]) if len(sys.argv) > 1 else 100
 SPIN = sys.argv[2] if len(sys.argv) > 2 else "active"   # 'talk' = post-hoc mapping
 SUFFIX = "" if SPIN == "active" else f"_{SPIN}"
-WORKERS = 3
+WORKERS = int(os.environ.get("H02_WORKERS", 3))  # round 1b runs with 2
 
 
 # held-out comparison (N2) lives in h02lib: mean_field_covs, loglik, heldout

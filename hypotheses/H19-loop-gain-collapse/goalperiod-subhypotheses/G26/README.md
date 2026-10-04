@@ -1,6 +1,7 @@
 # H19 × G26: Elect a village leader. They choose this week’s goal! (2026-01-05 → 2026-01-09)
 
 **Verdict:** supported
+**Verdict (1b):** mixed (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: mixed; round 1: supported)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode C · 10.0 agents (N_room 10.0) · 1 room(s) carrying ≥ 5% of agent messages · 5 non-holdout days · 4.0 h/day (empirical).
 
@@ -37,3 +38,20 @@ Primary collapse model (per-method affine in x_att), fitted without G26 (LOPO); 
 
 ## Notes
 - Inputs: `data/processed/H19-loop-gain-collapse/G26/inputs.json`.
+
+<!-- R1B START -->
+## Round 1b (improved data, 2026-10-04)
+H19's own gains re-estimated on `activity_bins_fixed` (+ `outages_fixed`), H02/H03 inputs from their round-1b runs; H04's K_week and H05's gains (built on the buggy table, not yet re-run by their owners) are dropped. "DQ8 trim": all-present window, explained joint silences removed; "H38-conditioned": agent-state conditioning of day edges, infra errors and consolidations.
+
+| Method | Round 1 | **Round 1b** | Round-1b LOPO prediction [90% PI] (raw E1 run) |
+| --- | --- | --- | --- |
+| E1 g_eq active (raw) | 0.209 | **0.465 ± 0.067** | 0.153 [-0.026, 0.331] |
+| E1 g_eq active, DQ8 trim | – | **0.335 ± 0.094** | – |
+| E1 g_eq active, H38-conditioned | – | **0.483 ± 0.093** | – |
+| E2 g_eq talk | 0.240 | **0.358 ± 0.018** | 0.176 [0.020, 0.332] |
+| T1 n̂ TALK | 0.564 | **0.541 ± 0.082** | 0.396 [0.030, 0.763] |
+| T3 fast n_x | 0.211 | **0.212 ± 0.020** | 0.070 [0.014, 0.125] |
+
+Per-period rule (unchanged): (i) both primaries inside their LOPO 90% intervals: raw run False, trim run False; (ii) log density ≥ regime-only rival: raw True (-8.53 vs -10.80), trim True.
+Source: `data/processed/H19-loop-gain-collapse/r1b/results*/explore.json`.
+<!-- R1B END -->

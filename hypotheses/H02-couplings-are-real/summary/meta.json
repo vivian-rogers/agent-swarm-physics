@@ -1,13 +1,14 @@
 {
- "complete": 60,
- "faithfulness": 0.5,
- "usefulness": 1.5,
- "rationale": {
-  "complete": "Round 1, synthetic validation and the pre-registered #45 holdout test are all done; the talk/mention spins, the Hawkes comparison and the #14/#49 transfer set remain.",
-  "faithfulness": "The core claim (pairwise couplings measure influence) was refuted on the locked holdout and pairwise J never beat the nulls; only a weak mean-field co-activation beats N1 in some chunks, and its forward P(K) test failed.",
-  "usefulness": "A well-controlled negative: it tells operators not to infer leaders or influence from activity timing, which saves effort but gives no positive handle."
- },
- "one_line": "Activity-timing Ising couplings are null-level and missed the installed #45 leader; only shared lulls remain",
- "rated_by": "calibrated by coordinator 2026-10-04 (from summary writer (suggested))",
- "updated": "2026-10-04"
+  "complete": 65,
+  "faithfulness": 0.5,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1, synthetic validation and the #45 holdout run are done; round 1b re-ran everything on the corrected minute grid with DQ8 nulls and added three period-native tests (#12 teams, the #44 leader, NE14) plus a synthetic check of what the bug did to the holdout rule. Open: message-level influence (H02-R1/R2), the #14/#49 transfer set, a decision on re-running #45.",
+    "faithfulness": "The core claim (pairwise activity couplings measure influence) is refuted on the holdout and on every corrected analog (#12, #44b, #26). The collective coupling that partly survived round 1 is mostly day edges once nulls are trimmed; only weak regime-I co-activation and a post-hoc talk-spin signal remain.",
+    "usefulness": "A clean, well-controlled negative with a concrete warning (trim day edges before any synchrony statistic; do not read leaders from activity timing) and one lead (talk-spin couplings), consistent with H50."
+  },
+  "one_line": "Activity-timing couplings stay null on corrected data; the regime-III collective coupling was day edges",
+  "rated_by": "RE-A2 re-evaluation agent (suggested), round 1b",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)"
 }

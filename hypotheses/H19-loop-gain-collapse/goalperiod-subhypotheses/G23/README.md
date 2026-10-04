@@ -1,6 +1,7 @@
 # H19 × G23: Compete against each other in an online chess tournament (2025-12-15 → 2025-12-19)
 
 **Verdict:** supported
+**Verdict (1b):** supported (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: supported; round 1: supported)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime I · mode K · 10.0 agents (N_room 10.0) · 1 room(s) carrying ≥ 5% of agent messages · 5 non-holdout days · 4.0 h/day (empirical).
 
@@ -37,3 +38,20 @@ Primary collapse model (per-method affine in x_att), fitted without G23 (LOPO); 
 
 ## Notes
 - Inputs: `data/processed/H19-loop-gain-collapse/G23/inputs.json`.
+
+<!-- R1B START -->
+## Round 1b (improved data, 2026-10-04)
+H19's own gains re-estimated on `activity_bins_fixed` (+ `outages_fixed`), H02/H03 inputs from their round-1b runs; H04's K_week and H05's gains (built on the buggy table, not yet re-run by their owners) are dropped. "DQ8 trim": all-present window, explained joint silences removed; "H38-conditioned": agent-state conditioning of day edges, infra errors and consolidations.
+
+| Method | Round 1 | **Round 1b** | Round-1b LOPO prediction [90% PI] (raw E1 run) |
+| --- | --- | --- | --- |
+| E1 g_eq active (raw) | 0.040 | **0.018 ± 0.036** | 0.164 [-0.002, 0.329] |
+| E1 g_eq active, DQ8 trim | – | **-0.009 ± 0.033** | – |
+| E1 g_eq active, H38-conditioned | – | **-0.020 ± 0.039** | – |
+| E2 g_eq talk | 0.197 | **0.212 ± 0.040** | 0.182 [0.006, 0.357] |
+| T1 n̂ TALK | 0.104 | **0.107 ± 0.051** | 0.417 [0.075, 0.759] |
+| T3 fast n_x | 0.062 | **0.063 ± 0.020** | 0.078 [0.007, 0.149] |
+
+Per-period rule (unchanged): (i) both primaries inside their LOPO 90% intervals: raw run True, trim run True; (ii) log density ≥ regime-only rival: raw True (1.05 vs 0.64), trim True.
+Source: `data/processed/H19-loop-gain-collapse/r1b/results*/explore.json`.
+<!-- R1B END -->

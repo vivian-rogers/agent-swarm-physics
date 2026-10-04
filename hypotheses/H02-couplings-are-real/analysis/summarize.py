@@ -8,21 +8,22 @@ import numpy as np
 import polars as pl
 
 ROOT = Path(__file__).resolve().parents[3]
-DATA = ROOT / "data/processed/H02-couplings-are-real"
+DATA = __import__("r1b_common").data_dir()   # round 1 or round 1b (+ mask): analysis/r1b_common.py
 pl.Config.set_tbl_rows(60); pl.Config.set_tbl_cols(30); pl.Config.set_tbl_width_chars(250)
 
 
 def main():
     out = {}
     # ---------------- harness C (null calibration / power at D = 5)
-    C = pl.read_parquet(DATA / "harness_C.parquet")
+    BASE = ROOT / "data/processed/H02-couplings-are-real"   # synthetic harness: round 1 (data-independent)
+    C = pl.read_parquet(BASE / "harness_C.parquet")
     cs = C.group_by("JL", "background").agg(
         *[pl.col(f"{n}_fpr").mean().round(3).alias(f"{n}_fpr") for n in ("blockN1", "naiveN0", "blockN0")],
         *[pl.col(f"{n}_power").mean().round(3).alias(f"{n}_power") for n in ("blockN1", "naiveN0")],
         pl.col("blockN1_pass").mean().round(2).alias("pass_rate"), (pl.col("blockN1_rank") == 1).mean().round(2).alias("rank1"),
         pl.col("blockN1_zI").median().round(2).alias("zI_med")).sort("background", "JL")
     print("harness C\n", cs); out["harness_C"] = cs.to_dicts()
-    B2 = pl.read_parquet(DATA / "harness_B2.parquet")
+    B2 = pl.read_parquet(BASE / "harness_B2.parquet")
     b2 = B2.group_by("JL", "D").agg(pl.col("ki1_auc").mean().round(3), pl.col("ki5_auc").mean().round(3),
                                     (pl.col("ki1_rank") == 1).mean().alias("ki1_top1"),
                                     (pl.col("ki5_rank") == 1).mean().alias("ki5_top1")).sort("JL", "D")

@@ -1,6 +1,7 @@
 # H19 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
 **Verdict:** supported
+**Verdict (1b):** mixed (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: mixed; round 1: supported)
 **Role:** exploratory (round 1, non-holdout)
 **Period:** regime III · mode C · 12.5 agents (N_room 6.4) · 2 room(s) carrying ≥ 5% of agent messages · 17 non-holdout days · 4.0 h/day (empirical).
 
@@ -39,3 +40,20 @@ Primary collapse model (per-method affine in x_att), fitted without G38 (LOPO); 
 
 ## Notes
 - Inputs: `data/processed/H19-loop-gain-collapse/G38/inputs.json`.
+
+<!-- R1B START -->
+## Round 1b (improved data, 2026-10-04)
+H19's own gains re-estimated on `activity_bins_fixed` (+ `outages_fixed`), H02/H03 inputs from their round-1b runs; H04's K_week and H05's gains (built on the buggy table, not yet re-run by their owners) are dropped. "DQ8 trim": all-present window, explained joint silences removed; "H38-conditioned": agent-state conditioning of day edges, infra errors and consolidations.
+
+| Method | Round 1 | **Round 1b** | Round-1b LOPO prediction [90% PI] (raw E1 run) |
+| --- | --- | --- | --- |
+| E1 g_eq active (raw) | 0.123 | **0.270 ± 0.016** | 0.266 [0.100, 0.433] |
+| E1 g_eq active, DQ8 trim | – | **0.006 ± 0.022** | – |
+| E1 g_eq active, H38-conditioned | – | **0.042 ± 0.028** | – |
+| E2 g_eq talk | 0.040 | **0.107 ± 0.025** | 0.182 [0.012, 0.353] |
+| T1 n̂ TALK | 0.321 | **0.140 ± 0.035** | 0.327 [-0.024, 0.678] |
+| T3 fast n_x | 0.020 | **0.010 ± 0.020** | 0.041 [-0.031, 0.113] |
+
+Per-period rule (unchanged): (i) both primaries inside their LOPO 90% intervals: raw run True, trim run True; (ii) log density ≥ regime-only rival: raw False (5.96 vs 6.26), trim False.
+Source: `data/processed/H19-loop-gain-collapse/r1b/results*/explore.json`.
+<!-- R1B END -->

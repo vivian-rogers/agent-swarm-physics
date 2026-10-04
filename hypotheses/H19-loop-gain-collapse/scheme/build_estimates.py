@@ -12,6 +12,12 @@ Sources (read-only; never modified):
   Ingest hook: data/processed/H*/per_period_estimates.parquet in the proposed shared schema (card, Notes).
 
 Usage: uv run python hypotheses/H19-loop-gain-collapse/scheme/build_estimates.py
+Round 1b (2026-10-04): H19_DATA=r1b uv run python .../build_estimates.py [--stale drop|keep]
+  H19's own g_eq on activity_bins_fixed (+ DQ8-trimmed and H38-conditioned variants, scheme/geq_r1b.py); H02 and H03
+  from their round-1b outputs (data/processed/H02-.../r1b/mf_cw.parquet, H03-.../r1b/period_table.parquet). H04's
+  K_week and H05's two-block gains were built on the buggy activity_bins and are not yet re-run by their owners:
+  dropped by default (--stale drop), kept with --stale keep (sensitivity). H04's Hawkes n_week reads chat, not
+  activity_bins, and is kept. Results go to data/processed/H19-loop-gain-collapse/r1b/.
 """
 from __future__ import annotations
 
@@ -47,6 +53,11 @@ METHODS = {
     "H03.n_all": ("T", "hawkes n", False, False, "H03 M1 Hawkes n on all agent turns, B2 baseline"),
     "H03.nx_fast": ("T", "hawkes n_cross fast", False, False, "H03 M3 fast (tau<=300 s) cross-agent offspring per TALK event"),
     "H04.n_week": ("T", "hawkes n", False, False, "H04 Hawkes n on agent chat per ISO week (4-step day profile)"),
+    # round 1b (secondary): DQ8-trimmed and H38-conditioned versions of H19's own estimator
+    "H19.geq_active_trim": ("E", "1-1/VR", False, False, "g_eq active on the all-present window, explained joint silences removed (DQ8)"),
+    "H19.geq_talk_trim": ("E", "1-1/VR", False, False, "g_eq talk on the all-present window, explained joint silences removed (DQ8)"),
+    "H19.geq_active_scaf": ("E", "1-1/VR", False, False, "g_eq active, H38 agent-state conditioning (mask_scaffold)"),
+    "H19.geq_talk_scaf": ("E", "1-1/VR", False, False, "g_eq talk, H38 agent-state conditioning (mask_scaffold)"),
 }
 
 
@@ -141,8 +152,13 @@ def own_geq(cal: pl.DataFrame, rng: np.random.Generator) -> pl.DataFrame:
 
 
 # ----------------------------------------------------------------------------- other hypotheses
+R1B = C.DATA_VERSION == "r1b"
+H02_DIR = C.PROC / "H02-couplings-are-real" / ("r1b" if R1B else "")
+H03_DIR = C.PROC / "H03-self-excited-criticality" / ("r1b" if R1B else "")
+
+
 def h02_rows() -> pl.DataFrame:
-    d = pl.read_parquet(C.PROC / "H02-couplings-are-real/mf_cw.parquet")
+    d = pl.read_parquet(H02_DIR / "mf_cw.parquet")
     gno = d["chunk"].str.slice(1, 2).cast(pl.Int64)
     return pl.DataFrame({"goal_no": gno, "window": d["chunk"], "method": "H02.gcw_active", "value": d["bJ0"] * d["q"],
                          "se": d["bJ0_null_sd"] * d["q"], "ci_kind": "null_sd", "N": d["N"].cast(pl.Float64),
@@ -156,7 +172,7 @@ def ci_se(lo, hi):
 
 
 def h03_rows() -> pl.DataFrame:
-    d = pl.read_parquet(C.PROC / "H03-self-excited-criticality/period_table.parquet")
+    d = pl.read_parquet(H03_DIR / "period_table.parquet")
     rows = []
     for r in d.iter_rows(named=True):
         boot = r["n_boot_lo"] is not None and r["n_boot_hi"] is not None
@@ -175,7 +191,7 @@ def h03_rows() -> pl.DataFrame:
 
 def h03_aux() -> pl.DataFrame:
     """Auxiliary H03 quantities for P3 / P4 (not loop gains in the collapse)."""
-    d = pl.read_parquet(C.PROC / "H03-self-excited-criticality/period_table.parquet").filter(pl.col("set") == "TALK")
+    d = pl.read_parquet(H03_DIR / "period_table.parquet").filter(pl.col("set") == "TALK")
     return d.select("goal_no", "N_active", "n_cross_fast", "n_self_fast", "n_c_pair_fast", "n_cross_fast_boot_lo",
                     "n_cross_fast_boot_hi", "tau_cross", "n_B3")
 
@@ -287,14 +303,23 @@ def combine(win: pl.DataFrame) -> pl.DataFrame:
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--stale", default="drop", choices=["drop", "keep"])
+    stale = ap.parse_args().stale
     rng = np.random.default_rng(SEED)
     cal = C.calendar_nonholdout()
     C.assert_no_holdout(cal["pt_date"], cal["goal_no"])
     goals = set(cal["goal_no"].unique().to_list())
     day_goal = dict(zip(cal["pt_date"].to_list(), cal["goal_no"].to_list()))
+    C.OUT.mkdir(parents=True, exist_ok=True)
 
     print("H19 own g_eq ...", flush=True)
-    own = own_geq(cal, rng)
+    if R1B:
+        from geq_r1b import own_geq_r1b
+        own = own_geq_r1b(cal, rng, bins="fixed")
+    else:
+        own = own_geq(cal, rng)
     h02 = h02_rows()
     # validation: H19 g_eq vs H02 published on the same chunks
     val = (own.filter(pl.col("method") == "H19.geq_active").select("window", pl.col("value").alias("g_h19"), pl.col("se").alias("se_h19"),
@@ -308,13 +333,18 @@ def main():
     print("H03, H04, H05 ...", flush=True)
     h03 = h03_rows()
     h04, h04_sd = h04_rows(day_goal)
-    h05, h05_checks = h05_rows(cal)
-    for c in h05_checks:
-        assert abs(c["recomputed"] - c["published"]) < 1e-9, f"H05 recomputation mismatch {c}"
-    print(f"  H05 loop gains recomputed = published ({len(h05_checks)} windows); H04 week SDs {h04_sd}", flush=True)
-    ing = ingest_shared_schema(goals)
+    if R1B and stale == "drop":
+        h04 = h04.filter(pl.col("method") == "H04.n_week")   # K_week is built on the buggy activity_bins
+        h05 = pl.DataFrame()
+        print("  r1b: H04.K_week and H05 two-block gains dropped (stale activity_bins inputs)", flush=True)
+    else:
+        h05, h05_checks = h05_rows(cal)
+        for c in h05_checks:
+            assert abs(c["recomputed"] - c["published"]) < 1e-9, f"H05 recomputation mismatch {c}"
+        print(f"  H05 loop gains recomputed = published ({len(h05_checks)} windows); H04 week SDs {h04_sd}", flush=True)
+    ing = ingest_shared_schema(goals) if not R1B else pl.DataFrame()
 
-    win = pl.concat([own, h02, h03, h04, h05] + ([ing] if ing.height else []), how="diagonal_relaxed")
+    win = pl.concat([own, h02, h03, h04] + ([h05] if h05.height else []) + ([ing] if ing.height else []), how="diagonal_relaxed")
     win = win.filter(pl.col("goal_no").is_in(list(goals)))
     assert not win.filter(~pl.col("goal_no").is_in(list(goals))).height
     win.write_parquet(C.OUT / "estimates_window.parquet", compression="zstd")
@@ -324,7 +354,7 @@ def main():
     aux.write_parquet(C.OUT / "h03_aux.parquet", compression="zstd")
 
     # per-period input records
-    ctr = pl.read_parquet(C.OUT / "controls.parquet")
+    ctr = pl.read_parquet(C.CTRL / "controls.parquet")
     for g in sorted(goals):
         d = C.OUT / C.pname(g)
         d.mkdir(parents=True, exist_ok=True)
@@ -334,12 +364,14 @@ def main():
         (d / "inputs.json").write_text(json.dumps(rec, indent=1, default=str))
 
     C.write_provenance("estimates.parquet", "hypotheses/H19-loop-gain-collapse/scheme/build_estimates.py",
-                       [{"source": "ai-village", "revision": C.REVISION, "tables": ["activity_bins", "calendar"]},
-                        {"source": "data/processed/H02-couplings-are-real", "tables": ["mf_cw.parquet"]},
-                        {"source": "data/processed/H03-self-excited-criticality", "tables": ["period_table.parquet"]},
+                       [{"source": "ai-village", "revision": C.REVISION,
+                         "tables": (["activity_bins_fixed", "outages_fixed/reasons", "outages_fixed/stall_minutes", "calendar"]
+                                    if R1B else ["activity_bins", "calendar"])},
+                        {"source": str(H02_DIR.relative_to(C.ROOT)), "tables": ["mf_cw.parquet"]},
+                        {"source": str(H03_DIR.relative_to(C.ROOT)), "tables": ["period_table.parquet"]},
                         {"source": "data/processed/H04-reversible-forcing", "tables": ["explore_placebo_switch.json"]},
                         {"source": "data/processed/H05-rooms-cut", "tables": ["mf_blocks.json", "pair_day_bin1.parquet", "agent_day.parquet"]}],
-                       {"seed": SEED, "nboot_geq": NBOOT_GEQ, "nboot_h05": NBOOT_H05, "se_floor": SE_FLOOR,
+                       {"data_version": C.DATA_VERSION, "stale_inputs": stale if R1B else "n/a", "seed": SEED, "nboot_geq": NBOOT_GEQ, "nboot_h05": NBOOT_H05, "se_floor": SE_FLOOR,
                         "h02_rules": {"chunk_days": CHUNK_DAYS, "min_tail_days": MIN_TAIL_DAYS, "min_active_bins": MIN_ACTIVE_BINS,
                                       "block_min": BLOCK_MIN, "min_last_block": MIN_LAST_BLOCK, "min_block_n": MIN_BLOCK_N},
                         "h04_week_assignment": ">= 80% of the week's days in one period", "h04_week_sd": {f"{k[0]}:{k[1]}": v for k, v in h04_sd.items()},

@@ -22,7 +22,22 @@ import polars as pl  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[3]
 HYP = ROOT / "hypotheses/H19-loop-gain-collapse"
-OUT = ROOT / "data/processed/H19-loop-gain-collapse"
+BASE = ROOT / "data/processed/H19-loop-gain-collapse"
+# Data version (round 1b, 2026-10-04). H19_DATA=r1 (default): round-1 inputs (shared activity_bins, which dropped ~half
+# of all events; DQ8). H19_DATA=r1b: activity_bins_fixed + outages_fixed, H02's and H03's round-1b outputs; results go
+# to data/processed/H19-loop-gain-collapse/r1b/ so round 1 stays in place. Controls (no activity_bins input) are read
+# from BASE in both versions.
+DATA_VERSION = os.environ.get("H19_DATA", "r1")
+assert DATA_VERSION in ("r1", "r1b"), DATA_VERSION
+OUT = BASE if DATA_VERSION == "r1" else BASE / "r1b"
+CTRL = BASE
+# Round-1b sensitivity: which version of H19's own equal-time gains enters the P1 method set as E1 / E2.
+# raw (default) = the pre-registered definition; trim = DQ8 all-present window + explained joint silences removed;
+# scaf = H38 agent-state conditioning. The non-raw versions are never added as extra methods (P1's method set is
+# fixed by the pre-registration): they replace E1 / E2. Results go to OUT/results[_<variant>]/.
+E1_VARIANT = os.environ.get("H19_E1", "raw")
+assert E1_VARIANT in ("raw", "trim", "scaf"), E1_VARIANT
+RES = OUT / ("results" if E1_VARIANT == "raw" else f"results_{E1_VARIANT}")
 SHARED = ROOT / "data/processed/shared"
 PROC = ROOT / "data/processed"
 sys.path.insert(0, str(ROOT / "infra/shared"))

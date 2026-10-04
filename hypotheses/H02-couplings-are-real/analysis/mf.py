@@ -26,7 +26,7 @@ import h02lib as L
 from calibrate import load_chunks
 
 ROOT = Path(__file__).resolve().parents[3]
-DATA = ROOT / "data/processed/H02-couplings-are-real"
+DATA = __import__("r1b_common").data_dir()   # round 1 or round 1b (+ mask): analysis/r1b_common.py
 
 
 # ------------------------------------------------------------------ MF-a Curie-Weiss
@@ -174,7 +174,7 @@ def main():
     n_lf = int(sys.argv[2]) if len(sys.argv) > 2 else 50
     chunks = load_chunks()
     jobs = [(ch, c, k, n_cw, n_lf) for k, (ch, c) in enumerate(sorted(chunks.items()))]
-    with Pool(3) as p:
+    with Pool(int(os.environ.get("H02_WORKERS", 3))) as p:  # round 1b runs with 2
         res = p.map(job, jobs, chunksize=1)
     cw = pl.DataFrame([r[0] for r in res]); cw.write_parquet(DATA / "mf_cw.parquet")
     pl.DataFrame([x for r in res for x in r[1]]).write_parquet(DATA / "mf_pk.parquet")

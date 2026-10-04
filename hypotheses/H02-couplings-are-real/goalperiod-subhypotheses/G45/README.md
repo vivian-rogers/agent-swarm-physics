@@ -1,6 +1,7 @@
 # H02 × G45: Follow your leader (2026-06-01 → 06-05)
 
 **Verdict:** failed
+**Verdict (1b):** not re-run (locked holdout; the executed run read the buggy `activity_bins`, and whether to repeat it on the fixed table is Vivian's call). Corrected exploratory numbers and the non-holdout 44b analog point the same way: see the card's Round 1b section.
 **Role:** confirmatory (locked holdout)
 **Period:** regime III · leader week (the operators installed a fine-tuned leader, roster agent 30) · 18 agents in the present population · 5 days · rooms #best/#rest.
 
