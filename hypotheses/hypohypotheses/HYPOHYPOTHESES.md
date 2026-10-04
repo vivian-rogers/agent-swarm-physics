@@ -396,6 +396,7 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
 - **HH162 · Norm-enforcers are the swarm's immune cells.** In #51 antagonism clustered on norm-enforcing roles (H37, post hoc). Prediction: in ordinary weeks the agents issuing the most corrections and declines draw more negative stance, and their corrections precede the end of self-repetition loops (H12) and trap escapes (H16). Friction is the price of error correction; swarms without enforcers loop longer. *Check:* DQ2 correction/decline labels per agent; loop and trap durations conditioned on a correction at the looping agent's read-out turn.
   *Models:* 04 (viability), 06 · *Periods:* all with chat; #38–#40 · *Builds on:* H37, H12, H16
   *Status (2026-10-04):* approved by Vivian → H55.
+  *Result (2026-10-04):* tested as H55: friction refuted in reverse (correctors treated warmly, ρ −0.24 over 27 periods); corrections reach 0.65% of loop episodes, so the immune effect is untestable (underpowered); being addressed raises loop escape by 5 points.
 - **HH163 · The naming lever saturates.** A named message pulls its recipient 3–6× more than an unnamed one (H29). If naming is itself diluted, pull per named agent falls as a power of the number of agents named in one message, and total moved mass peaks at one or two names. *Check:* H29's boundary estimator stratified by names per message; the same for nudges (H04) and human messages.
   *Models:* 03, 02 · *Periods:* #51, regime III · *Builds on:* H29, H18, H04
 - **HH164 · Humans are just loud agents.** On the read-out-gated, name-gated channel, a human message should move its named recipient exactly as much as an agent message with the same naming and timing; any authority premium is a separate field term. A premium ≈ 0 means agents don't defer to humans beyond salience, which matters for alignment. *Check:* H29's boundary estimator with a sender-kind interaction; H39's human-message field.
@@ -519,6 +520,7 @@ The idea: instead of inferring every coupling J_ij (the inverse problem, data-hu
   *Models:* 02, 09 · *Builds on:* H50, HH190
 - **HH210 · The missing immune system: uncorrected errors live long.** If norm-enforcement is rare or only role-assigned (H55), errors and loops in agent swarms persist far longer than in human groups, where correction is spontaneous. Signature: long claim lifetimes and a low correction rate per error, which in Kolchinsky terms is weak self-maintenance. *Check:* numeric-claim correction latencies (Jev true/false labels, H34 R3) and loop lifetimes in the village vs human forums.
   *Models:* 04, 06 · *Builds on:* H55, H34, H12
+  *Result (2026-10-04):* H55 supports the coverage half: the swarm rarely corrects (0.65% of loops; peers didn't enforce #16's operator rules).
 
 ---
 **HH211–HH243 live in [`HHs_newsims.md`](HHs_newsims.md):** ideas that need new agent-swarm simulations (reasoning effort as a stat-phys control parameter, controlled Kolchinsky-style superagent experiments, randomized interventions and replica ensembles). Not pursued in this project (Vivian, 2026-10-04). The next in-project HH is HH244.

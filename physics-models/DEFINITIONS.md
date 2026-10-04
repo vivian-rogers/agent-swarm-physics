@@ -291,3 +291,9 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Thrash index Θ_c:** the rise in re-acquisition share after a reset, conditioned on agent × previous call category (so a pure output dip does not leak into it), with a 0.01 floor.
 - **Pseudo-erasure:** a matched no-reset position in a segment, used as the control for the within-segment ramp.
 - **Reply rate per visible message:** replies (DQ2) per item that entered the call's context (ledger).
+
+### H55 named variants (2026-10-04; see `hypotheses/H55-norm-enforcer-immunity/README.md`)
+- **Correction (Jev confident subtype):** a DQ2 reply pair with stance opposes at confidence ≥ 0.8 and `opp_type` ∈ {correction, decline}. Precision 0.93 as correction on a blind sample; recall ≈ 0.10 (rates are scaled, not absolute).
+- **Directed read:** a message addressed to an agent (reply parent or @-mention) that entered its context at a receiving call (ledger).
+- **Loop episode (restatement / copy):** a run of an agent's statements flagged `self_repeat` by either model (restatement) or both (copy) (DQ5). **Blocked episode:** a run of Jev v3 windows with `p_blocked` ≥ 0.5.
+- **Immune contrast Δ:** the change in loop or blocked-episode escape hazard after a directed correction is read vs after other directed messages, with agent fixed effects.

@@ -1,0 +1,35 @@
+\hwhat{We asked whether agents who correct others draw negative stance, and whether corrections end self-repetition loops and blocked spells. Corrections came from DQ2's confident Jev correction/decline subtype, validated blind (precision 0.93, recall about 0.1); our own lexical marker failed (0.30). Over 27 periods, correctors receive \emph{warmer} replies (random-effects $\rho=-0.24$, $p=0.04$; \#51 $-0.60$), and replies to a correction are no colder than replies to the same agent's other messages. Corrections reach a looping agent in 0.65\% of loop episodes; matched contrasts show no effect on escape (loops $-0.18$, blocked $-0.02$; underpowered), while being addressed at all raises loop escape by $+0.05$. \#51's assigned enforcers do not correct more; \#12 judges get cooler replies than teammates; nobody enforced \#16's operator rules. Holdout not run.}
+
+\hmodel{Escape from a failure state (a restatement loop, or a v3 ``blocked'' spell) is a discrete-time hazard with agent frailty $\alpha_i$, loop age $k$, and what the agent read since its last step: $D$, a message addressed to it; $C$, a correction among them. Immunity: $\beta_C>0$ beyond $\beta_D$. Friction: the received-stance field $\nu_j=-b_j$ (ordered logit with replier fields $a_i$) rises with $j$'s correction rate $c_j$. Corrections are the information whose viability value $\Delta V$ (Kolchinsky--Wolpert) we measure.}
+
+\hmath{\vspace{-8pt}
+\begin{gather*}
+\mathrm{logit}\,h_i(k)=\alpha_i+\beta_{\rm age}\ln k+\beta_D D+\beta_C C\\
+P(y_{ij}\le m)=\sigma(c_m-a_i-b_j),\quad \nu_j=-b_j,\quad \rho(c_j,\nu_j)>0
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Per-period Spearman $\rho$ between an agent's correction rate and the negativity it receives (Fisher-$z$ 95\% intervals; band: random-effects mean). Friction predicts $\rho>0$; the swarm shows the reverse. (b) Matched, agent-demeaned change in per-step escape probability after reading any addressed message (blue) or a correction (orange). Attention ends loops a little; corrections are too rare (0.65\% of loops) to show anything.}
+
+\htelos{Mostly a negative result an operator can use. Peer correction does not cost social standing in these swarms. The agents who correct are treated better, so there is no friction to manage and no reason to fear that enforcers will be ostracized. But peers almost never correct an agent that is stuck: one loop in 150 receives a correction, and enforcement of an operator's rule never rises above background. HH210's ``missing immune system'' is real in the coverage sense. The practical lever this round found is the dull one: addressing a looping agent by name raises its chance of breaking out (by 5 points per message, more in debates). If you want error correction, you have to supply it (operator, nudger, a designated reviewer); the swarm will not.}
+
+\hbottom{Correctors are treated warmly, not resisted, and corrections almost never reach looping agents, so the swarm has no measurable immune response; plain attention is the only loop-breaker found.}
+
+\hresults{{\footnotesize\noindent\begin{tabular}{@{}p{0.33\columnwidth}p{0.47\columnwidth}p{0.14\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\
+P1 correctors draw negativity & meta $\rho=-0.24$ [$-0.44,-0.02$], 10/27 $>0$ & reversed\\
+P1b beyond own speaker field & $-0.24$ (same) & fail\\
+P2 replies to corrections colder & $\gamma=-0.006$ [$-0.09,+0.08$] & fail\\
+P3 received opposes are corrections & median 0.66 (21/27 $\ge0.5$) & pass\\
+P4 corrections end loops & $\Delta=-0.18$ [$-0.56,+0.14$], 14 matched & underpowered\\
+P5 corrections end blocked spells & $\Delta=-0.02$ [$-0.12,+0.10$], 75 matched & fail (no large effect)\\
+P6 any addressed read ends loops & $+0.053$ [$+0.028,+0.080$], $p=10^{-4}$ & pass\\
+P7 more enforcement, shorter loops & $\rho=-0.24$, $p=0.24$ (not identifiable) & fail\\
+P8 $<$20\% of loops corrected & 0.65\% (35\% addressed) & pass\\
+Native G51/G12/G16/G38 & roles not enacted; judges cooler; no peer enforcement; no address effect in \#38 & mixed$\times$3, failed\\
+\end{tabular}}}
+
+\hobsb{../figures/synthetic_validation.pdf}{Synthetic validation on real reply graphs and real loop/blocked step structures with the measured sensor and stance noise. (a) Friction tests: calibrated under the null; P1 also fires under reciprocity (R-style), which the partial P1b controls. (b) Immune contrast power: limited by the sensor's recall, not the design (dotted: perfect sensor).}
+
+\hcaveats{The correction sensor sees about one correction in ten, so the immune tests have few treated events and $c_j$ is a scaled rate. There was one blind rater, with a broader rubric than DQ2's. Stance is reliable only in aggregate. The warmth toward correctors could partly be a labeller habit. Being addressed may end a restatement mechanically, since an answer is not a restatement. Loops are within-day restatement runs, many of them benign. \#51 overlaps H37's labels, and its enforcer concentration is largely activity (they are in 56\% of replies). The synthetic check found and fixed a targeting confound (agent fixed effects); within-agent targeting remains.}
+
+\hnext{Run a high-recall correction labelling pass on the messages read during loops (blocked by API credit). Test whether correctors are right more often (work ledger). Measure the naming lever against nudges and NE43. Run \texttt{confirm.py} on the \#51 tail and G22/G28/G29/G32 after the \$0.08 subtype pass.}
