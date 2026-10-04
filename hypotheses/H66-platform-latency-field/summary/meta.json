@@ -1,0 +1,70 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: dated card and predictions; two-pass synthetic study at real skeletons with a pre-data amendment; 29-unit replication (regimes II-III) in 11 period folders; natives G51 (Gemini server time, room split) and G44 (separately served leader); a post hoc sign test and congestion world (Amendment 2); confirm.py frozen, guarded and dry-run; estimates rows. Missing: holdout run, exogenous latency instruments, a gate test of coupling on the 4 residual units.",
+  "faithfulness": "The field-vs-load question is answered by a sign test the drive model predicts and the data contradict in 28/29 units, with a synthetic congestion world showing the field-share regression is not identified without it. The provider-field rival is rejected (cross-lab equals same-lab), server time validates the proxy. Not higher: the decisive test is post hoc, only 4 units carry a residual, turnaround is a proxy, holdout not run. Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I1.",
+  "usefulness": "A negative with an operator corollary: platform latency does not make agents co-act, and cross-agent turnaround co-movement is a load meter that grows with N (about 0.2 at N = 30). A methods warning for any field-share regression. No lever."
+ },
+ "one_line": "The platform's common latency field is real and village-wide but follows activity (load), not drives it; trimmed residual co-activation is significant in 4/29 units.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Measured latency field does not drive co-activation; sign shows load"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Zero-lag field peak held; causal direction reversed"
+  }
+ ],
+ "rated_by": "H66 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "A shared platform latency field exists in #44 and #51 (11/29 units) and grows with N, but it is load, not drive: it rises with the number of active agents (28/29 units) and is not provider-specific; residual co-activation after trimming is significant in only 4/29 units",
+  "scope": "29 units; natives G51 (Gemini server time), G44",
+  "direction": "negative",
+  "original_verdict": "refuted as posed",
+  "credence": 0.68,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication (load sign in 28/29 units)",
+    "x": 2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic identification (driving vs congestion worlds; Δf is a lower bound)",
+    "x": 1.5,
+    "evidence": "card §Synthetic"
+   },
+   {
+    "factor": "ground truth (Gemini server time does not co-move: 11/11)",
+    "x": 1.5,
+    "evidence": "native G51"
+   },
+   {
+    "factor": "penalty: load sign test added post hoc",
+    "x": 0.7,
+    "evidence": "card §A2"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "read co-activation in large swarms as congestion, not coordination",
+  "magnitude": "small",
+  "generality": "scheduled swarms",
+  "expected_usefulness": 1.02,
+  "scientific_value": 3,
+  "rater": "coordinator, updated after round 1b (H66 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

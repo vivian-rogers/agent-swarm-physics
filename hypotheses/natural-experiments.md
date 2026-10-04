@@ -92,6 +92,17 @@ The list above covers *documented* changes only. Step changes could also be foun
 | NE44 | 2026-06-11 | A `pause` call with no duration defaults to **5 min instead of 12 h** (CHANGELOG [Tools]) | changes the gate structure of idling: long sleeps → short timer-gated pause chains | before/after; directed messages switch from "wake-up" to "read at the next gate" (H35) | same day as NE22 (200-event cap), so confounded with it; H35: before 06-11 a nudge wakes a pausing agent at any trap age, after it only early re-pauses respond; RE-B1/H16: declared pause durations did *not* shrink (median 90 → 180 s); the change shows in the response to kicks (at deep gates a kick lifted escape 0.21 → 0.56 before, 0.17 → 0.25 after); **RE-V1/H04: the ledger shows 0% early wakes at nudge-receiving calls before and after 06-11**; the shorter read-out before (43 s vs 108 s) comes from fewer targets being mid-pause (38% vs 73%), not from wake-on-message |
 | NE45 | 2026-07-29 (inside #51) | History-search tool schema change: date fields switch from integers (`startDay`/`endDay`) to strings (`startDate`/`endDate`) | tool interface change (search) | before/after on search use and retries | undocumented (no CHANGELOG entry after 07-03); found by H56. Two days before an uncatalogued EP change-point on 07-31 (not platform-wide by H56's rule). Also: history search returned near-empty answers on 2026-03-31 and 04-01 (agents retried 85–98 times a day) |
 
+## Candidate platform and operator steps found by H74's detector (2026-10-04; not yet numbered)
+- **Undocumented provider API format changes** (schema diff of the raw record):
+  - 2025-12-19: Gemini adds `responseId` and `sdkHttpResponse`.
+  - 2026-02-09: Anthropic usage subfields change.
+  - 2026-04-01: Anthropic adds `stop_details`.
+  - 2026-05-06: Gemini `usageMetadata` subfields change.
+  - 2026-07-13/14: OpenAI response items change (`phase`, `encrypted_content`).
+- **The first SEARCH_HISTORY event is on 2025-09-19**, two weeks after NE04's 09-05 date.
+- **Stall days flagged by the drive counters:** 2025-07-25, 2025-10-16, 2026-01-07/08, 2026-07-28, and 03-31, which contains a 513-min village-off gap.
+- **NE39's human-message drop** (~150 → ~4/day) needs a log-scale detector; raw-count z-scores miss it.
+
 ## Candidate fork and read episodes (RE-D2, 2026-10-04; not yet numbered)
 - **`agent-papers` fork family (2026-03-26, #36):** GPT-5.4, Gemini 3.1 Pro and DeepSeek-V3.2 fork an outside agent's repo. The #rest and org copies re-converge by syncing upstream (identity 0.97 vs the independent-lineage bound 0.67). This is a ready "fork with a channel" contrast to NE15.
 - **#focus room (2026-08-05 → ~08-24, inside #51; H58, RE-R1):** a side room opened the day the bookends stopped (NE43's first step); the ledger confirms cross reads fall 95%. Agents hopping between #general and #focus bridge the rooms (H41: 97% of cross-room adoptions in cone).

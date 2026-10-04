@@ -1,0 +1,35 @@
+\hwhat{After the day is trimmed to the window in which every agent runs, little co-activation is left in regime III. The question is whether a common platform-latency field explains that residual. The test uses call turnaround from the DQ1 ledger on 29 non-holdout units (regimes II and III) and Gemini's logged server time. The residual beats the trimmed block-shift null in 4/29 units. A latency field exists in 11/29 units, all in \#44 and \#51, and it grows with $N$. It is not a provider field: same-lab and cross-lab pairs co-move alike. It is not a driver either. It rises when more agents are active (28/29 units), which is the opposite of the model's sign. The pre-registered rule says mixed; a post hoc sign test and a congestion world say the field share measures load. \textbf{Refuted as posed.} The holdout is not run.}
+
+\hmodel{Models 01 and 02. The spin $a_i(m)$ is 1 when agent $i$ logs an act call in minute $m$ of the all-present window. The latency spin $z_i(m)$ is the agent-day-standardized log turnaround of its chained calls. The field $L_{-ij}$ is the mean of $z_k$ over third parties $k\neq i,j$, with lags 0--5 min, plus an infrastructure-error count $u$. $h_i(b)$ is a 30-min block field. $E$ is the mean pair correlation of block-demeaned spins above the block-shift null. $K$ is the number of active agents.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+P(\mathbf a)\propto\exp\Big[\textstyle\sum_i\big(h_i(b)+\sum_{k=0}^{5}\gamma_{ik}L(m-k)+\kappa_i u(m)\big)a_i+\tfrac{J_0}{2N}(\sum_i a_i)^2\Big]\\
+f_{\rm lat}=1-E_{\rm adj}/E,\qquad \Delta f=f_{\rm lat}-\langle f_{\rm lat}\rangle_{\rm shifted\ field}\\
+\text{field drives silence: } \mathrm{corr}(L,K)<0;\qquad \text{load: } \mathrm{corr}(L,K)>0
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Cross-agent turnaround correlation per regime-III unit vs $N$. Same-lab and cross-lab pairs co-move alike, so the field is not a provider's API. (b) Field share $\Delta f$ against the sign of the field's relation to the active count. A field that silences agents gives a negative sign (synthetic W2). Congestion gives a positive sign and $\Delta f\approx1$ (W6). Every real unit with a residual sits on the load side.}
+
+\htelos{Do not blame platform slowness for agents acting together. On the call clock, the platform's latency field is a load meter: it rises when more agents run, and it does not make them co-act. A field share from a third-party-field regression is uninformative without the sign of the field--activity relation; report both. For a scaffold builder, the useful number is the growth of turnaround co-movement with $N$: about 0 at $N\le16$, 0.02--0.10 at $N$ 17--28, and 0.2 at $N=30$. Watch it as a capacity signal. Gemini's API time is only 0.44 of a call's turnaround, and it does not co-move across agents; the shared part is the village's own execution layer.}
+
+\hbottom{The residual co-activation after trimming is small; the platform's common latency field is real but follows activity rather than driving it.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.45\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 synthetic recovery & sizes 0/16, 1/16; $\Delta f$ a lower bound (W2 0.74 vs 1.0); no false attribution & partly\\
+P1 field in $\ge2/3$ units; provider field & 11/26 units; same-lab 0.080 vs cross-lab 0.062 & failed\\
+P2 $\Delta f<0.25$ where $E$ sig. & 4/29 sig.; $\Delta f$ 0.74, 0.36, 0.17, 0.42; rule: mixed & load (A2)\\
+Post hoc sign test & corr$(L,K)>0$ in 28/29 (median $+0.11$); W2 gives $-0.34$ to $-0.66$ & against H66\\
+P3 zero-lag field peak & $C_\ell(0)$ 0.023 vs $C_\ell(\pm1)$ 0.017 & held\\
+P4 intensity $>$ binary & 14/29 & failed\\
+P5 same-room $>$ cross-room $E$ & 5/18 two-room units & failed\\
+P6 residual at window edges & 3/4 units ($\times$2.0--6.1) & held\\
+G51 server time (native) & $r$ 0.49 with turnaround; no cross-agent co-movement & failed as H66\\
+G44 separate-stack leader & loading $-0.11$ vs median 0.14 (70 min) & descriptive\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic.pdf}{Synthetic swarms on real unit skeletons (44b, 51c; 8 seeds). Bars: $\Delta f$; ticks: true field share. The estimator stays near 0 when the field does not act (W1, W3). It recovers 0.4--0.85 of a field that drives pauses (W2, W2s, W4).}
+
+\hcaveats{The sign test and the congestion world are post hoc (Amendment 2); they reverse a pre-registered ``mixed''. Turnaround mixes generation, tool execution and overhead; only Gemini logs server time. Load may be congestion or shared heavy work; the data do not separate them. Only 4 units carry a residual, and their $\Delta f$ intervals are wide. The separately served leader has 70 minutes. The holdout is not run.}
+
+\hnext{Fit a load curve (latency vs active count) per unit and its slope vs $N$. Use provider-specific error bursts as exogenous latency shocks. Run \texttt{confirm.py} after sign-off.}

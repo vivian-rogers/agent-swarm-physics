@@ -261,6 +261,26 @@
    "model": "10",
    "source": "H64",
    "meaning": "Antagonism tracks an open prize and stops within minutes of the verdict."
+  },
+  {
+   "symbol": "ρ_lat",
+   "name": "cross-agent call-turnaround co-movement",
+   "value": "≈ 0 at N ≤ 16; 0.02–0.10 at N 17–28; 0.18–0.22 at N = 30; load sign + in 28/29 units",
+   "kind": "coupling",
+   "scope": "29 units",
+   "model": "02",
+   "source": "H66",
+   "meaning": "A shared latency field appears only in large swarms and tracks load (congestion)."
+  },
+  {
+   "symbol": "FAR_S",
+   "name": "schema-diff change-detector false-alarm rate",
+   "value": "0/34 placebo days (Wilson upper ≈ 0.10); fused detector 0.18",
+   "kind": "rate",
+   "scope": "282 non-holdout days",
+   "model": "02",
+   "source": "H74",
+   "meaning": "Diffing the raw record's schema catches platform changes with no false alarms."
   }
  ]
 }
