@@ -1,0 +1,32 @@
+\hwhat{HH340 says that an agent's own repo acts like the pinned layer in exchange bias. Agents still committing to their own repo at a goal boundary should keep the old goal state longer (decay $\ge2\times$ slower), and the offset should end within a day of their last commit to that repo. H110 re-implements H96's field-orthogonal old-state remanence per agent and splits it by DQ4 pinning at 7 non-holdout transitions (4 with both groups). \textbf{A small day-1 asymmetry, no exchange bias.} Pinned agents keep $R_1=0.17$ vs $-0.13$ (difference 0.30 [$-0.01$, 0.57]; gte 0.22), but the offset is not tied to continued commits, is gone by day 2, and reverses under an any-repo definition. Neither HH340's rule nor its kill fires. The holdout (incl.\ NE24) is not run.}
+
+\hmodel{Model 01 (hysteresis under a stepped field) measured with the O(32) content vector of model 11. A free spin's old-state component decays as $m_i(h)=m_i(0)e^{-\lambda h}$ (H96: a quench, $R_1\approx0.25$). A spin bonded to a pinned layer feels an extra field $J_\mathrm{ex}\pi_i(h)$ while it still commits to its own repo ($\pi=1$), which shifts its loop: slower decay, and a residual offset that ends with the last commit.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\frac{dm_i}{dh}=-\lambda\big(m_i-m_i^\infty\big),\qquad m_i^\infty=J_\mathrm{ex}\,\pi_i(h)/\lambda\\
+R_1^g=\frac{\sum_{i\in g}m_i(\mathrm{day}\,1)}{\sum_{i\in g}m_i(\mathrm{pre})},\qquad \rho_\lambda=\frac{\ln\max(R_1^U,0.02)}{\ln\max(R_1^P,0.02)}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Day-1 persistence $R_1$ of pinned (filled) and unpinned (open) agents at the four transitions with both groups, and pooled with agent-bootstrap 95\% CIs (bge blue, gte orange). Two transitions favour pinned agents, one quenches both, one reverses. (b) Pinned excess over same-boundary unpinned agents, split by own-repo commits: while still committing, the day after the last commit, and later. No offset while committing.}
+
+\htelos{For an operator: do not expect agents with a live own repo to resist a goal change. By day 2 they have switched like everyone else (difference 0.11 of the pre level, CI includes 0). The kickoff alone moves them; archiving their old repo is not needed for the content switch. The own repo stores where an agent works (H70), not what it is thinking about.}
+
+\hbottom{An agent's own live repo does not pin its old goal state: at most a small day-1 residual (0.30 [$-0.01$, 0.57] of the pre level) that is not tied to continued commits and is gone by day 2.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.35\columnwidth}p{0.47\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 size; HH power; kill discrimination & size $\le0.03$; HH power 0.47--0.60; kill fires 0.75--0.90 vs 0--0.02 & amended (A1)\\
+P1 $\rho_\lambda\ge2$, CI $>1$; kill $[0.8,1.25]$ & 2.2 / 1.7, CI lower at floor; $dR$ 0.30 [$-0.01$, 0.57] & neither\\
+P2 offset ends with last commit & $e$(live) 0.00 [$-0.10$, 0.09] & failed\\
+P3 own-state $\rho_\lambda>1$ & 1.15 [0.39, 3.33] & failed\\
+P4 share pinned vs $R_1$ (not blind) & $\rho$ 0.57 / 0.25, $n$ 7 & weak\\
+G40 continuing $>$ stopping & $-0.01$ [$-0.21$, 0.18] & null\\
+G39 movers by \#38 commits & 1 kept committing & n/a\\
+Any-repo pinning & $dR$ $-0.23$ (reversed) & against\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Synthetic validation on the real skeleton (bge 60, gte 30 replicates per world). (a) The detection rule (decay-ratio CI above 1) has size $\le0.03$ with no pinning or an activity confound, and power 0.85--0.87 at a $2\times$ slower decay; less if the slowdown lasts only while agents commit. (b) The kill fires in 75--90\% of no-pinning worlds and 0--2\% of $2\times$ worlds.}
+
+\hcaveats{Only 4 transitions have both groups (26 pinned, 28 unpinned agent-transitions). The decay ratio is unresolved when the unpinned group is fully quenched ($R_1\le0$); the persistence difference is the readable number. The switcher variant is significant in bge only (0.37 [0.05, 0.66]). Ownership uses non-holdout commits only. The transition-level correlation is not blind (H96 had reported \#39$\to$\#40).}
+
+\hnext{Test whether the day-1 asymmetry is a mid-task effect (open vs closed task at the last pre-kickoff commit), pool with H96's transitions, and run the NE24 confirm.}

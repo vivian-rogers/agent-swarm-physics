@@ -1,0 +1,33 @@
+\hwhat{HH339 says that a forced context erasure (NE41, the 41-call cap) is a demagnetizing pulse. If a room's content order is held by coupling through the context window, an agent's alignment with its room's direction should drop right after an erasure and recover as it re-reads the room. H109 projects every statement on the leave-agent-out spontaneous room axis (H100's $\Delta_\mathrm{spont}$) in 8 non-holdout regime-III two-room periods and compares 3,477 forced erasures with gap-matched within-segment boundaries of the same agent and day. \textbf{There is no pulse.} Pooled $\delta_F=-0.08$ [$-0.23$, 0.07] (gte $-0.07$), where a 30\% drop is detected with power 1.00. HH339's kill fires. The holdout is not run.}
+
+\hmodel{Model 11 (soft-spin O(32) in a two-domain room system) with the erasure as a natural scramble of one channel (model 04). A statement is $\tilde{\mathbf{x}}_t=\mathbf{a}_i+\sigma_r m(t)\,\mathbf{u}_P+\boldsymbol\eta_t$. Context-held order: $m$ drops by $\delta$ after an erasure and recovers with the room items $R$ read. Self-made field (own work, prompt, memory): $\delta=0$. The kickoff, held in the prompt since NE13, must not move in either case.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+a_t=\sigma_{r(t)}\,\langle\tilde{\mathbf{x}}_t-\hat{\mathbf{a}}_i,\ \hat{\mathbf{u}}_i\rangle,\qquad m(R)=m_\infty\big[1-\delta\,e^{-R/R_0}\big]\\
+\delta_F=-\frac{\sum_s n_{F,s}\,(\bar D_{F,s}-\bar D_{W,s})}{\sum_s n_{F,s}\;\bar A_{\mathrm{pre},F}},\qquad D=\bar a_\mathrm{post}-\bar a_\mathrm{pre}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Drop fraction $\delta_F$ per period (bge blue, gte orange; 95\% agent-day bootstrap CIs, clipped at $\pm1.2$) and the random-effects mean (diamonds). The dashed line is HH339's 30\% drop. Periods whose pre-erasure alignment is not identified are omitted. (b) Real-skeleton synthetic worlds: probability that the pooled CI excludes 0, with each world's noise-free estimand. The null, erasure-noise and common-drive worlds never reject; the 30\% world always does.}
+
+\htelos{For an operator: resetting an agent's context does not erase its room's content identity. Alignment with the room stays within $-7\%$ to $+23\%$ of its pre-erasure level (pooled 95\% CI). Use erasures to break loops or clear clutter (H44, H69) without worrying about room differentiation. To change what a room talks about, change its work or instructions. Reading the room has only a small pull ($\kappa_R\approx0.02$ per e-fold of items read).}
+
+\hbottom{A forced context erasure does not demagnetize an agent's room alignment ($\delta_F=-0.08$ [$-0.23$, 0.07], power 1.00 at a 30\% drop); room order lives in the agent's work, prompt and memory, not in its context window.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.35\columnwidth}p{0.47\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P0 size $\le0.07$; power $\ge0.8$ & size 0.00; power 1.00 pooled, 2/8 periods & mostly\\
+P1 $\delta_F\ge0.30$ (HH339); kill & $-0.08$ [$-0.23$, 0.07]; gte $-0.07$ [$-0.18$, 0.04] & killed\\
+P2 $|\delta_K|<0.15$ & 0.08 [$-0.12$, 0.28]; gte 0.00 & holds\\
+P3 no drop: $\kappa_R$ CI $\ni0$ & 0.019 [0.003, 0.034]; gte 0.017 & failed\\
+P4 drop at $R=0$ & no drop; $R=0$: $-0.10$ & moot\\
+P5 $\delta_V\approx\delta_F$ & $-0.04$ vs $-0.08$ & holds\\
+P6 dedupe adds a drop & $+0.005$ / $-0.03$ & $\approx0$\\
+\#38 (powered) & $-0.26$ [$-0.38$, $-0.07$]: a rise & failed\\
+51g (powered) & 0.05 [$-0.13$, 0.19] & failed\\
+\end{tabular}}
+
+\hobsb{../figures/summary_obsb.pdf}{Pooled event profile: room alignment of the last three statements before and the first ten after a forced erasure, divided by the pre-erasure mean (95\% CIs). No dip at the erasure; the later climb is post hoc and mixes segment lengths (later positions come only from long segments).}
+
+\hcaveats{Scoped statements are sparse (median 2 per reset segment), so effect sizes are read on the estimand scale (Amendment 1); HH339's literal ``30\% for 3 statements'' world has an estimand of only 0.12. Per-period power is $\ge0.8$ only in \#38 and 51g; six per-period negatives are inconclusive. The room axis is a period-level ruler; a faster, other-direction room component would be missed. A drop that recovers before the first post-erasure statement is invisible. The post-erasure rise ($-0.12$ [$-0.21$, $-0.03$] direct pooled) is post hoc.}
+
+\hnext{Test whether room alignment falls with context fill inside a segment (does context dilute room order?), and measure the drop on the call clock in the first 1--3 calls after an erasure. Confirm on \#45--\#47 and \#50.}

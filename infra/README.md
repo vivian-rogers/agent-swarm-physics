@@ -313,6 +313,11 @@ Two builders and two libraries are now shared, and `semantic_kappa` is extended.
 
 ## Known issues
 
+- **Wall-clock talk counts carry a shared call-density field** (H111: Φ 1.28 with no coupling planted on unit 41). Use the per-call residual clock. Circular block-shift nulls change private variance when talk-per-call drifts within a day, so F/F_shift ≠ Φ.
+- **Early regime-I units (#2–#7) lose most windows to public-chat human sessions** (H111).
+- **DQ2's reply forest lets one reader answer one message several times** (H114): pair gains L/R can exceed 1 (5 pairs). A finite message skeleton makes null reply tails lighter than geometric, so two-sided tail tests are anti-conservative.
+- **Statement-level erasure event studies are attenuated by sparse segments** (H109: median 2 statements per reset segment). Calibrate effect sizes on the estimand scale. Decay-rate ratios from day-1 persistence are unresolved when one group is fully quenched (H110); report the persistence difference.
+- **Old-state direction builder now has three users** (H96, H110, H82); room-of-statement helper a fifth (H109): use `infra/shared/rooms_asof.py`, and move `old_state` to shared.
 - **Within-day split-half noise correction biases direction persistence low** (H108): it keeps agent-day deviations as signal. Use a joint-relabel excess. Agent-bootstrap CIs with duplicated agents shift relabel nulls (CIs sit low); the persistence relabel test is liberal (size up to 0.28) when directions regenerate under a strong room effect.
 - **A `|` inside a card table cell (e.g. |m|) breaks `build_summaries.py`'s scorecard parser** (H108). Write \|m\| or "norm of m".
 - **Room-split scheme and `rslib.py` now have four users** (H100, H102, H107, H108; H108's is a copy of H107's): move to `infra/shared/` next to `rooms_asof.py`.

@@ -1,0 +1,70 @@
+{
+ "complete": 40,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; real-skeleton synthetic calibrated to real moments (4 worlds, both models) and Amendment 1 before real data; replication on 7 transitions plus 2 natives (G40, G39); both models, white32, own/any pinning, switcher fixed effects; estimates rows; confirm.py frozen and dry-run (not run). Missing: holdout (NE24); power (4 contrast transitions); G39 native not testable.",
+  "faithfulness": "HH340's signature (commit-locked offset) fails and the G40 native is null; a day-1 asymmetry in the predicted direction is borderline and definition-dependent. Scorecard A1 B1 C1 D0 E0 F1 G1 H1 I0.",
+  "usefulness": "Operator-relevant negative: live own repos do not slow a goal switch beyond day 1, so no repo archiving is needed for a content switch. Limited by small groups."
+ },
+ "one_line": "An agent's own live repo does not pin its old goal state: a small day-1 residual (0.30 [-0.01, 0.57] of the pre level) that is not tied to continued commits and is gone by day 2.",
+ "models": [
+  {
+   "model": "01-inverse-ising",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "no exchange-bias shift: offset not locked to the pinning layer's activity"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "old-state remanence measurement; small day-1 pinned residual, borderline"
+  }
+ ],
+ "rated_by": "H110 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "An agent's own live repo does not pin its old goal state: a small day-1 residual (dR 0.30 [−0.01, 0.57] bge) is not tied to continued commits (pinned excess while committing 0.00 [−0.10, 0.09]), is gone by day 2, and reverses sign when 'pinned' means any repo",
+  "scope": "4 transitions, 26 pinned vs 28 unpinned agent-transitions; natives G39, G40",
+  "direction": "negative",
+  "original_verdict": "mixed",
+  "credence": 0.35,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic validation with a discriminating kill",
+    "x": 1.3,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "both models agree in sign",
+    "x": 1.2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: small sample (4 transitions)",
+    "x": 0.6,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: definition sensitivity",
+    "x": 0.85,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 0.5,
+  "decision": "don't count on an agent's own repo to anchor it to an old goal",
+  "magnitude": "small",
+  "generality": "LLM swarms with goal changes",
+  "expected_usefulness": 0.17,
+  "scientific_value": 1.5,
+  "rater": "coordinator, updated after round 1b (H110 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

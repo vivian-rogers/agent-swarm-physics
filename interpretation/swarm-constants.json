@@ -671,6 +671,46 @@
    "model": "11",
    "source": "H108",
    "meaning": "The room direction persists within a period, more under a room field; size and field are confounded."
+  },
+  {
+   "symbol": "δ_F",
+   "name": "room-alignment drop at a forced erasure",
+   "value": "−0.08 [−0.23, 0.07] bge, −0.07 gte (3,477 erasures); read pull κ_R 0.019 [0.003, 0.034] per e-fold of room items read; median 2 statements per reset segment",
+   "kind": "response",
+   "scope": "8 regime-III two-room periods",
+   "model": "11",
+   "source": "H109",
+   "meaning": "Room order is not stored in the context window."
+  },
+  {
+   "symbol": "dR_pin",
+   "name": "own-repo pinned day-1 residual",
+   "value": "0.30 [−0.01, 0.57] bge (0.22 gte); 0.11 by day 2; not commit-locked",
+   "kind": "remanence",
+   "scope": "4 transitions",
+   "model": "01",
+   "source": "H110",
+   "meaning": "An agent's own repo barely anchors it to an old goal."
+  },
+  {
+   "symbol": "r_F",
+   "name": "talk Fano sum-rule ratio (observed / 1/(1 − g_lag)²)",
+   "value": "regime III 1.01 [0.94, 1.09] (18 units, τ² 0); regime I 1.34 [1.18, 1.52]; median Φ(10 min) 1.32 / 1.92 / 1.29 (I / II / III); cross-room covariance 0 in 0/12 two-room units",
+   "kind": "sum rule",
+   "scope": "per-call residual clock, 10-min windows",
+   "model": "02",
+   "source": "H111",
+   "meaning": "In regime III the collective talk variance is exactly what the read-out gain predicts; regime I has a fast extra field or coupling."
+  },
+  {
+   "symbol": "h1_mom",
+   "name": "reply thread momentum",
+   "value": "h(1) − g_rep +0.16 (54/54 units); g_rep medians 0.36 (I) / 0.53 (III); strong reply pairs 37 directed in 18/66 units",
+   "kind": "branching",
+   "scope": "54 units",
+   "model": "09",
+   "source": "H114",
+   "meaning": "Replies beget replies within a thread; no Griffiths phase from rare strong pairs."
   }
  ]
 }

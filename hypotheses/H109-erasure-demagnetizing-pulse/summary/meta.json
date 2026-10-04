@@ -1,0 +1,70 @@
+{
+ "complete": 45,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; real-skeleton synthetic (8 worlds, both models) and Amendment 1 before real data; replication on 8 periods plus natives (G38/G44 field control, G41, 51g dose, NE41 voluntary contrast); both models, three dedupe variants, white32, no-constant; estimates rows; confirm.py frozen and dry-run (not run). Missing: holdout run; call-clock version; per-period power outside #38 and 51g.",
+  "faithfulness": "HH339 fails by its own kill rule with pooled power 1.00 in both models; the kickoff control and voluntary erasures behave. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I1. The positive alternative (order in work/prompt) is not separated from the agent prior.",
+  "usefulness": "A clean operator rule: context resets do not erase room identity (alignment within -7% to +23%), so erasures can be used for loop-breaking without cost to room differentiation. It sharpens the Q4 picture: the context window carries work value, not identity."
+ },
+ "one_line": "A forced context erasure does not demagnetize an agent's room alignment (delta_F -0.08 [-0.23, 0.07], power 1.00 at a 30% drop): room order lives in the agent's work, prompt and memory, not its context window.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "no context-held room magnetization; alignment does not drop at erasure"
+  },
+  {
+   "model": "04-semantic-information",
+   "role": "secondary",
+   "outcome": "supported",
+   "note": "natural scramble of the context channel carries ~0 room-order information"
+  }
+ ],
+ "rated_by": "H109 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "A forced context erasure does not drop an agent's alignment with its room's spontaneous axis (δ_F −0.08 [−0.23, 0.07] bge, −0.07 gte over 3,477 erasures; pooled power 1.00 for a 30% drop): room order is not stored in the context window",
+  "scope": "8 regime-III two-room periods; natives G38, G51, NE41",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.62,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "scaffold-timed erasures as interventions (NE41)",
+    "x": 1.4,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "pooled synthetic power 1.00",
+    "x": 1.5,
+    "evidence": "card §P0"
+   },
+   {
+    "factor": "both embedding models",
+    "x": 1.3,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: per-period power ≥ 0.8 in only 2/8",
+    "x": 0.9,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "erasing context won't reset a room's character; it lives in work, prompt and memory",
+  "magnitude": "medium",
+  "generality": "multi-room LLM swarms",
+  "expected_usefulness": 0.93,
+  "scientific_value": 2.5,
+  "rater": "coordinator, updated after round 1b (H109 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

@@ -1,0 +1,34 @@
+\hwhat{HH346 proposed a Griffiths phase: a swarm subcritical on average whose rare strongly coupled pairs make reply chains heavy-tailed. H114 measures reply depth on DQ2 parent links in 66 non-holdout units (54 usable). Chains are heavier than a uniform subcritical process: the tail continuation hazard exceeds the reply branching ratio in 52/54 units (CI $>0$ in 33/54). The excess sits at depth 1: a reply's parent is itself a reply more often than the mean allows (+0.16, 54/54 units). The hazard then rises little (significant in 10/54). Strong pairs (pair gain $>0.5$) exist in 18/66 units, are half of them readers answering three hub authors, and carry the tail in 1/16. \textbf{The Griffiths mechanism fails}; thread momentum explains the tail. The holdout is not run.}
+
+\hmodel{A reply forest (models 09, 03, 01). Each agent message has at most one agent parent. Its depth $D$ counts links to the root. A uniform subcritical process gives a geometric depth law at the reply branching ratio $g_{\rm rep}$. A Griffiths phase mixes continuation rates: strong pairs $(i,j)$ with pair gain $g_{ij}$ near 1 make the hazard $h(d)$ rise with depth. Thread momentum makes $h$ jump at $d=1$ and stay flat. M1 and M2 are first-order author chains without and with pair-specific transitions.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+S(d)=P(D\ge d),\quad h(d)=\frac{S(d+1)}{S(d)},\quad g_{\rm rep}=S(1)\\
+h_{\rm tail}=\frac{\sum_{d\ge4}S(d+1)}{\sum_{d\ge4}S(d)},\quad \Delta h=h_{\rm tail}-g_{\rm rep},\quad \delta h=h_{\rm tail}-h(1)\\
+g_{ij}=L_{ij}/R_{ij},\qquad \text{M}k:\ s_d=p\odot(P_k\,s_{d-1})
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_col.pdf}{Left: continuation hazard $h(d)$ by reply depth (median and IQR over units), against the geometric law at $g_{\rm rep}$ (dashed) and the rank-1 agent model M1 (dotted). The hazard jumps at depth 1 and stays nearly flat. Right: per-unit tail excess $\Delta h$ against the Griffiths rise $\delta h$. Most units have $\Delta h>0$ with $\delta h$ near 0.}
+
+\htelos{For an operator, the long reply chains in a swarm come from conversation momentum: once two messages form a reply, the next message continues the thread 28--55\% more often than the base reply rate (regime III and I). They do not come from a few agent pairs locked in ping-pong. Removing or separating ``chatty pairs'' would not shorten threads (cutting strong pairs removed the excess in 1/16 units). To bound long threads, act on thread state, for example a cap on consecutive replies per thread. Tail exponents of reply chains are not identifiable at village counts.}
+
+\hbottom{Reply chains are heavier than uniform subcritical branching because of first-order thread momentum, not because rare strong agent pairs form locally supercritical regions.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.49\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 $\Delta h>0$ in $\ge2/3$ & CI 33/54; point 52/54 & failed narrowly\\
+P2 rise $\delta h>0$ in $\ge1/2$ & 10/54 (median $+0.05$) & failed\\
+P3 strong pair in $\ge1/2$ of units & 18/66; 37 pairs; 4 mutual & failed\\
+P4 strong cut carries the tail & 1/16 & failed\\
+P5 M2 beats M1 & 39/54, M2$-$M1 $+0.003$ & null in size\\
+P6 tail above M2 (momentum) & 31/54 & supported\\
+P7 $\rho(\Delta h,$ strong share$)\ge0.4$ & $-0.14$; exponent unidentifiable & failed\\
+P8 naming $\ge1.2\times$; no family & 0.73$\times$; OR 0.31 & mixed\\
+G51 assigned pairs strong / higher $g$ & 0/176 / MW $p$ 0.0003 & failed / yes\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_col.pdf}{Synthetic forests planted on real message skeletons (4 units, 10 replicates). Uniform and agent-heterogeneity worlds give $\Delta h\le0$. Strong pairs at $g\approx0.8$ give $\Delta h>0$ and a rise $\delta h>0$; at $g\approx0.5$ they are invisible. Thread momentum gives $\Delta h\approx0.19$ with no rise.}
+
+\hcaveats{DQ2's parent rule favors named partners and its reply probability keeps a thread-membership component, so label-driven momentum is possible (R4); a label-free reply proxy is needed. Pairs with $g\approx0.5$ are not detectable at these counts (Amendment A1). One parent per message projects a richer reply graph. P1's CI count (61\%) misses its 2/3 bar. Predictions were written knowing H62's thread-field result.}
+
+\hnext{Rebuild chains from ledger timing without DQ2 labels; split momentum into read vs in-flight parents; model hub authors as fields.}

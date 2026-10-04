@@ -1,0 +1,71 @@
+{
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic forests on real skeletons (5 worlds x 10 reps x 4 units) answering identifiability, with a dated pre-data amendment; replication on 66 units (54 usable) with exact M1/M2 model ladders, strong-pair detection and matched random cuts, 3 variants; 2 natives (G51 mixed, NE42 descriptive); estimates rows; confirm.py frozen, guarded, dry-run. Missing: holdout run, label-free chains.",
+  "faithfulness": "The Griffiths model fails where testable: little rise of the hazard with depth (10/54), strong pairs rare (18/66 units) and not carrying the tail (1/16), pair transitions add nothing over agents (+0.003). The tail excess is real (52/54 point, 33/54 CI) and matches a thread-momentum world. Pair structure of g ~ 0.5 is undetectable; exponent unidentifiable. Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I0.",
+  "usefulness": "A bounded negative with an operator reading: long threads come from conversation momentum (+0.16 continuation at depth 1), not chatty pairs; act on thread state, not pairs. Methods warning: reply-tail exponents are unidentifiable at village counts."
+ },
+ "one_line": "No Griffiths phase: reply chains are heavier than geometric (52/54 units) because a reply's parent is itself a reply +0.16 more often (54/54), not because rare strong pairs carry the tail (present in 18/66 units, carrying it in 1/16).",
+ "models": [
+  {
+   "model": "09-hawkes",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Uniform subcritical branching rejected; no locally supercritical pairs"
+  },
+  {
+   "model": "03-contagion",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "Heterogeneous (Griffiths) branching: no rise of hazard with depth"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "rival",
+   "outcome": "refuted",
+   "note": "Pair-specific couplings add nothing over agent fields"
+  }
+ ],
+ "rated_by": "H114 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Reply chains are heavier than a uniform subcritical process, but thread momentum explains it, not rare strong pairs: a reply's parent is itself a reply more than g_rep allows (h(1) − g_rep +0.16, 54/54 units), the hazard barely rises beyond depth 1, and cutting strong pairs removes the excess in 1/16 units",
+  "scope": "54 usable units; natives G51, NE42",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.54,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication across 54 units",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic worlds discriminate momentum vs planted pairs",
+    "x": 1.4,
+    "evidence": "card §A1"
+   },
+   {
+    "factor": "penalty: pairs with gain ≈ 0.5 undetectable (negative scoped to g ≳ 0.7)",
+    "x": 0.85,
+    "evidence": "card §A1"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "expect replies to beget replies within a thread; don't look for a few hot pairs driving the tail",
+  "magnitude": "small",
+  "generality": "LLM swarms with threaded chat",
+  "expected_usefulness": 0.54,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H114 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

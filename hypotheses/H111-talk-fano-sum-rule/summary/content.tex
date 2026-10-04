@@ -1,0 +1,35 @@
+\hwhat{HH342 proposed a parameter-free check of the read-out loop gain. For a linear point process with branching ratio $g$, collective count variance at long windows exceeds the independent-agent value by $1/(1-g)^2$. H111 compares this sum rule, with H67's $g_{\rm lag}$, against the collective Fano ratio $\Phi$ of 10-min talk counts in 66 non-holdout units (35 periods). In regime III the rule closes: the pooled ratio $r_F=\Phi/\Phi_{\rm pred}$ is 1.01 [0.94, 1.09] over 18 units, with no between-unit spread, and $\Phi-1$ tracks $g_{\rm lag}$ ($\rho$ 0.60). No unit reaches the kill ($r_F\ge2$). In regime I, where $g_{\rm lag}\approx0$, talk co-varies $1.34\times$ [1.18, 1.52] more than the loop allows. The holdout is not run.}
+
+\hmodel{Linear multivariate Hawkes process on the call clock (model 09) with a fluctuation decomposition (model 14). Each agent has private talk noise of any form (clocked calls, own bursts). Reading couples agents through a cross-response matrix $K$ with eigenvalue $g$ on each room's collective mode. $n_i$ is agent $i$'s talk count in a window, $\Phi$ the ratio of collective to summed private variance, $N$ the present agents, $n_b$ the room sizes. $\Phi$ divides out every private noise level.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+C(T)/T\to(I-K)^{-1}\Sigma\,(I-K)^{-\top},\qquad \Phi(T)=\frac{\mathrm{Var}\sum_i n_i}{\sum_i\mathrm{Var}\,n_i}\\
+\Phi_{\rm pred}(g)=\frac{N(1-g)^{-2}}{\sum_b\big[(1-g)^{-2}+\frac{n_b-1}{(1+g/(n_b-1))^{2}}\big]}\approx\frac{1}{(1-g)^2}\\
+r_F=\Phi(10\,{\rm min})\,/\,\Phi_{\rm pred}(g_{\rm lag})
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_col.pdf}{Left: observed $\Phi(10\,\mathrm{min})$ (per-call clock, all-present window, hour-block demeaned) against the parameter-free prediction from H67's $g_{\rm lag}$, per unit with 95\% CIs. Regime-III units (dark) lie on the line; regime-I units (light) sit above it at $\Phi_{\rm pred}\approx1$. Right: $\Phi(T)$ medians and IQRs. Regime III is flat from 5 to 30 min near the median prediction, so no slow field remains.}
+
+\htelos{For an operator, H67's read-out gain is the whole story of collective talk clustering in the current scaffold: a push is amplified by $1/(1-g)\approx1.15$ and the swarm's talk variance by $1/(1-g)^2\approx1.32$, with nothing left over for a hidden field at 10--30 min. A monitor can use $\Phi$ on 10-min talk counts as a cheap, label-free check of the coupling gauge: $\Phi$ above $1/(1-g_{\rm lag})^2$ by more than $\sim0.3$ flags a field or a coupling the read-out estimator misses. In regime-I-style scheduled chat, expect that excess ($\Phi\approx1.3$ with $g_{\rm lag}\approx0$).}
+
+\hbottom{In regime III, talk obeys a fluctuation--response sum rule with no free parameter: the collective Fano ratio equals $1/(1-g_{\rm lag})^2$ to within 9\% (pooled over 18 units), so the read-out loop accounts for all collective talk variance.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.49\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 regime III $r_F\in[0.8,1.2]$ in $\ge2/3$ & 14/18; pooled 1.01 [0.94, 1.09] & supported\\
+K kill: $r_F\ge2$ in $>1/2$ & 0/18 & not met\\
+P2 untrimmed $>$ trimmed & 11/18; gap $+0.03$ (raw $+0.22$) & failed\\
+P3 excess rises with $T$ & 1/17 & failed\\
+P4 regime I $\Phi>1.2$ in $\ge2/3$ & 13/21; pooled $r_F$ 1.34 & failed narrowly\\
+P5 $\rho(\Phi-1,g_{\rm lag})\ge0.3$ & all 0.09; regime III 0.60 & failed / III yes\\
+P6 within $>$ cross room & 10/12; cross $>0$ in 0/12 & mixed\\
+P7 call clock lowers $\Phi$ & 13/18 & supported\\
+NE43 bookends: trim flat, raw falls & $-0.01$, $+0.08$; $+0.23\to-0.05$ & supported\\
+NE42 $\Phi$ drops in \#40 & $-0.04$ vs predicted $0.41$ & failed\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_col.pdf}{Synthetic validation on the real call grids of units 27, 41 and 51e (10 replicates per world). Coupling alone is recovered within $\pm3\%$ at $g=0.15$ and reads 5--20\% low at $g=0.30$. Private persistence leaves $\Phi$ at 1. Shared rate fields of 5 or 30 min give $\Phi/\Phi_{\rm pred}=2.3$--2.9.}
+
+\hcaveats{Per-unit CIs are $\pm0.3$--0.5, so the HH's $\pm20\%$ per unit is not resolvable; the pooled regime-III ratio carries the claim. A fast field ($\tau\le5$ min) and a missed coupling look alike in $\Phi(T)$, so the regime-I excess is unattributed. The per-call clock was adopted after the synthetic run showed a call-grid field (Amendment A1, before real data). The block-shift identity $F/F_{\rm shift}=\Phi$ fails within 10\% in half the units. Predictions were written knowing H67's $g_{\rm lag}$.}
+
+\hnext{Recompute $\Phi_{\rm pred}$ in regime I with a next-chat-call gain; split the regime-I excess with a window-level in-flight placebo; run the frozen confirm after H67's.}

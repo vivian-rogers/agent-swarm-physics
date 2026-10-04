@@ -1,0 +1,81 @@
+{
+ "complete": 50,
+ "faithfulness": 2.0,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic validation on real call grids (7 worlds x 10 reps x 4 units) forcing a dated pre-data amendment (per-call clock, T = 10 min, session exclusion); replication on 66 units in 35 periods with wall/per-call/swarm-clock, untrimmed, raw and exogenous variants; 3 natives (1 supported, 1 failed, 1 descriptive); estimates rows; confirm.py frozen, guarded, dry-run. Missing: holdout run, regime-I clock re-analysis.",
+  "faithfulness": "A parameter-free sum rule from H67's read-out gain matches an independent statistic (windowed count covariance) in regime III: pooled r_F 1.01 [0.94, 1.09], tau2 = 0, rank rho 0.60, zero cross-room covariance. Regime I/II excess (1.34x) unattributed; NE42 failed; shape test cannot separate fast fields. Scorecard A1 B1 C1 D2 E1 F1 G1 H1 I0.",
+  "usefulness": "Closes the coupling gauge: the read-out loop accounts for all regime-III collective talk variance, so g_lag is a complete operator dial there; Phi on 10-min talk counts is a cheap label-free monitor (excess > 0.3 over 1/(1-g)^2 flags a hidden field)."
+ },
+ "one_line": "Talk obeys a parameter-free sum rule in regime III: the 10-min collective Fano ratio equals 1/(1-g_lag)^2 (pooled ratio 1.01 [0.94, 1.09], 18 units, no spread); regime I shows a 1.34x excess where g_lag ~ 0.",
+ "models": [
+  {
+   "model": "09-hawkes",
+   "role": "primary",
+   "outcome": "supported",
+   "note": "Linear Hawkes long-window variance 1/(1-g)^2 closes in regime III"
+  },
+  {
+   "model": "14-scaling-and-fluctuations",
+   "role": "tool",
+   "outcome": "n/a",
+   "note": "Collective-to-private variance ratio, block-shift null"
+  },
+  {
+   "model": "01-inverse-ising",
+   "role": "rival",
+   "outcome": "refuted",
+   "note": "Equal-time 1/(1-g) mapping; regime-I excess read as field"
+  }
+ ],
+ "rated_by": "H111 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "In regime III, talk obeys a parameter-free fluctuation–response sum rule: the collective Fano ratio of 10-min talk counts equals 1/(1 − g_lag)² from H67's read-out gain (pooled r_F 1.01 [0.94, 1.09], 18 units, no between-unit spread; Φ − 1 tracks g_lag, ρ 0.60); regimes I and II carry an unexplained fast excess (r_F 1.34)",
+  "scope": "18 regime-III units (35 periods total); natives NE43, NE42, NE14",
+  "direction": "positive",
+  "original_verdict": "supported",
+  "credence": 0.65,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "unfitted prediction from an independently fitted parameter (g_lag, H67)",
+    "x": 2.0,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "replication 14/18 units in band",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic recovery (±3% at g 0.15)",
+    "x": 1.3,
+    "evidence": "card §S1–S5"
+   },
+   {
+    "factor": "penalty: g_lag fitted on the same data (robustness, not independent replication)",
+    "x": 0.9,
+    "evidence": "RUBRIC rule 4"
+   },
+   {
+    "factor": "penalty: NE42 native failed (no Φ drop in #40)",
+    "x": 0.8,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M1",
+  "fragile": false,
+  "value_if_true": 2.0,
+  "decision": "monitor coupling cheaply: the Fano ratio of talk counts gives 1/(1 − g)²; an excess means a field or a missed coupling",
+  "magnitude": "medium",
+  "generality": "LLM swarms on a call clock",
+  "expected_usefulness": 1.3,
+  "scientific_value": 3.5,
+  "rater": "coordinator, updated after round 1b (H111 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}
