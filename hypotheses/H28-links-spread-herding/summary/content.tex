@@ -1,0 +1,34 @@
+\hwhat{In 14 non-holdout goal periods we asked whether an agent is more likely to switch to project X soon after seeing a chat link to X: a 5-min hazard model with agent, project and day effects. Seeing a link goes with a $2.3\times$ switch hazard (pooled; $p<0.05$ in 13/14). But it beats links shifted by $\pm$30--120 min in only 3/11 herding weeks (primary test failed). Future links predict switches better than past ones in 10/11, and naive agents already switch at $3.3\times$ baseline in the hour before their first exposure. Links lead visits only in own-artifact weeks, where nobody herds. Simple beats complex contagion. NE09 failed. Synthetic swarms: 0--4\% false positives, 92--100\% power. Holdout script written, not run.}
+
+\hmodel{Multi-label kinetic Potts (model 10) with a contagion field (model 03). An off-project agent $i$ switches into $X$ at rate $\mu_{iX}$. $\alpha_i,\pi_X,\delta_d$: agent, project and day fields. $E_{iX}$: a link to $X$ by another agent became visible to $i$ in the last 60 min. $\kappa$: link coupling. $n_{-i,X}$: others on $X$ (Potts coupling $J$). $\mathbf h$: own history, plans, pulses. $\lambda$: extra switches per exposure. $R_{\rm link}$: share of switches attributable to links. $\pi$: links per switch. $k_s$: susceptible recipients per link.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\log\mu_{iX}(t)=\alpha_i+\pi_X+\delta_d+\kappa\,E_{iX}(t)+J\log\!\big(1+n_{-i,X}(t)\big)+\boldsymbol\eta\!\cdot\!\mathbf h_{iX}(t)\\
+\lambda=\frac{\sum(\hat\mu-\hat\mu|_{E=0})}{N_{\rm exp}},\qquad R_{\rm link}=\pi\,k_s\,\lambda=\frac{\sum(\hat\mu-\hat\mu|_{E=0})}{\sum y}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Switch hazard coefficient for a link seen in the last hour (blue) and for a link that arrives in the next hour (orange), fitted jointly. In every herding week but \#24, the future link predicts as well or better; only the own-artifact weeks (\#39, \#40, \#42) show past $>$ future. (b) Simulated peak number of agents on one project if half (green) or all (orange) links were removed: median $\times0.79$ with no links, an upper bound.}
+
+\htelos{The operator question was: would throttling link-sharing damp pile-ons? Mostly no. In herding weeks links, chat and work on a project rise together. The link marks an attention burst already under way more than it starts one. Removing every link trims simulated peak pile-ons by about a fifth at most; halving them changes little. The usable outputs are diagnostics. The lead/lag test tells an operator whether links act as directed recruitment (lag $\gg$ lead: agents advertising their own artifacts, $\lambda\approx0.01$--$0.02$ per exposure) or as markers (lead $\ge$ lag). The bounds are $\lambda\lesssim0.1$ and $R_{\rm link}\lesssim0.45$. To prevent duplicated work, target ownership or the burst triggers, not links.}
+
+\hbottom{Links co-move with project switches (hazard ratio $\approx2.3$) but do not lead them in herding weeks, so they mark attention bursts more than spread them; throttling them would trim pile-ons by at most $\sim$20\%.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (11 herding weeks)} & \textbf{Verdict}\\\hline
+\raggedright P1 $\kappa>0$, $p<.05$, beats link shift & \raggedright 3/11 (\#24, \#30, \#51); pooled $e^\kappa=2.3$ & \raggedright failed\tabularnewline
+\raggedright P2a past $>$ future links & \raggedright future $>$ past in 10/11; pooled $-1.17\pm0.30$ & \raggedright reversed\tabularnewline
+\raggedright P2b survives momentum & \raggedright 3/3 & \raggedright yes\tabularnewline
+\raggedright P3 naive agents; no pre-trend & \raggedright naive $\kappa=1.31$; pre-trend $3.3\times$ & \raggedright half\tabularnewline
+\raggedright P4 simple contagion & \raggedright 1 link: HR 2.3; $\ge$2 senders add $-0.24$ & \raggedright yes\tabularnewline
+\raggedright P5/P6 $\lambda$, $R_{\rm link}<0.5$ & \raggedright $\lambda$ median 0.036; $R_{\rm link}$ 0.06--0.44 & \raggedright yes (bounds)\tabularnewline
+\raggedright P7 no links: peaks $-$10--30\% & \raggedright median $\times0.79$; calibration 9/14 & \raggedright mixed\tabularnewline
+\raggedright P8 NE09 slows response & \raggedright pre-NE09 as fast (2.5 vs 7.5 min) & \raggedright failed\tabularnewline
+\raggedright P9 own-artifact $\lambda$ lower & \raggedright 0.012--0.019 vs 0.036; past $>$ future & \raggedright yes\tabularnewline
+\raggedright P10 occupancy $J>0$ & \raggedright 3/11 under both FE & \raggedright failed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/synthetic_compact.pdf}{Synthetic swarms at village size, 25 runs each. Blue: the primary test calls contagion only when links truly act (92--100\%; 52\% with drive). Orange: future links beating past links is typical of drive, occupancy and announcement worlds (88--100\%) and rare under pure contagion (8--16\%). Real herding weeks show it in 10/11.}
+
+\hcaveats{Touches are attention (strict artifact mentions), not work. Call-start visibility is doubtful in regime I, and NE09 contradicts it. $\lambda$ and $R_{\rm link}$ are attributable associations, so they are upper bounds on any causal link effect. The counterfactual simulator has $\pm0.1$ error in synthetic tests, over-states the effect when drive and contagion mix, and under-predicts peaks in long periods (\#38, \#51). The other-room placebo was uninformative (rooms work on different projects). On the shared window labels no period beats the shift null (post hoc). The short-lag check, label robustness and H27 cross-reference are post hoc. Holdout not run.}
+
+\hnext{Run the frozen test on \#22, \#28, \#45. Model attention bursts directly: what starts them (human messages, kickoffs, announcements), jointly with H27 onsets. Split links by sender type and by announcement vs request (Phase 2 text).}

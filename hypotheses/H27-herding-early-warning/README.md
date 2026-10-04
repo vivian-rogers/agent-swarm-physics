@@ -257,6 +257,7 @@ All periods were run on 2026-10-04, after each `G<NN>/README.md` prediction was 
 - **H27-R3.** Test the one regime where the theory says warnings can work: long, large swarms with slowly drifting incentives (#51 roles, if any shared project ever rises), with the slow-rise onset rule.
 
 ## Notes
+- **From H28 (2026-10-04):** the post-hoc link precursor (11/21 onsets after a link) fits bursts *marked* by announcements: H28 finds links posted in the next hour predict switches better than past links (10/11 herding weeks), with a 3.3× pre-trend before first exposure. Links don't, by themselves, trigger onsets. H28's design excludes the "link labels its poster" artifact (posters' links count as their switch, recipients must be off X).
 - 2026-10-04: promoted from HH109 by Vivian (usefulness-first batch); wave 1.
 - 2026-10-04: model variant, scheme, observables, nulls and predictions written before the synthetic validation and before any real-data run.
 - 2026-10-04: synthetic validation run; calibration notes and Amendment 1 appended before any real data.

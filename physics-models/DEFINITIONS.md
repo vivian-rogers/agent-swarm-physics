@@ -226,3 +226,9 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Unit macro-state (work ledger):** whether G advanced its artifacts in a 30-min bin (binary, from strict executed git/deploy writes). Too coarse to see a store that decides *which* artifact members work on (H01 synthetic); H58 should use a state that encodes the artifact.
 - **Allocation continuity ΔC:** overnight return of members to the unit's artifacts vs a permutation null, with leave-target-day-out membership.
 - **Semantic information (natural-scramble variant)** (H15): ΔV of a viability measure after a naturally occurring scramble of one store (forced consolidation NE41, memory loss, departure, night, channel cut, goal change), against matched non-scramble controls.
+
+### H28 named variants (2026-10-04; see `hypotheses/H28-links-spread-herding/README.md`)
+- **Interaction (link exposure, call-start visible):** a link to project X posted by another agent that became visible to the recipient within the last 60 min (visible = the recipient's next model call after the post; H18's rule, to be replaced by the context ledger).
+- **Contagion / adoption event, variant arrival (project switch-in):** an agent's first strict touch of X after ≥ 60 min without one.
+- **Agent state (categorical, on-project multi-label):** the set of projects an agent touched within the last 60 min (an agent can be on several).
+- **Link-attributable share R_link** = π · k_s · λ (links posted per switch × susceptible recipients per link × extra switches per exposure): an upper bound on the causal share when links ride bursts.

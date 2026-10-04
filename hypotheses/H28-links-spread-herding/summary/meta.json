@@ -1,0 +1,14 @@
+{
+  "complete": 42,
+  "faithfulness": 1.5,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: synthetic validation (12 scenarios x 25 runs), 14 per-period verdicts with dated predictions, NE09 test, counterfactual simulations, post hoc short-lag and shared-label checks, and a scorecard. The frozen holdout test (#22, #28, #45) is written and dry-run, not run.",
+    "faithfulness": "The core claim (links drive switches) fails its primary timing test (3/11 herding periods beat the link time-shift null) and its signature: future links predict switches better than past links (pooled -1.17 +- 0.30), naive agents show a 3.3x pre-trend, NE09 failed. What survives is a strong, well-calibrated association (pooled HR 2.3), simple rather than complex contagion, and directed recruitment only in own-artifact weeks.",
+    "usefulness": "It answers an operator question with numbers: throttling link-sharing would trim peak pile-ons by at most ~20% (upper bound), so act on ownership or burst triggers instead. The lead/lag diagnostic and the lambda / R_link bounds are cheap to compute from any swarm's logs. But the counterfactual is model-based (+-0.1) and not interventionally validated."
+  },
+  "one_line": "Links co-move with project switches (HR 2.3) but do not lead them in herding weeks: they mark attention bursts, and throttling them would trim pile-ons by at most ~20%.",
+  "rated_by": "H28 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}
