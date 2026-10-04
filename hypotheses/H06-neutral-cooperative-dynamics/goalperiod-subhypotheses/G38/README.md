@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (P6 contrast)
 **Verdict (1b):** mixed (P6; km24 all inadequate; work: Hubbell adequate, NCD not)
-**Role:** exploratory (contrast)
+**Role:** replication (exploratory (contrast))
 **Period:** regime III · mode C · 12–14 agents · #best/#rest rooms (pooled; the rooms got different instructions) · 17 days × 4 h
 
 ## Why this period

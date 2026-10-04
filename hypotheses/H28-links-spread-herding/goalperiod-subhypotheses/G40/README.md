@@ -2,7 +2,7 @@
 
 **Verdict:** supported (P1 supported)
 **Verdict (1b):** supported (ledger visibility: κ +0.62 ± 0.30, z_shift +4.8, κ_lead +0.10; work switches κ +0.25 ± 0.31, z +1.6, lead -0.80)
-**Role:** exploratory (contrast)
+**Role:** replication (exploratory (contrast))
 **Period:** regime III · mode C · 15 agents on the roster · 5 non-holdout days.
 
 ## Why this period

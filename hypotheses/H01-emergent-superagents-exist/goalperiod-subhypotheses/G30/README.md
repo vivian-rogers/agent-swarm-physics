@@ -1,7 +1,7 @@
 # H01 × G30: Adopt a park and get it cleaned
 
 **Verdict:** failed (round 2: no agency signature)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** round 2 units 30 · regime I · 5 non-holdout days · 10 writers · 516 strict write events
 
 ## Round 2 (2026-10-04)

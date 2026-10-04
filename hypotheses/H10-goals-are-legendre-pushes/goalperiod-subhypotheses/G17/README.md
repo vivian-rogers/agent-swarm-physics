@@ -2,7 +2,7 @@
 
 **Verdict:** failed (pair test #16 → #17; NE34)
 **Verdict (1b):** failed (both models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode I · 7 agents · #general only · 5 active days; no step change. Segment A = days 2+ (10-14 … 10-17, ~24 windows).
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed: content 0.53; activity excess noisy (4 days); at w30 activity exceeds content (gap -0.21)
 **Verdict (1b):** mixed (bge) / failed (gte)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 13 agents · two rooms · 4 days. H01 units used: 36b.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: mixed; round 1: mixed)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime III · mode I · 15.6 agents (N_room 9.7) · 2 room(s) carrying ≥ 5% of agent messages · 5 non-holdout days · 4.0 h/day (empirical).
 
 ## Why this period

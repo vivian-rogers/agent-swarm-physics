@@ -6,6 +6,22 @@
 **Origin:** shortlist S7 ([`../promotion-shortlist.md`](../promotion-shortlist.md)); idea HH38; goal periods #34 (held out) and #35; NE15 (the split).
 **Definitions used** (`physics-models/DEFINITIONS.md`): Regime; Population; Activity time. Proposed here, to be added to DEFINITIONS.md by whoever owns that file: **"copy information (fork variant)"** (Observables 2) and **"lineage"** (Data scheme).
 
+## Standards (2026-10-04)
+**Question served:** Q1 (cross-fork change follows reads) and Q2 (identical innovations in isolated forks are convergence).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | Divergence is measured against clocks (active hours, commits, touches); no synchrony claim. | n/a |
+| Exogenous field (kickoff/goal/operator) | partly | Not handled: shared innovations are read as convergent repair of inherited defects, with no test against the #35 kickoff or operator messages. Close with a `goal_fields` and operator-message check (§1). | open |
+| Shared model priors | partly | Not handled: nucleation is one agent's trait (G35 native), and shared innovations have no family split. Close with a cross-family control (§1). | open |
+| Contemporaneous convergence | yes | Ledger check (Round 1b): 0/3 shared innovations had a readable cross-team channel; 5/5 cross-fork commits followed a read. | removed |
+
+**Inputs:** all current: DQ4 `work_commits`, DQ6 `room_assignment`, context ledger, shared `copy_info`. `activity_bins` and embeddings do not apply.
+
+**Two layers:** 3 period folders (G35, G36, G37), all tagged exploratory. Natives: 3 in the card (G35 failed, NE15 supported, G36 supported); no folder carries `**Role:** native`.
+
+**Confirm script:** `confirm_h34.py` (#34), written and dry-run, not run. Re-freeze: no; it reads git touches and snapshots, which no fix changed (round 1b found 0 automated fork commits).
+
 ## Question
 On 2026-03-16 the village was split into #best (GPT-5.4, Claude Opus 4.6, Gemini 3.1 Pro) and #rest (everyone else), and each room took its own copy of the RPG that all twelve agents had built during #34. Two isolated subpopulations then evolved two copies of one artifact. How fast, and in which features, do the copies diverge from the common ancestor and from each other? Is the divergence gradual (an inheritance curve with a measurable mutation rate), and does anything cross between the rooms?
 

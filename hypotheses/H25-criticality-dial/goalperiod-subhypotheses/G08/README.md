@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; corrected table, same rule)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime I · mode C · 4 agents at start · 18 non-holdout days · 3.0 h/day (empirical).
 
 ## Why this period

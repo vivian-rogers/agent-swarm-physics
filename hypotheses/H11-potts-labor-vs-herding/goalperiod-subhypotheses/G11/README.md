@@ -2,7 +2,7 @@
 
 **Verdict:** n/a (insufficient labels)
 **Verdict (1b):** n/a (insufficient labels; unchanged)
-**Role:** exploratory (transfer)
+**Role:** replication (exploratory (transfer))
 **Period:** regime I · mode F · N = 7 at start · one room (#general) · 5 active days. Class for H11: **FM-free**.
 
 ## Why this period

@@ -6,6 +6,22 @@
 **Origin:** HH114 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`). Related: HH109 (early warning of herding waves), HH79 (group exposure beats pairwise: tested here as complex contagion via distinct senders). Follows H11's next step 2 (kinetic Potts with `exposure`).
 **Definitions used:** "Interaction (broadcast)", with a named variant proposed for DEFINITIONS.md, **interaction (link exposure, call-start visible)**; "Contagion / adoption event", with a named variant **arrival (project switch-in)**; H11's **agent state (categorical, project/artifact strict)**, used here in a multi-label form (**on-project state**); "Regime"; "Population N(t)" (active-population variant: agents with ≥ 1 logged turn in a 5-min bin). All defined under Data scheme.
 
+## Standards (2026-10-04)
+**Question served:** Q2 (a third to a half of apparent influence is convergence) and Q1 (does reading a link recruit).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Agent and project × day fields; link time shift within the day's active window (N1). | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Lead placebo, momentum control (N3) and room placebo (N4) detect a common drive; the drive itself (human prompts, announcements) is not regressed out (Known confounds). | partly |
+| Shared model priors | no | No family claim. | n/a |
+| Contemporaneous convergence | yes | Ledger blind window (NE09 native): recipients switch at 6.5× baseline before they can read a link vs 3.5× after. | removed |
+
+**Inputs:** all current: ledger visibility and DQ4 work switches. Active bins come from logged turns; embeddings do not apply.
+
+**Two layers:** 13 replication folders. Natives: 2 (NE09 failed, G31 failed).
+
+**Confirm script:** `confirm_holdout.py` (#22, #28, #45), frozen, not run; uncommitted at the DQ8 survey. Re-freeze: yes, on ledger visibility (holdout item 15); it uses H18's round-1 turn-time rule.
+
 ## Question
 In a kinetic Potts model with exposure, the probability that an agent switches to project X rises with the number of recent links to X it saw: an infection rate per link exposure. Throttling link-sharing would damp pile-ons. *Check:* switch hazard vs exposure count (artifact mentions in chat) with agent fixed effects, vs a common-drive rival.
 

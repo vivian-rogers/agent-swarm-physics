@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; corrected activity table, same rule)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime III · mode F (free) · N = 13 at start (present: 12) · rooms holding ≥ 3 present agents: 37: 2 · 3 non-holdout days. 
 
 ## Why this period

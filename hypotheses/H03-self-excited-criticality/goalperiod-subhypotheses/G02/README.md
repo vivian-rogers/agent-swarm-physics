@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1b, 2026-10-04: n̂ TALK 0.72 → 0.75 on corrected inputs; unchanged verdict)
-**Role:** exploratory
+**Role:** native (was: exploratory)
 **Period:** regime I · mode F (free / holiday) · N = 4 at start (±0), 3.5 active per day on average · one shared room · 2 non-holdout days, median window 1.9 h. Splits inside the period: none.
 
 Verdict rule: P1 (n̂ < 0.5): lower 95% bound ≥ 0.5. Verdicts use the primary statistic, n̂ for TALK under M1 with B2 + exogenous drive. n̂ depends on the baseline. A Poisson process with a rate modulated on 10–30 min scales can mimic it, and the 10-min jitter test has no power to separate the two (main card, jitter calibration). Read B2 n̂ as an upper value and B3 n̂ as a downward-biased lower bound. Any verdict here is descriptive, not mechanistic.

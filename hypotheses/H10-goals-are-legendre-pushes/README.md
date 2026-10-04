@@ -5,6 +5,22 @@
 **Origin:** HH49 + HH85 (shortlist 2, item 1) (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** agent; regime (never pooled across; every pair lies inside one regime); driving / external field (the village goal, here as a *linear* field along ĝ); agent state, variant *vector (for model 11)*, operationalized as the **statement-mean projection** below (proposed as a named variant, see Notes); goal period as the unit of analysis, with exception (c) for the free → assigned transitions.
 
+## Standards (2026-10-04)
+**Question served:** Q2 (the goal as a field: does it act as a linear push) and Q5 (forecasting steerability).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | Content projections along ĝ; no timing statistic. | n/a |
+| Exogenous field (kickoff/goal/operator) | yes | The goal field is the object. Shared `goal_fields`, transverse-direction null (Null / baseline), per-room kickoff in G44. In NE38 the incumbent control drifted −3.1 SD. Other operator messages are not regressed out (§1). | partly |
+| Shared model priors | yes | `statements_style_resid_period32` in both models (Round 1b); P1 fails in every configuration. | removed |
+| Contemporaneous convergence | no | No agent-to-agent influence claim; R2 (common target) is a form of field response. | n/a |
+
+**Inputs:** all current: shared goal fields, gte, DQ5 dedupe, `style_resid`. Activity not used.
+
+**Two layers:** 7 replication folders (pairs #11→#12a, #16→#17, #37→#38a). Natives: 3 (G26 failed, NE38 mixed, G44 mixed).
+
+**Confirm script:** `confirm.py` (#22b→#23, #31a→#32), written, not run. Re-freeze: no for the data fixes (bge numbers reproduce exactly); a gte arm would meet STANDARDS §2. #32 was consumed by H05's executed NE12 run, so the card's reuse note is stale (holdout item 4).
+
 ## Question
 Estimate the free energy F(m) of the swarm's alignment m from its fluctuations in field-free (pick-your-own-goal) weeks. Can it predict how the swarm lines up behind an assigned goal, by tilting G = F − h·m, without refitting? Practical payoff: forecasting how steerable a swarm is from how it behaves when nobody steers it.
 
@@ -203,6 +219,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - Reuse policy: #22 and #32 have not been used for confirmation by any hypothesis that I know of; if one has, the reuse rule in `holdout.md` applies (different statistic; disclose in both cards and `LOG.md`).
 
 ## Notes
+- **Correction (coordinator, 2026-10-04):** #32 is not unused. H05's executed holdout run used it (holdout ledger item 4).
 - 2026-10-03: promoted from shortlist 2 (HH49 + HH85 (shortlist 2, item 1)).
 - 2026-10-03: predictions written (P1–P5, F1–F3, A1–A3) before any real-data statistic. Scheme built (180k non-holdout statements, 34 goal vectors; 27 MB data folder in total).
 - 2026-10-03: calibration (random directions, non-test periods) and synthetic validation; Amendment 1 (P2 perturbative range, P3/P4 descriptive, P4 shrinkage) before any real-data statistic along a goal direction.

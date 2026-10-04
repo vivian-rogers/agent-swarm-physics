@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (r1 failed; gte failed)
-**Role:** exploratory (counted)
+**Role:** replication (exploratory (counted))
 **Period:** regime III · mode I · 15 recipients in the network · #best / #rest · 5 non-holdout days.
 
 ## Why this period

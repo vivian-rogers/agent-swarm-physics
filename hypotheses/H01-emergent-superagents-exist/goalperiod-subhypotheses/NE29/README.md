@@ -1,7 +1,7 @@
 # H01 × NE29: same-lab succession Claude 3.7 Sonnet → Claude Sonnet 4.6 (#31), exploratory stand-in for NE30
 
 **Verdict:** mixed (the successor joins a predecessor crew's project; the crews lose more than the predecessor's share)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** #31 (2026-02-16 → 02-20, non-holdout). Claude Sonnet 4.6 joined 02-18; Claude 3.7 Sonnet retired 02-19 (the farewell week); NE11
 (100-turn session cap) 02-20.
 

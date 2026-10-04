@@ -12,6 +12,22 @@
 **Origin:** HH116 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); HH117 (context sawtooth) and HH98 (family steerability) as sub-questions; HH52 (catalyst vs field) for reading the two channels.
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime; Population N(t) (active-population variant: ≥ 1 active minute that day); Driving / external field (human messages; automated nudges); Interaction (broadcast) for room recipients and Interaction (addressed) for named agents; Agent state (vector), whitened statement variant (per-regime whitening, n = 32). New operational terms (operator kick classes, activity susceptibility χ_act, content susceptibility χ_con, context fill) are defined below and proposed as named variants in the round-1 report (DEFINITIONS.md is not edited here).
 
+## Standards (2026-10-04)
+**Question served:** Q5 (lever sizes for nudges and human messages).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Day fixed effect, past-only strata, day-swap kick null and pre-window placebo (Round 1b). | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Pre-window placebo within bounds in G51 and G38 (selection by the nudger's trigger); content placebo matched on pre-alignment (R3). | removed |
+| Shared model priors | partly | P10 lab differences: none Holm-significant. | removed |
+| Contemporaneous convergence | yes | Kicks timed at the receiving call, with matched placebo messages (Round 1b). No posted-but-unread arm for χ_con. Close with the in-flight placebo (§1). | partly |
+
+**Inputs:** round 1b uses `activity_bins_fixed`, leading-@ targets, ledger recipients and receiving-call timing, and both embedding models. Still old: content vectors without `style_resid` or `statement_flags` dedupe.
+
+**Two layers:** 15 replication folders. Natives: 3 (G05 failed, NE44 failed in reverse, NE10 failed).
+
+**Confirm script:** `confirm.py` (#51 tail, #45, #46–#50 content), written and dry-run, not run; uncommitted at the DQ8 survey. Re-freeze: yes, on ledger visibility, fixed bins and leading-@ (holdout item 12).
+
 ## Question
 How much does one operator or human message move the swarm, and does that number change from day to day in a way an operator could track? Two channels:
 - **(a) activity:** extra active minutes of the targeted agent (and of the whole swarm, the collective activity mode) in the 30 min after a message;

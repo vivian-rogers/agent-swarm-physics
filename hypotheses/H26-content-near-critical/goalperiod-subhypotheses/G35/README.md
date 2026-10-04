@@ -2,7 +2,7 @@
 
 **Verdict:** mixed: content room excess 0.80 (N2 p 0.01), but activity nearly matches it at w30 once its global part is removed (gap +0.12)
 **Verdict (1b):** supported
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime II · mode C · 13 agents · two rooms (#best, #rest) working on separate forks of one game · 5 days. H01 units used: 35.
 
 ## Why this period

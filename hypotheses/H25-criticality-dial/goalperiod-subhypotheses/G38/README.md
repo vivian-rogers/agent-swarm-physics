@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1: failed; corrected table, same rule)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime III · mode C · 12 agents at start · 17 non-holdout days · 4.0 h/day (empirical).
 
 ## Why this period

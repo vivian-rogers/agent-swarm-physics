@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents · two rooms, reshuffled 04-27 · 5 days.
 **Units analysed:** 39
 

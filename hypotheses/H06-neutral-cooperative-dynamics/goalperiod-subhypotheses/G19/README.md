@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (P6 contrast)
 **Verdict (1b):** mixed (P6 unchanged; all models inadequate)
-**Role:** exploratory (contrast)
+**Role:** replication (exploratory (contrast))
 **Period:** regime I · mode C (shared objective) · 8 agents · 1 room · 10 days × 4 h
 
 ## Why this period

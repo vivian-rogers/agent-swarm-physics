@@ -9,6 +9,22 @@ The #51 content couplings are real but mostly positive, and same-role rivals co-
 **Origin:** HH102 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population; Regime; Driving / external field; Interaction (broadcast); Agent state, variant vector, in H01's named form **agent state (vector), whitened statement mean**. H13's operational *talk spin* (+1 in a 1-min bin where `activity_bins.state == 4`, else −1). Five terms not yet in DEFINITIONS.md are defined below under Observables and proposed for the shared file: *coupling (content co-movement, within-day)*, *coupling (talk, excess)*, *frustration index (triangle)*, *balance index τ₃*, *overlap (day-to-day content)*.
 
+## Standards (2026-10-04)
+**Question served:** Q3 (no spin glass under private, conflicting goals).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Cross-day surrogate as the noise floor (Null / baseline); talk spins use `activity_bins_fixed` but no trim. Close with trim-then-block-shift (§1, §3). | partly |
+| Exogenous field (kickoff/goal/operator) | yes | Couplings are defined beyond the field; role-field manipulation check (NE38). Same-role rivals co-move more, which a shared role field also predicts. Close with `agent_goals` and `goal_fields` regressors (§1). | partly |
+| Shared model priors | yes | Same-lab residualized couplings and family-block removal (Null / baseline); `style_resid_period` in both models. | removed |
+| Contemporaneous convergence | yes | Not handled: within-day content co-movement is not read-gated. Close with the in-flight placebo (§1). | open |
+
+**Inputs:** all current: gte, `style_resid_period`, DQ5 dedupe, `activity_bins_fixed`, DQ6 roles, DQ2 stance. Couplings are co-movement, not ledger exposure.
+
+**Two layers:** 8 replication folders (#51 in 5 units, #38, #40, #44). Natives: 2 (NE38 failed, G23 failed).
+
+**Confirm script:** `confirm_tail.py` (#51 tail), written, not run. Re-freeze: no; DQ6 roles change nothing in H22's units and bge numbers reproduce. A gte arm would meet STANDARDS §2.
+
 ## Question
 In #51 each agent maximizes a privately assigned goal, and some goals conflict. Do the couplings between agents carry random signs, with frustration (unsatisfied triangles) well above shared-objective weeks? Couplings here means content alignment beyond the field, and talk coupling. Are the dynamics glassy: many metastable configurations, and overlaps between days that decay slowly and depend on history? Aging belongs to H20. Practical payoff: how mixed-motive swarms behave.
 

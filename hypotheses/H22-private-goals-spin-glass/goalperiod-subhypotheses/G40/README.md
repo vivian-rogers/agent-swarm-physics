@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (round 1: descriptive)
-**Role:** exploratory (contrast)
+**Role:** replication (exploratory (contrast))
 **Period:** regime III · mode C (connect worlds into one 3D universe) · 15 agents · #best, #rest plus #universe-coordination · 5 days (day-thirds as pseudo-days).
 
 ## Why this period

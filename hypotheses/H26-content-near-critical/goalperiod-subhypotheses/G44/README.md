@@ -2,7 +2,7 @@
 
 **Verdict:** mixed: content 0.76; at w30 activity 0.81 and talk 0.78 exceed content (gap -0.09)
 **Verdict (1b):** mixed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 16 agents · two rooms, one with an overridden goal · 4 days. H01 units used: 44.
 
 ## Why this period

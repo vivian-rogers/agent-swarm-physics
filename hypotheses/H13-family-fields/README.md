@@ -11,6 +11,22 @@ Confirmatory script written, not run. Predictions were written 2026-10-03 23:50 
 **Origin:** HH10 + HH75 + HH89 (shortlist 2, item 4) (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population; Regime; Driving / external field (the goal field, here estimated as the day field, see Observables); Agent state, **variant vector** (named sub-variant proposed here: *agent state (vector, chat agent-day, whitened)*, defined under Observables); Interaction (broadcast: co-located = same room). Two terms not in DEFINITIONS.md are used with the operational meaning given here and proposed for the shared file: **model family** = `roster.lab`, and **talk spin** = H05's spin (+1 in a 1-min bin where `activity_bins.state == 4`, else −1).
 
+## Standards (2026-10-04)
+**Question served:** Q2 (family fields are writing style, not coupling).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Cross-day surrogate for talk spins (b1, Null / baseline), on `activity_bins_fixed` but untrimmed. Close with trim-then-block-shift (§1, §3). | partly |
+| Exogenous field (kickoff/goal/operator) | yes | Day- or window-mean removal on every a, b and c observable (goal-field null, Null / baseline). | removed |
+| Shared model priors | yes | The object of the card: style rivals S-a, S-b and `style_resid_period` in both models remove the family field (P2, Round 1b). | removed |
+| Contemporaneous convergence | partly | Not handled for P7's "rooms carry coupling" (co-movement, not reads). Close with ledger reads or the in-flight placebo (§1). | open |
+
+**Inputs:** round 1b uses both embedding models, `style_resid_period`, DQ5 dedupe, `activity_bins_fixed`, Jev v3.1 and `n_errors`. Still old: talk coupling is minute-bin co-movement, not ledger read-outs; the card does not name DQ4 as the source of commit rates.
+
+**Two layers:** 10 replication folders. Natives: 3 in the card (NE06 uninformative, NE32 failed, G35 mixed); the G35 folder is tagged exploratory, so 2 carry `**Role:** native`.
+
+**Confirm script:** `confirm.py` (C1–C6), written and dry-run, not run. Re-freeze: yes; C5's talk test was frozen before the switch to `activity_bins_fixed`.
+
 ## Question
 Does each lab's models share a direction in content space (a family field h_f, e.g. the 'genuinely' magnetization), beyond the goal field? Is coupling homophilous by family: a K×K family coupling matrix with J_within > J_across? Does family identity persist across room boundaries, or does room identity dominate (H01 D9.2)? Practical payoff: vendor bias and homophily in mixed-model swarms, with about 9 parameters instead of N×N.
 

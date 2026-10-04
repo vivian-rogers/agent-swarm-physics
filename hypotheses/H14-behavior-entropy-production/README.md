@@ -14,6 +14,22 @@ Promoted 2026-10-03 by Vivian from shortlist 2.
 - **"entropy production (Markov pair-KL on categorical behavior states)"**: for one agent, the KL divergence between the forward and time-reversed pair distribution p(x_t, x_{t+1}) of its state sequence, i.e. the AIK bound with the antisymmetrized transition indicators as observables. Cross-fitted by day; reported per transition and per agent-hour; null = detailed-balance surrogate.
 - **"entropy production (AIK cross-agent bound on categorical states)"**: on a common 1-min grid, the AIK bound with single-agent transition indicators plus cross-agent lagged antisymmetric observables (mean-field and pairwise, defined below); the collective term is the increase over the single-agent bound. Null = cross-day surrogate (as in H05's variant).
 
+## Standards (2026-10-04)
+**Question served:** Q6 (irreversibility of agent behavior).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Scaffold removal with a 3-transition burn-in (act_sh_b3, Round 1b) beats rival R1 for fine arrows. HH67's collective term uses an untrimmed cross-day surrogate (N3). Close with trim-then-block-shift (§1, §3). | partly |
+| Exogenous field (kickoff/goal/operator) | partly | NE43 drive withdrawal against placebo boundaries (N1): no step, one marginal miss. | removed |
+| Shared model priors | yes | Lab-label permutation N4 and action-mix rival R2: no lab effect (P3-family p 0.35). Anthropic > OpenAI is fragile. | removed |
+| Contemporaneous convergence | no | Per-agent arrows; the collective term is null. | n/a |
+
+**Inputs:** round 1b uses `actions_bash_head_fixed`, `turn_outcomes`, `call_windows`, `error_class` and Jev v3.1. Still old: R1's output rate counts git-printed commits from `turn_outcomes`, not the DQ4 `work_ledger`; HH67 was not re-run.
+
+**Two layers:** 9 replication folders. Natives: 3 in the card (NE43 failed, NE14 mixed, loops vs progress in #38–#40 failed); 2 folders carry `**Role:** native`.
+
+**Confirm script:** `confirm_h14.py` (C1–C9), written and dry-run, not run. Re-freeze: no for inputs (coarse and `act` classes do not read the fixed columns). Round 1b attributes C2's regime contrast to the session scaffold, so an amendment is advisable before a run.
+
 ## Question
 1-minute activity spins were too coarse for entropy production (H05). With richer categorical states (action classes now; Jev behavior states later), how irreversible is each agent's behavior? Does each model family have its own arrow of time (HH19)? Is the swarm's joint irreversibility more than the sum over agents (HH67)? Where do the probability currents run (HH56)? Practical payoff: irreversibility as a measure of goal-directed, driven work versus aimless activity.
 

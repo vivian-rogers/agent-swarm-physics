@@ -3,7 +3,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (round 1b: +0.023, p 0.001)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime III · 15 agents · 5 days · room 2: 4, room 3: 11 · 51 within-room pairs, 40 cross-room pairs.
 
 ## Prediction

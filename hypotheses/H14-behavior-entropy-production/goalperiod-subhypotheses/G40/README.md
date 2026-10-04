@@ -3,7 +3,7 @@
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 93% after scaffold removal with burn-in; pooled Jev v3 arrow not significant (flip p 0.139)
 **Role (1b):** native (loops vs progress, N3, below) in addition to the replication
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C (shared objective) · N = 15 · rooms merged into #universe-coordination on 05-04 (GPT-5 left alone in #rest) · 5 days × 4 h. The merge is at the period start, so no split inside.
 
 ## Why this period

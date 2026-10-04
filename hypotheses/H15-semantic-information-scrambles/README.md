@@ -6,6 +6,22 @@
 **Literature:** [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md) (the framework); Sowinski et al. 2023 (plateau-then-collapse; via `physics-models/04-semantic-information`).
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime; Memory state; Interaction (broadcast; exposure as in `exposure`); Action; Entropy (of behavior); **Semantic information (Kolchinsky–Wolpert)**, in a named variant proposed here, **"semantic information (natural-scramble variant)"** (defined under Model; to be added to DEFINITIONS.md by whoever owns that file).
 
+## Standards (2026-10-04)
+**Question served:** Q4 (which information is load-bearing: context, memory or artifacts).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Same-day differencing against other agents and matched placebo days of the same agent (Null / baseline). The erasure dip compares calls within one segment. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Same-day differencing removes common day fields; forced-erasure timing is set by the 41-turn cap. Artifact switches fall on goal-change days (118/172), and P5 carries a task-phase confound (Round 1b). | partly |
+| Shared model priors | no | Within-agent event designs. | n/a |
+| Contemporaneous convergence | no | No influence claim; chat-cut events (CC) number 3. | n/a |
+
+**Inputs:** round 1b uses DQ4 work commits, `turn_outcomes.failed` and `error_class`, `activity_bins_fixed` and ledger resets. Still old: chat-cut detection uses the `exposure` table; V_out is undefined before #30.
+
+**Two layers:** 30 replication folders. Natives: 3 (NE41 supported, NE16 mixed, NE29 supported).
+
+**Confirm script:** `confirm_ne30.py` (NE30, NE33 tail, regime-III holdout), dry-run only. Re-freeze: yes; it was frozen on round-1 viability measures (stderr reliability, write turns) (round-1b synthesis, decision 2).
+
 ## Question
 Kolchinsky–Wolpert: information is semantic, or load-bearing, if scrambling it lowers the system's viability. We can't run new swarms or replay agents, but the logs contain natural scrambles: memory loss and resets, a change in consolidation rate (NE14), newcomers with empty memories, room cuts that remove chat exposure, and widened history search (NE18). Which removals lower viability, by how much, and what fraction of the available information is load-bearing (η)? Practical payoff: which context actually keeps a swarm working.
 

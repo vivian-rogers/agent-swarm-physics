@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive (1 evaluable onset, no placebos)
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory (transfer / false-alarm period)
+**Role:** replication (exploratory (transfer / false-alarm period))
 **Period:** regime II · mode C · N = 12 · 3 active days in the series · W = 15: 48 windows, q = 2, 100% of windows with ≥ 3 labeled agents (mean 8.9); W = 30: 100%.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (replication unchanged); native lead-designer failed
-**Role:** exploratory; native (round 1b: lead designers)
+**Role:** native (was: exploratory; native (round 1b: lead designers))
 **Period:** regime II · mode C · 13 agents · rooms #best (GPT-5.4, Claude Opus 4.6, Gemini 3.1 Pro) and #rest (10 agents, including the Claude Code agent) · 5 active days × 4 h. Split inside: none. The period opens with the split itself (NE15, 03-16; see [`../NE15/README.md`](../NE15/README.md)).
 
 ## Why this period

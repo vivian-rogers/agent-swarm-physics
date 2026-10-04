@@ -5,6 +5,22 @@
 **Origin:** HH100 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Population N(t); Regime; Interaction (broadcast; the shared `exposure` room rule); Action (turn-merged). **New here, proposed for `physics-models/DEFINITIONS.md`** (not edited, outside H19's scope): *loop gain (equal-time)*, *loop gain (Hawkes)*, *attention load k̄* and *agent turn (village)*, defined under Model and Observables.
 
+## Standards (2026-10-04)
+**Question served:** Q2 (loop gains: day-edge field vs coupling) and Q1 (k_llm, messages per LLM step, as a cadence knob).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | DQ8 trim, H38 conditioning and the corrected N1 null (Round 1b): the activity gain's rise with x_att disappears. | removed |
+| Exogenous field (kickoff/goal/operator) | partly | N1 block fields absorb shared time-varying drives; regime and era rivals (Null / baseline). Operator messages and kickoffs are not regressed out of the talk gains. Close with `goal_fields` and operator regressors (§1). | partly |
+| Shared model priors | partly | Not handled: the period's family mix is not a control. Close with leave-period-out agent means or cross-family subsets (§1). | open |
+| Contemporaneous convergence | yes | Not handled: equal-time talk gains include contemporaneous convergence. Close with the in-flight placebo or a ledger-gated read-out gain (§1). | open |
+
+**Inputs:** round 1b uses `activity_bins_fixed`, the DQ8 trim and H02/H03 round-1b estimates. Still old: H04's `K_week` and H05's two-block gains are dropped until re-run; x_att comes from the `exposure` room rule, not the ledger.
+
+**Two layers:** 35 replication folders. Natives: 4 in the card (G51 failed, NE42 failed, NE43 supported, NE14 failed); the G51 folder is tagged exploratory, so 3 carry `**Role:** native`.
+
+**Confirm script:** `confirm.py`, written, not run. Re-freeze: yes; `results/frozen_channel_model.json` was fitted on the buggy table (holdout item 9). Its #45 Hawkes cell is blocked (item 2).
+
 ## Question
 Every hypothesis now produces per-goal-period coupling estimates: H02 Curie–Weiss βJ₀, H03 branching ratio n̂ and fast cross-triggering, H04 loop gain K, H05 J_in/J_out, and soon H10–H18. Do they collapse onto a single function of an operational control parameter, such as N, messages per agent-turn, hours per day, rooms, or the coupling mode of the goal? A collapse would be the swarm's phase diagram and would predict coupling from operating conditions. Practical payoff: forecasting a swarm's collective regime from its configuration.
 

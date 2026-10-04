@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive: rooms merged (not two-room by rule); whole-room gains: content 0.75, activity 0.90
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 15 agents · two rooms, merged mid-week (universe-coordination room) · 5 days. H01 units used: 40.
 
 ## Why this period

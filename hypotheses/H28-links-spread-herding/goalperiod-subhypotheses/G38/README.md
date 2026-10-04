@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (P1 weak)
 **Verdict (1b):** mixed (ledger visibility: κ +0.76 ± 0.20, z_shift -0.6, κ_lead +1.67; work switches κ +1.05 ± 0.26, z -0.3, lead +1.97)
-**Role:** exploratory (candidate)
+**Role:** replication (exploratory (candidate))
 **Period:** regime III · mode C · 14 agents on the roster · 17 non-holdout days.
 
 ## Why this period

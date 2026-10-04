@@ -10,6 +10,22 @@
 **Definitions used:** Agent; Population, N(t) (variant: *present population*, below); Regime; Driving / external field; Interaction (broadcast). Spin = "active" (below).
 **Shortlist entry:** S1 (`hypotheses/promotion-shortlist.md`).
 
+## Standards (2026-10-04)
+**Question served:** Q2 (activity couplings vs the scheduler's field) and Q1 (do inferred couplings measure influence).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Corrected null: each day trimmed to the all-present window and H38's joint silences removed before block-shift surrogates (`trim_stall`, Round 1b); H38-conditioned gains. | removed |
+| Exogenous field (kickoff/goal/operator) | partly | The N1 time-varying field and block fields absorb common drives (Null / baseline). Operator messages to single agents are not regressed out of pairwise couplings. Close with operator-message regressors (§1). | partly |
+| Shared model priors | yes | Family field M2 vs M3 on held-out days and lab enrichment (Null / baseline); same-lab enrichment 0.85 on fixed bins (Round 1b). | removed |
+| Contemporaneous convergence | partly | Not handled for the post-hoc talk-spin couplings (Round 1b, Reading 4); lagged minute bins only. Close with the in-flight placebo at the recipient's read-out call (§1). | open |
+
+**Inputs:** exploratory results use `activity_bins_fixed` and DQ8 nulls. Still old: the executed #45 run (`confirm_45.py`) read `activity_bins`; talk spins are minute bins, not ledger read-outs.
+
+**Two layers:** 15 replication periods. Natives: 3 in the card (G12, G44 sub-unit 44b, NE14), all failed; the G44 folder is still tagged exploratory, so 2 folders carry `**Role:** native`.
+
+**Confirm script:** `confirm_45.py` ran on #45 on 2026-10-03 (FAIL) on the buggy table. Re-freeze: yes, if Vivian orders a corrected re-run (holdout items 1, 9). The planned #14/#49 transfer set has no script.
+
 ## Question
 When we fit Ising couplings to the village's binned activity, do they measure who influences whom? Or are they artifacts of the schedule, the scheduler, shared model family and finite data?
 

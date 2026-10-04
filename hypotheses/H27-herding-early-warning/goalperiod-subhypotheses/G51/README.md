@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive (no evaluable onset)
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory (transfer / false-alarm period)
+**Role:** replication (exploratory (transfer / false-alarm period))
 **Period:** regime III · mode I/K · N = 21 · 45 active days in the series · W = 15: 1545 windows, q = 8, 93% of windows with ≥ 3 labeled agents (mean 12.9); W = 30: 91%. Locked tail 2026-09-07 → 09-21 excluded (holdout).
 
 ## Why this period

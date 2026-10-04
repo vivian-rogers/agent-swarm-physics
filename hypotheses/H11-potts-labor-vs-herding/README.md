@@ -5,6 +5,22 @@
 **Origin:** HH24 + HH26 + HH84 (shortlist 2, item 2), plus **HH22** (the election, #26), folded in as `G26/` by Vivian on 2026-10-03 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** "Agent state (categorical)" with two named variants proposed for DEFINITIONS.md, **agent state (categorical, project/artifact strict)** and **agent state (categorical, action class)** (defined under Data scheme); "Population N(t)", active-population variant (labeled agents in a window and room); "Regime" (each period sits inside one regime); "Interaction (broadcast)" (the room is the interaction neighbourhood, so the coupling is uniform within a room block).
 
+## Standards (2026-10-04)
+**Question served:** Q2 (herding coupling vs common drive and specialization fields) and Q5 (detecting duplicated work).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | N2 circular shift of within-day window sequences and N1d within-agent-day permutation remove day-scale drive timing (Null / baseline). | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Named as a known confound and not separable from coupling (Null / baseline; axis C: drive vs coupling unseparated). Close with `goal_fields` and operator-message regressors and a kickoff-matched placebo (§1). | open |
+| Shared model priors | partly | N1 within-agent permutation removes stable agent specialization. No same- vs cross-family herding split. Close with a cross-family control (§1). | partly |
+| Contemporaneous convergence | yes | Not handled in H11's herding statistic (H06 ran the ledger test on the same labels). Close with the in-flight placebo (§1). | open |
+
+**Inputs:** all current: shared `project_states`, DQ4 work labels, DQ6 ballots. Activity, embeddings and failures do not apply.
+
+**Two layers:** 18 replication folders. Natives: 3 (G26 mixed, G31 supported, G40 mixed).
+
+**Confirm script:** `confirm_holdout.py` (#22, #28, #45), frozen 2026-10-03, not run. Re-freeze: yes, on the deterministic shared labels (Notes, from H31). #35 contradicts frozen C2; disclose before any run (holdout item 11).
+
 ## Question
 When agents work on a shared goal, do they spread across subtasks (antiferromagnetic Potts coupling: division of labor, graph coloring) or pile onto the same project (ferromagnetic: herding)? Does consensus arrive as a first-order jump (mean-field Potts, q ≥ 3)? Practical payoff: detecting duplicated work and groupthink in multi-agent systems.
 

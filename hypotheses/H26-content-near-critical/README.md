@@ -5,6 +5,22 @@
 **Origin:** HH108 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Agent; Population N(t) (active variant: agents with data in the window); Regime (III only, plus #35 in II as a descriptive extra); Driving / external field (goal, kickoffs, human and `automated` messages); Interaction (broadcast, room rule); Agent state, *vector (for model 11)* in H01's named variant *whitened statement mean* (n = 32, H01's regime bases) but **unnormalized** (see "Agent state (vector), linear statement mean" below); H01's *goal field ĝ*. **New named variants proposed for `physics-models/DEFINITIONS.md`** (not edited here; outside H26's scope): *agent state (vector), linear statement mean*; *loop gain (equal-time, room excess)*; *exogenous drive direction*. The loop-gain functional is H19's *loop gain (equal-time)*, g = 1 − 1/VR.
 
+## Standards (2026-10-04)
+**Question served:** Q3 (content is not near-critical) and Q2 (the activity room gain was an artifact).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Time-shuffle N1 and the DQ8 trim variant (Round 1b): activity cross-room ρ falls from 0.79 to −0.05. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Drive-removal ladder with exogenous-message directions and shared goal fields; P5 operator inputs; G12 shows half the debate gain is the motion field. Room-task drives are not separated from coupling (NE42 reading). | partly |
+| Shared model priors | partly | Not handled: no `style_resid` vectors. Close with `style_resid` (§1). | open |
+| Contemporaneous convergence | yes | Not handled: the room excess is equal-time co-fluctuation. Close with the in-flight placebo or ledger reads (§1). | open |
+
+**Inputs:** round 1b uses `activity_bins_fixed`, the DQ8 trim, both embedding models, shared goal fields and DQ5 restatement flags. Still old: no `style_resid`; rooms use the broadcast rule, not ledger reads.
+
+**Two layers:** 10 replication folders. Natives: 2 (NE42 supported, G12 supported in bge and mixed in gte).
+
+**Confirm script:** `confirm.py` (#46, #47; #45 content only), written and dry-run, not run. Re-freeze: yes; it reads `activity_bins`, and C2/C3 were set from round-1 activity numbers that round 1b withdrew (round-1b synthesis, decision 2).
+
 ## Question
 H01's content-level βJ₀/n (median 0.74, an upper bound) sits far above every activity loop gain (≤ 0.4). If that survives proper multi-direction field removal (the H24 lesson), ideas can cascade even when activity can't. *Check:* drive-removed content loop gain vs activity gain in the same windows; idea-cascade sizes (HH122).
 

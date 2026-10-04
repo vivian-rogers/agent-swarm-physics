@@ -2,7 +2,7 @@
 
 **Verdict:** P1 failed (significant); P2 failed (significant)
 **Verdict (1b):** P1 failed (sig.); P2 failed (was sig.)
-**Role:** exploratory (transfer)
+**Role:** replication (exploratory (transfer))
 **Period:** regime III · mode C · N = 12 at start · #best / #rest · 17 active days. Class for H11: **AF**.
 
 ## Why this period

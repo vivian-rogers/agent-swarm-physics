@@ -2,7 +2,7 @@
 
 **Verdict:** mixed: content 0.65, 0.55, 0.40 in 38a, b, c (N2 p up to 0.03); at w30 activity ties or exceeds content; talk higher
 **Verdict (1b):** 38a: mixed (unchanged); 38b: supported; 38c: mixed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 12 agents · two rooms given different instructions · 17 days. H01 units used: 38a, 38b, 38c.
 
 ## Why this period

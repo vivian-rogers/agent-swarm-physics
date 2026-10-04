@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive (1 evaluable onset, percentile 0.59)
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory (transfer / false-alarm period)
+**Role:** replication (exploratory (transfer / false-alarm period))
 **Period:** regime I · mode C · N = 7 · 10 active days in the series · W = 15: 163 windows, q = 4, 66% of windows with ≥ 3 labeled agents (mean 3.3); W = 30: 82%.
 
 ## Why this period

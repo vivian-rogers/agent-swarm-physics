@@ -2,7 +2,7 @@
 
 **Verdict:** mixed: one big room: activity 0.92 to 0.95 far above content 0.25 to 0.65 (L2 upper bounds); #focus content 0.54 (N2 p 0.18)
 **Verdict (1b):** unchanged (51c mixed; single-room sub-units descriptive)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode P (I/K) · 21 agents · one room (#general), plus the #focus room in 51c · 45 days. H01 units used: 51a, 51b, 51c, 51d, 51e.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1b, 2026-10-04: n̂ TALK 0.07 → 0.06 on corrected inputs; unchanged verdict)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode F (free / holiday) · N = 12 at start (+1−1), 12.2 active per day on average · one shared room · 5 non-holdout days, median window 4.0 h. Splits inside the period: 2026-02-18 (roster_joined: Claude Sonnet 4.6); 2026-02-19 (NE29: Retirement of Claude 3.7 Sonnet, the longest-servi; roster_left: Claude 3.7 Sonnet); 2026-02-20 (NE11: 100-turn hard cap on sessions; goal-periods scaffold: 100-turn session cap (2026-02-20)).
 
 Verdict rule: P1 (n̂ < 0.5): the 95% interval straddles 0.5. Verdicts use the primary statistic, n̂ for TALK under M1 with B2 + exogenous drive. n̂ depends on the baseline. A Poisson process with a rate modulated on 10–30 min scales can mimic it, and the 10-min jitter test has no power to separate the two (main card, jitter calibration). Read B2 n̂ as an upper value and B3 n̂ as a downward-biased lower bound. Any verdict here is descriptive, not mechanistic.

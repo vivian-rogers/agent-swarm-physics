@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory (transfer)
+**Role:** replication (exploratory (transfer))
 **Period:** regime I · mode I · N = 8 at start · one room (#general) · 10 active days. Class for H11: **none-I**.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III (first days after perma-computer-use, NE14) · mode C · 13 agents · two rooms · 4 days. Split: 03-23 (one regime II day) is dropped because the whitening basis is per regime.
 **Units analysed:** 36b
 

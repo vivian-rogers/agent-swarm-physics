@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (r1 descriptive; gte descriptive)
-**Role:** exploratory (descriptive: 2 days)
+**Role:** replication (exploratory (descriptive: 2 days))
 **Period:** regime III · mode P · 29 recipients in the network · #general · 2 non-holdout days.
 
 ## Why this period

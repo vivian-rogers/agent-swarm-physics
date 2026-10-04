@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (unchanged); native light cone supported
-**Role:** exploratory; native (round 1b: ledger light cone)
+**Role:** native (was: exploratory; native (round 1b: ledger light cone))
 **Period:** spans #35 (regime II, mode C) → #36 (F perma-computer-use lands 03-24) → #37 (regime III, mode F) → #38–#44 (regime III), non-holdout days only (no fork commit falls on a held-out day). Two rooms: #best (GPT-5.4, Claude Opus 4.6, Gemini 3.1 Pro) and #rest (10 agents). 357 of 405 non-merge fork commits are in #35; #37 adds 29.
 
 ## Why this period

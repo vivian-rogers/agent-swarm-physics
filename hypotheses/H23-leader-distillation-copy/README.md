@@ -11,6 +11,22 @@ Round 1: exploratory round 1 done (2026-10-03; G44, non-holdout). **Mixed.** The
 **Origin:** HH39 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime (all data are regime III); Agent state, **variant vector** (message-level: regime-III whitened bge vector, `common.load_whitener("III", 32)`); Driving / external field (the day field); **Copy information (fork variant)**, used here in a named variant, *copy information (distillation variant)*, defined under Observables and proposed for DEFINITIONS.md. "Family field" is used as in H13 (lab = `roster.lab`); here only the base model's **agent field** h_K (Kimi K2.6) is needed, which is an agent-level property used across periods under exception (b), with H13's split-half invariance check.
 
+## Standards (2026-10-04)
+**Question served:** Q4 (what information survives distillation of the swarm into one model).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | Message content only. | n/a |
+| Exogenous field (kickoff/goal/operator) | yes | Same-window controls share the room's field (N0); day-field-removed agent fields (O3b). | removed |
+| Shared model priors | yes | Rival R1 (the base model's echo) is tested and not rejected; under gte the leader is no closer to its corpus than base Kimi (Round 1b). The C1 Kimi clause needs #45. | partly |
+| Contemporaneous convergence | partly | Rival R2 (echo of the latest chat) is tested on the context → response channel (N2). The context is the 3 previous room messages, not ledger receipts. Close with ledger-defined contexts (§1). | partly |
+
+**Inputs:** round 1b uses shared `copy_info`, DQ6 checkpoints and gte for O3a. Still old: message contexts come from room order, not the context ledger; no `style_resid`.
+
+**Two layers:** 1 replication period (G44). Natives: none yet (DQ9 designs for #26 and #35 are recorded without predictions).
+
+**Confirm script:** `confirm_g45.py` (#45), frozen, not run. Re-freeze: yes, if Vivian approves the amendment that drops agent 30's messages before 2026-06-01 17:15:40 UTC (holdout item 14).
+
 ## Question
 In #44 the #best agents built training data and fine-tuned a leader model. A temporary fine-tuned leader (roster agent 28) ran on 05-28 and 05-29 inside #44; the final leader (agent 30) ran in #45 (🔒). Using Kolchinsky-style copy vs transformation information: what did distillation copy from the corpus (vocabulary, phrasing, topics) and what did it transform (plans, priorities)? Is the leader's content closer to the training corpus than to its base model's field? Practical payoff: what survives when a swarm is distilled into one model.
 

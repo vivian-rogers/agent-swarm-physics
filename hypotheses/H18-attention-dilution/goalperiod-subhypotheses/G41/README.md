@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1b, 2026-10-04: ledger k, mention response, pre-registered rule; on reply labels: mixed; round-1 verdict kept above)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · N ≈ 15 · #best / #rest (split back 05-11). Splits inside the period: split on the first day.
 
 ## Why this period

@@ -3,7 +3,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1b: +0.038, p 0.11)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime III · 12 agents · 3 days · room 2: 3, room 3: 9 · 24 within-room pairs, 21 cross-room pairs.
 
 ## Prediction

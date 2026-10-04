@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; corrected activity table, same rule)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime III · mode I/K (private roles (individual/competitive)) · N = 21 at start (present: 21, 24, 27, 27, 31) · rooms holding ≥ 3 present agents: 51a: 1, 51b: 1, 51c: 1, 51d: 1, 51e: 1 · 45 non-holdout days. Splits: 51a (3 d, III), 51b (19 d, III), 51c (14 d, III), 51d (7 d, III), 51e (2 d, III) (H01 step changes).
 
 ## Why this period

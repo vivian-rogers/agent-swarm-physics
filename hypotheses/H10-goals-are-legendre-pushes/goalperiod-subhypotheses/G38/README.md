@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (pair test #37 → #38a; NE34)
 **Verdict (1b):** mixed (bge mixed, gte failed)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 12 agents at start (+2 joins) · #best / #rest · 17 active days. **Splits:** NE17 (outreach approval, 04-14) and NE18 (history search, 04-20); the analyzed unit is 38a = 04-02 … 04-13; segment A = days 2+ (04-03 … 04-13). Day 1 also carries NE36 (operator corrects the Year-1 total).
 
 ## Why this period

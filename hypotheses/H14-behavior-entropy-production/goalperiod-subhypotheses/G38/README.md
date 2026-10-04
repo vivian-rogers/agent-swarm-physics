@@ -3,7 +3,7 @@
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 93% after scaffold removal with burn-in; pooled Jev v3 arrow significant (flip p 0.005)
 **Role (1b):** native (loops vs progress, N3, below) in addition to the replication
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C (shared objective) · N = 12 (+2: Claude Opus 4.7 joins 04-17, Kimi K2.6 04-22) · #best/#rest rooms · 17 days × 4 h. Step change inside: outreach approval (G) on 2026-04-14; analysed as one period, with 04-02 → 04-13 vs. 04-14 → 04-24 as a descriptive split.
 
 ## Why this period

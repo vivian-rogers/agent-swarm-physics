@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1b, 2026-10-04: n̂ TALK 0.70 → 0.68 on corrected inputs; unchanged verdict)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C (shared objective) · N = 7 at start (+1−1), 7.5 active per day on average · one shared room · 10 non-holdout days, median window 4.0 h. Splits inside the period: 2025-10-22 (goal-periods scaffold: 4 h/day runs (2025-10-22); roster_joined: Claude Haiku 4.5); 2025-10-29 (roster_left: Grok 4).
 
 Verdict rule: P3 (n̂ ≥ 0.7): the 95% interval straddles 0.7. Verdicts use the primary statistic, n̂ for TALK under M1 with B2 + exogenous drive. n̂ depends on the baseline. A Poisson process with a rate modulated on 10–30 min scales can mimic it, and the 10-min jitter test has no power to separate the two (main card, jitter calibration). Read B2 n̂ as an upper value and B3 n̂ as a downward-biased lower bound. Any verdict here is descriptive, not mechanistic.

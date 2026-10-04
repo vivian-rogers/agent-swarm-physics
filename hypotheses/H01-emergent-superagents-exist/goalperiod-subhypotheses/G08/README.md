@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (unchanged; P4 still not as predicted)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 4 agents · one room (#general) · 18 days.
 
 ## Why this period

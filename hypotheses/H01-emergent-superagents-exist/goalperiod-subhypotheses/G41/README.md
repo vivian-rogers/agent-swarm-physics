@@ -2,7 +2,7 @@
 
 **Verdict:** failed (round 2: no agency signature; round 1: mixed)
 **Verdict (1b):** mixed (unchanged, both models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents · re-split into #best/#rest on 05-11 · 5 days.
 
 ## Why this period

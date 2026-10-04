@@ -2,7 +2,7 @@
 
 **Verdict:** n/a (insufficient labels)
 **Verdict (1b):** n/a (insufficient labels; unchanged)
-**Role:** exploratory (candidate)
+**Role:** replication (exploratory (candidate))
 **Period:** regime I · mode C · N = 6 at start · one room (#general) · 10 active days. Class for H11: **AF**.
 
 ## Why this period

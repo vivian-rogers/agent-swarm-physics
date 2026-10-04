@@ -2,7 +2,7 @@
 
 **Verdict:** failed: content co-fluctuation is global (within-room 0.14, cross-room 0.12): L3 0.13; activity excess higher
 **Verdict (1b):** failed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents · two rooms · 5 days. H01 units used: 42.
 
 ## Why this period

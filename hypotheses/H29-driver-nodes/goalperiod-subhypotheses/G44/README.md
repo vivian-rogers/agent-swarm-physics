@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (r1 failed; gte failed)
-**Role:** exploratory (counted)
+**Role:** replication (exploratory (counted))
 **Period:** regime III · mode C · 17 recipients in the network · #best / #rest; Opus 4.8 and the temporary fine-tuned leader join 05-28 (NE31) · 4 non-holdout days.
 
 ## Why this period

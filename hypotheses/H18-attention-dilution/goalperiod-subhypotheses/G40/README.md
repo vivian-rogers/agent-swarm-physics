@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1b, 2026-10-04: ledger k, mention response, pre-registered rule; on reply labels: mixed; round-1 verdict kept above)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · N ≈ 15 · merged into #universe-coordination (GPT-5 alone in #rest). Splits inside the period: merge on the first day.
 
 ## Why this period

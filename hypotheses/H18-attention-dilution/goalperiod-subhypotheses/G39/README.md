@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** supported (round 1b, 2026-10-04: ledger k, mention response, pre-registered rule; on reply labels: mixed; round-1 verdict kept above)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · N ≈ 15 · #best / #rest (reshuffled 04-27). Splits inside the period: GPT-5.5 joins 04-27 (first day).
 
 ## Why this period

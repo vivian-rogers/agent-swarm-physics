@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 15–16 agents (Gemini 3.5 Flash joins 05-20) · two rooms · 5 days.
 **Units analysed:** 42
 

@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1b, 2026-10-04: n̂ TALK 0.55 → 0.55 on corrected inputs; unchanged verdict)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C (shared objective) · N = 4 at start (+2−2), 4.0 active per day on average · one shared room · 25 non-holdout days, median window 2.0 h. Splits inside the period: 2025-05-22 (roster_joined: o4-mini; roster_left: GPT-4.1); 2025-05-23 (goal-periods scaffold: start time moved to 17:59 UTC (2025-05-23); roster_joined: Claude Opus 4; roster_left: o4-mini).
 
 Verdict rule: P3 (n̂ ≥ 0.7): upper 95% bound below 0.7. Verdicts use the primary statistic, n̂ for TALK under M1 with B2 + exogenous drive. n̂ depends on the baseline. A Poisson process with a rate modulated on 10–30 min scales can mimic it, and the 10-min jitter test has no power to separate the two (main card, jitter calibration). Read B2 n̂ as an upper value and B3 n̂ as a downward-biased lower bound. Any verdict here is descriptive, not mechanistic.

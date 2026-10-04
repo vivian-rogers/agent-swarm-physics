@@ -5,6 +5,22 @@
 **Origin:** HH101 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** agent (the Claude Code agent excluded); regime (whitening per regime; no analyzed period crosses a regime boundary, so #36 is excluded); driving / external field (the village goal ĝ, and in #51 each agent's assigned goal ĝ_i); agent state, variant *vector (for model 11)*, operationalized at day resolution as the **agent-day statement mean** below (proposed as a named variant, see Notes); activity time, operationalized as the **active-day clock** (days of the period with village activity; weekends and holidays don't count). Goal period as the unit of analysis; named exceptions: (c) for rejuvenation at step changes inside #38/#51, (d) for the short-period contrast (partial pooling of a matched-window statistic), (a) for the shared embedding basis and ĝ.
 
+## Standards (2026-10-04)
+**Question served:** Q3 (no glassy aging in content).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Common-drift-removed A_c (rival R3) and calendar vs active-day clock (R6) (Null / baseline). | removed |
+| Exogenous field (kickoff/goal/operator) | yes | ĝ-removed A_g (rival R2), the kickoff transient K and shared goal fields; NE43 drive withdrawal (Round 1b). | removed |
+| Shared model priors | yes | Static style h_i in the null; `style_resid` halves A and removes #51's late slowing (Round 1b). | removed |
+| Contemporaneous convergence | no | No influence claim. | n/a |
+
+**Inputs:** all current: shared goal fields, gte, DQ5 dedupe, style-residualized vectors. Activity not used.
+
+**Two layers:** 27 replication folders. Natives: 3 (G51 mixed, G27 descriptive, NE43 mixed).
+
+**Confirm script:** `confirm_h20.py` (#1, #51 tail, short holdout periods), dry-run only. Re-freeze: no; bge numbers reproduce to the last digit on shared inputs. A gte arm would meet STANDARDS §2.
+
 ## Question
 Agents restart every day with memory, which is like field cooling. Does the similarity of what an agent (or the swarm) says on day t_w and day t_w + τ depend on the waiting time t_w since the goal's kickoff, as in spin-glass aging (C(t_w + τ, t_w) decays more slowly for larger t_w)? Or only on τ (stationary)? Do longer goals age more? Practical payoff: how fast a long-running swarm 'forgets' or locks in, and whether old swarms become rigid.
 

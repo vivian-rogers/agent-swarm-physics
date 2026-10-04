@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1: failed; same in both embedding models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode D/C · 16–18 agents (Opus 4.8 and the temporary Fine-tuned Leader join) · two rooms with different tasks (#best fine-tunes a Kimi leader; #rest picks creative work) · 4 days. The fine-tuned leader is its own lab label ('Fine-tuned (Kimi)').
 **Units analysed:** 44
 

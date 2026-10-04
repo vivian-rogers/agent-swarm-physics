@@ -1,7 +1,7 @@
 # H15 × NE14: consolidation-rate change (2026-03-11 → 03-24)
 
 **Verdict:** n/a (catalogued, not tested)
-**Role:** exploratory (catalog only)
+**Role:** replication (exploratory (catalog only))
 **Window:** the change spans #34 (held out) and #35/#36; non-holdout sides are #35 (03-16 → 03-20, regime II) and #36b (03-24 → 03-27, regime III).
 
 ## Why it is not tested

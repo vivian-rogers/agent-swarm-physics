@@ -2,7 +2,7 @@
 
 **Verdict:** failed (pair test #11 → #12a; NE34)
 **Verdict (1b):** failed (both models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode M · 7 agents · #general only · 5 active days. **Split:** scaffold change C (history search + CoT memory) on 2025-09-05, so the analyzed unit is 12a = 09-01 … 09-04; segment A = days 2+ (09-02 … 09-04, ~18 windows).
 
 ## Why this period

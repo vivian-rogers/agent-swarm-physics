@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode F (free choice) · 13 agents · rooms #best / #rest (split continues) · 3 active days × 4 h. Split inside: none.
 
 ## Why this period

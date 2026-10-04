@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (underpowered: not significant, μ = 0.5 aging not rejected) (Amendment-2 null; pre-registered null: mixed)
 **Verdict (1b):** mixed (both models, all configs)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 6 agents with statements · #general only · 25 active days (99 agent-days with ≥ 8 statements). Roster swap inside (o4-mini one day; GPT-4.1 out, Claude Opus 4 in); start time moved 05-23.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** failed (P1 fails in combination: r > 0 in 1/3 pairs, Stouffer p = 0.89; P2 untestable, every push non-perturbative)
 **Verdict (1b):** failed (both models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** spans goal periods (exception (c), the transition is the object). Three primary pairs: #11 → #12a, #16 → #17, #37 → #38a; secondary pairs #3 → #4, #5 → #6 (N = 4); kickoff event study at every non-holdout, within-regime goal change (#23 excluded, to keep #22 → #23 blind).
 
 **Folder choice:** one `NE34/` folder with tables, rather than one folder per pair, so the overview builder (which reads only `G<NN>` and `NE<NN>` names) picks it up. Per-pair figures are in `figures/`, per-period descriptions in the `G<NN>/` folders.

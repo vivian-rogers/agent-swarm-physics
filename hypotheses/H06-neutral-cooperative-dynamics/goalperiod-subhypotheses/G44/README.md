@@ -2,7 +2,7 @@
 
 **Verdict:** failed (P1; P2 failed; P3 failed; art failed; no model adequate (joint PPC p < 0.01 for all three))
 **Verdict (1b):** failed (km24 and work inadequate); native two-arm mostly supported
-**Role:** exploratory; native (round 1b: two arms)
+**Role:** native (was: exploratory; native (round 1b: two arms))
 **Period:** regime III · mode C for #best, free for #rest · #rest room only: 12 agents · 4 days × 4 h
 
 ## Why this period

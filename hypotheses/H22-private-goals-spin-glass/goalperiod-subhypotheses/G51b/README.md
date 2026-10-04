@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1: failed; rival homophily in every content variant)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 24 → 27 agents · one room (#general; GPT-5.6 triplet isolated on 07-09, Grok 4.5 onboarding room 07-10, side room 07-24) · 19 days. Single joins inside (Grok 4.5 07-10, Kimi K3 07-17, Opus 5 07-24) handled by the population rule; NE38 (Opus 5's role restart, 07-29) inside.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** failed (round 2: no agency signature; round 1: mixed)
 **Verdict (1b):** mixed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 16 agents · two rooms · 5 days (Gemini 3.5 Flash joins 05-20; chat-length instruction 05-22, not split).
 
 ## Why this period

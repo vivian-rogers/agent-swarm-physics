@@ -1,7 +1,7 @@
 # H01 × NE34: goal changes as a relevance scramble of the unit–goal correlation (round 2)
 
 **Verdict:** supported (R5c by the letter: units lose ~40% of their artifact advancement at new goals; the continuation boundary is not different; artifacts are not abandoned)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** 8 non-holdout goal boundaries with a work ledger before and after (#30 → #31 … #41 → #42); exception (c), the transition is the object.
 
 ## Why this event

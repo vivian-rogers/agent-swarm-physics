@@ -2,7 +2,7 @@
 
 **Verdict:** failed (round 2: no agency signature; round 1: mixed)
 **Verdict (1b):** mixed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 16–18 agents · two rooms with a per-room goal/kickoff override (05-26) · 4 days (Opus 4.8 and the temporary fine-tuned leader join 05-28).
 
 ## Why this period

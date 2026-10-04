@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (AUC 0.57, 2/4 hit)
 **Verdict (1b):** mixed (AUC 0.55, 2/4 hit; unchanged)
-**Role:** exploratory (transfer / false-alarm period)
+**Role:** replication (exploratory (transfer / false-alarm period))
 **Period:** regime I · mode C · N = 12 · 5 active days in the series · W = 15: 83 windows, q = 4, 96% of windows with ≥ 3 labeled agents (mean 9.0); W = 30: 93%.
 
 ## Why this period

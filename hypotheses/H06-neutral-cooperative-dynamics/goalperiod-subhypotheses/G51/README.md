@@ -2,7 +2,7 @@
 
 **Verdict:** supported (P7 check passes: no block 'supported'; but the free weeks fail the same way, so the check is uninformative)
 **Verdict (1b):** supported (P7 check, model-free); native rivals 1/3
-**Role:** exploratory (check); native (round 1b: DQ6 roles)
+**Role:** native (was: exploratory (check); native (round 1b: DQ6 roles))
 **Period:** regime III · mode P (private assigned roles) · 21 → 32 agents · rooms #general/#focus (pooled) · 8 h days (16 windows/day). Splits: three 5-day blocks analysed separately (the 28k intentions are clustered once, k-means only).
 
 ## Why this period

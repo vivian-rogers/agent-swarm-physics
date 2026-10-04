@@ -2,7 +2,7 @@
 
 **Verdict:** failed (round 2: no agency signature; round 1: failed)
 **Verdict (1b):** failed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode F · 12 agents · two rooms · 3 days.
 
 ## Why this period

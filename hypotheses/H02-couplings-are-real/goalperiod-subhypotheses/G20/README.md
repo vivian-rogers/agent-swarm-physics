@@ -3,7 +3,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** supported (round 1b, 2026-10-04, corrected data and DQ8 null: significant-coupling fraction 0.143, 0.083 vs the 8% threshold; collective βJ₀ significant in 0/2 chunk(s))
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime I · mode I (individual objectives) · 9 agents · 10 days in 2 chunk(s) of ≤ 5 days.
 
 ## Prediction

@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive (F1 mixed, F2 ✗, F3 ✓)
 **Verdict (1b):** descriptive (both models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode F · 12 agents (+1 −1; the Claude Code agent excluded) · #general only · 5 active days (41 windows). **Split:** 100-turn session cap on 2026-02-20, so the analyzed unit is 31a = 02-16 … 02-19.
 
 ## Why this period

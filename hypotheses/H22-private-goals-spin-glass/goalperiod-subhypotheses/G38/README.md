@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (round 1: descriptive)
-**Role:** exploratory (contrast)
+**Role:** replication (exploratory (contrast))
 **Period:** regime III · mode C (charity fundraiser, operator-specified) · 12 → 14 agents · two rooms (#best, #rest) · 17 days, split at 04-14 (NE17 outreach approval) and 04-20 (NE18 history search): 38a 8 days (counted, low power), 38b 4 days, 38c 5 days (day-thirds as pseudo-days).
 
 ## Why this period

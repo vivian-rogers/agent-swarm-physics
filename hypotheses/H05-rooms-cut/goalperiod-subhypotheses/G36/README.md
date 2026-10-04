@@ -3,7 +3,7 @@
 
 **Verdict:** descriptive (not one of the P2 two-room windows; numbers reported for context)
 **Verdict (1b):** descriptive (round 1b: within > cross +0.010, p 0.12; regime II)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime II · 11 agents · 5 days · room 2: 3, room 3: 8 · 24 within-room pairs, 21 cross-room pairs.
 
 ## Prediction

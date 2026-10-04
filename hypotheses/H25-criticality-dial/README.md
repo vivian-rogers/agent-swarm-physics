@@ -5,6 +5,22 @@
 **Origin:** HH107 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); tests HH108 on the way.
 **Definitions used:** Population N(t) (active-population variant, per day; thresholds below); Regime; Driving / external field; Agent state (vector), *whitened statement mean* (H01 named variant), here per 30-min window. **New named variants, proposed for `physics-models/DEFINITIONS.md`** (not edited; outside H25's scope): *loop gain (equal-time, daily dial)*, *platform stall (null-calibrated joint silence)*, *content soft spin (30-min window)*, all defined under Model.
 
+## Standards (2026-10-04)
+**Question served:** Q3 (every unit is subcritical).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | 30-min block demeaning, H38 stall masks and the DQ8 trim before the null (Round 1b): activity days above the ceiling fall from 54% to 24%. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Content F2 projects out each day's exogenous-message span, F3 is conservative, and NE43 leaves the dial unchanged. The 0.70 content dial reads as size × constant ρ̄, a field-like pattern (PH1). | partly |
+| Shared model priors | partly | F1 removes each agent's own day mean; shared family style co-moving within a day is not removed. Close with `style_resid` (§1). | partly |
+| Contemporaneous convergence | yes | Not handled: talk and content dials are equal-time co-fluctuation; H50 is cross-hypothesis support. Close with the in-flight placebo (§1). | open |
+
+**Inputs:** round 1b uses `activity_bins_fixed`, `outages_fixed` and the DQ8 trim. Still old: the content channel uses bge only, H12's near-copy rule instead of DQ5 `statement_flags`, and no `style_resid`.
+
+**Two layers:** 33 replication folders. Natives: 3 (NE43 supported, G51 failed, G40/NE42 mixed).
+
+**Confirm script:** `confirm.py` (Stage A content; Stage B gated on H19), frozen and dry-run, not run. Re-freeze: yes; Stage B lacks the trimmed variants (holdout item 8; round-1b synthesis, decision 2).
+
 ## Question
 Curie–Weiss gives χ = β(1−m²)/(1 − βJ₀(1−m²)). The ratio of the observed susceptibility (variance of the collective mode, for activity *and* content separately) to the independent-agent value gives the loop gain g, and T/T_c ≈ 1/g. Report it per day as a dial: how close the swarm is to runaway cascades. *Check:* per-day g vs H03's n̂ and H19's per-period table; calibrate on simulated swarms; held-out days.
 

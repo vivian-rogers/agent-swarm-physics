@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1b, 2026-10-04, context-ledger read-out; C9 talk clause CI includes 0; round-1 verdict kept above)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · N ≈ 15 · merged #universe-coordination (GPT-5 alone in #rest) · 5 non-holdout days.
 
 ## Why this period

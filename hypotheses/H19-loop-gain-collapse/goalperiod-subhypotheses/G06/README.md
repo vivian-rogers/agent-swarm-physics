@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: supported; round 1: supported)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime I · mode K · 4.0 agents (N_room 4.0) · 1 room(s) carrying ≥ 5% of agent messages · 15 non-holdout days · 2.0 h/day (empirical).
 
 ## Why this period

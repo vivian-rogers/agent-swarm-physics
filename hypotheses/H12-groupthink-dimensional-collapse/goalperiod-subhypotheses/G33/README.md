@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** mixed (round 1: supported; corrected activity table, same rule)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime II · mode C (shared objective) · N = 12 at start (present: 11) · rooms holding ≥ 3 present agents: 33: 1 · 3 non-holdout days. 
 
 ## Why this period

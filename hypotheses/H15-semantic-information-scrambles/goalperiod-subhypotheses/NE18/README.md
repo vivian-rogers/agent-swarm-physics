@@ -1,7 +1,7 @@
 # H15 × NE18: history search widened to verbatim segments and a 10-day window (2026-04-20)
 
 **Verdict:** not supported (n.s., signs mixed)
-**Role:** exploratory (round 1, non-holdout); inside goal #38 (`../G38/`).
+**Role:** replication (exploratory (round 1, non-holdout); inside goal #38 (`../G38/`).)
 **Verdict (1b):** not supported (V_out slope −0.02, p 0.95; 2026-10-04)
 
 ## Why this NE

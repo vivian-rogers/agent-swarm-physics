@@ -7,6 +7,22 @@
 **Definitions used:** Regime; Driving / external field; Activity time (here: minutes since the day's empirical window start); Action; Interaction (broadcast) for bystanders; Population N(t). New operational terms are defined below (activity n, kick, Green's function G, FD ratio X).
 **Shortlist / ideas:** S3 (`../promotion-shortlist.md`); HH46 (hours and Hawkes), HH31 (nudger reversal), with HH14 (humans as bath) and HH18 (nudger and the FD ratio) as side readings.
 
+## Standards (2026-10-04)
+**Question served:** Q5 (size and timing of the nudge lever) and Q1 (the response starts at the receiving call).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Matched no-kick controls stratified on minutes since the last active minute, a presence mask and a day fixed effect (Round 1b, What changed). The executed hours contrast (C1) is confounded with era and goal changes (Amendment 2). | partly |
+| Exogenous field (kickoff/goal/operator) | yes | The nudge is the measured field. Selection by the nudger's trigger: the pre-window placebo is +0.25 [0.05, 0.46], about a quarter of the level (Round 1b, Reading). A goal change coincides with every NE21 switch (Known confounds). | partly |
+| Shared model priors | no | The response is measured within target against matched controls; no family claim. | n/a |
+| Contemporaneous convergence | partly | Kernel aligned on the target's receiving call (ledger `age_s`) and split by read-out delay (Round 1b). No posted-but-unread arm at matched lag. Close with the in-flight placebo (§1). | partly |
+
+**Inputs:** round 1b uses `activity_bins_fixed`, leading-@ targets and ledger read-out times. Still old: Onsager X and the MF loop gain K were not re-run on the round-1b design; the executed holdout C2, C4 and MF-C read `activity_bins`. The work ledger is not used (the outcome is active minutes, which STANDARDS §2 reads as attention).
+
+**Two layers:** 4 replication periods (G38, G41, G44, G51). Natives: 3 (NE10, NE43, NE44), all mixed.
+
+**Confirm script:** `confirm_ne21_ne23.py` ran on 2026-10-03. C1 stands; C2, C4 and MF-C are void (old table and isolation rule). Re-freeze: yes, on `activity_bins_fixed` and the round-1b kernel, before any corrected re-run (holdout item 10; Vivian's call).
+
 ## Question
 Do outside kicks (nudger messages, human messages, goal kickoffs) act on the swarm through a well-defined linear response kernel G(τ)? If they do, does changing the forcing regime (hours 4 → 8 → 4 → 8 h, NE21; nudger off/on, NE23) reshape that kernel and the swarm's branching ratio **reversibly**, and how far is the swarm from equilibrium by the fluctuation–dissipation (FD) yardstick?
 

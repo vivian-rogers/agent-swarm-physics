@@ -2,7 +2,7 @@
 
 **Verdict:** supported (P1 supported)
 **Verdict (1b):** supported (ledger visibility: κ +0.60 ± 0.05, z_shift +7.3, κ_lead +0.76)
-**Role:** exploratory (candidate)
+**Role:** replication (exploratory (candidate))
 **Period:** regime III · mode I/K (private roles) · 32 agents on the roster · 45 non-holdout days.
 
 ## Why this period

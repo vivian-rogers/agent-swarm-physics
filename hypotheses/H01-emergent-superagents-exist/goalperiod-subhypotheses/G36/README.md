@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (round 2: continuity, partial agency; round 1: failed)
 **Verdict (1b):** failed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime II (36a, 03-23, one day) / regime III (36b, 03-24 → 03-27) · mode C · 13 agents · two rooms · split at the 03-24 regime boundary.
 
 ## Why this period

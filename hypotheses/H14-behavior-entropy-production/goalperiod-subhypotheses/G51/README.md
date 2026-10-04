@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 100% after scaffold removal with burn-in; pooled Jev v3 arrow significant (flip p 0.005)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · private assigned roles, mode I/K · N = 21 → 32 · mostly #general (GPT-5.6 triplet isolated 07-09/10; #focus 08-05 → 08-24) · 8 h/day · 45 non-holdout days (tail 09-07 → 09-21 held out). Roster steps: NE32 (07-09), 07-10, 07-17, 07-24, 08-28, 09-01, NE33 (09-03/04). Single-agent tests use each agent's own non-holdout days; the collective analysis uses the constant-roster block **07-24 → 08-28** (25 days, H09 E7's window), with weekly sub-blocks as a stability check.
 
 ## Why this period

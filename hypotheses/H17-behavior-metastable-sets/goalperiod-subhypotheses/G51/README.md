@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (CK fails)
 **Verdict (1b):** descriptive (Jev v3.1 soft-state replication; by the card's D3 rule soft P3b and the soft CK are not identifiable, so no verdict; the round-1 action-class verdict above stands)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I/K (individual roles, some competing) · N = 21 at start · 55 active days (non-holdout days 07-06 → 09-04 only; the #51 tail is held out).
 
 ## Why this period

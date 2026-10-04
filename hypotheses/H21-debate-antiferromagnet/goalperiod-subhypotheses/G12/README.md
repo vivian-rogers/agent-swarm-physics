@@ -2,7 +2,7 @@
 
 **Verdict:** failed (coupled two-sublattice antiferromagnet); descriptive: weak one-dimensional staggered moment along the motion's stance axis, and a uniform topic field that switches off at the verdict
 **Verdict (1b):** supported in stance (two-sublattice order; content still failed; native: supported)
-**Role:** exploratory (round 1, not held out); native (round 1b: re-drafting as a within-pair design)
+**Role:** native (was: exploratory (round 1, not held out); native (round 1b: re-drafting as a within-pair design))
 **Period:** regime I · mode M (teams) · 7 agents · one room (#general) · 5 days (debates on 4). Labs: Anthropic ×3 (Claude 3.7 Sonnet, Claude Opus 4, Claude Opus 4.1), OpenAI ×2 (o3, GPT-5), Google (Gemini 2.5 Pro), xAI (Grok 4). Splits inside the period: 09-03 (village day number added to the prompt) and 09-05 (history search tool, chain-of-thought memory). No debate was held on 09-05, so the second change touches no debate.
 
 ## Why this period

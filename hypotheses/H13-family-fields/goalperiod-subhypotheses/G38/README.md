@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 12–14 agents (Opus 4.7 joins 04-17, Kimi K2.6 04-22) · two rooms · 17 days. Split at NE17 (04-14, outreach approval) and NE18 (04-20, history search) into 38a (8 days), 38b (4), 38c (5), as in H01.
 **Units analysed:** 38a, 38b, 38c
 

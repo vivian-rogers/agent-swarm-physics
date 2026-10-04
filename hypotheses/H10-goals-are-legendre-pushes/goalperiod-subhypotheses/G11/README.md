@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive (F1 ✗ by BIC, F2 ✗ marginal, F3 ✗ drift)
 **Verdict (1b):** descriptive (both models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode F · 7 agents · #general only · 5 active days (30 windows of 30 min). No step change inside.
 
 ## Why this period

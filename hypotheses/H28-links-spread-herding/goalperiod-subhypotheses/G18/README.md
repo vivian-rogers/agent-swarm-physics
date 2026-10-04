@@ -2,7 +2,7 @@
 
 **Verdict:** failed (P1 failed)
 **Verdict (1b):** mixed (ledger visibility: κ +1.48 ± 0.43, z_shift -0.2, κ_lead +3.71)
-**Role:** exploratory (candidate)
+**Role:** replication (exploratory (candidate))
 **Period:** regime I · mode C · 8 agents on the roster · 10 non-holdout days · pre-NE09 visibility rule.
 
 ## Why this period

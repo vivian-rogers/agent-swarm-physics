@@ -10,6 +10,22 @@ Round 1: exploratory rounds 1 (E1–E5) and 2 (E6–E8) done, light. Observable 
 **Literature:** [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (entropy production); [Kolchinsky 2024](../../literature/kolchinsky-2024-dissipation-does-not-bound-replicator-rates.md) (caution on dissipation bounds); [Piñero et al. 2025](../../literature/pinero-2025-neutral-theory-cooperative-dynamics.md), [2026](../../literature/pinero-2026-information-bounds-replicator-production.md)
 **Definitions used:** Regime; Action; Activity time; Agent state (categorical); see [`../hypohypotheses/statmech-primitives.md`](../hypohypotheses/statmech-primitives.md).
 
+## Standards (2026-10-04)
+**Question served:** Q6 (an effective thermodynamics of the swarm) and Q4 (memory as a homeostat).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | E1 trimmed to the all-present window: the regime-III excess falls to 1.22 (Round 1b). E7 pair EP was not re-run on a trimmed grid. | partly |
+| Exogenous field (kickoff/goal/operator) | yes | Gate covariates include nudges and human messages (G1); NE43 drive withdrawal leaves the gate unchanged (N1a). Memory size vs N is confounded with tenure (N2b). | partly |
+| Shared model priors | partly | Not handled: E3 family clustering has no cross-family control, and axis A notes no family invariance check. Close with leave-period-out agent means (§1). | open |
+| Contemporaneous convergence | partly | The gate test uses items that entered the post-pause call (ledger), not co-timing. No posted-but-unread arm. Close with the in-flight placebo (§1). | partly |
+
+**Inputs:** round 1b uses `activity_bins_fixed`, `outages.idle_spells`, the context ledger and `reset_forced`/`reset_consol`; no statistic reads `actions.error`. Still old: E7b (pair EP) was built on `activity_bins` and is superseded until re-run.
+
+**Two layers:** no replication folders; estimates are per regime, with per-period gate ORs in #38, #41, #44 and #51. Natives: 2 (NE43, G51 roster sweep).
+
+**Confirm script:** none. The planned NE22/NE23 use for T5 has no script (DQ8 ledger). Re-freeze: n/a.
+
 ## Question
 Can the swarm be described with the working parts of thermodynamics:
 - free-energy landscapes over states;

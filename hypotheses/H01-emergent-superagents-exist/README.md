@@ -5,6 +5,22 @@
 **Literature:** [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md); [Sowinski et al. 2023](../../literature/sowinski-2023-semantic-information-resource-gathering-agents.md); [Bartlett et al. 2025](../../literature/bartlett-2025-physics-of-life-information-roadmap.md); [arXiv:2608.16578](../../literature/arxiv-2608.16578-physics-of-agents.md) (not yet read). Further reading: [architecture.md](architecture.md#reading-list-from-the-transcript-citations-to-verify).
 **Definitions used:** *superagent*, *ideology*, *semantic information*, *semantic entropy (meaning clusters)*: drafts in `physics-models/DEFINITIONS.md`. Round 2 also uses *semantic information (natural-scramble variant)* (H15) and proposes the named variants *superagent (effective, Kolchinsky–Wolpert)*, *unit macro-state (work ledger)* and *allocation continuity (ΔC)*, defined in "Round 2 formal setup". They are not yet in DEFINITIONS.md; the text is in the round-2 report.
 
+## Standards (2026-10-04)
+**Question served:** Q3 (do multi-agent units act as agents beyond their members) and Q2 (D3.2: field-driven vs coupling-driven content order).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Round 2 conditions on non-member writes as a common-drive proxy (Round 2 formal setup, F4). The Krakauer erratum (Notes) says the environment omits the scheduler. Close with the all-present-window trim and block-shift nulls (STANDARDS §1). | partly |
+| Exogenous field (kickoff/goal/operator) | yes | ĝ (goal + kickoff) is projected out (Amendment 2, P5), on shared `goal_fields` in round 1b. Room fields stay confounded with room coupling (Caveats; axis H 0), and NE42 is goal-confounded. Close with per-room operator-message regressors and a kickoff-matched placebo (§1). | partly |
+| Shared model priors | yes | First-day agent field h_i (Amendment 3) and `style_resid_period` (Round 1b). Lab order disappears under style removal; room order survives. | removed |
+| Contemporaneous convergence | yes | P6 exposure slope beats rotation and day-shuffle nulls, with a joint same-day + lag fit (Amendment 2) and a ledger-exposure variant (Round 1b). No read vs posted-but-unread contrast. Close with the in-flight placebo (§1). | open |
+
+**Inputs:** round 1b uses both embedding models, `style_resid_period`, DQ5 dedupe and shared goal fields. Still old: P6's primary exposure is the `exposure` table (the ledger is only a variant); round 2's work panel is H01's own `artifact_mentions` write events, not the DQ4 `work_ledger`.
+
+**Two layers:** 15 replication folders (units from #8 to #51). Natives: 2 (G12 failed, NE42 supported).
+
+**Confirm script:** `confirm_d32.py` (NE15, NE12 placebo, #45–#47) and `confirm_r2.py` (NE30, NE24, holdout units), both written, not run. Re-freeze: yes. `confirm_d32.py` uses bge only and the old `exposure` table (round-1b synthesis, decision 2); `confirm_r2.py` was uncommitted at the DQ8 survey.
+
 ## Files
 
 | File | What |

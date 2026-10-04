@@ -2,7 +2,7 @@
 
 **Verdict:** inconclusive
 **Verdict (1b):** inconclusive (round 1: inconclusive)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 27 agents · #general plus #focus (Gemini 2.5 Pro and Opus 4.8 moved there, 08-05 → 08-24); those two are excluded from couplings (variant keeps them) · 14 days.
 
 ## Why this period

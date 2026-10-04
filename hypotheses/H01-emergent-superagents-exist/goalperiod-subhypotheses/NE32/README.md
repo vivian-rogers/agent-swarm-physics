@@ -1,7 +1,7 @@
 # H01 × NE32: GPT-5.6 Sol/Terra/Luna join in isolated rooms (2026-07-09), merged 07-10
 
 **Verdict:** n/a (not estimable as designed; descriptive numbers below)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** inside #51 (unit 51b), regime III, one room (#general) plus three single-agent rooms (sol, terra, luna) on the afternoon of 07-09. Non-holdout.
 
 ## Why this event

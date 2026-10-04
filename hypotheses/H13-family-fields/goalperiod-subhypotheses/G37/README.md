@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1: failed; same in both embedding models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode F (free) · 10 eligible agents (Anthropic 5, OpenAI 3, Google 1, DeepSeek 1) · two rooms · 3 days.
 **Units analysed:** 37
 

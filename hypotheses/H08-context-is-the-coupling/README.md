@@ -15,6 +15,22 @@
 **Definitions used:** Interaction / exposure (broadcast; `physics-models/DEFINITIONS.md`); Regime; Action (turn-merged); Driving / external field. New operational terms ("call start (pause-aware)", "read-out time", "in-flight turn") are defined under "Operational definitions" and proposed for DEFINITIONS.md as the named variant **"Exposure (turn read-out)"**.
 **Origin of the primary test:** HH92 (messages couple to a hidden variable); HH91 (longer sessions run hotter) as C10.
 
+## Standards (2026-10-04)
+**Question served:** Q1 (coupling is gated at the recipient's read-out call).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Turn-offset discontinuity within each recipient's call sequence; pseudo-message null with the same pair at shifted times (Null / baseline). | removed |
+| Exogenous field (kickoff/goal/operator) | partly | Common cause (both agents react to one earlier event) is simulated in the synthetic validation; other-room placebo passes 8/8 (Round 1b). A shared field cannot create a jump at the read-out call. | removed |
+| Shared model priors | no | The design compares the same recipient before and after read-out. | n/a |
+| Contemporaneous convergence | yes | The in-flight floor is the in-flight placebo: messages posted but not yet read give ≈ 0 (C9 on the ledger, Round 1b). The content jump is negative in regime I (recency confound). | removed |
+
+**Inputs:** round 1b uses the context ledger, DQ2 reply pairs and H04's round-1b nudge design (`activity_bins_fixed`, leading-@). Still old: the content response uses bge only; C1, C2 and C10 were not re-run.
+
+**Two layers:** 17 replication periods. Natives: 3 (NE32 supported, NE41 mixed, NE03 descriptive).
+
+**Confirm script:** `confirm_holdout.py` (CF1–CF5), written, not run. Re-freeze: yes; it still builds round-1 inputs and must switch to the ledger (holdout item 10).
+
 ## Question
 Agents interact *only* through what enters their context. So the coupling between agents is, mechanically, *context inclusion*: what each agent saw, and when. How faithfully can we reconstruct that from the logs, and how much of each agent's behavior does it explain?
 

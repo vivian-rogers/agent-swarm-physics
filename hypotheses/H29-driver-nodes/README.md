@@ -20,6 +20,22 @@
 **Origin:** HH110 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population N(t); Regime; Driving / external field (human messages); Agent state, variant vector (statement embedding, whitened, unit-normalized; H01's named variant at the statement level); Interaction, variant broadcast, restricted to H18's *pending set* (proposed there as "Interaction (addressed, pending-sender)"; here the unaddressed version). New terms defined under Observables and proposed for the shared file: **influence coupling (content pull)**, **driver score (mean-output Gramian)**, **net influence current (out − in strength)**.
 
+## Standards (2026-10-04)
+**Question served:** Q1 (content influence is address-gated) and Q5 (where an operator should inject).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | Content pull at the recipient's next statement. | n/a |
+| Exogenous field (kickoff/goal/operator) | yes | Field-corrected pull with a cross-day placebo (N2), a synthetic room-topic drive (N3), and NE38's operator message as a native. Goal and operator directions are not regressed out of the pull (§1). | partly |
+| Shared model priors | partly | The cross-day placebo removes static style; no `style_resid`. Close with `style_resid` (§1). | partly |
+| Contemporaneous convergence | yes | Strictly ledger-invisible same-call placebo and the matched-age boundary test (post hoc); co-response diagnosed (Round 1b). | removed |
+
+**Inputs:** round 1b uses the context ledger, both embedding models and the DQ2 reply graph. Still old: no `style_resid` and no `statement_flags` dedupe.
+
+**Two layers:** 12 replication folders (#51 in 5 units). Natives: 3 (NE38 supported, G35 mixed, G26 failed).
+
+**Confirm script:** `confirm.py` (G47, #51 tail; G45 optional), written and dry-run, not run. Re-freeze: yes, on ledger visibility, fixed bins and leading-@ (holdout item 12). Its predictions freeze post hoc findings (Caveats).
+
 ## Question
 Linearize the influence network and compute network controllability. A_ij is how much i's messages move j's next content. Compute the minimal driver set and per-agent control energy. HH110's prediction: driver nodes are high-exposure agents in small rooms, and control energy scales as N^0.6. *Check:* the observed spread of content after messages from different senders and from humans vs the predicted driver ranking.
 

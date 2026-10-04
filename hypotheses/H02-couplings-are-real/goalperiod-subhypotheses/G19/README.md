@@ -3,7 +3,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1b, 2026-10-04, corrected data and DQ8 null: significant-coupling fraction 0.071, 0.024 vs the 12% threshold; collective βJ₀ significant in 2/2 chunk(s))
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime I · mode C (shared objective) · 7 agents · 10 days in 2 chunk(s) of ≤ 5 days.
 
 ## Prediction

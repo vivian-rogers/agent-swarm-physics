@@ -2,7 +2,7 @@
 
 **Verdict:** failed (dynamics speed up with age, A < 0) (Amendment-2 null; pre-registered null: failed)
 **Verdict (1b):** failed (both models, all configs)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode I · 10 agents with statements · #general only · 10 active days (92 agent-days with ≥ 8 statements).
 
 ## Why this period

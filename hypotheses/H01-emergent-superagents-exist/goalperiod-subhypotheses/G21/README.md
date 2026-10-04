@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode I · 9 agents · one room · 5 days (NE28: o3 and Opus 4.1 retired on day 1).
 
 ## Why this period

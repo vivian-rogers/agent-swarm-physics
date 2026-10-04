@@ -6,6 +6,22 @@
 **Origin:** HH103 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Agent (roster agent), Regime (I), Agent state, **variant vector** (`physics-models/DEFINITIONS.md`), here the sub-variant *"agent state (vector, masked window mean)"* defined below (proposed for DEFINITIONS.md; not added there, edit scope). Agent state, **variant categorical** for the team label (σ_i ∈ {Gov, Opp, judge, bench} per debate). Driving / external field (goal and motion text; the verdict).
 
+## Standards (2026-10-04)
+**Question served:** Q3 (no antiferromagnetic coupling; the stance order is the assignment).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | Statistics are per debate phase, not activity timing. | n/a |
+| Exogenous field (kickoff/goal/operator) | yes | The assigned sides are a staggered field. Agent-field null and the verdict switch-off (S3) are used, but a coupled antiferromagnet stays not shown (Round 1b). Close by regressing stance on the assignment and motion axis and testing the residual (§1). | partly |
+| Shared model priors | yes | Agent centring, lab-partition placebo (N3) and `style_resid_period` in both models. | removed |
+| Contemporaneous convergence | partly | Not handled for P7's fluctuation co-movement (read as common drive). Close with the in-flight placebo (§1). | open |
+
+**Inputs:** all current: gte, `style_resid_period`, DQ5 dedupe, DQ2 stance, DQ6 labels. Activity does not apply.
+
+**Two layers:** 1 replication period (G12). Natives: 3 in the card (G12 re-drafting supported, G26 failed, G33 failed); 2 folders carry `**Role:** native`.
+
+**Confirm script:** `confirm_g34.py` (#34), written, not run. Re-freeze: no; its inputs are unaffected. Its reuse note calls H05's #34 script unrun, but H05 ran on #34 days (holdout item 4).
+
 ## Question
 In #12 the agents formed two teams to debate, with one agent judging. In content space, do the teams order as two sublattices: aligned within a team, anti-aligned across teams along the debate axis? Is the staggered magnetization m_A − m_B the order parameter? Does the judge act as an external field that is zero during the debate and switched on at the verdict, collapsing or flipping the order? Practical payoff: detecting factions or teams from content alone, which links to finding hidden teams (D8.3).
 
@@ -329,6 +345,7 @@ Unmasked inputs give the same picture (Δ̄ 0.017 bge, −0.046 gte). **The cont
 **Figure:** `figures/r1b_stance_vs_content.pdf`. **Estimates:** 28 rows in `per_period_estimates`.
 
 ## Notes
+- **Correction (coordinator, 2026-10-04):** H05's #34 script was run (holdout ledger item 4). The earlier note calling it unrun is wrong.
 - **From H37 (2026-10-04):** stance spins do find the #12 antiferromagnet that topic missed: opponents −0.13 vs teammates +0.32 (AUC 0.74 vs 0.48 for topic), teams recovered exactly in 7/10 debates, contrast gone within 10 min of the verdict. H21's null was a topic-channel result. H37's planned #34 confirmatory run (`confirm_g34.py`, not run) reuses H21's saboteur ground-truth rule with a new modality, which must be disclosed when run.
 - 2026-10-03: promoted from HH103.
 - 2026-10-03: round 1. Derived and verified labels for 10 debates. Built masked embeddings (2.8 MB). Synthetic validation found and fixed three estimator biases before the real run. Real run: primary failed; a-priori stance axis passed; post-hoc post-verdict reversal. #34 confirm script written, amended, dry run OK, not run. Data folder 3.0 MB.

@@ -18,6 +18,22 @@
 
 **Proposed DEFINITIONS variant (not yet added there):** *Action (turn-merged)*: an agent's `events` within 1 s of its own previous event count as one compound turn.
 
+## Standards (2026-10-04)
+**Question served:** Q3 (no period is near critical) and Q1 (fast cross-agent triggering at 10–30 s).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Baselines B1–B3, a scheduler-only rival and an agent-shift null (Null / baseline); round 1b redraws the null after the all-present trim and cuts days at `outages_fixed` gaps. Fast n_x survives. n̂ is not separated from slow rate modulation (Status). | partly |
+| Exogenous field (kickoff/goal/operator) | yes | Exogenous kernel on `kicks_classified` human messages and nudges, bookends dropped (Round 1b, C1); NE43 drive withdrawal and the drive-free #2 window (natives). | removed |
+| Shared model priors | partly | Not handled: no within- vs cross-family split of n_x. Close with a cross-family control (§1). | open |
+| Contemporaneous convergence | yes | Not handled: the agent-shift null keeps common-cause triggering by a shared earlier event. Close with the in-flight placebo, read vs posted-but-unread events at matched lag (§1; H42's read-out kernel). | open |
+
+**Inputs:** event streams come from `events_core`, which the `activity_bins` bug did not touch; round 1b adds `kicks_classified` and `outages_fixed`. Still old: the kernel runs on clock seconds, not on the recipient's receiving call (context ledger). Work, failures, embeddings and leading-@ do not apply.
+
+**Two layers:** 35 replication periods. Natives: 4 in the card (NE43 supported, G02 supported, G51 supported, NE14 mixed); only NE14 and NE43 carry `**Role:** native`.
+
+**Confirm script:** none. Draft holdout predictions exist only in "Next steps". The #45 n̂ cell duplicates H04's executed Hawkes estimate and is blocked (holdout item 2). Re-freeze: n/a; write one on current inputs.
+
 ## Question
 How much of the swarm's activity is self-generated (triggered by earlier agent events) rather than driven by the schedule, goal kickoffs and humans? Is the branching ratio n set by the goal's coupling mode (shared objective vs. free/holiday, etc.), and does the long private-role era (#51) drift toward criticality (n → 1) as the roster grows?
 

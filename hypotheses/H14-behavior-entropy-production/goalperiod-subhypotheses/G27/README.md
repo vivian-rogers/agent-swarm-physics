@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 90% after scaffold removal with burn-in; pooled Jev v3 arrow significant (flip p 0.005)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode K (competition turned collaboration) · N = 10 · #general only (rooms arrive 02-25) · 10 days × 4 h. No step change inside.
 
 ## Why this period

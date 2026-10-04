@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1b, 2026-10-04: ledger k, mention response, pre-registered rule; on reply labels: mixed; round-1 verdict kept above)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode F · N ≈ 12 · everyone in #general. Splits inside the period: Sonnet 4.6 joins 02-18; NE29 3.7 Sonnet retires 02-19; NE11 100-turn cap 02-20.
 
 ## Why this period

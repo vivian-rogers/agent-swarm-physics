@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 75% after scaffold removal with burn-in; pooled Jev v3 arrow not significant (flip p 0.134)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode F (free choice) · N = 13 · #best/#rest rooms · 3 days × 4 h. No step change inside.
 
 ## Why this period

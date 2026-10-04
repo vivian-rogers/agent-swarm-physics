@@ -6,6 +6,22 @@
 **Origin:** HH77 + HH58 (shortlist 2, item 3) (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Population N(t), variant *present population* (H02 rule, below); Regime (whitening is per regime); Agent state, variant *vector* (centered, whitened mean embedding of the agent's statements in a 30-min window); Driving / external field (goal kickoffs). Two new named variants are proposed for `DEFINITIONS.md` (not yet added; H12 may not edit it): **"collective eigenmode (random-matrix)"**, to avoid a clash with the "collective mode" of `statmech-primitives.md` (coordinating / executing / idling / reporting, HH56), and **"effective dimensionality (bias-corrected participation ratio)"**.
 
+## Standards (2026-10-04)
+**Question served:** Q3 (collective modes beyond fields: talk and content).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Cross-day surrogate plus DQ8 `trim_bs` and `trim_stall_bs` block-shift nulls (Round 1b): the activity mode survives in 7/24 units. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Placebo kickoffs for P6 (NE34); G12 shows a uniform motion field compresses content. Content modes (24/24) are not tested against `goal_fields` or operator messages. Close with field regression before the eigen-analysis (§1). | partly |
+| Shared model priors | yes | Not handled: no `style_resid` vectors, so family style blocks could form content modes. Close with `style_resid` (§1). | open |
+| Contemporaneous convergence | yes | Not handled: talk and content modes are equal-time correlations; H50's read-out coupling is cross-hypothesis support only. Close with the in-flight placebo (§1). | open |
+
+**Inputs:** round 1b uses `activity_bins_fixed`, `outages_fixed`, gte and `statement_flags`. Still old: no `style_resid` content vectors.
+
+**Two layers:** 22 replication folders. Natives: 2 (G12 supported, G26 mixed).
+
+**Confirm script:** `confirm.py` (C1–C8, Amendment 2), written, not run. Re-freeze: yes; it was frozen on `activity_bins`, and RE-A1 expects C1–C3 and C5 to fail as frozen (holdout item 8).
+
 ## Question
 How many collective modes does the swarm have beyond random-matrix noise, and does the effective dimensionality of what agents say collapse after kickoffs and during consensus, then re-expand in free weeks? Practical payoff: a cheap, model-free monitor of whether a swarm is 'thinking alike'.
 

@@ -6,6 +6,22 @@
 **Literature:** none in `literature/` yet for MSM practice. Standard references (not in the folder): Prinz et al., *J. Chem. Phys.* 134, 174105 (2011) (MSM estimation, ITS, CK test)†; Röblitz & Weber, *Adv. Data Anal. Classif.* 7, 147 (2013) (PCCA+)†; Metzner, Schütte & Vanden-Eijnden, *Multiscale Model. Simul.* 7, 1192 (2009) (transition path theory)†; Reuter et al., *J. Chem. Phys.* 149, 174102 (2018) (non-reversible PCCA)†.
 **Definitions used** (`physics-models/DEFINITIONS.md`): Regime; Action; Activity time; Agent state (categorical: action class), in H14's coarse 6-state scheme; Entropy production, in H14's variant "entropy production (Markov pair-KL on categorical behavior states)". New named terms proposed for DEFINITIONS.md (owner to add): **"Markov state model (MSM, lag τ)"**, **"implied timescale"**, **"metastable set (PCCA+)"**, **"mixing time (MSM)"**, defined in Observables below.
 
+## Standards (2026-10-04)
+**Question served:** Q6 (behavior kinetics: a mixing time as a per-period order parameter).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Rivals R3 (schedule drift) and R4 (scaffold timer) named; out-of-span windows dropped (Round 1b). The slow mode is attributed to the agent-day mixture and the wait state. | removed |
+| Exogenous field (kickoff/goal/operator) | partly | NE43 drive withdrawal (N2): t2\* swings ×6–7 between ordinary blocks, so no step is detectable. | partly |
+| Shared model priors | no | Per-agent MSMs with the agent-mixture rival R2 (N4); no family claim. | n/a |
+| Contemporaneous convergence | no | Single-agent dynamics. | n/a |
+
+**Inputs:** round 1b uses Jev v3.1 and real failures (`n_errors`, `turn_outcomes.failed`); action classes come from `actions` + `events_core`, untouched by the fixes. Still old: the output rate counts git-printed commits and pushes, not the DQ4 `work_ledger`.
+
+**Two layers:** 27 replication folders. Natives: 3 in the card (NE41, NE43, #27), all failed; 2 folders carry `**Role:** native`.
+
+**Confirm script:** `confirm_h17.py` (P9–P9c on #32, #45), written and dry-run, not run. Re-freeze: no; action-class states are hash-locked to H14's builder and unaffected. A Jev-state P9 needs its own pre-registration first (Notes).
+
 ## Question
 Coarse-grain each agent's behavior-state sequence into a Markov state model. Do a few slow, metastable sets ('attractors' such as coding, debugging loops, existential talk) dominate, as identified by spectral clustering of the transition matrix (PCCA+)? Is the spectral gap, or slowest implied timescale, a per-goal-period order parameter: slowest in stuck periods, fastest in productive ones? Practical payoff: a compact map of where agents get stuck and how fast they move between modes.
 

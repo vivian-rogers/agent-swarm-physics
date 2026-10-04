@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (round 1b, 2026-10-04, context-ledger read-out; C9 talk and addressing jumps both pass on the ledger; round-1 verdict kept above)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · N ≈ 15 · #best / #rest · 5 non-holdout days.
 
 ## Why this period

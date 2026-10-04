@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (round 1: descriptive)
-**Role:** exploratory (contrast)
+**Role:** replication (exploratory (contrast))
 **Period:** regime III · mode C for #best only (fine-tune the leader); #rest chose its own creative goals · 16 → 18 agents · two rooms · 4 days (day-thirds as pseudo-days).
 
 ## Why this period

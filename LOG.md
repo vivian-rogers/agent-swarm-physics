@@ -7,6 +7,7 @@ something, or make a decision worth remembering.
 
 ## 2026-10-04 (UTC)
 
+- **Standards pass done for all 59 cards.** Each card has a "Standards (2026-10-04)" section: question served, impostor table, inputs, two layers and confirm status. The most common open impostors are convergence (19 cards) and shared priors (13); the exogenous field is partly handled almost everywhere. These are now listed in `STANDARDS.md` §1. Period role tags normalized: 649 replication folders (H01–H39), and named natives tagged `native`. Holdout items 17–18: nine more confirm scripts need re-freezing (H31, H33, H43, H47, H49, then H06, H13, H16, H24, H27), handled by re-freeze batches C and D. Stale holdout notes in H10 and H21 corrected.
 - **Scaled out to the 20-agent cap (Vivian: "run even more agents"; rate limits not a concern).** In addition to H60–H80 round 1, the dashboard upgrade and the two card standards passes, six agents now run:
   - two prepare re-frozen confirm scripts (`analysis/confirm_r1b.py` + `CONFIRM_R1B.md` beside the untouched originals, dry-run on non-holdout stand-ins only; nothing runs on the holdout without Vivian);
   - two blind v2 raters cover all of H01–H59;

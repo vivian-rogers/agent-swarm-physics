@@ -2,7 +2,7 @@
 
 **Verdict:** failed (P1; P2 failed; P3 failed; art n/a; no model adequate (joint PPC p < 0.01 for all three))
 **Verdict (1b):** mixed (P1 by rule; all models still inadequate)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode F · 7 agents · 1 room (#general) · 5 days × ≈ 3 h (6 windows/day)
 
 ## Why this period

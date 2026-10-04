@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; same in both embedding models; native: mixed)
-**Role:** exploratory (round 1); native (round 1b: room × lab crossed, behavior channel)
+**Role:** native (was: exploratory (round 1); native (round 1b: room × lab crossed, behavior channel))
 **Period:** regime II · mode C · 13 agents · two rooms (#best: GPT-5.4, Opus 4.6, Gemini 3.1 Pro; #rest: the other 10) · 5 days.
 **Units analysed:** 35
 

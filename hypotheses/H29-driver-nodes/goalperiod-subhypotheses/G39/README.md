@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (r1 mixed; gte mixed)
-**Role:** exploratory (counted)
+**Role:** replication (exploratory (counted))
 **Period:** regime III · mode I · 14 recipients in the network · #best / #rest (reshuffled 04-27) · 5 non-holdout days.
 
 ## Why this period

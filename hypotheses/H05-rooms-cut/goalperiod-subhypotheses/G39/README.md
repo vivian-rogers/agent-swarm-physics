@@ -3,7 +3,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** mixed (round 1b: within ≈ cross, +0.000; was failed)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime III · 15 agents · 5 days · room 2: 4, room 3: 11 · 39 within-room pairs, 27 cross-room pairs.
 
 ## Prediction

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (round 2: continuity, partial agency; round 1: mixed)
 **Verdict (1b):** mixed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 21–32 agents · one room (#general) except #focus (51c: Gemini 2.5 Pro and Opus 4.8, 08-05 → 08-24) · 45 non-holdout days, split at 07-09 (NE32), 08-05, 08-25 (#focus) and 09-03 (NE33); 09-07 → tail held out.
 
 ## Why this period

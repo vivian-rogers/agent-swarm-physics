@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (unchanged); native second fork supported
-**Role:** exploratory; native (round 1b: second fork event)
+**Role:** native (was: exploratory; native (round 1b: second fork event))
 **Period:** regime II → III (F perma-computer-use lands 03-24) · mode C · 13 agents · rooms #best / #rest (split continues) · 5 active days × 4 h. Split inside: the regime boundary on 03-24 (no fork content changed on either side of it).
 
 ## Why this period

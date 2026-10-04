@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (unchanged under the round-1 rule; its core predictions did not change). Error loops on real failures: β -0.07 (stderr loops in round 1: -0.41); Jev blocked spells β -0.17; loop spells β -0.77
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime III · mode C · 12–14 agents · #best / #rest · 17 days. Splits or exclusions: see the main card's period table.
 
 ## Why this period

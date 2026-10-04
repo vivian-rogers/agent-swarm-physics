@@ -2,7 +2,7 @@
 
 **Verdict:** supported (P1 supported)
 **Verdict (1b):** supported (ledger visibility: κ +2.90 ± 0.63, z_shift +5.1, κ_lead +1.71)
-**Role:** exploratory (herding)
+**Role:** replication (exploratory (herding))
 **Period:** regime I · mode C · 10 agents on the roster · 5 non-holdout days.
 
 ## Why this period

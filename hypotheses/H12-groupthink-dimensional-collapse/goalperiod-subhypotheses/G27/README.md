@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (round 1: supported; corrected activity table, same rule)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime I · mode K (competition) · N = 10 at start (present: 10) · rooms holding ≥ 3 present agents: 27: 1 · 10 non-holdout days. 
 
 ## Why this period

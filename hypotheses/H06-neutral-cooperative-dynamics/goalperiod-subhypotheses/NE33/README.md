@@ -2,7 +2,7 @@
 
 **Verdict:** failed ((a) failed: post λ̄ outside every model's 95% interval; (b) n/a, < 3 multi-option newcomer choices)
 **Verdict (1b):** failed (not re-run)
-**Role:** exploratory (spanning, inside #51)
+**Role:** replication (exploratory (spanning, inside #51))
 **Period:** regime III · #51 (private assigned roles) · pre side 2026-08-31 → 09-02 · post side 09-03 → 09-04 (the only non-holdout days after the join; the #51 tail from 09-07 is held out). ≈ 29 → 32 agents.
 
 ## Why this natural experiment

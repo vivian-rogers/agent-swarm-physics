@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive (1 evaluable onset, percentile 0.46)
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory (candidate)
+**Role:** replication (exploratory (candidate))
 **Period:** regime I · mode C · N = 7 · 10 active days in the series · W = 15: 153 windows, q = 8, 59% of windows with ≥ 3 labeled agents (mean 3.1); W = 30: 79%.
 
 ## Why this period

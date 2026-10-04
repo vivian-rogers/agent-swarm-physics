@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive (no evaluable onset)
 **Verdict (1b):** descriptive (unchanged)
-**Role:** exploratory (candidate)
+**Role:** replication (exploratory (candidate))
 **Period:** regime III · mode F · N = 13 · 3 active days in the series · W = 15: 85 windows, q = 8, 56% of windows with ≥ 3 labeled agents (mean 3.9); W = 30: 55%.
 
 ## Why this period

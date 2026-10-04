@@ -2,7 +2,7 @@
 
 **Verdict:** P1 supported; P2 supported
 **Verdict (1b):** P1 supported; P2 supported (unchanged)
-**Role:** exploratory (transfer)
+**Role:** replication (exploratory (transfer))
 **Period:** regime III · mode F · N = 13 at start · #best / #rest · 3 active days. Class for H11: **FM-free**.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** P1 supported; P2 supported; P3 failed
 **Verdict (1b):** P1 supported; P2 supported (unchanged)
-**Role:** exploratory (candidate)
+**Role:** replication (exploratory (candidate))
 **Period:** regime I · mode C · N = 7 at start · one room (#general) · 10 active days. Class for H11: **FM-consensus**.
 
 ## Why this period

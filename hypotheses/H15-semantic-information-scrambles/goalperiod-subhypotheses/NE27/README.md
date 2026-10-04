@@ -1,7 +1,7 @@
 # H15 × NE27: batch join of GPT-5, Grok 4, Claude Opus 4.1 (2025-08-18, goal #10)
 
 **Verdict:** supported on V* (small, fragile)
-**Role:** exploratory (round 1, non-holdout); the three newcomers are MN events in `../G10/`.
+**Role:** replication (exploratory (round 1, non-holdout); the three newcomers are MN events in `../G10/`.)
 **Verdict (1b):** not supported (newcomers' V_eng +0.49, z +1.5; 2026-10-04)
 
 ## Why this NE

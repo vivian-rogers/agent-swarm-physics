@@ -5,6 +5,22 @@
 **Origin:** HH28 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** agent; regime (all of #21 is regime I, one room); driving / external field (the goal + kickoff direction ĝ); agent state, variant *vector (for model 11)* (whitened, unit-normalized bge-small statement embeddings, regime-I basis, n = 32); interaction (broadcast: everyone is in #general); goal period as the unit of analysis, split at the switch-on and at the 12-04 step changes. Proposed new named variant: **coupling switch-on (document access)**, see "Switch-on" below and the suggested DEFINITIONS.md entry in Notes.
 
+## Standards (2026-10-04)
+**Question served:** Q2 (a decaying kickoff field explains swarm-level alignment) and Q1 (pairwise coupling is gated by reading).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | Content statistics; the switch-on comes from intentions and screen descriptions. | n/a |
+| Exogenous field (kickoff/goal/operator) | yes | Kickoff-matched placebo across 23 periods (N2) and multi-direction field removal (7 directions) on shared goal fields (Round 1b). | removed |
+| Shared model priors | yes | Style-residualized vectors; the reading DiD weakens to p 0.08–0.14 after style removal (Round 1b, natives). | partly |
+| Contemporaneous convergence | yes | Pair-level reading DiD against teammates not read at the same time, with an owner-permutation null (G21 native). No posted-but-unread arm at matched lag; G41's first window cannot separate fast coupling from composition. | partly |
+
+**Inputs:** all current: shared goal fields, gte, DQ5 dedupe, style residualization, the ledger in G41. Activity not used. Reading events come from agent narration, which is a claim.
+
+**Two layers:** #21 is the single replication period (its folder is tagged native). Natives: 2 (G21 reading DiD supported, G41 mixed).
+
+**Confirm script:** `confirm.py` (#14), written, not run. Re-freeze: yes; it uses H24's own ĝ (kickoff part cos 0.88 vs the shared vector) and one-direction field removal, which round 1b replaced.
+
 ## Question
 In #21 the agents forecast AI abilities and effects. If they first drafted independently and then compared, the coupling was effectively switched on mid-week. Do their forecasts (as vectors in content space, and as numeric forecasts where extractable) show low alignment during drafting and a jump in alignment, with shrinking variance (herding), once comparison starts? Is the crowd's diversity lost faster than independent updating would predict? Practical payoff: forecast aggregation in swarms, wisdom of crowds vs herding.
 

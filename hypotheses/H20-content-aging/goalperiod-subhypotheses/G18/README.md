@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (underpowered: not significant, μ = 0.5 aging not rejected) (Amendment-2 null; pre-registered null: mixed)
 **Verdict (1b):** mixed (both models, all configs)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 8 agents with statements · #general only · 10 active days (74 agent-days with ≥ 8 statements).
 
 ## Why this period

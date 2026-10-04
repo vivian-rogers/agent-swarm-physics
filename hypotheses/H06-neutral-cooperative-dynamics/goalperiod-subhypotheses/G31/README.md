@@ -2,7 +2,7 @@
 
 **Verdict:** failed (P1; P2 supported; P3 failed; art failed; no model adequate (joint PPC p < 0.01 for all three))
 **Verdict (1b):** failed (P1 6/6; work labels also inadequate; P2 now failed)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode F · 13 agents (Sonnet 4.6 joins, 3.7 Sonnet leaves) · 1 room · 5 days × 4 h (8 windows/day). Inside: 100-turn session cap (2026-02-20).
 
 ## Why this period

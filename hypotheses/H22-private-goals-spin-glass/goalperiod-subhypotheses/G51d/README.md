@@ -2,7 +2,7 @@
 
 **Verdict:** inconclusive
 **Verdict (1b):** inconclusive (round 1: inconclusive)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 27 → 29 agents · one room · 7 days. GLM-5.3 Flash joins 08-28 (Press baron from 08-31), Fable 5.1 joins 09-01 (AI safety researcher).
 
 ## Why this period

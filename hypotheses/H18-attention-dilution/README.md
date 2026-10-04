@@ -11,6 +11,22 @@
 **Origin:** HH99 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** Regime; Population N(t); Action; Interaction, variant *addressed* (i's message names j, from `chat_mentions_clean.mentions_roster`). New operational terms are defined under "Operational definitions" below and proposed for DEFINITIONS.md as **"talk turn"**, **"pending set (talk-turn backlog)"** and **"Interaction (addressed, pending-sender)"**.
 
+## Standards (2026-10-04)
+**Question served:** Q1 (an attention budget: per-pair uptake falls with room size).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Endogenous turn timing is the strongest null; D2 uses timer wakes as exogenous k (Null / baseline). D2 is convincing only in #51. | partly |
+| Exogenous field (kickoff/goal/operator) | partly | Agent×day propensities absorb day-level fields (M_const null). | removed |
+| Shared model priors | no | Within agent-day design. | n/a |
+| Contemporaneous convergence | yes | Ledger-strict invisible placebo: invisible senders are addressed at 0.49× the pending rate (3/16 pass); the residual is conversation state (Round 1b, P10). | partly |
+
+**Inputs:** round 1b uses the context ledger (`k_since_talk`, `call_windows`) and DQ2 reply pairs. Activity, embeddings and failures do not apply. P11 (content reply) was not re-run.
+
+**Two layers:** 15 replication folders. Natives: 3 (NE42 failed, G51 N sweep mixed, NE03 failed).
+
+**Confirm script:** `confirm_holdout.py` (C1–C6), written, not run. Re-freeze: yes; it still builds round-1 inputs (call-start rule) and must switch to the ledger (holdout item 10).
+
 ## Question
 When an agent takes its next turn, it faces k unread messages. Does the probability of responding to a given one fall as ~1/k (a fixed attention budget), making the mean-field J/N normalization literal? Does this micro-mechanism explain H03's finding that per-pair triggering and the branching ratio fall with N, and H05's rise in within-room coupling after the split (HH90)? Practical payoff: how coupling scales with swarm size and channel design.
 

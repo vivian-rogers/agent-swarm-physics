@@ -14,6 +14,22 @@ Round 1: **confirmatory run on the locked holdout (2026-10-03): INCONCLUSIVE by 
 **Origin:** shortlist S4 ([`../promotion-shortlist.md`](../promotion-shortlist.md)); idea HH33; feeds H01 D1.1.a (rooms are superagents), D3.2 and D9.2 ([`../H01-emergent-superagents-exist/subhypotheses.md`](../H01-emergent-superagents-exist/subhypotheses.md)).
 **Definitions used** (`physics-models/DEFINITIONS.md`): Regime; Population; Interaction (broadcast: co-located = same current room); Entropy production / irreversibility, in a named variant proposed here, **"entropy production (pairwise AIK bound on activity spins)"** (defined under Observables; to be added to DEFINITIONS.md by whoever owns that file).
 
+## Standards (2026-10-04)
+**Question served:** Q1 (rooms couple talk only through what is read).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Cross-day surrogate, with the DQ8 trim to the all-present window applied before it (Round 1b). Active-spin room effects vanish; talk effects survive the trim. | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Day fixed effects absorb goal changes and operator resets (Observables 7); goal-change placebo events (Null / baseline). Room-specific kickoffs are not removed; NE42 is confounded with #40's shared objective (Round 1b, Reading 4). Close with room-level `goal_fields` and operator-message regressors (§1). | partly |
+| Shared model priors | partly | Not handled: no same-family pair term. Close with a cross-family pair control (§1). | open |
+| Contemporaneous convergence | yes | Ledger read counts absorb the co-location effect (HH248: 90% shrink, read dose-response). Reads and co-location correlate 0.82, and there is no posted-but-unread arm. Close with the in-flight placebo (§1). | partly |
+
+**Inputs:** round 1b uses `activity_bins_fixed`, the DQ8 trim and ledger read counts. Still old: the executed NE12 holdout run read the buggy panel; EP (X5) was not re-scored. Work, failures, embeddings and leading-@ do not apply.
+
+**Two layers:** 8 replication periods. Natives: 2 (G51 #focus cut, right sign and n.s.; NE42 split, supported).
+
+**Confirm script:** `confirm_ne12.py` ran on 2026-10-03 (INCONCLUSIVE) on the buggy panel. Re-freeze: yes, with a pre-registration amendment for the fixed panel; C5 looks mis-specified (holdout item 13).
+
 ## Question
 When the chat channel between two groups of agents is cut (they are put in different rooms and see only their own room), does the coupling between the groups vanish while coupling inside each group holds, and does the swarm's statistical irreversibility (entropy production) fall? Equivalently: do rooms behave as coupled blocks, i.e. candidate superagents?
 

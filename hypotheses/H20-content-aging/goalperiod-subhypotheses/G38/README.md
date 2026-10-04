@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (interrupted aging: no late slowing) (Amendment-2 null; pre-registered null: mixed)
 **Verdict (1b):** mixed (both models, all configs)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 14 agents with statements · 2 rooms with agent statements · 17 active days (208 agent-days with ≥ 8 statements). Step changes inside (kept in one unit; tested as rejuvenation, exception (c)): 2026-04-14, 2026-04-20.
 
 ## Why this period

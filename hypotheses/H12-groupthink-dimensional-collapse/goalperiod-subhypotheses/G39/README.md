@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** failed (round 1: mixed; corrected activity table, same rule)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime III · mode I (individual objective) · N = 15 at start (present: 15) · rooms holding ≥ 3 present agents: 39: 2 · 5 non-holdout days. 
 
 ## Why this period

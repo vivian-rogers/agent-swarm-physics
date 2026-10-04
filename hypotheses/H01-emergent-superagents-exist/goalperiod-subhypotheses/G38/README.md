@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (round 2: continuity, partial agency; round 1: mixed)
 **Verdict (1b):** mixed (unchanged; corrected room fields move within−cross by < 0.03)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 12–14 agents · #best/#rest with different instructions (charity overrides vs. free) · 17 days, split at NE17 (04-14) and NE18 (04-20) into 38a/38b/38c.
 
 ## Why this period

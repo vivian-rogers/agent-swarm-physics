@@ -2,7 +2,7 @@
 
 **Verdict:** failed (round 2: no agency signature; round 1: mixed)
 **Verdict (1b):** mixed (unchanged, both models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime II · mode C · 13 agents · #best/#rest (split 03-16, NE15; RPG forked per room) · 5 days. The pre-split window (#34) is held out.
 
 ## Why this period

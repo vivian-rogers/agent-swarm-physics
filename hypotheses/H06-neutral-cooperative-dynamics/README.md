@@ -5,6 +5,22 @@
 **Origin:** HH42 + HH16 (`../hypohypotheses/HYPOHYPOTHESES.md`; shortlist S6 in `../promotion-shortlist.md`)
 **Definitions used:** "Agent state (categorical)" with two named variants: **agent state (categorical, project/artifact strict)** (H11's, imported) and a new **agent state (categorical, intention cluster)** (defined under Data scheme; proposed for DEFINITIONS.md). "Population N(t)", active-population variant (agent slots with a label in a window). "Regime" (each period sits inside one regime). "Interaction (broadcast)" is implicit in the model's well-mixed pairing (one room per scope).
 
+## Standards (2026-10-04)
+**Question served:** Q1 (project copying is read-mediated) and Q3 (no cooperative collective law in free weeks).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Day-shift null N-ind keeps each agent's within-day window index and destroys cross-agent co-occurrence (Null / baseline). | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Listed as a known confound (common time-varying drive) and not regressed out (Null / baseline). G44's assigned vs free arms contrast a field. Close with `goal_fields` and operator-message regressors (§1). | open |
+| Shared model priors | partly | Intention clusters on `style_resid_period` in both models; the style-split rival is not supported (Round 1b, R1b-1). | removed |
+| Contemporaneous convergence | yes | Ledger in-flight test (Round 1b, R1b-4): read vs posted-unread OR 8.6 (attention) and 5.6 (work). In two-room weeks the unread class is mostly the other room. | removed |
+
+**Inputs:** all current: gte and `style_resid_period` clusters, shared `project_states`, DQ4 work labels, context ledger. `activity_bins` and `statement_flags` are not used. NE27, NE33 and the #51 intention fits were not re-run.
+
+**Two layers:** 10 replication periods. Natives: 3 in the card (G35 supported, G51 1/3, G44 mostly supported); only G35 carries `**Role:** native`.
+
+**Confirm script:** `confirm_holdout.py` (#22), frozen after round 1, not run; uncommitted at the DQ8 survey. Re-freeze: yes. It uses round-1 labels (bge clusters, H11's nondeterministic artifact files), which round 1b replaced.
+
 ## Question
 In "pick your own goal" weeks, agents choose and abandon projects freely. Do project abundances follow *neutral cooperative dynamics* (Piñero-style: species, here projects, are equivalent, but joining is frequency-dependent and cooperative)? Signatures: bimodal abundances with a persistent cooperator core, Simpson concentration λ near the predicted λ*(μ, N), and boundaries μ_B (bimodal) and μ_L (log-series) in the novelty rate μ. Or does plain Hubbell neutral drift (log-series, no cooperation) explain them? Practical payoff: whether a free swarm concentrates its effort on a few shared projects by a predictable law, and what sets how many projects survive.
 

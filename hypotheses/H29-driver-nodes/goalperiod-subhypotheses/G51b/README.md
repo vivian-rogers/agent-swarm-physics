@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (r1 mixed; gte mixed)
-**Role:** exploratory (counted)
+**Role:** replication (exploratory (counted))
 **Period:** regime III · mode P · 27 recipients in the network · #general (isolated GPT-5.6 rooms 07-09/10) · 19 non-holdout days.
 
 ## Why this period

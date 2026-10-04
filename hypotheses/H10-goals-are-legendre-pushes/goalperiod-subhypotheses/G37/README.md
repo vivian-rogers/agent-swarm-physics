@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive (F1 ✓, F2 ✗, F3 ✓)
 **Verdict (1b):** descriptive (both models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode F · 12 agents (Claude Code agent not present) · #best / #rest · 3 active days (27 windows); statements are sparse (median 3 per agent-window).
 
 ## Why this period

@@ -3,7 +3,7 @@
 
 **Verdict:** descriptive (not one of the P2 two-room windows; numbers reported for context)
 **Verdict (1b):** supported (round 1b: talk κ_x within − cross +0.022, p 0.004; fixed bins)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime II · 12 agents · 5 days · room 2: 3, room 3: 9 · 39 within-room pairs, 27 cross-room pairs.
 
 ## Prediction

@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1: failed; PR inputs do not depend on the corrected activity table; second model gte: median first-hour change +9%, 40% negative, p = 0.85; regime III +56%)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** NE34, all goal transitions g−1 → g where both sides are non-holdout, both days are in the same regime, and both first hours have a valid PR30. That gives 20 usable transitions (15 regime I, 1 regime II, 4 regime III), against 189 placebo pairs (consecutive days inside one unit). Named exception (c) of the unit-of-analysis rule: the transition is the object.
 
 ## Why this natural experiment

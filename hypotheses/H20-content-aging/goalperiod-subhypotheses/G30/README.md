@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive (stationary contrast) (Amendment-2 null; pre-registered null: descriptive)
 **Verdict (1b):** descriptive (both models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode C · 11 agents with statements · #general only · 5 active days (55 agent-days with ≥ 8 statements).
 
 ## Why this period

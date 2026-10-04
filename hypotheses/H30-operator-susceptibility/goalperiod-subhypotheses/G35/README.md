@@ -2,7 +2,7 @@
 
 **Verdict:** failed — nudge -0.75 min (n 6); low power
 **Verdict (1b):** failed (r1 failed; fixed bins, receiving call)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime II · mode C · 13 agents at start · 5 active days.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (P6 contrast)
 **Verdict (1b):** mixed (P6); work labels: NCD and Hubbell adequate, no core
-**Role:** exploratory (contrast)
+**Role:** replication (exploratory (contrast))
 **Period:** regime I · mode C · 12 agents · 1 room · 5 days × 4 h
 
 ## Why this period

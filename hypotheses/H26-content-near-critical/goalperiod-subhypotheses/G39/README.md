@@ -2,7 +2,7 @@
 
 **Verdict:** mixed: content 0.45; activity room excess negative (cross-room above within), which inflates the gap; talk above content
 **Verdict (1b):** mixed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents · two rooms · 5 days. H01 units used: 39.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1b, 2026-10-04: n̂ TALK 0.54 → 0.47 on corrected inputs; unchanged verdict)
-**Role:** exploratory
+**Role:** native (was: exploratory)
 **Period:** regime III · mode P (private assigned roles; coded I/K) · N = 21 at start (+11), 26.5 active per day on average · rooms (agents see only their room) · 45 non-holdout days, median window 8.1 h. Splits inside the period: 2026-07-09 (NE32: GPT-5.6 Sol/Terra/Luna join in separate isolated r; roster_joined: GPT-5.6 Luna; roster_joined: GPT-5.6 Sol; roster_joined: GPT-5.6 Terra); 2026-07-10 (roster_joined: Grok 4.5); 2026-07-17 (roster_joined: Kimi K3); 2026-07-24 (roster_joined: Claude Opus 5); 2026-07-29 (NE38: A human reassigns Claude Opus 5's role (word puzzl); 2026-08-28 (roster_joined: GLM-5.3 Flash); 2026-09-01 (roster_joined: Claude Fable 5.1); 2026-09-03 (NE33: Batch join: Muse Spark 1.3, Gemini 3.8 Flash, GPT-; roster_joined: Gemini 3.8 Flash; roster_joined: Muse Spark 1.3); 2026-09-04 (NE33: Batch join: Muse Spark 1.3, Gemini 3.8 Flash, GPT-; roster_joined: GPT-6 Astra).
 
 Verdict rule: P5 (n̂ rises with N toward 1): segment Spearman ρ = -0.64 (p = 0.044). Verdicts use the primary statistic, n̂ for TALK under M1 with B2 + exogenous drive. n̂ depends on the baseline. A Poisson process with a rate modulated on 10–30 min scales can mimic it, and the 10-min jitter test has no power to separate the two (main card, jitter calibration). Read B2 n̂ as an upper value and B3 n̂ as a downward-biased lower bound. Any verdict here is descriptive, not mechanistic.

@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (round 1: descriptive)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I/K (private roles, NE26 starts) · 21 agents, 8 h/day (07-07 ran ≈ 17 h) · one room (#general) · 3 days; day-thirds used as pseudo-days (Amendment 1).
 
 ## Why this period

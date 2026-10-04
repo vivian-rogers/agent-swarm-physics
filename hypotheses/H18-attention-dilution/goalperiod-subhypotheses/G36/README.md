@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (round 1b, 2026-10-04: ledger k, mention response, pre-registered rule; on reply labels: mixed; round-1 verdict kept above)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime II/III · mode C · N ≈ 13 · #best / #rest. Splits inside the period: F perma-computer-use 03-24 (NE14); NE16 03-26.
 
 ## Why this period

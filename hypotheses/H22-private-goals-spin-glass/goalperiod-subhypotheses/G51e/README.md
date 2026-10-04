@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (round 1: descriptive)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 29 → 32 agents · one room · 2 days (NE33: Muse Spark 1.3, Gemini 3.8 Flash, GPT-6 Astra join; their roles start 09-04); day-thirds as pseudo-days.
 
 ## Why this period

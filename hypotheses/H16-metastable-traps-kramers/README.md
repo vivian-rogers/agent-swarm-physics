@@ -13,6 +13,22 @@ Confirmatory script for #32/#45 is written and dry-run on stand-ins; **not run**
 **Origin:** HH53 + HH86 (shortlist 2, item 10) (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); HH47 for the landscape.
 **Definitions used:** Agent; Regime; Action; Population N(t) (active-population variant: agents with ≥ 1 active row that day); Interaction (broadcast) for undirected kicks and Interaction (addressed) for directed kicks; Driving / external field (human messages; nudges). New operational terms (trap states TS1–TS4, reaction coordinate x, kick classes) are defined below; proposed as named variants for `physics-models/DEFINITIONS.md` in the round-1 report (not edited here).
 
+## Standards (2026-10-04)
+**Question served:** Q6 (trap kinetics) and Q5 (what gets a stuck agent out).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Agent fixed effects against frailty; day-swap kick-timeline null (Null / baseline). The swarm block (d) was not re-run on fixed or trimmed data. | partly |
+| Exogenous field (kickoff/goal/operator) | yes | Past-only kick look-backs and the day-swap null (Round 1b, Lever controls); NE43 shows aging persists with the nudger off. | removed |
+| Shared model priors | no | Agent fixed effects absorb per-agent frailty; no family claim. | n/a |
+| Contemporaneous convergence | partly | Kicks are counted by posting time in 2- and 15-min look-backs, not by ledger receipt. Close with the in-flight placebo at the gate call (§1). | open |
+
+**Inputs:** round 1b uses `turn_outcomes.failed`, `error_class`, leading-@ targets and Jev v3.1. Still old: kick exposure is by time window, not the context ledger; the landscape (b) and swarm (d) blocks were not re-run.
+
+**Two layers:** 11 replication folders. Natives: 3 in the card (NE43, NE44, #27), all mixed; the G27 folder is tagged exploratory, so 2 carry `**Role:** native`.
+
+**Confirm script:** `confirm.py` (#32, #45), written and dry-run, not run. Re-freeze: yes; TS3 counts `actions.error` and N_tgt counts every named agent. #32 and #45 collide with H05's and H02/H04's executed runs (holdout item 2).
+
 ## Question
 Idle loops, repeated-error debugging loops and theory spirals look like local free-energy minima. Do dwell times in these trap states follow Kramers escape, with the rate set by a barrier from Boltzmann inversion of occupancies? Do kicks (nudges, @-mentions, human messages) lower the barrier, with escape hazard rising exponentially in kick strength? At swarm level, does mean-field theory (βJ₀ < 1, as measured) correctly predict *no* collective bistability, so that traps are individual? Practical payoff: predicting when agents get stuck and what gets them out.
 

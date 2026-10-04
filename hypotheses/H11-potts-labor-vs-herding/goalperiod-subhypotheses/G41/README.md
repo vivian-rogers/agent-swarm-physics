@@ -2,7 +2,7 @@
 
 **Verdict:** P1 supported; P2 supported
 **Verdict (1b):** P1 supported; P2 supported (unchanged)
-**Role:** exploratory (candidate)
+**Role:** replication (exploratory (candidate))
 **Period:** regime III · mode I · N = 15 at start · #best / #rest · 5 active days. Class for H11: **FM-convergence**.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 93% after scaffold removal with burn-in; pooled Jev v3 arrow significant (flip p 0.020)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · N = 15 (+1: Gemini 3.5 Flash joins 05-20) · #best/#rest rooms · 5 days × 4 h. The join is a roster step; Gemini 3.5 Flash has 3 days and enters single-agent tests only.
 
 ## Why this period

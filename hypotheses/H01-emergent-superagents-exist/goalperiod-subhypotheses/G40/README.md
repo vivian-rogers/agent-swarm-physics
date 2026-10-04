@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (round 2: continuity, partial agency; round 1: supported)
 **Verdict (1b):** supported (P7) in both models; DiD gone after style residualization
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** (verdict for P7, this period's specific prediction; P5/P6/P9 as in the table) regime III · mode C · 15 agents · merged into #universe-coordination 05-04, GPT-5 alone in #rest · 5 days.
 
 ## Why this period

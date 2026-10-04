@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (round 1b, 2026-10-04, corrected data, pre-registered E1; with the day-edge-adjusted activity gain: mixed; round 1: failed)
-**Role:** exploratory (round 1, non-holdout)
+**Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime III · mode C · 15.0 agents (N_room 13.9) · 1 room(s) carrying ≥ 5% of agent messages · 5 non-holdout days · 4.1 h/day (empirical).
 
 ## Why this period

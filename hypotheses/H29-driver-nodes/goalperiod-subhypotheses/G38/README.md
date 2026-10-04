@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (r1 failed; gte failed)
-**Role:** exploratory (counted; the largest two-room unit)
+**Role:** replication (exploratory (counted; the largest two-room unit))
 **Period:** regime III · mode C · 14 recipients in the network · #best (~4) / #rest (~10); joins 04-17, 04-22 · 17 non-holdout days.
 
 ## Why this period

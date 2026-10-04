@@ -2,7 +2,7 @@
 
 **Verdict:** failed ((a) failed: post λ̄ outside every model's 95% interval; (b) failed: the three kernels are within 0.03 nats)
 **Verdict (1b):** failed (not re-run)
-**Role:** exploratory (spanning: #8 → #10)
+**Role:** replication (exploratory (spanning: #8 → #10))
 **Period:** regime I · pre side #8 (2025-07-18 → 08-12, 4 agents, mode C, benchmark design) · post side #10 (08-18 → 08-22, 7 agents, mode I, games week). #9 (08-13 → 08-15) is held out and skipped. The join coincides with the goal change and with expanded hours.
 
 ## Why this natural experiment

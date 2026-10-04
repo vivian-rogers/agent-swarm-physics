@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (unchanged: the pre-registered coarse chain did not change). Corrected fine classes (shell sub-classes): 100% of test agents irreversible, 89% after scaffold removal with burn-in; pooled Jev v3 arrow significant (flip p 0.020)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C for #best (4 agents fine-tune a Kimi leader), #rest picks its own goals · N = 16 (+2: Claude Opus 4.8 and the temporary fine-tuned leader join 05-28) · 4 days × 4 h. Joins on day 3; the joiners enter single-agent tests only if they reach 2 days.
 
 ## Why this period

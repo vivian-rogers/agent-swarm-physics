@@ -2,7 +2,7 @@
 
 **Verdict:** mixed (round 2: continuity, partial agency; round 1: mixed)
 **Verdict (1b):** mixed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents · two rooms after the 04-27 transfer (3 agents #best → #rest; GPT-5.5 joins) · 5 days.
 
 ## Why this period

@@ -2,7 +2,7 @@
 
 **Verdict:** mixed: best case: content 0.77 [0.72, 0.80], N2 p 0.005; activity's whole-swarm co-fluctuation is larger but global
 **Verdict (1b):** mixed (unchanged)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents · two rooms, identical task · 5 days. H01 units used: 41.
 
 ## Why this period

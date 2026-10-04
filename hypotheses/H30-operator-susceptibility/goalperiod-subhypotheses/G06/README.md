@@ -2,7 +2,7 @@
 
 **Verdict:** mixed — content 0.012*, named 0.030; human activity ≈ 0
 **Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime I · mode K · 4 agents at start · 14 active days.
 
 ## Why this period

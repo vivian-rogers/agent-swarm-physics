@@ -2,7 +2,7 @@
 
 **Verdict:** failed — nudge -1.87 min (n 7); low power
 **Verdict (1b):** mixed (r1 failed; fixed bins, receiving call)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents at start · 5 active days.
 
 ## Why this period

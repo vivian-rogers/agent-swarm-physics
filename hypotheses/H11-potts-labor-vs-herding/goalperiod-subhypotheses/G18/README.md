@@ -2,7 +2,7 @@
 
 **Verdict:** P1 failed (significant); P2 failed (significant)
 **Verdict (1b):** P1 failed (sig.); P2 failed (sig.) (unchanged)
-**Role:** exploratory (candidate)
+**Role:** replication (exploratory (candidate))
 **Period:** regime I · mode C · N = 7 at start · one room (#general) · 10 active days. Class for H11: **AF**.
 
 ## Why this period

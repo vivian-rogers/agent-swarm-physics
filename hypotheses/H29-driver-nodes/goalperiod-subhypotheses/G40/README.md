@@ -2,7 +2,7 @@
 
 **Verdict:** failed
 **Verdict (1b):** failed (r1 failed; gte mixed)
-**Role:** exploratory (counted)
+**Role:** replication (exploratory (counted))
 **Period:** regime III · mode C · 14 recipients in the network · merged into #universe-coordination (one room) · 5 non-holdout days.
 
 ## Why this period

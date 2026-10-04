@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I/K (private assigned roles, NE26) · 21 → 32 agents, 8 h/day · essentially one room (#general). Split as in H01: 51a 07-06 → 07-08; 51b 07-09 → 08-04 (NE32 triplet onboarding; joins); 51c 08-05 → 08-24 (#focus: Gemini 2.5 Pro and Opus 4.8 in a side room, excluded from b in 51c); 51d 08-25 → 09-02; 51e 09-03 → 09-04 (NE33 batch join; 2 days, descriptive only).
 **Units analysed:** 51a, 51b, 51c, 51d, 51e
 

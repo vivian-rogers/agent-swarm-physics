@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1b, 2026-10-04: ledger k, mention response, pre-registered rule; on reply labels: mixed; round-1 verdict kept above)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · N ≈ 12 · #best / #rest (Sonnet 4.6 moves to #best 04-02). Splits inside the period: NE17 outreach approval 04-14; NE18 04-20; joins 04-17, 04-22.
 
 ## Why this period

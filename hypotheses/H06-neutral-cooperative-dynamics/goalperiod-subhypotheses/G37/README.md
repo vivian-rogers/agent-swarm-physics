@@ -2,7 +2,7 @@
 
 **Verdict:** failed (P1; P2 failed; P3 failed; art mixed; no model adequate (joint PPC p < 0.01 for all three))
 **Verdict (1b):** failed (km24 only; all models inadequate)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode F · 13 agents · #best/#rest rooms (pooled: one free goal for both) · 3 days × 4 h (8 windows/day)
 
 ## Why this period

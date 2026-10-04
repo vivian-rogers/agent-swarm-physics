@@ -2,7 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · 15 agents · one room (#universe-coordination) except GPT-5, alone in #rest · 5 days.
 **Units analysed:** 40
 

@@ -5,6 +5,22 @@
 **Origin:** HH109 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`). Related: HH114 (H28, links as the contagion vector, running in parallel), HH126 (reorganization alarm).
 **Definitions used:** "Agent state (categorical)" in H11's named variant **agent state (categorical, project/artifact strict)** (H11 card, Data scheme; proposed there for DEFINITIONS.md); "Population N(t)", active-population variant (**n(w)** = agents with any project label in window w); "Regime" (every period used sits inside one regime; #36, which crosses 2026-03-24, is excluded); active time as in `infra/README.md` (village-on clock time, overnight and weekend gaps removed). New named variant proposed for DEFINITIONS.md: **herding onset (H27, project-share step)**, defined under Observables (O1).
 
+## Standards (2026-10-04)
+**Question served:** Q5 (an operator alarm for pile-ons) and Q2 (pile-ons follow announcements, a field).
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Active-time clock (Definitions) and the rate-matched circular-shift alarm null N2 (Null / baseline). | removed |
+| Exogenous field (kickoff/goal/operator) | yes | Field-step synthetic (SS) and the link precursor (11/21 onsets follow a link). Links are not split by human/operator vs agent sender. Close with that split and operator-message regressors (§1). | partly |
+| Shared model priors | no | No family claim. | n/a |
+| Contemporaneous convergence | partly | Not handled: the link precursor uses posting time, not reads. Close with H28's blind-window ledger design (§1). | open |
+
+**Inputs:** round 1b uses shared `project_states` and DQ4 work labels. Still old: the link precursor counts posting times, not ledger reads.
+
+**Two layers:** 17 replication folders. Natives: 2 (G31 mixed, G40 mixed).
+
+**Confirm script:** `confirm_holdout.py`, frozen 2026-10-04, not run. Re-freeze: yes; it builds labels through the round-1 path (H11's nondeterministic labels), which the shared deterministic build replaced.
+
 ## Question
 Before H11's pile-ons (#31's time-capsule repo reaching 11 agents; #18's last-day convergence), the dominant project share's autocorrelation and variance should rise. *Check:* lag-1 autocorrelation and variance of the dominant share in rolling windows before vs after onsets, against placebo windows; lead time.
 

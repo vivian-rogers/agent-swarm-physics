@@ -2,7 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (round 1b, 2026-10-04: n̂ TALK 0.20 → 0.20 on corrected inputs; unchanged verdict)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I (each agent its own objective) · N = 15 at start (+1), 15.6 active per day on average · rooms (agents see only their room) · 5 non-holdout days, median window 4.0 h. Splits inside the period: 2026-05-20 (roster_joined: Gemini 3.5 Flash).
 
 Verdict rule: no period-level prediction for mode I; enters P2/P4 as a comparison point. Verdicts use the primary statistic, n̂ for TALK under M1 with B2 + exogenous drive. n̂ depends on the baseline. A Poisson process with a rate modulated on 10–30 min scales can mimic it, and the 10-min jitter test has no power to separate the two (main card, jitter calibration). Read B2 n̂ as an upper value and B3 n̂ as a downward-biased lower bound. Any verdict here is descriptive, not mechanistic.

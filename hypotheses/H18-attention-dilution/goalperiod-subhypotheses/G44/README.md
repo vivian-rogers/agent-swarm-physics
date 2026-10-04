@@ -2,7 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (round 1b, 2026-10-04: ledger k, mention response, pre-registered rule; on reply labels: mixed; round-1 verdict kept above)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode C · N ≈ 16 · #best / #rest. Splits inside the period: Opus 4.8 and the temporary fine-tuned leader join 05-28 (NE31).
 
 ## Why this period

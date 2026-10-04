@@ -2,7 +2,7 @@
 
 **Verdict:** mixed — nudge 0.86 [0.51, 1.26] min (n 53); low power
 **Verdict (1b):** mixed (r1 mixed; fixed bins, receiving call)
-**Role:** exploratory
+**Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents at start · 5 active days.
 
 ## Why this period

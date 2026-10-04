@@ -12,6 +12,13 @@ Each one has produced fake collective order in this project at least once. Every
 | **Shared model priors** (family, style) | Family "fields", conventions, assembly "selection" | `style_resid`; leave-period-out agent means; cross-family and first-day controls | H13, H46, H80 |
 | **Contemporaneous convergence** | Copying, contagion, influence | In-flight placebo: compare read vs posted-but-unread at a matched lag; use the blind window before read-out | H57, H32, H34, H28, H41 |
 
+**Audit of H01–H59 (2026-10-04): the most common gaps.** Close these first in any round 2.
+- **Convergence is open in 19 cards.** Equal-time co-movement statistics have no read vs posted-but-unread placebo at a matched lag. Only H06, H07, H08, H28, H29 and some of H32/H34/H41 remove it.
+- **Shared priors are open in 13 cards.** These lack `style_resid` and a cross-family control.
+- **The exogenous field is partly handled in about 33 cards.** No card regresses on `goal_fields` directions or uses a kickoff-matched placebo as standard. Do both.
+- **The scheduler field is handled everywhere.** It is partly handled where a trim-then-block-shift null was never run (H01, H13, H14, H22, H31, H35, H58) or a swarm/EP block was not re-run (H09, H16).
+- In the impostor table, the **Status** column is `removed`, `partly`, `open`, or `n/a` (impostor not relevant).
+
 ## 2. Inputs (use these, not the old tables)
 - **Activity:** `activity_bins_fixed`, `outages_fixed`. The old `activity_bins` dropped about half the events.
 - **Visibility and exposure:** the context ledger (`call_windows`, `context_ledger_items`, `context_ledger_turns`). A message acts at the recipient's **receiving call**.
