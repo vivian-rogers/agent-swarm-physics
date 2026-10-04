@@ -1,0 +1,32 @@
+\hwhat{HH123 claims that a goal switch shows hysteresis: the swarm keeps the old goal's state with a lag that grows with how ordered that state was, like a coercive field. H96 measures the old state's remanence after 24 non-holdout transitions (18 in regime I, 6 in regime III), with the new field projected out and placebo old states subtracted, in both embedding models. \textbf{A switch is a quench, not a hysteresis loop.} On day 1 the remanence is 0.27 (bge) / 0.18 (gte) of its pre-switch level, against 0.85--0.89 across an ordinary night (146 pseudo-switches). The order test is inconclusive: its synthetic power is 0.50, and the measured trend is negative ($\rho=-0.75$ / $-0.52$, 12 transitions). One reassigned agent (NE38) loses its old role state faster than all 22 same-day placebos. The holdout script is written, not run.}
+
+\hmodel{Model 11. Each agent is a unit spin $\mathbf s_i$ in the 32-d whitened, style-residualized content space. At the kickoff time $t_0$ the field steps from the old goal to the new one. The old state $\hat e_{\rm old}$ is the leave-agent-out centroid of the old period's last days. $P_\perp$ removes the new field (kickoff, goal, room kickoffs). Placebo old states $\hat e_Q$ come from non-adjacent periods. Hysteresis predicts a decay time that grows with the old order $q$. The rivals are a quench and ordinary night-to-night drift.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+M(t)=\big\langle \mathbf s_i(t)\cdot P_\perp\hat e^{(-i)}_{\rm old}\big\rangle_i-\operatorname{med}_Q\big\langle \mathbf s_i(t)\cdot P_\perp\hat e^{(-i)}_Q\big\rangle_i\\
+R_1=M(\text{day }1)/M(\text{pre}),\qquad \Delta R_1=R_1-R_1^{\rm night}\\
+\ln\frac{M_{\rm old}(h)}{M_{\rm new}(h)}=L_0-\frac{h}{\tau_{\rm sw}},\qquad \text{HH123: }\ln\tau_{\rm sw}=a+b\,q,\ b>0
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Persistence ratio $R_1$ per transition (bge with agent-bootstrap CI; gte diamonds). The grey band is the 10--90\% range of ordinary nights. Most switches sit far below it. (b) Old-state order $q$ against the switching time $\tau_{\rm sw}$ for the 12 transitions with a measurable residual. HH123 predicts a rising trend; the data fall.}
+
+\htelos{For an operator who reassigns a swarm: there is nothing to clear first. The new kickoff removes 70--80\% of the old state's content by the end of day 1, about $3\times$ more than one night removes, and most of it within the first active hour. A single reassigned agent behaves the same way (NE38). A small residual of the old state can linger for about one active day (median $\tau_{\rm sw}$ 7--15 active h), so expect stray references to the old goal on day 1, not a lag. The claim that ordered swarms resist a new goal is not supported. Its test is weak at this sample size, so it stays open, but the sign is wrong.}
+
+\hbottom{A goal switch quenches the swarm's content state within the first active hour, well beyond ordinary night-to-night drift; there is no sign of an order-dependent coercive field.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed (bge / gte)} & \textbf{Verdict}\\\hline
+P1 quench: $\Delta R_1<0$, $R_1$ below nights in $\ge2/3$ & $-0.62$ [$-0.78$, $-0.45$] / $-0.72$ [$-0.88$, $-0.56$]; 20/23 / 21/24 & supported\\
+P2$'$ $\rho(q,\ln\tau_{\rm sw})>+0.29$ & $-0.75$ / $-0.52$ (n 12); power 0.50 & inconclusive\\
+P3 median $\tau_{\rm old}<8$ active h & 0.16 / 0.15 h (cosine scale) & supported\\
+P4 old kickoff fades first & 10/15 / 10/19 & holds (weak)\\
+N1 G39 room memory & ratio 0.15 / 0.26; ordered room keeps less & mixed\\
+N2 NE38 single agent & $R_1$ 0.36 / 0.22, percentile 0/22 & quench\\
+per transition & 18 quench, 3 lag, 2 mixed, 1 desc. (bge) & --\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Synthetic transitions on the real skeletons (Amendment 1). Left: with the cosine decay time $\tau_{\rm old}$, $\rho(q,\ln\tau)$ is positive even without hysteresis, because unit normalization slows the cosine decay of large components. Right: the ratio time $\tau_{\rm sw}$ is centred under the null. Its power at a doubling over the IQR is 0.50. The blue line is the real value.}
+
+\hcaveats{The order test has power 0.50, so its negative is not a refutation, and its 12 transitions are selected (those with a measurable residual). The cosine decay time is biased by the old state's amplitude; only the ratio time is usable for cross-period comparison. The new field is a text-embedding proxy and operator messages are not removed. Composition carry-over is reduced, not removed. bge and gte disagree on some single transitions (\#19$\to$\#20). Regime II has too few placebo old states. G39's room contrast is confounded by three agents who changed rooms. The holdout is not used.}
+
+\hnext{Fit a two-stage model (fast quench fraction plus slow residual) and ask whether the residual lives in veterans' carried-over context or in the record (newcomers, H82). Pool with H82's boundary rows to raise power.}

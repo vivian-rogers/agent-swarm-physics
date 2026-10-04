@@ -1,0 +1,70 @@
+{
+ "complete": 45,
+ "faithfulness": 2.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: card, impostor table and dated predictions before data; synthetic validation on every real window skeleton (clock confusion matrix, time-of-day null) that repaired the two-time design before real data; replication on 31 periods (O1), 23 transitions (O2) and 41 units (O3) in three regimes and both models; natives NE43, NE41, G06; estimates rows; confirm.py frozen with a passing dry run (not run). Missing: holdout run, the per-call clock, an explicit sawtooth model.",
+  "faithfulness": "HH331's kill clause holds with synthetic clock-selection accuracy 0.82: active hours fit as well as or better than nights in 16-17/22 decaying periods in both models, there is no two-time night step (RE beta_N about 0 over 41 units), and resets and the bookends' end change nothing. The night factor's sign differs between models and activity clocks are not separable, so the positive model is weak. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "Rules out a mechanism (overnight demagnetization) and tells operators that overnight shutdowns and in-day erasures do not reset content; stale themes fade with work or a goal change. Small direct operator value."
+ },
+ "one_line": "Remanent content decays with active work, not per night: active hours beat the night clock in 16-17/22 periods, no night step at fixed lag (41 units), and resets do not move content.",
+ "models": [
+  {
+   "model": "11-vector-spins",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "per-night AC demagnetization of content refuted"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "content relaxation is not concentrated at day edges"
+  }
+ ],
+ "rated_by": "H103 agent (suggested)",
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "Nights do not demagnetize content: kickoff remanence decays on the active-hour clock, not per night (nights win 3–5 of 22 clock fits; night step β_N −0.001 [−0.023, +0.021]; clock-selection accuracy 0.82), and an agent's own idle hour does not age its content",
+  "scope": "22 periods with decay; 41 units; natives NE43, NE41, G06",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": 0.59,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "synthetic clock selection (accuracy 0.82) and corrected two-time regression before data",
+    "x": 1.4,
+    "evidence": "card §Amendment 1"
+   },
+   {
+    "factor": "replication across 22 periods, both models",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "natives agree (NE43, NE41 null steps)",
+    "x": 1.2,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "penalty: per-unit CIs anti-conservative (10–25%); card-level claims rest on RE means",
+    "x": 0.85,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.0,
+  "decision": "count content memory in active hours of work; nights and pauses don't reset it",
+  "magnitude": "small",
+  "generality": "LLM swarms with sessions",
+  "expected_usefulness": 0.59,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H103 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
+}

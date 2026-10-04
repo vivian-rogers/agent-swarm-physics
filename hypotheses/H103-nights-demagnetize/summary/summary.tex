@@ -1,0 +1,30 @@
+\documentclass[aps,pre,reprint,10pt,nofootinbib]{revtex4-2}
+\input{../../../writeup/hypothesis-pages/hpage.tex}
+\def\hID{H103}
+\def\hTitle{Nights demagnetize: remanence decays per night}
+\def\hStatus{exploratory round 1 done (2026-10-04): failed. Nights do not demagnetize the content; remanence decays during active work, and the night slightly re-magnetizes toward the goal.}
+\def\hStage{level: hypothesis  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-04}
+\def\hBadges{\hbadge{Complete}{45\%}{6da7ec}{0b0b0b}\ \hbadge{Faithfulness}{2/5}{f5bcbb}{0b0b0b}\ \hbadge{Usefulness}{1/5}{e34948}{0b0b0b}}
+\def\hPeriodSummary{3 supported, 16 failed, 4 mixed, 10 descriptive}
+\def\hDate{Updated 2026-10-04}
+\def\hFooter{H103-nights-demagnetize $\cdot$ generated 2026-10-04 14:30 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H103-nights-demagnetize/README.md $\cdot$ ratings: H103 agent (suggested)}
+\def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G03 & d & descriptive \\
+G04 & d & descriptive \\
+G05 & $\times$ & failed \\
+G06 & d & descriptive \\
+G08 & $\times$ & failed \\
+G10 & $\times$ & failed \\
+G11 & $\sim$ & mixed \\
+G12 & $\times$ & failed \\
+G13 & $\times$ & failed \\
+G16 & d & descriptive \\\multicolumn{3}{l}{\textit{+23 more periods: see the card.}} \\\end{tabular}}
+\def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 2 \\
+B assumptions & 1 & G ground truth & 1 \\
+C adequacy & 1 & H comparative & 1 \\
+D unfitted predictions & 1 & I transfer & 1 \\
+E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{H103-R1} Put the agent's own call count (the H40 clock) into the O3 regression next to active hours and resets; test whether calls absorb the active-hour decay.\item \textbf{H103-R2} Model the daily sawtooth explicitly: an activity-clock decay plus a morning re-orientation pulse toward the prompt-resident goal; compare eras before and after NE08/NE13 (goal and kickoff in the prompt).\item \textbf{H103-R3} Rerun O2 with H82's remanence series once it exists, to see whether its veteran/newcomer split changes the clock.\item \textbf{H103-R4} Run confirm.py after Vivian's sign-off and the ledger disclosure.\end{itemize}}
+\input{content.tex}
+\begin{document}
+\makehpage
+\end{document}

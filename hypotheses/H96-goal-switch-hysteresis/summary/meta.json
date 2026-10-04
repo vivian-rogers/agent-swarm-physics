@@ -29,5 +29,48 @@
   }
  ],
  "rated_by": "H96 agent (suggested)",
- "updated": "2026-10-04"
+ "updated": "2026-10-04",
+ "v2": {
+  "claim": "A goal switch is a quench, not a hysteresis loop: day-1 persistence of the old-state direction is R₁ 0.18–0.27 vs 0.85–0.89 across an ordinary night (below the night reference in 20–21 of 23–24 transitions, both models), with old-state inertia ≈ 0.15 active h; coercivity (order dependence) is untested at power 0.50",
+  "scope": "24 transitions (18 regime I, 6 regime III); natives G39, NE38",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.74,
+  "ladder": [
+   {
+    "factor": "base (pre)",
+    "x": 0.4
+   },
+   {
+    "factor": "replication across transitions, both models",
+    "x": 1.8,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "synthetic validation and a calibrated ratio estimator before data",
+    "x": 1.3,
+    "evidence": "card §Amendment 1"
+   },
+   {
+    "factor": "native intervention: NE38 reassigned agent below all 22 same-day placebos",
+    "x": 1.5,
+    "evidence": "card §Results"
+   },
+   {
+    "factor": "robust to white32 and per-period style variants",
+    "x": 1.2,
+    "evidence": "card §Results"
+   }
+  ],
+  "mechanism_level": "M0",
+  "fragile": false,
+  "value_if_true": 1.5,
+  "decision": "expect a new goal to wipe the old one within the first day; don't plan on carry-over",
+  "magnitude": "medium",
+  "generality": "goal-driven LLM swarms",
+  "expected_usefulness": 1.11,
+  "scientific_value": 2,
+  "rater": "coordinator, updated after round 1b (H96 report); independent rater pending",
+  "rated_at": "2026-10-04"
+ }
 }

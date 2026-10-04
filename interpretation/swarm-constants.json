@@ -631,6 +631,26 @@
    "model": "11",
    "source": "H83",
    "meaning": "There is little persistent village culture in content; culture tests on window means have little power."
+  },
+  {
+   "symbol": "R₁",
+   "name": "day-1 old-state persistence after a goal switch",
+   "value": "0.18–0.27 vs 0.85–0.89 across an ordinary night (24 transitions, both models); inertia τ_old ≈ 0.15 active h; residual switching time τ_sw median 7–15 active h",
+   "kind": "quench response",
+   "scope": "24 transitions",
+   "model": "11",
+   "source": "H96",
+   "meaning": "A goal switch is a quench that erases most of the old state on day 1."
+  },
+  {
+   "symbol": "λ_night",
+   "name": "night factor in content remanence decay",
+   "value": "λ 0.83–1.06 (no night step); β_N ≈ 0 ± 0.02; weekend β_G ≈ −0.015 per extra 24 h; own idle gap β_gap ≈ +0.10; context reset β_R ≈ 0; overnight re-orientation toward the goal +0.03",
+   "kind": "clock",
+   "scope": "22 periods, 41 units",
+   "model": "11",
+   "source": "H103",
+   "meaning": "Content memory decays with active work, not with nights; mornings slightly re-orient agents to the goal."
   }
  ]
 }

@@ -1,0 +1,36 @@
+\hwhat{HH331 claims that nights demagnetize the swarm: the remanent content field (a finished kickoff, the previous goal's state) falls in steps at night boundaries by a fixed factor per night. H103 compares four clocks (nights, active hours, wall time, context resets) on 30-min agent windows in 31 non-holdout periods, plus a two-time night step in 41 period units, in both embedding models. \textbf{Nights do not demagnetize.} Where the kickoff remanence decays (22/31 periods), active hours fit as well as or better than nights in 17/22 (bge) / 16/22 (gte). At fixed active lag an agent's content is as similar across a night as within a day ($\beta_N=-0.001$ [$-0.023$, $+0.021$]). Across the night the kickoff alignment rises a little. Context resets and the end of the operator's bookends change nothing. The holdout script is written, not run.}
+
+\hmodel{Model 11 with model 15's question of where in time relaxation happens. The spin is an agent's 30-min content vector $\mathbf s_{iw}$ (32-d, whitened, style-residualized). The remanent magnetization is the decoy-corrected alignment with the period's kickoff $\hat k_P$. It relaxes as $A_\infty+\Delta A\,f(t)$ on one of four clocks, with a common time-of-day profile $s(\text{slot})$ that removes the scheduler field. HH331 is the night clock $f=\lambda^N$, AC demagnetization by a fixed factor per night.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+A_w=\big\langle\cos(\mathbf s_{iw},\hat k_P)-\overline{\cos(\mathbf s_{iw},\hat k_q)}\big\rangle_i\\
+A_w=A_\infty+\Delta A\,f(t_w)+s(\text{slot}_w)\\
+f\in\{\lambda^{N},\,e^{-H/\tau_H},\,e^{-W/\tau_W},\,e^{-R/\rho}\},\ \text{nested }\lambda^{N}e^{-H/\tau_H}\\
+\cos(\mathbf s_{iw},\mathbf s_{iw'})=\alpha_i+\gamma_{\rm slots}+g(\Delta H)\\
+\qquad+\beta_N N+\beta_G N\,\Delta G/24+\beta_{\rm gap}\,\text{gap}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Log ratio of the active-hour to the night-clock residual per period; values below 0 mean active hours fit better. Filled dots: decay present. Most sit below 0 in both models. (b) The two-time night step $\beta_N$ per period unit (bge, agent-cluster bootstrap CI, clipped at $\pm0.4$). It scatters around 0 with no sign preference.}
+
+\htelos{For a swarm operator: a night does not reset the swarm's content. What the swarm remembers of a kickoff or of the last goal fades with work done, not with nights or wall time. Shutting the village down overnight neither helps nor hurts that memory, and forcing context erasures inside the day does not move content either. Each morning the agents lean slightly back toward the current goal, which suits goals kept in the prompt. To clear a stale theme, change the goal; waiting overnight does nothing. The result mostly rules out a mechanism; its direct operator value is small.}
+
+\hbottom{The content magnetization decays with active work, not per night; nights add no demagnetizing step and slightly re-orient agents toward the current goal.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.49\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed (bge / gte)} & \textbf{Verdict}\\\hline
+P1 night clock best in $\ge2/3$ & night best 5/22 / 3/22; $\mathrm{SSE}_H\le\mathrm{SSE}_N$ 17/22 / 16/22 & failed (kill)\\
+P1 RE $\ln\lambda<0$ & $+0.06$ [$-0.11$, $+0.23$] / $-0.19$ [$-0.38$, $+0.00$] & failed\\
+P2 previous-centroid level $>0$ in $\le1/3$ & 11/23 / 10/23; mostly too weak to clock & failed\\
+P3 RE $\beta_N<0$ & $-0.001$ [$-0.023$, $+0.021$] / $-0.002$ (41 units) & failed\\
+P3 $\beta_G\approx0$ & $-0.017$ [$-0.030$, $-0.005$] per extra 24 h & failed (small)\\
+P3 $\beta_{\rm gap}\approx0$ & $+0.099$ [$+0.055$, $+0.142$] & failed (sign $+$)\\
+N1 NE43 bookends & $\Delta\beta_N$ $+0.023$ [$-0.017$, $+0.062$] & supported\\
+N2 NE41 resets & $\beta_R$ $+0.0003$ [$-0.0011$, $+0.0018$] per reset & supported\\
+N3 midday break & 0.37 across vs 0.35 same-day vs 0.52 cross-night & descriptive\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synthetic.pdf}{Synthetic validation on the real window skeletons. Left: the winning clock under each planted truth (rows). Night and active-hour truths separate (accuracy about 0.82); a time-of-day field never reads as decay. Right: the repaired two-time design gives $\beta_N\approx0$ under active-hour and time-of-day truths and detects a night jump and a wall clock.}
+
+\hcaveats{Active hours and reset counts are nearly collinear, so the decay clock is "activity" rather than either one. The night factor is not robust in sign between models ($\lambda$ 1.06 vs 0.83). The positive night step matches a morning re-orientation, but a time-of-day field gives the same sign in the synthetic, so it is not a clean measurement of re-magnetization. Per-unit two-time CIs are anti-conservative (10--25\% under null truths), and regime-I units with 3-h days identify $\beta_N$ poorly. Only one village-off midday break is usable. The kickoff field is a text-embedding proxy. The holdout is not used.}
+
+\hnext{Add the agent's own call count (H40's clock) to the two-time regression; model the daily sawtooth as activity decay plus a morning pulse, before and after the goal and kickoff entered the prompt (NE08, NE13).}

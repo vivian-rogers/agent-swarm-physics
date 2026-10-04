@@ -263,6 +263,9 @@ Seven builders and nine libraries are now shared and registered in `build_all.py
 
 ## Known issues
 
+- **Cosine decay times on unit statement vectors depend on the decaying component's amplitude** (H96): τ biased to ≈ 0.35× the planted value, and an order-vs-timescale correlation rejects in 35–57% of null worlds. Use ratio estimators (ln old/new projection). Bears on H20, H36, H48 and H54's τ_K. (Same family as H97's normalization issue.)
+- **Two-time pair regressions with additive slot effects and coarse lag bins fake night steps** (H103: β_N −0.07 to −0.14 under null truths). Use slot-pair fixed effects and 0.5-h lag bins.
+- **Old-state / previous-centroid builder is duplicated** (H96 `h96lib.projections`, H103 `o2`; H82 specifies the same). Candidate for `infra/shared/` with an active-hour clock helper.
 - **Style-free content has almost no persistent shared component among veterans** (H83): ≈ 3% of statement variance within a period, 0.5% across periods. Content-vector culture tests on window means have little power; calibrate before running.
 - **Family baselines from first-day vectors share an onboarding component** (H83; size up to 0.55). Use unnormalized differences.
 - **H34 marker uses exclude held-out text** (H88, H101): confirm scripts need `idea_markers.uses_for_rows(allow_holdout=True)`.

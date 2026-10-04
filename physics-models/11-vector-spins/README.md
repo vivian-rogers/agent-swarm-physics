@@ -65,6 +65,7 @@ HH85.
 
 ## Pitfalls
 
+- **Two-period room statistics need a joint relabel** (H100, 2026-10-04): room remanence R = cos(Δ_P1, Δ_P2) is positive with no room memory when the same agents keep their rooms and part of each agent's constant survives preprocessing. Relabelling the two periods independently centres the null near 0 (median R ≈ 0.15 in H100's null worlds; size 0.45 in `infra/shared/relabel.py`'s synthetic with a strong leftover constant). Give an agent present in both periods the same pseudo-room in both (`relabel.joint_relabel` / `remanence_test`; size 0.025–0.04).
 - **A day-level common data loss inflates whole-unit λ₁ against cross-day nulls** (RE-A1, 2026-10-04): the activity_bins bug dropped a day-specific share of every agent's events, which acts as a shared day field; cross-day surrogates destroy it and report a collective mode. Trim to the all-present window and use a block-shift edge.
 - **Coverage takes minutes, settling takes hours** (H48, 2026-10-04): 90% of room-mate pairs have read each other 0.24 active h after a kickoff (bulk read-out mixing 0.02 h), while content settles with τ ≈ 4.5 h (bge) / 1.9 h (gte), about 10× T90. If read-out drives settling, the pull per read is small (α ~ 1/250). Single-exponential settling fails in about half the periods, and settling is detectable in only 41–52% of periods at hour resolution.
 - **Cross-day circular-shift nulls are slightly liberal for content transfer** (H32): the day × room field leaks through the sender's same-day messages; use a within-day shift as the strict check. Transfer significance also falls fast as more field directions are removed (25 → 18 → 7 periods for 1, 5, 10 directions), and a fast responder to a hidden drive looks like a leader in single-room weeks.
@@ -87,6 +88,7 @@ HH85.
 - Anisotropy and topic-vs-style confounds: two agents can align because they write alike, not because they are thinking about the same thing.
 - Embedding vectors aren't physical spins. Their norm is arbitrary, and the geometry depends on the embedding model.
 - Few agents (N ≲ 30) against high n: reduce the dimension before fitting couplings.
+- **Goal switches are quenches; content decays with work, not nights** (H96, H103): day-1 old-state persistence 0.2 vs 0.87 per ordinary night; remanence follows the active-hour clock (nights win 3–5/22 fits). Unit-normalized cosine decay times depend on amplitude: use ratio estimators.
 
 ## Hypothesis seeds
 
