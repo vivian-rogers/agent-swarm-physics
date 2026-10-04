@@ -1,0 +1,284 @@
+\documentclass[aps,prl,reprint,superscriptaddress,nofootinbib]{revtex4-2}
+\usepackage{graphicx}\usepackage{amsmath,amssymb}\usepackage[T1]{fontenc}
+\begin{document}
+\title{Agent-swarm physics: figure compendium}
+\author{Vivian Rogers}\affiliation{with Claude Opus 5.5}
+\date{2026-10-04}
+\begin{abstract}
+Writeup figures for the hypotheses with the clearest results, grouped by theme. Each figure is rebuilt by \texttt{writeup/visuals/H\textit{NN}-*/make.py} from processed, non-holdout data; animations (where they exist) are \texttt{anim.mp4} in the same folder, and the static figure here is the version for print. Numbers in captions come from the hypothesis cards; nothing here is holdout-confirmed. Data: AI Village (AI Digest).
+\end{abstract}
+\maketitle
+\section*{How agents couple: reading at the next call}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H08-context-is-the-coupling/fig.pdf}
+\caption{\textbf{Context is the coupling: a message acts only at the recipient's receiving call.}
+(a)~One agent message in G38 (2026-04-02), on the context ledger. Four room-mates were mid-call when it was posted (dark bars, in flight); they read it 7--24\,s later at their next call (blue). Three others were in long gaps; they read it 130--169\,s later and replied to the sender at that call (triangles).
+(b)~G38 (17 days): the excess chance that a recipient's call names the sender, over the pseudo-message null (same pair, shifted 20--60\,min), by call offset $o$. The excess jumps at the receiving call ($D=+1.14$\,pp [$+0.80$, $+1.41$]) and is $\approx 0$ at the call in flight. The gray curve is the other-room placebo (messages the recipient cannot see), which is flat. The raised $o<0$ values are ongoing exchanges.
+(c)~The jump $D$ in all 17 non-holdout periods: reply-to-sender (filled) is positive in 17/17 and naming the sender (open) in 14/17; the other-room placebo (gray) is $|D|\le0.15$\,pp in 8/8 two-room periods. Bars are day-bootstrap 95\% CIs. Animation: \texttt{H08-context-is-the-coupling/anim.mp4}.}
+\label{fig:H08}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H50-field-vs-coupling-transfer-lag/fig.pdf}
+\caption{\textbf{Field or coupling: activity co-moves through the scheduler, talk spreads through one read-out call at a time.}
+(a)~Simulation on a synthetic call schedule (ticks: model calls, $\sim$13\,s apart). A field (orange line) reaches every agent at its next call, so all respond within about one call. A coupling passes from reader to reader, and each hop waits for the recipient's next call.
+(b)~G38 (regime III), measured lags. Orange: each agent's first call of the day relative to that day's median (pooled IQR 12\,s; per-day median IQR 9\,s; 82\% of agents start before any peer message reaches them). Blue: from a peer message to the recipient's receiving call (median 17\,s; regime-III unit median 24\,s). The tail is pauses.
+(c)~Excess chance that a recipient's call is a talk call, by hop after a peer message (IVW pooled over 41 regime-I and 27 regime-III units; bands are 95\% CIs). It is zero at the call in flight and steps up at the read-out call. The gray band is the pooled shifted-time placebo. $J_1>0$ in 45/71 units and $<0$ in none. The regime-I rise beyond hop 2 is not validated on synthetic data. Animation: \texttt{H50-field-vs-coupling-transfer-lag/anim.mp4}.}
+\label{fig:H50}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H40-call-clock-coupling/fig.pdf}
+\caption{\textbf{In the computer-use scaffold agents couple per model call, not per minute.}
+(a)~Analytic illustration: two agents with the same reply hazard per call (0.08), one calling every 8\,s and one every 40\,s. Their reply curves coincide when counted in calls (collapse) and fan out in minutes (smear).
+(b)~The exposure-time elasticity $\eta$ (the coefficient of the log wall time a call spans in a cloglog reply-hazard model) in 33 non-holdout periods, with 95\% CIs. The horizontal lines and bands are random-effects means by regime: I $+0.51$ [0.41, 0.61], II $-0.01$ [$-0.12$, 0.11], III $-0.16$ [$-0.32$, 0.01]. The call clock is $\eta=0$ and the wall clock $\eta=1$. G38 and G44 lie below zero, which neither clock explains.
+(c,\,d)~G51 heavy spins, 243 agent-units (marker area $\propto$ weight, within-unit centred). The per-call coupling is flat in call rate ($s=+0.11$ [$-0.03$, 0.25]), and the wall-clock rival $s=-1$ (dashed) is excluded. The per-hour coupling rises as $1+s=1.11$ [0.97, 1.25] (model-free 1.00 [0.81, 1.19]), where the wall clock predicts no slope.}
+\label{fig:H40}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H18-attention-dilution/fig.pdf}
+\caption{\textbf{Attention dilutes: per-sender uptake falls with the backlog $k$, and replies go to the newest messages.}
+(a)~The response to a pending sender relative to a no-budget model with the same agent$\times$day propensities, vs the number $k$ of messages that reached the agent since its previous talk call (context ledger). The plot shows 16 non-holdout periods, with G51 bold and its day-bootstrap 95\% band. Every period declines, less steeply than the literal $1/k$ (dotted).
+(b)~The fitted exponent $\hat\beta$ (uptake $\propto k^{-\beta}$) on all talk calls (D1, blue) is $>0$ in 16/16 periods; the pooled value is $0.66\pm0.02$ (dashed). Gray bands: generative agents with no budget whose replies are triggered (reactive timing, 8 replicates). That null alone gives D1 $\hat\beta=0.75$--$0.80$, so D1 cannot separate dilution from timing. Timer-wake batches (D2, pink: exogenous $k$) are not fooled by the null ($-0.28$ to $0.19$). D2 is clear in G51 ($0.45$ [0.41, 0.50]), G37 and G44, and it contradicts D1 in G38 and G41.
+(c)~G51: the chance that a pending message becomes the reply parent, by its queue rank (1 = newest), for $k=5$--8 and 9--16, with day-bootstrap 95\% bands. Lines are the rank-blind rates.}
+\label{fig:H18}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H41-readout-light-cone/fig.pdf}
+\caption{\textbf{A logged light cone for novel items: it binds inside a room, and across rooms it is a cage.}
+(a)~One novel item (a number) first posted by DeepSeek-V3.2 in G38's \#rest (2026-04-06), drawn on the ledger's model calls. Blue shading is each agent's logged light cone: the time after its first call that read a message on a time-respecting read-out path from the post. All seven room-mates enter the cone at their next call (within 2.6\,min), and two adopt the item inside it. No \#best agent enters the cone that day, yet all four adopt the item 60--72\,min later, outside it ($\times$). Three later \#rest adoptions (about 21\,h later) are inside the cone and lie off-axis.
+(b)~Per period, the share of adoptions outside the logged cone (robust to call-start uncertainty). Adopters in the source's room: median 0.6\%, maximum 4\%, over 32 non-holdout periods. Adopters in another room: 75--100\% in 7/8 two-room periods (G44: 11\%). In G51, where agents hop rooms, it is 47\%. Animation: \texttt{H41-readout-light-cone/anim.mp4}.}
+\label{fig:H41}
+\end{figure*}
+\clearpage
+\section*{Subcritical swarms, fields and scaling}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H67-subcritical-dial/fig.pdf}
+\caption{The talk loop sits far below its critical point. (a) Amplification of a push, $\chi=1/(1-g)$, against loop gain $g$; every goal period is placed at its read-out loop gain $g_{lag}$ (H67, random-effects pool, 95\% CI), and the gray strips are H25's daily equal-time Curie--Weiss dial for activity and talk (282 non-holdout days, medians 0.16; no day's upper bound reaches 0.8). The largest period gain is 0.23, so $\chi\le1.31$, against a divergence at $g=1$; open circles mark the simulated gains of the companion animation. (b) $g_{lag}$ per period in time order: about 0 in regimes I and II, unit median 0.13 in regime III (every unit's upper bound $<0.40$), with the shift null (gray, 95\%) and the equal-time dial $g_{eq}$ (orange), which reads 0.05--0.40 from fast shared fields where $g_{lag}\approx0$. Animation: \texttt{H67-subcritical-dial/anim.mp4}.}
+\label{fig:H67}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H111-talk-fano-sum-rule/fig.pdf}
+\caption{A fluctuation--response sum rule for talk. (a) Simulation: in a linear Hawkes talk swarm (15 agents, one room, 1-min read-out kernel) the collective Fano ratio of 10-min talk counts, $\Phi=\mathrm{Var}(\sum_i n_i)/\sum_i\mathrm{Var}(n_i)$, follows the room-adjusted prediction $\Phi_{pred}(g)\approx1/(1-g)^2$ with no free parameter; the gray band is the no-coupling spread. The estimator reads slightly low at large $g$ because cascades straddle window edges, which is small in the village range ($g_{lag}\le0.29$). (b) Village: observed $\Phi$(10 min) per unit against $\Phi_{pred}$ built from H67's $g_{lag}$ (95\% CIs both ways; 41 units with $\ge40$ usable windows). Regime III closes, pooled $r_F=\Phi_{obs}/\Phi_{pred}=1.01$ [0.94, 1.09] over 18 units; regime I carries an unexplained fast excess, $r_F=1.34$ [1.18, 1.52]; gray shading marks values below the independent-agent (block-shift) null's 95th percentile.}
+\label{fig:H111}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H34-idea-cascades/fig.pdf}
+\caption{Idea cascades are strongly subcritical and heavier-tailed than one branching law. (a) Complementary distribution of exposure-tree sizes in \#51 (52,874 trees in a 25-agent room; Wilson 95\% intervals), against a single Galton--Watson law with negative-binomial offspring at the measured $\hat R=0.23$, $\hat k=2.2$ (gray band: 95\% sampling envelope at the observed tree count) and against the critical law $P(s)\propto s^{-3/2}$ ($R=1$); the other 31 periods are thin lines. Trees of five or more agents are more frequent than the homogeneous law allows, consistent with idea-specific $R$, but nowhere near critical. (b) Branching ratio $\hat R$ (95\% CI) for all 32 non-holdout periods against room size: 0.09--0.40, median 0.22, every upper bound below 1. Animation: \texttt{H34-idea-cascades/anim.mp4}.}
+\label{fig:H34}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H51-one-dial-collapse/fig.pdf}
+\caption{One dial does not collapse the phase diagram. (a) The 33 non-holdout periods placed by active population $N$ (log scale) and read-out coupling $g_{lag}$ (H67, 95\% CI), with scaffold regime as marker; the largest coupling gives $\chi=1/(1-g)=1.31$, so the critical point is far off-scale. (b) Four unfitted observables (settling time, herding share, idea branching, loop rate) against $g_{lag}$ (top) and $N$ (bottom), with leave-one-period-out CV-$R^2$ in each axis label: $g_{lag}$ collapses none of them ($-0.00$, $0.03$, $-0.01$, $0.22$; within-regime permutation $p=0.07$), while $\log N$ carries herding (0.38). The gray band is the most a mean-field amplification $\chi\le1.31$ could move each observable from its $g_{lag}\approx0$ median; the observables vary $\times3$ to $\times127$ across periods.}
+\label{fig:H51}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H38-platform-stalls/fig.pdf}
+\caption{Scheduler or coupling? (a) Simulation of one scheduled day (12 agents, weak kinetic-Ising coupling): agents start and stop within minutes of the operator's resume and pause (orange: outside the all-present window), and with the 30-min block estimator these shared edges alone inflate the equal-time co-activation gain (three simulated days: 0.42 whole day vs 0.15 inside the window). (b) Village, round 1b: excess activity co-activation gain over the block-shift null (gray, 95\%) per period, split into the part removed by scaffold conditioning (orange: off-schedule minutes dropped, not-started, finished and consolidating agent-minutes imputed) and the part that survives (blue). In regime III the median scheduler share is $f=0.72$ (0.83 after the DQ8 all-present trim; with trim and conditioning together only \#44 and \#51 keep a significant excess); in regime I it is $f=0.11$. Unlabelled blocks between the dotted lines are regime II (\#33, \#35) and the split period \#36. Animation: \texttt{H38-platform-stalls/anim.mp4}.}
+\label{fig:H38}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H85-output-scaling-with-n/fig.pdf}
+\caption{Talk output scales sublinearly with swarm size. (a) Agent messages per scheduled hour against active population for 71 non-holdout units, with regime intercepts and a common slope: $\beta=0.33$ [$-0.18$, 0.64] (goal-cluster bootstrap), against the independent-agent reference $\beta=1$ (dashed); within regimes the slope is 0.09 (I) and 0.77 (III). (b) Regime I decomposition of the exponent: each agent adds a clock ($+1$), calls per agent-hour do not change ($-0.02$), the talk share of calls falls ($-0.89$), and messages per talk call are flat, so room talk is nearly fixed ($+0.09$ [$-0.31$, 0.53]); error bars are goal-cluster 95\% intervals.}
+\label{fig:H85}
+\end{figure*}
+\clearpage
+\section*{Goals as fields: quench, remanence, memory}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H54-kickoff-quench-target/fig.pdf}
+\caption{\textbf{Day-1 content lands on its own kickoff text (H54).}
+(a)~Target score of each period's day-1 content centroid (rows) against each of the 33 eligible kickoff texts (columns), bge, regime-whitened, after the genericness correction (a kickoff that resembles every centroid gets no credit); the diagonal is the own kickoff.
+(b)~Rank of the own kickoff among the 33 candidates per period (1 = best). Gray: kickoff-swap null (uniform rank; 90\% band and median). The own kickoff ranks first in 18/33 periods (median percentile 1.0, $p=3\times10^{-6}$); the misses are kickoffs that name no shared target (free weeks \#3, \#16; \#44's half-free week; \#51's private goals).
+(c)~In \#51, where each agent has its own goal text, an agent's content sits closer to its own goal than to a swapped agent's goal in 0.95 of pairs ($p=0.0002$), flat over nine weeks (weekly 0.90--0.96; bars: binomial 90\% CI; dashed: chance).}
+\label{fig:H54}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H97-quench-restoring-force/fig.pdf}
+\caption{\textbf{A goal kickoff is a restoring force: it erases where each agent was, more along the goal than across it, and overshoots on day~1 (H97).}
+(a)~One real kickoff (\#38\,$\rightarrow$\,\#39, bge statement vectors, regime-whitened): agent day means projected on the new kickoff direction $\hat k_{39}$ and on the old-state direction $\hat e_{38}$ (the \#38 last-day centroid orthogonal to $\hat k_{39}$). Gray arrows: an ordinary night inside \#38; orange arrows: the kickoff. The day-1 mean (diamond) lies beyond the settled level of days 2--5 (dashed).
+(b)~Cross-agent memory $\rho$ (disattenuated correlation of agent positions before and after a day boundary) around 18 kickoffs: median and bootstrap 90\% CI (black; thin lines, single kickoffs); gray, the 161 ordinary-night placebo boundaries (dark: IQR, light: 5--95\%). Memory falls from $\rho_0=0.68$ to $\rho=0.42$ at the kickoff only, $\Delta\rho=+0.26\pm0.04$, positive in 16/18.
+(c)~Extra forgetting by subspace (random-effects mean, 90\% CI): along $\hat k$ $0.63\pm0.27$, across $\hat k$ $0.25\pm0.04$, full space $0.26\pm0.04$; the agent-centered day-1 overshoot intercept is $a=+0.12\pm0.02$ (0 under the linear law). Animation: \texttt{H97-quench-restoring-force/anim.mp4}.}
+\label{fig:H97}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H96-goal-switch-hysteresis/fig.pdf}
+\caption{\textbf{A goal switch is a quench: the old state is gone within the first active hour (H96).}
+(a)~Illustration in the shared content plane (\#38\,$\rightarrow$\,\#39, bge): each agent's old-state coordinate $\langle z,\hat e_{38}\rangle$ keeps its level across an ordinary night (gray) and collapses across the kickoff (orange); diamonds, swarm means.
+(b)~H96's field-orthogonal old-state remanence $M(t)/M_{\rm pre}$ against active hours since the kickoff (bge, style-residualized; thin lines, the 23 transitions with $M_{\rm pre}>0$; orange, median and IQR). Gray band: day-1 persistence across an ordinary night (146 pseudo-switches, 10--90\%; dashed, median 0.85).
+(c)~Day-1 persistence $R_1$ per transition (bge filled, gte open; 90\% CIs, clipped at the axis) against the ordinary-night reference by regime (median 0.85 in regime I, 0.89 in regime III). Median $R_1$ is 0.27 (bge) / 0.18 (gte); $\Delta R_1=-0.62\,[-0.78,-0.45]$ / $-0.72\,[-0.88,-0.56]$, below the night reference in 20/23 / 21/24 transitions.}
+\label{fig:H96}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H82-remanence-endogenous-field/fig.pdf}
+\caption{\textbf{The previous goal leaves a day-1 trace that does not decay within five days and is carried by each agent's own past (H82).}
+(a)~Remanence excess $\Delta\gamma_d$ (day-$d$ loading on the previous period's village centroid beyond kickoff, operator, prior and placebo centroids) over 25 goal boundaries, mean and boundary-bootstrap 95\% CI, bge (filled) and gte (open). Gray: the synthetic no-remanence null (S0, 95th percentile). Green: the decaying remanence the hypothesis predicted ($\tau_R=1$ and 5 active days). Day~1 is 0.158 / 0.153, about $3\times$ the null 95th percentile (0.055 / 0.063), and the trace stays near 0.11--0.15 through day~5.
+(b)~Day-1 loadings on the past (P$-$1), future (P$+$1) and placebo centroids: 0.16 / 0.15, 0.08 / 0.06 and 0.00; the asymmetry is partly the slow mode's lag geometry.
+(c)~Post hoc: with the agent's own previous-period content as a regressor, the village-centroid excess drops to $-0.024$ / $-0.060$.}
+\label{fig:H82}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H103-nights-demagnetize/fig.pdf}
+\caption{\textbf{Nights do not demagnetize: kickoff remanence decays with active work, not per night (H103).}
+(a)~Simulation of the two candidate clocks: a night clock (one multiplicative step per night, flat during the day) and an active-hour clock (decay during work, flat over the night); nights drawn short.
+(b)~Kickoff remanence $A_w$ in 30-min windows of goal period \#10 (bge, style-residualized; symbol size, agents in the window) against active hours since the kickoff, with H103's night-clock (green) and active-hour (orange) fits, both with time-of-day terms and equal parameter counts; dotted lines mark nights. The alignment falls inside each day and partly recovers overnight. Across the 22 periods with decay the active-hour clock fits as well or better in 17/22 (bge) and 16/22 (gte); the night clock wins in 5/22 / 3/22 (synthetic clock-selection accuracy 0.82).
+(c)~Night step at fixed active lag $\beta_N$: village random-effects mean over 41 period units, $-0.001\,[-0.023,+0.021]$ (bge) and $-0.002\,[-0.028,+0.024]$ (gte), against H103's synthetic truths (median, 10--90\% of 20 replicates): active-hour clock $\approx0$, night clock $-0.17$, wall clock $-0.22$.}
+\label{fig:H103}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H88-collective-memory-decay/fig.pdf}
+\caption{\textbf{Collective memory of a finished goal period decays fast to a small floor, and newcomers forget at the veterans' pace (H88).}
+(a)~Veterans' attention share to a finished period's coined terms against village days since the period ended, each period normalized by its own fitted share at day~1 (thin gray: per-period exponential-plus-floor fits; black: median over 20 periods in day bins, IQR bars). Curves at the median fitted parameters: exponential plus floor ($\tau=5.5$ village days, floor 1.9\% of the initial share; best model in 8 of 20 periods), biexponential where it won ($\tau_1=2.0$, $\tau_2=48$\,d; 4/20) and a single exponential (5/20).
+(b)~Newcomers' standardized attention relative to veterans' at the same age of the terms (indirect standardization, period-bootstrap 95\% CI): 0.93, 0.64, 0.79 by age band, with no rise ($b=-0.17\,[-0.80,+1.32]$). Dashed gray: equal decay; green: the Candia two-compartment prediction that newcomers carry only the slow component (synthetic, $b=+0.79$; power 0.87--0.92).}
+\label{fig:H88}
+\end{figure*}
+\clearpage
+\section*{Rooms as magnetic domains}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H05-rooms-cut/fig.pdf}
+\caption{Rooms decouple chat only through what agents read (H05). (a)~Schematic of the two-block kinetic Ising picture: room-mates read each other ($J_\mathrm{in}$), and the cut removes the cross-room reads ($J_\mathrm{out}\approx0$). (b)~Within-room minus cross-room excess lagged coupling $\kappa_x$ (over the cross-day surrogate) in the six regime-III two-room windows; gray: room-label null, $\pm1.96$~sd. Talk coupling follows the room in 6/6 windows (Fisher $p=6\times10^{-7}$); activity spins, the actual work, do not ($p=0.17$). (c)~At the 05-11 split (NE42, not held out) the 40 cut pairs lose talk coupling relative to the 51 pairs that stay together (DiD $-0.020$, assignment-permutation $p=0.027$; gray: permutation null, 95\%). Pooled over regime-III pair-days, co-location raises $\kappa_x$ by 0.012 ($z=5.1$); with ledger read counts in the model it drops to 0.001 ($z=0.2$) while reads keep $z=2.1$, and activity spins show no co-location effect. On the holdout, the 03-16 split (NE15) gave a pair DiD of $-0.022$ [$-0.038$, $-0.008$] ($p=0.021$), but the pre-registered verdict is inconclusive.}
+\label{fig:H05}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H100-room-symmetry-breaking/fig.pdf}
+\caption{The \#best/\#rest content split is spontaneous and regenerates at each goal (H100). (a)~Simulation of a two-block soft-spin model: with a room field $h$ the split $\Delta$ points along $h$ at every goal (explicit symmetry breaking); without one it takes a new direction at each goal (spontaneous). (b)~Relabel excess $Q$ of the split-half room separation per period, before and after removing composition and the measured field directions ($Q_\mathrm{spont}$); gray: room-relabel null, 95th percentile. After both removals the rooms still differ beyond random groupings in 5/7 regime-III periods ($Q_\mathrm{spont}$ 1.8--5.7). The two periods with room-specific kickoffs (orange) separate most ($Q$ 6.85, 5.09), but their split lies along the kickoff-text direction only at chance (\#38: 0.18 vs null 0.16). (c)~Shares of the separation: composition 0.03--0.18 where rooms separate significantly, spontaneous 0.58--0.91 (faded: $Q$ not significant; bars: agent-bootstrap 95\% CI of the composition share). (d)~Remanence $R$ of the spontaneous split direction between consecutive periods against the joint-relabel null (gray: mean $\pm2$~sd): all six pairs have $|z|<2$, and across the NE42 merge $R(\#39,\#41)=-0.13$ ($z=-1.6$). bge, style-residualized agent-day vectors. Animation: \texttt{H100-room-symmetry-breaking/anim.mp4}.}
+\label{fig:H100}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H102-room-domain-walls/fig.pdf}
+\caption{Two content domains without a wall: a hopper's talk follows the room it is said in (H102). (a)~Schematic: the coupling model puts a hopper inside the wall ($s\approx\kappa p$, with $p$ its read share from the other room); observed, its home-room talk stays in its own domain. (b)~Bimodality $D$ of the stayers' positions on the inter-room axis per unit; gray: room-relabel null (axis refitted), 95th percentile. Rooms with different work form two domains ($D$ 5.3--6.1 in \#38, \#41, \#44 and 5.5 in \#51g; relabel $p\le0.006$); identical-kickoff weeks split less (median 1.70). (c)~Unit \#51g: wall coordinate $s$ of the \#general stayers' and \#focus residents' statements, the stayers' leave-one-out positions (rug) and the hoppers' mean positions for statements made in \#general (green) and in \#focus (pink). The one frequent hopper, Claude Fable~5, sits at $s=0.06$ in \#general talk, inside the stayers' range (95th percentile 0.21); hoppers' statements made inside \#focus sit at $s$ 0.15--0.51. (d)~Hopper-day $s$ of \#general talk against hopping read-outs (within-hopper): $\kappa_R=-0.014$ [$-0.042$, $0.024$] per e-fold (band: day-bootstrap 95\%), where the synthetic power against $\kappa=0.1$ (dashed) is $\ge0.93$. bge, style-residualized statement vectors. Animation: \texttt{H102-room-domain-walls/anim.mp4}.}
+\label{fig:H102}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H47-room-coherence-length/fig.pdf}
+\caption{Rooms bound content coherence when they do different work, and the boundary follows the channel (H47). (a)~Simulation of agent--agent content correlations in a 5\,+\,10 two-room world: room-specific drives give a block matrix ($C_B\approx0$), one shared task drive does not. (b)~Room contrast $C_B=\rho_c/\rho_w$ (cross-room over within-room per-pair correlation, 30-min windows; bars: day-bootstrap 95\% CI) against the between-room topic separation $F$; gray: room-relabel null medians; dashed: the $C_B\le0.3$ rule, met with $p<0.05$ in 6/9 periods (median 0.23). The sharpest boundaries are the room-specific-kickoff weeks (\#38 0.07, \#44 $-0.04$) and \#41, where identical kickoffs led to split work (0.17); identical-kickoff weeks share about half their fluctuation (median 0.54). The separation axis is post hoc (Spearman $-0.83$, $p=0.014$). (c)~NE42 merge and split: cross-partition over within-partition correlation $r_X$ is 0.57 with two rooms, 1.37 when merged and 0.17 after the split (DiD 1.00 [0.50, 1.34], $p=0.001$); gray: partition-permutation null medians. bge only.}
+\label{fig:H47}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H108-goldstone-room-wandering/fig.pdf}
+\caption{The room content direction persists within a goal period, more so with room-specific kickoffs (H108). (a)~Simulation of the room order-parameter angle over 17 days: free Goldstone diffusion at the identical-kickoff rate ($D_\theta=0.35$ per day) vs an angle pinned by a field ($D_\theta=0.075$ per day). (b)~Measured noise-corrected direction persistence $P(\ell)$ (joint-relabel excess) per period, lags with at least two day pairs; dashed: $e^{-D_\theta\ell}$ for the pooled groups. \#38 (17 days) falls from 0.95 to a plateau of 0.85 at six days, the pinned signature. (c)~Day-to-day persistence $P(1)$ with agent-bootstrap 95\% CIs (which sit low) against the regenerating synthetic world (gray, 10--90\%): $P(1)$ is 0.69--0.95 in 6/8 periods; the fork week (\#35, 0.32) and \#36 lose the direction. Pooled, identical-kickoff periods keep 0.70 [0.56, 0.75] and room-kickoff periods 0.93 [0.82, 0.92]: $R_D=4.7$ [2.1, 5.9] (gte 5.2). The contrast rests on \#38 (without it $R_D=1.4$) and is confounded with split size. bge, style-residualized.}
+\label{fig:H108}
+\end{figure*}
+\clearpage
+\section*{The context window carries the value}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H44-context-wipe/fig.pdf}
+\caption{A forced context wipe costs output and starts a short re-reading phase.
+(a) Schematic: the scaffold wipes the context window at the 41-record cap (40 calls); the agent then re-reads.
+(b)--(d) Measured in G51 (14{,}593 forced wipes), calls aligned to the wipe (vermillion, 95\% agent-day bootstrap band) and to a no-reset boundary at call 21 of a segment (gray band, the null).
+At the first call after a wipe the re-acquisition share rises from 0.22 to 0.47 and relaxes over about 5--7 calls; writes and work commits dip and recover over about 3 calls.
+(e) Work commits over calls $+1\ldots+10$ relative to calls $-20\ldots-11$, per period: pooled $-38\%$ $[-41,-35]$ after forced wipes (H15's ledger estimator: $-39\%$ $[-42,-35]$, 7/9 periods), against a no-reset control that rises because output ramps up through every segment.
+(f) A command loop in the last 10 calls recurs in the next 10 calls far less often after a wipe (G38: 16\% vs 72\%; pooled OR 0.11 $[0.05, 0.26]$, 7 periods; bars are binomial 95\% intervals). Animation: \texttt{H44-context-wipe/anim.mp4}.}
+\label{fig:H44}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H69-restatement-loops/fig.pdf}
+\caption{Restatement loops copy what is still in the context window.
+(a) Schematic: an agent's own statements on the call clock; a wipe removes the older ones from its context.
+(b) Mantel--Haenszel odds that a statement near-copies an earlier own statement in the current context segment rather than one an erasure removed, at matched agent, lag and call distance (green; agent-day bootstrap 95\% intervals; faded periods have fewer than 30 loop episodes). The gray null puts a fake boundary at each segment's midpoint. Pooled over the four scorable periods the enrichment is 3.38 $[2.56, 4.46]$ ($I^2=0$), against 1.11 $[0.98, 1.26]$ at the pseudo-boundary.
+(c) A forced erasure between two statements raises the odds that a loop ends 2.40$\times$ $[1.18, 4.88]$ and lowers the odds that one starts to 0.54$\times$ $[0.34, 0.86]$ (logits with agent effects, agent-day cluster errors; random-effects pools). Animation: \texttt{H69-restatement-loops/anim.mp4}.}
+\label{fig:H69}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H87-kappa-table/fig.pdf}
+\caption{The $\kappa$ table: only the context window buys commits per bit.
+Each row is a channel scored at its natural scramble (NE41 forced erasures, 18{,}760 events vs 19{,}886 pseudo-erasures; the kickoff at new-goal nights, NE34).
+(a) Allocation information $I_c$ (bits about the repo of the next commit, beyond agent identity; the within-agent permutation floor is subtracted). Rows whose lower bound is under 0.02 bits (gray) are not identified.
+(b) Value $\Delta V_c$ in work commits per 20 calls: erasing the context costs 0.41 $[0.36, 0.45]$ (41\% of output); every other row's interval includes 0. Receiving any chat item after an erasure (hollow) adds output without repo bits.
+(c) $\kappa_c=\Delta V_c/I_c$ where both rows are identified: $\kappa_C = 5.2$ $[3.8, 7.9]$, $\kappa_A = -0.6$ $[-1.6, +0.3]$, $P(\kappa_C>\kappa_A)=1.00$; ``n.i.'' = not identified.
+(d) The artifact tells the agent where to work: 89\% of first commits after a forced erasure land in its own repo (87\% after a pseudo-erasure), and re-reading the artifact raises that to 96\% in both arms, so it adds no output beyond its placebo association. Bars: agent-day paired bootstrap 95\% intervals (a--c), binomial intervals (d).}
+\label{fig:H87}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H16-trap-aging/fig.pdf}
+\caption{Idle traps age by themselves, and one directed kick helps.
+(a) Simulation: with one trap depth (Kramers) the escape probability per gate does not depend on the time already spent in the trap; with a broad spread of depths it falls with trap age. A kick that multiplies the escape odds by 1.54 shifts the aging curve up without removing the aging.
+(b) G51 idle gates (22{,}797; a gate is a call after an idle call): share that start a sustained run, by trap age, for gates with a directed read (mention or own nudge, orange) and without (dark), with agent-day bootstrap 95\% bands. The gray band is the null with trap ages shuffled within each agent, which keeps each agent's escape rate and age mix; the steeper fall of the data is within-agent aging.
+(c) Fixed-effect logit slopes on ln(trap age) in the four periods with powered aging, without ($\beta_{a0}$) and with ($\beta_a$) the input-starvation clock, and the input clock itself ($\beta_s$): in G51 $\beta_{a0}=-0.48$ $[-0.54,-0.41]$, $\beta_a=-0.53$ $[-0.59,-0.44]$, $\beta_s=+0.23$ $[+0.11,+0.33]$, so aging is not input starvation (gray band: memoryless). A directed kick at the gate raises the odds of acting 1.5--2.9$\times$ (G51 1.54; H16). Animation: \texttt{H16-trap-aging/anim.mp4}.}
+\label{fig:H16}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H71-memory-homeostat/fig.pdf}
+\caption{Memory size is held by a homeostat on the consolidation clock.
+(a) Memory size of two G51 agents over 90 minutes: append snapshots grow the memory file and each consolidation compresses it (triangles) back toward the agent's set point (dashed: its mean post-compression size in G51).
+(b) G51 post-compression deviation from the agent set point against the previous cycle's deviation (26{,}681 cycles, 15 quantile bins, agent-bootstrap 95\% intervals). The fitted persistence $\phi^+ = 0.81$ $[0.75, 0.88]$ (green) lies between a random walk (slope 1, gray null) and a deadbeat reset (slope 0); the next cycle does not overshoot to the other side.
+(c) $\phi^+$ in all 37 non-holdout period units: the interval excludes 1 in 37/37, pooled 0.67 $[0.63, 0.71]$. Forced and voluntary consolidations give the same $\phi^+$ ($|F-V|<0.15$ in 9/10 regime-III periods). The loop is not first order (AR(2) median $+0.19$): a fast compression tracks a set point that drifts slowly (persistence $\approx 0.82$ per cycle).}
+\label{fig:H71}
+\end{figure*}
+\clearpage
+\section*{Collective order: herding, allocation, culture}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H11-herding-shared-projects/fig.pdf}
+\caption{\textbf{Agents herd onto shared projects, in attention and in work commits (H11).}
+(a)~Curie--Weiss Potts cartoon: projects are wells and agents are balls; $\beta J<0$ spreads agents over projects, $\beta J>0$ piles them into one.
+(b)~Goal period \#31 (free week): agents on the busiest project per 30-min window, from strict artifact mentions (blue) and from agent work commits (red, dashed); gray band, 95\% interval of the circular-shift null N2, which keeps each agent's own persistence; up to 11 agents mention one repo in one window and 9 commit to one.
+(c)~Same-project co-location share minus its N2 mean, per unit from \#30 on (gray bars, null $\pm1.96$\,SD); the excess is about equal in attention and work (\#31: $+0.07$ in both).
+(d)~Coupling beyond agent fields, $z_{N2}$, per period, sorted by artifact ownership; gray band, $|z|<2$. Attention herds ($\beta J_\mathrm{CW}>0$) in 11 of 14 tested weeks whatever the goal mode, with $z_{N2}\ge2$ in 10 of 11 shared-artifact weeks; work herds ($z_{N2}\ge2$) in 4 of 6 testable shared weeks (open square: \#37, too few work blocks). The exceptions are own-artifact weeks (spread by agent fields, not avoidance) and \#35 ($z_{N2}=-2.5$, a shared week against the pattern). Animation: \texttt{H11-herding-shared-projects/anim.mp4}.}
+\label{fig:H11}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H94-maxent-work-allocation/fig.pdf}
+\caption{\textbf{Work is allocated at maximum entropy once activity, repo sizes, ownership and rooms are fixed (H94).}
+(a--c)~Goal period \#41 (shared week): observed agent $\times$ repo work quanta (30-min agent-windows with $\ge1$ work commit), the max-ent table with agent and repo margins only (M1, $D_1=1.85$ bits per quantum left), and the max-ent table that also matches ownership and room totals (M3, 0.56 bits left). (d--f)~The same for private-role unit 51d with ownership (M2: 3.60 $\to$ 0.56 bits). Orange marks are each repo's owner.
+(g)~Ownership price $\lambda_\mathrm{own}$ per testable unit with agent-bootstrap 95\% intervals: median 2.2 nats in shared weeks and 7.8 in own-role units (Mann--Whitney $p=0.0007$); \#40, a hub beside own worlds, sits at 12.9.
+(h)~Share of $I(\mathrm{agent};\mathrm{repo})$ carried by ownership, by rooms, by the run-persistence floor (gray, the null: a max-ent draw that keeps each agent-day's runs) and left as residual beyond it (pink): $\le0.13$ in 23 of 24 units (\#36c 0.23).}
+\label{fig:H94}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H81-culture-slow-mode/fig.pdf}
+\caption{\textbf{Regime-I village content carries a slow collective mode beyond its members and the measured fields (H81).}
+(a)~Top: the model, an Ornstein--Uhlenbeck culture direction with $\tau=25$\,d (simulation). Bottom: who is present in each weekly block of regime~I (May 2025--Feb 2026, real); the carriers turn over almost completely.
+(b)~Cosine similarity of block culture residuals (members' leave-goal-out personal vectors and the goal, kickoff and human-message directions removed) for block pairs in different goal periods, against lag, for two embedding models; gray, 95\% band of the S0 composition null on the real panel (personal vectors plus exchangeable goal and block fields, no memory). Blocks $\le14$\,d apart align ($\bar s=0.17$ / 0.14) and the similarity decays with $\tau_u=28\pm5$ / $23\pm4$\,d (dashed, OU fit).
+(c)~The same using only members absent from the other block (open symbols: $<15$ pairs); this raw turnover-disjoint statistic has little power (S0 band wide).
+(d)~Near-minus-far contrasts against the S0 95th percentile (gray bars, bge upper, gte lower): goal-adjusted 0.237 / 0.208 vs 0.081 / 0.089; overlap-adjusted 0.166 / 0.170 vs 0.100 / 0.099; turnover-disjoint 0.115 / 0.075 (fails, power $\le0.4$) but 0.188 / 0.156 when size-matched ($m=4$; vs 0.078 / 0.054); 0.244 / 0.229 after removing operator directions beyond the centroid (round 2; vs 0.067 / 0.076). The mode is not carried by the long-lived artifact record its members read; an unmeasured calendar-time outside drift is narrowed, not excluded.}
+\label{fig:H81}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H89-price-equation/fig.pdf}
+\caption{\textbf{Village content changes by transmission; selection is not detectable (H89).}
+(a)~The cultural Price split of the day-to-day change of the mean trait (schematic): stayers change (transmission), stayers whose ideas others adopt inside the logged light cone have higher fitness $w$ (selection), and leavers and entrants move the mean (migration).
+(b)~Cross-fitted energy share of transmission in the change of mean content (bge statement vectors) for the 33 eligible periods, with agent-jackknife 95\% intervals; dashes, the second embedding model (gte). Median 0.98 in both models; $\ge0.5$ and the largest term in 33 of 33 periods.
+Lower (b): the small terms, selection (median $|s_\mathrm{Sel}|=0.010$; beyond its fitness-permutation null in 1 of 33 periods, circled, against 1.7 expected by chance), migration (median 0.004; visible only in the largest, most open periods \#38, \#40, \#51), and the part of transmission along the kickoff direction (orange, the exogenous field; median 0.04). The synthetic validation shows that selection in a vector trait cannot be detected at village counts, so its small share is a bound set by the design, not a discovery.
+(c)~Migration share of style (20 text features) against content: style is above content in 21 of 26 periods with any turnover (open circle: 7 periods with no entries or exits).}
+\label{fig:H89}
+\end{figure*}
+\begin{figure*}[p]
+\centering
+\includegraphics[width=\textwidth]{H35-nudger-demon/fig.pdf}
+\caption{\textbf{The auto-nudger is an inefficient Maxwell demon: its bits buy glances, not committed work (H35, with H60).}
+(a)~Goal period \#51 (short-pause scaffold), trap-age state space: work bought beyond a random nudger with the same budget against the state information the policy uses. The logged nudger uses 1.04 bits per nudge and buys $+0.50$ [$-0.09$, 1.16] extra active minutes, $\eta_\mathrm{SU}=0.38$ [$-0.08$, 0.68] of what the frontier $V^*(R)$ gives at the same bits; nudging once at the early re-pauses ($k=2$--3) reaches the frontier's end ($\times2.3$ [1.7, 5.2] work per nudge), nudging only deep traps is worse than random; the shaded region lies above the Donsker--Varadhan ceiling.
+(b)~First-nudge response by trap age (95\% CI; dashed, shrunk) and where the nudges go: 38\% fall on chains $\ge10$ pauses deep, where a nudge buys 0.5 minutes against 2.2--2.6 at $k=1$--9.
+(c)~Efficiency by outcome (round 1b, gray band: random nudging): glances $\eta_\mathrm{SU}=0.88$ [0.26, 0.97]; committed work 0.19 [$-1.39$, 0.70] after placebo differencing (post hoc), with $+0.22$ [$-0.29$, 0.82] commits per hour per nudge.
+(d)~H60, idle gates in \#51: extra active calls in 30\,min per nudge under each policy at the logged budget (cross-fitted, 95\% CI). Random gate choice beats the logged nudger ($\times1.46$ [1.22, 1.67]) and once-early beats it ($\times1.55$ [1.25, 1.81]); a fitted index does not beat once-early ($\times1.08$ [$-0.30$, 3.44]; once per trap $\times1.49$ [0.46, 3.42]).}
+\label{fig:H35}
+\end{figure*}
+\clearpage
+\end{document}
