@@ -197,3 +197,18 @@ Vivian picked these from HH107–HH126 and the leftovers. HH92 was already H08's
 | S77 | Replicator growth order: herding vs division of labor | HH326 | 05, 06 | H78 (launched) |
 | S78 | An artifact-only autocatalytic set | HH327 | 05 | H79 (launched) |
 | S79 | Assembly index vs compression as an agent signature | HH328 | 04 | H80 (launched) |
+| S80 | Culture beyond composition: the emergent slow mode | HH293 | 11, 04, 14 | H81 (launched) |
+| S81 | Remanence: the endogenous part of the mean field | HH290 | 11, 04 | H82 (launched) |
+| S82 | Enculturation of newcomers | HH292 | 11, 13 | H83 (launched) |
+| S83 | History-search outage as a collective-memory scramble | HH294 | 04 | H84 (launched) |
+| S84 | Scaling of outputs with N | HH309 | 14, 02 | H85 (launched) |
+| S85 | Taylor's law as a shared-field gauge | HH310 | 14, 02 | H86 (launched) |
+| S86 | κ table: commits per bit by channel | HH307 | 04, 12 | H87 (launched) |
+| S87 | Collective memory decays biexponentially | HH316 | 13, 04 | H88 (launched) |
+| S88 | Price equation for village culture | HH313 | 13, 05 | H89 (launched) |
+| S89 | Collective entropy production beyond the parts | HH311 | 15, 02 | H90 (launched) |
+| S90 | Eigenvector rotation as a reorganization signal | HH272 | 01, 14 | H91 (launched) |
+| S91 | RMT-cleaned matrices forecast tomorrow's alignment | HH277 | 01, 11 | H92 (launched) |
+| S92 | Project choice as a Brock–Durlauf equilibrium | HH283 | 10, 05 | H93 (launched) |
+| S93 | Work allocation as a max-entropy equilibrium | HH285 | 10, 05 | H94 (launched) |
+| S94 | Speed-limit slack as a kickoff-specificity gauge | HH329 | 15, 11 | H95 (launched) |

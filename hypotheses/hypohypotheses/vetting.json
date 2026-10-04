@@ -8,7 +8,10 @@
    "family": "egregore",
    "q": "Q3",
    "cost": "low",
-   "why": "The cleanest test of whether the village is more than the sum of its members' own vectors. Uses DQ5 vectors only."
+   "why": "The cleanest test of whether the village is more than the sum of its members' own vectors. Uses DQ5 vectors only.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:52:49.447951+00:00",
+   "promoted_to": "H81"
   },
   {
    "id": "HH290",
@@ -16,7 +19,10 @@
    "family": "egregore",
    "q": "Q3",
    "cost": "low",
-   "why": "Day-1 content leaning toward the previous period, beyond kickoff and agent priors. Newcomers tell record vs memory."
+   "why": "Day-1 content leaning toward the previous period, beyond kickoff and agent priors. Newcomers tell record vs memory.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:52:51.320482+00:00",
+   "promoted_to": "H82"
   },
   {
    "id": "HH292",
@@ -24,7 +30,10 @@
    "family": "egregore",
    "q": "Q3",
    "cost": "low",
-   "why": "Do newcomers drift toward a village-specific culture, faster with more veteran reads? Uses every roster join."
+   "why": "Do newcomers drift toward a village-specific culture, faster with more veteran reads? Uses every roster join.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:52:55.607031+00:00",
+   "promoted_to": "H83"
   },
   {
    "id": "HH294",
@@ -32,7 +41,10 @@
    "family": "egregore",
    "q": "Q4",
    "cost": "low",
-   "why": "A dated natural Kolchinsky intervention (03-31/04-01). One event, cheap, a clean positive or a clean zero."
+   "why": "A dated natural Kolchinsky intervention (03-31/04-01). One event, cheap, a clean positive or a clean zero.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:53:01.398823+00:00",
+   "promoted_to": "H84"
   },
   {
    "id": "HH301",
@@ -40,7 +52,9 @@
    "family": "egregore",
    "q": "Q3",
    "cost": "medium",
-   "why": "Tests if repo state recruits agents beyond goal naming and share. H77/H78 show share and naming dominate; this asks what remains."
+   "why": "Tests if repo state recruits agents beyond goal naming and share. H77/H78 show share and naming dominate; this asks what remains.",
+   "decision": "declined",
+   "decided_at": "2026-10-04T19:53:52.584077+00:00"
   },
   {
    "id": "HH296",
@@ -48,7 +62,9 @@
    "family": "egregore",
    "q": "Q3",
    "cost": "medium",
-   "why": "The one formal information test: where does self-prediction peak, agent to village, against size-matched nulls."
+   "why": "The one formal information test: where does self-prediction peak, agent to village, against size-matched nulls.",
+   "decision": "declined",
+   "decided_at": "2026-10-04T19:53:56.606403+00:00"
   },
   {
    "id": "HH309",
@@ -56,7 +72,10 @@
    "family": "quantitative",
    "q": "Q1",
    "cost": "low",
-   "why": "A consistency check of H18's dilution law and a direct test of collective benefit (work ∝ N^>1?)."
+   "why": "A consistency check of H18's dilution law and a direct test of collective benefit (work ∝ N^>1?).",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:53:13.599994+00:00",
+   "promoted_to": "H85"
   },
   {
    "id": "HH310",
@@ -64,7 +83,10 @@
    "family": "quantitative",
    "q": "Q2",
    "cost": "low",
-   "why": "One number per unit for the shared-field share. Becomes a standard column for every hypothesis."
+   "why": "One number per unit for the shared-field share. Becomes a standard column for every hypothesis.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:53:18.437519+00:00",
+   "promoted_to": "H86"
   },
   {
    "id": "HH307",
@@ -72,7 +94,10 @@
    "family": "quantitative",
    "q": "Q4",
    "cost": "medium",
-   "why": "The flagship Kolchinsky number: what each information channel is worth. H70 builds the artifact row now."
+   "why": "The flagship Kolchinsky number: what each information channel is worth. H70 builds the artifact row now.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:54:01.674446+00:00",
+   "promoted_to": "H87"
   },
   {
    "id": "HH316",
@@ -80,7 +105,10 @@
    "family": "quantitative",
    "q": "Q3",
    "cost": "low",
-   "why": "Fast decay carried by veterans, slow decay carried by the record. The slow part is the village's cultural memory."
+   "why": "Fast decay carried by veterans, slow decay carried by the record. The slow part is the village's cultural memory.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:53:42.407416+00:00",
+   "promoted_to": "H88"
   },
   {
    "id": "HH313",
@@ -88,7 +116,10 @@
    "family": "quantitative",
    "q": "Q3",
    "cost": "medium",
-   "why": "Splits culture change into influence, bias and roster turnover. Separates culture from migration."
+   "why": "Splits culture change into influence, bias and roster turnover. Separates culture from migration.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:53:31.751857+00:00",
+   "promoted_to": "H89"
   },
   {
    "id": "HH311",
@@ -96,7 +127,10 @@
    "family": "quantitative",
    "q": "Q6",
    "cost": "medium",
-   "why": "A collective arrow of time that individuals lack. Uses the Aguilera estimator; pairs with H76."
+   "why": "A collective arrow of time that individuals lack. Uses the Aguilera estimator; pairs with H76.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:53:30.570705+00:00",
+   "promoted_to": "H90"
   },
   {
    "id": "HH272",
@@ -104,7 +138,10 @@
    "family": "RMT",
    "q": "Q5",
    "cost": "low",
-   "why": "A spectral alarm for goal and platform changes. A direct rival for H74's detector."
+   "why": "A spectral alarm for goal and platform changes. A direct rival for H74's detector.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:53:21.548755+00:00",
+   "promoted_to": "H91"
   },
   {
    "id": "HH277",
@@ -112,7 +149,10 @@
    "family": "RMT",
    "q": "Q2",
    "cost": "low",
-   "why": "Out-of-sample test that the talk and content modes (H12) carry real structure beyond noise."
+   "why": "Out-of-sample test that the talk and content modes (H12) carry real structure beyond noise.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:53:25.337210+00:00",
+   "promoted_to": "H92"
   },
   {
    "id": "HH283",
@@ -120,7 +160,10 @@
    "family": "econ free energy",
    "q": "Q2",
    "cost": "medium",
-   "why": "Fits utility and social coupling for project choice; predicts multiple equilibria across same-type weeks."
+   "why": "Fits utility and social coupling for project choice; predicts multiple equilibria across same-type weeks.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:53:23.954277+00:00",
+   "promoted_to": "H93"
   },
   {
    "id": "HH285",
@@ -128,7 +171,10 @@
    "family": "econ free energy",
    "q": "Q2",
    "cost": "low",
-   "why": "A principled null for H06/H11 allocations. Deviations measure planning or herding in bits."
+   "why": "A principled null for H06/H11 allocations. Deviations measure planning or herding in bits.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:53:29.362088+00:00",
+   "promoted_to": "H94"
   },
   {
    "id": "HH329",
@@ -136,7 +182,10 @@
    "family": "thermodynamic",
    "q": "Q5",
    "cost": "low",
-   "why": "H75 found named-target kickoffs settle at the speed limit (S ≈ 1). Test S as a one-number gauge of how much a goal constrains allocation."
+   "why": "H75 found named-target kickoffs settle at the speed limit (S ≈ 1). Test S as a one-number gauge of how much a goal constrains allocation.",
+   "decision": "approved",
+   "decided_at": "2026-10-04T19:55:28.305351+00:00",
+   "promoted_to": "H95"
   }
  ]
 }
