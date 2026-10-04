@@ -1,0 +1,14 @@
+{
+  "complete": 40,
+  "faithfulness": 1.0,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Round 1 done: dated predictions and nulls, synthetic validation at village sampling (10 scenarios, two-room and one-room), two pre-data amendments, 10 G folders with dated predictions and verdicts, joint-bootstrap gap tests, scorecard, a post hoc N-scaling check prompted by H25, and a confirmatory script (dry-run reproduces exploration; not run). Missing: holdout run, embedding swap, lagged estimator, cascade sizes.",
+    "faithfulness": "The core claim (content near-critical while activity is subcritical) is refuted at matched resolution: 0/10 units supported, median 30-min gap +0.03, talk at least as high as content, activity far higher in #51. The synthetic shows H01's 0.74 is reproducible by drives alone. The positive half (a real content room excess of about 0.5 that beats a room-permutation null) survives but cannot be separated from unmeasured room drives. Scorecard A1 B1 C1 D0 E0 F1 G1 H0 I0.",
+    "usefulness": "A computable diagnostic and a methods correction. Compare channels only at matched resolution and drive removal. Within-room minus cross-room co-fluctuation tells room-local (content) from village-wide (activity, platform) co-movement. Operator broadcasts do not explain room content. Not a lever, and the 'ideas cascade' alarm it set out to provide turns out not to exist."
+  },
+  "one_line": "No content-vs-activity criticality gap: at matched resolution both have room loop gains of ~0.5; H01's 0.74 is drives plus time-averaging",
+  "rated_by": "H26 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

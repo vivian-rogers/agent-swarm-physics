@@ -1,0 +1,33 @@
+\hwhat{HH108 claimed the swarm's \emph{content} is near-critical (H01: $\beta J_0/n=0.74$) while its \emph{activity} is subcritical (loop gains $\le0.4$). We put content, activity and talk on one estimand, $g=1-1/\mathrm{VR}$, at matched resolution (day means, 30-min windows). Field removal was nested: dedupe, goal and kickoff directions, operator-message directions, and a within-room minus cross-room contrast. We ran 10 regime-III two-room units plus \#35 and \#51. Synthetic worlds at village sampling came first. Drives alone reproduce H01's number: 0.57 from a global drive at the observed cross-room level, 0.74 with more drive types. Real data: content's room excess is genuine (median 0.53 [0.34, 0.66]; room-permutation null beaten in 6/10 units). But activity matches it at 30 min (0.44 vs 0.43) and is larger in \#51. Verdicts: 0 supported, 8 mixed, 2 failed. \textbf{Failed as posed.} Holdout script written, not run.}
+
+\hmodel{Mean-field soft-spin O($n$) / Curie--Weiss (models 11, 01). Spins: an agent's 32-d whitened statement mean (content), or its fraction of active or talking minutes. Within-room coupling $J$; drives: global day and time-of-day, static goal fields, measured operator inputs, unmeasured room drives. $C_{ab}$: cross-agent covariance of drive-removed deviations; $S_a$: split-half signal variance; $\rho_w,\rho_c$: within- and cross-room correlation; $N_r$: room size.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\rho_{w,c}=\frac{\sum_{\rm pairs}\mathrm{tr}\,C_{ab}}{\sum_{\rm pairs}\sqrt{S_aS_b}},\qquad
+\rho_{\rm ex}=\frac{\rho_w-\rho_c}{1-\rho_c}\\
+g=1-\frac{1}{1+(N_r-1)\,\rho_{\rm ex}},\qquad g_{\rm eq}=J,\quad g_{\rm day}\to J(2-J)
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_col.pdf}{Median loop gain over 10 regime-III two-room units, down the field-removal ladder: H01's estimator, then whole-swarm (L0 all), room (L0), drive-projected room (L2), and room excess (L3). Content (blue) falls from 0.74 to 0.53 (day) and 0.43 (30 min). Activity and talk sit above content at every step except day-level activity L3, which is unpowered. At 30 min, activity's excess equals content's. Activity's large raw gain is village-wide co-movement.}
+
+\htelos{Mostly a correction, with one usable diagnostic. The HH108 gap was an artifact: it set a day-mean statistic that includes drives against a 1-min statistic with drives removed. Time-averaging alone turns an equal-time gain of 0.4 into 0.64. Compare channels at the same resolution and with the same drive removal and the gap disappears: ideas do not cascade more easily than effort. The diagnostic is \emph{where} co-movement lives. Content co-moves within rooms (cross-room $\rho_c\approx0.05$). Activity co-moves village-wide ($\rho_c$ 0.5--0.8), so a swarm-wide activity dip is a platform or schedule event. Operator messages explain none of the room content co-movement. Near-critical is too strong for either channel: room loop gains of about 0.5 mean variance about twice the independent level.}
+
+\hbottom{At matched time resolution and drive removal, LLM-swarm content and activity have similar room loop gains ($\approx0.5$); H01's 0.74 is mostly drives plus time-averaging, and the channels differ in \emph{where} they co-move, not how strongly.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.45\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1a drives alone give H01 $\ge0.3$ & 0.57 (global); 0.67--0.74 (more drives) & passed\\
+P1b L3 unbiased, no channel bias & global $-0.01$; content $+0.25$, activity $-0.15$ & partial\\
+P2 L3 content median 0.25--0.5 & 0.53 [0.34, 0.66]; $\ge0.5$ in 6/10 & failed (higher)\\
+P3 content $-$ activity $>0.15$ & day 6/10 (CI $>0$: 1); 30 min 4/10 & failed\\
+P3 content $-$ talk $>0.15$ (30 min) & 2/10; median $-0.09$ & failed\\
+P4 day beyond time-averaging & 0.53 vs map 0.68 & failed\\
+P5 operator inputs explain $\le10\%$ & $-0.16$ to $+0.05$, all units & passed\\
+P6 \#51: content $\ge$ activity & reversed in 4/4 (0.25--0.65 vs 0.92--0.95) & failed\\
+Card rule & 0 supported, 8 mixed, 2 failed & failed (R2)\\
+Post hoc (H25): $\rho_w\propto N_r^{\alpha}$ & content $-1.4$, activity $-0.1$ & lead\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_col.pdf}{Synthetic validation (24 worlds each, $N=14$ in two rooms, 5 days). With zero coupling, H01's P9 (gray) already reads 0.57--0.74 from drives and barely moves with $J$. H26's L3 (green) tracks the realized latent gain (black) under global drives. It reads unmeasured room drives (``+room'') and imperfectly measured operator pulses as coupling.}
+
+\hcaveats{Unmeasured room drives (forks in \#35, instructions in \#38, the override in \#44) read as coupling. Day-level activity is nearly unpowered (3--8 days). Talk's split-half variance is unreliable. The estimator favors content in synthetic worlds, which strengthens the null. One-room units lack a baseline. One embedding model; no cascade sizes (H34). The post hoc size scaling is confounded with \#51.}

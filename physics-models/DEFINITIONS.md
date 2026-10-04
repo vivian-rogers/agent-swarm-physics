@@ -194,3 +194,14 @@ Field references are to the AI Village tables (`data/raw/ai-village/SCHEMA.md`).
 - **Per-pair correlation ρ̄:** (VR − 1)/(N − 1). At fixed ρ̄, g = (N−1)ρ̄ / (1 + (N−1)ρ̄) rises with headcount, so compare swarms of different size on ρ̄, not g. Flat ρ̄ across N is a shared-field signature; flat g is J₀/N coupling.
 - **Platform stall (null-calibrated joint silence):** minutes whose joint silence exceeds a per-day null threshold (deterministic), used as a per-minute mask; catches 98% of planted outage minutes.
 - **Content soft spin (30-min window):** whitened message-embedding window mean per agent, after removing agent-day means and operator-message directions, with a method-of-moments noise correction.
+
+### H34 named variants (2026-10-04; see `hypotheses/H34-idea-cascades/README.md`)
+- **Idea (H34 marker rule):** a hashed marker (no text stored) of one of four classes: U artifacts (from `artifact_mentions`), D numbers with ≥ 3 significant digits, N capitalized runs / code identifiers / hashtags / short quoted phrases, W words of ≥ 6 letters not in the system dictionary; agent, family and lab names dropped. An idea belongs to the period of its first non-holdout use.
+- **Interaction (visible exposure):** a message counts as seen by agent i if it reached i's room before i's call started (H18's rule; see the Known issue on pauses and long tool calls).
+- **Adoption cascade (exposure tree):** each agent's first use of an idea is parented to the latest earlier use it could see; cascade size = number of agents in the tree.
+- **Branching ratio (content):** R̂ = first uses with an agent parent ÷ all agent first uses. **HR₁₀:** the adoption hazard within 10 min after a visible use ÷ the hazard otherwise (exposure locking; robust to a shared field in synthetics). **Contagion share** R_c = R̂ (1 − 1/HR₁₀).
+
+### H26 named variants (2026-10-04; see `hypotheses/H26-content-near-critical/README.md`)
+- **Loop gain (equal-time, room excess):** ρ_ex = (ρ_w − ρ_c)/(1 − ρ_c), with ρ_w and ρ_c the split-half-normalized within-room and cross-room per-pair correlations. Removes village-wide drives (not room-specific ones). Compare channels only at matched time resolution: day means inflate an equal-time gain as g_day = J(2 − J).
+- **Agent state (vector), linear statement mean:** the unnormalized mean of whitened statement vectors per agent and window (the norm keeps how strongly an agent leans, unlike the unit-normalized H01 variant).
+- **Exogenous drive direction:** a content direction imposed from outside the agents (goal text, kickoff, first-hour mean, operator messages) that is projected out before computing alignment.

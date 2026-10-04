@@ -54,6 +54,7 @@ $$\lambda_i(t) = \mu_i(t) + \sum_j \sum_{t_k^j < t} \phi_{ij}(t - t_k^j)$$
 
 ## Pitfalls
 
+- **At N ≤ 25 a fitted cascade exponent does not estimate 3/2** (H34): with a cutoff the fit is biased (0.5–2.9), and the apparent exponent is a monotone function of the branching ratio (ρ = −0.95 with R̂), so it carries no extra information. Activity Hawkes n̂ does not predict idea spread (ρ = 0.06).
 - **Endogenous turn timing fakes attention dilution** (H18): with reactive turn timing and no attention budget, the per-message response rate still falls with the backlog (β̂ ≈ 0.78). Identify dilution from exogenous batch sizes (timer wakes), and count only messages visible in the agent's room.
 
 - **Nonstationarity fakes criticality.** If the true baseline varies (time of day, goal changes) but μ is fitted as constant, the fit attributes the variation to self-excitation and n is pushed toward 1 (Filimonov & Sornette 2015). Model the baseline seriously before believing any n near 1.

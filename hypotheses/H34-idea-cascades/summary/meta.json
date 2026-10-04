@@ -1,0 +1,14 @@
+{
+  "complete": 42,
+  "faithfulness": 2.0,
+  "usefulness": 2.5,
+  "rationale": {
+    "complete": "Round 1 done: pre-registered predictions, synthetic validation (finite-N branching and the full pipeline on real village timelines), 32 per-period verdicts, cross-period tests, a scorecard, and a frozen, dry-run confirmatory script (not run). No natural-experiment test or holdout run yet.",
+    "faithfulness": "The subcritical, exposure-driven branching description holds everywhere (32/32 subcritical; HR10 beats the validated field null in 27/32), so C, D, F, G, H and I are each 1. The literal claim (a power law whose exponent reads criticality, tied to activity loop gains) failed. There is no s^-3/2, tau_app is just R-hat, P4 gave rho = 0.06, tails are heavier than one branching law, and the pre-registered forecast was overconfident. E = 0.",
+    "usefulness": "A computable rule: R-hat from two days of logs gives next-day reach probabilities for new ideas or claims, and the post-hoc version is roughly calibrated (70-84% at 90%). The practical negative results also help: activity gains don't proxy idea spread, and exposure ordering can't separate copying from independent invention in a shared room. The calibration evidence is post hoc and the rule is unconfirmed, hence between a diagnostic (2) and a validated monitor (3)."
+  },
+  "one_line": "Idea cascades are strongly subcritical (R-hat 0.06-0.39, 32/32) and exposure-driven, not s^-3/2; the exponent is just R-hat and activity gains don't predict spread",
+  "rated_by": "H34 agent (suggested)",
+  "updated": "2026-10-04",
+  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)"
+}

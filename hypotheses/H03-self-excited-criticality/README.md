@@ -301,6 +301,7 @@ Verdict count: C 11 failed, 4 mixed; F 2 supported, 5 mixed, 1 failed; I/K/M 11 
    - day windows with gaps.
 
 ## Notes
+- **From H34 (2026-10-04), answering H03-R3:** content (idea) cascades are subcritical too: R̂ 0.06–0.39 in 32/32 periods, exposure-locked (HR₁₀ CI > 1 in 27/32), no s^−3/2. R̂ is unrelated to H03's activity n̂ (ρ 0.06) but tracks H25's content dial (post hoc).
 - 2026-10-03: Card and predictions written before fitting. Holdout masked via `calendar.holdout` and `infra/shared/common.py: holdout_mask`. Every kickoff lands before its day's window opens (checked from `kicks` vs. `calendar`), so the kickoff bump starts at `win_start` of each goal's first day.
 - 2026-10-03: Slow kernels (τ̂ ≥ 30 min) appeared in 2 (TALK) / 3 (ALL) periods, e.g. #33 TALK τ̂ = 2276 s and #37 ALL 17086 s. They are confounded with the baseline, hence the τ ≤ 30 min variant (same verdicts).
 - 2026-10-03: In M3, slow cross components (τ = 3000 s) appear at similar size in agent-shifted surrogates (#30). They are co-modulation, not triggering. Fast components (10–30 s) vanish under shifting (#18: 0.075 → 0.015).
