@@ -4,7 +4,7 @@ Vivian's priority order: (1) postprocessed data quality; (2) re-evaluate every h
 
 | Item | Status | Output |
 | --- | --- | --- |
-| Consolidation into `infra/shared/` (goal fields, behavior states, project states, period units, classified kicks, text features, spectra, copy info, bash_head fix, `build_all.py`) | running | see the consolidation agent's report |
+| Consolidation into `infra/shared/` (goal fields, behavior states, project states, period units, classified kicks, text features, spectra, copy info, turn errors + outages, bash_head fix, `build_all.py`) | **done** (2026-10-04) | 47 MB of new tables; 13/13 tests pass; see `infra/README.md` → Shared pipeline |
 | DQ1 turn-level context ledger (+ `call_windows`, pause-aware visibility: H29) | running | `context_ledger_turns.parquet`, `context_ledger_items.parquet`, `call_windows.parquet` |
 | DQ2 reply threading + stance labels (Jev, cap $8) | running | `reply_pairs.parquet`, `reply_graph.parquet` |
 | DQ3 Jev behavior states v3 + full run (cap $15) | running | `behavior_states_v3.parquet` |
@@ -36,3 +36,11 @@ Starts once the consolidation, DQ1 (context ledger + `call_windows`), DQ5 (embed
 | Behavior states | H14, H16, H17, H39 | Jev v3 behavior states; `bash_head` fix; `error_class`; NE43 (nudger off) |
 | Stance and ground truth | H21, H22, H37 | DQ2 reply labels (correction vs oppose); DQ6 ground-truth labels; calibrated agent-field null |
 | Remaining | H05, H06, H07, H09, H23, H25, H28, H32, H34 | whichever of the above tables they consume (listed in each card's data scheme) |
+
+## After consolidation (2026-10-04)
+- **Shims, deferred until the running agents finish** (switching libraries under a running agent is risky): pure shims for H12 (`spectra`), H07 (`copy_info`), H13 (`text_features`), H38 (`turn_errors`, `outages`), H10 (`goal_fields`), and H14 (`behavior_states`), switching H17's sha256 check at the same time. **Result-changing adoptions go into the re-evaluation wave:** H11 → `project_states` (8.1% of labels change: 111 tie re-picks, 499 renumberings, 52 in/out of "other"; consumers H06, H27, H28, H31); H01 → `goal_fields` (fixes the #38 kickoff swap, also in H20 and H32); H04/H08/H16 → `kicks_classified`; H03/H18/H01/H12/H22/H17 → `period_units`; H09 → `outages.idle_spells`.
+- **H01 #38 room-2/3 kickoff vectors are swapped** in H01's processed files (inherited by H20, H32). The H01 round-2 and H32 agents were told; H20 is rechecked in the re-evaluation wave.
+- **DQ7 is now a single command** once agents finish: `uv run python infra/shared/scan_tables.py --only turns` (stable sort; the bash_head fix), then the chat_core rebuild with clean mentions. Until then use the `actions_bash_head_fixed` sidecar (`bash_head_fixed`, `error_class`, `system_class`).
+- **Further consolidation candidates:** H18 `scheme/build.py` (imported by H28, H29, H31, H34), H05 analysis code (H13, H14, H22), H22 scheme (H37), H15 `h15common` (H33), H09 `idle_runs`, H25 `dial.py`.
+- **Proposed CLAUDE.md conventions, for Vivian to approve:** rebuild shared tables with `build_all.py`; never import code from another hypothesis's folder (move it to `infra/shared/` with a `--verify`, leave a shim); use `period_units.parquet` unless the card justifies another split; use `bash_head_fixed` / `error_class` and `kicks_classified` instead of the raw columns.
+

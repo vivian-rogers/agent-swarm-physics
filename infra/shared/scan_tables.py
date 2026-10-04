@@ -204,6 +204,21 @@ def _usage(am):
 
 
 BASH_HEAD = re.compile(r"^\s*(?:sudo\s+|cd\s+\S+\s*&&\s*|timeout\s+\S+\s+)*([A-Za-z0-9_.\-/]+)")
+_SKIP_LINE = re.compile(r"^\s*(?:#.*)?$")  # blank lines and comment lines (incl. a '#!' shebang)
+
+
+def bash_head(cmd: str | None) -> str | None:
+    """First command word of a bash command, after skipping leading blank and '#' comment lines (fix 2026-10-03:
+    regime-III commands usually open with a '# what this does' comment, so the old first-line match was null for ~87%
+    of them), then optional sudo / 'cd X &&' / 'timeout N' prefixes. Path prefixes are dropped; <= 24 chars."""
+    if not cmd:
+        return None
+    lines = cmd.split("\n")
+    i = 0
+    while i < len(lines) and _SKIP_LINE.match(lines[i]):
+        i += 1
+    m = BASH_HEAD.match("\n".join(lines[i:])) if i < len(lines) else None
+    return m.group(1).split("/")[-1][:24] if m else None
 
 
 def scan_turns():
@@ -215,8 +230,7 @@ def scan_turns():
         t = parse_ts(r["created_at"])
         a = r.get("agent_action") or {}
         if "command" in a and not a.get("action"):
-            act, m = "bash", BASH_HEAD.match(a.get("command") or "")
-            head = (m.group(1).split("/")[-1][:24] if m else None)
+            act, head = "bash", bash_head(a.get("command"))
         else:
             act, head = (a.get("action") or ("none" if not a else "other")), None
         am = r.get("agent_messages")
@@ -228,10 +242,11 @@ def scan_turns():
     df = pl.DataFrame(recs, schema=cols, orient="row").with_columns(
         pl.col("agent").cast(pl.Int8), pl.col("action").cast(pl.Categorical), pl.col("bash_head").cast(pl.Categorical),
         *[pl.col(c).cast(pl.Int32) for c in ("tok_in", "tok_cache_read", "tok_cache_write", "tok_out", "reasoning_chars")]
-    ).sort("t")
+    ).sort("t", maintain_order=True)  # stable: ties keep raw order, so rebuilds are row-identical
     df.write_parquet(OUT / "actions.parquet", compression="zstd")
     write_provenance("scan_tables:turns", ["computer_use_turns", "computer_use_sessions", "agents"],
-                     {"text": "none kept; bash_head = first token of command; tokens from provider usage objects"})
+                     {"text": "none kept; bash_head = first token of command after leading blank/# comment lines "
+                              "(fix 2026-10-03); tokens from provider usage objects"})
     return f"actions {len(df):,} rows in {time.time()-t0:.0f}s"
 
 # ----------------------------------------------------------------------------- memories
