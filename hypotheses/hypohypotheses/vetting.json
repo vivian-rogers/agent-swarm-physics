@@ -186,6 +186,110 @@
    "decision": "approved",
    "decided_at": "2026-10-04T19:55:28.305351+00:00",
    "promoted_to": "H95"
+  },
+  {
+   "id": "HH123",
+   "title": "Goal switches show hysteresis: a coercive field",
+   "family": "magnet",
+   "q": "Q2",
+   "cost": "low",
+   "why": "After a goal change, alignment with the old goal lags by an amount that grows with how ordered the old state was. Gives a coercive field and an inertia time; tells operators whether to clear context at a switch."
+  },
+  {
+   "id": "HH246",
+   "title": "A restoring-force law for the kickoff quench",
+   "family": "magnet",
+   "q": "Q2",
+   "cost": "low",
+   "why": "Each agent's day-1 displacement ∝ its distance from the kickoff target: Δv = χ_i(k̂ − v). An unfitted shape test, and a per-agent susceptibility χ_i to set beside style's agent constant."
+  },
+  {
+   "id": "HH183",
+   "title": "Conflicting kickoff cues quench into two domains",
+   "family": "magnet",
+   "q": "Q2",
+   "cost": "low",
+   "why": "Two-target kickoffs or different room instructions (#38, #44) give bimodal day-1 positions with a domain wall at the room boundary."
+  },
+  {
+   "id": "HH129",
+   "title": "#51 is a random-field system",
+   "family": "magnet",
+   "q": "Q3",
+   "cost": "medium",
+   "why": "The natural successor to the refuted spin glass (H22): private roles are random fields, the room is a weak mean-field pull. Predicts the overlap distribution, and rivals co-moving through shared niches."
+  },
+  {
+   "id": "HH81",
+   "title": "Fluctuations predict relaxation (mean-field Glauber)",
+   "family": "magnet",
+   "q": "Q2",
+   "cost": "low",
+   "why": "βJ₀ from fluctuations should predict how fast responses decay: τ = τ₀/(1 − βJ₀(1−m²)). A fluctuation–relaxation consistency test on the talk and content channels, where coupling is real."
+  },
+  {
+   "id": "HH130",
+   "title": "Goals act on a two-state order parameter",
+   "family": "magnet",
+   "q": "Q2",
+   "cost": "low",
+   "why": "Rescues H10 in Ising form: on the on-goal occupancy p(t), a Legendre tilt does predict variance growth while p < ½. Linear response may hold on the right variable."
+  },
+  {
+   "id": "HH247",
+   "title": "Prompt-held targets persist, chat-held targets decay",
+   "family": "magnet",
+   "q": "Q4",
+   "cost": "low",
+   "why": "Remanence time scales with how often the target re-enters context: the system prompt or memory (#51 private goals, persistent) vs chat (kickoffs, decaying). A field-refresh law."
+  },
+  {
+   "id": "HH66",
+   "title": "#best/#rest: explicit vs spontaneous symmetry breaking",
+   "family": "magnet",
+   "q": "Q2",
+   "cost": "medium",
+   "why": "Separates the response to the operator's room field from spontaneous divergence that persists after members swap rooms (NE19 moves)."
+  },
+  {
+   "id": "HH322",
+   "title": "Pairwise Ising vs full multi-information in co-usage",
+   "family": "magnet",
+   "q": "Q3",
+   "cost": "medium",
+   "why": "Schneidman's test: does a pairwise max-ent model capture the swarm's co-usage (I₂/I_N > 0.9)? A higher-order remainder beyond fields would be collective structure."
+  },
+  {
+   "id": "HH317",
+   "title": "Phenomenological RG of the dialect (Bialek–Meshulam)",
+   "family": "magnet",
+   "q": "Q3",
+   "cost": "medium",
+   "why": "Coarse-grain thousands of term time series. β̃ (free energy of silence) and τ_c scaling separate a field from a non-trivial fixed point."
+  },
+  {
+   "id": "HH330",
+   "title": "Barkhausen avalanches when a field is stepped",
+   "family": "magnet (new)",
+   "q": "Q2",
+   "cost": "low",
+   "why": "Do project switches after kickoffs and human messages come in power-law bursts (random-field Ising crackling, τ ≈ 1.5), with Poisson switching between steps?"
+  },
+  {
+   "id": "HH331",
+   "title": "Nights demagnetize: remanence decays per night",
+   "family": "magnet (new)",
+   "q": "Q4",
+   "cost": "low",
+   "why": "Overnight consolidation acts as AC demagnetization: remanence falls in steps at nights, and the night-count clock beats active hours. Pairs with H82."
+  },
+  {
+   "id": "HH332",
+   "title": "Domain walls between rooms, set by bridging agents",
+   "family": "magnet (new)",
+   "q": "Q1",
+   "cost": "low",
+   "why": "Rooms with different instructions form two content domains. Agents who hop rooms sit in the wall, and its width grows with their reads (H41 bridging)."
   }
  ]
 }

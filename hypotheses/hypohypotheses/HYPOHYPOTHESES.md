@@ -944,3 +944,21 @@ An egregore claim needs a residual after removing all four, and the viability fu
 - **HH329 · Speed-limit slack as a kickoff-specificity gauge.** H75 found that kickoffs naming their target settle at the speed limit (S ≈ 1.0–1.4) while free-choice goals churn (S 5–15). Prediction: across all regime-III kickoffs, S falls monotonically with kickoff specificity, i.e. the fraction of day-1 work on kickoff-named repos (H54). This would make S a one-number gauge of how much a goal statement constrains allocation. *Check:* S and T_e per kickoff vs specificity; size-matched null on agent switch rates. *Kill:* no monotone relation (Spearman |ρ| < 0.3).
   *Models:* 15, 11 · *Builds on:* H75, H54, H48
   *Status (2026-10-04):* approved by Vivian (dashboard) → H95.
+## Magnet-flavoured additions (added 2026-10-04 for the vetting panel)
+These three build on today's results: the kickoff is a field (H54, H75), H82's remanence is running, H22 found rival homophily rather than a spin glass, and rooms cage spread (H41, H05).
+
+- **HH330 · Barkhausen avalanches: switches come in bursts when a field is stepped.** In a disordered ferromagnet a slowly ramped field flips spins in avalanches with power-law sizes; this is crackling noise in the random-field Ising model. Here the field steps are mid-period human messages and kickoffs, and the flips are agents switching project or topic.
+  - *Prediction:* switch bursts after field steps have a heavy-tailed size distribution whose exponent sits near the mean-field random-field Ising value τ ≈ 1.5. Burst size grows with step size. Between steps, switches are Poisson.
+  - *Check:* DQ4 and `project_states` switch times, burst sizes after each step, and a time-shuffled null that keeps the step times.
+  - *Kill:* burst sizes are no heavier than the null, or bursts are as frequent between steps as after them.
+  - *Models:* 01, 10, 14 · *Builds on:* H54, H75, H53, HH129
+- **HH331 · Nights demagnetize: remanence decays per night, not per hour.** Overnight consolidation and erasure act like an AC demagnetization step on the content magnetization.
+  - *Prediction:* alignment with the previous period's centroid, and with a finished kickoff, falls in steps at night boundaries by a roughly fixed factor per night. Active-hour clocks fit worse than the night-count clock.
+  - *Check:* a clock comparison (nights vs active hours vs wall time) on H82's remanence series, plus a placebo on midday breaks of the same length.
+  - *Kill:* active hours fit as well as or better than nights.
+  - *Models:* 11, 15 · *Builds on:* H82, H71, H20
+- **HH332 · Domain walls between rooms: width set by the bridging agents.** In weeks where rooms get different instructions (#38, #44) or work on different things, content forms two domains with a wall at the room boundary. Agents who hop rooms sit inside the wall.
+  - *Prediction:* agent positions along the inter-domain axis are bimodal by room. Hoppers sit at intermediate positions. Wall width (the spread of the hoppers' positions) grows with the number of hopping read-outs (H41 #focus bridging).
+  - *Check:* projection onto the axis between room centroids (DQ5, both models, style-residualized), with hoppers identified from the ledger; compare with a shuffled room assignment.
+  - *Kill:* hoppers are not intermediate, or the positions are not bimodal.
+  - *Models:* 11, 01 · *Builds on:* H05, H41, H47, HH183
