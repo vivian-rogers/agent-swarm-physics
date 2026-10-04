@@ -192,6 +192,14 @@ def physics_models() -> list[dict]:
     return out
 
 
+def constants() -> dict:
+    p = ROOT / "interpretation/swarm-constants.json"
+    try:
+        return json.loads(p.read_text()) if p.exists() else {}
+    except ValueError:
+        return {}
+
+
 def hypothesis(hdir: Path) -> dict:
     card = hdir / "README.md"
     text = card.read_text(errors="replace") if card.exists() else ""
@@ -574,7 +582,7 @@ def state() -> dict:
     hs = cached("hyp", 8, hypotheses)
     out = {
         "generated_at": iso(time.time()), "root": str(ROOT),
-        "hypotheses": hs, "grid": grid(hs), "holdout": holdout(hs), "models": cached("models", 60, physics_models),
+        "hypotheses": hs, "grid": grid(hs), "holdout": holdout(hs), "models": cached("models", 60, physics_models), "constants": cached("constants", 30, constants),
         "agents": cached("agents", 5, agents), "pipelines": cached("pipelines", 30, pipelines),
         "log": cached("log", 10, log_feed), "git": git_state(), "processes": processes(), "budget": budget(),
     }

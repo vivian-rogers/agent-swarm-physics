@@ -192,6 +192,8 @@ td.num { text-align: right; white-space: nowrap; }
     </section>
   </div>
   <div>
+    <section><h2>Measured swarm constants <span class="sub">exploratory · round 1b · not holdout-confirmed</span></h2><table id="consts"></table>
+      <div class="legend small">Each row gives a measured parameter of the swarm, with its uncertainty and source. Hover a row for its meaning. Click to open the source card. File: interpretation/swarm-constants.json.</div></section>
     <section><h2>Agents <span class="sub" id="ag-sub"></span></h2><table id="agents"></table></section>
     <section><h2>Holdout ledger <span class="sub" id="ho-sub"></span></h2><div id="holdout"></div></section>
     <section><h2>Lab notebook <span class="sub">latest LOG.md entries</span></h2><div id="log"></div></section>
@@ -426,6 +428,16 @@ function renderModels() {
   $("#mx").querySelectorAll("tr[data-card]").forEach(r => r.onclick = () => r.dataset.card && openFile(r.dataset.card));
 }
 
+function renderConstants() {
+  const C = S.constants?.constants || []; const MS = Object.fromEntries((S.models || []).map(m => [m.id, m.name]));
+  const card = src => { const id = (src || "").split(/[ ,]/)[0]; const h = S.hypotheses.find(x => x.id === id); return h?.card || ""; };
+  $("#consts").innerHTML = `<thead><tr><th>Symbol</th><th>Quantity</th><th>Value</th><th>Model</th><th>Source</th></tr></thead><tbody>` +
+    C.map(c => `<tr class="click" data-card="${esc(card(c.source))}" data-tip="${esc(c.meaning + "\nScope: " + c.scope + "\nKind: " + c.kind)}">
+      <td class="mono">${esc(c.symbol)}</td><td class="small">${esc(c.name)}</td><td class="mono small">${esc(c.value)}</td>
+      <td class="small muted" data-tip="${esc(MS[c.model] || "")}">${esc(c.model)} ${esc(MSHORT[c.model] || "")}</td><td class="mono small">${esc(c.source)}</td></tr>`).join("") + `</tbody>`;
+  $("#consts").querySelectorAll("tr[data-card]").forEach(r => r.onclick = () => r.dataset.card && openFile(r.dataset.card));
+}
+
 function renderAgents() {
   const ag = S.agents; const n = s => ag.filter(a => a.state === s).length;
   $("#ag-sub").textContent = `${n("running")} running · ${n("stalled")} stalled · ${n("finished")} finished (48 h)`;
@@ -497,7 +509,7 @@ function renderGit() {
 }
 
 function render() {
-  for (const f of [renderFacts, renderHyp, renderGridOrModels, renderAgents, renderHoldout, renderLog, renderPipes, renderStorage, renderProcs, renderGit]) {
+  for (const f of [renderFacts, renderHyp, renderGridOrModels, renderConstants, renderAgents, renderHoldout, renderLog, renderPipes, renderStorage, renderProcs, renderGit]) {
     try { f(); } catch (e) { console.error(f.name, e); }
   }
 }
