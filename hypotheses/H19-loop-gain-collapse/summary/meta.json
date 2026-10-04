@@ -1,0 +1,13 @@
+{
+  "complete": 40,
+  "faithfulness": 1.0,
+  "usefulness": 1.5,
+  "rationale": {
+    "complete": "Round 1 done: assembled table, synthetic validation of the decision rule, per-period verdicts and scorecard, plus an amended frozen confirmatory script; the holdout run needs H03/H04 held-out exports, and H10-H18 estimates are not yet ingested.",
+    "faithfulness": "The primary collapse was refuted outright (opposite-sign slopes, loses to regime, era and size rivals out of sample, C = 0, H = 0); only the secondary unfitted mapping P3 and the no-mode-effect P5 hold.",
+    "usefulness": "Mostly a warning that 'loop gain' is channel-specific and a cross-method conversion; the post hoc messages-per-LLM-step knob could matter for steering but is selected after the fact and unconfirmed."
+  },
+  "one_line": "No common loop-gain curve: activity and talk channels move oppositely; Hawkes-to-Ising mapping holds.",
+  "rated_by": "summary writer (suggested)",
+  "updated": "2026-10-04"
+}

@@ -145,7 +145,8 @@ def period_diagram(h: dict, out: Path):
         if r:
             ax.add_patch(Rectangle((a - 0.5, -0.15 - 0.9 * max(len(nes), 0)), b - a + 1, ymax + 0.15 + 0.9 * max(len(nes), 0) + 0.45,
                                    color=shade.get(r, "#f6f5f2"), lw=0, zorder=0))
-            ax.text((a + b) / 2, ymax + 0.12, f"regime {r}", ha="center", va="bottom", fontsize=6.5, color="#85847e")
+            ax.text((a + b) / 2, ymax + 0.12, f"regime {r}", ha="center", va="bottom", fontsize=6.5, color="#85847e", zorder=5,
+                    bbox=dict(facecolor=shade.get(r, "#f6f5f2"), edgecolor="none", pad=0.6))
     ybot = -0.15 - 0.9 * max(len(nes), 0) - (0.35 if nes else 0)
     for g in range(1, 52):
         if g in held:  # held-out goal periods: hatched full-height columns

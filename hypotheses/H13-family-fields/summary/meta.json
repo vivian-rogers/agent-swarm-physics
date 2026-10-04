@@ -1,0 +1,13 @@
+{
+  "complete": 45,
+  "faithfulness": 2.0,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Round 1 done with synthetic validation (F1-F5), per-unit verdicts, post hoc style diagnostics and a frozen confirmatory script (C1-C6); holdout, embedding swap and family-specific natural experiments are not done.",
+    "faithfulness": "A family field beats the lab-permutation null (C = 1) and is invariant across periods, but the strongest rival (writing style) absorbs it (0/9) and family coupling is absent, so the hypothesis as stated loses to its rivals (H = 0); a clear but partial result.",
+    "usefulness": "Gives a concrete control (style residualization before any embedding-alignment metric) and a null on vendor homophily, but the 'rooms carry coupling' design lesson is H05's and nothing here steers a swarm."
+  },
+  "one_line": "Model families share a stable content field that is writing style; no family homophily; rooms carry coupling.",
+  "rated_by": "summary writer (suggested)",
+  "updated": "2026-10-04"
+}

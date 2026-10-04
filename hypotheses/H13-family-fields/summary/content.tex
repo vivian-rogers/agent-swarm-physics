@@ -1,0 +1,16 @@
+\hwhat{15 counted units (regime II--III goal periods \#35--\#44 and \#51, non-holdout; $N=10$--27 agents, 57k chat statements). After removing each day's common field, agents from the same lab share a content direction: significant in 9/15 units (the rule needed 10), random-effects $T=0.08$ [0.02, 0.14], and stable across periods (family split-half cosine 0.88 vs a 0.76 regrouping null, $p=0.008$). \textbf{But it is writing style:} regressing out 20 style features (length, bullets, punctuation, pronouns) leaves it in 0/9 units (median retention 3\%), and the style features alone identify families in 14/15. No period-specific family stance (3/14). \textbf{No family coupling:} family-block mean-field couplings in talk timing (RE $\Delta=0.002$) and 30-min content co-movement ($-0.002$) are flat. \textbf{Rooms carry the coupling:} room beats lab in 8/10 (talk) and 9/10 (co-movement) two-room units. Newcomers are classified by family field at 4/11 (chance 14\%). Holdout script frozen, not run.}
+
+\hmodel{Model 11 (vector spins) plus models 01/02 in $K$-block mean field. $v_{i,d}$: agent $i$'s mean whitened chat embedding on day $d$; $g_d$: day (goal) field, estimated by the day mean $m_d$; $h_f$: field of lab $f(i)$; $a_i$: agent offset; $x_{i,d}$: fluctuations, coupled through a $K\times K$ family matrix ($K=2$--5 multi-member labs); $\varepsilon$: sampling noise. $H_i$: agent field. $C$: talk-spin or co-movement correlation matrix. $y_{ij}$: a pair outcome; $r(i)$: agent's room.}
+
+\hmath{\vspace{-8pt}\begin{gather*}
+v_{i,d}=g_d+h_{f(i)}+a_i+x_{i,d}+\varepsilon_{i,d},\qquad H_i=\langle v_{i,d}-m_d\rangle_d\\
+T_{\rm field}=\langle\cos(H_i,H_j)\rangle_{f(i)=f(j)}-\langle\cos(H_i,H_j)\rangle_{f(i)\ne f(j)}\\
+J\approx-C^{-1}\ (\text{off-diag.}),\quad J_{ij}=J_{f(i)f(j)},\quad \Delta=J_{\rm in}-J_{\rm out}\\
+y_{ij}=c+b_{\rm lab}[f(i)=f(j)]+b_{\rm room}[r(i)=r(j)]
+\end{gather*}\vspace{-10pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Family-field statistic $T_{\rm field}$ per unit before (blue) and after (orange) regressing out writing-style features; filled = lab-permutation $p<0.05$; ``RE'' = random-effects summary with 95\% CI. The field vanishes under style control. (b) Two-room units: permutation $z$ of the same-lab and same-room pair coefficients. Talk timing and content co-movement follow rooms, not labs; the static content field has a lab term too, which is style.}
+
+\htelos{For anyone mixing vendors in one swarm: models from the same lab sound alike, and that is nearly all there is. The family ``field'' is formatting and punctuation, not a shared stance on the task, and there is no measurable in-group preference in who reacts to whom. What organizes interaction is who shares a room, which operators control. Two practical consequences, both modest. Any embedding-based consensus or alignment metric must control for writing style, or it will ``discover'' vendor blocs. Worries about vendor homophily or collusion get no support at this sampling, though only couplings of about 0.1 or larger are excluded. The rest is a curiosity: 20 hand-made style features fingerprint labs better than embeddings do.}
+
+\hbottom{Model families differ in how they write, not in what they think or whom they follow; rooms, not vendors, set who couples with whom.}

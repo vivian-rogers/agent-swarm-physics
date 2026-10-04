@@ -1,0 +1,13 @@
+{
+  "complete": 40,
+  "faithfulness": 1.5,
+  "usefulness": 2.0,
+  "rationale": {
+    "complete": "Round 1 done with per-period verdicts, synthetic validation and a scorecard; the frozen holdout test (#22, #28, #45) and the drive-vs-coupling kinetic model are not run.",
+    "faithfulness": "The core prediction (sign of J set by goal mode) failed (5/11 signs, D = 0) and no first-order consensus passed; only an effective ferromagnetic coupling beats the nulls (C = 1), and it is not separated from common drive.",
+    "usefulness": "A robust 'herding is the default' finding and a cheap duplicated-work statistic from artifact links, but the 'assign ownership' design rule is post hoc (rho = -0.56, p = 0.04) and unconfirmed."
+  },
+  "one_line": "Agents herd onto shared projects in 11/14 weeks whatever the goal; spread appears only as fixed ownership.",
+  "rated_by": "summary writer (suggested)",
+  "updated": "2026-10-04"
+}
