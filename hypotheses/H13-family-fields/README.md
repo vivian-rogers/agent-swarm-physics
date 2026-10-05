@@ -526,3 +526,33 @@ One folder per goal period (round-1b `Verdict (1b)` lines in each; unchanged); v
 - **C.** Real rows (hop, age, naming, lab pair, blocks); outcomes replaced. Worlds: N0 no pull; N1 equal pull for all lab pairs; N2 family pull Δ = 0.5 J̄; N3 a family-common drive at both hops (no coupling); N4 only named rows couple and naming is more frequent within labs. Required: size ≤ 0.07 in N0, N1, N3, N4 for Δ_J^adj (N4 tests the stratification); power at N2. Talk: the same with Bernoulli outcomes.
 
 **Estimates.** Per-unit rows to `per_period_estimates` (hypothesis H13, round 2): T at each ladder level (bge), J_same, J_cross, Δ_J^adj and Δβ_talk per unit; enculturation statistics per joiner unit. Period READMEs G35–G51 and NE32 get round-2 blocks.
+
+### Synthetic validation (run 2026-10-05 03:40–04:20 UTC, before any round-2 statistic on real data)
+Outputs: `data/processed/H13-family-fields/r2/synthetic_{A,B,C}.json`. Values are means over replicates.
+
+**A (graded ladder; 15 units, 20 replicates per world).** Entries: RE T / share of replicates with RE CI > 0.
+
+| World | L0 | W1 | W2 | **W3** | P3 | S-a | S-a′ | PG |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| S0 style only | 0.034 / 0.60 | 0.011 / 0 | 0.005 / 0 | **−0.004 / 0** | −0.070 / 0 | −0.046 / 0 | 0.005 / 0 | 0.011 / 0 |
+| NL (+ squared style) | 0.032 / 0.40 | 0.012 / 0.10 | 0.004 / 0.10 | **−0.001 / 0** | −0.068 / 0 | −0.043 / 0 | 0.005 / 0.10 | 0.009 / 0.10 |
+| SG (+ speech-act signature) | 0.039 / 0.50 | 0.016 / 0.05 | 0.009 / 0 | **0.002 / 0** | −0.065 / 0 | −0.043 / 0 | 0.007 / 0 | 0.014 / 0 |
+| S1 non-style field, c 0.10 | 0.043 / 0.75 | 0.022 / 0.20 | 0.014 / 0.05 | **0.009 / 0.05** | −0.062 / 0 | −0.036 / 0 | 0.014 / 0.05 | 0.020 / 0.20 |
+| S1, c 0.15 | 0.059 / 1.0 | 0.041 / 0.75 | 0.033 / 0.50 | **0.027 / 0.30** | −0.055 / 0 | −0.027 / 0 | 0.033 / 0.60 | 0.030 / 0.50 |
+| S1, c 0.20 | 0.065 / 1.0 | 0.047 / 0.90 | 0.044 / 0.80 | **0.040 / 0.75** | −0.048 / 0 | −0.019 / 0 | 0.044 / 0.80 | 0.038 / 0.70 |
+| S1, c 0.30 | 0.124 / 1.0 | 0.108 / 1.0 | 0.107 / 1.0 | **0.103 / 1.0** | −0.021 / 0 | 0.019 / 0.20 | 0.106 / 1.0 | 0.088 / 1.0 |
+| S2 style-aligned position, c 0.15 | 0.053 / 0.95 | 0.032 / 0.50 | 0.027 / 0.25 | **0.022 / 0.25** | −0.054 / 0 | −0.028 / 0 | 0.027 / 0.25 | 0.028 / 0.25 |
+
+Readings. (1) W3 holds size (RE CI > 0 in 0/20 replicates in S0, NL and SG; per-unit rate 0.06–0.10). Squared style terms do not leak into W3. (2) **Every pooled map is biased downward under the style-only world** (P3 −0.070, S-a −0.046, P1 −0.030): a pooled map fits agent offsets through the agents' mean features, which makes same-family residuals anti-aligned. Round 1's S-a value is therefore not centred at 0 when the field is style only. (3) The W3 test has power 0.30 at a non-style field of one third of the raw field (W3 ≈ 0.027) and 0.75 at one half (W3 ≈ 0.040). (4) With agent offsets permuted, the within-agent linear style signature alone gives a raw field of 0.034, about 40% of the real raw RE (0.080). (5) The S2 world (family position aligned with family style) is kept by W and removed by P, as designed.
+
+**B (enculturation; 20 joiners, 200 replicates).** J0 neutral: a(1) relabelling p < 0.05 in 0.07; a-slope CI > 0 in 0.035. J0 places a synthetic joiner nearer the room mean than real incumbents (r(1) +0.07), so the r statistic has no generative null. J0c (an exchangeable pseudo-joiner: a real incumbent of another lab in the same room, removed from the incumbent set): r(1) CI < 0 in 0.03, r-slope CI > 0 in 0.025. Power: J1 (half the lab field, from day 1) a(1) 1.0; J2 (converging to the lab) slope 1.0; J3 (room outsider converging) r(1) CI < 0 in 0.87, r-slope CI > 0 in 1.0.
+
+**C (read-out; 8 eligible regime-III units: 38a, 40, 41, 44, 51a–d; 40 replicates).** Pre-registered day blocks with inverse-variance pooling gave false positives in 0.40 of N0 replicates (unit SEs from 3–8 day blocks are too small and noisy). After Amendment C-A1: N0 size 0.075, N1 0.05, N3 (family-common drive) 0.025, N4 (only named rows couple) 0.0 for Δ_J^adj; the unstratified Δ_J is biased in N4 (−0.010). Power at Δ = 0.5 J̄: **0.55**. Pooling hops 1–2, or using all regime-III units, does not raise it (0.15–0.40). The replicate SD of pooled Δ_J^adj is ≈ 0.011, so the 80%-power MDE is ≈ 0.031, about J̄. With a true Δ = 0 the "supported" rule (upper bound < 0.5 J̄) is met in 0.30 of replicates. Talk: T0 size 0.05; T1 (equal couplings) 0.10, a linear-probability bias of 20% of β̄; power at Δβ = 0.5 β̄ 0.90.
+
+### Amendments (2026-10-05 04:22 UTC, after the synthetic validation, before any round-2 statistic on real data)
+- **A-A1 (pooled-map bias).** P-level and PG values are reported next to their S0 reference value. A-P1's clause "each P level ≤ the W level" is dropped as uninformative. A-P4's ρ_PG clause is dropped: S0 gives ρ_PG = 0.32 with no speech-act field. A-P4 is judged on T over agents' mean G vectors alone.
+- **A-A2 (the "only style" reading cannot be reached).** It needs W3 power ≥ 0.8 at one third of the raw field, and the synthetic gives 0.30. A W3 RE CI that includes 0 therefore reads "mostly style; a non-style residual below ≈ half of the raw field is not resolved". The stated exclusion bound is the W3 value with 0.8 power (≈ 0.045).
+- **A-A3 (calibrated location, descriptive, fixed now).** The real RE values of W3, S-a and P3 are placed on the synthetic S0/S1 curves (c grid) to give an implied non-style field size c*. Model-based; no verdict.
+- **B-A1.** No estimator change. The size of the r statistic rests on the J0c world.
+- **C-A1 (blocks and pooling).** 1-h blocks in every unit, and fixed-weight pooling of the units' bootstrap draws (weights n₁n₀/(n₁ + n₀) for content, read items for talk). This replaces day blocks with inverse-variance pooling.
+- **C-A2 (power).** C-P1 keeps its rule, but it is now known to be reachable in only 30% of true-null worlds. The design excludes a family pull that doubles J̄ (Δ ≥ ≈ 0.031) with 80% power, not one of half that size. A C-P1 outcome with CI ∋ 0 and upper bound ≥ 0.5 J̄ reads "inconclusive at 0.5 J̄; Δ ≥ J̄ excluded" if the upper bound is < J̄.
