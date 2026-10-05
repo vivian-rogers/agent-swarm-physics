@@ -185,6 +185,62 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - **H74-R4. Provider API changes as natural experiments.** The six dated format changes are candidates for family-targeted DiD (H56-R2's sign synchrony).
 - **H74-R5. Holdout.** Run `confirm.py` after sign-off.
 
+## Round 2 (2026-10-05)
+*Scope: redirects H74-R1 (precision monitor, calibrated on non-reserved placebo days only), H74-R3 (heavy-tailed baselines), H74-R2 (presence/retirement rule for formats) and H74-R4 (provider API changes as family-targeted DiD). H74-R5 (reserved data) is not run. Exploratory data only (`holdout_mask`); no `confirm.py` run.*
+
+### Pre-registration (written 2026-10-05 03:50 UTC, before any round-2 statistic on real data)
+**Disclosure.** I have read the round-1 results above and H36's round-2 results: the frozen topic rule C3 (alarm if R1 ≥ 3 or Z_cont ≥ 2) hits 0.55–0.64 of kickoffs at window FAR 0.02–0.07; the intraday rule fires in the first 30 min on 82–85% of kickoffs at a 7–9% placebo day-start rate; within-agent daily action mixes are overdispersed ~28× over multinomial; gte's Z_cont FAR is seed-fragile. Design facts computed for this plan (no detector score): the non-reserved placebo pool at ≥ 2 active days from every catalogued event has 82 days in 22 goal periods (34 days in 6 periods at round 1's ≥ 3 rule); search answers exist on 162 days from 2025-09-19; NE39 (07-01) is day index 39, so it has a full baseline. `natural-experiments.md` already says the Gemini bullet marker is present on 55/61 days before 04-17 and in 0/68 answers from 04-20. **NE40 is therefore a recovery test of the presence rule, not a discovery.** The prospective parts are the false-alarm rates, the other undocumented events and the class hit rates.
+
+**Common evaluation.**
+- Days: the 282 non-reserved active days; catalog: round 1's `events.parquet` (217 events; undocumented class scored separately, as round 1).
+- **Placebo pool P2** (primary): days with a baseline (index ≥ 10), not a return from a reserved gap, and ≥ 2 active days from every catalogued event (82 days). A day ≥ 2 days from every event cannot be inside any event's hit window, so an alarm on it is a false alarm by the hit definition. Round 1's ≥ 3 pool (34 days) is reported for comparison, with window FARs.
+- **Leave-one-period-out (LOPO) calibration.** For each goal period g and channel k, the threshold θ_k(g) is the conformal quantile of channel k's scores on the P2 days of all *other* periods: the ⌈(1 − α)(n + 1)⌉-th smallest of the n training scores, with α = 0.02 (if that rank exceeds n, the channel is off in that fold). Alarm on day d of period g if score_k(d) > θ_k(g). Every reported FAR is out-of-sample: each placebo day is judged by thresholds that never saw its period. With n ≈ 60–81 training days the rank equals n, so the rule is "above every training placebo day of the other periods"; its expected per-day FAR is ≈ 1/(n + 1) ≈ 0.013–0.016 per channel.
+- Hit = an alarm on day −1, 0 or +1 (active-day offsets), as round 1. Classes: scaffold_tool (23), scaffold_prompt (17), scaffold_family (9), drive = operator ∪ operator_schedule (7), goal (35), goal_prompt (5), roster (27), room (6), undocumented (6). Random-date null per class: 2,000 draws of same-regime eligible days. AUCs are not the target here; hit at a fixed FAR is.
+
+**R1: precision monitor (S + D counters + C).**
+- **S:** round 1's schema diff (shared `schema_diff_daily` z_S = 4 × new + retired signatures), LOPO-calibrated (round 1 had 0 placebo alarms, so I expect θ_S = 0: alarm at ≥ 1 platform-wide signature change).
+- **D counters:** n_bookends, n_nudges, n_human, documented_hours, window_min, js_share (start time, start spread and n_present are dropped: they fired on roster changes and gave round 1's largest unexplained alarm). Each feature is scored by R3's primary baseline (below); channel score D = max over the six; LOPO-calibrated.
+- **C (topic):** H36's frozen C3 per-day score (bge-small, restate dedupe; `fmax(R1 − 1, Z_cont)`, alarm at ≥ 2; read as data from `data/processed/H36-reorganization-alarm/r2/rob_bge_restate/scores.parquet`). C3 is used **frozen** (its thresholds were set by H36 before this round), so its FAR is out-of-sample by construction; a LOPO-recalibrated C3 score is reported as secondary. Seed spread: the monitor is recomputed with each of H36's stored bge seed variants (base + s1…s8 = 9 surrogate seeds) and the range is reported. Intraday rule (max r1w over windows 0–1 of the day, H36 `intraday_bge`) is a secondary C channel, LOPO-calibrated.
+- **Monitor alarm** = S ∪ D ∪ C.
+- Predictions [credence]:
+  - **P1a** per-channel OOS per-day FAR on P2 ≤ 0.03 for S, D and C [0.7]; union FAR ≤ 0.06 [0.55].
+  - **P1b** hit rates: goal 0.45–0.70 [0.6]; scaffold_tool 0.20–0.40 [0.6]; scaffold_prompt ≤ 0.25 [0.7]; drive ≥ 0.5 [0.5]; room ≥ 0.5 [0.5]; roster ≤ 0.40 [0.6]; undocumented ≥ 3/6 [0.5].
+  - **P1c** random-date p < 0.05 for goal and drive [0.5]; scaffold_tool p < 0.10 [0.4].
+  - **P1d** vs round 1's fused alarm: per-day FAR falls from 0.18 to ≤ 0.06, and the scaffold_tool hit falls from 0.78 to ≤ 0.40, because most round-1 hits were chance at 30% alarm days [0.6].
+  - **P1e** rival R1 (topic alone, frozen C3): the monitor adds ≥ 0.15 hit on the pooled platform + drive + undocumented events (scaffold_tool, scaffold_family, drive, undocumented) at a union FAR cost ≤ +0.04 [0.6].
+- **Kill rule.** The monitor is **operator-grade** if the union OOS per-day FAR ≤ 0.05 (Wilson upper ≤ 0.12), goal hit ≥ 0.45, drive hit ≥ 0.5 and scaffold_tool hit ≥ 0.20 with random-date p < 0.10. **Failed** if the union FAR > 0.10 or goal hit < 0.40. Mixed otherwise.
+
+**R3: heavy-tailed baselines.**
+- Transforms: log1p for counts (bookends, nudges, human messages) and log for minutes (window_min); documented_hours and js_share raw.
+- Scores per feature:
+  - **G** (round 1): raw value, Gaussian trailing z, B = 10, round-1 floors.
+  - **L**: transformed value, Gaussian trailing z, B = 10 (floor 0.1 on log scales).
+  - **Q (primary)**: transformed value, empirical-quantile exceedance over the previous B = 30 scored days (≥ 10 needed): e = (x − Q50)/(Q90 − Q50) above the median and (Q50 − x)/(Q50 − Q10) below it; denominators floored at 0.1 on log scales, 0.5 h for documented_hours and 0.01 for js_share. Score = |e|.
+- Readouts: per-day exceedance on P2 at the nominal thresholds (G, L: |z| ≥ 4; Q: |e| ≥ 4); the LOPO-calibrated thresholds; NE39's n_human score and whether it alarms at the calibrated D threshold.
+- Synthetic (100 worlds on the real skeleton): the real 282-day sequence (index, period, regime, reserved gaps); each D feature follows a level path with steps at the real documented changes, and day noise drawn by block bootstrap (blocks of 5) from the feature's real residuals on non-event days (residual = transformed value − rolling median of 9), which keeps the real tails. Planted on 12 random non-event days per world: bookends 2 → 0, nudges → 0, human messages × 0.03, window length × 0.75, js_share + 0.3. LOPO calibration on the synthetic values of the real P2 days.
+  - **P3.0** G at |z| ≥ 4 has per-day FAR ≥ 0.04 on synthetic P2 (the round-1 failure reproduces) [0.6]; Q with LOPO thresholds has OOS FAR ≤ 0.03 [0.7]; planted-step hit ≥ 0.8 for the three count steps and ≥ 0.5 for the window and silence steps [0.6]. If Q's count-step hit is < 0.6, a real miss is uninformative.
+  - **P3.1** NE39: Q alarms on n_human within day −1..+1 of 07-01 at the calibrated D threshold [0.75]; G does not (as round 1) [0.8].
+  - **P3.2** real P2 exceedance at nominal thresholds: G ≥ 0.05, Q ≤ 0.04 [0.5]; the calibrated Q threshold is ≤ 10 [0.5].
+  - **P3.3** NE43a and NE43b alarm under Q in the D channel at calibrated thresholds [0.7].
+- **Kill rule.** R3 succeeds if NE39 alarms at a D-channel OOS per-day FAR ≤ 0.03. Failed if NE39 does not alarm under Q or L at the calibrated threshold.
+- Secondary (descriptive): channels M and O rescored with Q baselines (log features as they are; shares via logit), LOPO-calibrated; do they add hits to the monitor at ≤ +0.01 union FAR?
+
+**R2: presence/retirement rule for format markers.**
+- Markers (per search answer, from `search_format.parquet`): presence (count > 0) of h1, h2, h3, bold, each bullet style (`*` with 3 spaces, `*`, `-`, `•`, numbered), em dash, en dash, non-ASCII, and each opening-phrase class (4 classes). A day is scored if it has ≥ 3 answers.
+- **Retirement alarm** on day d for marker m: m was present on ≥ 8 of the previous 10 scored days, m is absent from every answer on d, and the binomial probability of zero answers with m, given the pooled baseline share s over those 10 days and today's n answers, is ≤ 0.01. Only the first day of an absence counts. Channel score P = number of markers retiring on d; alarm at P ≥ 1 (fixed in advance; the LOPO threshold is reported).
+- Secondary: an **appearance alarm** (m present on ≤ 2 of the previous 10 scored days, present today in ≥ 3 answers from ≥ 2 agents).
+- Synthetic (100 worlds): the real search-day skeleton (real answers per day and agents), 12 markers with baseline shares 0.05–0.9, day-level beta-binomial overdispersion set to the real day-to-day dispersion of presence shares; 6 planted retirements (share → 0) and 6 nuisance halvings per world. **P2.0** retirement hit ≥ 0.8 within ±1 day, per-day FAR ≤ 0.02, halvings alarm ≤ 0.1 [0.6].
+- **P2.1** NE40: a retirement alarm within day −1..+1 of 04-20 [0.85; a recovery]. **P2.2** the 03-31 near-empty-answer outage alarms [0.7]. **P2.3** OOS per-day FAR on P2 search days ≤ 0.03 [0.5]; ≤ 10 retirement alarm days in all 162 search days [0.5]. **P2.4** NE45 (a tool-schema change, not an answer change) does not alarm [0.6].
+- **Kill rule.** Failed if NE40 is not alarmed or the P2 FAR > 0.05.
+
+**R4: provider API response changes as family-targeted DiD.**
+- Events (round 1's S finds): 2025-12-19 Google, 2026-02-09 Anthropic, 2026-04-01 Anthropic (adjacent to the 03-31 search outage; disclosed confound), 2026-05-06 Google, 2026-07-13 OpenAI.
+- Outcomes per agent-day (`agent_day_features`): log_out, log_turnaround, infra_err_share, rec_per_call, cache_share (cache_share is accounting-sensitive: a shift there is a measurement change, not behavior).
+- Estimator: DiD = [mean over target-family agents of (post − pre)] − [same over other agents], pre = 5 active days before day 0, post = days 0…+4; agents need ≥ 3 days on each side; no reserved gap inside the window. Null: the same DiD for the same target family at every eligible non-event day of the same regime; two-sided p = rank of |DiD|. Holm over 5 events × 5 outcomes.
+- **P4.1** at most 1 of the 25 tests survives Holm [0.7]: response-envelope changes are format changes, not behavior changes. **P4.2** if one survives, it is cache_share or infra_err_share (accounting or errors), not log_out or rec_per_call [0.6].
+
+**Impostors in round 2.** Scheduler field: D tracks the schedule as a target; Monday placebo FAR is reported. Exogenous field: goal changes are their own class, and the C channel is H36's rule. Shared priors: within-agent baselines (M), family-targeted DiD with other families as control (R4). Convergence: n/a (no influence claim). No coupling claim, so the partition-contrast rule does not apply.
+
 ## Notes
 - 2026-10-04 19:25 UTC: card written before any detector score (see disclosure).
 - ~19:40–20:25: synthetic study (3 passes; generator drift bug and floor design fixed; Amendment 1).
