@@ -271,6 +271,36 @@ Estimator: agent-FE logit of sustained escape on B + A + C (+ F in regime III); 
 ### Nulls and validation plan (before any real-data round-2 statistic)
 `analysis/synthetic_r2.py` on the real G51 and G38 primary skeletons. Outcomes simulated **sequentially within traps** (stop at the first escape, censor at the real trap end; H16). Agent intercepts SD 0.5. Worlds: **W0** null; **W1** intrinsic aging (−0.6 per ln k); **W2** urn (+1.0 × ln(1 − f_call), logit form); **W3** chatter hold (−0.25 per ln(1 + U5)); **W4** starvation (−0.4 per ln s_dir); **W5** per-trap frailty (SD 1.5, nothing conditional); **W6** mixture (W1 −0.3 + W2 + W3); **W7** W3 + a mention-cancel interaction (+0.25). Read: bias and size of β_C (W0, W1, W2, W4, W5), power at −0.25 (W3), the ε of each mechanism in each world (W1 band for RC-P4), the CV classifier's hit rate (the planted mechanism has the largest ε), and the interaction's power (W7). Per-period power for R1 at β_C = −0.25 on every replication skeleton (W3, 40 runs). Pass: size ≤ 0.10, power ≥ 0.8; otherwise the statistic is read as descriptive (dated amendment).
 
+### Round-2 synthetic validation (run 2026-10-05 ~04:05–04:15 UTC, before any round-2 outcome statistic)
+`analysis/synthetic_r2.py`; outputs `r2/synthetic/{main,power}.json`. G51: 30 runs per world; G38: 60. Rejection rates are Wald tests at 5%; ε values are means [2.5–97.5% of runs].
+
+| Statistic | Null / rival worlds (size) | Planted world (power) | Notes |
+| --- | --- | --- | --- |
+| β_C in B + A + C | W0 0.07; W1a 0.07; W1c 0.13; **W5 frailty 0.03**; **W2 urn −0.05 (0.53)**; **W4 starvation +0.04 (0.30, positive)** | W3 −0.247 (truth −0.25): 1.00 | the urn and starvation leak into β_C when F and S are left out |
+| β_C in B + S + C + F + A | W2 0.00 (0.00); W4 0.00 (0.03); W0, W1, W5 ≤ 0.10 | W3 1.00; W6 −0.25: 1.00 | the full model removes both leaks |
+| β_C at first wakes (k = 1), full model | ≤ 0.07 in every world (W2 0.00, W4 0.07, W5 0.07) | W3 −0.248: 1.00 | in B + A + C the urn and starvation leak as above (0.47, 0.27) |
+| β_C with agent + day FE, full model | ≤ 0.13 (W1c 0.13; others ≤ 0.10) | W3 1.00 | — |
+| interaction U5 × directed read, full model | ≤ 0.10 | W7 +0.26 (truth +0.25): 1.00 | — |
+| slope on ln λ_u (rate) | ≤ 0.07 | W3 −0.21 | recovers the dose slope on the rate scale |
+| ε(F) in proxy worlds (no urn) | W1a 0.04 [−0.03, 0.12]; W1b 0.08 [0.00, 0.17]; W1c 0.06 [−0.01, 0.13]; **W5 frailty 0.11 [0.04, 0.22]** | W6 (urn + chatter + k aging): 0.73 [0.62, 0.84] | a proxy alone makes ε(F) ≤ 0.22 |
+| ε(C) | W1 0.05–0.07; W5 0.07 | W6 0.54 [0.45, 0.65] | — |
+| ε(S) | ≤ 0.02 | W4 1.27 [0.74, 1.78] | — |
+| largest ε picks the planted mechanism | W1a: C 0.60 / F 0.40 (both ≈ 0.05) | W2 F 0.90; W3 C 0.87; W4 S 1.00; W6 F 1.00 | — |
+| ε(F) − ε(C) CI above 0 | W1a 0.10; W1b 0.07; W5 0.07 | W6: **0.63** | not powered at 0.8 |
+| ε(F) − ε(S) CI above 0 | W1 0.07–0.50 (ε small) | W6 1.00 | — |
+| ε when the clocks carry no information (W0, W2, W3) | unstable (G(A) ≈ 0) | — | read ε only when G(A) > 0 with CI above 0 |
+| β_C power per period at −0.25 | size 0.00–0.13 | **G51 1.00**; G18 0.43; G38 0.33; G04 0.28; every other period ≤ 0.23 | only G51 is powered for R1 |
+| G38 reconcile | CV gains: 95% range ≈ 10 nats per 1,000 wakes | W1b G(A) CI above 0 in 0.93; W3 G(C) 0.10; W4 G(S) 0.80 | G38 is not powered for the reconcile |
+
+A pure chatter world (W3) also produces apparent wake-index aging (b_k −0.15, rejection 0.50), because the dose grows with k: chatter *can* make aging, and ε(C) measures how much it does.
+
+### Round-2 amendments (2026-10-05 ~04:15 UTC, after the synthetic validation, before any round-2 outcome statistic)
+- **R2-A1 · R1-P1 is scored on the full model** B + S + C + F + A (B + S + C + A in regime I). In B + A + C, an urn world fakes β_C −0.05 (rejection 0.53) and a starvation world fakes +0.04 (0.30); the full model removes both. B + A + C is reported; R1-P2 compares the two. R1-P3 (k = 1) and R1-P5 (interaction) also use the full model.
+- **R2-A2 · Only G51 is powered for R1** (1.00 at −0.25; every other period ≤ 0.43). Other periods' R1 verdicts are descriptive unless the CI excludes 0. R1-P7 is read as "β_C CI above 0 in no period".
+- **R2-A3 · ε is read only when G(A) > 0 with CI above 0.** The reconcile is read in G51 only; G38 and the 4-h regime-III periods are descriptive (power < 0.8). Transfer scores are descriptive.
+- **R2-A4 · RC-P4's band is 0.22**, the largest 97.5th percentile of ε(F) across the proxy worlds W1a, W1b, W1c and W5 (frailty).
+- **R2-A5 · RC-P2's F-versus-C difference is not powered** (0.63 in W6): a CI including 0 is inconclusive, not failed. F versus S is powered (1.00).
+
 ## Notes
 - 2026-10-04: round 1 started. The gate table is a new shared builder (`infra/shared/idle_gates.py`) because H60 needs the same table; registration in `build_all.py` is proposed in the report, not made (other agents are editing shared files).
 - 2026-10-04: round 1 done. Compute: local, ≤ 4 threads until the coordinator's load notice, then ≤ 2 threads and one job at a time; ≈ 25 min CPU in total. Disk: `data/processed/H72-trap-aging-input-starvation/` ≈ 3 MB; shared `idle_gates/` ≈ 3 MB.
