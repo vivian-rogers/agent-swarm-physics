@@ -245,3 +245,125 @@ The overview counts 34 replication folders as one estimator applied 34 times; th
 - **H57-R1.** Verbatim reuse of read markers (artifacts, numbers, names) exceeds the unread baseline at matched lag, and the excess per read item is independent of backlog.
 - **H57-R2.** Contemporaneous convergence (unread near-copies within 15 s) is a swarm-level order parameter: it is highest in template-heavy regime-I weeks and predicts H12's dimensional collapse better than echo does.
 - **H57-R3.** A lag-resolved chance model (continuous q(lag) fitted on mutually invisible and cross-room pairs) replaces DQ5's 2-h cross_echo flag as the shared copying instrument.
+
+## Round 2 (2026-10-05): read-marker reuse vs backlog, a lag-resolved chance model, convergence as an order parameter
+*Items H57-R1, R3 and R2. Predictions, nulls and kill rules written 2026-10-05 04:47 UTC, before any round-2 statistic on real data. Reserved data are masked with `holdout_mask` and `calendar.holdout` in every script (the round-1 skeleton already excludes them). Round-1 code and outputs are unchanged. Round-2 code is in new files (`scheme/build_r2.py`, `analysis/r2_*.py`); outputs go to `data/processed/H57-copy-under-backlog/r2/`.*
+
+**Seen before writing:** everything on this card; the round-2 sections of H41, H34, H08 and H54; H12's card and its per-day PRday tables (`r1b/dq5/prday_*.parquet`, values already published in H12); the number of rooms per non-reserved period (multi-room: #35–#42, #44, #51; every regime-I period has one room); H34's marker table schema (classes U artifact, D number, N name, W rare word). No round-2 pair, rate or contrast had been computed.
+
+### Common design
+- **Statements B:** the round-1 skeleton (`skeleton/G<NN>_S.parquet`): agent chat messages matched to their talk call, Claude Code excluded as author, 35 non-reserved periods.
+- **Pairs (B, A):** A is another agent's chat message on the same PT day with 0 < t_B − t_A ≤ 2 h, any room, non-reserved. Classes, from the context ledger:
+  - *read:* B's author received A at a call no later than B's talk call, with no computer-use context reset in between;
+  - *in flight:* same room, posted at or after B's call start (t_A ≥ t_call(B)), so B could not read it;
+  - *unread, same room:* same room, posted before t_call(B), never received by B's author (absent, joined later, or omitted);
+  - *cross-room:* another room, never received by B's author;
+  - *read, erased* (a reset between receipt and B's call): excluded.
+- **Outcomes per pair:**
+  - *rare-marker reuse* by class c ∈ {U artifacts, D numbers, N names}: B and A share at least one class-c marker that is not common in the period (round-1 rule: ≥ 2% of the period's agent messages, or ≥ 3 agents on its first day). It is defined on pairs where both messages hold ≥ 1 rare class-c marker. *Any-class* = U ∪ D ∪ N.
+  - *embedding near-copy:* raw cosine ≥ 0.95 (bge), ≥ 0.938 (gte), and both.
+- **Strata (all contrasts):**
+  - period;
+  - lag bin [0, 15), [15, 30), [30, 60), [60, 120), [120, 300) s;
+  - before-message age (time since B's author's previous chat message that day): < 60 s, 60–300 s, 300–1800 s, ≥ 1800 s or none (H54 r2);
+  - received-message density (other agents' same-room messages in the 300 s before B): 0–1, 2–3, 4–7, 8+ (H08 r2);
+  - marker-count bins of B and of A for the rare class-c markers: 1, 2–3, 4+. For the embedding outcomes, within-period length terciles of B and A are used instead.
+
+  The marker-count and length strata are the call-length guard (H41 r2): at a matched lag, in-flight pairs come from long calls and read pairs from short ones, and long calls write long messages.
+- **Pooling and errors:** pooled numbers are Mantel–Haenszel (MH) combinations over these strata, with period always a stratum (exception (d) in `CLAUDE.md`: per-period ratios on ≤ 5 events mislead). They are reported next to per-regime and per-period values. CIs: 95% percentile bootstrap over 1-h blocks of t_B within PT days (Poisson multiplier weights), 200 draws (100 in synthetic runs).
+
+### R1. Verbatim reuse of read markers vs backlog
+**Estimators.**
+- **D_MH:** the MH risk difference of rare-marker reuse, read − in flight, with weights w = n_r·n_u / (n_r + n_u). **RR_MH:** the MH risk ratio.
+- **Excess per read item by backlog:** D_j in the k bins {1}, {2–3}, {4–7}, {8–15}, {16+} (k = |R(B)|, round-1 definition), each with the same strata. The read and in-flight pairs of one bin share k.
+  - Fit D_j = θ·(k̄_j / 4)^b by weighted least squares (weights 1/var_j from the bootstrap; k̄_j = mean k of the bin's read pairs). This gives **b, the backlog exponent of the per-item excess.** The bootstrap refits b in each draw.
+  - Reference values: b = 0 means a constant per-item excess (H57-R1 as written). b ≈ −0.45 is H18's per-sender dilution transferred to copying. b = −1 means a constant per-statement copy probability. b > 0 means copying under load (the original H57).
+- *Scope:* the excess is identified only at lags < 300 s, where in-flight pairs exist. These are the newest items of the read set. Older items need R3's model (secondary).
+
+**Synthetic validation first** (real skeletons and real pair tables of #20 (regime I), #38 (regime III, two rooms) and #51 unit 51c; synthetic markers with classes in the real proportions and synthetic two-model embeddings; 4 seeds per world and skeleton):
+- *Z0:* topic field only (room topics drift in 10-min bins). No copying, no convergence.
+- *Zc:* pure convergence. With probability p_conv = 0.05, a message adopts its room's current 30-s "moment" (markers and vector). A village-wide moment, shared across rooms, has one third of that probability. No copying.
+- *ZL:* call-length world. A message's marker count and its topic adherence rise with its call latency (talk depends on call length). No copying, no convergence.
+- *Zk(b):* per-item copying. Each read item a is copied with probability θ·(k/4)^b·exp(−lag_a / 600 s), keeping 80% of its markers, at most one copy per statement. b ∈ {−1, −0.45, 0, +0.35}, with Zc convergence and the ZL length effect on. θ is set so that the any-class read/in-flight risk ratio is about 2 at lags < 300 s.
+- *Pass:*
+  - D_MH lower CI > 0 in ≤ 10% of Z0, Zc and ZL runs (size), and in ≥ 80% of Zk(0) runs (power);
+  - b's CI excludes 0 in ≤ 10% of Zk(0) runs;
+  - b upper CI < 0 in ≥ 80% of Zk(−0.45) runs, and b lower CI > 0 in ≥ 80% of Zk(+0.35) runs;
+  - median b̂ within ±0.2 of the truth in every Zk world.
+
+**Predictions.**
+- **P-R1a (excess exists):** pooled D_MH > 0 with lower CI > 0 for names (N), for numbers (D) and for any-class, and RR_MH > 1. Prior 0.8 (H41 r2: regime-III read-out jumps J_mh,D 3.2, J_mh,N 4.8).
+- **P-R1b (the copy channel is verbatim, not semantic):** RR_MH for any-class markers exceeds RR_MH for bge and for gte near-copies. The embedding RR_MH CI includes 1 or lies below it, because embedding near-copies at a matched lag are convergence-dominated (round 1; H34 r2). Prior 0.55.
+- **P-R1c (backlog exponent):** b < 0 with upper CI < 0, and point estimate in [−0.9, −0.1] (dilution). Prior 0.5.
+- **P-R1d (regimes):** D_MH (any-class) lower CI > 0 in each regime with ≥ 1,000 read pairs. Prior 0.6.
+
+**Kill rules.**
+- (i) Size > 0.10 in Z0, Zc or ZL: D_MH is not interpretable, and P-R1a and P-R1d are not scored.
+- (ii) D_MH CI includes 0 or lies below it, with Zk(0) power ≥ 0.8: "verbatim reuse of read markers does not exceed the unread baseline at matched lag and before-message age".
+- (iii) Backlog exponent b:
+  - CI includes 0 with Zk(−0.45) power ≥ 0.8: "the per-item excess does not depend on backlog" (H57-R1 as written stands);
+  - upper CI < 0: dilution (H57-R1 as written fails; H18 transfers to copying);
+  - lower CI > 0: copying under load (the original H57 revives, for verbatim reuse);
+  - power < 0.8: inconclusive.
+
+### R3. A lag-resolved chance model q(lag)
+**Model.** It is fitted on unread pairs only (in flight ∪ unread same room ∪ cross-room), separately for the embedding near-copy (per model) and any-class marker reuse:
+
+logit q = s(ln lag) + δ·same_room + α_period + γ_B·ln n_B + γ_A·ln n_A,
+
+where s is a natural cubic spline with knots at ln(10, 30, 120, 600, 3600 s), and n is the message length (embeddings) or the rare-marker count (markers).
+- Multi-room periods (#35–#42, #44, #51): one fit per regime (II, III), using all lags up to 2 h.
+- Single-room periods (all of regime I, and regime II before #35): s is fitted on in-flight pairs only. q is not identified beyond the longest in-flight lag there; this is stated, not extrapolated.
+
+**Uses.**
+- *Model excess* of a statement: (number of read items it near-copies) − Σ q(lag_a) over its read items within 2 h. This is linear, so it stays valid when chance near-copies are correlated (round-1 lesson).
+- *Candidate shared flag:* `echo_excess` replaces DQ5's `cross_echo` (any room, 2-h window, no reading).
+
+**Validation.**
+- *V1, lag invariance of the room offset:* in multi-room periods, δ is fitted separately for lags < 60 s and 60–900 s. Pass if |δ_short − δ_long| < 0.5 log-odds and the interaction CI includes 0. If V1 fails, same-room chance at long lags is not identified.
+- *V2, calibration, cross-fitted by day:* fit on the other days and predict the held-back day's unread pairs. Pass if observed/predicted lies in [0.75, 1.33] in ≥ 8 of 10 lag deciles and the calibration slope lies in [0.8, 1.25], in ≥ 2/3 of eligible periods (≥ 30 unread near-copy events).
+- *V3, synthetic:* in Zc and ZL the model excess over read pairs has lower CI > 0 in ≤ 10% of runs. In Zk(0) the estimated excess count lies within 0.8–1.2× the planted copies in ≥ 80% of runs (multi-room skeleton #38 for long lags).
+- *V4, replacement audit (real):* among statements that DQ5-style `cross_echo` flags (bge, any room, 2 h; recomputed on these pairs), the share whose near partners are all unread, and the share Σ q predicts.
+
+**Predictions.**
+- **P-R3a (shape):** unread near-copy rate falls with lag: q(10 s)/q(1 h) ≥ 5 (bge, regimes II–III), and q(10 s)/q(120 s) ≥ 2 in single-room periods. Prior 0.75.
+- **P-R3b:** V1 passes. Prior 0.4.
+- **P-R3c:** V2 passes. Prior 0.6.
+- **P-R3d:** in multi-room periods, ≥ 50% of DQ5 `cross_echo` (bge) flags have no read near partner. Prior 0.5.
+
+**Adoption rule and kill rule.**
+- q(lag) is recommended as the shared copying instrument only if V1, V2 and V3 pass.
+- Otherwise the recommendation is the R1 design (read vs in flight at matched lag and before-message age), plus a "read partner" restriction of `cross_echo`.
+- V3 size > 0.10: R3 is not validated.
+
+### R2. Contemporaneous convergence as an order parameter
+**Observables.**
+- **C15:** per-pair near-copy rate (bge primary; gte and both reported) among same-room in-flight pairs at lag < 15 s. Pairs whose near-copy is explained by a read item that both messages near-copy (siblings, round-1 rule) are excluded.
+  - *Period value:* the pooled rate with its block-bootstrap CI, for periods with ≥ 300 such pairs.
+  - *Day value:* the beta-binomial empirical-Bayes rate, shrunk to the regime mean (method of moments).
+- **E (echo):** the share of statements that near-copy a read item within 2 h (round-1 `er`, bge). The crude comparator is the DQ5 `cross_echo` share.
+- **T (template share):** the DQ5 `templated_bge` share of statements per period.
+- **Dimensional collapse:** H12's agent-balanced PRday (r1b `prday_bge`; `prday_gte` as a check). Low PRday = collapse.
+- **Reference predictor:** the DQ5 `self_repeat_bge` share (H12 r1b: Spearman −0.75 with PRday on regime-III days).
+
+**Predictions.**
+- **P-R2a (where convergence lives):** two parts. Prior 0.45.
+  - Across eligible periods, Spearman ρ(C15, T) > 0.4 in both models.
+  - Regime-I template-heavy periods (regime I, T above the regime-I median) have higher C15 than the other eligible periods (one-sided Mann–Whitney p < 0.05).
+- **P-R2b (C15 beats echo):** test by leave-one-period-out prediction of day-level PRday with the model PRday ~ regime + x, for x ∈ {C15_day, E_day, cross_echo_day, self_repeat_day}. The C15 model has a lower out-of-period mean squared error than the echo model. The paired period-bootstrap 95% CI of ΔMSE (echo − C15) excludes 0. Prior 0.3.
+- **P-R2c (reference):** the self-repetition model beats both. Prior 0.8.
+
+**Synthetic check.**
+- In Zc at p_conv ∈ {0.02, 0.05, 0.10}, C15 rises monotonically with p_conv on every skeleton.
+- In ZL, and in Zk(0) without convergence, C15 stays within 25% of its Z0 value (the sibling exclusion works).
+- Otherwise C15 is not an order parameter, and P-R2a and P-R2b are not scored.
+
+**Kill rules.**
+- ΔMSE CI includes 0 or favours echo: "convergence does not predict dimensional collapse better than echo".
+- The C15 model does no better than the regime-only model: "C15 carries no PRday information".
+
+**Impostors (round 2).**
+- *Scheduler field:* pairs are within a room-day, and the strata hold lag, before-message age and density.
+- *Exogenous field:* common markers are dropped. A shared stimulus raises in-flight and read pairs alike, so the contrast removes it. T and C15 separate templates from convergence.
+- *Shared priors:* the same agents appear on both sides. A cross-family check splits D_MH by same-lab vs cross-lab pairs (descriptive).
+- *Convergence:* this is the object. Read vs in flight at matched lag and before-message age, siblings excluded.
