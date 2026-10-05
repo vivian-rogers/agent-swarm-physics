@@ -1,13 +1,13 @@
 {
- "complete": 45,
- "faithfulness": 2.5,
+ "complete": 60,
+ "faithfulness": 3.0,
  "usefulness": 2.5,
  "rationale": {
-  "complete": "Round 1 done: card and dated predictions before data; synthetic validation on real call grids (4 units x 5 worlds x 10 reps) with a dated pre-data amendment (hour blocks); replication on 66 units / 35 periods with variants (trim, exogenous, decision-time, heterogeneous radius, quiet recipients), shift null and comparison with H25/H42/H50; 3 natives with dated predictions; confirm.py frozen, guarded and dry-run. Missing: holdout run, regime-I clock, multi-hop correction.",
-  "faithfulness": "The read-out linear-response model is identified (synthetic bias <= 3%, null size 7.5-10%) and makes unfitted predictions that pass (subcritical, address gating x19, per-read dilution with N, rank agreement with H42 rho 0.55). The HH's own signature (lagged > equal-time) fails, the unnamed part is at the placebo's resolution, and H50's estimator disagrees by a factor 2. Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I0.",
-  "usefulness": "A calibrated, field-free loop-gain gauge computable from call logs, with a clear operator message: the equal-time dial overstates coupling, naming carries it, and the village is far from talk runaway at any size seen. A monitor, not a lever."
+  "complete": "Rounds 1 and 2 done. Round 2 (R3, R4, R1): dated pre-registration and pre-data amendment; synthetic validation of every estimator on real call grids (R4 failed and is labelled descriptive); the R3 ladder of 11 rungs on identical pairs; the R1 chat clock with a call-skeleton null (post hoc); estimates rows; period READMEs. Missing: reserved-data run (R2), the pair-sampling term, a valid multi-hop design.",
+  "faithfulness": "The read-out gain is identified (synthetic bias <= 5%). It passes an unfitted cross-check against an independent fluctuation statistic: g_lag 0.127 vs the Fano-implied 0.149 [0.123, 0.175] (H111 data). The H50 disagreement is located: pair-RD design in regime III, call-class composition in regime I. H50's estimator fails synthetic recovery. The HH's own signature still fails, and the multi-hop gain is not resolved. Scorecard r2 A1 B1 C1 D2 E1 F2 G1 H2 I0.",
+  "usefulness": "A calibrated, field-free loop-gain gauge computable from call logs, with an independent fluctuation check. The operator message: the equal-time dial and pair-RD jumps overstate coupling, naming carries it, regime-I talk follows the schedule, and the village is far from talk runaway. A monitor, not a lever."
  },
- "one_line": "Read-out talk coupling is subcritical (g_lag ~0.13 in regime III, ~0 elsewhere), carried by named messages; the equal-time dial overstates it (lagged > equal-time in only 7/35 periods).",
+ "one_line": "Read-out talk coupling is subcritical (g_lag 0.13 in regime III, matching the Fano-implied 0.149 [0.123, 0.175]; ~0 in regime I on either clock); H50's 2x larger value is an estimator artifact.",
  "models": [
   {
    "model": "01-inverse-ising",
@@ -19,7 +19,7 @@
    "model": "09-hawkes",
    "role": "secondary",
    "outcome": "supported",
-   "note": "Branching-ratio reading; ranks like H42's read-out Hawkes"
+   "note": "Branching-ratio reading; ranks like H42; matches the Fano sum-rule total gain (H111)"
   },
   {
    "model": "02-nonequilibrium-ising",
@@ -28,8 +28,8 @@
    "note": "Read-out-gated kinetic update and in-flight placebo"
   }
  ],
- "rated_by": "H67 agent (suggested)",
- "updated": "2026-10-04",
+ "rated_by": "H67 agent (suggested, round 2)",
+ "updated": "2026-10-05",
  "v2": {
   "claim": "The read-out loop gain of talk (extra messages one message causes through reading at hop 1) is subcritical in 66/66 units: regime III median 0.13, regime I 0.005; named messages carry ×19 the per-read jump of unnamed ones",
   "scope": "66 units, 35 periods; natives NE14, NE42, G51",

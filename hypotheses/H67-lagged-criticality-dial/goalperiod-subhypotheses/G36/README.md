@@ -23,3 +23,16 @@ Data: `data/processed/H67-lagged-criticality-dial/results/units.parquet`, `perio
 
 ## Scorecard (period-specific axes)
 C: J₁* against the in-flight placebo and the shift null (above). H: g_lag vs the equal-time dial and H42's world-B n_x (above).
+
+## Round 2 (2026-10-05)
+
+### R3 ladder and R4 multi-hop gain
+*Descriptive (card, Round 2). Period pools (random effects).* H50's pair RD re-implemented (L1) 0.186 [-0.041, 0.413] → with call-class cells (L4W) 0.089 [-0.166, 0.344] → call counts with cells (L8) 0.065 [-0.042, 0.173] → H67 main (L9) 0.065 [-0.039, 0.170]. R4 (synthetic S-R4 failed, descriptive only): G₁ -0.089 [-0.159, -0.019], G₃ -0.222 [-0.526, 0.083], G₅ -0.130 [-0.709, 0.448].
+
+| Unit | L1 (H50) | L4W (cells) | L8 (counts) | L9 (H67) | G₃ | G₅ [95%] |
+| --- | --- | --- | --- | --- | --- | --- |
+| 36a | -0.096 | -0.124 | -0.066 | -0.060 | -0.500 | -0.786 [-1.774, 0.362] |
+| 36b | 0.257 | 0.080 | 0.095 | 0.094 | -0.168 | 0.183 [-0.644, 0.989] |
+| 36c | 0.343 | 0.309 | 0.154 | 0.151 | -0.026 | -0.166 [-1.116, 1.136] |
+
+Data: `data/processed/H67-lagged-criticality-dial/round2/units.parquet`, `periods.parquet`.
