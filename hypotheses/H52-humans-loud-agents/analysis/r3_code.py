@@ -168,10 +168,16 @@ def receiving_call(mid, a):
     return tu["t_call"].min() if tu.height else None
 
 
+def pass2_units(file="r3_codes_pass1.csv"):
+    """Units coded in pass 2: every addressed human directive and every conflicting agent directive."""
+    c1 = pl.read_csv(HYP / file).filter((pl.col("directive") == 1) & (pl.col("broadcast") == 0) & (pl.col("target") >= 0))
+    return c1.filter((pl.col("cls") == "human") | (pl.col("conflict") == 1))
+
+
 def sheet2(file, start, n):
     cc = chat_frame()
     nm, _ = names()
-    c1 = pl.read_csv(HYP / file).filter(pl.col("directive") == 1).slice(start, n)
+    c1 = pass2_units(file).slice(start, n)
     cmd = pl.read_parquet(SH / "artifact_commands_text.parquet", columns=["t", "agent", "act", "cmd", "out_urls"])
     wc = pl.read_parquet(SH / "work_commits.parquet", columns=["repo", "t", "author_agent", "author_kind", "automated", "canonical",
                                                                 "imported", "holdout"]).filter(
@@ -185,18 +191,18 @@ def sheet2(file, start, n):
             t0 = tm
         t1 = t0 + dt.timedelta(hours=3)
         print(f"\n=== unit {r['unit']} | {mid} -> {a}:{nm.get(a)} | received {t0:%Y-%m-%d %H:%M} UTC")
-        print("INSTRUCTION:", clip(texts([mid]).get(mid), 900))
+        print("INSTRUCTION:", clip(texts([mid]).get(mid), 450))
         after = cc.filter((pl.col("agent") == a) & (pl.col("t") >= t0) & (pl.col("t") <= t1)).sort("t")
         tx = texts(after["message_id"].to_list())
-        for x in after.head(12).iter_rows(named=True):
-            print(f"   chat +{int((x['t'] - t0).total_seconds() // 60)} min: {clip(tx.get(x['message_id']), 350)}")
-        if after.height > 12:
-            print(f"   ... {after.height - 12} more chat messages")
+        for x in after.head(8).iter_rows(named=True):
+            print(f"   chat +{int((x['t'] - t0).total_seconds() // 60)} min: {clip(tx.get(x['message_id']), 240)}")
+        if after.height > 8:
+            print(f"   ... {after.height - 8} more chat messages")
         cm = cmd.filter((pl.col("agent") == a) & (pl.col("t") >= t0) & (pl.col("t") <= t1)).sort("t")
-        for x in cm.head(15).iter_rows(named=True):
-            print(f"   cmd +{int((x['t'] - t0).total_seconds() // 60)} min [{x['act']}]: {clip(x['cmd'], 160)}")
-        if cm.height > 15:
-            print(f"   ... {cm.height - 15} more commands")
+        for x in cm.head(10).iter_rows(named=True):
+            print(f"   cmd +{int((x['t'] - t0).total_seconds() // 60)} min [{x['act']}]: {clip(x['cmd'], 120)}")
+        if cm.height > 10:
+            print(f"   ... {cm.height - 10} more commands")
         w = wc.filter((pl.col("author_agent") == a) & (pl.col("t") >= t0) & (pl.col("t") <= t1))
         wb = wc.filter((pl.col("author_agent") == a) & (pl.col("t") >= t0 - dt.timedelta(hours=3)) & (pl.col("t") < t0))
         print(f"   commits 3h after: {w.height} {sorted(set(w['repo'].cast(pl.Utf8).to_list()))[:6]} | 3h before: {wb.height} "
