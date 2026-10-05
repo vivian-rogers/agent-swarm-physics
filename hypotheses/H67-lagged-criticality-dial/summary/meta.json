@@ -35,16 +35,16 @@
   "scope": "66 units in 35 periods; regime III 25 units; regime I 36 units on the chat clock",
   "direction": "positive",
   "original_verdict": "failed (lagged > equal-time)",
-  "credence": 0.86,
+  "credence": 0.87,
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.75,
+  "value_if_true": 2.62,
   "decision": "monitor: report g_lag (or the Fano ratio) as distance to runaway talk; a push grows at most ×1.3",
   "magnitude": "small",
   "generality": "read-out-gated LLM swarms",
-  "expected_usefulness": 2.36,
-  "scientific_value": 3.5,
-  "rater": "coordinator (round 2); independent blind rater pending",
+  "expected_usefulness": 2.28,
+  "scientific_value": 3.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.02, ΔV 0.25 (no adjudication needed)",
   "rated_at": "2026-10-05",
   "round": 2,
   "raters": [
@@ -86,6 +86,53 @@
       "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "In regime III the read-out talk loop gain is subcritical and small, g_lag 0.13 (pool 0.127, 25 units), agreeing with the Fano-implied total gain 0.149 [0.123, 0.175]; H50's twice-larger value comes from its pair-RD design (regime III) and call-class composition (regime I); on the chat clock regime I has no read-out gain (-0.022 [-0.052, 0.009]; attenuation-corrected < 0.04).",
+    "credence": 0.88,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 4,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (round-1 P1 estimator fixed after A1 before real data; R3 ladder and R1 pre-registered; failed R3-P2/R1-P1 keep base by rule 3)",
+      "x": "p0=0.40",
+      "evidence": "card Round 2 pre-registration / provenance"
+     },
+     {
+      "factor": "calibrated null: round-1 synthetic on real call grids (null 7.5%, burst 10% after hour blocks; recovery -1% to -3%)",
+      "x": 2,
+      "evidence": "card Amendment A1; axis F"
+     },
+     {
+      "factor": "identified: round-2 synthetic separates the estimators (L9 recovers within 5%, L1 +35-43% and +0.05 with no coupling; R1 chat-clock estimator passes, attenuation measured)",
+      "x": 1.5,
+      "evidence": "card Amendment B"
+     },
+     {
+      "factor": "replication: regime-III g_lag > 0 at 95% in 7/8 periods (25 units)",
+      "x": 2,
+      "evidence": "card axis I; results table"
+     },
+     {
+      "factor": "partly robust: trimming, exogenous controls, decision-time matching, heterogeneous spectral radius; Fano agreement uses H111's fluctuations on the same data (robustness, not replication); post hoc quiet-recipient subset -34%",
+      "x": 1.5,
+      "evidence": "card axis B; R3 'which scale is right'"
+     },
+     {
+      "factor": "intervention partly consistent: NE42 merged room removes read-out coupling (0.016 -> 0.000 -> 0.023)",
+      "x": 1.5,
+      "evidence": "card axis E; NE42"
+     },
+     {
+      "factor": "penalty: shift-null size 13.6% (anti-conservative per unit); regime-I negative depends on a 0.23x attenuation correction; the factor-2 location was not the predicted rung",
+      "x": 0.8,
+      "evidence": "card axis C; S-R1d; R3-P2 failed"
+     }
+    ],
+    "notes": "Strong internal consistency; the regime-I negative is a bound that leans on a synthetic attenuation factor, and the post hoc quiet-recipient subset suggests part of 0.13 may be turn-taking structure."
    }
   ]
  },

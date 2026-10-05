@@ -30,16 +30,16 @@
   "scope": "regime III, 23 units; 24 non-reserved goal switches",
   "direction": "positive",
   "original_verdict": "refuted (conservation)",
-  "credence": 0.81,
+  "credence": 0.79,
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3.0,
+  "value_if_true": 3.25,
   "decision": "attribution and model-swap monitoring: use style + function-word rates, compare at matched context position",
   "magnitude": "material",
   "generality": "any LLM swarm",
-  "expected_usefulness": 2.43,
-  "scientific_value": 3,
-  "rater": "coordinator (round 2); independent blind rater pending",
+  "expected_usefulness": 2.57,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.04, ΔV 0.50 (no adjudication needed)",
   "rated_at": "2026-10-05",
   "round": 2,
   "raters": [
@@ -81,6 +81,48 @@
       "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "An agent's style is a stable identity charge plus a context-held offset that a forced erasure redraws: across exogenous erasures style moves (T 0.546 [0.522, 0.564] after genre and context-position control) while content does not (0.51 in bge and gte), and style plus function words identify agents across goal switches at 0.85 (content 0.51, chance 0.15).",
+    "credence": 0.77,
+    "value_if_true": 3.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (R1-P1 and R3-P3 fixed before data; R2-A5 scaling before real data; round-1 P2 falsifier is what happened, rule 3)",
+      "x": "p0=0.40",
+      "evidence": "card Round 2 pre-registration / provenance"
+     },
+     {
+      "factor": "intervention + calibrated placebo, one design: cap-timed forced erasures vs within-context pairs at matched gap, sized on synthetic schedules (null T 0.500 after scaling)",
+      "x": 2,
+      "evidence": "card R1-P1; Round-2 synthetic; axis E 1->2"
+     },
+     {
+      "factor": "replication: erasure style shift in 18/23 units across #36-#51; fingerprint at 24/24 goal switches above content",
+      "x": 2,
+      "evidence": "card axis I; R3-P3"
+     },
+     {
+      "factor": "robust: content flat in both embedding models; genre, genre+position, genre-matched strata and scaled/unscaled estimators agree; round 1 -> round 2 sign kept (0.564 -> 0.547)",
+      "x": 2,
+      "evidence": "card R1-P1 row; Results 2"
+     },
+     {
+      "factor": "penalty: the 'redraws an offset' wording leans on the post hoc reset-and-hold reading, and fw+style 0.85 is a reported combination, not a pre-set criterion",
+      "x": 0.8,
+      "evidence": "card Results 3-4; claim exclusions"
+     },
+     {
+      "factor": "penalty: the erasure effect is weak in #44 and #51 (0.46-0.58) and the round-1 dry run of C3 failed on late #51; style features are partly topic-adjacent",
+      "x": 0.8,
+      "evidence": "card Results 5; Confirmatory predictions; Caveats"
+     }
+    ],
+    "notes": "Ambiguity: the claim line includes 'a context-held offset that a forced erasure redraws', which is the post hoc reset-and-hold shape the card excludes; I scored only the measured erasure shift and the fingerprint. The confirmatory erasure test is at risk in #51-like periods."
    }
   ]
  },

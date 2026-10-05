@@ -37,15 +37,15 @@
   "direction": "positive",
   "original_verdict": "mixed (no thrash)",
   "credence": 0.85,
-  "mechanism_level": "M2",
+  "mechanism_level": "M1",
   "fragile": false,
   "value_if_true": 3.5,
   "decision": "context-cap length: halving the cap costs 12% of output per call; a reset does not pay as a loop breaker",
   "magnitude": "material",
   "generality": "capped-context LLM scaffolds",
   "expected_usefulness": 2.98,
-  "scientific_value": 3,
-  "rater": "coordinator (round 2); independent blind rater pending",
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.00, ΔV 0.00 (no adjudication needed)",
   "rated_at": "2026-10-05",
   "round": 2,
   "raters": [
@@ -92,6 +92,58 @@
       "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "In regime III (9 non-reserved periods) a forced context wipe triggers a one-call re-reading spike with an ~8-call tail (Theta_c +0.106 [0.089, 0.122] on blind-checked labels, 9/9), a write dip of -20% to -32% depending on the pre-reset reference, and a 20-call cap would give 12% less output per call than the 40-call cap (Y(20)/Y(40) 0.88 [0.85, 0.91]).",
+    "credence": 0.85,
+    "value_if_true": 3.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (Theta_c P1/P-R1b, P-R2a, P-R2b, P-R2d fixed before data; A3-A6 amendments before real data)",
+      "x": "p0=0.40",
+      "evidence": "card Round 2 pre-registration / provenance"
+     },
+     {
+      "factor": "calibrated null / quasi-random intervention, one design (NE41 cap-timed resets + pseudo-erasure null + round-1 synthetic thrash/dip/none worlds, 100% at G51/G38)",
+      "x": 2,
+      "evidence": "card Results: Synthetic validation; axes E, F"
+     },
+     {
+      "factor": "replication: Theta_c > 0 in 9/9 periods, Y(20)/Y(40) < 1 in 9/9",
+      "x": 2,
+      "evidence": "card Round 2 outcome table, per-period table"
+     },
+     {
+      "factor": "partly robust: five reference windows keep the dip sign, checked-label variants (+0.072 to +0.106), past-only controls; one instrument family",
+      "x": 1.5,
+      "evidence": "card P-R1b, P-R2d"
+     },
+     {
+      "factor": "ground truth: 300 blind hand labels agree with the classifier (kappa 0.87)",
+      "x": 1.5,
+      "evidence": "card R1 classifier check; axis G 1->2"
+     },
+     {
+      "factor": "identified: round-2 synthetic on real skeletons recovers two timescales and the cap edge rule (separate suite from the NE41 design)",
+      "x": 1.5,
+      "evidence": "card Round 2 synthetic validation; axis F"
+     },
+     {
+      "factor": "penalty: the ~8-call tail is resolved only in G51 and G40 (l2 hits the 12-call fit cap elsewhere)",
+      "x": 0.8,
+      "evidence": "card note under per-period table"
+     },
+     {
+      "factor": "penalty: Y(20)/Y(40) is a counterfactual from the within-segment curve; the cap itself never varies in regime III (assumes behaviour per position is cap-invariant)",
+      "x": 0.8,
+      "evidence": "card R2 design, result 3"
+     }
+    ],
+    "notes": "Biggest uncertainty: the cap counterfactual extrapolates a fixed-cap curve; the useful operator question (lengthen beyond 40) is explicitly not identified. Compound claim; the dip size is reference-dependent by the card's own account."
    }
   ]
  },

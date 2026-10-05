@@ -36,16 +36,16 @@
   "scope": "regime III, 16 eligible units",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.82,
+  "credence": 0.79,
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3.0,
+  "value_if_true": 2.5,
   "decision": "to move a peer's content, name it: ×5 jump at its next call",
   "magnitude": "material",
   "generality": "read-out-gated LLM swarms",
-  "expected_usefulness": 2.46,
-  "scientific_value": 3,
-  "rater": "coordinator (round 2); independent blind rater pending",
+  "expected_usefulness": 1.98,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.06, ΔV 1.00 (no adjudication needed)",
   "rated_at": "2026-10-05",
   "round": 2,
   "raters": [
@@ -92,6 +92,43 @@
       "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "In regime III, content couples at the recipient's read-out call as talk does: matched-age content jump J^c_1 = 0.033 [0.027, 0.039] (bge; gte 0.046), CI > 0 in 10/16 units, none below 0, address-gated x5 (named 0.077 vs unnamed 0.016).",
+    "credence": 0.76,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (P-R1a/b, estimator ran unchanged)",
+      "x": "p0=0.40",
+      "evidence": "card Round 2 pre-registration / provenance"
+     },
+     {
+      "factor": "calibrated null: own synthetic on the real skeleton (N0 0/5 false positives, ungated N2 and dead-time N3 give ~0, gated bias -4%), hop-0 in-flight placebo at matched age (one design)",
+      "x": 2,
+      "evidence": "card R1 synthetic results"
+     },
+     {
+      "factor": "partial replication: 16/16 unit point estimates > 0, but 12 of 16 units are segments of G51; the 4 other periods (G38, G40, G41, G44) have bge CIs that include 0",
+      "x": 1.5,
+      "evidence": "card R1 table; data r2/content_units.parquet (design check)"
+     },
+     {
+      "factor": "robust: both embedding models, style_resid_period, dedupe, age x latency-tercile matching all > 0",
+      "x": 2,
+      "evidence": "card R1 variant table"
+     },
+     {
+      "factor": "penalty: tension with H08 round 2 on the same data (non-addressed content toward a read message is <= 0 under H08's same-message null); co-response is the known threat to content partition tests",
+      "x": 0.8,
+      "evidence": "H08 card R2 results; STANDARDS 1 convergence row"
+     }
+    ],
+    "notes": "Effectively a G51 result: 12 of 16 eligible units are G51 segments, and two-room weeks are mostly ineligible. The unnamed component conflicts in sign with H08's differently-nulled estimate."
    }
   ]
  },

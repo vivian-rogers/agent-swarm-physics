@@ -29,16 +29,16 @@
   "scope": "regime III, G38, G40, G41, G51; NE41",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.91,
-  "mechanism_level": "M2",
+  "credence": 0.88,
+  "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.5,
+  "value_if_true": 2.75,
   "decision": "scaffold design: cap the agent's own chat in context; check memory before a reset (H44: most flagged loops are productive, so a reset is not a free loop breaker)",
   "magnitude": "material",
   "generality": "read-out-gated LLM swarms",
-  "expected_usefulness": 2.27,
-  "scientific_value": 3,
-  "rater": "coordinator (round 2); independent blind rater pending",
+  "expected_usefulness": 2.42,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.06, ΔV 0.50 (no adjudication needed)",
   "rated_at": "2026-10-05",
   "round": 2,
   "raters": [
@@ -85,6 +85,58 @@
       "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "Restatement loops copy what the agent's context still holds, and an erasure ends them as a step, not a dose (in-context enrichment OR 3.38 [2.56, 4.46], 4/4 scorable periods; erasure exit x own tokens removed 1.26 [0.95, 1.69] per log unit; a 2-fold-per-log-unit dose excluded at power 1.00).",
+    "credence": 0.85,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (P4 and R2-P1 fixed before data; A1-A5 and R2-A2 amendments before real data)",
+      "x": "p0=0.40",
+      "evidence": "card Round 2 pre-registration / provenance"
+     },
+     {
+      "factor": "calibrated null: R0 recency synthetic on real skeletons (size 0-0.06) plus pseudo-erasure placebo 1.11-1.13",
+      "x": 2,
+      "evidence": "card synthetic validation; P4"
+     },
+     {
+      "factor": "identified: round-2 dose synthetic (size 0.07, power 1.00 pooled) - separate suite for the dose clause",
+      "x": 1.5,
+      "evidence": "card Round-2 synthetic validation"
+     },
+     {
+      "factor": "partial replication: enrichment > 1 in 4/4 scorable periods plus G39 (5 periods, < 6 units)",
+      "x": 1.5,
+      "evidence": "card Results by goal period"
+     },
+     {
+      "factor": "robust: bge, gte, both-model copies; segment-cut recheck unchanged; templated statements excluded",
+      "x": 2,
+      "evidence": "card axis A; Recheck"
+     },
+     {
+      "factor": "intervention partly consistent: NE41 cap-timed erasures (forced-boundary enrichment 3.53; exit OR 2.4 [1.2, 4.9]); E = 1",
+      "x": 1.5,
+      "evidence": "card NE41; axis E"
+     },
+     {
+      "factor": "penalty: erasure exit heterogeneous (I2 0.74; G41 and G51 n.s.); post hoc memory moderation suggests the step fails where the looping text is in memory (most #51 loops)",
+      "x": 0.8,
+      "evidence": "card Results; Round-2 post hoc"
+     },
+     {
+      "factor": "penalty: a weak dose (<= 0.53 per log unit, point 0.24) is not excluded; more data could make the dose term significant",
+      "x": 0.8,
+      "evidence": "card R2-P1"
+     }
+    ],
+    "notes": "The source-location clause is very solid; the 'erasure ends them' part is heterogeneous across periods and may depend on memory content, which the card leaves post hoc."
    }
   ]
  },

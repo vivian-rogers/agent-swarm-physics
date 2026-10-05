@@ -29,16 +29,16 @@
   "scope": "regimes II–III; G38, G40, G41, G44 for the split; 11 periods for the wall-clock exclusion",
   "direction": "positive",
   "original_verdict": "failed (pooled P1) / supported in II–III",
-  "credence": 0.83,
+  "credence": 0.82,
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3.0,
+  "value_if_true": 2.5,
   "decision": "cadence as a coupling knob: per-call coupling × call rate; long tool calls suppress talk",
   "magnitude": "material",
   "generality": "computer-use LLM agents",
-  "expected_usefulness": 2.49,
-  "scientific_value": 3,
-  "rater": "coordinator (round 2); independent blind rater pending",
+  "expected_usefulness": 2.05,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.02, ΔV 1.00 (no adjudication needed)",
   "rated_at": "2026-10-05",
   "round": 2,
   "raters": [
@@ -80,6 +80,63 @@
       "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "In the computer-use scaffold (regimes II-III), a talk call answers a pending message with a hazard that barely depends on the wall time its previous call spanned (eta_rep|talk = -0.11 [-0.16, -0.06], 4 periods, homogeneous); the negative total eta of G38 and G44 is mostly call-type composition (eta_talk -0.28 [-0.39, -0.18]); the wall clock (eta = 1) is excluded in every regime-II/III period.",
+    "credence": 0.81,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "base: pre-registered secondary (regime II-III scope set after round-1 regime-I failure; R6 M1 strict pattern missed on its CI clause)",
+      "x": "p0=0.30",
+      "evidence": "card Round 2 pre-registration / provenance"
+     },
+     {
+      "factor": "calibrated null: round-1 synthetic on real schedules with start jitter (eta bias <= 0.05, power 1.0 against the wrong clock)",
+      "x": 2,
+      "evidence": "card Synthetic validation results (axis F = 2)"
+     },
+     {
+      "factor": "identified: round-2 synthetic worlds S1/S6/S7/S8 show each diagnostic neither creates nor removes eta and recover -0.5 given talk (separate suite)",
+      "x": 1.5,
+      "evidence": "card Round 2 synthetic validation results"
+     },
+     {
+      "factor": "partial replication: eta_rep|talk homogeneous in 4 regime-III periods (tau 0); wall-clock exclusion in 11/11 regime-II/III periods",
+      "x": 1.5,
+      "evidence": "card R6 table; round-1 results"
+     },
+     {
+      "factor": "partly robust: outcome definition, jittered starts, gap splits; one instrument (DQ2 labels)",
+      "x": 1.5,
+      "evidence": "card axis F evidence"
+     },
+     {
+      "factor": "intervention partly consistent: pause-timer waits declared in advance give eta1 -0.03 [-0.14, +0.08] (G51)",
+      "x": 1.5,
+      "evidence": "card N1; axis E = 1"
+     },
+     {
+      "factor": "rival beaten on held-out days: call clock beats wall clock in 33/33 day-blocked folds",
+      "x": 1.5,
+      "evidence": "card P4"
+     },
+     {
+      "factor": "penalty: conditioning on talk is conditioning on a variable the message can cause (H50 read-out talk jump); untested",
+      "x": 0.8,
+      "evidence": "card R6 caveat"
+     },
+     {
+      "factor": "penalty: DQ2 primary-parent labels undercount multi-target replies, more for slow agents (bias by cadence)",
+      "x": 0.8,
+      "evidence": "card R5 multi-parent bias; axis A"
+     }
+    ],
+    "notes": "Ambiguity: the claim says 'regimes II-III' but eta_rep|talk comes from 4 regime-III periods only; regime II enters only through the round-1 wall-clock exclusion. The talk-conditioning collider is the main risk to the -0.11."
    }
   ]
  },

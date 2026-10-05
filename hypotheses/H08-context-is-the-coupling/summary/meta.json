@@ -36,16 +36,16 @@
   "scope": "17 periods, all three regimes; G51 for the content split",
   "direction": "positive",
   "original_verdict": "supported",
-  "credence": 0.93,
-  "mechanism_level": "M2",
+  "credence": 0.85,
+  "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3.0,
+  "value_if_true": 2.75,
   "decision": "send before the target's next call and name it; log what each call received; monitor event-feed age (five-fetch monitor)",
   "magnitude": "material",
   "generality": "read-out-gated LLM swarms",
-  "expected_usefulness": 2.79,
-  "scientific_value": 3,
-  "rater": "coordinator (round 2); independent blind rater pending",
+  "expected_usefulness": 2.34,
+  "scientific_value": 3.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.23, ΔV 0.50 (no adjudication needed)",
   "rated_at": "2026-10-05",
   "round": 2,
   "raters": [
@@ -92,6 +92,48 @@
       "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "On the context ledger, a recipient's naming and replying to a sender jump at the call that received the message (mention 14/17, reply author 17/17 periods; other-room placebo 8/8), and its content moves toward the message only within those addressed replies (G51 read - in flight at matched lag +1.25 [+0.98, +1.60] cos x100 with them, -0.39 [-0.62, -0.12] without).",
+    "credence": 0.7,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 4,
+    "ladder": [
+     {
+      "factor": "base: pre-registered secondary (C9 prediction pre-registered; estimator moved to the DQ1 ledger and reply-author outcome added in round 1b after round-1 results)",
+      "x": "p0=0.30",
+      "evidence": "card Round 2 pre-registration / provenance"
+     },
+     {
+      "factor": "calibrated null: pseudo-message null, other-room placebo 8/8, C9 synthetic guard (injected responses recovered, common cause gives no jump); R2 guard after A1/A2",
+      "x": 2,
+      "evidence": "card Round 1b C9 table; R2 synthetic guard"
+     },
+     {
+      "factor": "replication: reply author 17/17, mention 14/17 periods",
+      "x": 2,
+      "evidence": "card Round 1b C9-V2"
+     },
+     {
+      "factor": "partly robust: headline strengthened under the ledger fix (11/17 -> 14/17) and content checked in bge and gte; but the regime-I part flipped sign with the data fix",
+      "x": 1.5,
+      "evidence": "card Round 1b What changed; R2 table"
+     },
+     {
+      "factor": "intervention partly consistent: NE32 newcomers name an old-timer only after receipt (35/35); NE41 erasure cuts reply coupling -21% (sizes not met, E = 1)",
+      "x": 1.5,
+      "evidence": "card Round 1b C3/NE41 and natives"
+     },
+     {
+      "factor": "penalty: content clause rests on DQ2 reply parents, which are partly content-selected (known issue), so splitting by 'replies to j' can mechanically raise the read side with replies and lower it without; with-reply effect CI > 0 in only 3/9 (bge) and 5/9 (gte) regime-III periods",
+      "x": 0.6,
+      "evidence": "STANDARDS 2 (DQ2 parents partly content-selected); card R2 table"
+     }
+    ],
+    "notes": "First clause is robust; the second ('only within addressed replies') could be a reply-label selection artifact and is weakly replicated outside G51. Fragile set false: the regime-I flip repaired an artifact that ran against the claim, and the clean-recipient subset held in both data versions."
    }
   ]
  },

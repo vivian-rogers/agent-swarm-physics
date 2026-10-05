@@ -36,16 +36,16 @@
   "scope": "33 non-reserved kickoffs, #51, NE38; 181 human messages ≥250 chars",
   "direction": "positive",
   "original_verdict": "supported",
-  "credence": 0.93,
-  "mechanism_level": "M2",
+  "credence": 0.9,
+  "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3.0,
+  "value_if_true": 2.75,
   "decision": "kickoff design: write the shared target into the kickoff; rewrite one agent's goal text to move it",
   "magnitude": "large",
   "generality": "any LLM swarm with a shared instruction",
-  "expected_usefulness": 2.79,
-  "scientific_value": 3,
-  "rater": "coordinator (round 2); independent blind rater pending",
+  "expected_usefulness": 2.48,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.06, ΔV 0.50 (no adjudication needed)",
   "rated_at": "2026-10-05",
   "round": 2,
   "raters": [
@@ -92,6 +92,58 @@
       "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "Where a kickoff names a shared target, the day-1 content centroid identifies its own kickoff in both embedding models (median pi 1.0; top-1 18/33 bge, 20/33 gte), #51 agents sit on their private goals (0.95 / 0.96), and a human message pulls each reader at its first post-read message by about 0.09, of which reading adds +0.11-0.12 over unread in-flight messages at matched lag.",
+    "credence": 0.87,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (P1, N1, R3-A/R3-B; R2-1 estimator amendment before real data)",
+      "x": "p0=0.40",
+      "evidence": "card Round 2 pre-registration / provenance"
+     },
+     {
+      "factor": "calibrated null: kickoff-swap null with genericness correction, synthetic 0/200 under R0/R1; R3 matched-cell contrast sized in S6 (one design per clause, credited once)",
+      "x": 2,
+      "evidence": "card synthetic validation (axis F); R2 S6"
+     },
+     {
+      "factor": "replication: 33 kickoffs, pi >= 0.9 in 26/33, per-period agreement across models rho 0.75",
+      "x": 2,
+      "evidence": "card P1 results; R5-P1"
+     },
+     {
+      "factor": "robust: bge and gte, style_resid, echo removal, chat-only",
+      "x": 2,
+      "evidence": "card R5; axis F"
+     },
+     {
+      "factor": "intervention partly consistent: NE34 kickoffs as steps (move direction 92%) and NE38 reassignment DiD +0.56-0.61; sizes not predicted (E = 1)",
+      "x": 1.5,
+      "evidence": "card axis E; R5-N1b"
+     },
+     {
+      "factor": "ground truth: DQ6 #51 assigned goal texts recovered (0.95 / 0.96)",
+      "x": 1.5,
+      "evidence": "card axis G; R5-N1"
+     },
+     {
+      "factor": "penalty: read-out clause rests on 93 in-flight pairs (80 in regime I, 13 in regime III), convergence carries 40-50%, and the paired within-agent contrast is null",
+      "x": 0.7,
+      "evidence": "card R3-B; post hoc diagnostics"
+     },
+     {
+      "factor": "penalty: compound claim; top-1 rate (55-61%) sits near the 50% rule for a small confirmatory set of kickoffs",
+      "x": 0.8,
+      "evidence": "card P1 / R5-P1; confirm plan (14 held-out kickoffs)"
+     }
+    ],
+    "notes": "The kickoff and #51 parts are very solid; the read-out re-quench clause is the weak link (few in-flight pairs, mostly regime I). Value is limited because 'agents follow the kickoff' is close to the default expectation."
    }
   ]
  },
