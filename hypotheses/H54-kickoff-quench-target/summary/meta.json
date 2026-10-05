@@ -32,146 +32,212 @@
  "updated": "2026-10-04 (round 2)",
  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.5 -> 3.0; others kept)",
  "v2": {
-  "claim": "Day-1 content lands on what the kickoff names; agents land on private goals",
+  "claim": "Where a kickoff names a shared target, the day-1 content centroid identifies its own kickoff in both embedding models (median π 1.0; top-1 18/33 bge, 20/33 gte), #51 agents sit on their private goals (0.95/0.96), and a human message pulls each reader at its first post-read message by Δ≈0.09, of which reading adds +0.11–0.12 over unread in-flight messages at matched lag",
+  "scope": "33 non-reserved kickoffs, #51, NE38; 181 human messages ≥250 chars",
+  "direction": "positive",
   "original_verdict": "supported",
-  "credence": 0.92,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "calibrated null",
-    "x": 2
-   },
-   {
-    "factor": "replication",
-    "x": 2
-   },
-   {
-    "factor": "partly robust",
-    "x": 1.5
-   },
-   {
-    "factor": "synthetic identification",
-    "x": 1.5
-   },
-   {
-    "factor": "intervention consistent",
-    "x": 2
-   },
-   {
-    "factor": "rival beaten",
-    "x": 1.5
-   }
-  ],
+  "credence": 0.93,
   "mechanism_level": "M2",
   "fragile": false,
-  "value_if_true": 2.83,
-  "decision": "kickoff design",
+  "value_if_true": 3.0,
+  "decision": "kickoff design: write the shared target into the kickoff; rewrite one agent's goal text to move it",
   "magnitude": "large",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 2.6,
-  "scientific_value": 2.8,
-  "rater": "3 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "generality": "any LLM swarm with a shared instruction",
+  "expected_usefulness": 2.79,
+  "scientific_value": 3,
+  "rater": "coordinator (round 2); independent blind rater pending",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.95,
-    "value_if_true": 3,
-    "mechanism_level": "M2",
-    "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater (blind, 2026-10-04)",
-    "claim": "Where the kickoff names a shared target, the day-1 content centroid identifies its own kickoff text among ~32 decoy kickoffs (median own-target percentile >= 0.9; top-1 about half the time), and the day-1 move points at the new kickoff.",
+    "rater": "coordinator (round 2)",
     "credence": 0.93,
-    "value_if_true": 2.5,
-    "mechanism_level": "M1",
+    "value_if_true": 3.0,
+    "mechanism_level": "M2",
     "fragile": false,
     "scientific_value": 3,
     "ladder": [
      {
-      "factor": "base: pre-registered primary (P1)",
-      "x": "p0=0.40",
-      "evidence": "card Prediction, primary P1"
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
      },
      {
-      "factor": "calibrated null passed",
+      "factor": "calibrated null passed (kickoff swap; S6–S8 after Amendment R2-1, pre-data)",
       "x": 2,
-      "evidence": "Synthetic S1: P1 passes 0/200 under R0 and R1"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "replication >=2/3 of >=6 units",
+      "factor": "replication: π≥0.9 in 26/33 periods",
       "x": 2,
-      "evidence": "Results: pi>=0.9 in 26/33, P1b 28/33"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "robust (partial: estimator variants only; no second embedding, not re-run in 1b)",
-      "x": 1.5,
-      "evidence": "Results: style-residualized, chat-only, echo removal; Caveats: gte not run"
-     },
-     {
-      "factor": "identified (synthetic recovery at real counts)",
-      "x": 1.5,
-      "evidence": "Synthetic S1/S4 with real day-1 counts"
-     },
-     {
-      "factor": "intervention consistent",
+      "factor": "robust: both embedding models now agree (verdicts 29/33)",
       "x": 2,
-      "evidence": "NE34 kickoff steps (move sign 92%); NE38 reassignment DiD +0.61"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "rival beaten out of sample",
+      "factor": "identified: synthetic recovery at real day-1 counts",
       "x": 1.5,
-      "evidence": "Scorecard C/H: inertia (displacement) and genre rivals rejected, parameter-free"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "penalty: quoting inflates alignment; genericness correction incomplete",
+      "factor": "intervention consistent: NE38 reassignment, NE34 kickoff steps",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: quoting carries part of the alignment; ~half the read-out pull is convergence (f_conv 0.4–0.5)",
       "x": 0.8,
-      "evidence": "Synthesis 1 (echo removal top-1 0.55->0.30); Synthetic genericness artifact"
-     }
-    ]
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Scope: 33 non-holdout kickoffs plus #51 and NE38. The kickoff (or private goal) text is the day-1 content quench target: each day-1 centroid picks out its own kickoff (median percentile 1.0, top-1 18/33, p 3e-6; move toward kickoff 23/25), failing only where the kickoff names no shared target.",
-    "credence": 0.85,
-    "value_if_true": 3.0,
-    "mechanism_level": "M2",
-    "fragile": false,
-    "scientific_value": 2.5,
-    "ladder": [
-     {
-      "factor": "replication: 23/25 periods move toward the new kickoff",
-      "x": 2,
-      "evidence": "summary hresults P1c"
-     },
-     {
-      "factor": "calibrated null: genericness-corrected swap null",
-      "x": 2,
-      "evidence": "summary hwhat"
-     },
-     {
-      "factor": "intervention consistent: NE38 human reassignment re-targets one agent within a day (DiD +0.61)",
-      "x": 2,
-      "evidence": "summary hresults"
-     },
-     {
-      "factor": "ground truth agrees: #51 private goals, role-swap accuracy 0.95",
-      "x": 1.5,
-      "evidence": "summary hresults"
-     },
-     {
-      "factor": "changed under a variant: near-echo removal lowers top-1 0.55 -> 0.30-0.45; one embedding model",
-      "x": 0.7,
-      "evidence": "summary hcaveats"
+      "evidence": "card §Round 2"
      }
     ]
    }
-  ],
-  "adjudicate": false
- }
+  ]
+ },
+ "v2_history": [
+  {
+   "claim": "Day-1 content lands on what the kickoff names; agents land on private goals",
+   "original_verdict": "supported",
+   "credence": 0.92,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "calibrated null",
+     "x": 2
+    },
+    {
+     "factor": "replication",
+     "x": 2
+    },
+    {
+     "factor": "partly robust",
+     "x": 1.5
+    },
+    {
+     "factor": "synthetic identification",
+     "x": 1.5
+    },
+    {
+     "factor": "intervention consistent",
+     "x": 2
+    },
+    {
+     "factor": "rival beaten",
+     "x": 1.5
+    }
+   ],
+   "mechanism_level": "M2",
+   "fragile": false,
+   "value_if_true": 2.83,
+   "decision": "kickoff design",
+   "magnitude": "large",
+   "generality": "any LLM swarm",
+   "expected_usefulness": 2.6,
+   "scientific_value": 2.8,
+   "rater": "3 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.95,
+     "value_if_true": 3,
+     "mechanism_level": "M2",
+     "fragile": false,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater (blind, 2026-10-04)",
+     "claim": "Where the kickoff names a shared target, the day-1 content centroid identifies its own kickoff text among ~32 decoy kickoffs (median own-target percentile >= 0.9; top-1 about half the time), and the day-1 move points at the new kickoff.",
+     "credence": 0.93,
+     "value_if_true": 2.5,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3,
+     "ladder": [
+      {
+       "factor": "base: pre-registered primary (P1)",
+       "x": "p0=0.40",
+       "evidence": "card Prediction, primary P1"
+      },
+      {
+       "factor": "calibrated null passed",
+       "x": 2,
+       "evidence": "Synthetic S1: P1 passes 0/200 under R0 and R1"
+      },
+      {
+       "factor": "replication >=2/3 of >=6 units",
+       "x": 2,
+       "evidence": "Results: pi>=0.9 in 26/33, P1b 28/33"
+      },
+      {
+       "factor": "robust (partial: estimator variants only; no second embedding, not re-run in 1b)",
+       "x": 1.5,
+       "evidence": "Results: style-residualized, chat-only, echo removal; Caveats: gte not run"
+      },
+      {
+       "factor": "identified (synthetic recovery at real counts)",
+       "x": 1.5,
+       "evidence": "Synthetic S1/S4 with real day-1 counts"
+      },
+      {
+       "factor": "intervention consistent",
+       "x": 2,
+       "evidence": "NE34 kickoff steps (move sign 92%); NE38 reassignment DiD +0.61"
+      },
+      {
+       "factor": "rival beaten out of sample",
+       "x": 1.5,
+       "evidence": "Scorecard C/H: inertia (displacement) and genre rivals rejected, parameter-free"
+      },
+      {
+       "factor": "penalty: quoting inflates alignment; genericness correction incomplete",
+       "x": 0.8,
+       "evidence": "Synthesis 1 (echo removal top-1 0.55->0.30); Synthetic genericness artifact"
+      }
+     ]
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "Scope: 33 non-holdout kickoffs plus #51 and NE38. The kickoff (or private goal) text is the day-1 content quench target: each day-1 centroid picks out its own kickoff (median percentile 1.0, top-1 18/33, p 3e-6; move toward kickoff 23/25), failing only where the kickoff names no shared target.",
+     "credence": 0.85,
+     "value_if_true": 3.0,
+     "mechanism_level": "M2",
+     "fragile": false,
+     "scientific_value": 2.5,
+     "ladder": [
+      {
+       "factor": "replication: 23/25 periods move toward the new kickoff",
+       "x": 2,
+       "evidence": "summary hresults P1c"
+      },
+      {
+       "factor": "calibrated null: genericness-corrected swap null",
+       "x": 2,
+       "evidence": "summary hwhat"
+      },
+      {
+       "factor": "intervention consistent: NE38 human reassignment re-targets one agent within a day (DiD +0.61)",
+       "x": 2,
+       "evidence": "summary hresults"
+      },
+      {
+       "factor": "ground truth agrees: #51 private goals, role-swap accuracy 0.95",
+       "x": 1.5,
+       "evidence": "summary hresults"
+      },
+      {
+       "factor": "changed under a variant: near-echo removal lowers top-1 0.55 -> 0.30-0.45; one embedding model",
+       "x": 0.7,
+       "evidence": "summary hcaveats"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
+  }
+ ]
 }

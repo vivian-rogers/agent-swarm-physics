@@ -32,92 +32,158 @@
  "updated": "2026-10-05",
  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 -> 2.5; others kept)",
  "v2": {
-  "claim": "Activity co-movement is the scheduler's field; talk is a coupling gated at hop 1",
-  "original_verdict": "mixed (regime split rejected)",
-  "credence": 0.85,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "calibrated null",
-    "x": 2
-   },
-   {
-    "factor": "replication",
-    "x": 2
-   },
-   {
-    "factor": "synthetic identification",
-    "x": 1.5
-   },
-   {
-    "factor": "rival beaten",
-    "x": 1.5
-   }
-  ],
+  "claim": "In regime III, content couples at the recipient's read-out call, as talk does: the matched-age jump is J^c_1 = 0.033 [0.027, 0.039] (bge; gte 0.046), CI > 0 in 10/16 units and none below 0, and ×5 larger for named messages (0.077 vs 0.016)",
+  "scope": "regime III, 16 eligible units",
+  "direction": "positive",
+  "original_verdict": "mixed",
+  "credence": 0.82,
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3.5,
-  "decision": "separate scheduler synchrony from real coupling",
+  "value_if_true": 3.0,
+  "decision": "to move a peer's content, name it: ×5 jump at its next call",
   "magnitude": "material",
-  "generality": "read-out-gated swarms",
-  "expected_usefulness": 2.98,
-  "scientific_value": 4.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "generality": "read-out-gated LLM swarms",
+  "expected_usefulness": 2.46,
+  "scientific_value": 3,
+  "rater": "coordinator (round 2); independent blind rater pending",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.86,
-    "value_if_true": 3,
+    "rater": "coordinator (round 2)",
+    "credence": 0.82,
+    "value_if_true": 3.0,
     "mechanism_level": "M1",
     "fragile": false,
-    "scientific_value": 4
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Scope: 71 non-holdout units (35 periods), ledger call times. Activity co-movement is mostly a scheduler field (daily start/stop explains ~0.6 of it), while talk co-movement is a coupling gated at the recipient's first read-out call (J1 > 0 in 45/71 units, none negative; onset at hop 1; zero at the in-flight call).",
-    "credence": 0.84,
-    "value_if_true": 4.0,
-    "mechanism_level": "M2",
-    "fragile": false,
-    "scientific_value": 4,
+    "scientific_value": 3,
     "ladder": [
      {
-      "factor": "replication: J1 > 0 in 45/71 units, 0 negative",
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
+     },
+     {
+      "factor": "calibrated null passed (no-coupling world 0/5; ungated rival rejected)",
       "x": 2,
-      "evidence": "summary hresults P5"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "identified: synthetic swarms recover planted coupling, read zero for fields and drives",
+      "factor": "replication: CI > 0 in 10/16 units, none negative",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "robust: both embedding models, style/self-repeat/latency variants",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "identified: synthetic recovery −4% bias",
       "x": 1.5,
-      "evidence": "summary hobsb"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "penalty: per-unit CIs mildly anti-conservative (~9% synthetic FP)",
+      "factor": "penalty: content contrasts can be co-response dominated (H08 R2: unaddressed content negative)",
+      "x": 0.7,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: H50's pair-boundary family carries a +0.05 no-coupling excess for talk (H67 R3)",
       "x": 0.8,
-      "evidence": "summary hcaveats"
-     },
-     {
-      "factor": "intervention partly consistent: NE43 nudge path gone, edge field persists",
-      "x": 1.5,
-      "evidence": "summary hresults NE43"
-     },
-     {
-      "factor": "partly robust: jump survives on logged-start recipients; early regime I unchecked",
-      "x": 1.5,
-      "evidence": "summary hcaveats"
-     },
-     {
-      "factor": "cross-method agreement: H38 trimmed-null finds the same activity field",
-      "x": 1.5,
-      "evidence": "H38 card corroboration"
+      "evidence": "card §Round 2"
      }
     ]
    }
-  ],
-  "adjudicate": false
- }
+  ]
+ },
+ "v2_history": [
+  {
+   "claim": "Activity co-movement is the scheduler's field; talk is a coupling gated at hop 1",
+   "original_verdict": "mixed (regime split rejected)",
+   "credence": 0.85,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "calibrated null",
+     "x": 2
+    },
+    {
+     "factor": "replication",
+     "x": 2
+    },
+    {
+     "factor": "synthetic identification",
+     "x": 1.5
+    },
+    {
+     "factor": "rival beaten",
+     "x": 1.5
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": false,
+   "value_if_true": 3.5,
+   "decision": "separate scheduler synchrony from real coupling",
+   "magnitude": "material",
+   "generality": "read-out-gated swarms",
+   "expected_usefulness": 2.98,
+   "scientific_value": 4.0,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.86,
+     "value_if_true": 3,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 4
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "Scope: 71 non-holdout units (35 periods), ledger call times. Activity co-movement is mostly a scheduler field (daily start/stop explains ~0.6 of it), while talk co-movement is a coupling gated at the recipient's first read-out call (J1 > 0 in 45/71 units, none negative; onset at hop 1; zero at the in-flight call).",
+     "credence": 0.84,
+     "value_if_true": 4.0,
+     "mechanism_level": "M2",
+     "fragile": false,
+     "scientific_value": 4,
+     "ladder": [
+      {
+       "factor": "replication: J1 > 0 in 45/71 units, 0 negative",
+       "x": 2,
+       "evidence": "summary hresults P5"
+      },
+      {
+       "factor": "identified: synthetic swarms recover planted coupling, read zero for fields and drives",
+       "x": 1.5,
+       "evidence": "summary hobsb"
+      },
+      {
+       "factor": "penalty: per-unit CIs mildly anti-conservative (~9% synthetic FP)",
+       "x": 0.8,
+       "evidence": "summary hcaveats"
+      },
+      {
+       "factor": "intervention partly consistent: NE43 nudge path gone, edge field persists",
+       "x": 1.5,
+       "evidence": "summary hresults NE43"
+      },
+      {
+       "factor": "partly robust: jump survives on logged-start recipients; early regime I unchecked",
+       "x": 1.5,
+       "evidence": "summary hcaveats"
+      },
+      {
+       "factor": "cross-method agreement: H38 trimmed-null finds the same activity field",
+       "x": 1.5,
+       "evidence": "H38 card corroboration"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
+  }
+ ]
 }

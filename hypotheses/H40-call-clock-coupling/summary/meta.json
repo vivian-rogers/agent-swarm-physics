@@ -25,108 +25,169 @@
  "rated_by": "H40 agent (suggested 2.5/3.0); coordinator calibrated faithfulness to 2.0 (pooled P1 failed, two natives failed); round-2 update by H40 agent 2026-10-05 (v1 ratings unchanged; v2 left to the coordinator)",
  "updated": "2026-10-05",
  "v2": {
-  "claim": "In the computer-use scaffold (regimes II–III), reply coupling runs on the call clock (η ≈ 0): per-hour coupling = per-call coupling (a family/style trait) × call rate; doubling cadence raises 5-min coupling ~×1.3–1.5. Regime-I chat calls are partly wall-clock (η ≈ 0.5)",
-  "scope": "11 regime-II/III periods (G51 9/9 units); 22 regime-I periods; natives G51, NE41, G18, NE14",
+  "claim": "In the computer-use scaffold (regimes II–III), a talk call answers a pending message with a hazard that barely depends on the wall time its previous call spanned (reply given talk −0.11 [−0.16, −0.06], 4 periods, homogeneous); the negative total η of G38 and G44 is mostly call-type composition (η_talk −0.28 [−0.39, −0.18]); the wall clock (η = 1) is excluded in every regime-II/III period",
+  "scope": "regimes II–III; G38, G40, G41, G44 for the split; 11 periods for the wall-clock exclusion",
   "direction": "positive",
   "original_verdict": "failed (pooled P1) / supported in II–III",
-  "credence": 0.72,
-  "ladder": [
-   {
-    "factor": "base (sec)",
-    "x": 0.3
-   },
-   {
-    "factor": "synthetic identification (η recovered, bias ≤ 0.05)",
-    "x": 1.5,
-    "evidence": "card §Synthetic"
-   },
-   {
-    "factor": "replication (11/11 regime II–III periods)",
-    "x": 2,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "rival beaten (held-out call clock > wall clock 33/33; compensation s = −1 excluded)",
-    "x": 1.5,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "intervention partly consistent (G51 pause-timer dose yes; G18, NE14 no)",
-    "x": 1.5,
-    "evidence": "natives"
-   },
-   {
-    "factor": "penalty: verdict rule written after 3 periods ran",
-    "x": 0.8,
-    "evidence": "card amendments"
-   },
-   {
-    "factor": "penalty: G38/G44 η significantly < 0, unexplained",
-    "x": 0.8,
-    "evidence": "replication_table"
-   }
-  ],
+  "credence": 0.83,
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3.5,
-  "decision": "cadence (pause timers, tool-call length) as a prompt-free coupling knob",
+  "value_if_true": 3.0,
+  "decision": "cadence as a coupling knob: per-call coupling × call rate; long tool calls suppress talk",
   "magnitude": "material",
-  "generality": "read-out-gated swarms",
-  "expected_usefulness": 2.52,
-  "scientific_value": 3.8,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "generality": "computer-use LLM agents",
+  "expected_usefulness": 2.49,
+  "scientific_value": 3,
+  "rater": "coordinator (round 2); independent blind rater pending",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.65,
-    "value_if_true": 3,
+    "rater": "coordinator (round 2)",
+    "credence": 0.83,
+    "value_if_true": 3.0,
     "mechanism_level": "M1",
     "fragile": false,
-    "scientific_value": 4
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Scope: computer-use scaffold, regimes II-III (11 periods, G51 strongest). Reply coupling runs on the recipient's call clock: per-call reply hazard does not grow with call wall-time span (eta ~0; G51 -0.03 at pre-set pause wakes); per-hour coupling = per-call (family) coupling x call rate.",
-    "credence": 0.78,
-    "value_if_true": 4.0,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3.5,
+    "scientific_value": 3,
     "ladder": [
      {
-      "factor": "replication: II -0.01, III -0.16 pooled; P2 6/8; 9/9 G51 units",
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
+     },
+     {
+      "factor": "calibrated null passed (synthetic: the talk schedule alone gives η −0.26/−0.13)",
       "x": 2,
-      "evidence": "card Results P1, P2, N1"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "identified: synthetic recovers eta 0/0.5/1 on real schedules (bias <=0.05)",
+      "factor": "replication: wall clock excluded in 11/11 regime-II/III periods",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "partly robust: rivals M1b–M4 do not move η",
       "x": 1.5,
-      "evidence": "summary hobsb"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "rival beaten on held-out days: call-clock > wall-clock in 33/33",
+      "factor": "identified: synthetic recovery on real schedules",
       "x": 1.5,
-      "evidence": "card Results P4"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "intervention partly consistent: pause-timer dose (quasi-exogenous) eta -0.03; clean NE20 is in the holdout",
-      "x": 1.5,
-      "evidence": "card N1"
-     },
-     {
-      "factor": "partly robust: estimator variants (logged starts, short spans), single data version",
-      "x": 1.5,
-      "evidence": "card What it means 1"
-     },
-     {
-      "factor": "penalty: DQ2 parents partly content-selected; agents partly choose cadence",
+      "factor": "penalty: the split conditions on talk, which messages can cause; residual −0.11 unexplained",
       "x": 0.8,
-      "evidence": "summary hcaveats"
+      "evidence": "card §Round 2"
      }
     ]
    }
-  ],
-  "adjudicate": false
- }
+  ]
+ },
+ "v2_history": [
+  {
+   "claim": "In the computer-use scaffold (regimes II–III), reply coupling runs on the call clock (η ≈ 0): per-hour coupling = per-call coupling (a family/style trait) × call rate; doubling cadence raises 5-min coupling ~×1.3–1.5. Regime-I chat calls are partly wall-clock (η ≈ 0.5)",
+   "scope": "11 regime-II/III periods (G51 9/9 units); 22 regime-I periods; natives G51, NE41, G18, NE14",
+   "direction": "positive",
+   "original_verdict": "failed (pooled P1) / supported in II–III",
+   "credence": 0.72,
+   "ladder": [
+    {
+     "factor": "base (sec)",
+     "x": 0.3
+    },
+    {
+     "factor": "synthetic identification (η recovered, bias ≤ 0.05)",
+     "x": 1.5,
+     "evidence": "card §Synthetic"
+    },
+    {
+     "factor": "replication (11/11 regime II–III periods)",
+     "x": 2,
+     "evidence": "card §Results"
+    },
+    {
+     "factor": "rival beaten (held-out call clock > wall clock 33/33; compensation s = −1 excluded)",
+     "x": 1.5,
+     "evidence": "card §Results"
+    },
+    {
+     "factor": "intervention partly consistent (G51 pause-timer dose yes; G18, NE14 no)",
+     "x": 1.5,
+     "evidence": "natives"
+    },
+    {
+     "factor": "penalty: verdict rule written after 3 periods ran",
+     "x": 0.8,
+     "evidence": "card amendments"
+    },
+    {
+     "factor": "penalty: G38/G44 η significantly < 0, unexplained",
+     "x": 0.8,
+     "evidence": "replication_table"
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": false,
+   "value_if_true": 3.5,
+   "decision": "cadence (pause timers, tool-call length) as a prompt-free coupling knob",
+   "magnitude": "material",
+   "generality": "read-out-gated swarms",
+   "expected_usefulness": 2.52,
+   "scientific_value": 3.8,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.65,
+     "value_if_true": 3,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 4
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "Scope: computer-use scaffold, regimes II-III (11 periods, G51 strongest). Reply coupling runs on the recipient's call clock: per-call reply hazard does not grow with call wall-time span (eta ~0; G51 -0.03 at pre-set pause wakes); per-hour coupling = per-call (family) coupling x call rate.",
+     "credence": 0.78,
+     "value_if_true": 4.0,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3.5,
+     "ladder": [
+      {
+       "factor": "replication: II -0.01, III -0.16 pooled; P2 6/8; 9/9 G51 units",
+       "x": 2,
+       "evidence": "card Results P1, P2, N1"
+      },
+      {
+       "factor": "identified: synthetic recovers eta 0/0.5/1 on real schedules (bias <=0.05)",
+       "x": 1.5,
+       "evidence": "summary hobsb"
+      },
+      {
+       "factor": "rival beaten on held-out days: call-clock > wall-clock in 33/33",
+       "x": 1.5,
+       "evidence": "card Results P4"
+      },
+      {
+       "factor": "intervention partly consistent: pause-timer dose (quasi-exogenous) eta -0.03; clean NE20 is in the holdout",
+       "x": 1.5,
+       "evidence": "card N1"
+      },
+      {
+       "factor": "partly robust: estimator variants (logged starts, short spans), single data version",
+       "x": 1.5,
+       "evidence": "card What it means 1"
+      },
+      {
+       "factor": "penalty: DQ2 parents partly content-selected; agents partly choose cadence",
+       "x": 0.8,
+       "evidence": "summary hcaveats"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
+  }
+ ]
 }

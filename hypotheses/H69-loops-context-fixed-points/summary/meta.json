@@ -25,93 +25,159 @@
  "rated_by": "H69 agent (suggested, round 2)",
  "updated": "2026-10-05",
  "v2": {
-  "claim": "Restatement loops are copies held by the context window: a statement still in context is near-copied 3.4× [2.6, 4.5] more than an erased one (4/4 periods, both models); forced erasure raises loop exit 2.4×; loops are not triggered by a self-share threshold nor ended by novel input",
-  "scope": "G38, G40, G41, G51 (≥ 30 loop episodes); natives G38, NE41, G51",
+  "claim": "Restatement loops copy what the agent's context still holds, and an erasure ends them as a step, not a dose: in-context enrichment OR 3.38 [2.56, 4.46] in 4/4 scorable periods; exit × own tokens removed 1.26 [0.95, 1.69] per log unit, with a 2×-per-log-unit dose excluded at power 1.00",
+  "scope": "regime III, G38, G40, G41, G51; NE41",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.85,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "replication (4/4 scorable periods, I² 0)",
-    "x": 1.5,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "calibrated null (fake-boundary control 1.13)",
-    "x": 2,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "intervention consistent (NE41 forced erasure)",
-    "x": 2,
-    "evidence": "native NE41"
-   },
-   {
-    "factor": "robust (bge 3.5, gte 6.1)",
-    "x": 1.5,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "penalty: only 4 scorable periods",
-    "x": 0.8,
-    "evidence": "card §Results"
-   }
-  ],
-  "mechanism_level": "M1",
+  "credence": 0.91,
+  "mechanism_level": "M2",
   "fragile": false,
-  "value_if_true": 2.75,
-  "decision": "break restatement loops by erasing context, not by sending new input",
+  "value_if_true": 2.5,
+  "decision": "scaffold design: cap the agent's own chat in context; check memory before a reset (H44: most flagged loops are productive, so a reset is not a free loop breaker)",
   "magnitude": "material",
-  "generality": "agents with context resets",
-  "expected_usefulness": 2.34,
-  "scientific_value": 3.2,
-  "rater": "2 raters (coordinator + blind); log-odds mean",
-  "rated_at": "2026-10-04",
+  "generality": "read-out-gated LLM swarms",
+  "expected_usefulness": 2.27,
+  "scientific_value": 3,
+  "rater": "coordinator (round 2); independent blind rater pending",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.83,
+    "rater": "coordinator (round 2)",
+    "credence": 0.91,
     "value_if_true": 2.5,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater 3 (blind, 2026-10-04)",
-    "claim": "Restatement loops are held by the context window: at matched lag and call distance, an agent near-copies its own earlier statement 3.4x [2.6, 4.5] more often when that statement is still in context than when an erasure removed it (4/4 scorable periods, I2 0; pseudo-erasure 1.13).",
-    "credence": 0.86,
-    "value_if_true": 3.0,
     "mechanism_level": "M2",
     "fragile": false,
-    "scientific_value": 3.5,
+    "scientific_value": 3,
     "ladder": [
      {
-      "factor": "calibrated recency null on real skeletons (size 0-0.06) plus pseudo-erasure placebo; F=2",
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
+     },
+     {
+      "factor": "calibrated null passed (fake mid-segment boundary 1.11)",
       "x": 2,
-      "evidence": "card Synthetic validation; Amendments A1-A5"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "intervention partly consistent: enrichment holds at scaffold-timed forced boundaries (3.53); NE41 exit 2.4x but heterogeneous (I2 0.74)",
+      "factor": "partial replication: 4/4 scorable periods (< 6 units)",
       "x": 1.5,
-      "evidence": "card P4, N-NE41"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "partial replication: 4/4 scorable periods (< 6), G39 2.2 descriptive",
-      "x": 1.5,
-      "evidence": "card Results by goal period"
-     },
-     {
-      "factor": "robust: both embedding models (bge 3.5, gte 6.1, both 8.6) and templated exclusion",
+      "factor": "robust: both embedding models; round 1b",
       "x": 2,
-      "evidence": "card scorecard A, F"
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "intervention consistent: NE41 forced erasures timed by the cap",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "identified: synthetic separated recency and starvation rivals",
+      "x": 1.5,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: erasure-exit heterogeneity (I² 0.74); memory carriage failed as frozen",
+      "x": 0.8,
+      "evidence": "card §Round 2"
      }
     ]
    }
-  ],
-  "adjudicate": false
- }
+  ]
+ },
+ "v2_history": [
+  {
+   "claim": "Restatement loops are copies held by the context window: a statement still in context is near-copied 3.4× [2.6, 4.5] more than an erased one (4/4 periods, both models); forced erasure raises loop exit 2.4×; loops are not triggered by a self-share threshold nor ended by novel input",
+   "scope": "G38, G40, G41, G51 (≥ 30 loop episodes); natives G38, NE41, G51",
+   "direction": "positive",
+   "original_verdict": "mixed",
+   "credence": 0.85,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "replication (4/4 scorable periods, I² 0)",
+     "x": 1.5,
+     "evidence": "card §Results"
+    },
+    {
+     "factor": "calibrated null (fake-boundary control 1.13)",
+     "x": 2,
+     "evidence": "card §Results"
+    },
+    {
+     "factor": "intervention consistent (NE41 forced erasure)",
+     "x": 2,
+     "evidence": "native NE41"
+    },
+    {
+     "factor": "robust (bge 3.5, gte 6.1)",
+     "x": 1.5,
+     "evidence": "card §Results"
+    },
+    {
+     "factor": "penalty: only 4 scorable periods",
+     "x": 0.8,
+     "evidence": "card §Results"
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": false,
+   "value_if_true": 2.75,
+   "decision": "break restatement loops by erasing context, not by sending new input",
+   "magnitude": "material",
+   "generality": "agents with context resets",
+   "expected_usefulness": 2.34,
+   "scientific_value": 3.2,
+   "rater": "2 raters (coordinator + blind); log-odds mean",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.83,
+     "value_if_true": 2.5,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater 3 (blind, 2026-10-04)",
+     "claim": "Restatement loops are held by the context window: at matched lag and call distance, an agent near-copies its own earlier statement 3.4x [2.6, 4.5] more often when that statement is still in context than when an erasure removed it (4/4 scorable periods, I2 0; pseudo-erasure 1.13).",
+     "credence": 0.86,
+     "value_if_true": 3.0,
+     "mechanism_level": "M2",
+     "fragile": false,
+     "scientific_value": 3.5,
+     "ladder": [
+      {
+       "factor": "calibrated recency null on real skeletons (size 0-0.06) plus pseudo-erasure placebo; F=2",
+       "x": 2,
+       "evidence": "card Synthetic validation; Amendments A1-A5"
+      },
+      {
+       "factor": "intervention partly consistent: enrichment holds at scaffold-timed forced boundaries (3.53); NE41 exit 2.4x but heterogeneous (I2 0.74)",
+       "x": 1.5,
+       "evidence": "card P4, N-NE41"
+      },
+      {
+       "factor": "partial replication: 4/4 scorable periods (< 6), G39 2.2 descriptive",
+       "x": 1.5,
+       "evidence": "card Results by goal period"
+      },
+      {
+       "factor": "robust: both embedding models (bge 3.5, gte 6.1, both 8.6) and templated exclusion",
+       "x": 2,
+       "evidence": "card scorecard A, F"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
+  }
+ ]
 }

@@ -26,83 +26,144 @@
  "updated": "2026-10-05",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
  "v2": {
-  "claim": "Style drifts with context fill and resets at erasure, yet identifies agents better than content",
+  "claim": "An agent's style is a stable identity charge plus a context-held offset that each forced erasure redraws: across exogenous erasures style moves (T 0.546 [0.522, 0.564] after removing genre and context position) while content does not (0.51, both embedding models); style plus function words identify agents across goal switches at 0.85 (content 0.51, chance 0.15)",
+  "scope": "regime III, 23 units; 24 non-reserved goal switches",
+  "direction": "positive",
   "original_verdict": "refuted (conservation)",
-  "credence": 0.75,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "synthetic identification",
-    "x": 1.5
-   },
-   {
-    "factor": "replication",
-    "x": 2
-   },
-   {
-    "factor": "intervention consistent",
-    "x": 2
-   }
-  ],
+  "credence": 0.81,
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 3.25,
-  "decision": "attribution and fingerprinting",
+  "value_if_true": 3.0,
+  "decision": "attribution and model-swap monitoring: use style + function-word rates, compare at matched context position",
   "magnitude": "material",
   "generality": "any LLM swarm",
-  "expected_usefulness": 2.44,
-  "scientific_value": 3.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "expected_usefulness": 2.43,
+  "scientific_value": 3,
+  "rater": "coordinator (round 2); independent blind rater pending",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.8,
-    "value_if_true": 3,
+    "rater": "coordinator (round 2)",
+    "credence": 0.81,
+    "value_if_true": 3.0,
     "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Scope: 32 periods' boundaries (goal switches, erasures, roles). An agent's 20-feature style is not conserved: it moves at goal switches (T_s 0.69, 21/24), at exogenously timed erasures (0.56) and with assigned registers, yet still identifies agents across goal switches better than content (0.76 vs 0.51; chance 0.15).",
-    "credence": 0.69,
-    "value_if_true": 3.5,
-    "mechanism_level": "M0",
     "fragile": false,
     "scientific_value": 3,
     "ladder": [
      {
-      "factor": "replication: goal switches 21/24; style wins identification 22/24",
-      "x": 2,
-      "evidence": "summary hresults P1, P7"
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
      },
      {
-      "factor": "intervention consistent: exogenously timed forced erasures move style",
+      "factor": "calibrated null passed (synthetic found the agent-free comparison bias; scaled pairs, pre-data)",
       "x": 2,
-      "evidence": "summary hwhat"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "identified: synthetic validation before real data",
+      "factor": "intervention consistent: NE41 erasures are exogenous (cap-timed)",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "partly robust: genre variants, two embeddings for content; one style instrument",
       "x": 1.5,
-      "evidence": "card Synthetic validation"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "penalty: style features include topic-adjacent rates (digits, uppercase, colons) that carry the goal-switch shift",
+      "factor": "identified: synthetic recovery on the real schedule",
+      "x": 1.5,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: the redraw-and-hold shape and the 0.85 combination are partly post hoc; OU form failed",
       "x": 0.7,
-      "evidence": "summary hcaveats"
-     },
-     {
-      "factor": "penalty: speech act not controlled; content on bge only",
-      "x": 0.8,
-      "evidence": "summary hcaveats"
+      "evidence": "card §Round 2"
      }
     ]
    }
-  ],
-  "adjudicate": false
- }
+  ]
+ },
+ "v2_history": [
+  {
+   "claim": "Style drifts with context fill and resets at erasure, yet identifies agents better than content",
+   "original_verdict": "refuted (conservation)",
+   "credence": 0.75,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "synthetic identification",
+     "x": 1.5
+    },
+    {
+     "factor": "replication",
+     "x": 2
+    },
+    {
+     "factor": "intervention consistent",
+     "x": 2
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": false,
+   "value_if_true": 3.25,
+   "decision": "attribution and fingerprinting",
+   "magnitude": "material",
+   "generality": "any LLM swarm",
+   "expected_usefulness": 2.44,
+   "scientific_value": 3.0,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.8,
+     "value_if_true": 3,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "Scope: 32 periods' boundaries (goal switches, erasures, roles). An agent's 20-feature style is not conserved: it moves at goal switches (T_s 0.69, 21/24), at exogenously timed erasures (0.56) and with assigned registers, yet still identifies agents across goal switches better than content (0.76 vs 0.51; chance 0.15).",
+     "credence": 0.69,
+     "value_if_true": 3.5,
+     "mechanism_level": "M0",
+     "fragile": false,
+     "scientific_value": 3,
+     "ladder": [
+      {
+       "factor": "replication: goal switches 21/24; style wins identification 22/24",
+       "x": 2,
+       "evidence": "summary hresults P1, P7"
+      },
+      {
+       "factor": "intervention consistent: exogenously timed forced erasures move style",
+       "x": 2,
+       "evidence": "summary hwhat"
+      },
+      {
+       "factor": "identified: synthetic validation before real data",
+       "x": 1.5,
+       "evidence": "card Synthetic validation"
+      },
+      {
+       "factor": "penalty: style features include topic-adjacent rates (digits, uppercase, colons) that carry the goal-switch shift",
+       "x": 0.7,
+       "evidence": "summary hcaveats"
+      },
+      {
+       "factor": "penalty: speech act not controlled; content on bge only",
+       "x": 0.8,
+       "evidence": "summary hcaveats"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
+  }
+ ]
 }

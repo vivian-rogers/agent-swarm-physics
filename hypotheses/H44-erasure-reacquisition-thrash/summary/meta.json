@@ -32,143 +32,209 @@
  "updated": "2026-10-05",
  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 kept: quasi-random scaffold intervention with a priced design trade-off, parity with H54)",
  "v2": {
-  "claim": "Forced erasure triggers orderly re-reading, costs 4–11% of output, breaks loops",
+  "claim": "In regime III (9 non-reserved periods), a forced context wipe triggers a one-call re-reading spike with a tail of about 8 calls (Θ_c +0.106 [0.089, 0.122] on blind-checked labels, 9/9) and a write dip of −20% to −32% depending on the reference window; a 20-call cap would give 12% less output per call than the 40-call cap (0.88 [0.85, 0.91])",
+  "scope": "regime III, 9 periods, forced resets (NE41)",
+  "direction": "positive",
   "original_verdict": "mixed (no thrash)",
-  "credence": 0.88,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "replication",
-    "x": 2
-   },
-   {
-    "factor": "intervention consistent",
-    "x": 2
-   },
-   {
-    "factor": "synthetic identification",
-    "x": 1.5
-   },
-   {
-    "factor": "rival beaten",
-    "x": 1.5
-   }
-  ],
+  "credence": 0.85,
   "mechanism_level": "M2",
   "fragile": false,
-  "value_if_true": 3.67,
-  "decision": "context-cap length",
+  "value_if_true": 3.5,
+  "decision": "context-cap length: halving the cap costs 12% of output per call; a reset does not pay as a loop breaker",
   "magnitude": "material",
-  "generality": "agents with context resets",
-  "expected_usefulness": 3.23,
-  "scientific_value": 3.2,
-  "rater": "3 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "generality": "capped-context LLM scaffolds",
+  "expected_usefulness": 2.98,
+  "scientific_value": 3,
+  "rater": "coordinator (round 2); independent blind rater pending",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.86,
-    "value_if_true": 3.5,
-    "mechanism_level": "M2",
-    "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater (blind, 2026-10-04)",
-    "claim": "A forced context erasure (NE41 cap) is followed, over the next ~5 calls, by a rise in re-acquisition reads (Theta_c about +0.08, 9/9 regime-III periods) and a write dip (Omega about -26%, work commits -38%), with no temperature pulse and no rise in susceptibility to new room content.",
-    "credence": 0.94,
+    "rater": "coordinator (round 2)",
+    "credence": 0.85,
     "value_if_true": 3.5,
     "mechanism_level": "M2",
     "fragile": false,
     "scientific_value": 3,
     "ladder": [
      {
-      "factor": "base: pre-registered primary (P1, P3)",
-      "x": "p0=0.40",
-      "evidence": "card Prediction P1, P3"
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
      },
      {
-      "factor": "calibrated null passed",
+      "factor": "intervention consistent: NE41 cap-timed erasures with pseudo-erasure null (one design)",
       "x": 2,
-      "evidence": "pseudo-erasure null Theta_c -0.011; synthetic pure-dip leak <=0.005 (Amendment A2)"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "replication >=2/3 of >=6 units",
+      "factor": "replication: 9/9 periods",
       "x": 2,
-      "evidence": "Results by goal period: Theta_c>0 9/9, Omega<0 8/9"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "robust to estimator variants",
-      "x": 2,
-      "evidence": "Notes post hoc: past-only control, balanced windows, normalized hash, bge/gte; built on corrected ledger"
-     },
-     {
-      "factor": "identified (synthetic recovery at real counts)",
+      "factor": "partly robust: classifier checked (κ 0.87); dip sign holds under 5 references, size does not",
       "x": 1.5,
-      "evidence": "Synthetic validation: 100% at G51/G38 counts"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "intervention consistent",
-      "x": 2,
-      "evidence": "NE41 forced resets, no excess pre-trend (+7% vs +7%)"
-     },
-     {
-      "factor": "rival beaten",
+      "factor": "identified: synthetic validation found three design flaws pre-data",
       "x": 1.5,
-      "evidence": "Scorecard H: R1 restart overhead, R2 temperature pulse, R3 task boundary rejected"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "penalty: unvalidated heuristic call classifier",
-      "x": 0.7,
-      "evidence": "Caveats 'Categories are heuristics'; R2 redirect H44-R1"
-     }
-    ]
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Scope: nine regime-III non-holdout periods, 21k forced resets. A forced context wipe triggers orderly re-reading (read share of non-write calls up, Theta_c +0.079, 9/9 periods; ~7-call tail) and a ~26% write dip (-38% commits), costing 4-11% of output, with no temperature pulse and no added susceptibility to new room items.",
-    "credence": 0.79,
-    "value_if_true": 4.0,
-    "mechanism_level": "M2",
-    "fragile": false,
-    "scientific_value": 3.5,
-    "ladder": [
-     {
-      "factor": "replication 9/9 periods (write dip 8/9)",
-      "x": 2,
-      "evidence": "summary hresults P1, P3"
+      "factor": "ground truth: blind hand labels (single rater)",
+      "x": 1.2,
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "intervention consistent: forced resets timed by the 41-record cap; forced pre-trend equals pseudo-erasure band",
-      "x": 2,
-      "evidence": "card Standards; summary hresults P5"
-     },
-     {
-      "factor": "identified: synthetic 100% correct at G51 counts, no false thrash",
-      "x": 1.5,
-      "evidence": "summary hobsb"
-     },
-     {
-      "factor": "partly robust: gte robustness model, estimator variants; single data version",
-      "x": 1.5,
-      "evidence": "card Standards Inputs"
-     },
-     {
-      "factor": "penalty: unvalidated regex call classifier",
+      "factor": "penalty: the cap ratio extrapolates within-segment output curves",
       "x": 0.8,
-      "evidence": "summary hcaveats"
-     },
-     {
-      "factor": "penalty: ~12 statistics x 9 periods uncorrected; dip size depends on reference window",
-      "x": 0.8,
-      "evidence": "summary hcaveats"
+      "evidence": "card §Round 2"
      }
     ]
    }
-  ],
-  "adjudicate": false
- }
+  ]
+ },
+ "v2_history": [
+  {
+   "claim": "Forced erasure triggers orderly re-reading, costs 4–11% of output, breaks loops",
+   "original_verdict": "mixed (no thrash)",
+   "credence": 0.88,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "replication",
+     "x": 2
+    },
+    {
+     "factor": "intervention consistent",
+     "x": 2
+    },
+    {
+     "factor": "synthetic identification",
+     "x": 1.5
+    },
+    {
+     "factor": "rival beaten",
+     "x": 1.5
+    }
+   ],
+   "mechanism_level": "M2",
+   "fragile": false,
+   "value_if_true": 3.67,
+   "decision": "context-cap length",
+   "magnitude": "material",
+   "generality": "agents with context resets",
+   "expected_usefulness": 3.23,
+   "scientific_value": 3.2,
+   "rater": "3 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.86,
+     "value_if_true": 3.5,
+     "mechanism_level": "M2",
+     "fragile": false,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater (blind, 2026-10-04)",
+     "claim": "A forced context erasure (NE41 cap) is followed, over the next ~5 calls, by a rise in re-acquisition reads (Theta_c about +0.08, 9/9 regime-III periods) and a write dip (Omega about -26%, work commits -38%), with no temperature pulse and no rise in susceptibility to new room content.",
+     "credence": 0.94,
+     "value_if_true": 3.5,
+     "mechanism_level": "M2",
+     "fragile": false,
+     "scientific_value": 3,
+     "ladder": [
+      {
+       "factor": "base: pre-registered primary (P1, P3)",
+       "x": "p0=0.40",
+       "evidence": "card Prediction P1, P3"
+      },
+      {
+       "factor": "calibrated null passed",
+       "x": 2,
+       "evidence": "pseudo-erasure null Theta_c -0.011; synthetic pure-dip leak <=0.005 (Amendment A2)"
+      },
+      {
+       "factor": "replication >=2/3 of >=6 units",
+       "x": 2,
+       "evidence": "Results by goal period: Theta_c>0 9/9, Omega<0 8/9"
+      },
+      {
+       "factor": "robust to estimator variants",
+       "x": 2,
+       "evidence": "Notes post hoc: past-only control, balanced windows, normalized hash, bge/gte; built on corrected ledger"
+      },
+      {
+       "factor": "identified (synthetic recovery at real counts)",
+       "x": 1.5,
+       "evidence": "Synthetic validation: 100% at G51/G38 counts"
+      },
+      {
+       "factor": "intervention consistent",
+       "x": 2,
+       "evidence": "NE41 forced resets, no excess pre-trend (+7% vs +7%)"
+      },
+      {
+       "factor": "rival beaten",
+       "x": 1.5,
+       "evidence": "Scorecard H: R1 restart overhead, R2 temperature pulse, R3 task boundary rejected"
+      },
+      {
+       "factor": "penalty: unvalidated heuristic call classifier",
+       "x": 0.7,
+       "evidence": "Caveats 'Categories are heuristics'; R2 redirect H44-R1"
+      }
+     ]
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "Scope: nine regime-III non-holdout periods, 21k forced resets. A forced context wipe triggers orderly re-reading (read share of non-write calls up, Theta_c +0.079, 9/9 periods; ~7-call tail) and a ~26% write dip (-38% commits), costing 4-11% of output, with no temperature pulse and no added susceptibility to new room items.",
+     "credence": 0.79,
+     "value_if_true": 4.0,
+     "mechanism_level": "M2",
+     "fragile": false,
+     "scientific_value": 3.5,
+     "ladder": [
+      {
+       "factor": "replication 9/9 periods (write dip 8/9)",
+       "x": 2,
+       "evidence": "summary hresults P1, P3"
+      },
+      {
+       "factor": "intervention consistent: forced resets timed by the 41-record cap; forced pre-trend equals pseudo-erasure band",
+       "x": 2,
+       "evidence": "card Standards; summary hresults P5"
+      },
+      {
+       "factor": "identified: synthetic 100% correct at G51 counts, no false thrash",
+       "x": 1.5,
+       "evidence": "summary hobsb"
+      },
+      {
+       "factor": "partly robust: gte robustness model, estimator variants; single data version",
+       "x": 1.5,
+       "evidence": "card Standards Inputs"
+      },
+      {
+       "factor": "penalty: unvalidated regex call classifier",
+       "x": 0.8,
+       "evidence": "summary hcaveats"
+      },
+      {
+       "factor": "penalty: ~12 statistics x 9 periods uncorrected; dip size depends on reference window",
+       "x": 0.8,
+       "evidence": "summary hcaveats"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
+  }
+ ]
 }
