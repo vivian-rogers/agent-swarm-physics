@@ -1,36 +1,36 @@
-\hwhat{H43 asks whether a kicked agent ignores a second kick until the task that the first kick launched is over. Each kick is timed at the model call that first read it (DQ1 ledger). Past-only matching compares the second kick's effect, as a function of spacing $\delta$, with an isolated first kick. The synthetic validation (planted windows) comes first. Replication covers 35 non-holdout periods, with native tests on NE43 (nudger off), G38 (pause gates) and G04 (human chat). The data show no refractory window. A second kick read by a later call keeps 80--130\% of the effect at every $\delta$ from 1\,min to 4\,h. Mentions give $R=0.78$ [0.67, 0.89] (15 periods), human messages $R\approx1.4$, and nudge re-fires 1.28. Only a kick read in the \emph{same} call adds little ($R=0.2$--0.4). The episode lock is absent (in-episode 0.67 vs 0.83). The holdout is not run.}
+\hwhat{H43 asked whether a kicked agent ignores a second kick until the task the first kick launched is over. Each kick is timed at the model call that first reads it (DQ1 ledger). Round 1 (35 non-reserved periods) found no refractory window: a second kick read by a later call keeps 80--130\% of a first kick's effect. Round 2 asks what the unit of operator attention is. Four tests ran, each validated first on synthetic outcomes over the real skeleton: the $k$-th kick inside one read, nudge facilitation against the nudger's own trigger, re-kicked timer wakes in every regime-III period, and the decomposition of the NE43 drop. In \#51 one read is one kick. A second directed item in the same call adds $\rho_2=0.11$ [0.01, 0.21] of the first; a kick read by the next call keeps about 0.7.}
 
-\hmodel{Model 09 (renewal or refractory Hawkes) with model 03's refractory compartment. A kick read at time $t$ multiplies the agent's escape (or reply) hazard by a gain $g_c$ with a short kernel $\kappa$. A recovery function $r$ runs from the previous effective kick. H43 claims $r=0$ inside the launched task episode of length $L$. The rivals are a habituation clock $r(\delta)$, $r\equiv1$ (state dependence only), and read-out batching (kicks read in one call count once). The estimator $R(\delta)=E_2/E_1$ uses pooled log hazard ratios.}
+\hmodel{Model 09 (renewal Hawkes with a recovery function) and model 03 (refractory compartment). The read-out call is the clock. At each receiving call, the log odds of talking (or of a sustained escape at a timer wake) carry an agent intercept, dose terms $f_d$ for $d$ directed items read in that call, and nuisance terms. These are the read window (H50's length bias), undirected items, wake index $k$ and trap age (H16), and hour of the day. Rivals: additive kicks ($\rho_2=1$), nudge facilitation, and selection by the nudger's trigger.}
 
 \hmath{\vspace{-5pt}\begin{gather*}
-\lambda_{\rm esc}(t)=\lambda_0(a)\,[1+g_c\,\kappa(t-t_{\rm read})\,r(t-t_{\rm last})]\\
-\text{H43: } r=\mathbb{1}[\,t-t_{\rm last}>L\,];\qquad \text{habituation: } r=1-a\,e^{-\delta/\tau}\\
-E=\ln\frac{\sum\text{events}_K/\sum\text{at-risk}_K}{\sum\text{events}_C/\sum\text{at-risk}_C}\\
-R(\delta)=E_2(\delta)/E_1,\qquad \delta_{1/2}:\ R(\delta_{1/2})=\tfrac12
+\mathrm{logit}\,P(y_c)=\alpha_a+\textstyle\sum_{d}f_d\,\mathbb{1}[\text{dose}_c=d]+\beta_w\ln w_c+\boldsymbol\beta\cdot\mathbf{x}_c\\
+m_k=f_k-f_{k-1},\qquad \rho_2=m_2/m_1\quad(\text{additive: }\rho_2=1)\\
+\Delta_F=\gamma_{\rm refire}-\gamma_{\rm first}\ \text{at matched }(k,\ \text{trap age},\ \text{prior-nudge state})\\
+\ln R=\ln\tfrac{G}{M}+\ln p\quad(\text{escapes}=\text{reads}\times\text{escape per read})
 \end{gather*}\vspace{-7pt}}
 
-\hobs{../figures/summary_obs.pdf}{Second-kick effect relative to a first kick (lnHR ratio, 95\% CI), against the spacing of the two receiving calls. Diamonds: the second kick read in the \emph{same} call. Dotted: H43's prediction ($R=0$ inside a 20-min launched episode). Mentions (G51) dip only to ${\sim}0.8$ (pooled over 15 periods: 0.78). Human messages (G04) and nudge re-fires (G51) stay at or above 1.}
+\hobs{../figures/r2_summary.pdf}{(a) Sustained escape at a timer wake by wake index (\#51, before 08-21). First nudges and re-fires after a sustained run lift escape strongly. A re-fire into the same unbroken trap does almost nothing. (b) Dose curve in one read: the second item adds little and the third nothing, for all calls and for Gemini calls with measured starts. (c) Directed read at fresh vs re-kicked timer wakes per period (small periods: post hoc prior). (d) The NE43 drop sits in the one-room week and in the read cadence, not on the nudger-off day.}
 
-\htelos{Do not wait for an agent to finish its task before you nudge or message it again. A kick read by a later call works about as well as the first ($R$ 0.8--1.3). A kick sent before the agent's next model call, e.g.\ during its PAUSE, lands in the same read as the earlier one and adds little ($R=0.2$--0.4). Merge such messages, or deliver them after the next call. The nudger's 15-min floor is already past any refractoriness. Its real limit is that a first nudge buys a glance (escape $\times1.75$), not sustained work. The physics label (refractory renewal) does not survive. The context assembly is the unit of attention.}
+\htelos{Do not stack kicks before the recipient's next model call. In \#51 a second directed message in the same read adds about a tenth of the first, and a third adds nothing. Merge them, or send the second after the next call; a kick read by the next call keeps about 70\%. Do not re-nudge an agent that ignored a nudge and is still in the same pause chain. Its escape rises only from 0.03 to 0.05. Wait until it has worked and stopped again; then a nudge works like a first one. Before blaming a lever for a swarm-level drop, split the drop into read cadence and escape per read. The NE43 drop was longer pauses.}
 
-\hbottom{Kicks leave no refractory window: a second kick read by a later model call works about as well as the first; only kicks in the same read are wasted.}
+\hbottom{In \#51, one read is one kick: a second directed item in the same call adds 0.11 [0.01, 0.21] of the first, robust to measured starts and start bounds.}
 
 \hresults{\footnotesize\begin{tabular}{@{}p{0.37\columnwidth}@{\ }p{0.5\columnwidth}@{\ }c@{}}
-Prediction & Observed & \\\hline
-\raggedright P1 window, $R_{\rm short}\le0.5$ & \raggedright mentions 0.57--0.79; humans, nudges $\ge1$ & $\times$\\
-\raggedright P2 window $\approx$ episode & \raggedright $\delta_{1/2}=0$ vs $\tilde L$ = 5--56 min & $\times$\\
-\raggedright P3 episode lock & \raggedright $R_{\rm in}$ 0.65--0.69 vs $R_{\rm act}$ 0.81--0.84 & $\times$\\
-\raggedright P4 same-call kick $\le0.3$ & \raggedright 0.18 (reply), 0.31 (talk) & \checkmark\\
-\raggedright P5 synthetic recovery & \raggedright nulls clean; mention windows only & $\sim$\\
-\raggedright P6 NE43 nudge window & \raggedright no sustained $E_1$; re-fire $R$ = 1.28 & $\times$\\
-\raggedright P7 invariance across NE43 & \raggedright mention $\Delta R=\pm0.16$ & \checkmark\\
-\raggedright P8 G38 pause gates & \raggedright 8 re-kicked gates: untestable & n/a\\
-\raggedright P9 G04 human trains & \raggedright $R(\delta\le2\,{\rm min})=1.46$ & $\times$\\
-\raggedright P10 rule reliable & \raggedright no window in 98--100\% of draws & \checkmark\\
+Prediction (round 2) & Observed & \\\hline
+\raggedright R3-P1 $\rho_2\le0.5$ (G51) & \raggedright 0.11 [0.01, 0.21]; $m_3=-0.19$ & \checkmark\\
+\raggedright R3-P3 provider, timing & \raggedright Gemini 0.08; bounds 0.08 / 0.30 & \checkmark\\
+\raggedright R3-P4 pooled, $I^2<0.5$ & \raggedright $\rho_2=-0.15$, $I^2$ 0.95 (31 periods) & $\sim$\\
+\raggedright R3-P5 next read $R\ge0.7$ & \raggedright Gemini 0.68 [0.26, 1.14] & $\sim$\\
+\raggedright R2-P1 no facilitation & \raggedright $\Delta_F=-0.06$ [$-0.84$, 0.61] (power 0.5) & ?\\
+\raggedright R2-P2/P3 proxies, agent-day & \raggedright shifts 0.14, 0.18 & \checkmark\\
+\raggedright R5-P1 wake $R_w\ge0.7$ (G51) & \raggedright 0.64 [0.38, 1.08] & $\sim$\\
+\raggedright R5-P3/P4 homogeneous; G38 untestable & \raggedright $I^2$ 0.93; G38 $R_w$ 0.22 & $\times$\\
+\raggedright R6-P1 per-read escape $\ge$50\% & \raggedright cadence 69\% & $\times$\\
+\raggedright R6-P2/P3/P4/P5 roster, channels, bookends, date & \raggedright newcomers $+24\%$; nudger 4\%; 08-21 flat & \checkmark\\
 \end{tabular}}
 
-\hobsb{../figures/synthetic_validation.pdf}{Synthetic validation at G51 scale. (a) Mention $R(\delta)$: the null stays near 1. The estimator recovers a planted 30-min habituation clock ($\delta_{1/2}$ 15 vs 18\,min); an episode lock gives an intermediate curve. (b) The episode test separates the three worlds. The real data look like the null in both panels.}
+\hobsb{../figures/summary_obs.pdf}{Round 1. Second-kick effect relative to a first kick against the spacing of the two receiving calls. Diamonds: the second kick read in the same call. Mentions (G51) dip only to ${\sim}0.8$ (15 periods: 0.78). Human messages (G04) and nudge re-fires (G51) stay at or above 1. Dotted: H43's prediction (a 20-min window).}
 
-\hcaveats{Only mention curves are identifiable at G51 size. Human messages are testable in G04 alone (5-min quiet rule, amended before outcomes), and nudges only marginally. The nudge first-kick effect exists for ``any activity'' (post hoc) but not for sustained work (pre-registered), so $R$ for nudges rests on the post hoc outcome. Re-fired nudges may beat first ones because of the nudger's unobserved text trigger. Estimated call starts for non-Gemini agents misclassify some same-call and next-call pairs; this pulls $R(\delta\le2)$ toward the batched value. Episodes come from minute-grid runs, not task content. With 35 periods $\times$ 3 classes $\times$ 5 outcomes, the replication verdicts are templated and not independent.}
+\hcaveats{The batching ratio is a \#51 result; elsewhere, talking at the call does not carry the read-out ($I^2$ 0.95). R2 has power 0.5, so neither facilitation nor its absence is shown. A trap that survived a first nudge is selected for non-response, so the same-trap loss is not identified as refractoriness. The large first-nudge effect at the wake (lnOR 1.0--1.7) is post hoc and model-dependent; it disagrees with round 1 and with H35's minute-level result. Small regime-III periods separate and need a post hoc prior. The NE43 decomposition is an accounting: what links the room merge to longer pauses is not identified.}
 
-\hnext{Price the $k$-th kick inside one read (per-provider timing). Test nudge facilitation against the trigger (H35). Run content-defined episodes and a content-drift outcome. Run \texttt{confirm.py}.}
+\hnext{Confirm one-read-one-kick on the \#51 tail (C2, extended to $\rho_2$). Separate same-trap refractoriness from trap selection with the NE41 forced erasure between two nudges. Find what lengthened pauses after 08-24. Re-run the first-nudge wake effect against H35's design.}

@@ -32,3 +32,16 @@ Effects are pooled log hazard ratios over the outcome window (E1: isolated first
 | A | O2 | 81 / 79 | 0.73 [0.15, 1.35] | 0.35 [-3.12, 0.80] | 0.14 [-0.39, 8.06] | 0.42 [-13.44, 4.40] | 7.4 [0.0, 332.7] vs L̃ 18 | fail |
 
 Templated verdict: **failed**. A test "passes" when R(short) < R(long) and δ½ lies within [L̃/2, 2L̃]; "underpowered" or "no first-kick effect" classes do not count.
+
+## Round 2 (2026-10-05): pooled timer-wake test (card R5)
+*Prediction (card R5-P1, written before the run): a directed read at an after-PAUSE timer wake works as well after an effective isolated directed primer (re-kicked) as at a fresh wake (no directed read in 60 min). Read only inside the partial pooling; this period is too small to decide alone.*
+
+| Quantity | Value |
+| --- | --- |
+| directed wakes, fresh / re-kicked | 9 / 32 (5 days) |
+| escape at the wake, fresh: no read / read | 0.33 / 0.56 (24 / 9 wakes) |
+| escape at the wake, re-kicked: no read / read | 0.51 / 0.81 (73 / 32) |
+| log OR fresh / re-kicked (N(0, 2.5²) prior, post hoc) | +0.95 [−0.61, 3.47] / +0.88 [−0.08, 2.04] |
+| re-kicked − fresh | −0.08 [−2.94, +2.09] |
+
+Reading: re-kicked and fresh wakes respond alike (R ≈ 0.9), with wide intervals. Verdict unchanged (failed under the round-1 template).

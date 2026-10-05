@@ -1,6 +1,6 @@
 # H43: Kicks leave a refractory window
 
-**Status:** exploratory round 1 done (2026-10-04): no refractory window. Second kicks read by a later call keep 80–130% of the first's effect; only kicks read in the same call are wasted. Holdout not run.
+**Status:** round 2 done (2026-10-05, exploratory): one read is one kick (a second directed item in the same call adds 0.11 [0.01, 0.21] of the first in #51, provider- and timing-robust); re-fired nudges are not better than first ones at matched trap state; the NE43 drop is a cadence change from the one-room week, not the nudger. Round 1 (2026-10-04): no refractory window. Second kicks read by a later call keep 80–130% of the first's effect; only kicks read in the same call are wasted. Reserved data not used.
 Design, nulls and predictions P1–P10 were written before any real-data outcome; synthetic validation (axis F) came first; 35 non-holdout goal periods (replication) and 3 native tests (NE43, G38, G04).
 **Headline: there is no refractory window.** A second kick read by a later model call keeps 80–130% of the first kick's effect at every spacing measured, from 1 min to 4 h:
 - **Mentions:** a shallow dip, pooled R(δ ≤ 15 min) = 0.78 [0.67, 0.89] over 15 periods, recovering by about 1 h.
@@ -241,7 +241,7 @@ Replication verdicts are templated (card, "Replication layer"): a testable class
 | [G35](goalperiod-subhypotheses/G35/README.md) | replication | descriptive | no testable class (primers: H 4, A 111) |
 | [G36](goalperiod-subhypotheses/G36/README.md) | replication | failed | A: E1 0.48, R(0–15) 0.64, δ½ 2 vs L̃ 32 |
 | [G37](goalperiod-subhypotheses/G37/README.md) | replication | descriptive | no testable class (primers: N 5, A 42) |
-| [G38](goalperiod-subhypotheses/G38/README.md) | native | descriptive | native: directed E1 at fresh gates 0.28 (n.s.), 8 re-kicked gates → untestable; replication: mention R(0–15) 1.80 [0.46, 13.7] |
+| [G38](goalperiod-subhypotheses/G38/README.md) | native | mixed | round 2 (after-PAUSE wakes): fresh directed reads 26/26 escape vs re-kicked 0.78 (baseline 0.49–0.53); R_w 0.22 [0.05, 0.39] (ceiling, post hoc prior). Round 1: untestable (8 re-kicked) |
 | [G39](goalperiod-subhypotheses/G39/README.md) | replication | descriptive | no testable class (primers: N 1, H 7, A 106) |
 | [G40](goalperiod-subhypotheses/G40/README.md) | replication | descriptive | no testable class (primers: N 2, A 78) |
 | [G41](goalperiod-subhypotheses/G41/README.md) | replication | failed | A: E1 0.73, R(0–15) 0.35, δ½ 7 vs L̃ 18 |
@@ -473,6 +473,108 @@ Statistic: round 1's sustained escapes per idle agent-minute, R = E/M, before (0
 - **A2-2 · R2 primary model is the proxy model.** Without the γ × proxy terms a k-dependent nudge effect biases Δ_F (−0.18, size 0.13); with them the size is 0.02–0.08. R2-P2 still compares the two.
 - **A2-3 · R2 is underpowered for a null.** Power for Δ_F = 0.5 is 0.48–0.52 at real counts. R2-P1 is therefore read as an interval: an upper 95% bound below 0.3 excludes a re-fire advantage of the round-1 size (≈ 0.3–0.4); otherwise "inconclusive". R2-P4 (reset partition, power 0.42) is descriptive.
 - **A2-4 · R5-P1 is decided on G51** (power 0.87 for R_w = 0.3). The pooled estimate (power 0.60) is reported with its per-period and shrunk values and read as descriptive where its CI includes 0.
+
+### Round-2 results (run 2026-10-05 ~04:50–06:10 UTC; exploratory, non-reserved)
+*Scripts: `analysis/run_r2.py --only r2|r3|r3p5|r5|r6`, `analysis/posthoc_r2.py` (post hoc P1–P3), `analysis/estimates_r2.py`, `analysis/figure_r2.py` → `figures/r2_summary.pdf`. Numbers: `r2/results_{r2,r3,r3p5,r5,r6}.json`, `r2/posthoc_r2.json`. CIs: day-block bootstrap (200 draws; 300 for R3-P5). Compute: one local process at a time, ≤ 2 threads; R3 took 35 min, everything else < 1 min each.*
+
+**R2 · nudge facilitation or nudger selection** (G51 before 08-21: 19,009 after-PAUSE wakes, 182 first nudges, 212 re-fires inside the same trap, 162 re-fires after a sustained run; 34 days)
+
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| R2-P1 | Δ_F CI includes 0, \|Δ_F\| < 0.3; interval reading (A2-3): upper bound < 0.3 | proxy model **Δ_F −0.06 [−0.84, +0.61]** (analytic SE 0.28) | **inconclusive** (A2-3): no re-fire advantage, but the interval cannot exclude one of round-1 size |
+| R2-P2 | proxies move Δ_F by < 0.15 | base +0.08 [−0.54, +0.74] → proxy −0.06 (shift 0.14) | **holds** |
+| R2-P3 | agent-day FE within 0.2 | −0.24 [−0.88, +0.45] (shift 0.18) | **holds** |
+| R2-P4 | reset partition, descriptive | re-fire × reset between +0.30 [−0.41, +1.18]: re-fires after an erasure do no worse | descriptive; the sign is opposite to facilitation through the context |
+| R2-P5 | glance: both > 0, Δ_F ∋ 0 | first +1.19 [0.48, 1.86], re-fire +1.29 [0.47, 1.94]; Δ_F +0.10 [−0.66, +0.70] | **holds** |
+
+The re-fire classes differ sharply (proxy model, split):
+- **Re-fire after a sustained run (new trap):** +1.59 [1.00, 2.17]; minus first +0.28 [−0.36, +0.85]. A nudge to an agent that has worked and stopped again works like a first nudge.
+- **Re-fire inside the same unbroken trap:** −0.10 [−1.21, +0.80]; minus first **−1.42 [−2.60, −0.37]**. Raw, at matched wake index (post hoc P2): k 10–29, first nudges 0.28 escape vs 0.07 un-nudged; same-trap re-fires 0.05 vs 0.03. A second nudge into a trap that ignored the first one does almost nothing.
+- **This is not identified as refractoriness.** A trap that survived a first nudge is selected for non-response (per-trap responsiveness). The synthetic W0 had frailty in the baseline only, not in the nudge response, so it cannot separate the two readings.
+
+Post hoc P1 (why round 1 saw no first-nudge effect on sustained work): on the same wakes, with round 1's outcome (a sustained run within 15 min), first-nudged wakes escape 0.71 against 0.74 for wakes with no nudge in 4 h, the round-1 picture. With the wake index and trap age in the model the first-nudge effect is +1.05 [0.63, 1.49] (base) and +0.47 [−0.25, +1.03] (proxy). On the sustained escape at the wake it is +1.70 [1.27, 2.29] (base) and +0.99 [0.28, 1.53] (proxy). **The nudger fires into deep traps** (median k 3 for first nudges, 33 for same-trap re-fires), where the un-nudged escape is low. Round 1 matched on idle age, not wake index, so it compared nudged deep traps with shallow quiet ones. This reverses round 1's "glance, not work" at the wake. It is post hoc and model-dependent (the proxy model halves it), and it disagrees with H35 round 1b's minute-level DiD.
+
+**R3 · the k-th kick in one read** (active-at-read receiving calls; outcome: the call talks)
+
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| R3-P1 | G51 ρ₂ ∈ [0, 0.5], upper CI < 0.8 | f₁ +1.40 [1.30, 1.49]; m₂ +0.16 [0.01, 0.30]; **ρ₂ 0.11 [0.01, 0.21]** (22,656 / 1,931 / 629 calls at dose 1 / 2 / 3+; talk 0.04 / 0.19 / 0.24 / 0.22) | **holds** |
+| R3-P2 | m₃ ≤ m₂ | m₃ −0.19 [−0.45, +0.03] | **holds** |
+| R3-P3 | S2, S3, S4 within 0.2 of S1 | Gemini logged starts 0.08 [−0.10, 0.32]; calibrated starts 0.13 [0.03, 0.23]; no uncertain items 0.07 [−0.05, 0.17]; boundaries at t_call_lo 0.08 [0.01, 0.18], at t_call_hi 0.30 [0.12, 0.47] | **holds** (largest shift +0.19, t_call_hi) |
+| R3-P4 | pooled ρ₂ ≤ 0.5, upper CI < 1; I² < 0.5 | 31 periods: pooled f₁ +0.35, m₂ −0.05, ρ₂ −0.15 [−0.93, +0.54]; **I² 0.95** on m₂ | **partly**: ρ₂ is small, but periods disagree; in 15 of 31 periods f₁'s CI includes 0 (talk at the call is not a read-out outcome in chat mode), and 10 of the 16 periods with f₁ > 0 have ρ₂ < 0 |
+| R3-P5 | Gemini-only R(δ ≤ 2 min) ≥ 0.7 | 0.68 [0.26, 1.14] (below) | not met as worded; not contradicted |
+| R3-P6 | timer-wake ρ₂ ∈ [0, 0.6] | G51 0.35 [−0.13, 0.92] (f₁ +0.47 [0.35, 0.59], m₂ +0.16); G38 −0.21 [−1.26, 1.24] | **holds** (G51; matches H16's "about a third") |
+
+- The H50 length bias is real but small here: without the window term ρ₂ is 0.15 (vs 0.11) and f₁ 1.45 (vs 1.40).
+- Gemini recipients (measured starts) respond more strongly to a first directed item (f₁ 2.26 vs 1.29) but batch the same way (ρ₂ 0.08 vs 0.13). Start misplacement does not create the batching.
+
+**R3-P5 · the next read restores the kick** (round-1 estimator, G51 mentions, reply at the receiving call; Gemini recipients = agents 6, 22, 27, 44, whose starts are logged): Gemini R(δ ≤ 2 min) **0.68 [0.26, 1.14]** (55 second kicks; first-kick E1 2.64 [2.27, 3.17]; batched R 0.12 [−0.27, 0.61], 18 calls) against 0.75 [0.53, 0.95] for the other recipients (415). The CI width is 0.88, so the test is read: the point misses 0.7 by 0.02 and nothing counts against (the "against" line was R ≤ 0.4 with upper CI < 0.7). **Outcome: not met as worded, not contradicted.** Measured starts do not remove the shallow short-spacing dip, so round 1's caveat (start misplacement pulls R(0–2) down) is not the cause. A kick read by the next call keeps about 70% of a first kick; one read in the same call keeps about 10%.
+
+**R5 · pooled timer-wake test** (after-PAUSE wakes; strict re-kicked class, A2-1)
+
+| Period | directed wakes fresh / re-kicked | log OR fresh | log OR re-kicked | re-kicked − fresh | R_w |
+| --- | --- | --- | --- | --- | --- |
+| G51 (45 days) | 492 / 1,735 | +0.62 [0.41, 0.87] | +0.40 [0.26, 0.55] | **−0.22 [−0.47, +0.04]** | **0.64 [0.38, 1.08]** |
+| G38 (17 days)* | 26 / 96 | +4.08 [3.19, 4.86] (26/26 escape) | +0.90 [0.19, 1.73] | −3.18 [−4.12, −2.23] | 0.22 [0.05, 0.39] |
+| G37 (3 days)* | 7 / 29 | +2.48 [1.57, 3.44] | +0.68 [0.08, 3.07] | −1.81 [−3.25, +1.12] | 0.27 |
+| G41 (5 days)* | 9 / 32 | +0.95 [−0.61, 3.47] | +0.88 [−0.08, 2.04] | −0.08 [−2.94, +2.09] | 0.92 |
+| pooled (DL, k = 4)* | | +2.07 [0.20, 3.93] | +0.43 [0.29, 0.57] | −1.40 [−3.25, +0.45], I² 0.93 | 0.21 [0.09, 1.03] |
+
+\* Post hoc: an N(0, 2.5²) prior on the three directed-read terms. Without it the small periods separate (G38: every fresh directed wake escapes) and the unpenalized pooled estimate is meaningless (−4.9, CI ±10). Loose class (pre-registered): G51 −0.22 [−0.52, +0.08], R_w 0.67.
+
+| # | Prediction | Outcome |
+| --- | --- | --- |
+| R5-P1 | Δ_w CI ∋ 0 and R_w ≥ 0.7 (decided on G51, A2-4) | **partly**: Δ_w's CI includes 0, but R_w's point is 0.64; the kill line (R_w ≤ 0.5 with Δ_w < 0) is not crossed. A shallow dip at the wake, the size of round 1's mention dip (0.78) |
+| R5-P2 | β_fresh > 0 (G51 and pooled) | **holds**: +0.62 [0.41, 0.87]; pooled +2.07 [0.20, 3.93] |
+| R5-P3 | I² < 0.5 | **failed**: I² 0.93; G38 and G37 show large reductions, G41 and G51 small ones |
+| R5-P4 | G38 stays untestable | **failed**: 96 re-kicked directed wakes; G38 shows a ceiling-limited reduction (risk difference +0.51 fresh vs +0.25 re-kicked) |
+
+**R6 · the NE43 drop** (details in `goalperiod-subhypotheses/NE43/README.md`)
+
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| R6-P1 | per-read escape ≥ 50% of Δ ln R | Δ ln R −0.190 [−0.300, −0.106] = cadence −0.132 [−0.262, −0.024] (69%) + per-read escape −0.058 [−0.155, +0.031] (31%) | **failed**: the drop is a cadence change |
+| R6-P2 | roster < 1/3; ≥ half of the drop before any join | newcomers and leavers **+24%** of the change (they raise the rate); within incumbents 73%, reweighting 52%; 08-24…27 (no joins) −23.6% | **holds** |
+| R6-P3 | nudger + room + day edge < 1/2; nudger < 10% | nudge reads 4% [1%, 8%]; room ≈ 0 (CI ±0.03, i.e. ±60% of the per-wake change); day edge ≈ 0 | **holds** (room uncertain) |
+| R6-P4 | bookend step (08-05) inside its band | +4.8%, band [−18.8%, +10.4%] | **holds** |
+| R6-P5 | not a clean 08-21 step | 08-21: −2.9% (cadence −4%, per read +1%); 08-24…27: −23.6% (all cadence); 08-28…09-02: −16%; 09-03…04: −15% (per read −24%, NE33 batch join); wake-model step −0.22 sits at the edge of its placebo band (1 of 13 splits more negative) | **holds** |
+
+Post hoc P3: the cadence drop is longer declared pauses. The median declared pause rises from 240 s to 300 s on 08-21 and 08-24…27, and the share of pauses ≥ 10 min doubles in the one-room week (0.17 → 0.34; agent-FE ln pause +0.10 to +0.14).
+
+### Findings (round 2)
+1. **A re-fired nudge is not better than a first one at matched trap state.** Round 1's re-fire advantage came from different baselines. The unified wake model gives Δ_F −0.06 [−0.84, +0.61]; the interval is wide (power 0.5), so the null is not established either.
+2. **What matters is whether the trap was broken in between.** A re-fire after the agent has worked again acts like a first nudge (+1.59). A re-fire into the same unbroken trap does almost nothing (−1.42 vs first). Refractoriness and selection of non-responsive traps give the same pattern here.
+3. **One read is one kick, robustly, in #51.** A second directed item in the same call adds 11% of the first (ρ₂ 0.11 [0.01, 0.21]); a third adds nothing. Gemini's measured starts, the uncertain flag and both start bounds give 0.07–0.30. A kick read by the *next* call keeps about 70% (Gemini recipients 0.68 [0.26, 1.14]). At a timer wake the second item adds about a third (0.35). Outside #51 the talk-at-the-call outcome does not carry the read-out (I² 0.95).
+4. **At timer wakes, a directed read after an effective primer works about two thirds as well** in #51 (R_w 0.64 [0.38, 1.08]), and much less in the long-pause period G38 (a ceiling-limited 0.22). That is a shallow dip, not a window, in the powered period.
+5. **The NE43 drop is not the nudger.** It starts with the one-room week (08-24), not with the nudger stop (08-21: −3%). It is a cadence change: longer declared pauses, so fewer timer wakes per idle minute. Newcomers raise the rate, and the bookend stop (08-05) left no step.
+
+### Impostors (round 2)
+| Impostor | Relevant? | Handling | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Call clock (timer wakes, receiving calls); hours-into-day bins and others' activity in every wake model; the read window term for dose (H50); the NE43 date profile separates the day schedule from the steps | removed |
+| Exogenous field | yes | The nudger's trigger: prior-nudge state, wake index, trap age, recent run and agent-day FE (R2); the nudge, room and day-edge channels named in R6 | partly (unobserved per-trap responsiveness remains for same-trap re-fires) |
+| Shared model priors | partly | Agent FE everywhere; per-provider split for batching (Gemini vs calibrated starts) | removed for the claims made |
+| Contemporaneous convergence | no | No copying claim; kicks are timed at the receiving call | n/a |
+
+### Scorecard (round 2; round 1 in brackets)
+A 1 [1] · B 1 [1] · C 1 [1] · D 1 [0] · E 1 [1] · F 2 [1] · G 1 [1] · H 1 [1] · I 1 [1].
+- **D 1:** read-out batching predicted in advance (ρ₂ ≤ 0.5, m₃ ≤ m₂, provider-robust) holds in #51; the episode window signatures still fail.
+- **E 1:** NE43 decomposed: the nudger-off day is flat, and the drop arrives with the room merge as a cadence change. This is an accounting, not a clean intervention.
+- **F 2:** every round-2 estimator was validated on the real skeletons before the run; the validation changed two designs (A2-1, A2-2) and flagged R2 and the pooled R5 as underpowered.
+- **H 1:** facilitation is not supported; "re-fires are better" (round 1) loses to the baseline-artifact rival; refractoriness vs selection of non-responsive traps is not separated.
+
+### Old → new
+| Number | Round 1 | Round 2 |
+| --- | --- | --- |
+| first nudge, sustained escape | lnHR 0.07 [−0.19, 0.28] (matched on idle age) | wake model, wake index matched: lnOR +0.99 [0.28, 1.53] (proxy), +1.70 (base); post hoc |
+| re-fired vs first nudge | E2 0.36–0.45 vs E1 0.07 | Δ_F −0.06 [−0.84, +0.61]; same trap −1.42 [−2.60, −0.37]; new trap +0.28 [−0.36, +0.85] |
+| second mention in the same call | R 0.18 (reply), 0.31 (talk) | ρ₂ 0.11 [0.01, 0.21] (G51); Gemini starts 0.08 |
+| G38 timer wakes | 8 re-kicked: untestable | 26 fresh / 96 re-kicked directed wakes; R_w 0.22 (ceiling, post hoc prior) |
+| NE43 drop | −17%, 1–6% nudger, rest "room, roster, bookends" | 69% cadence (longer pauses), from 08-24; nudger 4%; newcomers +24%; bookends 0 |
+
+**Operator reading.** Do not stack kicks before the recipient's next call: in #51 a second directed message in the same read adds about a tenth of the first. Do not re-nudge an agent that ignored a nudge and is still in the same pause chain: it raises escape from 0.03 to about 0.05. Wait until it has worked and stopped again; then a nudge works like a first one.
+
+**Claim that stands:** in #51, one read is one kick: a second directed item read in the same call adds 0.11 [0.01, 0.21] of the first item's effect on talking at that call, robust to measured (Gemini) starts, the uncertain flag and both start bounds (0.07–0.30), while a kick read by the next call keeps about 0.7 (Gemini recipients 0.68 [0.26, 1.14]). Excluded: nudge facilitation (Δ_F −0.06 [−0.84, +0.61], underpowered); the same-trap re-fire loss as refractoriness (not separated from selection of non-responsive traps); the first-nudge effect at the wake (post hoc, model-dependent); the pooled timer-wake and batching estimates outside #51 (I² 0.93–0.95; post hoc prior for small periods); G38's wake reduction (ceiling, post hoc prior); and the NE43 cadence decomposition (an accounting; the link from the room merge to longer pauses is not identified).
 
 ## Notes
 - 2026-10-04: round 1 started. Resumed after an API session limit; the DQ1 context ledger landed in the meantime, so every kick is timed at its receiving call from the start (coordinator instruction), not as a later refinement.

@@ -1,6 +1,6 @@
 # H43 × G38: Choose a charity and raise money (2026-04-02 → 2026-04-24)
 
-**Verdict:** descriptive
+**Verdict:** mixed
 **Role:** native (also carries the replication-layer row)
 **Period:** regime III · mode C · 12–14 agents · #best / #rest · 17 non-holdout days · units 38a–38e (NE17 approval system 04-14, NE18 04-20, two roster joins).
 
@@ -40,3 +40,19 @@ Nudges alone at gates have E1 = 1.04 [0.60, 1.63] (O1, 23 primers; H16's directe
 | A | O2 | 249 / 210 | 0.34 [0.04, 0.62] | 1.80 [0.46, 13.69] | 1.65 [−1.15, 9.69] | 0.19 [−5.58, 3.23] | 0.0 [0.0, 7.9] vs L̃ 28 | fail (no window) |
 
 Verdict: **descriptive**. The native test is untestable at G38's size (the synthetic validation already found nothing resolvable at G38 scale). The replication row shows no mention window (R(0–15) ≥ 1).
+
+## Round 2 (2026-10-05): timer-wake test on after-PAUSE wakes (card R5)
+*Predictions (card, written before the run): R5-P1, a directed read works as well at a re-kicked wake (after an effective isolated directed primer, run ended, ≤ 120 min) as at a fresh wake; R5-P4, G38 stays untestable (< 10 re-kicked wakes with a directed read) after the after-PAUSE restriction.*
+
+| Quantity | Value |
+| --- | --- |
+| after-PAUSE wakes; directed wakes fresh / re-kicked | 1,616; 26 / 96 (17 days) |
+| escape at the wake, fresh: no read / read | 0.49 / **1.00** (335 / 26 wakes) |
+| escape at the wake, re-kicked: no read / read | 0.53 / 0.78 (861 / 96) |
+| risk difference fresh / re-kicked | +0.51 / +0.25 |
+| log OR fresh / re-kicked (N(0, 2.5²) prior; post hoc, the fresh cell is separated) | +4.08 [3.19, 4.86] / +0.90 [0.19, 1.73] |
+| re-kicked − fresh | −3.18 [−4.12, −2.23]; R_w 0.22 [0.05, 0.39] |
+
+- **R5-P4 failed:** with the round-2 definitions G38 is testable (96 re-kicked directed wakes; round 1 had 8 re-kicked idle reads).
+- **Reading:** every fresh directed read in G38 ended the trap at that wake; after an effective primer the same read lifts escape by half as much in risk difference. The log-OR contrast is inflated by the ceiling (26/26) and rests on a post hoc prior. G38 is the long-pause era (before NE44): one directed read wakes a fresh agent for sure, a second soon after does not.
+- Verdict: **mixed (native, round 2)**: a reduction after an effective primer exists here, but it is a ceiling-limited, post hoc-penalized estimate on 26 fresh wakes.

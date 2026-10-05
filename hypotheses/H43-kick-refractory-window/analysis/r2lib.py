@@ -77,7 +77,7 @@ def _sig(x):
     return 1.0 / (1.0 + np.exp(-np.clip(x, -35, 35)))
 
 
-def fe_logit(X: np.ndarray, y: np.ndarray, g: np.ndarray, maxit: int = 60, tol: float = 1e-9, ridge: float = 1e-6):
+def fe_logit(X: np.ndarray, y: np.ndarray, g: np.ndarray, maxit: int = 60, tol: float = 1e-9, ridge=1e-6):
     """Logit with one intercept per group g (no global intercept in X). Exact Newton: the group intercepts are
     profiled out with the Schur complement. Groups whose outcomes do not vary are dropped (they carry no information
     on beta). Returns dict(beta, cov, keep, n, n_groups, converged)."""
@@ -92,6 +92,7 @@ def fe_logit(X: np.ndarray, y: np.ndarray, g: np.ndarray, maxit: int = 60, tol: 
     _, gi = np.unique(gi, return_inverse=True)
     G = gi.max() + 1 if len(gi) else 0
     n, p = X.shape
+    ridge = np.broadcast_to(np.asarray(ridge, float), (p,)) if np.ndim(ridge) else np.full(p, float(ridge))
     if n == 0 or G == 0:
         return {"beta": np.full(p, np.nan), "cov": np.full((p, p), np.nan), "keep": keep, "n": 0, "n_groups": 0,
                 "converged": False}
@@ -109,7 +110,7 @@ def fe_logit(X: np.ndarray, y: np.ndarray, g: np.ndarray, maxit: int = 60, tol: 
         ga = np.bincount(gi, weights=r, minlength=G)
         Daa = np.bincount(gi, weights=W, minlength=G)
         XW = X * W[:, None]
-        Hbb = X.T @ XW + ridge * np.eye(p)
+        Hbb = X.T @ XW + np.diag(ridge)
         Hba = np.zeros((p, G))
         for j in range(p):
             Hba[j] = np.bincount(gi, weights=XW[:, j], minlength=G)
@@ -124,7 +125,7 @@ def fe_logit(X: np.ndarray, y: np.ndarray, g: np.ndarray, maxit: int = 60, tol: 
         for _h in range(25):
             bn, an = beta + t * db, alpha + t * da
             mun = _sig(X @ bn + an[gi])
-            ll = float(np.sum(y * np.log(np.clip(mun, 1e-12, 1)) + (1 - y) * np.log(np.clip(1 - mun, 1e-12, 1))))
+            ll = float(np.sum(y * np.log(np.clip(mun, 1e-12, 1)) + (1 - y) * np.log(np.clip(1 - mun, 1e-12, 1)))) - 0.5 * float(np.sum(ridge * bn ** 2))
             if ll >= ll_old - 1e-9:
                 break
             t /= 2
@@ -141,7 +142,7 @@ def fe_logit(X: np.ndarray, y: np.ndarray, g: np.ndarray, maxit: int = 60, tol: 
     Hba = np.zeros((p, G))
     for j in range(p):
         Hba[j] = np.bincount(gi, weights=XW[:, j], minlength=G)
-    S = X.T @ XW + ridge * np.eye(p) - (Hba / Daa[None, :]) @ Hba.T
+    S = X.T @ XW + np.diag(ridge) - (Hba / Daa[None, :]) @ Hba.T
     try:
         cov = np.linalg.inv(S)
     except np.linalg.LinAlgError:
