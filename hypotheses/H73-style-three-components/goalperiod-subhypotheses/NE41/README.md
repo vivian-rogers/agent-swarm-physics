@@ -29,3 +29,9 @@ The scaffold erases the context at a fixed record count, not when the agent choo
 - **E (interventional):** the scaffold-timed erasure is the intervention; the drift fitted inside segments does not predict the erasure jump in the stated range.
 - **D (unfitted):** β is an out-of-fold, unfitted statistic (Amendment A1).
 - **H (rivals):** R5 (directionless excursion) predicts β ≈ 0 with T_s ≈ 0.556 (synthetic S2).
+
+## Round 2 (2026-10-05)
+**Round-2 result:** pending.
+*Prediction written 2026-10-05 05:07 UTC, before the real round-2 run (card pre-registration 04:46 UTC).*
+- **C0 (correction, not a test):** round 1's forced-erasure T_s (0.567) recomputed with H46's agent × unit scaling (R2-A5); expected ≈ 0.55.
+- **R2-3, regime III (seen sample; H46 found the reset-and-hold shape here post hoc):** new statistics only. Carry-over ρ_carry < 0.3 (the offset is redrawn at each reset, not carried), and κ_seg ∈ [0.02, 0.10].

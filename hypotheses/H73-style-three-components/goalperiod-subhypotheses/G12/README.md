@@ -44,3 +44,9 @@ Native: the only non-holdout period with an assigned, rotating speech register i
 - **G (ground truth):** DQ6 judge and team windows define the register.
 - **E (interventional):** the judge draw assigns the register from outside; judging moves style in a shared direction.
 - **H (rivals):** a shared direction separates an assigned register from agent-specific responses.
+
+## Round 2 (2026-10-05)
+**Round-2 result:** pending.
+*Prediction written 2026-10-05 05:07 UTC, before the real round-2 run (card pre-registration 04:46 UTC).*
+- **R2-2c judge register by minute (descriptive):** projection on the leave-this-judge-out shared judge direction, relative to the judge's debater mean. (i) The 0–5 min mean is ≥ 0.5 × the window mean (a step); (ii) no build-up (slope per 10 min ≤ 0 or within-window permutation p ≥ 0.05); (iii) switch-off: the 30 min after the window < 0.5 × the window mean.
+- Replication layer: the templated R2-1a/R2-1b lines also apply.

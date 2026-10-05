@@ -40,3 +40,10 @@ Native: the fine-tuned leader is a weights swap on a known base (Kimi K2.6), the
 
 ## Scorecard (period-specific axes)
 - **G (ground truth):** the leader's base model is known (H23, DQ6); the weights component should point to it.
+
+## Round 2 (2026-10-05)
+**Round-2 result:** pending.
+*Prediction written 2026-10-05 05:07 UTC, before the real round-2 run (card pre-registration 04:46 UTC; templated, layer 1).*
+- **R2-1a conversation state:** the unique share of conversation state (received items, pending @-mentions, pending nudge, DQ2 thread depth) u_Cv is positive (within-agent-day permutation p < 0.05); in regime III it exceeds the unique share of own fill u_Cf.
+- **R2-1b accommodation** (read vs in-flight sources at the read boundary): the unit's γ is reported if the unit has ≥ 200 read and ≥ 200 in-flight pairs; the verdict is card-level (pooled), not per unit.
+- **R2-3 reset-and-hold** (regime I/II periods with ≥ 150 one-reset pairs): ΔC(1) > 0 and T > ½ reported (descriptive per period).

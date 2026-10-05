@@ -45,3 +45,11 @@ Native: private roles assigned on 07-06 (Prankster, media roles) are the cleanes
 - **E (interventional):** the 07-06 role assignment is the intervention; the Prankster's shift does not exceed its placebo band once context is removed.
 - **G (ground truth):** DQ6 roles and role classes.
 - **H (rivals):** class coherence tests an assigned register against agent-specific responses.
+
+## Round 2 (2026-10-05)
+**Round-2 result:** pending.
+*Prediction written 2026-10-05 05:07 UTC, before the real round-2 run (card pre-registration 04:46 UTC).*
+- **R2-2-P1 (Prankster onset transient):** daily split-half shift S_10(k) since 07-06 (difference-in-differences against the other incumbents) fits S∞ + A e^(−k/τ) with A > 0 (CI > 0), τ ∈ [0.5, 14] days (upper bound < 30), and the k = 21–60 level inside its placebo band.
+- **R2-2-P2 (general onset transients):** over the 16 incumbents, mean S(k ≤ 2) − mean S(14 ≤ k ≤ 42) > 0 in a sign test (p < 0.05).
+- **R2-2b NE38 (agent 40, 07-29; descriptive):** the k = 0–2 shift exceeds all four pseudo-date values and halves by k = 7–20.
+- Replication layer: the templated R2-1a/R2-1b lines also apply.
