@@ -1,6 +1,7 @@
 # H74 × G06: daily change detector on goal period #6 (2025-06-26 → 2025-07-15, non-holdout days)
 
 **Verdict:** mixed
+**Verdict (r2):** mixed
 **Role:** replication
 **Period:** regime I · 15 non-holdout active days scored.
 
@@ -25,6 +26,24 @@ Goal kickoffs (not part of the rule): 2025-06-26 (Z 3.6).
 
 Unexplained alarms (no catalogued event within ±1 active day):
 - 2025-06-29: Z 125.0, channel D (start_tod_min)
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Round-2 precision monitor on this period (card: Round 2; S ∪ D3 ∪ C3, LOPO thresholds at α = 0.02; role: replication, exploratory).
+*Period rule written 2026-10-05 04:05 UTC, before any round-2 statistic: supported if every non-reserved target event (scaffold tool, scaffold family, drive, undocumented, goal) is hit and no P2 placebo day alarms; failed if none is hit; mixed otherwise; descriptive if none.*
+
+Monitor alarm days: 1/15. P2 placebo days: 2, false alarms 0.
+
+| day 0 | class | event | monitor (channels in window) |
+| --- | --- | --- | --- |
+| 2025-06-26 | goal | goal #6 kickoff | miss |
+| 2025-06-26 | scaffold tool | [Prompt/Computer-use] Timezone standardization; ensure early | miss |
+| 2025-07-01 | undocumented | public chat closed (DQ9) | hit (D3) |
+| 2025-07-03 | scaffold tool | [Computer-use] Added screenshot redaction: screenshots are r | hit (D3) |
+| 2025-07-10 | scaffold family | [Prompt] Gave Gemini an extra reminder to get pixel coordina | miss |
+
+Result under the period rule: **mixed**. Data: `data/processed/H74-change-detector/r2/monitor_days.parquet` (goal_no = 6).
+<!-- /R2 -->
 
 ## Scorecard (period-specific axes)
 - G (ground truth): dated events in this period are the answer key; hits as tabulated.

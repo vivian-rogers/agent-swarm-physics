@@ -1,6 +1,7 @@
 # H74 × NE43: the automated speaker winds down in two steps (#51; 2026-08-05 and 2026-08-21)
 
 **Verdict:** mixed
+**Verdict (r2):** supported
 **Role:** native
 **Period:** regime III · #51 · 27 agents · #general (+ #focus 08-05 → ~08-24) · units 51f–51h.
 
@@ -24,6 +25,17 @@ Two undocumented operator steps inside one long period with a dense, stable base
 | Specificity: quiet #51 days alarm ≤ 0.15 | 2/7 quiet days (0.29; both channel O, answer line length, 08-12 and 08-14); #51 is so dense with events that only 7 days qualify | failed (n = 7) |
 
 Both undocumented operator steps are dated to the day by the drive channel's plain counters. The rest of #51 is noisy in the oracle-format channel.
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Round-2 readout (card: Round 2, D3 counters with two-day persistence, LOPO threshold).
+| Step | D3 window max | Threshold | Outcome |
+| --- | --- | --- | --- |
+| NE43a (08-05, bookends stop) | 11.0 | 2.76 | alarm |
+| NE43b (08-21, nudges stop) | 10.1 | 2.76 | alarm |
+
+Both steps alarm with one day of delay (persistence). Round-2 verdict: supported.
+<!-- /R2 -->
 
 ## Scorecard (period-specific axes)
 - G (ground truth): both dated steps recovered on the correct day.

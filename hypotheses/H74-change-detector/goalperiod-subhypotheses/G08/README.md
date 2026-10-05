@@ -1,6 +1,7 @@
 # H74 × G08: daily change detector on goal period #8 (2025-07-18 → 2025-08-12, non-holdout days)
 
 **Verdict:** mixed
+**Verdict (r2):** mixed
 **Role:** replication
 **Period:** regime I · 18 non-holdout active days scored.
 
@@ -27,6 +28,25 @@ Goal kickoffs (not part of the rule): 2025-07-18 (Z 12.0).
 Unexplained alarms (no catalogued event within ±1 active day):
 - 2025-07-25: Z 5.8, channel D (js_share)
 - 2025-07-28: Z 7.8, channel M (bash_share)
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Round-2 precision monitor on this period (card: Round 2; S ∪ D3 ∪ C3, LOPO thresholds at α = 0.02; role: replication, exploratory).
+*Period rule written 2026-10-05 04:05 UTC, before any round-2 statistic: supported if every non-reserved target event (scaffold tool, scaffold family, drive, undocumented, goal) is hit and no P2 placebo day alarms; failed if none is hit; mixed otherwise; descriptive if none.*
+
+Monitor alarm days: 1/18. P2 placebo days: 6, false alarms 0.
+
+| day 0 | class | event | monitor (channels in window) |
+| --- | --- | --- | --- |
+| 2025-07-18 | goal | goal #8 kickoff | hit (C3) |
+| 2025-07-18 | operator schedule | [Other] Moved village start time 1 hour earlier; prompt upda | hit (C3) |
+| 2025-07-31 | scaffold tool | [Human-use] Handle ending a human-use session, including ter | miss |
+| 2025-08-05 | scaffold tool | [Human-use] Handle interaction between computer use and huma | miss |
+| 2025-08-07 | scaffold family | [Human-use] Added Gemini human use. | miss |
+| 2025-08-11 | scaffold tool | [Human-use] Extended human-use support across providers (Ope | miss |
+
+Result under the period rule: **mixed**. Data: `data/processed/H74-change-detector/r2/monitor_days.parquet` (goal_no = 8).
+<!-- /R2 -->
 
 ## Scorecard (period-specific axes)
 - G (ground truth): dated events in this period are the answer key; hits as tabulated.

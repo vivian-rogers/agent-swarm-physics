@@ -1,6 +1,7 @@
 # H74 × G51: daily change detector on goal period #51 (2026-07-06 → 2026-09-04, non-holdout days)
 
 **Verdict:** mixed
+**Verdict (r2):** mixed
 **Role:** replication
 **Period:** regime III · 45 non-holdout active days scored.
 
@@ -29,6 +30,25 @@ Unexplained alarms (no catalogued event within ±1 active day):
 - 2026-08-12: Z 6.9, channel O (f_mean_line)
 - 2026-08-14: Z 4.5, channel O (f_mean_line)
 - 2026-08-26: Z 4.0, channel D (n_present)
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Round-2 precision monitor on this period (card: Round 2; S ∪ D3 ∪ C3, LOPO thresholds at α = 0.02; role: replication, exploratory).
+*Period rule written 2026-10-05 04:05 UTC, before any round-2 statistic: supported if every non-reserved target event (scaffold tool, scaffold family, drive, undocumented, goal) is hit and no P2 placebo day alarms; failed if none is hit; mixed otherwise; descriptive if none.*
+
+Monitor alarm days: 5/45. P2 placebo days: 16, false alarms 1 (2026-07-14).
+
+| day 0 | class | event | monitor (channels in window) |
+| --- | --- | --- | --- |
+| 2026-07-06 | goal | goal #51 kickoff | hit (S) |
+| 2026-07-29 | operator | human reassigns one agent's role | miss |
+| 2026-07-29 | undocumented | search tool date fields int -> str (H56) | miss |
+| 2026-08-05 | undocumented | daily pause/resume bookends stop (first day without) | hit (D3) |
+| 2026-08-21 | operator | automated speaker silent (nudger off); undocumented | hit (D3) |
+| 2026-08-21 | undocumented | nudger off (first day without) | hit (D3) |
+
+Result under the period rule: **mixed**. Data: `data/processed/H74-change-detector/r2/monitor_days.parquet` (goal_no = 51).
+<!-- /R2 -->
 
 ## Scorecard (period-specific axes)
 - G (ground truth): dated events in this period are the answer key; hits as tabulated.

@@ -16,7 +16,7 @@ H36 = ROOT / "data/processed/H36-reorganization-alarm/r2"
 MARKERS = ["h1", "h2", "h3", "bold", "b_star3", "b_star", "b_dash", "b_dot", "b_num", "emdash", "endash", "nonascii",
            "open0", "open1", "open2", "open3"]
 CLASSES = ["scaffold_tool", "scaffold_prompt", "scaffold_family", "drive", "goal", "goal_prompt", "roster", "room",
-           "undocumented"]
+           "undocumented", "provider"]
 LABEL_MAP = {"drive": ["operator", "operator_schedule"]}
 PLATFORM_POOL = ["scaffold_tool", "scaffold_family", "operator", "operator_schedule", "undocumented"]
 
@@ -33,9 +33,25 @@ def load_days():
     return days, cal_days
 
 
-def load_frame() -> R.Frame:
+# Round-1 data findings (card Notes): provider API response-format changes dated by channel S. Post hoc catalog
+# completion for round 2 ("ext" catalog): they are real platform-side changes that the CHANGELOG does not list.
+PROVIDER = [("PROV1219", "2025-12-19", "Google", "Gemini response envelope: responseId, sdkHttpResponse added"),
+            ("PROV0209", "2026-02-09", "Anthropic", "Anthropic usage subfields"),
+            ("PROV0401", "2026-04-01", "Anthropic", "Anthropic stop_details field added"),
+            ("PROV0506", "2026-05-06", "Google", "Gemini usageMetadata subfields"),
+            ("PROV0713", "2026-07-13", "OpenAI", "OpenAI response items: phase, encrypted_content")]
+
+
+def load_frame(catalog: str = "prereg") -> R.Frame:
     days, cal_days = load_days()
     ev = pl.read_parquet(OUT1 / "events.parquet")
+    if catalog == "ext":
+        dl = days["pt_date"].to_list()
+        rows = [{"event": e, "date": d, "cls": "provider", "label": lab, "ref": e, "family_target": fam,
+                 "day0": next(x for x in cal_days if x >= d), "held0": False} for e, d, fam, lab in PROVIDER]
+        add = pl.DataFrame(rows, schema=ev.schema)
+        assert all(r["day0"] in dl for r in rows), "provider day 0 not a scored day"
+        ev = pl.concat([ev, add])
     return R.Frame(days, cal_days, ev)
 
 

@@ -1,6 +1,7 @@
 # H74 × G38: daily change detector on goal period #38 (2026-04-02 → 2026-04-24, non-holdout days)
 
 **Verdict:** supported
+**Verdict (r2):** mixed
 **Role:** replication
 **Period:** regime III · 17 non-holdout active days scored.
 
@@ -26,6 +27,25 @@ Goal kickoffs (not part of the rule): 2026-04-02 (Z 8.0).
 
 Unexplained alarms (no catalogued event within ±1 active day):
 - none
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Round-2 precision monitor on this period (card: Round 2; S ∪ D3 ∪ C3, LOPO thresholds at α = 0.02; role: replication, exploratory).
+*Period rule written 2026-10-05 04:05 UTC, before any round-2 statistic: supported if every non-reserved target event (scaffold tool, scaffold family, drive, undocumented, goal) is hit and no P2 placebo day alarms; failed if none is hit; mixed otherwise; descriptive if none.*
+
+Monitor alarm days: 0/17. P2 placebo days: 5, false alarms 0.
+
+| day 0 | class | event | monitor (channels in window) |
+| --- | --- | --- | --- |
+| 2026-04-02 | goal | goal #38 kickoff | miss |
+| 2026-04-02 | operator | operator corrects Year-1 total belief | miss |
+| 2026-04-14 | scaffold tool | [Tools/Chat] Added the unsolicited-outreach approval system: | miss |
+| 2026-04-20 | scaffold tool | [Tools] `search_history`: split long transcripts into verbat | miss |
+| 2026-04-20 | undocumented | search oracle swap Gemini 2.5 Pro -> Sonnet 4.6 (H56) | miss |
+| 2026-04-24 | scaffold family | [Computer-use] Temporary hotfix for a DeepSeek "multiple too | hit (C3) |
+
+Result under the period rule: **mixed**. Data: `data/processed/H74-change-detector/r2/monitor_days.parquet` (goal_no = 38).
+<!-- /R2 -->
 
 ## Scorecard (period-specific axes)
 - G (ground truth): dated events in this period are the answer key; hits as tabulated.

@@ -1,6 +1,7 @@
 # H74 × NE45: history-search tool schema change (#51; 2026-07-29)
 
 **Verdict:** supported
+**Verdict (r2):** mixed
 **Role:** native
 **Period:** regime III · #51 · 27 agents · #general · unit 51f.
 
@@ -22,6 +23,18 @@ An undocumented tool-interface change (date fields startDay/endDay as integers b
 | S alarms at ≤ 2 of 8 #51 roster-join days | 1/8 (the 07-10 join window, carried by the 07-13 change in the OpenAI response format of incumbent agents, not by the newcomers) | held |
 
 The fused window score is 26.8, but that maximum comes from D on 07-28: a long window with a 36% joint-silence share, an unrelated operations event. The schema channel names the change exactly.
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Round-2 readout (card: Round 2).
+| Channel | Score at 07-29 | Threshold | Outcome |
+| --- | --- | --- | --- |
+| S (pre-registered catalog) | 12 | 20 | no alarm |
+| S (catalog + round-1 provider dates, post hoc) | 12 | 0 | alarm |
+| presence rule (P2.4: should stay silent) | – | – | accumulating rule silent; one-day rule fires on h1 (a false attribution) |
+
+Round-2 verdict: mixed (S is blinded by its own uncatalogued provider finds in the pre-registered placebo pool).
+<!-- /R2 -->
 
 ## Scorecard (period-specific axes)
 - G: the undocumented schema change is recovered on the day, with the renamed fields listed.

@@ -1,6 +1,7 @@
 # H74 × G05: daily change detector on goal period #5 (2025-06-19 → 2025-06-25, non-holdout days)
 
 **Verdict:** descriptive
+**Verdict (r2):** failed
 **Role:** replication
 **Period:** regime I · 5 non-holdout active days scored.
 
@@ -21,6 +22,20 @@ Goal kickoffs (not part of the rule): 2025-06-19 (Z 48.0).
 
 Unexplained alarms (no catalogued event within ±1 active day):
 - none
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Round-2 precision monitor on this period (card: Round 2; S ∪ D3 ∪ C3, LOPO thresholds at α = 0.02; role: replication, exploratory).
+*Period rule written 2026-10-05 04:05 UTC, before any round-2 statistic: supported if every non-reserved target event (scaffold tool, scaffold family, drive, undocumented, goal) is hit and no P2 placebo day alarms; failed if none is hit; mixed otherwise; descriptive if none.*
+
+Monitor alarm days: 0/5. P2 placebo days: 2, false alarms 0.
+
+| day 0 | class | event | monitor (channels in window) |
+| --- | --- | --- | --- |
+| 2025-06-19 | goal | goal #5 kickoff | miss |
+
+Result under the period rule: **failed**. Data: `data/processed/H74-change-detector/r2/monitor_days.parquet` (goal_no = 5).
+<!-- /R2 -->
 
 ## Scorecard (period-specific axes)
 - G (ground truth): dated events in this period are the answer key; hits as tabulated.

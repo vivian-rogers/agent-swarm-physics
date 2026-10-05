@@ -1,6 +1,7 @@
 # H74 × NE14: the regime II → III boundary (#36; scored at 2026-03-24)
 
 **Verdict:** supported
+**Verdict (r2):** supported
 **Role:** native
 **Period:** regime II → III · #36 · 12 agents · #best / #rest · units 36a → 36b.
 
@@ -23,6 +24,19 @@ The largest documented platform change in the non-holdout data: perma-computer-u
 | C < 4 | C 1.8 | held |
 
 The largest platform change in the non-holdout data, which EP (H56) and the fluctuation alarm (H36) missed, is dated to the day by the schema channel alone.
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Round-2 readout (card: Round 2). Monitor channels at 03-24 (window −1..+1):
+| Channel | Score | Threshold | Outcome |
+| --- | --- | --- | --- |
+| S (pre-registered catalog) | 16 | 20 (LOPO; two provider format changes sit on P2 days) | no alarm |
+| S (catalog + round-1 provider dates, post hoc) | 16 | 0 | alarm |
+| D3 (counters) | 1.29 | 2.76 | no alarm |
+| C3 (frozen topic rule) | 4.72 | 2 | alarm |
+
+The monitor fires (alarm). The positive control holds only through C3 under the pre-registered catalog; S recovers it once the provider dates leave the placebo pool.
+<!-- /R2 -->
 
 ## Scorecard (period-specific axes)
 - E (interventional): a documented scaffold intervention is detected on its day by the channel built for it.

@@ -1,29 +1,29 @@
 {
- "complete": 45,
+ "complete": 60,
  "faithfulness": 2.0,
  "usefulness": 3.0,
  "rationale": {
-  "complete": "Round 1 done: dated card and predictions; numbers-only raw scan of event and turn schemas; synthetic study at real counts with a pre-data amendment; detector on all 282 non-holdout days against 217 dated events; 35 replication period folders; 4 natives (NE14, NE40, NE43, NE45) with predictions written before the run; confirm.py frozen, guarded and dry-run; estimates rows. Missing: holdout run, per-channel calibrated thresholds, a presence rule for format markers.",
-  "faithfulness": "Dated changes are the ground truth and the schema channel recovers them to the day with the changed fields named (NE14, NE17, NE45) at zero placebo false alarms; drive counters date both NE43 steps. Not higher: the pre-registered fused alarm is mixed (AUC 0.68, p 0.059) and miscalibrated (FAR 0.18 vs 0.05 synthetic), NE40 is missed, two undocumented recoveries are not blind, and only 34 placebo days exist. Scorecard A1 B1 C1 D1 E1 F1 G2 H1 I1.",
-  "usefulness": "Directly operator-usable: a schema diff is computable from any swarm's logs, costs nothing, had no false alarms and dated platform and provider API changes; plain drive counters date operator changes. The fused alarm itself is not ready."
+  "complete": "Rounds 1 and 2 done. Round 2: dated pre-registration, two amendments before real data, synthetic worlds on the real skeleton with bootstrapped real tails, a leave-one-period-out calibrated monitor, heavy-tailed baseline variants, a format presence rule, a provider DiD, period blocks and estimates, an operator rule. Missing: the reserved-data run, a scaffold-change observable, a powered provider DiD.",
+  "faithfulness": "Every FAR is now out-of-sample and distribution-free (B, F to 2); the synthetic study predicted the real per-channel FAR. Dated changes remain the ground truth. Not higher: the pre-registered monitor is mixed (FAR 0.085), scaffold changes are at chance, the S fix is post hoc, NE40 is a recovery. Scorecard A1 B2 C1 D1 E1 F2 G2 H1 I1.",
+  "usefulness": "Operator-ready: three cheap channels with stated thresholds and out-of-sample FARs, computable from any swarm's logs; it dates drive, format and goal changes. It cannot see scaffold or prompt changes."
  },
- "one_line": "A daily schema diff of log records dates platform and provider API changes to the day with zero placebo false alarms; the fused five-channel alarm is mixed (AUC 0.68) and too noisy (FAR 0.18).",
+ "one_line": "Calibrated out of sample, a schema diff plus log-count operator counters plus topic shift dates drive, format and goal changes at FAR 0.085 per quiet day (0.051 with provider dates catalogued); scaffold changes stay at chance.",
  "models": [
   {
    "model": "02-nonequilibrium-ising",
    "role": "primary",
    "outcome": "mixed",
-   "note": "Platform steps show as synchronous rule changes; behavior shifts rarely do"
+   "note": "Platform and drive steps show as synchronous rule and counter changes; behavior-mix shifts stay below day-to-day noise"
   },
   {
    "model": "11-vector-spins",
    "role": "secondary",
    "outcome": "supported",
-   "note": "Content centroid shift detects goal steps (AUC 0.89)"
+   "note": "Content centroid shift (C3) detects goal steps (hit 0.57, p 0.003)"
   }
  ],
  "rated_by": "H74 agent (suggested)",
- "updated": "2026-10-04",
+ "updated": "2026-10-05",
  "v2": {
   "claim": "A schema diff of the raw record is an operator-grade change detector: 0/34 placebo false alarms; it dates NE14, NE17 and NE45 to the day and found 6 undocumented provider API changes. The fused five-channel alarm is too noisy (18% false alarms, AUC 0.68); topic shift remains the goal detector (AUC 0.89)",
   "scope": "282 non-holdout days, 217 dated events; natives NE14, NE45, NE43, NE40",

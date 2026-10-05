@@ -1,36 +1,36 @@
-\hwhat{A daily change-point monitor runs on all 282 non-holdout active days, from April 2025 to September 2026. It has five channels: log record schemas (S), synchronous within-agent behavior shifts (M), search-answer format (O), drive and schedule counters (D) and content topic shift (C). The fused alarm is the maximum channel score at $\tau=4$. It is scored against 211 catalogued changes and 6 undocumented ones. On documented tool changes the fused score has AUC 0.68 [0.54, 0.82] (random-date $p$ 0.059): \textbf{mixed}. It alarms on 18\% of placebo days, against a predicted 10\%. The schema channel has no false alarms and dates platform changes to the day, naming the changed fields. It also finds six provider API format changes that no catalog lists. Drive counters date both NE43 steps. Topic shift remains the goal detector. The holdout is not run.}
+\hwhat{H74 builds a daily change detector for an agent swarm and scores it against 217 dated changes on 282 non-reserved days (April 2025 to September 2026). Round 1: a five-channel fused alarm was too noisy (18\% false alarms on quiet days); a schema diff of the log records was precise. \textbf{Round 2} keeps three channels: the schema diff S, operator counters D3 (bookends, nudges, human messages) and H36's frozen topic rule C3. Thresholds are calibrated on quiet days of the \emph{other} goal periods, so every false-alarm rate (FAR) is out-of-sample. The monitor has FAR 0.085 [0.04, 0.17] per quiet day and hits goal kickoffs at 0.57 ($p$ 0.003) and room changes at 6/6. D3 dates all three undocumented drive steps (NE39, NE43a, NE43b) at FAR 1/82. Scaffold tool changes are hit at chance. Verdict: \textbf{mixed}.}
 
-\hmodel{Models 02 and 11. A day $d$ is one step of a driven system. A platform step changes the rules for every agent at once, so the record schema changes or every agent's own behavior shifts together. An operator step changes the drive counters. A goal step is a field step on content. Each feature is scored by a robust trailing $z$ against the previous $B=10$ days. $c_k$ is the Gaussian consistency factor of the trimmed SD. $n^{\rm new}_d$ and $n^{\rm retired}_d$ count platform-wide record signatures (field names and value types) that appear or retire on day $d$.}
+\hmodel{Models 02 and 11. A day $d$ is one step of a driven system. A platform step changes record schemas for every agent at once; an operator step changes drive counters; a goal step is a field step on content. Counts are heavy-tailed, so each counter is logged, scored by a robust trailing $z$ (10 days) and must persist for two days. Each channel $k$ alarms above $\theta_k(g)$, the conformal $(1-\alpha)$ quantile of its scores on the $n$ placebo days outside goal period $g$ (placebo: $\ge2$ active days from every catalogued event).}
 
 \hmath{\vspace{-6pt}\begin{gather*}
-z(d)=\big[x(d)-\mathrm{med}_B\,x\big]\big/\max\{\mathrm{sd}^{\rm trim}_B(x)/c_k,\ \mathrm{floor}\}\\
-z_M(d)=\max_f\big|\mathrm{med}_i\,z_{i,f}(d)\big|,\qquad z_S(d)=4\,\big(n^{\rm new}_d+n^{\rm retired}_d\big)\\
-Z(d)=\max\{z_S,z_M,z_O,z_D,z_C\},\qquad \text{alarm if } Z(d)\ge\tau=4
+p_f(d)=\min\{|z_f(d-1)|,|z_f(d)|\},\quad z_f=z[\log(1+x_f)],\quad D3(d)=\max_f p_f(d)\\
+\theta_k(g)=s_{k,(\lceil(1-\alpha)(n+1)\rceil)}\ \text{over placebo days}\notin g,\qquad \alpha=0.02\\
+\text{alarm}(d)=[z_S>\theta_S]\lor[D3>\theta_{D}]\lor[\mathrm{R1}\ge3\lor Z_{\rm cont}\ge2]
 \end{gather*}\vspace{-8pt}}
 
-\hobs{../figures/summary_obs.pdf}{Left: AUC of the event window (days $-1$..$+1$) against placebo windows, by event class and channel; event counts in brackets. Each channel sees its own class: schema and drive for platform and operator steps, topic for goals and rooms. The fused score averages them away. Right: \#51 daily channel scores. The schema channel fires on the search-tool rename (NE45). The drive channel fires on the bookend stop (NE43a) and the nudger stop (NE43b).}
+\hobs{../figures/r2_summary.pdf}{(a, b) Operating points: out-of-sample FAR per quiet day against hit rate (alarm on day $-1$..$+1$), for 45 platform, drive and undocumented events and for 35 goal kickoffs. Round 1's fused alarm (gray square) sits at FAR 0.21; with a calibrated threshold it fires once (gray cross). The monitor (violet) reaches FAR 0.085; pink and the small violet marker add round 1's provider-format dates to the catalog (post hoc). (c) The D3 counter channel over all days with its threshold (2.1--2.8): it fires at NE39 and both NE43 steps, and on one quiet day.}
 
-\htelos{Run a schema diff on your logs. Hash the field names and value types of every record each day, and alarm when a signature used by $\ge2$ agents appears or retires. Here it gave 0 false alarms in 34 quiet days. It dated the regime change, the outreach tool and an undocumented search-tool rename to the day, and it found six silent provider API changes. Add plain counters for operator drives (bookends, nudges, hours, joint silence): they dated both NE43 steps. Use topic shift for goal changes (AUC 0.89). Do not fuse heavy-tailed behavior statistics with a Gaussian threshold: they fire on 6--9\% of quiet days each. Prompt-only changes stay invisible to every channel.}
+\htelos{Run three channels daily. (1) A schema diff: alarm on $\ge1$ platform-wide new or retired record signature; report provider-envelope signatures as a separate alert. FAR 0/78 once provider changes are catalogued. (2) Log counts of pause bookends, nudges and human messages, with a two-day persistence rule: alarm above $z\approx2.8$. FAR 1/82; it caught the public-chat closure and both operator wind-down steps. (3) The topic rule C3 for goals (FAR 0.06). Recalibrate each threshold as the maximum over $\ge50$ of your own quiet days. Do not expect it to see scaffold or prompt changes.}
 
-\hbottom{A schema diff plus operator counters is a precise, nearly free platform-change monitor; the fused five-channel alarm is too noisy as tuned.}
+\hbottom{Calibrated out of sample, schema diff plus log-count operator counters plus topic shift is a usable monitor for drive, format and goal changes (FAR 0.05--0.085); scaffold changes stay invisible.}
 
 \hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.45\columnwidth}p{0.16\columnwidth}@{}}
 \textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
-P0 synthetic own-channel hit $\ge0.8$ & S 1.00, D 0.97, C 0.98, O 0.80, M 0.90 (5 SD; 0.05 at 3 SD); FAR 0.051 & held\\
-P1 tool changes: AUC $\ge0.70$, $p<0.05$ & AUC 0.68 [0.54, 0.82]; hit 0.78; $p$ 0.059 & mixed\\
-P2 undocumented $\ge4/6$ & 6/6 in window ($p$ 0.13); 4/6 attributable & held, weak\\
-P3 goals: C AUC $\ge0.9$, S $\le0.6$ & 0.89; 0.66 & failed (narrowly)\\
-P4 fused FAR $\le0.10$ & 0.18 per day (S 0, C 0) & failed\\
-P5 fused beats topic shift & undocumented $+0.30$ [0.01, 0.59]; tools $+0.04$; goals $-0.16$ & failed\\
-P6 roster: hit $\ge0.3$, S $\le0.2$ & 0.63; 0.26 & half\\
-NE14 regime change & S = 16 on 03-24 (new pause, search schemas) & supported\\
-NE45 search-tool rename & S = 12 on 07-29; S at 1/8 \#51 joins & supported\\
-NE43 two operator steps & D = 8 (08-05), 6.9 (08-21); quiet days 2/7 & mixed\\
-NE40 oracle swap & O $\le2.8$: missed & failed\\
+r1 P1 tool changes AUC $\ge0.70$, $p<0.05$ & AUC 0.68, $p$ 0.059 & mixed\\
+r1 P4 fused FAR $\le0.10$ & 0.18 & failed\\
+r2 P1a channel FAR $\le0.03$; union $\le0.06$ & S 0.012, D3 0.012, C3 0.061; 0.085 & partly\\
+r2 P1b class hits in predicted bands & goal 0.57, drive 0.57, tool 0.35, room 1.00, roster 0.26 & held\\
+r2 P1c $p<0.05$ goal, drive; tool $p<0.10$ & 0.003; 0.13; 0.55 & partly\\
+r2 P1e beats C3 alone by $\ge0.15$ & pooled hit 0.22 $\to$ 0.38 at +0.024 FAR & held\\
+r2 R1 kill rule (operator-grade) & FAR 0.085; tool $p$ 0.55 & mixed\\
+r2 P3.1 NE39 alarms (heavy-tailed baseline) & quantile score no; amended D3 yes (4.5 $>$ 2.76) & held (amended)\\
+r2 P3.3 NE43a/b alarm & amended D3: both & held\\
+r2 P2.1 NE40 by presence rule (recovery) & primary 2 days late; one-day and appearance rules on the day; 0--1/37 FAR & mixed\\
+r2 P4 provider DiD & 0/25 after Holm; minimum $p$ 0.031 & unpowered\\
 \end{tabular}}
 
-\hobsb{../figures/synthetic.pdf}{Synthetic daily streams at real counts (20 runs, 24 planted steps each). Each channel catches its own step type at a fused per-day false-alarm rate of 0.05. The mix channel needs synchronous shifts of about 5 within-agent SD. The real false-alarm rate was 3.5$\times$ the synthetic one: real noise has heavier tails.}
+\hobsb{../figures/summary_obs.pdf}{Round 1. Left: AUC of the event window against placebo windows, by class and channel. Each channel sees its own class: schema and drive for platform and operator steps, topic for goals and rooms. Right: \#51 daily channel scores; the schema channel fires on the search-tool rename (NE45), the drive channel on the bookend and nudger stops (NE43).}
 
-\hcaveats{Only 34 placebo days survive the dense catalog (FAR 6/34, Wilson 95\% 0.08--0.33). NE40 and NE45 were found by hand by H56, so they are recoveries, not blind discoveries. With 30\% of days in alarm, period-level ``hits'' are weak evidence. Provider API changes show in S, but they are not village platform changes. One baseline length and one threshold were tried. The evaluation catalog is H56's CHANGELOG parse. The holdout is not run.}
+\hcaveats{The pre-registered placebo pool held two provider format changes that round 1 found but did not catalog; they blind S (threshold 20). The catalog completion that fixes it is post hoc (FAR 0.051). The D3 channel and the accumulating presence rule are amendments after the synthetic study, before real data; synthetic power for count steps is 0.4--0.6. NE40 is a recovery, not a discovery. With dense events, random dates near other changes set a high chance level (0.33). The reserved data is not run.}
 
-\hnext{Build a precision monitor from S, D counters and C, with per-channel thresholds at 2\% FAR. Add a presence/retirement rule for format markers (NE40). Use empirical-quantile baselines.}
+\hnext{Re-freeze \texttt{confirm.py} on the round-2 monitor and run it on the reserved data after sign-off. Split the schema diff into platform and provider streams. Find an observable for scaffold changes (quantile-baselined mix: post hoc lead, $p$ 0.016). Power the provider DiD with agent-day permutations.}
