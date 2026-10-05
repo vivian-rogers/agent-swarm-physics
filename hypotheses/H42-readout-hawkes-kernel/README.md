@@ -390,6 +390,34 @@ Round 2 runs H42-R2 and R3 in full and R1 as a short consistency check. Non-rese
 
 **Round-2 period verdict (added to each period README; the round-1 verdict line stays on top).** *Supported* if the Cox-field Bmu beats field-only S0 held out (summed over the period's CV units) with n_named > 0, and the period's pooled cold-named talk J* has its CI above 0. *Failed* if neither holds. *Mixed* otherwise. *Descriptive* where no unit is CV-eligible (the call-level part is still reported).
 
+#### Amendment R2-A (2026-10-05 ~04:50 UTC, after the synthetic runs, before any real-data statistic)
+*Seen: only synthetic runs on real call skeletons (`round2/synthetic/r2_synth.parquet`, `r2_synth_summary.json`, `r3_synth.parquet`) and per-period item counts from the scheme build (named, cold and thread shares).*
+- **A1 (synthetic world, V1 pause).** The additive plant (−0.005 per named read) was clipped at 0 in most cells, because most agent × day × class cells have a pause rate near 0. The first run (8 replicates) therefore recovered nothing. Now each named read multiplies the pause probability by 0.7. The truth is the realized per-read change, Σ(p₁ − p₀)/Σ reads over the analysis rows (median −0.0034 per read in regime III). All truths are computed this way.
+- **A2 (synthetic run).** 20 replicates per unit and world (was 8), bootstrap 200 draws (as on real data, was 100). Each criterion is scored in the regime where its outcome is used: regime III for pause and log gap, regime I for chat next, session start and stop, both for talk. A pooled check is added: a DerSimonian–Laird pool per replicate over the regime's units, as on real data.
+- **Synthetic verdicts, R2/R1** (unit level; pooled in brackets):
+
+  | Outcome (regime) | S-R2a: worst \|median J\| in V0 / V0f / VL; worst false-positive share | S-R2b: bias; coverage | Status |
+  | --- | --- | --- | --- |
+  | talk, named / unnamed (III) | 0.003 / 0.001; 0.15 [0.10] | −2% / +19%; 1.00 / 0.92 | valid |
+  | talk, cold / thread-named (III) | 0.004; 0.13 [0.15] | −1% / +2%; 0.97 / 0.98 | valid |
+  | talk, with room × 10-min field (III) | 0.003; 0.15 | −2%; 1.00 | valid |
+  | pause, named / unnamed (III) | 0.0011 / 0.0004; 0.13 [0.15] | −4%; 0.80 [0.75]; pooled power over 3 units 0.20 | valid; underpowered |
+  | log gap, named (III) | 0.009 [0.011]; 0.13 | +12%; 0.90 | valid at unit level; pooled V0f median 0.011 > 0.01: **fragile** |
+  | log gap (I) | VL +0.021 named, +0.025 unnamed; false positives 0.98 | — | **invalid** (call-length selection) |
+  | chat next, named / unnamed (I) | 0.002; 0.10 | +2%; 0.93 | valid |
+  | session start, unnamed (I) | VL +0.006; 0.20 | — | **invalid** (call-length selection) |
+  | session start, named (I) | 0.003; 0.13 | +12%; 0.90 | valid; power 0.15 |
+  | talk (I) | 0.001; 0.13 | ≤ 10%; ≥ 0.88 | valid |
+
+- **Synthetic verdicts, R3** (24 runs: 4 units × 3 truths × 2 replicates).
+  - **S-R3a passed.** Truth 0, round-1 field: the round-1 baseline gives world-B n_x 0.010 and world-A n_x 0.09 (median, up to 0.17); the Cox field gives 0.000 and 0.000 (max 0.0015 and 0.003). Strong field: round-1 baseline 0.076 (B) and 0.18 (A); Cox field 0.0006 (B, max 0.026) and 0.002 (A, max 0.017).
+  - **S-R3b failed narrowly.** Planted read-out n_x 0.143: round-1 baseline 0.164 (+13%); Cox field 0.112 (median ratio 0.75, −25%). A 10-min field absorbs about a quarter of real read-out excitation, because cascades co-move inside a bin.
+  - **Reference survival.** In the planted world, survival n_x(cox10)/n_x(r1) of world B's B is 0.67. A real call-scale coupling should survive at about 0.67; a field should survive at ≈ 0.
+- **Consequences (fixed now):**
+  - R2-P2 (log gap) is scored, with the fragility flag. Regime-I log gap and the unnamed session-start J are descriptive only (kill rule).
+  - R2-P1: real power is below 0.8 (≈ 0.7 by scaling the 3-unit pool to the regime-III unit count), so a null reads "inconclusive", not "counts against".
+  - R3: survival is reported next to the reference 0.67. Corrected n_x = n_x(cox10)/0.75 is shown as a secondary number. R3-P3's 0.10 threshold is read on the corrected scale as well.
+
 ## Notes
 - 2026-10-04: The brief asked for activity turns first and talk second; TALK is primary here for the reason given under Prediction (decided before any fit).
 - 2026-10-04: A is fitted on the same (message, recipient) pairs as B (room-aware ledger pairs) so that A vs B compares kernel shapes only; A_H03 keeps H03's room-blind at-risk set for continuity (it gives the same median n_x, 0.061).
