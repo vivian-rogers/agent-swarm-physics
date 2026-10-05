@@ -555,6 +555,11 @@ D in percentage points with day-bootstrap 95% CIs; "clean" = recipients with no 
 
 **Synthetic guard for R5-b (run first).** Real statement times and rooms of G38 and G51; synthetic embeddings with a drifting day field per room. Coupled agents' statements add α · c₃₀; for a planted "replayed" agent the term uses a window from another day instead. Pass: the planted agent's days are flagged in ≥ 80% of replicates; coupled agent-days flagged at the power floor ± 2 pp.
 
+**R5-b synthetic guard (run 2026-10-05, before the real monitor run; `r2/r5_synthetic_noise1.json`, `_noise6.json`).** 5 replicates per setting, one planted replayed agent per skeleton.
+- At the pre-registered noise (coupled M ≈ 0.61–0.65) the guard passes trivially: planted agent-days flagged 0.96 (G38) and 0.96 (G51); coupled agent-days 0 flagged, floor 0.
+- At six times the noise (coupled M ≈ 0.11–0.15, closer to real cosine scales) it still passes: planted flagged 1.00 / 1.00; coupled excess −1.9 to +1.4 pp (within ±2). But a coupled agent reached 3 consecutive flagged days in 1/5 G38 replicates (floor ≈ 6% per day).
+- **Amendment R5-A1 (before real data):** R5-P5's run clause is judged against the floor. A run counts against the prediction only if it is longer than the 95th percentile of the longest run under independent flags at each day's floor probability (simulated, 1,000 draws per agent).
+
 **Prior credences (Claude, 2026-10-05):** R2-P1 0.6, P2 0.4, P3 0.4, P4 0.7, P5 0.7; R4-P1 0.3, P2 0.7; R5-P1 0.7, P2 0.5, P3 0.6, P4 0.5, P5 0.6, P6 0.7.
 
 ## Confirmatory predictions (written 2026-10-04 after round 1, before any holdout use; `analysis/confirm_holdout.py`, not run)
