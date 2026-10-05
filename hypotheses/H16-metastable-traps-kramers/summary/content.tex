@@ -1,38 +1,38 @@
-\hwhat{The units are per-agent trap spells: inactive spells, timer-pause chains, error loops and repeated-command loops. We test them in 11 non-holdout goal periods. Kramers escape predicts a constant escape hazard. Instead, traps \emph{age}: within an agent, the hazard falls as about $t^{-0.8}$ (\#51 $\beta=-0.77$, \#38 $-1.71$). Each re-pause lowers the odds of action at the next timer expiry (\#51 $-0.38$). One directed message during a pause raises those odds $\times$1.5--2.9 (5/7 periods); more messages add little. Round 1b counts real failures instead of stderr, takes the leading-@ nudge target and adds Jev blocked and loop spells. Error-loop aging was mostly a stderr artifact: loop rows fall 51\%, and aging survives only in \#51 ($-0.57$). Jev blocked spells age in \#51 and \#27. The kick results do not change. With the nudger off (NE43), aging does not change. Mean-field $\beta J_0=0.09$--$0.41$ gives no bistability. The holdout is not run.}
+\hwhat{The units are per-agent trap spells: inactive spells and timer-pause chains, on the wall clock (30-s bins) and on the call clock (idle gates of the context ledger). We test them in 11 non-reserved goal periods. Kramers escape predicts a constant hazard; traps \emph{age} instead (\#51 $\beta=-0.77$). Round 2 asks why. A P\'olya urn says the context fills with the agent's own repeats. It predicts the gate-clock exponent from composition alone ($-0.36$ vs $-0.35$) and absorbs half of it, but not the wall-clock one ($-0.08$ vs $-0.77$). The decisive test is the forced erasure at the 41-call cap (NE41). It lifts sustained escape at the next gate from 0.47 to 0.84 (log OR $+2.68$ [2.31, 3.16]), 4.6$\times$ what dilution implies. A per-trap frailty world gives no step. A directed message works by address, not dilution. Trap depth is not a model trait. Spell-kind mixing explains little of \#51's aging and most of it in two 4-h periods. The reserved data are not used.}
 
-\hmodel{Models 01/02 (mean field) with Kramers escape. The activity $x$ of an agent moves in a double well $U(x)$ (idle and active basins) at temperature $T$. A trap is a stay in the idle basin. Escape has rate $k$ over barrier $\Delta U$, with attempt rate $\nu$. A kick (a message that reaches the agent) adds a force $f$. Swarm: Curie--Weiss coupling $J_0$, field $h$, active fraction $m$. Fit: hazard $h_{it}$, agent effects $\alpha_i$, aging slope $\beta$, dose effects $\gamma_n$.}
+\hmodel{Model 02 with an urn on the context window. At an idle gate $g$ (a call after a pause call) the agent acts or re-pauses. The context segment since the last reset holds $n_\text{rep}$ own idle calls, $n_\text{act}$ own active calls and $k$ room items. The urn sets escape by the own-repeat share $f$, measured four ways: tokens, own calls, all entries, the last 10 entries. Rivals: aging with trap age $a$ at fixed $f$; a context step at erasure; a mixture of spell kinds; per-trap frailty. Fit: agent effects $\alpha_i$, slopes $\beta_a$, $\beta_f$, reset step $\delta$, read effects $\gamma$.}
 
 \hmath{\vspace{-5pt}\begin{gather*}
-k=\nu\,e^{-\Delta U/T},\qquad G(x)=-\ln P(x)=U(x)/T+\text{const}\\
-k(n)=k_0\,e^{nf/T}\ \text{(Kramers)}\quad\text{vs}\quad k(n)=k_0(1+c\,n)\ \text{(triggers)}\\
-\ln\!\big[-\ln(1-h_{it})\big]=\alpha_i+\beta\ln t+\textstyle\sum_{n}\gamma_n\,\mathbb 1[\text{dose}_{it}=n]\\
-f(m)=-\tfrac{1}{2}J_0m^2-hm-Ts(m);\ \text{bistable iff }\beta J_0(1-m^2)>1
+P(\text{escape}_g)=c_i\,(1-f_g),\qquad f_\text{call}=\frac{n_\text{rep}}{n_\text{rep}+n_\text{act}}\\
+\operatorname{logit}P_g=\alpha_i+\beta_a\ln a_g+\beta_f\ln(1-f_g)\\
+\qquad+\,\delta\,\mathbb 1[\text{reset}]+\gamma_d\,\mathbb 1[\text{dir}]+\gamma_u\,\mathbb 1[\text{undir}]\\
+\text{urn: }\beta_f\approx1,\ \beta_a\to0,\ \gamma_d=\gamma_u\approx\Delta\ln(1-f)
 \end{gather*}\vspace{-7pt}}
 
-\hobs{../figures/summary_obs.pdf}{(a) Escape hazard from inactive spells vs time in the spell, in the two periods with the most power. A spell ignores single stray actions. After the first minutes (grey), Kramers predicts the flat dashed line. The measured hazard falls, so traps age. (b) \#51 hazard and odds ratios vs the number of kicks. Dotted lines extrapolate Kramers (exponential in dose) from one kick. The measured curves flatten: the first message carries the effect.}
+\hobs{../figures/r2_summary.pdf}{(a) \#51 gate aging slope (blue band: observed, day-bootstrap CI) against the slope each urn ruler predicts from measured composition, with no fitted slope (orange). Only the own-call share matches. (b) Escape at the next gate after a forced erasure vs without one, by depth in the trap. (c) Wall-clock aging within spell kinds; grey and orange bands are the pure-mixture and day-cell nulls. (d) A directed read lifts escape about 3$\times$ more than an undirected one; the urn implies nearly nothing for both.}
 
-\htelos{Kick a stuck agent early: its escape hazard falls as about $t^{-0.8}$ with time in the trap. Send one directed message during a pause. It raises the odds of action at the next timer expiry $\times$1.5--2.9; repeats and room messages add little. Under the 5-min pause default (after NE44), a kick lifts escape from deep pause chains only from 0.17 to 0.25. Messages do not break real failure loops (9/9 periods), so use tooling or a reset there. The aging is the agent's own: it does not change with the nudger off. The physics adds little, because Kramers fails and aging with saturating triggers is ordinary survival analysis.}
+\htelos{When an agent re-pauses again and again, erase or consolidate its context. In \#51 that ends 84\% of traps at the next gate, against 47\% otherwise, at any depth. Deep traps (5+ re-pauses) still escape less after the erasure (0.58 vs 0.93), so some depth lives outside the context. If you message a stuck agent, name it. A directed read adds $+0.69$ log odds, room chatter $+0.24$; a second message adds about a third. Do not expect a model to be reliably more trap-prone: depth does not repeat across periods.}
 
-\hbottom{Traps age by themselves, not by Kramers escape; one directed kick at a pause gate helps, and real failure loops age only in \#51.}
+\hbottom{Pause-chain traps are held by the context: a forced erasure ends most of them, and a message works by naming the agent, not by diluting its repeats.}
 
-\hresults{\footnotesize\begin{tabular}{@{}p{0.34\columnwidth}p{0.44\columnwidth}l@{}}
+\hresults{\footnotesize\begin{tabular}{@{}p{0.36\columnwidth}p{0.42\columnwidth}l@{}}
 \hline
-prediction (round 1b) & observed & verdict\\\hline
-real-failure loops age (majority) & 3/10 point, 0/10 CI; \#51 $-0.57$ & failed\\
-messages do not break them & 9/9 periods & holds\\
-Jev blocked spells age (\#51, \#38, $\ge$half) & \#51 $-0.39$, \#27 $-1.24$; \#38 flat; timer-like in 3 & failed\\
-Jev loop spells age (\#51) & $-0.46$ [$-0.55,-0.18$] & partial\\
-gate kick OR $\ge1.5$ (leading @) & 5/7 (1.5--2.9) & holds\\
-room kicks above null & 6/8 & holds\\
-NE44 kick$\times\ln k$: 0 then $<0$ & $+0.57$ before, $+0.06$ after & failed\\
-NE44 declared pauses shrink & 90 s $\to$ 180 s & failed\\
-NE43 aging without kicks & TS1r $-0.59\to-0.53$; gates $-0.31\to-0.26$ & holds\\
-NE43 gate escape drops & $+0.006$ [$-0.09,0.10$] & failed\\
+prediction (round 2) & observed (\#51) & verdict\\\hline
+token urn misses the exponent & $-0.02$ predicted vs $-0.35$ (gate) & holds\\
+own-call urn: gate yes, wall clock no & $-0.36$ vs $-0.35$; $-0.08$ vs $-0.77$ & holds\\
+composition absorbs $<25\%$ & $\rho=0.47$ [0.33, 0.70], $\beta_f=1.05$ & failed\\
+forced erasure raises escape & log OR $+2.68$ [2.31, 3.16] & holds\\
+erasure dose & $+0.11$ [$-0.35$, 0.44] & no power\\
+directed $>$ undirected & $+0.45$ [0.32, 0.58] & holds\\
+urn-implied kick $<0.2\times$ observed & $0.01$ vs $0.69$ & holds\\
+depth invariant across periods & $r=-0.04$ [$-0.55$, 0.22] & failed\\
+aging slopes differ by agent & $I^2=0.92$ & holds\\
+pause spells age; beat mixture null & $-0.61$; null $-0.20$ & holds\\
 \hline
 \end{tabular}}
 
-\hobsb{../figures/r1b_summary.pdf}{(a) Loop aging slope per period: error loops on stderr (round 1), real failures (round 1b) and Jev blocked spells. The gray band is memoryless. Only \#51 keeps a clear negative slope on real failures. (b) Gate escape vs pause-chain depth. Before NE44, a directed kick rescues agents at any depth. After NE44, deep chains barely respond.}
+\hobsb{../figures/summary_obs.pdf}{Round 1. (a) Escape hazard from inactive spells vs time in the spell in the two periods with the most power; Kramers predicts the flat dashed line. (b) \#51 hazard and odds ratios vs the number of kicks; the first message carries the effect.}
 
-\hcaveats{The NE44 contrast compares periods, because the change sits inside the locked holdout window. Day length (4 h vs 8 h), roster and goals confound it. Jev \texttt{p\_blocked} means ``waiting on others'' in regime I and ``failing or looping'' in regime III. Window spells are short in 4-h periods. Kick labels are temporal coincidences. Several 3--5-day periods have unstable day-bootstrap CIs; we report Wald CIs alongside. We did not re-run the barrier-inversion and swarm blocks, because their inputs did not change.}
+\hcaveats{The reset and dose tests are powered only in \#51. A day-level mixture of escape rates (post hoc) reproduces the wall-clock exponent ($-0.93$), so that exponent is not separable from day states; the gate results are not affected. With the gate count in the model (post hoc), trap age turns timer-like and the count carries the aging. Per-trap frailty fakes gate aging in synthetic worlds; only the erasure separates it. Kick exposure is now the ledger read at the gate; no in-flight placebo was run in round 2.}
 
-\hnext{Test self-reinforcement with a Pólya urn on the context ledger: own-output share vs the aging slope. Test content-level spirals on the holdout (\#45).}
+\hnext{Confirm the erasure step on reserved \#51 days and \#45. Test what survives the erasure (memory, task state) in deep traps.}

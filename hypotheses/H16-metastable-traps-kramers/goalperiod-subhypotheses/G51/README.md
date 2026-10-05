@@ -86,3 +86,27 @@ Period verdict rule: core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2): a
 | undirected kick ln HR vs day-swap null p95 (TS1) | +0.39 | +0.39 vs +0.25 |
 | directed kick on real-failure loops, ln HR (SE) | -0.02 (stderr loops) | -0.07 (0.05) |
 | N_tgt kicks | 970 (every named agent) | 729 (leading @) |
+
+## Round 2 (2026-10-05)
+*Replication layer, exploratory, non-reserved days. Predictions: the card's "Round 2" section (written before any round-2 statistic). Numbers: `data/processed/H16-metastable-traps-kramers/r2/results_r2.json`.*
+
+| Statistic | Round 2 |
+| --- | --- |
+| gate aging slope (sustained escape, ln trap age; 21361 gates) | -0.35 [-0.44, -0.23] |
+| urn-predicted gate slope: U-tok / U-call / U-entry / U-rec | -0.02 / -0.36 / -0.03 / -0.03 |
+| aging absorbed by ln(1 − f): ρ U-call (β_f) / U-tok | +0.47 [+0.33, +0.70] (β_f +1.05) / +0.47 |
+| forced reset inside a trap (NE41), log OR (276 gates) | +2.68 [+2.31, +3.16] |
+| directed read at the gate / undirected only / difference (log OR) | +0.69 / +0.24 / +0.45 [+0.32, +0.58] |
+| dose: 1 vs 2+ directed items (log OR) | +0.63 vs +0.85 |
+| TS1r deep slope, pooled (agent FE) | -0.77 [-0.87, -0.61], 4321 escapes |
+| TS1r deep slope within agent × kind_start × last_kind cells | -0.64 [-0.71, -0.49] |
+| TS1r deep slope, pause-start spells | -0.61 [-0.69, -0.49], 3136 escapes |
+| TS1r deep slope, consolidation-latency spells removed | -0.71 [-0.82, -0.57] |
+| mixing share 1 − β_within/β_pooled | +0.16 |
+| pure-mixture null (agent × kind cells), mean [95%] | -0.20 [-0.24, -0.16]; observed below it (M-P2) |
+| day-cell mixture null (post hoc P4) | -0.93 [-0.98, -0.89] |
+| post hoc P1: forced-reset step, outcome shifted one call | +2.35 [+2.01, +2.74] |
+| post hoc P5: escape after forced reset vs none, k = 1 / 2–4 / ≥ 5 | 0.93/0.91/0.58 vs 0.68/0.44/0.09 |
+| per-agent TS1r slopes (R3-P3) | I² 0.92, 26 agents, range 0.00 to −1.83 |
+
+**Reading.** The forced erasure lifts escape from 0.47 to 0.84 (R1-P3 holds; frailty-proof). The own-call urn predicts the gate exponent and absorbs about half of it (R1-P1b holds, R1-P2 fails), but not the TS1r exponent. A directed read works by address (R2-P1, R2-P2 hold). Pause-start spells age within kind and beat the pure-mixture null (M-P1, M-P2 hold); the day-cell null (post hoc) reproduces the TS1r slope. Verdict unchanged (mixed).

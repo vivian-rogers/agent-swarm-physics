@@ -54,7 +54,7 @@ def run_gates(B, rng, res):
         t0 = time.time()
         g = R.prep_gates(pl.read_parquet(R.R2 / "gates_r2.parquet").filter(pl.col("goal_no") == goal))
         y = g["y_sus"].to_numpy().astype(np.int8)
-        days = np.array(g["pt_date"].to_list())
+        days = np.unique(np.array(g["pt_date"].to_list()), return_inverse=True)[1]
         point = R.flat(R.gate_models(g, y))
         boots = []
         rows = R.HF.rows_per_day(days)
@@ -111,6 +111,7 @@ def run_ts1r(B, rng, res, null_sims=200):
     for per in REG3:
         t0 = time.time()
         H = R.ts1r_deep(per)
+        H["day"] = np.unique(H["day"], return_inverse=True)[1]
         y = H["y"]
         if y.sum() < 15:
             out[per] = {"ok": False, "events": int(y.sum())}

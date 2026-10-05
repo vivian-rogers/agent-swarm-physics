@@ -86,3 +86,24 @@ Period verdict rule: core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2): a
 | undirected kick ln HR vs day-swap null p95 (TS1) | +0.20 | +0.20 vs +0.12 |
 | directed kick on real-failure loops, ln HR (SE) | -0.31 (stderr loops) | -0.53 (0.17) |
 | N_tgt kicks | 120 (every named agent) | 110 (leading @) |
+
+## Round 2 (2026-10-05)
+*Replication layer, exploratory, non-reserved days. Predictions: the card's "Round 2" section (written before any round-2 statistic). Numbers: `data/processed/H16-metastable-traps-kramers/r2/results_r2.json`.*
+
+| Statistic | Round 2 |
+| --- | --- |
+| gate aging slope (sustained escape, ln trap age; 1616 gates) | -0.21 [-0.47, +0.09] |
+| urn-predicted gate slope: U-tok / U-call / U-entry / U-rec | -0.03 / -0.19 / -0.10 / -0.19 |
+| aging absorbed by ln(1 − f): ρ U-call (β_f) / U-tok | +0.77 [+0.23, +7.13] (β_f +2.34) / +0.88 |
+| forced reset inside a trap (NE41), log OR (41 gates) | +2.32 [+1.36, +3.80] |
+| directed read at the gate / undirected only / difference (log OR) | +1.34 / +0.53 / +0.82 [+0.28, +1.45] |
+| dose: 1 vs 2+ directed items (log OR) | +1.42 vs +0.93 |
+| TS1r deep slope, pooled (agent FE) | -1.71 [-2.22, -0.76], 230 escapes |
+| TS1r deep slope within agent × kind_start × last_kind cells | -1.24 [-1.85, -0.15] |
+| TS1r deep slope, pause-start spells | -1.66 [-2.60, -0.42], 116 escapes |
+| TS1r deep slope, consolidation-latency spells removed | -1.45 [-2.11, -0.49] |
+| mixing share 1 − β_within/β_pooled | +0.28 |
+| pure-mixture null (agent × kind cells), mean [95%] | -0.65 [-0.93, -0.39]; observed below it (M-P2) |
+| day-cell mixture null (post hoc P4) | -2.24 [-2.66, -1.86] |
+
+**Reading.** Signs agree with G51 (reset step +2.32, directed − undirected +0.82, pause-start aging −1.66), but the reset, dose and within-kind tests are underpowered here (amendments A2, A4). Verdict unchanged (mixed).

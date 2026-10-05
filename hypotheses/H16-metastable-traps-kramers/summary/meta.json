@@ -1,19 +1,19 @@
 {
- "complete": 48,
- "faithfulness": 1.5,
+ "complete": 60,
+ "faithfulness": 2.0,
  "usefulness": 2.5,
  "rationale": {
-  "complete": "Round 1 and round 1b (real failures, leading-@ targets, Jev blocked/loop spells, natives NE44, NE43, #27) are done. Holdout not run; content-level spirals and the Pólya-urn mechanism test are open.",
-  "faithfulness": "The Kramers core failed (aging, saturating kicks, unidentifiable barrier); mean-field no-bistability holds. Round 1b withdrew 'error loops age' outside #51 (a stderr artifact) and added that aging is intrinsic (unchanged with the nudger off, NE43). Scorecard A1 B1 C1 D1 E1 F1 G1 H0 I1. No holdout.",
-  "usefulness": "'Intervene early; one directed message at a pause gate helps, repeats don't; chat doesn't fix failure loops; under the 5-min pause default kicks barely help deep pause chains' is near-actionable, though exploratory."
+  "complete": "Rounds 1, 1b and 2 done: round 2 tested the Pólya urn (exponent predicted from composition), dilution vs address for kicks, trap depth as a model trait and the spell-kind mixture rival, with synthetic validation on the real skeletons first. Reserved data not used; content-level spirals not run.",
+  "faithfulness": "Kramers core failed (round 1). Round 2 adds an intervention: the NE41 forced erasure inside a trap lifts #51 gate escape 0.47 -> 0.84 (log OR +2.68 [2.31, 3.16]), frailty-proof by synthetic check; the own-call urn predicts the gate-clock exponent unfitted (-0.36 vs -0.35) but not the wall-clock one; kicks work by address. Scorecard A1 B1 C1 D1 E2 F2 G1 H1 I1. The wall-clock exponent is not separable from day-level states (post hoc).",
+  "usefulness": "Directly actionable: erase or consolidate the context of an agent that keeps re-pausing (84% vs 47% escape at the next gate in #51); name the agent when messaging (directed read +0.69 vs chatter +0.24 log odds); one message is enough. Exploratory, one long period."
  },
- "one_line": "Traps age by themselves, not by Kramers escape; one directed kick at a pause gate helps; real failure loops age only in #51.",
+ "one_line": "Pause-chain traps are held by the context: a forced erasure ends most of them (0.47 -> 0.84), and a message works by naming the agent, not by diluting its repeats.",
  "models": [
   {
    "model": "02-nonequilibrium-ising",
    "role": "primary",
    "outcome": "refuted",
-   "note": "Kramers escape from a double well; traps age instead"
+   "note": "Kramers escape from a double well; traps age, and the trap state is held by the context window (erasure step)"
   },
   {
    "model": "01-inverse-ising",
@@ -22,14 +22,20 @@
    "note": "Mean-field βJ₀ < 1: no collective bistability (10/11)"
   },
   {
+   "model": "08-copying-vs-transformation",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Pólya urn on own repeats: predicts the gate-clock exponent from composition and absorbs half of it; fails on the wall clock, in tokens, and for kicks"
+  },
+  {
    "model": "11-vector-spins",
    "role": "secondary",
    "outcome": "untested",
    "note": "Content-level spirals not run"
   }
  ],
- "rated_by": "H16 re-evaluation agent RE-B1 (suggested; round-1 values were coordinator-calibrated)",
- "updated": "2026-10-04",
+ "rated_by": "H16 round-2 agent (suggested v1; coordinator writes v2)",
+ "updated": "2026-10-05",
  "suggested": {
   "usefulness": 2.0
  },

@@ -82,3 +82,16 @@ Period verdict rule: core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2): a
 | undirected kick ln HR vs day-swap null p95 (TS1) | +0.15 | +0.15 vs +0.51 |
 | directed kick on real-failure loops, ln HR (SE) | +0.04 (stderr loops) | -0.24 (0.53) |
 | N_tgt kicks | 24 (every named agent) | 20 (leading @) |
+
+## Round 2 (2026-10-05)
+*Replication layer, exploratory, non-reserved days. Predictions: the card's "Round 2" section (written before any round-2 statistic). Numbers: `data/processed/H16-metastable-traps-kramers/r2/results_r2.json`.*
+
+| Statistic | Round 2 |
+| --- | --- |
+| TS1r deep slope, pooled (agent FE) | -1.56 [-1.64, -0.60], 47 escapes |
+| TS1r deep slope within agent × kind_start × last_kind cells | -1.36 [-1.36, +1.08] |
+| TS1r deep slope, pause-start spells | -1.66 [-1.96, -0.60], 32 escapes |
+| TS1r deep slope, consolidation-latency spells removed | -1.62 [-1.82, -0.48] |
+| mixing share 1 − β_within/β_pooled | +0.13 |
+
+**Reading.** Aging survives within kinds (pause-start spells), on 47 escapes and 3 days. Verdict unchanged (mixed).

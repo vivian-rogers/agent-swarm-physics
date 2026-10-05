@@ -82,3 +82,16 @@ Period verdict rule: core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2): a
 | undirected kick ln HR vs day-swap null p95 (TS1) | +0.27 | +0.27 vs +0.20 |
 | directed kick on real-failure loops, ln HR (SE) | -0.04 (stderr loops) | -0.02 (0.17) |
 | N_tgt kicks | 32 (every named agent) | 27 (leading @) |
+
+## Round 2 (2026-10-05)
+*Replication layer, exploratory, non-reserved days. Predictions: the card's "Round 2" section (written before any round-2 statistic). Numbers: `data/processed/H16-metastable-traps-kramers/r2/results_r2.json`.*
+
+| Statistic | Round 2 |
+| --- | --- |
+| TS1r deep slope, pooled (agent FE) | -0.77 [-0.77, -0.05], 61 escapes |
+| TS1r deep slope within agent × kind_start × last_kind cells | -0.10 [-0.32, +4.45] |
+| TS1r deep slope, pause-start spells | -0.33 [-0.37, +3.32], 34 escapes |
+| TS1r deep slope, consolidation-latency spells removed | -0.80 [-0.98, +0.23] |
+| mixing share 1 − β_within/β_pooled | +0.87 |
+
+**Reading.** Pooled TS1r aging here is mostly a mixture of spell kinds: within agent × kind cells the slope is near 0 (mixture rival not beaten in this period). Verdict unchanged (mixed).

@@ -8,6 +8,8 @@
 
 **Round 1b (2026-10-04, improved data):** on real failures (not stderr) error loops age only in #51; Jev blocked and repeated-action spells age in #51, #27 (and #38 for loops) but are timer-like in short periods; kick results survive the leading-@ target fix; with the nudger off (NE43) aging is unchanged, so it is intrinsic.
 
+**Round 2 (2026-10-05, exploratory):** the trap is held by the context. In #51 a forced context erasure inside a pause chain lifts sustained escape from 0.47 to 0.84 (log OR +2.68 [2.31, 3.16]). The Pólya urn predicts the gate-clock aging exponent from composition (own-call share: −0.36 vs −0.35) and absorbs half of it, but not the wall-clock exponent (−0.08 vs −0.77). A directed message works by address, not dilution. Trap depth is not a model trait. Kind mixing explains little of #51's aging and most of G41's and G44's. See "Round 2".
+
 Confirmatory script for #32/#45 is written and dry-run on stand-ins; **not run**.
 **Fields:** stat mech, dynamics, thermodynamics
 **Origin:** HH53 + HH86 (shortlist 2, item 10) (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); HH47 for the landscape.
@@ -201,10 +203,10 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Memorylessness, the Kramers order-0 assumption, was tested directly and fails (aging). NE17 split in G38: same sign on both sides. Within-period stationarity is otherwise untested; no update-order audit |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Kick effects beat the day-swap null in some periods: undirected in 5/8 regime-III periods; directed at gates 5/7. Aging beats the memoryless null within agent where powered. The *Kramers* model itself loses to these nulls and rivals. No held-out-day prediction |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | Mean-field forward prediction holds: βJ₀ < 1 → unimodal swarm activity in 10/11 periods (11/11 with the minimum-mass rule). The Kramers signatures (memoryless dwell; exponential dose law) are absent |
-| E interventional | predicts the change across a natural experiment | 1 | *Round 1b (2026-10-04; was 0):* NE43 tested: aging unchanged with the nudger off, as predicted; the predicted drop in gate escape failed, and the NE44 interaction failed as operationalized (the H35 pattern holds in probabilities). Round 1: no NE tested; NE17 was only a stability check |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | (a), the TS2 gate model and (d) are recovered on synthetic data. The dose law is identifiable only at high kick rates. **(b) is not identifiable** (1D closure fails; MSM closure tautological; barrier location is an EWMA artifact). τ = 3/10 min gives the same landscapes. Outage censoring and alternative nulls (A3–A5) do not change (a) or (d) |
+| E interventional | predicts the change across a natural experiment | 2 | *Round 2 (2026-10-05; was 1):* the NE41 forced erasure inside a trap lifts #51 gate escape 0.47 → 0.84 (log OR +2.68 [2.31, 3.16]), as predicted; a frailty world gives no step. Round 1b: NE43 aging unchanged with the nudger off; the predicted gate-escape drop and the NE44 interaction failed |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 | *Round 2 (was 1):* every round-2 gate, reset, kick, mixture and trait estimator validated on the real skeletons; the validation caught a frailty artifact in the reset design (A1). Still **(b) is not identifiable** (1D closure fails; MSM closure tautological), and the TS1r wall-clock exponent is not separable from day-level states (post hoc P4) |
 | G ground truth | agrees with known structure | 1 | Regime-III timer gates respond to directed messages (H09's mention effect at the gate, reproduced and quantified per dose). H09's regime-I message triggering does *not* extend to silences ≥ 3 min |
-| H comparative | beats the named rivals | 0 | Kramers loses to R1 (aging) in the dwell law and to R3 (saturating/additive) in the dose law (14/16 powered cells). R4 (collective bistability) is rejected in its favour only on the mean-field part |
+| H comparative | beats the named rivals | 1 | *Round 2 (was 0):* gate results beat per-trap frailty (reset step), the pure kind mixture (M-P2) and urn dilution (kicks); the urn loses to the context-step rival. Kramers still loses to aging and to saturating triggers. The day-level mixture is not beaten for TS1r |
 | I transfer | holds in other same-mode periods, including the holdout | 1 | The direction (aging; gate kicks) is consistent across regime-III periods (6/8 TS1r point estimates negative; 6/7 TS2r). Holdout not used |
 
 ## Prediction
@@ -400,6 +402,7 @@ Verdict rule: the core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2) all s
 - 2026-10-03: promoted from shortlist 2 (HH53 + HH86, shortlist 2, item 10).
 - 2026-10-03: exploratory round 1 done (see Results). Compute: local, 1 process (≤ 2 threads); about 15 min of CPU in total. Disk: `data/processed/H16-metastable-traps-kramers/` ≈ 7 MB.
 - 2026-10-03: the coordinator's data fix arrived before any kick was computed. `chat_core.mentions` carries a spurious `o1` on 175k messages; H16 uses `chat_mentions_clean.mentions_roster` throughout. H09's idle-agent mention flags are not reused.
+- 2026-10-05: round 2 done (urn, dilution, trait, mixture rival). Compute: one local process, ≤ 2 threads, ≈ 15 min CPU in total. Disk: `data/processed/H16-metastable-traps-kramers/r2/` ≈ 23 MB (mostly `calls_comp.parquet`, codes and numbers only). Reserved rows are dropped in `scheme/build_r2.py` (ledger flag and `holdout_mask`, asserted).
 - 2026-10-03: holdout reuse policy (`../holdout.md`).
   - #45 was used for confirmation by H02 (activity-timing couplings and its Curie–Weiss βJ₀ = 0.41). #32 lies inside H05's NE12 confirmatory window (room couplings on activity and talk spins).
   - H16's confirmatory statistics on these periods differ from those runs: dwell hazards, pause gates, loop hazards, kick dose laws and swarm bimodality. βJ₀ on #45 is **not** a confirmatory statistic for H16, because H02 computed it.
@@ -590,3 +593,89 @@ Pass: size ≤ 0.10 and power ≥ 0.8 at real counts; otherwise the statistic is
 - **R2-A3 · U-tok β_f is descriptive;** R1-P2 is decided on ρ (with β_f for U-call, U-entry, U-rec). **R2-P3 is read on Δ_k (U-entry) in G51 only;** Δ_k (U-tok) separates.
 - **R2-A4 · M-P1b (G38) is inconclusive by design** (power 0.25); G38 within-kind slopes are descriptive.
 - **R2-A5 · Frailty caveat made explicit.** A per-trap frailty world reproduces gate-clock aging (−0.44). Gate aging alone therefore cannot separate aging from unobserved trap depth; only the forced reset (A1 model) can, and only in G51.
+
+### Round-2 results (run 2026-10-05 ~04:25–05:00 UTC; exploratory, non-reserved)
+*Scripts: `analysis/run_r2.py` (gates, TS1r, R3), `analysis/posthoc_r2.py` (P1–P5, post hoc), `analysis/estimates_r2.py` (41 rows), `analysis/figure_r2.py` → `figures/r2_summary.pdf`. Numbers: `r2/results_r2.json`, `r2/posthoc_r2.json`, `r2/urn_prediction.json`. CIs: day-block bootstrap (200 draws). G51: 21,361 at-risk gates (10,136 sustained escapes, 43 days), 276 forced and 417 voluntary resets inside traps, 3,601 gates with a directed read; G38: 1,616 gates. Compute: one local process, ≤ 2 threads, ≈ 15 min in total.*
+
+**R1 · urn**
+
+| # | Prediction | Observed (G51 unless noted) | Outcome |
+| --- | --- | --- | --- |
+| R1-P1 | U-tok misses the exponent | gate: predicted −0.02 [−0.05, 0.01], observed **−0.35 [−0.44, −0.23]**; TS1r: predicted 0.00, observed **−0.77 [−0.87, −0.61]** | **holds** (the token share of own repeats is far too small: median 0.02) |
+| R1-P1b | U-call closest at the gate, not on TS1r | gate: predicted −0.36 [−0.39, −0.32] at the observed level 0.47, observed −0.35 (Δ +0.00); TS1r: predicted −0.08, observed −0.77 | **holds**: the own-call urn predicts the gate-clock exponent, not the wall-clock one |
+| R1-P2 | composition absorbs < 25% of aging (every ruler) | ρ U-call **0.47 [0.33, 0.70]** (β_f 1.05 [0.68, 1.65], the urn's +1); U-tok 0.47 [0.35, 0.68]; U-entry 0.20 [0.13, 0.34]; U-rec 0.14 [0.08, 0.25]. G38: ρ 0.77–1.05, CIs [0.23, 9] | **failed** for U-call and U-tok: the own-call share carries about half of gate aging. Neither kill line is crossed (0.25 < ρ < 0.5) |
+| R1-P3 | forced reset raises escape (NE41) | log OR **+2.68 [2.31, 3.16]** (OR 14.6); escape 0.84 after a forced reset vs 0.47; voluntary +1.54 [1.26, 1.81]. G38 +2.32 [1.36, 3.80] (descriptive, A2) | **holds** |
+| R1-P4 | the step is not a dose | Δ_u (U-call) +0.11 [−0.35, 0.44] | descriptive (power 0.30, A2) |
+| urn check | urn-implied step (U-call, observed level, A1 model) | +0.58 [0.28, 0.96] vs observed +2.68 | the erasure step is 4.6× what dilution implies: **the context-step rival beats the urn** |
+
+**R2 · dilution**
+
+| # | Prediction | Observed (G51) | Outcome |
+| --- | --- | --- | --- |
+| R2-P1 | directed > undirected per read | directed +0.69 [0.51, 0.85], undirected +0.24 [0.07, 0.40]; difference **+0.45 [0.32, 0.58]**. G38 +0.82 [0.28, 1.45] | **holds** |
+| R2-P2 | urn-implied kick < 0.2 × observed | mean Δ_k at directed gates 0.002 (U-tok), 0.021 (U-entry); simulated urn kick +0.01 [−0.09, 0.10] vs observed +0.69 | **holds** (ratio ≤ 0.03) |
+| R2-P3 | no dilution scaling (Δ_k CI includes 0) | coefficient on Δ_k (U-entry) **−0.52 [−3.01, −0.22]**; the urn predicts +1 | **failed as worded** (CI excludes 0), but with the sign opposite to the urn: counts against dilution |
+| R2-P4 | 2+ directed items add < half of the first | dose 1 +0.63 [0.44, 0.81], dose 2+ +0.85 [0.65, 1.08] (ratio 1.36) | **holds** (saturating) |
+
+**R3 · trap depth as a model trait** (one model per agent)
+
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| R3-P1 | invariance: depth correlates across periods | leave-period-out r **−0.04 [−0.55, 0.22]** (62 cells, 13 agents in ≥ 2 periods) | **failed**: depth is not an invariant agent trait, so no pooled per-model depth is reported (exception (b) not met) |
+| R3-P2 | agent (model) share ≥ 0.2 | 0.00 (permutation p 0.53); lab share −0.07 (p 0.63). Power 0.73–0.80 at SD 0.5 | **failed** (powered null at SD 0.5) |
+| R3-P3 | per-agent aging slopes differ (G51) | Q 306 on 25 df, I² 0.92; slopes 0.00 (claude-opus-4-6) to −1.83 (claude-opus-5), median −0.90; within-lab spread as large as between | **holds** (within one period; invariance of slopes across periods not testable) |
+
+**Mixture rival**
+
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| M-P1 | pause-start spells age (G51) | **−0.61 [−0.69, −0.49]**; silent −0.96 [−1.12, −0.57]; consolidation-start −0.86 [−1.07, −0.34] | **holds** |
+| M-P1b | same in G38 | pause −1.66 [−2.60, −0.42] | direction holds (descriptive, A4) |
+| M-P2 | below the pure-mixture null (G51) | null −0.20 [−0.24, −0.16]; observed −0.77 (p < 0.005). G38: null −0.65 [−0.93, −0.39], observed −1.71 | **holds** |
+| M-P3 | after-work gate traps age | −0.33 [−0.41, −0.20]; after talk −0.30 [−0.40, −0.16]; agent × kind FE −0.32 | **holds** |
+| M-P4 | mixing share 1 − β_within/β_pooled | G51 0.16, G38 0.28; **G41 0.91, G44 0.87** (within-cell −0.05, −0.10); G37 0.13 | descriptive: in the 4-h periods G41 and G44, pooled TS1r aging is mostly kind mixing |
+| — | consolidation-latency spells removed | G51 −0.71 [−0.82, −0.57]; G38 −1.45 [−2.12, −0.49] | aging is not a consolidation artifact |
+
+**Post hoc (not pre-registered; `posthoc_r2.py`).**
+- **P1, scaffold check.** 80% of forced-reset gate calls are computer-use actions; with the outcome shifted one call (the three calls after the gate call all active), the forced-reset step is +2.35 [2.01, 2.74]. The step is not the scaffold's post-consolidation mouse move.
+- **P2, which clock ages.** With ln(gate index k) in the gate model, trap age turns timer-like (+0.68) and k carries the aging (−1.55 per ln k; −1.45 [−1.58, −1.26] with the urn term). The own-call share keeps +0.68 [0.48, 1.03]. Aging lives in the count of re-pauses and the context they leave, not in elapsed time.
+- **P5, does the erasure remove the depth?** Escape at the first gate after a forced reset is 0.93 / 0.91 / 0.58 for k = 1 / 2–4 / ≥ 5, against 0.68 / 0.44 / 0.09 without a reset. The step grows with depth (forced × ln k +0.40 [0.16, 0.64]), yet deep traps stay below shallow ones after the erasure. The erasure removes most but not all of the depth; the rest survives the context (memory, task, or trap-level frailty).
+- **P4, day-level mixture (stress null).** Constant hazards per agent × kind × last-kind × **day** cell give a G51 slope of −0.93 [−0.98, −0.89], steeper than observed. In synthetic calibration this null gives −0.20 for a true −0.5 aging world and ≈ 0 for no aging, so it does not simply refit the outcome. Between-day heterogeneity within an agent is large enough to produce the wall-clock TS1r exponent by itself. **The TS1r wall-clock exponent is not separable from day-level states**; the gate-clock results and the reset step are not affected by this null.
+
+**Findings (round 2).**
+1. **The trap lives in the context, not in elapsed time.** In #51 a forced context erasure inside a pause chain lifts sustained escape from 0.47 to 0.84 (log OR +2.68 [2.31, 3.16]); a frailty world gives no step (synthetic), and the step survives a shifted outcome. This is the same step-not-dose pattern H69 found for restatement loops.
+2. **The urn is half right on the call clock and wrong on the wall clock.** The own-call share (U-call) predicts the gate aging exponent with no fitted slope (−0.36 vs −0.35) and absorbs about half of it, with the urn's coefficient (+1.05). The token share is far too small to matter. On the wall clock the urn predicts −0.08 against −0.77. The erasure step is 4.6× what dilution implies, so the context holds a state that a share of repeats does not capture.
+3. **A message works by address.** A directed read lifts escape +0.69 (log OR), an undirected one +0.24; the urn implies +0.01 for both. The dilution coefficient has the wrong sign. The second message adds about a third.
+4. **Depth is not a model trait; aging is agent-specific within a period.** Escape depth does not repeat across periods for the same model (r −0.04), and model and lab explain none of it. Within #51, aging slopes range from 0 to −1.8 by agent (I² 0.92).
+5. **Kind mixing explains little of #51's aging and most of the 4-h periods'.** Pause-start spells age at −0.61 in #51 and the pure-mixture null reaches only −0.20; in G41 and G44 the aging disappears within cells.
+
+### Impostors (round 2)
+| Impostor | Relevant? | Handling | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Call clock; hours into the day and others' activity in every gate model; forced resets are timed by the 41-call cap, not the clock; P1 shifted outcome removes the post-consolidation scaffold action. The day-level mixture null (P4) shows day states can fake the wall-clock exponent | removed for gate results; **open for the TS1r exponent** |
+| Exogenous field | partly | Nudges and human messages enter as reads at the gate; agent FE | partly |
+| Shared model priors | yes | Agent FE; lab share of depth ≈ 0 (p 0.63) | removed |
+| Contemporaneous convergence | partly | Kicks are now ledger reads at the receiving gate call (round 1 used posting time). No in-flight placebo in round 2 (H72's on the same gates: ≈ 0 in 16/18 periods) | partly |
+
+### Scorecard (round 2; round 1b in brackets)
+A 1 [1] · B 1 [1] · C 1 [1] · D 1 [1] · **E 2 [1]** · **F 2 [1]** · G 1 [1] · **H 1 [0]** · I 1 [1].
+- **B:** the state variable is narrowed: re-pause count and context composition, not elapsed time (post hoc P2); Markov order is still untested beyond that.
+- **D:** the urn's unfitted exponent matches on the call clock (U-call) and fails on the wall clock and for the token share.
+- **E 2:** the NE41 forced reset is an intervention with a large, frailty-proof step in #51 (power 1.00); G38 agrees in sign but is underpowered.
+- **F 2:** every round-2 estimator was validated on the real skeletons; the validation found and fixed a frailty artifact in the reset design (A1).
+- **H 1:** the gate results beat per-trap frailty (reset step), the pure kind mixture (M-P2) and dilution (R2); the urn loses to the context-step rival; the day-level mixture is not beaten for TS1r.
+
+### Old → new
+| Number | Round 1 / 1b | Round 2 |
+| --- | --- | --- |
+| G51 TS1r deep slope | −0.77 [−0.81, −0.73] | −0.77 [−0.87, −0.61] (day bootstrap, same rows); within agent × kind cells −0.64 [−0.71, −0.49]; pause-start −0.61 [−0.69, −0.49] |
+| G51 gate aging | TS2r −0.38; H72 −0.48 | −0.35 [−0.44, −0.23] (sustained escape, this model); carried by re-pause count (post hoc) |
+| "Traps age" in 4-h periods | point β < −0.3 in 6/8 | in G41 and G44 the aging is kind mixing (within-cell −0.05, −0.10) |
+| Directed kick at the gate | OR 1.5–2.9 (TS2r, posting time) | log OR +0.69 [0.51, 0.85] (G51, ledger read at the gate); undirected +0.24 |
+| Open issue "spell kinds mimic aging" | open | closed for #51 (M-P1, M-P2); confirmed for G41, G44; open at the day level for TS1r (P4) |
+
+**Verdicts:** period verdicts unchanged under the round-1 rule. G51 and G38 READMEs gain a Round 2 section; G37, G41 and G44 gain a mixture row.
+
+**Operator reading.** When an agent re-pauses again and again, erase or consolidate its context: in #51 that ends 84% of traps at the next gate, against 47% otherwise. If you message it, name it: a directed read works about three times better than room chatter, and a second message adds about a third.
+
+**Claim that stands:** in #51, pause-chain traps are held by the agent's context: a forced context erasure inside a trap raises sustained escape at the next gate from 0.47 to 0.84 (log OR +2.68 [2.31, 3.16]; frailty-proof by synthetic check; 4.6× the urn's dilution prediction), and a directed read works by address, not dilution (directed − undirected +0.45 [0.32, 0.58]; urn-implied +0.01). Excluded: the urn as the aging law (it matches the gate-clock exponent, −0.36 vs −0.35, and absorbs half of it, ρ 0.47, but fails on the wall clock, −0.08 vs −0.77, and in tokens); the reset dose (unpowered); G38 reset and dose results (underpowered); trap depth as a model trait (failed invariance, r −0.04); TS1r aging in G41 and G44 (kind mixing); the TS1r wall-clock exponent against day-level states (post hoc P4 null −0.93); and the post hoc clock and depth results (P2, P5).
