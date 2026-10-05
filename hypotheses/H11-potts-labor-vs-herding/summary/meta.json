@@ -38,78 +38,208 @@
  "updated": "2026-10-05",
  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
  "v2": {
-  "claim": "Agents herd onto shared projects in attention and work; ownership disperses",
+  "claim": "Herding is not stigmergic: in 37 non-reserved units, other agents' commits to a project never predict an agent's join better than read chat mentions of it (held-out ΔLL_CM pooled −0.047 [−0.070, −0.024] in 24 attention units and −0.002 [−0.026, +0.023] in 13 work units, where synthetic artifact-driven worlds give ΔLL_CM > 0 in ≥ 88% of runs; pooled join OR for a read chat mention 3.0 vs 1.26 for commits in attention, 2.2 vs 1.8 in work). Excluded (rule 1): θ = 0.70 (attention-defined n includes watchers; the card's own round-3 redirect recomputes it); 'excluding past-driven attachment' (post hoc A2 power 0.38–1.0); the sublinear α kernel (scored separately it is ≈ 0.75 but is not this clause).",
+  "scope": "13 work units, 27 attention units, #18–#51",
+  "direction": "positive",
   "original_verdict": "mixed",
   "credence": 0.75,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "calibrated null",
-    "x": 2
-   },
-   {
-    "factor": "replication",
-    "x": 2
-   },
-   {
-    "factor": "robust to data/instruments",
-    "x": 2
-   }
-  ],
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.75,
-  "decision": "anticipate pile-ons and duplicated work",
+  "value_if_true": 2.5,
+  "decision": "operator lever: a shared project's output grows as n^0.7; split work across owned artifacts; steer joins through chat, not artifacts",
   "magnitude": "material",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 2.06,
-  "scientific_value": 2.8,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "generality": "multi-agent LLM swarms with shared repos",
+  "expected_usefulness": 1.88,
+  "scientific_value": 3,
+  "rater": "coordinator + blind + adjudicator; adjudicated (Δp > 0.25)",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.84,
+    "rater": "coordinator (round 2)",
+    "credence": 0.83,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
+     },
+     {
+      "factor": "calibrated null passed (synthetic caught a likelihood bug and quasi-separation pre-data)",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "replication: lag − lead ≈ 0 in 34/40 units; θ < 1 in 16/23",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "partly robust: project fixed effects, two outcome channels",
+      "x": 1.5,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "identified: planted-attachment world recovers lag − lead +1.0 to +1.6",
+      "x": 1.5,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: α_work CI barely excludes 1; per-unit work CIs wide",
+      "x": 0.8,
+      "evidence": "card §Round 2"
+     }
+    ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "In 40 non-reserved units, agents join projects with a sublinear, time-symmetric co-arrival kernel (pooled alpha 0.68 [0.38, 0.98] work, 0.52 [0.36, 0.67] attention; lag - lead ~ 0, excluding past-driven attachment), read chat predicts joins better than artifact activity (stigmergy refuted), and a project's output grows sublinearly with the agents on it (theta 0.70 [0.56, 0.85] in shared weeks).",
+    "credence": 0.55,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.0,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (R1b, R1d, R2 kill, R3b; estimators fixed by A1 before real data); weakest parts are theta and the 'excluding past-driven' clause",
+      "x": "p0=0.40",
+      "evidence": "card Round 2 pre-registration and A1"
+     },
+     {
+      "factor": "calibrated null / identified: synthetic on real skeletons recovers theta (1.00 +- 0.01, 0.50 +- 0.01) and alpha; A1 bug caught pre-data",
+      "x": 2,
+      "evidence": "card Round 2 synthetic validation, A1"
+     },
+     {
+      "factor": "partial replication for theta in shared weeks: theta < 1 (CI) in 3/8 shared units (16/23 overall, mostly own-artifact)",
+      "x": 1.5,
+      "evidence": "card Round 2 results R3b row"
+     },
+     {
+      "factor": "penalty: known-problem input - theta uses attention-defined n (watchers included); card's own round-3 redirect asks to recompute with committers",
+      "x": 0.7,
+      "evidence": "card Round 2 caveats; round 3 redirects"
+     },
+     {
+      "factor": "(other parts, not limiting) alpha sublinear ~0.75; stigmergy refuted ~0.73 (clear in attention, a tie in work: pooled dLL -0.002 [-0.026, +0.023]); 'excluding past-driven attachment' relies on post hoc A2 power calibration (power 0.38-1.0) and the work pooled CI upper 0.89 vs +0.96 planted, ~0.60",
+      "x": "n/a",
+      "evidence": "card Round 2 results; A2"
+     }
+    ],
+    "notes": "Four-part compound claim; theta's n includes watchers, so 'sublinear output' may partly be attention without work. The claim line duplicates its exclusion text (copy error), which is harmless."
+   },
+   {
+    "rater": "adjudicator (2026-10-05)",
+    "credence": 0.75,
     "value_if_true": 2.5,
     "mechanism_level": "M1",
     "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "In shared-artifact weeks, agents herd onto the same project beyond their own stable preferences (beta J_CW > 0 in 11/14 weeks regardless of goal mode; coupling-beyond-fields z>=2 in 10/11 shared weeks), and their work commits herd too (4/6); spread appears only with own-artifact or private-role tasks.",
-    "credence": 0.64,
-    "value_if_true": 3.0,
-    "mechanism_level": "M0",
-    "fragile": false,
-    "scientific_value": 2.5,
+    "scientific_value": 3,
     "ladder": [
      {
-      "factor": "calibrated null partly",
+      "factor": "base: pre-registered primary (stigmergy kill and R2a/R2c estimators fixed before real data; A1 pre-data; rule 3, the stated falsifier happened)",
+      "x": "p0=0.40",
+      "evidence": "card §Round 2 H11-R2, A1"
+     },
+     {
+      "factor": "calibrated null: A1 synthetic on real skeletons (artifact-only world identified ≥ 88%; lead-contrast null FPR 4–12%; R2b's residual lean is towards commits, against the observed direction). One design, so no separate identification factor (rule 8)",
+      "x": 2,
+      "evidence": "card §Round 2 A1"
+     },
+     {
+      "factor": "partial replication: ΔLL_CM ≤ 0 in 21/24 attention units but 7/13 work units (< 2/3); work pooled is a tie",
       "x": 1.5,
-      "evidence": "circular-shift and day nulls; z near 2 moves by 0.5 between draws"
+      "evidence": "card §Round 2 results, R2a and kill rows"
      },
      {
-      "factor": "replication",
-      "x": 2,
-      "evidence": "11/14 weeks; 10/11 shared weeks"
-     },
-     {
-      "factor": "robust to data versions",
-      "x": 2,
-      "evidence": "round 1b deterministic labels + DQ4 work ledger: no verdict change"
-     },
-     {
-      "factor": "penalty: drive vs coupling not separable",
-      "x": 0.7,
-      "evidence": "herding is an effective coupling (exogenous field impostor); #35 z=-2.5 counterexample"
+      "factor": "partly robust: held-out horse race, MH odds ratios and lead contrasts agree in two label channels; one instrument family (round-1b labels)",
+      "x": 1.5,
+      "evidence": "card §Round 2 results R2a, R2b, R2c-artifact"
      }
-    ]
+    ],
+    "claim": "Herding is not stigmergic: in 37 non-reserved units, other agents' commits to a project never predict an agent's join better than read chat mentions of it (held-out ΔLL_CM pooled −0.047 [−0.070, −0.024] in 24 attention units and −0.002 [−0.026, +0.023] in 13 work units, where synthetic artifact-driven worlds give ΔLL_CM > 0 in ≥ 88% of runs; pooled join OR for a read chat mention 3.0 vs 1.26 for commits in attention, 2.2 vs 1.8 in work). Excluded (rule 1): θ = 0.70 (attention-defined n includes watchers; the card's own round-3 redirect recomputes it); 'excluding past-driven attachment' (post hoc A2 power 0.38–1.0); the sublinear α kernel (scored separately it is ≈ 0.75 but is not this clause).",
+    "notes": "The rules support the blind rater on the compound claim: rule 1 scores one clause, the coordinator counted the A1 synthetic twice (calibrated null and identification, rule 8) and counted lag − lead CIs that include 0 in 34/40 units as replication of a null without per-unit power (rule 9). θ uses attention-defined n (watchers included, a known-problem input the card itself flags) and is the weakest part, so I narrow to the pre-registered stigmergy refutation, which answers the round-2 question and survives at 0.75. V drops to 2.5 because the n^0.7 lever leaves with θ and lead ≈ lag for chat in work means chat forecasts joins rather than being shown to steer them; no readiness credit (needs the read-out ledger and project labels, rule 7)."
    }
-  ],
-  "adjudicate": false
- }
+  ]
+ },
+ "v2_history": [
+  {
+   "claim": "Agents herd onto shared projects in attention and work; ownership disperses",
+   "original_verdict": "mixed",
+   "credence": 0.75,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "calibrated null",
+     "x": 2
+    },
+    {
+     "factor": "replication",
+     "x": 2
+    },
+    {
+     "factor": "robust to data/instruments",
+     "x": 2
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": false,
+   "value_if_true": 2.75,
+   "decision": "anticipate pile-ons and duplicated work",
+   "magnitude": "material",
+   "generality": "any LLM swarm",
+   "expected_usefulness": 2.06,
+   "scientific_value": 2.8,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.84,
+     "value_if_true": 2.5,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "In shared-artifact weeks, agents herd onto the same project beyond their own stable preferences (beta J_CW > 0 in 11/14 weeks regardless of goal mode; coupling-beyond-fields z>=2 in 10/11 shared weeks), and their work commits herd too (4/6); spread appears only with own-artifact or private-role tasks.",
+     "credence": 0.64,
+     "value_if_true": 3.0,
+     "mechanism_level": "M0",
+     "fragile": false,
+     "scientific_value": 2.5,
+     "ladder": [
+      {
+       "factor": "calibrated null partly",
+       "x": 1.5,
+       "evidence": "circular-shift and day nulls; z near 2 moves by 0.5 between draws"
+      },
+      {
+       "factor": "replication",
+       "x": 2,
+       "evidence": "11/14 weeks; 10/11 shared weeks"
+      },
+      {
+       "factor": "robust to data versions",
+       "x": 2,
+       "evidence": "round 1b deterministic labels + DQ4 work ledger: no verdict change"
+      },
+      {
+       "factor": "penalty: drive vs coupling not separable",
+       "x": 0.7,
+       "evidence": "herding is an effective coupling (exogenous field impostor); #35 z=-2.5 counterexample"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
+  }
+ ]
 }

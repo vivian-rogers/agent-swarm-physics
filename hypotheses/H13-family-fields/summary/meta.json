@@ -41,89 +41,137 @@
   "usefulness": 2.0
  },
  "v2": {
-  "claim": "Model-family content fields are writing style; behavior carries only a weak family trace (tooling-like)",
-  "scope": "15 units; natives NE06, NE32, G35",
+  "claim": "At the read-out call, a message pulls a same-lab reader's next statements toward it more than a cross-lab reader's (J^c_1 0.067 vs 0.039; Δ_J^adj 0.029 [0.010, 0.054]; 8/8 regime-III units; bge and gte; rooms and in-flight convergence held fixed). Excluded (rule 1): 'not only style' (W3 CI includes 0 in bge, excludes it in gte; power 0.30 at one third of the field); the talk null (a separate clause, powered 0.90); homophily beyond lab main effects (post hoc PH1).",
+  "scope": "regimes II–III, 15 units (field); regime III, 8 units (read-out)",
   "direction": "positive",
   "original_verdict": "refuted (fields as positions)",
-  "credence": 0.87,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "calibrated null",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "replication (8–9/15 units, both models)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "robust to data/instruments",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "rival beaten (style explains field, 0/8 survive)",
-    "x": 1.5,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "quasi-intervention (G35 room × lab crossed)",
-    "x": 1.5,
-    "evidence": "native G35"
-   }
-  ],
+  "credence": 0.74,
   "mechanism_level": "M1",
   "fragile": false,
-  "value_if_true": 2.5,
-  "decision": "don't infer family 'ideology' from content; fingerprinting",
+  "value_if_true": 2.0,
+  "decision": "monitoring: remove style before embedding consensus metrics; expect ~1.7× stronger content pull within labs (half is receiver susceptibility)",
   "magnitude": "small",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 2.17,
+  "generality": "multi-vendor LLM swarms",
+  "expected_usefulness": 1.48,
   "scientific_value": 3.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "rater": "coordinator + blind + adjudicator; adjudicated (Δp > 0.25)",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.92,
-    "value_if_true": 2,
+    "rater": "coordinator (round 2)",
+    "credence": 0.82,
+    "value_if_true": 2.5,
     "mechanism_level": "M1",
     "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "The model-family content field is writing style: same-lab agents share a content direction in 9/15 units but in 0/9 after style residualization, and talk/content coupling follows rooms (10/10), not labs.",
-    "credence": 0.8,
-    "value_if_true": 3.0,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3,
+    "scientific_value": 3.5,
     "ladder": [
      {
-      "factor": "identified: synthetic size and power",
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
+     },
+     {
+      "factor": "calibrated null passed (1-h block bootstrap after synthetic showed 40% false positives)",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "replication: 8/8 units",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "robust: both embedding models, style-residualized vectors, without #51 same-role pairs",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "identified: synthetic recovery at real counts",
       "x": 1.5,
-      "evidence": "F1-F5 nominal size; power at village N; flaws fixed before real data"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "replication",
-      "x": 2,
-      "evidence": "15 units; 10/10 two-room units"
+      "factor": "penalty: the non-style field share is not resolved in bge (CI includes 0)",
+      "x": 0.7,
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "robust to instruments",
-      "x": 2,
-      "evidence": "bge and gte, own and DQ5 style residuals, dedupe: every number reproduces"
+      "factor": "penalty: units may include G51 segments (partial independence)",
+      "x": 0.8,
+      "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "Model families carry a content field that is mostly but not only writing style (a within-agent style-and-function-word map keeps 32-47% of it; W3 RE T 0.026 [-0.013, 0.064] bge, 0.040 [0.002, 0.079] gte), and at the read-out call a message pulls a same-lab reader's content more than a cross-lab reader's (0.067 vs 0.039; delta 0.029 [0.010, 0.054], 8/8 regime-III units), while talk shows no family term (delta-beta -0.0002 [-0.0016, 0.0014]).",
+    "credence": 0.48,
+    "value_if_true": 2.0,
+    "mechanism_level": "M0",
+    "fragile": true,
+    "scientific_value": 3.0,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (A-P2 reading rule; C-P1 kill fired as stated, rule 3; C-P2)",
+      "x": "p0=0.40",
+      "evidence": "card Round 2 pre-registration (03:25 UTC) and amendments"
+     },
+     {
+      "factor": "calibrated null: synthetic style-only world S0 gives W3 RE CI > 0 in 0/20 replicates; NL and SG do not leak",
+      "x": 2,
+      "evidence": "card Round 2 synthetic A table"
+     },
+     {
+      "factor": "instruments disagree on the 'not only style' clause: W3 CI includes 0 with bge, excludes 0 barely with gte; W3 power 0.30 at one third of the field",
+      "x": 0.7,
+      "evidence": "card Round 2 outcome table A-P2, A-A2"
+     },
+     {
+      "factor": "(other clauses, not limiting) read-out contrast: 0.40 x2 synthetic N0-N4 x2 replication 8/8 x2 robust (both models, style-resid, IVW) gives ~0.84, discounted to ~0.72 for power 0.55 near the MDE (winner's-curse risk); talk null: power 0.90 at 0.5 beta-bar, ~0.7",
+      "x": "n/a",
+      "evidence": "card Round 2 C results; synthetic C"
+     }
+    ],
+    "notes": "Fragile because the first clause ('not only style') is significant with gte and not with bge, and it reverses round 1's 'it is writing style' headline (that round-1 rival is shown biased by synthetic, so the reversal alone would not set the flag under rule 5). The read-out contrast is robust but sits near its MDE, so a confirmation of the same size may not reach significance."
+   },
+   {
+    "rater": "adjudicator (2026-10-05)",
+    "credence": 0.74,
+    "value_if_true": 2.0,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 3.0,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (C-P1 kill fired as stated, rule 3; C-A1 block and pooling change fixed before real data)",
+      "x": "p0=0.40",
+      "evidence": "card §Round 2 R2-C, C-A1"
+     },
+     {
+      "factor": "calibrated null: synthetic N0–N4 on real rows (size 0.0–0.075, family-common drive 0.025); one design, so no separate identification factor (rule 8)",
+      "x": 2,
+      "evidence": "card §Round 2 synthetic C"
+     },
+     {
+      "factor": "partial replication: 8/8 units positive, but 4 are #51 segments, so 5 independent periods (rule 9)",
+      "x": 1.5,
+      "evidence": "card §Round 2 results C-P1 row"
+     },
+     {
+      "factor": "robust: both embedding models (0.029 / 0.029), style-residualized vectors (0.032), pre-registered IVW pooling (0.031), without #51 same-role pairs (0.027)",
+      "x": 2,
+      "evidence": "card §Round 2 C-P1 row, PH2"
+     },
+     {
+      "factor": "effect at the design's MDE (MDE80 ≈ 0.031 vs observed 0.029; power 0.55 at 0.5 J̄): a confirmatory run of the same size reaches significance only about 0.5–0.75 of the time (credence definition)",
+      "x": 0.7,
+      "evidence": "card §Round 2 synthetic C, Results point 5"
+     }
+    ],
+    "claim": "At the read-out call, a message pulls a same-lab reader's next statements toward it more than a cross-lab reader's (J^c_1 0.067 vs 0.039; Δ_J^adj 0.029 [0.010, 0.054]; 8/8 regime-III units; bge and gte; rooms and in-flight convergence held fixed). Excluded (rule 1): 'not only style' (W3 CI includes 0 in bge, excludes it in gte; power 0.30 at one third of the field); the talk null (a separate clause, powered 0.90); homophily beyond lab main effects (post hoc PH1).",
+    "notes": "The blind rater's reading is the one the rules support for the compound claim: 'not only style' is significant in gte and not in bge, so that clause is fragile and near p ≈ 0.48. The coordinator stacked identification on the same synthetic suite (rule 8) and gave full replication to 8 units that include 4 #51 segments (rule 9). The read-out contrast survives both embeddings and style residualization and is not fragile, so I score that clause and keep the blind rater's discount for an effect at the MDE. V 2.0: small effect in decision units (half of it is lab-level susceptibility and potency), not shown outside this scaffold, needs the read-out ledger."
    }
-  ],
-  "adjudicate": false
+  ]
  },
  "v2_history": [
   {
@@ -134,6 +182,91 @@
    "expected_usefulness": 1.68,
    "rater": "coordinator first pass (from integrated reports); independent rater pending",
    "rated_at": "2026-10-04"
+  },
+  {
+   "claim": "Model-family content fields are writing style; behavior carries only a weak family trace (tooling-like)",
+   "scope": "15 units; natives NE06, NE32, G35",
+   "direction": "positive",
+   "original_verdict": "refuted (fields as positions)",
+   "credence": 0.87,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "calibrated null",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "replication (8–9/15 units, both models)",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "robust to data/instruments",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "rival beaten (style explains field, 0/8 survive)",
+     "x": 1.5,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "quasi-intervention (G35 room × lab crossed)",
+     "x": 1.5,
+     "evidence": "native G35"
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": false,
+   "value_if_true": 2.5,
+   "decision": "don't infer family 'ideology' from content; fingerprinting",
+   "magnitude": "small",
+   "generality": "any LLM swarm",
+   "expected_usefulness": 2.17,
+   "scientific_value": 3.0,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.92,
+     "value_if_true": 2,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "The model-family content field is writing style: same-lab agents share a content direction in 9/15 units but in 0/9 after style residualization, and talk/content coupling follows rooms (10/10), not labs.",
+     "credence": 0.8,
+     "value_if_true": 3.0,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3,
+     "ladder": [
+      {
+       "factor": "identified: synthetic size and power",
+       "x": 1.5,
+       "evidence": "F1-F5 nominal size; power at village N; flaws fixed before real data"
+      },
+      {
+       "factor": "replication",
+       "x": 2,
+       "evidence": "15 units; 10/10 two-room units"
+      },
+      {
+       "factor": "robust to instruments",
+       "x": 2,
+       "evidence": "bge and gte, own and DQ5 style residuals, dedupe: every number reproduces"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
   }
  ]
 }

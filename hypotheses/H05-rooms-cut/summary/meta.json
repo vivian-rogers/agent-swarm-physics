@@ -37,94 +37,132 @@
  "rated_by": "H05 round-2 agent (suggested); coordinator calibration pending",
  "updated": "2026-10-05",
  "v2": {
-  "claim": "Rooms are coupled blocks for talk, and the coupling runs through reading: co-location adds nothing once ledger read counts are controlled",
-  "scope": "6 windows (talk spins); natives #focus (G51), NE42; holdout run inconclusive",
+  "claim": "Rooms partition artifacts as well as chat: cross-room same-day co-editing is ≤ 0.04 of the within-room rate in 5 of 8 non-reserved two-room windows (#35–#44) and drops from 0.56 to 0 for NE42 cut pairs at the split (merge #40 → split #41). Excluded (rule 1): the command-output leak (+0.26 [0.11, 0.42], 48 of 52 exposures in #36: a single powered unit) and its 22% share.",
+  "scope": "regime II–III two-room windows #35–#44, NE42; leak: pooled multi-room windows",
   "direction": "positive",
-  "original_verdict": "inconclusive (holdout DiD passed, C3 missed)",
-  "credence": 0.88,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "holdout partly passed (C1 pass, bug-tainted; C3 miss)",
-    "x": 1.5,
-    "evidence": "holdout.md items 1, 13"
-   },
-   {
-    "factor": "intervention consistent (#focus cut, NE42 split)",
-    "x": 2,
-    "evidence": "natives"
-   },
-   {
-    "factor": "replication (6/6 windows)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "robust (strengthened on fixed bins and trim)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "weak leverage for the read-filter mechanism (co-location × reads r 0.82)",
-    "x": 0.8,
-    "evidence": "native HH248"
-   }
-  ],
+  "original_verdict": "inconclusive",
+  "credence": 0.56,
   "mechanism_level": "M1",
   "fragile": false,
   "value_if_true": 2.5,
-  "decision": "room layout: rooms couple talk because they route reading",
+  "decision": "room design: rooms also partition work; cross-room leaks run through command output and relays, not history search",
   "magnitude": "material",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 2.2,
-  "scientific_value": 2.8,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "generality": "read-out-gated LLM swarms with rooms",
+  "expected_usefulness": 1.4,
+  "scientific_value": 2.5,
+  "rater": "coordinator + blind + adjudicator; adjudicated (Δp > 0.25)",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.86,
-    "value_if_true": 3,
+    "rater": "coordinator (round 2)",
+    "credence": 0.74,
+    "value_if_true": 2.5,
     "mechanism_level": "M1",
     "fragile": false,
-    "scientific_value": 3
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
+     },
+     {
+      "factor": "calibrated null passed (matched placebo, synthetic on real skeletons)",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "partial replication: 5/8 windows",
+      "x": 1.5,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "intervention consistent: NE42 split/merge",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "identified: synthetic validation, amendments A1–A4 pre-data",
+      "x": 1.5,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: leak rests on 52 exposures, mostly one period",
+      "x": 0.6,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: disclosed pre-data look at co-edit counts and NE42 levels",
+      "x": 0.8,
+      "evidence": "card §Round 2"
+     }
+    ]
    },
    {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "In regime-III two-room windows, talk-spin coupling is room-structured (within > cross in 6/6 windows, TWFE z 4.1) and cutting the channel lowers cross-room talk coupling (NE15 pair DiD); activity spins are not room-structured.",
-    "credence": 0.89,
-    "value_if_true": 2.0,
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "Rooms partition artifacts as well as chat (cross-room same-day co-editing <= 0.04 of within-room in 5/8 two-room windows; NE42 cut pairs 0.56 -> 0 at the split), and novel repositories leak across rooms through command output at +0.26 [0.11, 0.42] adoptions per exposure over matched placebos (52 exposures, mostly #36), 22% of cross-room adoptions.",
+    "credence": 0.42,
+    "value_if_true": 3.0,
     "mechanism_level": "M1",
     "fragile": false,
     "scientific_value": 2.5,
     "ladder": [
      {
-      "factor": "calibrated null passed",
-      "x": 2,
-      "evidence": "day-edge-trimmed nulls; result unchanged under trim"
+      "factor": "base: pre-registered primary (R3-P1 leak; the weakest load-bearing part)",
+      "x": "p0=0.40",
+      "evidence": "card Round 2, R3 pre-registration"
      },
      {
-      "factor": "replication",
+      "factor": "calibrated null: own synthetic on real items/candidates/exposure times (size 0/40, recovery +-0.01) with same-agent same-moment placebo items",
       "x": 2,
-      "evidence": "6/6 two-room windows; 4 periods pass individually"
+      "evidence": "card Round 2, synthetic table R3 row; A4"
      },
      {
-      "factor": "robust to data versions",
-      "x": 1.5,
-      "evidence": "survived round 1b (5/6->6/6); one channel, estimator variants (MF, TWFE, pair DiD)"
+      "factor": "replication: single powered unit (48 of 52 exposures in #36)",
+      "x": 0.6,
+      "evidence": "card Round 2 results, R3-P1 row"
      },
      {
-      "factor": "intervention consistent",
-      "x": 2,
-      "evidence": "NE15 holdout primary DiD passed (buggy table), NE42 merge-split, 05-11 split DiD"
+      "factor": "(other part, not limiting) R1-P1 artifact partition: base 0.30 (cross side not blind) x1.5 partial replication (5/8 < 2/3) x2 intervention (NE42 merge/split 0 -> 0.56 -> 0) gives ~0.56",
+      "x": "n/a",
+      "evidence": "card Round 2, disclosure + R1-P1 row"
      }
-    ]
+    ],
+    "notes": "The leak conductance rests almost entirely on #36 and output exposures are self-selected (the agent chose to run the command), which the matched-placebo null does not fully remove. The partition half is close to the scaffold's definition of a room."
+   },
+   {
+    "rater": "adjudicator (2026-10-05)",
+    "credence": 0.56,
+    "value_if_true": 2.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "base: secondary (R1-P1 pre-registered, but the cross-room co-edit counts per period, incl. the #39/#41 zeros, were seen before writing it)",
+      "x": "p0=0.30",
+      "evidence": "card §Round 2, disclosure and R1-P1"
+     },
+     {
+      "factor": "partial replication: ≤ 0.04 in 5/8 windows (< 2/3; #36 0.56 and #42 1.06 fail)",
+      "x": 1.5,
+      "evidence": "card §Round 2 results, R1-P1 row"
+     },
+     {
+      "factor": "intervention consistent: NE42 merge/split, cut-pair co-edit share 0.00 → 0.56 → 0.00",
+      "x": 2,
+      "evidence": "card §Round 2 results, R1-P1 row"
+     },
+     {
+      "factor": "no null or synthetic factor: the census is descriptive; R3's synthetic and placebo belong to the excluded leak clause",
+      "x": 1,
+      "evidence": "card §Round 2 synthetic table (no R1-P1 row)"
+     }
+    ],
+    "claim": "Rooms partition artifacts as well as chat: cross-room same-day co-editing is ≤ 0.04 of the within-room rate in 5 of 8 non-reserved two-room windows (#35–#44) and drops from 0.56 to 0 for NE42 cut pairs at the split (merge #40 → split #41). Excluded (rule 1): the command-output leak (+0.26 [0.11, 0.42], 48 of 52 exposures in #36: a single powered unit) and its 22% share.",
+    "notes": "The blind rater's reading is the one the rules support: rule 1 scores one clause, and the coordinator's ladder credited the NE42 intervention (partition clause) and the R3 synthetic and placebo (leak clause) to one claim, so no single part of the evidence carries that product. The leak rests on 48 of 52 exposures in #36, which is a single powered unit (×0.6) and limits it to about 0.44, so I score the partition clause, which survives at 0.56 and keeps the card's headline. V: material co-edit effect (≈3), scaffold-specific room semantics (−1), co-edit share runs on standard commit logs (+0.5)."
    }
-  ],
-  "adjudicate": false
+  ]
  },
  "v2_history": [
   {
@@ -135,6 +173,96 @@
    "expected_usefulness": 2.31,
    "rater": "coordinator first pass (from integrated reports); independent rater pending",
    "rated_at": "2026-10-04"
+  },
+  {
+   "claim": "Rooms are coupled blocks for talk, and the coupling runs through reading: co-location adds nothing once ledger read counts are controlled",
+   "scope": "6 windows (talk spins); natives #focus (G51), NE42; holdout run inconclusive",
+   "direction": "positive",
+   "original_verdict": "inconclusive (holdout DiD passed, C3 missed)",
+   "credence": 0.88,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "holdout partly passed (C1 pass, bug-tainted; C3 miss)",
+     "x": 1.5,
+     "evidence": "holdout.md items 1, 13"
+    },
+    {
+     "factor": "intervention consistent (#focus cut, NE42 split)",
+     "x": 2,
+     "evidence": "natives"
+    },
+    {
+     "factor": "replication (6/6 windows)",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "robust (strengthened on fixed bins and trim)",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "weak leverage for the read-filter mechanism (co-location × reads r 0.82)",
+     "x": 0.8,
+     "evidence": "native HH248"
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": false,
+   "value_if_true": 2.5,
+   "decision": "room layout: rooms couple talk because they route reading",
+   "magnitude": "material",
+   "generality": "any LLM swarm",
+   "expected_usefulness": 2.2,
+   "scientific_value": 2.8,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.86,
+     "value_if_true": 3,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "In regime-III two-room windows, talk-spin coupling is room-structured (within > cross in 6/6 windows, TWFE z 4.1) and cutting the channel lowers cross-room talk coupling (NE15 pair DiD); activity spins are not room-structured.",
+     "credence": 0.89,
+     "value_if_true": 2.0,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 2.5,
+     "ladder": [
+      {
+       "factor": "calibrated null passed",
+       "x": 2,
+       "evidence": "day-edge-trimmed nulls; result unchanged under trim"
+      },
+      {
+       "factor": "replication",
+       "x": 2,
+       "evidence": "6/6 two-room windows; 4 periods pass individually"
+      },
+      {
+       "factor": "robust to data versions",
+       "x": 1.5,
+       "evidence": "survived round 1b (5/6->6/6); one channel, estimator variants (MF, TWFE, pair DiD)"
+      },
+      {
+       "factor": "intervention consistent",
+       "x": 2,
+       "evidence": "NE15 holdout primary DiD passed (buggy table), NE42 merge-split, 05-11 split DiD"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
   }
  ]
 }
