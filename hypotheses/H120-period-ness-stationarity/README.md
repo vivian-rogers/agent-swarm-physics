@@ -228,6 +228,50 @@ In both periods the trend statistic exceeds the best single split, and no step c
 - **H120-R3.** Drivers of the walk: regress the weekly one-step δJ on roster share outside the core, operator message volume and project churn (DQ4).
 - **H120-R4.** Content analog: the same score test on H91's content modes, to tie the two "about 1 SD a day" drifts.
 
+### Round 2: design, predictions and kill rules (written 2026-10-05 04:15 UTC, before any round-2 statistic on real data)
+*Why:* the unit-of-analysis decision (CLAUDE.md) needs a number: how many days a stationary fit can use, per regime. Round 2 runs redirects R1–R3. R4 (content analog) runs only if time allows; it is not pre-registered here.
+
+**What I had seen when writing this.** Round 1 in full (the tables above). Skeleton facts only for the new windows: non-reserved days per goal period and their regime (calendar), and `period_units` boundaries. Regime II has 9 non-reserved days (#33, #35, #36), in periods of ≤ 5 days. No round-2 fit, drift rate, window statistic or covariate value had been computed.
+
+**Data (switch `--round2` in `scheme/build.py`; round-1 grids unchanged).** New period-level grids with the round-1 rules (core set, DQ8 all-present trim over core agents, spins): **P04** (#4, 25 d), **P06** (#6, 15 d), **P18**, **P19**, **P20** (10 d each). With the round-1 windows **8**, **13**, **27** (one unit = whole period), **G38** and **51main**, every non-reserved goal period with ≥ 10 days has a period window: regime I P04, P06, 8, 13, P18, P19, P20, 27; regime III G38, 51main. Regime II has no such period, so R1 and R2 give no regime-II number. Period windows span step changes (roster joins); this is exception (c) as in round 1 (the window length is the object), and the round-1 within-unit windows (4c, 6b, 19a, 38a, 51g) are refitted next to them.
+
+**R1. Time-varying parameters (random-walk Laplace–Kalman fit).**
+- *Model.* Per core agent i and kept day d, θ_i(d) = (h_i, J_i·)(d) follows a random walk: θ(d) = θ(d−1) + η_d, η_d ~ N(0, Q), Q = diag(q_h, q_Jd on J_ii, q_Jo on J_ij, j ≠ i). The day's linear predictor adds iid day noise ε_d ~ N(0, diag(σ²_h, σ²_J)) on (h, J), so exchangeable day-to-day scatter is not read as a walk. Weekday and session-length fields are static. Initial prior: J ~ N(0, 1) (the round-1 ridge), h and static fields N(0, 10²).
+- *Estimator.* Each day's logistic log-likelihood is expanded to second order around the current path; ε is integrated out in closed form; a Kalman filter gives the Laplace marginal likelihood, and an RTS smoother gives the path. The five hyperparameters are shared by the core agents of a window × channel and maximize the summed marginal likelihood (L-BFGS-B on logs, floor 10⁻⁶ = "zero"). Two passes: linearize at the pooled round-1 fit, then re-linearize at the smoothed path.
+- *Outputs.* Drift rate **κ_J = √q_Jo** (logits per √day; RMS change of one off-diagonal coupling per day) with a 95% profile interval (other four hyperparameters re-maximized; Δ log L = 1.92). Drift detected when the boundary-corrected LR for q_Jo = 0 exceeds 2.71 (p < 0.05 for a ½χ²₀ + ½χ²₁ null). Also κ_h = √q_h and κ_Jd. Regime level: hierarchical partial pooling (exception (d)): log q_Jo,w ~ N(μ_r, τ²_r) across a regime's period windows, integrated over each window's profile likelihood; regime κ_J = exp(μ_r/2) with a profile interval, reported next to the per-window values.
+- *Phase diagram.* Each window's smoothed daily path in the plane (mean J_ii, mean |J_ij|), and the RMS distance of J_offdiag(d) from day 1, D(d), against d (a walk gives D ∝ √d).
+- *Synthetic (axis F; run first)* on the real skeletons of G38, 38a, 51main, 27 and 8: **Z0** stationary (round-1 S1: h day noise 0.3, weekday ±0.3, session-length field 0.3); **Z1** Z0 plus iid day noise on J (0.1 per entry; stationary but noisy couplings); **RW05**, **RW10** Z0 plus a random walk on every J entry with κ = 0.05 and 0.10 logits/√day; **S2** round-1 linear drift that matters. Worlds: 20 per setting (10 for 51main).
+
+**R2. Stationary window length.**
+- *Windows.* Inside each period window, every run of L consecutive kept days, L ∈ {5, 6, 7, 8, 10, 12, 14, 17, 21, 28, 35, 41} (L ≤ the period's kept days), start stride ⌈L/4⌉. L counts active days; in regime III five active days are one calendar week.
+- *Model in a window.* Kinetic Ising (h, J) per core agent, ridge 1 on J. The weekday and session-length fields are fixed offsets taken from the period window's pooled round-1 fit, because a short window cannot separate a weekday pattern from a trend (Mon → Fri is a trend in every 5-day window).
+- *Test per window.* T2 trend for every L (500 day-order permutations, or all distinct orders if fewer); T1 contiguous split for L ≥ 8 (500 random splits, or all distinct). A window **fails** if Holm over its tests (T1, T2) < 0.05 in that channel.
+- *Rate.* r_obs(L) = share of failing windows per regime × channel, with a Wilson 95% interval on the number of non-overlapping windows. r_stat(L) and power(L) = the same rate in synthetic worlds (whole period windows simulated, then the same pipeline, 2 random windows per L per world, 200 permutations): Z0 (stationary) and RW05 / RW10. Regime III: 10 worlds per setting in each of G38 and 51main; regime I: 20 worlds per setting spread over its windows.
+- ***L*\_test*** (the number for the decision) = the largest L in the grid such that r_obs(L′) ≤ r_stat(L′) + 0.10 for every L′ ≤ L. Its power is the RW10 rate at L*; L* is reported as "≥ L (unpowered)" where that power is < 0.8.
+- *Model-based companions (from R1, per window and per regime):* **L_opt = √(12c/q_Jo)**, the window that minimizes the mean squared error of a stationary fit for the mid-window coupling (estimation variance c/L plus walk variance q_Jo·L/12; c = D × the mean posterior variance of a pooled off-diagonal J); **L_0.9 = 0.235 σ²_sig / q_Jo**, the length over which the J pattern keeps correlation ≥ 0.9 with its start (σ²_sig = cross-pair variance of pooled off-diagonal J minus mean estimation variance).
+
+**R3. Drivers of the walk.** Within each period window, each pair of adjacent ISO weeks (≥ 2 kept days each) is a step. Step size = R_step, the score W of week w+1 vs week w on a fit to those days, over its mean in 200 random splits of the same days (activity and talk). Covariates for the two weeks: (a) roster share outside the core (non-core share of agent-minutes with state ≥ 3 inside the calendar windows, `activity_bins_fixed`); (b) operator message volume (human chat messages per kept day, `chat_core` speaker_kind human); (c) project churn (DQ4 `work_commits`, agent work: 1 − Jaccard overlap of the repo sets with agent commits in week w and w+1; regime III only, because git use is sparse before #30). Model: OLS of log R_step on regime + z(a) + z(b) (+ z(c) in a regime-III-only fit), HC3 standard errors; Spearman ρ per covariate. Analytic power: with about 24 steps, power to detect ρ = 0.5 at α = 0.05 is about 0.7. R3 is descriptive unless |ρ| ≥ 0.6.
+
+**Impostors (round 2).** Scheduler field: day edges removed by the trim; a within-day schedule that drifts is absorbed into activity J (H38/H50: 70–80% of co-activation is the scheduler), so an activity drift may be a drifting schedule field. Talk is the coupling channel (H67: read-out gain 0.13) and is reported next to it. Exogenous field: operator messages enter R3 as a driver; kickoff transients enter the first windows of each period (sensitivity: R2 without windows that start on a period's first day). Shared priors and convergence: n/a (no coupling or influence claim; constancy only).
+
+**Predictions (credences in brackets).**
+- **P0-R1 (synthetic).** (a) False drift detection ≤ 0.10 in Z0 and ≤ 0.15 in Z1 per window and channel [0.6]. (b) RW10: detection ≥ 0.8 in G38 and 51main activity [0.6]; the profile interval covers the true κ in ≥ 80% of worlds [0.5]; median κ̂ within ×1.5 of the truth [0.5].
+- **P0-R2 (synthetic).** r_stat(L) ≤ 0.12 at every L [0.6]; RW10 power ≥ 0.8 for L ≥ 10 in regime-III activity [0.5].
+- **P7 (R1, natives).** Drift detected in G38 and 51main, activity and talk [0.65]; activity κ_J in [0.03, 0.12] logits/√day [0.5].
+- **P8 (R1, within units).** No detection in 38a activity [0.5].
+- **P9 (R1, regimes).** Regime-III κ_J above regime-I κ_J (hierarchical means, activity) [0.5].
+- **P10 (R2, the number).** Regime-III activity L*_test between 7 and 12 active days [0.55]; talk L*_test ≥ activity L*_test [0.6].
+- **P11 (R2, regime I).** Regime-I L*_test is unpowered at its largest testable L, or ≥ 10 days [0.6].
+- **P12 (R2, model companions).** Regime-III activity L_opt within ×2 of L*_test [0.4]; regime-III L_0.9 ≤ 14 days [0.5].
+- **P13 (R3).** No covariate reaches p < 0.05 [0.6]; roster share outside the core has a positive sign [0.55].
+
+**Kill rules.**
+- *R1 estimator:* if Z0 or Z1 false detection > 0.20 in a window, R1 detections there are descriptive only.
+- *R1 claim:* if neither G38 nor 51main detects q_Jo > 0 in either channel, round 1's drift is day scatter or a base-rate (h) drift, not a walk of the couplings.
+- *R2 claim:* if r_obs(L) does not rise with L in regime III (Spearman ρ ≤ 0 over the grid, activity), the data give no drift-limited window length, and round 1's drift is not a walk.
+
+**Verdict rules (round 2).** R1 is **supported** (the couplings walk) if P7's detection holds in G38 and 51main activity with P0-R1(a) passed; **failed** if neither detects; **mixed** otherwise. R2 is an estimate (descriptive), scored by P10–P12. R3 is descriptive unless a covariate passes |ρ| ≥ 0.6 and p < 0.05.
+
 ## Notes
 - 2026-10-04 22:03 UTC: card opened. The HH's "rolling fits with fixed hyperparameters" is implemented as one pooled fit plus per-day scores (a score test for drift), so every split and permutation uses the same hyperparameters without refitting; the weekly fits are one-step updates from the pooled fit.
 - 2026-10-04 22:59 UTC: Amendment 1 (synthetic): power judged per channel; EP drift declared unpowered; regime-I 4–6-agent units inconclusive unless they reject.
