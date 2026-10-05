@@ -456,6 +456,78 @@ D in percentage points with day-bootstrap 95% CIs; "clean" = recipients with no 
 - **H04 / H43:** the response to a nudge starts at the receiving call; H04's dead time is read-out delay plus paused targets that respond late or not at all.
 - **H35:** none of the 991 non-holdout nudge read-outs in regime III (#36–#44, #51) is an early wake (`wake_early` = 0), before or after NE44; pre-NE44 read-outs are shorter because fewer targets were mid-pause (38% vs 73% of receiving calls after a pause).
 
+## Round 2 (2026-10-05): content response, memory dose, exposure audit
+*Pre-registration written 2026-10-05 02:45 UTC, before any round-2 statistic on real data. Scope: the card's H08-R2, R4 and R5 (R1 and R3 were superseded by round 1b). Reserved data are never read: every builder drops reserved days with `holdout_mask` and `calendar.holdout` before any computation. Round-1 and round-1b code and outputs are unchanged; round-2 code is new files (`analysis/r2_*.py`, `scheme/build_memory_names.py`), outputs in `data/processed/H08-context-is-the-coupling/r2/`.*
+
+**What had been looked at before writing this:** table schemas (`context_ledger_items`, `call_windows`, `memory_stats`, `chat_index`, both chat embedding matrices, `statements`, `statement_flags`, `cc_fetches`, `cc_seen`); the timing of one G38 agent-day's consolidation calls, memory snapshots and reset calls (no outcome); the ledger documentation of the 200-event cap. Known from round 1b: the call-offset content jump D_cos (pseudo-message null) is positive in 6/9 regime-III periods and negative in regime I; the Claude Code feed replays 2025 from 2026-03-17; H44 finds memory dose does not shorten the output dip (ρ ≈ 0).
+
+### R2 · Non-mention content response at matched lag
+**Question.** Does the recipient's *content* move toward a sender's message only once a call has read it, with names and reply labels removed?
+
+**Units.** (agent message m by sender j, recipient i) pairs from `context_ledger_items` (agent senders only; i ≠ j), and every talk statement s of i posted at lag ℓ = t_s − t_m ∈ (0, 300] s. The producing call of s is the ledger call with t_first ≤ t_s ≤ t_log. s is **read** if its producing call is the receiving call of m or later; s is **in flight** if its producing call started before m (t_call ≤ t_m < t_s). Same 17 replication periods as round 1b.
+
+**Response (message-specific null).** x(s, m) = cos(s, m) − b(m, i). The null b(m, i) is the mean cosine of the *same message* with the recipient's statements on the same PT day at |t − t_m| ∈ [20, 60] min. It removes the message's baseline overlap with this recipient's talk and the day's shared topic. Secondary null: the recipient's statements on other non-reserved days of the period.
+
+**Estimator (partition contrast, read vs in flight at matched lag).** Lag bins (0, 15], (15, 30], (30, 60], (60, 120], (120, 300] s. Δ = Σ_b w_b (x̄_read,b − x̄_flight,b) / Σ_b w_b, with w_b = n_r n_f / (n_r + n_f). Convergence share κ_c = Σ_b w_b x̄_flight,b / Σ_b w_b x̄_read,b. Day-cluster bootstrap, B = 200. Both embedding models (bge-small, gte-modernbert).
+- **Non-name subset (primary):** drop statements that mention j or whose DQ2 reply parent was written by j.
+- **Robustness:** all statements; copies removed (`statement_flags.self_repeat_both`); the other-day null; a paired version (only (m, i) pairs with statements on both sides).
+- **Other-room placebo (two-room periods):** messages from a room the recipient is not in; "read" means the producing call started after m (it would have been read had it been visible).
+
+**Rivals.** Contemporaneous convergence (both agents follow one earlier event: equal x on both sides at equal lag); the day's shared topic (removed by b); the recipient's style prior (same recipient on both sides); recency (removed by lag matching).
+
+| # | Prediction | Counts against |
+| --- | --- | --- |
+| R2-P1 | **Content is read-gated without names (primary):** Δ_nonname > 0 with CI excluding 0 in both models in ≥ 6/9 regime-III periods | CI includes 0 in ≥ 5/9 in either model |
+| R2-P2 | **Regime I/II:** with recency removed by lag matching, Δ_nonname > 0 in sign in both models in ≥ 5/8 periods; no period has Δ < 0 with CI excluding 0 in both models | Δ < 0 (CI excluding 0) in ≥ 2/8 |
+| R2-P3 | **Convergence share:** median κ_c over regime-III periods (bge, non-name) in [0.2, 0.6]: in-flight statements already carry part of the near-time alignment (Known issues: a third to a half) | median κ_c < 0.2 or > 0.6 |
+| R2-P4 | **Other-room placebo:** \|Δ_other\| < ⅓ Δ_own, CI including 0, in ≥ 6/8 two-room periods (bge) | Δ_other comparable to Δ_own |
+| R2-P5 | **Paired version** agrees in sign with Δ_nonname in ≥ 7/9 regime-III periods | sign disagreement in ≥ 3/9 |
+
+**Kill rule.** If R2-P1 fails with CIs including 0 in ≥ 5/9 regime-III periods in either model, the content arm of the gating claim is withdrawn; the claim then stands on names and reply labels only. If the synthetic ungated world gives Δ with CI excluding 0 in > 20% of replicates, R2 is reported as descriptive only.
+
+**Synthetic guard (run first).** Real call skeletons, statement times and ledger receipts of G38 and G41; synthetic 64-d embeddings. A day field T_d(t) drifts as an Ornstein–Uhlenbeck process (τ = 60 min) shared by all agents (contemporaneous convergence by construction). m = norm(T(t_m) + a_j + ε); s = norm(T(t_s) + a_i + ε + α Σ m̂) over the messages of the last 5 min. Truths: *gated* (sum over messages the producing call has read, α = 0.3), *ungated* (all messages posted before t_s), *mixed* (gated 0.3 + ungated 0.15; expected κ_c ≈ 0.3–0.5), *null* (α = 0). 20 replicates each. Pass: gated Δ CI > 0 in ≥ 80%; ungated and null Δ CI covers 0 in ≥ 80% (false positives ≤ 20%); mixed κ_c recovered within ±0.2.
+
+### R4 · NE41 memory dose
+**Question.** When an agent writes a sender's name into memory at a forced erasure, is the coupling to that sender protected after the wipe?
+
+**Units.** Round 1b's NE41 units (`analysis/erasure_ledger.py`, unchanged): (talk call k of i, agent sender j) with j's latest message read in the 30 min before k; erased = a `reset_forced` (CF) or `reset_consol` (CV) call between the read-out call and k. Regime III: G36 (from 03-24), G37–G42, G44, G51.
+
+**Dose.** From the memory text (`agent_memories`, read locally; only name bitmasks are written). For a consolidation: S_before = the latest snapshot before the consolidation call's t_call; S_after = the latest snapshot at or before the next call's t_call (the memory in that prompt). **Added names** = agents named (the `common.mention_regexes` rule) in lines added by the snapshots in (S_before, S_after] and still named in S_after. The dose z of a unit is "j is an added name" at the **adjacent consolidation**: for erased units, the consolidation between the read-out and k; for non-erased units, the next consolidation after k (a placebo dose: same salience signal, but it cannot have acted on k). Secondary: z_stock = j named anywhere in the prompt's memory at k.
+
+**Estimator.** Round 1b's linear probability model with agent×day effects (age bins, engaged, PC, new), plus z, CF×z and CV×z. Response: reply author (y_auth; primary, because a name in memory could prime a mention without any coupling); mention (secondary). Protection ratio π = β_{CF×z} / (−β_CF). Day-bootstrap B = 200; DerSimonian–Laird pooling over periods (exception (c): the erasure is the object).
+
+| # | Prediction | Counts against |
+| --- | --- | --- |
+| R4-P1 | **Memory protects the thread:** pooled β_{CF×z} > 0 (CI excluding 0) on y_auth, with π ≥ 0.5 | pooled β_{CF×z} ≤ 0, or CI includes 0 at power ≥ 0.8 for π = 0.5 |
+| R4-P2 | **Salience:** in non-erased units the placebo dose predicts replies (β_z > 0, CI excluding 0, pooled): agents write down the senders they are engaged with | β_z ≤ 0 |
+| R4-P3 | **Dose rate (descriptive):** share of CF units with z = 1, per period | — |
+
+**Kill rule.** If the pooled CF×z CI includes 0 and the synthetic power at π = 0.5 is ≥ 0.8, "memory carries the thread" is rejected for names. If the power is < 0.8 the verdict is inconclusive.
+
+**Synthetic guard (run first).** Real unit skeletons (units, z, CF/CV flags, agent-days) of G38, G41 and G51. y ~ Bernoulli(p₀ · (1 + 0.5 z) · (1 − 0.21 · CF · (1 − π z))), with p₀ the unit's real mean response rate by age bin. Truths π ∈ {0, 0.5, 1}; 50 replicates each. Pass: π = 0 gives the CF×z CI excluding 0 (positive) in ≤ 10%; π = 1 recovered (CI excludes 0) in ≥ 80%. The power at π = 0.5 sets the R4 verdict rule.
+
+### R5 · Exposure audit
+**Question.** Where input logs exist, how often and for how long were agents silently decoupled by a stale or replayed feed? Can a log-free monitor find the same thing?
+
+**R5-a, fetch-log audit (the Claude Code agent, non-reserved days).** Per fetch: the creation times of the returned events (`cc_seen`, event ids joined to `events`). A returned event is *stale* if it was created > 24 h before the fetch; a fetch is stale if ≥ 50% of its returned events are stale. Freshness lag L = fetch time − newest returned event. A **decoupled episode** is a maximal run of ≥ 3 consecutive stale fetches. Also: the goal text in each fetch result (if present) vs the village goal at that time.
+
+**R5-b, log-free monitor (all agents).** M(agent-day) = mean over the agent's statements of [cos(s, c₃₀(s)) − cos(s, c₃₀ˢʰⁱᶠᵗ(s))]. Here c₃₀ is the normalized centroid of other speakers' messages in the agent's room (room rule) in the 30 min before s, and c₃₀ˢʰⁱᶠᵗ is the same clock window on another non-reserved day of the period. An agent-day is *flagged* if it has ≥ 10 statements and the bootstrap 95% lower bound of M is ≤ 0. The expected flag rate under full coupling comes from resampling each agent-day at its agent-period median M (power floor). Both models.
+
+**R5-c, scaffold truncation (descriptive).** The share of received agent messages that the ledger marks `omitted` (beyond the 200-event cap, from 2026-06-11), per period.
+
+| # | Prediction | Counts against |
+| --- | --- | --- |
+| R5-P1 | **One episode:** exactly one decoupled episode on non-reserved days, from 2026-03-17 to the agent's exit; ≥ 90% of its fetches in that span stale; no episode before 03-17 | a second episode, or < 90% stale in the span |
+| R5-P2 | **Goal stays current:** the goal in fetch results matches the village goal in ≥ 95% of fetches, during the replay too (the replay is in the event feed only) | < 95% |
+| R5-P3 | **A log monitor detects it fast:** "median age of returned events over the last 5 fetches > 1 h" fires within 1 active hour of the episode onset, with no alarm on current-feed days | delay > 1 h or a false alarm |
+| R5-P4 | **The log-free monitor sees the replay:** the Claude Code agent's M on replay days < ½ of its M on current-feed days, in both models | ratio ≥ ½ in either model |
+| R5-P5 | **No hidden episodes in standard agents:** in every regime-III period the flagged share exceeds the power floor by ≤ 2 pp, and no agent has a run of ≥ 3 consecutive flagged days | excess > 2 pp, or such a run |
+| R5-P6 | **Truncation is rare:** omitted share < 1% in every period before 2026-06-11 and ≤ 5% in G51 | larger shares |
+
+**Synthetic guard for R5-b (run first).** Real statement times and rooms of G38 and G51; synthetic embeddings with a drifting day field per room. Coupled agents' statements add α · c₃₀; for a planted "replayed" agent the term uses a window from another day instead. Pass: the planted agent's days are flagged in ≥ 80% of replicates; coupled agent-days flagged at the power floor ± 2 pp.
+
+**Prior credences (Claude, 2026-10-05):** R2-P1 0.6, P2 0.4, P3 0.4, P4 0.7, P5 0.7; R4-P1 0.3, P2 0.7; R5-P1 0.7, P2 0.5, P3 0.6, P4 0.5, P5 0.6, P6 0.7.
+
 ## Confirmatory predictions (written 2026-10-04 after round 1, before any holdout use; `analysis/confirm_holdout.py`, not run)
 Run only after this card and the script are committed and Vivian signs off. The script refuses without `--confirm --i-understand-this-uses-the-locked-holdout`; `--dry-run` runs the same code on non-holdout stand-ins (`data/processed/H08-context-is-the-coupling/confirm_dryrun/dryrun.json`).
 
