@@ -38,7 +38,7 @@ OUT = R.R2OUT / "synthetic"
 SIGMA = {"G51": 2.26, "G04": 1.32}
 KAPPA = 0.09
 PI = 0.9
-CANDS = ("chi_q1", "chi_qm", "chi_qa", "chi_dd", "chi")
+CANDS = ("chi_q1", "chi_qm", "chi_qa", "chi_q1_jd", "chi_qm_jd", "chi_dd", "chi")
 
 
 def ou_topic(times: np.ndarray, rng, tau: float = 3600.0) -> np.ndarray:
@@ -193,7 +193,7 @@ def simulate_A(Rk: pl.DataFrame, cls: np.ndarray, world: str, rng, prm: dict, B:
             stats[tag] = stats["obs"]
             continue
         Vall[nb:] = post(kk, pp).reshape(-1, D)
-        pc = R.content_rows_r2(Vall, bidx, pmask, qidx, U.astype(np.float32), Up)
+        pc = R.content_rows_r2(Vall, bidx, pmask, qidx, U.astype(np.float32), Up, call_id=call_idx)
         cand = R.candidates(pc)
         r1 = L.content_rows(Vall, bidx, pmask, qidx, U.astype(np.float32), Up)
         cand["chi_dd"] = r1["chi_dd"]; cand["chi"] = r1["chi"]
@@ -268,7 +268,7 @@ def summarize_A(df: pl.DataFrame) -> dict:
     ).sort("cand", "skeleton", "labels", "world")
     # admissibility (card's selection rule)
     adm = {}
-    for cnd in ("chi_q1", "chi_qm", "chi_qa"):
+    for cnd in ("chi_q1", "chi_qm", "chi_qa", "chi_q1_jd", "chi_qm_jd"):
         s = g.filter(pl.col("cand") == cnd)
         a = s.filter(pl.col("world").is_in(["S0", "S1"]))["prem_bias"].abs().max() <= 0.006
         b = s.filter(pl.col("world") == "N0")["nam_cov0"].min() >= 0.8
@@ -319,7 +319,7 @@ def run_B(reps: int, n_boot: int, amp: float = 0.15):
                 sel = (P["cls"] == cl).to_numpy()
                 if sel.sum() < 50:
                     continue
-                fires, Cs, As = 0, [], []
+                fires, Cs, As = {"delta": 0, "delta_q": 0}, {"delta": [], "delta_q": []}, []
                 for rep in range(reps):
                     rng = np.random.default_rng([52, rep, hash((sk, world, cl)) % 10_000])
                     times = np.array([st_t[int(i)] for i in stm_ids] + [m_t[m] for m in um])
@@ -336,7 +336,6 @@ def run_B(reps: int, n_boot: int, amp: float = 0.15):
                         for k in np.flatnonzero((P["arm"] == "read").to_numpy()):
                             Z[int(am[k])] = Z[int(am[k])] + amp * np.linalg.norm(Z[int(am[k])]) * Em[int(msgs[k])]
                     Zu = {i: L.unit(v) for i, v in Z.items()}
-                    # decoys: other messages of the same class (synthetic vectors), 50 per message
                     pool = np.unique(msgs[sel])
                     e = np.stack([Em[int(m)] for m in msgs]); zb = np.stack([Zu[int(i)] for i in bm]); za = np.stack([Zu[int(i)] for i in am])
                     dec_idx = rng.integers(len(pool), size=(len(um), 50))
@@ -344,12 +343,22 @@ def run_B(reps: int, n_boot: int, amp: float = 0.15):
                     Dm = np.stack([Em[int(m)] for m in pool])
                     rowsD = Dm[dec_idx[[mpos[int(m)] for m in msgs]]]           # (n, 50, D)
                     dz = za - zb
-                    delta = (dz * e).sum(1) - np.einsum("nkd,nd->nk", rowsD, dz).mean(1)
-                    Q = P.with_columns(pl.Series("delta", delta)).filter(pl.Series(sel))
-                    r = R.partition_contrast(Q, "delta", n_boot=n_boot, seed=rep)
-                    fires += int(r["C_ci"][0] > 0 or r["C_ci"][1] < 0) if world != "WH" else int(r["C_ci"][0] > 0)
-                    Cs.append(r["C"]); As.append(r["A"])
-                res[f"{sk}_{world}_cls{cl}"] = dict(reps=reps, rate=fires / reps, mean_C=float(np.nanmean(Cs)), mean_A=float(np.nanmean(As)),
+                    dl = {}
+                    dl["delta"] = (dz * e).sum(1) - np.einsum("nkd,nd->nk", rowsD, dz).mean(1)
+                    eq = L.unit(e - (e * zb).sum(1, keepdims=True) * zb)
+                    Dq = rowsD - np.einsum("nkd,nd->nk", rowsD, zb)[..., None] * zb[:, None, :]
+                    Dq = Dq / np.maximum(np.linalg.norm(Dq, axis=2, keepdims=True), 1e-9)
+                    dl["delta_q"] = (za * eq).sum(1) - np.einsum("nkd,nd->nk", Dq, za).mean(1)
+                    for col in ("delta", "delta_q"):
+                        Q = P.with_columns(pl.Series(col, dl[col])).filter(pl.Series(sel))
+                        r = R.partition_contrast(Q, col, n_boot=n_boot, seed=rep)
+                        fires[col] += int(r["C_ci"][0] > 0 or r["C_ci"][1] < 0) if world != "WH" else int(r["C_ci"][0] > 0)
+                        Cs[col].append(r["C"])
+                        if col == "delta":
+                            As.append(r["A"])
+                res[f"{sk}_{world}_cls{cl}"] = dict(reps=reps, rate=fires["delta"] / reps, rate_q=fires["delta_q"] / reps,
+                                                    mean_C=float(np.nanmean(Cs["delta"])), mean_C_q=float(np.nanmean(Cs["delta_q"])),
+                                                    mean_A=float(np.nanmean(As)),
                                                     n_inflight=int(((P["arm"] == "inflight").to_numpy() & sel).sum()))
                 print(sk, world, cl, res[f"{sk}_{world}_cls{cl}"], f"({time.time() - t0:.0f} s)", flush=True)
     L.jdump(res, OUT / "B_summary.json")

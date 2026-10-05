@@ -370,6 +370,39 @@ Unit: (message m, recipient j) with a ledger receiving call (t_rc). Statements: 
 
 **Power (stated before data).** With about 20 units per arm, a Fisher test detects a difference of 0.3 in complied share with power ≈ 0.5. A miss is "inconclusive" unless the difference has the opposite sign with a 95% CI that excludes 0.
 
+### R4 synthetic validation and amendments (2026-10-05, before any R4 statistic on real data)
+`analysis/r2_synthetic.py A` → `data/processed/H52-humans-loud-agents/r2/synthetic/A_summary.json` (10 replicates per cell; skeletons G51 and G04, labels real and confounded, worlds N0/S0/S1; 40,000-row skeletons).
+- **Amendment R2-A1 (calibration, before the first full run).** A one-replicate draft world quoted the recipient's last statement at weight 0.6 (named messages then had cos(u, S_k) ≈ 0.5) and used a strong shared drift. On structural moments of the real rows (no post-call statement used) named agent messages have cos(u, S_k) 0.21 (G51) / 0.30 (G04) against 0.01 / 0.20 for unnamed ones, and nearly the same cosine with S_{k−1} (0.19 / 0.29): they share the recipient's general state more than they quote its last line. Consecutive statements have cosine 0.46 / 0.54. The world was recalibrated per skeleton to these moments (`PARAMS` in the script; matched within about ±0.03). Humans stay less topical than agents (ratio 0.5 / 0.6).
+- **First full run: none of the three pre-registered candidates is admissible.** All of them remove the quote artifact for the naming effect only partly or not at all, and all show a human-premium bias of −0.012 to −0.018 in the G51 S0/S1 cells (truth 0 or planted). The cause is the round-1 co-arrival spillover: one post-call statement answers several co-arriving messages, so topical agent rows borrow pull from their neighbours.
+- **Amendment R2-A2 (after the partial first run on synthetic data only, before any real data).** Two candidates were added: `chi_q1_jd` and `chi_qm_jd`, the quote-free DiDs with a joint per-call ridge deconvolution of the shared displacement (λ = 0.05, round 1's `chi_jd` construction on the quote-free directions). The selection rule is unchanged and now covers five candidates. The run was restarted with the same seeds, so the results for the first three candidates are unchanged.
+
+| Candidate | max \|human-premium bias\| over S0/S1 cells | N0 naming CI covers 0 (min over cells) | max \|naming bias\| | admissible |
+| --- | --- | --- | --- | --- |
+| `chi_dd` (A1, round 1) | 0.025 | 0.0 (CI below 0 in 100% of N0 replicates: −0.013 G04, −0.021 G51) | 0.022 | — (reference) |
+| `chi` (H30 = literal redirect) | 0.027 | 0.0 (biased upward, +0.012 to +0.026) | 0.028 | — (reference) |
+| `chi_q1` | 0.020 | 0.8 | 0.005 | no (premium bias) |
+| `chi_qm` | 0.016 | < 0.8 | 0.004 | no |
+| `chi_qa` | 0.028 | 0.0 | 0.028 | no |
+| **`chi_q1_jd`** | **0.006** (G04 real S1 −0.0058; G51 cells ≤ 0.0015) | **0.8** | **0.004** | **yes → primary** |
+| `chi_qm_jd` | 0.007 | < 0.8 | 0.004 | no |
+
+- `chi_q1_jd` in S1: G51 planted truth 0.036, bias −0.0015 (real labels) / +0.0008 (confounded), power 1.0, coverage 1.0; G04 truth ≈ 0.07, bias −0.006 / −0.003, power 1.0 / 0.8. Naming effect recovered within 0.004 in every cell.
+- **R4-S1 holds:** under no influence (N0), `chi_dd`'s naming effect is negative with CI below 0 in 100% of replicates (−0.013 to −0.021). Round 1's negative naming effect (P8) is what reply-sharing produces with zero influence.
+- **R4-S2 holds** after Amendment R2-A2 (not with the three pre-registered candidates alone; disclosed).
+
+**R4b synthetic check** (`r2_synthetic.py B`, real G51 and G04 pair skeletons, 60 replicates per cell; `B_summary.json`, 20-replicate first pass in `B_summary_reps20.json`). Share of replicates whose 95% CI on C excludes 0:
+
+| World | H54's Δ (pre-registered primary) | quote-free Δ_q |
+| --- | --- | --- |
+| W0 (nothing) | 0.02–0.10 | 0.05–0.08 |
+| WC (shared OU topic, pure convergence) | humans 0.07 / 0.12; **agents 0.30 / 0.15** | humans 0.07 / 0.03; agents 0.12 / 0.10 |
+| WQ (m quotes its named readers' before message) | humans 0.00 / **0.20**; agents 0.00 / **1.00** | 0.03–0.08 |
+| WH (read pulse, C ≈ 0.14) power | 0.97–1.00 | 1.00 |
+
+(G51 / G04.) **R4-S3 fails for H54's Δ** (convergence and quoting fire in up to 100% of worlds when named agent pairs are included) **and holds within sampling error for Δ_q** (maximum 0.12, G51 agents under convergence).
+- **Amendment R2-A3 (before any R4b statistic on real data):** the primary R4b score is **Δ_q**. H54's Δ is reported for comparability with H54 only and carries no verdict. Power was checked only at C ≈ 0.14 (amplitude 0.15), above H54's Δ ≈ 0.09, so a miss at smaller C is not informative.
+- **Amendment R2-A4 (naming effect statistic):** R4-P3/P4 use the primary `chi_q1_jd`. Fixed now.
+
 **Amendment R3-A1 (2026-10-05 ~05:00 UTC, after pass 1, before any outcome was viewed; pass-1 codes committed in c7d43f4).**
 - *Pass-1 counts.* Human: 110 messages, 37 addressed directives (16 conflicting, 21 congruent); 53 units are broadcasts, questions or information. Agent: 247 prefiltered messages read to reach 40 conflicting directives; 117 addressed directives (40 conflicting, 77 congruent).
 - *The two conflict sets differ in kind.* All 16 human conflicts are task conflicts (stop the visible activity); none is a role conflict. Of the 40 agent conflicts, 33 are role-only (a favour outside the recipient's role, often a relay or a check), 3 are both and 4 are task-only. 9 of the 16 human conflicts go to one agent (Gemini 2.5 Pro, one issue: chapters posted in chat or written character by character).

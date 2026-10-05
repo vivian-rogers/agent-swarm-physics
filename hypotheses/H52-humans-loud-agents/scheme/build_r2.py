@@ -137,7 +137,7 @@ def build_content(p):
     m = meta(p)
     days = m["days"]
     L.assert_no_holdout(days, m["goal"])
-    r = rows(p, ["item", "msg", "recv", "tc", "cls", "day_idx", "kickoff"])
+    r = rows(p, ["item", "msg", "recv", "tc", "cls", "day_idx", "kickoff", "turn_id"])
     rng = np.random.default_rng([SEED2, m["goal"], 1])
     st, V = L.statement_table(days, "bge_small", "white32")
     recv = r["recv"].to_numpy().astype(int); tc = r["tc"].to_numpy()
@@ -161,7 +161,7 @@ def build_content(p):
         okp = plx >= 0
         Up[okp] = Mv[np.searchsorted(uniq, plx[okp])]
         Vs = V if tag == "" else L.statement_table(days, model, variant)[1]
-        pc = R.content_rows_r2(Vs, bidx, pmask, qidx, U, Up)
+        pc = R.content_rows_r2(Vs, bidx, pmask, qidx, U, Up, call_id=r["turn_id"].to_numpy().astype(np.int64))
         alphas[tag or "_bge"] = pc["alpha_sums"].tolist()
         for k, v in pc.items():
             if k != "alpha_sums":

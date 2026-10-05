@@ -41,7 +41,8 @@ def _perp1(u, s):
     return _unit_rows(u - c * s[:, None, :])
 
 
-def content_rows_r2(V, bidx, pmask, qidx, U, Upl, chunk: int = 20000) -> dict:
+def content_rows_r2(V, bidx, pmask, qidx, U, Upl, chunk: int = 20000, call_id: np.ndarray | None = None,
+                    ridge: float = 0.05) -> dict:
     """Per-row pieces of the round-2 candidates. V: statement vectors (unit); bidx (n, K) right-aligned recent
     statements (-1 missing), pmask (n, K) within the 60-min pre window, qidx (n, K_POST) post statements; U (n, d)
     message vectors (NaN if missing); Upl (n, P, d) placebo vectors (NaN rows ignored).
@@ -50,6 +51,10 @@ def content_rows_r2(V, bidx, pmask, qidx, U, Upl, chunk: int = 20000) -> dict:
     n = len(U)
     keys = ("q1_t", "q1_p", "qm_t", "qm_p", "a_t", "b_t", "a_p", "b_p")
     out = {k: np.full(n, np.nan, np.float32) for k in keys}
+    if call_id is not None:                      # Amendment R2-A2: joint per-call deconvolution of the quote-free DiD
+        UQ = np.zeros((n, U.shape[1]), np.float32)
+        D1 = np.zeros((n, U.shape[1]), np.float32)
+        DM = np.zeros((n, U.shape[1]), np.float32)
     sums = np.zeros(5)
     npost = (qidx >= 0).sum(1)
     for s0 in range(0, n, chunk):
@@ -88,6 +93,8 @@ def content_rows_r2(V, bidx, pmask, qidx, U, Upl, chunk: int = 20000) -> dict:
         dm = Qbar - Sold
         out["qm_t"][s0:e0] = np.where(okm, np.einsum("nd,nd->n", uq, dm), np.nan)
         out["qm_p"][s0:e0] = np.where(okm, (np.einsum("npd,nd->np", upq, dm) * okp).sum(1) / np.maximum(nokp, 1), np.nan)
+        if call_id is not None:
+            UQ[s0:e0] = uq; D1[s0:e0] = d1; DM[s0:e0] = dm
         # A1 direction (older statements projected out), pieces for chi_qa / chi_dd
         S2 = S.copy()
         S2[:, -1] = 0.0
@@ -107,6 +114,20 @@ def content_rows_r2(V, bidx, pmask, qidx, U, Upl, chunk: int = 20000) -> dict:
         x, y = bp_all[w], ap_all[w]
         sums += np.array([(x * y).sum(), (x * x).sum(), x.sum(), y.sum(), w.sum()])
     out["alpha_sums"] = sums
+    if call_id is not None:
+        for key, Dv, okc in (("q1_jd", D1, np.isfinite(out["q1_t"])), ("qm_jd", DM, np.isfinite(out["qm_t"]))):
+            jd = np.full(n, np.nan, np.float32)
+            idx = np.flatnonzero(okc)
+            o = idx[np.argsort(call_id[idx], kind="stable")]
+            cid = call_id[o]
+            st = np.r_[0, np.flatnonzero(np.diff(cid)) + 1, len(o)]
+            for a_, b_ in zip(st[:-1], st[1:]):
+                rr = o[a_:b_]
+                Wc = UQ[rr].astype(np.float64)
+                dl = Dv[rr[0]].astype(np.float64)          # shared within the call (same recipient statements)
+                G = Wc @ Wc.T + ridge * np.eye(len(rr))
+                jd[rr] = np.linalg.solve(G, Wc @ dl)
+            out[key] = jd
     return out
 
 
@@ -121,7 +142,10 @@ def candidates(pieces: dict, alpha: float | None = None) -> dict:
     """Candidate statistics from the per-row pieces."""
     al = alpha_from_sums(pieces["alpha_sums"]) if alpha is None else alpha
     p = {k: np.asarray(v, float) for k, v in pieces.items() if k != "alpha_sums"}
-    return {"chi_q1": p["q1_t"] - p["q1_p"], "chi_qm": p["qm_t"] - p["qm_p"],
+    extra = {}
+    if "q1_jd" in p:
+        extra = {"chi_q1_jd": p["q1_jd"] - p["q1_p"], "chi_qm_jd": p["qm_jd"] - p["qm_p"]}
+    return {**extra, "chi_q1": p["q1_t"] - p["q1_p"], "chi_qm": p["qm_t"] - p["qm_p"],
             "chi_qa": (p["a_t"] - al * p["b_t"]) - (p["a_p"] - al * p["b_p"]),
             "chi_dd2": (p["a_t"] - p["b_t"]) - (p["a_p"] - p["b_p"]), "alpha": al}
 
