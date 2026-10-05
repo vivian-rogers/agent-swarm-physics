@@ -89,3 +89,10 @@ Data: `data/processed/H58-coordinated-superagents/results/` (units/*.json, repli
 
 ## Notes
 - 2026-10-04: prediction written by `period_folders.py --predict` before the run; results filled by `--results`.
+
+## Round 2 (2026-10-05)
+### Prediction (written before the round-2 run on this period; card "Round 2 design", amendments R2-A1..A6)
+- **R1 A-rule:** no candidate passes; synthetic power ≤ 0.4 even at ρ = 0.7 (38a 0.40, 38b 0.05, 38c 0.10), so a null is not identifiable.
+- **R1 village level:** herding in 38a (power 0.85); 38b and 38c not identifiable (0.40–0.45).
+- **R2 file level:** eligible shared repos 38a 5, 38b 2, 38c 2; per-repo tests unpowered; enters the pooled test.
+- **R3:** as the card (G38 per-period rows).

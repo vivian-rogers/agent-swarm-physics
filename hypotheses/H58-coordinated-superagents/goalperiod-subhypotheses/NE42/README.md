@@ -35,3 +35,9 @@ Data: `data/processed/H58-coordinated-superagents/results/` (units/*.json, repli
 ## Notes
 - 2026-10-04: prediction written by `period_folders.py --predict` before the run; results filled by `--results`.
 - 2026-10-04, reading: *mixed* by the letter only. The file-level part passes on g > 0 and z_shift ≥ 2, but that set is untestable against an outside reference (no file-level outsiders), its specificity is negative and its search p is 0.55. The main part fails: #40 has no qualifying unit of any size, and neither do #39 or #41. Inside the shared repo, half of all working bins are on the hub file (a common field), and each agent keeps 75% of its work on its own top file (median): agent + own file, inside a shared container. Power is low (0.15–0.30 at ρ = 0.5).
+
+## Round 2 (2026-10-05)
+### Prediction (written before the round-2 run on these units; card "Round 2 design", amendments R2-A1..A6)
+- **R1:** no A-rule candidate in #39, #40 or #41 (power at ρ = 0.7: 0.80, 0.35, 0.40); village herding in #40 (one shared repo) and #41; #39 has no shared repo.
+- **R2 file level, #40's shared universe repo:** own file in a shared container (exclusivity above the random partition), hub file as a common field, no file-level store (Λ_file z_shift < 2; per-repo power is low, so a null is not identifiable on its own).
+- **R3:** G39–G41 per-period rows as the card.

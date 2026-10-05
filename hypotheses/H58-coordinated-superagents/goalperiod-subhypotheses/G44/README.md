@@ -52,3 +52,9 @@ Data: `data/processed/H58-coordinated-superagents/results/` (units/*.json, repli
 ## Notes
 - 2026-10-04: prediction written by `period_folders.py --predict` before the run; results filled by `--results`.
 - 2026-10-04, reading: the #best team does not act as a unit in its allocation. Its members' own memory and fine-tuning repos dominate (3% of transitions are moves onto a team-mate's artifact; g below its outside reference, z −2.3). The label-free search returns a #rest set (Jaccard 0.125 with the team) that fails specificity. A joint-work crew inside #rest (five agents around a shared framework repo) qualifies with weak attraction (4 joins vs 1.4 expected): that falsifies the card's 'no qualifying unit of size ≥ 3 in #rest' clause. Power 0.35.
+
+## Round 2 (2026-10-05)
+### Prediction (written before the round-2 run on this period; card "Round 2 design", amendments R2-A1..A6)
+- **R1:** the #best team is not an attraction candidate (power at ρ = 0.5: 0.60; ρ = 0.7: 0.50); village herding (power 0.95).
+- **R2:** 4 eligible shared repos (incl. the fine-tuning repo); no file-level store.
+- **R3:** G44 per-period rows as the card.

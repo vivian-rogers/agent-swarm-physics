@@ -139,3 +139,11 @@ Data: `data/processed/H58-coordinated-superagents/results/` (units/*.json, repli
 ## Notes
 - 2026-10-04: prediction written by `period_folders.py --predict` before the run; results filled by `--results`.
 - 2026-10-04, reading (post hoc, A3): the verdict is *mixed* by the pre-registered letter only. The powered units 51b–d (synthetic power 0.60–0.75) have no qualifying unit, which refutes a group store of strength ρ ≳ 0.5 there. Their village-scale search results (8 members) do show real attraction (joins 1.8–4.5× what agent + own artifacts predicts), but it fails specificity or the outside reference: outsiders on the same artifacts co-allocate as much, so it reads as a shared field or convergence, not a group store. The one qualifier (51e: Claude Sonnet 4.6, Claude Fable 5 and GPT-6 Astra, each on its own repo; robust at 15 and 60 min) has **zero joins**: its gain comes from members *avoiding* each other's artifacts (territoriality), which the join-only M1 also rewards. It is not a superagent. Re-acquisition after forced erasures: members return to their own artifact (51e: own 0.78 vs group 0.00).
+
+## Round 2 (2026-10-05)
+### Prediction (written before the round-2 run on this period; card "Round 2 design", amendments R2-A1..A6)
+- **R1 A-rule (attraction, outside reference):** no round-1 candidate set passes in 51b–d. Synthetic power here at a planted store of ρ = 0.35: 51a 0.80, 51b 1.00, 51c 0.95, 51d 0.85, 51e 0.55; size ≤ 0.05. So a null in 51b–d excludes a group store of ρ ≥ 0.35.
+- **R1 village level:** herding (Λ_V above rotations, T_V below) in each of 51a–e; tests powered (≥ 0.95 under W_env).
+- **R1 T-rule (territoriality as a group state):** expected none; power ≤ 0.50 at θ = 0.9, so a null is inconclusive. #51e's round-1 qualifier: territorial, not attractive (prior 0.4; 2 days).
+- **R2 file level:** shared repos 51a 3, 51b 13, 51c 11, 51d 7, 51e 3 (eligible, ≥ 30 commits); no file-level store (pooled z < 3); own file in a shared container (descriptive).
+- **R3:** the pair's stored "which file" information survives erasure (I_store(F) > 0.1 bits, ratio to placebo ≥ 0.8); re-reading is habit (read × erasure interaction CI includes 0); the own-file κ row identified.
