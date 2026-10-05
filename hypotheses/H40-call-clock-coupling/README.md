@@ -6,6 +6,7 @@
 - **Heavy spins (G51, 32 agents, 243 agent-units):** per-call coupling does not depend on cadence (s +0.11 [−0.03, +0.25]; −0.00 with lab + style controls) and is a family/style trait (lab + style R² 0.25, cadence 0.01); per-hour coupling scales ~linearly with call rate (slope 1.00 [0.81, 1.19]; cadence R² 0.50 vs lab + style 0.33). Slowest-fifth agents (25 calls/h) answer within 5 min 8× less often than the fastest fifth (184/h).
 - **Operator statement:** doubling a recipient's call rate (all intervals halved, message stream fixed) raises its 5-min reply coupling by ×2^0.57 ≈ 1.5 [1.3, 1.7] (regime III pooled; G51 ×1.32 [1.29, 1.36]) and its 30-min coupling by ×1.39 [1.27, 1.51] (G51 ×1.21). Cross-sectionally the association is steeper (slope 1.0 in G51).
 - Pooled across agents and periods, s = −0.12 [−0.28, +0.04] (rival s = −1 excluded). Natives: G51 supported, NE41 mixed (no catch-up after forced erasure; raw ratio failed), G18 and G36 (NE14) failed. Replication verdicts 15 supported / 14 mixed / 4 failed (all non-supported in regime I). Scorecard A1 B1 C1 D1 E1 F2 G1 H1 I1. `confirm.py` (NE20 in #45, NE44 in #46, transfer #45–#47, #28) written, frozen and dry-run; **not run**.
+- **Round 2 (2026-10-05; section "Round 2"):** G38/G44's negative η is mostly call-type composition: long tool calls are followed by fewer talk calls (η_talk −0.28 [−0.39, −0.18]). Given a talk call, the span elasticity is −0.11 [−0.16, −0.06], the same in all four regime-III periods tested. Previous-call job, arrivals, rooms and label truncation are rejected. Regime-I span split inconclusive (274 logged replies); full-strength scheduler-wait exposure and the start-placement artifact are excluded. The tertile collapse is withdrawn: synthetic worlds show it cannot tell the clocks apart.
 **Fields:** stat mech, dynamics, sociophysics
 **Literature:** [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (kinetic Ising as the dynamical model). Not in `literature/` (cited from memory, †): Glauber, *J. Math. Phys.* 4, 294 (1963)† (single-spin-flip kinetics, attempt rate); Brown, Barbieri, Ventura, Kass & Frank, *Neural Comput.* 14, 325 (2002)† (time-rescaling: a point process is Poisson in its own intensity clock); Singer & Willett, *Applied Longitudinal Data Analysis* (2003)† (discrete-time hazard models, complementary log-log link).
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime; Population N(t); **Exposure (turn read-out)** as implemented by the shared context ledger (a message is read out by the recipient's first call whose context was assembled after the message); Interaction, variant *reply* replaced by the DQ2 reply label (see the Known issue "Mention-based responses are superseded"); Action (turn-merged) only through the ledger's call definition. New named variants proposed here (not edited into DEFINITIONS.md, outside H40's scope): **call clock** (a recipient's model-call count since read-out), **per-call coupling** and **per-hour coupling** (defined under Operational definitions), **exposure-time elasticity η** and **cadence elasticity ε(T)**.
@@ -293,6 +294,65 @@ Truth on call starts jittered within their bounds (R6, R5) or on logged starts (
 - **R5 withdrawn as uninformative** by the pre-set validity rule (< 80% in 3/5 periods). The tertile collapse measures burial, dilution and agent heterogeneity, not the clock. P5 (round 1, 21/33) is re-scored as uninformative, not failed. The real-data R5 run is kept as descriptive only, for the multi-parent bias (pool sizes by tertile).
 - **R1: the engagement branch is unpowered by design** (power 0.00; a looser band, η_wait upper bound < 0.5 with η_busy > 0, reaches only 0.55, so I do not adopt it). Under the pre-set kill rule, a non-exposure result is reported as "exposure excluded; engagement vs call clock inconclusive". The exposure branch stays decisive (power 1.00, size 0.05).
 - **R6:** unchanged. Every diagnostic passed its synthetic check.
+
+### Results (2026-10-05, non-reserved data only; `analysis/round2.py r6 / r1 / r5`, figure `figures/round2_summary.pdf`)
+Numbers: `data/processed/H40-call-clock-coupling/round2/r6_G38.json`, `r6_G44.json`, `r6_G40.json`, `r6_G41.json`, `r1.json`, `r5.json`. CIs: larger of model SE and 1-h block bootstrap SE (B = 50; B = 30 for G40/G41). Per-period rows: `per_period_estimates` (statistics `eta_talk_span_elasticity`, `eta_reply_given_talk`, `eta_busy_prev_call`, `eta_scheduler_wait`, `eta_placement_artifact`).
+
+**R6: the talk split (D1) and the rejected mechanisms (D2–D5).**
+
+| Period | base η | η_talk (talk propensity) | η_rep\|talk (reply given talk) | Δη (D1 vs base) | D2 / D3 / D4 / D5 η |
+| --- | --- | --- | --- | --- | --- |
+| G38 (target) | −0.57 [−0.67, −0.46] | **−0.33 [−0.44, −0.22]** | −0.11 [−0.19, −0.03] | +0.46 [+0.36, +0.56] | −0.58 / −0.58 / −0.55 / −0.59 |
+| G44 (target) | −0.34 [−0.44, −0.24] | **−0.22 [−0.36, −0.07]** | −0.09 [−0.17, −0.02] | +0.25 [+0.14, +0.35] | −0.36 / −0.34 / −0.34 / −0.38 |
+| G41 (contrast) | −0.04 [−0.18, +0.09] | +0.08 [−0.07, +0.23] | −0.16 [−0.31, −0.01] | — | −0.19 / −0.04 / −0.08 / −0.10 |
+| G40 (contrast) | −0.04 [−0.27, +0.20] | +0.05 [−0.05, +0.15] | −0.10 [−0.33, +0.12] | — | −0.07 / −0.02 / +0.00 / +0.07 |
+| Random-effects mean | targets −0.45 [−0.68, −0.23] | targets −0.28 [−0.39, −0.18]; contrast +0.06 [−0.02, +0.14] | **all four −0.11 [−0.16, −0.06], τ = 0, Q = 0.58** | | |
+
+| Mechanism | Predicted pattern | Observed | Verdict |
+| --- | --- | --- | --- |
+| M1 call-type composition | η_talk < 0; η_rep\|talk ≤ 0.5 \|η_base\| with CI including 0 | η_talk < 0 in both; η_rep\|talk is 19% (G38) and 26% (G44) of base, Δη CI above 0; but its CI excludes 0 by 0.02–0.03 | **mostly supported** (strict pattern missed on the CI clause) |
+| M1b work absorption (previous-call job) | η moves toward 0 | Δη −0.01 / −0.02 | rejected |
+| M2 selection on arrivals | η moves toward 0; third-party term < 0 | Δη −0.01 / −0.02; third-party term **positive** (+0.86, +0.32) | rejected |
+| M3 room / agent-day state | η moves toward 0 | Δη +0.02 / −0.00 | rejected |
+| M4 label truncation | \|η(k_n = 0)\| ≤ 0.5 \|η_base\| | −0.59 / −0.38 | rejected |
+| Kill rule | no diagnostic moves η and η_rep\|talk < 0 in both | D1 moves η toward 0 in both | **not triggered** |
+
+- **What it means.** In every regime-III period tested, a talk call answers a pending message with nearly the same hazard whatever wall time the previous call spanned: η_rep\|talk = −0.11 per log span, the same in all four periods (doubling the span lowers it by 7%). What differs between periods is the talk channel. In G38 and G44 a long tool call is followed by fewer talk calls (η_talk −0.28). In G40 and G41 it is not (+0.06). That difference explains about 3/4 of the negative η and all of the between-period spread (Q 34 in talk vs 0.6 given talk). The real talk schedule alone gives η̂ = −0.26 / −0.13 under a pure call clock (S6), which matches this.
+- **D6 (descriptive, Gemini, 2–3 agents).** API generation time of the previous call carries a positive elasticity (G44 +0.56 [+0.24, +0.88], G38 +0.38 [−0.04, +0.81]); the rest of the span (tool execution) carries the negative one (G44 −1.05 [−1.25, −0.85], G38 −0.33, G41 −0.44). Long thinking goes with replying; long tool jobs go with not talking.
+- **D0 shape (G38).** The negative slope holds across the span bins (8–16 s −0.41, 16–32 s −0.78, 32–64 s −0.58 vs < 8 s); it is not a tail effect.
+- **Caveat.** Conditioning on talk conditions on a variable that m can cause (H50: a read message turns the next call into talk). S6 shows the split is unbiased when talk is exogenous; it is not tested when m causes talk.
+
+**R1: regime-I span split (Gemini recipients, logged starts, #24–#31).** 274 replies at qualifying calls (G24: 2; G25 61, G26 95, G27 67, G30 33, G31 16). Busy time of the previous call is a median 12–14% of the span (median span 54–90 s, busy 8–12 s, wait 45–77 s).
+
+| Statistic | Pooled (random effects, 6 periods) | Pre-set rule | Verdict |
+| --- | --- | --- | --- |
+| Precondition: total η on this subset | +0.30 [−0.14, +0.73] | CI above 0 | **failed** (underpowered: CI includes both 0 and the regime-I value +0.51) |
+| η_busy (generation + tool time of call n−1) | +0.28 [−0.11, +0.67] | engagement: > 0 | not shown |
+| η_wait (scheduler wait) | +0.18 [−0.17, +0.53] | exposure: ≥ 0.3 with CI above 0 | **exposure not supported**; full-strength exposure (η_wait ≈ 0.84 in S-wall) is excluded |
+| R1c: η_placed − η_logged | +0.04 [−0.06, +0.13] | ≥ 0.2 | **failed**: latency placement does not inflate η |
+
+- R1 is **inconclusive** under the pre-set rules (precondition failed; engagement branch unpowered, A5). Two things are learned: a wall clock acting through the scheduler's wait at full strength is excluded, and the start-placement artifact is excluded, so regime I's η in non-Gemini agents is not a timing artifact. The cause of regime I's η stays open.
+
+**R5: collapse (withdrawn by A5; descriptive).** Lab-balanced D_call < D_wall in 8/10 regime-II/III periods with common lab support (G37 has none) and 4/12 regime-I periods; α̂-balanced 8/10 and 10/14 (raw, as in round 1: 8/11 and 13/22). These numbers do not score P5 (the synthetic shows the statistic cannot tell the clocks apart). **Multi-parent bias:** DQ2 pools (visible candidates per reply message) are larger for the slowest cadence tertile in several regime-II/III periods (G35 36.5 vs 26.6 for the fastest; G41 35.8 vs 28.4; G42 29.4 vs 18.7), equal (≈ 38) in regime I. With only rank-1 candidates mostly labelled, slow agents' secondary replies are undercounted more, which lowers their per-call curves (bias against the call clock in any per-call comparison across cadence). The multi-parent outcome (all labelled candidates) changes D values by at most 0.20 (G24, lab-balanced) and changes no regime-II/III call-vs-wall ordering.
+
+**Outcome vs prediction (round 2).**
+| Item | Prediction | Result | Verdict |
+| --- | --- | --- | --- |
+| R6 | one mechanism explains η < 0 (prior M1 50%) | M1 explains ≈ 3/4; M1b, M2, M3, M4 rejected; residual −0.11 common to all regime-III periods | M1 mostly supported |
+| R1 | engagement (40%) / exposure (25%) / inconclusive (35%) | inconclusive; full exposure excluded | inconclusive |
+| R1c | placement artifact ≥ 0.2 (50%) | +0.04 [−0.06, +0.13] | failed (no artifact) |
+| R5 | P5′ ≥ 2/3 (55%); withdrawn (30%) | withdrawn by the validity rule | withdrawn |
+
+**Scorecard changes:** D stays 1 (P5 re-scored uninformative, not failed). H stays 1: M1 beats four named rivals for G38/G44, but regime I is unresolved. B stays 1 (talk composition identified; conditioning on talk is untested when m causes talk). Others unchanged: A1 B1 C1 D1 E1 F2 G1 H1 I1.
+
+**New constants (proposed for `interpretation/swarm-constants.json`):**
+- η_rep\|talk (reply-given-talk span elasticity) = −0.11 [−0.16, −0.06]; regime III; G38, G40, G41, G44 (4 periods, τ = 0); DQ2 parents; synthetic attenuation ≈ 10% (S7).
+- η_talk (talk-propensity span elasticity) = −0.28 [−0.39, −0.18] in G38 + G44; +0.06 [−0.02, +0.14] in G40 + G41; regime III.
+- η_wait (regime-I scheduler-wait elasticity) = +0.18 [−0.17, +0.53]; regime I, Gemini logged chat calls, #24–#31 pooled.
+
+**Round-2 redirects:** (1) Test whether m causes the talk call (talk split under H50's read-out jump) before reading η_rep\|talk as a clean call clock. (2) Regime I needs more logged starts: no non-reserved period has enough; H40-R4 (`confirm.py`, NE20) remains the decisive test. (3) Drop the tertile collapse from the toolkit; use η and the pause-timer dose.
+
+**Claim that stands:** In the computer-use scaffold (regimes II–III), a talk call answers a pending message with a hazard that barely depends on the wall time its previous call spanned (η_rep\|talk = −0.11 [−0.16, −0.06], 4 periods, homogeneous); the negative total η of G38 and G44 is mostly call-type composition (long tool calls are followed by fewer talk calls, η_talk −0.28 [−0.39, −0.18]), and the wall clock (η = 1) is excluded in every regime-II/III period. *Exclusions:* R5 collapse withdrawn (invalid statistic); R1 inconclusive (precondition failed, engagement branch unpowered); the residual −0.11 has no identified cause; regime I's η stays unexplained (only full-strength scheduler-wait exposure and the start-placement artifact are excluded).
 
 ## Notes
 - 2026-10-04: H29's boundary pull (content channel) was considered as the per-call coupling. Its rows are built on H18's visibility rule and per-unit H29 tables; rebuilding them on the ledger is a separate project. Round 1 uses the reply channel; the content channel is a round-2 redirect.

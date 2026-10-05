@@ -628,6 +628,8 @@ def r1syn(reps: int, calls=None, X=None):
 # ============================================================================= R5 (collapse with matched coupling)
 
 def km_w(t, ev, w, grid):
+    if len(t) == 0 or w.sum() <= 0:
+        return np.full(len(grid), np.nan)
     o = np.argsort(t, kind="stable")
     t, ev, w = t[o], ev[o], w[o]
     ut, idx = np.unique(t, return_index=True)
