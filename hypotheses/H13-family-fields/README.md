@@ -447,3 +447,82 @@ One folder per goal period (round-1b `Verdict (1b)` lines in each; unchanged); v
 - **H13-R1.** Policy fingerprint: P(next behavior state | current state, context features) differs by family beyond agent identity.
 - **H13-R2.** Families differ in susceptibility: who listens to whom (HH98).
 - **H13-R3.** Mixed-vendor periods out-produce single-vendor ones (descriptive, confounded; work ledger).
+
+## Round 2 (2026-10-05): graded style rival, newcomer enculturation, family coupling at the read-out call
+*Scope: the coordinator's round-2 brief (graded style rival; enculturation of newcomers; power for the no-coupling result) plus H13-R2 (who listens to whom) as a descriptive K×K matrix of the read-out design. H13-R1 (policy fingerprint) and H13-R3 (mixed-vendor output) are not run. Non-reserved data only (`holdout_mask` asserted in every script); `confirm.py` not run; no paid labels.*
+
+### Pre-registration (written 2026-10-05 03:25 UTC, committed before any round-2 statistic on real data)
+*Facts seen before writing (sampling design only): the joiner list from `roster` with each joiner's chat-statement counts on its first five days and the reserved flags of those days; the schemas of `text_features`, `reply_pairs`, `behavior_states_v3`, `context_ledger_items`, `call_windows`, `producing_calls`; H46's round-2 card (genre control, per-segment style offset ≈ 5% of per-message style variance, function words identify agents at 0.79); H50's round-2 content read-out estimator and its pooled regime-III J^c_1 = 0.033 [0.027, 0.039]. No family, style-ladder, enculturation or read-out statistic split by lab has been computed.*
+
+**Code (new, behind a switch; round-1 and 1b scripts are untouched):** `analysis/r2lib.py`, `r2_synthetic.py`, `r2_ladder.py`, `r2_encult.py`, `r2_readout.py`, `r2_write.py`. Data: `data/processed/H13-family-fields/r2/`.
+
+#### R2-A. Graded style rival (settles "only style" vs "mostly style")
+**Population.** Round-1b units (15 counted plus 51e descriptive), agent chat statements with DQ5 `statements_white32` vectors (bge-small primary, gte-modernbert second) and a `text_features` row. Agent-day means (≥ 3 statements), day-demeaning, agent means (≥ 2 days), T_field, lab permutation (2,000), #51 same-role pairs dropped, delete-one-agent jackknife SE and DerSimonian–Laird RE exactly as round 1 (a1).
+
+**Feature blocks (per statement, standardized within unit).**
+- `S20`: H13's 20 style features (`text_features` f_*).
+- `core14`: `S20` without the length/markup-count features (log_chars, urls, backticks) and the topic-adjacent ones (digit_share, upper_share, colon; H46).
+- `FW50`: the 50 most frequent of H46's 128 closed-class words (list copied, not imported) in non-reserved H13-unit statements with ≥ 10 word tokens; sqrt relative frequency, winsorized at 0.1/99.9%, z-scored; statements with < 10 tokens get 0 plus a short-statement flag.
+- `G` (speech-act genre, H46's block): is-reply, parent human, parent automated, parent-pair p_supports / p_opposes / p_asks, max candidate p_reply, has-mention, log(1 + mentions), leading @, 12 DQ3 window probabilities (execute_task is the reference) and a DQ3-missing flag.
+- **Genre control (suffix g):** each block is residualized on G within the unit with agent fixed effects; only (G − Ḡ)B̂ is removed, the agent constant is kept (H46's method). So a family difference in speech-act mix stays in the content.
+
+**Maps.** **W** (within-agent): B̂ is fitted on agent-demeaned statements and features, then applied to the full features (round 1's S-a′ form). **P** (pooled): OLS with intercept on all statements (round 1's S-a form). The residual statement vectors are renormalized and pass through the a1 pipeline.
+
+**Ladder (nested within a map).** L0 raw; W1 = W(core14g); W2 = W(S20g); **W3 = W(S20g + FW50g)**; Wf = W(FW50g); P1, P2, P3, Pf likewise. Bridges: S-a (P, raw S20; round 1) and S-a′ (W, raw S20). Speech-act rival PG = P(G) alone. Strength axis: the share of statement-vector variance each map removes (R²_map).
+
+**Why W3 is decisive.** The W map removes only the embedding signature that style features carry within an agent. It cannot remove a family position that merely correlates with family style across agents. P can, so P over-removes by construction. W3 is the gentlest complete linear style control (formatting plus function words, genre kept).
+
+**Predictions.**
+- **A-P1 (monotone ladder).** RE T falls as blocks are added (L0 ≥ W1 ≥ W2 ≥ W3; L0 ≥ P1 ≥ P2 ≥ P3), and each P level ≤ the W level with the same block. Credence 0.7.
+- **A-P2 (mostly style).** Retention ρ_W3 = RE T(W3) / RE T(L0) lies in (0.10, 0.50]; W3 p < 0.05 in ≤ 4/15 units. Credence 0.5.
+- **A-P3 (function words carry part of the field beyond formatting).** ρ_W3 ≤ 0.75 ρ_W2. Credence 0.5.
+- **A-P4 (the field is not speech-act mix).** ρ_PG ≥ 0.75, and T on agents' mean G vectors has p < 0.05 in ≤ 5/15 units. Credence 0.6.
+- **Reading (fixed now).** *Only style* (at linear resolution): W3 RE CI includes 0, ρ_W3 ≤ 0.25, and synthetic power ≥ 0.8 to detect a non-style family field of one third of the raw field at W3. *Mostly style, with a non-style residual:* W3 RE CI excludes 0 and ρ_W3 ≤ 0.5. *Not mainly style:* ρ_W3 > 0.5. Any other outcome: *mostly style, residual unresolved*.
+- **Kill.** ρ_W3 > 0.5 with the W3 RE CI above 0: round 1's "the family field is writing style" is withdrawn as stated.
+- **Descriptive.** gte ladder; leave-family-out day mean at L0 and W3 (round-1 caveat 2); T on agents' mean FW50g vectors.
+
+#### R2-B. Enculturation of newcomers
+**Joiners.** Agents whose roster join day is a non-reserved day with ≥ 5 chat statements. The joiner's window is its join goal period's non-reserved days from the join day, at most 10 PT days and one regime. Day index d = the d-th window day with ≥ 5 joiner statements, d ≤ 6. *Incumbents* are agents present in the window before the join day. The candidate labs are the labs with ≥ 1 incumbent with ≥ 2 eligible days in the window; the joiner needs its own lab and ≥ 1 other lab among them. From the roster this gives about 20 joiners (regimes I–III); the exact list is fixed by the rule in code.
+
+**Vectors.** DQ5 `statements_white32` (bge primary; gte second), regime-whitened, unit-normalized. Style-free variant: shared `statements_style_resid_period32`. Day mean m_d = incumbents' equal-weight agent-day mean (joiner excluded). Lab field h_g = mean over g's incumbents of their day-demeaned agent means over the window. **Statement-count matching:** every joiner and incumbent agent-day vector entering a cosine statistic is the mean of 5 random statements; statistics are averaged over 20 draws (fewer statements give noisier means and smaller cosines).
+
+**Observables.**
+- Lab alignment a(d) = cos(v_{j,d} − m_d, h_own) − mean over other candidate labs g of cos(v_{j,d} − m_d, h_g).
+- Room outsiderness r(d) = cos(v_{j,d}, m^room_d) − mean over incumbents i in the room of cos(v_{i,d}, m^room_{d,−i}), with m^room_d the incumbents' mean in the joiner's modal room that day (≥ 2 incumbents).
+- Null for a(1): own-lab relabelling (each joiner's own lab replaced by a random candidate lab; 10,000 draws). Slopes: per-joiner OLS over d (joiners with ≥ 3 days), mean slope, joiner bootstrap CI (5,000). Lab-alignment drift is also compared with incumbents' leave-self-out a(d) on the same days (difference in slopes).
+
+**Predictions (direction fixed now).**
+- **B-P1 (start at the lab, raw content).** Mean a(1) > 0 with relabelling p < 0.05. Credence 0.6.
+- **B-P2 (the lab alignment does not fade).** The mean slope of a(d) is not negative: joiner-bootstrap CI includes 0 or lies above 0. Credence 0.65.
+- **B-P3 (style-free content starts neutral).** With `style_resid_period`, a(1) has p ≥ 0.05 and a point estimate ≤ 0.5 × the raw a(1). Credence 0.6.
+- **B-P4 (convergence on the room).** Mean r(1) < 0 (CI below 0) and the mean slope of r(d) > 0 (CI above 0). Credence 0.45.
+- **Reading.** "Newcomers arrive carrying their lab's style and converge on the room's content" if B-P1, B-P2 and B-P4 pass. "Newcomers start neutral" if B-P1 fails with synthetic power ≥ 0.8 at the planted lab field. **Kill for "the family field is a fixed charge":** slope of a(d) < 0 with CI below 0 (newcomers lose their lab position as they settle).
+
+#### R2-C. Family coupling at the read-out call (power for the no-coupling result)
+**Round-1 sensitivity (analytic, stated now).** The minimum detectable effect at 80% power is about 2.8 × the RE SE: Δ_talk 2.8 × 0.0094 ≈ 0.026 and Δ_content 2.8 × 0.0087 ≈ 0.024 in estimator units. F3 attenuation (0.3–0.8) puts the content bound at a true J_in − J_out of roughly 0.03–0.08.
+
+**New design (H50's content read-out estimator, reimplemented here from shared tables).**
+- Source m = an agent chat message with a statement vector. Recipient j = a ledger receiver (`context_ledger_items`, kind agent; receiving call r).
+- Response B = one of j's next 8 statements after t_m, same PT day, within 30 min.
+- Hop h = pos(prod(B)) − pos(r) + 1 in j's non-summary call sequence (`call_windows`, ordered by t_call; `producing_calls`). h = 1 is the read-out call; h = 0 is the call in flight at t_m (posted after m, could not read it).
+- y = cos(z_B, z_m) − mean cos(z_B, z_m′), with m′ two seeded random statements of the same sender ≥ 2 h away in the unit.
+- J^c_1 = Σ_b w_b [ȳ(1, b) − ȳ(0, b)] over 10-s age bins in [0, 60) s, w_b ∝ n_1b n_0b / (n_1b + n_0b).
+- Units: round-1b units with ≥ 200 hop-1 and ≥ 200 hop-0 rows; block bootstrap (days if ≥ 3 days, else 1-h blocks), 400 draws; inverse-variance pooling over regime-III units; #35 (regime II) reported separately.
+- **Family partition:** same-lab (sender lab = recipient lab) vs cross-lab rows. Δ_J = J_same − J_cross with paired bootstrap draws. **Primary:** the named-stratified contrast Δ_J^adj = Σ_s w_s (J_same,s − J_cross,s) over s ∈ {named, unnamed} (ledger `ment`), w_s = the unit's share of hop-1 rows in s. Naming is address-gated coupling (×5, H50) and may differ by lab pair.
+- This is a partition contrast twice over: read vs in-flight at matched age (contemporaneous convergence and common drives cancel), and same vs cross lab. Reads happen within a room, so rooms are held fixed.
+- **Talk (secondary).** For each non-summary call c: talk_c (`call_windows.talk`) on the counts of agent items newly read at c, split same-lab / cross-lab × named / unnamed, with agent-day fixed effects (linear probability). Δβ_talk = named-stratified β_same − β_cross; block bootstrap; pooled.
+- **Smallest effect of interest:** Δ_J = 0.5 × the pooled J^c_1 (all rows); Δβ_talk = 0.5 × the pooled β (all reads).
+- **Descriptive (H13-R2, who listens to whom):** pooled J^c_1 by sender lab × receiver lab over {Anthropic, OpenAI, Google, other}, and by receiver lab (susceptibility).
+
+**Predictions.**
+- **C-P1 (no family coupling in content at the read-out).** Pooled Δ_J^adj CI includes 0 and its upper bound < 0.5 J̄. Credence 0.55.
+- **C-P2 (no family coupling in talk at the read-out).** Pooled Δβ_talk CI includes 0 and its upper bound < 0.5 β̄. Credence 0.55.
+- **C-P3 (replication of H50).** Pooled regime-III J^c_1 > 0 with CI above 0 and inside [0.018, 0.048].
+- **Kill.** Δ_J^adj CI above 0: family coupling exists at the read-out, and round 1's "no family coupling" is withdrawn for content. CI including 0 with an upper bound ≥ 0.5 J̄, or synthetic power < 0.8 at Δ = 0.5 J̄: inconclusive.
+
+#### Synthetic validation first (axis F; `analysis/r2_synthetic.py`, real skeletons, before any real round-2 statistic)
+- **A.** Real statements, features, agents and days of every unit. Synthetic U = (real features) × (real within-agent map) + agent offsets permuted across agents (no family link) + real day means + real within-agent residuals permuted across statements. Worlds: S0 style only; S1 = S0 + a random non-style family direction sized to one third of the raw field; S2 = S0 + a family position aligned with family mean style through a different map; NL = S0 + squared style terms (nonlinear style); SG = S0 + a speech-act signature (real family G differences). Required: W3 size ≤ 0.1 per unit and RE CI > 0 in ≤ 10% of replicates in S0; report leakage under NL; W3 power in S1; S2 kept by W and removed by P; SG kept by g levels.
+- **B.** Real joiners' and incumbents' statement schedules and incumbents' real vectors; joiner statements replaced. Worlds: J0 neutral; J1 at the lab from day 1; J2 neutral then converging to the lab; J3 a room outsider converging. Required: J0 size ≤ 0.07 for a(1); power at J1.
+- **C.** Real rows (hop, age, naming, lab pair, blocks); outcomes replaced. Worlds: N0 no pull; N1 equal pull for all lab pairs; N2 family pull Δ = 0.5 J̄; N3 a family-common drive at both hops (no coupling); N4 only named rows couple and naming is more frequent within labs. Required: size ≤ 0.07 in N0, N1, N3, N4 for Δ_J^adj (N4 tests the stratification); power at N2. Talk: the same with Bernoulli outcomes.
+
+**Estimates.** Per-unit rows to `per_period_estimates` (hypothesis H13, round 2): T at each ladder level (bge), J_same, J_cross, Δ_J^adj and Δβ_talk per unit; enculturation statistics per joiner unit. Period READMEs G35–G51 and NE32 get round-2 blocks.
