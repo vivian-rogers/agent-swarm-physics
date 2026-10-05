@@ -311,3 +311,195 @@ def dl_pool(est, se):
     I2 = max(0.0, (Q - (k - 1)) / Q) if Q > 0 else 0.0
     return dict(mean=float(mm), se=float(sem), lo=float(mm - 1.96 * sem), hi=float(mm + 1.96 * sem), tau2=float(tau2),
                 I2=float(I2), k=int(k), p=float(2 * stats.norm.sf(abs(mm / sem))))
+
+
+# ============================================================================ round 2 (2026-10-05)
+R1_COLS = ["log1p:o_ctx", "log1p:U_k", "log1p:k_ctx"]
+
+
+def attach_r2(st: pl.DataFrame, tok: pl.DataFrame) -> pl.DataFrame:
+    """Join round-2 token covariates (r2_tokens.parquet) to a statement frame. U_k = own tool tokens / 1000.
+    dose_prev = seg_dose of the previous statement's segment (the own tokens an erasure between t-1 and t removed);
+    cap_prev = cap hits on calls in (call of t-1, call of t] (NE22)."""
+    st = st.join(tok, on="sid", how="left").with_columns((pl.col("U") / 1000).alias("U_k"))
+    st = st.sort("agent", "t").with_columns(
+        pl.col("seg_dose").shift(1).over("agent", "pt_date").alias("dose_prev"),
+        (pl.col("cap_cum") - pl.col("cap_cum").shift(1).over("agent", "pt_date")).alias("cap_prev"))
+    return st
+
+
+def logit_terms(d: pl.DataFrame, y: np.ndarray, cols: list[str]) -> dict:
+    """Agent-effect logit with agent-day cluster SEs; returns {name: (b, se)}, n."""
+    ag = np.unique(d["agent"].to_numpy(), return_inverse=True)[1]
+    X = _X(d, cols)
+    keep = X.std(axis=0) > 0
+    r = fit_logit(y, X[:, keep], ag, clusters=d["aday"].to_list())
+    out, j = {}, 0
+    for c, k in zip(cols, keep):
+        name = c.split(":")[-1]
+        if k:
+            bad = abs(r["b"][j]) > 10 or r["se_cl"][j] > 10
+            out[name] = (float("nan"), float("nan")) if bad else (float(r["b"][j]), float(r["se_cl"][j]))
+            j += 1
+        else:
+            out[name] = (float("nan"), float("nan"))
+    return dict(terms=out, n=int(len(y)), n_y=int(y.sum()))
+
+
+def r1_onset(st: pl.DataFrame, resp="r_either", fill="ctx_pos", with_U=True):
+    """R1 onset: log(1+O), log(1+U/1000), log(1+K) + round-1 controls; fill = ctx_pos (round 1) or P (log P)."""
+    d = st.filter((pl.col("r_prev") == 0) & pl.col("U_k").is_not_null())
+    if d.height < 50 or d[resp].sum() < 10:
+        return None
+    ctrl = [c for c in ONSET_CTRL if c != "log1p:ctx_pos"] + (["log1p:ctx_pos"] if fill == "ctx_pos" else ["log:P"])
+    cols = (R1_COLS if with_U else ["log1p:o_ctx", "log1p:k_ctx"]) + ctrl
+    return logit_terms(d, d[resp].to_numpy().astype(float), cols)
+
+
+def r2_exit_dose(st: pl.DataFrame, resp="r_either"):
+    """R2a exit: round-1 primary exit model plus erasure x centered dose (dose of the erased segment)."""
+    d = st.filter(pl.col("r_prev") == 1).with_columns(
+        (pl.col("reset_between") & ~pl.col("forced_between")).alias("vol_between"))
+    er = d["reset_between"].fill_null(False).to_numpy()
+    dose = d["dose_prev"].to_numpy().astype(float)
+    ok = ~er | np.isfinite(dose)
+    d = d.filter(pl.Series(ok))
+    er = er[ok]
+    dose = dose[ok]
+    if d.height < 30 or er.sum() < 10:
+        return None
+    mu = float(np.nanmean(dose[er]))
+    d = d.with_columns(pl.Series("dose_c", np.where(er, dose - mu, 0.0)))
+    y = 1 - d[resp].to_numpy().astype(float)
+    cols = ["forced_between", "vol_between", "dose_c", "log1p:nov_read", "log1p:nov_infl", "log1p:nov_read_next"] \
+        + EXIT_CTRL
+    r = logit_terms(d, y, cols)
+    r.update(n_erasure=int(er.sum()), dose_mean=mu, dose_sd=float(np.nanstd(dose[er])))
+    return r
+
+
+def r2_onset_dose(st: pl.DataFrame, resp="r_either"):
+    d = st.filter(pl.col("r_prev") == 0)
+    er = d["reset_between"].fill_null(False).to_numpy()
+    dose = d["dose_prev"].to_numpy().astype(float)
+    ok = ~er | np.isfinite(dose)
+    d = d.filter(pl.Series(ok))
+    er, dose = er[ok], dose[ok]
+    if d.height < 50 or er.sum() < 10 or d[resp].sum() < 10:
+        return None
+    mu = float(np.nanmean(dose[er]))
+    d = d.with_columns(pl.Series("dose_c", np.where(er, dose - mu, 0.0)),
+                       pl.Series("erased", er.astype(float)))
+    cols = ["erased", "dose_c", "log1p:n_prev_day", "log:lag_prev_s", "log:calls_prev", "log1p:n_read"]
+    r = logit_terms(d, d[resp].to_numpy().astype(float), cols)
+    r.update(n_erasure=int(er.sum()))
+    return r
+
+
+def r2_cap_exit(st: pl.DataFrame, resp="r_either"):
+    """R2b: exit among loop statements with a 200-event cap hit since the previous statement (counts + OR)."""
+    d = st.filter(pl.col("r_prev") == 1)
+    cap = (d["cap_prev"].fill_null(0) > 0).to_numpy()
+    out = dict(n_loop=int(d.height), n_cap=int(cap.sum()))
+    if cap.sum() >= 20:
+        d = d.with_columns(pl.Series("cap", cap.astype(float)))
+        y = 1 - d[resp].to_numpy().astype(float)
+        out.update(logit_terms(d, y, ["cap", "forced_between", "log:calls_prev", "log:lag_prev_s",
+                                      "log1p:n_prev_day"]))
+    return out
+
+
+def mh_boot(y, x, strata, clusters, B=200, seed=0):
+    """MH log OR with a cluster bootstrap (clusters: agent-days of the outcome statement)."""
+    lor, n_inf = mh_or(y, x, strata)
+    rng = np.random.default_rng(seed)
+    cl = np.unique(clusters, return_inverse=True)[1]
+    idx_by = [np.where(cl == k)[0] for k in range(cl.max() + 1)] if len(cl) else []
+    bs = []
+    for _ in range(B):
+        pick = rng.integers(0, len(idx_by), len(idx_by))
+        ii = np.concatenate([idx_by[k] for k in pick])
+        v, _ = mh_or(y[ii], x[ii], strata[ii])
+        if np.isfinite(v):
+            bs.append(v)
+    ok = len(bs) > 20 and np.isfinite(lor)  # no interval when the point estimate is not estimable
+    lo, hi = np.percentile(bs, [2.5, 97.5]) if ok else (np.nan, np.nan)
+    return dict(log_or=lor, lo=float(lo), hi=float(hi), se=float(np.std(bs)) if ok else float("nan"),
+                n=int(len(y)), n_y=int(y.sum()), n_x=int(x.sum()), n_xy=int((x & y).sum()), n_strata_inf=n_inf)
+
+
+def base_strata(p: pl.DataFrame) -> np.ndarray:
+    return (p["agent"].to_numpy().astype(np.int64) * 10 ** 6 + lag_bin(p["lag_s"].to_numpy()) * 100
+            + call_bin(p["calls_between"].to_numpy()))
+
+
+def cu_bin(c_u):
+    c = np.nan_to_num(np.asarray(c_u, float), nan=0.0)
+    return np.where(c <= 0, 0, np.where(c < 0.5, 1, 2))
+
+
+def prior_bin(n):
+    return np.minimum(np.asarray(n), 2)
+
+
+def r3_stats(e: pl.DataFrame, ycol="y", thr=0.5, B=200, seed=0):
+    """R3 on erased pairs with containment (c_t, c_u): P1 in_mem OR; P2 new_mem vs not-in-memory and the
+    salience-stratified in_mem OR; within-source OR (strata = source u x lag bin; amendment R2-A3)."""
+    e = e.filter(pl.col("c_t").is_not_nan())
+    if e.height < 200:
+        return None
+    y = e[ycol].to_numpy().astype(bool)
+    ct = e["c_t"].to_numpy()
+    cu = np.nan_to_num(e["c_u"].to_numpy(), nan=0.0)
+    inm = ct >= thr
+    newm = inm & (cu < thr)
+    S = base_strata(e)
+    cl = e["aday"].to_numpy()
+    out = dict(n_pairs=int(e.height), n_copies=int(y.sum()), share_in_mem=float(inm.mean()),
+               share_in_mem_copies=float(inm[y].mean()) if y.any() else float("nan"))
+    out["P1"] = mh_boot(y, inm, S, cl, B, seed)
+    keep = ~(inm & ~newm)  # drop old_mem
+    out["P2_new"] = mh_boot(y[keep], newm[keep], S[keep], cl[keep], B, seed + 1)
+    S2 = S * 10 + cu_bin(cu) * 3 + prior_bin(e["prior_copies"].to_numpy())
+    out["P2_strat"] = mh_boot(y, inm, S2, cl, B, seed + 2)
+    Su = e["sid_u"].to_numpy().astype(np.int64) * 100 + lag_bin(e["lag_s"].to_numpy())
+    out["within_u"] = mh_boot(y, inm, Su, cl, B, seed + 3)
+    out["within_u_discordant"] = int(pl.DataFrame({"u": e["sid_u"], "m": inm}).group_by("u").agg(
+        pl.col("m").n_unique()).filter(pl.col("m") > 1).height)
+    return out
+
+
+def r3_lowerbound(p: pl.DataFrame, ycol="y", thr=0.5, B=200, seed=0):
+    """R3-P3: in-context enrichment vs erased-not-in-memory sources minus vs all erased sources (log ORs), joint
+    agent-day bootstrap. p: all pairs (in_seg true or erased with c_t)."""
+    p = p.filter(pl.col("in_seg") | pl.col("c_t").is_not_nan())
+    y = p[ycol].to_numpy().astype(bool)
+    x = p["in_seg"].to_numpy().astype(bool)
+    notmem = x | (np.nan_to_num(p["c_t"].to_numpy(), nan=0.0) < thr)
+    S = base_strata(p)
+    a, _ = mh_or(y, x, S)
+    b, _ = mh_or(y[notmem], x[notmem], S[notmem])
+    rng = np.random.default_rng(seed)
+    cl = np.unique(p["aday"].to_numpy(), return_inverse=True)[1]
+    idx_by = [np.where(cl == k)[0] for k in range(cl.max() + 1)]
+    bs = []
+    for _ in range(B):
+        ii = np.concatenate([idx_by[k] for k in rng.integers(0, len(idx_by), len(idx_by))])
+        va, _ = mh_or(y[ii], x[ii], S[ii])
+        jj = ii[notmem[ii]]
+        vb, _ = mh_or(y[jj], x[jj], S[jj])
+        if np.isfinite(va) and np.isfinite(vb):
+            bs.append(vb - va)
+    ok = len(bs) > 20
+    lo, hi = np.percentile(bs, [2.5, 97.5]) if ok else (np.nan, np.nan)
+    return dict(lor_all=a, lor_notmem=b, diff=b - a, lo=float(lo), hi=float(hi),
+                se=float(np.std(bs)) if ok else float("nan"))
+
+
+def r3_frame(pr: pl.DataFrame, mem: pl.DataFrame, s: pl.DataFrame) -> pl.DataFrame:
+    """All pairs with containment for erased ones (c_t NaN for in-context pairs) and t's agent / agent-day."""
+    p = pr.join(mem.select("sid", "sid_u", "prior_copies", "c_t", "c_u", "lines_added_between"),
+                on=["sid", "sid_u"], how="left")
+    p = p.with_columns(pl.col("c_t").fill_null(float("nan")), pl.col("c_u").fill_null(float("nan")),
+                       pl.col("prior_copies").fill_null(0))
+    return p.join(s.select("sid", "agent", "aday"), on="sid", how="inner")

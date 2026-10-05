@@ -96,6 +96,37 @@ def context_days(days: list[str]) -> tuple[list[str], dict]:
     return sorted(load), blk
 
 
+def ledger_calls(load_days: list[str], blk: dict, extra: tuple = ()) -> pl.DataFrame:
+    """All agent calls on the loaded days, ordered per agent, with H69 segments over the agent's timeline
+    (round-1 rule, factored out 2026-10-05 for round 2; `extra` adds ledger columns, e.g. n_ev, cap_hit)."""
+    # ---- calls (all agent calls on the loaded days), ordered per agent; segments over the agent's timeline
+    lt = (pl.scan_parquet(SH / "context_ledger_turns.parquet")
+          .filter(pl.col("pt_date").is_in(load_days) & (~pl.col("holdout") | pl.lit(ALLOW_HOLDOUT)))
+          .select("turn_id", "agent", "pt_date", "t_call", "t_first", "t_log", "ctx_mode", "k_ctx", "ctx_pos",
+                  "chars_new", "k_new", "reset_consol", "reset_forced", "reset_session", "room", *extra)
+          .collect().sort("agent", "t_call"))
+    lt = lt.with_columns(
+        (pl.col("reset_consol") | pl.col("reset_session")).fill_null(False).alias("reset_any"),
+        pl.col("reset_forced").fill_null(False),
+        pl.col("pt_date").replace_strict(blk, return_dtype=pl.Int32).alias("_blk"))
+    # a segment starts at a reset (infra rule: reset_consol | reset_session, never first_of_day), at the agent's
+    # first loaded call, or after an unloaded active day (left-censored when no reset is flagged there)
+    lt = lt.with_columns((pl.col("_blk") != pl.col("_blk").shift(1).over("agent")).fill_null(True).alias("_new_blk"))
+    lt = lt.with_columns((pl.col("reset_any") | pl.col("_new_blk")).alias("_seg_start"),
+                         (pl.col("_new_blk") & ~pl.col("reset_any")).alias("_cens_start"))
+    lt = lt.with_columns(
+        pl.int_range(pl.len()).over("agent").alias("call_idx"),
+        pl.col("_seg_start").cast(pl.Int32).cum_sum().over("agent").alias("seg"),
+        pl.col("reset_forced").cast(pl.Int32).cum_sum().over("agent").alias("n_forced_cum"),
+        pl.col("reset_any").cast(pl.Int32).cum_sum().over("agent").alias("n_reset_cum"),
+    ).with_columns(
+        pl.col("chars_new").fill_null(0).cum_sum().over("agent", "seg").alias("chars_ctx"),
+        pl.int_range(pl.len()).over("agent", "seg").alias("seg_pos"),
+        pl.len().over("agent", "seg").alias("seg_len"),
+        pl.col("_cens_start").any().over("agent", "seg").alias("seg_cens"))
+    return lt
+
+
 class Emb:
     def __init__(self):
         self.bge = np.load(ED / "chat_bge_small.npy", mmap_mode="r")
@@ -120,31 +151,7 @@ def build(g: int, emb: Emb, flags: pl.DataFrame, stm: pl.DataFrame, ev: pl.DataF
     if not days:
         return {}
     load_days, blk = context_days(days)
-    # ---- calls (all agent calls on the loaded days), ordered per agent; segments over the agent's timeline
-    lt = (pl.scan_parquet(SH / "context_ledger_turns.parquet")
-          .filter(pl.col("pt_date").is_in(load_days) & (~pl.col("holdout") | pl.lit(ALLOW_HOLDOUT)))
-          .select("turn_id", "agent", "pt_date", "t_call", "t_first", "t_log", "ctx_mode", "k_ctx", "ctx_pos",
-                  "chars_new", "k_new", "reset_consol", "reset_forced", "reset_session", "room")
-          .collect().sort("agent", "t_call"))
-    lt = lt.with_columns(
-        (pl.col("reset_consol") | pl.col("reset_session")).fill_null(False).alias("reset_any"),
-        pl.col("reset_forced").fill_null(False),
-        pl.col("pt_date").replace_strict(blk, return_dtype=pl.Int32).alias("_blk"))
-    # a segment starts at a reset (infra rule: reset_consol | reset_session, never first_of_day), at the agent's
-    # first loaded call, or after an unloaded active day (left-censored when no reset is flagged there)
-    lt = lt.with_columns((pl.col("_blk") != pl.col("_blk").shift(1).over("agent")).fill_null(True).alias("_new_blk"))
-    lt = lt.with_columns((pl.col("reset_any") | pl.col("_new_blk")).alias("_seg_start"),
-                         (pl.col("_new_blk") & ~pl.col("reset_any")).alias("_cens_start"))
-    lt = lt.with_columns(
-        pl.int_range(pl.len()).over("agent").alias("call_idx"),
-        pl.col("_seg_start").cast(pl.Int32).cum_sum().over("agent").alias("seg"),
-        pl.col("reset_forced").cast(pl.Int32).cum_sum().over("agent").alias("n_forced_cum"),
-        pl.col("reset_any").cast(pl.Int32).cum_sum().over("agent").alias("n_reset_cum"),
-    ).with_columns(
-        pl.col("chars_new").fill_null(0).cum_sum().over("agent", "seg").alias("chars_ctx"),
-        pl.int_range(pl.len()).over("agent", "seg").alias("seg_pos"),
-        pl.len().over("agent", "seg").alias("seg_len"),
-        pl.col("_cens_start").any().over("agent", "seg").alias("seg_cens"))
+    lt = ledger_calls(load_days, blk)
     # ---- statements -> calls (loaded days: the context-only days feed O over the segment, then are dropped)
     s = stm.filter(pl.col("pt_date").is_in(load_days) & (~pl.col("holdout") | pl.lit(ALLOW_HOLDOUT)))
     s = s.join(chat.select("crow", "message_id", pl.col("length").alias("chars")), left_on="src_row", right_on="crow",

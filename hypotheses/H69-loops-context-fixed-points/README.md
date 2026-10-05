@@ -315,3 +315,31 @@ Frozen C1–C6 on #43, #45–#47, #49, #50 and the #51 tail (scored at ≥ 30 ep
 - Pass: size ≤ 0.10 and power ≥ 0.8 at real counts; otherwise the statistic is reported as inconclusive (dated amendment).
 
 **Verdict impact.** Round 2 adds rows to the G38, G40, G41, G51 and NE41 READMEs. A period verdict changes only if a kill rule fires.
+
+### Round-2 synthetic validation (run 2026-10-05 ~03:00–03:25 UTC, before any round-2 statistic on real data)
+`analysis/synthetic_r2.py` (60 sequence runs and 20 pair runs per world; G51 on a random 25% of agent-days, 30 and 10 runs). Outputs: `synthetic/r2_worlds.parquet`, `r2_summary.json`, `r2_pooled_power.json`. Rejection rates (one-sided 5%; pooled = random effects over the scorable periods, G51 at 25%):
+
+| Statistic | Null world (size) | Planted world (power) | Per period (power) |
+| --- | --- | --- | --- |
+| R1 b_U > 0, dense | W0: 0–0.07 | WU: pooled 0.40 | 0.15–0.30 |
+| R1 b_U > 0, all labs | W0: 0–0.05 | WU: pooled **0.93** | 0.25–0.45; G51 0.83 |
+| R1 b_O > 0 (true 0.32) | — | pooled 0.40 dense, 0.67 all | 0.10–0.53 |
+| R2a b_dose > 0 (exit) | W0/WU: pooled 0.03–0.07; per period ≤ 0.13 | WD: pooled **1.00** | G38 0.97, G51 0.90, G39 0.65, G40 0.25, G41 0.37 |
+| R3-P1 in_mem OR > 1 | M0: pooled 0.10; G38–G41, G51 0–0.10; G44 0.25 | M1: pooled **1.00** | G38, G39, G51 1.0; G40 0.75; G41 0.50 |
+| R3-P2 new_mem; salience-stratified | M0: 0–0.15 | M1: pooled 1.00 | — |
+| R3-P2 under salience (M2) | **M2: pooled 1.00 (both)** | — | — |
+| R3 within-source OR | estimable in 0–70% of runs; size up to 0.30 (G39) | ≤ 0.5 | — |
+| R3-P3 lower bound | M0: 0–0.10 | M1: 1.0 in G38, G51 | M2: 0.8 in G38 |
+
+Readings:
+- The dense R1 sample is too small: b_U has pooled power 0.40. The all-lab sample has 0.93, with size ≤ 0.05.
+- The erasure-dose interaction is well calibrated and powered when pooled (size 0.07, power 1.00).
+- R3-P1 is calibrated where a period has ≥ 100 erased near-copies, except G44 (size 0.25).
+- **R3-P2 cannot separate carriage from salience.** A latent salience that drives both memory and copying passes P2 at pooled power 1.00, because c_u and prior copies are noisy proxies. The within-source design is rarely estimable: few sources change memory status between their later statements.
+- A polars trap was found and fixed in the summary: NaN compares above every number, so `lo > 0` passed on non-estimable runs (infra Known issue, H63). The first printed table overstated sizes for that reason; `--summarize` is NaN-safe.
+
+### Round-2 amendments (2026-10-05 ~03:30 UTC, after the synthetic validation, before any round-2 statistic on real data)
+- **R2-A1 · R1 primary sample = all labs** (pooled power 0.93); the dense sample is a variant (power 0.40). R1-P1 and R1-P2 are read on the pooled all-lab coefficients. Per-period R1 rows are descriptive (power ≤ 0.45, except G51).
+- **R2-A2 · R2a is read pooled** over G38, G40, G41, G51 (size 0.07, power 1.00). Per period it is read only in G38 and G51.
+- **R2-A3 · R3-P2 is inconclusive by design.** It is reported and cannot pass or fail; the within-source OR is descriptive. R3-P3 is descriptive (the salience world also produces it).
+- **R2-A4 · R3 scorable rule:** ≥ 100 erased near-copies and synthetic size ≤ 0.10 under M0. A per-period R3-P1 is read where M1 power ≥ 0.8.
