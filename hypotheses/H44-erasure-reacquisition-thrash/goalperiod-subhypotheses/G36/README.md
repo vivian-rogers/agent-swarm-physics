@@ -61,3 +61,24 @@ Native layer. G36 holds the regime boundary inside one goal: NE14 (perma-compute
 ## Notes
 - Exploratory, non-holdout. Event windows truncate at the next reset of any kind and at the day edge; a balanced +1…+20 subset is in `results.json` (`forced_balanced`).
 - No agent text is stored or quoted; commands were classified in memory (see the card's scheme).
+
+## Round 2 (2026-10-05)
+*Prediction: the card's "Round 2 design, predictions and kill rules" (written 2026-10-05 02:45 UTC, before any round-2 statistic) and amendments A3–A6 (03:01 UTC, after the synthetic validation, before real data). Role in round 2: replication. Run 2026-10-05 (`analysis/r2_run.py`, `analysis/r2_label.py` → `data/processed/H44-erasure-reacquisition-thrash/r2/G36/r2_results.json`); figure `figures/r2_sawtooth.pdf`. Period verdict above is unchanged (round-1 rule).*
+
+| Statistic (95% agent-day cluster bootstrap CI) | Value |
+| --- | --- |
+| R1: Θ_c on blind-checked labels (round-1 classifier: +0.069) | +0.100 [+0.051, +0.162]; mid-segment rates +0.059 [+0.037, +0.084] |
+| R2: complete forced sawtooths (40 calls) | 319 |
+| R2: re-acquisition R(k): spike ℓ₁, tail ℓ₂ (calls; ℓ₂ capped at 12) | 0.7; 11.8 [2.0, 11.8]; ΔAIC two vs one timescale -1.9 |
+| R2: write slope β (per call, after the slow relaxation) | +4.8 [-12.0, +24.1] ×10⁻⁴ |
+| R2: output per call, cap 20 / cap 40 (Y(20)/Y(40)) | 0.89 [0.83, 0.96] |
+| R2: P(L* = 40) per call · per minute; P(L* < 35) | 0.83 · 1.00; 0.14 |
+| R2: write dip Ω (+1…+10) vs far · near · whole segment · steady state · cycle mean | -25% [-38, -13] · -24% [-36, -12] · -17% [-27, -8] · -22% [-36, -7] · -15% [-27, -4] |
+| R2: in-loop share slope over k 11–40 (per call) | +0.8 [-4.5, +7.8] ×10⁻⁴ |
+| R3: re-open share of post-reset read calls (file paths): forced · no reset · voluntary | 0.43 · 0.49 · 0.37 (989 forced read calls) |
+| R3: recency-adjusted excess, forced vs no reset · vs voluntary | -0.046 [-0.133, +0.036] · +0.063 [-0.107, +0.195] |
+| R3: re-opened object's recency rank (median; share within last 5 calls) | 2.0; 0.70 |
+| R4: reset effect on writes per call, looping · loop-free · difference (32 looping forced events) | +0.108 [-0.035, +0.195] · -0.042 [-0.063, -0.021] · +0.150 [+0.014, +0.242] |
+| R4: relative (log-ratio) difference | +0.863 [+0.296, +1.284] |
+
+- **R2 reading:** shorter caps lose output here (Y(20)/Y(40) CI < 1); the dip is negative under all five references.

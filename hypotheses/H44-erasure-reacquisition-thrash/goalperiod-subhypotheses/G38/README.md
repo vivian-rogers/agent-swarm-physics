@@ -60,3 +60,25 @@ Native layer. G38 is the longest two-room regime-III period with dense git and t
 ## Notes
 - Exploratory, non-holdout. Event windows truncate at the next reset of any kind and at the day edge; a balanced +1…+20 subset is in `results.json` (`forced_balanced`).
 - No agent text is stored or quoted; commands were classified in memory (see the card's scheme).
+
+## Round 2 (2026-10-05)
+*Prediction: the card's "Round 2 design, predictions and kill rules" (written 2026-10-05 02:45 UTC, before any round-2 statistic) and amendments A3–A6 (03:01 UTC, after the synthetic validation, before real data). Role in round 2: native (R2 power, R3, R4 at scale). Run 2026-10-05 (`analysis/r2_run.py`, `analysis/r2_label.py` → `data/processed/H44-erasure-reacquisition-thrash/r2/G38/r2_results.json`); figure `figures/r2_sawtooth.pdf`. Period verdict above is unchanged (round-1 rule).*
+
+| Statistic (95% agent-day cluster bootstrap CI) | Value |
+| --- | --- |
+| R1: Θ_c on blind-checked labels (round-1 classifier: +0.068) | +0.091 [+0.056, +0.131]; mid-segment rates +0.063 [+0.050, +0.076] |
+| R2: complete forced sawtooths (40 calls) | 1,693 |
+| R2: re-acquisition R(k): spike ℓ₁, tail ℓ₂ (calls; ℓ₂ capped at 12) | 0.3; 11.8 [2.0, 11.8]; ΔAIC two vs one timescale -2.6 |
+| R2: write slope β (per call, after the slow relaxation) | +4.2 [-0.0, +8.5] ×10⁻⁴ |
+| R2: output per call, cap 20 / cap 40 (Y(20)/Y(40)) | 0.93 [0.89, 0.97] |
+| R2: P(L* = 40) per call · per minute; P(L* < 35) | 0.50 · 1.00; 0.00 |
+| R2: write dip Ω (+1…+10) vs far · near · whole segment · steady state · cycle mean | -24% [-33, -15] · -27% [-37, -17] · -18% [-27, -11] · -27% [-35, -20] · +2% [-6, +11] |
+| R2: in-loop share slope over k 11–40 (per call) | +4.3 [+0.9, +7.2] ×10⁻⁴ |
+| R3: re-open share of post-reset read calls (file paths): forced · no reset · voluntary | 0.59 · 0.72 · 0.60 (2,735 forced read calls) |
+| R3: recency-adjusted excess, forced vs no reset · vs voluntary | -0.119 [-0.174, -0.070] · +0.026 [-0.073, +0.135] |
+| R3: re-opened object's recency rank (median; share within last 5 calls) | 2.0; 0.73 |
+| R4: reset effect on writes per call, looping · loop-free · difference (170 looping forced events) | -0.020 [-0.084, +0.022] · -0.022 [-0.035, -0.009] · +0.002 [-0.061, +0.046] |
+| R4: relative (log-ratio) difference | +0.195 [-0.204, +0.529] |
+
+- **R2 reading:** shorter caps lose output here (Y(20)/Y(40) CI < 1); the cycle-mean reference includes 0, the pre-reset references do not.
+- **G38 native (loops):** R4 has power 0.70 here. The reset effect on looping agents is −0.020 [−0.084, +0.022] writes per call (170 events), no better than for loop-free agents (difference +0.002). Post hoc, stuck loops (96 events) gain +0.024 [−0.017, +0.064], n.s. The cap curve is flat after call 5 (P(L* = 40) = 0.50), but Y(20)/Y(40) = 0.93 [0.89, 0.97] still favours the longer cap. R3: forced reads re-open the erased working set *less* than mid-segment reads (−0.12).

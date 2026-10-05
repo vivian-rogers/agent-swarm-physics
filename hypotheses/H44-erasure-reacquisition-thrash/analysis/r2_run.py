@@ -123,6 +123,13 @@ def r4_block(calls, ev, B, seed) -> dict:
     gv = R.loop_strata(calls, ev, kinds=("voluntary", "pseudo31")).with_columns(
         pl.col("ev_kind").replace({"voluntary": "forced"}))
     out["writes_voluntary"] = R.lever_stats(gv, B=B, seed=seed, outcome="w")
+    # post hoc (labelled): "stuck" loops = >= 3 in-loop calls and no write in -10..-1; "productive" = >= 3 and >= 1 write
+    gs = g.with_columns(pl.when((pl.col("nl") >= 3) & (pl.col("w_pre") == 0)).then(pl.lit("loop"))
+                        .when(pl.col("nl") == 0).then(pl.lit("free")).otherwise(pl.lit("other")).alias("stratum"))
+    out["posthoc_stuck_writes"] = R.lever_stats(gs, B=B, seed=seed, outcome="w")
+    gp = g.with_columns(pl.when((pl.col("nl") >= 3) & (pl.col("w_pre") > 0)).then(pl.lit("loop"))
+                        .when(pl.col("nl") == 0).then(pl.lit("free")).otherwise(pl.lit("other")).alias("stratum"))
+    out["posthoc_productive_writes"] = R.lever_stats(gp, B=B, seed=seed, outcome="w")
     # operator number: net write calls per reset for a looping agent over +1..+10 = 10 * E_loop
     out["net_writes_per_reset_loop"] = [10 * x for x in out["writes"]["E_loop"]]
     out["net_work_per_reset_loop"] = [10 * x for x in out["work"]["E_loop"]]
@@ -134,7 +141,7 @@ def long_arm(B: int, rng) -> dict:
     C.refuse_holdout(cl_["pt_date"].unique().to_list(), "long calls")
     cl_ = cl_.with_columns((pl.col("agent").cast(pl.Utf8) + "_" + pl.col("pt_date")).alias("cl"))
     out = {}
-    for (per,), g in cl_.group_by("period"):
+    for (per,), g in sorted(cl_.group_by("period"), key=lambda t: t[0]):
         g = g.filter(pl.col("k").is_between(1, 60))
         long_s = g.filter(pl.col("sess_len") >= 41)
         n_long = long_s.select("agent", "sess").n_unique()
@@ -158,6 +165,14 @@ def long_arm(B: int, rng) -> dict:
             nw, dw, _ = R.curve_sums(long_s, "n_work", kmax=60)
             dk = d(nw.sum(0), dw.sum(0)); bk = d(W @ nw, W @ dw)[0]
             res["work41_60_minus_work31_40"] = [float(dk[0]), *L._ci(bk)]
+            # post hoc (labelled): drop the last 10 calls of every session (a voluntary stop follows a write burst)
+            trim = long_s.filter(pl.col("k") <= pl.col("sess_len") - 10)
+            nT, dT, _ = R.curve_sums(trim, "any_write", kmax=60, cl_codes=np.unique(long_s["cl"].to_numpy()))
+            okT = dT[:, 40:60].sum() > 0
+            if okT:
+                dT_, aT, bT = d(nT.sum(0), dT.sum(0))
+                res["posthoc_trim10_W41_60_minus_W31_40"] = [float(dT_), *L._ci(d(W @ nT, W @ dT)[0])]
+                res["posthoc_trim10_n_calls_41_60"] = int(dT[:, 40:60].sum())
             # first-10 dip in these sessions (session start = context reset)
             e10 = nL[:, :10].sum() / max(dL[:, :10].sum(), 1); m = nL[:, 10:40].sum() / max(dL[:, 10:40].sum(), 1)
             res["W1_10_over_W11_40"] = float(e10 / m) if m > 0 else None
@@ -183,13 +198,13 @@ def run_period(per, calls_all, ev_all, obj, B) -> dict:
     # labs and models
     sl = saw.join(roster, on="agent")
     res["r2_labs"] = {}
-    for (lab,), g in sl.group_by("lab"):
+    for (lab,), g in sorted(sl.group_by("lab"), key=lambda t: t[0]):
         nseg = g.select("agent", "pt_date", "seg").n_unique()
         if nseg >= MIN_SAW_LAB:
             res["r2_labs"][lab] = r2_block(g, B, rng, False)
     if per == "G51":
         res["r2_models"] = {}
-        for (m,), g in sl.group_by("model_string"):
+        for (m,), g in sorted(sl.group_by("model_string"), key=lambda t: t[0]):
             nseg = g.select("agent", "pt_date", "seg").n_unique()
             if nseg >= MIN_SAW_LAB:
                 res["r2_models"][m] = r2_block(g, B, rng, False)
@@ -223,6 +238,17 @@ def pooled(results: dict) -> dict:
         "loop_slope": pool(lambda r: r["r2"]["loop_slope"]),
         "r3_dFP_paths": pool(lambda r: r["r3"]["paths"]["d_forced_pseudo31"], lambda r: r["r3"]["paths"]["forced"].get("n_events", 0) >= 200),
         "r3_dFV_paths": pool(lambda r: r["r3"]["paths"]["d_forced_voluntary"], lambda r: r["r3"]["paths"]["forced"].get("n_events", 0) >= 200),
+        "r3_excess_FP_paths": pool(lambda r: r["r3"]["paths"]["recency_adjusted"]["excess_FP"], lambda r: r["r3"]["paths"]["forced"].get("n_events", 0) >= 200),
+        "r3_excess_FV_paths": pool(lambda r: r["r3"]["paths"]["recency_adjusted"]["excess_FV"], lambda r: r["r3"]["paths"]["forced"].get("n_events", 0) >= 200),
+        "r3_excess_FP_arts": pool(lambda r: r["r3"]["arts"]["recency_adjusted"]["excess_FP"], lambda r: r["r3"]["arts"]["forced"].get("n_events", 0) >= 200),
+        "r3_excess_FV_arts": pool(lambda r: r["r3"]["arts"]["recency_adjusted"]["excess_FV"], lambda r: r["r3"]["arts"]["forced"].get("n_events", 0) >= 200),
+        "r3_rho_forced_paths": pool(lambda r: r["r3"]["paths"]["forced"]["rho"]),
+        "r3_rho_pseudo_paths": pool(lambda r: r["r3"]["paths"]["pseudo31"]["rho"]),
+        "r2_Y20_over_Y40": pool(lambda r: r["r2"]["cap"]["Y20_over_Y40"]),
+        "r2_Y30_over_Y40": pool(lambda r: r["r2"]["cap"]["Y30_over_Y40"]),
+        "r4_logDDD": pool(lambda r: r["r4"]["writes"]["logDDD"], lambda r: r["r4"]["writes"]["n"]["forced_loop"] >= 30),
+        "r4_posthoc_E_stuck": pool(lambda r: r["r4"]["posthoc_stuck_writes"]["E_loop"], lambda r: r["r4"]["posthoc_stuck_writes"]["n"]["forced_loop"] >= 30),
+        "r4_posthoc_E_productive": pool(lambda r: r["r4"]["posthoc_productive_writes"]["E_loop"], lambda r: r["r4"]["posthoc_productive_writes"]["n"]["forced_loop"] >= 30),
         "r3_dFP_arts": pool(lambda r: r["r3"]["arts"]["d_forced_pseudo31"], lambda r: r["r3"]["arts"]["forced"].get("n_events", 0) >= 200),
         "r4_E_loop": pool(lambda r: r["r4"]["writes"]["E_loop"], lambda r: r["r4"]["writes"]["n"]["forced_loop"] >= 30),
         "r4_E_free": pool(lambda r: r["r4"]["writes"]["E_free"], lambda r: r["r4"]["writes"]["n"]["forced_loop"] >= 30),

@@ -1,6 +1,6 @@
 # H44: Erasure makes agents busy but unproductive
 
-**Status:** exploratory round 1 done (2026-10-04, non-holdout; 9 regime-III periods + NE41). **Re-acquisition yes, thrash no.** A forced context erasure is followed by a burst of re-reading (re-acquisition share of calls 0.22 → 0.47 at the first call in G51; +0.079 [0.071, 0.086] among non-write calls over the first five calls, conditioned on agent and previous call, 9/9 periods) and a write dip (−26%, work commits −38%), with fewer pauses and +1 pp real failures. No temperature pulse (entropy falls slightly), no extra susceptibility to new room content (reply rate per new item RR 0.97; content pull ≈ 0), but coupling to pre-erasure items falls (ratio 0.60). Erasures break command loops (OR ≈ 0.1); re-reading files restores output fastest; memory dose does nothing. Predictions and synthetic validation came first. `confirm.py` written, dry-run only, **not run**.
+**Status:** exploratory round 2 done (2026-10-05, non-reserved data; see "Round 2" at the end). The call classifier holds on 300 blind labels (re-acquisition κ 0.87; Θ_c on checked labels +0.106 [0.089, 0.122], 9/9). The sawtooth has two timescales (a one-call re-reading spike, a tail of about 8 calls) and no segment-long linear ramp. A 20-call cap would give 12% less output per call than 40 (Y(20)/Y(40) 0.88). Post-reset reads re-open the working set at the mid-segment rate (no targeted restoration). A wipe does not pay as a loop breaker (E_loop −0.086 writes per call). Round 1 (2026-10-04, non-holdout; 9 regime-III periods + NE41): **Re-acquisition yes, thrash no.** A forced context erasure is followed by a burst of re-reading (re-acquisition share of calls 0.22 → 0.47 at the first call in G51; +0.079 [0.071, 0.086] among non-write calls over the first five calls, conditioned on agent and previous call, 9/9 periods) and a write dip (−26%, work commits −38%), with fewer pauses and +1 pp real failures. No temperature pulse (entropy falls slightly), no extra susceptibility to new room content (reply rate per new item RR 0.97; content pull ≈ 0), but coupling to pre-erasure items falls (ratio 0.60). Erasures break command loops (OR ≈ 0.1); re-reading files restores output fastest; memory dose does nothing. Predictions and synthetic validation came first. `confirm.py` written, dry-run only, **not run**.
 **Fields:** nonequilibrium statistical mechanics (kinetic Ising / Glauber response, local field quench vs temperature pulse), information theory and physics of life (Kolchinsky–Wolpert semantic information of stores), dynamics (event studies, relaxation)
 **Literature:** [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md) (value of information under a scramble; coarse-graining interventions); [Sowinski et al. 2023](../../literature/sowinski-2023-semantic-information-resource-gathering-agents.md) (viability vs scrambled information); [Bartlett et al. 2025](../../literature/bartlett-2025-physics-of-life-information-roadmap.md) (information import as maintenance)
 **Definitions used** (`physics-models/DEFINITIONS.md`): Regime; Action (turn-merged) as implemented by the DQ1 call grouping; Context fill (H30: `ctx_pos`); Exposure (turn read-out) via the DQ1 context ledger; Receiving call (H43); Semantic information (natural-scramble variant) (H15); Field effect / Catalytic effect (H39); Entropy (of behavior); Influence coupling (content pull) (H29). New named variants, defined below and proposed for DEFINITIONS.md: **call category (H44)**, **re-acquisition share**, **thrash index Θ**, **pseudo-erasure**, **reply rate per visible message (pre/post read)**.
@@ -108,8 +108,8 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | Beats the no-reset pseudo-erasure null in 9/9 periods (Θ_c) and 8/9 (Ω); past-only pseudo control and balanced windows agree; the hour-of-day match is built in (KS ≤ 0.04). No held-out-day likelihood; the model's susceptibility and entropy signatures fail. |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | Unfitted and as predicted: Θ_c sign and size, forced ≥ voluntary, no excess pre-trend, relaxation tail ℓ 5–7 calls (predicted 3–15), coupling cut, loop breaking, memory dose ≈ 0, work-commit dip. Unfitted and failed: entropy rise, susceptibility rise (RR 0.97), content pull rise (D ≈ 0, G51 negative), onset effect and learning trend (G36). |
 | E interventional | predicts the change across a natural experiment | 1 | NE41's forced resets (timed by the 41-record cap; pre-trend = the no-reset band) were the pre-registered intervention: re-acquisition, output and coupling-cut predictions held in every period, susceptibility predictions did not. NE16 had no first stage. Holdout not run. |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | `analysis/synthetic.py`: three worlds on real call skeletons, 100% correct at G51 and G38 counts, G37-size thrash detected 62% (missed output dip, never a false thrash); it found that the raw Θ calls a pure dip "thrash" at G51 scale (Amendment A2). Reply estimator recovers planted effects (null log DiD −0.01, cover 95%). Robust to the normalized loop hash, bge vs gte, past-only controls; classifier not cross-validated. |
-| G ground truth | agrees with known structure | 1 | The cap appears exactly (40-call segments); the first post-reset call rarely writes (H15); write-call and DQ4 work-commit dips agree (−26% vs −38%); voluntary resets follow a status message (G51 talk share 0.07 → 0.17 at the last call), as consolidating at a task boundary should. No hand-labelled re-acquisition ground truth. |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 | **Round 2 (2026-10-05): 2.** Every round-2 estimator was validated on real skeletons with size and power before real data, which found three design flaws (Amendments A3–A6). Round 1: `analysis/synthetic.py`: three worlds on real call skeletons, 100% correct at G51 and G38 counts, G37-size thrash detected 62% (missed output dip, never a false thrash); it found that the raw Θ calls a pure dip "thrash" at G51 scale (Amendment A2). Reply estimator recovers planted effects (null log DiD −0.01, cover 95%). Robust to the normalized loop hash, bge vs gte, past-only controls; classifier not cross-validated. |
+| G ground truth | agrees with known structure | 2 | **Round 2 (2026-10-05): 2.** 300 blind hand labels (one rater, Claude; tool names and arguments only) agree with the call classifier on re-acquisition in 95% of population-weighted calls (κ 0.87). Round 1: The cap appears exactly (40-call segments); the first post-reset call rarely writes (H15); write-call and DQ4 work-commit dips agree (−26% vs −38%); voluntary resets follow a status message (G51 talk share 0.07 → 0.17 at the last call), as consolidating at a task boundary should. No hand-labelled re-acquisition ground truth. |
 | H comparative | beats the named rivals | 1 | Rejects R0 (no effect), R1 (pure restart overhead: Θ_c 0.06–0.10 vs ≤ 0.005 in the synthetic dip world), R2 (temperature pulse: entropy falls) and R3 (task boundary: forced ≥ voluntary). But H44's own field-quench signature (susceptibility up) also fails, so the winning description is narrower than the model. |
 | I transfer | holds in other same-mode periods, including the holdout | 1 | Θ_c > 0 in 9/9 regime-III periods (τ 0.006), Ω < 0 in 8/9, from the first erasure days (#36) to #51. Holdout not run. |
 
@@ -315,3 +315,95 @@ Readings:
 - **A4 (R3 decision).** P-R3a and P-R3b are decided on the recency-adjusted excess (excess_FP, excess_FV). The raw Δρ is reported alongside. The kill rule applies to the pooled excess_FP; power is ≥ 0.8 at G38 size and above.
 - **A5 (where a statistic is read).** The two-timescale clause of P-R2a is read in G51 only (power ≥ 0.8). Elsewhere, and in the per-lab and per-model fits, the fitted parameters (ℓ₁, ℓ₂, β, A₁, A₂) are reported as phase-diagram coordinates without a model decision. The edge clause of P-R2b is read where its synthetic pass rate is ≥ 0.8 (G51, G38); the kill rule is read everywhere. P-R4a is decided on G51 (power 1.00) and on the pooled DDD over periods with ≥ 30 looping forced events. The per-period counts are descriptive. The log-ratio DDD is reported as a calibrated variant.
 - **A6 (P-R4b).** A failure of E_loop > 0 is "inconclusive" (power 0.40), not "failed". The kill rule (E_loop CI entirely below 0) stands.
+
+### Round 2 outcome vs prediction
+*Run 2026-10-05 03:03–03:13 UTC (`analysis/r2_label.py` → `r2/r1_check.json`; `analysis/r2_run.py` → `r2/G<NN>/r2_results.json`, `r2/long_arm.json`, `r2/pooled.json`). Non-reserved data only. Decision rules as amended (A3–A6). Pooled values are DerSimonian–Laird over periods (CLAUDE.md exception (c)); per-period values are in the table below.*
+
+| Prediction | Observed | Verdict |
+| --- | --- | --- |
+| **P-R1a** classifier: 3-class agreement ≥ 0.8, κ ≥ 0.6 | 300 blind labels, population-weighted. 3 classes: agreement 0.92, κ 0.89. Re-acquisition vs not: 0.95, κ 0.87, precision 0.94, recall 0.87. All 14 categories: 0.86, κ 0.84. | **pass** |
+| **P-R1b** Θ_c on checked labels > 0.01 in ≥ 7/9 and pooled | **+0.106 [0.089, 0.122]**, 9/9. With mid-segment label rates in both windows: +0.072 [0.067, 0.078], 9/9. With typed navigation counted as re-acquisition: +0.090 [0.072, 0.108]. Round-1 classifier: +0.079. | **pass** |
+| **P-R2a** two timescales in R(k) (G51, A5) | ΔAIC(M2 − M1) = +104. The spike lasts one call (ℓ₁ at the 0.3 grid floor); the tail has ℓ₂ = 8.2 [5.8, 11.8] calls. Elsewhere unpowered: G39 +12, G41 +9, others < 2. | **pass** (G51) |
+| **P-R2a** ramp in W(k) (A3: β CI > 0 in G51 and pooled) | Pooled β +0.0004 [0.0001, 0.0006] per call, positive in 8/9 periods. **G51 +0.0002 [−0.0002, 0.0005]**. The rise saturates: the slow write relaxation has ℓ₂ = 8.5 [5.9, 11.1] calls pooled. | **failed** (no segment-long linear ramp) |
+| **P-R2b** no shorter cap helps (edge in G51, G38; kill everywhere) | P(L* = 40) = 1.00 in G51 and 0.50 in G38 (flat curve). Kill not met: the highest P(L* < 35) is 0.74 (G37, write share 0.03). **Y(20)/Y(40) = 0.88 [0.85, 0.91]**, below 1 in 9/9 periods (CI < 1 in 8/9). Per wall-clock minute, P(L* = 40) ≥ 0.83 in 9/9. | **pass** (G51); G38 flat |
+| **P-R2c** longer sessions (regime I/II arm) | W(41–60) − W(31–40) = +0.04 to +0.15 (CI > 0) in G30, G31, G33 and G35. But sessions longer than 40 calls end within about 50 calls, so k 41–60 holds the end-of-session write burst. Trimming the last 10 calls leaves 1–23 calls. | **inconclusive** (confounded) |
+| **P-R2d** dip not a reference artifact | Pooled Ω < 0 under all five references: far −26%, near −31%, whole segment −20%, steady state −32%, cycle mean −11% [−18, −4]. All five CIs < 0 in 5/9 periods; the cycle-mean reference includes 0 in G37, G38, G44 and G51. The spread across references is ≥ 9 points in 9/9 periods. ΔV per reset: −0.19 (whole) to −0.59 (near, steady) write calls; +0.07 [−0.04, +0.18] against the cycle mean. | **mixed** (sign holds against every pre-reset window; size depends on the reference) |
+| **P-R3a** re-opening of erased files (recency-adjusted, A4) | Excess vs no reset −0.039 [−0.085, +0.007], positive in 2/9 periods. G51 +0.001 [−0.015, 0.017]; G38, G40 and G41 below 0 (CI). Raw re-open share: forced 0.60 [0.53, 0.67], no reset 0.66 [0.57, 0.75]. Artifact level (L2): +0.024 [−0.012, 0.061]. | **failed** (kill met: powered ≥ 0.8) |
+| **P-R3b** forced vs voluntary | Excess **+0.040 [0.017, 0.062]**, positive in 8/9 periods. | **pass** |
+| **P-R4a** reset costs looping agents less (G51 vs null q95; pooled) | G51 DDD −0.028 [−0.070, +0.003], below its null q95 (−0.004). Pooled −0.027 [−0.076, +0.022]. Log-ratio variant +0.23 [0.10, 0.36], 6/6: looping agents lose a smaller *fraction* (G51 −19% vs −32%), from a write base 3 times higher. | **failed** (absolute); relative variant positive |
+| **P-R4b** reset pays when looping | E_loop **−0.086 [−0.151, −0.022]** writes per call over +1…+10 (6 periods), G51 −0.073 [−0.114, −0.042]. Work commits −0.037 [−0.063, −0.010] per call. | **failed** (kill met) |
+| Loop accumulation (R2 link) | In-loop share rises over calls 1–10, then is flat: slope over k 11–40 +0.0001 [−0.0000, +0.0003] per call pooled (CI > 0 only in G38). | no accumulation |
+
+**Round-2 numbers by period** (complete forced sawtooths; R3 on file-path objects; E_loop where ≥ 30 looping forced events):
+
+| Period | complete sawtooths | R tail ℓ₂ (calls) | W slope β (per call) | Y(20)/Y(40) | P(L* = 40) | Ω range over 5 references | re-open excess vs no reset | E_loop (looping events) | Θ_c checked |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| G36 | 319 | 11.8 [2.0, 11.8] | +4.8 [−12.0, +24.1] ×10⁻⁴ | 0.89 [0.83, 0.96] | 0.83 | −25% to −15% | −0.046 [−0.133, +0.036] | +0.108 [−0.035, +0.195] (32) | +0.100 [+0.051, +0.162] |
+| G37 | 241 | 8.2 [2.0, 11.8] | +2.4 [−6.0, +15.2] ×10⁻⁴ | 1.02 [0.87, 1.21] | 0.23 | −37% to +13% | −0.114 [−0.290, +0.044] | n/a (10 < 30) | +0.091 [+0.046, +0.142] |
+| G38 | 1,693 | 11.8 [2.0, 11.8] | +4.2 [−0.0, +8.5] ×10⁻⁴ | 0.93 [0.89, 0.97] | 0.50 | −27% to +2% | −0.119 [−0.174, −0.070] | −0.020 [−0.084, +0.022] (170) | +0.091 [+0.056, +0.131] |
+| G39 | 569 | 11.8 [4.8, 11.8] | +14.0 [+3.2, +25.0] ×10⁻⁴ | 0.85 [0.81, 0.88] | 0.96 | −32% to −10% | −0.032 [−0.070, +0.009] | −0.182 [−0.235, −0.121] (44) | +0.125 [+0.082, +0.182] |
+| G40 | 583 | 4.1 [2.4, 11.8] | +12.1 [+0.6, +26.5] ×10⁻⁴ | 0.88 [0.85, 0.91] | 1.00 | −31% to −20% | −0.084 [−0.134, −0.028] | −0.156 [−0.215, −0.084] (49) | +0.115 [+0.062, +0.182] |
+| G41 | 441 | 11.8 [3.4, 11.8] | −2.6 [−19.9, +12.3] ×10⁻⁴ | 0.82 [0.78, 0.87] | 1.00 | −41% to −25% | −0.093 [−0.146, −0.034] | −0.146 [−0.220, −0.081] (68) | +0.154 [+0.088, +0.235] |
+| G42 | 563 | 11.8 [2.0, 11.8] | +7.1 [−5.8, +19.4] ×10⁻⁴ | 0.84 [0.76, 0.91] | 0.98 | −41% to −15% | +0.123 [+0.065, +0.173] | n/a (18 < 30) | +0.104 [+0.072, +0.144] |
+| G44 | 191 | 11.8 [2.0, 11.8] | +6.3 [−20.2, +26.9] ×10⁻⁴ | 0.84 [0.73, 0.94] | 0.60 | −37% to −15% | −0.042 [−0.131, +0.043] | n/a (13 < 30) | +0.101 [+0.039, +0.174] |
+| G51 | 8,842 | 8.2 [5.8, 11.8] | +2.0 [−1.5, +5.5] ×10⁻⁴ | 0.91 [0.89, 0.92] | 1.00 | −33% to −2% | +0.001 [−0.015, +0.017] | −0.073 [−0.114, −0.042] (741) | +0.109 [+0.065, +0.160] |
+
+ℓ₂ = 11.8 is the 12-call cap of the fit (Amendment A3): the tail is resolved only in G51 and G40.
+
+### Round 2 results
+**1. The classifier holds (R1).**
+- On 300 blind labels, the re-acquisition class agrees with my labels in 95% of population-weighted calls (κ 0.87).
+- The errors sit inside the re-acquisition class or at its edge:
+  - "Notes read" catches project documents whose names contain plan, session or context (20 of 30 sampled calls). Both labels count as re-acquisition.
+  - Python scripts that fetch web pages are "run" (20–27% of run calls are reads).
+  - Echo narration and touch/mkdir sit in "setup".
+- Window-specific label rates *raise* Θ_c to +0.106. The conservative variant, mid-segment rates in both windows, gives +0.072 [0.067, 0.078]. Either way the round-1 value (+0.079) is not a classifier artifact.
+- Typed text after a reset is navigation (URLs, search terms, game commands) in 47% of GUI-type calls (73% mid-segment; n = 15 each). Clicks carry only coordinates and cannot be split.
+
+**2. The sawtooth has two timescales and no linear ramp (R2).**
+- Re-reading spikes for exactly one call (G51 R: 0.46 at k = 1, then 0.25), then decays with ℓ₂ ≈ 8 calls to a plateau near 0.21.
+- Writes drop to 0.06 at k = 1, recover most of the way by k ≈ 5 (0.10) and approach a plateau (0.13) with ℓ ≈ 8–10 calls.
+- Round 1's "segment-long write ramp" is the end of this slow relaxation. In G51, where the slope test has power, there is no residual linear slope.
+- The same shape holds in each lab of G51 (Anthropic, Google, OpenAI, Moonshot). Y(20)/Y(40) is below 1 for 10 of the 11 G51 models with ≥ 300 sawtooths.
+- One model reverses: gpt-5-2025-08-07 writes most right after a reset, so its Y(20)/Y(40) = 1.20 [1.11, 1.32]. The best cap is model-dependent.
+
+**3. Halving the cap would cost about 12% of output per call; longer caps are not identified.**
+- Y(L) rises up to L = 40 in every well-sampled period: shorter caps are worse (Y(20)/Y(40) = 0.88, Y(30)/Y(40) = 0.95 [0.94, 0.96]). This also holds per wall-clock minute, because a consolidation takes about 4.5 min (257–315 s) against 18–26 s per call.
+- Beyond 40 the data are silent. Curvature fits extrapolate to optima from 44 to more than 200 calls.
+- The regime I/II sessions that ran longer than 40 calls end within about 50, so their late calls carry the end-of-session write burst. Loops do not accumulate with segment position, so loop growth gives no reason for a finite cap.
+- The restart dip itself transfers: in regime I/II sessions, writes over the first 10 calls are 0.48–0.52 of calls 11–40 (descriptive; a different scaffold).
+
+**4. The size of the dip depends on the reference (R2, explicit).** Against windows before the reset the dip is −20% (whole closed segment) to −32% (agent-day steady state). Round 1's far window gives −26%. Against the mean of the 40-call cycle, which contains the dip, it is −11%. The cost per reset ranges from 0.19 to 0.59 write calls. The cost of the sawtooth relative to the late-segment plateau, 1 − ⟨W(1…40)⟩/⟨W(31…40)⟩, is 5–15% of write calls (G51 8.5%; point values, no CI). Round 1's "4–11% of output" sits inside this band. Quote the reference with any cap cost.
+
+**5. Agents re-read their working set, not the erased files in particular (R3).**
+- 60% of post-reset read calls touch a file from the last 20 calls before the wipe. The file is usually the most recent one (median rank 1–4 calls; 60–91% within the last 5).
+- Mid-segment reads do this as often or more (0.66), and the recency-adjusted excess is −0.04 [−0.09, +0.01].
+- The wipe raises the *volume* of re-reading (Θ_c), not its *targeting*.
+- After a voluntary reset, reads go to the erased working set less often (excess +0.04 [0.02, 0.06]). Voluntary resets mark task boundaries; forced ones interrupt a task that the agent then resumes from the same files.
+- In Kolchinsky–Wolpert terms: the semantic content that the wipe removes, as file identity, is the agent's current working set. The agent recovers it by its ordinary working-set habit, which the wipe amplifies.
+
+**6. A wipe does not pay as a loop breaker (R4).**
+- Over the next 10 calls a forced reset costs a looping agent 0.86 write calls (E_loop −0.086 per call), against 0.57 for a loop-free agent. The absolute difference is not significant.
+- The round-1 loop flag mostly marks *productive* repetition. Looping pre-windows write at 0.43 per call vs 0.13 (G51), and 617 of 741 looping G51 events contain writes (repeated appends, commits, deploys).
+- Post hoc, on stuck loops only (≥ 3 in-loop calls, no write): the reset is neutral (+0.011 [−0.015, 0.037], G38 and G51 only, 220 events). Breaking a productive loop costs 0.15 writes per call (−0.149 [−0.201, −0.097]).
+
+### Round 2 scorecard (old → new)
+| Axis | Round 1 | Round 2 | Why |
+| --- | --- | --- | --- |
+| A mapping | 1 | 1 | Classifier validated blind (κ 0.87 on the re-acquisition class), but clicks cannot be split into navigation and production; regime III only for the event study |
+| B assumptions | 1 | 1 | Within-segment non-stationarity is now a measured two-timescale relaxation (spike 1 call, tail ≈ 8 calls, slow write recovery ≈ 8.5 calls), not a ramp; Θ_c still first-order |
+| C adequacy | 1 | 1 | Unchanged nulls; checked labels and five references keep the sign |
+| D unfitted predictions | 1 | 1 | New passes: two timescales (G51), cap edge (G51), Y(20)/Y(40) < 1 in 9/9, forced > voluntary re-opening. New fails: linear ramp, targeted re-reading, loop lever |
+| E interventional | 1 | 1 | Forced resets (quasi-random cap timing) remain the intervention; the NE11/NE14 cap difference is confounded by session ends |
+| F identifiability | 1 | **2** | Round-2 synthetic on real skeletons for every estimator, with size and power; it found three design flaws before real data: the ramp is unidentified by AIC, raw re-open contrasts are biased under recency, and the absolute DDD is biased under a multiplicative dip |
+| G ground truth | 1 | **2** | The hand-labelled ground truth the card lacked now exists (300 blind labels; single rater, Claude) and agrees with the classifier (0.95) |
+| H comparative | 1 | 1 | Beats the classifier-artifact and reference-artifact rivals; the "targeted restoration" and "loop lever" readings lose to "working-set habit" and "productive loops" |
+| I transfer | 1 | 1 | Restart dip of about 50% in regime I/II sessions (descriptive); reserved data not run |
+
+**Round 2 scorecard: A1 B1 C1 D1 E1 F2 G2 H1 I1.**
+
+**Rivals after round 2.** R0 (no effect), R1 (pure restart overhead), R2 (temperature pulse) and R3 (task boundary) stay rejected; R1 is now rejected on checked labels. New rivals: classifier artifact (beaten, P-R1b); reference artifact for the dip (beaten for the sign, not the size); targeted restoration of erased files (beaten by working-set habit, which is a rival to H44's original story); loop breaking pays (rejected).
+
+**Operator values.** Keep the context cap at 40 calls or more: halving it to 20 cuts output per call by about 12% (Y(20)/Y(40) 0.88 [0.85, 0.91]). Do not use forced consolidation to break loops: it costs a looping agent about 0.9 write calls per reset over the next 10 calls (E_loop −0.086 [−0.151, −0.022]).
+
+**Claim that stands:** In regime III (9 non-reserved periods), a forced context wipe triggers a one-call re-reading spike with an about-8-call tail (Θ_c +0.106 [0.089, 0.122] on blind-checked labels, 9/9 periods) and a write dip of −20% to −32% depending on the reference window, and a 20-call cap would yield 12% less output per call than the 40-call cap (Y(20)/Y(40) 0.88 [0.85, 0.91]). *Excluded:* a segment-long linear write ramp (withdrawn; the rise saturates with ℓ ≈ 8.5 calls); any optimum beyond 40 calls (not identified; the regime I/II arm is confounded by session ends); targeted re-reading of erased files (failed; working-set habit); loop breaking as a lever (failed; E_loop −0.086 [−0.151, −0.022]); the stuck-loop result (post hoc, 2 periods); the gpt-5 reversal (post hoc, one model).

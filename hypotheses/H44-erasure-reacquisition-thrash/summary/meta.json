@@ -1,25 +1,25 @@
 {
- "complete": 42,
+ "complete": 62,
  "faithfulness": 2.0,
  "usefulness": 3.0,
  "rationale": {
-  "complete": "Round 1 done: dated predictions, synthetic validation first (three worlds on real call skeletons; it exposed and fixed a spillover flaw in the raw thrash index), 6 replication + 3 native period folders + NE41, scorecard, outcome-vs-prediction table, robustness (normalized loop hash, balanced windows, past-only pseudo control, two embedding models). Confirmatory script written and dry-run on stand-ins; holdout not run. Classifier not validated by hand.",
-  "faithfulness": "The re-acquisition half holds strongly and interventionally (forced resets at the cap): Theta_c > 0 in 9/9 periods, write and work-commit dips, forced >= voluntary, no excess pre-trend, coupling cut, loop breaking, memory dose ~0. But the hypothesis's distinctive signatures fail: no temperature pulse (entropy falls), no susceptibility rise (RR 0.97, G51 opposite), no content-pull rise, no onset or learning effect. Scorecard all 1s; no holdout.",
-  "usefulness": "Operator numbers with interventional backing: the 41-record cap costs 4-9% of write calls and 5-11% of work commits per period, breaks most command loops (OR ~0.1), raises trial-and-error failures, and wiped agents do not become more steerable by room content. The recovery rule (point the agent at its working files: artifact-first resumes 2.6 calls sooner) is observational. A cost/benefit dial for context caps, not yet a validated knob."
+  "complete": "Round 1 done; round 2 (2026-10-05) ran R1-R4 with dated predictions, kill rules and a synthetic validation on real skeletons before real data (three design flaws found and fixed by amendment: AIC cannot identify the ramp, raw re-open contrasts are biased under recency, the absolute loop DDD is biased under a multiplicative dip). Blind 300-call classifier check without paid API; Theta_c recomputed on checked labels; cap curves per period, lab and model; five-reference dip table; regime I/II long-session arm. Estimates rows written. Reserved data not run.",
+  "faithfulness": "Re-acquisition now survives a blind classifier check (re-acquisition kappa 0.87; Theta_c +0.106 checked, +0.072 conservative, 9/9) and the sawtooth is a measured two-timescale relaxation (one-call spike, ~8-call tail, G51 dAIC +104). The model's further readings fail: no linear write ramp, no targeted re-reading of erased files (working-set habit), no loop lever. The dip's sign survives five references but its size moves from -11% to -32%. Scorecard A1 B1 C1 D1 E1 F2 G2 H1 I1; no reserved-data test.",
+  "usefulness": "Two operator numbers with interventional backing: halving the context cap from 40 to 20 calls costs ~12% of output per call (Y20/Y40 0.88 [0.85, 0.91], 9/9 periods; also per minute), and forced consolidation does not pay as a loop breaker (E_loop -0.086 writes/call). The optimal cap beyond 40 is not identified, and the cap cost depends on the reference window, which limits it as a priced knob."
  },
- "one_line": "A forced context wipe causes orderly re-reading and a 26% write dip (4-11% of output) and breaks command loops; it adds no room susceptibility.",
+ "one_line": "A forced context wipe causes a one-call re-reading spike with an ~8-call tail (Theta_c +0.106 on blind-checked labels) and a 20-32% write dip; a 20-call cap would lose 12% of output per call, and wiping does not pay as a loop breaker.",
  "models": [
   {
    "model": "02-nonequilibrium-ising",
    "role": "primary",
    "outcome": "mixed",
-   "note": "task-field quench fits; no temperature pulse or susceptibility rise"
+   "note": "task-field quench with two timescales (one-call spike, ~8-call tail); no temperature pulse, susceptibility rise or linear ramp"
   },
   {
    "model": "04-semantic-information",
    "role": "secondary",
    "outcome": "supported",
-   "note": "artifacts, not memory, restore output (observational)"
+   "note": "artifacts, not memory, restore output; the erased working set is re-read by habit, not targeted (round 2)"
   },
   {
    "model": "13-cultural-evolution-conventions",
@@ -29,7 +29,7 @@
   }
  ],
  "rated_by": "H44 agent (suggested)",
- "updated": "2026-10-04",
+ "updated": "2026-10-05",
  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.0 kept: quasi-random scaffold intervention with a priced design trade-off, parity with H54)",
  "v2": {
   "claim": "Forced erasure triggers orderly re-reading, costs 4–11% of output, breaks loops",

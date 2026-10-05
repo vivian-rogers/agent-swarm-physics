@@ -45,3 +45,28 @@ The scaffold erases the context window when a segment reaches 41–42 records (4
 
 ## Notes
 - Exploratory, non-holdout; per-period numbers are in the G folders. The write dip (Ω) is H15's statistic (replication).
+
+## Round 2 (2026-10-05)
+*Spanning summary of round 2; predictions in the card (02:45 UTC) and amendments A3–A6 (03:01 UTC), both before real data. Pooled values are DerSimonian–Laird over the 9 periods (exception (c)); `data/processed/H44-erasure-reacquisition-thrash/r2/pooled.json`, `long_arm.json`.*
+
+| Pooled statistic | Value |
+| --- | --- |
+| Θ_c on blind-checked labels (R1) | +0.106 [+0.089, +0.122], 9/9 > 0.01 |
+| Θ_c, mid-segment label rates in both windows | +0.072 [+0.067, +0.078] |
+| Y(20)/Y(40) · Y(30)/Y(40) | 0.88 [0.85, 0.91] · 0.95 [0.94, 0.96] |
+| write slope β (per call) | +3.8 [+1.4, +6.2] ×10⁻⁴ (8/9 > 0; G51 n.s.) |
+| write dip Ω vs far · near · whole · steady · cycle mean | -26% [-29, -23] · -31% [-35, -27] · -20% [-23, -18] · -32% [-35, -28] · -11% [-18, -4] |
+| ΔV per reset (write calls, +1…+20) vs far · near · whole · steady · cycle mean | -0.38 [-0.54, -0.23] · -0.59 [-0.77, -0.42] · -0.19 [-0.25, -0.12] · -0.58 [-0.75, -0.41] · +0.07 [-0.04, +0.18] |
+| re-open excess vs no reset · vs voluntary (file paths) | -0.039 [-0.085, +0.007] · +0.040 [+0.017, +0.062] |
+| reset effect, looping · loop-free · difference (6 periods) | -0.086 [-0.151, -0.022] · -0.057 [-0.076, -0.038] · -0.027 [-0.076, +0.022] |
+
+**Cap difference NE11/NE14 (regime I/II sessions, no 41-record cap; descriptive):**
+
+| Period | sessions (> 40 calls) | W(41–60) − W(31–40) | writes in first 10 calls / calls 11–40 |
+| --- | --- | --- | --- |
+| G30 (I) | 1,041 (268) | +0.037 [+0.001, +0.066] | 0.49 |
+| G31 (I) | 1,250 (318) | +0.043 [+0.013, +0.066] | 0.52 |
+| G33 (II) | 706 (134) | +0.052 [+0.003, +0.112] | 0.50 |
+| G35 (II) | 1,247 (420) | +0.147 [+0.092, +0.199] | 0.48 |
+
+- Sessions longer than 40 calls end within about 50, so k 41–60 carries the end-of-session write burst; trimming the last 10 calls of each session leaves 1–23 calls. P-R2c is **inconclusive**. The restart dip itself (≈ 0.5 of later writes in the first 10 calls) appears in this different scaffold too.

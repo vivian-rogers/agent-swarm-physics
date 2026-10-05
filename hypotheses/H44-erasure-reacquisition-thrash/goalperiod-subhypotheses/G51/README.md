@@ -63,3 +63,25 @@ Native layer. The largest sample by far (14,593 forced resets in 45 non-holdout 
 ## Notes
 - Exploratory, non-holdout. Event windows truncate at the next reset of any kind and at the day edge; a balanced +1…+20 subset is in `results.json` (`forced_balanced`).
 - No agent text is stored or quoted; commands were classified in memory (see the card's scheme).
+
+## Round 2 (2026-10-05)
+*Prediction: the card's "Round 2 design, predictions and kill rules" (written 2026-10-05 02:45 UTC, before any round-2 statistic) and amendments A3–A6 (03:01 UTC, after the synthetic validation, before real data). Role in round 2: native (R2 power, R3, R4 at scale). Run 2026-10-05 (`analysis/r2_run.py`, `analysis/r2_label.py` → `data/processed/H44-erasure-reacquisition-thrash/r2/G51/r2_results.json`); figure `figures/r2_sawtooth.pdf`. Period verdict above is unchanged (round-1 rule).*
+
+| Statistic (95% agent-day cluster bootstrap CI) | Value |
+| --- | --- |
+| R1: Θ_c on blind-checked labels (round-1 classifier: +0.081) | +0.109 [+0.065, +0.160]; mid-segment rates +0.074 [+0.067, +0.081] |
+| R2: complete forced sawtooths (40 calls) | 8,842 |
+| R2: re-acquisition R(k): spike ℓ₁, tail ℓ₂ (calls; ℓ₂ capped at 12) | 0.3; 8.2 [5.8, 11.8]; ΔAIC two vs one timescale +104.0 |
+| R2: write slope β (per call, after the slow relaxation) | +2.0 [-1.5, +5.5] ×10⁻⁴ |
+| R2: output per call, cap 20 / cap 40 (Y(20)/Y(40)) | 0.91 [0.89, 0.92] |
+| R2: P(L* = 40) per call · per minute; P(L* < 35) | 1.00 · 1.00; 0.00 |
+| R2: write dip Ω (+1…+10) vs far · near · whole segment · steady state · cycle mean | -24% [-27, -20] · -27% [-30, -24] · -18% [-21, -16] · -33% [-37, -28] · -2% [-7, +5] |
+| R2: in-loop share slope over k 11–40 (per call) | +0.2 [-0.7, +1.0] ×10⁻⁴ |
+| R3: re-open share of post-reset read calls (file paths): forced · no reset · voluntary | 0.62 · 0.64 · 0.60 (21,080 forced read calls) |
+| R3: recency-adjusted excess, forced vs no reset · vs voluntary | +0.001 [-0.015, +0.017] · +0.033 [+0.001, +0.061] |
+| R3: re-opened object's recency rank (median; share within last 5 calls) | 1.0; 0.82 |
+| R4: reset effect on writes per call, looping · loop-free · difference (741 looping forced events) | -0.073 [-0.114, -0.042] · -0.045 [-0.051, -0.039] · -0.028 [-0.070, +0.003] |
+| R4: relative (log-ratio) difference | +0.199 [+0.054, +0.302] |
+
+- **R2 reading:** shorter caps lose output here (Y(20)/Y(40) CI < 1); the cycle-mean reference includes 0, the pre-reset references do not.
+- **G51 native (power):** the two-timescale and ramp tests are read here (Amendment A5). Two timescales in R(k): pass (ΔAIC +104). Linear write ramp: not found (β CI includes 0); the write rise saturates (ℓ₂ ≈ 10 calls). Edge rule: pass (P(L* = 40) = 1.00). Per model, Y(20)/Y(40) < 1 for 10 of 11 models; gpt-5-2025-08-07 reverses (1.20 [1.11, 1.32]; post hoc). R3: no excess re-opening (+0.001). R4: the reset costs looping agents 0.73 write calls per reset (E_loop × 10); post hoc, stuck loops (no writes, 124 events) are unaffected (+0.002 [−0.033, +0.034]).

@@ -1,36 +1,38 @@
-\hwhat{The scaffold wipes an agent's context window at the 41-record cap and keeps its memory. H44 asks whether the agent then thrashes: re-reads instead of producing, acts more randomly, and listens harder to new room content. The test aligns 21,165 forced and 16,357 voluntary resets with no-reset pseudo-erasures, over 1.24M model calls in nine non-holdout regime-III periods. A synthetic validation comes first. Re-acquisition is real. The read share doubles at the first post-reset call (G51: 0.22 to 0.47). Among non-write calls it stays up over five calls ($\Theta_c=+0.079$, 9/9 periods). Writes fall 26\%, work commits 38\%, and real failures rise 1 point. No temperature pulse appears, and new room items exert no extra pull (RR 0.97). Coupling to pre-reset items drops (ratio 0.60). Erasures break command loops (OR 0.11). The holdout is not run.}
+\hwhat{The scaffold wipes an agent's context window at the 41-record cap and keeps its memory. Round 1 aligned 21,165 forced resets with no-reset pseudo-erasures over 1.24M calls in nine regime-III periods. The read share doubles at the first post-reset call. Among non-write calls it stays up for five calls ($\Theta_c=+0.079$, 9/9). Writes fall 26\% and command loops break. There is no temperature pulse and no extra pull from the room. Round 2 tested four things. The call classifier holds on 300 blind labels, and $\Theta_c$ on the checked labels is $+0.106$. The sawtooth has two timescales and no linear ramp. A 20-call cap would lose 12\% of output per call. Re-reading is working-set habit, and a wipe does not pay as a loop breaker.}
 
-\hmodel{Model 02 as a kinetic multinomial spin. Each model call has a category $s_t$ (write, run, read, look, GUI, room read, talk, idle, \ldots). Its update has a baseline field $h^0$, a room drive $h^{\rm room}$, a context-held task field $h^{\rm ctx}(n)$ and a persistence $J(n)$. Here $n$ counts calls since the last reset; an erasure sets $n\to0$, a quench of the task field. $R_{\rm nw}$ is the read share of non-write calls, $c'$ an agent $\times$ previous-category cell, and $W$ the write share. Model 04 asks which store restores output.}
+\hmodel{Model 02 as a kinetic multinomial spin. Each call has a category $s_t$ (write, run, read, look, GUI, room read, talk, idle, \ldots). Its update has a baseline field $h^0$, a context-held task field $h^{\rm ctx}(k)$ and a persistence $J(k)$. Here $k$ counts calls since the last reset; a wipe sets $k\to1$, a quench of the task field. $R(k)$ is the re-acquisition share and $W(k)$ the write share at segment position $k$. $Y(L)$ is the output per call under a cap of $L$ calls, with one summary call per consolidation. Model 04 asks which store restores output.}
 
 \hmath{\vspace{-5pt}\begin{gather*}
-P(s_{t+1}{=}c)\propto e^{\,h^0_c+h^{\rm room}_c+h^{\rm ctx}_c(n)+J(n)\mathbb 1[c=s_t]}\\
-h^{\rm ctx}(n)=h^{\rm ctx}_\infty\,(1-e^{-n/\ell})\\
-\Theta_c=\textstyle\sum_{c'} w_{c'}\,[R_{\rm nw}(\text{post}\,|\,c')-R_{\rm nw}(\text{far}\,|\,c')]\\
-\Omega=W_{\rm post}/W_{\rm far}-1,\qquad \Delta V=\textstyle\sum_{k\le20}(W_k-W_{\rm far})
+P(s_{t+1}{=}c)\propto e^{\,h^0_c+h^{\rm ctx}_c(k)+J(k)\mathbb 1[c=s_t]}\\
+y(k)=c+\beta(k{-}1)+A_1e^{-(k-1)/\ell_1}+A_2e^{-(k-1)/\ell_2}\\
+Y(L)=\textstyle\sum_{k\le L}W(k)\,/\,(L+1),\qquad \Omega=W_{+1..+10}/W_{\rm ref}-1\\
+\Theta_c=\textstyle\sum_{c'} w_{c'}\,[R_{\rm nw}(\text{post}\,|\,c')-R_{\rm nw}(\text{far}\,|\,c')]
 \end{gather*}\vspace{-7pt}}
 
-\hobs{../figures/summary_obs.pdf}{(a) G51: share of non-write calls that re-acquire (solid) and write share (dashed) against calls from a forced reset, a voluntary reset, or a no-reset boundary. Re-reading doubles at the first call and decays with a $\sim$7-call tail. Writes drop 68\% at the first call and then ramp back. (b) All nine periods. Forced and voluntary resets sit at $\Theta_c>0$, $\Omega<0$. Pseudo-erasures sit at $\Theta_c\le0$ and $\Omega>0$, because writes ramp up through every segment.}
+\hobs{../figures/summary_obs.pdf}{Round 1. (a) G51: share of non-write calls that re-acquire (solid) and write share (dashed) against calls from a forced reset, a voluntary reset, or a no-reset boundary. (b) All nine periods: forced and voluntary resets sit at $\Theta_c>0$, $\Omega<0$; pseudo-erasures at $\Theta_c\le0$.}
 
-\htelos{The 41-record cap costs each period 4--9\% of its write calls and 5--11\% of its work commits. After a wipe the agent re-reads, fails a few more commands, and rebuilds its task from its files over 3--7 calls. Memory notes written at the wipe do not help, and the agent does not turn to the room. Treat the cap length as a cost/benefit dial: it also breaks most command loops. Point the recovering agent at its working files. A re-read of them resumes writing 2.6 calls sooner than a look at the screen. A freshly wiped agent is no easier for other agents to steer. The ``temperature pulse'' does not survive, and ``thrash'' overstates the effect: the re-reading is orderly.}
+\htelos{Keep the context cap at 40 calls or more. In every well-sampled period output per call still rises at 40, and halving the cap to 20 loses about 12\% (per call and per minute). Whether a longer cap would help is not identified. Do not use a forced consolidation to break loops. Most flagged loops are productive repetition, and a wipe costs a looping agent about 0.9 write calls over the next ten calls. After a wipe the agent re-reads the files it was just using, at its normal working-set rate. Re-reading is orderly, not thrash. Quote any cap cost with its reference window: the dip is $-20\%$ to $-32\%$ against pre-reset windows and $-11\%$ against the 40-call cycle mean. The best cap may depend on the model.}
 
-\hbottom{A context wipe triggers orderly re-reading and a ${\sim}$26\% write dip that cost 4--11\% of output and break command loops; it does not heat the agent or open it to the room.}
+\hbottom{A forced context wipe causes a one-call re-reading spike with an ${\sim}8$-call tail ($\Theta_c=+0.106$ on blind-checked labels) and a $-20\%$ to $-32\%$ write dip; a 20-call cap would yield 12\% less output per call than 40, and wiping does not pay as a loop breaker.}
 
 \hresults{\footnotesize\begin{tabular}{@{}p{0.34\columnwidth}@{\ }p{0.53\columnwidth}@{\ }c@{}}
 Prediction & Observed (pooled, 9 periods) & \\\hline
-\raggedright P1 re-acquisition $\Theta>0$ & \raggedright $\Theta_c$ +0.079 [0.071, 0.086], 9/9; pseudo $-0.011$ & \checkmark\\
-\raggedright P2 entropy, switching up & \raggedright $\Delta H$ $-0.027$; $\Delta\sigma$ +0.018; $\ell$ tail 5--7 calls & $\times$\\
-\raggedright P3 write dip $-25$ to $-60\%$ & \raggedright $\Omega$ $-26\%$ (8/9); commits $-38\%$ & \checkmark\\
-\raggedright P4a coupling to pre-reset items down & \raggedright ratio 0.60 [0.44, 0.81] & \checkmark\\
-\raggedright P4b susceptibility to new items up & \raggedright RR 0.97 [0.91, 1.04]; G51 0.90 & $\times$\\
-\raggedright P4c content pull up & \raggedright D $-0.026$ (n.s.); G51 $-0.027$ & $\times$\\
-\raggedright P5 forced $\ge$ $\tfrac12$ voluntary & \raggedright 0.079 vs 0.057; pre-trend = no-reset band & \checkmark\\
-\raggedright G51 artifact-first recovers fastest & \raggedright $-2.6$ calls to first write vs screen; dose $\rho$ $-0.03$ & \checkmark\\
-\raggedright G38 resets break loops & \raggedright recur 16\% vs 72\%, OR 0.08 & \checkmark\\
-\raggedright G36 onset larger, learning trend & \raggedright onset 0.075 vs 0.080; no trend & $\times$\\
+\raggedright P1 re-acquisition $\Theta_c>0$ & \raggedright $+0.079$ [0.071, 0.086], 9/9 & \checkmark\\
+\raggedright P2 temperature pulse & \raggedright $\Delta H$ $-0.027$; $\Delta\sigma$ +0.018 & $\times$\\
+\raggedright P3 write dip & \raggedright $\Omega$ $-26\%$ (8/9); commits $-38\%$ & \checkmark\\
+\raggedright P4b susceptibility up & \raggedright RR 0.97 [0.91, 1.04] & $\times$\\
+\raggedright R1 classifier agrees; $\Theta_c$ checked & \raggedright re-acq.\ $\kappa$ 0.87; $\Theta_c$ $+0.106$ [0.089, 0.122], 9/9 & \checkmark\\
+\raggedright R2 two timescales in $R(k)$ (G51) & \raggedright $\Delta$AIC +104; spike 1 call, tail $\ell_2=8.2$ & \checkmark\\
+\raggedright R2 segment-long write ramp & \raggedright G51 $\beta$ n.s.; rise saturates ($\ell\approx8.5$) & $\times$\\
+\raggedright R2 no shorter cap helps & \raggedright $Y(20)/Y(40)=0.88$ [0.85, 0.91]; G51 edge 1.00 & \checkmark\\
+\raggedright R2 dip sign vs 5 references & \raggedright $-11\%$ to $-32\%$ pooled; cycle mean n.s.\ in 4/9 & $\sim$\\
+\raggedright R3 erased files re-opened more & \raggedright excess $-0.039$ [$-0.085$, 0.007] & $\times$\\
+\raggedright R3 forced $>$ voluntary & \raggedright excess $+0.040$ [0.017, 0.062] & \checkmark\\
+\raggedright R4 wipe pays when looping & \raggedright $E_{\rm loop}$ $-0.086$ [$-0.151$, $-0.022$] & $\times$\\
 \end{tabular}}
 
-\hobsb{../figures/synthetic_validation.pdf}{Synthetic validation on real call skeletons: planted thrash, a pure output dip and no effect, classified by $\Theta_c$ (dotted: floor 0.01) and $\Omega$. At G51 counts, 100\% are correct. At G37 counts, the estimator finds thrash in 62\% (otherwise it misses the dip) and never calls a false thrash. The raw, unconditioned $\Theta$ would call the pure dip ``thrash''.}
+\hobsb{../figures/summary_r2.pdf}{Round 2. (a) G51 complete 40-call sawtooths: re-acquisition and write share by call after a forced reset, with the two-timescale fit. (b) Output per call under a cap of $L$ calls, relative to 40, for nine periods (diamond: pooled $Y(20)/Y(40)$). (c) The forced write dip against five reference windows (dots: periods; diamonds: pooled). (d) Pooled classifier check, recency-adjusted re-open excess and loop-lever effects.}
 
-\hcaveats{Call categories come from in-memory regex classification of commands and from GUI action types, with no hand-labelled validation. GUI browsing cannot be separated from production. Writes ramp up through every 40-call segment, so the dip size depends on the reference window. $\Theta_c$ conditions on first-order state only. The agents choose their re-acquisition paths, so the path results are observational. Jev's 5-min windows cannot resolve the 1--5-call burst; they label post-reset windows as \emph{more} executing, as H39 sees. G37 has low power. The analysis runs nine periods times about 12 statistics, uncorrected. The holdout is not run.}
+\hcaveats{The blind labels come from one rater (Claude) using tool names and arguments only. Clicks cannot be split into navigation and production. The two-timescale and ramp tests have power only in G51. Beyond 40 calls the optimum is not identified: regime I/II sessions longer than 40 calls end within about 50, so their late calls carry the end-of-session write burst. Re-open shares use file-path tokens from commands; the artifact-level check is n.s. The stuck-loop and gpt-5 results are post hoc. Agents choose re-acquisition paths. The reserved data are not run.}
 
-\hnext{Validate the classifier. Find which files agents re-read (the semantic content of the context store). Find the segment length that maximizes output per call. Price loop breaking against re-acquisition. Run \texttt{confirm.py} after disclosure.}
+\hnext{Measure the cap effect directly at a scaffold change of the cap length, if one exists. Split looping events by failure state before and after reset. Run \texttt{confirm.py} after disclosure.}

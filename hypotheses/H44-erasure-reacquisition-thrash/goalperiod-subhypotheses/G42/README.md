@@ -48,3 +48,23 @@ Replication layer: the common reset event-study estimator, giving one comparable
 ## Notes
 - Exploratory, non-holdout. Event windows truncate at the next reset of any kind and at the day edge; a balanced +1…+20 subset is in `results.json` (`forced_balanced`).
 - No agent text is stored or quoted; commands were classified in memory (see the card's scheme).
+
+## Round 2 (2026-10-05)
+*Prediction: the card's "Round 2 design, predictions and kill rules" (written 2026-10-05 02:45 UTC, before any round-2 statistic) and amendments A3–A6 (03:01 UTC, after the synthetic validation, before real data). Role in round 2: replication. Run 2026-10-05 (`analysis/r2_run.py`, `analysis/r2_label.py` → `data/processed/H44-erasure-reacquisition-thrash/r2/G42/r2_results.json`); figure `figures/r2_sawtooth.pdf`. Period verdict above is unchanged (round-1 rule).*
+
+| Statistic (95% agent-day cluster bootstrap CI) | Value |
+| --- | --- |
+| R1: Θ_c on blind-checked labels (round-1 classifier: +0.086) | +0.104 [+0.072, +0.144]; mid-segment rates +0.078 [+0.061, +0.098] |
+| R2: complete forced sawtooths (40 calls) | 563 |
+| R2: re-acquisition R(k): spike ℓ₁, tail ℓ₂ (calls; ℓ₂ capped at 12) | 0.3; 11.8 [2.0, 11.8]; ΔAIC two vs one timescale -2.1 |
+| R2: write slope β (per call, after the slow relaxation) | +7.1 [-5.8, +19.4] ×10⁻⁴ |
+| R2: output per call, cap 20 / cap 40 (Y(20)/Y(40)) | 0.84 [0.76, 0.91] |
+| R2: P(L* = 40) per call · per minute; P(L* < 35) | 0.98 · 1.00; 0.01 |
+| R2: write dip Ω (+1…+10) vs far · near · whole segment · steady state · cycle mean | -28% [-40, -15] · -37% [-49, -22] · -22% [-32, -11] · -41% [-50, -30] · -15% [-25, -1] |
+| R2: in-loop share slope over k 11–40 (per call) | -2.0 [-6.4, +1.6] ×10⁻⁴ |
+| R3: re-open share of post-reset read calls (file paths): forced · no reset · voluntary | 0.61 · 0.46 · 0.63 (998 forced read calls) |
+| R3: recency-adjusted excess, forced vs no reset · vs voluntary | +0.123 [+0.065, +0.173] · +0.002 [-0.079, +0.105] |
+| R3: re-opened object's recency rank (median; share within last 5 calls) | 1.0; 0.84 |
+| R4 | not scored (18 looping forced events < 30) |
+
+- **R2 reading:** shorter caps lose output here (Y(20)/Y(40) CI < 1); the dip is negative under all five references.

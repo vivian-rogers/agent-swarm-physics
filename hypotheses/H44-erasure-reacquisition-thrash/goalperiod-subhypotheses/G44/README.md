@@ -47,3 +47,23 @@ Replication layer: the common reset event-study estimator, giving one comparable
 ## Notes
 - Exploratory, non-holdout. Event windows truncate at the next reset of any kind and at the day edge; a balanced +1…+20 subset is in `results.json` (`forced_balanced`).
 - No agent text is stored or quoted; commands were classified in memory (see the card's scheme).
+
+## Round 2 (2026-10-05)
+*Prediction: the card's "Round 2 design, predictions and kill rules" (written 2026-10-05 02:45 UTC, before any round-2 statistic) and amendments A3–A6 (03:01 UTC, after the synthetic validation, before real data). Role in round 2: replication. Run 2026-10-05 (`analysis/r2_run.py`, `analysis/r2_label.py` → `data/processed/H44-erasure-reacquisition-thrash/r2/G44/r2_results.json`); figure `figures/r2_sawtooth.pdf`. Period verdict above is unchanged (round-1 rule).*
+
+| Statistic (95% agent-day cluster bootstrap CI) | Value |
+| --- | --- |
+| R1: Θ_c on blind-checked labels (round-1 classifier: +0.059) | +0.101 [+0.039, +0.174]; mid-segment rates +0.065 [+0.033, +0.104] |
+| R2: complete forced sawtooths (40 calls) | 191 |
+| R2: re-acquisition R(k): spike ℓ₁, tail ℓ₂ (calls; ℓ₂ capped at 12) | 0.6; 11.8 [2.0, 11.8]; ΔAIC two vs one timescale -3.9 |
+| R2: write slope β (per call, after the slow relaxation) | +6.3 [-20.2, +26.9] ×10⁻⁴ |
+| R2: output per call, cap 20 / cap 40 (Y(20)/Y(40)) | 0.84 [0.73, 0.94] |
+| R2: P(L* = 40) per call · per minute; P(L* < 35) | 0.60 · 0.94; 0.07 |
+| R2: write dip Ω (+1…+10) vs far · near · whole segment · steady state · cycle mean | -33% [-47, -19] · -37% [-51, -26] · -26% [-38, -16] · -34% [-47, -21] · -15% [-31, +6] |
+| R2: in-loop share slope over k 11–40 (per call) | -3.6 [-13.1, +3.2] ×10⁻⁴ |
+| R3: re-open share of post-reset read calls (file paths): forced · no reset · voluntary | 0.50 · 0.57 · 0.50 (573 forced read calls) |
+| R3: recency-adjusted excess, forced vs no reset · vs voluntary | -0.042 [-0.131, +0.043] · +0.090 [+0.018, +0.160] |
+| R3: re-opened object's recency rank (median; share within last 5 calls) | 3.0; 0.61 |
+| R4 | not scored (13 looping forced events < 30) |
+
+- **R2 reading:** shorter caps lose output here (Y(20)/Y(40) CI < 1); the cycle-mean reference includes 0, the pre-reset references do not.
