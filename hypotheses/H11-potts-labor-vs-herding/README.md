@@ -405,3 +405,83 @@ Monte Carlo noise: the same z_N2 drawn with a different null seed moves by up to
 - **H11-R1.** Preferential attachment: P(join X) ∝ (recent activity on X)^α. With α near 1 this is a Yule process, which predicts the project-size distribution (E2).
 - **H11-R2.** Herding is stigmergic, not social: artifact activity predicts joining better than chat mentions of X (E3, vs H28).
 - **H11-R3.** Herding is a coordination solution that raises output; own-artifact spread duplicates effort (test against the work ledger).
+
+## Round 2 (2026-10-05): why agents pile on
+*Predictions, nulls and kill rules written 2026-10-05 03:30 UTC, before any round-2 statistic on real data. Results are appended below this block; the block is not edited after the run (amendments are dated and labelled).*
+
+**What I had seen when writing this:** the round-1 and round-1b results above; the H28, H53, H63, H93, H94 and H06 cards (H63: a chat link precedes 60% of herding bursts vs 12% of controls, OR 11.9, deploys do not; H28: future links predict attention switches as well as past ones; H06 RE-D2: read vs posted-unread OR 8.6 on attention labels; H93: share coupling +1.9 to +5.8, not identified as J; H94: λ_own 2.2 vs 7.8 nats, κ ≥ 1 in shared weeks). Structural counts only: label switches per period (work: #31 130, #38 87, #41 59, #44 67, #51 930, others 2–53; attention-action: 14–257 per period, #51 3,604) and the number of cross-agent printed commit hashes per goal period (8,941 in all; #40 2,288, #41 1,094). No join, choice-set, coefficient, rate or size-distribution statistic had been computed.
+
+### Degrees of freedom and events (shared by R1–R3)
+- **Labels:** round-1b agent-window labels at W = 30 min. **Work** (DQ4 agent work commits; primary, periods #30 onward) and **attention-action** (shared `project_states`, `sources = action`, strict mentions; secondary, every period listed below). Raw unmerged project names.
+- **Join (H11-R2 named variant):** agent i's labelled window whose project X differs from i's previous labelled project in the same period (carried over unlabelled windows and nights). An agent's first labelled window in a period is an entry, not a join. **Recruit:** X already holds ≥ 1 labelled agent-window by anyone in the period before the join window. **Birth:** otherwise.
+- **Choice set C(i, w):** every project with ≥ 1 labelled agent-window in the period before window w, minus i's previous project. Recruits with |C| ≥ 2 enter the choice models.
+- **Clock:** the period's active time (calendar `win_start`–`win_end` per day, concatenated). Lookbacks cross nights in active time, never in wall-clock time.
+- **Decision time τ:** work joins: i's first strict action mention of X after i's last commit to its previous repo, if it falls ≤ 2 active hours before i's first commit to X; else the first commit to X. Attention joins: i's first strict action mention of X in the join window.
+- **Units:** whole goal periods for #18–#44 (the work labels give 2–130 joins per period, so per-unit fits inside #31 and #38 are empty; named exception (d), as in round 1b); the 12 non-holdout #51 units separately. Card-level summaries are random-effects (DerSimonian–Laird) pooled values reported next to the per-period values. **Testable:** ≥ 25 recruits with |C| ≥ 2.
+- **Groups (fixed now, as H94):** own-artifact = #39, #42, #44, #51 units; shared = all others (#40 flagged: own worlds plus a hub).
+- **Reserved data:** every table is filtered with `holdout_mask`; the ledger and commits with their `holdout` flags.
+
+### H11-R1: preferential attachment
+**Model.** Conditional logit over C(i, w): u_Y = α·log a_Y·[a_Y > 0] + β₀·[a_Y = 0] + γ·log(1 + s_Y) + η·h_Y, where a_Y = labelled agent-windows on Y by agents other than i in the previous L = 4 windows (2 active hours), s_Y = the same count over the whole period so far, and h_Y = 1 if i was labelled on Y earlier in the period (habit, return). α is the attachment exponent: P(join Y) ∝ a_Y^α. SE: sandwich clustered by agent.
+**Variants:** α_PA (kernel only: log a and the zero dummy); α_FE (+ project fixed effects, ridge 0.1: within-project variation only, the fitness rival); α_lead (adds log(1 + a_Y^lead), others' windows on Y in the next L windows: the convergence placebo).
+**Size-distribution test (unfitted).** Replay each period on its real skeleton: every agent keeps its real sequence of labelled windows and event types (entry, stay, recruit, birth); only the targets of entries and recruits are redrawn from a kernel, using the simulated state. 200 replays per kernel. Statistics of the final project sizes (labelled agent-windows per project): **top share**, **effective number exp(H)**, **shared-effort share** (fraction of windows on projects with ≥ 2 agents). Kernels: the fitted R1 model; **Yule–Simon** (∝ total cumulative size s_Y + own); **uniform** (equal weights).
+
+| ID | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R1a | Attachment is real: α > 0 with 95% CI > 0 in ≥ 2/3 of testable shared periods (work channel) | CI includes 0 in > 1/3 | 0.70 |
+| R1b | Attachment is sublinear, not Yule: pooled α between 0.3 and 0.9, and the CI contains 1 in < 1/2 of testable periods | pooled α ≥ 0.9 or CI contains 1 in ≥ 1/2 | 0.45 |
+| R1c | Fitness takes part of it: α_FE < α in ≥ 2/3 of testable periods, but α_FE > 0 (CI) in ≥ 1/2 | α_FE ≥ α, or α_FE CI includes 0 in > 1/2 | 0.45 |
+| R1d | Past and future activity are not separable (convergence open): α_lag − α_lead CI includes 0 in ≥ 1/2 of testable periods | lag > lead (CI) in > 1/2 | 0.60 |
+| R1e | The fitted kernel predicts the size distribution: observed top share and exp(H) inside the 90% replay band in ≥ 2/3 of testable periods | either statistic outside in > 1/3 | 0.50 |
+| R1f | Yule–Simon also fits (inside the band on both statistics in ≥ 1/2); uniform choice fails (observed top share above its band in ≥ 1/2) | the reverse | 0.40 |
+| **Kill (PA)** | α CI includes 0 or α < 0 in > 1/2 of testable shared periods, **or** the fitted kernel misses both statistics in > 1/2 | — | P(kill) 0.25 |
+
+### H11-R2: stigmergic vs social
+**Exposures of candidate Y at τ (60 active minutes back; leads 60 forward):**
+- **M_read:** chat messages by other agents with a strict mention of Y (`project_mentions_chat`) that entered one of i's calls with t_call in [τ − 60, τ] (DQ1 ledger items).
+- **M_unread:** such messages posted in [τ − 60, τ) that had not entered any of i's calls by τ (other room or in flight): the read-out partition.
+- **M_lead:** such messages entering i's calls in (τ, τ + 60].
+- **C:** other agents' work commits to Y in [τ − 60, τ) (artifact activity). **C_lead:** in (τ, τ + 60].
+- Controls in every model: h_Y, log(1 + s_Y).
+
+**Tests.**
+- **R2a (horse race, primary):** day-blocked held-out log-likelihood per join of base + log(1 + C) vs base + log(1 + M_read). ΔLL_CM > 0 means artifact activity predicts better.
+- **R2b (matched contrast at read-out):** Mantel–Haenszel OR of joining for M_read > 0 vs 0 within strata of Y's activity (a_Y: 0 / 1 / 2–3 / 4+) × habit × period (OR_M|act), and for C > 0 vs 0 within strata of M_read (0 / ≥ 1) × habit × period (OR_C|M).
+- **R2c (partition contrasts):** in the joint model (base + C + C_lead + M_read + M_unread + M_lead), social coupling acts only at read-out if β(M_read) > β(M_unread) and β(M_read) > β(M_lead); artifact coupling if β(C) > β(C_lead).
+- **R2d (descriptive path):** for work recruits, the share whose first commit to X was preceded within 60 active minutes by (i) a read chat mention of X only, (ii) other agents' commits to X that i printed in its own command output (`artifact_commands_text.out_hashes`, mapped to DQ4 hashes: "seen commits") only, (iii) both, (iv) neither; and which came first. Seen commits need i to be in X's repo already, so they are not a fair predictor for non-chosen candidates; descriptive only.
+
+| ID | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R2a (H11-R2 as stated) | Stigmergic: ΔLL_CM > 0 in ≥ 2/3 of testable periods (work channel) | ΔLL_CM ≤ 0 in > 1/3 | 0.30 |
+| R2b | OR_C|M > OR_M|act in ≥ 2/3 of testable periods (work channel) | the reverse in > 1/3 | 0.30 |
+| R2c-social | Read-out partition holds: β(M_read) > β(M_unread) with CI in the pooled work and attention fits | CI includes 0 | 0.65 |
+| R2c-lead | Lag beats lead for chat: β(M_read) − β(M_lead) > 0 (CI) pooled | CI includes 0 or lead > lag (H28's pattern) | 0.40 |
+| R2c-artifact | Lag beats lead for commits: β(C) − β(C_lead) > 0 (CI) pooled | CI includes 0 | 0.35 |
+| **Kill (stigmergy, H11-R2)** | ΔLL_CM < 0 in ≥ 1/2 of testable periods **and** OR_M|act > OR_C|M pooled | — | P(kill) 0.60 |
+
+**Reconciliation with H28 / H63:** if R2c-lead fails (M_lead ≈ M_read), the burst-marker pattern of H28 replicates on work joins; if R2c-social holds at the same time, chat acts at read-out but also marks bursts.
+
+### H11-R3: herding and output
+**Panel:** agent × 30-min window with an attention-action label, periods #30 onward (DQ4 dense). **Position:** k = other agents with the same attention-action project in the same window (any room): solo k = 0, pair k = 1, herd k ≥ 2. **Exposure:** active minutes (`activity_bins_fixed`), rows with ≥ 1. **Outcomes:** the agent's agent-work commits in the window (all repos; DQ4 default filter); **landed** = on the default branch and not a merge; **deployed** = pages branch or deploy message; duplication markers: revert and merge commits.
+- **R3a (within week, primary):** conditional Poisson with agent-day fixed effects and log(active minutes): RR_herd = exp(β_herd) vs solo; sandwich SE clustered by agent. **Matched version:** each herd window paired with a solo window of the same agent-day with the nearest active minutes (within ±25%); mean of the paired log rate ratio. Testable: ≥ 20 herd and ≥ 20 solo windows in agent-days that have both.
+- **R3b (crowding exponent):** project × window panel: total agent-work commits to X ~ n_Xw^θ, Poisson with project and day fixed effects. Output per agent ∝ n^(θ−1): θ < 1 is crowding or duplicated effort, θ > 1 synergy.
+- **R3c (between weeks, descriptive):** output per active agent-hour per unit vs the round-1b herding index (work co-location excess), Spearman over units; own-artifact vs shared units, Mann–Whitney. Confounded by goal, regime and roster, so descriptive only.
+
+| ID | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R3a (H11-R3 as stated) | Herding raises per-agent output: pooled RR_herd > 1 (CI) over testable shared periods | pooled RR ≤ 1 | 0.15 |
+| R3a (mine) | Crowding: pooled RR_herd < 1 (CI), landed commits too | CI includes 1 or RR > 1 | 0.45 |
+| R3b | θ < 1 (CI) in ≥ 2/3 of testable periods | θ ≥ 1 in > 1/3 | 0.55 |
+| R3c | Output per agent-hour is higher in own-artifact units than in shared units (Mann–Whitney p < 0.05) | p ≥ 0.05 or reverse | 0.50 |
+| **Kill (H11-R3: herding raises output)** | pooled RR_herd upper CI < 1, **or** θ < 1 (CI) in ≥ 1/2 of testable periods | — | P(kill) 0.55 |
+
+### Impostors in round 2
+| Impostor | How round 2 handles it |
+| --- | --- |
+| Scheduler field | Active-time clock; choice sets compare projects at the same instant, so a common activity drive cancels in the conditional logit; R3 uses agent-day fixed effects and active minutes as exposure |
+| Exogenous field | Project fixed effects (α_FE) and habit absorb time-invariant project attraction (kickoff naming, ownership); a time-varying project field is the lead placebo's job |
+| Shared priors | Not addressed beyond agent clustering and habit (no family split) |
+| Convergence | Lead placebos (α_lead, M_lead, C_lead) at matched lags; the read vs unread partition for chat |
+
+### Synthetic validation (before real data)
+Worlds on each period's real skeleton (real joins, choice sets and covariates; only the chosen project or the commit counts are redrawn): R1 planted α = 1 and 0.5, a fitness-only world (time-invariant attraction ∝ final project size, α = 0), and a burst world (choice driven by next-window activity only). R2 social-only, artifact-only and burst worlds. R3 RR = 1 (size) and RR = 0.7 (power). The estimators must recover planted values (|bias| ≤ 0.2, coverage ≥ 0.85) and keep the false positive rate of lag > lead ≤ 0.1 in burst worlds before the real run.
