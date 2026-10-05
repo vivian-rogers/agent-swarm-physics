@@ -304,6 +304,70 @@ Replication verdict rule (templated): supported if the own-kickoff percentile π
 - **H54-R5. Embedding swap.** Rerun P1, G51 and NE38 on DQ5's second model (gte-modernbert), and HH184 with per-agent read-out timing.
 - **H54-R6. Remanence mechanism (HH182).** Why does the previous kickoff leave no trace on the new day 1? Test memory consolidation at goal changes, and link the within-goal plateau (0.11) to H20's day-to-day correlation and H31's τ_C.
 
+## Round 2 (2026-10-04, UTC): embedding swap, read-out re-quench, two targets, first-plan read
+*Design, predictions, nulls and kill rules written before any round-2 statistic on real data. Items: the card's H54-R5, R3, R1 and R2. R4 is skipped (it needs paid LLM labels); R6 is not in this round.*
+
+**What I had seen when writing this:** the round-1 results above; H97 and H96 round 1 (NE38 holds in both embedding models; the kickoff erases old positions in both models); DQ5 (agent-day aggregates agree across models, CKA 0.91; statement-level geometry does not, 10-NN overlap 0.26; #51 is the least robust period); H29 round 1b (in-flight placebos are co-response dominated; use matched-age contrasts). Structure only for round 2: 238 non-reserved mid-period human messages (26 periods), 53 first plans (33 whole-swarm, 20 room scope), #12's 10 debates with DQ6 teams and phases, and the #12, #19 and #21 kickoff texts (read in memory to define the targets below; no text is stored). No round-2 statistic, no gte statistic and no read-split statistic had been computed.
+
+**Question served:** Q2 (field vs coupling: does the target act through reading, or do agents converge on it without reading?), Q5 second (what an operator's or an agent's text does, and when).
+
+### Design
+**Code and inputs.** New code: `analysis/round2.py` (subcommands `r5build`, `synth`, `r3`, `r2`, `r1`) and `scheme/embed_targets.py` (local embedding of the #12 motions and the #19/#21 option clauses with both DQ5 models; vectors only). The model switch `H54_MODEL` in `analysis/h54lib.py` (default `bge_small`, so round 1 reproduces exactly) routes raw vectors, goal vectors and whiteners to gte-modernbert and writes to `data/processed/H54-kickoff-quench-target/r2_gte/`. Visibility: the context ledger (`context_ledger_items`, `context_ledger_turns`) and `producing_calls` (shared `visibility.py` rule). Every row passes `holdout_mask`; #23 stays excluded.
+
+**R5, embedding swap.** `round2.py r5build` writes gte copies of `stmt_z` / `stmt_zs` (target-period regime basis, DQ5 `style_resid_period32_gte_modernbert`) next to copies of the model-free round-1 tables. Then `explore.py` and `native.py` run unchanged with `H54_MODEL=gte_modernbert`. Same estimators, same verdict rules as round 1.
+
+**R3, per-agent read-out re-quench (HH180).** Unit: a (human message m, recipient agent i) pair. m comes from `human_msgs.parquet` (≥ 250 characters, not a kickoff, not in day 1's first 2 h). i is any agent except the Claude Code agent with a ledger receiving call for m; t_rc is that call's `t_call`.
+- **Statements:** agent chat messages only (they have producing calls). z = unit regime-whitened chat vector (bge and gte); ê_m = the same for m.
+- **Before:** i's last chat message posted before m (same PT day, within 6 h).
+- **Read arm:** i's first chat message whose producing call has `t_call` ≥ t_rc (m is in its context), posted within 60 min of m.
+- **In-flight arm:** i's first chat message posted after m whose producing call has `t_call` < t_rc (generated without m in context).
+- **Amplitude:** a = cos(z_after, ê_m) − cos(z_before, ê_m). **Decoy-corrected** Δ = a − mean over decoys d of [cos(z_after, ê_d) − cos(z_before, ê_d)]. Decoys: up to 50 other human messages of the same regime from other goal periods, length ratio 0.5–2 (round-1 rule).
+- **R3-A (primary):** per message, the mean Δ over its read pairs; across messages, the median and a one-sided sign test; mean with a message-cluster bootstrap 90% CI.
+- **R3-B (partition contrast):** read vs in-flight at matched lag. Lag ℓ = posting time − t_m, bins [0, 30), [30, 60), [60, 120), [120, 300), [300, 900) s. C = Σ_b w_b (mean Δ_read,b − mean Δ_if,b), with w_b ∝ in-flight pairs in bin b. Message-cluster bootstrap 90% CI (2,000 draws). Convergence share = mean Δ_if / mean Δ_read at matched lag.
+- **R3-C:** named recipients (ledger `ment`) vs unnamed: difference of read-arm Δ (message-cluster bootstrap).
+
+**R2, first-plan read (HH181).** The same estimator with the first concrete plan P (`first_plans.parquet`, all scopes) as the target ê_P. Recipients: other agents with a ledger receiving call for P. Decoys: the other agents' ≥ 40-word chat messages on the same day 1 (round-1 P6 set), minus P and the recipient's own messages, so Δ is the pull toward P beyond the day's shared topic.
+- **R2-A:** read-arm Δ > 0 across plans (median, sign test, cluster bootstrap).
+- **R2-B (the causal test):** read vs in-flight at matched lag, C as in R3-B.
+- **R2-C (descriptive):** in two-room periods, agents in the other room never read a room-scope plan. Their Δ over the same clock window (last message before P vs first message after P plus the same-room median read lag) is the never-read control.
+- #26's leader goal in the project layer (the redirect's second clause) is not run in this round.
+
+**R1, two concrete targets (HH183).**
+- **#12 debates (assigned membership, two sides).** Per debate k (DQ6 `team`, `phase`), debaters' agent vectors from their statements (chat + intentions) in the `deb` phase, ≥ 2 statements; judge and bench excluded.
+  - **R1-A team domains:** Q_k = mean within-team pair cosine − mean between-team pair cosine. **Placebo window:** the same agents with the same labels in the 30 min before the debate's draft (when they were not yet split this way). DiD_k = Q_k − Q_k^pre. Null: re-split the debaters into the real team sizes (all splits), applied to both windows; the statistic is the mean over debates.
+  - **R1-B motion target:** the motion string is the first quoted string (≥ 20 characters) after the word "motion" in any agent message of the debate's window, else the first "This House / THW / THBT" sentence; embedded locally, vector only. Own-motion percentile of the debaters' `deb`-phase centroid among the other debates' motions, genericness-corrected (round-1 `colcenter`).
+- **#19 and #21 (two enumerated options, no assigned membership).** #19: "A) make a daily puzzle game" vs "B) make it popular". #21: "a) quantitative predictions" vs "b) scenarios". The two option clauses are embedded locally (t_A, t_B, regime-I basis); u = unit(t_A − t_B).
+  - **R1-C both targets readable:** on days 1–3, excess alignment with t_A and with t_B over the other eligible kickoffs (mean_i cos(v_i, t) − mean_q mean_i cos(v_i, k̂_q)), each > 0.
+  - **R1-D two domains:** per day, the reliable between-agent variance of projections on u (split-half cross-product across agents) vs the same on null axes (differences of pairs of other eligible kickoffs); percentile of u, averaged over days 1–3.
+  - **R1-E sequence:** Spearman(active day, swarm-mean projection on u) < 0 (A first, then B).
+
+### Synthetic validation plan (before real data)
+`round2.py synth`, on the real skeleton (real message, plan and statement times, real read calls and producing calls, real debate teams and statement counts, real #19/#21 agent-day counts), with synthetic 32-d statement vectors calibrated on round 1 (`synthetic/calibration.json`: within-agent-day resultant ≈ 0.58 in regime I).
+- **S6 (R3/R2):** worlds W0 (no effect), WH (read-out: messages produced by calls that read m get a pulse along ê_m), WC (convergence: every message posted after m − 10 min gets the same pulse whether or not m was read). Required: R3-A false-positive rate ≤ 0.07 under W0; the C test (90% CI above 0) fires in ≤ 0.10 of WC worlds; power stated under WH at the amplitude that gives round 1's Δ ≈ 0.04.
+- **S7 (R1-A):** worlds with persistent agent offsets only (shared priors) vs a team direction ±w in the `deb` phase. Required: DiD false-positive rate ≤ 0.07 under offsets only; power stated vs w.
+- **S8 (R1-D):** one mixed target vs two domains (agents split between t_A and t_B) at the real counts. Required: false-positive rate ≤ 0.10; power stated.
+- If a required calibration fails, the estimator is changed before real data and the change is logged as an amendment.
+
+### Predictions (round 2)
+| ID | Prediction | Counts against (kill rule) | Credence |
+| --- | --- | --- | --- |
+| **R5-P1** | gte: P1 holds by the round-1 rule (median π ≥ 0.9, top-1 ≥ 50%, Wilcoxon p < 0.001); per-period π agree across models (Spearman ≥ 0.5) | median π < 0.75 or top-1 < 25% under gte: P1 is model-specific, and the claim narrows to bge | 0.7 / 0.6 |
+| R5-P1c | gte: the move points at the kickoff (median displacement percentile ≥ 0.85) | median < 0.7 | 0.65 |
+| **R5-N1** | gte: #51 role swap ≥ 0.75 with p < 0.01 | ≤ 0.6 | 0.7 |
+| **R5-N1b** | gte: NE38 DiD > 0 with CI excluding 0 | CI includes 0 | 0.85 |
+| **R3-A** | Read-out re-quench: median per-message Δ_read > 0, sign test p < 0.05 | median ≤ 0 | 0.65 |
+| **R3-B** | Read beats in-flight at matched lag: C > 0 with 90% CI above 0 | C ≤ 0: HH180's re-quench is contemporaneous convergence, and round-1 P4 is downgraded from "holds" | 0.5 |
+| R3-C | Named recipients move more than unnamed ones (difference > 0, CI above 0) | difference ≤ 0 | 0.55 |
+| **R2-A** | Readers of the first plan move toward it beyond the day's topic: median Δ_read > 0, sign p < 0.05 | median ≤ 0 | 0.45 |
+| **R2-B** | Read beats in-flight at matched lag for plans: C > 0 with 90% CI above 0 | C ≤ 0: plan centrality (round-1 P6) is convergence, and HH181 is rejected as an influence claim | 0.35 |
+| **R1-A** | #12: team domains form during debates: mean Q > 0 (permutation p < 0.05) and mean DiD > 0 (p < 0.1) | DiD ≤ 0: team "domains" are agent offsets, not a quench | 0.45 |
+| R1-B | #12: the debate centroid identifies its own motion: median percentile ≥ 0.75 | median < 0.5 | 0.65 |
+| R1-C | #19, #21: both option targets carry excess alignment > 0 on days 1–3 (4 of 4) | ≤ 2 of 4 | 0.6 |
+| **R1-D** | #19, #21: no spontaneous domains: u's percentile < 0.9 in both (one mixed target) | percentile ≥ 0.9 in either: spontaneous two-domain breaking (HH183 holds without assigned membership) | 0.65 |
+| R1-E | Sequence A → B: Spearman < 0 in #19 / in #21 | > 0 | 0.55 / 0.4 |
+
+**Overall round-2 rules.** R5 passes if R5-P1 and R5-N1b hold. The read-out claim (Q1/Q2 reading) is **supported** for human messages if R3-A and R3-B both hold, **convergence** if R3-A holds and R3-B fails, **failed** if R3-A fails. The same rule applies to plans with R2-A and R2-B. HH183 is **retired** for spontaneous domains if R1-D shows no domains in both periods with power ≥ 0.8 at the planted size; otherwise "inconclusive".
+
 ## Notes
 - 2026-10-04: promoted from HH169 (Vivian). Round 1 started; card design and predictions written before any real-data statistic.
 - 2026-10-04: one scorer fix before any outcome statistic: agent names (and their model version numbers) are masked before counting numbers and named entities in the specificity score.

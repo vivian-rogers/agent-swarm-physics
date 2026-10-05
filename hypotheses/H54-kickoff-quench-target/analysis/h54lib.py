@@ -4,6 +4,9 @@ Conventions
   - Every comparison for a target period p is made in p's regime basis: z = unit(W_r(raw)), d = 32.
   - Eligible kickoffs: non-holdout goal periods with a shared kickoff (goal_fields), minus #23 (kept blind for H10).
   - Holdout rows are masked with common.holdout_mask unless allow_holdout=True (confirm.py only).
+  - Round 2 (2026-10-04): embedding-model switch H54_MODEL in {bge_small (default, round 1 unchanged), gte_modernbert}.
+    With gte_modernbert, raw vectors, goal vectors and whiteners come from DQ5's second model, and OUT moves to
+    data/processed/H54-kickoff-quench-target/r2_gte/ so round-1 outputs are never overwritten.
 """
 from __future__ import annotations
 
@@ -24,10 +27,14 @@ ROOT = Path(__file__).resolve().parents[3]
 HYP = ROOT / "hypotheses/H54-kickoff-quench-target"
 SHARED = ROOT / "data/processed/shared"
 ED = SHARED / "embeddings"
-OUT = ROOT / "data/processed/H54-kickoff-quench-target"
+MODEL = os.environ.get("H54_MODEL", "bge_small")
+assert MODEL in ("bge_small", "gte_modernbert"), MODEL
+OUT_BASE = ROOT / "data/processed/H54-kickoff-quench-target"
+OUT = OUT_BASE if MODEL == "bge_small" else OUT_BASE / "r2_gte"
 H31 = ROOT / "data/processed/H31-consensus-time-spectral-gap"
 sys.path.insert(0, str(ROOT / "infra/shared"))
 from common import holdout_mask, load_whitener, git_commit, REVISION  # noqa: E402
+import embed_models as _EM  # noqa: E402
 
 EXCLUDE = {23}          # kept blind for H10's confirmatory #22 -> #23 pair
 CLAUDE_CODE = 19        # separate scaffolding; never an agent here
@@ -44,7 +51,9 @@ def unit(x, axis=-1):
 
 @lru_cache(maxsize=None)
 def W(regime: str):
-    return load_whitener(regime, D)
+    if MODEL == "bge_small":
+        return load_whitener(regime, D)
+    return _EM.load_whitener(regime, D, MODEL)
 
 
 def whiten_unit(raw, regime):
@@ -69,7 +78,9 @@ def goals() -> pl.DataFrame:
 
 @lru_cache(maxsize=1)
 def goal_raw() -> np.ndarray:
-    return np.load(ED / "goal_vectors.npy").astype(np.float32)
+    if MODEL == "bge_small":
+        return np.load(ED / "goal_vectors.npy").astype(np.float32)
+    return np.asarray(_EM.goal_vectors(MODEL), dtype=np.float32)
 
 
 def eligible(allow_holdout: bool = False, include_excluded: bool = False) -> list[int]:
@@ -113,7 +124,7 @@ def statements() -> pl.DataFrame:
 
 @lru_cache(maxsize=1)
 def raw_arrays():
-    return (np.load(ED / "chat_bge_small.npy", mmap_mode="r"), np.load(ED / "intentions_bge_small.npy", mmap_mode="r"))
+    return (np.load(_EM.emb_path("chat", MODEL), mmap_mode="r"), np.load(_EM.emb_path("intentions", MODEL), mmap_mode="r"))
 
 
 def raw_for(st: pl.DataFrame) -> np.ndarray:
