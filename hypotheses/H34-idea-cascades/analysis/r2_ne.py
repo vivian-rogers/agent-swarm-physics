@@ -218,7 +218,7 @@ def focus51(ch: pl.DataFrame, rng) -> dict:
     pos = fu["pos"].to_numpy()
     fr, fd = room[pos], pdate[pos]
     inwin = (fd >= FOCUS[2]) & (fd < FOCUS[3])
-    w = rows.filter(pl.col("pt_date").is_between(FOCUS[2], FOCUS[3], closed="left") & (pl.col("speaker_kind") == "agent")
+    w = rows.filter(pl.col("pt_date").is_between(pl.lit(FOCUS[2]), pl.lit(FOCUS[3]), closed="left") & (pl.col("speaker_kind") == "agent")
                     & (pl.col("agent") != CC_AGENT))
     N = {r: int(w.filter(pl.col("room") == r)["agent"].n_unique()) for r in (FOCUS[0], FOCUS[1])}
     out = dict(N_focus=N[FOCUS[0]], N_general=N[FOCUS[1]], pred_ratio=((N[FOCUS[0]] - 1) / (N[FOCUS[1]] - 1)) ** (B_EXP - 1) if N[FOCUS[0]] > 1 else np.nan)
