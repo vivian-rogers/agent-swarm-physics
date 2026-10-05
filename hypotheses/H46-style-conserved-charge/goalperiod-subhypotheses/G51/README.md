@@ -51,3 +51,10 @@
 ## Scorecard (period-specific axes)
 - **E:** 1 (persona onset and NE38 used as interventions; prediction failed for the Prankster).
 - **G:** DQ6 role labels as ground truth; the shift tracks lab more than role (post hoc).
+
+## Round 2 (2026-10-05)
+**Round-2 result:** the Prankster's onset shift survives genre and position control (R1-P3 passed).
+*Pre-registered in the card (Round 2, 2026-10-05 02:44 UTC), synthetic validation and amendments R2-A1..A5 before this run; `analysis/r2_run.py` → `data/processed/H46-style-conserved-charge/r2/`. Non-reserved data.*
+- **Prediction (R1-P3):** percentile ≥ 0.95 under gp style. **Result:** gp 1.00 (5.3× the median placebo); g 1.00; round-1 style 1.00; content 1.00 (2.1×).
+- Incumbents at ≥ 0.9 (gp): 0.29 of 17; media roles 0.36, 0.30, 0.97, 1.00 (media vs other p 0.31). NE38 (agent 40): day level gp 0.73, content 0.91.
+- **Context-held state in #51 (R2, gp):** ΔC(1) 0.73 [0.32, 1.15]; self-pull difference (context minus erased) 0.164 [0.089, 0.226]. NE41 per #51 unit: see NE41.

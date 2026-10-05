@@ -68,8 +68,10 @@ def run_r1(m, V):
     ne = {}
     for v in ("tc", "g", "gp"):
         ne[v] = R.ne41_test(pr, i1, i2, V[v])
+        ne[v + "_unscaled"] = R.ne41_test(pr, i1, i2, V[v], scale=False, n_rand=5000)
     ne["content_bge"] = R.ne41_test(pr, i1, i2, cb, cosine=True)
     ne["content_gte"] = R.ne41_test(pr, i1, i2, cg, cosine=True)
+    ne["content_bge_unscaled"] = R.ne41_test(pr, i1, i2, cb, cosine=True, scale=False, n_rand=5000)
     cellm = (m["is_reply"].cast(pl.Int8) * 2 + (m["n_mention"] > 0).cast(pl.Int8)).to_numpy()
     cell = cellm[i1] * 4 + cellm[i2]
     for v in ("tc", "gp"):
@@ -79,13 +81,13 @@ def run_r1(m, V):
                    for k, v in ne.items()}, f"{time.time() - t0:.0f}s", flush=True)
     # natives on the new matrices: monkeypatch the round-1 native module
     idx = {k: i for i, k in enumerate(m["msg"].to_list())}
-    MATS = {"tc": V["tc"], "g": V["g"], "gp": V["gp"], "content": cb}
+    MATS = {"style": V["gp"], "tc": V["tc"], "g": V["g"], "content": cb}   # "style" = gp (round-1 code keys on it)
 
     def mats_for(sub):
         rows = np.array([idx[k] for k in sub["msg"].to_list()])
         return {c: MATS[c][rows] for c in N.CH}
     N.mats_for = mats_for
-    N.CH = ("tc", "g", "gp", "content")
+    N.CH = ("style", "tc", "g", "content")
     g12 = N.g12(m)
     out["G12"] = {k: v for k, v in g12.items() if k.startswith(("role9", "onetime", "fp_", "side_", "switch_"))}
     g51 = N.g51(m)
@@ -185,6 +187,8 @@ def run_r3(m, V):
     i3 = np.where(mf["regime"].to_numpy() == "III")[0]
     pr, i1, i2 = R.ne41_pairs(m3)
     out["NE41"] = {c: R.ne41_test(pr, i1, i2, W[c][i3], cosine=(c == "content")) for c in chans}
+    for c in ("tc", "fw"):
+        out["NE41"][c + "_unscaled"] = R.ne41_test(pr, i1, i2, W[c][i3], scale=False, n_rand=5000)
     print("R3 NE41", {c: (round(v["forced"]["T"], 3), round(v["forced"]["lo"], 3), round(v["forced"]["hi"], 3))
                       for c, v in out["NE41"].items()}, flush=True)
     # feature excess at goal switches for fw (which words carry any shift)

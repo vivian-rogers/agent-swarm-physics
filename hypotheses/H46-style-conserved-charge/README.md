@@ -1,6 +1,7 @@
 # H46: Style is a conserved charge
 
-**Status:** **exploratory round 1 done (2026-10-04, non-holdout only). Refuted as stated; the fingerprint part holds.**
+**Status:** **exploratory round 2 done (2026-10-05, non-reserved data only; see "Round 2").** Round 2: the erasure, judge and Prankster style moves survive speech-act genre and context-position control (erasure T 0.546 [0.522, 0.564], content flat with bge and gte); the pre-registered OU drift-and-reset form fails (no growth with position, no decay), and a per-segment offset that the erasure redraws fits (post hoc, ≈ 5% of style variance); function words move more at goal switches (0.727) but add identity (function words + style 0.85 across goal switches, chance 0.15).
+**Round 1 (2026-10-04): refuted as stated; the fingerprint part holds.**
 - **Style is not a conserved charge.** It moves beyond its own day-to-day band at goal switches (T_s = 0.69 vs content 0.86; 21/24 switches), across forced context erasures (0.56, while content does not move), for the #51 Prankster (percentile 1.00) and for #12 judges (3/4 at 1.00, content in band). It stays put where content also stays put (roster, scaffold) and after the nudger switch-off.
 - **Style is a strong identity fingerprint.** Trained before and tested after a goal switch, style identifies agents at 0.76 (chance 0.15), content at 0.51; style wins at 22/24 switches.
 - **Post hoc mechanism:** style drifts away from the agent's own mean as its context fills and snaps back after an erasure. That is a substrate charge plus a context-held excitation.
@@ -136,6 +137,7 @@ Script: `scheme/build.py` (shared tables only; drops every holdout row via `cale
 - **Rivals:** R1 (style is a state), R2 (task leakage), R3 (nothing moves).
 
 ## Faithfulness scorecard
+*Scores updated to round 2 (2026-10-05): E 1→2, F 1→2, H 0→1, I 0→1; evidence in "Round 2 → Scorecard". The evidence column below is round 1's.*
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
 **Rival models:** R1 style-as-state (accommodation, in-context self-imitation), R2 task leakage, R3 nothing moves.
 **Locked holdout used for confirmation:** none yet (planned: NE15 room split, NE30 same-family succession, NE21+NE23 nudger off/on, #51 tail; script `analysis/confirm.py`, not run).
@@ -146,11 +148,11 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Day-level stationarity is built into the placebo (within-unit transitions), and roster and scaffold boundaries sit at ½ for both channels. **Markov order fails at turn level:** style depends on position in the context window (PH3: monotone drift from −2.3 to +1.1, reset at erasure), so the agent alone is not the state. No time-rescaling audit. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | The estimator holds size on synthetic data at village sampling and on the real roster and scaffold classes. The *conservation* model fails its main test: style moves in 2 of 4 informative classes (goal switches, erasures). The fingerprint beats chance at every goal switch and beats content at 92% of them. No held-out-day likelihood comparison. |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | Unfitted fingerprint: style 0.76 vs content 0.51 across goal switches (retention 0.91 vs 0.72). Leader (G44): base model Kimi K2.6 is rank 2 by type-controlled style and rank 1 by raw style (power-limited, 16–20 messages). Failed: the KW signature (style ≈ content information in #51; between-agent identity channel R² > 0 in only 2/11 periods). |
-| E interventional | predicts the change across a natural experiment | 1 | Six NE classes, the #51 persona onset, NE38 and the #12 judge assignment were used as interventions. The predicted invariance failed at goal switches, at forced erasures (exogenous timing), for the Prankster and for judges. It held at nudger-off, where equivalence could not be established with one boundary. The failures are informative: style responds to context and register. |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | `analysis/synthetic.py`: size and power at real counts (a style shift of 0.5 day-jitter SD is detected at 100% of goal-switch replicates). It found and fixed two flaws before the real run: the equivalence rule is underpowered in small classes (A1), and coarse gap strata leave a recency confound at NE41 (A2). Preprocessing variants: raw vs type-controlled style, residualized vs raw content, day-demeaned, dedup vs all messages, all agreeing. Not done: second embedding model, alternative style feature set. |
+| E interventional | predicts the change across a natural experiment | 2 | Six NE classes, the #51 persona onset, NE38 and the #12 judge assignment were used as interventions. The predicted invariance failed at goal switches, at forced erasures (exogenous timing), for the Prankster and for judges. It held at nudger-off, where equivalence could not be established with one boundary. The failures are informative: style responds to context and register. |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 | `analysis/synthetic.py`: size and power at real counts (a style shift of 0.5 day-jitter SD is detected at 100% of goal-switch replicates). It found and fixed two flaws before the real run: the equivalence rule is underpowered in small classes (A1), and coarse gap strata leave a recency confound at NE41 (A2). Preprocessing variants: raw vs type-controlled style, residualized vs raw content, day-demeaned, dedup vs all messages, all agreeing. Not done: second embedding model, alternative style feature set. |
 | G ground truth | agrees with known structure | 1 | DQ6 roles, judges and teams (#51, #12); the leader's known base model (G44); families are separable by style (consistent with H13). |
-| H comparative | beats the named rivals | 0 | R1 (style is partly a state that follows context and register) beats H46 at erasures, judging and personas. R2 (task leakage through length, code, links) does not explain the goal-switch shift (type control leaves T_s at 0.69); the excess sits in digit and uppercase shares, a broader leakage that R2 as defined does not cover. R3 (nothing moves) holds for roster and scaffold. |
-| I transfer | holds in other same-mode periods, including the holdout | 0 | Not run on the holdout. Across periods, conservation fails consistently: the style shift at goal switches has the same sign at 21/24 boundaries. The replication layer gives 7 supported, 11 failed, 9 mixed and 5 descriptive points (templated thresholds, 4–15 agents each). The identity fingerprint transfers everywhere. |
+| H comparative | beats the named rivals | 1 | R1 (style is partly a state that follows context and register) beats H46 at erasures, judging and personas. R2 (task leakage through length, code, links) does not explain the goal-switch shift (type control leaves T_s at 0.69); the excess sits in digit and uppercase shares, a broader leakage that R2 as defined does not cover. R3 (nothing moves) holds for roster and scaffold. |
+| I transfer | holds in other same-mode periods, including the holdout | 1 | Not run on the holdout. Across periods, conservation fails consistently: the style shift at goal switches has the same sign at 21/24 boundaries. The replication layer gives 7 supported, 11 failed, 9 mixed and 5 descriptive points (templated thresholds, 4–15 agents each). The identity fingerprint transfers everywhere. |
 
 ## Prediction
 *Written 2026-10-04 05:40 UTC, before running the analysis on real data.*
@@ -305,7 +307,7 @@ These test the round-1 picture (a quasi-conserved charge with a context-held exc
 ## Round 2 (2026-10-05): genre control, drift-and-reset model, function-word charge
 *Scope: the coordinator's H46-R1, R2 and R3. Non-reserved data only; no confirm run; no paid labels. R4 and R5 are not run.*
 
-### Pre-registration (written 2026-10-05 02:50 UTC, before any round-2 statistic on real data)
+### Pre-registration (written 2026-10-05 02:44 UTC, committed 02:45, before any round-2 statistic on real data)
 *Facts seen before writing (sampling design only, no style, word or content statistic): `scheme/build_r2.py` gives 111,234 eligible messages (identical to round 1). Coverage of the genre covariates per regime I / II / III: DQ2 reply parent 38% / 48% / 55%; roster mention 51% / 54% / 61%; DQ3 window label 90% / 96% / 90%; ≥ 10 word tokens 99.4% / 99.9% / 99.6%. Regime III has 20,090 agent context segments (10,378 opened by a forced erasure, 9,532 voluntary, 160 session); 924 hold ≥ 8 eligible messages (DeepSeek 483, Anthropic 164, OpenAI 140, Google 104, other 33). #12 has 2,898 eligible messages.*
 
 **Inputs (new, behind a switch: round-1 scripts are untouched and reproduce exactly).** `scheme/build_r2.py` → `data/processed/H46-style-conserved-charge/r2/messages_r2.parquet` from the shared `style_messages` (H46's population; `main & ~holdout & ~holdout_mask`). Per message: DQ2 reply parent (`pair_set = cand`, `parent`), the parent's speaker kind and the parent pair's stance probabilities, the maximum candidate `p_reply`; roster mentions; a leading-@ flag; the 13 DQ3 window probabilities (11 states, `p_addresses_participant`, `p_blocked`); `ctx_mode`, `ctx_pos`, `k_ctx`; the regime-III context segment (cut at `reset_consol | reset_session`; `first_of_day` is not a reset) and the message's position k in it (eligible messages since the reset); counts of 128 closed-class words. No text is stored.
@@ -349,7 +351,7 @@ with ξ isotropic in the 17-d style space, so Var e_k = s²(1 − φ^{2k}), s² 
 
 **Estimates.** Per-unit rows go to `per_period_estimates` (hypothesis H46, `post_hoc = False`, role `native` or `replication`, notes "round 2").
 
-### Synthetic validation (run 2026-10-05 02:52–03:00 UTC, before any round-2 statistic on real data)
+### Synthetic validation (run 2026-10-05 02:46–02:58 UTC, before any round-2 statistic on real data)
 `analysis/r2_synthetic.py` → `data/processed/H46-style-conserved-charge/r2/synthetic.json`. Real schedules (111,234 messages, 46,260 NE41 pairs, 20,090 segments, 24 goal switches); vectors from each agent's resampled real residuals (day and context structure destroyed) plus day jitter (5% of message variance) and planted structure. Shares are of the per-message variance trace.
 
 | Block | World | Result |
@@ -367,12 +369,75 @@ with ξ isotropic in the 17-d style space, so Var e_k = s²(1 − φ^{2k}), s² 
 
 Readings. (1) Genre residualization holds size and removes planted genre leakage at goal switches. It cannot remove a random-direction erasure excursion, which is the point of `gp`. (2) Round-1 NE41 strata are thin: with 0.05-decade gap bins only 15% of forced pairs find ≥ 5 same-agent within pairs, so most are ranked in agent-free strata. Agents with noisier vectors then bias T up (0.507 for style, 0.530 for function words under the null). (3) The squared-distance growth is heavy-tailed (SD of d ≈ 20); clipping each centred dimension at ±3 cuts it to ≈ 7. The growth *slope* has little power for fast relaxation; the mean rise Δ̄ has full power. The growth fit does not bound φ (CIs reach 0.99–1.0); the cross-product decay does. (4) ΔC(1) and the pull contrast separate reset from no-reset and clock-drift worlds. The pull contrast has size up to 0.3 in a no-reset chain, so ΔC(1) is the decisive reset test.
 
-### Amendments (2026-10-05 03:00 UTC, after the synthetic validation, before any round-2 statistic on real data)
+### Amendments (2026-10-05 02:58 UTC, committed with the synthetic results, before any round-2 statistic on real data)
 - **R2-A1 (clip).** R2 distances and cross-products use unit-centred vectors clipped at ±3 per dimension.
 - **R2-A2 (growth statistic).** R2-P1's growth test is Δ̄ (n-weighted mean of Δ_k over k = 2…8) with cluster CI > 0, in the pool and in ≥ 2 lab groups; the slope is reported. The τ clause (τ ∈ [1, 20], upper bound < 50) applies to τ_C = −1/ln φ_C from the cross-product decay; the growth-fit τ is reported.
 - **R2-A3 (unfitted check).** R2-P2's consistency check is the covariance-implied growth: s²_C = ΔC(1) / (φ_C · mean_j(1 − φ_C^{2j})) predicts Δ̄; pass if Δ̄_obs / Δ̄_pred ∈ [0.5, 2]. "φ_C inside the growth-fit φ CI" is reported but is weak (wide CI).
 - **R2-A4 (pull).** Within observations are reweighted to the forced observations' joint (time-gap bin × number of reference messages) distribution; r̄'s noise depends on the number of reference messages.
 - **R2-A5 (NE41 scaling, all channels).** Each NE41 pair distance is divided by the median within-pair distance of its agent × unit before ranking (pairs without a scale are dropped). Unscaled values (round-1 method) are reported next to it. This applies to R1-P1, R3-P2 and the content checks.
+
+### Outcome vs prediction (run 2026-10-05 02:59–03:03 UTC; `analysis/r2_run.py`, `r2_posthoc.py`)
+| Prediction | Observed | Verdict |
+| --- | --- | --- |
+| R1-P1 NE41: T_s(gp) ≥ 0.54, cluster CI > ½ | gp 0.546 [0.522, 0.564] (5,673 forced pairs, 23 units); g 0.545; tc 0.547; genre-matched strata 0.545 [0.519, 0.566]; content 0.513 (bge), 0.510 (gte), CIs ∋ ½ | **pass** |
+| R1-P2 #12 judges: agent 9 gp ≥ 0.7 and > content; ≥ 2/4 one-time judges ≥ 0.9 | agent 9: gp 0.80 (perm p 0.09), content 0.60; one-time judges 4/4 at 1.00 (content 0.40–0.67) | **pass** |
+| R1-P3 Prankster: gp percentile ≥ 0.95 | 1.00 (5.3× the median placebo); content 1.00 (2.1×) | **pass** |
+| R1-P4 goal switches: T_s(g), T_s(gp) ≥ 0.60; gp fingerprint ≥ 0.9 × tc | g 0.691, gp 0.687 [0.613, 0.758] (tc 0.694); fingerprint gp 0.78 vs tc 0.76 (chance 0.15) | **pass** |
+| R1 reading | 3/3 of P1–P3 pass | register and context act beyond genre |
+| R2-P1 growth: Δ̄ > 0 (pool and ≥ 2 labs); τ_C ∈ [1, 20] | Δ̄ 0.25 [−0.16, 0.59]; OpenAI 0.21 [0.08, 0.56], DeepSeek 0.96 (2 agents), others ∋ 0; φ_C 1.14 > 1, τ_C undefined | **fail (kill fires)** |
+| R2-P2 reset: ΔC(1) > 0; implied growth ratio ∈ [0.5, 2] | ΔC(1) 0.70 [0.26, 1.11]; ΔC(l) does not decay (0.70, 0.70, 0.83, 1.02 for l = 1–4); implied growth not computable (φ_C > 1) | **mixed** (reset yes, OU decay no) |
+| R2-P3 self-pull: ρ_within > 0, ρ_within − ρ_forced > 0, ρ_forced < ρ_within/2; room control | ρ_within 0.36 [0.27, 0.45], ρ_forced 0.22 [0.16, 0.27], difference 0.145 [0.086, 0.184]; 0.22 > 0.18; with the room term 0.365 (room coefficient 0.11 [0.08, 0.15]) | **partial** |
+| R2-P4 labs (descriptive): larger outside Anthropic | ΔC(1): Google 1.34 [0.02, 2.37], Anthropic 0.59 [0.07, 1.29], OpenAI 0.30 [−0.38, 0.58], other 0.39 [−0.29, 1.14], DeepSeek 1.82 (2 agents); τ per lab not identified | mixed |
+| R3-P1 goal switches: T_fw ≤ 0.60 and ≤ T_s − 0.05 | T_fw 0.727 [0.656, 0.791] vs T_s 0.695 (same population); fw genre-controlled 0.699 | **fail** |
+| R3-P2 NE41: T_fw ≤ 0.53 or CI ∋ ½ | 0.528 [0.501, 0.553] (unscaled 0.558) vs style 0.547 | pass (marginal) |
+| R3-P3 identity: fw ≥ 3× chance at ≥ 80%, > content at ≥ 2/3 | fw 0.79, ≥ 3× chance 24/24, > content 24/24; style 0.77; fw + style 0.85 (beats style 19/24) | **pass** |
+| R3-P4 topic-adjacent: T_s(core) ≤ T_s − 0.03 | 0.661 vs 0.695 | pass (marginal) |
+| R3 reading | P1 fails; fw < style at NE41 | neither "better charge" nor "no better" |
+| Content, second model (no verdict) | gte: goal switches 0.881 (bge 0.858); NE41 0.510 (bge 0.513) | bge and gte agree |
+
+### Results
+**1. The erasure effect is not speech-act genre (R1).** Removing 23 genre covariates (DQ2 reply parent and stance, mentions, leading @, DQ3 window states) and the position block leaves the forced-erasure style percentile at 0.546 [0.522, 0.564]. Genre-matched strata give the same 0.545. Content does not move with either embedding model. The judge register (agent 9: 0.80; one-time judges 4/4 at 1.00) and the Prankster's onset shift (1.00) survive the same control. The goal-switch shift is not genre either (0.687).
+
+**2. Round 1's erasure number was inflated, not wrong.** Only 15% of forced pairs find ≥ 5 same-agent comparison pairs at 0.05-decade gaps; the rest are ranked in agent-free strata, where agents with noisier vectors push T up (synthetic null 0.507). Scaling each pair by its agent's within-pair spread (R2-A5) lowers style from 0.564 to 0.547 and keeps it above ½. Function words fall from 0.558 to 0.528.
+
+**3. The context holds a style offset, not an OU drift (R2).** Message pairs inside one context segment share more style than pairs across a forced erasure at the same time gap: ΔC(1) 0.70 [0.26, 1.11], about 5% of the per-message style variance. The pull toward the agent's own last messages is 0.36 in context and 0.22 after an erasure (difference 0.145 [0.086, 0.184]); the room's recent register does not absorb it. But the pre-registered OU form fails. The variance does not grow reliably with position (Δ̄ CI ∋ 0), and ΔC(l) does not decay over eight messages. *Post hoc (PH-R2a):* ΔC(1) is already 0.64 [0.35, 0.95] at the first message after a reset. A per-segment offset, drawn at the reset and held, reproduces this shape in synthetic data (flat in lag, no growth); an OU excursion from zero does not. So erasure redraws the offset rather than undoing a drift. The relaxation scale is longer than a segment (no τ is identified).
+
+**4. Function words are a second fingerprint, not a conserved charge (R3).** Fifty closed-class words move more than formatting at goal switches (0.727 vs 0.695). Pronouns carry it (*post hoc* PH-R3a: their, my, we, our hold 32% of the excess). Who the agent writes about follows the task. Across erasures they move less (0.528). They identify agents across goal switches at 0.79, against 0.77 for formatting style and 0.51 for content. Together they reach 0.85 (chance 0.15). Dropping digits, uppercase and colons lowers the goal-switch style shift only slightly (0.661).
+
+**5. Where the erasure effect lives.** Per unit (gp), the two-room regime-III periods #36–#42 give 0.56–0.71; #44 and #51 give 0.46–0.58. *Post hoc (PH-R3b):* Google 0.62 and DeepSeek 0.61 (2 agents) exceed OpenAI 0.55 and Anthropic 0.54 (CI ∋ ½). This matches round 1's lab pattern but has 2–11 agents per lab.
+
+Figures: `figures/r2_obs.pdf` (T by channel at goal switches and erasures; ΔC(l) against the synthetic offset and OU shapes), `figures/r2_obsb.pdf` (identity across goal switches by channel; self-pull in context vs erased, per lab). Data: `data/processed/H46-style-conserved-charge/r2/` (`r1.json`, `r2.json`, `r3.json`, `posthoc.json`, `synthetic.json`). Estimates: 87 rows in `per_period_estimates` (NE41 per unit for style gp, function words and content; ΔC(1) and the pull contrast per regime-III goal period).
+
+### Impostors (round 2)
+| Impostor | Relevant? | How round 2 handles it | Status |
+| --- | --- | --- | --- |
+| Scheduler field | no | Same-day message pairs; time-gap matching (0.05 decades, NE41; 0.1 decades, R2); the clock-time OU world gives ΔC(1) ≈ 0 and no pull contrast | n/a |
+| Exogenous field | yes | Goal switches remain the intervention; genre control does not remove the shift; the function-word shift is pronouns (task-adjacent). `goal_fields` residualization still not done | partly |
+| Shared model priors | yes | The object; agent fixed effects in every residualization; content style-residualized; lab split reported (post hoc) | removed |
+| Contemporaneous convergence | yes (R2) | Partition contrast: in-context vs erased own messages at matched gap; the room's recent register as a second regressor (pull unchanged, 0.365) | removed |
+
+### Scorecard (round 2; old → new)
+| Axis | Score | Evidence |
+| --- | --- | --- |
+| A mapping | 1 → 1 | Genre-controlled and function-word charges are defined from shared tables; still not lab-invariant (post hoc lab split) |
+| B assumptions | 1 → 1 | The agent alone is not the state; the missing variable is a per-segment offset (≈ 5% of variance), not an OU drift in position |
+| C adequacy | 1 → 1 | Beats the within-context placebo at matched gap after genre control; the OU growth model fails its own test |
+| D unfitted | 1 → 1 | The OU-implied decay is not seen (fail); function words + style identity 0.85 (unfitted, pass) |
+| E interventional | 1 → 2 | Exogenous forced erasures move style and not content after genre and position control, with both embedding models and a scaled estimator |
+| F identifiability | 1 → 2 | Synthetic on real schedules for every round-2 estimator; two estimator flaws found and fixed before real data (A1 clip, A5 scaling); second embedding model and an alternative feature set run |
+| G ground truth | 1 → 1 | DQ6 judges and the Prankster survive genre control |
+| H comparative | 0 → 1 | Beats the genre rival (R1); beats room convergence for the pull; loses its own OU form to a reset-and-hold offset (post hoc) |
+| I transfer | 0 → 1 | Erasure effect in 18/23 units (gp), strongest in #36–#42; not run on reserved data |
+
+**Constants (proposed for `interpretation/swarm-constants.json`).**
+- T_erase,style = 0.546 [0.522, 0.564]: forced-erasure style percentile, genre and position removed, scaled pairs; regime III, 23 non-reserved units, agent-cluster CI.
+- κ_ctx ≈ 0.046 [0.017, 0.072]: context-held style offset ΔC(1) as a share of per-message style variance; regime III, gap-matched, agent bootstrap (clipped units, approximate).
+- Δρ_erase = 0.145 [0.086, 0.184]: drop in the pull toward the agent's own last ≤ 3 messages when a forced erasure removes them (0.36 → 0.22); regime III.
+- A_id(fw + style) = 0.85 across 24 non-reserved goal switches (chance 0.15; style 0.77, function words 0.79, content 0.51).
+
+**Operator value.** To attribute messages to a model, combine 50 function-word rates with the 17 formatting rates: 0.85 across a goal switch, against 0.51 for embeddings. After a forced context erasure expect about 5% of an agent's style variance to be redrawn; compare messages within one context segment, or against the agent's multi-segment mean.
+
+**Claim that stands:** an agent's style is a stable identity charge plus a context-held offset that a forced erasure redraws: across exogenous erasures style moves (T 0.546 [0.522, 0.564] after removing speech-act genre and context position) while content does not (0.51 with both embedding models), and style plus function words identify agents across goal switches at 0.85 (content 0.51, chance 0.15). Excluded: strict conservation (refuted, rounds 1–2), the OU drift growing with position (R2 kill fired), function words as a conserved charge (they move more at goal switches), the reset-and-hold shape and lab differences (post hoc), and the Kolchinsky–Wolpert reading (round 1).
 
 ## Notes
 - 2026-10-04: promoted from HH170 by Vivian. The first round-1 session stalled during an API outage before writing any file; resumed 05:33 UTC.
@@ -381,3 +446,4 @@ Readings. (1) Genre residualization holds size and removes planted genre leakage
 - 2026-10-04 06:05–06:12 UTC: real runs (`conservation.py`, `ne41.py`, `kw_info.py`, `native.py`, `replication.py`), then post-hoc diagnostics (`posthoc.py`, PH1–PH5), `summarize.py`, `figures.py`, READMEs (`--phase results`). `confirm.py` dry-run only.
 - Read-only imports: H15's processed data and H13/H23 code were **not** imported. All inputs are shared tables; H13's feature definitions are used through `text_features`.
 - Data: `data/processed/H46-style-conserved-charge/` (13 MB) with `_provenance.json`.
+- 2026-10-05 02:40–03:15 UTC: round 2 (H46-R1, R2, R3). Order (file and commit times): `scheme/build_r2.py` (02:42) → pre-registration (committed 02:45) → `r2_synthetic.py` (02:46–02:58) → amendments R2-A1..A5 (committed 02:58) → `r2_run.py` (02:59–03:03; the first launch stopped after NE41 on a channel-name error in the reused native code and was relaunched with only that fix) → `r2_posthoc.py` (post hoc, labelled) → `r2_estimates.py` (87 rows) → `r2_figures.py` → `r2_period_cards.py` (round-2 blocks in NE41, NE34, G12, G51, G36–G44). Round-1 scripts and outputs are untouched. Data: `data/processed/H46-style-conserved-charge/r2/` (≈ 18 MB). No confirm script run; no paid labels; ≤ 1 process, 2 threads.

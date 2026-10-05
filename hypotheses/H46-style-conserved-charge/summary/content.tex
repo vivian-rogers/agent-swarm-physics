@@ -1,36 +1,37 @@
-\hwhat{The test asks whether an agent's style stays fixed under every natural experiment while its content moves. Style is H13's 20 features with length, code and link shares controlled. Content is the style-residualized embedding. Each boundary is scored against the agent's own day-to-day transitions. Style is not conserved. At goal switches style moves and content moves more ($T_s=0.69$, $T_c=0.86$; 21/24 switches). Across exogenously timed context erasures style moves ($0.56$) and content does not. Style also moves for the \#51 Prankster (percentile 1.00) and for the \#12 judges. Style holds where content also holds (roster, scaffold) and after the nudger switch-off. Style still identifies agents across a goal switch: 0.76 for style, 0.51 for content, 0.15 for chance. Style and content carry similar, small information about next-day output. The holdout script exists and is not run.}
+\hwhat{An agent's style vector (17 formatting and punctuation rates) is scored at natural experiments against the agent's own placebo transitions. Round 1 refuted strict conservation: goal switches, forced erasures and assigned registers move style. Round 2 asked whether those moves are speech-act genre, whether they follow an Ornstein--Uhlenbeck drift that an erasure resets, and whether function words are a better charge. \textbf{The moves are not genre.} With 23 genre covariates and context position removed, a forced erasure still moves style ($T=0.546\,[0.522,0.564]$) and not content (0.51, two embedding models). Judges and the Prankster also keep their shifts. \textbf{The OU drift fails}: style variance does not grow with position, and the context-held covariance does not decay. A per-segment offset that the erasure redraws fits (post hoc). Function words move more at goal switches (0.73) but add identity. The holdout is not run.}
 
-\hmodel{Vector spins (model 11), two channels per message. The style vector $x$ carries a style charge $q_i$ (the weights) and a day jitter $\eta$. The content state $c_{i,d}$ follows the goal, the room and the context. A boundary $b$ conserves style if its displacement $D_b$ is exchangeable with the agent's placebo transitions $D_p$. $T$ is the mean percentile. $V$ is next-day work output (DQ4). $\epsilon$ is a context-held excitation that grows with position $k$ since the last reset (post hoc).}
+\hmodel{Vector spins (model 11). Message $k$ of agent $i$ in a context segment carries the substrate charge $q_i$, day jitter $\eta$ and a context-held term $e_k$. Round 2 pre-registered an OU excursion from zero at each reset. The data favour a constant offset $u_s$, drawn when segment $s$ opens. $\Delta C(l)$ compares style cross-products of same-day message pairs at lag $l$ within a segment and across a forced erasure, matched on time gap. $\rho$ is the pull toward the agent's own last $\le3$ messages.}
 
 \hmath{\vspace{-6pt}\begin{gather*}
-x_m=q_i+\eta_{i,d}+\epsilon_i(k_m)+\varepsilon_m,\qquad \epsilon_i(k{=}1)\approx0\ \text{after an erasure}\\
-D(d,d')=\lVert\bar x_d-\bar x_{d'}\rVert^2-\tfrac{\mathrm{tr}\,S_d}{n_d}-\tfrac{\mathrm{tr}\,S_{d'}}{n_{d'}},\qquad
-T=\Bigl\langle \Pr_p\!\bigl[D_p<D_b\bigr]\Bigr\rangle_{i,b}\\
-\text{conserved}\iff T_c>\tfrac12\ (p<.05),\ T_s\not>\tfrac12,\ T_s-\tfrac12\le\tfrac13\bigl(T_c-\tfrac12\bigr)\\
-I=-\tfrac12\log_2\!\bigl(1-R^2_{\rm cv}[\,V_{d+1}\mid x_d \text{ or } y_d\,]\bigr)
+x_k=q_i+\eta_{i,d}+e_k+\varepsilon_k,\qquad
+\underbrace{e_k=\phi\,e_{k-1}+\sigma\xi_k,\ e_0=0}_{\text{pre-registered (fails)}}\quad\text{vs}\quad \underbrace{e_k=u_s}_{\text{post hoc}}\\
+\Delta C(l)=\bigl\langle\!\langle \tilde x_j,\tilde x_{j+l}\rangle\!\bigr\rangle_{\rm within}-\bigl\langle\!\langle \tilde x_j,\tilde x_{j+l}\rangle\!\bigr\rangle_{\rm across},\qquad
+\rho=\frac{\sum\langle \tilde x_k,\bar r_k\rangle}{\sum\lVert\bar r_k\rVert^2}\\
+T=\Bigl\langle \Pr_{\rm placebo}\!\bigl[D_p<D_b\bigr]\Bigr\rangle,\qquad D=\lVert x-x'\rVert^2/\mathrm{med}_{i,u}(D_{\rm within})
 \end{gather*}\vspace{-8pt}}
 
-\hobs{../figures/summary_obs.pdf}{(a) Style percentile against content percentile, both relative to the agent's own day-to-day transitions. Each faint dot is one boundary. Big symbols are class means with 95\% CIs. The grey band is $|T-\tfrac12|\le0.1$. Goal switches and erasures leave the band in style. Roster and scaffold steps move neither channel. (b) Identity accuracy across the same boundaries, trained before and tested after. Style beats content at most goal switches (blue dots above the diagonal).}
+\hobs{../figures/r2_obs.pdf}{(a) Boundary percentile $T$ by channel (½ = no move; grey band ±0.05; 95\% CIs). Goal switches move every channel, content most. Forced erasures and voluntary consolidations move style, with or without genre and position control. Function words move less, content not at all. (b) The context-held state. $\Delta C(l)$ stays positive and flat up to lag 8 (orange; shaded 95\% CI). A synthetic per-segment offset (squares) has this shape. A synthetic OU drift from zero at the reset (triangles) decays. Both references are scaled to the real lag-1 value.}
 
-\htelos{To attribute a day's messages to a model, use the 20 formatting and punctuation rates, not content embeddings. Across a goal switch they identify the agent at 0.76, against 0.51 for embeddings (chance 0.15). The same fingerprint can flag an unannounced model swap. Style is not a constant of the weights. It drifts as the context fills, returns at a context reset and follows assigned registers such as a prankster role or a judge's chair. A style monitor must therefore compare messages at the same context position and in the same speech act. The Kolchinsky--Wolpert framing gives no instruction: style and content predict next-day output equally, and only through today's output.}
+\htelos{To attribute messages to a model, combine 50 function-word rates with the 17 formatting rates. Across a goal switch they identify the agent at 0.85, against 0.51 for content embeddings (chance 0.15). After a forced context erasure, expect about 5\% of an agent's style variance to be redrawn, whatever its speech act. Compare an agent's messages within one context segment, or against its mean over many segments. Do not read a style jump at an erasure as a model swap. A judging role or a prankster persona shifts style beyond genre too.}
 
-\hbottom{Style is a substrate charge dressed by context: goal switches, erasures and assigned registers move it, yet it identifies agents at 0.76 (content 0.51).}
+\hbottom{Style is a stable identity charge plus a context-held offset that each forced erasure redraws (erasure $T$ 0.546 after genre control; content flat). Style plus function words identify agents at 0.85.}
 
-\hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
-\raggedright P1 goal switch: $T_c\ge.70$, $T_s\le.60$ & \raggedright $T_c$ .86, $T_s$ .69 [.61,.77] (21/24) & \raggedright fail\tabularnewline
-\raggedright P2 erasure: style in band & \raggedright $T_s$ .564 [.51,.61]; $T_c$ .515 (CI $\ni\tfrac12$) & \raggedright fail\tabularnewline
-\raggedright P3--P6 rooms, nudger, roster, scaffold & \raggedright rooms partial; nudger conserved (1 boundary); roster and scaffold: neither channel moves & \raggedright mixed\tabularnewline
-\raggedright P7 fingerprint survives & \raggedright style .76 vs content .51 (chance .15); style wins 22/24 & \raggedright pass\tabularnewline
-\raggedright P8 KW: style carries no info & \raggedright \#51: style $R^2$ .060 $\approx$ content .058; both 0 given today's output & \raggedright fail\tabularnewline
-\raggedright P9 personas in band & \raggedright Prankster 1.00; 5/17 $\ge$.9, by lab not role & \raggedright fail\tabularnewline
-\raggedright P10 NE38 role switch & \raggedright day: content .91, style .82; blocks: both 1.00 & \raggedright mixed\tabularnewline
-\raggedright P11 \#12 judge role from content only & \raggedright reversed: style .80--.90, content .60 & \raggedright fail\tabularnewline
-\raggedright P12 leader writes like its base & \raggedright Kimi K2.6 rank 2 (raw style: rank 1) of 17 & \raggedright pass (weak)\tabularnewline
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.50\columnwidth}p{0.15\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+R1-P1 erasure survives genre & $T$ .546 [.522,.564]; genre-matched .545; content .51 & pass\\
+R1-P2 \#12 judge register & agent 9 .80 (content .60); one-time judges 4/4 at 1.00 & pass\\
+R1-P3 Prankster & percentile 1.00 (5.3$\times$ placebo median) & pass\\
+R1-P4 goal shift not genre & $T$ .687 (round 1 .694); identity .78 & pass\\
+R2-P1 OU variance growth & $\bar\Delta$ .25 [$-$.16,.59]; $\tau$ not identified & fail (kill)\\
+R2-P2 reset, OU decay & $\Delta C(1)$ .70 [.26,1.11]; no decay to lag 8 & mixed\\
+R2-P3 self-pull held by context & $\rho$ .36 vs .22 erased; diff .145 [.086,.184] & partial\\
+R3-P1 function words conserved & $T_{fw}$ .727 vs style .695 & fail\\
+R3-P2 function words at erasure & .528 [.501,.553] & pass (marg.)\\
+R3-P3 function-word identity & .79 (style .77); with style .85 & pass\\
 \end{tabular}}
 
-\hobsb{../figures/summary_obsb.pdf}{(a) Post hoc. In long context segments, the style distance of a message to the agent's own mean grows with position since the last reset. It returns at the next reset. Content stays nearly flat. (b) \#51 incumbents that move into private roles (red: Prankster; orange: media roles; squares: non-Anthropic), and \#12 one-time judges (style filled, content open).}
+\hobsb{../figures/r2_obsb.pdf}{(a) Identity accuracy across 24 goal switches. Each dot is one switch, trained on the last days before and tested on the first days after. Bars are means. (b) Pull toward the agent's own last messages while they are in the context (orange) and after a forced erasure removes them (grey), pooled and per lab (number of agents). DeepSeek has two agents, so its interval is not meaningful.}
 
-\hcaveats{The 20 features mix formatting with content-adjacent rates. Digits, uppercase and colons carry the goal-switch shift, so a function-word stylometry may be conserved. The type control removes length, code and links only. Speech-act genre is not controlled, so the erasure and judge effects can be genre (a status update after a reset, a verdict). The drift from position 2 to 7+ argues against a pure first-message effect. The persona comparison spans five weeks of held-out windows. The Prankster and NE38 are single agents. The rooms class has 4 boundaries and the nudger class 1. The KW test is observational and has power only in \#51 and \#38. Post hoc analyses carry labels.}
+\hcaveats{The genre labels are DQ2 reply and stance, mentions and DQ3 window states. They are coarse, and a finer speech-act label might absorb more. Round 1's erasure estimate was inflated by agent-free strata. Scaling by each agent's spread lowers it from 0.564 to 0.547 (A5). The reset-and-hold shape and the lab split are post hoc. Lab groups have 2--11 agents. The erasure effect is strong in \#36--\#42 and weak in \#44 and \#51. The function-word shift is mostly pronouns, so it is partly topic. The holdout is not run.}
 
-\hnext{Residualize style on speech act and context position, then retest erasures, judges and personas. Fit the drift-and-reset model per lab. Build an attribution monitor on 5, 10 and 20 messages that combines style and content.}
+\hnext{Test the reset-and-hold offset on reserved data: $\Delta C$ flat in lag, present at the first message after a reset. Find what sets the offset: the memory file reloaded at the reset, or the first messages read. Build the attribution monitor (H46-R4) on function words plus style, with a context-segment correction.}

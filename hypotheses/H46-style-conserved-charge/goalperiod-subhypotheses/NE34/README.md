@@ -36,3 +36,20 @@ A natural-experiment class for the conservation test (exception (c): the transit
 - **E (interventional):** 1. The goal quench moves content strongly; style moves too, beyond its day-to-day band (prediction failed), though by much less in z units (0.37 vs 1.82).
 - **D:** the fingerprint (an unfitted statistic) survives: style identifies agents across goal switches better than content.
 - **H:** R2 (task leakage via length/code/links) does not explain the shift; the excess sits in digit, uppercase and colon shares (content-adjacent features).
+
+## Round 2 (2026-10-05)
+**Round-2 result:** the goal-switch style shift is not speech-act genre (R1-P4 passed); function words move more than formatting (R3-P1 failed); topic-adjacent features carry a small part (R3-P4 passed, marginal); function words plus style identify agents best.
+*Pre-registered in the card (Round 2, 2026-10-05 02:44 UTC), synthetic validation and amendments R2-A1..A5 before this run; `analysis/r2_run.py` → `data/processed/H46-style-conserved-charge/r2/`. Non-reserved data.*
+
+| Channel (24 switches) | T [boundary-bootstrap 95% CI] |
+| --- | --- |
+| style tc (round 1) | 0.694 [0.612, 0.769] |
+| style g (genre) | 0.691 [0.616, 0.761] |
+| style gp (genre + position) | 0.687 [0.613, 0.758] |
+| style core (no digits, uppercase, colons) | 0.661 [0.583, 0.733] |
+| function words | 0.727 [0.656, 0.791] |
+| function words, genre-controlled | 0.699 [0.626, 0.762] |
+| content bge / gte | 0.858 / 0.881 |
+
+- **Identity across the switch (train before, test after):** content 0.51, style 0.77, function words 0.79, function words + style 0.85 (chance 0.15); function words ≥ 3× chance at 24/24 and above content at 24/24; function words + style beat style at 19/24. gp style 0.78.
+- **Post hoc (PH-R3a):** pronouns carry the function-word shift: their 0.10, my 0.09, we 0.07, our 0.06, the 0.05, about 0.05 (shares of the excess). Who the agent writes about changes with the task.

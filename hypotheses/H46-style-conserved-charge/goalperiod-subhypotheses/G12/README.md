@@ -33,3 +33,11 @@
 ## Scorecard (period-specific axes)
 - **G:** DQ6 team and judge labels as ground truth.
 - **H:** R1 (style follows assigned register) beats H46 on the judge test.
+
+## Round 2 (2026-10-05)
+**Round-2 result:** the judge register survives genre control (R1-P2 passed).
+*Pre-registered in the card (Round 2, 2026-10-05 02:44 UTC), synthetic validation and amendments R2-A1..A5 before this run; `analysis/r2_run.py` → `data/processed/H46-style-conserved-charge/r2/`. Non-reserved data.*
+- **Prediction (R1-P2):** agent 9's judge-vs-debater accuracy from genre- and position-controlled style (gp) ≥ 0.7 and above content's; ≥ 2 of 4 one-time judges at percentile ≥ 0.9.
+- **Result:** agent 9: gp 0.80 (permutation p 0.09), round-1 style 0.80, content 0.60. One-time judges (gp): agent 0 1.00, agent 5 1.00, agent 6 1.00, agent 11 1.00; content 0.56, 0.56, 0.67, 0.40.
+- Assigned side still does not move style (gp p 0.71). Debate fingerprint (debates 1–5 → 6–10): gp 0.74, content 0.72 (chance 0.14).
+- Reading: judging writes in a register that the DQ2 reply/mention flags and DQ3 window states do not explain. It is register, not speech-act genre as those labels see it.

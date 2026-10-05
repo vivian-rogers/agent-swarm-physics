@@ -27,3 +27,9 @@
 
 ## Scorecard (period-specific axes)
 - **G:** the fine-tuned leader's base model is known ground truth; style points to it (weakly).
+
+## Round 2 (2026-10-05)
+**Round-2 result (replication, regime III):** context-held style state ΔC(1) 0.79 [-0.43, 2.31]; self-pull context minus erased 0.278 [0.002, 0.473].
+*Pre-registered in the card (Round 2, 2026-10-05 02:44 UTC), synthetic validation and amendments R2-A1..A5 before this run; `analysis/r2_run.py` → `data/processed/H46-style-conserved-charge/r2/`. Non-reserved data.*
+- Templated R2 statistics (no period verdict): cross-product of the 17-d style (genre + position removed) for lag-1 message pairs within a context segment minus pairs across a forced erasure, gap-matched (209 across pairs, 16 agents); the pull coefficient toward the agent's last ≤ 3 messages in context vs erased.
+- NE41 forced-erasure style percentile (gp) in this period's units: 44a 0.51, 44b 0.47.
