@@ -199,13 +199,24 @@ def write_estimates(rows, hypothesis: str, path: Path = PATH, replace_keys=("sta
     errs = validate(df)
     if errs:
         raise ValueError("estimates rejected: " + "; ".join(errs))
-    old = read_estimates(path)
-    if old.height:
-        keys = df.select(list(replace_keys)).unique()
-        drop = old.filter(pl.col("hypothesis") == hypothesis).join(keys, on=list(replace_keys), how="semi", nulls_equal=True)
-        old = old.join(drop, on=list(SCHEMA), how="anti", nulls_equal=True)
-    out = pl.concat([old, df]).sort("hypothesis", "statistic", "goal_no", "period_unit")
-    out.write_parquet(path, compression="zstd")
+    # Parallel agents upsert into one parquet: hold an exclusive lock over read-merge-write and write atomically,
+    # so concurrent writers cannot drop each other's rows (race found 2026-10-05, H11 round 2).
+    import fcntl
+    path = Path(path)
+    with open(str(path) + ".lock", "w") as lk:
+        fcntl.flock(lk, fcntl.LOCK_EX)
+        try:
+            old = read_estimates(path)
+            if old.height:
+                keys = df.select(list(replace_keys)).unique()
+                drop = old.filter(pl.col("hypothesis") == hypothesis).join(keys, on=list(replace_keys), how="semi", nulls_equal=True)
+                old = old.join(drop, on=list(SCHEMA), how="anti", nulls_equal=True)
+            out = pl.concat([old, df]).sort("hypothesis", "statistic", "goal_no", "period_unit")
+            tmp = path.with_suffix(f".tmp{os.getpid()}.parquet")
+            out.write_parquet(tmp, compression="zstd")
+            os.replace(tmp, path)
+        finally:
+            fcntl.flock(lk, fcntl.LOCK_UN)
     return df
 
 
