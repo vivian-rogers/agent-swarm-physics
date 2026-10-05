@@ -452,6 +452,28 @@ Statistic: round 1's sustained escapes per idle agent-minute, R = E/M, before (0
 - **R6:** G51 wakes in both windows from the before-window fit. W0: only covariates shift (β unchanged). W1: W0 + a step of −0.2 in logit after 08-21. Pass: unexplained step within ±0.05 of truth in both.
 - A statistic that fails its pass line is reported as inconclusive (dated amendment before the real run).
 
+### Round-2 synthetic validation (run 2026-10-05 ~04:20–04:45 UTC, before any round-2 outcome statistic)
+`analysis/synthetic_r2.py`; outputs `r2/synthetic/{r2,r3,r5,r6}.json`. Rejection rates are Wald tests at 5%. "seq" = sequential inside traps (re-firing on non-responders; drops ~40% of rows), "ind" = every real row kept (real counts).
+
+| Statistic | Null world (size) | Planted world (power, estimate vs truth) | Notes |
+| --- | --- | --- | --- |
+| R2 Δ_F, base model | W0: 0.05 seq, 0.03 ind | W1 (+0.5): 0.23 seq, **0.52 ind**; estimate +0.38–0.46 | **W2 (effect falls with k): −0.18, size 0.13 (ind)** |
+| R2 Δ_F, proxy model | W0: 0.07 / 0.05; W2: 0.02 / 0.08 | W1: 0.20 / 0.48 | the proxies remove the W2 bias |
+| R2 reset partition | W0: 0.02 | W3: 0.12 seq, 0.42 ind | not powered |
+| R2 SE check | analytic 0.33–0.35 vs day bootstrap 0.33–0.39 | — | analytic SE is close |
+| R3 f₁, m₂ (G51) | W0: 0.05 / 0.00; W3 (window): 0.10 / 0.10 | W1: ρ₂ 0.37 (truth 0.34); W2: 1.02 (truth 1.00); power 1.00 | without the window term, W3 gives a spurious f₁ +0.21 (rejection 1.00) |
+| R3 misassignment (W4) | — | f₁ 0.74 (truth 0.80), ρ₂ 0.36 (truth 0.34) | a 10% start error attenuates f₁ by ~8% and leaves ρ₂ almost unchanged |
+| R5 Δ_w, G51 | W0: 0.03–0.05 | W1 (R 0.3): **0.65 seq, 0.87 ind**; Δ_w −0.35 (truth −0.42) | — |
+| R5 Δ_w, pooled (DL, k = 3–4) | W0: 0.00–0.03 | W1: 0.47 seq, 0.60 ind; pooled R 0.31–0.37 | small periods add heterogeneity, not power |
+| R5 frailty (W2) | Δ_w size 0.03–0.07; R_w 1.02–1.35 (W0 1.12–1.16) | — | agent-day responsiveness does not fake refractoriness |
+| R6 unexplained step | W0: +0.004 (truth 0) | W1: −0.206 (truth −0.2) | passes |
+
+### Round-2 amendments (2026-10-05 ~04:45 UTC, after the synthetic validation and structural counts, before any round-2 outcome statistic)
+- **A2-1 · R5 re-kicked class made strict.** The pre-registered class covers 54–85% of wakes in every period: in regime III almost any directed read is followed by a sustained run within 15 min by chance. The primary class now requires an *isolated* effective primer (no directed read in the 30 min before it), as round-1 primers were. The loose class is a sensitivity. Per-period fits need ≥ 5 directed wakes in both the fresh and the re-kicked class (G37, G38, G41, G51 qualify).
+- **A2-2 · R2 primary model is the proxy model.** Without the γ × proxy terms a k-dependent nudge effect biases Δ_F (−0.18, size 0.13); with them the size is 0.02–0.08. R2-P2 still compares the two.
+- **A2-3 · R2 is underpowered for a null.** Power for Δ_F = 0.5 is 0.48–0.52 at real counts. R2-P1 is therefore read as an interval: an upper 95% bound below 0.3 excludes a re-fire advantage of the round-1 size (≈ 0.3–0.4); otherwise "inconclusive". R2-P4 (reset partition, power 0.42) is descriptive.
+- **A2-4 · R5-P1 is decided on G51** (power 0.87 for R_w = 0.3). The pooled estimate (power 0.60) is reported with its per-period and shrunk values and read as descriptive where its CI includes 0.
+
 ## Notes
 - 2026-10-04: round 1 started. Resumed after an API session limit; the DQ1 context ledger landed in the meantime, so every kick is timed at its receiving call from the start (coordinator instruction), not as a later refinement.
 - 2026-10-04: no other hypothesis's code is imported (read-only or otherwise). Shared tables only: `call_windows`, `context_ledger_items`, `period_units`, `states_min`, `calendar`, `work_commits`, `work_api_writes`, `kicks_classified` (structural counts only).
