@@ -27,7 +27,7 @@
 \newcommand{\mname}[1]{\ifcase#1\or inverse Ising\or kinetic Ising\or contagion\or semantic info\or replicator dissipation\or neutral drift\or fluct.\ environments\or copying\or Hawkes\or Potts\or vector spins\or info dynamics\or conventions\or scaling\or stoch.\ thermo\fi}
 % \mdl{NN}{role}{outcome}: role p primary, s secondary, r rival, t tool; outcome s supported, m mixed, r refuted, u untested, a n/a
 \newcommand{\mdl}[3]{%
-  \def\mrole{}\if#2s\def\mrole{+\,}\fi\if#2r\def\mrole{vs\,}\fi\if#2t\def\mrole{tool\,}\fi
+  \def\mrole{}\if#2s\def\mrole{+\,}\fi\if#2r\def\mrole{vs\,}\fi\if#2t\def\mrole{tool\,}\fi\if#2n\def\mrole{null\,}\fi
   \def\mfill{untested}\def\mtext{ink}\def\mdraw{untested}%
   \if#3s\def\mfill{good}\def\mtext{white}\def\mdraw{good}\fi
   \if#3m\def\mfill{mid}\def\mtext{white}\def\mdraw{mid}\fi

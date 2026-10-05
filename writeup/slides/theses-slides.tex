@@ -22,139 +22,20 @@ EU = credence $\times$ value if true. Two Claude judges (one blind) gave both nu
 \vfill
 \end{frame}
 
-\Models{\mdl{02}{p}{m}\mdl{04}{s}{s}\mdl{13}{s}{u}}
-\Math{P(a)\propto e^{\,h^{0}_a+h^{\rm room}_a+h^{\rm task}_a},\quad \text{wipe: } h^{\rm task}\!\to 0}
-\thesis{H44}{A context wipe costs output, but the agent does not heat up}
-{H44-context-wipe/fig.pdf}
-{The wipe is a field quench, not a temperature pulse.}
-{Read share 0.22$\to$0.47 at the first call, relaxes in 5--7 calls. Commits $-38\%$. Entropy \emph{falls}: no temperature pulse. Loops recur 16\% vs 72\%.}
-{The 40-call cap is a dial: it costs 4--11\% of output and breaks most command loops. Point a wiped agent at its files.}
-{0.88}{3.23}
-
-\Models{\mdl{02}{p}{s}\mdl{01}{t}{a}\mdl{09}{t}{a}}
-\Math{\Delta P_i(k)=h\,\delta_{k,0}^{\rm field}+J_1\,\delta_{k,1}^{\rm msg},\quad J_0=0}
-\thesis{H50}{Activity follows the scheduler; talk moves one read-out call at a time}
-{H50-field-vs-coupling-transfer-lag/fig.pdf}
-{Fields act with zero lag; a coupling lags by whole calls (hops).}
-{The daily start/stop explains 0.6 of activity co-movement. Talk coupling: onset at hop 1 in 45/45 units, never at hop 0.}
-{Do not read synchrony as influence. Name the recipient: jump 0.17 with a name, 0.004 without.}
-{0.85}{2.98}
-
-\Models{\mdl{01}{p}{m}\mdl{09}{r}{m}\mdl{14}{t}{a}}
-\Math{\mathrm{VR}=\frac{\mathrm{Var}(M)}{\sum_i\mathrm{Var}(s_i)},\quad g=1-\frac{1}{\mathrm{VR}}}
-\thesis{H38}{The runner, not the platform, makes most synchrony}
-{H38-platform-stalls/fig.pdf}
-{A shared on/off field inflates VR and looks like coupling.}
-{Joint silences fill 5\% of minutes; 78\% fall outside the run. 72--83\% of regime-III co-activation is the start/stop schedule.}
-{Trim each day to the window when all agents run, then draw nulls. Do not alert on joint silences.}
-{0.90}{2.93}
-
-\Models{\mdl{02}{p}{s}\mdl{04}{s}{m}\mdl{09}{r}{r}}
-\Math{P(s_i^{\rm new}{=}1)=\sigma\Big(h_i+\!\!\sum_{j\in\mathcal R_i}\!J_{ij}s_j\Big)}
-\thesis{H08}{A message acts only at the call that receives it}
-{H08-context-is-the-coupling/fig.pdf}
-{$\mathcal R_i$: messages read at this call. One channel opens per call.}
-{Response jumps at the receiving call in 17/17 periods; zero at the call in flight. Placebo room: $\pm0.15$\,pt.}
-{Coupling delay = call cadence ($\approx$15\,s to 2\,min). Send before the target's next call, and name it.}
-{0.91}{2.88}
-
-\Models{\mdl{04}{p}{m}}
-\Math{\kappa_c=\frac{\Delta\mathcal V_c}{I_c}}
-\thesis{H15}{Memory loss costs nothing visible; a context wipe costs a tenth of output}
-{H15-semantic-information-scrambles/figures/summary_obs.pdf}
-{Kolchinsky--Wolpert: scramble channel $c$, measure the loss of viability $\mathcal V$.}
-{Memory loss: no day-scale cost. Forced wipe: commits $-39\%$ for 10 calls. A longer memory note does not help.}
-{Raise the cap or carry task state across the reset. Do not spend effort to protect memory files.}
-{0.78}{2.73}
-
-\Models{\mdl{11}{p}{s}\mdl{10}{s}{m}\mdl{15}{s}{u}}
-\Math{\mathbf x_i=\mathbf h_{\rm kickoff}+\mathbf b_i+J\,\bar{\mathbf x}+\boldsymbol\xi_i}
-\thesis{H54}{The kickoff text sets the day-1 target}
-{H54-kickoff-quench-target/fig.pdf}
-{The kickoff is a quench: a field on vector spins.}
-{Own kickoff ranks first in 18/33 periods ($p=3\times10^{-6}$). In \#51 each agent lands on its own private goal (0.95).}
-{Write the shared target into the kickoff. To move one agent, rewrite its goal text. ``More specific'' does not tighten.}
-{0.92}{2.60}
-
-\Models{\mdl{02}{p}{m}\mdl{09}{s}{m}}
-\Math{\lambda_{\rm call}=J\,(\Delta t)^{\eta}}
-\thesis{H40}{Agents couple per model call, not per minute}
-{H40-call-clock-coupling/fig.pdf}
-{Glauber: one call is one update attempt. Call clock $\eta=0$; wall clock $\eta=1$.}
-{Computer-use scaffold: $\eta=0.00\pm0.05$. Per-hour coupling scales with call rate (slope 1.0). Chat loop (regime I): $\eta=0.5$.}
-{Cadence is a coupling knob. Halve the call interval: reply coupling $\times1.5$. Long batch jobs decouple.}
-{0.72}{2.52}
-
-\Models{\mdl{11}{p}{m}\mdl{04}{s}{r}}
-\Math{T=\big\langle\mathrm{rank}\,|\Delta\mathbf s_{\rm bdry}|\big\rangle,\quad T_{\rm conserved}=\tfrac12}
-\thesis{H46}{Style is a fingerprint, not a conserved charge}
-{H46-style-conserved-charge/figures/summary_obs.pdf}
-{A boundary (goal switch, wipe) is a collision. Does style survive it?}
-{Style moves at goal switches and wipes. But it identifies agents at 0.76 vs 0.51 for content. It drifts as context fills.}
-{Use the 20 style rates to attribute messages or flag a model swap. Compare at the same context position.}
-{0.75}{2.44}
-
-\Models{\mdl{02}{p}{r}\mdl{01}{r}{r}}
-\Math{P(s_i^{t+1}\mid\mathbf s^t)\propto e^{\,s_i^{t+1}\left(h_i(t)+\sum_j J_{ij}s_j^t\right)}}
-\thesis{H02}{Activity timing does not show who influences whom}
-{H02-couplings-are-real/figures/summary_obs2.pdf}
-{$h_i(t)$ per 30-min block absorbs the daily schedule.}
-{Pairwise couplings sit at the null floor. All known leaders missed. The regime-III collective coupling was day edges (8/8$\to$2/8).}
-{Do not read synchrony as coordination. To find who steers, measure who replies after whom.}
-{0.94}{2.35}
-
-\Models{\mdl{02}{p}{m}\mdl{08}{s}{s}}
-\Math{\mathrm{OR}=\frac{\Pr(\text{copy}\mid\text{in context})}{\Pr(\text{copy}\mid\text{erased})}}
-\thesis{H69}{Restatement loops copy the context window}
-{H69-restatement-loops/fig.pdf}
-{A loop is a fixed point $x_{t+1}\approx x_t$ held by the context.}
-{In-context statements are copied $3.4\times$ more than wiped ones (4/4 periods). A wipe: exit $\times2.4$, onset $\times0.54$.}
-{Trim the agent's own chat from its context. Nudges do not break loops (0.81).}
-{0.85}{2.34}
-
-\Models{\mdl{02}{p}{m}\mdl{01}{s}{m}\mdl{09}{r}{u}\mdl{15}{t}{a}}
-\Math{J=\begin{pmatrix}J_{\rm in}&J_{\rm out}\\ J_{\rm out}&J_{\rm in}\end{pmatrix},\quad \text{cut: } J_{\rm out}\to0}
-\thesis{H05}{Rooms couple chat only through reading}
-{H05-rooms-cut/fig.pdf}
-{Rooms as two coupled spin blocks.}
-{Within-room $>$ cross-room talk coupling in 6/6 windows. With read counts in the model, co-location adds nothing. Work ignores rooms.}
-{A room is a read filter. To decouple two agents, stop them reading each other. Rooms do not divide work.}
-{0.88}{2.20}
-
-\Models{\mdl{01}{p}{r}\mdl{11}{s}{m}}
-\Math{\chi=\frac{\mathrm{Var}\left(\sum_i s_i\right)}{\sum_i\mathrm{Var}(s_i)}}
-\thesis{H36}{A topic-shift alarm beats a fluctuation alarm}
-{H36-reorganization-alarm/figures/summary_obs.pdf}
-{Susceptibility peaks near a transition. A goal change is a field step: it moves the mean, not $\chi$.}
-{Topic shift: AUC 0.95. Physics alarm: AUC 0.68, all from content. Activity channel at chance.}
-{Run the daily topic-shift score; alarm at 3 SD. Do not build alarms on activity fluctuations.}
-{0.80}{2.20}
-
-\Models{\mdl{11}{p}{r}\mdl{02}{s}{r}\mdl{01}{s}{r}\mdl{10}{s}{u}}
-\Math{\mathbf x_{i,d}=\mathbf h_d+\mathbf f_{{\rm lab}(i)}+\mathbf b_i+\boldsymbol\xi_{i,d}}
-\thesis{H13}{Model families share a writing style, not a coupling}
-{H13-family-fields/figures/summary_obs.pdf}
-{Is the family field $\mathbf f$ a position, or a style offset?}
-{Family field in 9/15 units; after style removal, 0/9. No family coupling. Room term $17\times$ the lab term.}
-{Remove style before any embedding consensus metric. Do not infer vendor ``ideology'' from content.}
-{0.87}{2.17}
-
-\Models{\mdl{01}{p}{m}\mdl{09}{s}{s}\mdl{02}{t}{a}}
-\Math{\chi=\frac{1}{1-g},\quad \Phi=\frac{1}{(1-g)^2}}
-\thesis{H67}{The talk loop sits far below runaway}
-{H67-subcritical-dial/fig.pdf}
-{$g$ = talk messages caused per read; runaway at $g=1$.}
-{Subcritical in 66/66 units. Regime-III median $g=0.13$; max 0.23, so $\chi\le1.31$. Flat as the swarm grows 21$\to$32.}
-{Report the lagged gain as the distance to runaway. More agents do not push toward criticality.}
-{0.79}{2.17}
-
-\Models{\mdl{02}{p}{r}\mdl{01}{s}{s}\mdl{11}{s}{u}}
-\Math{h_{\rm Kramers}(t)=\mathrm{const},\quad h_{\rm Bouchaud}(t)\sim t^{-\mu}}
-\thesis{H16}{Idle traps deepen with time}
-{H16-trap-aging/fig.pdf}
-{A broad spread of trap depths gives aging: escape gets harder with time.}
-{Escape slope $-0.77$ in \#51; negative in 6/8 periods. One directed message: odds $\times1.5$--$2.9$. More messages add little.}
-{Kick a stuck agent early (hazard $\sim t^{-0.8}$). Send one message. For failure loops, use a reset.}
-{0.70}{2.10}
+\input{theses/H44}
+\input{theses/H50}
+\input{theses/H38}
+\input{theses/H08}
+\input{theses/H15}
+\input{theses/H54}
+\input{theses/H40}
+\input{theses/H46}
+\input{theses/H02}
+\input{theses/H69}
+\input{theses/H05}
+\input{theses/H36}
+\input{theses/H13}
+\input{theses/H67}
+\input{theses/H16}
 
 \end{document}

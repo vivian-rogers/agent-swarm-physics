@@ -9,6 +9,7 @@ something, or make a decision worth remembering.
 
 - Built `writeup/slides/theses-slides.tex` (beamer, 16:9, 16 pages): title slide plus one slide per top-15 EU thesis (H44, H50, H38, H08, H15, H54, H40, H46, H02, H69, H05, H36, H13, H67, H16). Each slide: claim title, credence/EU chips, figure, three short columns (physics picture, what we found, what to do). Content condensed from `writeup/hypothesis-summary-writeup/entries/`.
 - Theses deck: each slide now tags the physics models from the card's `models` field (role: primary/secondary/rival/tool; colour: outcome) and shows the key equation. Shared beamer style moved to `writeup/slides/swarmslides.sty`.
+- Direction deck extended to 69 slides: appendix A with the paper's tables (goal periods 3 slides, hypothesis × model matrix 3 slides, EU ranking 6 slides); appendix B with 37 thesis slides (top-15 EU plus all hypotheses with visuals), grouped by theme and sorted by EU. 22 new thesis slides written by three agents from cards/summaries/captions. Open item: the H35 figure panel (a) shows round-1 numbers (1.04 bits, +0.50 min); the slide text uses the card's round 1b (1.42 bits, +1.45 min).
 - Built `writeup/slides/direction-slides.tex` (11 slides): research direction, reusing the paper's timeline, architecture, scoring, table-zoom and scatter figures.
 - Redid `writeup/figures/slide_motivation2.png` (Motivation II slide figure) with a cleaner layout.
 
