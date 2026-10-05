@@ -8,6 +8,8 @@ something, or make a decision worth remembering.
 ## 2026-10-04 — Theses slide deck
 
 - Built `writeup/slides/theses-slides.tex` (beamer, 16:9, 16 pages): title slide plus one slide per top-15 EU thesis (H44, H50, H38, H08, H15, H54, H40, H46, H02, H69, H05, H36, H13, H67, H16). Each slide: claim title, credence/EU chips, figure, three short columns (physics picture, what we found, what to do). Content condensed from `writeup/hypothesis-summary-writeup/entries/`.
+- Theses deck: each slide now tags the physics models from the card's `models` field (role: primary/secondary/rival/tool; colour: outcome) and shows the key equation. Shared beamer style moved to `writeup/slides/swarmslides.sty`.
+- Built `writeup/slides/direction-slides.tex` (11 slides): research direction, reusing the paper's timeline, architecture, scoring, table-zoom and scatter figures.
 - Redid `writeup/figures/slide_motivation2.png` (Motivation II slide figure) with a cleaner layout.
 
 ## 2026-10-04 (UTC)

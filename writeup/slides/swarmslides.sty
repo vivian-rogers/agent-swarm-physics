@@ -1,0 +1,54 @@
+% Shared beamer style for the swarm-physics decks (theses-slides, direction-slides).
+\ProvidesPackage{swarmslides}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\graphicspath{{../visuals/}{../../hypotheses/}{../paper/figs/}{../figures/}}
+\input{../paper/claudespark}
+
+\definecolor{ink}{HTML}{1A1A1A}\definecolor{ink2}{HTML}{555555}\definecolor{muted}{HTML}{8C8C8C}
+\definecolor{good}{HTML}{0CA30C}\definecolor{mid}{HTML}{8C8C8C}\definecolor{bad}{HTML}{D03B3B}
+\definecolor{untested}{HTML}{E3E3E3}\definecolor{rule}{HTML}{E3E3E3}\definecolor{panel}{HTML}{F4F4F4}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{normal text}{fg=ink}
+\setbeamercolor{frametitle}{fg=ink,bg=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{frametitle}{\vspace*{0.35em}\insertframetitle\par\vspace{-0.1em}{\color{rule}\rule{\linewidth}{0.6pt}}}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{muted}\insertframenumber\ /\ \inserttotalframenumber}\hspace*{0.8em}\vspace*{0.5em}}
+\setbeamersize{text margin left=0.9em,text margin right=0.9em}
+\setbeamertemplate{itemize item}{\color{muted}\textbullet}
+\setbeamertemplate{itemize subitem}{\color{muted}--}
+
+% ---------- chips
+\newcommand{\chip}[2]{\tikz[baseline=(c.base)]\node[fill=#1,text=white,rounded corners=2pt,inner sep=2.5pt,font=\scriptsize\bfseries](c){#2};}
+% model names (physics-models/NN-*)
+\newcommand{\mname}[1]{\ifcase#1\or inverse Ising\or kinetic Ising\or contagion\or semantic info\or replicator dissipation\or neutral drift\or fluct.\ environments\or copying\or Hawkes\or Potts\or vector spins\or info dynamics\or conventions\or scaling\or stoch.\ thermo\fi}
+% \mdl{NN}{role}{outcome}: role p primary, s secondary, r rival, t tool; outcome s supported, m mixed, r refuted, u untested, a n/a
+\newcommand{\mdl}[3]{%
+  \def\mrole{}\if#2s\def\mrole{+\,}\fi\if#2r\def\mrole{vs\,}\fi\if#2t\def\mrole{tool\,}\fi
+  \def\mfill{untested}\def\mtext{ink}\def\mdraw{untested}%
+  \if#3s\def\mfill{good}\def\mtext{white}\def\mdraw{good}\fi
+  \if#3m\def\mfill{mid}\def\mtext{white}\def\mdraw{mid}\fi
+  \if#3r\def\mfill{bad}\def\mtext{white}\def\mdraw{bad}\fi
+  \if#3a\def\mfill{white}\def\mtext{ink2}\def\mdraw{muted}\fi
+  \tikz[baseline=(c.base)]\node[fill=\mfill,draw=\mdraw,text=\mtext,rounded corners=2pt,inner sep=2.2pt,line width=0.5pt,
+    font=\scriptsize\ifx#2p\bfseries\fi](c){\mrole#1 \mname{#1}};\,}
+
+% ---------- one thesis per slide
+% \Models{\mdl..}\Math{equation}  then  \thesis{id}{claim}{figure}{picture}{found}{use}{credence}{EU}
+\newcommand{\Models}[1]{\def\theModels{#1}}
+\newcommand{\Math}[1]{\def\theMath{#1}}
+\newcommand{\col}[2]{\begin{column}{0.322\textwidth}{\scriptsize\color{muted}\textbf{#1}}\\[0.15em]{\footnotesize #2}\end{column}}
+\newcommand{\thesis}[8]{%
+\begin{frame}{#2}
+\vspace{-0.3em}
+{\scriptsize\chip{ink}{#1}\ \chip{good}{credence #7}\ \chip{mid}{EU #8}\hfill{\color{muted}models:}\ \theModels}\par\vspace{0.3em}
+\centering\includegraphics[height=0.45\textheight,width=\linewidth,keepaspectratio]{#3}\par\vspace{0.3em}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.322\textwidth}{\scriptsize\color{muted}\textbf{Physics picture}}\\[0.1em]
+\colorbox{panel}{\parbox{\dimexpr\linewidth-2\fboxsep}{\centering\footnotesize\sbox0{$\displaystyle\theMath$}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi}}\\[0.15em]{\footnotesize #4}\end{column}
+\col{What we found}{#5}\col{What to do}{#6}
+\end{columns}
+\end{frame}}
