@@ -208,6 +208,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
   - **P1c** random-date p < 0.05 for goal and drive [0.5]; scaffold_tool p < 0.10 [0.4].
   - **P1d** vs round 1's fused alarm: per-day FAR falls from 0.18 to ≤ 0.06, and the scaffold_tool hit falls from 0.78 to ≤ 0.40, because most round-1 hits were chance at 30% alarm days [0.6].
   - **P1e** rival R1 (topic alone, frozen C3): the monitor adds ≥ 0.15 hit on the pooled platform + drive + undocumented events (scaffold_tool, scaffold_family, drive, undocumented) at a union FAR cost ≤ +0.04 [0.6].
+- **Period rule (round 2, `**Verdict (r2):**` line in each G folder; added 04:05 UTC, still before any round-2 statistic).** Target events: scaffold_tool, scaffold_family, drive, undocumented and goal. *Supported* if every non-reserved target event in the period is hit by the monitor and no P2 day of the period alarms; *failed* if no target event is hit; *mixed* otherwise; *descriptive* if the period has no target event (its P2 false alarms are reported).
 - **Kill rule.** The monitor is **operator-grade** if the union OOS per-day FAR ≤ 0.05 (Wilson upper ≤ 0.12), goal hit ≥ 0.45, drive hit ≥ 0.5 and scaffold_tool hit ≥ 0.20 with random-date p < 0.10. **Failed** if the union FAR > 0.10 or goal hit < 0.40. Mixed otherwise.
 
 **R3: heavy-tailed baselines.**
