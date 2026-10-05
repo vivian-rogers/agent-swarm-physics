@@ -528,6 +528,13 @@ D in percentage points with day-bootstrap 95% CIs; "clean" = recipients with no 
 
 **Synthetic guard (run first).** Real unit skeletons (units, z, CF/CV flags, agent-days) of G38, G41 and G51. y ~ Bernoulli(p₀ · (1 + 0.5 z) · (1 − 0.21 · CF · (1 − π z))), with p₀ the unit's real mean response rate by age bin. Truths π ∈ {0, 0.5, 1}; 50 replicates each. Pass: π = 0 gives the CF×z CI excluding 0 (positive) in ≤ 10%; π = 1 recovered (CI excludes 0) in ≥ 80%. The power at π = 0.5 sets the R4 verdict rule.
 
+**R4 synthetic guard (run 2026-10-05, before any real-data fit; `r2/r4_synthetic.json`, `r4_synthetic_all9.json`).** 50 replicates per truth on the real units (G38 13,989 units with a dose, G41, G51).
+- **As pre-registered, the estimator is biased.** CF×z came out at −0.03 to −0.07 under every truth, π = 1 included. Cause: the dose's salience effect is multiplicative on an age-dependent base rate, erased units are old (base ≈ 0.04 vs 0.16), and an additive z term cannot absorb it.
+- **Amendment R4-A1 (before real data):** add z × age-bin terms. With them, π = 0 gives a positive CF×z CI in 0–12% of replicates per period and 0% pooled (pass).
+- **Power is far too low.** A full protection (π = 1) is detected pooled over all nine periods in 22% of replicates; π = 0.5 in 4%. The forced cut is about 0.2 × an old-unit base rate of a few percent, and the dose splits it further.
+- A relative-scale protection ratio was tried and rejected: it gives false positives in 30% of replicates at π = 0 (ratios of small numbers).
+- **Consequence, fixed now:** by the kill rule, R4's verdict cannot be "rejected" (power < 0.8). It can only be "supported" (pooled CF×z CI > 0) or "inconclusive". The real fit is reported with its power.
+
 ### R5 · Exposure audit
 **Question.** Where input logs exist, how often and for how long were agents silently decoupled by a stale or replayed feed? Can a log-free monitor find the same thing?
 

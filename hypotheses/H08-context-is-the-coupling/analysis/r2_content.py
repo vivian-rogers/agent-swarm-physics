@@ -437,8 +437,8 @@ def summarize():
         r["n_read"] = o["bge"]["own"]["nonname"]["n_read"]; r["n_flight"] = o["bge"]["own"]["nonname"]["n_flight"]
         r["share_named"] = o["bge"]["own"]["share_named"]
         rows.append(r)
-    R3 = [r for r in rows if r["regime"] == "III"]
-    R12 = [r for r in rows if r["regime"] != "III"]
+    R3 = [r for r in rows if int(r["period"][1:]) in REGIME_III]     # G36 counts as regime III (as in C3), 9 periods
+    R12 = [r for r in rows if int(r["period"][1:]) not in REGIME_III]
     pos = lambda r, k: r[f"{k}_delta"][1] > 0
     p1 = sum(pos(r, "bge") and pos(r, "gte") for r in R3)
     p1_cov = max(sum(r[f"{k}_delta"][1] <= 0 for r in R3) for k in MODELS)
@@ -457,12 +457,17 @@ def summarize():
             "R2-P3": {"median_kappa_bge": float(np.median(kap)) if kap else None, "kappas": kap,
                       "pass": bool(kap) and 0.2 <= float(np.median(kap)) <= 0.6},
             "R2-P4": {"pass_count": p4, "of": len(two), "pass": p4 >= 6},
-            "R2-P5": {"sign_agree": p5, "of": len(R3), "pass": p5 >= 7}}
+            "R2-P5": {"sign_agree": int(p5), "of": len(R3), "pass": bool(p5 >= 7)},
+            "descriptive_all_statements": {"both_models_CI_pos_regIII": sum(r["bge_all"][1] > 0 and r["gte_all"][1] > 0 for r in R3),
+                                           "bge_CI_pos_regIII": sum(r["bge_all"][1] > 0 for r in R3),
+                                           "bge_CI_pos_regI_II": sum(r["bge_all"][1] > 0 for r in R12),
+                                           "nonname_bge_CI_neg_regIII": sum(r["bge_delta"][2] < 0 for r in R3)}}
     jdump(summ, OUT2 / "r2_summary.json")
-    for k in ("R2-P1", "R2-P2", "R2-P3", "R2-P4", "R2-P5"):
+    for k in ("R2-P1", "R2-P2", "R2-P3", "R2-P4", "R2-P5", "descriptive_all_statements"):
         print(k, {a: b for a, b in summ[k].items() if a != "kappas"})
     for r in rows:
-        print(r["period"], r["regime"], "bge", [round(v, 4) for v in r["bge_delta"]], "gte", [round(v, 4) for v in r["gte_delta"]],
+        print(r["period"], r["regime"], "all bge", [round(v, 4) for v in r["bge_all"]], "gte", [round(v, 4) for v in r["gte_all"]],
+              "| nonname bge", [round(v, 4) for v in r["bge_delta"]], "gte", [round(v, 4) for v in r["gte_delta"]],
               "kappa", round(r["bge_kappa"][0], 2), "other", [round(v, 4) for v in r.get("bge_other_room", [np.nan] * 3)])
 
 
