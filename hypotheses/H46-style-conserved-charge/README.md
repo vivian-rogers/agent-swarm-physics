@@ -302,6 +302,53 @@ These test the round-1 picture (a quasi-conserved charge with a context-held exc
 - **H46-R4.** Fingerprint as a monitor: an attribution ROC for 5/10/20 messages, combining style, content and a context-position correction, across goal switches and on the leader and NE30 successions.
 - **H46-R5.** Lab-dependent susceptibility (PH5): pre-register a Gemini/GPT vs Anthropic difference in register response for the #51 tail and NE30.
 
+## Round 2 (2026-10-05): genre control, drift-and-reset model, function-word charge
+*Scope: the coordinator's H46-R1, R2 and R3. Non-reserved data only; no confirm run; no paid labels. R4 and R5 are not run.*
+
+### Pre-registration (written 2026-10-05 02:50 UTC, before any round-2 statistic on real data)
+*Facts seen before writing (sampling design only, no style, word or content statistic): `scheme/build_r2.py` gives 111,234 eligible messages (identical to round 1). Coverage of the genre covariates per regime I / II / III: DQ2 reply parent 38% / 48% / 55%; roster mention 51% / 54% / 61%; DQ3 window label 90% / 96% / 90%; ≥ 10 word tokens 99.4% / 99.9% / 99.6%. Regime III has 20,090 agent context segments (10,378 opened by a forced erasure, 9,532 voluntary, 160 session); 924 hold ≥ 8 eligible messages (DeepSeek 483, Anthropic 164, OpenAI 140, Google 104, other 33). #12 has 2,898 eligible messages.*
+
+**Inputs (new, behind a switch: round-1 scripts are untouched and reproduce exactly).** `scheme/build_r2.py` → `data/processed/H46-style-conserved-charge/r2/messages_r2.parquet` from the shared `style_messages` (H46's population; `main & ~holdout & ~holdout_mask`). Per message: DQ2 reply parent (`pair_set = cand`, `parent`), the parent's speaker kind and the parent pair's stance probabilities, the maximum candidate `p_reply`; roster mentions; a leading-@ flag; the 13 DQ3 window probabilities (11 states, `p_addresses_participant`, `p_blocked`); `ctx_mode`, `ctx_pos`, `k_ctx`; the regime-III context segment (cut at `reset_consol | reset_session`; `first_of_day` is not a reset) and the message's position k in it (eligible messages since the reset); counts of 128 closed-class words. No text is stored.
+
+**Style variants (fixed now).**
+- `tc`: round 1's type-controlled style (17-d).
+- `g` (**genre-controlled**): `tc` residualized within regime on the genre block G = {is_reply; parent is human; parent is automated; parent-pair p_supports, p_opposes, p_asks (zero without a parent); max candidate p_reply; has_mention; log(1 + n_mentions); leading @; the 13 DQ3 probabilities minus `p_execute_task` (reference), zero-filled, plus a DQ3-missing flag}. Coefficients are fitted with agent fixed effects (OLS on agent-demeaned data), and only the covariate part is removed: x̃ = x − (G − Ḡ_regime)B̂. The agent constant is kept.
+- `gp` (**genre- and position-controlled**): the same with the position block P added: computer-use vs chat mode vs unmatched; log2(1 + ctx_pos) and log2(1 + k_ctx) (0 in chat mode); in regime III log2(k) and 1[k = 1]. This removes any *common directed* position profile; a random-direction excursion survives it (H73 synthetic S2).
+- `fw` (**function-word charge**): the 50 most frequent of the 128 closed-class words in non-reserved eligible messages; per message sqrt(count / n_tok) for messages with ≥ 10 tokens; winsorized and z-scored globally; type-controlled within regime exactly as `tc` (log-length spline, has_code, has_url). `fw_g`: `fw` with the genre block removed as above.
+- `core`: `tc` without the topic-adjacent `digit_share`, `upper_share`, `colon` (14-d).
+- Content: round 1's style-residualized bge (primary); **gte** style-residualized (`statements_style_resid32_gte_modernbert`) as the second-model check.
+
+**R1. Genre-controlled style (retests of round 1's moves).** Same estimators as round 1 (NE41 gap-matched percentiles with 0.05-decade bins and agent-cluster CI; G12 and G51 native code; O1 class test and O2 fingerprint), run on `g` and `gp`.
+- **R1-P1 NE41 (forced erasures, regime III).** Prediction: the erasure effect survives: T_s(gp) ≥ 0.54 with agent-cluster CI lower bound > ½. Second design: genre-matched strata (each crossing pair ranked only among within pairs whose two messages fall in the same reply × mention cells). *Kill (genre explains it):* T_s(gp) CI includes ½ and T_s(gp) − ½ ≤ ½ (T_s(tc) − ½). Prior 65% for the prediction.
+- **R1-P2 #12 judges.** Prediction: the judge register survives: agent 9's judge-vs-debater leave-one-debate-out accuracy from `gp` ≥ 0.7 and above content's, and ≥ 2 of the 4 one-time judges at percentile ≥ 0.9. *Kill:* accuracy < 0.6 and ≤ 1 one-time judge at ≥ 0.9. Prior 55%.
+- **R1-P3 #51 Prankster.** Prediction: its onset displacement (round-1 block design) stays at percentile ≥ 0.95 under `gp`. *Kill:* < 0.9. Prior 70%.
+- **R1-P4 goal switches (secondary).** Prediction: T_s(g) ≥ 0.60 and T_s(gp) ≥ 0.60 (the goal-switch shift is topic, not speech act); fingerprint accuracy under `gp` ≥ 0.9 × its `tc` value (genre control does not remove identity).
+- **R1 reading.** "Round 1's moves are speech-act genre" if ≥ 2 of P1–P3 hit their kill; "register and context act beyond genre" if ≥ 2 of P1–P3 pass.
+
+**R2. Drift-and-reset model (first real test of round 1's post hoc PH3).** *Form fixed now.* In a regime-III context segment of agent i, the k-th eligible message is
+  x_k = q_i + η_{i,d} + e_k + ε_k,  e_k = φ e_{k−1} + σ ξ_k,  e_0 = 0 at the reset,
+with ξ isotropic in the 17-d style space, so Var e_k = s²(1 − φ^{2k}), s² = σ²/(1 − φ²), relaxation scale τ = −1/ln φ (messages). Primary variant `gp` (the excursion is directionless by construction); `tc` secondary. Lab groups: Anthropic, OpenAI, Google, DeepSeek, other.
+- **O-R2a variance growth.** d_k = ‖x_k − q̂_{i,u}‖² (agent × unit mean). Within each segment, Δ_k = d_k − d_1 for k = 2…8 (segments with ≥ k eligible messages; each segment is its own baseline). Model E[Δ_k] = s²(φ² − φ^{2k}); fit (s², φ) by weighted least squares on the seven position means; agent-cluster bootstrap (500) for CIs; per lab and pooled.
+- **O-R2b reset (cross-products).** c = ⟨x_j − q̂, x_{j+l} − q̂⟩ for message pairs of one agent on one PT day at message lag l = 1…4: *within* (no reset between) vs *across* (exactly one forced erasure between). Within pairs are reweighted to the across pairs' time-gap distribution (0.1-decade bins). ΔC(l) = C_within(l) − C_across(l). The model predicts ΔC(l) = V̄ φ^l (day jitter and the agent constant cancel in the contrast). φ_C from a log-linear fit of ΔC(l) is an *unfitted* check of φ from O-R2a.
+- **O-R2c self-imitation (direct test).** For message k ≥ 2, r̄ = mean of the agent's previous ≤ 3 eligible messages. The pull coefficient ρ = Σ⟨x_k − q̂, r̄ − q̂⟩ / Σ‖r̄ − q̂‖² (17-d, pooled). ρ = 0: the message is drawn around the long-run mean; ρ > 0: it follows the agent's own recent messages. ρ_within: r̄ in the same segment (in context); ρ_across: r̄ from before a forced erasure (erased), with k among the first three messages after it; within observations reweighted to the across time-gap distribution (gap from r̄'s last message to k). Rival control (contemporaneous convergence to the room's register): ρ refitted with a second regressor, the mean deviation (x_j − q̂_j) of other agents' eligible messages in the same room in the 10 min before k.
+- **R2-P1.** E[Δ_k] rises with k (slope over k = 2…8 > 0, cluster CI > 0, pooled and in ≥ 2 lab groups); the pooled fit gives τ ∈ [1, 20] messages with bootstrap upper bound < 50.
+- **R2-P2.** ΔC(1) > 0 (cluster CI > 0), and φ_C lies inside the 95% CI of φ from R2-P1.
+- **R2-P3.** ρ_within > 0 (CI > 0), ρ_within − ρ_across > 0 (CI > 0) and ρ_across < ρ_within / 2; ρ_within stays > 0 with the room term.
+- **R2-P4 (descriptive).** s² and τ per lab with CIs; round 1's PH5 (non-Anthropic more susceptible) predicts larger s² outside Anthropic.
+- *Kill (the drift-and-reset model fails):* the R2-P1 slope CI includes 0, **or** ΔC(1) CI includes 0, **or** ρ_across ≥ ρ_within. Prior that the model survives all three: 45% (H73 found no dispersion rise with call fill).
+
+**R3. Function-word charge.** Population: eligible messages with ≥ 10 tokens; every R3 comparison recomputes `tc` on the same population.
+- **R3-P1 goal switches (NE34, 24 switches; O1).** T_fw ≤ 0.60 and T_fw ≤ T_s(tc) − 0.05. Prior 40%.
+- **R3-P2 NE41 forced.** T_fw ≤ 0.53 or its cluster CI includes ½. Prior 45%.
+- **R3-P3 identity (O2 across goal switches).** fw balanced accuracy ≥ 3× chance at ≥ 80% of switches and above content's at ≥ 2/3; fw vs `tc` accuracy reported. Prior 65%.
+- **R3-P4 topic-adjacent features.** T_s(core) ≤ T_s(tc) − 0.03 at goal switches. Prior 60%.
+- **R3 reading.** Function words are "a better charge" if P1, P2 and P3 pass; "no better" if T_fw ≥ T_s(tc) at goal switches and at NE41.
+- **Content, second model.** T_c with gte at goal switches and NE41 reported next to bge (no verdict).
+
+**Synthetic validation first** (`analysis/r2_synthetic.py`, on the real message, pair and segment schedules; vectors built from resampled real agent residuals with planted structure): residualization must hold size under a genre-only world and keep power for a random-direction erasure jump; the R2 estimators must recover planted (s², φ), give ΔC(1) ≈ 0 without a reset and ρ_across ≈ ρ_within for a clock-time drift; the `fw` class test must hold size. Any estimator change after the synthetic run is a dated amendment.
+
+**Estimates.** Per-unit rows go to `per_period_estimates` (hypothesis H46, `post_hoc = False`, role `native` or `replication`, notes "round 2").
+
 ## Notes
 - 2026-10-04: promoted from HH170 by Vivian. The first round-1 session stalled during an API outage before writing any file; resumed 05:33 UTC.
 - 2026-10-04 05:40 UTC: card, observables, nulls, verdict rules and predictions written before any real-data style or content statistic. 05:45 UTC: period and NE READMEs with dated predictions (`analysis/write_period_cards.py --phase predict`).
