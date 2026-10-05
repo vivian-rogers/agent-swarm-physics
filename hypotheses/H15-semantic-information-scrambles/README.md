@@ -405,3 +405,27 @@ Takes over H01 D4 (D4.1.b first); H01 D2.6 chooses the viability function; H08 (
 **Impostors.** Scheduler: F timing set by the 41-call cap; P from the same segments; stratum × arm FE. Exogenous field: estimation within periods; for M (arrivals depend on room activity) the P arm with arrivals is the control; Gn compares notes in the same unit. Shared priors: agent × period FE; R3's window-swap null holds the agent fixed. Convergence: no influence claim; M is a read-at-receiving-call class compared across erased vs intact context.
 
 **Estimates.** Rows `r2_*` per period via `write_estimates`, role `replication`; NE41 pooled rows role `native`.
+
+### Round 2 synthetic validation (axis F; run 2026-10-05 03:45–03:55 UTC, before any round-2 statistic on real data)
+`analysis/r2_synthetic.py` → `r2/synthetic.json`. Real F/P skeleton (20,592 F and 21,806 P events with ≥ 10 window calls), base rates from pre-event commits only, agent-day and event gamma noise; 40 replicates per world; test = sandwich CI on the interaction.
+
+| Statistic (sample) | size, null_main | size, null_latent | power RR 1.10 | power RR 1.15 | power RR 1.25 |
+| --- | --- | --- | --- | --- | --- |
+| L × F (pooled / G51) | 0.00 / 0.03 | **0.15** / 0.05 | 0.43 / 0.30 | 0.65 / 0.55 | 1.00 / 0.90 |
+| M × F | 0.03 / 0.03 | 0.08 / 0.10 | 0.28 / 0.20 | 0.60 / 0.38 | 0.88 / 0.70 |
+| Gp × F (1% of events) | 0.05 / 0.03 | 0.10 / 0.10 | 0.13 / 0.13 | 0.35 / 0.33 | 0.43 / 0.35 |
+| Gn × F | 0.00 / 0.03 | 0.05 / 0.03 | 0.38 / 0.23 | 0.63 / 0.38 | 0.95 / 0.70 |
+| U12 × F, V6 (concentration) | 0.05 / 0.08 | 0.00 / 0.00 | 0.23 / 0.15 | 0.33 / 0.23 | 0.73 / 0.43 |
+| U35 × F, V6 | 0.00 / 0.00 | 0.00 / 0.03 | 0.23 / 0.25 | 0.18 / 0.15 | 0.48 / 0.25 |
+| T2 × F (trail, pooled / G51) | 0.00 / 0.00 | 0.08 / 0.03 | 0.40 / 0.40 | 0.60 / 0.53 | 0.93 / 0.90 |
+
+Point estimates are unbiased (mean RR within ±0.03 of the planted value in every world). R1c (32 regime-III ML/MG events with ≥ 10 control segments): size 0.03; power 0.24 at +0.05 and 0.69 at +0.10 in read-or-search share. R3 (mean excess over 3 replicates, 37,031 notes): performative world E_x **+0.035**, E_s −0.007, novel E_x +0.010, novel E_s −0.002; enacted q = 0.05 / 0.10 / 0.20: E_s +0.036 / +0.079 / +0.167 (E_s ≈ 0.8 q), novel E_s +0.044 / +0.091 / +0.184.
+
+### Amendments (2026-10-05 03:58 UTC, after the synthetic validation, before any round-2 statistic on real data)
+- **A1 (R3 primary null).** The cross-agent note null is biased in the performative world (+0.035: an agent's own vocabulary persists across days), so by the pre-set rule the **window-swap null E_s is primary** (bias −0.007). E_x is reported as the matched null that was asked for, labelled with its +0.035 floor. P-R3a and its kill are read on E_s and novel E_s.
+- **A2 (power).** Power ≥ 0.8 is reached at RR 1.25, not 1.15, for L, M, Gn and T2 (pooled). The kill rules of P-R1b and R2 that required power ≥ 0.8 at RR 1.15 are read at RR 1.25: a null result excludes effects of RR ≥ 1.25, not smaller ones. Every null result also gets the real-data minimal detectable effect MDE₈₀ = exp(2.8 · SE) from its own fit.
+- **A3 (Gp).** Gp (notes read or history search in calls 1–2) occurs in about 1% of events; power 0.43 at RR 1.25. It is reported and not decided ("inconclusive" unless its CI excludes 1).
+- **A4 (L).** The sandwich test of L × F has size 0.15 under the latent-productivity world. The pooled decision for L uses the agent-day cluster bootstrap (B = 300), as pre-registered for pooled fits; per-period sandwich intervals for L are descriptive.
+- **A5 (P-R2d).** The concentration contrast has power ≤ 0.73 even at RR 1.25. P-R2d is decided only if RR(U12)/RR(U35) has a bootstrap CI excluding 1; otherwise "inconclusive". The dip-share statistic is reported regardless.
+- **A6 (R1c).** Power is 0.69 at +0.10, so the memory-loss re-acquisition test can only see shifts of about +0.12 or more; a null is "inconclusive".
+- **A7 (classifier).** This round's read flag is stricter than H44's categories: of calls H44 labels a read, 64% are reads here; of calls labelled read here, 99% are reads in H44 (agreement 0.93 over 1.24M calls; `r2/classifier_check.json`). L, touch5 and rs5 therefore count clean read-only calls.
