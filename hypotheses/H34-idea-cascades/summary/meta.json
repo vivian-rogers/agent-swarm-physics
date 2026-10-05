@@ -1,25 +1,25 @@
 {
- "complete": 50,
- "faithfulness": 2.0,
+ "complete": 65,
+ "faithfulness": 2.5,
  "usefulness": 2.5,
  "rationale": {
-  "complete": "Round 1 done: pre-registered predictions, synthetic validation (finite-N branching and the full pipeline on real village timelines), 32 per-period verdicts, cross-period tests, a scorecard, and a frozen, dry-run confirmatory script (not run). No natural-experiment test or holdout run yet. Round 1b (2026-10-04): re-run on context-ledger visibility with an H57 read-vs-unread placebo, and two ground-truth natives (#35 lead designers, #26 elected leader).",
-  "faithfulness": "The subcritical, exposure-driven branching description holds everywhere (32/32 subcritical; HR10 beats the validated field null in 27/32), so C, D, F, G, H and I are each 1. The literal claim (a power law whose exponent reads criticality, tied to activity loop gains) failed. There is no s^-3/2, tau_app is just R-hat, P4 gave rho = 0.06, tails are heavier than one branching law, and the pre-registered forecast was overconfident. E = 0. Round 1b: HR10 now passes 32/32 (regime I was mismeasured), but not-yet-read uses predict adoption at about half the strength of read ones, so part of the exposure lock is convergence; known leaders are not idea sources. Axes unchanged.",
-  "usefulness": "A computable rule: R-hat from two days of logs gives next-day reach probabilities for new ideas or claims, and the post-hoc version is roughly calibrated (70-84% at 90%). The practical negative results also help: activity gains don't proxy idea spread, and exposure ordering can't separate copying from independent invention in a shared room. The calibration evidence is post hoc and the rule is unconfirmed, hence between a diagnostic (2) and a validated monitor (3)."
+  "complete": "Round 1 done: pre-registered predictions, synthetic validation (finite-N branching and the full pipeline on real village timelines), 32 per-period verdicts, cross-period tests, a scorecard, and a frozen, dry-run confirmatory script (not run). No natural-experiment test or holdout run yet. Round 1b (2026-10-04): re-run on context-ledger visibility with an H57 read-vs-unread placebo, and two ground-truth natives (#35 lead designers, #26 elected leader). Round 2 (2026-10-05): R1 (gamma-mixed branching, exact FN-GW law, skeleton null), R4 (paraphrase ideas, two embeddings, threshold sensitivity, planted-paraphrase check) and R2 (NE42 and five more non-reserved room changes, skeleton references) done with dated pre-registration and three amendments before real data. R3 (paid labels) and the holdout remain.",
+  "faithfulness": "The subcritical, exposure-driven branching description holds everywhere (32/32 subcritical; HR10 beats the validated field null in 27/32), so C, D, F, G, H and I are each 1. The literal claim (a power law whose exponent reads criticality, tied to activity loop gains) failed. There is no s^-3/2, tau_app is just R-hat, P4 gave rho = 0.06, tails are heavier than one branching law, and the pre-registered forecast was overconfident. E = 0. Round 1b: HR10 now passes 32/32 (regime I was mismeasured), but not-yet-read uses predict adoption at about half the strength of read ones, so part of the exposure lock is convergence; known leaders are not idea sources. Axes unchanged. Round 2: C, D, F and H rise to 2 (the mixture beats one-ratio branching and the beta-binomial on held-out days; the unfitted non-root/root ratio 1.52 matches the mixture and excludes every homogeneous reference; exact law and synthetic recovery; node-level overdispersion beaten). E rises to 1: the NE42 reversal is predicted in sign and size, but skeleton worlds without dilution predict it too.",
+  "usefulness": "A computable rule: R-hat from two days of logs gives next-day reach probabilities for new ideas or claims, and the post-hoc version is roughly calibrated (70-84% at 90%). The practical negative results also help: activity gains don't proxy idea spread, and exposure ordering can't separate copying from independent invention in a shared room. The calibration evidence is post hoc and the rule is unconfirmed, hence between a diagnostic (2) and a validated monitor (3). Round 2 adds a tail-risk rule (mean R about 0.2 with CV^2 about 1) and a monitoring rule (watch second-generation adopters, who out-spread inventors 1.5:1); it also shows paraphrase similarity measures shared reaction, not copying."
  },
- "one_line": "Idea cascades are strongly subcritical (R about 0.2) and heavy-tailed, not power-law; about half the exposure lock is convergence, not copying.",
+ "one_line": "Idea cascades are subcritical (R about 0.2) and heterogeneous: a gamma mixture of idea-level branching ratios (CV^2 about 1) fits the heavy tail, adopters out-spread inventors 1.5:1, and branching reversed with room size across the NE42 merge and split.",
  "models": [
   {
    "model": "03-contagion",
    "role": "primary",
    "outcome": "mixed",
-   "note": "subcritical contagion holds; no power law; half is convergence"
+   "note": "subcritical contagion with idea-level heterogeneity; paraphrase adoption mostly convergence"
   },
   {
    "model": "09-hawkes",
    "role": "secondary",
    "outcome": "mixed",
-   "note": "branching picture fits; activity loop gain does not predict R"
+   "note": "gamma-mixed finite-N branching fits the tail; activity loop gain does not predict R"
   },
   {
    "model": "13-cultural-evolution-conventions",
@@ -34,8 +34,8 @@
    "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
- "rated_by": "H34 agent (suggested); round 1b RE-D1 (suggested)",
- "updated": "2026-10-04 (round 1b)",
+ "rated_by": "H34 agent (suggested); round 1b RE-D1 (suggested); round 2 agent (suggested, 2026-10-05)",
+ "updated": "2026-10-05 (round 2)",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
  "v2": {
   "claim": "Idea cascades are subcritical (R̂ 0.09–0.40) and exposure-locked in 32/32 periods, but about half of the lock is convergence; leaders are not stronger idea seeders",

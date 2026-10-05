@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.28, HR₁₀ 8.3 [6.9, 10.2], tail heavy; H57 placebo HR unread/seen 3.6/6.4)
+**Round 2 (2026-10-05):** replication only; the 1b verdict stands. Gamma-mixed branching α̂ 0.70 [0.56, 0.84], tail not covered; semantic R̂ 0.22 (bge) / 0.20 (gte).
 **Role:** replication (exploratory)
 **Period:** regime I · mode I · 8 agents at start (median room size 10) · 10 non-holdout days. Setup: Each agent starts a Substack; niches formed (e.g. consciousness, telemetry). Roster churn: two in, two out.
 
@@ -57,3 +58,17 @@ C (adequacy): HR₁₀ beats the field null (lower CI 2.17). D (unfitted shape):
 - Censoring check: R̂ without trees rooted on the last day = 0.249.
 - Root vs non-root mean offspring 0.218 vs 0.350 (GW assumes equal).
 - Root types: invented 0.95, from humans 0.001, field (unexposed) 0.050; 0.87 of non-seed first uses were visibly exposed.
+
+## Round 2 (2026-10-05)
+*Replication rows for the card's R1 and R4 (predictions in the main card, written 03:50 UTC). Role: replication; no verdict change.*
+
+| Quantity | Value | Reference |
+| --- | --- | --- |
+| R1 gamma-mixed FN-GW: α̂ (CV² = 1/α), μ̂ | 0.70 [0.56, 0.84], μ̂ 0.227 | LR vs one R: 355.5 (5% point 2.71) |
+| R1 tail: P(s ≥ 3), P(s ≥ 5) | 0.092, 0.0320 | Γ-FN 90% band [0.066, 0.087], [0.0216, 0.0351]: not covered |
+| R1 non-root / root offspring (unfitted) | 1.72 | Γ-FN band [1.63, 2.08]; one R 0.82; homogeneous skeleton ≤ 0.91 |
+| R1 day-ahead log score, Γ-FN minus beta-binomial | -21.1 nats | > 0 favours Γ-FN |
+| R4 semantic R̂, bge (θ 0.90) | 0.22 [0.21, 0.24], 2782 first uses | marker R̂ (1b) in the 1b line above |
+| R4 semantic R̂, gte (θ 0.877) | 0.20 [0.18, 0.21], 2807 first uses | |
+| R4 HR₁₀ (bge / gte) | 6.6 / 8.0 | field null 1 |
+| R4 HR_unread5 / HR_seen5 (bge / gte) | 3.24 / 2.17 | copying < 1; marker median 0.56 |

@@ -1,37 +1,35 @@
-\hwhat{H34 hashes novel terms, URLs, numbers and names in 32 non-holdout periods (132k ideas). Each agent's first use of an idea gets as parent the latest earlier use it could see. These links form exposure trees. Idea cascades are subcritical in every period: $\hat R=0.09$--$0.40$ (round 1: 0.06--0.39), and every CI lies below 1. A new idea reaches a second agent 6--24\% of the time. Round 1b uses context-ledger visibility. Adoption locks in time to recent visible uses beyond a common field in 32/32 periods (round 1: 27/32, because regime I was mismeasured). Uses not yet read predict adoption at about half that strength, so part of the lock is convergence, not copying. The tests reject pure $s^{-3/2}$ in all 32 periods; the tails are heavier than one branching law. Leaders are not idea sources. Two tests fail: activity loop gains do not predict spread, and the pre-registered forecast is overconfident. The holdout is not run.}
+\hwhat{H34 builds exposure trees of new ideas in 32 non-reserved periods; an agent's first use gets as parent the latest earlier use it read. Rounds 1--1b: cascades are subcritical everywhere ($\hat R=0.09$--$0.40$), tails are heavier than one branching law, and half the exposure lock is convergence. Round 2: (R1) a gamma mixture of idea-level branching ratios fits the tail in 28/32 periods (one ratio: 9/32), and adopters out-spread inventors. (R4) Paraphrase ideas (two embedding models) are subcritical at half the marker value, but their adoption is mostly convergence. (R2) Across the NE42 merge and split, branching reverses with room size; per-read dilution is not identified. No reserved-data run.}
 
-\hmodel{Contagion (model 03) runs as a Galton--Watson cascade (model 09) in a room of $N$ agents. The degree of freedom is an agent's first use of an idea. Each adopter has negative-binomial offspring with mean $R$, the branching ratio and control parameter, and dispersion $k$. $s$ is the tree size and $s_c$ its cutoff. $h_k$ is the adoption hazard per talk turn with $k$ recent visible sources. $R_c$ is the contagion share of $\hat R$, after removal of the common field. $\eta$ is the daily drift of $R$ in the forecast rule.}
+\hmodel{Contagion (model 03) runs as a Galton--Watson cascade (model 09) in a room of $N$ agents with depletion (FN-GW). The degree of freedom is an agent's first use of an idea. Each idea $i$ has its own ratio $R_{0,i}$, gamma-distributed with mean $\mu$, shape $\alpha$ (CV$^2=1/\alpha$). $P_{\rm FN}(s\mid R_0)$ is the exact size law. $\rho_{\rm off}$: non-root over root offspring. $R_{\rm src}$: a group's offspring per first use; $\beta$ scales the room-size rule.}
 
 \hmath{\vspace{-6pt}\begin{gather*}
-\hat R=\frac{\#\,\text{first uses with an agent parent}}{\#\,\text{agent first uses}},\quad
-R_c=\hat R\,\bigl(1-h_0/h_{\ge1}\bigr)\\
-P(s\mid R,k)=\frac{\Gamma(ks+s-1)}{\Gamma(ks)\Gamma(s+1)}\frac{(R/k)^{s-1}}{(1+R/k)^{ks+s-1}}\sim s^{-3/2}e^{-s/s_c}\\
-s_c^{-1}=R-1-\ln R,\qquad R_d=\hat R\,e^{\eta},\ \ \eta\sim\mathcal N(0,0.25^2)
+\hat R=\frac{\#\,\text{first uses with an agent parent}}{\#\,\text{agent first uses}},\qquad R_{0,i}\sim\Gamma\!\left(\alpha,\ \mu/\alpha\right)\\
+P(\{s_{ij}\}_j)=\int\! dR_0\ \Gamma(R_0;\alpha,\mu/\alpha)\prod_j P_{\rm FN}(s_{ij}\mid R_0)\\
+\Delta\ln R_{\rm src}=\beta\cdot0.451\,\ln\frac{N_a-1}{N_b-1}+\text{boundary effect}
 \end{gather*}\vspace{-8pt}}
 
-\hobs{../figures/summary_obs.pdf}{(a) Fraction of exposure trees that reach at least $s$ agents in \#20, \#42 and \#51. Dashed: the branching law from $\hat R,\hat k$. Dotted: the critical $s^{-3/2}$. The cascades are far from critical and a little heavier-tailed than one branching law. (b) One dot per period. The idea branching ratio $\hat R$ does not track the activity loop gain $\hat n$ from H03; most periods lie below $\hat R=\hat n$.}
+\hobs{../figures/r2_obs.pdf}{(a) Fraction of exposure trees that reach at least $s$ agents in \#20, \#42 and \#51. Dashed: one branching ratio (FN-GW). Solid: the gamma mixture of idea-level ratios. The mixture follows the tail; one ratio falls short beyond $s\approx4$. (b) Room changes at six goal boundaries, after removing each boundary's common shock. Orange: the NE42 merge and split. Lines: the dilution law ($\beta=1$), and synthetic worlds on the real timelines with a constant chance per read ($\beta\approx1.7$) or a field only ($\beta\approx2.5$). The data cannot tell them apart.}
 
-\htelos{A monitor can forecast idea spread from one number. Compute $\hat R$ (first uses with a visible parent over all first uses) on the last two days of logs. At $\hat R\approx0.2$, expect 83\% of new ideas or claims to stay with their author, and about 1 in 150 to reach five agents. With day drift added, this post-hoc rule reaches 70--84\% coverage at 90\% nominal; it is frozen for the holdout. Activity criticality (Hawkes $n$) does not predict idea spread. In a shared room, ``who saw it first'' cannot separate copying from independent invention. To separate them, compare read with not-yet-read uses at the same lag. A power-law exponent is $\hat R$ in another form. No cascade is near runaway. Misinformation dies locally unless it sits in an artifact that every agent must touch.}
+\htelos{For tail risk, use the two-parameter mixture (mean $\approx0.2$, CV$^2\approx1$); one ratio under-predicts ideas that reach five agents. An idea's second-generation holders spread it 1.5 times as often as its inventor: watch them. Measure copying by reuse of names, links and numbers; paraphrase similarity mostly measures a shared stimulus. Merging rooms widens each agent's reach and splitting reverses it.}
 
-\hbottom{Idea cascades are strongly subcritical ($\hat R\approx0.2$), exposure-driven and heterogeneous, not power-law; the branching ratio, not an exponent or an activity loop gain, forecasts their reach.}
+\hbottom{Idea branching is heterogeneous and shared along trees: a gamma mixture of idea-level ratios (CV$^2\approx1$) fits the heavy tail that one ratio misses, adopters out-spread inventors 1.5:1, and in a room merge and split branching reversed with room size.}
 
 \hresults{\small\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.30\columnwidth}p{0.50\columnwidth}p{0.17\columnwidth}@{}}
 \textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\tabularnewline\hline
-\raggedright P1 subcritical, $\hat R<1$ & \raggedright $\hat R$ 0.06--0.39 $\to$ 0.09--0.40 (1b), CI $<1$ in 32/32 periods, 113/113 class cells & \raggedright pass\tabularnewline
-\raggedright P1 order U\,$>$\,N\,$>$\,D & \raggedright artifacts 0.35 $>$ numbers 0.27 $>$ names 0.19 & \raggedright fail\tabularnewline
-\raggedright P2 $\hat R<$ activity $\hat n$ (HH108) & \raggedright 25/32 periods & \raggedright pass\tabularnewline
-\raggedright P3a branching-law tail & \raggedright $P(s\ge3)$ in band 27/32; $P(s\ge5)$ heavier in 25/32 & \raggedright fail\tabularnewline
-\raggedright P3b no $s^{-3/2}$; $\tau_{\rm app}\ge2$ & \raggedright rejected 32/32; $\tau_{\rm app}$ 2.4--4.3, $\rho(\tau_{\rm app},\hat R)=-0.95$ & \raggedright pass\tabularnewline
-\raggedright P4 $\hat R$ tracks $\hat n$ & \raggedright $\rho=0.06$ (Holm $p=1$) $\to$ 0.19 (Holm $p=0.33$) & \raggedright fail\tabularnewline
-\raggedright P5 contagion beyond field & \raggedright $\mathrm{HR}_{10}$ CI $>1$: 27/32 $\to$ 32/32 (1b); regime I 2.3 $\to$ 6.4 & \raggedright pass\tabularnewline
-\raggedright 1b: read vs unread uses (H57) & \raggedright read $>$ unread 30/32, but unread CI $>1$ in 25/32 (ratio 0.56) & \raggedright half convergence\tabularnewline
-\raggedright 1b native: leaders seed spread & \raggedright \#35 ratio 1.11 [0.82,1.45]; \#26 0.36 [0.27,0.46] & \raggedright fail\tabularnewline
-\raggedright P6 simple contagion & \raggedright HR(2 vs 1) bracket 0.5--4.2 & \raggedright ambiguous\tabularnewline
-\raggedright P7 forecast coverage $\ge$80\% & \raggedright 36\%/46\% $\to$ 38\%/47\% (1b); post hoc V3 70\%/84\% & \raggedright fail\tabularnewline
+\raggedright R1-P1 mixture covers the tail & \raggedright 28/32 (one ratio: 9/32) & \raggedright pass\tabularnewline
+\raggedright R1-P2 heterogeneity (LR) & \raggedright 31/32; median $\hat\alpha=0.96$ (0.27--5.3) & \raggedright pass\tabularnewline
+\raggedright R1-P3 beats beta-binomial & \raggedright 21/32 day-ahead, gain mostly from \#51 & \raggedright pass (small)\tabularnewline
+\raggedright R1-P4 unfitted $\rho_{\rm off}$ & \raggedright 1.52, $>1$ in 31/32; homogeneous references $\le0.91$ & \raggedright pass\tabularnewline
+\raggedright R4-P1 paraphrase ideas subcritical & \raggedright $\hat R$ 0.13 (bge), 0.11 (gte), CI $<1$ in 32/32; 0.39 at a looser threshold & \raggedright pass\tabularnewline
+\raggedright R4-P2/P3 rank and model agreement & \raggedright $\rho$ with markers 0.56--0.63; bge vs gte 0.94 & \raggedright pass\tabularnewline
+\raggedright R4-P4 read beats unread & \raggedright 7/32 & \raggedright fail\tabularnewline
+\raggedright R4-P5 more convergence than markers & \raggedright unread/read 1.8--1.9 vs 0.56 & \raggedright pass\tabularnewline
+\raggedright R2-P2 NE42 reversal $D>0$ & \raggedright $+1.29$ [0.74, 2.11]; predicted $+1.09$ & \raggedright pass\tabularnewline
+\raggedright R2-P1 dilution slope $\beta$ & \raggedright 1.50 [$-0.10$, 3.10] & \raggedright open\tabularnewline
 \end{tabular}}
 
-\hobsb{../figures/summary_obsb.pdf}{(a) Real village timelines with synthetic ideas. A common field inflates $\hat R$ (squares) with no contagion at all; $R_c$ (dots) recovers the true contagion $R$. (b) The post-hoc rule's next-day forecasts of $P(s\ge2)$ and $P(s\ge3)$ against the observed values, over 219 period-days.}
+\hobsb{../figures/r2_obsb.pdf}{(a) One dot per period and model. Paraphrase ideas (leader clustering at rate-matched thresholds) branch about half as much as marker ideas and rank the periods alike. (b) Adoption hazard after another agent's use that was posted but not yet read, over the hazard after one already read, both within 5 min. For markers (gray) read uses win. For paraphrases (blue, orange) unread uses win, so their adoption is mostly convergence.}
 
-\hcaveats{An ``idea'' is a hashed marker rule, not a semantic unit, and $\hat R$ depends on the rule. The split of field and contagion rests on $\mathrm{HR}_{10}$. A bursty common trigger, e.g.\ a web page or human prompt that reaches several agents at once, mimics it. Copies from tools or the web are invisible. Round 1's call-start visibility undercounts regime-I exposure; round 1b uses the ledger. Unread uses are more recent than read ones, so the convergence share is an upper bound. Novelty is relative to non-holdout text only. The H25 content-dial link (partial $\rho=0.41$ given room size; daily $\rho=0.28$) is post hoc and shares its source text with $\hat R$. Periods with rooms of 4 cannot show tails.}
+\hcaveats{Tail fit and likelihood ratio cannot tell idea-level from node-level spread; only the non-root/root ratio does. Most ideas have one tree, so idea and seeding-moment heterogeneity are not separated. The forecast gain is mostly \#51. Paraphrase $\hat R$ depends on the threshold (0.008--0.39). Unread uses are more recent, which overstates convergence. Each room change is also a goal change, and worlds without per-read dilution also predict the reversal.}
 
-\hnext{Fit a mixture of idea-level $R$ to explain the heavy tail. Predict $\hat R$ across the room split and merge before looking. Label numeric claims true or false, and compare the spread of misinformation with the spread of its corrections.}
+\hnext{Per-read dilution inside \#51 with a power check; ideas with several trees to separate idea from seeding moment; re-freeze the confirm script with the mixture clauses.}

@@ -9,6 +9,7 @@
 - **Post hoc:** R̂ tracks H25's *content* dial (partial ρ 0.41 given N; daily ρ 0.28), not its activity dial.
 - Scorecard A1 B1 C1 D1 E0 F1 G1 H1 I1. `analysis/confirm.py` frozen and dry-run, not run. Not promoted.
 - **Round 1b (2026-10-04, context-ledger visibility):** contagion beyond the field now holds in **32/32** periods (round 1: 27/32); regime I was mismeasured by the call-start rule (median HR₁₀ 2.3 → 6.4). **But about half of the exposure-locked hazard is contemporaneous convergence:** uses not yet read predict adoption too (HR_unread5/HR_seen5 median 0.56; read > unread in 30/32). Natives: designated lead designers seed no more spreadable ideas (#35, ratio 1.11 [0.82, 1.45]); the elected leader's ideas spread *less* (#26, 0.36 [0.27, 0.46]). Verdicts 9 supported / 23 mixed / 0 failed. Scorecard unchanged.
+- **Round 2 (2026-10-05; R1, R4, R2 on non-reserved room changes):** the heavy tail is a gamma mixture of idea-level branching ratios (median α̂ 0.96, CV² ≈ 1; tail covered 28/32 vs 9/32 for one R), and spread is shared along trees (non-root/root offspring 1.52 vs ≤ 0.91 for every homogeneous reference). Paraphrase ideas (two embeddings) are subcritical too (R̂ 0.11–0.13, about half the marker value, level set by the threshold), but their adoption is mostly convergence (unread/read 1.8–1.9). NE42 merge and split: the branching contrast reverses as predicted (D +1.29 [+0.74, +2.11]); old rooms leave no trace beyond reading (ρ 1.05); per-read dilution is not identified (β̂ 1.50 [−0.10, 3.10]). Scorecard A1 B1 C2 D2 E1 F2 G1 H2 I1. See "Round 2".
 
 Predictions were written 2026-10-04 01:30 UTC, before any real-data run.
 
@@ -16,8 +17,8 @@ Predictions were written 2026-10-04 01:30 UTC, before any real-data run.
 **Origin:** HH122 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`); tests HH108 at the idea level.
 **Definitions used:** Population N(t); Regime; Interaction (broadcast; the shared `exposure` room rule) with the named variant *Interaction (visible exposure)* below; Contagion / adoption event, with the marker set fixed by the *Idea (H34 marker rule)* below. **New here, proposed for `physics-models/DEFINITIONS.md`** (not edited; outside H34's scope): *Idea (H34 marker rule)*, *Interaction (visible exposure)*, *Adoption cascade (exposure tree)*, *Branching ratio (content, adopter-level)*.
 
-## Standards (2026-10-04)
-*Documentation pass against `STANDARDS.md`. No analysis was re-run. Every entry rests on this card and its round-1b section.*
+## Standards (2026-10-04; round-2 rows added 2026-10-05)
+*Documentation pass against `STANDARDS.md`. No analysis was re-run. Every entry rests on this card and its round-1b section. Round 2 additions are marked.*
 
 **Question served:** Q3. Idea cascades are subcritical in 32/32 periods, so there is no near-critical collective order. Q1 second: HR₁₀ measures coupling through reading.
 
@@ -26,11 +27,11 @@ Predictions were written 2026-10-04 01:30 UTC, before any real-data run.
 | Scheduler field | partly | HR₁₀ is a hazard per at-risk talk turn, stratified by idea. The jitter null (N0) keeps each agent's turn rate. | removed |
 | Exogenous field (kickoff/goal/operator) | yes | Human and automated parents make roots; roster names are excluded from markers. N0 failed its synthetic guard (A2). S2 simulated only a constant field; a bursty field also gives HR₁₀ > 1 (Caveats). R̂ is 1.5× higher on kickoff days. Close with a kickoff-matched placebo and goal-text marker exclusion (§1, row 2). | partly |
 | Shared model priors | partly | Not handled. Shared pretraining can coin the same marker without exposure (field ε, Model). Close with a cross-family HR₁₀ and a first-day control (§1, row 3). | open |
-| Contemporaneous convergence | yes | Round 1b H57 placebo: read uses beat unread ones in 30/32; unread uses carry about half the hazard ratio. HR₁₀ and R_c are not net of the unread term. | partly |
+| Contemporaneous convergence | yes | Round 1b H57 placebo: read uses beat unread ones in 30/32; unread uses carry about half the hazard ratio. HR₁₀ and R_c are not net of the unread term. Round 2: for paraphrase ideas, unread uses beat read ones (ratio 1.8–1.9). | partly |
 
-**Inputs:** round 1b uses the context ledger for every exposure quantity. Embeddings, activity bins, work and failures are not inputs (ideas are hashed text markers). P4 still reads H03's and H19's round-1 activity-gain tables as comparators.
+**Inputs:** round 1b uses the context ledger for every exposure quantity. Activity bins, work and failures are not inputs. Round 2 adds DQ5 chat embeddings (both models, raw vectors) for paraphrase ideas; markers stay hashed. P4 still reads H03's and H19's round-1 activity-gain tables as comparators.
 
-**Two layers:** no folder has role `replication`. The common estimator runs on 32 period folders under role `exploratory`. Native tests: 2 (`G35` lead designers as seeders, mixed; `G26` elected leader as seeder, failed).
+**Two layers:** the common estimator runs on 32 period folders (role replication, exploratory); round 2 adds replication rows for R1 and R4 to each. Native tests: 3 (`G35` lead designers as seeders, mixed; `G26` elected leader as seeder, failed; `NE42` merge and split, round 2, mixed).
 
 **Confirm script:** `analysis/confirm.py` exists, dry-run only, built on H18's call-start visibility. **Re-freeze on ledger visibility before any holdout run** (holdout.md items 8 and 15). Add the unread placebo as a clause at re-freeze.
 
@@ -124,12 +125,12 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | --- | --- | --- | --- |
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Ideas (hashed markers), visible exposure (H18 call-start rule on `exposure`), trees and R̂ all come from shared tables; assumptions are listed under Operational definitions. **Not invariant:** HR₁₀'s size depends on the scaffold (median 2.3 in regime I, 14 in II, 39 in III); the marker mix shifts across eras (N ideas are dominated by code identifiers in regime III); room structure changes what "exposed" means. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | **Violated:** i.i.d. offspring (roots 0.18 vs non-roots 0.30 median offspring) and stationarity: R̂ is higher on kickoff days (0.30 vs 0.19) and drifts down within periods (median ρ −0.38), with day-to-day spread of logit P(s ≥ 2) 0.46 vs 0.13 from sampling. **Checked:** censoring (R̂ without last-day trees moves ≤ 0.035) and the call-start fallback (0.1–1.7% of talk turns). **Assumed:** the recency window W = 3 call windows. |
-| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | **Field null (N0, A2):** HR₁₀ lower CI > 1 in 27/32 periods; the test had 0/36 false positives and 18/18 power in S2. **Day-ahead held-out days:** the pre-registered FN-GW beats the homogeneous field (31/32) and the H03 plug-in (29/32) but loses to the beta-binomial (9/32) and the empirical (12/32) rivals. The post-hoc GW-NB V3 beats the empirical rival in 20/32 periods and ties the beta-binomial (16/32, +313 nats in total). |
-| D unfitted predictions | unfitted statistics and the model's signature | 1 | **Unfitted shape:** FN-GW covers P(s ≥ 3) in 27/32, but P(s ≥ 5) is heavier than its band in 25/32. **Signature:** pure s^−3/2 rejected 32/32. τ_app (2.4–4.3) matches S1's τ_app(R) calibration within ±0.27, though this is nearly mechanical. The mean tree size is an identity, not a test. |
-| E interventional | predicts the change across a natural experiment | 0 | Not attempted. Natural experiments that would test it: the NE15 room split, the 05-04 merge, and roster joins in #51. |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | **S1:** FN-GW recovers Reed–Frost R0 within 0.01; τ with a cutoff is not identifiable at N ≤ 25. **S2:** the full pipeline on real #20, #42 and #51 timelines. R_c recovers the true contagion R (bias +0.02 to +0.07, up to +0.15 with a strong field). R̂ alone is inflated by up to +0.5 under a pure field. The jitter test fails its guard (17% false positives). The shape test is not specific. **Not checked:** alternative marker rules and embedding novelty. |
+| C adequacy | beats the null hierarchy, day-blocked held-out data | 2 | **Round 2:** the gamma-mixed FN-GW beats one-ratio FN-GW (25/32) and the beta-binomial (21/32) on day-ahead held-out days, and its heterogeneity exceeds the skeleton null in 3/3. **Field null (N0, A2):** HR₁₀ lower CI > 1 in 27/32 periods; the test had 0/36 false positives and 18/18 power in S2. **Day-ahead held-out days:** the pre-registered FN-GW beats the homogeneous field (31/32) and the H03 plug-in (29/32) but loses to the beta-binomial (9/32) and the empirical (12/32) rivals. The post-hoc GW-NB V3 beats the empirical rival in 20/32 periods and ties the beta-binomial (16/32, +313 nats in total). |
+| D unfitted predictions | unfitted statistics and the model's signature | 2 | **Round 2:** the unfitted non-root/root offspring ratio (median 1.52, > 1 in 31/32) matches the fitted mixture (1.50) and excludes every homogeneous reference (≤ 0.91); tail coverage 9/32 → 28/32. **Unfitted shape:** FN-GW covers P(s ≥ 3) in 27/32, but P(s ≥ 5) is heavier than its band in 25/32. **Signature:** pure s^−3/2 rejected 32/32. τ_app (2.4–4.3) matches S1's τ_app(R) calibration within ±0.27, though this is nearly mechanical. The mean tree size is an identity, not a test. |
+| E interventional | predicts the change across a natural experiment | 1 | **Round 2:** NE42 merge/split reversal predicted in sign and size (D +1.29 [+0.74, +2.11] vs +1.09), but skeleton worlds without per-read dilution predict it too; β over 6 boundaries unidentified. Not attempted. Natural experiments that would test it: the NE15 room split, the 05-04 merge, and roster joins in #51. |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 | **Round 2:** exact FN-GW law; α recovered (0.5/1/3), LR size 2–6%; skeleton null; node- vs idea-level discriminator found by synthetic; planted-paraphrase check (bge fails two guards on #42, bracketed). **S1:** FN-GW recovers Reed–Frost R0 within 0.01; τ with a cutoff is not identifiable at N ≤ 25. **S2:** the full pipeline on real #20, #42 and #51 timelines. R_c recovers the true contagion R (bias +0.02 to +0.07, up to +0.15 with a strong field). R̂ alone is inflated by up to +0.5 under a pure field. The jitter test fails its guard (17% false positives). The shape test is not specific. **Not checked:** alternative marker rules and embedding novelty. |
 | G ground truth | agrees with known structure | 1 | In two-room periods (#35–#44), never-exposed agents adopt an idea 13–970× less often than exposed ones within 24 h, consistent with rooms gating spread. But room-specific fields confound this (rooms often worked on different projects). There is no labeled transmission ground truth. |
-| H comparative | beats the named rivals | 1 | **Beats:** the homogeneous field (31/32) and the activity-gain plug-in N3 (29–31/32). **Does not clearly beat:** heterogeneous salience N1 (pre-registered model 9/32; post hoc 16/32). **Simple vs complex contagion:** unresolved, because the bias bracket [0.5, 4.2] straddles both. |
+| H comparative | beats the named rivals | 2 | **Round 2:** beats one-ratio branching, the beta-binomial and node-level overdispersion; convergence wins for paraphrase ideas (stated). **Beats:** the homogeneous field (31/32) and the activity-gain plug-in N3 (29–31/32). **Does not clearly beat:** heterogeneous salience N1 (pre-registered model 9/32; post hoc 16/32). **Simple vs complex contagion:** unresolved, because the bias bracket [0.5, 4.2] straddles both. |
 | I transfer | holds in other same-mode periods, including the holdout | 1 | Subcritical R̂ holds in 32/32 periods across all modes and regimes; HR₁₀ > 1 holds in 27/32 (all 11 regime II/III periods, 16/21 regime I). Magnitudes are regime-dependent. Holdout not run. |
 
 ## Prediction
@@ -253,6 +254,7 @@ Verdict rule A2 (written in every G card at 02:00 UTC, before its run). **4 supp
 | [G42](goalperiod-subhypotheses/G42/README.md) | exploratory (card) | supported | regime III, N_room 11, 3944 trees; R̂ 0.13 [0.12, 0.15]; R_c 0.13; HR₁₀ 45.2 [34.8, 58.9]; P(s ≥ 2) 0.11; s_max 9; tail ok |
 | [G44](goalperiod-subhypotheses/G44/README.md) | exploratory | mixed | regime III, N_room 12, 2917 trees; R̂ 0.20 [0.18, 0.21]; R_c 0.20; HR₁₀ 62.5 [49.4, 79.4]; P(s ≥ 2) 0.16; s_max 7; s ≥ 5 heavier than FN-GW |
 | [G51](goalperiod-subhypotheses/G51/README.md) | exploratory (card) | mixed | regime III, N_room 25, 53355 trees; R̂ 0.22 [0.22, 0.23]; R_c 0.21; HR₁₀ 18.4 [16.9, 20.1]; P(s ≥ 2) 0.18; s_max 26; s ≥ 5 heavier than FN-GW |
+| [NE42](goalperiod-subhypotheses/NE42/README.md) | native (round 2) | mixed | merge/split A-B-A: D +1.29 [+0.74, +2.11] (predicted +1.09; skeleton 1.2–2.6); merged-week ρ 1.05 [0.97, 1.15]; β̂ 1.50 [−0.10, 3.10] over 6 boundaries |
 
 ## Outcome vs prediction
 | # | Prediction (written 01:30 UTC; A1–A5 at 01:57 UTC) | Outcome | Verdict |
@@ -475,9 +477,9 @@ Round 2 runs H34-R1, R4 and R2. R3 is not run (it needs paid LLM labels). R2 doe
 
 #### R4: semantic ideas (embedding-cluster novelty)
 **Semantic idea (H34 embedding rule).**
-- Corpus: every non-holdout chat message (any speaker kind) with ≥ 40 characters, in time order, with its DQ5 raw embedding (fp32, unit norm). Both models: bge-small (384-d) and gte-modernbert (768-d).
+- Corpus: every non-reserved chat message (any speaker kind) with ≥ 40 characters, in time order, with its DQ5 raw embedding (fp32, unit norm). Both models: bge-small (384-d) and gte-modernbert (768-d).
 - Online leader clustering (first-story detection): message m becomes a *use* of every existing seed with cos(m, seed) ≥ θ. If there is none, m founds a new seed (a new idea first used at t_m). Seeds never move, so all seeds are pairwise below θ and drift is bounded.
-- Novelty: an idea of period g is a seed founded in g (the baseline is all earlier non-holdout chat, as for markers). The same 32 periods.
+- Novelty: an idea of period g is a seed founded in g (the baseline is all earlier non-reserved chat, as for markers). The same 32 periods.
 - Thresholds: θ_bge = 0.90 (primary; 0.85 and 0.95 as sensitivity). θ_gte is rate-matched: among 20,000 random agent messages, the share whose most similar earlier message in the same period has cos ≥ θ_gte equals the bge share at its θ. This uses no cascade statistic.
 - Secondary assignment: nearest seed only (one idea per message).
 - The semantic uses then enter the round-1b assembler unchanged (ledger visibility, trees, HR₁₀, the H57 seen/unread placebo, the jitter table), with class code S.
@@ -533,7 +535,7 @@ Round 2 runs H34-R1, R4 and R2. R3 is not run (it needs paid LLM labels). R2 doe
 
 **Verdict rules for the period READMEs (round 2).** G37–G42 get an "NE (round 2)" line with the group values. NE42 is written to `goalperiod-subhypotheses/NE42/`: supported if R2-P1 and R2-P2 pass, failed if β's upper CI < 0.3 and D ≤ 0, mixed otherwise. Replication rows (R1, R4) go to every period README as a short round-2 line; they do not change round-1b verdicts.
 
-#### Synthetic validation, R1 (run 2026-10-05 04:05–04:15 UTC, before any real-data round-2 statistic)
+#### Synthetic validation, R1 (run 2026-10-05 03:53–03:57 UTC, before any real-data round-2 statistic)
 *Code: `analysis/r2_mixture.py synth_a | synth_b`. Data: `r2/mixture/synth_a.parquet`, `synth_b.parquet`.* The FN-GW size law is computed exactly by dynamic programming; it matches 200,000 simulated trees to ±0.001 at N = 4, 14, 26.
 
 **S-R1a, pure worlds** (N 8 / 14 / 25, μ 0.15 / 0.3, 1,000 and 5,000 trees, 8 replicates; 480 fits).
@@ -549,12 +551,12 @@ Round 2 runs H34-R1, R4 and R2. R3 is not run (it needs paid LLM labels). R2 doe
 - The tail band is not specific on the skeleton: it covers homogeneous worlds in 11/27 runs with the weak field and 1/27 with the strong field (tails lighter than the band).
 - The non-root/root ratio is biased up by the skeleton: homogeneous worlds give 0.56–0.91, often above the fitted band (active agents both adopt and spread). Heterogeneous worlds give 0.74–1.51.
 
-#### Amendment R2-A1 (2026-10-05 04:20 UTC, after the R1 synthetic runs, before any real-data round-2 statistic)
+#### Amendment R2-A1 (2026-10-05 03:58 UTC, committed 05765c8, after the R1 synthetic runs, before any real-data round-2 statistic)
 - **R1-P2 and R1-P5 are kept,** but R1-P2's LR cannot tell idea-level from node-level heterogeneity (S-R1a). R1-P5's skeleton null is the boundary (α̂ = 500, LR = 0 in 54/54), so R1-P5 passes in a skeleton period exactly when its LR > 2.71.
 - **R1-P4 becomes the discriminating test,** read two ways: (a) as written, inside the Γ-FN band; (b) against the reference values, homogeneous skeleton ≤ 0.91, node-level NB ≈ 0.8, idea-level mixing ≥ 1.2. A real ratio above 1.0 in a period counts as idea-level (or tree-level) shared R beyond the skeleton and beyond node-level overdispersion. Reading (a) is reported, but the skeleton bias makes its band too narrow.
 - **R1-P1 is kept;** a tail miss now counts against the Γ-FN idealization, as for FN-GW in round 1 (S2), not against heterogeneity.
 
-#### Synthetic validation, R2 (run 2026-10-05 04:35 UTC, before any real-data NE statistic)
+#### Synthetic validation, R2 (run 2026-10-05 04:01–04:02 UTC, before any real-data NE statistic)
 *Code: `analysis/r2_ne.py synth`. Data: `r2/ne/synth.parquet`.* The S2 simulator runs on the real G36–G42 timelines and exposure rows (900 ideas per period, 3 replicates per world). Groups, room sizes and the estimator are the real ones.
 
 | World | β̂ (3 replicates) | NE42 D̂ | ρ̂ (#40) | R2-P4 count |
@@ -567,12 +569,12 @@ Round 2 runs H34-R1, R4 and R2. R3 is not run (it needs paid LLM labels). R2 doe
 - **ρ is calibrated:** 0.83–1.14 in worlds without old-room memory.
 - **R2-P4 is not specific:** the per-pair direction holds in 5–10 of 10 groups in every world.
 
-#### Amendment R2-A2 (2026-10-05 04:40 UTC, after the R2 synthetic runs, before any real-data NE statistic)
+#### Amendment R2-A2 (2026-10-05 04:02 UTC, committed 814891f, after the R2 synthetic runs, before any real-data NE statistic)
 - **R2-P1 and R2-P2 are kept as written,** but they are not specific: worlds without dilution often pass them too.
 - **The discriminating reading of β is against the skeleton references:** β ≈ 1 means that the chance per read falls with room size (dilution beyond the reading structure). β ≈ 1.4–2.5 means a constant chance per read. β ≈ 2.5 means field-like spread. Real β below 1.4 with its upper CI below 2.0 counts as per-read dilution. The same scale applies to D: skeleton references 1.2–2.6, law 1.09.
 - **R2-P4 is reported as descriptive only.**
 
-#### Rate matching and synthetic validation, R4 (run 2026-10-05 04:50–04:55 UTC, before any real semantic idea or tree)
+#### Rate matching and synthetic validation, R4 (run 2026-10-05 04:03–04:04 UTC, before any real semantic idea or tree)
 *Code: `scheme/build_semantic.py ratematch | synth`. Data: `r2/semantic/ratematch.json`, `synth_r4.parquet`.*
 - **Thresholds.** Among 20,000 random agent messages, 47% have an earlier message in the same period at bge cos ≥ 0.90 (84% at 0.85, 14% at 0.95). The rate-matched gte thresholds are 0.877 (primary), 0.820 and 0.937. The 0.95 match (0.937) agrees with DQ5's independent 0.938.
 - **S-R4** (#42 and #51 07-27 → 08-07, both models, simple contagion q 0.015 and field-only worlds, 2 replicates; 16 runs):
@@ -587,12 +589,108 @@ Round 2 runs H34-R1, R4 and R2. R3 is not run (it needs paid LLM labels). R2 doe
 - Planted paraphrases below θ are missed by design (truth over all planted uses is 0.03–0.09 higher than at cos ≥ θ).
 - The messages that join planted ideas are real replies to the real seed message, so they are partly genuine semantic adoptions. Their excess is exposure-locked, so HR₁₀ does not remove it.
 
-#### Amendment R2-A3 (2026-10-05 04:58 UTC, after the R4 synthetic runs, before any real semantic statistic)
+#### Amendment R2-A3 (2026-10-05 04:04 UTC, committed 07264d9, after the R4 synthetic runs, before any real semantic statistic)
 - **Guards.** The pipeline passes every guard on the dense #51 skeleton and fails two on #42 with bge (false adopters 10–14%, R̂ bias up to +0.11). Real semantic R̂ is therefore read with a bias bracket of [0, +0.1] in periods the size of #42 or smaller, and gte is the primary model where the two disagree.
 - **Novelty loss.** About 20% of new ideas whose seed restates an earlier message are lost. This biases the idea count, not R̂ on recovered ideas.
 - R4-P1 to R4-P5 are unchanged.
 
 **Impostors.** Scheduler field: R̂ is per first use, R1 adds a skeleton null, R2 uses boundary fixed effects. Exogenous field: boundary fixed effects absorb each goal change (common to both groups); R4 reports HR₁₀. Shared priors: semantic paraphrases can be co-generated by genre; the seen/unread placebo and HR₁₀ bound it, and no style residualization is applied (stated as open). Convergence: the H57 placebo is reported for R4; R2's R̂_src is not net of convergence (stated as partly).
+
+### Round 2 results (2026-10-05; 32 non-reserved periods, 6 boundaries)
+*Code: `analysis/r2_mixture.py`, `scheme/build_semantic.py`, `analysis/r2_semantic.py`, `analysis/r2_ne.py`, `analysis/r2_figures.py`, `analysis/r2_summarize.py`. Data: `data/processed/H34-idea-cascades/r2/` (21 MB: `mixture/`, `ne/`, `semantic/`, `sem_<model>[_θ]/G<NN>/`). Figures: `figures/r2_obs.pdf`, `figures/r2_obsb.pdf`. 335 rows in `per_period_estimates` (methods `H34.r2_gamma_mixture`, `H34.r2_semantic_bge_small`, `H34.r2_semantic_gte_modernbert`, `H34.r2_room_change`). Rounds 1 and 1b are unchanged on disk and reproduce.*
+
+#### Outcome vs prediction
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| R1-P1 | Γ-FN covers P(s ≥ 3) and P(s ≥ 5) in ≥ 2/3 of periods | **28/32** (FN-GW with one R: 9/32); P(s ≥ 5) alone 31/32 | **pass** |
+| R1-P2 | LR > 2.71 in ≥ 2/3; median α̂ in [0.2, 2] | 31/32; median α̂ 0.96 (0.27–5.3) | **pass** (does not separate idea- from node-level spread, S-R1a) |
+| R1-P3 | beats the beta-binomial in ≥ 1/2 of periods; FN-GW in ≥ 2/3 | 21/32 (+215 nats in total, +170 of them from G51; median +1.2 nats per period); FN-GW 25/32 (+1,184 nats). V3 window: 21/32 and 24/32 | **pass**, small margin outside G51 |
+| R1-P4 | non-root/root ratio inside the Γ-FN band in ≥ 2/3 | (a) 22/32 inside the band; (b) ratio > 1.0 in **31/32** (median 1.52; one-R model 0.80; homogeneous skeleton ≤ 0.91; node-level NB ≈ 0.8) | **pass** (b, the discriminating reading); (a) narrowly |
+| R1-P5 | real α̂ below the skeleton null in ≥ 2 of 3 | 3/3: LR 355 (#20), 50 (#42), 826 (#51); skeleton null LR 0 in 54/54 | **pass** |
+| R4-P1 | semantic R̂ upper CI < 1 in 32/32, both models | 32/32 for bge (median 0.13, 0.02–0.32) and gte (0.11, 0.01–0.33); at θ_bge 0.85: 0.39 (0.17–0.68) | **pass** |
+| R4-P2 | ρ(semantic R̂, marker R̂) > 0.4 | 0.63 (bge), 0.56 (gte); semantic R̂ ≈ 0.5 × marker R̂ | **pass** |
+| R4-P3 | ρ(bge, gte) ≥ 0.7; ratio in [0.8, 1.25] | ρ 0.94; median R̂_gte/R̂_bge 0.89 | **pass** |
+| R4-P4 | HR₁₀ lower CI > 1 and read > unread in ≥ 2/3 | HR₁₀ 32/32 (both); read > unread only **7/32** (both) | **fail** (counts-against met) |
+| R4-P5 | unread/read ratio > 0.56 | median **1.77** (bge), 1.89 (gte); > 1 at θ 0.85 (1.36) and 0.95 (2.98) | **pass**: paraphrase adoption is mostly convergence |
+| R2-P1 | β > 0 (lower CI > 0), CI includes 1 | β̂ 1.50 [−0.10, 3.10] (14 groups, 6 boundaries); b̂ = 0.68 [−0.05, 1.40] | **inconclusive** (CI includes 0) |
+| R2-P2 | NE42 D > 0 (predicted +1.09) | **D +1.29 [+0.74, +2.11]** | **pass** (not specific: skeleton 1.2–2.6) |
+| R2-P3 | merged-week ρ ≥ 0.7, CI includes 1 | **ρ 1.05 [0.97, 1.15]** (1,902 transmissions) | **pass** |
+| R2-P4 | per-pair direction in ≥ 2/3 of groups | 7/10 | descriptive (not specific, R2-A2) |
+
+#### R1: the heavy tail is a gamma mixture of idea-level branching ratios
+- **Fit.** Each idea draws its own R0 from a gamma law; trees grow as finite-room branching with depletion. Two parameters per period: mean μ̂ (median 0.20) and shape α̂ (median 0.96, so the idea-to-idea CV² of R0 is about 1).
+- **Tail.** One branching ratio (FN-GW, round 1b) covers both tail points in 9/32 periods; the mixture covers them in 28/32 (`figures/r2_obs.pdf` a). The four misses (#20, #33, #36, #38) lie just outside the band at P(s ≥ 3).
+- **What kind of heterogeneity.** The likelihood uses tree sizes only. Non-root adopters have 1.5× the offspring of roots (median ratio 1.52; > 1 in 31/32). A single R predicts 0.80 (depletion), node-level overdispersion about 0.8, and the homogeneous skeleton at most 0.91. So an idea (or a tree) that has spread once is more likely to spread again: the spread is shared along the tree, not drawn afresh at each node.
+- **Regimes.** Heterogeneity is larger in regime I (median α̂ 0.73, CV² ≈ 1.4) than in regimes II–III (α̂ 1.8–2.0, CV² ≈ 0.5); G51 has α̂ 3.0.
+- **Forecast.** The mixture beats the beta-binomial in 21/32 periods, but most of the total gain is G51 (+170 of +215 nats); elsewhere the two are close (median +1.2 nats per period). Day-ahead, both over-predict P(s ≥ 5) (0.023 and 0.025 vs 0.014 observed), the within-period drift of round 1.
+- **Semantic trees (secondary).** Paraphrase ideas are less heterogeneous: α̂ ≈ 3, LR > 2.71 in 17–18/32, tail covered in 29–31/32, ratio > 1 (median 1.2), and a tie with the beta-binomial (11/31 bge, 16/30 gte).
+
+#### R4: paraphrase ideas branch half as much, and mostly by convergence
+- **Construction.** Leader clustering at θ_bge 0.90 / θ_gte 0.877 gives about 81,000 seeds from 131,562 messages (61% of messages found a new idea). In the 32 periods: about 73,000 novel ideas and 83,000–84,000 agent first uses per model.
+- **Branching.** Semantic R̂ is subcritical everywhere (median 0.13 bge, 0.11 gte; max upper CI 0.36). It ranks periods like the marker R̂ (ρ 0.56–0.63) at about half the level. The two models agree (ρ 0.94).
+- **The level is set by the threshold.** At θ_bge 0.85 the median R̂ is 0.39 (max 0.68); at 0.95 it is 0.008. A semantic branching ratio is a property of the paraphrase threshold, not of the swarm. It stays below 1 at every threshold tried.
+- **Copying vs convergence.** Adoption is time-locked to visible uses (HR₁₀ lower CI > 1 in 32/32). But uses posted in the last 5 min and not yet read predict a paraphrase *more* than read ones (median ratio 1.8–1.9; read > unread in 7/32; `figures/r2_obsb.pdf` b). For markers the ratio is 0.56. A paraphrase is mostly two agents answering the same stimulus at once; a marker (a name, a link, a number) is more often copied from a message read. Caveat (H54 r2): unread uses are more recent, so the ratio overstates convergence; it does so for markers too, and the gap between the two rules stands.
+- **Bias bracket (R2-A3).** In periods the size of #42 or smaller, semantic R̂ can be inflated by up to +0.1 through replies that join the seed's idea.
+
+#### R2: room changes
+- **The A-B-A reversal holds.** At the merge, the 4 #best agents (room N − 1: 3 → 13) raised their source-based branching from 0.069 to 0.329; the 10 #rest agents (10 → 13) from 0.089 to 0.219. The difference reverses at the split: D = +1.29 [+0.74, +2.11], against +1.09 predicted (NE42 folder).
+- **Rooms leave no trace beyond reading.** In the merged week, ideas pass between former other-room agents at the same per-pair rate as between former room-mates (ρ 1.05 [0.97, 1.15]).
+- **Dilution per read is not identified.** Across 6 boundaries, β̂ = 1.50 [−0.10, 3.10]. The skeleton with a constant chance per read gives 1.4–2.5 and the dilution law gives 1. The CI covers both, and every boundary is also a goal change with large common shocks (e.g. #38 → #39: −1.3 and −1.4 for both groups).
+- **#51 #focus (descriptive).** The 8 agents posting in #focus (08-05 → 08-24) and the 27 in #general have the same source-based branching (0.18 vs 0.19). So per-pair branching is 3.4× higher in #focus [3.2, 3.7], which is just (27 − 1)/(8 − 1) = 3.7: within #51 each agent's ideas reach the same expected number of adopters whatever the room size (full attention conservation), not the law's 2.06. Hoppers read both rooms, so this is not a clean N step.
+
+#### Old → new
+| Quantity | Round 1b | Round 2 |
+| --- | --- | --- |
+| Tail model | one R (FN-GW) covers both tail points in 9/32 | idea-level gamma mixture covers 28/32; α̂ median 0.96 |
+| Source of heavy tails | "idea-level heterogeneity" (reading) | measured: CV² of R0 ≈ 1; shared along trees (non-root/root 1.52 vs ≤ 0.91 for every homogeneous reference) |
+| Best day-ahead rule | GW-NB V3 ties the beta-binomial (16/32) | Γ-FN beats it in 21/32, but the gain is mostly G51 |
+| Idea rule | hashed markers only | + paraphrase ideas (two embeddings): subcritical, R̂ ≈ 0.5 × markers, threshold-dependent level |
+| Convergence share | markers: unread/read 0.56 | paraphrases: unread/read 1.8–1.9 (convergence dominates) |
+| Axis E | not attempted | NE42 A-B-A reversal D +1.29 [+0.74, +2.11]; old rooms leave no trace (ρ 1.05); per-read dilution not identified |
+
+#### Impostors (round 2 additions)
+| Impostor | Round 2 | Status |
+| --- | --- | --- |
+| Scheduler field | R1: the skeleton gives no false heterogeneity (LR 0 in 54/54) and a non-root/root ratio ≤ 0.91. R2: boundary fixed effects; skeleton β references. | removed (R1); partly (R2: goal shocks dominate the noise) |
+| Exogenous field | R2's group difference removes the goal change common to both groups. A group-specific response to the new goal is not removed. | partly |
+| Shared priors | R4 paraphrases can be co-generated by genre; no style residualization. The unread > read result is what co-generation predicts. | open (R4) |
+| Convergence | R4: H57 placebo shows paraphrase adoption is mostly convergence (unread/read 1.8–1.9). R1 and R2 statistics are not net of it. | partly |
+
+#### Scorecard (round 2)
+| Axis | Round 1b | Round 2 | Why |
+| --- | --- | --- | --- |
+| A mapping | 1 | 1 | Paraphrase ideas added; their R̂ level depends on θ (0.008 → 0.39), so the mapping is rule-dependent. |
+| B assumptions | 1 | 1 | The i.i.d.-offspring violation is now modeled (gamma mixture) and its nature tested (shared along trees). Stationarity still fails (day-ahead over-prediction of P(s ≥ 5)). |
+| C adequacy | 1 | 2 | The mixture beats one-R branching (25/32) and the beta-binomial (21/32) on held-out days, and beats the skeleton null for heterogeneity in 3/3. |
+| D unfitted | 1 | 2 | The unfitted non-root/root ratio is predicted by the fitted mixture (median 1.50 vs 1.52 observed) and excluded by every homogeneous reference (31/32); tail coverage 9/32 → 28/32. |
+| E interventional | 0 | 1 | NE42 reversal predicted in sign and size, but skeleton worlds without dilution predict it too; per-read dilution not identified. |
+| F identifiability | 1 | 2 | Exact FN-GW law; α recovered (0.5/1/3), LR size 2–6%; skeleton null; the discriminating statistic found by synthetic (node- vs idea-level); semantic pipeline checked with planted paraphrases (guards fail only for bge on #42, bracketed). |
+| G ground truth | 1 | 1 | Unchanged; ρ 1.05 says rooms act on idea spread only through reading. |
+| H comparative | 1 | 2 | Beats one-R FN-GW, the beta-binomial (21/32) and node-level overdispersion (ratio test); the convergence rival wins for paraphrases (stated). |
+| I transfer | 1 | 1 | 32/32 periods for both idea rules and both models; no reserved-data run. |
+
+#### Constants (proposed for `interpretation/swarm-constants.json`)
+| Symbol | Value | 95% interval | Scope |
+| --- | --- | --- | --- |
+| α_R (gamma shape of idea-level R0; CV² = 1/α) | 0.96 (median) | period range 0.27–5.3; regime I 0.73, regimes II–III 1.8–2.0 | 32 periods, marker ideas, ledger trees |
+| ρ_off (non-root / root offspring) | 1.52 (median) | > 1 in 31/32; homogeneous references ≤ 0.91 | 32 periods, marker ideas |
+| R̂_sem (paraphrase branching, θ_bge 0.90 / θ_gte 0.877) | 0.13 / 0.11 (median) | period range 0.01–0.33; all upper CI ≤ 0.36 | 32 periods; level depends on θ |
+| U/S_sem (HR_unread5 / HR_seen5, paraphrase ideas) | 1.8 (bge) / 1.9 (gte), median | read > unread in 7/32 | 32 periods |
+| D_NE42 (A-B-A branching contrast) | +1.29 | [+0.74, +2.11] | #39 → #40 → #41, 4 groups |
+| ρ_room (merged-week cross/same old-room per-pair rate) | 1.05 | [0.97, 1.15] | #40 |
+
+#### Round 3 redirects
+- **H34-R5. Per-read dilution with a cleaner dose.** Use #51's day-level room sizes and roster joins (NE33) with a within-room, within-goal design, so that goal shocks do not swamp β. Target the skeleton references (1 vs 1.4–2.5) with a power analysis first.
+- **H34-R6. Idea vs tree heterogeneity.** Ideas with several independent trees (several roots) test whether R is a property of the idea or of the seeding moment: the mixture predicts correlated tree sizes within an idea.
+- **H34-R7. Re-freeze `confirm.py`** on ledger visibility with the Γ-FN tail clause (C6 → "Γ-FN covers P(s ≥ 5)") and the non-root/root ratio > 1 clause.
+- **H34-R3 (unchanged).** Claims proper, with Jev labels (needs paid labels).
+
+**Claim that stands:** Idea branching is heterogeneous across ideas: a gamma mixture of idea-level branching ratios (median shape α̂ 0.96, CV² ≈ 1) covers the tree-size tail in 28/32 periods where a single ratio covers 9/32, and adopters out-spread inventors (non-root/root offspring 1.52, > 1 in 31/32, against ≤ 0.91 for every homogeneous reference), so spread is shared along a tree; in the NE42 merge and split, branching tracked the room-size change in a reversal (D +1.29 [+0.74, +2.11]).
+- *Excluded:*
+  - The day-ahead win over the beta-binomial (21/32, mostly G51; small elsewhere).
+  - Per-read attention dilution from room changes (β̂ 1.50 [−0.10, 3.10]; unidentified against the skeleton).
+  - The semantic branching level (threshold-dependent); semantic copying (convergence dominates).
+  - #51 #focus attention conservation (descriptive; hoppers).
 
 ## Notes
 - 2026-10-04: promoted from HH122 by Vivian (usefulness-first batch); wave 2.

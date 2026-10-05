@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (native: lead-designer seeds P(s≥2) ratio 1.11 [0.82, 1.45]; replication mixed, HR₁₀ 25.6)
+**Round 2 (2026-10-05):** replication only; the 1b verdict stands. Gamma-mixed branching α̂ 2.14 [1.73, 2.79], tail covered; semantic R̂ 0.15 (bge) / 0.11 (gte).
 **Role:** native (round 1b: designated lead designers as idea seeders, DQ6; round 1: exploratory)
 **Period:** regime II · mode C · 13 agents at start (median room size 9) · 5 non-holdout days. Setup: Test your game. The village split into #best (GPT-5.4, Opus 4.6, Gemini 3.1 Pro) and #rest to evolve **separate forks** of the RPG.
 
@@ -79,3 +80,17 @@ C (adequacy): HR₁₀ beats the field null (lower CI 20.09). D (unfitted shape)
 **Reading.** Designated lead designers do not seed ideas that spread further than their room-mates' (H29's 1.4× reply premium does not show up in idea branching). The pre-registered negative control was mis-specified: once an idea crosses rooms (almost always without ledger exposure, 97%), it spreads inside the new room through visible exposure, so most cross-room first uses *are* exposed. The crossing events themselves behave as the control intended: rooms gate visible exposure, and ideas cross by independent invention or channels the ledger does not log (artifacts, history search).
 
 **Verdict (H34 here):** mixed (no leader premium; crossing events confirm room gating, post hoc).
+
+## Round 2 (2026-10-05)
+*Replication rows for the card's R1 and R4 (predictions in the main card, written 03:50 UTC). Role: replication; no verdict change.*
+
+| Quantity | Value | Reference |
+| --- | --- | --- |
+| R1 gamma-mixed FN-GW: α̂ (CV² = 1/α), μ̂ | 2.14 [1.73, 2.79], μ̂ 0.291 | LR vs one R: 117.3 (5% point 2.71) |
+| R1 tail: P(s ≥ 3), P(s ≥ 5) | 0.099, 0.0309 | Γ-FN 90% band [0.086, 0.108], [0.0204, 0.0319]: covered |
+| R1 non-root / root offspring (unfitted) | 1.30 | Γ-FN band [1.04, 1.29]; one R 0.81; homogeneous skeleton ≤ 0.91 |
+| R1 day-ahead log score, Γ-FN minus beta-binomial | 11.5 nats | > 0 favours Γ-FN |
+| R4 semantic R̂, bge (θ 0.90) | 0.15 [0.13, 0.17], 1804 first uses | marker R̂ (1b) in the 1b line above |
+| R4 semantic R̂, gte (θ 0.877) | 0.11 [0.09, 0.12], 1845 first uses | |
+| R4 HR₁₀ (bge / gte) | 26.3 / 48.7 | field null 1 |
+| R4 HR_unread5 / HR_seen5 (bge / gte) | 1.10 / 0.99 | copying < 1; marker median 0.56 |

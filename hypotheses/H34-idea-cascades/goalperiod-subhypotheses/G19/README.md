@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.23, HR₁₀ 8.4 [6.7, 10.8], tail heavy; H57 placebo HR unread/seen 2.9/5.1)
+**Round 2 (2026-10-05):** replication only; the 1b verdict stands. Gamma-mixed branching α̂ 0.62 [0.51, 0.84], tail covered; semantic R̂ 0.29 (bge) / 0.27 (gte).
 **Role:** replication (exploratory)
 **Period:** regime I · mode C · 7 agents at start (median room size 7) · 10 non-holdout days. Setup: Make a popular daily puzzle game. Many candidate concepts (Chronos, Huedle, Maplink, …) were brainstormed, then the swarm converged and shipped.
 
@@ -53,3 +54,17 @@ C (adequacy): HR₁₀ beats the field null (lower CI 2.79). D (unfitted shape):
 - Censoring check: R̂ without trees rooted on the last day = 0.225.
 - Root vs non-root mean offspring 0.183 vs 0.324 (GW assumes equal).
 - Root types: invented 0.96, from humans 0.000, field (unexposed) 0.035; 0.89 of non-seed first uses were visibly exposed.
+
+## Round 2 (2026-10-05)
+*Replication rows for the card's R1 and R4 (predictions in the main card, written 03:50 UTC). Role: replication; no verdict change.*
+
+| Quantity | Value | Reference |
+| --- | --- | --- |
+| R1 gamma-mixed FN-GW: α̂ (CV² = 1/α), μ̂ | 0.62 [0.51, 0.84], μ̂ 0.197 | LR vs one R: 273.0 (5% point 2.71) |
+| R1 tail: P(s ≥ 3), P(s ≥ 5) | 0.071, 0.0219 | Γ-FN 90% band [0.054, 0.074], [0.0156, 0.0265]: covered |
+| R1 non-root / root offspring (unfitted) | 1.91 | Γ-FN band [1.49, 2.04]; one R 0.78; homogeneous skeleton ≤ 0.91 |
+| R1 day-ahead log score, Γ-FN minus beta-binomial | 1.2 nats | > 0 favours Γ-FN |
+| R4 semantic R̂, bge (θ 0.90) | 0.29 [0.28, 0.31], 2970 first uses | marker R̂ (1b) in the 1b line above |
+| R4 semantic R̂, gte (θ 0.877) | 0.27 [0.26, 0.29], 2953 first uses | |
+| R4 HR₁₀ (bge / gte) | 6.5 / 6.8 | field null 1 |
+| R4 HR_unread5 / HR_seen5 (bge / gte) | 2.17 / 2.57 | copying < 1; marker median 0.56 |

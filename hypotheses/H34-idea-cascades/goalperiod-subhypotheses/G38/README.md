@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.26, HR₁₀ 119.8 [102.0, 141.2], tail heavy; H57 placebo HR unread/seen 42.5/138.8)
+**Round 2 (2026-10-05):** replication only; the 1b verdict stands. Gamma-mixed branching α̂ 5.30 [4.26, 7.97], tail not covered; semantic R̂ 0.14 (bge) / 0.09 (gte). **NE (round 2), boundary #37→#38:** #best→#best (N 3→6): Δ ln R_src -0.10 [-0.37, +0.24] vs predicted +0.41; #rest→#best (N 7→6): Δ ln R_src -1.10 [-1.47, -0.72] vs predicted -0.08; #rest→#rest (N 7→8): Δ ln R_src +0.46 [+0.28, +0.66] vs predicted +0.07.
 **Role:** replication (exploratory)
 **Period:** regime III · mode C · 12 agents at start (median room size 8) · 17 non-holdout days. Setup: Second charity fundraiser, a year after #1. Opened with an operator correcting the agents' belief about the Year-1 total ($1,984). Outreach approval (G) arrives mid-goal.
 
@@ -55,3 +56,19 @@ C (adequacy): HR₁₀ beats the field null (lower CI 66.69). D (unfitted shape)
 - Censoring check: R̂ without trees rooted on the last day = 0.263.
 - Root vs non-root mean offspring 0.247 vs 0.284 (GW assumes equal).
 - Root types: invented 0.98, from humans 0.000, field (unexposed) 0.020; 0.94 of non-seed first uses were visibly exposed.
+
+## Round 2 (2026-10-05)
+*Replication rows for the card's R1 and R4 (predictions in the main card, written 03:50 UTC). Role: replication; no verdict change.*
+
+| Quantity | Value | Reference |
+| --- | --- | --- |
+| R1 gamma-mixed FN-GW: α̂ (CV² = 1/α), μ̂ | 5.30 [4.26, 7.97], μ̂ 0.269 | LR vs one R: 30.9 (5% point 2.71) |
+| R1 tail: P(s ≥ 3), P(s ≥ 5) | 0.090, 0.0076 | Γ-FN 90% band [0.072, 0.085], [0.0093, 0.0140]: not covered |
+| R1 non-root / root offspring (unfitted) | 1.17 | Γ-FN band [0.86, 1.00]; one R 0.77; homogeneous skeleton ≤ 0.91 |
+| R1 day-ahead log score, Γ-FN minus beta-binomial | -21.2 nats | > 0 favours Γ-FN |
+| R4 semantic R̂, bge (θ 0.90) | 0.14 [0.12, 0.15], 2676 first uses | marker R̂ (1b) in the 1b line above |
+| R4 semantic R̂, gte (θ 0.877) | 0.09 [0.08, 0.10], 2915 first uses | |
+| R4 HR₁₀ (bge / gte) | 32.4 / 58.3 | field null 1 |
+| R4 HR_unread5 / HR_seen5 (bge / gte) | 1.25 / 1.27 | copying < 1; marker median 0.56 |
+
+**R2 native, boundary #37→#38** (role native; dilution rule R̂ ∝ (N − 1)^0.451 written before looking): #best→#best (N 3→6): Δ ln R_src -0.10 [-0.37, +0.24] vs predicted +0.41; #rest→#best (N 7→6): Δ ln R_src -1.10 [-1.47, -0.72] vs predicted -0.08; #rest→#rest (N 7→8): Δ ln R_src +0.46 [+0.28, +0.66] vs predicted +0.07. The boundary is also a goal change, so only the difference between groups is read (card, R2).

@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.23, HR₁₀ 26.3 [23.9, 29.2], tail heavy; H57 placebo HR unread/seen 8.8/49.4)
+**Round 2 (2026-10-05):** replication only; the 1b verdict stands. Gamma-mixed branching α̂ 2.96 [2.74, 3.32], tail covered; semantic R̂ 0.05 (bge) / 0.06 (gte).
 **Role:** replication (exploratory)
 **Period:** regime III · mode I/K · 21 agents at start (median room size 25) · 45 non-holdout days. Setup: Standing goal: each agent maximizes a private assigned role (Table IV of the overview). 21 → 32 agents, 8 h/day, the longest stationary-ish window in the data (~12k agent-hours). Some roles are held by two agents (direct competition). Humans occasionally reassign roles.
 
@@ -57,3 +58,17 @@ C (adequacy): HR₁₀ beats the field null (lower CI 16.86). D (unfitted shape)
 - Censoring check: R̂ without trees rooted on the last day = 0.221.
 - Root vs non-root mean offspring 0.206 vs 0.276 (GW assumes equal).
 - Root types: invented 0.97, from humans 0.000, field (unexposed) 0.028; 0.91 of non-seed first uses were visibly exposed.
+
+## Round 2 (2026-10-05)
+*Replication rows for the card's R1 and R4 (predictions in the main card, written 03:50 UTC). Role: replication; no verdict change.*
+
+| Quantity | Value | Reference |
+| --- | --- | --- |
+| R1 gamma-mixed FN-GW: α̂ (CV² = 1/α), μ̂ | 2.96 [2.74, 3.32], μ̂ 0.211 | LR vs one R: 825.9 (5% point 2.71) |
+| R1 tail: P(s ≥ 3), P(s ≥ 5) | 0.057, 0.0124 | Γ-FN 90% band [0.057, 0.061], [0.0105, 0.0125]: covered |
+| R1 non-root / root offspring (unfitted) | 1.30 | Γ-FN band [1.28, 1.39]; one R 0.93; homogeneous skeleton ≤ 0.91 |
+| R1 day-ahead log score, Γ-FN minus beta-binomial | 169.9 nats | > 0 favours Γ-FN |
+| R4 semantic R̂, bge (θ 0.90) | 0.05 [0.05, 0.06], 33260 first uses | marker R̂ (1b) in the 1b line above |
+| R4 semantic R̂, gte (θ 0.877) | 0.06 [0.05, 0.06], 32917 first uses | |
+| R4 HR₁₀ (bge / gte) | 24.9 / 30.5 | field null 1 |
+| R4 HR_unread5 / HR_seen5 (bge / gte) | 0.36 / 0.40 | copying < 1; marker median 0.56 |

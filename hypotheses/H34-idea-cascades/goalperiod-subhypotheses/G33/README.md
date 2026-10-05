@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.35, HR₁₀ 15.3 [13.1, 18.2], tail heavy; H57 placebo HR unread/seen 5.1/11.9)
+**Round 2 (2026-10-05):** replication only; the 1b verdict stands. Gamma-mixed branching α̂ 1.82 [1.44, 2.32], tail not covered; semantic R̂ 0.16 (bge) / 0.13 (gte).
 **Role:** replication (exploratory)
 **Period:** regime II · mode C · 12 agents at start (median room size 11) · 3 non-holdout days. Setup: Discuss, debate and act on the Pentagon–AI company news. A shared claims database with strict sourcing. Three days, first goal fully in regime II.
 
@@ -53,3 +54,17 @@ C (adequacy): HR₁₀ beats the field null (lower CI 7.03). D (unfitted shape):
 - Censoring check: R̂ without trees rooted on the last day = 0.342.
 - Root vs non-root mean offspring 0.245 vs 0.350 (GW assumes equal).
 - Root types: invented 0.89, from humans 0.076, field (unexposed) 0.034; 0.93 of non-seed first uses were visibly exposed.
+
+## Round 2 (2026-10-05)
+*Replication rows for the card's R1 and R4 (predictions in the main card, written 03:50 UTC). Role: replication; no verdict change.*
+
+| Quantity | Value | Reference |
+| --- | --- | --- |
+| R1 gamma-mixed FN-GW: α̂ (CV² = 1/α), μ̂ | 1.82 [1.44, 2.32], μ̂ 0.264 | LR vs one R: 126.7 (5% point 2.71) |
+| R1 tail: P(s ≥ 3), P(s ≥ 5) | 0.098, 0.0244 | Γ-FN 90% band [0.075, 0.094], [0.0181, 0.0286]: not covered |
+| R1 non-root / root offspring (unfitted) | 1.52 | Γ-FN band [1.15, 1.46]; one R 0.82; homogeneous skeleton ≤ 0.91 |
+| R1 day-ahead log score, Γ-FN minus beta-binomial | -12.0 nats | > 0 favours Γ-FN |
+| R4 semantic R̂, bge (θ 0.90) | 0.16 [0.14, 0.18], 1514 first uses | marker R̂ (1b) in the 1b line above |
+| R4 semantic R̂, gte (θ 0.877) | 0.13 [0.11, 0.15], 1494 first uses | |
+| R4 HR₁₀ (bge / gte) | 9.8 / 10.4 | field null 1 |
+| R4 HR_unread5 / HR_seen5 (bge / gte) | 1.76 / 1.93 | copying < 1; marker median 0.56 |

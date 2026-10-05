@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** supported (ledger visibility: R̂ 0.19, HR₁₀ 3.5 [2.2, 5.5], tail ok; H57 placebo HR unread/seen 1.2/1.9)
+**Round 2 (2026-10-05):** replication only; the 1b verdict stands. Gamma-mixed branching α̂ 0.32 [0.26, 0.40], tail covered; semantic R̂ 0.31 (bge) / 0.29 (gte).
 **Role:** replication (exploratory)
 **Period:** regime I · mode K · 10 agents at start (median room size 10) · 5 non-holdout days. Setup: Online chess tournament: agents play each other on Lichess.
 
@@ -53,3 +54,17 @@ C (adequacy): HR₁₀ beats the field null (lower CI 1.57). D (unfitted shape):
 - Censoring check: R̂ without trees rooted on the last day = 0.210.
 - Root vs non-root mean offspring 0.146 vs 0.345 (GW assumes equal).
 - Root types: invented 0.99, from humans 0.000, field (unexposed) 0.008; 0.97 of non-seed first uses were visibly exposed.
+
+## Round 2 (2026-10-05)
+*Replication rows for the card's R1 and R4 (predictions in the main card, written 03:50 UTC). Role: replication; no verdict change.*
+
+| Quantity | Value | Reference |
+| --- | --- | --- |
+| R1 gamma-mixed FN-GW: α̂ (CV² = 1/α), μ̂ | 0.32 [0.26, 0.40], μ̂ 0.137 | LR vs one R: 196.3 (5% point 2.71) |
+| R1 tail: P(s ≥ 3), P(s ≥ 5) | 0.044, 0.0168 | Γ-FN 90% band [0.033, 0.059], [0.0101, 0.0269]: covered |
+| R1 non-root / root offspring (unfitted) | 2.32 | Γ-FN band [2.35, 3.61]; one R 0.80; homogeneous skeleton ≤ 0.91 |
+| R1 day-ahead log score, Γ-FN minus beta-binomial | 9.0 nats | > 0 favours Γ-FN |
+| R4 semantic R̂, bge (θ 0.90) | 0.31 [0.27, 0.35], 916 first uses | marker R̂ (1b) in the 1b line above |
+| R4 semantic R̂, gte (θ 0.877) | 0.29 [0.25, 0.32], 887 first uses | |
+| R4 HR₁₀ (bge / gte) | 2.6 / 3.8 | field null 1 |
+| R4 HR_unread5 / HR_seen5 (bge / gte) | 3.27 / 4.54 | copying < 1; marker median 0.56 |

@@ -2,6 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (ledger visibility: R̂ 0.13, HR₁₀ 49.8 [38.5, 66.7], tail ok; H57 placebo HR unread/seen 13.3/47.1)
+**Round 2 (2026-10-05):** replication only; the 1b verdict stands. Gamma-mixed branching α̂ 1.36 [0.97, 2.61], tail covered; semantic R̂ 0.08 (bge) / 0.06 (gte). **NE (round 2), boundary #41→#42:** #best→#best (N 4→5): Δ ln R_src -0.30 [-0.52, -0.11] vs predicted +0.13; #rest→#rest (N 11→10): Δ ln R_src -0.67 [-0.79, -0.56] vs predicted -0.05.
 **Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents at start (median room size 11) · 5 non-holdout days. Setup: Each agent runs a YouTube channel (1–10 videos); several agents read "1–10" as "10".
 
@@ -59,3 +60,19 @@ C (adequacy): HR₁₀ beats the field null (lower CI 34.81). D (unfitted shape)
 - Censoring check: R̂ without trees rooted on the last day = 0.141.
 - Root vs non-root mean offspring 0.124 vs 0.193 (GW assumes equal).
 - Root types: invented 0.99, from humans 0.001, field (unexposed) 0.007; 0.95 of non-seed first uses were visibly exposed.
+
+## Round 2 (2026-10-05)
+*Replication rows for the card's R1 and R4 (predictions in the main card, written 03:50 UTC). Role: replication; no verdict change.*
+
+| Quantity | Value | Reference |
+| --- | --- | --- |
+| R1 gamma-mixed FN-GW: α̂ (CV² = 1/α), μ̂ | 1.36 [0.97, 2.61], μ̂ 0.125 | LR vs one R: 49.6 (5% point 2.71) |
+| R1 tail: P(s ≥ 3), P(s ≥ 5) | 0.031, 0.0030 | Γ-FN 90% band [0.021, 0.033], [0.0015, 0.0056]: covered |
+| R1 non-root / root offspring (unfitted) | 1.59 | Γ-FN band [1.19, 1.95]; one R 0.89; homogeneous skeleton ≤ 0.91 |
+| R1 day-ahead log score, Γ-FN minus beta-binomial | -2.8 nats | > 0 favours Γ-FN |
+| R4 semantic R̂, bge (θ 0.90) | 0.08 [0.06, 0.10], 1012 first uses | marker R̂ (1b) in the 1b line above |
+| R4 semantic R̂, gte (θ 0.877) | 0.06 [0.04, 0.07], 1013 first uses | |
+| R4 HR₁₀ (bge / gte) | 15.5 / 24.9 | field null 1 |
+| R4 HR_unread5 / HR_seen5 (bge / gte) | 1.23 / 1.30 | copying < 1; marker median 0.56 |
+
+**R2 native, boundary #41→#42** (role native; dilution rule R̂ ∝ (N − 1)^0.451 written before looking): #best→#best (N 4→5): Δ ln R_src -0.30 [-0.52, -0.11] vs predicted +0.13; #rest→#rest (N 11→10): Δ ln R_src -0.67 [-0.79, -0.56] vs predicted -0.05. The boundary is also a goal change, so only the difference between groups is read (card, R2).

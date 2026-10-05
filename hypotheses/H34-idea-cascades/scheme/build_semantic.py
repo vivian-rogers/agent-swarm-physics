@@ -215,10 +215,18 @@ def _binit(model, theta, nearest):
     _FS = pl.read_parquet(od / "first_seen.parquet")
 
 
+def room_size(inp: dict) -> int:
+    """Median room size (recipients + sender) of agent messages; same rule as scheme/build.py room_size."""
+    am = inp["kind"] == 0
+    E = inp["E"][am]
+    snd = inp["sender"][am].astype(np.int64)
+    inc = E[np.arange(len(snd)), snd]
+    return int(np.median(E.sum(1) + (~inc).astype(int)))
+
+
 def build_period(task):
     g, out_tag = task
     import h34core as C
-    from build import room_size
     t0 = time.time()
     days = _SH.period_days(g)
     chat = _SH.chat.filter((pl.col("goal_no") == g) & pl.col("pt_date").is_in(days))

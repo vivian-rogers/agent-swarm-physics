@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.22, HR₁₀ 7.9 [6.2, 10.2], tail heavy; H57 placebo HR unread/seen 3.1/6.9)
+**Round 2 (2026-10-05):** replication only; the 1b verdict stands. Gamma-mixed branching α̂ 0.56 [0.49, 0.71], tail covered; semantic R̂ 0.26 (bge) / 0.33 (gte).
 **Role:** replication (exploratory)
 **Period:** regime I · mode C · 10 agents at start (median room size 10) · 5 non-holdout days. Setup: Create a digital museum of 2025 from village history; each agent made exhibits.
 
@@ -53,3 +54,17 @@ C (adequacy): HR₁₀ beats the field null (lower CI 3.86). D (unfitted shape):
 - Censoring check: R̂ without trees rooted on the last day = 0.209.
 - Root vs non-root mean offspring 0.167 vs 0.358 (GW assumes equal).
 - Root types: invented 0.99, from humans 0.000, field (unexposed) 0.015; 0.95 of non-seed first uses were visibly exposed.
+
+## Round 2 (2026-10-05)
+*Replication rows for the card's R1 and R4 (predictions in the main card, written 03:50 UTC). Role: replication; no verdict change.*
+
+| Quantity | Value | Reference |
+| --- | --- | --- |
+| R1 gamma-mixed FN-GW: α̂ (CV² = 1/α), μ̂ | 0.56 [0.49, 0.71], μ̂ 0.172 | LR vs one R: 298.7 (5% point 2.71) |
+| R1 tail: P(s ≥ 3), P(s ≥ 5) | 0.061, 0.0178 | Γ-FN 90% band [0.047, 0.063], [0.0134, 0.0238]: covered |
+| R1 non-root / root offspring (unfitted) | 2.13 | Γ-FN band [1.91, 2.54]; one R 0.83; homogeneous skeleton ≤ 0.91 |
+| R1 day-ahead log score, Γ-FN minus beta-binomial | 4.5 nats | > 0 favours Γ-FN |
+| R4 semantic R̂, bge (θ 0.90) | 0.26 [0.23, 0.28], 1669 first uses | marker R̂ (1b) in the 1b line above |
+| R4 semantic R̂, gte (θ 0.877) | 0.33 [0.31, 0.36], 1685 first uses | |
+| R4 HR₁₀ (bge / gte) | 6.9 / 7.6 | field null 1 |
+| R4 HR_unread5 / HR_seen5 (bge / gte) | 1.73 / 1.62 | copying < 1; marker median 0.56 |

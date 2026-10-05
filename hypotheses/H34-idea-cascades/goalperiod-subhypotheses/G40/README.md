@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (ledger visibility: R̂ 0.24, HR₁₀ 19.3 [16.4, 22.8], tail heavy; H57 placebo HR unread/seen 27.2/33.6)
+**Round 2 (2026-10-05):** replication only; the 1b verdict stands. Gamma-mixed branching α̂ 1.34 [1.19, 1.54], tail covered; semantic R̂ 0.13 (bge) / 0.07 (gte). **NE (round 2), boundary #39→#40:** #best→#universe (N 4→14): Δ ln R_src +1.56 [+1.10, +2.33] vs predicted +0.66; #rest→#universe (N 11→14): Δ ln R_src +0.90 [+0.73, +1.08] vs predicted +0.12.
 **Role:** replication (exploratory)
 **Period:** regime III · mode C · 15 agents at start (median room size 14) · 5 non-holdout days. Setup: Connect the worlds into one 3D universe; about 15 agents coordinated in a dedicated #universe-coordination room.
 
@@ -55,3 +56,19 @@ C (adequacy): HR₁₀ beats the field null (lower CI 15.64). D (unfitted shape)
 - Censoring check: R̂ without trees rooted on the last day = 0.232.
 - Root vs non-root mean offspring 0.198 vs 0.364 (GW assumes equal).
 - Root types: invented 0.99, from humans 0.001, field (unexposed) 0.009; 0.97 of non-seed first uses were visibly exposed.
+
+## Round 2 (2026-10-05)
+*Replication rows for the card's R1 and R4 (predictions in the main card, written 03:50 UTC). Role: replication; no verdict change.*
+
+| Quantity | Value | Reference |
+| --- | --- | --- |
+| R1 gamma-mixed FN-GW: α̂ (CV² = 1/α), μ̂ | 1.34 [1.19, 1.54], μ̂ 0.208 | LR vs one R: 240.0 (5% point 2.71) |
+| R1 tail: P(s ≥ 3), P(s ≥ 5) | 0.069, 0.0181 | Γ-FN 90% band [0.057, 0.070], [0.0136, 0.0200]: covered |
+| R1 non-root / root offspring (unfitted) | 1.86 | Γ-FN band [1.45, 1.75]; one R 0.88; homogeneous skeleton ≤ 0.91 |
+| R1 day-ahead log score, Γ-FN minus beta-binomial | -1.5 nats | > 0 favours Γ-FN |
+| R4 semantic R̂, bge (θ 0.90) | 0.13 [0.11, 0.16], 1124 first uses | marker R̂ (1b) in the 1b line above |
+| R4 semantic R̂, gte (θ 0.877) | 0.07 [0.05, 0.08], 1233 first uses | |
+| R4 HR₁₀ (bge / gte) | 3.1 / 8.4 | field null 1 |
+| R4 HR_unread5 / HR_seen5 (bge / gte) | 1.74 / 2.17 | copying < 1; marker median 0.56 |
+
+**R2 native, boundary #39→#40** (role native; dilution rule R̂ ∝ (N − 1)^0.451 written before looking): #best→#universe (N 4→14): Δ ln R_src +1.56 [+1.10, +2.33] vs predicted +0.66; #rest→#universe (N 11→14): Δ ln R_src +0.90 [+0.73, +1.08] vs predicted +0.12. The boundary is also a goal change, so only the difference between groups is read (card, R2).
