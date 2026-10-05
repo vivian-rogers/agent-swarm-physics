@@ -7,3 +7,5 @@
 *.toc
 *Notes.bib
 *.synctex.gz
+*.nav
+*.snm
