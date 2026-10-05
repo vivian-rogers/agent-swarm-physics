@@ -5,6 +5,11 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-04 — Theses slide deck
+
+- Built `writeup/slides/theses-slides.tex` (beamer, 16:9, 16 pages): title slide plus one slide per top-15 EU thesis (H44, H50, H38, H08, H15, H54, H40, H46, H02, H69, H05, H36, H13, H67, H16). Each slide: claim title, credence/EU chips, figure, three short columns (physics picture, what we found, what to do). Content condensed from `writeup/hypothesis-summary-writeup/entries/`.
+- Redid `writeup/figures/slide_motivation2.png` (Motivation II slide figure) with a cleaner layout.
+
 ## 2026-10-04 (UTC)
 
 - **Round 1 complete for all 132 hypotheses.** Last four: H125 failed (kickoff response overdamped, no undershoot, power 1.00); H127 failed as posed (agents adopt a new goal within the read-out call, 74%, not by gradual catch-up); H126 failed (a goal lowers k_off as well as raising k_on: a symmetric field); H131 narrowed (antagonism off by the first post-read reply, 0/21; read vs clock untestable). All scored. **Paper started** (`writeup/paper/main.tex`): Claude added as co-author with the spark (TikZ, `claudespark.tex`); four section agents drafting results.

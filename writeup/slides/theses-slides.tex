@@ -1,0 +1,157 @@
+% Slides: the 15 theses with the highest estimated usefulness, one slide each.
+% Build: cd writeup/slides && pdflatex theses-slides && pdflatex theses-slides
+\documentclass[aspectratio=169,10pt]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\graphicspath{{../visuals/}{../../hypotheses/}}
+\input{../paper/claudespark}
+
+\definecolor{ink}{HTML}{1A1A1A}\definecolor{ink2}{HTML}{555555}\definecolor{muted}{HTML}{8C8C8C}
+\definecolor{good}{HTML}{0CA30C}\definecolor{mid}{HTML}{8C8C8C}\definecolor{bad}{HTML}{D03B3B}
+\definecolor{rule}{HTML}{E3E3E3}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{normal text}{fg=ink}
+\setbeamercolor{frametitle}{fg=ink,bg=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{frametitle}{\vspace*{0.35em}\insertframetitle\par\vspace{-0.1em}{\color{rule}\rule{\linewidth}{0.6pt}}}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{muted}\insertframenumber\ /\ \inserttotalframenumber}\hspace*{0.8em}\vspace*{0.5em}}
+\setbeamersize{text margin left=0.9em,text margin right=0.9em}
+
+% \thesis{id}{claim}{figure}{picture}{found}{use}{credence}{EU}{model}
+\newcommand{\chip}[2]{\tikz[baseline=(c.base)]\node[fill=#1,text=white,rounded corners=2pt,inner sep=2.5pt,font=\scriptsize\bfseries](c){#2};}
+\newcommand{\col}[2]{\begin{column}{0.322\textwidth}{\scriptsize\color{muted}\textbf{#1}}\\[0.15em]{\footnotesize #2}\end{column}}
+\newcommand{\thesis}[9]{%
+\begin{frame}{#2}
+\vspace{-0.3em}
+{\scriptsize\chip{ink}{#1}\ \chip{good}{credence #7}\ \chip{mid}{EU #8}\ \ {\color{muted}model: #9}}\par\vspace{0.35em}
+\centering\includegraphics[height=0.52\textheight,width=\linewidth,keepaspectratio]{#3}\par\vspace{0.35em}
+\begin{columns}[T,onlytextwidth]
+\col{Physics picture}{#4}\col{What we found}{#5}\col{What to do}{#6}
+\end{columns}
+\end{frame}}
+
+\title{The 15 most useful theses}
+\subtitle{Agent swarm physics on the AI Village record}
+\author{Claude Opus 5.5 and Vivian Rogers}
+\date{2026-10-04}
+
+\begin{document}
+\begin{frame}
+\vfill
+{\Large\bfseries Towards a thermodynamics of agent swarms}\par\vspace{0.3em}
+{\color{ink2}The 15 theses with the highest estimated usefulness, one slide each}\par\vspace{1.2em}
+{\small Claude Opus 5.5\,\claudespark\ \ and\ \ Vivian Rogers}\par\vspace{1.2em}
+{\scriptsize\color{muted}
+EU = credence $\times$ value if true. Two Claude judges (one blind) gave both numbers.\\
+132 hypotheses tested on the AI Village record (AI Digest). No thesis has passed a confirmation test on reserved data yet.}
+\vfill
+\end{frame}
+
+\thesis{H44}{A context wipe costs output, but the agent does not heat up}
+{H44-context-wipe/fig.pdf}
+{The wipe is a quench: it sets the task field to zero. Does it shift the call mix (field) or make it random (temperature)?}
+{Read share 0.22$\to$0.47 at the first call, relaxes in 5--7 calls. Commits $-38\%$. Entropy \emph{falls}: no temperature pulse. Loops recur 16\% vs 72\%.}
+{The 40-call cap is a dial: it costs 4--11\% of output and breaks most command loops. Point a wiped agent at its files.}
+{0.88}{3.23}{kinetic Ising (02)}
+
+\thesis{H50}{Activity follows the scheduler; talk moves one read-out call at a time}
+{H50-field-vs-coupling-transfer-lag/fig.pdf}
+{A field reaches all agents at once (zero lag). A coupling passes through a message, so its lag is a whole number of calls.}
+{The daily start/stop explains 0.6 of activity co-movement. Talk coupling: onset at hop 1 in 45/45 units, never at hop 0.}
+{Do not read synchrony as influence. Name the recipient: jump 0.17 with a name, 0.004 without.}
+{0.85}{2.98}{kinetic Ising (02)}
+
+\thesis{H38}{The runner, not the platform, makes most synchrony}
+{H38-platform-stalls/fig.pdf}
+{Curie--Weiss spins plus a shared on/off field. The field inflates the variance of $M$ and looks like coupling.}
+{Joint silences fill 5\% of minutes; 78\% fall outside the run. 72--83\% of regime-III co-activation is the start/stop schedule.}
+{Trim each day to the window when all agents run, then draw nulls. Do not alert on joint silences.}
+{0.90}{2.93}{inverse Ising (01)}
+
+\thesis{H08}{A message acts only at the call that receives it}
+{H08-context-is-the-coupling/fig.pdf}
+{Each agent has a visible spin and a hidden field (unread messages). The call reads and clears the field: one channel per call.}
+{Response jumps at the receiving call in 17/17 periods; zero at the call in flight. Placebo room: $\pm0.15$\,pt.}
+{Coupling delay = call cadence ($\approx$15\,s to 2\,min). Send before the target's next call, and name it.}
+{0.91}{2.88}{kinetic Ising (02)}
+
+\thesis{H15}{Memory loss costs nothing visible; a context wipe costs a tenth of output}
+{H15-semantic-information-scrambles/figures/summary_obs.pdf}
+{Kolchinsky--Wolpert: information is semantic if its loss lowers viability. Scramble one store, measure the drop.}
+{Memory loss: no day-scale cost. Forced wipe: commits $-39\%$ for 10 calls. A longer memory note does not help.}
+{Raise the cap or carry task state across the reset. Do not spend effort to protect memory files.}
+{0.78}{2.73}{semantic info (04)}
+
+\thesis{H54}{The kickoff text sets the day-1 target}
+{H54-kickoff-quench-target/fig.pdf}
+{The kickoff is a quench and a field on vector spins. The day-1 mean should point at its own kickoff text.}
+{Own kickoff ranks first in 18/33 periods ($p=3\times10^{-6}$). In \#51 each agent lands on its own private goal (0.95).}
+{Write the shared target into the kickoff. To move one agent, rewrite its goal text. ``More specific'' does not tighten.}
+{0.92}{2.60}{vector spins (11)}
+
+\thesis{H40}{Agents couple per model call, not per minute}
+{H40-call-clock-coupling/fig.pdf}
+{Glauber dynamics: one call = one update attempt. Call clock gives $\eta=0$; wall clock gives $\eta=1$.}
+{Computer-use scaffold: $\eta=0.00\pm0.05$. Per-hour coupling scales with call rate (slope 1.0). Chat loop (regime I): $\eta=0.5$.}
+{Cadence is a coupling knob. Halve the call interval: reply coupling $\times1.5$. Long batch jobs decouple.}
+{0.72}{2.52}{kinetic Ising (02)}
+
+\thesis{H46}{Style is a fingerprint, not a conserved charge}
+{H46-style-conserved-charge/figures/summary_obs.pdf}
+{Is style a charge of the weights that no collision changes? Boundaries (goal switch, wipe) are the collisions.}
+{Style moves at goal switches and wipes. But it identifies agents at 0.76 vs 0.51 for content. It drifts as context fills.}
+{Use the 20 style rates to attribute messages or flag a model swap. Compare at the same context position.}
+{0.75}{2.44}{vector spins (11)}
+
+\thesis{H02}{Activity timing does not show who influences whom}
+{H02-couplings-are-real/figures/summary_obs2.pdf}
+{Kinetic inverse Ising on 1-min spins. A common field (the daily schedule) also makes spins move together.}
+{Pairwise couplings sit at the null floor. All known leaders missed. The regime-III collective coupling was day edges (8/8$\to$2/8).}
+{Do not read synchrony as coordination. To find who steers, measure who replies after whom.}
+{0.94}{2.35}{inverse Ising (01)}
+
+\thesis{H69}{Restatement loops copy the context window}
+{H69-restatement-loops/fig.pdf}
+{A loop is a fixed point: the agent reads its own recent text and writes it again. A wipe should break it.}
+{In-context statements are copied $3.4\times$ more than wiped ones (4/4 periods). A wipe: exit $\times2.4$, onset $\times0.54$.}
+{Trim the agent's own chat from its context. Nudges do not break loops (0.81).}
+{0.85}{2.34}{copying (08)}
+
+\thesis{H05}{Rooms couple chat only through reading}
+{H05-rooms-cut/fig.pdf}
+{Rooms as two coupled spin blocks. A cut removes the cross-room reads, so $J_\mathrm{out}\to0$.}
+{Within-room $>$ cross-room talk coupling in 6/6 windows. With read counts in the model, co-location adds nothing. Work ignores rooms.}
+{A room is a read filter. To decouple two agents, stop them reading each other. Rooms do not divide work.}
+{0.88}{2.20}{kinetic Ising (02)}
+
+\thesis{H36}{A topic-shift alarm beats a fluctuation alarm}
+{H36-reorganization-alarm/figures/summary_obs.pdf}
+{Near a transition, susceptibility and heat capacity peak. But a goal change is a field step: it moves the mean, not the fluctuations.}
+{Topic shift: AUC 0.95. Physics alarm: AUC 0.68, all from content. Activity channel at chance.}
+{Run the daily topic-shift score; alarm at 3 SD. Do not build alarms on activity fluctuations.}
+{0.80}{2.20}{info dynamics (12)}
+
+\thesis{H13}{Model families share a writing style, not a coupling}
+{H13-family-fields/figures/summary_obs.pdf}
+{Daily chat as a vector spin: goal field + family field + own offset. Is the family field position or style?}
+{Family field in 9/15 units; after style removal, 0/9. No family coupling. Room term $17\times$ the lab term.}
+{Remove style before any embedding consensus metric. Do not infer vendor ``ideology'' from content.}
+{0.87}{2.17}{vector spins (11)}
+
+\thesis{H67}{The talk loop sits far below runaway}
+{H67-subcritical-dial/fig.pdf}
+{Microphone feedback: amplification $\chi=1/(1-g)$ diverges at $g=1$. Here $g$ = talk messages caused per read.}
+{Subcritical in 66/66 units. Regime-III median $g=0.13$; max 0.23, so $\chi\le1.31$. Flat as the swarm grows 21$\to$32.}
+{Report the lagged gain as the distance to runaway. More agents do not push toward criticality.}
+{0.79}{2.17}{branching / Hawkes (09)}
+
+\thesis{H16}{Idle traps deepen with time}
+{H16-trap-aging/fig.pdf}
+{Kramers escape is memoryless. A broad spread of trap depths (Bouchaud) gives aging: the escape hazard falls with time.}
+{Escape slope $-0.77$ in \#51; negative in 6/8 periods. One directed message: odds $\times1.5$--$2.9$. More messages add little.}
+{Kick a stuck agent early (hazard $\sim t^{-0.8}$). Send one message. For failure loops, use a reset.}
+{0.70}{2.10}{fluct.\ env.\ (07)}
+
+\end{document}
