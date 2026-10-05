@@ -230,6 +230,117 @@ The read-out loop gain is a calibrated, subcritical number: **g_lag = 0.13 (regi
 - **H67-R3. Reconcile with H50.** Run both estimators on identical pairs with matched bandwidths to locate the factor-2 gap.
 - **H67-R4. Multi-generation gain.** Placebo-correct hops 2–5 with a lagged in-flight design and report the full DC loop gain.
 
+## Round 2 (2026-10-05): R3, R4, R1
+Round 2 runs H67-R3, R4 and R1. R2 needs reserved data and is not run. Non-reserved data only (`holdout_mask` asserted on every unit's days).
+
+### Pre-registration
+*Written 2026-10-05 02:55 UTC, before any round-2 statistic on real data.*
+
+**Seen beforehand:**
+- Everything on this card.
+- Round-1 per-unit design quantities: r̄, m̄, the median call interval and matched window, the base talk rate, and the list of columns in H50's unit table.
+- The regime-I call mix in 10 units. Chat-mode calls are 5–10% of trimmed calls and talk at 0.7–0.85 of them; computer-use calls talk at 0.01–0.10. Chat calls are spaced 60–560 s apart (median), and 75% of their starts are latency-placed (`start_conf` low).
+- H50's published J₁ and its hop kernel: a drop at hop 2, then a plateau near 0.015 in regime III; a rise in regime I.
+- H111's r_F (hop-1 g closes regime III, g3 over-predicts) and H99 round 2 (named messages keep acting one call later).
+- No round-2 estimator has run on real data.
+
+**Correction to round 1, Finding 5.** H50's gate bandwidth is not 120 s. H50's Amendment 1 set W = 1.5 × the unit's median act-call interval (≈ 17–20 s). The "120-s bandwidth" explanation of the gap is withdrawn untested; R3 tests it.
+
+**Code switches.** All round-2 code is new (`analysis/r2lib.py`, `r2_synthetic.py`, `r2_run.py`, `r2_summarize.py`). `h67lib.py` and the round-1 scripts are unchanged, so round 1 reproduces exactly. H50's estimator is re-implemented in `r2lib.py`, never imported.
+
+#### R3: reconcile with H50 (a ladder on identical pairs)
+Both estimators run on the same unit tables (H67's `units/` and `msgs/`; visibility = the ledger rule). Each rung changes one thing. Gains are put on one scale as g = m̄ r̄ × (per-read jump).
+
+| Rung | Estimator | Changes |
+| --- | --- | --- |
+| L0 | H50's published J₁ × r̄ | (round 1, P3b) |
+| L1 | H50's pair RD, re-implemented. Pairs: (peer message, room recipient that reads it). Anchor calls within ±W of the message (W = H50's unit W); 2-s donut; local-linear limits at s = 0. Minus the same RD at placebo times shifted by ±U(5, 30) min (2 copies). All calls of the unit. | reproduction |
+| L2 | L1 on the all-present window only | trimming |
+| L3 | L2 with bandwidth = the unit's median H67 matched window w̄ | bandwidth |
+| L4 | L3 with talk demeaned in H67's agent × day × call-class cells | call-class baseline |
+| L5 | L4 without the shifted-time placebo | placebo |
+| L6 | L4 divided by the RD jump of the anchor call's read count (first stage ΔR) | per-read normalization |
+| L7 | Call-level count regression on the same trimmed rows: talk ~ R^m + P, pooled (no cells); J = β(R^m) − β(P) | pair → call design |
+| L8 | L7 with agent × day × call-class cells | cells in the call design |
+| L9 | H67 main (L8 + R^o, R_{c−1}, R_{c−2}, y_{c−1}, exogenous items) = round-1 g_lag | controls |
+| L9b | L9 with the matched window capped at H50's W | bandwidth, reverse |
+
+- **Unit pooling** (the fifth candidate): period pools of L1 and L9 by both IVW and random effects.
+- **Attribution:** the change in the regime median of g at each rung, with the per-unit median of the paired difference and its sign share.
+- **The gap is located** if one or two named rungs carry ≥ 2/3 of the regime-III change from L1 to L9.
+
+#### R4: multi-generation gain (lagged in-flight design)
+- **Design.** On the all-call clock, call c of agent i, and k = 0…4: R^m_{c−k}, P_{c−k} and R^o_{c−k} are H67's counts at the same agent's call c − k (same day; the first 4 calls of each agent-day drop out).
+  - Regress talk_c on all 15 counts, the exogenous items at c, and the pre-window own talk y_{c−5}. Use agent × day × call-class cells, trimmed rows and a 1-h block bootstrap (200 draws).
+  - No own-talk lag inside the window: y_{c−1}…y_{c−4} are mediators of earlier reads.
+- **Identification.** A message read at c − k is at hop k + 1 for call c. A message in flight at c − k is read at c − k + 1, which is hop k. So β(R^m_{c−k}) = δ(k+1) + f_k and β(P_{c−k}) = δ(k) + f_k, with the same field term f_k (δ(0) = 0).
+  - Kernel increment: Δ_k = β(R^m_{c−k}) − β(P_{c−k}) = δ(k+1) − δ(k).
+  - Kernel: δ(h) = Σ_{k<h} Δ_k.
+  - **Multi-generation (DC) loop gain:** G_H = m̄ r̄ Σ_{h=1..H} δ(h). The primary is **g_full = G_5**.
+  - It counts first-generation offspring over hops 1–5, including the recipient's own talk persistence. That is the gain H111's Fano sum rule needs, g/(1 − a).
+- **Fano check.** Φ_pred(G_5) uses H111's formula and room sizes (H111's `present` table, days weighted equally). H111's Φ_obs(10) and its log-SE are read as data; nothing is refitted.
+  - r_F = Φ_obs/Φ_pred.
+  - Pooled by random effects on log r_F (regime III), with G_5's bootstrap SE propagated by the delta method.
+- **Rivals:**
+  - (a) Hop 1 is the whole gain: G_5 ≈ g_lag.
+  - (b) H50's plateau: δ(h) stays near 0.8 δ(1) to hop 5, so G_5 ≈ 4 g_lag.
+  - (c) The uncorrected round-1 g3 (0.28 in regime III).
+
+#### R1: the regime-I chat clock
+- **Design.** In regime I and II units, the response clock is the agent's chat-mode receiving calls (the talk-capable ones). t_prev is the previous chat-mode call of the same agent-day. Per chat call c:
+  - **R^m:** peer messages posted in (t_c − w_c, t_c), read at c itself.
+  - **P:** peer messages posted in (t_c, t_c + w_c), in flight at c.
+  - w_c = min(t_first − t_call, chat-to-chat interval, 120 s).
+  - **R^o_chat:** reads since the previous chat call minus R^m. It includes reads at the computer-use calls in between.
+  - y = talk at the previous chat call; exogenous items summed since the previous chat call.
+  - Cells: agent × day × wake class. Trimmed rows; 1-h blocks.
+- **Primary:** J*_chat = β(R^m) − β(P) and **g_chat = m̄ r̄ J*_chat**. Every read reaches exactly one next chat call, so r̄ is unchanged.
+- **Variants:**
+  - Re-indexed all reads, g_chat,all = m̄ r̄ (β(R^m + R^o_chat) − β(P)). It is not matched-lag.
+  - Logged-start chat calls only (`start_conf` high).
+  - Named vs unnamed.
+- **Regime-I total:** g_I = g_cu + g_chat, where g_cu is the round-1 estimator on computer-use rows only.
+- **Start-time error.** Chat-call starts are mostly latency-placed (t_call = first output − calibrated latency), so reads and in-flight messages near t_c can swap sides. That attenuates J*_chat toward 0. Synthetic worlds measure the size of this effect.
+
+#### Synthetic validation (before real data; worlds on real call grids, H67's simulator extended)
+- **R3 (units 27, 41, 51e):** null, burst, g = 0.15 and g = 0.30 (hop 1), 8 replicates each.
+  - **S-R3a:** L9 recovers truth within ±10% and L1 within ±25% (median relative error).
+  - **S-R3b:** in null and burst worlds, |median g| ≤ 0.03 for both.
+- **R4 (units 27, 41, 51e):** five worlds, 8 replicates each.
+  - Worlds: (a) hop 1 only, g = 0.15; (b) decaying kernel δ = J·(1, 0.6, 0.4, 0.2, 0), G_5 = 0.22; (c) plateau kernel δ = J·(1, 0.8, 0.8, 0.8, 0.8), G_5 = 0.33; (d) null; (e) burst null.
+  - **S-R4a:** in (a)–(c), the median G_5 is within ±25% of truth and 95% coverage is ≥ 0.8.
+  - **S-R4b:** in (d)–(e), |median G_5| ≤ 0.05 and the CI excludes 0 in ≤ 15%.
+- **R1 (regime-I units 4c, 19a, 27):** four worlds, 8 replicates each.
+  - Worlds: (a) chat-clock coupling: talk at chat calls responds to all reads since the previous chat call, g_chat = 0.15, no computer-use coupling; (b) null; (c) burst null; (d) world (a) with start-time error (true latency lognormal, median 11 s, σ_log 0.5; observed start = first output − 11.3 s).
+  - **S-R1a:** in (a), the median g_chat is within ±25% of truth and coverage is ≥ 0.8.
+  - **S-R1b:** in (b)–(c), |median| ≤ 0.03 and the CI excludes 0 in ≤ 15%.
+  - **S-R1c:** in (a), the round-1 hop-1 estimator reads < 0.5 × truth (the wrong-clock claim).
+  - **S-R1d:** in (d), the attenuation of g_chat is reported, and it rescales the real-data reading.
+
+#### Predictions (real data, exploratory, non-reserved)
+| # | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R3-P1 | **Reproduction.** L1 reproduces H50's J₁: median L1/L0 in [0.85, 1.15], Spearman ≥ 0.8 over units. | median outside [0.7, 1.4] (kill: ladder not interpretable) | 0.7 |
+| R3-P2 | **Where the gap lives (regime III).** The call-class baseline (L3→L4) and the placebo design (L4→L5, and L1 vs L7) together carry ≥ 50% of the change from L1 to L9. Trimming (L1→L2) and bandwidth (L2→L3, L9→L9b) each carry < 25%. | bandwidth or trimming carries ≥ 50% | 0.45 |
+| R3-P3 | **Normalization is not the cause.** The first-stage jump ΔR in reads at the boundary is in [0.8, 1.25] (regime-III median). | ΔR ≥ 1.5 | 0.6 |
+| R3-P4 | **Regime I.** The call-class baseline removes ≥ 70% of H50's positive regime-I gain (L3→L4). | < 30% removed | 0.5 |
+| R3-P5 | **Synthetic arbitration.** Both estimators recover planted hop-1 coupling (S-R3a), so the real-data gap comes from structure the simulator lacks. | L1 biased > 25% in synthetic | 0.6 |
+| R4-P1 | **Hop 1 carries most of the gain.** Regime-III median g_full = G_5 is within [0.7, 1.5] × the round-1 median g_lag (0.09–0.20). | G_5 ≥ 2.5 × g_lag (H50's plateau) | 0.55 |
+| R4-P2 | **The uncorrected hop 2–3 sum was a field.** Regime-III median G_3 < 0.20 (round-1 uncorrected g3 0.28). | G_3 ≥ 0.28 | 0.65 |
+| R4-P3 | **Subcritical.** Every unit's G_5 upper bound < 1. | any unit with lower bound ≥ 1 | 0.85 |
+| R4-P4 | **Fano closure with the full gain.** Regime-III pooled r_F with Φ_pred(G_5) in [0.8, 1.25] with CI including 1. | pooled r_F < 0.7 | 0.5 |
+| R1-P1 | **Coupling on the chat clock.** Regime-I median g_chat ≥ 0.05, and J*_chat > 0 at 95% in ≥ 1/3 of regime-I units. | median g_chat ≤ 0.02 and ≤ 10% of units > 0 | 0.4 |
+| R1-P2 | **It explains H111's regime-I excess.** Regime-I pooled r_F with Φ_pred(g_cu + g_chat) in [0.8, 1.25]. | r_F ≥ 1.25 still | 0.3 |
+| R1-P3 | **No address gating in regime I.** Named/unnamed J*_chat ratio < 3 (H50: 0.042 vs 0.031). | ratio ≥ 5 with CI excluding 3 | 0.5 |
+
+**Kill rules.**
+- If a synthetic criterion fails for an estimator, its real-data number is descriptive only, and the card says so.
+- If R3-P1 fails, the ladder result is "not reconciled".
+
+**Round-2 per-period verdicts.**
+- **Regime-I periods:** re-apply the round-1 rule on the chat clock. Use g_I = g_cu + g_chat in place of g_lag and J*_chat in place of J₁*. The period README's top verdict takes this round-2 verdict, marked "(round 2, chat clock)".
+- **Regime-II and regime-III periods:** the top verdict stays as in round 1. A "Round 2" section adds G_5, δ(h) and the ladder values, as descriptive numbers.
+
 ## Notes
 - 2026-10-04 19:15 UTC: round 1 started; card filled before any real-data statistic. Compute: local, ≤ 4 threads per process; after the coordinator's load notice (~20:25 UTC) ≤ 2 workers, one job at a time.
 - 2026-10-04 19:55 UTC: Amendment A1 after the synthetic validation (before real data).
