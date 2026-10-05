@@ -503,3 +503,28 @@ def r3_frame(pr: pl.DataFrame, mem: pl.DataFrame, s: pl.DataFrame) -> pl.DataFra
     p = p.with_columns(pl.col("c_t").fill_null(float("nan")), pl.col("c_u").fill_null(float("nan")),
                        pl.col("prior_copies").fill_null(0))
     return p.join(s.select("sid", "agent", "aday"), on="sid", how="inner")
+
+
+def posthoc_exit_mem(st: pl.DataFrame, mem: pl.DataFrame, resp="r_either", thr=0.5):
+    """POST HOC (2026-10-05, after the R3 result): exit model with erasure x (previous statement's content in the
+    memory at t). The previous statement t-1 of a loop is the erased source u of the pair (t, t-1) when an erasure
+    lies between them; c_t is its containment in M_t."""
+    s2 = st.sort("agent", "t").with_columns(pl.col("sid").shift(1).over("agent", "pt_date").alias("sid_prev"))
+    d = s2.filter(pl.col("r_prev") == 1).join(
+        mem.select("sid", pl.col("sid_u").alias("sid_prev"), "c_t"), on=["sid", "sid_prev"], how="left")
+    er = d["reset_between"].fill_null(False).to_numpy()
+    c = d["c_t"].fill_null(float("nan")).to_numpy()
+    known = ~er | np.isfinite(c)
+    d = d.filter(pl.Series(known)).with_columns(
+        (pl.col("reset_between") & ~pl.col("forced_between")).alias("vol_between"))
+    er = er[known]
+    inm = np.where(er, np.nan_to_num(c[known], nan=0.0) >= thr, False)
+    if d.height < 30 or er.sum() < 10 or inm.sum() < 3:
+        return dict(n=int(d.height), n_erasure=int(er.sum()), n_erasure_inmem=int(inm.sum()))
+    d = d.with_columns(pl.Series("erased_inmem", inm.astype(float)), pl.Series("erased", er.astype(float)))
+    y = 1 - d[resp].to_numpy().astype(float)
+    r = logit_terms(d, y, ["erased", "erased_inmem"] + EXIT_CTRL)
+    r.update(n_erasure=int(er.sum()), n_erasure_inmem=int(inm.sum()),
+             exit_rate_erased_inmem=float(y[inm].mean()), exit_rate_erased_notmem=float(y[er & ~inm].mean()),
+             exit_rate_no_erasure=float(y[~er].mean()))
+    return r

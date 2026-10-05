@@ -1,9 +1,10 @@
 # H69: Restatement loops are context fixed points
 
-**Status:** round 1 done (2026-10-04; exploratory, non-holdout). **Half right: restatement loops are held by the context window, but the trigger is not a self-share threshold and novel input does not end them.**
+**Status:** round 2 done (2026-10-05; exploratory, non-reserved). Round 1 done (2026-10-04; exploratory, non-holdout). **Half right: restatement loops are held by the context window, but the trigger is not a self-share threshold and novel input does not end them.**
 - **Context-held (supported):** at matched lag and call distance, an agent near-copies its own earlier statement 3.4× [2.6, 4.5] more often when that statement is still in its context than when an erasure has removed it (4/4 scorable periods, I² 0; both embedding models; pseudo-erasure 1.13 [0.99, 1.28]). A forced erasure (NE41) between two statements raises loop exit 2.4× [1.2, 4.9] and lowers onset to 0.54× [0.34, 0.86].
 - **Not a share threshold (failed):** own statements in the segment raise onset (b_O 0.34 [0.09, 0.60] per log unit), but room items in context do not dilute it (b_K +0.04 [−0.17, 0.25]); the self-share coefficient is not significant pooled (0.53 [−0.12, 1.19]). The threshold test has no power (synthetic ≤ 0.13).
 - **Novel input does not end loops (failed):** exit per log(1 + novel reads) 1.23 [0.85, 1.78], no larger than the in-flight placebo (1.58 [0.97, 2.57]); in G51, nudges read inside a loop 0.81 [0.49, 1.34].
+- **Round 2 (2026-10-05):** own tool tokens do not raise onset (b_U −0.47 [−1.31, 0.37], power 0.93); an erasure ends loops as a step, not in proportion to the own tokens it removes (1.26 [0.95, 1.69] per log unit); memory carries erased sources in G51 (73% of cross-erasure near-copies) and G38, but not pooled (OR 3.09 [0.67, 14.1], failed as frozen). Post hoc: erasure helps less when the looping text is in memory (0.42 [0.26, 0.68]). See "Round 2".
 - Scorable periods (≥ 30 episodes): G38, G40, G41, G51. Verdicts: G38 supported (native), G40, G41 mixed, G51 failed (native: nudges), NE41 mixed, 5 descriptive. Predictions, synthetic validation (axis F) and amendments A1–A5 came before real data. `confirm.py` written, dry-run only, **not run**.
 **Question:** **Q4** (where does the swarm's information live?): if a loop is held by the context window, the context carries the agent's self-reinforcing state and an erasure (an operator lever, Q5) ends it; if not, the loop lives in the agent or its task.
 **Fields:** nonequilibrium stat mech (self-coupled spin, fixed points, bistability), information theory (copying vs transformation), dynamics (hazards, event studies)
@@ -198,9 +199,12 @@ Frozen C1–C6 on #43, #45–#47, #49, #50 and the #51 tail (scored at ≥ 30 ep
 - Code map: `scheme/build.py`; `analysis/h69lib.py` (logit with agent effects, onset/exit, MH enrichment, pooling), `synthetic.py`, `run_periods.py`, `write_period_cards.py`, `figures.py`, `estimates_rows.py`, `confirm.py`.
 
 ## Round 2 redirects (2026-10-04)
-- **H69-R1.** Measure own content in tokens (H45's prompt sizes) and test whether onset depends on own tool output as well as own chat.
-- **H69-R2.** Dose of erasure: does a partial context trim (NE22's 200-event cap, NE03's chat window) break loops in proportion to how much own text it removes?
-- **H69-R3.** Memory as the residual carrier: are post-erasure restatements of erased statements the ones written into memory at the consolidation (`memory_stats`)?
+- **H69-R1.** Measure own content in tokens (H45's prompt sizes) and test whether onset depends on own tool output as well as own chat. *(Done 2026-10-05 in "Round 2"; superseded by its results.)*
+- **H69-R2.** Dose of erasure: does a partial context trim (NE22's 200-event cap, NE03's chat window) break loops in proportion to how much own text it removes? *(Done 2026-10-05 in "Round 2"; superseded by its results.)*
+- **H69-R3.** Memory as the residual carrier: are post-erasure restatements of erased statements the ones written into memory at the consolidation (`memory_stats`)? *(Done 2026-10-05 in "Round 2"; superseded by its results.)*
+- **H69-R4.** Test the post hoc memory moderation fresh: on the reserved targets in `confirm.py` (with sign-off), add "erasure × looping content in memory" as a frozen criterion.
+- **H69-R5.** Memory edits as an intervention: consolidations that drop the looping content from memory (compression) vs keep it; does the loop then end at the next erasure?
+- **H69-R6.** Lab composition of the own-count effect: refit round-1 onset by lab family (agent effects nested), since the token sample lost it.
 
 ## Recheck (segment cuts) — 2026-10-04
 *Requested by the vocabulary consolidation (Notes, coordinator recheck). Exploratory, non-holdout periods only; holdout masked; `confirm.py` not run. Round-1 outputs kept in `data/processed/H69-loops-context-fixed-points/recheck_segcuts/round1/`.*
@@ -343,3 +347,65 @@ Readings:
 - **R2-A2 · R2a is read pooled** over G38, G40, G41, G51 (size 0.07, power 1.00). Per period it is read only in G38 and G51.
 - **R2-A3 · R3-P2 is inconclusive by design.** It is reported and cannot pass or fail; the within-source OR is descriptive. R3-P3 is descriptive (the salience world also produces it).
 - **R2-A4 · R3 scorable rule:** ≥ 100 erased near-copies and synthetic size ≤ 0.10 under M0. A per-period R3-P1 is read where M1 power ≥ 0.8.
+
+### Round-2 results (run 2026-10-05 ~03:35–03:55 UTC; exploratory, non-reserved)
+*Scripts: `scheme/build_r2.py` (tokens, memory), `analysis/run_r2.py`, `estimates_rows_r2.py` (35 rows), `figures_r2.py`. Numbers: `data/processed/H69-loops-context-fixed-points/results_r2.json` and `G<NN>/results_r2.json`. Figure: `figures/r2_obs.pdf`. Pools are random effects (DerSimonian–Laird) over the scorable periods: R1 G38, G51 (≥ 30 episodes in the token sample); R2 G38, G40, G41, G51; R3 G38, G39, G40, G41, G51. The refactor of `scheme/build.py` (`ledger_calls`) reproduces every round-1 call index and segment (asserted on all 55k statements).*
+
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| R1-P1 | b_U CI includes 0 and b_U < b_O | b_U −0.47 [−1.31, 0.37] per log unit (I² 0.90; G38 −0.94 [−1.44, −0.43], G51 −0.08 [−0.23, 0.08]); b_O −0.03; power 0.93 at b_U = +0.32 | **passed** (own tool output does not raise onset) |
+| R1-P2 | b_O CI > 0 with U in the model | −0.03 [−0.41, 0.35]; without U in the same sample +0.04 [−0.24, 0.32]; power 0.67 | **failed** (not replicated in the token sample; kill rule does not fire, b_U is not > 0) |
+| R1-P3 | descriptive: fill with and without U | `ctx_pos` +0.23 [−0.11, 0.57] without U, +0.85 [−0.53, 2.23] with U (G38 +1.59 [0.94, 2.23]); log-P variant: P +0.46 [0.05, 0.86], U −0.13 [−0.27, 0.01] | calls since the reset carry the fill effect in G38; tokens do not add to it |
+| R2-P1 | erasure effect is a step (b_dose CI includes 0) | exit +0.24 [−0.06, 0.53] per log unit of own tokens removed (OR 1.26 [0.95, 1.69], I² 0.25); b_dose = 0.7 excluded (power 1.00); onset −0.09 [−0.19, 0.02]; erasure at the mean dose: exit OR 2.49 [1.14, 5.44] | **passed** (a weak dose ≤ 0.53 is not excluded) |
+| R2-P2 | NE22 cap: no exit effect | 2 loop statements after a cap hit in G51 (non-reserved days) | **inconclusive** (pre-declared floor of 20) |
+| R2c | NE03 | not run (reasons above) | — |
+| R3-P1 | in_mem OR ≥ 2 pooled (CI > 1); > 1 in ≥ 60% | pooled 3.09 [0.67, 14.1] (I² 0.86); > 1 in 4/5; powered periods: G38 7.0 [1.1, 17.1], G51 31.7 [7.1, 65.3], G39 0.57 [0.29, 6.3] | **failed as frozen** (pooled CI includes 1) |
+| R3-P2 | carrier, not salience | new_mem OR 2.32 [1.60, 3.39] (I² 0); salience-stratified 2.27 [0.78, 6.6]; within-source (G51 only) 1.83 [0.37, 9.2] | **inconclusive by design** (R2-A3) |
+| R3-P3 | lower bound | ratio of ORs 1.14 [0.96, 1.34]; G51 1.62 [1.24, 2.13] (enrichment 2.7 → 4.4 without memory-held erased sources); G38 1.13 [0.99, 1.43] | descriptive |
+
+**R3 variants** (pooled in_mem OR): containment ≥ 0.3 4.67 [1.75, 12.4]; ≥ 0.7 3.95 [0.75, 20.9]; bge only 4.09 [0.96, 17.5]; gte only 5.26 [1.34, 20.7]. Templated and cross-echo statements excluded: G38 4.3, G51 31.7 (point estimates).
+
+**Where the erased sources sit** (share of cross-erasure near-copies whose source is in the memory at t; in brackets, the share among all erased pairs): G51 **0.73** [0.05], of which 0.67 were already in memory when the source was posted; G38 0.10 [0.03]; G40 0.07 [0.02]; G39 0.015 [0.04]; G41 0.017 [0.01].
+
+**Post hoc (not pre-registered; `h69lib.posthoc_exit_mem`, written after the R3 result).** Exit model with erasure × "the looping statement is in the memory at t". An erasure raises exit 3.74× [1.83, 7.61] when the looping content is not in memory (I² 0.71). The interaction is 0.42 [0.26, 0.68] (I² 0; G38 −1.09 ± 0.48, G39 −0.02 ± 0.84, G40 −1.68 ± 0.69, G51 −0.69 ± 0.33 log units). Exit rates after an erasure: in memory 0.31 / 0.25 / 0.56 vs not 0.48 / 0.58 / 0.85 (G38 / G40 / G51). This would explain G51's weak round-1 erasure effect (1.36): there, most looping content is in memory. It needs a fresh test.
+
+### Findings (round 2)
+1. **Tokens are not the trigger.** At fixed own statements, room items and calls since the reset, own tool output does not raise loop onset (b_U −0.47 [−1.31, 0.37]; a +0.32 effect would be seen 93% of the time). In G38 more tool output at a fixed position *lowers* onset (OR 0.39 per log unit): working calls do not restate. Calls since the reset, not tokens, carry the fill effect there.
+2. **The round-1 own-count effect does not replicate in the token sample** (G38 and G51 statements whose segment has an early prompt-token reading: b_O +0.04 [−0.24, 0.32] without U). That sample drops many OpenAI and DeepSeek statements, so the round-1 effect (0.32 [0.08, 0.57], all statements) may be lab-specific. Finding 3 is downgraded to "not robust".
+3. **An erasure acts as a step, not a dose.** The exit effect does not grow with the own tokens the erasure removes (+0.24 [−0.06, 0.53] per log unit; a 0.7 slope is excluded). This fits source removal: every full erasure removes the copied source. No partial trim that removes own text exists in regime III: the NE22 cap removes only others' events and acted at 2 loop statements; NE03 has no non-reserved first stage.
+4. **Memory carries erased sources in some periods, not pooled.** In G51, 73% of the near-copies that cross an erasure restate content in the agent's memory (vs 5% of erased pairs; OR 31.7). Most of that content was in memory before the agent first said it: the agent restates its memory. In G38 the share is 10% (OR 7.0). In G39–G41 memory plays no detectable role. The pooled OR (3.09 [0.67, 14.1]) misses its CI rule, so the pooled claim fails. Carriage cannot be separated from salience with these data (synthetic M2).
+5. **Kill rule (R3).** The pooled condition is met, so the general Caveat 4 ("enrichment is a lower bound because memory carries erased statements") is withdrawn. It is replaced by a period-scoped statement: in G51 the in-context enrichment rises from 2.7 to 4.4 when memory-held erased sources are set aside; in G38 from 3.9 to 4.4.
+
+### Impostors (round 2)
+| Impostor | Relevant? | Handling | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Per-call clock (calls since the reset, calls between, lag) in every model; memory snapshots are matched to the receiving call's `t_call` | removed |
+| Exogenous field | partly | Templated and cross-echo statements excluded as a variant (R3 unchanged in G51, 4.3 in G38); memory text is the agent's own, not the operator's | partly |
+| Shared priors | yes | Agent effects in every model; strata by agent in R3; the R1 own-count effect varies with lab composition (Finding 2) | partly |
+| Contemporaneous convergence | no | No influence claim: all statistics are within one agent | n/a |
+
+### Scorecard (round 2): A1 B1 C1 D1 E1 F2 G1 H1 I1 (unchanged)
+- **A:** own content is now measured in tokens and memory content by containment; prompt tokens are dense only for Anthropic and Google, and the token sample changes lab composition.
+- **B:** the state variable is narrowed: in-context own text by calls, not tokens; memory is a second store in G51 and G38.
+- **D:** R1-P1 and R2-P1 pass; R1-P2 fails; R3-P1 fails as frozen.
+- **E:** the NE41 erasure acts as a step across a 4-fold range of removed tokens; NE22 has no power; the memory moderation of erasure is post hoc.
+- **F:** synthetic validation on the real skeletons; it showed the dense sample is underpowered, R3-P2 is not identified, and a NaN comparison trap.
+- **H:** beats the own-content density rival (R1) and the proportional-dose rival (R2); does not beat salience for memory (R3).
+- **I:** the memory role differs strongly by period (I² 0.86).
+
+### Old → new for the card's quoted numbers
+| Number | Round 1 / recheck | Round 2 |
+| --- | --- | --- |
+| Own-count onset b_O (pooled, all statements) | 0.32 [0.08, 0.57] | unchanged on all statements; +0.04 [−0.24, 0.32] in the token sample (G38, G51) |
+| Caveat: "the self-share counts chat items, not tool output" | open | closed: tool tokens do not raise onset (b_U −0.47 [−1.31, 0.37]) |
+| Caveat: "memory may carry erased statements, so the enrichment is a lower bound" | open | withdrawn as a general claim; G51 2.7 → 4.4, G38 3.9 → 4.4 |
+| Forced-erasure exit OR | 2.40 [1.18, 4.88] | 2.49 [1.14, 5.44] at the mean dose (dose model) |
+| Enrichment, P3, P4, NE41 | as quoted | unchanged |
+
+**Verdicts:** no period verdict changes (R1's kill rule did not fire; R3's kill rule touches only Caveat 4). Round-2 rows are added to the G38, G39, G40, G41, G51 and NE41 READMEs.
+
+**Operator reading.** Trimming tool output does not prevent restatement loops; erasing the agent's chat context does, at any context size. When the looping text is in the agent's memory (most loops in #51), an erasure helps less (post hoc). Check memory before relying on a reset.
+
+*Round-3 redirects (H69-R4 to R6) are listed under "Round 2 redirects" above.*
+
+**Claim that stands:** restatement loops copy what the agent's context still holds, and an erasure ends them as a step, not a dose (in-context enrichment OR 3.38 [2.56, 4.46], 4/4 scorable periods; erasure exit × own tokens removed 1.26 [0.95, 1.69] per log unit, a 2-fold-per-log-unit dose excluded at power 1.00). Excluded: own tool tokens as a trigger (a powered null), the own-statement count (not replicated in the token sample), memory as a pooled residual carrier (3.09 [0.67, 14.1], failed as frozen; holds in G51 and G38 only), carriage vs salience (not identified), the NE22 cap (2 events), NE03 (not run), and the post hoc memory moderation of erasure exit (0.42 [0.26, 0.68]).

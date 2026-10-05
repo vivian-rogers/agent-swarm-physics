@@ -1,31 +1,35 @@
-\hwhat{HH259 claims that a restatement loop is a fixed point of an agent's context. It starts when the agent's own output fills the context above a threshold. It ends at an erasure or when novel input arrives. H69 maps 55k regime-III chat statements to their ledger calls and context segments (9 periods, 4 with $\ge30$ loop episodes). A synthetic validation on the real skeletons came first. \textbf{The claim is half right.} The loop lives in the context window. A statement still in context is restated $3.4\times$ [2.6, 4.5] more often than an erased one at the same lag and call distance. A forced erasure (NE41) raises loop exit $2.4\times$ and lowers onset to $0.54\times$. The trigger is not a self-share: room messages do not dilute it. Novel input, nudges and human messages do not end loops. The holdout script is written, not run.}
+\hwhat{HH259 claims that a restatement loop is a fixed point of an agent's context. It starts when the agent's own output fills the context above a threshold. It ends at an erasure or when novel input arrives. H69 maps 55k regime-III chat statements to their ledger calls and context segments (9 periods, 4 with $\ge30$ loop episodes). Synthetic validations on the real skeletons came first in both rounds. \textbf{The claim is half right.} The loop lives in the context window. A statement still in context is restated $3.4\times$ [2.6, 4.5] more often than an erased one at the same lag and call distance. A forced erasure (NE41) raises loop exit $2.4\times$ and lowers onset to $0.54\times$. Round 2 adds three results. Own tool output in tokens does not trigger loops. An erasure acts as a step, not a dose. Memory carries erased sources in \#51 and \#38 but not in pooled data. Novel input, nudges and human messages do not end loops. The holdout script is written, not run.}
 
-\hmodel{Models 02 and 08. The spin is the statement mode: restate ($r_t=1$, a copy of an earlier own statement from an earlier call) or transform. The context at the producing call holds $O_t$ own statements and $K_t$ room items since the last reset. H69 gives the restate state a self-coupling $J$ that scales with the self-share $s_t$. Erasure ($E_t$) and novel reads ($N_t$) act as fields toward exit. The decisive observable is the Mantel--Haenszel odds ratio of a near-copy for a source still in context vs an erased one, in strata $s$ of agent $\times$ lag $\times$ calls between.}
+\hmodel{Models 02 and 08. The spin is the statement mode: restate ($r_t=1$, a copy of an earlier own statement from an earlier call) or transform. At the producing call the context holds $O_t$ own statements, $U_t$ own tool tokens (prompt tokens minus calibrated room tokens and own chat, H45) and $K_t$ room items since the last reset. Erasure ($E_t$) acts as a field toward exit; round 2 lets it scale with the removed own tokens $D_t$. The memory $M_t$ survives the erasure. The decisive observables are Mantel--Haenszel odds ratios of a near-copy, in strata $s$ of agent $\times$ lag $\times$ calls between: source in context vs erased, and erased source in memory vs not ($c\ge0.5$ word 3-gram containment).}
 
 \hmath{\vspace{-6pt}\begin{gather*}
-\mathrm{logit}\,P(r_t{=}1\mid r_{t-1}{=}0)=a_i+J\,(s_t-s^*)_+ ,\qquad s_t=\frac{O_t}{O_t+K_t}\\
-\mathrm{logit}\,P(r_t{=}0\mid r_{t-1}{=}1)=b_i+c_E\,E_t+c_\nu\ln(1+N_t)\\
-\mathrm{OR}_{\rm ctx}=\frac{\sum_s a_sd_s/n_s}{\sum_s b_sc_s/n_s}
+\mathrm{logit}\,P(r_t{=}1\mid r_{t-1}{=}0)=a_i+b_O\ln(1{+}O_t)+b_U\ln(1{+}U_t)+b_K\ln(1{+}K_t)\\
+\mathrm{logit}\,P(r_t{=}0\mid r_{t-1}{=}1)=b_i+(c_E+c_D\,D_t)\,E_t\\
+\mathrm{OR}=\frac{\sum_s a_sd_s/n_s}{\sum_s b_sc_s/n_s}
 \end{gather*}\vspace{-8pt}}
 
-\hobs{../figures/summary_obs.pdf}{Effects as log odds ratios. Dots: G38, G40, G41, G51 with 95\% CIs. Diamonds: random-effects pools. The source-in-context enrichment is $\ln3.4$ in every period. The pseudo-erasure control (same vs other half of one segment) is about 0. Forced and voluntary erasures raise exit. Room items in context, novel reads and both placebos stay near 0. The dotted line marks $\mathrm{OR}=2$.}
+\hobs{../figures/summary_obs.pdf}{Round-1 effects as log odds ratios. Dots: G38, G40, G41, G51 with 95\% CIs. Diamonds: random-effects pools. The source-in-context enrichment is $\ln3.4$ in every period. The pseudo-erasure control (same vs other half of one segment) is about 0. Forced and voluntary erasures raise exit. Room items in context, novel reads and both placebos stay near 0. The dotted line marks $\mathrm{OR}=2$.}
 
-\htelos{A looping agent copies what its context window holds. To break a restatement loop, erase or trim the context: one forced erasure more than doubles the exit odds and halves the onset odds. Do not rely on messages: nudges read inside a loop give exit $0.81\times$ [0.49, 1.34]. Room traffic does not dilute the loop either, so a busy room does not protect an agent. Each doubling of the agent's own statements in its window raises onset by about $1.25\times$. A scaffold could cap the agent's own chat kept in context (for example, drop its oldest self-messages) to lower loop onset. The 41-call cap already acts as a loop breaker and costs 4--10\% of output (H44).}
+\htelos{A looping agent copies what its context window holds. To break a restatement loop, erase the context: one forced erasure more than doubles the exit odds and halves the onset odds, whatever the context size. Trimming tool output does not help: own tool tokens do not raise onset. Do not rely on messages: nudges read inside a loop give exit $0.81\times$ [0.49, 1.34]. Check the agent's memory first. In \#51, 73\% of the loops that cross an erasure restate text the agent keeps in memory, and (post hoc) an erasure then helps less ($0.42\times$ the effect). The 41-call cap already acts as a loop breaker and costs 4--10\% of output (H44).}
 
-\hbottom{Restatement loops are held by the context window (source in context $3.4\times$, erasure exit $2.4\times$), but they are not triggered by a self-share threshold and novel input does not end them.}
+\hbottom{Restatement loops copy what the context still holds (source in context $3.4\times$), and an erasure ends them as a step, not a dose; own tool output does not trigger them, and novel input does not end them.}
 
 \hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.16\columnwidth}@{}}
-\textbf{Prediction (locked)} & \textbf{Observed (pooled, 4 periods)} & \textbf{Verdict}\\\hline
+\textbf{Prediction (locked)} & \textbf{Observed (pooled)} & \textbf{Verdict}\\\hline
 P1 onset rises with $s$; $b_K<0$ & $b_s$ 0.51 [$-$0.13, 1.14]; $b_K$ +0.05; $b_O$ 0.32 [0.08, 0.57] & failed\\
-P2 threshold (hinge) & no power (synthetic $\le0.13$) & inconclusive\\
 P3 erasure exit OR $\ge2$ & 2.40 [1.18, 4.88] & passed\\
 P4 in-context OR $\ge2$; pseudo $\approx1$ & 3.38 [2.56, 4.46], 4/4; pseudo 1.11 & passed\\
 P5 novel reads end loops & 1.23 [0.85, 1.78]; in flight 1.58 & failed\\
 NE41: exit $\ge2$; onset $\le0.5$ & 2.40; 0.54 [0.34, 0.86] & mixed\\
-G38: P1 and P4 & $b_s$ 0.79 [0.02, 1.56]; OR 3.9 & supported\\
-G51: nudges end loops & 0.81 [0.49, 1.34] & failed\\
+G51: nudges end loops & 0.81 [0.49, 1.34] & failed\\\hline
+R1 tool tokens: $b_U$ CI $\ni0$ & $-$0.47 [$-$1.31, 0.37] (power 0.93) & passed\\
+R1 own count survives & $b_O$ $-$0.03 [$-$0.41, 0.35] & failed\\
+R2 step, not dose & $c_D$ 0.24 [$-$0.06, 0.53]; 0.7 excluded & passed\\
+R2 NE22 cap & 2 loop statements & inconclusive\\
+R3 memory OR $\ge2$, CI $>1$ & 3.09 [0.67, 14.1]; G51 31.7, G38 7.0 & failed\\
+R3 carrier vs salience & not identified (synthetic) & inconclusive\\
 \end{tabular}}
 
-\hobsb{../figures/summary_obs2.pdf}{Synthetic validation on the real skeletons (scorable periods, 16 runs each). Rejection rates under the recency null (Z0, gray, about 0), the H69 world (Z1, blue) and input starvation (Z2, orange). The enrichment test separates H69 from both rivals. The novel-read exit test does not separate H69 from starvation.}
+\hobsb{../figures/r2_obs.pdf}{Round-2 effects as log odds ratios (per log unit for R1 and R2). Dots: periods with 95\% CIs; diamonds: random-effects pools. Own tool tokens and the own count give no onset effect. The erasure effect does not grow with the own tokens it removes. The memory odds ratio is large in G51 and G38 and near 1 in G39--G41. Post hoc: an erasure raises exit $3.7\times$ when the looping text is not in memory, and less when it is.}
 
-\hcaveats{Only four periods have $\ge30$ loop episodes, and the erasure exit effect varies across them ($I^2$ 0.74; G51 1.36, not significant). Statement-level geometry depends on the embedding model: gte gives an enrichment of 6.1 and bge 3.5. The self-share counts chat items, not the agent's tool output, which dominates prompt tokens. Memory and artifacts may still carry erased statements, so the enrichment is a lower bound on the context effect. Context fill also raises onset, so H46's fill drift is part of the picture.}
+\hcaveats{Only four periods have $\ge30$ loop episodes, and the erasure exit effect varies across them ($I^2$ 0.74). Statement geometry depends on the embedding model (enrichment gte 6.1, bge 3.5). Prompt tokens are dense only for Anthropic and Google; the token sample loses many OpenAI and DeepSeek statements, and there the round-1 own-count effect vanishes. No partial trim that removes own text exists in regime III, so the dose test spans full erasures only. Memory containment is lexical, and carriage cannot be told apart from salience. The memory moderation of erasure is post hoc.}

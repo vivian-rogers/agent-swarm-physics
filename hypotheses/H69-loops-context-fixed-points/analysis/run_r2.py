@@ -126,13 +126,36 @@ def pool(per, scor, path_b, path_se=None, kind="se"):
     return r
 
 
+def composition(p, thr=0.5):
+    m = json.loads((SH / "statement_flags_meta.json").read_text())
+    pr = pl.read_parquet(D / p / "pairs.parquet").filter(~pl.col("in_seg")).with_columns(
+        ((pl.col("cos_bge") > m["thr_bge"]) | (pl.col("cos_gte") > m["thr_gte_rate_matched"])).alias("y"))
+    e = pr.join(pl.read_parquet(D / p / "r2_memory.parquet"), on=["sid", "sid_u"]).filter(pl.col("c_t").is_not_nan())
+    e = e.with_columns((pl.col("c_t") >= thr).alias("inm"), (pl.col("c_u").fill_nan(0) >= thr).alias("old"))
+    out = {}
+    for name, d in (("copies", e.filter(pl.col("y"))), ("pairs", e)):
+        n = d.height
+        out[name] = dict(n=n, in_mem=float(d["inm"].mean()) if n else None,
+                         old_mem=float((d["inm"] & d["old"]).mean()) if n else None,
+                         new_mem=float((d["inm"] & ~d["old"]).mean()) if n else None)
+    return out
+
+
+def _num(v, default):
+    return default if v is None or not np.isfinite(v) else float(v)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--B", type=int, default=300)
     ap.add_argument("--procs", type=int, default=2)
+    ap.add_argument("--pool-only", action="store_true", help="re-pool from existing G<NN>/results_r2.json")
     a = ap.parse_args()
-    with ProcessPoolExecutor(min(a.procs, 2)) as ex:
-        outs = list(ex.map(run_period, [(p, a.B) for p in PERIODS]))
+    if a.pool_only:
+        outs = [json.loads((D / p / "results_r2.json").read_text()) for p in PERIODS]
+    else:
+        with ProcessPoolExecutor(min(a.procs, 2)) as ex:
+            outs = list(ex.map(run_period, [(p, a.B) for p in PERIODS]))
     per = {o["period"]: o for o in outs}
     syn = json.loads((D / "synthetic/r2_summary.json").read_text())
     pw = {(r["period"], r["world"]): r for r in syn}
@@ -143,7 +166,7 @@ def main():
             R1_power_dense=pw.get((p, "WU"), {}).get("R1_bU_dense"),
             R1_power_all=pw.get((p, "WU"), {}).get("R1_bU_all"),
             R2_power=pw.get((p, "WD"), {}).get("R2_exit_dose"),
-            R3=((get(o, ["r3", "n_copies"]) or 0) >= 100) and ((pw.get((p, "M0"), {}).get("R3_P1") or 1) <= 0.10),
+            R3=((get(o, ["r3", "n_copies"]) or 0) >= 100) and (_num(pw.get((p, "M0"), {}).get("R3_P1"), 1.0) <= 0.10),
             R3_size=pw.get((p, "M0"), {}).get("R3_P1"),
             R3_power=pw.get((p, "M1"), {}).get("R3_P1"))
         (D / p / "results_r2.json").write_text(json.dumps(o, indent=1, default=float))
@@ -160,6 +183,8 @@ def main():
         R1_dense_logP_bU=pool(per, r1d, ["r1_dense_logP", "U_k"]), R1_dense_logP_P=pool(per, r1d, ["r1_dense_logP", "P"]),
         R1_all_bU=pool(per, r1a, ["r1_all", "U_k"]), R1_all_bO=pool(per, r1a, ["r1_all", "o_ctx"]),
         R1_all_fill=pool(per, r1a, ["r1_all", "ctx_pos"]),
+        R1_all_noU_bO=pool(per, r1a, ["r1_all_noU", "o_ctx"]), R1_all_noU_fill=pool(per, r1a, ["r1_all_noU", "ctx_pos"]),
+        R1_all_logP_bU=pool(per, r1a, ["r1_all_logP", "U_k"]), R1_all_logP_P=pool(per, r1a, ["r1_all_logP", "P"]),
         R2_exit_dose=pool(per, r1, ["r2_exit_dose", "dose_c"]),
         R2_exit_forced=pool(per, r1, ["r2_exit_dose", "forced_between"]),
         R2_onset_dose=pool(per, r1, ["r2_onset_dose", "dose_c"]),
@@ -179,6 +204,17 @@ def main():
             se.append(o["se"])
             used.append(p)
     pooled["R3_P3_diff"] = L.dl_pool(est, se) | dict(periods=used)
+    for p in PERIODS:  # descriptive: where the erased sources of cross-erasure near-copies sit (memory before/after u)
+        per[p]["r3_composition"] = composition(p)
+        if p in ("G38", "G39", "G40", "G41", "G51"):  # POST HOC (labelled): erasure exit by memory status
+            s_, _, mem_ = load(p)
+            o = L.posthoc_exit_mem(s_, mem_)
+            if "terms" in o:
+                o["terms"] = {k: dict(b=v[0], se=v[1]) for k, v in o["terms"].items()}
+            per[p]["posthoc_exit_mem"] = o
+            (D / p / "results_r2.json").write_text(json.dumps(per[p], indent=1, default=float))
+    pooled["POSTHOC_exit_erased"] = pool(per, r3, ["posthoc_exit_mem", "terms", "erased"])
+    pooled["POSTHOC_exit_erased_inmem"] = pool(per, r3, ["posthoc_exit_mem", "terms", "erased_inmem"])
     out = dict(periods=per, pooled=pooled)
     (D / "results_r2.json").write_text(json.dumps(out, indent=1, default=float))
     for k, v in pooled.items():
