@@ -28,89 +28,95 @@
  "updated": "2026-10-05",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
  "v2": {
-  "claim": "Plain topic shift detects goal changes (AUC ~0.95) far better than the physics alarm (AUC 0.66–0.68, not better than random dates); neither finds undocumented platform steps blind",
-  "scope": "goal changes in non-holdout periods; natives NE38/39/40/43/45",
+  "claim": "A topic-shift alarm fires within the first 30 min of agents' talk on 82–85% of non-reserved goal kickoffs, against 7–9% of placebo day starts (AUC 0.92–0.94); the frozen daily rule C3 keeps hit 0.55–0.64 at window FAR 0.02–0.07 across both embedding models, three dedupe rules and Monday-matched placebos",
+  "scope": "33 non-reserved kickoffs, 55 placebo days, regimes I–III",
   "direction": "positive",
   "original_verdict": "mixed (bge) / failed (gte)",
-  "credence": 0.8,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "replication",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "rival beaten (R1 beats Z_phys by 0.29–0.34 AUC)",
-    "x": 1.5,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "robust (both models)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "interventions partly consistent (NE38/40/45 silent as predicted; NE39, NE43 not)",
-    "x": 1.5,
-    "evidence": "natives"
-   }
-  ],
+  "credence": 0.74,
   "mechanism_level": "M0",
   "fragile": true,
   "value_if_true": 2.75,
-  "decision": "reorganization monitor: use topic shift, add log features for platform steps",
+  "decision": "operator monitor: daily/intraday topic-shift alarm with known hit and false-alarm rates",
   "magnitude": "material",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 2.2,
-  "scientific_value": 2.2,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "generality": "any LLM swarm with logged chat",
+  "expected_usefulness": 2.04,
+  "scientific_value": 2.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.24, ΔV 0.50 (no adjudication needed)",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.86,
+    "rater": "coordinator (round 2)",
+    "credence": 0.84,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": true,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
+     },
+     {
+      "factor": "calibrated null passed (placebo day starts; Monday-matched placebos)",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "replication: 33 kickoffs",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "robust: both embedding models, three dedupe rules, style-residualized R1 AUC 0.91",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "identified: synthetic intraday dating partly met (0.76 vs 0.8)",
+      "x": 1.2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: gte FAR seed-fragile 0.07–0.18",
+      "x": 0.8,
+      "evidence": "card §Round 2"
+     }
+    ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "A topic-shift alarm fires within the first 30 min of agents' talk on 82-85% of non-reserved goal kickoffs (vs 7-9% of placebo day starts, AUC 0.92-0.94), and the frozen daily rule C3 keeps hit 0.55-0.64 at window FAR 0.02-0.07 across both embedding models, three dedupe rules and Monday-matched placebos.",
+    "credence": 0.6,
     "value_if_true": 2.5,
     "mechanism_level": "M0",
     "fragile": true,
-    "scientific_value": 2
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Scope: 33 goal kickoffs, daily resolution. Fluctuation statistics (multi-information, susceptibility, heat capacity) are weak reorganization alarms (~1/4 of goal changes, random-date p at the failure boundary, all signal from content), and a first-moment topic-shift detector dominates (AUC 0.95-0.97 vs 0.66-0.68).",
-    "credence": 0.71,
-    "value_if_true": 3.0,
-    "mechanism_level": "M0",
-    "fragile": true,
-    "scientific_value": 2.5,
+    "scientific_value": 2.0,
     "ladder": [
      {
-      "factor": "robust: R1 dominance and content-only signal survive round 1b in both embedding models",
+      "factor": "base: post hoc for the C3 clause (C3 was built in-sample in round 1, then frozen and re-tested on the same 33 kickoffs); the intraday clause is pre-registered primary (0.40 -> ~0.84) and is not limiting",
+      "x": "p0=0.20",
+      "evidence": "card Faithfulness axis H (round 1: complementarity post hoc, in-sample); Round 1b table C3 row"
+     },
+     {
+      "factor": "calibrated null: placebo days, Monday-matched placebo sets M1/M2, random dates; trailing-baseline FAR matches synthetic",
       "x": 2,
-      "evidence": "card Round 1b table"
+      "evidence": "card Round 2 robustness table; axis B"
      },
      {
-      "factor": "calibrated against placebo windows and random dates (not DQ8-sized)",
+      "factor": "partial replication: 33 kickoffs across many periods, hit ~0.6 (< 2/3 by unit)",
       "x": 1.5,
-      "evidence": "summary hwhat"
+      "evidence": "card Round 2 robustness table"
      },
      {
-      "factor": "identified: synthetic shows fluctuation stats blind to field steps, R1 sees them",
-      "x": 1.5,
-      "evidence": "summary hobsb"
-     },
-     {
-      "factor": "penalty: kickoffs mostly on Mondays, 55 placebo days, none in regime II",
-      "x": 0.8,
-      "evidence": "summary hcaveats"
+      "factor": "robust to data versions and instruments: round 1 -> 1b stable (bge 0.58/0.02 -> 0.55/0.02), two embedding models, three dedupe rules, style-resid variant",
+      "x": 2,
+      "evidence": "card Round 1b old-vs-new; Round 2 RB1-RB5"
      }
-    ]
+    ],
+    "notes": "Fragile set because the C3 window FAR moved from 0.02 to 0.13 with gte in round 1b and spans 0.07-0.18 over 10 surrogate seeds (above 0.15 in 2/10); the claim excludes this but the flag stays on the record. The confirmatory question is whether an in-sample-built rule keeps FAR <= 0.07 on reserved data."
    }
-  ],
-  "adjudicate": false
+  ]
  },
  "v2_history": [
   {
@@ -121,6 +127,91 @@
    "expected_usefulness": 1.67,
    "rater": "coordinator first pass (from integrated reports); independent rater pending",
    "rated_at": "2026-10-04"
+  },
+  {
+   "claim": "Plain topic shift detects goal changes (AUC ~0.95) far better than the physics alarm (AUC 0.66–0.68, not better than random dates); neither finds undocumented platform steps blind",
+   "scope": "goal changes in non-holdout periods; natives NE38/39/40/43/45",
+   "direction": "positive",
+   "original_verdict": "mixed (bge) / failed (gte)",
+   "credence": 0.8,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "replication",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "rival beaten (R1 beats Z_phys by 0.29–0.34 AUC)",
+     "x": 1.5,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "robust (both models)",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "interventions partly consistent (NE38/40/45 silent as predicted; NE39, NE43 not)",
+     "x": 1.5,
+     "evidence": "natives"
+    }
+   ],
+   "mechanism_level": "M0",
+   "fragile": true,
+   "value_if_true": 2.75,
+   "decision": "reorganization monitor: use topic shift, add log features for platform steps",
+   "magnitude": "material",
+   "generality": "any LLM swarm",
+   "expected_usefulness": 2.2,
+   "scientific_value": 2.2,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.86,
+     "value_if_true": 2.5,
+     "mechanism_level": "M0",
+     "fragile": true,
+     "scientific_value": 2
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "Scope: 33 goal kickoffs, daily resolution. Fluctuation statistics (multi-information, susceptibility, heat capacity) are weak reorganization alarms (~1/4 of goal changes, random-date p at the failure boundary, all signal from content), and a first-moment topic-shift detector dominates (AUC 0.95-0.97 vs 0.66-0.68).",
+     "credence": 0.71,
+     "value_if_true": 3.0,
+     "mechanism_level": "M0",
+     "fragile": true,
+     "scientific_value": 2.5,
+     "ladder": [
+      {
+       "factor": "robust: R1 dominance and content-only signal survive round 1b in both embedding models",
+       "x": 2,
+       "evidence": "card Round 1b table"
+      },
+      {
+       "factor": "calibrated against placebo windows and random dates (not DQ8-sized)",
+       "x": 1.5,
+       "evidence": "summary hwhat"
+      },
+      {
+       "factor": "identified: synthetic shows fluctuation stats blind to field steps, R1 sees them",
+       "x": 1.5,
+       "evidence": "summary hobsb"
+      },
+      {
+       "factor": "penalty: kickoffs mostly on Mondays, 55 placebo days, none in regime II",
+       "x": 0.8,
+       "evidence": "summary hcaveats"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
   }
  ]
 }

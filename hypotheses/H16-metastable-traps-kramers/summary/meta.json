@@ -41,100 +41,198 @@
  },
  "calibrated_by": "coordinator 2026-10-04 (round 1b ratings accepted)",
  "v2": {
-  "claim": "Within agent, escape from inactive spells and timer-pause chains ages instead of being memoryless (TS1r deep beta about -0.8 in #51, -1.7 in #38; point beta < -0.3 in 6/8 regime-III periods, CI below -0.3 in 3/8; gate escape falls with chain index in 6/7), the aging persists with the nudger off (NE43), and one directed message at a pause gate raises the odds of acting x1.5-2.9 (5/7 periods).",
+  "claim": "In #51, pause-chain traps are held by the agent's context: a forced context erasure inside a trap raises sustained escape at the next timer wake from 0.47 to 0.84 (log OR +2.68 [2.31, 3.16]), frailty-proof by synthetic check and 4.6× the urn's dilution prediction, and a directed read works by address, not dilution (directed − undirected +0.45 [0.32, 0.58]; urn-implied +0.01)",
+  "scope": "#51 (G51), regime III; G38 agrees in sign but underpowered",
+  "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.7,
-  "ladder": [
-   {
-    "factor": "base: pre-registered primary (P-a1, P-a4, P-c3 written after the synthetic and before real data; TS2r amendment A1 before any statistic)",
-    "x": 0.4,
-    "evidence": "card §Prediction, Amendment A1"
-   },
-   {
-    "factor": "identified: synthetic recovery of a deepening trap at village sampling (agent FE removes frailty bias)",
-    "x": 1.5,
-    "evidence": "card §Synthetic validation"
-   },
-   {
-    "factor": "partial replication (aging: point 6/8, CI 3/8; gate kick 5/7)",
-    "x": 1.5,
-    "evidence": "card §Results round 1 and round 1b tables"
-   },
-   {
-    "factor": "partly robust (kick ORs move < 1 SE under the leading-@ fix; boot and Wald CIs; one activity instrument)",
-    "x": 1.5,
-    "evidence": "card §Round 1b Reading 3"
-   },
-   {
-    "factor": "intervention partly consistent (NE43: aging unchanged with the nudger off, as predicted; predicted gate-escape drop and NE44 interaction failed)",
-    "x": 1.5,
-    "evidence": "card §Round 1b N1, N2"
-   },
-   {
-    "factor": "penalty: within-agent spell heterogeneity can mimic aging; kick exposure by posting time, not ledger receipt (impostor open)",
-    "x": 0.7,
-    "evidence": "card §Standards; §Caveats"
-   }
-  ],
-  "mechanism_level": "M1",
+  "credence": 0.68,
+  "mechanism_level": "M2",
   "fragile": false,
-  "value_if_true": 3.0,
-  "decision": "operator: kick a stuck agent early with one directed message during a pause; use tooling or a reset for real failure loops",
-  "magnitude": "material (a directed kick lifts deep-chain gate escape 0.17 -> 0.25 under the 5-min default, 0.21 -> 0.56 before NE44)",
-  "generality": "read-out-gated swarms with sleep timers (0); readiness not credited",
-  "expected_usefulness": 2.1,
-  "scientific_value": 2.5,
-  "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
-  "rated_at": "2026-10-04",
+  "value_if_true": 3.5,
+  "decision": "operator lever: wipe the context of an agent stuck in an idle trap (escape 0.47 → 0.84); send one directed message",
+  "magnitude": "large",
+  "generality": "computer-use LLM agents with capped context",
+  "expected_usefulness": 2.38,
+  "scientific_value": 3.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.07, ΔV 0.00 (no adjudication needed)",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.44,
-    "value_if_true": 2.5,
-    "mechanism_level": "M1",
-    "fragile": true,
-    "scientific_value": 2
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Inactive/pause traps age within agent: the escape hazard falls (~t^-0.8; #51 -0.77, #38 -1.71) instead of the constant hazard Kramers predicts, unchanged with the nudger off.",
-    "credence": 0.7,
-    "value_if_true": 3.0,
-    "mechanism_level": "M1",
+    "rater": "coordinator (round 2)",
+    "credence": 0.64,
+    "value_if_true": 3.5,
+    "mechanism_level": "M2",
     "fragile": false,
-    "scientific_value": 2.5,
+    "scientific_value": 3.5,
     "ladder": [
      {
-      "factor": "identified: synthetic recovery",
-      "x": 1.5,
-      "evidence": "deepening trap recovered; agent FE removes frailty bias"
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
      },
      {
-      "factor": "partial replication",
-      "x": 1.5,
-      "evidence": "point beta < -0.3 in 6/8 regime-III periods; CI rule met in 3/8"
+      "factor": "intervention consistent: NE41 cap-timed erasures inside traps",
+      "x": 2,
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "partly robust",
-      "x": 1.5,
-      "evidence": "inactive-spell aging stable; error-loop aging collapsed as stderr artifact"
+      "factor": "single powered unit (G51)",
+      "x": 0.6,
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "intervention partly consistent",
+      "factor": "identified: per-trap frailty world rejected the reset artifact after Amendment A1 (separate suite)",
       "x": 1.5,
-      "evidence": "NE43: aging unchanged without kicks, as predicted"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "penalty: residual heterogeneity",
-      "x": 0.7,
-      "evidence": "within-agent spell heterogeneity can mimic aging; sparse readout bias"
+      "factor": "partly robust: outcome shifted one call (+2.35); round-1 directed-message effect in 5/7 periods",
+      "x": 1.5,
+      "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "In #51, pause-chain traps are held by the agent's context: a forced context erasure inside a trap raises sustained escape at the next gate from 0.47 to 0.84 (log OR +2.68 [2.31, 3.16]; frailty-proof by synthetic check; 4.6x the urn's dilution prediction), and a directed read works by address, not dilution (directed - undirected +0.45 [0.32, 0.58]; urn-implied +0.01).",
+    "credence": 0.71,
+    "value_if_true": 3.5,
+    "mechanism_level": "M2",
+    "fragile": false,
+    "scientific_value": 3.5,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (R1-P3, R2-P1; amendment R2-A1 made after synthetic, before real data)",
+      "x": "p0=0.40",
+      "evidence": "card Round 2, R1/R2 tables and amendments"
+     },
+     {
+      "factor": "calibrated null: own synthetic on real G51 skeleton; per-trap frailty world gives step 0.01 (size 0.00) after A1",
+      "x": 2,
+      "evidence": "card Round-2 synthetic validation; R2-A1"
+     },
+     {
+      "factor": "intervention consistent: NE41 forced erasure timed by the 41-call cap",
+      "x": 2,
+      "evidence": "card Round 2 R1-P3; scorecard E 2"
+     },
+     {
+      "factor": "partly robust: shifted-outcome check +2.35 (post hoc P1), voluntary resets same sign, ledger-read kicks vs posting-time kicks",
+      "x": 1.5,
+      "evidence": "card Round 2 post hoc P1; Old -> new"
+     },
+     {
+      "factor": "replication: single powered unit (#51); G38 same sign (+2.32) but underpowered (power 0.33)",
+      "x": 0.6,
+      "evidence": "card Round 2 R1-P3 row; R2-A2"
+     },
+     {
+      "factor": "(address clause, not limiting) 0.40 x2 synthetic x1.5 partial replication (G38 powered 0.92, +0.82 CI>0) x1.5 partial robustness gives ~0.75",
+      "x": "n/a",
+      "evidence": "card Round 2 R2-P1 row"
+     }
+    ],
+    "notes": "All evidence is in one period (#51); G38 agrees in sign but is underpowered for the reset step. The address clause is only M1 (no intervention) and contemporaneous convergence for directed reads is only partly handled."
    }
-  ],
-  "adjudicate": false,
-  "scope": "11 non-holdout periods (8 regime III); silences and pause gates only, not error loops (withdrawn outside #51)",
-  "direction": "positive",
-  "adjudication_note": "Different claim scored: the coordinator scored a composite that included the withdrawn error-loop aging, framed it as 'power only in #51' (x0.6) and marked it fragile; the blind rater scored silence and pause-gate aging, which never changed between data versions. Ruling: score aging of silences and pause chains plus the one-kick gate effect, with the error-loop result excluded; fragile is false because the scored headline did not move (the error-loop collapse is a withdrawn sub-finding, per the clarification). Credence comes out where the rater put it, V is material for an operator."
- }
+  ]
+ },
+ "v2_history": [
+  {
+   "claim": "Within agent, escape from inactive spells and timer-pause chains ages instead of being memoryless (TS1r deep beta about -0.8 in #51, -1.7 in #38; point beta < -0.3 in 6/8 regime-III periods, CI below -0.3 in 3/8; gate escape falls with chain index in 6/7), the aging persists with the nudger off (NE43), and one directed message at a pause gate raises the odds of acting x1.5-2.9 (5/7 periods).",
+   "original_verdict": "mixed",
+   "credence": 0.7,
+   "ladder": [
+    {
+     "factor": "base: pre-registered primary (P-a1, P-a4, P-c3 written after the synthetic and before real data; TS2r amendment A1 before any statistic)",
+     "x": 0.4,
+     "evidence": "card §Prediction, Amendment A1"
+    },
+    {
+     "factor": "identified: synthetic recovery of a deepening trap at village sampling (agent FE removes frailty bias)",
+     "x": 1.5,
+     "evidence": "card §Synthetic validation"
+    },
+    {
+     "factor": "partial replication (aging: point 6/8, CI 3/8; gate kick 5/7)",
+     "x": 1.5,
+     "evidence": "card §Results round 1 and round 1b tables"
+    },
+    {
+     "factor": "partly robust (kick ORs move < 1 SE under the leading-@ fix; boot and Wald CIs; one activity instrument)",
+     "x": 1.5,
+     "evidence": "card §Round 1b Reading 3"
+    },
+    {
+     "factor": "intervention partly consistent (NE43: aging unchanged with the nudger off, as predicted; predicted gate-escape drop and NE44 interaction failed)",
+     "x": 1.5,
+     "evidence": "card §Round 1b N1, N2"
+    },
+    {
+     "factor": "penalty: within-agent spell heterogeneity can mimic aging; kick exposure by posting time, not ledger receipt (impostor open)",
+     "x": 0.7,
+     "evidence": "card §Standards; §Caveats"
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": false,
+   "value_if_true": 3.0,
+   "decision": "operator: kick a stuck agent early with one directed message during a pause; use tooling or a reset for real failure loops",
+   "magnitude": "material (a directed kick lifts deep-chain gate escape 0.17 -> 0.25 under the 5-min default, 0.21 -> 0.56 before NE44)",
+   "generality": "read-out-gated swarms with sleep timers (0); readiness not credited",
+   "expected_usefulness": 2.1,
+   "scientific_value": 2.5,
+   "rater": "adjudicated 2026-10-04 (coordinator vs blind rater; see adjudication note)",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.44,
+     "value_if_true": 2.5,
+     "mechanism_level": "M1",
+     "fragile": true,
+     "scientific_value": 2
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "Inactive/pause traps age within agent: the escape hazard falls (~t^-0.8; #51 -0.77, #38 -1.71) instead of the constant hazard Kramers predicts, unchanged with the nudger off.",
+     "credence": 0.7,
+     "value_if_true": 3.0,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 2.5,
+     "ladder": [
+      {
+       "factor": "identified: synthetic recovery",
+       "x": 1.5,
+       "evidence": "deepening trap recovered; agent FE removes frailty bias"
+      },
+      {
+       "factor": "partial replication",
+       "x": 1.5,
+       "evidence": "point beta < -0.3 in 6/8 regime-III periods; CI rule met in 3/8"
+      },
+      {
+       "factor": "partly robust",
+       "x": 1.5,
+       "evidence": "inactive-spell aging stable; error-loop aging collapsed as stderr artifact"
+      },
+      {
+       "factor": "intervention partly consistent",
+       "x": 1.5,
+       "evidence": "NE43: aging unchanged without kicks, as predicted"
+      },
+      {
+       "factor": "penalty: residual heterogeneity",
+       "x": 0.7,
+       "evidence": "within-agent spell heterogeneity can mimic aging; sparse readout bias"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false,
+   "scope": "11 non-holdout periods (8 regime III); silences and pause gates only, not error loops (withdrawn outside #51)",
+   "direction": "positive",
+   "adjudication_note": "Different claim scored: the coordinator scored a composite that included the withdrawn error-loop aging, framed it as 'power only in #51' (x0.6) and marked it fragile; the blind rater scored silence and pause-gate aging, which never changed between data versions. Ruling: score aging of silences and pause chains plus the one-kick gate effect, with the error-loop result excluded; fragile is false because the scored headline did not move (the error-loop collapse is a withdrawn sub-finding, per the clarification). Credence comes out where the rater put it, V is material for an operator."
+  }
+ ]
 }

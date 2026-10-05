@@ -19,89 +19,105 @@
  "rated_by": "H15 round-2 agent (suggested); round 1 calibrated by coordinator 2026-10-04",
  "updated": "2026-10-05",
  "v2": {
-  "claim": "A forced wipe cuts work commits ~39% for ~10 turns (≈10% of a segment's output); saving more memory doesn't soften it; memory carries ~0 day-scale information",
-  "scope": "9 periods (wipe dip); NE41, NE16, NE29",
+  "claim": "In regime III (9 periods; 20,592 forced wipes against 21,806 pseudo-wipes), the context window's value is not held in the few items read first after a wipe: re-opening the last files (RR 1.10 [1.01, 1.21]) and new messages (1.14 [1.02, 1.28]) soften the 41% dip but together carry 4% [−23, +26] of it; consolidation notes are partly enacted rather than performative (window-swap excess recall 0.090 [0.076, 0.104], about 11% of their content)",
+  "scope": "regime III, 9 periods (notes: 8 periods)",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.78,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "intervention consistent (NE41 dose, NE29)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "replication (7/9 periods)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "cross-hypothesis replication (H44 ~10%)",
-    "x": 2,
-    "evidence": "H44"
-   },
-   {
-    "factor": "partly robust (dip survives work ledger; V* re-chosen)",
-    "x": 1.5,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "penalty: V* choice moved P1 sign",
-    "x": 0.8,
-    "evidence": "card §Round 1b"
-   }
-  ],
+  "credence": 0.72,
   "mechanism_level": "M1",
-  "fragile": true,
-  "value_if_true": 3.5,
-  "decision": "context-cap and memory design",
-  "magnitude": "material",
-  "generality": "agents with context resets",
-  "expected_usefulness": 2.73,
-  "scientific_value": 3.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "fragile": false,
+  "value_if_true": 2.0,
+  "decision": "scaffold design: restoring the first-read items after a wipe recovers little; memory notes carry ~11% of their content into action",
+  "magnitude": "small",
+  "generality": "capped-context LLM scaffolds",
+  "expected_usefulness": 1.44,
+  "scientific_value": 2.8,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; Δp 0.13, ΔV 1.00 (no adjudication needed)",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.86,
-    "value_if_true": 3,
-    "mechanism_level": "M1",
-    "fragile": true,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "A forced context wipe (41-turn consolidation cap) cuts an agent's committed work by ~39% for about ten calls (7/9 periods), independent of how much the agent saves to memory.",
-    "credence": 0.67,
-    "value_if_true": 4.0,
+    "rater": "coordinator (round 2)",
+    "credence": 0.78,
+    "value_if_true": 2.5,
     "mechanism_level": "M1",
     "fragile": false,
     "scientific_value": 3,
     "ladder": [
      {
-      "factor": "replication",
-      "x": 2,
-      "evidence": "7/9 periods; NE41 dated prediction"
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
      },
      {
-      "factor": "robust to instruments",
+      "factor": "calibrated null passed (pseudo-wipe arm; within-agent window swap after A1)",
       "x": 2,
-      "evidence": "write rate (round 1, -44%, 8/9) and DQ4 work commits (1b, -39%)"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "intervention consistent (quasi-random timing)",
+      "factor": "replication: note enactment 8/8 periods",
       "x": 2,
-      "evidence": "forced consolidations fire on a turn cap, independent of task state; memory dose rho 0.01"
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "partly robust: estimator variants; M heterogeneous across periods",
+      "x": 1.5,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "identified: synthetic validation, amendments A1–A7 pre-data",
+      "x": 1.5,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: the 'not in the first reads' part is unpowered at the 25% size that matters (CI to +26%)",
+      "x": 0.6,
+      "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "In regime III (9 periods; 20,592 forced wipes vs 21,806 pseudo-wipes), the context window's value is not held in the few items read first after a wipe (re-opening last files RR 1.10 [1.01, 1.21] softens the 41% dip, but first reads carry 4% [-23, +26] of it), and consolidation notes are partly enacted rather than performative (window-swap excess recall 0.090 [0.076, 0.104], about 11% of content).",
+    "credence": 0.65,
+    "value_if_true": 1.5,
+    "mechanism_level": "M1",
+    "fragile": false,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (P-R2a/P-R2d, P-R3a; failed redirect predictions where the stated falsifier occurred keep the base, rule 3)",
+      "x": "p0=0.40",
+      "evidence": "card Round 2 design, written 03:20 UTC before real data"
+     },
+     {
+      "factor": "calibrated null: synthetic on real F/P skeleton (size <= 0.10, L decided by bootstrap after A4); window-swap null chosen by pre-set synthetic rule (bias -0.007)",
+      "x": 2,
+      "evidence": "card Round 2 synthetic validation; A1, A4"
+     },
+     {
+      "factor": "replication: L x F > 1 in 7/9 periods (DL tau 0); R3 excess CI > 0 in 8/8 periods",
+      "x": 2,
+      "evidence": "card Round 2 per-period table"
+     },
+     {
+      "factor": "partly robust: cross-agent null and chat-term variant agree for R3; one instrument family for R2",
+      "x": 1.5,
+      "evidence": "card Round 2 results R3 paragraph"
+     },
+     {
+      "factor": "penalty: uncorrected multiplicity (L at CI lower 1.01 is one of ~7 class tests; synthetic power at RR 1.10 only 0.43)",
+      "x": 0.6,
+      "evidence": "card Round 2 synthetic table; results P-R2a"
+     },
+     {
+      "factor": "negative clause scope narrowed (rule 2): dip-share CI upper 0.26 means only first-read shares above ~0.26 are excluded, not the pre-registered 0.25 line",
+      "x": "scope",
+      "evidence": "card Round 2 P-R2d row; power statements"
+     }
+    ],
+    "notes": "Ambiguous claim line: it cites new messages (1.14 [1.02, 1.28]) as softening the dip, yet excludes 'M's pooled value' (DL 1.02 [0.86, 1.20], below 1 in 5 periods); I scored M as excluded. The L effect is marginal (lower CI 1.01) and could fail a same-size confirmation."
    }
-  ],
-  "adjudicate": false
+  ]
  },
  "v2_history": [
   {
@@ -112,6 +128,91 @@
    "expected_usefulness": 2.53,
    "rater": "coordinator first pass (from integrated reports); independent rater pending",
    "rated_at": "2026-10-04"
+  },
+  {
+   "claim": "A forced wipe cuts work commits ~39% for ~10 turns (≈10% of a segment's output); saving more memory doesn't soften it; memory carries ~0 day-scale information",
+   "scope": "9 periods (wipe dip); NE41, NE16, NE29",
+   "direction": "positive",
+   "original_verdict": "mixed",
+   "credence": 0.78,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "intervention consistent (NE41 dose, NE29)",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "replication (7/9 periods)",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "cross-hypothesis replication (H44 ~10%)",
+     "x": 2,
+     "evidence": "H44"
+    },
+    {
+     "factor": "partly robust (dip survives work ledger; V* re-chosen)",
+     "x": 1.5,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "penalty: V* choice moved P1 sign",
+     "x": 0.8,
+     "evidence": "card §Round 1b"
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": true,
+   "value_if_true": 3.5,
+   "decision": "context-cap and memory design",
+   "magnitude": "material",
+   "generality": "agents with context resets",
+   "expected_usefulness": 2.73,
+   "scientific_value": 3.0,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.86,
+     "value_if_true": 3,
+     "mechanism_level": "M1",
+     "fragile": true,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "A forced context wipe (41-turn consolidation cap) cuts an agent's committed work by ~39% for about ten calls (7/9 periods), independent of how much the agent saves to memory.",
+     "credence": 0.67,
+     "value_if_true": 4.0,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3,
+     "ladder": [
+      {
+       "factor": "replication",
+       "x": 2,
+       "evidence": "7/9 periods; NE41 dated prediction"
+      },
+      {
+       "factor": "robust to instruments",
+       "x": 2,
+       "evidence": "write rate (round 1, -44%, 8/9) and DQ4 work commits (1b, -39%)"
+      },
+      {
+       "factor": "intervention consistent (quasi-random timing)",
+       "x": 2,
+       "evidence": "forced consolidations fire on a turn cap, independent of task state; memory dose rho 0.01"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
   }
  ]
 }
