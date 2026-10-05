@@ -297,6 +297,73 @@ Figures (`figures/`):
 - **H50-R6. HH187 graph clause.** Lags vs hop distance on the read-out graph (A reads B reads C): does C's response to A appear at hop 2 of C's calls?
 - **H50-R7. Confirm on the holdout** (`confirm.py`: CP1–CP5, NE23 nudger off/on).
 
+## Round 2 (2026-10-04/05): content gate, graph clause, regime-I kernel
+*Items H50-R1, H50-R6 and H50-R2. Predictions, nulls and kill rules written 2026-10-05 02:50 UTC, before any round-2 statistic on real data. Seen before writing: the round-1 results above; the regime-I call composition (chat-mode calls are 5–38% of regime-I calls and 78% of them talk; computer-use calls talk 4%; logged starts exist only in #23–#31, about 20% of calls); logged latencies (chat-mode talk median 8.7 s, chat-mode non-talk 14.1 s, computer-use 11.4–11.8 s). No content, relay or round-2 kernel statistic had been computed. Code: `analysis/r2_*.py`. Data: `data/processed/H50-field-vs-coupling-transfer-lag/r2/`. Reserved data are masked with `holdout_mask` in every script.*
+
+### R1. Content gate (C3)
+**Rows.** Source m = an agent chat message with a statement vector. Recipient j = a ledger receiver of m (`context_ledger_items`, kind agent; receiving call r). Response B = one of j's next 8 chat statements after t_m, same PT day, within 30 min. B's producing call comes from `producing_calls`. The hop of B is h = pos(prod(B)) − pos(r) + 1 in j's non-summary call sequence. So h = 1 is a statement made by the read-out call. h = 0 is a statement made by the call in flight at t_m: it is posted after m, but that call could not read m (the in-flight placebo).
+
+**Outcome.** y = cos(z_B, z_m) − cos(z_B, z_m′). Here z is the 32-d whitened, unit-normalized statement vector (bge-small primary, gte-modernbert second). m′ is a seeded random statement of the same sender at least 2 h away from t_m in the same unit (mean of 2 draws). It removes the sender's static style and position.
+
+**Estimator: matched-age jump by hop (H29's control).** Age a = t_B − t_m. For hop h ≥ 1:
+J^c_h = Σ_b w_b [ȳ(h, b) − ȳ(0, b)], over age bins b of 10 s in [0, 60) s, with w_b ∝ n_hb n_0b / (n_hb + n_0b).
+The age match removes co-response: similarity falls steeply with age (H29), and hop-0 rows are young by construction. Primary statistic: J^c_1. Also J^c_2, J^c_3 (onset), named vs unnamed (ledger `ment`: m names j). CIs: day bootstrap (1-h blocks for units with < 3 days), 400 draws. Pooled per regime by inverse-variance weights over units.
+- Variants (descriptive): H29's original bins [0, 30) s; `style_resid_period` vectors; drop B flagged `self_repeat_both`; age × latency-tercile matching (visible rows at a given age come from shorter calls); raw cosine without m′.
+- Eligible units: round-1 units with ≥ 200 hop-1 and ≥ 200 hop-0 rows in [0, 60) s.
+
+**Synthetic validation first (axis F), on the real skeleton.** Units #51b (regime III, one room), #38a (regime III, two rooms) and #27 (regime I). Real message times, real ledger reads, real producing calls; only the vectors are synthetic. Each statement is a normalized sum of: own persistence, a shared room topic (slow OU, τ = 30 min, plus fast OU, τ = 60 s: the co-response field), noise, and a gated pull a·z_m for every message read by the producing call or earlier (decaying over the statements that follow; named messages × 5). Truth = the oracle difference in cos(z_B, z_m) between the world and the same world with a = 0 (same noise), at hop 1.
+- **N0, no pull** (topic fields only): J^c_1 within 2 SE of 0 in ≥ 90% of seeds. The unmatched visible-minus-invisible contrast should be biased (H29's failure).
+- **N1, gated pull:** |bias of J^c_1| < 30% of truth; named / unnamed ratio recovered within a factor of 1.5.
+- **N2, ungated rival** (pull from every message posted before t_B, read or not): J^c_1 ≈ 0.
+- **N3, dead time 1** (pull starts at hop 2): J^c_1 ≈ 0 and J^c_2 > 0.
+- **Power:** at the pull that gives J^c_1 equal to half the named effect H29 measured, pooled regime-III power ≥ 0.8. Without it, a null verdict is "inconclusive".
+
+**Predictions (real data, non-reserved).**
+- **P-R1a (content couples at hop 1):** pooled regime-III J^c_1 > 0 with the CI above 0, in both embedding models. CI > 0 in ≥ 1/3 of eligible regime-III units.
+- **P-R1b (address gating):** in regime III, named J^c_1 ≥ 3 × unnamed; unnamed CI includes 0 (pooled, bge).
+- **P-R1c (onset at hop 1, like talk):** J^c_1 > 0 and J^c_1 ≥ J^c_2 (pooled regime III).
+- **P-R1d (regime I, low confidence):** pooled J^c_1 ≥ 0, with unnamed messages coupling too (unnamed CI > 0), as for talk. Latency-placed starts blur the hop-0 / hop-1 split, which attenuates J^c_1.
+- **Kill rules.** (i) Pooled regime-III J^c_1 CI includes 0 in both models while synthetic power ≥ 0.8 → "content does not couple at hop 1" (H50 then holds for talk only). (ii) Unnamed ≥ named / 2 with unnamed CI > 0 in regime III → content is not address-gated. (iii) J^c_1 ≈ 0 and J^c_2 > 0 → content has a dead time of one call (not "like talk"). (iv) If N0 gives |J^c_1| > 2 SE in > 20% of seeds, the estimator is not interpretable and R1 is not scored.
+- **Rivals.** R1 pure field: J^c_h = 0 at every hop. R2 ungated: the pull is already present at hop 0, so J^c_1 ≈ 0 at matched age. Convergence (STANDARDS §1): removed by the hop-0 in-flight placebo at matched age. Shared priors: m′ (same sender) and `style_resid_period`.
+
+### R6. Graph clause (HH187): lag vs hop distance on the read-out graph
+**Triples.** Source A (an agent message, sender a). Relay m_B = a chat message by B ∉ {a} whose producing call is B's ledger receiving call of A (B posts at the call that reads A). Third agent C ∉ {a, B} reads both A and m_B (ledger). ρ = pos(r_C(m_B)) − pos(r_C(A)) + 1 is the C-hop, on A's clock, of the call that reads the relay. Per (A, C) pair, keep the earliest relay read.
+
+**Estimator: event study on the relay read inside C's clock.** Outcome Y = C's talk at C-hops h = 1…6 after A. Per unit, a linear probability model with pair effects and hop effects:
+Y_{p,h} = α_p + β_h + Σ_e γ_e 1[h − ρ_p = e] + ε, for e ∈ {−3, −2, 0, 1, 2}, e = −1 the reference.
+- β_h carries the direct response to A (read at hop 1) and the common kernel shape. γ_0 is the **relay step G**: the extra talk at the call that reads B's relay, beyond A's own clock.
+- Identification comes from variation in ρ across pairs. Primary sample: ρ ∈ {2, …, 5}. Sensitivity: add pairs with no relay read by hop 6 (never-treated). Pre-trend check: γ_{−2}, γ_{−3}.
+- Secondary: G for relays that name C; the distribution of ρ (descriptive); the standard gate J₁ of the relay messages at C (RD on t_{m_B}) for comparison.
+- CIs: day bootstrap over A's day (1-h blocks for short units), 200 draws; pooled per regime by inverse-variance weights.
+
+**Synthetic validation first, on the real skeleton** (#51b, #38a, #27; real messages, reads and relays; synthetic talk outcomes at every call). Outcome logit = agent-day base + own previous talk + a shared OU field + Σ gated read effects.
+- **W0, no coupling:** G within 2 SE of 0 in ≥ 90% of seeds; no pre-trend.
+- **W1, gated per-read coupling** (every read message, named × 10, decaying over hops): G recovers the planted per-relay effect with |bias| < 30%.
+- **W2, A-clock rival** (C responds only to messages it reads directly, with a dead time of one call; relays carry no effect): G ≈ 0, and the response sits in β_2.
+- **Power** at the round-1 per-read size (regime III: named 0.17, unnamed 0.004; regime I: 0.03): ≥ 0.8 pooled, or the verdict is "inconclusive".
+
+**Predictions.**
+- **P-R6a:** pooled regime-III G > 0 with the CI above 0. Pre-trend γ_{−2} within 2 SE of 0.
+- **P-R6b:** G for relays naming C ≥ 3 × G for the others (address gating carries through the relay).
+- **P-R6c:** pooled regime-I G > 0.
+- **P-R6d (descriptive):** the modal ρ is 2 in regime III (B posts at its read-out call; C's next call after that is its hop 2).
+- **Kill rules.** (i) G ≤ 0, or its CI includes 0 with power ≥ 0.8 → the lag is not set by the read-out path: the graph clause fails. (ii) |γ_{−2}| > 2 SE and > G / 2 → design confounded; R6 is inconclusive. (iii) G significant in W0 or W2 synthetic worlds → estimator invalid; not scored.
+
+### R2. Regime-I dead-time kernel
+**Synthetic worlds on the real regime-I skeleton** (units #27 and #24: mixed chat-mode and computer-use calls, about 20% logged-start calls).
+- True starts: logged calls and chained computer-use calls keep their `t_call`. Latency-placed calls get t* = t_first − L, with L drawn from the logged latency distribution of their mode.
+- Talk is decided at t* from the real peer messages read in [t*_{c−1}, t*_c). Base logit by mode (chat ≈ 0.78, computer use ≈ 0.04) plus agent effects plus the planted gated kernel on the logit.
+- Then the first record is redrawn as t* + L(mode, talk), and latency-placed starts are re-estimated as in the ledger: the first record minus the agent's median chained-call latency. The estimator sees only these estimated starts.
+- Kernels: K0 (no coupling); K1 (hop-1 spike, decay 1.5 hops) with dead time d ∈ {0, 1, 2}; K2 (cumulative rise over hops 1–5).
+- Estimates: the K = 6 boundary kernel on all recipients and on logged-start recipients only (≥ 80% logged calls). Also split by the mode of the recipient's in-flight call at t_m (chat vs computer use; set before the message, so not affected by it).
+
+**Predictions.**
+- **P-R2a (synthetic):** on logged-start recipients the onset hop equals d + 1 in ≥ 4/5 seeds for each d. The cumulative kernel at hop 5 is within 30% of the truth for K1 and K2.
+- **P-R2b (artifact size):** in K0 worlds the all-recipient J₁ is within 2 SE of 0 (latency placement does not create a jump). The all-recipient kernel shows no rise over hops 2–5.
+- **P-R2c (real data, logged-start recipients, #23–#31):** onset at hop 1, and the regime-I rise survives: the cumulative kernel at hop 4 exceeds hop 1 (pooled, one-sided 95%). Prior about 0.5.
+- **P-R2d (mode split):** J₁ > 0 for recipients in chat mode at t_m, and for recipients in computer-use mode.
+- **Kill rules.** (i) If P-R2a fails, the regime-I kernel beyond hop 1 is not identifiable: it stays unvalidated. (ii) If on logged-start recipients the hop-4 kernel ≤ hop-1, the regime-I "continuing rise" is withdrawn as a latency-placement artifact. (iii) If K0 worlds give a significant all-recipient J₁, the round-1 regime-I all-recipient J₁ is reported as biased by that amount.
+
 ## Notes
 - 2026-10-04 05:40 UTC: round 1 started; card filled before any real-data statistic. The first attempt (2026-10-04 ~02:40 UTC) was cut off by an API limit after reading context and inspecting input counts; nothing had been written. DQ1's context ledger exists, so lags are in call cycles from the start (`exposure.lag_s` is not used: it overstates visibility lags).
 - 2026-10-04 ~06:00–06:50 UTC: synthetic validation (three iterations; estimator fixes listed under Amendments), scheme build (NE43 bookend finding), amendments, then period predictions at 07:00 UTC, then the real-data run.
