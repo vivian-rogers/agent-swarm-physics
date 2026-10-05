@@ -73,5 +73,12 @@ Native verdict stays **mixed**, but now with b and c failing. Replication verdic
 - D (unfitted): acausal share 0.028; cycles per hop 27.
 - G: isolated agents are a no-logged-input ground truth.
 
+
+## Round 2 (2026-10-05)
+*Role unchanged. Predictions, nulls and kill rules are in the card's "Round 2" section (written 03:50 UTC before any round-2 statistic). Verdict lines above are round-1/1b and are not changed by round 2.*
+- **Native, R2 (hopping rooms):** 408 cross-room robustly acausal adoptions, 8,859 same-moment non-adopters. Adopters read the source's freshly written artifacts in 75% of cases, non-adopters in 3%: OR_ord 289 [140, 1085]. After their own use they read them just as often: OR_post 284 [125, 1056], **Λ 1.02 [0.43, 2.20]**. Leaks go to agents who already work on the source's artifacts (a shared-project field); the read is not an ordered step that carries the item. Channels: page 0.73, pull 0.62, api 0.48, file 0.29.
+- **Native, R3-H (not scored, synthetic size 3/8):** M₂ 54 vs entry-conditioned null 26 (p 0.002); #focus era (08-05 on) 76 vs 44. Median recipient calls from t0 to use: 27 at H = 1, 730 per hop at H = 2. Crossing a hopper bridge costs days. R3-Q: R_m 0.001, R_e 0.023 (critical 0.014, 15,101 hop events): weak quantization on the call grid only.
+- **R4:** numbers gate: J_mh,D 7.8 [5.1, 15.2] (18 in-flight adoptions); start-time RD 7.7 (not validated). Names J_mh 11.0 [7.8, 19.4]. Shared artifact touch: in-flight 0.28 vs post-t0 0.37 of number adoptions (not enriched).
+
 ## Notes
 - Data: `data/processed/H41-readout-light-cone/G51/`.

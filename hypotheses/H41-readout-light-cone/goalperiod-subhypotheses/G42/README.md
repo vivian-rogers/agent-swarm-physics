@@ -39,5 +39,11 @@ Verdict by the pre-registered rule A4 (J_in): **failed**. Post-hoc verdict with 
 - C (adequacy): J_in does not beat the field/room null (in-flight hazard).
 - D (unfitted): acausal share 0.053; cycles per hop 26.
 
+
+## Round 2 (2026-10-05)
+*Role unchanged. Predictions, nulls and kill rules are in the card's "Round 2" section (written 03:50 UTC before any round-2 statistic). Verdict lines above are round-1/1b and are not changed by round 2.*
+- **R2:** 30 strata, 152 controls. Ordered-read share 0.43 vs 0.28. OR_ord 4.7 [1.7, ∞], OR_post 4.4 [1.7, 24], Λ 1.08 [0.55, 7.9]: shared-project field, no ordered excess.
+- **R4:** names J_mh 10.6 [3.9, ∞] (2 in-flight adoptions); numbers not estimable.
+
 ## Notes
 - Data: `data/processed/H41-readout-light-cone/G42/`.

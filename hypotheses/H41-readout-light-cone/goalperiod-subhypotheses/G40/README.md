@@ -39,5 +39,11 @@ Verdict by the pre-registered rule A4 (J_in): **failed**. Post-hoc verdict with 
 - C (adequacy): J_in does not beat the field/room null (in-flight hazard).
 - D (unfitted): acausal share 0.025; cycles per hop 19.
 
+
+## Round 2 (2026-10-05)
+*Role unchanged. Predictions, nulls and kill rules are in the card's "Round 2" section (written 03:50 UTC before any round-2 statistic). Verdict lines above are round-1/1b and are not changed by round 2.*
+- **R4 (numbers):** the one period where numbers are co-generated: J_mh,D 0.69 [0.32, 1.55] on 26 in-flight adoptions (start-time RD 0.78, not validated). None of the in-flight number adoptions has a shared specific artifact touch with the source in the 30 min before, so the measured common stimulus does not explain it. #40 is the merged week with one cross-world objective; a common dashboard or API remains the candidate (round-3 redirect R8). Names J_mh 2.1 [1.0, 4.6].
+- R3-Q: R_m 0.049 is above the Rayleigh 5% value (0.040), one of 4/25 periods.
+
 ## Notes
 - Data: `data/processed/H41-readout-light-cone/G40/`.

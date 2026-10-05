@@ -1,6 +1,7 @@
 # H41: Read-out gating gives the swarm a light cone
 
 **Status:** exploratory round 1 done (2026-10-04); **round 1b (room-index fix, 2026-10-04) re-ran #33, #38, #44 and #51: see "Round 1b" below. Where this block and later sections disagree with Round 1b, Round 1b wins.** Card, definitions, nulls and dated predictions written ~06:00 UTC, before any real-data light-cone statistic; synthetic validation and amendments A1–A5 before real data; A6 (delay-matched jump) is post hoc and labelled.
+- **Round 2 (2026-10-05; section "Round 2" near the end):** cross-room leaks follow shared projects. Cross-room adopters read the source's freshly written artifacts far more than same-moment non-adopters, before and after their own use (pooled OR 9.6 vs 6.6; #51 289 vs 284); the ordered excess is Λ = 1.45 [1.09, 2.26] and does not survive leaving out #35 or #51. Pooled with period strata, regime-III numbers gate (J_mh,D 3.2 [2.2, 4.8]); round 1's "numbers are co-generated" came from tiny per-period counts, except #40 (0.69). A shared artifact touch does not explain co-generation. Synthetic guards rejected the start-time RD and the lag-vs-hop test (size 33–38%) and showed that a length field pushes J_mh down to 0.3–0.5.
 - **Inside a room the logged light cone holds:** across 32 non-holdout periods (133,549 novel marker items, 45,183 adoptions), adoptions by agents in the source's room almost never precede the first model call that could read the item (robust acausal share median 0.6%, max 4% in a 25-adoption period). In one room this bound is only one call wide, and a shared field would also pass it (synthetic).
 - **The pre-registered gating test mostly failed:** the hazard at the first entry call over the call in flight, J_in, has lower CI > 1 in 12/32 periods (verdicts by rule A4: 11 supported, 18 failed, 3 n/a). The cause is a recency confound: adoption hazard falls 10–20× with time since the item appeared, and in-flight calls all sit near t0. **Post hoc**, matching for delay since t0 (J_mh, validated afterwards on synthetic data: field ≈ 1, 8% false positives), the jump passes in 22/32 (post-hoc verdicts 20 supported, 9 failed, 3 n/a). The in-flight hazard is still ≈ 38% of the entry hazard: about a third of fast adoptions are co-generated. Names gate (J_mh,N lower CI > 1 in 24/29); numbers are co-generated (median J_mh,D 0.88); links essentially never appear before read-out.
 - **Across rooms the logged cone is a cage, and NE42 moves it:** 75–100% of cross-room adoptions lie outside the logged cone in 7/8 two-room periods. In #38 the cross-room hazard is 0.001× the within-room hazard, and cross-room adoptions come about 71 h later. NE42's merge raised the cross-group hazard 82× over #39 and 863× over #41, and the cross-group acausal share went 1.00 → 0.02 → 1.00 (native verdict supported). ~~#51's #focus hoppers bridge rooms (97% of cross-room adoptions in the cone).~~ **1b:** with true rooms, #51's #general ↔ #focus hoppers bridge only half the time (51% of 839 cross-room adoptions in the cone, mostly over 2–3 hops); the 97% was a stale-room artifact.
@@ -573,6 +574,83 @@ Unchanged: A1 B1 C1 D1 E1 F1 G1 H1 I1.
 - **R2-A3 (before real R4 data):** because J_mh is biased low by a length field (above), P-R4c (J_mh,D | CS = 0 lower CI > 1) is a conservative test: a length field pushes it down, not up. No change to the threshold.
 
 **Reporting.** `per_period_estimates` rows (round 2): `r2_lambda_ordered_read`, `r2_or_ordered`, `r2_ordered_share_cross` (R2); `r3_M2_excess`, `r3_phase_R_m`, `r3_phase_R_e` (R3); `r4_J_rd_<class>`, `r4_J_mh_cs0_D`, `r4_psi_D` (R4). Overlap note: H05 round 2 measures a cross-room leak conductance through command output and history search. H41-R2 builds its own read and write tables in its own folder and does not use H05 files.
+
+### Round-2 results (2026-10-05, non-reserved data)
+Code: `scheme/build_r2.py` (write and read tables), `analysis/r2_reads.py` (R2), `analysis/r34.py` (R3, R4), `analysis/r2_write.py` (estimates, figure). Data: `data/processed/H41-readout-light-cone/r2/` (≈ 25 MB: `tables/`, `R2/`, `R3/`, `R4/`). Figure: `figures/r2_summary.pdf`. Estimates: 156 round-2 rows in `per_period_estimates` (round-1 rows kept; H41 total 394). All CIs are 95%, 1-h-block bootstraps.
+
+**New tables.** DQ4 file-level history: 63,949 agent work commits in 386 repos since 2026-02-25 (non-reserved), 724k (commit, path) rows, paths hashed; 1,224 commits have no file list (one commits-only clone, empty merges). Read events: 145k (page 91k, pull 35k, api 14k, file URL 5.7k). Local file reads: 20k command rows naming a committed path in their working-directory repo (18.8k full-path matches).
+
+**R2: ordered reads of the source's artifacts.** 1,244 cross-room robustly acausal adoptions (strata) with 12,046 same-moment cross-room non-adopters.
+
+| | #35 | #36 | #38 | #42 | #51 | pooled |
+| --- | --- | --- | --- | --- | --- | --- |
+| strata / controls | 376 / 1,256 | 376 / 1,537 | 54 / 242 | 30 / 152 | 408 / 8,859 | 1,244 / 12,046 |
+| ordered-read share: adopters / controls | 0.05 / 0.16 | 0.78 / 0.55 | 0.06 / 0.04 | 0.43 / 0.28 | 0.75 / 0.03 | 0.51 / 0.11 |
+| OR_ord (equal window) | 0.34 [0.17, 0.48] | 6.3 [2.3, 19] | 2.3 [0, 12] | 4.7 [1.7, ∞] | 289 [140, 1085] | 9.6 [5.4, 23] |
+| OR_post (post-use placebo) | 0.19 [0.07, 0.31] | 4.3 [2.3, 7.4] | 9.2 [2.1, ∞] | 4.4 [1.7, 24] | 284 [125, 1056] | 6.6 [4.0, 13.5] |
+| **Λ = OR_ord / OR_post** | **1.84 [1.20, 3.05]** | 1.47 [0.76, 3.60] | 0.25 [0, 1.31] | 1.08 [0.55, 7.9] | 1.02 [0.43, 2.20] | **1.45 [1.09, 2.26]** |
+
+- **The ordered excess is small and fragile.** Pooled Λ passes (lower CI 1.09). *Post hoc diagnostic* (`R2/loo_posthoc.json`): leaving out #35 gives 1.47 [0.80, 3.00], leaving out #51 1.31 [0.78, 2.32]. In #35 both odds ratios are below 1: adopters read the source's repos *less* than non-adopters, before and after use.
+- **The big signal is a shared-project field.** In #51, cross-room adopters read the source's freshly written artifacts at 75% vs 3% for non-adopters (OR 289), but just as much after their use (OR 284). The leak goes to agents who already work on the source's artifacts; reading does not add an ordered step.
+- **Card-literal comparison fails:** delay-matched in-cone adoptions have the same or higher ordered-read rate, L_ctrl 0.78 [0.66, 0.95] (1,231 matched violations). The bias written before the run (same-room controls share repos) applies, so this is weak evidence.
+- **Channels:** page visits and fetches 0.44, pull 0.38, api 0.32, file 0.16 of cross-room acausal adoptions (pooled; an adoption can have several). Specificity ratio 1.46 [0.67, 3.90].
+- Descriptive periods: #37, #39, #41, #44 have 1–13 strata each (#41 Λ 2.9 [1.3, 8.2], 13 strata).
+
+**R3: lags in calls.**
+- *R3-Q (quantization, descriptive):* in 25 periods with ≥ 200 hop events, the phase from the message R_m is ≤ 0.05 in 17/25 and below the Rayleigh 5% value in 21/25 (exceptions #8, #18, #26, #40). R_e > R_m in 17/25. #51: R_m 0.001, R_e 0.023 (critical 0.014; 15,101 events). Uses sit on the call grid weakly; the message phase is smeared. This matches both synthetic worlds, so it does not test gating.
+- *R3-H (not scored: synthetic size 3/8):* M₂ (median recipient calls from t0 to use at H = 2 over H = 1) vs the entry-conditioned null: #51 54 vs 26 (p 0.002; #focus era 76 vs 44), #35 42 vs 33 (p 0.004), #36 6.1 vs 7.6 (p 0.96). The multiple n/H is not constant: #51 27 calls at H = 1 vs 730 per hop at H = 2. Lags at H ≥ 2 are 10–50× longer than at H = 1 in every world, real or synthetic: crossing a bridge costs days, not one call cycle.
+
+**R4: co-generation as a field.** Units: 2.6M (item × in-room agent × in-flight or first post-t0 talk call) in 32 periods. Unit-level J_mh reproduces round 1 (#38 2.61 vs 2.59, #40 1.33 vs 1.31, #51 9.15 vs 9.16).
+
+| regime · class | in-flight / post-t0 adoptions | J_mh (period × delay strata) | J_rd (60 s; not validated) | ψ (CS = 1 vs 0) | J_mh, CS = 0 | CS share: in-flight / post-t0 adoptions |
+| --- | --- | --- | --- | --- | --- | --- |
+| III · numbers (D) | 68 / 2,973 | **3.22 [2.24, 4.84]** | 3.45 [2.07, 8.24] | 1.32 [0.52, 3.59] | 2.98 [1.97, 4.92] | 0.24 / 0.31 |
+| III · names (N) | 127 / 6,698 | 4.76 [3.64, 6.91] | 6.23 [4.66, 8.89] | 1.29 [0.67, 2.56] | 4.23 [2.91, 6.96] | 0.35 / 0.46 |
+| III · rare words (W) | 7 / 292 | 2.63 [1.31, 7.85] | 4.8 [0.9, ∞] | n.e. | 4.6 [1.5, ∞] | 0.50 / 0.46 |
+| III · links (U) | 5 / 73 | 0.98 [0.33, ∞] | 3.6 [0.9, ∞] | n.e. | 0.55 [0.19, ∞] | 0 / 0.48 |
+| I · numbers (D) | 22 / 329 | 1.30 [0.73, 2.79] | 1.47 [0.66, 14] | 0 (no CS in-flight adoption) | 1.21 [0.68, 2.63] | 0 / 0.04 |
+| I · names (N) | 96 / 2,937 | 2.81 [2.14, 3.59] | 2.47 [1.76, 3.86] | 0.58 [0, 1.56] | 2.74 [2.13, 3.54] | 0.03 / 0.08 |
+
+- **The premise of R4 does not hold.** Pooled with period strata, regime-III numbers gate: J_mh,D = 3.2 [2.2, 4.8]. Only three periods have ≥ 10 in-flight number adoptions: #38 2.45 [1.36, 5.79], #51 7.8 [5.1, 15.2] and #40 0.69 [0.32, 1.55]. The round-1 "median J_mh,D 0.88, ≤ 1 in 10/18" came from per-period ratios built on 0–4 in-flight adoptions. Numbers are co-generated in one period, #40, the merged week with a shared cross-world objective.
+- **The measured common stimulus explains nothing.** A shared specific artifact touch in the last 30 min is not enriched among in-flight number adoptions (0.24 vs 0.31 post-t0) and does not raise the in-flight hazard (ψ_D 1.3 [0.5, 3.6]). In #38 it is enriched (0.50 vs 0.24), on 20 in-flight adoptions. Removing CS units leaves J_mh,D unchanged (3.0). In #40 no in-flight number adoption has a CS flag.
+- **Length bias acts the other way.** In the synthetic length world, J_mh falls to 0.29–0.53 with no coupling. Real J_mh values are lower bounds on the jump if talk depends on call length; the start-time RD that should remove this over-corrects (0.89–1.48), so the size of the length effect on real data is not identified.
+
+**Outcome vs prediction (round 2).**
+
+| Prediction | Observed | Verdict |
+| --- | --- | --- |
+| P-R2a pooled Λ lower CI > 1; Λ > 1 in ≥ 3/5 periods | 1.45 [1.09, 2.26]; point > 1 in 4/5, CI > 1 only #35; leave-one-out (post hoc) loses it without #35 or #51 | **supported, fragile** |
+| P-R2b L_ctrl > 1 | 0.78 [0.66, 0.95] | failed (bias stated beforehand) |
+| P-R2c pull largest channel; specificity > 1 | page 0.44 > pull 0.38; 1.46 [0.67, 3.90] | failed |
+| P-R3a R_m ≤ 0.05, R_e > R_m | 17/25 and 17/25 | mostly as predicted (descriptive; non-discriminating) |
+| P-R3b Δ_M > 0, p < 0.05 in #35, #36, #51 | #35, #51 yes; #36 no | **not scored** (kill i: size 3/8) |
+| P-R4a J_rd,D CI includes 1; J_rd,N > 1 | J_rd,D 3.45 [2.07, 8.24]; J_rd,N 6.23 | **not scored** (kill i: size 4/12) |
+| P-R4b CS share ≥ 2× in flight; ψ_D lower CI > 1 | 0.24 vs 0.31; 1.32 [0.52, 3.59] | failed |
+| P-R4c J_mh,D \| CS = 0 lower CI > 1 | 2.98 [1.97, 4.92] | passes as written, but J_mh,D itself is 3.22: the common stimulus is not what lifts it |
+
+**Rivals.**
+- *Shared-project field (R2):* explains the bulk of the cross-room read gap (OR 6.6 after use, 284 in #51). The ordered excess beyond it, Λ 1.45, survives pooled but not leave-one-out.
+- *Common stimulus (R4):* rejected as the explanation of co-generation; it is not enriched where co-generation would need it.
+- *Length bias (R4):* shown in synthetic worlds to depress J_mh (0.29–0.53); not measurable on real data with the validated tools.
+- *Mechanical bridge selection (R3):* not separable from relay with the entry-conditioned null.
+
+**Scorecard (old → new):** A1 B1 C1 D1 E1 F1 G1 H1 I1 → unchanged.
+- F stays 1: the synthetic guards rejected two estimators before real data (J_rd, R3-H) and validated Λ (size 0.10, power 1.0). They also showed that the round-1 J_mh is biased low by a length field.
+- H stays 1: one rival (common stimulus) is rejected, one (shared project) explains most of the read signal, one (length) is unresolved.
+- D stays 1: the regime-III numbers jump (3.2) reverses a round-1 descriptive claim, but J_mh is post hoc.
+
+**Constants proposed** (for `interpretation/swarm-constants.json`):
+- Λ_read = 1.45 [1.09, 2.26]: ordered-read excess, cross-room adopters vs same-moment non-adopters; #35, #36, #38, #42, #51 (regimes II–III); fragile (leave-one-out).
+- OR_read,#51 = 289 [140, 1085] (before use) vs 284 [125, 1056] (after): shared-project field of cross-room leaks in #51.
+- J_mh,D(III) = 3.2 [2.2, 4.8] and J_mh,N(III) = 4.8 [3.6, 6.9]: delay-matched read-out jump by item class, regime III pooled with period × delay strata; lower bounds under a length field.
+- Length-field bias of in-flight contrasts: J_mh 0.29–0.53 with no coupling (synthetic, #31, #38, #51 skeletons).
+
+**Claim that stands:** Cross-room leaks in two-room weeks follow shared projects more than item-specific reads: cross-room adopters read the source's freshly written artifacts far more than same-moment non-adopters both before and after their own use (pooled OR 9.6 vs 6.6), leaving an ordered excess of only Λ = 1.45 [1.09, 2.26]. *Excluded:* the leave-one-out fragility of Λ (post hoc diagnostic; it loses significance without #35 or #51); R3-H (not scored, synthetic size 3/8); J_rd and P-R4a (not scored, size 4/12); R4's numbers result (J_mh,D 3.2 reverses round 1's co-generation reading, but J_mh is a post-hoc estimator); the card-literal L_ctrl (biased by design).
+
+### Round-3 redirects (2026-10-05)
+- **H41-R6. A length-robust jump.** Simulate the in-flight vs entry contrast with talk tied to call length at several strengths, and find an estimator with size ≤ 0.10 (e.g. RD with bias-corrected local-quadratic limits, or matching on the call's start phase). Then re-measure the co-generated share.
+- **H41-R7. Project membership as the leak variable.** Model cross-room adoption as a function of prior co-work on the source's repos (DQ4 co-commit graph) and test whether it predicts leaks out of sample in #51 (and the reserved #47).
+- **H41-R8. #40's numbers.** The one co-generated period: identify the shared number source (the merged week's common dashboards or APIs) from fetch URLs at the in-flight calls.
 
 ## Notes
 - 2026-10-04: promoted from HH155 by Vivian; scope: the interaction graph, not rooms.

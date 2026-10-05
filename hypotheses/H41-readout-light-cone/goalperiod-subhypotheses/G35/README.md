@@ -40,5 +40,12 @@ Verdict by the pre-registered rule A4 (J_in): **failed**. Post-hoc verdict with 
 - C (adequacy): J_in does not beat the field/room null (in-flight hazard).
 - D (unfitted): acausal share 0.202; cycles per hop 53.
 
+
+## Round 2 (2026-10-05)
+*Role unchanged. Predictions, nulls and kill rules are in the card's "Round 2" section (written 03:50 UTC before any round-2 statistic). Verdict lines above are round-1/1b and are not changed by round 2.*
+- **R2 (ordered reads; predictions in the card, 2026-10-05 03:50 UTC):** 376 cross-room robustly acausal adoptions, 1,256 same-moment non-adopters. Ordered-read share 0.05 vs 0.16 for non-adopters. OR_ord 0.34 [0.17, 0.48], OR_post 0.19 [0.07, 0.31], **Λ 1.84 [1.20, 3.05]**: the only period with Λ's CI above 1, but both odds ratios are below 1 (adopters read the source's repos less than non-adopters).
+- **R3-H (not scored, synthetic size 3/8):** M₂ 42 vs entry-conditioned null 33 (p 0.004); 73 adoptions at H = 2.
+- **R4:** names J_mh 2.8 [1.3, 8.2]; numbers have 1 in-flight adoption (not estimable).
+
 ## Notes
 - Data: `data/processed/H41-readout-light-cone/G35/`.

@@ -57,5 +57,11 @@ Verdict by the pre-registered rule A4 (J_in): **supported**. Post-hoc verdict wi
 - D (unfitted): acausal share 0.006; cycles per hop 43.
 - B: the call-unit (clock) assumption in regime I.
 
+
+## Round 2 (2026-10-05)
+*Role unchanged. Predictions, nulls and kill rules are in the card's "Round 2" section (written 03:50 UTC before any round-2 statistic). Verdict lines above are round-1/1b and are not changed by round 2.*
+- **R3-H (descriptive, not scored):** 34 adoptions at H = 2 in one room; M₂ 23 vs entry-conditioned null 17 (p 0.04). R3-Q: R_m 0.026, R_e 0.057 (critical 0.045).
+- **R4:** names J_mh 2.6 [1.3, 5.8]; start-time RD 1.6 [0.7, 4.2] (not validated; regime-I RDs are biased, H50 r2). Numbers: 1 in-flight adoption.
+
 ## Notes
 - Data: `data/processed/H41-readout-light-cone/G31/`.

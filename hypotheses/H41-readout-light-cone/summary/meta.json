@@ -1,25 +1,25 @@
 {
- "complete": 48,
+ "complete": 56,
  "faithfulness": 2.0,
  "usefulness": 2.0,
  "rationale": {
-  "complete": "Round 1 plus round 1b (2026-10-04): a room-index bug (open room segments dropped) was fixed and #33, #38, #44 and #51 rebuilt, with a switch (H41_ROOMS=old) that reproduces round 1, a per-period audit of changed lookups, an old-to-new table, a deterministic bootstrap and a re-run of the #51 synthetic validation. 32 replication periods, 4 native tests, channel attribution with in-cone controls, guarded confirm script re-frozen (not run). Round 2 must pre-register the matched jump and time-stamp the unlogged channel.",
-  "faithfulness": "The logged light cone organizes the data where it binds: within-room adoptions almost never precede read-out (<= 4%, median 0.6%), 75-100% of cross-room adoptions in fixed two-room periods fall outside the cone, and NE42's merge/split moves cross-group pickup 80-860x as predicted (all unchanged by the 1b fix). But the pre-registered gating test failed (10-12/32; post hoc matched 22-24/32), #51's bridging claim reversed once rooms were fixed (51% in the cone, not 97%), a third of fast adoptions look co-generated, cadence and velocity predictions failed, and nothing is confirmed on the holdout.",
-  "usefulness": "A computable diagnostic: logged chat explains almost no cross-room spread, and shared artifacts cannot be blamed from logs; human cross-posts (23-28x) are the only strongly enriched leak. Fixed rooms are strong cages for chat (merging multiplies cross-group pickup ~100x); rooms that agents hop between leak about half the time. Spread runs at about one hop per 1.5-5 talk turns, independent of call cadence. No validated control knob."
+  "complete": "Rounds 1, 1b and 2. Round 2 (2026-10-05) ran the card's R2-R4 with dated predictions and kill rules, synthetic guards on real skeletons (including worlds where talk depends on call length), three amendments before real R3/R4 data, new DQ4 file-level and URL-read tables, 156 estimate rows and period READMEs. Two estimators were rejected by their guards (start-time RD, lag-vs-hop permutation). R1 (reserved-data pre-registration) and R5 (pause-timer cadence) remain.",
+  "faithfulness": "The logged light cone holds where it binds (within-room acausal <= 4%; cage in 7/8 two-room periods; NE42 80-860x). Round 2: the ordered-read test of the artifact leak passes pooled (Lambda 1.45 [1.09, 2.26]) but is fragile, and the large read gap is a shared-project field (OR ~290 before and after use in #51). Numbers gate in regime III when pooled with period strata (J_mh,D 3.2), reversing round 1's co-generation reading; but J_mh is post hoc and synthetic worlds show it is biased low by call-length effects.",
+  "usefulness": "Operator rule: cross-room leaks go to agents who already work on the source's artifacts (#51: 75% vs 3%), so project membership, not recent fetches, predicts where an item leaks. Fixed rooms cage chat (~100x); hopping rooms leak half the time. Spread runs at ~1 hop per 1.5-5 talk turns; cadence is not a lever."
  },
- "one_line": "Novel items obey a logged read-out light cone in rooms and across NE42; the gating jump passes only post hoc; cross-room leaks stay untraceable.",
+ "one_line": "Novel items obey a logged read-out light cone in rooms; cross-room leaks follow shared projects, with only a small, fragile ordered-read excess.",
  "models": [
   {
    "model": "02-nonequilibrium-ising",
    "role": "primary",
    "outcome": "mixed",
-   "note": "light cone holds in rooms; gating passes only post hoc; hopping rooms leak half (1b)"
+   "note": "light cone holds in rooms; gating passes only post hoc; numbers gate when pooled (round 2)"
   },
   {
    "model": "03-contagion",
    "role": "secondary",
    "outcome": "mixed",
-   "note": "a third of fast adoptions are shared field, not contagion"
+   "note": "cross-room spread follows shared projects; ordered artifact reads add little (Lambda 1.45, fragile)"
   },
   {
    "model": "13-cultural-evolution-conventions",
@@ -28,8 +28,8 @@
    "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
- "rated_by": "H41 agent (suggested; round 1b)",
- "updated": "2026-10-04",
+ "rated_by": "H41 agent (suggested; round 2)",
+ "updated": "2026-10-05",
  "v2": {
   "claim": "Inside rooms, novel items follow the logged light cone (acausal ≤ 4%, median 0.6%) and rooms cage spread (75–100% of cross-room adoptions outside the cone in 7/8 two-room periods; NE42 82×/863×); spread runs at ~1 hop per 1.5–5 talk calls; about a third of fast adoptions are co-generated; agents hopping between rooms leak about half the time (#51, corrected 1b)",
   "scope": "32 periods; natives NE42, G38, G31, G51",

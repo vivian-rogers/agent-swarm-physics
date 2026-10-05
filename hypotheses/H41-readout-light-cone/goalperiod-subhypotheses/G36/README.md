@@ -39,5 +39,12 @@ Verdict by the pre-registered rule A4 (J_in): **supported**. Post-hoc verdict wi
 - C (adequacy): J_in beats the field/room null (in-flight hazard).
 - D (unfitted): acausal share 0.272; cycles per hop 46.
 
+
+## Round 2 (2026-10-05)
+*Role unchanged. Predictions, nulls and kill rules are in the card's "Round 2" section (written 03:50 UTC before any round-2 statistic). Verdict lines above are round-1/1b and are not changed by round 2.*
+- **R2:** 376 strata, 1,537 controls. Ordered-read share 0.78 vs 0.55. OR_ord 6.3 [2.3, 19], OR_post 4.3 [2.3, 7.4], Λ 1.47 [0.76, 3.60] (CI includes 1): a shared-project field.
+- **R3-H (not scored):** M₂ 6.1 vs null 7.6 (p 0.96); 50 adoptions at H = 2. On the #36 skeleton the synthetic relay had power 0/4.
+- **R4:** names J_mh 17 [5, ∞] (1 in-flight adoption); numbers not estimable.
+
 ## Notes
 - Data: `data/processed/H41-readout-light-cone/G36/`.

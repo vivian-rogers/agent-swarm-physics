@@ -63,5 +63,12 @@ Verdict by the pre-registered rule A4 (J_in): **failed**. Post-hoc verdict with 
 - D (unfitted): acausal share 0.032; cycles per hop 12.
 - E/G: the room cut is known structure; cross-room spread outside the logged cone tests the cage (G).
 
+
+## Round 2 (2026-10-05)
+*Role unchanged. Predictions, nulls and kill rules are in the card's "Round 2" section (written 03:50 UTC before any round-2 statistic). Verdict lines above are round-1/1b and are not changed by round 2.*
+- **Native, R2 (the cage's leaks):** 54 cross-room robustly acausal adoptions, 242 controls. Ordered-read share 0.06 vs 0.04. OR_ord 2.3 [0, 12], OR_post 9.2 [2.1, ∞], Λ 0.25 [0, 1.31]. In the cage, reading the other room's fresh artifacts does not precede leaks; the few leaks are not traced by artifact reads either (round 1's G38-c also failed).
+- **R4:** numbers gate here: J_mh,D 2.45 [1.36, 5.79] (20 in-flight adoptions), J_mh,D without a shared artifact touch 3.4 [1.7, 16.8]. A shared specific artifact touch is enriched among in-flight number adoptions (0.50 vs 0.24 post-t0), but ψ_D is 1.7 [0.4, 9.8]. Names J_mh 3.0 [1.9, 6.9].
+- R3-Q: R_m 0.009, R_e 0.009 (critical 0.033): no quantization from the message.
+
 ## Notes
 - Data: `data/processed/H41-readout-light-cone/G38/`.
