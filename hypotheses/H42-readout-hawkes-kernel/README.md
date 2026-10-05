@@ -287,6 +287,109 @@ Verdicts: the *amended* reading (A1/A3) is primary; the pre-registered rule's ve
 - **H42-R2. Two-layer point process.** Model call times (busy chains, timer pauses, chat-mode schedules) as their own process and talk as a mark, then test whether messages shift call timing or call class.
 - **H42-R3. Shared-field control.** A Cox-process rival with a latent common rate (H03's next step), so cross terms are judged against a fitted field, not shift surrogates.
 
+## Round 2 (2026-10-05): R2 two-layer process, R3 Cox field, R1 consistency check
+Round 2 runs H42-R2 and R3 in full and R1 as a short consistency check. Non-reserved data only: every unit's days pass `holdout_mask`, asserted in the scheme and again in the runner.
+
+### Pre-registration
+*Written 2026-10-05 04:05 UTC, before any round-2 statistic on real data.*
+
+**Seen beforehand:**
+- Everything on this card, and the round-2 sections of H67, H50, H40 and H16 (as listed in the brief).
+- Covariate-only call descriptives (non-reserved, all regimes; no message or read count was involved):
+  - Regime III calls are cu_action 95%, talk 4.6%, timer pause 2.4%, search 0.6%.
+  - Start-to-start gaps by call kind (median): talk 10 s, cu_action 13 s, search 27 s, pause 184 s; 98% of pause calls are followed by a timer gap.
+  - Regime I chat-mode calls are wait 45%, talk 29%, session_start 25%. Computer-use sessions end with a summary call (session_stop).
+- DQ1: call starts are chained (previous end + 1.7 s) or set by a timer (99.8% of regime-III wakes at the timer). So a message cannot start a call. It can change call timing only through what the reading call does: pause or not, how long, start or stop a computer-use session.
+
+**Code switches.** All round-2 code is new: `scheme/build_r2.py`, `analysis/r2lib.py`, `r2_synthetic.py`, `r2_run.py`, `r2_summarize.py`. Round-1 tables and scripts are unchanged, so round 1 reproduces exactly. Outputs go to `data/processed/H42-readout-hawkes-kernel/round2/`.
+
+**Data added (`build_r2.py`).** Per unit: every call of each agent-day (summary calls included, for the timing sequence) with its room (`context_ledger_turns`), kind, gap kind and the next call's start, kind and context mode. Agent ledger items get `message_id` and three flags:
+- *named:* `chat_mentions_clean.mentions_roster` contains the recipient (H67's rule). The ledger `ment` flag is kept for continuity with round 1.
+- *thread:* the message is in an exchange with the recipient already in progress. Either its DQ2 parent (`reply_pairs.parent`) is a message by the recipient, or the recipient posted, in the 30 min before it (same day), a message that names its sender or has a DQ2 parent by its sender.
+- *cold:* named and not thread.
+
+#### R2: two-layer point process (call layer + mark)
+**Model.** Layer 1 is the call skeleton: each agent's call starts, set by chains, timers and the chat-mode schedule. Layer 2 is the mark of each call: what it does (talk, a tool action, a timer pause, a session start or stop). A read can act on layer 2 directly. It can act on layer 1 only through the reading call's own decisions.
+
+**Rows.** Receiving call c of agent i, inside the DQ8 all-present window, with a previous receiving call and a next call on the same agent-day.
+
+**Regressors (matched-lag in-flight design, symmetric window).**
+- w_c = min(t_first − t_call, t_call − t_call,prev, 120 s), floored at 1 s.
+- R^m_X: agent items of class X read at c and posted in (t_c − w_c, t_c).
+- P_X: agent items of class X for recipient i posted in (t_c, t_c + w_c). Call c cannot read them; the ledger gives them to a later call.
+- Classes X: named, unnamed; named splits into thread and cold (R1).
+- Controls: other reads at c (R^o), human and nudge items read at c, talk at the previous receiving call, log w_c, log of the previous start-to-start gap.
+- Cells: agent × day × call class κ (context mode × wake). Linear probability or linear model on cell-demeaned variables (OLS within).
+- **Statistic:** J_{O,X} = β(R^m_X) − β(P_X), per read message, for outcome O.
+
+**Outcomes (all decided by call c after it reads):**
+- Regime III: *pause* = c is a timer pause; *log gap* = log(t_next − t_c); *talk* = c posts a chat message (the mark; consistency with H67); log gap on non-pause calls (descriptive).
+- Regimes I and II: *chat next* = the next receiving call is chat-mode; *session start* = chat-mode call c starts computer use; *session stop* = computer-use call c is followed by the summary call; log gap; talk.
+
+**Call-skeleton null (the rival).** Per unit, 8 synthetic message streams on the real skeleton, with no coupling:
+- Every agent's real receiving calls are kept (times, classes, rooms).
+- Each call talks with its real agent × day × class rate; a talking call posts one message at its real `t_first`.
+- Recipients are the other agents whose current room (room of their latest call) is the sender's room. The visibility rule then assigns each message to the recipient's first receiving call after it.
+- Named and cold flags are drawn with each recipient's real shares.
+- The estimator then regresses the **real** outcomes on these synthetic reads. Any J it returns comes from the skeleton (call order, class propensities), not from reading.
+- **Reported:** the excess J − mean(J_null), with SE² = SE²_boot + var(J_null)/8.
+
+**CIs and pools.** 1-h block bootstrap (PT day × hour of t_c), 200 draws. Units pool by regime with DerSimonian–Laird random effects (primary) and inverse-variance weights. Periods pool their units the same way (CLAUDE.md exception (d)).
+
+#### R3: shared-field (Cox) rival for the round-1 Hawkes terms
+**Model.** Round 1's world B (call-clock world) and world A (H03 world), unchanged except for the baseline. Round 1 used c_{i,d,κ} s_b with one within-day shape s_b in 30-min bins, shared across days. R3 replaces s_b with a latent common rate φ:
+- **Cox field (primary):** one free log-rate per (day, 10-min bin): a piecewise-constant common intensity fitted jointly with the cross terms.
+- **Room field (world B, multi-room units):** one per (day, room, 10-min bin); each call's exposure goes to its room.
+- **Fine field (variant):** 5-min bins.
+- Specs: world B S0, B (all agent items) and Bmu (named / unnamed split, ledger `ment`, as round 1); world A S0 and A.
+- Fit by maximum likelihood as round 1. Held-out: day-blocked folds; on each test day, refit the agent levels **and** the field, with cross weights fixed from the training days.
+
+**Statistics.**
+- n_x of each cross term under the field, and its **survival** = n_x(field) / n_x(round-1 baseline), both fitted here. Regime medians and event-weighted per-period values.
+- Held-out gain Δℓ(cross − S0) under the field, per event; share of CV units with gain > 0.
+
+#### R1 (short): reply-thread control of the named-message effect
+- **Design.** The R2 call rows, outcome talk, regime III. Reads split into cold named, thread named and unnamed, each against its own in-flight count.
+- **H67-like variant for the comparison:** H67's window d_c = clip(t_first − t_call, 1, 120 s) without the previous-gap cap, plus reads at c−1 and c−2.
+- **Comparison target:** H67's regime-III named jump 0.079 [0.069, 0.089] per read. Agreement on the same data counts as robustness, not replication.
+- **Call-level field variant:** the R2 regression with room × day × 10-min fixed effects added (alternating projections). This is the Cox control on the call clock.
+
+#### Synthetic validation (before real data)
+**R2 and R1 worlds on the real skeleton** (units 27 and 19a for regime I; 38b, 41 and 51e for regime III). Messages come from the skeleton generator above; outcomes are synthetic. 8 replicates per unit and world.
+- **V0, fitted common field, no coupling.** z(t) per (day, room) = the standardized log of the real agent-message rate, Gaussian-smoothed with σ = 5 min (V0f: σ = 60 s). Its strength a is fitted per unit by a logit of real talk on z. Synthetic talk propensity × e^{a z}; pause propensity × e^{−a z}; log gap = cell mean + a resampled cell residual − 0.2 a z.
+- **VL, talk depends on call length, no coupling.** Talk logit falls by 0.5 per unit of log call duration (t_end − t_call, centred). Senders' messages come from this talk. Pause, log gap and class outcomes are the real ones.
+- **V1, planted coupling.** Per read at c: talk +0.08 named, +0.004 unnamed; pause −0.005 named, 0 unnamed; log gap −0.05 named; regime I: session start −0.02 named, chat next +0.01 named. Field as in V0.
+- **Criteria:**
+  - **S-R2a (no false coupling):** in V0, V0f and VL, |median J| ≤ tol and CI excludes 0 in ≤ 15% of replicates. tol = 0.01 (talk), 0.002 (pause), 0.01 (log gap), 0.003 (class outcomes).
+  - **S-R2b (recovery):** in V1, median J within ±30% of the planted value for every named effect; 95% coverage ≥ 0.8.
+  - **S-R2c (power):** the share of V1 replicates with the regime-III pooled named-pause CI below 0 (planted −0.005).
+- **R3 worlds** (round-1 simulator `synthetic.py`, units 27, 33, 40 and 51c, 2 replicates): truth 0 with the round-1 shared field (m = e^{0.5z − 0.125}, OU τ = 15 min); truth 0 with a strong field (e^{z − 0.5}); read-out truth n_x = 0.15 with the round-1 field.
+  - **S-R3a (field removed):** in truth-0 worlds the Cox-field world-B n_x(B) median ≤ 0.01 and world-A n_x(A) median ≤ 0.02.
+  - **S-R3b (coupling kept):** in the read-out world, Cox-field world-B n_x(B) within ±25% of truth (median).
+
+#### Predictions (real data, exploratory, non-reserved)
+| # | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R2-P1 | **A named read cuts pausing (regime III).** Pooled excess J_pause,named < 0 with CI below 0 | CI includes 0 while S-R2c power ≥ 0.8 | 0.55 |
+| R2-P2 | **A named read shortens the gap to the next call (regime III).** Pooled excess J_loggap,named < 0 with CI below 0 | CI includes 0 or > 0 | 0.5 |
+| R2-P3 | **Unnamed reads do not move call timing (regime III).** \|J_pause,unnamed\| ≤ 0.001 and \|J_loggap,unnamed\| ≤ 0.005 | either CI excludes 0 beyond these bounds | 0.6 |
+| R2-P4 | **No class switch beyond the skeleton (regimes I–II).** Pooled excess \|J_chatnext\| and \|J_start\| ≤ 0.005 per unnamed read; named ≤ 0.02 | an excess CI beyond these bounds | 0.6 |
+| R2-P5 | **Reading changes the mark more than the clock (regime III).** Excess J_talk,named ≥ 3 × \|J_pause,named\| | ratio < 1 | 0.7 |
+| R3-P1 | **H03's exponential term is mostly field.** World-A n_x(A) survival ≤ 0.5 (median over units) | survival ≥ 0.8 | 0.6 |
+| R3-P2 | **The general read-out term stays near 0.** World-B unsplit B beats field-only S0 held out in ≤ 50% of CV units | > 65% | 0.6 |
+| R3-P3 | **The named term survives the field (regime III).** Median Cox-field n_named ≥ 0.10 per named message (round 1: 0.145), and Bmu beats field-only S0 held out in ≥ 70% of regime-III CV units | median < 0.05, or ≤ 50% of units | 0.65 |
+| R1-P1 | **Agreement with H67.** Pooled regime-III named J* (H67-like variant, IVW) in [0.059, 0.099] (±25% of 0.079) | outside [0.04, 0.12] | 0.75 |
+| R1-P2 | **Naming acts beyond an exchange in progress.** Cold-named J* CI above 0 and ≥ 0.5 × thread-named J* (pooled, regime III) | cold CI includes 0, or cold ≤ 0.25 × thread | 0.55 |
+| R1-P3 | **The named effect survives a call-level field.** Adding room × day × 10-min fixed effects changes pooled named J* by < 20% | change ≥ 40% | 0.7 |
+
+**Kill rules.**
+- If S-R2a fails for an outcome, its real-data J is descriptive only. If S-R2b fails, the J is reported with the synthetic bias, as descriptive.
+- If S-R3a fails, the Cox field does not control a shared field in this estimator: R3 survival ratios are descriptive. If S-R3b fails, survival is reported next to the synthetic attenuation.
+- If thread-named items are < 10% or > 90% of named items in a regime, R1-P2 is not scored there.
+- R1 agreement is a robustness check of H67 on the same data, never a replication.
+
+**Round-2 period verdict (added to each period README; the round-1 verdict line stays on top).** *Supported* if the Cox-field Bmu beats field-only S0 held out (summed over the period's CV units) with n_named > 0, and the period's pooled cold-named talk J* has its CI above 0. *Failed* if neither holds. *Mixed* otherwise. *Descriptive* where no unit is CV-eligible (the call-level part is still reported).
+
 ## Notes
 - 2026-10-04: The brief asked for activity turns first and talk second; TALK is primary here for the reason given under Prediction (decided before any fit).
 - 2026-10-04: A is fitted on the same (message, recipient) pairs as B (room-aware ledger pairs) so that A vs B compares kernel shapes only; A_H03 keeps H03's room-blind at-risk set for continuity (it gives the same median n_x, 0.061).
