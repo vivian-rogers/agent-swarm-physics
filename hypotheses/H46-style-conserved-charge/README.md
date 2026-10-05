@@ -349,6 +349,31 @@ with ξ isotropic in the 17-d style space, so Var e_k = s²(1 − φ^{2k}), s² 
 
 **Estimates.** Per-unit rows go to `per_period_estimates` (hypothesis H46, `post_hoc = False`, role `native` or `replication`, notes "round 2").
 
+### Synthetic validation (run 2026-10-05 02:52–03:00 UTC, before any round-2 statistic on real data)
+`analysis/r2_synthetic.py` → `data/processed/H46-style-conserved-charge/r2/synthetic.json`. Real schedules (111,234 messages, 46,260 NE41 pairs, 20,090 segments, 24 goal switches); vectors from each agent's resampled real residuals (day and context structure destroyed) plus day jitter (5% of message variance) and planted structure. Shares are of the per-message variance trace.
+
+| Block | World | Result |
+| --- | --- | --- |
+| R1 (20 reps) | S0 null | NE41 forced T 0.506 (tc, g, gp alike); goal T 0.505; "moves" 0/20 |
+| R1 | SG common genre + position effects (5%), no jump | goal T: tc 0.522 → g 0.507 (genre mix leaks into raw style at goal switches; `g` removes it); NE41 0.508–0.511 |
+| R1 | SJ random-direction offset per segment (4%) | NE41 T 0.538 in tc, g and gp alike (a directionless excursion survives the control); but "moves" (CI > ½) 1/20 with round-1 unscaled strata |
+| R1b (10 reps, after A5) | S0 / SJ, scaled distances | null T 0.500 (tc, gp), 0.502 (fw), moves 0/10, 0/10, 1/10; SJ T 0.534 / 0.545, moves 10/10 in every channel. Unscaled null: tc 0.507, **fw 0.530** |
+| R2 (10 reps) | S0 none | Δ̄ CI > 0: 0/10; ΔC(1) CI > 0: 1/10; ρ_within − ρ_forced CI > 0: 0/10 (ρ ≈ 0.07 in both: day jitter) |
+| R2 | S1a OU reset, φ 0.7 | Δ̄ 10/10; ΔC(1) 10/10; pull contrast 10/10 (ρ 0.15 vs 0.06); φ_C 0.73; implied-growth ratio 1.08, in [0.5, 2] 10/10; growth slope CI > 0 only 4/10 |
+| R2 | S1b OU reset, φ 0.9 | Δ̄ 10/10; ΔC(1) 10/10; pull 10/10; φ_C 0.96; growth-fit φ 0.89 ± 0.07; ratio 1.31, in band 7/10 |
+| R2 | S2 OU without reset (day chain) | Δ̄ 1/10; ΔC(1) 1/10; pull contrast 3/10 (ρ 0.22 vs 0.20) |
+| R2 | S3 clock-time OU (τ 30 min), no reset | Δ̄ 0/10; ΔC(1) 0/10; pull 0/10 (ρ 0.177 vs 0.176: gap matching works) |
+| R3 (20 reps) | S0 / fw unit shift 0.5 | goal T 0.501 (moves 1/20) / 0.679 (20/20) |
+
+Readings. (1) Genre residualization holds size and removes planted genre leakage at goal switches. It cannot remove a random-direction erasure excursion, which is the point of `gp`. (2) Round-1 NE41 strata are thin: with 0.05-decade gap bins only 15% of forced pairs find ≥ 5 same-agent within pairs, so most are ranked in agent-free strata. Agents with noisier vectors then bias T up (0.507 for style, 0.530 for function words under the null). (3) The squared-distance growth is heavy-tailed (SD of d ≈ 20); clipping each centred dimension at ±3 cuts it to ≈ 7. The growth *slope* has little power for fast relaxation; the mean rise Δ̄ has full power. The growth fit does not bound φ (CIs reach 0.99–1.0); the cross-product decay does. (4) ΔC(1) and the pull contrast separate reset from no-reset and clock-drift worlds. The pull contrast has size up to 0.3 in a no-reset chain, so ΔC(1) is the decisive reset test.
+
+### Amendments (2026-10-05 03:00 UTC, after the synthetic validation, before any round-2 statistic on real data)
+- **R2-A1 (clip).** R2 distances and cross-products use unit-centred vectors clipped at ±3 per dimension.
+- **R2-A2 (growth statistic).** R2-P1's growth test is Δ̄ (n-weighted mean of Δ_k over k = 2…8) with cluster CI > 0, in the pool and in ≥ 2 lab groups; the slope is reported. The τ clause (τ ∈ [1, 20], upper bound < 50) applies to τ_C = −1/ln φ_C from the cross-product decay; the growth-fit τ is reported.
+- **R2-A3 (unfitted check).** R2-P2's consistency check is the covariance-implied growth: s²_C = ΔC(1) / (φ_C · mean_j(1 − φ_C^{2j})) predicts Δ̄; pass if Δ̄_obs / Δ̄_pred ∈ [0.5, 2]. "φ_C inside the growth-fit φ CI" is reported but is weak (wide CI).
+- **R2-A4 (pull).** Within observations are reweighted to the forced observations' joint (time-gap bin × number of reference messages) distribution; r̄'s noise depends on the number of reference messages.
+- **R2-A5 (NE41 scaling, all channels).** Each NE41 pair distance is divided by the median within-pair distance of its agent × unit before ranking (pairs without a scale are dropped). Unscaled values (round-1 method) are reported next to it. This applies to R1-P1, R3-P2 and the content checks.
+
 ## Notes
 - 2026-10-04: promoted from HH170 by Vivian. The first round-1 session stalled during an API outage before writing any file; resumed 05:33 UTC.
 - 2026-10-04 05:40 UTC: card, observables, nulls, verdict rules and predictions written before any real-data style or content statistic. 05:45 UTC: period and NE READMEs with dated predictions (`analysis/write_period_cards.py --phase predict`).
