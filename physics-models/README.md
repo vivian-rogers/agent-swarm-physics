@@ -71,6 +71,17 @@ Counts come from the `models` field of the 81 `../hypotheses/*/summary/meta.json
 - **14 Scaling and fluctuations.** Primary 2: 2 mixed. Secondary 3: untested. Tool 4. Talk scales sublinearly with N (H85, β 0.33). Taylor's c_T and b fail as field gauges, and the pair covariance c_× works (H86).
 - **15 Stochastic thermodynamics of selection.** Secondary 5: untested. Tool 4. Its content ran under the 02 and 05 labels: excess EP sits at the scheduler's day edges (H76), and speed-limit slack separates named from free kickoffs (H75, S 1.0–1.4 vs 5–15). σ\* and p are not identified (H77, H78).
 
+## What held up (round 2, wave 1, 2026-10-05)
+
+From the round-2 sections of H08, H40, H44, H46, H50, H54, H67 and H69 (non-reserved data; not in the round-1 counts above).
+
+- **01 Inverse Ising.** The mean-field gain reading holds and closes: the response-side g_lag 0.13 matches the fluctuation-side g_Fano 0.149 [0.123, 0.175] (H67, from H111's Φ). H50's twice-larger gain is an estimator artifact.
+- **02 Nonequilibrium Ising.** Kinetics that act only at the read-out call extend to content: content couples at the read-out call, named messages ×5 (H50), but only inside replies that name or answer the sender (H08). The call clock holds given a talk call (η_rep|talk −0.11, H40). Erasure is a two-timescale quench: a one-call re-reading spike and an ~8-call relaxation, no linear ramp (H44). Erasure ends restatement loops as a step field, not a dose (H69).
+- **04 Semantic information.** The erasure cost is reference-dependent (dip −20% to −32%); halving the cap costs 12% of output per call (H44). The erased semantic content is the working set, and agents recover it by habit, not by targeted re-reading (H44).
+- **08 Copying vs transformation.** Restatement copies in-context own text, counted in calls, not tokens (H69: own tool tokens b_U −0.47 [−1.31, 0.37]). In G51 most erasure-surviving loops restate the agent's memory.
+- **09 Hawkes.** The branching reading holds: g_lag = g_Fano within error, and hops 2–5 add at most ≈ 0.05 (H67). Regime I has no read-out gain on the chat clock (g_chat −0.022 [−0.052, 0.009]); its talk jump is mostly the chat-turn schedule (H50, H67).
+- **11 Vector spins.** The kickoff field holds in both embedding models (top-1 18/33 bge, 20/33 gte), and a human message is a read-out field step on each reader (Δ ≈ 0.09, H54). Style = a conserved identity charge plus a per-segment offset that each forced erasure redraws (T 0.546 [0.522, 0.564]); an OU drift fails (H46). Two-domain breaking without assigned membership is retired (H54).
+
 ## Candidates not yet written up
 
 Moved out of this list on 2026-10-04: partial information decomposition now lives in [12](12-information-dynamics/), and stigmergy / reinforced choice (Deneubourg choice function, nonlinear Pólya urn) in [13](13-cultural-evolution-conventions/).

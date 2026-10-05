@@ -92,7 +92,14 @@ The fixed-order sweep is the subtle case. Each single-site update satisfies deta
 - Nonstationarity within a window (new agents, goal changes) can masquerade as irreversibility. Use windows within one regime (`../DEFINITIONS.md`, Regime).
 - Bin width changes everything: too coarse merges cause and effect into the same bin and hides the arrow of time.
 - Causally ordered tool use (open a file, then edit it) is trivially irreversible inside one agent. Decide whether that counts as signal or as nuisance before measuring.
-- **Onsager regression fails in regime III (H99):** kicks outlive the fluctuation clock about tenfold (nudge response ×9.5 the prediction in #51), and the collective talk mode keeps more memory than mean-field Glauber allows. Do not infer response functions from equal-time fluctuations; talk minutes carry no single-agent memory (ρ_⊥(1) ≈ 0.006), so use the per-call clock.
+- **Onsager regression fails in regime III (H99):** kicks outlive the fluctuation clock about tenfold (nudge response ×9.5 the prediction in #51), and the collective talk mode keeps more memory than mean-field Glauber allows. Do not infer response functions from equal-time fluctuations; talk minutes carry no single-agent memory (ρ_⊥(1) ≈ 0.006), so use the per-call clock. *(Withdrawn 2026-10-04 by H99 round 2: the ×9.5 ratio was a masking and centring artifact; regime-III collective talk memory is read-out coupling within rooms, matching g_lag.)*
+
+## What held up (round 2, 2026-10-05)
+- **Two-timescale quench relaxation (H44):** a forced erasure gives a one-call re-reading spike, then a tail of 8.2 [5.8, 11.8] calls (G51) and a slow write recovery of 8.5 [5.9, 11.1] calls. Round 1's linear write ramp is the end of this relaxation. Model an erasure as a field quench of a context-held task state, not as a temperature pulse.
+- **Read-out coupling holds for content within addressed replies (H08, H50):** content jumps at the read-out call (J^c_1 0.033 [0.027, 0.039], named ×5), but statements that neither name nor answer the sender do not move toward the message (Δ_cont −0.39 [−0.62, −0.12], G51). Unaddressed content is co-response, a field.
+- **Call clock given a talk call (H40):** η_rep|talk −0.11 [−0.16, −0.06] in four regime-III periods; a negative total η is talk composition, not a wall-clock effect.
+- **Gain closure (H67):** g_lag 0.127 matches the Fano-implied total gain 0.149 [0.123, 0.175]. Pair-level boundary estimators overstate it ×2 (+0.05 to +0.07 with no coupling); use agent × day × call-class cells.
+- **Erasure is a step field on loops (H69):** loop exit does not scale with the own tokens removed. Its output value is negative for command loops (H44: most are productive).
 
 ## Hypothesis seeds
 

@@ -197,6 +197,7 @@ Frozen C1–C6 on #43, #45–#47, #49, #50 and the #51 tail (scored at ≥ 30 ep
 - 2026-10-04 ~19:50–20:45 UTC: synthetic validation; amendments A1–A5.
 - 2026-10-04 ~20:50 UTC: real-data run; rerun ~21:00 with a quasi-separation guard (G44's exit model and G51's in-flight human coefficient were not estimable; no scorable-period number changed). Period READMEs, figures, estimates rows (61).
 - Code map: `scheme/build.py`; `analysis/h69lib.py` (logit with agent effects, onset/exit, MH enrichment, pooling), `synthetic.py`, `run_periods.py`, `write_period_cards.py`, `figures.py`, `estimates_rows.py`, `confirm.py`.
+- **Cross-note (2026-10-05, from H44 round 2, R4):** a forced reset does not pay as a loop breaker in output: E_loop −0.086 [−0.151, −0.022] writes per call over 10 calls (6 periods). Most loops that H44 flags are productive (617 of 741 looping G51 events contain writes); stuck loops (no writes) are neutral, +0.011 [−0.015, 0.037] (post hoc). H44's loop is a repeated command hash, not this card's chat restatement, so the erasure exit effect here stands. But the loops that erasure breaks are mostly productive work in H44's sense, and ending a loop is not an output gain. The output value of ending a restatement loop is untested.
 
 ## Round 2 redirects (2026-10-04)
 - **H69-R1.** Measure own content in tokens (H45's prompt sizes) and test whether onset depends on own tool output as well as own chat. *(Done 2026-10-05 in "Round 2"; superseded by its results.)*

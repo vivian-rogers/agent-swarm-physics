@@ -42,6 +42,14 @@ Each DQ agent writes only new files in `infra/` and new tables in `data/processe
 - `kicks_classified`: add `primary_target` (the nudge's leading @; 29% of nudges mention other agents too, H35).
 - DQ7 rebuild should also apply stall-adjusted (agent-state conditioned) variants of the collective statistics used by H02, H12 and H19.
 
+**Added 2026-10-05** (from round 2, wave 1: H08, H40, H46, H54, H67, H69; code moves are queued, not done):
+- Move H54's read vs in-flight pair builder (`analysis/round2.py`, `build_pairs` and the after-lag × before-age cells of Amendment R2-1) into `infra/shared/readout_contrast.py` with a `--verify`. H08's matched-lag content contrast (lag × density strata) is the second user.
+- Move H08's `scheme/build_memory_names.py` (per-consolidation added-name bitmasks from `agent_memories`, text read in memory only) and `scheme/build_cc_status.py` (Claude Code status-block goal and day fields per tool result) into `infra/shared/`. H69's memory containment (word 3-grams) could share the snapshot matcher.
+- Move H46's genre residualization (`analysis/r2lib.py`: `genre_block`, `position_block`, `residualize`; 23 covariates, agent fixed effects, `g` / `gp`) and the 50 function-word rates (`fw_words`, `fw_matrix`) into `infra/shared/style_features.py` next to `text_features`; H73 and H13 use the same style space.
+- **DQ2 multi-label sample (H40):** label a stratified sample of rank-2/3 reply candidates (currently 16% / 6% labelled in regime I; 4–11% of replying messages have more than one labelled parent). Pools are larger for slow-cadence agents (G42 29.4 vs 18.7), so per-call comparisons across cadence are biased until this exists. Paid Jev labels: ask Vivian first.
+- Toolkit item (H08): the five-fetch event-age monitor (median event age over the last 5 fetches > 1 h) as a reusable function for any agent with fetch logs.
+- H67's regime-I call-skeleton null (real call order, fixed modes, no coupling) as a shared null in `infra/shared/nulls.py`; H50 and H111 need it for regime-I talk effects.
+
 
 ## Re-evaluation wave (Vivian, 2026-10-04: "go back through the older Hs with the better quality data")
 Starts once the consolidation, DQ1 (context ledger + `call_windows`), DQ5 (embedding pack) and DQ7 (atomic rebuild of `chat_core` / `actions`) have landed; DQ2–DQ4 and DQ6 join as they finish. One agent per hypothesis cluster, ≤ 2 threads each, holdout still locked. Each agent re-runs its hypotheses' pipelines on the shared tables, writes a dated "Round 1b (improved data)" section in the card and period folders (old numbers kept next to new), and fills the page-2 summary sections.

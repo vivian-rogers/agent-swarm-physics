@@ -1,11 +1,11 @@
 {
  "note": "Measured constants of the swarm. Exploratory (round 1b), not holdout-confirmed. Coordinator-curated from integrated reports; each value cites its hypothesis card. Update when a card changes.",
- "updated": "2026-10-04",
+ "updated": "2026-10-05",
  "constants": [
   {
    "symbol": "β",
    "name": "per-pair attention dilution exponent",
-   "value": "0.66 ± 0.02 | CORRECTION 2026-10-04: k^−0.66 (all talk calls, D1) is not separable from reactive timing (null 0.75–0.80); the identified value is the #51 timer-wake exponent 0.50 [0.45, 0.56]",
+   "value": "0.66 ± 0.02 | CORRECTION 2026-10-04: k^−0.66 (all talk calls, D1) is not separable from reactive timing (null 0.75–0.80); the identified value is the #51 timer-wake exponent 0.45 [0.41, 0.50] (round 1b; round 1 gave 0.50)",
    "kind": "exponent",
    "scope": "16/16 periods, mention-based, ledger k",
    "model": "01",
@@ -15,12 +15,12 @@
   {
    "symbol": "η",
    "name": "exposure-time elasticity of the reply hazard",
-   "value": "−0.00 ± 0.05 (G51); +0.51 [0.41, 0.61] regime I",
+   "value": "−0.00 ± 0.05 (G51); +0.51 [0.41, 0.61] regime I | updated 2026-10-05 (H40 round 2): base η G38 −0.57 [−0.67, −0.46], G44 −0.34 [−0.44, −0.24] is mostly call-type composition (74–81% removed by the talk split; η_talk −0.28 [−0.39, −0.18]); given a talk call η = −0.11 [−0.16, −0.06] in G38, G40, G41, G44 (τ 0); regime I: start-placement artifact +0.04 [−0.06, 0.13] (excluded), full-strength scheduler-wait exposure excluded, cause open",
    "kind": "elasticity",
    "scope": "11/11 regime II–III periods near 0",
    "model": "09",
    "source": "H40",
-   "meaning": "0 = coupling runs on the call clock; 1 = on the wall clock."
+   "meaning": "0 = coupling runs on the call clock; 1 = on the wall clock. | Round 2: in regimes II–III the wall clock (η = 1) is excluded everywhere; a negative total η means long tool calls are followed by fewer talk calls, not a negative wall-clock effect."
   },
   {
    "symbol": "ε(5 min)",
@@ -35,12 +35,12 @@
   {
    "symbol": "J₁",
    "name": "hop-1 coupling, named vs unnamed",
-   "value": "0.17 vs 0.004",
+   "value": "0.17 vs 0.004 | updated 2026-10-05 (H67 round 2): H50's J₁ scale is ≈ 2× g_lag through its pair-RD design (regime III: half local-linear extrapolation, half pair sampling; +0.05 to +0.07 with no coupling in synthetic worlds) and call-class composition (regime I); use H67's J₁* for magnitudes (named 0.079 [0.069, 0.089] vs unnamed 0.004, ×19)",
    "kind": "coupling",
    "scope": "regime III",
    "model": "02",
    "source": "H50",
-   "meaning": "Only addressed messages couple at the first read-out."
+   "meaning": "Only addressed messages couple at the first read-out. | The named/unnamed contrast stands; the absolute scale does not."
   },
   {
    "symbol": "R̂",
@@ -85,9 +85,9 @@
   {
    "symbol": "f_conv",
    "name": "convergence share of exposure effects",
-   "value": "≈ 1/3 (content, 60 s lag); ≈ 1/2 (ideas)",
+   "value": "≈ 1/3 (content, 60 s lag); ≈ 1/2 (ideas) | updated 2026-10-05 (H54 round 2): human messages, read vs unread in flight at matched lag × before-age: 0.48 (bge) / 0.40 (gte), no CI; (H08 round 2): for content of statements that neither name nor reply to the sender, median κ_c 1.68 over regime-III periods (bge; > 1 in 7/9), i.e. convergence explains all of it",
    "kind": "share",
-   "scope": "in-flight placebo at matched lag",
+   "scope": "in-flight placebo at matched lag | in-flight placebo at matched lag; H08's κ_c is not a pure convergence share (a shared drifting topic alone gives ≈ 0.73)",
    "model": "08",
    "source": "H32, H34",
    "meaning": "Part of apparent influence happens without reading: shared fields and priors."
@@ -125,12 +125,12 @@
   {
    "symbol": "ΔW_erase",
    "name": "forced-erasure work cost",
-   "value": "commits −39% [−42, −35] for ~10 turns; ≈ 10% of a segment; output −41% [−38, −44] over 20 calls (H87)",
+   "value": "commits −39% [−42, −35] for ~10 turns; ≈ 10% of a segment; output −41% [−38, −44] over 20 calls (H87) | updated 2026-10-05 (H44 round 2): the write dip depends on the reference window: −20% (whole closed segment), −26% (far), −31% (near), −32% (agent-day steady state), −11% [−18, −4] (40-call cycle mean); cost per reset 0.19–0.59 write calls; sawtooth cost vs the late-segment plateau 5–15% of write calls (G51 8.5%, no CI)",
    "kind": "response",
    "scope": "7/9 periods",
    "model": "04",
    "source": "H15, H44, H87",
-   "meaning": "The context window carries the call-scale information; memory does not recover it."
+   "meaning": "The context window carries the call-scale information; memory does not recover it. | Quote the reference window with any erasure or cap cost (H44 round 2)."
   },
   {
    "symbol": "χ_act",
@@ -165,7 +165,7 @@
   {
    "symbol": "top-1",
    "name": "kickoff quench target recovery",
-   "value": "18/33 periods (p 3e−6)",
+   "value": "18/33 periods (p 3e−6) | updated 2026-10-05 (H54 round 2): gte 20/33 (bge 18/33), median π 1.0 in both; per-period π Spearman 0.75 across models, verdicts agree in 29/33",
    "kind": "response",
    "scope": "day-1 content centroid",
    "model": "11",
@@ -235,12 +235,12 @@
   {
    "symbol": "OR_ctx",
    "name": "restatement source-in-context enrichment",
-   "value": "3.38 [2.56, 4.46]; loop exit per forced erasure ×2.40 [1.18, 4.88]",
+   "value": "3.38 [2.56, 4.46]; loop exit per forced erasure ×2.40 [1.18, 4.88] | updated 2026-10-05 (H69 round 2): erasure acts as a step, not a dose: exit × own tokens removed OR 1.26 [0.95, 1.69] per log unit (a 2-fold dose excluded, power 1.00); exit OR at the mean dose 2.49 [1.14, 5.44]; post hoc, exit ×3.74 [1.83, 7.61] when the looping text is not in memory (interaction 0.42 [0.26, 0.68])",
    "kind": "response",
    "scope": "G38, G40, G41, G51",
    "model": "12",
    "source": "H69",
-   "meaning": "Loops are copies of what is still in the context window; erasure breaks them."
+   "meaning": "Loops are copies of what is still in the context window; erasure breaks them. | Ending a restatement loop is not an output gain: H44 round 2 finds that most flagged (command) loops are productive and a reset costs a looping agent output (E_loop)."
   },
   {
    "symbol": "β_age",
@@ -305,7 +305,7 @@
   {
    "symbol": "g_lag",
    "name": "read-out loop gain of talk (hop 1)",
-   "value": "regime III median 0.13 (#51 0.142 [0.111, 0.174]); regime I 0.005; max upper bound 0.39",
+   "value": "regime III median 0.13 (#51 0.142 [0.111, 0.174]); regime I 0.005; max upper bound 0.39 | updated 2026-10-05 (H67 round 2): agrees with the Fano-implied total gain g_Fano 0.149 [0.123, 0.175] (25 regime-III units; pool 0.127); H50's twice-larger value is its estimator; regime I on the chat clock g_chat −0.022 [−0.052, 0.009]",
    "kind": "gain",
    "scope": "66/66 units subcritical",
    "model": "09",
@@ -695,7 +695,7 @@
   {
    "symbol": "r_F",
    "name": "talk Fano sum-rule ratio (observed / 1/(1 − g_lag)²)",
-   "value": "regime III 1.01 [0.94, 1.09] (18 units, τ² 0); regime I 1.34 [1.18, 1.52]; median Φ(10 min) 1.32 / 1.92 / 1.29 (I / II / III); cross-room covariance 0 in 0/12 two-room units",
+   "value": "regime III 1.01 [0.94, 1.09] (18 units, τ² 0); regime I 1.34 [1.18, 1.52]; median Φ(10 min) 1.32 / 1.92 / 1.29 (I / II / III); cross-room covariance 0 in 0/12 two-room units | updated 2026-10-05 (H67 round 2): regime-I r_F with the chat-clock gain g_I 1.35 [1.14, 1.60], unchanged: the regime-I excess is not chat-clock read-out coupling; r_F with the multi-hop G₅ 0.78 [0.67, 0.90] (descriptive)",
    "kind": "sum rule",
    "scope": "per-call residual clock, 10-min windows",
    "model": "02",
@@ -751,6 +751,336 @@
    "model": "02",
    "source": "H115, H116",
    "meaning": "Debaters answer opponents; leadership roles do not raise call-level talk influence."
+  },
+  {
+   "symbol": "Δ_read",
+   "name": "per-agent read-out pull of a human message",
+   "value": "0.090 [0.071, 0.109] (bge) / 0.088 [0.069, 0.107] (gte), 181 messages, 990 read pairs; post hoc: 0.22 ± 0.02 (SE) when the first post-read message is < 30 s, ≈ 0 by 10 min",
+   "kind": "response",
+   "scope": "human messages ≥ 250 characters, not kickoffs; regimes I and III; first post-read chat message, decoy-corrected",
+   "model": "11",
+   "source": "H54 r2",
+   "meaning": "Each reader moves toward a human message at its first post-read message; half the pull is gone within about a minute (decay profile post hoc)."
+  },
+  {
+   "symbol": "C_read",
+   "name": "read minus in-flight re-quench at matched lag and before-age",
+   "value": "+0.11 [0.05, 0.17] (bge) / +0.12 [0.07, 0.18] (gte); 93 in-flight pairs, 72 messages; matched read 0.21 vs in flight 0.10",
+   "kind": "response",
+   "scope": "human messages; regime I carries the contrast (regime III 13 in-flight pairs)",
+   "model": "11",
+   "source": "H54 r2",
+   "meaning": "Reading adds to the pull beyond contemporaneous convergence; convergence is 40–50% of the matched pull (f_conv)."
+  },
+  {
+   "symbol": "c_D",
+   "name": "erasure dose slope of restatement-loop exit",
+   "value": "+0.24 [−0.06, 0.53] per log unit of own tokens removed (OR 1.26 [0.95, 1.69], I² 0.25); onset −0.09 [−0.19, 0.02]",
+   "kind": "response",
+   "scope": "G38, G40, G41, G51 pooled (all labs); upper bound: a weak dose ≤ 0.53 is not excluded",
+   "model": "02",
+   "source": "H69 r2",
+   "meaning": "Every full erasure removes the copied source, so loop exit is a step, not proportional to how much is erased."
+  },
+  {
+   "symbol": "b_U",
+   "name": "own tool tokens as a loop-onset trigger",
+   "value": "−0.47 [−1.31, 0.37] per log unit (I² 0.90; G38 −0.94 [−1.44, −0.43], G51 −0.08); power 0.93 at +0.32",
+   "kind": "response",
+   "scope": "G38, G51; all-lab token sample (drops many OpenAI and DeepSeek statements)",
+   "model": "02",
+   "source": "H69 r2",
+   "meaning": "Own tool output does not raise restatement onset; trimming tool output does not prevent loops."
+  },
+  {
+   "symbol": "f_mem",
+   "name": "memory share of erasure-crossing restatements",
+   "value": "G51 0.73 (0.67 already in memory when first said); G38 0.10; G40 0.07; G39 0.015; G41 0.017; erased-pair base 0.01–0.05; in-memory OR G51 31.7 [7.1, 65.3], G38 7.0 [1.1, 17.1], pooled 3.09 [0.67, 14.1]",
+   "kind": "share",
+   "scope": "regime III, word 3-gram containment ≥ 0.5; pooled claim failed as frozen",
+   "model": "02",
+   "source": "H69 r2",
+   "meaning": "In #51 most loops that survive an erasure restate the agent's memory; elsewhere memory plays no detectable role. Carriage and salience are not separable."
+  },
+  {
+   "symbol": "OR_E×mem",
+   "name": "memory moderation of erasure loop exit (post hoc)",
+   "value": "0.42 [0.26, 0.68] (I² 0); erasure exit ×3.74 [1.83, 7.61] when the looping text is not in memory",
+   "kind": "response",
+   "scope": "G38, G39, G40, G51; post hoc, needs a fresh test (H69-R4)",
+   "model": "02",
+   "source": "H69 r2",
+   "meaning": "An erasure breaks a loop less when the looping content is in memory: check memory before relying on a reset."
+  },
+  {
+   "symbol": "T_erase,style",
+   "name": "forced-erasure style displacement percentile (genre and position removed)",
+   "value": "0.546 [0.522, 0.564] (5,673 forced pairs, 23 units); genre-matched strata 0.545; content 0.513 (bge) / 0.510 (gte), CIs include ½; round-1 0.564 → 0.547 after agent-scale fix",
+   "kind": "response",
+   "scope": "regime III, NE41, scaled pairs, agent-cluster CI; 18/23 units",
+   "model": "11",
+   "source": "H46 r2",
+   "meaning": "Exogenous erasures move style, not content, beyond speech-act genre."
+  },
+  {
+   "symbol": "κ_ctx",
+   "name": "context-held style offset share",
+   "value": "≈ 0.046 [0.017, 0.072] of per-message style variance (ΔC(1) 0.70 [0.26, 1.11]); flat in lag 1–4, 0.64 already at the first post-reset message (post hoc)",
+   "kind": "share",
+   "scope": "regime III, gap-matched, clipped units, agent bootstrap (approximate)",
+   "model": "11",
+   "source": "H46 r2",
+   "meaning": "A forced erasure redraws a per-segment style offset; no OU drift grows with position (kill fired)."
+  },
+  {
+   "symbol": "Δρ_erase",
+   "name": "drop in style self-pull across a forced erasure",
+   "value": "0.145 [0.086, 0.184] (ρ in context 0.36 [0.27, 0.45] → after erasure 0.22 [0.16, 0.27]); room-register term 0.11 does not absorb it",
+   "kind": "response",
+   "scope": "regime III, own last ≤ 3 messages, gap-matched",
+   "model": "11",
+   "source": "H46 r2",
+   "meaning": "An agent imitates its own in-context style; erasing the context removes part of that pull."
+  },
+  {
+   "symbol": "A_id",
+   "name": "agent identification across goal switches (function words + style)",
+   "value": "0.85 (chance 0.15); style 0.77, function words 0.79, content 0.51",
+   "kind": "accuracy",
+   "scope": "24 non-reserved goal switches, balanced accuracy",
+   "model": "11",
+   "source": "H46 r2",
+   "meaning": "50 function-word rates plus 17 formatting rates attribute messages to an agent across a goal switch; embeddings do not."
+  },
+  {
+   "symbol": "J^c_1",
+   "name": "content read-out jump (matched age, hop 1)",
+   "value": "0.033 [0.027, 0.039] (bge) / 0.046 [0.038, 0.055] (gte); named 0.077 [0.063, 0.091] vs unnamed 0.016 [0.009, 0.022] (×5); J^c_2 0.039; regime I 0.020 [0.014, 0.025], no named premium",
+   "kind": "coupling",
+   "scope": "regime III, 16 units (CI > 0 in 10, < 0 in none); whitened cosine with a same-sender placebo",
+   "model": "02",
+   "source": "H50 r2",
+   "meaning": "Content couples at the recipient's read-out call, as talk does, mostly through named messages. H08 r2: without names or replies in the response, no read-out content effect is found (different estimand)."
+  },
+  {
+   "symbol": "J_relay",
+   "name": "relay read-out jump at a third agent (post hoc)",
+   "value": "0.014 [0.006, 0.022]; relays naming the third agent 0.115 [0.078, 0.152], unnamed 0.006 [−0.002, 0.014] (×19)",
+   "kind": "coupling",
+   "scope": "regime III, 27 units, start-time RD at C-hops ≥ 2; post hoc estimator; not valid in regime I",
+   "model": "02",
+   "source": "H50 r2",
+   "meaning": "A relay couples a third agent only when it names it."
+  },
+  {
+   "symbol": "f_batch",
+   "name": "batched relay read share",
+   "value": "0.60 (regime III), 0.41 (regime I); ρ = 2 in 19% / 33%",
+   "kind": "share",
+   "scope": "relay pairs (source and relay read by a third agent)",
+   "model": "02",
+   "source": "H50 r2",
+   "meaning": "Path length 2 often collapses into one read-out call: the third agent reads the source and the relay together."
+  },
+  {
+   "symbol": "ΔP_chat",
+   "name": "regime-I read → chat-mode switch",
+   "value": "0.024 [0.019, 0.029] at hop 1 (0.026–0.041 to hop 6), ≈ 70% of the regime-I talk jump; chat-mode recipients k₁ 0.110 [0.087, 0.133] vs computer use 0.005 (post hoc split); H67 r2: ≈ 3/4 is the chat-turn schedule (skeleton null), mode-free excess 0.035 [0.023, 0.046]",
+   "kind": "response",
+   "scope": "regime I; chat-mode calls talk 0.78, computer-use 0.04",
+   "model": "02",
+   "source": "H50 r2, H67 r2",
+   "meaning": "Regime-I talk coupling is mostly a mode switch, and most of that switch is the scaffold's chat-turn order, not coupling."
+  },
+  {
+   "symbol": "k₁(I)",
+   "name": "regime-I hop-1 talk jump on logged-start recipients",
+   "value": "0.030 [0.021, 0.039] (all recipients 0.025 [0.020, 0.030]); k₄ − k₁ +0.013 n.s.",
+   "kind": "coupling",
+   "scope": "regime I, 10 units (#24–#31), logged starts",
+   "model": "02",
+   "source": "H50 r2",
+   "meaning": "The regime-I hop-1 jump is not a latency artifact; the round-1 'continuing rise' is withdrawn."
+  },
+  {
+   "symbol": "Δ_cont",
+   "name": "read − in-flight content response at matched lag",
+   "value": "all statements +1.25 [+0.98, +1.60] cos×100; statements that neither name nor reply to the sender −0.39 [−0.62, −0.12]; CI > 0 for all statements in 3/9 (bge) and 5/9 (gte) regime-III periods",
+   "kind": "response",
+   "scope": "G51, bge, lag × density strata, 1-h block bootstrap",
+   "model": "02",
+   "source": "H08 r2",
+   "meaning": "Read-gated content lives inside addressed replies; without names and replies, co-response wins (κ_c > 1)."
+  },
+  {
+   "symbol": "q_mem",
+   "name": "memory dose rate at forced erasures",
+   "value": "0.48 (G51) to 0.90 (G39)",
+   "kind": "share",
+   "scope": "regime III, 9 periods; share of forced erasures where the engaged sender is newly written to memory",
+   "model": "02",
+   "source": "H08 r2",
+   "meaning": "Agents write the senders they engage with into memory at most consolidations."
+  },
+  {
+   "symbol": "β_mem",
+   "name": "memory-salience reply premium",
+   "value": "+5.5 ± 1.0 pp (SE), CI > 0 in 7/9; protection CF × dose −0.36 ± 0.55 pp (power 0.04 at π = 0.5)",
+   "kind": "response",
+   "scope": "regime III, 9 periods, reply author, LPM with dose × age",
+   "model": "02",
+   "source": "H08 r2",
+   "meaning": "Memory records engagement; whether a name in memory protects a thread across an erasure is unpowered."
+  },
+  {
+   "symbol": "T_replay",
+   "name": "decoupled-feed episode length",
+   "value": "9 days, 17.3 active h, 130 fetches (2026-03-17 17:22 → 03-27 19:29 UTC); 97.7% of fetches stale vs 0.15% before",
+   "kind": "timescale",
+   "scope": "one episode, the Claude Code agent's event feed; status block stayed current",
+   "model": "02",
+   "source": "H08 r2",
+   "meaning": "A stale feed can decouple one agent silently for days while its goal and day number stay current."
+  },
+  {
+   "symbol": "t_detect",
+   "name": "event-age monitor detection delay",
+   "value": "0.38 active h (2 fetches), 0 false alarms",
+   "kind": "timescale",
+   "scope": "one episode; alarm when the median event age over the last 5 fetches exceeds 1 h",
+   "model": "02",
+   "source": "H08 r2",
+   "meaning": "A five-fetch event-age monitor catches a replayed feed fast; a content-only monitor does not."
+  },
+  {
+   "symbol": "f_omit",
+   "name": "200-event cap omission share",
+   "value": "0.0365 of 930,422 received agent messages (G51); 0 in every period before 2026-06-11",
+   "kind": "share",
+   "scope": "ledger `omitted`, NE22",
+   "model": "02",
+   "source": "H08 r2",
+   "meaning": "The NE22 cap drops about 4% of #51 messages and nothing earlier."
+  },
+  {
+   "symbol": "η_rep|talk",
+   "name": "reply-given-talk span elasticity",
+   "value": "−0.11 [−0.16, −0.06] (τ 0, Q 0.58); synthetic attenuation ≈ 10%",
+   "kind": "elasticity",
+   "scope": "regime III, G38, G40, G41, G44, DQ2 parents",
+   "model": "09",
+   "source": "H40 r2",
+   "meaning": "A talk call answers a pending message almost regardless of its previous call's wall span (doubling the span lowers the hazard 7%). The talk split conditions on talk, which a message can cause."
+  },
+  {
+   "symbol": "η_talk",
+   "name": "talk-propensity span elasticity",
+   "value": "−0.28 [−0.39, −0.18] (G38 + G44); +0.06 [−0.02, 0.14] (G40 + G41)",
+   "kind": "elasticity",
+   "scope": "regime III",
+   "model": "09",
+   "source": "H40 r2",
+   "meaning": "Long tool calls are followed by fewer talk calls in some periods; this explains about 3/4 of the negative total η and all of its between-period spread."
+  },
+  {
+   "symbol": "η_wait",
+   "name": "regime-I scheduler-wait elasticity",
+   "value": "+0.18 [−0.17, 0.53] (η_busy +0.28 [−0.11, 0.67]; total +0.30 [−0.14, 0.73]); start-placement artifact +0.04 [−0.06, 0.13]",
+   "kind": "elasticity",
+   "scope": "regime I, Gemini logged chat calls, #24–#31 pooled (274 replies)",
+   "model": "09",
+   "source": "H40 r2",
+   "meaning": "Full-strength wall-clock exposure through the scheduler's wait is excluded; the cause of regime I's η is open."
+  },
+  {
+   "symbol": "Θ_c",
+   "name": "thrash index on blind-checked labels",
+   "value": "+0.106 [0.089, 0.122] (9/9); conservative (mid-segment label rates) +0.072 [0.067, 0.078]; round-1 classifier +0.079",
+   "kind": "response",
+   "scope": "regime III, 9 non-reserved periods; 300 blind labels, re-acquisition κ 0.87 (single rater)",
+   "model": "02",
+   "source": "H44 r2",
+   "meaning": "A forced wipe raises re-reading; the round-1 value is not a classifier artifact."
+  },
+  {
+   "symbol": "ℓ₂",
+   "name": "two-timescale erasure relaxation",
+   "value": "re-read spike 1 call, tail 8.2 [5.8, 11.8] calls (G51; ΔAIC +104); slow write recovery 8.5 [5.9, 11.1] calls pooled; no residual linear ramp (G51 +0.0002 [−0.0002, 0.0005] per call)",
+   "kind": "timescale",
+   "scope": "regime III, complete forced sawtooths; tail resolved in G51 and G40 only",
+   "model": "02",
+   "source": "H44 r2",
+   "meaning": "The wipe is a quench with a one-call spike and an ~8-call relaxation; round 1's 'segment-long ramp' is the end of this relaxation."
+  },
+  {
+   "symbol": "Y(20)/Y(40)",
+   "name": "cap output ratio",
+   "value": "0.88 [0.85, 0.91] (< 1 in 9/9, CI < 1 in 8/9); Y(30)/Y(40) 0.95 [0.94, 0.96]; gpt-5-2025-08-07 reverses (1.20, post hoc)",
+   "kind": "response",
+   "scope": "regime III, 9 periods; also per wall-clock minute; optimum beyond 40 not identified",
+   "model": "04",
+   "source": "H44 r2",
+   "meaning": "Halving the context cap from 40 to 20 calls costs about 12% of output per call."
+  },
+  {
+   "symbol": "s_reopen",
+   "name": "post-reset re-open share of the erased working set",
+   "value": "forced 0.60 [0.53, 0.67] vs no reset 0.66 [0.57, 0.75]; recency-adjusted excess −0.039 [−0.085, +0.007]; forced − voluntary +0.040 [0.017, 0.062]",
+   "kind": "share",
+   "scope": "regime III, file-path objects, last 20 pre-wipe calls",
+   "model": "04",
+   "source": "H44 r2",
+   "meaning": "Agents re-read their working set by habit, not the erased files in particular; the wipe raises the volume of re-reading, not its targeting."
+  },
+  {
+   "symbol": "E_loop",
+   "name": "output effect of a reset on a looping agent",
+   "value": "−0.086 [−0.151, −0.022] writes per call over 10 calls (6 periods; G51 −0.073); post hoc: stuck loops (no writes) +0.011 [−0.015, 0.037], productive loops −0.149 [−0.201, −0.097]",
+   "kind": "response",
+   "scope": "regime III, command-hash loop flag (≥ 3 in-loop calls in the 10 calls before)",
+   "model": "02",
+   "source": "H44 r2",
+   "meaning": "A forced reset does not pay as a loop breaker: most flagged loops are productive repetition."
+  },
+  {
+   "symbol": "g_Fano",
+   "name": "Fano-implied total talk gain",
+   "value": "0.149 [0.123, 0.175]",
+   "kind": "gain",
+   "scope": "regime III, 25 units; H111's Φ(10) inverted with no refit; upper bound on the read-out gain",
+   "model": "09",
+   "source": "H67 r2, H111",
+   "meaning": "The fluctuation side agrees with the response side (g_lag 0.127) and excludes H50's 0.24; hops 2–5 add at most ≈ 0.05."
+  },
+  {
+   "symbol": "g_chat",
+   "name": "regime-I chat-clock read-out gain",
+   "value": "−0.022 [−0.052, 0.009] (36 units); attenuation-corrected < 0.04 at 95%; g_I −0.015 [−0.047, 0.017]",
+   "kind": "gain",
+   "scope": "regime I, chat-mode receiving calls",
+   "model": "09",
+   "source": "H67 r2",
+   "meaning": "On the talk-capable calls, a fresh read does not raise talk beyond messages in flight."
+  },
+  {
+   "symbol": "g_I,mode-free",
+   "name": "regime-I read-out gain without call-mode conditioning (post hoc)",
+   "value": "0.035 [0.023, 0.046] (0.056 raw minus skeleton null 0.019)",
+   "kind": "gain",
+   "scope": "regime I, 38 units, skeleton-null corrected; post hoc",
+   "model": "09",
+   "source": "H67 r2",
+   "meaning": "A small regime-I coupling that call-class cells hide; far below the g ≈ 0.13 that H111's regime-I excess would need."
+  },
+  {
+   "symbol": "ΔR",
+   "name": "first stage at the read-out boundary",
+   "value": "1.04 (regime III median); 0.95 (regime I)",
+   "kind": "consistency test",
+   "scope": "regime III, 25 units",
+   "model": "09",
+   "source": "H67 r2",
+   "meaning": "One read per message crosses the boundary, so per-read normalization does not cause the H50/H67 gap."
   }
  ]
 }
