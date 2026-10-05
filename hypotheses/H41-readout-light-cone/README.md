@@ -496,6 +496,75 @@ Unchanged: A1 B1 C1 D1 E1 F1 G1 H1 I1.
 - **H41-R4. Co-generation as a field.** Model the in-flight hazard as a common stimulus (shared reply parent, same dashboard, same tool output), and check whether it explains the numbers' J ≤ 1.
 - **H41-R5. Exogenous cadence.** Use declared pause lengths (timer wakes) as an instrument for call cadence within agents, to test cycles vs wall time with real leverage.
 
+## Round 2 (2026-10-05): ordered artifact reads, lags vs hops, co-generation as a field
+*Items H41-R2, R3 and R4. R1 (pre-registering J_mh on reserved data) is skipped here: it needs the reserved data. Predictions, nulls and kill rules written 2026-10-05 03:50 UTC, before any round-2 statistic on real data. Reserved data are masked with `holdout_mask` and `calendar.holdout` in every script. Round-1 and 1b code and outputs are unchanged; round-2 code is in new files (`scheme/build_r2.py`, `analysis/r2_*.py`); outputs go to `data/processed/H41-readout-light-cone/r2/`.*
+
+**Seen before writing:** the schemas of `artifact_mentions`, `artifact_commands_text`, `work_commits`, `work_repos`, `search_events`; the counts of action verbs by artifact kind since 2026-02-25 (no link to adoptions); that `git log --name-status` runs on the bare DQ4 clones (blobless clones keep trees; commits-only clones have no file names); round-1b table counts: cross-room robustly acausal adoptions per period (#35 376, #36 376, #38 58, #42 31, #51 408; #37, #39, #41, #44 ≤ 13), in-cone adoptions at cone hop count H ≥ 2 (#35 270, #36 213, #51 1,225, #38 20; #39–#41 ≤ 2), and class-D adoption counts; H05 round 2's one-line result (novel repos leak across rooms through command output, lift 21); H50 round 2 (length bias of in-flight anchors; relay reads batch). No round-2 statistic had been computed.
+
+**Common rules.** Cross-room = the adopter's known room at t0 differs from room0 (both known). Active time is the calendar's active-window coordinate (`h41core.active_time`). Pooling across periods is exception (d) in `CLAUDE.md` (too few events per period): pooled numbers are Mantel–Haenszel or inverse-variance combinations with period strata, always shown next to the per-period values. CIs are 95%. Bootstraps resample 1-h blocks of t0 within PT days (Known issue: day clusters under-cover in 5-day periods), 400 draws.
+
+### R2. Time-stamp the unlogged channel: ordered reads of the source's artifacts
+**Question.** Do cross-room adopters read the source's file or page *after* the source wrote it and the source posted, and *before* their own use, more than matched agents who did not adopt?
+
+**Definitions.**
+- *Source-written artifacts* W(s, t0, t_use): (i) repos and files that the source committed to (DQ4 `work_commits`, author = source agent, not `automated`) with commit time t_w ∈ [t0 − 6 h, t_use); file paths come from `git log --name-status` on the DQ4 clones (new table, built by `scheme/build_r2.py files`, paths hashed, no content); (ii) repos and sites the source pushed or deployed (`artifact_mentions`, source agent, verb `git push` or `deploy`) in the same window; (iii) artifacts linked in the source message m0 (t_w = t0). A site whose `parent` is a written repo counts as written.
+- *Read events* of the adopter a: `artifact_mentions` rows (source action, `how` ∈ {url, output, bare, cwd}) with a read verb: `git pull`, `git fetch`, `git clone`, `gh repo clone`, `glab repo clone`, `fetch`, `git show`, `git log`, `gh pr view`, `gh pr diff`, `gh issue view`, `glab mr view`, `glab issue view`, `gh api`, `gh api repos`, `glab api`, `glab api projects`, or a null verb with `how = url` (a page visit). Plus *local file reads*: a command row of a whose working-directory repo (`how = cwd`) is a written repo and whose command text names a path that the source committed (full relative path, or a basename of ≥ 8 characters outside a stoplist such as README.md and index.html). Command text is read in memory only.
+- A read *matches* W when its artifact is a written artifact, a file or site of a written repo, or the repo of a written file, and t_r > t_w.
+- *Ordered read* E_ord: a matching read with max(t0, t_w) < t_r < t_use (the card's wording). Variant E_ord⁻: t_w < t_r < t_use (a read between the source's write and its post also counts).
+- *Post-use placebo* E_post: a matching read (same W) in (t_use, t_use + Δ], where Δ is the active length of (t0, t_use]. Where the period's non-reserved days end first, both windows shrink to the same Δ′ (pre-window (t_use − Δ′, t_use]).
+- *Channels* of an ordered read: pull (git pull, fetch, clone), page (fetch or page visit of a site, repo or file URL), file (a file URL or a local file read of a source-committed path), api (gh / glab api, PR and issue views).
+
+**Design: a case–control within items (partition contrast: adopter vs non-adopter at the same moment).** A stratum is one cross-room robustly acausal adoption (item, adopter a, t0, t_use). Its controls are the item's other at-risk cross-room agents: agents in another room than room0 at t0, with a receiving call in (t0, t_use], who never use the item in the period. Controls get the adopter's windows.
+- OR_ord, OR_post: Mantel–Haenszel odds ratios of E_ord and E_post (adopter vs controls) over strata.
+- **Primary: Λ = OR_ord / OR_post.** A shared project (both agents read the source's repo anyway) raises both ORs; an artifact that carries the item raises only OR_ord.
+- Secondary: the specificity ratio OR_ord(source artifacts) / OR_ord(artifacts the source did not write, read in the same window), which removes "adopters are simply busier".
+- **Card-literal comparison:** the ordered-read share among cross-room robustly acausal adoptions vs in-cone item-exposed adoptions, matched on period × delay bin (< 5 min, 5–30 min, 30 min–2 h, 2–8 h, 8–24 h, > 24 h) × item class; Mantel–Haenszel risk ratio L_ctrl. Expected bias: in-cone controls are mostly same-room pairs, which share repos more, so L_ctrl leans low.
+- Descriptive: ordered-read shares by channel; the share with E_ord⁻.
+- Periods: two-room or hopping periods with ≥ 20 cross-room robustly acausal adoptions (#35, #36, #38, #42, #51). Others (#37, #39, #41, #44) descriptive only.
+
+**Synthetic validation first (real strata, real read events, real windows; only the identity of the adopter in each stratum is redrawn).**
+- Z0 activity field: adopter drawn among stratum members ∝ talk calls in (t0, t_use].
+- Z1 project field: ∝ the member's read rate of the source's artifacts over the whole period (unordered).
+- Z3 length world: ∝ the summed wall length of the member's talk calls in the window (talk depends on call length).
+- Z2 leak (f = 0.25, 0.5): with probability f the adopter is a member with an ordered read (if any), else Z0.
+- Pass: Λ lower CI > 1 in ≤ 10% of Z0, Z1, Z3 runs (size); in ≥ 80% of Z2 runs at f = 0.25 (power). 50 runs per world.
+
+**Predictions.**
+- **P-R2a (primary):** pooled Λ > 1 with lower CI > 1. Per period, Λ > 1 in ≥ 3 of the 5 periods. Prior 0.4.
+- **P-R2b (card-literal):** the ordered-read share among cross-room robustly acausal adoptions exceeds the delay-matched in-cone share (L_ctrl > 1, lower CI > 1). Prior 0.3 (bias above).
+- **P-R2c:** pull is the largest channel among ordered reads; the specificity ratio > 1. Prior 0.4.
+- **Kill rules.** (i) Λ's CI includes 1 or lies below it, with Z2 power ≥ 0.8 at f = 0.25: "ordered artifact reads do not carry cross-room items at a share ≥ 25%". With power < 0.8 the verdict is inconclusive. (ii) Size > 0.10 in Z0, Z1 or Z3: Λ is not interpretable and R2 is not scored.
+
+### R3. Lags quantized in calls, and lag vs cone hop count
+**R3-Q (quantization).** Hop events: exposed in-cone adoptions with an agent parent. τ_loc = the adopter's median receiving-call interval in the hour before exposure (intervals ≤ 30 min). Two phases: x_m = (t_use − t_m)/τ_loc from the first exposing message, and x_e = (t_use − t_call(c_e))/τ_loc from the start of the call that first read it. Statistic: phase concentration R = |mean exp(2πi x)|.
+- *What the model says before any data:* a message arrives at a uniform phase of the recipient's call, so x_m is smeared under any coupling clock. x_e is quantized whenever uses are emitted at call starts, under relay and under a field alike. So R3-Q describes the emission process; it cannot score gating unless the synthetic relay and field worlds separate.
+- **P-R3a:** real R_m ≤ 0.05 and within the synthetic range of both worlds; real R_e > R_m. Kill: none (descriptive). If relay and field worlds give overlapping R_e, R3-Q is declared non-discriminating.
+
+**R3-H (does the multiple track the cone hop count?).** In-cone adoptions with H ≥ 1 (H = hop count of the earliest time-respecting read-out path at the cone entry). Lag in the recipient's calls: n = receiving calls with a start in (t0, t_use] (a start-time count with no in-flight anchor; H50's length bias does not enter). Statistics: M₂ = median n(H = 2) / median n(H = 1), the same for H ≥ 3, the front ratio F₂ (10th percentiles), Spearman ρ(n, H), and the multiple n/H by H (descriptive).
+- *Null: entry-conditioned lag permutation.* Keep each adoption's source, t0, adopter, cone entry and H. Redraw the lag from the period's in-cone lags, conditioned on t0 + lag ≥ the adopter's cone entry (the adoption stays in the cone), and recount n on the adopter's calls. This removes the mechanical part (agents behind a bridge enter later, so late adopters have larger H). 500 draws. Excess Δ_M = M₂ − mean(M₂*), one-sided p.
+- *Synthetic first, on real skeletons with H ≥ 2 paths:* #51 08-05 → 08-22 (#focus hopping) and #36 (two rooms with bridges). Worlds: T1d decaying relay; T2 field pulse; W_L, a field whose per-talk-call hazard is proportional to the call's own latency (talk depends on call length). Pass: p < 0.05 in ≤ 10% of T2 and W_L runs, and in ≥ 80% of T1d runs.
+- Periods: those with ≥ 30 in-cone adoptions at H ≥ 2 (#35, #36, #51). NE42 (#39–#41) has ≤ 2 such adoptions per period: R3-H is n/a there (counts seen before writing).
+- **P-R3b:** in #35, #36 and #51, Δ_M > 0 with p < 0.05, and M₂ ≥ 1.5. Prior 0.5.
+- **Kill rules.** (i) Size > 0.10 in T2 or W_L: not scored. (ii) Power < 0.8 in T1d: inconclusive. (iii) Otherwise Δ_M ≤ 0 or p ≥ 0.05 in ≥ 2 of the 3 periods: "the lag does not track the cone hop count beyond entry".
+
+### R4. Co-generation as a field: numbers, call length and common stimuli
+**Units.** For each novel item (source message m0 at t0, room0) and each roster agent a ≠ source in room0 at t0: (1) a's talk call in flight at t0 (t_call < t0 < t_first ≤ t0 + 2 h, same day), and (2) a's first talk call with t_call > t0 (same horizon). A unit is at risk if a has not used the item before; the outcome is a's first use at that call. Coordinates: s = t_call − t0 (start time), lat = t_first − t_call, d = t_first − t0.
+- *Why a new estimator:* matched on d, an in-flight call has lat > d and a post-t0 call has lat < d, so J_mh compares long calls with short ones (H50's length bias). Long calls write long messages, which hold more numbers. This is a rival for J_D ≤ 1 that round 1 did not test.
+- **J_rd (start-time RD):** local-linear hazards in s on each side of 0 (|s| ≤ 60 s primary, 120 s secondary); J_rd = h₊(0)/h₋(0). At s → 0 both sides have the same delay and an unselected call length.
+- **Common stimulus CS_art** (agent sources only): the agent and the source both touched the same artifact (or the same repo through `parent`) in an action (`how` ∈ {url, output, bare}): the source in [t0 − 30 min, t0], the agent in [t0 − 30 min, t_first of the unit's call). Only artifacts touched by ≤ 50% of that day's active agents count (a specific stimulus, not the village's common repo).
+- Statistics per class (D numbers, N names, W rare words, U links): J_mh (round-1 estimator on these units), J_rd, ψ = MH ratio (over delay bins) of the in-flight hazard with CS_art = 1 vs 0, J_mh restricted to CS_art = 0 units, and the CS_art share of in-flight vs post-t0 adoptions. Descriptive: the share of in-flight adoptions whose message shares its DQ2 reply parent with m0.
+- Periods: all 32 replication periods; pooled per regime.
+
+**Synthetic validation first** (skeletons #38, #31, #51 07-06 → 07-23; 400 items per run, 4 seeds per world). Y0 decaying relay; Y1 relay + common stimulus (agents with CS_art = 1 get hazard 0.15 per talk call in [t0 − 5 min, t0 + 10 min], without reading); Y2 length field, no relay (pulse hazard ∝ lat); Y3 field pulse (T2); Y4 relay + length field. Pass: J_rd lower CI > 1 in ≤ 10% of Y2 and Y3 runs and in ≥ 80% of Y0 and Y4 runs; ψ lower CI > 1 in ≥ 80% of Y1 runs and ≤ 10% of Y0 runs; J_mh | CS = 0 lower CI > 1 in ≥ 80% of Y1 runs.
+
+**Predictions.**
+- **P-R4a (length rival rejected):** pooled regime-III J_rd,D has a CI that includes 1 or lies below it (numbers stay co-generated under the start-time design), while J_rd,N has lower CI > 1. Prior 0.5.
+- **P-R4b (common stimulus present):** the CS_art share of in-flight D adoptions is ≥ 2× that of post-t0 D adoptions, and pooled ψ_D has lower CI > 1. Prior 0.35.
+- **P-R4c (common stimulus explains J_D ≤ 1):** pooled regime-III J_mh,D | CS = 0 has lower CI > 1. Prior 0.3.
+- **Kill rules.** (i) J_rd false positives > 10% in Y2 or Y3: J_rd not scored. (ii) J_rd,D lower CI > 1: numbers' J ≤ 1 was an artifact of the in-flight design (recency and length), and R4's field question is moot. (iii) J_mh,D | CS = 0 CI includes 1 and ψ_D CI includes 1: "the measured common stimulus does not explain the numbers' co-generation". (iv) If CS_art covers < 10% of in-flight D adoptions, CS_art cannot explain J_D ≤ 1 whatever ψ is.
+
+**Reporting.** `per_period_estimates` rows (round 2): `r2_lambda_ordered_read`, `r2_or_ordered`, `r2_ordered_share_cross` (R2); `r3_M2_excess`, `r3_phase_R_m`, `r3_phase_R_e` (R3); `r4_J_rd_<class>`, `r4_J_mh_cs0_D`, `r4_psi_D` (R4). Overlap note: H05 round 2 measures a cross-room leak conductance through command output and history search. H41-R2 builds its own read and write tables in its own folder and does not use H05 files.
+
 ## Notes
 - 2026-10-04: promoted from HH155 by Vivian; scope: the interaction graph, not rooms.
 - 2026-10-04 ~06:00 UTC: round-1 agent wrote the operational definitions, observables, nulls, synthetic plan, predictions and native-test predictions before any real-data run.
