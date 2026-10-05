@@ -252,7 +252,7 @@ def analyze_trees(trees: pl.DataFrame, fu: pl.DataFrame | None, N: int, seed: in
 # ============================================================================================ day-ahead forecasts
 def _betabin(sizes, N):
     sys.path.insert(0, str(HERE))
-    from explore import betabin_fit
+    from explore import betabinom_fit as betabin_fit
     return betabin_fit(sizes, N)
 
 
