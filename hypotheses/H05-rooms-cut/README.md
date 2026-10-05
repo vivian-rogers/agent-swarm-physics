@@ -364,3 +364,53 @@ Ratings suggestion: completeness 55, faithfulness 2.0 (from 1.5), usefulness 2.5
 **Verdict changes.** None. P2 EP stays "not supported", P3 EP stays "not detectable" and the X5 reading stands: pairwise EP on 1-min activity is at the shared-schedule null. The two X5 exceptions (#42, #51 W28) were estimator noise and are withdrawn. Per-period verdicts rest on talk coupling, not EP, so no G folder changes. H05 writes no EP rows to `per_period_estimates`.
 
 **Claim that stands:** pairwise entropy production on 1-min activity spins is indistinguishable from the cross-day schedule null in 18/18 non-holdout windows (held-out Newton excess ≤ +0.056 nats per agent-hour, every p ≥ 0.07). Excluded: the round-1 #42 and #51 W28 exceptions (withdrawn).
+
+## Round 2 (2026-10-05): rooms vs shared artifacts, attention reallocation, leak conductance
+
+### Round-2 predictions, nulls and kill rules
+*Written 2026-10-05 03:25 UTC, before any round-2 statistic on real data and before the synthetic validation. Reserved data (NE12, NE15, held-out goal periods and windows) is not read; every script asserts this with `holdout_mask`. Code: `analysis/r2_*.py`; outputs `data/processed/H05-rooms-cut/r2/`. Round-1 and 1b predictions are unchanged.*
+
+**What I had seen before writing this (design steps, disclosed):**
+- Room partitions per day (`r1b/agent_day.parquet`, structure only) and the day lists of each window.
+- Counts of agent work commits per period, and the number of *cross-room* pair-days with a same-day co-edited repository: 98 of about 2,500 cross-room pair-days (#36 44, #42 22, #51 #focus 24, #35 3, #38 5; 0 in #37, #39, #41, #44). Within-room counts were not computed.
+- Search events whose answer names a repository: 214 in #35–#44, 1,529 in #51. Artifact-mention counts by source and `how`.
+- The NE42 period README (round 1b): stay-pair talk κ_x is +0.011 / +0.002 / +0.024 in #39 / #40 / #41. So the NE42 size check in R2 is **not blind**; the pooled room-size test (R2-P1) is.
+
+**R1: rooms vs shared artifacts (channel E3).**
+- *Degrees of freedom.* Commit spins e_i(t) ∈ {0, 1} per 5-min bin (DQ4 agent work commits: canonical, not imported, agent author, not automated). A pair-day is *co-edit* when both agents commit to a common repository that day.
+- *Observable.* Commit-response coupling E_ij = ½[corr(e_j(t), r_i(t)) + corr(e_i(t), r_j(t))], with r_i(t) = 1 if i commits in bins t+1 … t+6 (the next 30 min). E_x = E minus the cross-day surrogate (the same pair, other days of the same ISO week, aligned by minute of the window; H05's κ_x rule). Pair-days need ≥ 2 commits by each agent.
+- **R1-P1 (descriptive; not blind on the cross-room side).** Rooms split artifacts: the co-edit share of cross-room pair-days is ≤ 0.5 × the within-room share in ≥ 5 of the 8 two-room windows (#35–#39, #41, #42, #44). At the NE42 split, the co-edit share of cut pairs falls by ≥ 50% from #40 to #41.
+- **R1-P2 (the channel; partition contrast).** On cross-room pair-days, co-edit pair-days have a larger E_x than non-co-edit pair-days, matched on activity (strata: goal period × tertile of min(commits_i, commits_j)). Test: stratified difference Δ_cross; p from 2,000 permutations of the co-edit label within strata. **Pass:** Δ_cross > 0 with p < 0.05. Reference: the same Δ_in on within-room pair-days. If the artifact channel ignores rooms, Δ_cross ≈ Δ_in.
+- **R1-P3 (survives the cut; #focus 08-05 → 08-24, native, direction only).** The cut arm (Gemini 2.5 Pro or Opus 4.8 × #general) keeps co-editing during #focus (≥ 50% of its pre rate, 07-27 → 08-04), and its E_x does not fall (DiD against stay pairs, during − pre, ≥ 0 or CI including 0), while ledger reads fell 95% (round 1b).
+- **R1-P4 (talk does not ride on artifacts).** Cross-room talk κ_x on co-edit pair-days does not exceed that on non-co-edit pair-days (same strata; |Δ| < 0.01 or CI including 0). H41 found shared repos not enriched among leaks.
+- *Nulls.* Cross-day surrogate (schedule); co-edit label permutation within strata (partition contrast); synthetic size at real commit skeletons.
+- *Kill rules.* R1-P2 fails if Δ_cross ≤ 0, or if p > 0.2 where the synthetic power at the planted response probability 0.2 is ≥ 0.8; then the verdict is "no cross-room commit coupling at 30-min resolution". If power is < 0.8 the verdict is "inconclusive".
+- *Impostors.* A same-day drive shared by co-editors (a CI failure, an operator message) also gives Δ > 0. The surrogate removes the schedule, not this. I label a pass "commit coupling or a repository-level common drive" unless the synthetic common-drive world shows the estimator is not fooled.
+- Credence that R1-P2 passes: 0.35.
+
+**R2: attention reallocation (E5).**
+- *Model.* Per-sender response falls as k^−β with k = N_room − 1 (pending senders scale with room size). H18's identified exponent is β = 0.45 [0.41, 0.50] (#51 timer wakes; the card's N_room^−0.6 used the old mention exponent). For a pair that stays together while its room changes size, coupling scales by f = (k_post / k_pre)^−β.
+- **Pre-registered factors (from room sizes only, before measuring):**
+  - NE42 split 05-11: #best stay pairs k 13 → 3, f = 1.94; #rest stay pairs k 13 → 10, f = 1.13; pair-weighted (6 + 45 pairs) **f = 1.22** (β = 1: 1.66). The merge 05-04 is the inverse: pair-weighted **f = 0.85**. #39 and #41 have the same partition, so f(#41/#39) = 1.
+  - NE15 03-16 (reserved; arithmetic on the published C5 numbers only, no data read): #35 rooms of 3 and 9, one room of 11–12 before. Pair-weighted **f = 1.18–1.23** (β = 1: 1.54–1.69). The published J_in rise is ×6 (0.023 → 0.139). Dilution would explain log f / log 6 = 0.09–0.12 of the log rise (β = 1: 0.24–0.29).
+- **R2-P1 (pooled exogenous room size; blind).** Over non-reserved regime-III co-located pair-days (co-location ≥ 0.75), talk κ_x = α_pair + γ_day + b·log k_room + activity controls (two-way FE, two-way clustered SE). The operator sets room sizes, so log k_room is exogenous to a pair's chat. Day FE remove goal changes and shared fields. Identification comes from rooms of different sizes on the same day (two-room era, #focus). Read β̂_κ = −b / κ̄ (κ̄ = mean κ_x on those pair-days). **Prediction:** β̂_κ > 0 and its 95% CI includes 0.45.
+- **R2-P2 (mechanism: ledger uptake).** Per-sender mention uptake from `pending_sets` (any response to sender j at i's talk call, given j pending), directed pair-days. Poisson model with pair and day FE: log E[y] = log n + α_ij + γ_d − β_u·log k_room. **Prediction:** β̂_u CI includes 0.45 and excludes 0. Reply-parent uptake (`resp_reply`) reported, not decisive (one-parent budget, infra Known issues).
+- **R2-P3 (NE42 size; not blind).** The stay-pair κ_x ratio #41/#40 is ill-posed (#40 ≈ 0). The test uses levels: dilution predicts κ(#40) = 0.85·κ(#39) and κ(#41) = κ(#39). **Fails** if the merge drop κ(#39) − κ(#40) exceeds the dilution drop by more than 2 pair-bootstrap SE.
+- *Rivals.* β = 0 (room size does not matter given the room), β = 1 (a literal fixed budget), and a goal-specific field (H05 1b: #40's shared objective).
+- *Kill rules.* "Dilution sets the size" fails if the R2-P1 CI excludes 0.45. "No dilution" holds if the CI includes 0 at synthetic power ≥ 0.8 for β = 0.45. The ×6 at NE15 is "not dilution" if dilution explains < 0.3 of its log rise even at β = 1.
+- Credence that R2-P1 passes: 0.35.
+
+**R3: leak conductance through history search and artifacts.**
+- *Items.* Novel repositories: kind `repo` in `artifacts`, first agent mention on or after 2026-03-16 on a non-reserved day. Home room = the room of the first mentioner at that time (`rooms_asof.room_at_us`). Only items born while two or more rooms exist (two-room era; #51 #focus 08-05 → 08-21).
+- *Candidates.* Agents b in another room at the item's birth. Follow-up ends at the end of the item's goal period or when b enters the home room (censored).
+- *Adoption.* b's first deliberate use: an `artifact_mentions` row with `how` ∈ {url, bare} (chat, action or intention), while b is outside the home room.
+- *Exposures before adoption.* Search: one of b's `search_events` answers names the repository (`ans_rids`). Artifact: the repository appears in the output of one of b's commands (`how == output`, ≥ 2 s before any deliberate row). Chat relay (reference): a ledger item mentioning the repository entered one of b's calls.
+- *Observable.* Conductance per exposure G_c = P(b adopts within W = 2 h after its first exposure via channel c). **Matched null P0:** at the same moment, the same agent's adoption rate of up to 20 placebo items (novel repositories from another room, item age within ×2, not yet adopted by b, b not exposed to them through any channel up to t + W). Leak conductance = G_c − P0 (adoptions per exposure); lift = G_c / P0. CIs: bootstrap over items (clustered).
+- **R3-P1.** Search and artifact-output exposures both carry a leak: lift > 2 with the 95% CI excluding 1, for each channel.
+- **R3-P2.** A leak exposure is weaker than a chat read: (G_c − P0) for search and output each ≤ 0.5 × the within-room chat-read value (same estimator, readers in the home room).
+- **R3-P3.** Leaks are a minor route: among cross-room adoptions, those preceded within W by a search or output exposure (and no chat relay) are < 25%.
+- *Kill rule.* If the lift CI includes 1 for both channels where synthetic power at G − P0 = 0.05 is ≥ 0.8: "no measurable leak conductance through search or artifacts".
+- *Impostors.* Agent activity bursts (the matched null is the same agent at the same time); the shared schedule (same); convergence (an agent may search for a repository it already plans to use; a search query naming the repository, `q_rids`, marks prior knowledge, and such exposures are dropped).
+- Credence that R3-P1 passes for at least one channel: 0.6.
+
+**Synthetic validation first** (`analysis/r2_synthetic.py`), on real skeletons: real commit trains (R1), real talk-spin marginals, rooms and days (R2-P1), real pending sets (R2-P2), real items, candidates and exposure times (R3). Each estimator must recover a planted effect, hold size ≤ 0.10 at zero effect, and report power. Amendments after the synthetic step are dated and labelled.
