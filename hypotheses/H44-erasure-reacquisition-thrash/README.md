@@ -281,3 +281,37 @@ Confirmed if CF1, CF3, CF4 pass and neither CF2 nor CF5 fails. Reported, not sco
 **Synthetic validation first (axis F).** On real call skeletons (real agent-days, segments, events, objects, loop flags): (R2) planted curves with known ℓ₁, ℓ₂, β, including one world with an interior L* = 25 and one with a monotone ramp, to check recovery and the edge rule; (R3) planted re-opening (forced read calls draw from P_e with probability q + 0.15) vs null (same q), with real pre-set sizes; (R4) a multiplicative-dip null and a planted loop-breaking world. A statistic is read only where its synthetic size is ≤ 0.10 and its power ≥ 0.8; otherwise it is "inconclusive".
 
 **Estimates.** Rows `r2_*` per period via `write_estimates`, role `replication` (G51 and G38 natives keep `native` for their native statistics).
+
+### Round 2 synthetic validation (axis F; run 2026-10-05 02:52–03:01 UTC, before any round-2 statistic on real data)
+`analysis/r2_synthetic.py` → `r2/synthetic.json`. Real skeletons: complete sawtooths of G51 (353,680 calls), G38 (67,720) and G37 (9,640); real events, real pre-window object sets and real loop strata. Agent and agent-day multipliers make the counts overdispersed (dispersion ĉ 1.2–2.5). 30 replicates per world (R3: 30), cluster bootstrap B = 100–200.
+
+**R2 (rates over replicates; G51 / G38 / G37).**
+
+| Planted world | M2 beats M1 (ΔAIC ≥ 4) | β (ℓ₂ ≤ 12) CI > 0 | P(L* = 40) ≥ 0.8 | P(L* < 35) ≥ 0.8 |
+| --- | --- | --- | --- | --- |
+| W: two timescales + ramp (β 0.0006) | 0.83 / 0.10 / 0.00 | 0.93 / 0.40 / 0.23 | 1.00 / 1.00 / 0.37 | 0 / 0 / 0 |
+| W: one timescale + ramp | 0.00 / 0.00 / 0.03 | 1.00 / 0.20 / 0.07 | 1.00 / 0.93 / 0.47 | 0 / 0 / 0 |
+| W: two timescales, no ramp | 0.67 / 0 / 0 | **0.03** / 0.03 / 0.00 | 0.97 / 0.63 / 0.00 | 0 / 0 / 0.03 |
+| W: decline, planted L* = 34 | 1.00 / 1.00 / 0.73 | 0 (CI < 0: 1.00) | 0 / 0 / 0 | 0.37 / 0.20 / 0.37 |
+| W: decline, planted L* = 25 | 1.00 / 1.00 / 0.93 | 0 (CI < 0: 1.00) | 0 / 0 / 0 | **1.00 / 1.00 / 1.00** |
+| R: spike + tail (two timescales) | **1.00** / 0.37 / 0.03 | — | — | — |
+| R: spike only (one timescale) | **0.03** / 0.00 / 0.00 | — | — | — |
+
+Readings:
+1. The two-timescale test (M2 vs M1) has size ≤ 0.03 and power 0.83–1.00 only at G51 counts (≈ 10,000 sawtooths). At G38 counts power is 0.10–0.37.
+2. The ramp cannot be read from M2 vs M0. With ℓ₂ free up to 20 calls, a slow exponential mimics the ramp, and "ramp" wins in only 0.1–0.2 of ramp worlds even at G51. β read from the M2 fit with ℓ₂ ≤ 12 calls has size 0.03 and power 0.93–1.00 at G51, but 0.07–0.40 in smaller periods.
+3. "No shorter cap helps" (L* at the 40-call edge) holds in any world with a dip and no late decline, with or without a ramp. The edge rule therefore tests "no late decline", not the ramp. The kill rule detects a decline with an optimum at L* = 25 in every replicate at every size, and never fires in ramp worlds.
+
+**R3 (re-open share; G51 / G38 / G37).** Under the recency null the raw contrast Δρ_F is biased *negative*: mean −0.018 / −0.022 / −0.012, with CI < 0 in 1.00 / 0.27 / 0.00 of replicates. Pseudo-erasure pre windows sit inside a running segment, so their objects carry more recency weight (frac 0.80 vs 0.77 at G51). The **recency-adjusted excess** (observed contrast minus q̂·Δfrac, q̂ fitted on pseudo31) has mean −0.002 / −0.009 / −0.005, CI > 0 in 0 / 0 / 0 and CI < 0 in 0.07 / 0.13 / 0.07 of null replicates. Its power at δ = 0.15 is 1.00 / 1.00 / 0.73 (mean excess +0.07).
+
+**R4 (loop lever).** Periods with ≥ 30 looping forced events: G36 (32), G38 (170), G39 (44), G40 (49), G41 (68), G51 (741). Under the multiplicative-dip null:
+- The absolute DDD is biased negative at G51 (mean −0.016, q95 −0.004). Its null q95 is +0.012 at G38 and +0.04 to +0.08 in the small periods.
+- Against the null q95, power to detect planted loop breaking is 1.00 (G51), 0.70 (G38) and about 0.2–0.5 elsewhere.
+- E_loop > 0 ("pays") has power 0.40 at G51 even with strong planted loop breaking, because the re-acquisition dip offsets the gain.
+- The log-ratio DDD is unbiased under the null (CI > 0 in 0.00–0.03) and has power 1.00 at G51.
+
+### Amendments (2026-10-05 03:01 UTC, after the synthetic validation, before any round-2 statistic on real data)
+- **A3 (ramp).** The ramp clause of P-R2a is decided by β from the M2 fit with ℓ₂ ≤ 12 calls, not by M2 vs M0 (reading 2). It passes if β CI > 0 in G51 and the pooled β CI > 0, with β > 0 in ≥ 7/9 periods (sign count; the small periods have no per-period power).
+- **A4 (R3 decision).** P-R3a and P-R3b are decided on the recency-adjusted excess (excess_FP, excess_FV). The raw Δρ is reported alongside. The kill rule applies to the pooled excess_FP; power is ≥ 0.8 at G38 size and above.
+- **A5 (where a statistic is read).** The two-timescale clause of P-R2a is read in G51 only (power ≥ 0.8). Elsewhere, and in the per-lab and per-model fits, the fitted parameters (ℓ₁, ℓ₂, β, A₁, A₂) are reported as phase-diagram coordinates without a model decision. The edge clause of P-R2b is read where its synthetic pass rate is ≥ 0.8 (G51, G38); the kill rule is read everywhere. P-R4a is decided on G51 (power 1.00) and on the pooled DDD over periods with ≥ 30 looping forced events. The per-period counts are descriptive. The log-ratio DDD is reported as a calibrated variant.
+- **A6 (P-R4b).** A failure of E_loop > 0 is "inconclusive" (power 0.40), not "failed". The kill rule (E_loop CI entirely below 0) stands.
