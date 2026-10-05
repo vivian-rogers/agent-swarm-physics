@@ -215,3 +215,174 @@ def jdump(obj, path: Path):
 
 def expit(x):
     return special.expit(x)
+
+
+# ============================================================================ gate design and estimators (R1, R2)
+def prep_gates(g: pl.DataFrame) -> pl.DataFrame:
+    """At-risk gate rows with derived covariates: trap id, reset flags, urn-implied jump and kick terms."""
+    g = g.filter(pl.col("y_sus").is_not_null() & pl.col("a_sus").is_not_null()).sort("agent", "t_call", "turn_id")
+    g = g.with_columns(trap=(pl.col("k_sus") == 1).cast(pl.Int32).cum_sum().over("agent", "pt_date"))
+    # composition at the end of the old segment (the idle call before the gate included)
+    fprev_call = ((pl.col("n_rep_prev") + 1) / (pl.col("n_rep_prev") + pl.col("n_act_prev") + 1))
+    g = g.with_columns(
+        forced=(pl.col("reset_at_gate") & pl.col("reset_forced")).fill_null(False),
+        vol=(pl.col("reset_at_gate") & ~pl.col("reset_forced").fill_null(False)).fill_null(False),
+        f_call_end=fprev_call, f_tok_end=pl.col("f_tok_prev"))
+    g = g.with_columns(
+        du_call=pl.when(pl.col("forced")).then(-(1 - pl.col("f_call_end").clip(0, F_CAP)).log()).otherwise(0.0),
+        du_tok=pl.when(pl.col("forced")).then(-(1 - pl.col("f_tok_end").clip(0, F_CAP)).log()).otherwise(0.0),
+        dir1=(pl.col("n_dir") > 0), undir1=((pl.col("n_novel") > 0) & (pl.col("n_dir") == 0)),
+        dir_n=pl.col("n_dir").clip(0, 2))
+    # urn-implied effect of the items read at the gate: ln(1 - f_with) - ln(1 - f_without)
+    g = g.with_columns(
+        dk_tok=((1 - pl.col("f_tok").clip(0, F_CAP)).log() - (1 - pl.col("f_tok_pre").clip(0, F_CAP)).log()).fill_null(0.0),
+        dk_entry=((1 - pl.col("f_entry").clip(0, F_CAP)).log() - (1 - pl.col("f_entry_pre").clip(0, F_CAP)).log()).fill_null(0.0))
+    return g
+
+
+def nuisance(g: pl.DataFrame) -> np.ndarray:
+    la = np.log(np.maximum(g["a_sus"].to_numpy(), 10.0) / 60.0)
+    pp = np.log(np.clip(g["prev_pause_s"].fill_null(300.0).to_numpy(), 10.0, 86400.0))
+    hd = np.clip(g["h_day"].to_numpy(), 0, 12)
+    sw = g["swarm_act10"].fill_null(0.0).to_numpy()
+    lr = np.log1p(g["last_run_len"].fill_null(0).to_numpy())
+    return np.column_stack([la, pp, hd, sw, lr])
+
+
+NUIS = ["ln_a", "ln_prev_pause", "h_day", "swarm_act10", "ln_last_run"]
+
+
+def gate_fit(y, X, agent, names, link="logit"):
+    f = fe_logit(y, X, agent, link)
+    return {n: (float(b), float(s)) for n, b, s in zip(names, f["beta"], f["se"])}, f
+
+
+def gate_models(g: pl.DataFrame, y: np.ndarray, urn_cols=("f_tok", "f_call", "f_entry", "f_rec"), parts=("abs", "reset", "kick")) -> dict:
+    """All round-2 gate statistics on one outcome vector (real or simulated). Values are [estimate, Wald SE]."""
+    X0 = nuisance(g)
+    ag = g["agent"].to_numpy()
+    out = {}
+    c0, _ = gate_fit(y, X0, ag, NUIS)
+    out["beta_a0"] = list(c0["ln_a"])
+    if "abs" in parts:
+        for u in urn_cols:
+            f = g[u].to_numpy().astype(float)
+            ok = np.isfinite(f)
+            c0u, _ = gate_fit(y[ok], X0[ok], ag[ok], NUIS)
+            X = np.column_stack([X0[ok], lnq(f[ok])])
+            c1, _ = gate_fit(y[ok], X, ag[ok], NUIS + ["lnq"])
+            b0, b1 = c0u["ln_a"][0], c1["ln_a"][0]
+            out[f"abs_{u}"] = {"beta_a0": list(c0u["ln_a"]), "beta_a": list(c1["ln_a"]), "beta_f": list(c1["lnq"]),
+                               "rho": [(1 - b1 / b0) if b0 < 0 else float("nan"), float("nan")]}
+    # Amendment R2-A1 (after the synthetic validation, before real data): reset and kick models add ln(gate index k_sus),
+    # because a per-trap frailty world fakes a reset step (+0.47, power 0.87) through survivor selection at k = 1.
+    X0 = np.column_stack([X0, np.log(g["k_sus"].to_numpy().astype(float))])
+    NU = NUIS + ["ln_k"]
+    if "reset" in parts:
+        fo = g["forced"].to_numpy().astype(float); vo = g["vol"].to_numpy().astype(float)
+        X = np.column_stack([X0, fo, vo])
+        c2, _ = gate_fit(y, X, ag, NU + ["forced", "vol"])
+        out["reset"] = {"forced": list(c2["forced"]), "vol": list(c2["vol"])}
+        for d in ("du_call", "du_tok"):
+            du = g[d].to_numpy().astype(float)
+            mu = du[fo > 0].mean() if fo.sum() else 0.0
+            X = np.column_stack([X0, fo, vo, np.where(fo > 0, du - mu, 0.0)])
+            c3, _ = gate_fit(y, X, ag, NU + ["forced", "vol", "dose"])
+            out["reset"][f"dose_{d}"] = list(c3["dose"])
+    if "kick" in parts:
+        d1 = g["dir1"].to_numpy().astype(float); u1 = g["undir1"].to_numpy().astype(float)
+        X = np.column_stack([X0, d1, u1])
+        f4 = fe_logit(y, X, ag)
+        i, j = len(NU), len(NU) + 1
+        dse = float(np.sqrt(max(f4["cov"][i, i] + f4["cov"][j, j] - 2 * f4["cov"][i, j], 0)))
+        out["kick"] = {"dir": [float(f4["beta"][i]), float(f4["se"][i])], "undir": [float(f4["beta"][j]), float(f4["se"][j])],
+                       "diff": [float(f4["beta"][i] - f4["beta"][j]), dse]}
+        for dk in ("dk_tok", "dk_entry"):
+            z = g[dk].to_numpy().astype(float)
+            X = np.column_stack([X0, d1, u1, z])
+            c5, _ = gate_fit(y, X, ag, NU + ["dir", "undir", "dk"])
+            out["kick"][f"coef_{dk}"] = list(c5["dk"])
+            out["kick"][f"mean_{dk}_dir"] = [float(z[d1 > 0].mean()) if d1.sum() else float("nan"), float("nan")]
+        dn = g["dir_n"].to_numpy()
+        X = np.column_stack([X0, (dn == 1).astype(float), (dn >= 2).astype(float), u1])
+        c6, _ = gate_fit(y, X, ag, NU + ["dir1", "dir2p", "undir"])
+        out["kick"]["dose1"] = list(c6["dir1"]); out["kick"]["dose2p"] = list(c6["dir2p"])
+    return out
+
+
+def flat(d: dict, pre="") -> dict:
+    o = {}
+    for k, v in d.items():
+        if isinstance(v, dict):
+            o.update(flat(v, f"{pre}{k}."))
+        else:
+            o[f"{pre}{k}"] = v
+    return o
+
+
+# ============================================================================ sequential gate simulation
+def trap_index(g: pl.DataFrame):
+    """Row ranges of each trap (rows sorted by agent, t_call; trap = run starting at k_sus == 1)."""
+    a = g["agent"].to_numpy(); d = np.array(g["pt_date"].to_list()); tr = g["trap"].to_numpy()
+    brk = (a[1:] != a[:-1]) | (d[1:] != d[:-1]) | (tr[1:] != tr[:-1])
+    cuts = np.flatnonzero(brk) + 1
+    return np.r_[0, cuts], np.r_[cuts, len(a)]
+
+
+def simulate_traps(rng, p: np.ndarray, starts, ends):
+    """Walk each trap: outcome per gate with prob p; stop at the first escape; censor at the real trap end.
+    Returns (keep mask, y)."""
+    u = rng.random(len(p))
+    hit = u < p
+    keep = np.zeros(len(p), bool)
+    y = np.zeros(len(p), np.int8)
+    for s, e in zip(starts, ends):
+        h = np.flatnonzero(hit[s:e])
+        if len(h):
+            j = s + h[0]
+            keep[s:j + 1] = True
+            y[j] = 1
+        else:
+            keep[s:e] = True
+    return keep, y
+
+
+# ============================================================================ TS1r rows with kinds (mixture rival)
+def ts1r_deep(period: str, deep_s=600.0):
+    sys.path.insert(0, str(HERE))
+    import h16lib as L  # noqa: E402
+    k = pl.read_parquet(R2 / "ts1r_kinds.parquet").filter(pl.col("period") == period).filter(pl.col("first_act_s") >= 0)
+    k = k.sort("pt_date", "agent", "t0")
+    H = L.ts1_hazard_rows(k, None)
+    m = H["elapsed"] >= deep_s
+    H = {kk: v[m] for kk, v in H.items()}
+    H["day"] = np.array(k["pt_date"].to_list())[H["spell"]]
+    H["kind_start"] = np.array(k["kind_start"].to_list())[H["spell"]]
+    H["last_kind"] = np.array(k["last_kind"].to_list())[H["spell"]]
+    H["lnel"] = np.log(H["elapsed"] / 60.0)
+    return H
+
+
+def cell_codes(H, cols=("kind_start", "last_kind")):
+    key = np.char.add(H["agent"].astype(str), "|")
+    for c in cols:
+        key = np.char.add(np.char.add(key, H[c].astype(str)), "|")
+    _, code = np.unique(key, return_inverse=True)
+    return code
+
+
+def slope_cloglog(y, x, g):
+    f = fe_logit(y, x[:, None], g, "cloglog")
+    return float(f["beta"][0]), float(f["se"][0])
+
+
+def mixture_null(rng, H, y_obs, cells, sims=200):
+    """Constant hazard per cell (MLE = events / rows), per-row draws on the real deep skeleton; agent-FE slope each draw."""
+    ev = np.bincount(cells, y_obs.astype(float))
+    n = np.bincount(cells)
+    h = np.clip(ev / np.maximum(n, 1), 1e-6, 1 - 1e-6)[cells]
+    out = []
+    for _ in range(sims):
+        ys = (rng.random(len(h)) < h).astype(np.int8)
+        out.append(slope_cloglog(ys, H["lnel"], H["agent"])[0])
+    return np.array(out)

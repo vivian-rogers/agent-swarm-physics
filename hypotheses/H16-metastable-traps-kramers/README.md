@@ -565,3 +565,28 @@ Kinds fixed at spell start (never from the spell's future):
 ### Nulls and validation plan (before any real-data round-2 statistic)
 `analysis/synthetic_r2.py` on the real G51 and G38 skeletons. Gate worlds simulated **sequentially within traps** (stop at the first escape; censor at the real trap end): W0 null; W1 intrinsic aging (−0.5 per ln a); W2 urn (U-call, the strongest ruler); W3 per-trap frailty (SD 1.5), no conditional aging; W4 W1 + a forced-reset step (+0.7, no dose); W5 W1 + an address kick (+0.7 for a directed read, undirected 0). TS1r worlds: per-row draws on the deep skeleton with cell hazards (pure mixture) or within-cell aging (−0.5). R3: planted agent depths (SD 0.5 or 0) on the real agent × period skeleton.
 Pass: size ≤ 0.10 and power ≥ 0.8 at real counts; otherwise the statistic is reported as inconclusive (dated amendment).
+
+### Round-2 synthetic validation (run 2026-10-05 ~03:40–04:20 UTC, before any round-2 outcome statistic)
+`analysis/synthetic_r2.py`; outputs `r2/synthetic/{gates,ts1r,r3}.json`. Gate worlds: 30 runs (G51), 60 (G38); sequential within traps. TS1r: 8 runs (G51), 16 (G38), 40 null draws each. R3: 40 runs. Rates are Wald-test rejections at 5% (two-sided).
+
+| Statistic | Null world (size) | Planted world (power) | Notes |
+| --- | --- | --- | --- |
+| Gate aging β_a0 | W0: 0.03 (G51), 0.05 (G38) | W1 −0.49 (truth −0.5): 1.00 / 0.95 | unbiased |
+| Absorption (U-call): β_f > 0 and ρ | W1: β_f 0.00, ρ 0.00 | W2 urn: β_f 1.70, power 1.00; ρ 1.02 (G51) | separates intrinsic aging from the urn |
+| Absorption (U-tok) | β_f erratic (W0 −0.34, W3 +4.7) | — | f_tok varies too little: β_f is weakly identified; ρ is read, β_f is descriptive |
+| Per-trap frailty (W3) | marginal aging −0.44 with no conditional aging | — | **frailty fakes aging on the gate clock**; forced-reset step **+0.47 (rejection 0.87)** in the pre-registered reset model |
+| Forced-reset step (with ln k, A1) | W1 0.00; **W3 0.01 (0.00)** | W4 +0.74: 1.00 (G51), 0.33 (G38); W2 urn +0.58: 0.83 | G51 powered; G38 not |
+| Reset × removed repeat share (dose) | W4: −0.55 (0.10) | W2: power 0.30 | **not powered** |
+| Directed vs undirected (diff) | W1: 0.00–0.07 | W5 +0.69: 1.00 (G51), 0.92 (G38) | — |
+| Dilution coefficient on Δ_k (U-entry) | W5: 0.07 | W6 1.27 (truth 1): 0.97 (G51); G38 0.14, not powered | U-tok Δ_k separates (too little variance): not estimable |
+| Dose 2+ directed items | — | W5: 1.00 (G51), 0.42 (G38) | — |
+| TS1r pure mixture (cell SD 1) | pooled slope −0.02 (G51), +0.01 (G38); M-P1 size 0.00; M-P2 size 0.13 (1/8) | WA −0.50: M-P1 1.00 / 0.25; M-P2 1.00 / 0.50 | the real deep skeleton shifts little between kinds; G38 underpowered |
+| R3 invariance r > 0 | u SD 0: 0.025 | u SD 0.5: 0.80 | — |
+| R3 agent share (permutation) | 0.05 | 0.73 (share 0.65) | — |
+
+### Round-2 amendments (2026-10-05 ~04:20 UTC, after the synthetic validation, before any round-2 outcome statistic)
+- **R2-A1 · ln(gate index) in the reset and kick models.** The pre-registered reset model gives a frailty world (W3) a spurious forced-reset step of +0.47 (rejection 0.87): forced resets fall at k = 1 after long work runs (53% at k = 1, trap age 11 vs 6 min), where survivor selection has not yet acted. Adding ln k_sus removes it (W3: 0.01, size 0.00) and keeps power (W4: 1.00). The kick models get the same term. The aging and absorption models are unchanged.
+- **R2-A2 · R1-P4 (reset dose) is descriptive** (power 0.30). **R1-P3 and R1-P4 are read in G51 only** (G38 power 0.33).
+- **R2-A3 · U-tok β_f is descriptive;** R1-P2 is decided on ρ (with β_f for U-call, U-entry, U-rec). **R2-P3 is read on Δ_k (U-entry) in G51 only;** Δ_k (U-tok) separates.
+- **R2-A4 · M-P1b (G38) is inconclusive by design** (power 0.25); G38 within-kind slopes are descriptive.
+- **R2-A5 · Frailty caveat made explicit.** A per-trap frailty world reproduces gate-clock aging (−0.44). Gate aging alone therefore cannot separate aging from unobserved trap depth; only the forced reset (A1 model) can, and only in G51.
