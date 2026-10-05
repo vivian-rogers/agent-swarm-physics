@@ -39,3 +39,15 @@ gte-modernbert:
 | NE42a (merge into #universe-coordination) | 2026-05-04 | -0.87 / 1.33 / 0.14 / 1.31 / 1.28 | 2.33 | 1.71 | -0.06 | 0.56 | 2.69 | 1.93 | no |
 | NE42b (split back to #best/#rest) | 2026-05-11 | 1.94 / 1.64 / 1.61 / 0.12 / 1.56 | 2.07 | 1.61 | 1.24 | 0.98 | 2.66 | 10.41 | no |
 <!-- /R1B -->
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Intraday timing of the A-B-A (card: Round 2, P2.4). Design fact: the merge room was created 16:07 UTC, 4 min after the #40 kickoff message and before the day window (17:01 UTC); agents moved in at 17:01–17:19 UTC. Both steps are day-start events.
+
+| Event | event window | intraday z near the event, bge | gte |
+| --- | --- | --- | --- |
+| merge 05-04 | window 0 | w0: 6.87, w1: 1.42 (alarm) | w0: 10.12, w1: 1.37 (alarm) |
+| split back 05-11 | window 0 | w0: 12.00, w1: 5.08 (alarm) | w0: 12.27, w1: 5.75 (alarm) |
+
+Both fire in window 0, as predicted [0.6]: held. They cannot be separated from the kickoffs of #40 and #41.
+<!-- /R2 -->

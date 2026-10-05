@@ -75,3 +75,19 @@ Unconfounded goal changes only (n = 26): Z_phys hit 0.23, AUC 0.61.
 
 Per-event table: `data/processed/H36-reorganization-alarm/event_table.parquet`; figure `figures/event_locked.pdf`.
 <!-- /R1B -->
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Round-2 readouts over all scored kickoffs (card: Round 2).
+
+| Readout | bge | gte |
+| --- | --- | --- |
+| intraday alarm in the first 2 windows of day 0: kickoffs vs placebo days | 0.82 vs 0.09 | 0.85 vs 0.07 |
+| AUC (max z in windows 0–1), kickoff vs placebo days | 0.92 | 0.94 |
+| lead: alarm in the last 4 windows of day −1 vs placebo days | 0.20 vs 0.13 | 0.28 vs 0.16 |
+| C3 hit · window FAR (restate, round-2 seed) | 0.55 · 0.02 | 0.61 · 0.07 |
+| C3 window FAR on Monday placebos M1 · M2 | 0.00 · 0.00 | 0.10 · 0.12 |
+| Z_act_inv AUC day 0 [95% CI] | 0.64 [0.48, 0.79] | (activity) |
+
+Verdict for this NE (round 2): **supported** for the intraday timing (all first alarms in window 0); the physics alarm verdict (mixed/failed) is unchanged.
+<!-- /R2 -->

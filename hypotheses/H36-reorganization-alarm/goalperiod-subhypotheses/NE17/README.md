@@ -36,3 +36,19 @@ gte-modernbert:
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | NE17 (NE17) | 2026-04-14 | -0.11 / 0.14 / -0.34 / -0.08 / -0.49 | -0.02 | 0.52 | -0.09 | 0.54 | -0.45 | -0.75 | no |
 <!-- /R1B -->
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Scaffold detector R5 (card: Round 2; prediction P5.3 for NE14b: not separately predicted).
+
+| Channel | z on day 0 |
+| --- | --- |
+| z_R5 (alarm ≥ 4) | 0.53 |
+| tool mix | -1.25 |
+| bash grammar | -1.34 |
+| context-boundary rate (abs) | 0.53 |
+| schema diff S (H74, shared) | 8 |
+| H74 mix M | 0.41 |
+
+Data: `data/processed/H36-reorganization-alarm/r2/scaffold_days.parquet`.
+<!-- /R2 -->

@@ -63,3 +63,15 @@ Daily scores from the round-1b replication (fixed activity bins and outages, bot
 | R1 | 0.37 | 2.07 | 0.95 | yes | no | 0.92 |
 | C3 | 0.86 | 1.07 | 0.80 | no | no | 0.88 |
 <!-- /R1B -->
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Intraday timing of the #focus room, 08-05 (card: Round 2, P2.4; native, exploratory). Room created 16:36 UTC; first agent move 17:39 UTC (window 3; day window opened 16:00 UTC).
+
+| Event | event window | intraday z near the event, bge | gte |
+| --- | --- | --- | --- |
+| #focus first move | window 3 | w2: 2.25, w3: 0.70, w4: 1.71 | w2: 3.24, w3: 0.38, w4: 1.91 (alarm) |
+| side-room 07-24 (#51) | window 9 | w8: -0.40, w9: -0.20, w10: -0.86 | w8: -0.16, w9: -0.19, w10: -1.11 |
+
+Prediction (alarm within ±1 window of the first move) [0.35]: **mixed**: gte alarms in window 2 (z 3.2, between the room's creation and the first move); bge peaks there at 2.3, below the threshold. Side-room silent, as predicted [0.7].
+<!-- /R2 -->

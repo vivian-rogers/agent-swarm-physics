@@ -42,3 +42,19 @@ Daily scores from the round-1b replication (fixed activity bins and outages, bot
 | R1 | -0.38 | -1.23 | -0.93 | no | no | 0.36 |
 | C3 | 0.06 | -0.11 | -0.96 | no | no | 0.60 |
 <!-- /R1B -->
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Scaffold detector R5 (card: Round 2; prediction P5.3 for NE14b: not separately predicted; the schema diff S dates it, R5 does not).
+
+| Channel | z on day 0 |
+| --- | --- |
+| z_R5 (alarm ≥ 4) | 0.63 |
+| tool mix | -1.28 |
+| bash grammar | -1.02 |
+| context-boundary rate (abs) | 0.63 |
+| schema diff S (H74, shared) | 12 |
+| H74 mix M | 0.71 |
+
+Data: `data/processed/H36-reorganization-alarm/r2/scaffold_days.parquet`.
+<!-- /R2 -->

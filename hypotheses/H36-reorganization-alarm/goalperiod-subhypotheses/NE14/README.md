@@ -36,3 +36,19 @@ gte-modernbert:
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | NE14b (NE14 regime II->III boundary (perma-computer-use)) | 2026-03-24 | 0.07 / -1.02 / -0.67 / -0.12 / -0.79 | -1.45 | -1.77 | 0.17 | -0.68 | -1.61 | 0.48 | no |
 <!-- /R1B -->
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Scaffold detector R5 (card: Round 2; prediction P5.3 for NE14b: alarm [0.85]: **supported** (bash grammar)).
+
+| Channel | z on day 0 |
+| --- | --- |
+| z_R5 (alarm ≥ 4) | 4.47 |
+| tool mix | 0.81 |
+| bash grammar | 4.47 |
+| context-boundary rate (abs) | 0.12 |
+| schema diff S (H74, shared) | 16 |
+| H74 mix M | 2.62 |
+
+Data: `data/processed/H36-reorganization-alarm/r2/scaffold_days.parquet`.
+<!-- /R2 -->

@@ -1,6 +1,6 @@
 # H36: A reorganization alarm: susceptibility and multi-information peak at transitions
 
-**Status:** exploratory round 1 done (agent, 2026-10-04): **mixed**. **Round 1b (improved data, 2026-10-04): mixed (bge) / failed (gte)**: on the fixed activity table the physics alarm no longer beats random dates robustly (p 0.08 / 0.21, was 0.03); content and the rival R1 replicate in both models; NE40 and NE45 are not detected blind (see Round 1b). The physics alarm sees goal changes weakly (hit 0.30, AUC 0.68), entirely through content, and loses to a plain content-centroid detector (AUC 0.95). `analysis/confirm.py` written and dry-run, not run. Observables, nulls, the alarm rule and the predictions below were written 2026-10-04 ~01:40 UTC, before the synthetic validation and before any statistic was computed on real data.
+**Status:** **Round 2 (2026-10-05): intraday timing supported; operator rule C3 robust across 6 embedding × dedupe variants and Monday-matched placebos (gte FAR seed-fragile); sampling-invariant activity mixed; action-mix scaffold detector failed; physics alarm fails random dates in every variant** (see Round 2). Exploratory round 1 done (agent, 2026-10-04): **mixed**. **Round 1b (improved data, 2026-10-04): mixed (bge) / failed (gte)**: on the fixed activity table the physics alarm no longer beats random dates robustly (p 0.08 / 0.21, was 0.03); content and the rival R1 replicate in both models; NE40 and NE45 are not detected blind (see Round 1b). The physics alarm sees goal changes weakly (hit 0.30, AUC 0.68), entirely through content, and loses to a plain content-centroid detector (AUC 0.95). `analysis/confirm.py` written and dry-run, not run. Observables, nulls, the alarm rule and the predictions below were written 2026-10-04 ~01:40 UTC, before the synthetic validation and before any statistic was computed on real data.
 **Fields:** stat mech, sociophysics, info theory
 **Origin:** HH126, merging HH65 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`). Related: H27 (herding early warning, HH109) and H25 (criticality dial), running in parallel; H38 (platform stalls) supplies the outage mask.
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population N(t), **day-present variant** (roster agents, Claude Code excluded, with ≥ 10 active minutes, `activity_bins.state ≥ 3`, on that PT day; H38 uses ≥ 1 minute); Regime (alarm baselines cross regime boundaries on purpose, because the boundary is a transition to detect; this is the card's named exception (c), transitions as the object); Agent state, **categorical variant = the 4-state activity class** of `activity_bins` (silent / idle / act / talk; the regime-invariant action class); Agent state, **vector variant = whitened statement mean per agent × 30-min window** (`embeddings/agent_win30`, regime whitener, n = 32, unit-normalized; H01's "whitened statement mean" at window instead of day resolution); Mutual information between agents. **New named variants proposed** (not edited into DEFINITIONS.md; outside this card's scope): *multi-information (Gaussian, activity spins)*, *multi-information (pairwise expansion, behavior states)*, *content multi-information (overlap)*, *heat-capacity analogue (alignment-energy variance)*, *joint silence / village-off gap* (H38's definitions, reused as the outage mask).
@@ -13,8 +13,8 @@
 | Impostor | Relevant? | How it was handled | Status |
 | --- | --- | --- | --- |
 | Scheduler field | yes | Within-day circular-shift surrogates; stall mask from `outages_fixed`; round-1b DQ8 trim (`Z_act_trim`, AUC 0.50). Round-1 activity hits came from day-length and roster changes (PH3) and vanished on the fixed table. | removed |
-| Exogenous field (kickoff/goal/operator) | yes | Monday placebos (Null 3). Post hoc detrend (PH2): about 40% of the Z_cont signal is a within-day post-kickoff drift. No `goal_fields` regression. Close by regressing window vectors on `goal_fields` before Z_cont (§1, row 2). | partly |
-| Shared model priors | partly | Not handled. Z_cont and R1 use raw whitened vectors under both models, without `style_resid`. Close with `style_resid` vectors (§1, row 3). | open |
+| Exogenous field (kickoff/goal/operator) | yes | Monday placebos (Null 3); round 2: Monday-matched placebo sets M1 (10) and M2 (24), R1 AUC 0.93–0.97 against them. Post hoc detrend (PH2): about 40% of the Z_cont signal is a within-day post-kickoff drift. No `goal_fields` regression. Close by regressing window vectors on `goal_fields` before Z_cont (§1, row 2). | partly |
+| Shared model priors | partly | Round 2: R1 on `style_resid` agent-day vectors keeps AUC 0.91 in both models; C3 with it keeps hit 0.48–0.55. Z_cont still uses raw whitened vectors. | partly |
 | Contemporaneous convergence | no | The alarm makes no copying or influence claim. | n/a |
 
 **Inputs:** round 1b uses `activity_bins_fixed`, `outages_fixed`, both embeddings with `self_repeat` dedupe and the DQ8 trim. Context ledger, work, failures and leading-@ are not inputs. Still old: none of the listed inputs. "Behavior states" are the 4-state activity classes, not Jev labels.
@@ -171,6 +171,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 ## Results by goal period
 Each G folder holds that period's kickoff (day 0 = its first active day) and its placebo days. Verdict rule: supported = kickoff window alarms and placebo FAR ≤ 0.10; failed = kickoff window scored and silent.
+**Round 2 (2026-10-05):** every scored G folder has an `R2` block (intraday z in windows 0–2 of day 0, frozen C3 window max in both models, Z_act_inv); NE34, NE42, NE43 (#focus), NE14, NE17, NE40 and NE45 have round-2 blocks. Primary verdict lines are unchanged.
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
@@ -407,7 +408,127 @@ This caught 58% of goal changes at 1 false alarm in 61 placebo windows. The phys
 - **P5.1** scaffold_tool: AUC (window max vs placebo windows) ≥ 0.65 [0.4], hit ≥ 0.30 [0.4], random-date p < 0.10 [0.35]. **P5.2** per-day placebo FAR of z_R5 ≥ 4 ≤ 0.10 [0.5]. **P5.3** NE14b (03-24) alarms (bash grammar and tool mix change at once) [0.85]. **P5.4** vs H74: S keeps the lower FAR [0.8]; R5 hits more scaffold_prompt events than S (prompt changes leave no schema trace) [0.4]; S ∪ R5 raises scaffold_tool hit over S alone by ≥ 0.10 at per-day FAR ≤ 0.10 [0.4]. **P5.5** R5 beats H74's M on scaffold_tool AUC [0.5].
 - **Kill rule.** Failed if scaffold_tool AUC ≤ 0.60 or random-date p > 0.10; supported if AUC CI > 0.5 and p < 0.05; mixed otherwise.
 
+**Amendment R5-A1 (2026-10-05 ~04:05 UTC, after the R2, R3 and robustness runs, before any R5 statistic).** The rate channel can move either way (a tool added or removed), so its channel z enters z_R5 as |z|; the two JSD channels are one-sided by construction. The evaluation reuses H74's day table (`data/processed/H74-change-detector/days.parquet`, read as data: `has_baseline` = day index ≥ 10, `gap_return` = previous calendar active day held out), so the placebo set equals H74's (34 days). Random-date null: 2,000 draws, same regime, as H74.
+
 **Impostors in round 2.** Scheduler field: R3 removes day length and n by design; R2 uses a day-start control. Exogenous field: it is the target (goal and scaffold steps); Monday-matched placebos remove the calendar. Shared priors: style-resid R1 variant (RB5); R5 uses within-agent baselines. Convergence: n/a (no influence claim). No coupling claim is made, so the partition-contrast rule does not apply.
+
+### Results (2026-10-05)
+*Non-reserved data only: 282 active days, 33 scored goal kickoffs (26 on Mondays), 55 placebo days (10 Monday placebos M1; 24 in the wider Monday set M2); R5 uses H74's 34 placebo days. Scripts: `analysis/r2_content.py`, `r2_robust.py`, `r2_intraday.py`, `r2_activity.py`, `r2_scaffold.py`, `r2_estimates.py`, `r2_periods.py`, `r2_figures.py`. Outputs: `data/processed/H36-reorganization-alarm/r2/`. Figure: `figures/r2_summary.pdf`.*
+
+**Robustness of the frozen operator rule C3 (no re-tuning).**
+
+| Variant | C3 hit | window FAR [Wilson 95%] | Monday FAR M1 · M2 | hit Monday · other kickoffs | R1 AUC day 0 | R1 AUC vs M2 | style-resid R1 AUC | Z_phys random-date p |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| bge, no dedupe | 0.58 | 0.02 [0.00, 0.10] | 0/10 · 1/24 | 0.65 · 0.29 | 0.96 | 0.93 | 0.91 | 0.12 |
+| bge, restate | 0.55 | 0.02 [0.00, 0.10] | 0/10 · 0/24 | 0.62 · 0.29 | 0.95 | 0.94 | 0.91 | 0.17 |
+| bge, copies | 0.55 | 0.02 [0.00, 0.10] | 0/10 · 0/24 | 0.62 · 0.29 | 0.95 | 0.94 | 0.91 | 0.16 |
+| gte, no dedupe | 0.61 | 0.02 [0.00, 0.10] | 0/10 · 2/24 | 0.62 · 0.57 | 0.97 | 0.97 | 0.91 | 0.25 |
+| gte, restate | 0.61 | 0.07 [0.03, 0.17] | 1/10 · 3/24 | 0.62 · 0.57 | 0.97 | 0.97 | 0.91 | 0.25 |
+| gte, copies | 0.64 | 0.07 [0.03, 0.17] | 1/10 · 3/24 | 0.65 · 0.57 | 0.97 | 0.97 | 0.91 | 0.19 |
+
+- **The kill rule passes**: hit ≥ 0.45 and window FAR ≤ 0.15 in all 6 variants; Monday FAR ≤ 0.20 in M1 and M2.
+- **Monday is not the signal.** R1 separates kickoffs from Monday placebo days as well as from all placebo days (AUC 0.93–0.97). Monday kickoffs vs Monday placebo windows: C3 AUC 0.82–0.87.
+- **Shared priors.** R1 on style-residualized vectors keeps AUC 0.91 [0.83, 0.96] in both models. C3 with that R1: hit 0.48–0.55, FAR 0.00–0.11.
+- **Seed sensitivity (post hoc, 10 surrogate seeds per model, restate).** bge is stable: hit 0.55–0.58, FAR 0.02 in every seed. **gte's window FAR ranges from 0.07 to 0.18** (median 0.10; above 0.15 in 2 of 10 seeds), with hit 0.61–0.67. Round 1b's gte FAR of 0.13 was in part surrogate noise in Z_cont (30 surrogates; max |ΔZ_cont| 2.9 between seeds on one day). The observed content statistics are seed-free; only the surrogate mean moves.
+- **The physics alarm fails in every variant.** Its random-date p is 0.12–0.25 (failure rule: p > 0.10). Round 1b's bge p of 0.08 does not survive a new surrogate seed (0.17).
+
+**R2: intraday alarm.**
+
+| Readout | bge | gte | Prediction | Verdict |
+| --- | --- | --- | --- | --- |
+| P2.0 synthetic: mid-day switch dated ±1 window · clean per-window FAR | 0.76 · 0.027 | – | ≥ 0.8 · ≤ 0.02 | partly (inside the informative bounds) |
+| P2.1 alarm in windows 0–1 of day 0: kickoffs vs placebo days | **0.82** (27/33) vs 0.09 (5/55) | **0.85** vs 0.07 | ≥ 0.50 vs ≤ 0.15 | held |
+| AUC of max z in windows 0–1, kickoff vs placebo days | 0.92 [0.85, 0.98] | 0.94 [0.86, 0.99] | – | – |
+| P2.2 lead: alarm in the last 4 windows of day −1 vs placebo days | 0.20 (25) vs 0.13 | 0.28 vs 0.16 | difference ≤ 0.10 | held (bge) / marginal fail (gte, 0.12) |
+| P2.3 first alarm window on day 0 is 0 or 1 | 27/27 in window 0 | 28/28 in window 0 | ≥ 70% | held |
+| P2.3 median lag after the kickoff message | 162 min [IQR 117, 383] | 192 min | ≤ 90 min | failed (the lag is the gap to the agents' first window, not swarm dynamics) |
+| P2.4 #focus (08-05): alarm within ±1 window of the first move | max z 2.3 (window 2) | 3.2 (window 2) | alarm [0.35] | mixed |
+| P2.4 side-room (07-24): silent · 05-04 and 05-11: windows 0–1 | silent · 6.9 / 12.0 in window 0 | silent · 10.1 / 12.3 | silent [0.7] · alarm [0.6] | held · held |
+
+- Per-window FAR on placebo days: 0.038 (both models). Day-start control: placebo days' first 2 windows alarm 0.09 (Monday placebos 0.20, n 10).
+- **Kill rule passes**: the kickoff first-window rate (0.82) is far above the placebo day-start rate + 0.10.
+- **Reading.** The topic shift lands in the swarm's first 30 minutes of talk on day 0 and is gone by window 2 (`figures/r2_summary.pdf`, panel a). There is no measurable intraday build-up before the kickoff. The day −1 excess (0.20–0.28 vs 0.13–0.16) is the wrap-up hint of round 1 (PH1), small and unreliable. The 05-04 merge is a day-start event (see the disclosure above), so intraday timing cannot separate it from the #40 kickoff. On 08-05 the content moved in window 2, between the operator's room announcement (16:34–16:37 UTC) and the first agent move (17:39 UTC). That is one event, with gte only above threshold.
+
+**R3: sampling-invariant activity statistics.**
+
+| Readout | old Z_act (1b) | Z_act_trim (1b) | **Z_act_inv** | Prediction | Verdict |
+| --- | --- | --- | --- | --- | --- |
+| P3.0 synthetic: alarm ratio sampling-change / other days | 1.07 | – | 0.97 | old ≥ 1.5; inv ≤ 1.2 | old failed (the toy has no sampling confound); inv held |
+| P3.0 synthetic: per-day FAR · AUC for planted coupling-up days | 0.056 · 0.77 | – | 0.072 · 0.68 | inv FAR 0.01–0.06; AUC ≥ 0.70 | failed (FAR slightly high; power lower: n_s = 4) |
+| days scored | 277 | 271 | 209 (≥ 120 all-present minutes) | – | – |
+| P3.1 placebo ratio | – | – | not estimable (0 scored sampling-change placebo days) | ≤ 1.3 | n/a |
+| alarm rate, all days: sampling-change vs other | 0.23 vs 0.09 | 0.21 vs 0.09 | 0.21 (19) vs 0.06 (190) | – | still sampling-sensitive (event-confounded) |
+| *post hoc:* days ≥ 2 active days from every event, no sampling change | 0.087 (103) | 0.069 (101) | **0.028** (71) | – | quiet-day false alarms fall 3× |
+| P3.2 AUC on goal kickoffs, day 0 [95% CI] | 0.54 [0.41, 0.67] | 0.50 [0.38, 0.64] | 0.64 [0.48, 0.79] (25) | 0.40–0.60 | failed narrowly (above the band; CI includes 0.5) |
+| placebo per-day FAR | 0.073 | 0.057 | 0.00 (0/32) | – | – |
+| P3.3 C3 ∪ (Z_act_inv ≥ 2): hit · window FAR | 0.55 · 0.02 (C3 alone) | – | 0.67 · 0.02 | drop if gain < 0.05 | **not dropped** by the rule [0.75 that it would be: failed] |
+
+- **What the 4 added kickoffs are.** #11 (day +1, z 7.4, no sampling change), #16 (return from a held-out gap), #21 (NE28 roster batch on day 0) and #35 (NE15 room split). Three of four coincide with a sampling, roster or room change. The pre-registered rule keeps activity in the alarm. But its gain is mostly structural (who and how long), not goal content; only #11 is clean.
+- **Reading.** Fixed-size samples and fixed-length blocks do not stop day-length and roster changes from firing the activity channel. They do remove most quiet-day false alarms (0.028 vs 0.087). For an operator, Z_act_inv is a roster-and-schedule change flag with a low quiet-day FAR, not a goal detector.
+
+**R5: scaffold detector (action-mix change points).**
+
+| Score | scaffold_tool (23): hit · AUC [95% CI] · random-date p | scaffold_prompt (15–17): hit · AUC | per-day placebo FAR (34) | alarm days (282) |
+| --- | --- | --- | --- | --- |
+| **z_R5 (tool, bash, boundary)** | 0.26 · 0.61 [0.46, 0.75] · 0.16 | 0.00 · 0.54 | 0.12 (4/34) | 19 |
+| tool mix | 0.13 · 0.48 · 0.47 | 0.00 · 0.41 | 0.12 | 14 |
+| bash grammar (11 events scored) | 0.27 · 0.54 · 0.025 | 0.00 · 0.24 | 0.00 (0/15) | 4 |
+| context-boundary rate | 0.00 · 0.48 · 1.0 | 0.00 · 0.65 | 0.00 | 3 |
+| schema diff S (H74, shared) | 0.26 · 0.63 [0.54, 0.72] · 0.17 | 0.18 · 0.59 | 0.00 | 21 |
+| H74 mix M | 0.13 · 0.58 · 0.45 | 0.06 · 0.49 | 0.09 | 14 |
+| S ∪ R5 | 0.39 · 0.69 [0.54, 0.83] · 0.18 | 0.18 · 0.58 | 0.12 | 36 |
+
+- **P5.0 synthetic failed.** Real within-agent day-to-day mixes are far from multinomial: the median within-agent u is 28. At that noise, a new tool at 5% share and a halved bash head are invisible (own-channel hit 0.07 and 0.00); boundary rate × 1.5 gives 0.30. Post hoc larger steps: a new tool at 20% gives 0.44, boundary × 3 gives 0.71, and removing the second most common bash head gives 0.04. Clean-day FAR 0.03; roster-join days 0.07. **Real misses of small scaffold changes are therefore uninformative.**
+- P5.1: AUC 0.61, hit 0.26, p 0.16: **failed** by the kill rule (p > 0.10). P5.2: per-day FAR 0.12 > 0.10: failed. P5.3: NE14b fires (z_R5 4.5, through bash grammar): **held**. P5.4: S keeps the lower FAR (0 vs 0.12): held; R5 hits no scaffold_prompt event (S 0.18): failed; S ∪ R5 adds +0.13 hit but at per-day FAR 0.12: failed. P5.5: R5 AUC 0.61 vs M 0.58: nominally held (CIs overlap).
+- R5's scaffold_tool alarms: 12-15/16 (view_clipboard, one alarm), 12-22 (timezone hotfix; also S), 03-23/24 (also S), 04-27 (xdotool key names; R5 only). S alone dates 09-19, 03-31 and 04-14. Neither detector fires on the 6 undocumented steps except S (NE45; H74).
+- **Reading.** Action-mix change points add little to the schema diff. The bash-grammar channel alone has 0/15 placebo false alarms and catches 3/11 scored scaffold_tool events (p 0.025, post hoc emphasis). The tool-mix channel brings the false alarms. Behavior changes of the size a prompt edit causes are below the noise of agents' own day-to-day work mix.
+
+**Outcome vs prediction (round 2).**
+
+| Prediction | Outcome | Verdict |
+| --- | --- | --- |
+| RB1 C3 hit in [0.45, 0.70], all 6 variants | 0.55–0.64 | held |
+| RB2 window FAR ≤ 0.10 in ≥ 4 of 6; gte > bge | 6 of 6 (0.02–0.07); gte higher in 2 of 3 dedupe rules | held |
+| RB3 Monday FAR ≤ 0.15; R1 AUC vs Monday ≥ 0.85 | M1 0.00–0.10, M2 0.00–0.12; 0.93–0.97 | held |
+| RB4 seed: median \|ΔZ_cont\| ≤ 0.3; C3 within ±0.06 | 0.05–0.06; bge Δ 0 / 0; gte Δhit −0.06, ΔFAR −0.05; 10-seed gte FAR 0.07–0.18 | partly (gte FAR is seed-fragile) |
+| RB5 style-resid R1 AUC ≥ 0.90 | 0.91 / 0.91 | held |
+| R2 (P2.0–P2.4) | timing held; lag and #focus not | **supported** (kickoff timing); kill rule passes |
+| R3 (P3.0–P3.3) | sampling sensitivity remains; activity kept by the rule, gain structural | **mixed** |
+| R5 (P5.0–P5.5) | AUC 0.61, p 0.16; NE14b held | **failed** |
+
+**Old → new.**
+
+| Quantity | Round 1b | Round 2 |
+| --- | --- | --- |
+| C3 operator rule, hit · window FAR | bge 0.55 · 0.02; gte 0.67 · 0.13 | 6 variants: 0.55–0.64 · 0.02–0.07; gte FAR 0.07–0.18 over 10 seeds |
+| Physics alarm random-date p | 0.08 (bge) / 0.21 (gte) | 0.12–0.25 in all 6 variants: failed everywhere |
+| Lead / lag resolution | days | 30 min: alarm in window 0 of day 0 in 27/27 (bge) and 28/28 (gte) hits |
+| Activity channel | at chance, fires on sampling changes | Z_act_inv: AUC 0.64 [0.48, 0.79], quiet-day FAR 0.028; still sampling-sensitive |
+| Scaffold changes | 1/13 (Z_phys) | R5 scaffold_tool AUC 0.61 [0.46, 0.75]; S ∪ R5 hit 0.39 at per-day FAR 0.12 |
+| Shared-prior control | none | style-resid R1 AUC 0.91 (both models) |
+
+**Scorecard after round 2.**
+- A 1, B 1.
+- C 1: R1 and C3 beat placebo days and Monday placebos in 6 variants; the physics alarm fails random dates in all variants.
+- D 0: the coupling signature is still absent.
+- E 1: room events and NE14b behave as predicted; #focus mixed.
+- **F 1 → 2 for the operator rule** (6 embedding × dedupe variants, style-resid, Monday-matched; seed fragility in gte disclosed). It stays 1 for the physics statistics.
+- G 1. H 0 for the physics alarm (R1 wins), 1 for the operator rule (C3 beats R1 alone on FAR at the same hit).
+- I 0: reserved data not run.
+
+**Faithfulness lever.** F (robustness of the operator rule) and resolution (intraday timing). The physics model (01-inverse-ising) is not rescued: its alarm fails random dates in all variants.
+
+**For an operator.**
+- Run C3 daily with bge-small (hit 0.55, window FAR 0.02, stable over 10 seeds). With gte, use ≥ 100 surrogates or expect a window FAR of 0.07–0.18.
+- Run the topic shift every 30 min as well. A goal change shows in the first 30 min of agents' talk (82–85% of kickoffs, 4% per-window FAR).
+- For scaffold changes, use the schema diff (H74). Add the bash-grammar channel only as a second opinion. Action-mix detectors see only steps larger than agents' own day-to-day noise.
+
+### Round 3 redirects
+- **H36-R1 (unchanged).** Confirm C3 on the reserved data. Re-freeze `confirm.py` first, with N_SURR ≥ 100 for Z_cont (the seed result) and the bge model as primary.
+- **H36-R6. Intraday C3 on the reserved data.** Freeze r1w ≥ 3 in windows 0–1 of a day as an operator alarm and confirm its hit and day-start FAR.
+- **H36-R7. Bash-grammar presence rule.** Combine with H74-R2's presence/retirement rule (a head present on ≥ 8 of 10 days disappears, or a new head appears in ≥ 2 agents) to cut the tool-mix noise.
+
+**Claim that stands:** A topic-shift alarm fires within the first 30 min of agents' talk on 82–85% of non-reserved goal kickoffs (vs 7–9% of placebo day starts, AUC 0.92–0.94), and the frozen daily rule C3 keeps hit 0.55–0.64 at window FAR 0.02–0.07 across both embedding models, three dedupe rules and Monday-matched placebos. *Exclusions:* the gte false-alarm rate is seed-fragile (0.07–0.18 over 10 seeds; post hoc); the physics alarm fails random dates in every variant (p 0.12–0.25); the activity channel's added hits are mostly roster or schedule changes; the action-mix scaffold detector failed (AUC 0.61, p 0.16) and is unpowered for small steps; the #focus timing is one event in one model.
 
 ## Notes
 - 2026-10-04: promoted from HH126 by Vivian (usefulness-first batch); wave 2.

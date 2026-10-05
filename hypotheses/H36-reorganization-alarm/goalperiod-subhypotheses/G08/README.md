@@ -49,3 +49,17 @@ Re-run on the fixed activity table and outage mask (DQ8), restatements removed, 
 
 Placebo days: 13 (alarms 1 bge, 1 gte). Data: `data/processed/H36-reorganization-alarm/r1b/fixed_bge_restate/` and `.../fixed_gte_restate/`.
 <!-- /R1B -->
+
+## Round 2 (2026-10-05)
+<!-- R2 -->
+Round-2 readouts at this period's kickoff (card: Round 2; predictions P2.1–P2.3, RB1, P3.2). Role: replication (exploratory).
+
+| Readout | bge | gte |
+| --- | --- | --- |
+| intraday topic-shift z, windows 0 / 1 / 2 of day 0 | 6.06 / 2.03 / 0.99 | 5.91 / 2.30 / 0.95 |
+| first intraday alarm window (z ≥ 3) | 0 | 0 |
+| frozen C3 score, max over days −1..+1 (alarm ≥ 2) | 4.34 | 5.84 |
+| Z_act_inv (sampling-invariant activity), days −1 / 0 / +1 | – / 12.82 / -0.34 | (same) |
+
+Data: `data/processed/H36-reorganization-alarm/r2/` (intraday_<model>.json, rob_<model>_restate/, activity_inv.parquet).
+<!-- /R2 -->
