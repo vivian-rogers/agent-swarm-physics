@@ -5,6 +5,11 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-04 — Round 2, wave 1 (git: `dev` branch from now on)
+
+- Vivian: all git work on the new `dev` branch (from 0e05247); `main` stays at the last published state.
+- **Round 2 wave 1 launched** (8 agents, highest-EU hypotheses without a round 2; non-reserved data only; no confirm runs; no paid API calls): H44 (R2 sawtooth/best cap, R3 what is re-read, R4 loop breaking, R1 classifier check), H50 (R1 content channel, R6 hop-2 graph clause, R2 regime-I dead time), H08 (R2 non-mention response, R4 memory dose, R5 exposure audit), H54 (R5 embedding swap, R3 per-agent re-quench, R1 two concrete targets, R2 first-plan read), H40 (R6 negative η in G38/G44, R1 regime-I generation vs wait, R5 collapse fix), H67 (R3 reconcile with H50, R4 multi-generation gain, R1 regime-I clock), H69 (R1 tool-output self-share, R2 erasure dose, R3 memory carrier), H46 (R1 genre control, R2 drift-and-reset OU, R3 function-word charge).
+
 ## 2026-10-04 — Talk deck and physics titles
 
 - Thesis slide titles rewritten in technical physics language (37 files in `writeup/slides/theses/`); column heads now Model / Measured / Implication.
