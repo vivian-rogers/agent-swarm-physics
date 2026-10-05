@@ -296,6 +296,84 @@ Dry run on stand-ins (G51 08-24 → 09-04 for the tail; G38/G41/G42 for #46–#5
 - **H52-R4. A cleaner content statistic.** A DiD with the reply-quoting component removed (exclude the recipient's own last statement from the message direction), validated on the synthetic world; then recompute the content premium and the agent naming effect.
 - **H52-R5. Run `confirm.py`** after committing (#51 tail; #45 leader).
 
+## Round 2 (2026-10-05, UTC): a cleaner content statistic, a read vs in-flight contrast, and hand-coded role conflict
+*Design, predictions, nulls and kill rules written 2026-10-05 ~03:45 UTC, before any round-2 statistic on real data. Items: the card's H52-R4 and H52-R3. R1 and R2 need paid LLM labels and are skipped. R5 uses reserved data and is not run.*
+
+**Question served:** Q5 (is a human message a stronger lever than a peer's, at equal salience, and does it override the plan?). Q1/Q2 second (does the human content premium act through reading, or is it convergence?).
+
+**What I had seen when writing this:** the round-1 results above; H54 round 2 (a human message pulls each reader by Δ ≈ 0.09 at its first post-read message; reading adds +0.11–0.12 over in-flight messages at matched lag and before-age; R2-1: an unstratified matched-lag contrast fires in 100% of pure-convergence worlds); H08 round 2 (content moves toward a message only inside addressed replies; for non-addressed content the in-flight arm is closer to the message than the read arm, κ_c 1.68); H50 round 2 (named messages couple content ×5); infra Known issues. Structure only for round 2: the #51 non-reserved days hold 113 human messages on 22 days (69 `mention`, 41 `plain`, 3 kickoffs; 63 name one agent, 5 name two); 40,958 agent messages, 26,236 of them name a roster agent. No round-2 statistic had been computed. *Disclosure:* while counting, one speaker-kind count over all of goal #51 was printed with the reserved #51-tail days included. Counts only; no outcome; nothing from those days enters any statistic.
+
+### An algebraic fact found before any data (bears on R4)
+The redirect asks for "the DiD with the recipient's own last statement excluded from the message direction". Let û_q be the message direction with *all* recent statements S₁…S_k of the recipient projected out, including the last one S_k. Then S_k · û_q = 0, so (Q − S_k) · û_q = Q · û_q. This is exactly H30's orthogonalized χ (the column `chi`), which round 1 already computed and rejected: synthetic shared-topic bias −0.02 to −0.03. So the literal redirect gives nothing new. A quote-free DiD needs a baseline that is not in the projection set. Round 2 therefore tests three new candidates against the two round-1 statistics.
+
+### R4 · Content statistic: candidates
+Notation per (message m, recipient j, receiving call c): S₁…S_k are j's statements (chat + intentions) in the 2 h before `t_call` (k ≤ 8; S_k most recent); Q̄ is the mean of j's first ≤ 5 statements at or after `t_call` within 60 min; Q₁ is the first of them; u is m's whitened unit vector. Every candidate is "true direction minus the mean over 30 same-class other-day placebo directions" (round-1 rule, new seeded draws).
+- `chi_dd` (A1, reference): (Q̄ − S_k) · unit(u ⊥ S₁…S_{k−1}).
+- `chi` (H30, reference; equals the literal redirect): Q̄ · unit(u ⊥ S₁…S_k).
+- **`chi_q1`** (single-statement quote-free DiD): (Q₁ − S_{k−1}) · unit(u ⊥ S_k). Only the last statement, the one a reply quotes, is removed from u. The baseline is the statement before it, so the topic cancels. One statement on each side, so the two sides have the same norm. Needs k ≥ 2.
+- **`chi_qm`** (mean quote-free DiD): (Q̄ − S̄_old) · unit(u ⊥ S_k), with S̄_old the mean of S₁…S_{k−1} within 60 min. More statements, less noise, but unequal norms. Needs k ≥ 2.
+- **`chi_qa`** (ANCOVA DiD): (Q̄ − α̂ S_k) · unit(u ⊥ S₁…S_{k−1}), with α̂ the period's slope of Q̄ · p̂ on S_k · p̂ over all rows and their placebo directions p̂ (no influence along other-day directions). It keeps A1's direction and removes regression to the mean by the measured persistence.
+- Robustness for the chosen candidate: gte-modernbert; style-residualized recipient statements (`style_resid_period32`).
+
+**Synthetic world v2 (real skeleton, run first).** `analysis/r2_synthetic.py`, on the round-1 G51 and G04 skeletons (real calls, read-out ages, naming, idleness, room sizes, numbers of pre and post statements). New against round 1: (i) a room topic that drifts as an Ornstein–Uhlenbeck process (τ = 60 min) and enters the recipients' states and agent messages (humans less topical); (ii) pre statements at their own times before the call, so older statements carry an older topic; (iii) as many post statements as the real row had (≤ 5); (iv) named messages quote the recipient's last statement (agents 0.6, humans 0.3); (v) salience-gated influence (named ×4) plus a planted human premium. Worlds: **N0** no influence at all (κ = 0, π = 0); **S0** salience influence, π = 0; **S1** salience influence, planted π. Truths by common random numbers: the human premium truth is the ATT of (statistic − its π = 0 counterfactual); the naming-effect truth is the ATT of (statistic − its κ = 0 counterfactual), named vs unnamed agent rows. 10 replicates per cell (skeleton × labels real/confounded × world).
+
+**Selection rule (fixed now).** Among `chi_q1`, `chi_qm` and `chi_qa`, a candidate is *admissible* if (a) its human-premium bias is within ±0.006 in every S0/S1 cell, (b) in N0 its agent naming effect has a 95% CI covering 0 in ≥ 80% of replicates, and (c) in S1 its premium bias is ≤ 30% of the truth in the G51 cells. The primary is the admissible candidate with the lowest RMSE over all S0/S1 cells (ties within 10% go to `chi_q1`, the simplest). If none is admissible, the replication-layer content premium is reported as descriptive, and the content verdict rests on R4b.
+
+### R4b · Read vs in-flight partition contrast at matched lag and before-age
+Unit: (message m, recipient j) with a ledger receiving call (t_rc). Statements: j's chat messages with producing calls (`producing_calls`). *Before:* j's last chat message before t_m (same PT day, ≤ 6 h). *Read arm:* j's first chat message with `t_call_prod` ≥ t_rc, posted ≤ 60 min after m. *In-flight arm:* j's first chat message posted after m with `t_call_prod` < t_rc. Senders: non-kickoff human messages (all lengths with an embedding), and up to 3,000 agent messages per period (seeded sample), split by the pair's naming (ledger `ment`). Periods: the 17 replication periods.
+- **Scores.** Primary (H54's): Δ = (z_after − z_before) · ê − mean over decoys d of (z_after − z_before) · d. Quote-free: Δ_q = z_after · unit(ê ⊥ z_before) − the same decoy mean with unit(d ⊥ z_before). Decoys: up to 50 messages of the same class and regime from other goal periods, length ratio 0.5–2. Both embedding models.
+- **Contrast.** C = Σ_cells w (mean Δ_read − mean Δ_in-flight), cells = period × after-lag ([0, 30), [30, 60), [60, 120), [120, 300), [300, 900) s) × before-age ([0, 120), [120, 600), ≥ 600 s), w ∝ in-flight pairs (H54 R2-1, with period added so that every contrast is within a period). Message-cluster bootstrap (2,000 draws), 95% CI. Reported for humans, agents named, agents unnamed, and agents unnamed reweighted to the human length distribution (quintiles).
+- **Synthetic check (run first).** On the real G51 and G04 pair skeletons, synthetic vectors: W0 (nothing), WH (read-arm messages pulled toward m), WC (a shared OU topic that both m and all statements follow: pure convergence), WQ (m quotes the before message of its named readers; no influence). Required: C's 95% CI excludes 0 in ≤ 10% of W0, WC and WQ worlds; power stated under WH at Δ ≈ 0.09.
+
+### R4 · Predictions (real data, non-reserved only)
+| ID | Prediction | Counts against (kill rule) | Credence |
+| --- | --- | --- | --- |
+| R4-S1 | Synthetic: `chi_dd`'s agent naming effect in N0 is negative with CI below 0 in ≥ 50% of replicates (the round-1 explanation of P8) | CI covers 0 in > 80%: the quote explanation is wrong | 0.7 |
+| R4-S2 | Synthetic: at least one new candidate is admissible | none admissible | 0.6 |
+| R4-S3 | Synthetic: C fires in ≤ 10% of W0, WC and WQ worlds | > 10% in any: R4b is descriptive | 0.7 |
+| **R4-P1** | Human content premium under the primary candidate: G51 > 0 with CI > 0; regime-III pooled CI > 0 | G51 CI includes 0: the round-1 G51 content premium depends on the statistic and leaves the claim | 0.6 |
+| R4-P2 | Regime-I pooled human content premium ≥ 0 (point) | pooled CI below 0 | 0.6 |
+| **R4-P3** | The agent naming effect turns positive: pooled > 0 with CI > 0 in each regime, and > 0 (point) in ≥ 2/3 of periods | pooled ≤ 0 in either regime: naming carries no content pull on this statistic, and the salience model's content arm stays unsupported | 0.6 |
+| R4-P4 | G51 premium in naming units π_con / naming effect ≤ 0.5 | > 1 (a human outweighs a name) | 0.6 |
+| **R4-P5** | Partition, humans: C_human > 0 with CI > 0 (both models) | CI includes 0 or C ≤ 0: the content premium is not shown to act through reading | 0.6 |
+| R4-P6 | Partition, agents: C_named > C_unnamed (difference CI > 0) | difference ≤ 0 | 0.55 |
+| R4-P7 | Partition premium: C_human − C_agent-unnamed (length-reweighted) > 0, CI > 0. H52 predicts 0 | CI includes 0 | 0.45 |
+
+**R4 rules.** The content premium is **read-out** if R4-P1 and R4-P5 hold; **convergence-compatible** if R4-P1 holds and R4-P5 fails; **statistic-dependent** (withdrawn from the claim) if R4-P1 fails and R4-P5 fails. If R4-P5 holds and R4-P1 fails, the premium stands on the partition contrast alone.
+
+### R3 · Role conflict with ground truth (hand-coded, #51 non-reserved days)
+**Coder and blinding.** I (the round-2 agent) code every unit in two passes. Pass 1 shows only the instruction, the recipient's DQ6 role and role text, and the recipient's last ≤ 3 chat messages before the instruction. Pass 1 codes are written to `analysis/r3_codes_pass1.csv` (ids and codes only) and committed before pass 2 starts. Pass 2 shows what followed and codes compliance. Message text is read in memory only; no text is stored.
+
+**Units.**
+- *Human:* all 110 non-kickoff human messages of #51's non-reserved days. Each (message, named agent) pair is a unit; messages that name no agent are coded "broadcast" and leave the primary.
+- *Agent:* agent messages that name one other roster agent, in a seeded random order. A prefilter flag marks directive wording (stop, instead, switch, pause, please, can you, could you, should, don't, need you). I read prefiltered messages until 40 conflicting directives are coded or 600 messages are read. The same prefilter flag is recorded for the human units, and the human comparison is repeated on the prefiltered subset.
+
+**Pass 1 codes (fixed now).**
+- `directive`: the message asks or tells the named agent to do, stop or change something. Information requests, praise, status and announcements are not directives.
+- `role_conflict`: the requested action lies outside the recipient's private role or works against its role goal (DQ6 `role`; role text from `agent_goals`).
+- `task_conflict`: the recipient's last ≤ 3 chat messages show it working on task X, and the directive asks it to stop X or to switch to a different task.
+- `conflict` = `role_conflict` or `task_conflict`; `congruent` = a directive with neither.
+- `checkable`: the requested action leaves a trace that could be seen in chat, commands or commits.
+
+**Pass 2 codes (fixed now).** Window: from the receiving call to 3 h later, within the PT day. Evidence: the recipient's chat messages, its command texts (`artifact_commands_text`), DQ4 agent work commits (`work_commits`, agent work rule) and room moves.
+- `comply`: **verified** (an action, commit or produced artifact shows the requested thing), **claimed** (it says it did or will do it; no trace), **partial** (part of it, or a trace after 3 h), **decline** (refuses, argues against, or defers with no trace), **ignore** (no acknowledgement and no relevant action).
+- Objective outcomes: `rep` (DQ2 parent within the period), commits in the 3 h after minus the 3 h before.
+- Primary outcome: complied = verified or partial-with-trace (narration is a claim, not ground truth).
+
+| ID | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R3-P0 | Descriptive: the number of addressed human directives and their conflict share | — | — |
+| **R3-P1** | Humans' conflicting directives: complied share ≥ 0.5 | < 0.3 | 0.55 |
+| **R3-P2** | Complied share: human conflicting − agent conflicting > 0 (one-sided Fisher p < 0.05). H52 (salience only; all units are addressed) predicts 0; R1 deference predicts > 0 | difference ≤ 0 | 0.5 |
+| R3-P3 | Human directives: complied share lower for conflicting than for congruent ones (plan-congruence, round-1 N2) | conflicting ≥ congruent | 0.55 |
+| R3-P4 | Reply rate (DQ2) to conflicting directives: human ≥ agent | human < agent | 0.6 |
+
+**Power (stated before data).** With about 20 units per arm, a Fisher test detects a difference of 0.3 in complied share with power ≈ 0.5. A miss is "inconclusive" unless the difference has the opposite sign with a 95% CI that excludes 0.
+
+**Impostors for round 2.** Scheduler field: rows align to the receiving call; R4b compares arms at matched lag and before-age within periods. Exogenous field: R4b compares the same message's readers with its in-flight responders, so the message's field is common to both arms; R4 placebos are same-class other-day messages. Shared priors: the same recipient appears on both sides of each DiD; both embedding models and `style_resid` are run. Convergence: R4b is the in-flight partition contrast (STANDARDS §3).
+
+**Code.** New files only: `analysis/r2lib.py` (candidate statistics, partition contrast), `analysis/r2_synthetic.py`, `scheme/build_r2.py` (per-period `r2_content.parquet` and `r2_pairs.parquet`), `analysis/r2_run.py` (estimates), `analysis/r3_code.py` (coding sheets in memory, codes out). Round-1 code and outputs are unchanged. Outputs in `data/processed/H52-humans-loud-agents/r2/`.
+
 ## Notes
 - 2026-10-04: promoted from HH164 by Vivian (wave B).
 - 2026-10-04 ~06:10 UTC: round-1 agent started; design, nulls and predictions written before any outcome statistic.
