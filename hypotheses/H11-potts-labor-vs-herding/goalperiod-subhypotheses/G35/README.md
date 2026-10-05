@@ -2,6 +2,7 @@
 
 **Verdict:** supported (work herds)
 **Verdict (1b):** supported (work herds)
+**Verdict (r2):** R3 herding raises output G35: n.e.; θ < 1 G35: no
 **Role:** replication (round 1b work space; templated prediction)
 **Period:** regime II · 12 agents · #best / #rest (separate forks of the #34 RPG) · 5 active days.
 
@@ -27,3 +28,12 @@ Not tested in round 1 (not a card candidate or transfer period). Round 1b adds i
 
 ## Notes
 - **Against the round-1 pattern in attention:** a shared week (ownership 0.01) with z_N2(attention) = −2.5 (coupling below the circular-shift null; q = 2, one fork per room), while work has z_N2 = +2.2. With only two real states and each room on its own fork, room membership makes occupancies steadier than the shift null. The frozen confirmatory clause C2 ("refuted if any shared-artifact target has z_N2 < 0") would fail on a week like this.
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit | log RR herd vs solo, commits (R3a) | landed | matched pairs (mean log ratio) | θ crowding (R3b) | herd / solo windows |
+| --- | --- | --- | --- | --- | --- |
+| G35 (shared) | n.e. | n.e. | – | +0.98 [+0.51, +1.45] | 37/7 |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

@@ -1,34 +1,38 @@
-\hwhat{The spin is the project that an agent touches most in a 30-min window and room (strict artifact mentions). A uniform Curie--Weiss Potts model is fitted per week in 14 non-holdout weeks. The prediction: the sign of $\beta J$ follows the goal mode. \textbf{It fails}: $\beta J_{CW}>0$ in 11/14 weeks whatever the mode (mode rule 5/11 signs, $p=0.73$). Coupling beyond each agent's own preferences beats circular-shift and day nulls in 10/11 shared-artifact weeks. Spread appears only in own-artifact weeks, as fixed specialization. \textbf{Round 1b} (deterministic labels, DQ4 work ledger, DQ6 ballots) changes no verdict. Agents' \emph{work commits} herd too: in 4/6 shared weeks, onto the repos they attend (same repo in 84\% of agent-windows). The claim that attention herds while work stays private therefore fails, except in own-artifact and private-role weeks. On the correct \#26 election the runoff jumps from 1/3 to 7/8 in 83 s.}
+\hwhat{Rounds 1 and 1b fitted a Curie--Weiss Potts model per week. The spin is an agent's project in a 30-min window. The goal-mode rule for the sign of $\beta J$ failed: agents herd ($\beta J>0$) in 11/14 weeks, in attention and in work commits, and spread only when the task gives each agent its own artifact. \textbf{Round 2 asks why agents pile on.} The degrees of freedom are \emph{joins}: an agent switches to a project that others already hold. We fit the choice among all live projects with a conditional logit. Its attachment exponent $\alpha$ says how the odds grow with others' recent activity. Lead placebos test the arrow of time. Chat reads (context ledger) and commits (DQ4) compete as exposures, and a skeleton replay tests the project-size law. Output per agent comes from the work ledger. In 40 units, joins follow a sublinear kernel ($\alpha\approx0.5$--$0.7$). Activity \emph{after} a join predicts it as well as activity before, so this is co-arrival. Read chat beats commits, and a project's commits grow as $n^{0.70}$ with its agents.}
 
-\hmodel{Model 10 (Potts) in Curie--Weiss form. The spin $\sigma_i\in\{0,1..q\}$ is agent $i$'s project in a window ($q\le 8$; 0 = rare projects, uncoupled). It comes from artifact mentions (attention) or, in round 1b, from agent work commits (work). $b$ is a room block of $N_b$ agents. $h_a$ is the popularity field of project $a$. $\beta J$ is one uniform coupling: $>0$ is herding, $<0$ division of labor. $\beta J_c$ and $\beta J_s$ are the mean-field first-order point and the ordered spinodal. A variant with agent fields $h_i(a)$ separates coupling from specialization.}
+\hmodel{Model 10 (Potts) in kinetic form, with a preferential-attachment kernel. Agent $i$ joins project $Y$ from the live set $C$. $a_Y$ is other agents' labelled windows on $Y$ in the last 2 active hours, and $s_Y$ their cumulative windows. $h_{iY}=1$ if $i$ held $Y$ before (habit). $\alpha=1$ with $u\propto\log s_Y$ is the Yule--Simon process. The exposures are $M$ (chat mentions of $Y$ read at $i$'s calls in the last 60 min, or after the join: lead), $M^{u}$ (posted but unread) and $C$ (others' commits to $Y$, before or after). Output: $c_{Y}$ is a project's commits in a window with $n_Y$ agents on it, and $\theta<1$ means crowding.}
 
 \hmath{\vspace{-8pt}\begin{gather*}
-P(\boldsymbol\sigma)\propto\exp\Big[\sum_i h_{\sigma_i}+\frac{\beta J}{N_b-1}\sum_{i<j\in b}\delta_{\sigma_i\sigma_j}\,[\sigma_i\ge 1]\Big]\\
-x_a=\operatorname{softmax}_a\!\left(h_a+\beta J\,x_a\right),\quad x_1:\ \tfrac1q\to\tfrac{q-1}{q}\ \text{at }\beta J_c\\
-\beta J_c=\tfrac{2(q-1)\ln(q-1)}{q-2},\ \ \beta J_s=\min_s\tfrac1s\ln\tfrac{1+(q-1)s}{1-s}
+P(i\to Y)=e^{u_Y}\Big/\textstyle\sum_{Z\in C}e^{u_Z}\\
+u_Y=\alpha\log a_Y+\beta_0[a_Y{=}0]+\gamma\log(1{+}s_Y)+\eta\,h_{iY}\\
+\text{R2: }u_Y\mathrel{+}=\beta_M\log(1{+}M_Y)+\beta_C\log(1{+}C_Y)\ (+\text{lead, unread})\\
+\mathbb E\,c_{Y}\propto n_Y^{\theta},\qquad \mathrm{RR}_{\rm herd}=\text{rate}_{\rm herd}/\text{rate}_{\rm solo}
 \end{gather*}\vspace{-10pt}}
 
-\hobs{../figures/summary_obs_r1b.pdf}{(a) $\beta J_{CW}$ per tested week on the round-1b shared labels, grouped by the class that the goal text predicts. Every predicted division-of-labor week (blue) herds. Negative values occur only in own-artifact weeks (triangles), and a within-agent permutation reproduces them. \#40 is clipped ($-18$). (b) \#26 on DQ6 ballots: after a 9--9--9 approval tie, DeepSeek-V3.2 takes 7 of 8 runoff ballots within 100 s (orange) and 9 of 9 in the 01-09 confirmatory vote (blue).}
+\hobs{../figures/summary_obs_r2.pdf}{(a) Attachment exponent $\alpha$ per unit with 95\% CI, in work joins (blue) and attention joins (orange). Bands: pooled values, $0.68\,[0.38,0.98]$ and $0.52\,[0.36,0.67]$. Both exclude the Yule value 1 (dashed). (b) Pooled exposure coefficients. Commits and chat reads \emph{after} the join predict it as well as those before it. Read chat is the strongest predictor, and unread mentions have a negative coefficient.}
 
-\htelos{Herding is the default, and it is real work, not only attention. In shared-artifact weeks agents commit to the same repos in the same half-hour, beyond their stable preferences. Their attention labels point at the repos they commit to (84\% of agent-windows). Division of labor appears only when the task gives each agent its own artifact or role. There agents still read each other's work more than they contribute to it. To get parallel work, assign ownership (a post hoc rule). The coupling-beyond-fields $z$ on artifact links is a cheap monitor for duplicated work: $z\ge2$ flags herding in commits in 4/6 shared weeks. The Potts machinery adds little: no clean phase transition, no separation of drive and coupling, and the one jump (\#26) looks like a ballot cascade.}
+\htelos{Herding is co-arrival steered by chat, not stigmergy. Agents pick projects in proportion to others' recent activity, with a sublinear exponent. That activity is as predictive one hour after the join as one hour before, so agents converge in the same hour; they do not follow an accumulated record. Read chat mentions predict joins better than commits, and unread mentions do not. Pile-ons cost little per herded agent (commit rate RR 1.23, n.s.), but they add little to the project: each extra agent adds about 0.7 of a solo agent's commits. Operator rule: expect a project's commits to grow as $n^{0.7}$ with the agents on it. To get parallel output, split work across owned artifacts rather than adding agents to one repo.}
 
-\hbottom{LLM agents herd onto shared artifacts by default, in commits and in attention, and spread out only when the task gives each agent its own.}
+\hbottom{LLM agents pile onto projects in same-hour bursts steered by chat, not by the artifact record, and each extra agent on a shared project adds about 0.7 of a solo agent's commits.}
 
 \hresults{\footnotesize\setlength{\tabcolsep}{2.5pt}\begin{tabular}{@{}p{0.31\columnwidth}p{0.47\columnwidth}p{0.18\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Observed (round 1 $\to$ 1b)} & \textbf{Verdict}\\\hline
-P1 sign of $\beta J_{CW}$ follows mode & 5/11 signs, $p=0.73$ (unchanged); same sign in 14/14 & mixed by rule; failed\\
-P2 coupling beyond fields by mode & AF weeks $z_{N2}>0$ in 5/5; \#38 $+2.1\to+1.9$ & failed\\
-P3 first-order consensus & 0/4 project jumps; \#26 vote jump 1/3$\to$7/8 (correct round), $\beta J$ 3.2 [1.05, 6.0] vs 2.75 & failed; jump at threshold\\
-P5 held-out gain & 8/10 $\to$ 10/10 & supported\\
-R1b-1 replication & 14/14 P1, 12/14 P2 identical & supported\\
-R1b-2a work herds (shared) & $z_{N2}\ge2$ in 4/6 & supported\\
-HH266 work private & work $z<2$ in 2/5 herding weeks & not supported\\
-\#26 field, not cascade & runoff voters saw 2.6 earlier ballots; field favoured Gemini & failed\\
-\#40 hub less worked & hub 0.73 of work vs 0.74 of attention & failed\\
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 sign by goal mode (round 1) & 5/11 signs; herding in 11/14 weeks & failed\\
+R1a $\alpha>0$ in $\ge2/3$ shared (work) & 2/4 work; 8/12 attention & failed (work)\\
+R1b sublinear, not Yule & pooled $\alpha$ 0.68 / 0.52, both $<1$; per-unit CIs wide & mixed\\
+R1c fitness takes part & $\alpha_{\rm FE}<\alpha$ in 5/13, 16/27 & failed\\
+R1d lag = lead (convergence) & CI$\ni0$ in 34/40 units; attachment world gives $+1.0$ to $+1.6$ & supported\\
+R1e kernel replays sizes & work 10/13; attention 7/27 & supported (work)\\
+R1f Yule fits & 2/13, 4/27 & failed\\
+R2a commits beat chat (held out) & work 6/13, pooled $-0.002$; attention 3/24, pooled $-0.047\,[-0.070,-0.024]$ & failed\\
+R2b MH: commits $>$ chat & pooled OR chat 3.0 vs commits 1.26 (attention) & failed\\
+R2c commits lag $>$ lead & work $-0.18$; shared work $-0.78\,[-1.22,-0.35]$ & failed\\
+R3a herding raises output & RR 1.23 [0.94, 1.62] (shared) & not supported\\
+R3b $\theta<1$ & 16/23; $\theta$ 0.70 shared, 0.25 own & supported\\
 \end{tabular}}
 
-\hobsb{../figures/r1b_work_vs_attention.pdf}{(a) Coupling beyond agent fields ($z$ against circular shift) in attention (filled) and work (open), \#30--\#44. Work herds where attention does, except \#30 and \#38. Own-artifact weeks (triangles) stay below 2. (b) Co-location: agents that share their repo with a room-mate in the same 30 min. It is equal in shared weeks and lower in work in \#44 and in every \#51 unit.}
+\hobsb{../figures/r2_output.pdf}{(a) Crowding exponent $\theta$: a project's commits per window vs the number of agents on it (project-day fixed effects). Shared weeks (blue) pool to $0.70\,[0.56,0.85]$, own-artifact units (orange) to $0.25\,[0.14,0.36]$. In own units, attention to another agent's repo is reading, not work. (b) Herded ($\ge2$ others on the same project) vs solo windows of the same agent-day: log commit-rate ratio. Shared $+0.21\,[-0.06,0.48]$; own $-0.08\,[-0.17,0.01]$.}
 
-\hcaveats{Drive and coupling are still not separable: herding is an effective coupling. $z$ values near 2 move by up to 0.5 between null draws (\#20, \#38). Work is public agent commits only (dense from \#30; author time). In \#51 the work-space pseudo-likelihood is ill-determined because each agent has its own repo, so co-location is the measure there. \#35, a shared week not used in round 1, has $z_{N2}=-2.5$ in attention. That value would refute the frozen confirmatory clause C2; disclose it before the holdout run. The \#26 cascade reading rests on 8 ballots and no text. The ownership rule remains post hoc.}
+\hcaveats{Work joins are few (25--101 per period; 51g 321), so per-period work CIs are wide. Whole goal periods are units for \#18--\#44 (exception (d)). The 30-min window is coarser than the 18--50 s read-out delay, so ``before'' and ``after'' share a burst. The read vs unread contrast is not estimable in most units: unread mentions are almost never followed by a join. $\theta$ counts watchers as well as committers. Own units produce 3$\times$ more commits per agent-hour, but that difference follows calendar time. The R3 test is mildly liberal (synthetic size 0.04--0.13). Synthetic validation found and fixed a likelihood bug and two liberal contrasts before the real run (amendment A1).}
 
-\hnext{Fit a kinetic Potts model with ledger read-outs for ballots and commits, to test whether a read of $k$ earlier ballots or commits raises adoption. Use file-level states inside shared repos to look for division of labor below the repo. Use NE15 as an intervention.}
+\hnext{Move the join test to the call clock. Compare commits visible at the deciding call with commits made during it (an artifact in-flight placebo). Recompute $\theta$ with committers only and file-level overlap, to split watchers from duplicated work. Use \#40 ($\alpha<0$: agents leave active projects) and NE42 as natives.}

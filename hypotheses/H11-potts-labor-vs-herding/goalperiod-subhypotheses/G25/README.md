@@ -2,6 +2,7 @@
 
 **Verdict:** P1 failed (significant); P2 failed (significant)
 **Verdict (1b):** P1 failed (sig.); P2 failed (sig.) (unchanged)
+**Verdict (r2):** R1 attachment G25 att: n.s. (+); R2 stigmergy G25 att: failed
 **Role:** replication (exploratory (transfer))
 **Period:** regime I · mode C · N = 10 at start · one room (#general) · 5 active days. Class for H11: **AF**.
 
@@ -53,3 +54,12 @@ Transfer: shared objective where each agent made exhibits, so antiferromagnetic.
 | local-shift z (±1 window, post hoc) | +3.0 | +3.4 |
 | held-out PL gain (day folds) | 5 | 5/5 |
 | P1 / P2 | failed (significant) / failed (significant) | failed (significant) / failed (significant) |
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit · channel | α [95% CI] (R1a) | α_FE | lag − lead (R1d) | replay inside: top share / exp(H) (fit · Yule · uniform) | ΔLL artifact − chat (R2a) | OR chat-read \| act · OR commits \| chat (R2b) | read − lead, chat · commits (R2c) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G25 · att (n = 29) | +0.27 [-0.79, +1.33] | +1.17 [+0.16, +2.19] | -0.73 [-2.63, +1.16] | ✓/✗ · ✗/✗ · ✗/✗ | -0.730 [-1.119, -0.341] | 394.22 · 13.58 | +1.27 [+0.53, +2.01] · -0.02 [-1.78, +1.74] |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

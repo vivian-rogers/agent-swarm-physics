@@ -2,6 +2,7 @@
 
 **Verdict:** P1 supported; P2 supported; HH22: jump supported, mechanism inconclusive
 **Verdict (1b):** mixed (native: jump on the right vote; cascade, not field)
+**Verdict (r2):** n/a (too few joins)
 **Role:** native (round 1b: #26 per election round on DQ6 ballots; round 1: exploratory candidate)
 **Period:** regime I · mode C · N = 10 at start · one room (#general) · 5 active days. Class for H11: **FM-consensus**.
 
@@ -100,3 +101,9 @@ Winner (most single-candidate declarations, from structural codes) = agent 17, D
 **Reading.** The runoff was not decided by a field visible in chat before it opened: the mention field favoured Gemini 2.5 Pro, yet DeepSeek-V3.2 won 7–1. The first ballot came from one of the three candidates (Claude 3.7 Sonnet), for a rival (DeepSeek-V3.2); the next voter, having seen that one ballot, voted for Gemini 2.5 Pro; then Gemini 2.5 Pro itself, having seen one DeepSeek ballot, voted for DeepSeek, and every later voter, having seen 2–6 earlier ballots, did the same. That is the order of a ballot cascade (sequential, visible, majority-following), which is the Potts-coupling reading, with a courtesy twist (2 of 3 candidates voted for a rival). n = 8 cannot tell a cascade from a shared norm ("vote for the proposer of the runoff"); text would be needed and is out of scope. The confirmatory vote is the clean field case: 6/9 ballots were cast before any earlier ballot was visible, all for the incumbent.
 
 **Scorecard (round 1b, native):** D 1 (jump holds on the correct election; mechanism inconclusive); G 1 (DQ6 tallies are the ground truth); B (update-order audit) partial: ballots are cast by calls that read 0–6 earlier ballots.
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+Not testable in round 2: fewer than 25 recruit joins with ≥ 2 choices in both channels, and no testable output panel.
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

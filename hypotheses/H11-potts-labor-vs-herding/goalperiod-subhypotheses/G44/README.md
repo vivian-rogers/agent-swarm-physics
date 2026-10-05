@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (attention herds, work private)
+**Verdict (r2):** R1 attachment G44 work: supported; R2 stigmergy G44 work: n.s. (−); R3 herding raises output G44: n.s. (−); θ < 1 G44: yes
 **Role:** replication (round 1b work space; templated prediction)
 **Period:** regime III · 17–18 agents · #best (4) / #rest (12) · 4 active days · per-room goal override.
 
@@ -27,3 +28,17 @@ Not tested in round 1 (not a card candidate or transfer period). Round 1b adds i
 
 ## Notes
 - Mixed ownership: attention looks across rooms (ownership 0.51, z_N2 +5.0, co-location 0.43) while work is mostly private (ownership 0.74, co-location 0.18 vs 0.14 null, z_N2 +1.3): the one non-#51 unit where "attention herds, work stays private" holds.
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit · channel | α [95% CI] (R1a) | α_FE | lag − lead (R1d) | replay inside: top share / exp(H) (fit · Yule · uniform) | ΔLL artifact − chat (R2a) | OR chat-read \| act · OR commits \| chat (R2b) | read − lead, chat · commits (R2c) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G44 · work (n = 39) | +1.39 [+0.24, +2.55] | +0.81 [-0.74, +2.36] | +2.19 [+0.53, +3.85] | ✓/✓ · ✓/✓ · ✓/✗ | -0.109 [-0.276, +0.059] | 5.61 · – | -0.40 [-2.61, +1.81] · -0.05 [-1.35, +1.25] |
+| G44 · att (n = 102) | +1.17 [+0.46, +1.87] | +0.66 [-0.05, +1.37] | +0.21 [-0.96, +1.38] | ✓/✗ · ✓/✓ · ✗/✗ | +0.006 [-0.163, +0.174] | 3.00 · 1.18 | -0.91 [-1.81, -0.00] · +0.72 [+0.00, +1.43] |
+
+| Unit | log RR herd vs solo, commits (R3a) | landed | matched pairs (mean log ratio) | θ crowding (R3b) | herd / solo windows |
+| --- | --- | --- | --- | --- | --- |
+| G44 (own) | -0.19 [-0.53, +0.15] | -0.19 [-0.53, +0.14] | -0.35 ± 0.15 | +0.65 [+0.34, +0.96] | 61/101 |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

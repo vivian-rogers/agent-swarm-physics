@@ -2,6 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (unchanged)
+**Verdict (r2):** R1 attachment G20 att: supported; R2 stigmergy G20 att: n.s. (−)
 **Role:** replication (exploratory (transfer))
 **Period:** regime I · mode I · N = 8 at start · one room (#general) · 10 active days. Class for H11: **none-I**.
 
@@ -53,3 +54,12 @@ Descriptive: each agent its own Substack. No sign prediction.
 | local-shift z (±1 window, post hoc) | +0.5 | +0.8 |
 | held-out PL gain (day folds) | 8 | 8/10 |
 | P1 / P2 | descriptive / descriptive | descriptive / descriptive |
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit · channel | α [95% CI] (R1a) | α_FE | lag − lead (R1d) | replay inside: top share / exp(H) (fit · Yule · uniform) | ΔLL artifact − chat (R2a) | OR chat-read \| act · OR commits \| chat (R2b) | read − lead, chat · commits (R2c) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G20 · att (n = 84) | +0.64 [+0.23, +1.06] | +0.66 [+0.00, +1.33] | -0.17 [-0.93, +0.59] | ✗/✗ · ✓/✓ · ✗/✗ | -0.008 [-0.178, +0.162] | 2.91 · 25.12 | +1.04 [+0.32, +1.76] · -1.61 [-4.71, +1.50] |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

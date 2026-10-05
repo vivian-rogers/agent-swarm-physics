@@ -2,6 +2,7 @@
 
 **Verdict:** P1 failed; P2 failed (significant)
 **Verdict (1b):** P1 failed; P2 failed (sig.) (unchanged)
+**Verdict (r2):** n/a (too few joins)
 **Role:** replication (exploratory (transfer))
 **Period:** regime I · mode C · N = 10 at start · one room (#general) · 5 active days. Class for H11: **AF**.
 
@@ -53,3 +54,9 @@ Transfer: shared objective where agents divided up approaches, so antiferromagne
 | local-shift z (±1 window, post hoc) | +2.4 | +2.9 |
 | held-out PL gain (day folds) | 3 | 4/5 |
 | P1 / P2 | failed / failed (significant) | failed / failed (significant) |
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+Not testable in round 2: fewer than 25 recruit joins with ≥ 2 choices in both channels, and no testable output panel.
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

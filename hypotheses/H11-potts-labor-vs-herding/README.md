@@ -1,6 +1,7 @@
 # H11: Division of labor vs herding is the sign of a Potts coupling, set by the goal
 
 **Status:** exploratory round 1 done (2026-10-03); **round 1b on improved data done (2026-10-04): no verdict changes; work herds where attention does** (shared deterministic labels reproduce every round-1 sign; agents' work commits herd in 4/6 shared-artifact weeks, onto the same repos they attend; HH266's "attention herds, work stays private" holds only in own-artifact and private-role units; #26 redone per election round on DQ6 ballots). **The sign-by-goal-mode prediction is not supported.** βJ_CW > 0 (herding) in 11 of the 14 tested weeks, whatever the mode, including all five weeks predicted to be AF. The exceptions are the three weeks where agents built their own artifacts, and there the spread is static specialization (fields), not avoidance. A frozen confirmatory test of the original rule and of the round-1 pattern on the holdout (#22, #28, #45) is written but not run. Predictions below were written 2026-10-03, before any real-data run.
+**Round 2 (2026-10-05): why agents pile on.** Joins follow a sublinear rich-get-richer kernel (α ≈ 0.5–0.7) that is time-symmetric (co-arrival, not past-driven attachment). Read chat predicts joins better than commits (H11-R2 stigmergy refuted). A project's commits grow as n^0.70 with the agents on it in shared weeks; a herded agent's own commit rate is unchanged (RR 1.23 [0.94, 1.62]; H11-R3 refuted as stated). See "Round 2".
 **Fields:** stat mech, sociophysics
 **Origin:** HH24 + HH26 + HH84 (shortlist 2, item 2), plus **HH22** (the election, #26), folded in as `G26/` by Vivian on 2026-10-03 (`../hypohypotheses/HYPOHYPOTHESES.md`; `../promotion-shortlist.md`)
 **Definitions used:** "Agent state (categorical)" with two named variants proposed for DEFINITIONS.md, **agent state (categorical, project/artifact strict)** and **agent state (categorical, action class)** (defined under Data scheme); "Population N(t)", active-population variant (labeled agents in a window and room); "Regime" (each period sits inside one regime); "Interaction (broadcast)" (the room is the interaction neighbourhood, so the coupling is uniform within a room block).
@@ -228,6 +229,8 @@ All periods were run on 2026-10-03. Predictions were written before the run (car
 | [G42](goalperiod-subhypotheses/G42/README.md) | transfer, I (descriptive) | descriptive | −2.16 (t −1.7); z +1.3; ownership 0.73 |
 
 **Round 1b (2026-10-04):** every tested period gets a `**Verdict (1b):**` line (shared labels; work space for #30 onward). Verdict changes: #38 P2 "failed (significant)" → "failed" and #40 P2 "failed" → "weak" (z ≈ 0 and ≈ 2 noise). Native folders: G26 (per election round), G31 (wave in work), G40 (hub vs own worlds in work). New replication folders for the work space: [G33](goalperiod-subhypotheses/G33/README.md), [G35](goalperiod-subhypotheses/G35/README.md), [G44](goalperiod-subhypotheses/G44/README.md), [G51](goalperiod-subhypotheses/G51/README.md) (seven non-holdout units).
+
+**Round 2 (2026-10-05):** every period with a testable round-2 unit gets a `**Verdict (r2):**` line and a "Round 2" block (R1 attachment, R2 stigmergy, R3 output). New replication folders: [G27](goalperiod-subhypotheses/G27/README.md) and [G36](goalperiod-subhypotheses/G36/README.md). #24, #26 and #33 are n/a (too few joins).
 
 ## Results
 *Exploratory round 1, 2026-10-03.*
@@ -494,3 +497,67 @@ Worlds on each period's real skeleton (real joins, choice sets and covariates; o
 - **R2a is a coin flip under the null** (ΔLL_CM > 0 in 36–72% of null runs) **and is fooled by bursts** (> 0 in 4–100% of burst runs, depending on the unit). Social and artifact worlds are identified correctly (≤ 8% and ≥ 88%). A1 adds a CI-based count next to the pre-registered sign count: periods where the ΔLL interval excludes 0. **The stigmergy verdict needs the lead contrasts (R2c), which bursts do not fool.**
 - **R3:** RR = 1 world: false positive rate 0.08–0.16 with normal intervals; A1 uses t(G − 1) critical values (G = agent clusters): 0.04–0.13. RR = 0.7 recovered (mean log RR −0.35 to −0.37, power 0.89–1.0). θ recovered (1.00 ± 0.01; 0.50 ± 0.01; coverage 0.87–0.96).
 - Not changed: the predictions, the credences, the kill rules, the periods, the windows.
+
+### Results (round 2, run 2026-10-05, non-reserved data only)
+- **Code:** `scheme/build_r2.py` (joins, choice sets, exposures, output panel); `analysis/r2lib.py` (conditional logit and conditional Poisson with cluster sandwich, MH, DerSimonian–Laird, skeleton replay); `analysis/round2.py` (`synth`, `run`, `estimates`); `analysis/score_r2.py` (pre-registered rules); `analysis/summary_figure_r2.py`; `analysis/period_folders_r2.py`.
+- **Data:** `data/processed/H11-potts-labor-vs-herding/r2/` (`joins_*`, `cands_*`, `skel_*`, `panel_r3`, `projwin_r3`, `results/real_r2.json`, `score_r2.json`, `synthetic_r2*.json`; 2 MB).
+- **Figures:** [`figures/summary_obs_r2.pdf`](figures/summary_obs_r2.pdf) (α per unit; pooled lag vs lead coefficients), [`figures/r2_output.pdf`](figures/r2_output.pdf) (θ and herd rate ratio per unit).
+- **Estimates:** 424 rows in `per_period_estimates` (statistics `h11r2_*`; role replication).
+- **Testable units:** work 13 (shared #31, #36, #38, #41; own #44 and 51a, c–i), 1,076 work recruits in all; attention 27 (#18–#51l). Output panel: 21 units for R3a, 23 for R3b. #24, #26, #33 and #35 have too few joins.
+
+**Outcome vs prediction**
+
+| ID | Observed | Verdict |
+| --- | --- | --- |
+| R1a α > 0 in ≥ 2/3 shared periods (work) | Work 2/4 (#31 +0.84 [0.36, 1.32], #36 +1.07 [0.65, 1.49]; #38 −0.03, #41 +0.99 [−0.38, 2.35]). Attention 8/12 | **failed** on work by rule; holds in attention |
+| R1b sublinear, not Yule | Pooled α = 0.68 [0.38, 0.98] (work, 13 units) and 0.52 [0.36, 0.67] (attention, 27): both exclude 1. Per-period CI contains 1 in 10/13 work and 13/27 attention units | **mixed** (pooled sublinear; per-period work CIs too wide) |
+| R1c fitness takes part | α_FE < α in 5/13 and 16/27; α_FE > 0 in 4/13 and 9/27; pooled α_FE 0.51 [0.17, 0.85] and 0.42 [0.24, 0.60] | **failed** (project fixed effects remove little) |
+| R1d past and future not separable | lag − lead CI includes 0 in 10/13 and 24/27; pooled +0.23 [−0.43, 0.89] and −0.08 [−0.21, 0.04]. Causal attachment (α_FE > 0 and lag > lead, A1) in 0/13 and 1/27 (51j) | **supported** |
+| R1e fitted kernel replays sizes | Top share and exp(H) inside the 90% band: work 10/13, attention 7/27 | **supported in work**, failed in attention |
+| R1f Yule fits, uniform fails | Yule inside on both: 2/13, 4/27. Uniform: top share above its band in 3/13 work, 21/27 attention | **failed** |
+| Kill (PA) | Shared-work α CI includes 0 in 2/4 (not > 1/2); fitted kernel misses both statistics in 3/13 | **not met** |
+| R2a artifact beats chat (held out) | Work: ΔLL_CM > 0 in 6/13; no interval excludes 0; pooled −0.002 [−0.026, +0.023]. Attention: 3/24 > 0, 9/24 < 0 (CI); pooled −0.047 [−0.070, −0.024] | **failed** |
+| R2b OR_C\|M > OR_M\|act | Work 4/12, attention 2/25. Pooled OR: chat read 2.2 [1.7, 2.9] vs commits 1.8 [1.2, 2.6] (work); 3.0 [2.5, 3.6] vs 1.26 [1.01, 1.57] (attention) | **failed** (despite A1's lean towards commits) |
+| R2c-social read > unread | Estimable in 2 work and 7 attention units only (unread mentions are almost never followed by a join); pooled +1.56 [−0.33, 3.45] and +0.26 [−0.16, 0.69]. Pooled β(M_unread): −0.19 [−0.31, −0.07] (work), −0.14 [−0.41, 0.13] (attention) | **inconclusive** (not estimable in most units) |
+| R2c-lead chat lag > lead | Work −0.07 [−0.57, 0.43] (11 units); attention +0.26 [0.02, 0.50] (26) | **mixed** (attention only) |
+| R2c-artifact commits lag > lead | Work −0.18 [−0.63, 0.28]; shared work −0.78 [−1.22, −0.35] (lead > lag); attention −0.14 [−0.35, 0.08] | **failed** |
+| Kill (stigmergy) | ΔLL_CM < 0 in 7/13 work and 21/24 attention units, and OR_M\|act > OR_C\|M pooled in both | **met: H11-R2 refuted** |
+| R2d paths (descriptive) | 1,076 work recruits: 63% had neither a read chat mention nor seen commits in the 60 active min before the first commit; chat only 20%; seen commits only 7%; both 10% (chat first in 85/111) | – |
+| R3a herding raises output (H11-R3) | Shared: log RR_herd = +0.21 [−0.06, 0.48] (RR 1.23 [0.94, 1.62], 7 periods); landed +0.18 [−0.06, 0.42]; matched pairs +0.07 [−0.09, 0.22]. Own: −0.08 [−0.17, 0.01] (RR 0.92); matched −0.13 [−0.21, −0.05] | **not supported** (no gain detected) |
+| R3a (mine) crowding RR < 1 | Shared CI includes 1 and leans positive | **failed** |
+| R3b θ < 1 in ≥ 2/3 | 16/23 (shared 3/8, own 13/15). Pooled θ = 0.70 [0.56, 0.85] shared, 0.25 [0.14, 0.36] own | **supported** |
+| R3c own > shared output per agent-hour | Median 8.7 vs 2.9 commits per active agent-hour (15 vs 9 units, Mann–Whitney p = 0.017); vs work co-location excess ρ = −0.10 (p = 0.70, 18 units) | **supported, descriptive** (rate rises with calendar time; confounded) |
+| Kill (H11-R3) | RR clause not met; θ clause met (16/23) | **met: H11-R3 refuted as stated** |
+
+**Synthesis**
+1. **Agents join projects with a sublinear rich-get-richer kernel.** The odds of picking project Y grow as (others' recent activity on Y)^α with α ≈ 0.5–0.7, beyond habit and cumulative size, in both channels. Project fixed effects remove little, so it is not only fixed project attraction (the fitness rival). The fitted kernel replays the work project-size distribution (top share and effective number) in 10/13 units. A pure Yule–Simon kernel (∝ cumulative size) does not (2/13): sizes are less concentrated than Yule predicts. In attention the replay fails (7/27), because attention also scatters over many short visits.
+2. **The kernel has no arrow of time.** Others' activity on Y in the 2 h *after* the join predicts the join as well as activity before it (lag − lead ≈ 0 in 34/40 units). A pure past-driven attachment world gives lag − lead ≈ +1.0 to +1.6 on the same skeletons (A2, post hoc); the pooled real values (+0.23 [−0.43, 0.89] work, −0.08 [−0.21, 0.04] attention) exclude it. Fitness and burst worlds give negative values (−0.2 to −1.1). So the observed "rich get richer" is mostly co-arrival: agents arrive at a project in the same hour as others. At most a part of it follows earlier activity, and the 30-min window cannot place the order inside the hour.
+3. **Herding is not stigmergic.** Commits by others on Y never predict a join better than chat mentions of Y that the joiner read. In attention joins, chat reading wins clearly (pooled OR 3.0 vs 1.26). Commits after the join predict it as well as commits before. In shared work weeks they predict it better (lead > lag, −0.78 [−1.22, −0.35]): others' commits follow the join (H63: commits follow the pile-on). Seen commits (another agent's hash printed in the joiner's own output) precede only 17% of work recruits, and chat reading comes first in 77% of the cases with both.
+4. **Reconciliation with H28 and H06.** Read chat mentions are the best single predictor of a join, but in work joins mentions read *after* the join predict it as well (H28's burst-marker pattern replicates on work). In attention joins mentions read before beat those read after (+0.26 [0.02, 0.50]). This is a weak read-out signal; H28's switch hazard did not resolve it. Mentions that were posted but unread have a negative coefficient (agents do not join what they did not read; H06's read vs posted-unread OR 8.6, H53's other-room ratio 0.12). The formal read − unread contrast is not estimable in most units.
+5. **Herding neither raises nor cuts a herded agent's own commit rate in shared weeks** (RR 1.23 [0.94, 1.62]). **The project's output grows sublinearly with the number of agents on it** (θ = 0.70 shared, 0.25 own). One extra agent on a shared project adds about 0.7 of a solo agent's commits to it. In own-artifact units, extra attention on someone's repo is reading, not work (θ 0.25). The two results agree if part of a herd's members attend the project while they commit elsewhere, or duplicate work that never lands. Own-artifact units produce 3× more commits per active agent-hour than shared weeks. That difference rides on calendar time (later models, regime III), so it is descriptive.
+
+**Amendment A2 (2026-10-05, post hoc, after the real run; disclosed).** The A1 rule "causal attachment needs lag − lead > 0" had no synthetic power figure. On the same seven skeletons, planted past-driven attachment gives lag − lead = +1.38 to +1.57 (α = 1; power of lag > lead 0.53–1.0) and +0.96 to +1.20 (α = 0.5; power 0.38–1.0); `r2/results/synthetic_r2_A2_lagpower.json`. This calibrates synthesis point 2. It changes no verdict.
+
+**Constants (new; non-reserved units; DerSimonian–Laird pooled; `per_period_estimates` `h11r2_*`)**
+
+| Symbol | Value [95% CI] | Scope |
+| --- | --- | --- |
+| α_work (attachment exponent, work joins) | 0.68 [0.38, 0.98] | 13 units, #31–51i, DQ4 work labels, W = 30 min, 2 h lookback |
+| α_att (attachment exponent, attention joins) | 0.52 [0.36, 0.67] | 27 units, #18–51l, action-mention labels |
+| θ_shared (project output vs agents on it) | 0.70 [0.56, 0.85] | 8 shared periods #30–#41; attention-defined n, work commits |
+| θ_own | 0.25 [0.14, 0.36] | 15 own-artifact units (#39, #42, #44, #51) |
+| RR_herd,shared (herded vs solo agent commit rate) | 1.23 [0.94, 1.62] | 7 shared periods; agent-day fixed effects |
+| β_chat (log-odds per log count of read mentions of Y) | 0.71 [0.57, 0.86] att; 0.38 [0.10, 0.65] work | joint model with habit and size |
+
+**Impostors (round 2).** Scheduler: removed for the choice models (all candidates share the instant; active-time clock) and R3 (agent-day fixed effects). Exogenous field: partly (project fixed effects and habit absorb time-invariant attraction; a time-varying project field is not separable from co-bursts, which is what the lead placebo shows). Shared priors: open (no family split). Convergence: tested, and it is the result (lead ≈ lag for activity, commits and work-join chat).
+
+**Scorecard changes (round 2):** none in score. D gains a partial unfitted prediction (the fitted kernel replays the work size distribution in 10/13; Yule fails). H gains a rival test: stigmergy loses to chat, and the lead placebo shows that neither channel is causal at the 30-min scale. F gains validated estimators (A1). E and I stay 0.
+
+**Caveats.** Work joins are few per period (25–101 except 51g, 321); per-period work CIs are wide. Whole goal periods are units for #18–#44 (exception (d)). The 30-min window is coarser than the call clock (18–50 s read-out delay), so "lag" includes the same burst. θ uses attention-defined n (watchers included). The R3 test is mildly liberal (synthetic size 0.04–0.13). The deployed outcome separates in #30 and 51j, so it is not interpreted.
+
+**Round 3 redirects.**
+- Move the attachment test to the call clock: the hazard of a join at call c as a function of commits to Y visible at c's t_call vs commits made during c (an artifact in-flight placebo at 1–2 min, which the 30-min window cannot give).
+- Recompute θ with work-defined n (committers only) and file-level overlap, to split watchers from duplicated work.
+- Natives: #40 has α = −1.32 [−2.60, −0.04] in attention (agents leave recently active projects: own worlds beside a hub); NE42 (#39 → #40) as a test of θ and α across a merge.
+
+**Claim that stands:** In 40 non-reserved units, agents join projects with a sublinear, time-symmetric co-arrival kernel (pooled α = 0.68 [0.38, 0.98] work, 0.52 [0.36, 0.67] attention; lag − lead ≈ 0, excluding past-driven attachment) that read chat predicts better than artifact activity (stigmergy refuted), and a project's output grows sublinearly with the agents on it (θ = 0.70 [0.56, 0.85] in shared weeks). *Excluded:* the size-distribution replay (supported in work 10/13, failed in attention 7/27), the read vs unread contrast (not estimable in most units), the attention-only lag > lead for chat (+0.26, marginal), R3c's own > shared output (confounded by calendar time), the deployed-commit outcome (separated), and the Yule kernel (fails). the read vs unread contrast (not estimable in most units), the attention-only lag > lead for chat (+0.26, marginal), R3c's own > shared output (confounded by calendar time), the deployed-commit outcome (separated), and the Yule kernel (fails).

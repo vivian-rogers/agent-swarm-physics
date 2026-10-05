@@ -2,6 +2,7 @@
 
 **Verdict:** P1 failed; P2 failed; P3 failed
 **Verdict (1b):** mixed (native: work spread; hub worked as much as attended)
+**Verdict (r2):** R1 attachment G40 att: failed; R2 stigmergy G40 att: failed; R3 herding raises output G40: n.s. (−); θ < 1 G40: no
 **Role:** native (round 1b: hub vs own worlds in work, DQ4 ledger; round 1: exploratory candidate)
 **Period:** regime III · mode C · N = 15 at start · #universe-coordination + #rest · 5 active days. Class for H11: **FM-consensus**.
 
@@ -69,3 +70,16 @@ Shared interfaces and standards in a shared universe hub: consensus, so ferromag
 **Reading.** #40 is not "attention on the hub, work in private worlds". Agents committed to the shared hub as often as they mentioned it (0.73 of work agent-windows; 9 agents in one 30-min window), and to their own world repos for the rest; the occupancy is steadier than binomial in both spaces, so the uniform-field coupling is strongly negative in both and nothing is left beyond agent fields. Division of labor here is fixed staffing (fields), and it is the same in work and attention.
 
 **Scorecard (round 1b, native):** D 1 (own-artifact spread predicted in work and observed); G 1.
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit · channel | α [95% CI] (R1a) | α_FE | lag − lead (R1d) | replay inside: top share / exp(H) (fit · Yule · uniform) | ΔLL artifact − chat (R2a) | OR chat-read \| act · OR commits \| chat (R2b) | read − lead, chat · commits (R2c) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G40 · att (n = 37) | -1.32 [-2.60, -0.04] | -1.61 [-2.80, -0.42] | -2.48 [-4.63, -0.33] | ✓/✓ · ✓/✓ · ✗/✗ | -0.105 [-0.195, -0.016] | 74.99 · – | -0.00 [-0.48, +0.48] · -0.14 [-0.42, +0.14] |
+
+| Unit | log RR herd vs solo, commits (R3a) | landed | matched pairs (mean log ratio) | θ crowding (R3b) | herd / solo windows |
+| --- | --- | --- | --- | --- | --- |
+| G40 (shared) | -0.39 [-1.02, +0.25] | -0.40 [-1.06, +0.26] | -0.46 ± 0.15 | +1.05 [+0.44, +1.65] | 52/44 |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

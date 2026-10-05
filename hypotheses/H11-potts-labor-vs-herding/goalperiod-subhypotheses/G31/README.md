@@ -2,6 +2,7 @@
 
 **Verdict:** P1 supported; P2 supported; P3 failed
 **Verdict (1b):** supported (native: work herds)
+**Verdict (r2):** R1 attachment G31 work: supported; R2 stigmergy G31 work: n.s. (+); R3 herding raises output G31: n.s. (+); θ < 1 G31: yes
 **Role:** native (round 1b: herding measured in work, DQ4 ledger; round 1: exploratory candidate)
 **Period:** regime I · mode F · N = 12 at start · one room (#general) · 5 active days. Class for H11: **FM-free**.
 
@@ -74,3 +75,17 @@ HH26's case: about nine agents condensed onto one project in a free week. Herdin
 **Reading.** #31's herding is in the work, not only in the links and mentions: up to 9 agents committed to one repo in the same half-hour (`village-time-capsule` and `village-event-log` carry the work onsets H27 found). 25% of the week's 24 work repos have a single committer, but 87% of work agent-windows are on repos with ≥ 2 committers: most projects are private, most work is shared (this reconciles H06's 0.79–0.91 singleton share with H11's herding).
 
 **Scorecard (round 1b, native):** C 2 (work coupling beats N2, N1d and the local shift, held-out gain 5/5); D 1 (attention-derived herding predicts work herding); G 1.
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit · channel | α [95% CI] (R1a) | α_FE | lag − lead (R1d) | replay inside: top share / exp(H) (fit · Yule · uniform) | ΔLL artifact − chat (R2a) | OR chat-read \| act · OR commits \| chat (R2b) | read − lead, chat · commits (R2c) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G31 · work (n = 101) | +0.84 [+0.36, +1.32] | +0.69 [+0.18, +1.19] | -0.02 [-0.61, +0.57] | ✓/✓ · ✓/✗ · ✗/✗ | +0.071 [-0.018, +0.160] | 1.96 · 1.89 | -0.41 [-0.82, +0.00] · -0.37 [-0.95, +0.21] |
+| G31 · att (n = 185) | +0.33 [+0.11, +0.55] | +0.38 [+0.15, +0.61] | -0.36 [-0.64, -0.08] | ✗/✗ · ✓/✗ · ✗/✗ | +0.024 [-0.052, +0.100] | 2.06 · 1.72 | +0.31 [+0.02, +0.60] · -0.56 [-0.95, -0.18] |
+
+| Unit | log RR herd vs solo, commits (R3a) | landed | matched pairs (mean log ratio) | θ crowding (R3b) | herd / solo windows |
+| --- | --- | --- | --- | --- | --- |
+| G31 (shared) | +0.01 [-0.32, +0.33] | +0.05 [-0.23, +0.32] | -0.09 ± 0.09 | +0.79 [+0.58, +0.99] | 166/113 |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

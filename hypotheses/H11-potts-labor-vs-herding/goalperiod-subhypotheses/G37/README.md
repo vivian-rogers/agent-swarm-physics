@@ -2,6 +2,7 @@
 
 **Verdict:** P1 supported; P2 supported
 **Verdict (1b):** P1 supported; P2 supported (unchanged)
+**Verdict (r2):** R1 attachment G37 att: supported; R2 stigmergy G37 att: failed; R3 herding raises output G37: n.s. (+); θ < 1 G37: no
 **Role:** replication (exploratory (transfer))
 **Period:** regime III · mode F · N = 13 at start · #best / #rest · 3 active days. Class for H11: **FM-free**.
 
@@ -62,3 +63,16 @@ Transfer: free week (regime III, #best / #rest), so ferromagnetic by the class r
 | work | 84 | 12 (< 15: descriptive) | +1.58 (+1.3) | +2.3 | +1.2 | +1.38 | 0.58 (0.53, +1.0) | 0.29 |
 
 Agent-windows with both labels: work repo = attention project in 0.78. The attention top project holds 0.16 of attention and 0.21 of work agent-windows.
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit · channel | α [95% CI] (R1a) | α_FE | lag − lead (R1d) | replay inside: top share / exp(H) (fit · Yule · uniform) | ΔLL artifact − chat (R2a) | OR chat-read \| act · OR commits \| chat (R2b) | read − lead, chat · commits (R2c) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G37 · att (n = 66) | +0.82 [+0.23, +1.42] | +1.03 [+0.52, +1.54] | -0.42 [-1.21, +0.37] | ✓/✓ · ✓/✗ · ✗/✗ | -0.298 [-0.470, -0.125] | 11.85 · 1.63 | -0.77 [-1.99, +0.44] · -0.84 [-1.80, +0.13] |
+
+| Unit | log RR herd vs solo, commits (R3a) | landed | matched pairs (mean log ratio) | θ crowding (R3b) | herd / solo windows |
+| --- | --- | --- | --- | --- | --- |
+| G37 (shared) | +0.53 [-0.06, +1.13] | +0.29 [-0.62, +1.21] | +0.17 ± 0.17 | +0.69 [+0.11, +1.28] | 58/33 |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

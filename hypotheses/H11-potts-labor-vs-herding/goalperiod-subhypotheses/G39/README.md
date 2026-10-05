@@ -2,6 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (unchanged)
+**Verdict (r2):** R1 attachment G39 att: n.s. (+); R2 stigmergy G39 att: n.s. (−); R3 herding raises output G39: n.e.; θ < 1 G39: yes
 **Role:** replication (exploratory (transfer))
 **Period:** regime III · mode I · N = 15 at start · #best / #rest · 5 active days. Class for H11: **none-I**.
 
@@ -62,3 +63,16 @@ Descriptive: each agent its own world. No sign prediction.
 | work | 377 | 71 | -30.00 (–) | – | – | +0.00 | 0.00 (0.00, –) | 1.00 |
 
 Agent-windows with both labels: work repo = attention project in 0.97. The attention top project holds 0.09 of attention and 0.11 of work agent-windows.
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit · channel | α [95% CI] (R1a) | α_FE | lag − lead (R1d) | replay inside: top share / exp(H) (fit · Yule · uniform) | ΔLL artifact − chat (R2a) | OR chat-read \| act · OR commits \| chat (R2b) | read − lead, chat · commits (R2c) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G39 · att (n = 63) | +0.51 [-0.02, +1.04] | +0.47 [-0.30, +1.24] | -1.06 [-2.30, +0.19] | ✓/✓ · ✗/✗ · ✗/✓ | -0.031 [-0.066, +0.003] | 3.54 · 1.65 | +0.07 [-1.13, +1.27] · +0.11 [-1.12, +1.34] |
+
+| Unit | log RR herd vs solo, commits (R3a) | landed | matched pairs (mean log ratio) | θ crowding (R3b) | herd / solo windows |
+| --- | --- | --- | --- | --- | --- |
+| G39 (own) | n.e. | n.e. | – | +0.39 [+0.04, +0.73] | 0/0 |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

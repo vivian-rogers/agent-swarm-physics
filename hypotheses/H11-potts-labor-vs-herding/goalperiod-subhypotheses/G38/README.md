@@ -2,6 +2,7 @@
 
 **Verdict:** P1 failed (significant); P2 failed (significant)
 **Verdict (1b):** P1 failed (sig.); P2 failed (was sig.)
+**Verdict (r2):** R1 attachment G38 work: n.s. (−); R2 stigmergy G38 work: n.s. (−); R3 herding raises output G38: n.s. (+); θ < 1 G38: no
 **Role:** replication (exploratory (transfer))
 **Period:** regime III · mode C · N = 12 at start · #best / #rest · 17 active days. Class for H11: **AF**.
 
@@ -63,3 +64,17 @@ Transfer: a 17-day shared objective (charity), so antiferromagnetic by the class
 | work | 429 | 59 | +3.35 (+8.0) | +1.8 | +1.3 | +0.62 | 0.75 (0.71, +2.9) | 0.11 |
 
 Agent-windows with both labels: work repo = attention project in 0.85. The attention top project holds 0.33 of attention and 0.24 of work agent-windows.
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit · channel | α [95% CI] (R1a) | α_FE | lag − lead (R1d) | replay inside: top share / exp(H) (fit · Yule · uniform) | ΔLL artifact − chat (R2a) | OR chat-read \| act · OR commits \| chat (R2b) | read − lead, chat · commits (R2c) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G38 · work (n = 53) | -0.03 [-1.05, +0.99] | +0.05 [-0.54, +0.65] | +0.17 [-1.05, +1.40] | ✗/✗ · ✗/✗ · ✗/✗ | -0.147 [-0.437, +0.142] | 7.41 · 2.95 | -0.96 [-2.90, +0.97] · -1.48 [-2.99, +0.03] |
+| G38 · att (n = 187) | +0.54 [+0.29, +0.78] | +0.55 [-0.08, +1.18] | -0.40 [-1.31, +0.52] | ✓/✗ · ✗/✗ · ✗/✗ | -0.056 [-0.158, +0.046] | 2.29 · 0.79 | -1.08 [-1.70, -0.46] · -0.71 [-1.56, +0.14] |
+
+| Unit | log RR herd vs solo, commits (R3a) | landed | matched pairs (mean log ratio) | θ crowding (R3b) | herd / solo windows |
+| --- | --- | --- | --- | --- | --- |
+| G38 (shared) | +0.49 [-0.19, +1.17] | +0.63 [-0.01, +1.26] | +0.16 ± 0.07 | +0.73 [+0.43, +1.02] | 224/139 |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

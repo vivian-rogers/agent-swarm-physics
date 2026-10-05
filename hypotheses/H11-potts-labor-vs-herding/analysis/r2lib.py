@@ -238,6 +238,7 @@ def replay(skel: pl.DataFrame, kernel: str, beta: np.ndarray | None, rng: np.ran
     P = s["project"].n_unique() + int(sum(e in ("recruit", "entry") for e in evs)) + 2
     win = np.zeros((len(agents), G, P), dtype=np.int32)     # windows per agent, g, project (simulated)
     tot_win = np.zeros((G, P), dtype=np.int32)
+    cobirth = {}
     exists = np.zeros(P, dtype=bool)
     cur = -np.ones(len(agents), dtype=np.int64)
     nxt = 0
@@ -263,8 +264,13 @@ def replay(skel: pl.DataFrame, kernel: str, beta: np.ndarray | None, rng: np.ran
         if e == "stay" and cur[ia] >= 0:
             p = cur[ia]
         elif e == "birth" or (e == "entry" and first_g[projs[idx]] >= g):
-            p = nxt
-            nxt += 1
+            key = (g, projs[idx])               # co-births of one real project in one window share a simulated id
+            if key in cobirth:
+                p = cobirth[key]
+            else:
+                p = nxt
+                nxt += 1
+                cobirth[key] = p
         else:
             cand = np.flatnonzero(exists)
             if e != "entry":
@@ -279,7 +285,7 @@ def replay(skel: pl.DataFrame, kernel: str, beta: np.ndarray | None, rng: np.ran
                     w = cum_tot[cand].astype(float)
                 else:
                     lo = max(g - L, 0)
-                    a = tot_win[lo:g, cand].sum(axis=0) - win[ia, lo:g, cand].sum(axis=0)
+                    a = tot_win[lo:g][:, cand].sum(axis=0) - win[ia][lo:g][:, cand].sum(axis=0)
                     a = a.astype(float)
                     sz = cum_tot[cand] - cum_ag[ia, cand]
                     h = (cum_ag[ia, cand] > 0).astype(float)

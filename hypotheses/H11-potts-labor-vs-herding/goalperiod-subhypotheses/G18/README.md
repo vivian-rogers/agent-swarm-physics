@@ -2,6 +2,7 @@
 
 **Verdict:** P1 failed (significant); P2 failed (significant)
 **Verdict (1b):** P1 failed (sig.); P2 failed (sig.) (unchanged)
+**Verdict (r2):** R1 attachment G18 att: supported; R2 stigmergy G18 att: failed
 **Role:** replication (exploratory (candidate))
 **Period:** regime I · mode C · N = 7 at start · one room (#general) · 10 active days. Class for H11: **AF**.
 
@@ -54,3 +55,12 @@ A two-week shared objective with many interventions and sites: a divisible portf
 | local-shift z (±1 window, post hoc) | +4.1 | +4.1 |
 | held-out PL gain (day folds) | 10 | 9/10 |
 | P1 / P2 | failed (significant) / failed (significant) | failed (significant) / failed (significant) |
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit · channel | α [95% CI] (R1a) | α_FE | lag − lead (R1d) | replay inside: top share / exp(H) (fit · Yule · uniform) | ΔLL artifact − chat (R2a) | OR chat-read \| act · OR commits \| chat (R2b) | read − lead, chat · commits (R2c) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G18 · att (n = 56) | +0.77 [+0.15, +1.40] | +0.62 [-0.08, +1.32] | +0.50 [-0.73, +1.74] | ✓/✗ · ✗/✗ · ✗/✗ | -0.462 [-0.800, -0.123] | 2.91 · 2.24 | +0.35 [-0.41, +1.12] · +0.57 [-0.32, +1.46] |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.

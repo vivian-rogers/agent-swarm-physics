@@ -1,19 +1,19 @@
 {
- "complete": 50,
+ "complete": 60,
  "faithfulness": 1.5,
  "usefulness": 2.5,
  "rationale": {
-  "complete": "Round 1 done; round 1b re-evaluation on deterministic labels, the DQ4 work ledger and DQ6 ballots done, with a native layer (#26 per round, #31 and #40 in work). The frozen holdout test (#22, #28, #45) and a drive-vs-coupling kinetic model are not run.",
-  "faithfulness": "The core prediction (sign of J set by goal mode) failed and no first-order consensus passed; the effective ferromagnetic coupling beats the nulls and now also predicts coupling in work commits (D 0 -> 1), but drive and coupling are still not separated and the post hoc ownership pattern meets a counterexample (#35).",
-  "usefulness": "The attention-based coupling-beyond-fields statistic now tracks duplicated work: agents commit to the repos they attend (84%) and herd there in 4/6 shared weeks. A cheap monitor with modest evidence; the 'assign ownership' design rule is still post hoc."
+  "complete": "Rounds 1 and 1b done; round 2 (2026-10-05) tested the three redirects (attachment kernel, stigmergy vs chat, herding and output) on 40 units with synthetic validation on real skeletons, pre-registration and amendments A1 (pre-data) and A2 (post hoc). The frozen holdout test and a call-clock join test are not run.",
+  "faithfulness": "The Potts sign rule failed; round 2 finds a sublinear, time-symmetric join kernel that replays the work size distribution in 10/13 units but cannot be read as causal attachment (lag = lead), and refutes stigmergy. Drive and coupling are still not separated at the 30-min scale.",
+  "usefulness": "Operator numbers: a shared project's commits grow as n^0.70 with the agents on it (each extra agent adds about 0.7 of a solo agent), herding does not cut a herded agent's own rate, and chat (not the artifact record) steers pile-ons."
  },
- "one_line": "Agents herd onto shared projects whatever the goal, in commits as well as attention; spread appears only as fixed ownership.",
+ "one_line": "Agents pile onto projects in same-hour bursts steered by chat, not the artifact record; a shared project's commits grow as n^0.70 with its agents.",
  "models": [
   {
    "model": "10-potts",
    "role": "primary",
    "outcome": "refuted",
-   "note": "Coupling sign ignores goal mode: herding (βJ > 0) in 11/14 weeks"
+   "note": "Coupling sign ignores goal mode (herding in 11/14 weeks); round 2: kinetic join kernel is sublinear (α 0.68 / 0.52) and time-symmetric"
   },
   {
    "model": "13-cultural-evolution-conventions",
@@ -26,10 +26,16 @@
    "role": "secondary",
    "outcome": "untested",
    "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
+  },
+  {
+   "model": "06-neutral-cooperative-dynamics",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "Frequency-dependent joining: sublinear kernel replays work project sizes (10/13); Yule-Simon (linear) fails (2/13)"
   }
  ],
- "rated_by": "RE-P1 round-1b agent (suggested; previous calibrated ratings 40 / 1.5 / 2.0)",
- "updated": "2026-10-04",
+ "rated_by": "H11 round-2 agent (suggested 60 / 1.5 / 2.5; previous calibrated 50 / 1.5 / 2.5)",
+ "updated": "2026-10-05",
  "calibrated_by": "coordinator 2026-10-04 (ratings accepted)",
  "v2": {
   "claim": "Agents herd onto shared projects in attention and work; ownership disperses",

@@ -2,6 +2,7 @@
 
 **Verdict:** descriptive
 **Verdict (1b):** descriptive (unchanged)
+**Verdict (r2):** R1 attachment G42 att: supported; R2 stigmergy G42 att: n.s. (−); R3 herding raises output G42: n.s. (+); θ < 1 G42: no
 **Role:** replication (exploratory (transfer))
 **Period:** regime III · mode I · N = 15 at start · #best / #rest · 5 active days. Class for H11: **none-I**.
 
@@ -62,3 +63,16 @@ Descriptive: each agent its own channel. No sign prediction.
 | work | 341 | 71 | -2.38 (-2.9) | +1.4 | +0.7 | +1.13 | 0.20 (0.18, +2.3) | 0.74 |
 
 Agent-windows with both labels: work repo = attention project in 0.94. The attention top project holds 0.24 of attention and 0.26 of work agent-windows.
+
+## Round 2 (2026-10-05)
+*Predictions: the card's Round 2 block (written 2026-10-05 03:30 UTC, before any round-2 statistic; amendment A1 after the synthetic validation, before real data). Units: whole period (#51: period units). Data: `data/processed/H11-potts-labor-vs-herding/r2/` (`results/real_r2.json`, `score_r2.json`).*
+
+| Unit · channel | α [95% CI] (R1a) | α_FE | lag − lead (R1d) | replay inside: top share / exp(H) (fit · Yule · uniform) | ΔLL artifact − chat (R2a) | OR chat-read \| act · OR commits \| chat (R2b) | read − lead, chat · commits (R2c) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G42 · att (n = 48) | +0.96 [+0.12, +1.79] | +1.25 [+0.49, +2.01] | -0.46 [-2.17, +1.25] | ✗/✓ · ✓/✗ · ✗/✓ | -0.074 [-0.215, +0.067] | 2.75 · 1.27 | -0.44 [-2.28, +1.41] · -0.20 [-1.13, +0.73] |
+
+| Unit | log RR herd vs solo, commits (R3a) | landed | matched pairs (mean log ratio) | θ crowding (R3b) | herd / solo windows |
+| --- | --- | --- | --- | --- | --- |
+| G42 (own) | +0.25 [-0.08, +0.59] | +0.24 [-0.12, +0.61] | +0.07 ± 0.25 | +0.67 [+0.30, +1.03] | 30/26 |
+
+Reading rules (card): R1a counts α with CI > 0; causal attachment needs α_FE > 0 and lag − lead > 0 together (A1); R2a counts ΔLL > 0 (artifact beats chat), with the CI-based count next to it; R3a counts log RR > 0. n.e. = not estimable (A1: < 5 chosen exposed rows), n.s. = CI includes 0.
