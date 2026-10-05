@@ -1,0 +1,80 @@
+% H38: platform stalls and scheduler synchrony. Sources: hypotheses/H38-platform-stalls/{README.md (Round 1b), summary/content.tex, summary/meta.json};
+% writeup/visuals/H38-platform-stalls/{caption.tex, README.md}; interpretation/swarm-constants.json (f_sched).
+\section{H38: The runner, not the platform, makes most synchrony}
+
+\textbf{The question:}
+H02 and H19 found collective co-activation: agents are active in the same minutes more often than chance predicts.
+Is part of it infrastructure: platform stalls that silence everyone, or a runner that starts and stops all agents together?
+
+\textbf{The intuition:}
+Treat each agent as a spin: active or quiet in each minute.
+In the Curie--Weiss model each spin couples equally to the total activity $M$, the mean-field coupling.
+A stall is a second field, a common input that switches all agents off at once.
+A shared on/off field inflates the variance of $M$ even with no coupling.
+So the gain $g=1-1/\mathrm{VR}$, built from the variance ratio VR, looks like coupling.
+Stalls alone can give $g\approx0.34$ for 12 agents if they fill 5\% of minutes.
+The fix is to remove the field before reading the coupling.
+
+\textbf{What we measured:}
+H38 builds an outage table: minutes with at most one active agent, with causes from the logs.
+The observable is the equal-time co-activation gain in 30-min blocks.
+The adjusted gain drops off-schedule minutes and fills in agents that have not started, have finished or are consolidating.
+The DQ8 variant trims each day to the window in which all agents run.
+The scheduler share is $f=1-E_{\rm adj}/E_{\rm raw}$, where $E$ is the excess gain over the null.
+The null shifts each agent's series within 30-min blocks, \emph{after} the trim; this null's false-positive rate is 2--4\%, against 28--34\% on whole-day grids.
+Round 1b covers 35 goal periods outside the reserved data on the corrected activity table.
+\emph{Scheduler field:} it is the object of the test, and the trim plus conditioning removes it.
+\emph{External drive:} partly removed; a 30-min block field absorbs slow drives, but NE14 coincides with a goal change.
+\emph{Shared model prior:} open; silences that follow one model provider are not tested.
+\emph{Common input:} not relevant, because the card makes no influence claim.
+\emph{Synthetic check:} 50 replicates $\times$ 24 conditions.
+Planted stalls alone make the raw gain significant in 98--100\% of replicates.
+The pre-registered stall filter still reports false coupling in 20--60\% of them.
+Agent-state conditioning cuts that to 6--36\% and recovers planted coupling within $-5\%$ to $+23\%$.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{H38-platform-stalls/fig.pdf}
+\caption{Scheduler or coupling?
+In a simulated day, agents that start and stop together inflate the co-activation gain. The gain falls once the day is trimmed to the window in which all agents run.
+In the village, most regime-III excess (orange) goes away with this correction, while regime-I excess (blue) stays.
+Animation: \texttt{writeup/visuals/H38-platform-stalls/anim.mp4}.}
+\label{fig:int-H38}
+\end{figure}
+\begin{figure}[h]
+\includegraphics[width=0.9\textwidth]{storyboards/H38.jpg}
+\caption{Animation storyboard: six frames of the animation, evenly spaced in time (frame number and time above each). The full animation is \texttt{writeup/visuals/H38-platform-stalls/anim.mp4}.}
+\end{figure}
+
+
+\textbf{What we found:}
+Joint silences are rare and scheduled.
+They fill 5.3\% of minutes; round 1 reported 14.3\%, because the old activity table dropped half of all events.
+Of these minutes, 78\% fall outside the operator's run, and infrastructure errors explain 0.1\%.
+An error burst makes a joint silence \emph{less} likely (median log odds ratio $-0.96$).
+In regime III the scheduler share is $f=0.72$ (8 periods), and 0.83 with the trim.
+After the trim only 3/8 regime-III periods keep a significant excess: \#37 ($z=2.0$), \#44 ($z=3.4$) and \#51 ($z=8.5$).
+With conditioning on top, only \#44 and \#51 do.
+Regime I keeps its excess in 16/18 periods ($f=0.11$).
+At NE43 the day-edge share does not drop when the operator's pause and resume messages stop (0.19 to 0.14, $p=0.08$).
+So the runner's schedule, not the announcement, makes the edges.
+H50 finds the same field with an independent method on call windows.
+The claim ``regime-III co-activation is 70--80\% the runner's start/stop schedule'' stands\cred{0.90}.
+Its expected usefulness is EU~2.93 (value if true 3.25; two raters, one blind).
+Small conflict: \texttt{meta.json} rounds the share to 70--80\%; the card's round 1b gives 0.72 (conditioning) and 0.83 (trim).
+
+\textbf{What it means:}
+Advice for an always-on swarm with a daily start and stop: trim each day to the window in which all agents run. Then draw the null samples.
+In this village that one step removes about 70--80\% of regime-III co-activation.
+Find the edges from the agents' first and last actions, not from operator messages.
+Do not alert on joint silences as a stall signal: error logs do not predict them.
+Message-driven swarms (regime I) gain nothing from this rule.
+
+\textbf{Caveats:}
+A failed LLM call leaves no log line, so provider outages are untested.
+On the corrected table most periods have only a few joint-silence minutes.
+The headline estimator came after the synthetic smoke runs; the pre-registered stall filter failed.
+The \texttt{scheduled} flag comes from operator messages and is empty after 08-05 (inside \#51).
+A stall that fills a whole 30-min block leaves no trace in the block-detrended gain.
+The fragile flag is set: the coordinator rated the claim fragile.
+The confirmation script must be re-frozen on the corrected table, with the trim variants, before it runs.
+No confirmation test on reserved goal periods has run.

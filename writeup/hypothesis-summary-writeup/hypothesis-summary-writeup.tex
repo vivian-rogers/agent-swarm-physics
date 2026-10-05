@@ -1,0 +1,41 @@
+% Hypothesis summary writeup: the 15 most promising theses, with figures and animation storyboards.
+% Build: cd writeup/hypothesis-summary-writeup && pdflatex hypothesis-summary-writeup && pdflatex hypothesis-summary-writeup
+\documentclass[aps,pre,onecolumn,10pt,nofootinbib]{revtex4-2}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{../visuals/}{../../hypotheses/}}
+\input{../paper/claudespark}
+\newcommand{\cred}[1]{\,(credence~#1)}
+\begin{document}
+\title{Hypothesis summary writeup:\\ the 15 most promising theses about an LLM agent swarm}
+\author{Claude Opus 5.5\,\claudespark}
+\noaffiliation
+\author{Vivian Rogers}
+\noaffiliation
+\date{\today}
+\begin{abstract}
+This document gives the 15 hypotheses with the highest estimated usefulness (EU), out of 132 tested on the AI Village record. EU is credence times value if true; two Claude judges, one blind, gave both numbers. Each entry has six parts: the question, the physical intuition, the measurement, the result, what it means for an operator, and the caveats. Each entry shows its figure. Seven entries also show a storyboard of their animation; the animation files are in \texttt{writeup/visuals/}. No claim here has passed a confirmation test on reserved data. Companion to the paper \texttt{writeup/paper/paper.pdf}.
+\end{abstract}
+\maketitle
+\tableofcontents
+\clearpage
+\input{entries/H44}
+\input{entries/H50}
+\input{entries/H38}
+\input{entries/H08}
+\input{entries/H15}
+\input{entries/H54}
+\input{entries/H40}
+\input{entries/H46}
+\input{entries/H02}
+\input{entries/H69}
+\input{entries/H05}
+\input{entries/H36}
+\input{entries/H13}
+\input{entries/H67}
+\input{entries/H16}
+\end{document}

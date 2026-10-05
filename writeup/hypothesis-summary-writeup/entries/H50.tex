@@ -1,0 +1,77 @@
+% H50: field vs coupling from transfer lags. Sources: hypotheses/H50-field-vs-coupling-transfer-lag/{README.md, summary/content.tex, summary/meta.json};
+% writeup/visuals/H50-field-vs-coupling-transfer-lag/{caption.tex, README.md}; interpretation/swarm-constants.json (J1 named vs unnamed).
+\section{H50: Activity moves with the scheduler; talk moves one read-out call at a time}
+
+\textbf{The question:}
+When agents co-move, does a common input hit all of them (a field), or do they read each other (a coupling)? Can the lag tell?
+
+\textbf{The intuition:}
+Agents act only at model calls.
+A field, for example the runner's daily start, reaches every agent at its next call.
+So all agents respond within about one call cycle: the field has zero relative lag.
+A coupling must pass through a message.
+The message enters a recipient's context only at its next call, the read-out call.
+So coupling lags come in whole call cycles, or hops.
+Hop 0 is the call already in flight, which cannot see the message; hop 1 is the read-out call.
+The test is a regression discontinuity: it compares calls that start just after a message with calls that start just before it.
+
+\textbf{What we measured:}
+The read-out jump $J_1$ is the extra chance that a recipient's hop-1 call is a talk call, minus a shifted-time placebo.
+It uses the DQ1 context ledger, which records which call received which message.
+The analysis also fits impulse responses (the response over time to one input) for day starts, pauses, human messages, nudges and platform errors.
+It then splits co-movement into a field part and a coupling part.
+It covers 71 units in 35 goal periods outside the reserved data, in all three regimes, plus 4 period-native tests.
+\emph{Scheduler field:} measured as an input against a shifted-input null, with an all-running-window variant.
+\emph{External drive:} human messages, nudges, operator bookends and errors enter as fields.
+Goal kickoffs are not among the inputs, so this impostor is only partly removed.
+\emph{Shared model prior:} not relevant, because a family prior cannot make a step at the read-out call.
+\emph{Common input:} removed by the comparison of the in-flight call with the read-out call; the in-flight side is not raised.
+\emph{Synthetic check:} 15 planted scenarios $\times$ 5 seeds on real village schedules.
+$J_1$ recovers planted coupling with a bias of $-2$ to $-17\%$ in regime III.
+It reads zero for fields and slow common drives, and it finds a planted 2-hop dead time as onset at hop 3.
+It goes negative for a coupling that acts within the call in flight.
+False positives occur in 3/35 null seeds.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{H50-field-vs-coupling-transfer-lag/fig.pdf}
+\caption{Field or coupling, told apart by the lag.
+A simulated field moves every agent at its next call, while a coupling moves agents hop by hop, one read-out call per hop.
+In the village, agents start the day within seconds of each other (a field). A peer message raises the chance of talk only from the read-out call on (a coupling).
+Animation: \texttt{writeup/visuals/H50-field-vs-coupling-transfer-lag/anim.mp4}.}
+\label{fig:int-H50}
+\end{figure}
+\begin{figure}[h]
+\includegraphics[width=0.9\textwidth]{storyboards/H50.jpg}
+\caption{Animation storyboard: six frames of the animation, evenly spaced in time (frame number and time above each). The full animation is \texttt{writeup/visuals/H50-field-vs-coupling-transfer-lag/anim.mp4}.}
+\end{figure}
+
+
+\textbf{What we found:}
+Activity co-movement is the schedule.
+The daily start and stop alone explain 0.62 (regime I) and 0.67 (regime III) of it beyond the null.
+Inside the window where all agents run, the per-pair activity correlation nearly vanishes (0.056 and 0.005).
+In G38 the day-start spread has an interquartile range of 9\,s, and 82\% of agents start before any peer message reaches them.
+Talk co-movement is a coupling that acts only at the read-out call.
+$J_1>0$ in 45/71 units and $J_1<0$ in none; the onset is at hop 1 in all 45.
+Pooled, $J_1\approx0.034$ (regime I) and 0.019 (regime III), which is $+25\%$ and $+44\%$ over the base talk rate.
+The talk call replaces a work call; the idle share does not change.
+In regime III the coupling acts only on named messages: $J_1=0.17$ for a message that names the recipient, 0.004 otherwise.
+At NE43, switching off the nudger leaves peer coupling ($\times0.69$) and activity co-movement in place.
+Over 71 units, the claim ``activity co-movement is the scheduler's field; talk is a coupling at the hop-1 read-out call'' stands\cred{0.85}.
+Its expected usefulness is EU~2.98 (value if true 3.5; two raters, one blind).
+
+\textbf{What it means:}
+For an operator: do not read activity synchrony as influence.
+First trim each day to the window in which all agents run, or stagger the starts. About 0.6 of activity synchrony is the schedule.
+To spread a message in an always-on swarm, name the recipients: the jump is 0.17 with a name and 0.004 without.
+Expect the response at the recipient's next call, a median of 16--24\,s, or minutes if the agent pauses.
+A nudge moves the agent it targets ($J_1\approx0.14$ at hop 1) but leaves the collective mode unchanged.
+
+\textbf{Caveats:}
+Regime-I call starts are placed from latency; the jump holds on logged starts (\#24--\#31), but early regime I is unchecked.
+The rising regime-I kernel beyond hop 2 has no synthetic validation.
+Per-unit intervals are mildly anti-conservative (about 9\% false positives in synthetic data).
+The field and coupling shares are model-based and do not add up, because coupling amplifies field-driven talk.
+Room changes and roster joins confound NE43.
+Several numeric predictions failed: the nudge onset, the regime-I field share (0.51 against a predicted $\le0.2$) and the corner frequency.
+The content channel is not done, the fragile flag is not set, and no confirmation test on reserved goal periods has run.
