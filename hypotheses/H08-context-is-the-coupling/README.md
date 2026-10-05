@@ -487,6 +487,28 @@ D in percentage points with day-bootstrap 95% CIs; "clean" = recipients with no 
 
 **Synthetic guard (run first).** Real call skeletons, statement times and ledger receipts of G38 and G41; synthetic 64-d embeddings. A day field T_d(t) drifts as an Ornstein–Uhlenbeck process (τ = 60 min) shared by all agents (contemporaneous convergence by construction). m = norm(T(t_m) + a_j + ε); s = norm(T(t_s) + a_i + ε + α Σ m̂) over the messages of the last 5 min. Truths: *gated* (sum over messages the producing call has read, α = 0.3), *ungated* (all messages posted before t_s), *mixed* (gated 0.3 + ungated 0.15; expected κ_c ≈ 0.3–0.5), *null* (α = 0). 20 replicates each. Pass: gated Δ CI > 0 in ≥ 80%; ungated and null Δ CI covers 0 in ≥ 80% (false positives ≤ 20%); mixed κ_c recovered within ±0.2.
 
+**R2 synthetic guard (run 2026-10-05, before any real-data run; `r2/r2_synthetic.json`).** 20 replicates per truth; entries are the share of replicates with the Δ CI above 0 (below 0 in brackets).
+
+| Skeleton · truth | pre-registered (lag strata, day bootstrap) | lag strata, hour-block bootstrap | **lag × density strata, hour-block bootstrap** | median Δ · κ_c (last column) |
+| --- | --- | --- | --- | --- |
+| G38 · gated | 1.00 | 1.00 | **1.00** | +0.096 · 0.72 |
+| G38 · ungated | 0.05 | 0.00 | **0.10** | +0.007 · 0.98 |
+| G38 · mixed | 1.00 | 1.00 | **1.00** | +0.065 · 0.83 |
+| G38 · null | 0.15 | 0.10 | **0.10** | +0.002 · 0.99 |
+| G41 · gated | 1.00 | 1.00 | **1.00** | +0.092 · 0.76 |
+| G41 · ungated | **0.30** | 0.15 | **0.05 (0.05)** | +0.007 · 0.98 |
+| G41 · mixed | 1.00 | 1.00 | **0.90** | +0.036 · 0.90 |
+| G41 · null | 0.10 (0.10) | 0.00 (0.05) | **0.00 (0.10)** | −0.000 · 1.00 |
+
+- **The pre-registered estimator fails the guard in G41** (5 days): the ungated world gives a false positive in 30% of replicates (> 20%), and the null in 20%. Five day clusters make the percentile bootstrap too narrow; a leave-one-day-out jackknife-t was tried and loses the gated signal (power 0.20).
+- **κ_c is not a pure convergence share.** In a world with only gated responses, the shared drifting topic alone gives κ_c ≈ 0.73. The prediction band [0.2, 0.6] was set without that term.
+
+**Amendments (2026-10-05, after the guard, before any real-data statistic):**
+- **R2-A1 · Resampling unit:** 1-hour blocks of message time within a PT day (G41: about 20 blocks), percentile bootstrap, B = 200. The day bootstrap stays as a reported comparison (`prereg_nonname`).
+- **R2-A2 · Matching strata:** lag bin × density bin, where density is the number of own-room messages the recipient received in the 300 s before the statement (0–1, 2–3, 4–7, 8+). Busy stretches put more read statements in dense windows; that leaked convergence into Δ under the ungated truth (G41 median +0.015 → +0.007).
+- **R2-A3 · κ_c:** R2-P3 is scored as written, but κ_c is read against the synthetic references: ≈ 0.73 (gated only, with the shared drift), ≈ 0.85–0.90 (mixed), ≈ 0.98 (ungated).
+- With A1 and A2 the guard passes in both skeletons (gated 1.00 / 1.00; ungated and null false positives ≤ 0.10 one-sided, ≤ 0.10 two-sided). The kill rule's estimator clause is not triggered under the amended estimator.
+
 ### R4 · NE41 memory dose
 **Question.** When an agent writes a sender's name into memory at a forced erasure, is the coupling to that sender protected after the wipe?
 
