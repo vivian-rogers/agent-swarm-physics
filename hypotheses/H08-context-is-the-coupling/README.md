@@ -1,6 +1,7 @@
 # H08: Context is the coupling
 
 **Status:** round 1b done (2026-10-04, improved data): on the context ledger, responses are gated by read-out in every regime (addressing 14/17 periods, reply author 17/17; regime I's round-1 failure was the call-start rule), the nudge response starts at the receiving call (the ~3-min post-read-out lag was an artifact), erasure cuts reply coupling 21% (NE41), and newcomers name an old-timer only after receiving its message (NE32, 35/35). Round 1 (below) kept for comparison. Holdout script written, not run.
+**Round 2 (2026-10-05, non-reserved; see "Round 2"):** content moves toward a read message only inside addressed replies (G51 matched-lag contrast +1.25 [+0.98, +1.60] cos×100 with them, −0.39 [−0.62, −0.12] without; 0/9 regime-III periods positive without names), so the content arm without names is withdrawn and the claim rests on names and replies. Memory dose at NE41: senders written to memory get +5.5 ± 1.0 pp more replies, but protection is unpowered (inconclusive). Exposure audit: one replay episode (03-17 → 03-27, 17.3 active h; only the event feed was stale), caught by a five-fetch event-age monitor in 0.4 active h; a content-only monitor fails.
 **History:** reactivated 2026-10-04 (Vivian: start the hypotheses never worked on). Originally parked on 2026-10-03 after a misread. Since then H04 (delayed, context-mediated responses), H15 (context-erasure dip, NE41) and H18 (attention dilution) have all pointed at it. Primary test: HH92, the response kernel predicted from turn timing.
 **Exploratory round 1 done (2026-10-04; 17 non-holdout goal periods + NE41; predictions written before any real-data run).**
 - **Coupling is gated by read-out (C9).** A recipient's chance of addressing a sender jumps at the first turn whose model call started *after* the message, and not before. This holds in 10/11 regime-II/III periods. Among recipients who had not just talked, the jump holds in 16/17 periods and the in-flight floor is ≈ 0. That explains H18's failed placebo.
@@ -25,7 +26,7 @@
 | Shared model priors | no | The design compares the same recipient before and after read-out. | n/a |
 | Contemporaneous convergence | yes | The in-flight floor is the in-flight placebo: messages posted but not yet read give ≈ 0 (C9 on the ledger, Round 1b). The content jump is negative in regime I (recency confound). | removed |
 
-**Inputs:** round 1b uses the context ledger, DQ2 reply pairs and H04's round-1b nudge design (`activity_bins_fixed`, leading-@). Still old: the content response uses bge only; C1, C2 and C10 were not re-run.
+**Inputs:** round 1b uses the context ledger, DQ2 reply pairs and H04's round-1b nudge design (`activity_bins_fixed`, leading-@). Round 2's content response uses both embedding models and `statement_flags` (dedupe). Still old: C1, C2 and C10 were not re-run.
 
 **Two layers:** 17 replication periods. Natives: 3 (NE32 supported, NE41 mixed, NE03 descriptive).
 
@@ -562,6 +563,98 @@ D in percentage points with day-bootstrap 95% CIs; "clean" = recipients with no 
 
 **Prior credences (Claude, 2026-10-05):** R2-P1 0.6, P2 0.4, P3 0.4, P4 0.7, P5 0.7; R4-P1 0.3, P2 0.7; R5-P1 0.7, P2 0.5, P3 0.6, P4 0.5, P5 0.6, P6 0.7.
 
+### Round 2 results (2026-10-05, reserved data untouched)
+*Code: `analysis/r2_content.py`, `r4_memory_dose.py`, `r5_exposure_audit.py`, `r2_figures.py`, `r2_estimates.py`, `r2_period_cards.py`; `scheme/build_memory_names.py`, `build_cc_status.py`. Data: `data/processed/H08-context-is-the-coupling/r2/` (`r2_summary.json`, `G<NN>/r2_content.json`, `r4_pooled.json`, `r5_audit.json`, synthetic JSONs). Figure: `figures/r2_summary.pdf`. Content values are cosine ×100 with 95% 1-hour-block bootstrap intervals.*
+
+**R2: content at matched lag, read vs in flight.**
+
+| G | regime | Δ no name, no reply (bge) | Δ no name, no reply (gte) | Δ all statements (bge) | Δ all statements (gte) | other-room Δ (bge) |
+| --- | --- | --- | --- | --- | --- | --- |
+| G24 | I | -0.54 [-2.30, +1.25] | -0.16 [-2.28, +2.16] | -0.20 [-1.84, +1.43] | -0.20 [-2.27, +1.82] | — |
+| G25 | I | +0.58 [-0.65, +1.61] | +1.19 [+0.07, +2.16] | +1.06 [-0.03, +1.95] | +1.47 [+0.24, +2.40] | — |
+| G26 | I | +0.87 [-0.81, +2.19] | +1.07 [-0.77, +2.40] | +1.07 [-0.33, +2.35] | +1.11 [-0.27, +2.22] | — |
+| G27 | I | -1.13 [-1.98, -0.24] | -1.01 [-1.92, -0.00] | -0.21 [-0.82, +0.50] | +0.28 [-0.57, +1.15] | — |
+| G30 | I | -0.52 [-1.38, +0.67] | -0.17 [-1.27, +1.03] | +0.12 [-0.74, +1.06] | +0.45 [-0.61, +1.42] | — |
+| G31 | I | -0.12 [-0.92, +0.59] | -0.32 [-1.26, +0.58] | +0.26 [-0.45, +0.87] | +0.40 [-0.45, +1.20] | — |
+| G33 | II | +0.23 [-0.58, +1.06] | +0.30 [-0.67, +1.10] | +0.67 [-0.09, +1.31] | +1.07 [+0.07, +1.95] | — |
+| G35 | II | -0.38 [-1.79, +0.67] | +0.08 [-1.98, +1.70] | +0.53 [-0.61, +1.69] | +1.11 [-0.71, +2.75] | -1.22 [-2.34, +0.22] |
+| G36 | II/III | -0.47 [-2.29, +1.85] | +0.44 [-1.43, +3.27] | **+2.31 [+0.50, +4.36]** | **+3.20 [+1.35, +5.51]** | +0.75 [-0.47, +2.91] |
+| G37 | III | +1.79 [-13.93, +5.69] | +5.91 [-9.95, +12.66] | +2.86 [-1.47, +5.07] | **+5.98 [+1.58, +8.35]** | -0.24 [-2.63, +1.70] |
+| G38 | III | -0.33 [-1.60, +1.15] | +0.20 [-1.04, +1.78] | **+1.28 [+0.38, +2.55]** | **+1.78 [+0.56, +3.38]** | -0.03 [-0.63, +0.51] |
+| G39 | III | -1.73 [-4.12, +0.10] | -1.55 [-3.90, +0.13] | -0.19 [-2.45, +2.29] | +0.10 [-2.11, +2.07] | -2.46 [-4.09, +1.69] |
+| G40 | III | -0.70 [-1.60, +0.39] | -0.72 [-1.90, +0.71] | +0.52 [-0.25, +1.78] | +0.84 [-0.30, +2.39] | — |
+| G41 | III | -1.63 [-2.76, -0.23] | -1.28 [-2.50, +0.27] | -0.20 [-1.18, +1.42] | +0.70 [-0.45, +2.29] | -1.15 [-2.64, +0.36] |
+| G42 | III | -1.32 [-3.41, +0.47] | -2.70 [-4.70, -0.52] | +0.56 [-0.49, +1.84] | +0.10 [-1.13, +1.60] | -0.88 [-2.83, +0.63] |
+| G44 | III | -1.86 [-2.84, -0.92] | -1.22 [-2.59, +0.08] | +0.57 [-0.13, +1.27] | **+1.19 [+0.13, +2.06]** | -0.35 [-1.47, +0.85] |
+| G51 | III | -0.39 [-0.62, -0.12] | -0.15 [-0.39, +0.11] | **+1.25 [+0.98, +1.60]** | **+1.83 [+1.56, +2.19]** | — |
+
+**R4 (NE41 memory dose, reply author, pooled over 9 periods):** forced cut at z = 0, β_CF = −1.37 ± 0.29 pp. Dose salience β_z = +5.5 ± 1.0 pp (CI > 0 in 7/9). CF × dose = −0.36 ± 0.55 pp (π ≈ −0.26); G51 alone −0.64 [−0.95, −0.28]. The sender is newly written to memory at 48–90% of forced erasures (G51 48%, G39 90%). Mentions agree in sign (CF × dose −1.0 ± 0.9 pp). Per period: `goalperiod-subhypotheses/NE41/README.md`.
+
+**R5 (exposure audit):**
+- **Fetch log.** Exactly one decoupled episode on non-reserved days: 2026-03-17 17:22 → 03-27 19:29 UTC (9 days, 130 fetches, 17.3 active hours; the agent fetched nothing after 03-27). In the span from 03-17, 97.7% of 133 fetches are stale; before it, 0.15% of 3,443 (longest stale run 1). The median freshness lag is 4 s before and 3.0 × 10⁷ s (≈ 349 days) during the replay.
+- **Log monitor** (median event age over the last 5 fetches > 1 h): first alarm 2 fetches and 0.38 active hours after the onset; no alarm on any current-feed day.
+- **Status block.** Every village-tool result carries the agent's status (28,222 non-reserved results). During the replay the shown goal equals the active village goal in 100% of 6,119 results, and the village day number advances (350 → 360): **only the event feed was stale.** Before 03-17, exact text matches the active goal in 61%. The rest (8,683 results, 02-16 → 02-20) show a short goal text that is the start of #31's longer table text. No result ever shows an earlier goal. *Descriptive:* an undocumented `day` field in fetch results stayed at 311 from 02-09 to 02-18 and then disappeared.
+- **Log-free monitor.** The Claude Code agent's content coupling to its room fell during the replay but stayed positive: M = 0.014 vs 0.037 (bge, ratio 0.37) and 0.027 vs 0.050 (gte, ratio 0.54). Only 2 of 9 replay days were flagged. Standard agents: flagged agent-days exceed the floor by −1.6 to +10.7 pp per period (G51 +9.6 bge / +10.7 gte). Flags concentrate in agents with low content coupling overall (G51: median M ≈ 0.006 for the most-flagged agents vs 0.016 for all).
+- **Truncation.** The ledger marks 0% of received agent messages beyond the 200-event cap in every period before 2026-06-11, and 3.65% of 930,422 in G51.
+
+**Outcome vs prediction:**
+
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| R2-P1 | Δ_nonname > 0 (CI, both models) in ≥ 6/9 regime III | 0/9; point estimate negative in 8/9 (bge); CI < 0 in 3/9 (bge: G41, G44, G51) | **fails; kill rule fires:** the content arm without names is withdrawn |
+| R2-P2 | regime I/II Δ_nonname > 0 in sign in ≥ 5/8; no CI < 0 in both models | 3/8 positive in both; G27 CI < 0 in both | fails |
+| R2-P3 | median κ_c (bge) in [0.2, 0.6] | 1.68 (above even the ungated synthetic reference 0.98, A3) | fails: at equal lag, in-flight statements are *closer* to the message than read ones |
+| R2-P4 | \|Δ_other\| < ⅓ Δ_own, CI at 0, in ≥ 6/8 | placebo CI includes 0 in 8/8, but Δ_own ≈ 0, so the ratio clause holds in 3/8 | fails as written (no own-room effect to compare against) |
+| R2-P5 | paired version agrees in sign in ≥ 7/9 | 5/9 (paired samples are small: 130–5,069 in-flight rows) | fails |
+| R4-P1 | CF × dose > 0 pooled, π ≥ 0.5 | −0.36 ± 0.55 pp; π ≈ −0.26 | not supported; **inconclusive** (power 0.04 at π = 0.5, 0.22 at π = 1) |
+| R4-P2 | β_z > 0 pooled | +5.5 ± 1.0 pp | supported |
+| R4-P3 | dose rate (descriptive) | 48–90% of forced-erased units | — |
+| R5-P1 | one episode from 03-17, ≥ 90% stale, none before | one episode 03-17 → 03-27; 97.7% stale; none before | supported |
+| R5-P2 | goal current in ≥ 95%, replay included | 100% in the replay; 61% exact before (an annotated table text); no earlier goal ever shown | supported in substance; fails as computed (exact match). *Post hoc:* prefix matching gives 100% |
+| R5-P3 | log monitor fires within 1 active h, no false alarm | 0.38 h (2 fetches), 0 false alarms | supported |
+| R5-P4 | log-free M on replay days < ½ of current days, both models | 0.37 (bge), 0.54 (gte); 2/9 replay days flagged | fails |
+| R5-P5 | excess flags ≤ 2 pp in every regime-III period; no run beyond the floor (A1) | excess > 2 pp in G38, G39, G40, G51 (bge) and G38, G40, G44, G51 (gte); runs beyond the floor in G38 (bge, 3 days), G44 and G51 (gte; 13 days) | fails: the monitor flags low-coupling agent-days, which cannot be checked without input logs |
+| R5-P6 | omitted < 1% before 06-11; ≤ 5% in G51 | 0% before; 3.65% in G51 | supported |
+
+**Findings.**
+1. **Read-gated content lives inside the addressed replies.** At equal lag after a message, a statement produced by a call that read it is closer to it than an in-flight statement only when the statement names or replies to the sender. All statements: +1.25 [+0.98, +1.60] (G51) and CI > 0 in 3/9 (bge) and 5/9 (gte) regime-III periods. Without names and replies: −0.39 [−0.62, −0.12] (G51), never above 0. So round 1b's non-mention content jump was not independent of names. The gating claim stands on names and reply labels, as the kill rule says.
+2. **Contemporaneous convergence dominates non-addressed content.** In-flight statements at 0–15 s are more similar to the message than read ones at the same lag (κ_c > 1 in 7/9 regime-III periods). They answer the same earlier turn (Known issues: co-response). For content, the in-flight partition is the stronger rival, and it wins.
+3. **Memory writing tracks engagement, not protection.** Agents write the senders they engage with into memory at most consolidations (48–90%), and those senders get 5.5 pp more replies whether or not an erasure intervened. The data cannot tell whether the name protects the thread (power ≤ 0.22). In G51, the cut is if anything larger for named senders.
+4. **The replay was a feed fault, not a status fault.** For 9 days and 17 active hours, the Claude Code agent's event feed returned 2025 events while its status block (goal, day number, memory reminders) stayed current. Its talk kept some coupling to its room (M down 46–63%), so it was partly, not fully, decoupled. A five-fetch event-age monitor catches this in 0.4 active hours with no false alarm. A content-only monitor does not: it flags 2/9 replay days and many ordinary low-coupling days.
+5. **The 200-event cap drops 3.7% of received agent messages in G51** and nothing earlier.
+
+**Impostors (round 2).**
+
+| Impostor | Relevant? | How round 2 handled it | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Same-message null 20–60 min away, same recipient and day; lag × density strata | removed |
+| Exogenous field | partly | Agent senders only; the null removes the day's topic (b) | removed |
+| Shared model priors | partly | The same recipient on both sides of the partition; other-day null as robustness | removed |
+| Contemporaneous convergence | yes | Read vs in-flight at matched lag: **for non-addressed content, convergence explains all of the alignment** (κ_c > 1). Removed for names and replies (round 1b in-flight floor ≈ 0) | partly |
+
+**Scorecard changes (round 2).** A1 B1 C1 D1 E1 F1 G1 H2 I1, unchanged. **H stays 2 for the scoped claim** (names and replies); the convergence rival wins for non-addressed content, which round 2 now excludes from the claim. **F:** the guards caught two estimator flaws before real data (five-day clusters; additive dose on a multiplicative base rate). **G:** the fetch-log audit adds a quantified episode and a tested monitor, but it is still one agent. **E:** the memory-dose test is unpowered.
+
+**New constants (proposed for `interpretation/swarm-constants.json`).**
+
+| Symbol | Value | Interval | Scope |
+| --- | --- | --- | --- |
+| Δ_cont^named+ | +1.25 cos×100 | [+0.98, +1.60] | G51, bge, read − in-flight at matched lag, all statements |
+| Δ_cont^unnamed | −0.39 cos×100 | [−0.62, −0.12] | G51, bge, statements that neither name nor reply to the sender |
+| q_mem | 0.48–0.90 | per period | regime III: share of forced erasures where the engaged sender is newly written to memory |
+| β_mem-salience | +5.5 pp | ± 1.0 (SE), 9 periods | regime III, reply rate per memory-named sender |
+| T_replay | 9 days, 17.3 active h | one episode | the Claude Code agent's event feed, 2026-03-17 → 03-27 |
+| t_detect | 0.38 active h (2 fetches) | one episode | five-fetch median event age > 1 h |
+| f_omit | 0.0365 | n = 930,422 items | G51, 200-event cap; 0 before 2026-06-11 |
+
+**Disclosure.** During a structure check (2026-10-05), a count of the Claude Code agent's chat messages per goal period was printed, including reserved periods #28, #29, #32 and #34. Counts only; no outcome was computed. No reserved row entered any round-2 statistic.
+
+**Round 3 redirects (proposed after round 2).**
+- **Content needs a stronger null than the in-flight partition.** A content response independent of names would need a read vs posted-but-unread contrast that removes co-response, for example statements whose producing call received the message but not its parent turn.
+- **R4 needs a bigger first stage.** The memory test needs either many more forced erasures per sender or the reserved #43 memory week (confirmation only).
+- **R5:** report the five-fetch event-age monitor as a toolkit item; drop the content-only monitor.
+
+**Claim that stands:** On the context ledger, a recipient's naming and replying to a sender jump at the call that received the message (mention 14/17, reply author 17/17 periods; other-room placebo null 8/8), and its content moves toward the message only within those addressed replies (G51, read − in flight at matched lag: +1.25 [+0.98, +1.60] cos×100 with them, −0.39 [−0.62, −0.12] without). *Excluded:* read-gated content without names (withdrawn, R2 kill rule); memory protection of the thread (unpowered, R4); the content-only decoupling monitor (failed, R5-P4/P5); the κ_c band (mis-specified, A3).
+
 ## Confirmatory predictions (written 2026-10-04 after round 1, before any holdout use; `analysis/confirm_holdout.py`, not run)
 Run only after this card and the script are committed and Vivian signs off. The script refuses without `--confirm --i-understand-this-uses-the-locked-holdout`; `--dry-run` runs the same code on non-holdout stand-ins (`data/processed/H08-context-is-the-coupling/confirm_dryrun/dryrun.json`).
 
@@ -585,10 +678,10 @@ Run only after this card and the script are committed and Vivian signs off. The 
 - **Where round 1 went sideways:** the activity kernel assumed a fast step response at read-out. Nudge responses lag read-out by about 3 min, and binary activity has a ceiling (headroom), so a zero-parameter shape needs a post-read-out stage.
 - **What the direction is really after:** Coupling is what enters each model call, and when: responses are gated at call boundaries, and the response kernel is the read-out delay followed by a measurable post-read-out lag.
 - **H08-R1.** (Superseded by round 1b, 2026-10-04: on corrected data the nudge response starts at the receiving call, so there is no post-read-out lag to decompose.) Two-stage kernel: read-out delay convolved with a post-read-out lag counted in turns (talk and action turns aligned on the read-out turn), to decompose the nudge's 5-min onset and retest HH92 / H04-R1.
-- **H08-R2.** A non-mention response for the C9 discontinuity (content similarity to the sender's message against a message-specific null), so the gating result does not rest on names.
+- **H08-R2.** (Done in round 2, 2026-10-05; see "Round 2".) A non-mention response for the C9 discontinuity (content similarity to the sender's message against a message-specific null), so the gating result does not rest on names.
 - **H08-R3.** (Superseded by round 1b, 2026-10-04: the context ledger's scheduled chat-mode calls remove the regime-I in-flight peak.) Regime-I call logging: identify which calls produce chat turns and redo the read-out rule, since addressing peaks at turns currently classed as in flight.
-- **H08-R4.** NE41 dose: whether writing a sender or thread to memory at the erasure protects the coupling (needs memory text: stored-line overlap with sender names).
-- **H08-R5.** Exposure audit: detect stale or replayed feeds (like the Claude Code agent's from 2026-03-17) wherever input logs exist, as a monitor for silent decoupling.
+- **H08-R4.** (Done in round 2, 2026-10-05; see "Round 2".) NE41 dose: whether writing a sender or thread to memory at the erasure protects the coupling (needs memory text: stored-line overlap with sender names).
+- **H08-R5.** (Done in round 2, 2026-10-05; see "Round 2".) Exposure audit: detect stale or replayed feeds (like the Claude Code agent's from 2026-03-17) wherever input logs exist, as a monitor for silent decoupling.
 
 ## Next steps
 1. **What happens between read-out and the activity response to a nudge?** Talk-level or action-level responses aligned on the read-out turn would show whether the first post-read-out turns are acknowledgements, and how many turns the response takes. This could close HH92 with a two-stage kernel: read-out, then a k-turn lag.
@@ -620,3 +713,4 @@ Run only after this card and the script are committed and Vivian signs off. The 
     - `figures.py`, `summarize.py`, `write_period_cards.py` + `fill_period_results.py`;
     - `confirm_holdout.py`.
   - No file of H04, H15 or H18 was modified.
+- 2026-10-05: round 2 (R2, R4, R5). Pre-registration committed before any round-2 statistic; synthetic guards and amendments committed before each real-data run. Code: `scheme/build_memory_names.py` (memory name bitmasks), `scheme/build_cc_status.py` (status blocks), `analysis/r2_content.py`, `r4_memory_dose.py`, `r5_exposure_audit.py`, `r2_figures.py`, `r2_estimates.py`, `r2_period_cards.py`. Earlier rounds' code is unchanged. Next step 2 above is done (R2).

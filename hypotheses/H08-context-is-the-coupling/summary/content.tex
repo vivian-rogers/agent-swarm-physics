@@ -1,4 +1,4 @@
-\hwhat{The question is whether agents couple only through what enters their model calls. Round 1b re-runs 17 non-holdout goal periods on the context ledger, which records which call received which message, with reply labels. (1) A recipient's chance of addressing the sender jumps at the call that received the message, not at the call already running. This holds in 14/17 periods (round 1: 11/17) and in 17/17 on reply labels. Regime I now passes in 4/6 periods: its round-1 failure came from the call-start rule. (2) A nudge's activity response starts at the target's receiving call (median read-out 108 s). Dropped events and H04's isolation rule made round 1's extra 3-min lag. (3) A forced erasure (NE41) cuts reply coupling to senders read before it by 21\% (8/9 periods; predicted 30\%). (4) Newcomers name an old-timer only after they receive its message (NE32, 35/35 pairs). (5) The Claude Code agent's feed replays April 2025 from 2026-03-17. The holdout has not run.}
+\hwhat{The question is whether agents couple only through what enters their model calls. Rounds 1b and 2 use the context ledger, which records which call received which message, on 17 non-reserved goal periods. (1) A recipient's chance of naming or replying to the sender jumps at the call that received the message, not at the call already running: names 14/17 periods, replies 17/17; other-room messages give no jump (8/8). (2) Content follows only inside those replies. At equal lag, a statement from a call that read the message is closer to it than an in-flight statement only when it names or replies to the sender (G51: +1.25 vs $-$0.39 cos$\times$100 without them; 0/9 regime-III periods positive without names). Without names, in-flight talk is closer: both answer the same earlier turn. (3) A forced erasure (NE41) cuts reply coupling by 21\%. Senders written into memory get 5.5 pp more replies, but whether that protects the thread is unpowered. (4) The Claude Code agent's event feed replayed 2025 for 9 days (17 active hours) while its status stayed current. A five-fetch event-age monitor catches it in 0.4 active hours. Nothing is confirmed on reserved data.}
 
 \hmodel{Model 02 (two-variable kinetic Ising) with Hawkes kernels (model 09). Each agent has a visible spin $n_i$ (active per minute) and a hidden field $c_i$: the room messages that arrive after its last model call. Calls start on the scaffold's schedule, and the scaffold assembles the context at $t_{\rm call}$. Each call reads and resets the field, and the couplings $J_{ij}$ act only then. $W$ is the read-out delay. $o$ is the call offset (1 = the receiving call). $\beta_F$ is the coupling change after a forced erasure.}
 
@@ -11,26 +11,29 @@ D=G(o{=}1)-G(o{=}0)
 
 \hobs{../figures/r1b_summary_obs.pdf}{The excess chance that a recipient's call responds to the sender, by call offset, on the context ledger. Offset 0 is the call already running when the message arrives. Offset 1 is the call that receives it. Recipients are not mid-exchange. Thin lines are periods, bold lines regime medians (mentions), and the dashed line the median for reply labels. The response appears only at the receiving call, in every regime.}
 
-\htelos{The coupling delay equals the call cadence. A message cannot change an agent before a model call has the message in its context. The delay is about 15 s when the agent is busy and minutes when it pauses. To make a message act fast, send it before the target's next call. A forced erasure cuts conversational coupling by 21 $\pm$ 7\%. Newcomers couple only to what the scaffold shows them. Log what each call received: exposure can detach from the room (the replay bug). The response kernel is a brief transient at read-out, not a step.}
+\htelos{The coupling delay equals the call cadence. A message cannot change an agent before a model call has the message in its context: about 15 s when the agent is busy, minutes when it pauses. Name the recipient if you want its content to move: unaddressed messages shift content no more than co-response does. A forced erasure cuts conversational coupling by 21 $\pm$ 7\%; writing the sender into memory is not shown to restore it. Log what each call received and alarm when the median age of fetched events over five fetches exceeds 1 h: that caught the replay in 0.4 active hours with no false alarm. A content-only monitor does not.}
 
-\hbottom{Every measured response starts at the first model call whose context holds the message; erasure of that context cuts the coupling by about a fifth.}
+\hbottom{Responses start at the first model call whose context holds the message, and content moves only inside the replies that name the sender; erasure cuts the coupling by about a fifth.}
 
 \hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.46\columnwidth}p{0.17\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b} & \textbf{Verdict (1b)}\\\hline
+\textbf{Prediction} & \textbf{Round 1 $\to$ 1b (round 2: R rows)} & \textbf{Verdict}\\\hline
 C9 talk jumps at read-out ($\ge$70\%) & 6/17 $\to$ 6/17 (none in regime I/II) & no\\
 C9 addressing jumps at read-out & 11/17 $\to$ 14/17 (regime I 1/6 $\to$ 4/6); replies 17/17 & yes\\
 C9 other-room messages: no jump & 6/8 $\to$ 8/8 two-room periods & yes\\
 C9-V5 active read-out delay 10--40 s & 32--49 s $\to$ 29--41 s (8/9 regime III) & yes\\
-Content jump (non-mention, new) & D$_{\cos}>0$ in 6/9 regime III; negative in regime I & partly\\
+Content, no name or reply (R2, matched lag) & 1b D$_{\cos}>0$ in 6/9 $\to$ 0/9 regime III; G51 $-0.39$ [$-0.62$, $-0.12$] & no (withdrawn)\\
 C8 nudge onset = read-out & \#51 lag $\approx$3 min $\to$ onset at the receiving call ($t_{25}$ 1 min); transient, not a step & onset yes, shape no\\
 C8 beats a constant delay & no $\to$ yes: onset follows read-out (4, 4, 15 min) & yes\\
 NE41 erasure cuts coupling $\ge$30\% & $-18\%$ (mentions) $\to$ $-21\%\pm7\%$ (replies), 8/9 & sign only\\
+NE41 memory dose protects (R4) & CF$\times$dose $-0.36\pm0.55$ pp; power 0.04 & inconclusive\\
 NE32 newcomers respond only after receipt & new: 35/35 pairs & yes\\
 C1 room-rule recall $\ge$0.9 & 0.97--1.00 until the replay (unchanged) & until replay\\
+Replay audit (R5): one episode, monitor $<$1 h & 03-17$\to$03-27; alarm 0.38 h, 0 false & yes\\
+Content-only decoupling monitor (R5) & replay M ratio 0.37 / 0.54; 2/9 days flagged & no\\
 \end{tabular}}
 
-\hobsb{../figures/r1b_summary_obs2.pdf}{(a) The \#51 nudge response (H04 round-1b design, corrected activity), aligned on the nudge and on the target's receiving call. Realigned, the response is a sharp transient in the first two minutes. (b) NE41: the change in the chance of a reply to a sender read before a forced erasure, relative to one read after it (same calls, equal age), per period and pooled.}
+\hobsb{../figures/r2_summary.pdf}{(a) Round 2: content similarity of a recipient's statement to a message, statements from calls that read it minus in-flight statements at the same lag and message density. Blue: all statements. Orange: statements that neither name nor reply to the sender. (b) The Claude Code agent's fetches: share of returned events older than 24 h, per day. (c) NE41: forced erasure $\times$ the sender newly written to memory, effect on replies, per period and pooled.}
 
-\hcaveats{The ledger measures call starts only for Gemini (19\% of calls), so about 10\% of items can sit one call off. Reply labels keep a thread-membership component, and a reply parent is visible by construction. In regime I the content jump runs against recency. C8 rests on \#51, where the pre-window placebo is +0.25. NE32 is four agents and one event. No result is confirmed on the holdout.}
+\hcaveats{The ledger measures call starts only for Gemini (19\% of calls), so about 10\% of items can sit one call off. Reply labels keep a thread-membership component. The content contrast needed two amendments found by the synthetic guard (hour-block resampling, density strata). The memory-dose test has power 0.04 at half protection. The replay audit covers one agent. No result is confirmed on reserved data.}
 
-\hnext{Switch the holdout script to the ledger before the run. Fit a two-parameter kernel: read-out plus transient.}
+\hnext{Switch the confirm script to the ledger before the run. Find a content null that removes co-response. Ship the five-fetch event-age monitor as a toolkit item.}

@@ -74,5 +74,23 @@ Read-out pairs: 8768 own-room (+ 10852 other-room); in-flight share 98%, wake sh
 | E interventional | NE41 forced erasure (exogenous timing): inconclusive |
 | D unfitted | read-out turn and the zero-parameter kernel come from turn timing only |
 
+## Round 2 (2026-10-05)
+*Predictions: the card's "Round 2" section (written 2026-10-05 02:45 UTC, before any round-2 statistic on real data; amendments R2-A1..A3, R4-A1, R5-A1 written after the synthetic guards, still before real data). Role: replication (R2, R5-b, R5-c), native (R4). Reserved days never read. Data: `data/processed/H08-context-is-the-coupling/r2/`. Content values are cosine ×100; brackets are 95% 1-hour-block bootstrap intervals (R4: day bootstrap).*
+
+| Statistic | This period | Prediction | Note |
+| --- | --- | --- | --- |
+| R2 read − in-flight content at matched lag, no name and no reply (bge / gte) | -0.47 [-2.29, +1.85] / +0.44 [-1.43, +3.27] | > 0 (CI) in both models | read 3225, in flight 194 statement rows |
+| R2 same, all statements (bge / gte) | +2.31 [+0.50, +4.36] / +3.20 [+1.35, +5.51] | — (robustness) | 30% of rows name or reply to the sender |
+| R2 convergence share κ_c (bge, non-name) | 1.20 | [0.2, 0.6]; synthetic gated-only ≈ 0.73 | κ_c > 1: in-flight statements are closer |
+| R2 other-room placebo (bge, non-name) | +0.75 [-0.47, +2.91] | \|Δ_other\| < ⅓ Δ_own, CI at 0 | |
+| R5-b log-free monitor: flagged agent-days minus floor (bge / gte, pp) | +2.0 / +2.1 (44 agent-days; longest flagged run 1 / 1) | ≤ 2 pp (regime III) | not a validated detector (R5-P4 failed) |
+| R5-c ledger items beyond the 200-event cap | 0.00% of 8698 | < 1% before 06-11; ≤ 5% in G51 | |
+| R4 forced-erasure units with the sender newly written to memory | 61% of 809 | descriptive | |
+| R4 CF × dose on replies (pp) | +2.55 [-3.94, +6.38] | > 0 pooled | pooled power 0.04 at half protection |
+| R4 dose salience β_z on replies (pp) | +11.33 [+2.99, +16.50] | > 0 pooled | |
+| R5-a Claude Code feed | replay episode 2026-03-17 → 2026-03-27 (130 fetches, 17.3 active h) | one episode from 03-17 | supported |
+
+**Reading:** the round-1b content jump (regime III) is carried by statements that name or reply to the sender; without them, read statements are no closer to the message than in-flight statements at the same lag. The period verdict is unchanged (round 2 adds no period verdict rule).
+
 ## Notes
 - Card: [`../../README.md`](../../README.md). Data: `data/processed/H08-context-is-the-coupling/G36/`.

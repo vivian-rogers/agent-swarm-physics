@@ -61,5 +61,18 @@ Read-out pairs: 32835 own-room (+ 0 other-room); in-flight share 98%, wake share
 | G ground truth | Claude Code fetch log vs room rule: pass |
 | D unfitted | read-out turn and the zero-parameter kernel come from turn timing only |
 
+## Round 2 (2026-10-05)
+*Predictions: the card's "Round 2" section (written 2026-10-05 02:45 UTC, before any round-2 statistic on real data; amendments R2-A1..A3, R4-A1, R5-A1 written after the synthetic guards, still before real data). Role: replication (R2, R5-b, R5-c). Reserved days never read. Data: `data/processed/H08-context-is-the-coupling/r2/`. Content values are cosine ×100; brackets are 95% 1-hour-block bootstrap intervals (R4: day bootstrap).*
+
+| Statistic | This period | Prediction | Note |
+| --- | --- | --- | --- |
+| R2 read − in-flight content at matched lag, no name and no reply (bge / gte) | -0.12 [-0.92, +0.59] / -0.32 [-1.26, +0.58] | > 0 (CI) in both models | read 27271, in flight 1228 statement rows |
+| R2 same, all statements (bge / gte) | +0.26 [-0.45, +0.87] / +0.40 [-0.45, +1.20] | — (robustness) | 15% of rows name or reply to the sender |
+| R2 convergence share κ_c (bge, non-name) | 1.05 | [0.2, 0.6]; synthetic gated-only ≈ 0.73 | κ_c > 1: in-flight statements are closer |
+| R5-b log-free monitor: flagged agent-days minus floor (bge / gte, pp) | +2.7 / +1.7 (54 agent-days; longest flagged run 2 / 2) | ≤ 2 pp (regime III) | not a validated detector (R5-P4 failed) |
+| R5-c ledger items beyond the 200-event cap | 0.00% of 32342 | < 1% before 06-11; ≤ 5% in G51 | |
+
+**Reading:** in regime I/II the round-1b content jump ran negative (in-flight talk sits closer in time). Lag matching removes that recency term; statements without the sender's name or a reply to it still show no read-gated content. The period verdict is unchanged (round 2 adds no period verdict rule).
+
 ## Notes
 - Card: [`../../README.md`](../../README.md). Data: `data/processed/H08-context-is-the-coupling/G31/`.

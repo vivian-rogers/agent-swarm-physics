@@ -78,5 +78,22 @@ Read-out pairs: 25198 own-room (+ 28649 other-room); in-flight share 91%, wake s
 | E interventional | NE41 forced erasure (exogenous timing): inconclusive |
 | D unfitted | read-out turn and the zero-parameter kernel come from turn timing only |
 
+## Round 2 (2026-10-05)
+*Predictions: the card's "Round 2" section (written 2026-10-05 02:45 UTC, before any round-2 statistic on real data; amendments R2-A1..A3, R4-A1, R5-A1 written after the synthetic guards, still before real data). Role: replication (R2, R5-b, R5-c), native (R4). Reserved days never read. Data: `data/processed/H08-context-is-the-coupling/r2/`. Content values are cosine ×100; brackets are 95% 1-hour-block bootstrap intervals (R4: day bootstrap).*
+
+| Statistic | This period | Prediction | Note |
+| --- | --- | --- | --- |
+| R2 read − in-flight content at matched lag, no name and no reply (bge / gte) | -0.33 [-1.60, +1.15] / +0.20 [-1.04, +1.78] | > 0 (CI) in both models | read 6670, in flight 317 statement rows |
+| R2 same, all statements (bge / gte) | +1.28 [+0.38, +2.55] / +1.78 [+0.56, +3.38] | — (robustness) | 32% of rows name or reply to the sender |
+| R2 convergence share κ_c (bge, non-name) | 1.12 | [0.2, 0.6]; synthetic gated-only ≈ 0.73 | κ_c > 1: in-flight statements are closer |
+| R2 other-room placebo (bge, non-name) | -0.03 [-0.63, +0.51] | \|Δ_other\| < ⅓ Δ_own, CI at 0 | |
+| R5-b log-free monitor: flagged agent-days minus floor (bge / gte, pp) | +5.7 / +4.1 (118 agent-days; longest flagged run 3 / 1) | ≤ 2 pp (regime III) | not a validated detector (R5-P4 failed) |
+| R5-c ledger items beyond the 200-event cap | 0.00% of 24354 | < 1% before 06-11; ≤ 5% in G51 | |
+| R4 forced-erasure units with the sender newly written to memory | 62% of 4014 | descriptive | |
+| R4 CF × dose on replies (pp) | -0.45 [-3.42, +1.96] | > 0 pooled | pooled power 0.04 at half protection |
+| R4 dose salience β_z on replies (pp) | +1.55 [-2.10, +5.58] | > 0 pooled | |
+
+**Reading:** the round-1b content jump (regime III) is carried by statements that name or reply to the sender; without them, read statements are no closer to the message than in-flight statements at the same lag. The period verdict is unchanged (round 2 adds no period verdict rule).
+
 ## Notes
 - Card: [`../../README.md`](../../README.md). Data: `data/processed/H08-context-is-the-coupling/G38/`.

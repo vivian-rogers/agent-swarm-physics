@@ -91,6 +91,18 @@ holds in sign but the relative drop is < 30%.
 
 **Verdict (1b): mixed** (unchanged).
 
+## Round 2 (2026-10-05)
+*R4, the memory dose (card "Round 2"; predictions 2026-10-05 02:45 UTC, amendment R4-A1 after the synthetic guard, before real data). Role: native. Data: `r2/r4_pooled.json`, `r2/G<NN>/r4_dose.json`.*
+
+| Prediction | Observed (reply author, pooled over 9 periods, DerSimonian–Laird) | Verdict |
+| --- | --- | --- |
+| R4-P1 memory protects: CF × dose > 0, π ≥ 0.5 | CF × dose -0.36 ± 0.55 pp (π ≈ -0.26); G51 alone -0.64 [-0.95, -0.28] | not supported; **inconclusive** (synthetic power 0.04 at π = 0.5, 0.22 at π = 1) |
+| R4-P2 salience: placebo dose predicts replies | β_z +5.5 ± 1.0 pp; CI > 0 in 7/9 | supported |
+| forced-erasure cut in this sample (CF, z = 0) | -1.37 ± 0.29 pp | consistent with round 1b |
+| R4-P3 dose rate | 48–90% of forced-erased units have the sender newly written to memory | descriptive |
+
+**Reading:** agents usually write the senders they are engaged with into memory (dose rate 48–90%), and those senders get more replies whether or not an erasure intervened. Writing the name does not measurably restore the coupling the erasure cut; in G51, the only well-powered period, the cut is if anything larger for named senders. The test cannot reject protection (power ≤ 0.22 even for full protection).
+
 ## Notes
 - Card: [`../../README.md`](../../README.md). Data: `data/processed/H08-context-is-the-coupling/ne41_pooled.json`, `G<NN>/c3.json`.
 - Forced / voluntary labels come from H15's catalog (`data/processed/H15-semantic-information-scrambles/consolidations.parquet`).
