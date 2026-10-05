@@ -233,6 +233,48 @@ Numbers: `data/processed/H40-call-clock-coupling/results/summary.json`, `replica
 - **H40-R5. Fix the collapse test** by matching agents on per-call coupling (family) before comparing cadence tertiles, and add multi-parent reply labels (DQ2 holds only the primary parent).
 - **H40-R6. Negative η in G38 and G44** (coordinator, 2026-10-04): η = −0.57 [−0.77, −0.38] and −0.34 [−0.60, −0.08] sit significantly below the call clock, yet the period rule labels them supported. Longer calls carrying *less* reply hazard is neither clock; candidates are burial (long calls receive bigger batches) or long calls being work-absorbed. Check with the batch-size and gap-type splits (`eta_by_gap`) before calling regime III a pure call clock.
 
+## Round 2 (2026-10-05): R6 negative η, R1 regime-I span split, R5 collapse fix
+### Pre-registration (written 2026-10-05 02:45–03:10 UTC, before any round-2 statistic on real data)
+**Question served:** Q1 (what couples agents: per call or per minute), with Q5 (cadence as an operator knob).
+
+**Already seen before writing this (disclosed):** all round-1 outputs, including η by gap kind (G38 busy −0.62, G44 busy −0.33), the round-1 sensitivity rows (addressing outcome: G38 −0.18, G44 −0.32; jittered starts G38 −0.35/−0.37), and the collapse table. New covariate-only descriptives (no outcome): G38 busy spans have median 12 s (p90 28 s, p99 47 s; G44 17 / 36 / 53 s); 91–94% of busy calls follow a `cu_action` call and 2–9% a talk call; Gemini agents have logged starts (2 of 14 recipients in G38, 3 of 18 in G44); regime-I chat-mode calls with logged starts on both sides exist only in #24–#31 (366–892 calls per period); DQ2 labels 84% of rank-1 candidates but only 16% / 6% of rank-2 / rank-3 candidates (regime I), and 4–11% of replying messages carry more than one labelled parent.
+
+**Common estimator.** The round-1 hazard model (SPEC_FULL: agent-unit FE, η, η₁, φ, ψ, χ, δ, gap and mode terms) refitted on risk-set cells built from the round-1 items with extra keys. **CIs:** the larger of the model SE and a 1-hour block bootstrap SE (blocks = PT day × hour of the message's arrival, B = 50; H67: day blocks with ≤ 5 days are anti-conservative). Δη between a diagnostic and the base model uses paired bootstrap draws. Reserved data never enter (round-1 items are built with `holdout_mask` already).
+
+**R6 · Why η < 0 in G38 and G44.** Targets G38 and G44; contrast periods G41 and G40 (regime III, η ≈ 0) get the same diagnostics, descriptive only. Each mechanism names the pattern it predicts. "Moves η toward 0" means |η_diag| ≤ 0.5 |η_base| **and** the paired Δη CI excludes 0.
+
+| Mechanism | Diagnostic | Pattern it predicts |
+| --- | --- | --- |
+| **M1 call-type composition** (long calls are tool work that crowds out talk) | **D1 talk split:** the same risk rows, two models: (i) talk hazard, y = call n posts any chat message; (ii) reply given talk, rows where call n talks, y = reply to m | η_talk < 0 (CI below 0) and reply-given-talk η_rep\|talk moves toward 0 (\|η_rep\|talk\| ≤ 0.5 \|η_base\|, CI includes 0) |
+| **M1b work absorption** (the previous call's job type) | **D2:** add the previous call's kind (talk / search / room move / other vs cu_action), its action-row count (log), failure flag and write flag (`calls`) | η moves toward 0; the work terms are negative |
+| **M2 selection on arrivals** (what arrives during a long call competes with m, or the thread has moved on) | **D3:** add at call n log(1 + new items naming i), log(1 + new human items), any new agent item, and log(1 + third-party DQ2 replies to m posted before call n) | η moves toward 0; the third-party term is negative |
+| **M3 room structure / agent-day state** | **D4:** replace agent-unit FE by agent × day × room FE (room at the read-out call) | η moves toward 0 |
+| **M4 reply-label truncation** (long spans bring new arrivals that push m out of DQ2's top-3 candidates) | **D5:** η on rows with no new item at call n (k_n = 0). The addressing-outcome η (round 1) is reported but is not a fresh test | \|η(k_n = 0)\| ≤ 0.5 \|η_base\| with CI including 0 |
+| (descriptive) generation vs tool time | **D6:** Gemini recipients only: log e_n split into log (API time of call n−1) and log (rest of the span) | none (2–3 agents per period) |
+| (descriptive) shape | **D0:** η as a step function over e_n bins | none |
+
+- **Kill rule (R6):** if no diagnostic moves η toward 0 in either target period **and** η_rep\|talk has its CI below 0 in both, the negative wall term is unexplained: regime III is then reported as "no wall clock (η ≤ 0)", not as an exact call clock, and the regime-III claim loses its "η = 0" wording.
+- **Prior:** M1 50%, M4 15%, M2 15%, M3 10%, unexplained 10%.
+
+**R1 · Regime I: generation time or scheduler wait.** Sample: regime-I periods with logged chat-mode starts (#24, #25, #26, #27, #30, #31), Gemini recipients, rows at calls n ≥ 2 where calls n and n−1 are both chat-mode with logged starts. Split the span e_n = busy_{n−1} + wait_n, busy = t_log − t_call of call n−1 (generation plus tool time, measured), wait = t_call,n − t_log,n−1 (the scheduler's wait). Model: replace η log e by η_busy log busy + η_wait log wait. Per-period fits and a random-effects mean (exception (d): too few replies per period; per-period estimates reported next to it).
+- **Engagement (H40-consistent):** pooled η_wait CI inside [−0.25, 0.25] and pooled η_busy CI above 0.
+- **Exposure (wall-clock rival):** pooled η_wait ≥ 0.3 with CI above 0. For small changes the wall clock predicts η_wait / η_busy ≈ wait share / busy share of the span (> 1 here).
+- **Precondition:** the pooled total η on this subset has CI above 0; otherwise the split is moot and R1 is reported as "the positive η is absent where starts are measured".
+- **R1c · start-placement artifact.** On the same Gemini rows, refit η with t_call replaced by the latency placement that non-Gemini chat calls get (t_first minus the agent's median latency on logged chat calls). Placement puts a call's own generation time into its span, and reply calls generate longer. **Prediction:** η_placed − η_logged ≥ 0.2 (paired CI above 0), so part of regime I's η in agents without logged starts is a placement artifact. No effect if the difference CI includes 0.
+- **Kill rule (R1):** exposure holds → regime I keeps "partly wall clock" with exposure as the cause. Engagement holds → regime I is a call clock with an endogenous span. Synthetic power < 0.8 to tell η_wait = 0.5 from 0 → R1 inconclusive.
+- **Prior:** engagement 40%, exposure 25%, inconclusive 35%; R1c effect 50%.
+
+**R5 · Collapse with matched per-call coupling.** For every round-1 period, recompute the fast-vs-slow tertile collapse (D_call vs D_wall, same grids) with item weights that give every cadence tertile the period's overall mix of (a) **lab** (primary; labs absent from a tertile are dropped from all tertiles) and (b) **bins of α̂** (secondary; terciles of the round-1 agent-unit intercepts from the η-free model). Outcomes: DQ2 parent (primary) and the multi-parent label (every labelled candidate with p_reply ≥ 0.5, the round-1 `any_tid`; secondary).
+- **P5′ (regimes II–III):** lab-balanced D_call < D_wall in ≥ 2/3 of the 11 regime-II/III periods. Regime I: reported, no directional prediction.
+- **Validity rule (decided now):** synthetic worlds on real schedules with the real fitted coefficients and real agent intercepts, under the call clock (η = ψ = 0) and the wall clock (η = 1, φ = 0). If the lab-balanced collapse picks the call clock in < 80% of call-clock worlds, the collapse also measures burial and dilution (slow agents face bigger batches per call), and P5/P5′ are withdrawn as uninformative, not scored as failed.
+- **Multi-parent bias (no new labels exist):** DQ2 has no multi-label sample. The multi-parent outcome adds only labelled secondary candidates. Rank-2/3 candidates are mostly unlabelled, so replies to second and third parents stay undercounted. I quantify the bias by DQ2 pool size per cadence tertile: if slow agents' reply messages have larger pools, the bias lowers slow agents' per-call curves and inflates D_call (against the call clock).
+- **Prior:** 55% that P5′ passes; 30% that the validity rule withdraws it.
+
+**Synthetic validation (before real data, on the real call schedules and real item rows; `analysis/round2.py --synthetic`):**
+- R6: S1 (call clock, η = 0) must give η̂ within ±0.15 under every diagnostic (controls do not create or remove η); S6 (call clock acting only at the real talk calls) must give η̂_rep\|talk within ±0.15 of 0; S7 (as S6 with a true −0.5 per log span given talk) must give η̂_rep\|talk within ±0.15 of −0.5; S8 (call clock plus detection loss that grows with new arrivals) must give η̂(k_n = 0) within ±0.15 of 0. Periods G38 and G44.
+- R1: on the pooled Gemini rows, S-eng (η_busy 0.6, η_wait 0) and S-wall (η = 1 on the total span) must be told apart: power ≥ 0.8 for the engagement rule under S-eng and for the exposure rule under S-wall.
+- R5: as in the validity rule, on G18, G31, G38, G41 and G51c.
+
 ## Notes
 - 2026-10-04: H29's boundary pull (content channel) was considered as the per-call coupling. Its rows are built on H18's visibility rule and per-unit H29 tables; rebuilding them on the ledger is a separate project. Round 1 uses the reply channel; the content channel is a round-2 redirect.
 - 2026-10-04: compute limits: ≤ 2 threads per process, no pools larger than 2, no sub-agents.
