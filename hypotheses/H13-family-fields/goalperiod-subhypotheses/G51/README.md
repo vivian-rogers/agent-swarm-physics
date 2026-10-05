@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
+**Verdict (r2):** descriptive (round-2 rules are pooled across units; see the card's Round 2)
 **Role:** replication (exploratory)
 **Period:** regime III · mode I/K (private assigned roles, NE26) · 21 → 32 agents, 8 h/day · essentially one room (#general). Split as in H01: 51a 07-06 → 07-08; 51b 07-09 → 08-04 (NE32 triplet onboarding; joins); 51c 08-05 → 08-24 (#focus: Gemini 2.5 Pro and Opus 4.8 in a side room, excluded from b in 51c); 51d 08-25 → 09-02; 51e 09-03 → 09-04 (NE33 batch join; 2 days, descriptive only).
 **Units analysed:** 51a, 51b, 51c, 51d, 51e
@@ -129,3 +130,27 @@ Within-unit stationarity (first vs second half of days, family field cos): Anthr
 
 - **Talk on the corrected table:** family homophily in talk timing (Δ > 0, p < 0.05) in 51a of this period.
 - **Reading:** the content field is unchanged in both models and still vanishes under either style rival; the behavioral field is reported in the card (B1–B4).
+
+<!-- r2:start -->
+## Round 2 (2026-10-05): graded style rival, read-out family contrast, newcomers
+*Pre-registered in the card (Round 2, 03:25 UTC), validated on synthetic skeletons, then run on non-reserved data. The round-2 verdicts are pooled across units; the numbers below are this period's contributions. Code: `analysis/r2_ladder.py`, `r2_readout.py`, `r2_encult.py`; data: `data/processed/H13-family-fields/r2/`.*
+
+| Unit | T raw (bge / gte) | T W3: within-agent style + function words (bge / gte) | T S-a (pooled; style-only null −0.046) | read-out J same / cross lab (bge) | Δ_J^adj [95% CI] | talk Δβ [95% CI] |
+| --- | --- | --- | --- | --- | --- | --- |
+| 51a | 0.055* / 0.047 | 0.045 / 0.056* | 0.024 | 0.058 / 0.041 | 0.015 [-0.034, 0.077] | -0.0013 [-0.0048, 0.0042] |
+| 51b | 0.069* / 0.084* | 0.008 / 0.034 | -0.008 | 0.067 / 0.052 | 0.014 [-0.019, 0.047] | -0.0010 [-0.0034, 0.0016] |
+| 51c | 0.090* / 0.072* | 0.042 / 0.025 | 0.041 | 0.064 / 0.025 | 0.043 [-0.015, 0.104] | 0.0029 [0.0009, 0.0051] |
+| 51d | 0.006 / 0.048 | -0.020 / 0.036 | -0.030 | 0.040 / 0.049 | 0.017 [-0.064, 0.086] | 0.0001 [-0.0017, 0.0028] |
+| 51e | 0.012 / -0.013 | 0.007 / 0.015 | -0.029 | 0.016 / 0.013 | 0.011 [-0.039, 0.119] | 0.0099 [0.0051, 0.0141] |
+
+* lab-permutation p < 0.05. Pooled (card): W3 keeps 32% (bge) / 47% (gte) of the raw field; the read-out contrast Δ_J^adj = 0.029 [0.010, 0.054] over 8 regime-III units (half of it is lab-level susceptibility and potency, post hoc); talk shows no family contrast.
+
+**Newcomers joining in this period (R2-B; lab alignment a(d), bge raw, 5-statement means):**
+- GPT-5.6 Terra (OpenAI): a(d) = 0.26, 0.08, 0.13, 0.22; room outsiderness r(d) = 0.20, 0.03, -0.09, 0.01
+- GPT-5.6 Luna (OpenAI): a(d) = 0.38, 0.38, 0.28, 0.20, 0.06; room outsiderness r(d) = 0.00, 0.02, -0.14, 0.11, -0.06
+- Kimi K3 (Moonshot): a(d) = -0.03, 0.07, 0.00, -0.08, -0.03, 0.12; room outsiderness r(d) = -0.01, -0.12, 0.19, -0.16, 0.02, 0.01
+- Claude Opus 5 (Anthropic): a(d) = -0.06, 0.04, -0.00, -0.01, -0.15, -0.11; room outsiderness r(d) = 0.03, -0.00, 0.20, 0.12, 0.05, 0.12
+- GLM-5.3 Flash (Zhipu): a(d) = -0.22, -0.26, -0.12, -0.05, 0.07; room outsiderness r(d) = 0.21, 0.33, 0.14, 0.24, 0.29
+- Claude Fable 5.1 (Anthropic): a(d) = -0.26, -0.28, -0.17, -0.34; room outsiderness r(d) = 0.02, 0.13, 0.06, 0.01
+- Gemini 3.8 Flash (Google): a(d) = 0.05, -0.06; room outsiderness r(d) = 0.12, 0.28
+<!-- r2:end -->

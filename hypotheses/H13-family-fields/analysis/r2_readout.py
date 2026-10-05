@@ -415,17 +415,21 @@ def run():
                     r["kxk"] = M.tolist(); r["kxk_n"] = Nn.tolist()
         r["talk"] = talk_fit(D)
         res["units"][u] = r
-        print(u, r["eligible"], r.get("bge_white32", {}).get("delta_adj"), r["talk"]["delta_adj"], flush=True)
+        _d = lambda x: {k: v for k, v in x.items() if k != "draws"} if isinstance(x, dict) else x
+        print(u, r["eligible"], _d(r.get("bge_white32", {}).get("delta_adj")), _d(r["talk"]["delta_adj"]), flush=True)
     pooled = {}
     for scope, units in (("III", REGIME_III), ("II", ["35"])):
         el = [u for u in units if u in res["units"] and res["units"][u]["eligible"]]
         for ch in ("bge_white32", "gte_white32", "bge_srp"):
+            wts = [res["units"][u][ch]["weight"] for u in el]
             for k in ("all", "same", "cross", "delta_raw", "delta_adj", "same_nm", "cross_nm", "same_un", "cross_un",
                       "all_nm", "all_un"):
-                pooled[f"{scope}|{ch}|{k}"] = ivw([res["units"][u][ch][k] for u in el])
+                pooled[f"{scope}|{ch}|{k}"] = pool_draws([res["units"][u][ch][k] for u in el], wts)
+                pooled[f"{scope}|{ch}|{k}|ivw_prereg"] = ivw([res["units"][u][ch][k] for u in el])
         tl = [u for u in units if u in res["units"]]
+        wts = [res["units"][u]["talk"]["weight"] for u in tl]
         for k in ("same_un", "same_nm", "cross_un", "cross_nm", "delta_adj", "beta_bar"):
-            pooled[f"{scope}|talk|{k}"] = ivw([res["units"][u]["talk"][k] for u in tl])
+            pooled[f"{scope}|talk|{k}"] = pool_draws([res["units"][u]["talk"][k] for u in tl], wts)
         pooled[f"{scope}|n_eligible"] = len(el)
     # pooled K x K (inverse-row-count weighting is not available per cell; row-count weighted mean of unit cells)
     el = [u for u in REGIME_III if u in res["units"] and res["units"][u]["eligible"]]
@@ -437,6 +441,12 @@ def run():
     pooled["kxk_III"] = np.where(W > 0, M / np.maximum(W, 1), np.nan).tolist()
     pooled["kxk_III_n"] = W.tolist()
     res["pooled"] = pooled
+    for u, r in res["units"].items():
+        for ch, v in r.items():
+            if isinstance(v, dict):
+                for k, x in v.items():
+                    if isinstance(x, dict):
+                        x.pop("draws", None)
     R.dump(res, R.R2 / "readout.json")
     return res
 

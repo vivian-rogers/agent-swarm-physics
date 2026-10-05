@@ -1,31 +1,31 @@
 {
- "complete": 50,
+ "complete": 65,
  "faithfulness": 1.5,
  "usefulness": 2.0,
  "rationale": {
-  "complete": "Round 1 plus round 1b: re-run on two embedding models, two style rivals, dedupe and the corrected talk table; behavioral family test (HH267) and three native tests (NE06, NE32, G35). Holdout C1-C6 not run.",
-  "faithfulness": "Unchanged reading, now model-robust: the family field exists (stable across periods) but is style; no family coupling. The behavioral channel fails its count rule (3/15) and only adds a weak, possibly harness-borne field.",
-  "usefulness": "Style residualization is required before any embedding-alignment metric (now shown in two embedding models); no vendor homophily at this sampling; the NE06 log finding (one-call-per-turn hit all agents) corrects the NE catalog. Nothing here steers a swarm."
+  "complete": "Rounds 1, 1b and 2: graded style rival (within vs pooled maps, genre-controlled formatting and function words, synthetic style-only reference), newcomer enculturation (20 joiners), family coupling at the read-out call (ledger reads, in-flight placebo) with power analysis. Confirmatory C1-C6 not run.",
+  "faithfulness": "Round 2 revises round 1: the family field is mostly but not only style (32-47% survives a within-agent style map; round 1's pooled rival was biased), and content couples more within labs at the read-out call (8/8 units), about half lab-level susceptibility. Talk has no family term.",
+  "usefulness": "Use within-agent, not pooled, style correction before embedding comparisons across vendors; same-vendor reads move content ~1.7x more; vendor does not change who replies."
  },
- "one_line": "Model families share a stable content field that is writing style; behavior carries a weak family trace; no family homophily; rooms carry coupling.",
+ "one_line": "Model families carry a content field that is mostly style; at the read-out call content couples more within labs (half of it lab-level susceptibility), talk does not; newcomers start at their lab and drift.",
  "models": [
   {
    "model": "11-vector-spins",
    "role": "primary",
-   "outcome": "refuted",
-   "note": "Family content field exists but is writing style"
+   "outcome": "mixed",
+   "note": "Family content field is mostly style; a third to a half survives a within-agent style map"
   },
   {
    "model": "02-nonequilibrium-ising",
    "role": "secondary",
    "outcome": "refuted",
-   "note": "K-block talk coupling: no family term; rooms carry coupling"
+   "note": "K-block talk coupling: no family term (co-movement and read-out)"
   },
   {
    "model": "01-inverse-ising",
    "role": "secondary",
-   "outcome": "refuted",
-   "note": "K-block co-movement: no family coupling; rooms carry it"
+   "outcome": "mixed",
+   "note": "Co-movement: no family coupling; read-out content pull larger within labs (Delta 0.029), half lab main effects"
   },
   {
    "model": "10-potts",
@@ -34,10 +34,11 @@
    "note": "Named for categorical family states; not fitted"
   }
  ],
- "rated_by": "RE-C2 round-1b agent (suggested; faithfulness and usefulness unchanged from the coordinator's calibration)",
- "updated": "2026-10-04",
+ "rated_by": "H13 round-2 agent (suggested; coordinator writes v2)",
+ "updated": "2026-10-05",
  "suggested": {
-  "faithfulness": 2.0
+  "faithfulness": 2.0,
+  "usefulness": 2.0
  },
  "v2": {
   "claim": "Model-family content fields are writing style; behavior carries only a weak family trace (tooling-like)",

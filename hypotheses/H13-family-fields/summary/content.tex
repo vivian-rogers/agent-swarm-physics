@@ -1,36 +1,35 @@
-\hwhat{The data is 15 counted non-holdout units (\#35--\#44, \#51; $N=10$--27). The state is each agent's daily content vector. After removal of each day's common field, same-lab agents share a content direction in 9/15 units: random-effects $T=0.08$ [0.02, 0.14]. The direction is stable across periods (split-half 0.88 against 0.76, $p=0.008$). \textbf{It is writing style}: it survives style residualization in 0/9 units. Talk timing and content co-movement show \textbf{no family coupling}; \textbf{rooms carry coupling}. \textbf{Round 1b} (second embedding model, DQ5 style residuals, dedupe, corrected talk table) reproduces every number, and the talk null is 2.3$\times$ tighter. The new behavioral test (Jev v3 states, real failures, commit and write rates) \textbf{fails} its rule: 3/15 units, RE $T_B=0.075$ [0.03, 0.12]. That is a weak trace of work habits. Natives: NE06 (a Google-only change) is village-wide in the logs, newcomers match by behavior in 3/9 ($p=0.14$), and \#35 is mixed. The holdout has not run.}
+\hwhat{The data is 15 counted non-reserved units (\#35--\#44, \#51; $N=10$--27). The state is each agent's daily content vector with the day's common field removed. Same-lab agents share a content direction in 9/15 units (RE $T=0.08$ [0.02, 0.14]), stable across periods. \textbf{Round 2} grades the style rival. A within-agent map of 20 formatting features and 50 function words keeps \textbf{32\% (bge) to 47\% (gte)} of the field: $T=0.026$ [$-$0.01, 0.06] and 0.040 [0.002, 0.08]. Round 1's pooled control was biased downward. Newcomers start at their lab's field ($a(1)=0.21$, $p=0.005$) and drift away. At the read-out call, a message pulls a \textbf{same-lab reader's content 1.7$\times$ more} (0.067 vs 0.039; 8/8 units). About half of that is lab-level susceptibility (post hoc). Talk shows no family term.}
 
-\hmodel{Model 11 (vector spins) plus models 01/02 in $K$-block mean field. $v_{i,d}$ is agent $i$'s mean whitened chat embedding on day $d$. $g_d$ is the day (goal) field, estimated by the day mean $m_d$. $h_f$ is the field of lab $f(i)$, and $a_i$ is an agent offset. The fluctuations $x_{i,d}$ couple through a $K\times K$ family matrix ($K=2$--5 multi-member labs). $\varepsilon$ is sampling noise, and $H_i$ is the agent field. $C$ is the talk-spin or co-movement correlation matrix. $y_{ij}$ is a pair outcome, and $r(i)$ is the agent's room.}
+\hmodel{Model 11 (vector spins). $v_{i,d}$ is agent $i$'s mean whitened chat embedding on day $d$, and $m_d$ is the day mean. $h_f$ is the field of lab $f(i)$, $a_i$ an agent offset, and $H_i$ the agent field. Style rival: each statement vector $z$ is regressed on its style features $s$ (formatting, function words, genre held out) with a map $B$ fitted within agents (W) or pooled (P). Coupling: $J_1$ is the matched-age jump in $\cos(z_B,z_m)$ between the recipient's read-out call ($h=1$) and the call in flight ($h=0$), for same-lab and cross-lab pairs.}
 
 \hmath{\vspace{-8pt}\begin{gather*}
-v_{i,d}=g_d+h_{f(i)}+a_i+x_{i,d}+\varepsilon_{i,d},\qquad H_i=\langle v_{i,d}-m_d\rangle_d\\
-T_{\rm field}=\langle\cos(H_i,H_j)\rangle_{f(i)=f(j)}-\langle\cos(H_i,H_j)\rangle_{f(i)\ne f(j)}\\
-J\approx-C^{-1}\ (\text{off-diag.}),\quad J_{ij}=J_{f(i)f(j)},\quad \Delta=J_{\rm in}-J_{\rm out}\\
-y_{ij}=c+b_{\rm lab}[f(i)=f(j)]+b_{\rm room}[r(i)=r(j)]
+v_{i,d}=m_d+h_{f(i)}+a_i+\varepsilon_{i,d},\qquad T=\langle\cos H_iH_j\rangle_{\rm same}-\langle\cos H_iH_j\rangle_{\rm cross}\\
+z\mapsto z-(s-\bar s)\hat B_W,\qquad \rho_{\rm ns}=T_{W3}/T_{\rm raw}\\
+J_1=\textstyle\sum_b w_b\,[\bar y(1,b)-\bar y(0,b)],\qquad \Delta=J_1^{\rm same}-J_1^{\rm cross}
 \end{gather*}\vspace{-10pt}}
 
-\hobs{../figures/summary_obs.pdf}{(a) The family-field statistic $T_{\rm field}$ per unit before (blue) and after (orange) regression on writing-style features. Filled: lab-permutation $p<0.05$. RE: random-effects summary with 95\% CI. The field vanishes under style control. (b) Two-room units: permutation $z$ of the same-lab and same-room pair coefficients. Talk timing and content co-movement follow rooms, not labs. The static content field has a lab term too, which is style.}
+\hobs{../figures/r2_obs.pdf}{(a) Random-effects family field after each style control, bge (blue) and gte (orange), with 95\% CIs. Dashes: the same control on a synthetic world whose family field is style only. Within-agent maps keep a third to a half of the field. Pooled maps fall below zero even in the style-only world. (b) Read-out content pull, regime III. Same-lab pairs pull more in both naming strata. Violet: the named-stratified contrast (pre-registered) and, post hoc, the contrast with the receiver's or the sender's lab held fixed.}
 
-\htelos{Models from the same lab sound alike, and that is nearly all. The family field is formatting and punctuation, not a shared stance on the task. Who reacts to whom shows no measurable in-group preference. Rooms organize interaction, and operators control rooms. Any embedding-based consensus or alignment metric must control for writing style. Without style control, labs look like blocs in 9/15 units; with it, in 0 of those 9. Vendor homophily or collusion gets no support at this sampling, but only couplings of about 0.1 or larger are excluded. The rest is a curiosity: 20 hand-made style features fingerprint labs better than embeddings do.}
+\htelos{Vendors differ mostly in prose, and partly in what they say. A pooled style correction removes the prose and then pushes the vendor field below zero. A within-agent correction leaves about a third of it. Vendors also differ in how strongly their models are moved by what they read. A same-vendor message moves a reader 1.7$\times$ as much as a cross-vendor one, at the next call. Half of that is because some vendors' models are more easily moved, not in-group preference. Who replies does not depend on vendor. New models arrive sounding like their vendor and lose part of it within a week. For an operator: expect a read message to move a same-vendor model up to 1.7$\times$ as much as another vendor's model.}
 
-\hbottom{Model families differ in how they write, faintly in what they do, and not in whom they follow; rooms, not vendors, set the coupling.}
+\hbottom{Model families carry a content field that is mostly style, and content couples more within labs at the read-out call; talk does not.}
 
-\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.32\columnwidth}p{0.55\columnwidth}p{0.11\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b (bge; gte)} & \textbf{Verdict}\\\hline
-P1 family field & 9/15, RE 0.080 $\to$ 9/15, 0.080; gte 8/15, 0.085 & mixed\\
-P2 not only style & 0/9 $\to$ 0/9 (own S-a); 1/9, 0/8 (DQ5 residuals) & $\times$\\
-P3 family invariance & 0.88 vs 0.76 $\to$ 0.88 / 0.90 vs 0.76 / 0.74 & $\checkmark$\\
-P5 no talk homophily & RE 0.002 [$-$0.04, 0.05] $\to$ $-$0.003 [$-$0.02, 0.02] & $\checkmark$\\
-P6 no content homophily & 1/15 $\to$ 1/15 (both models) & $\checkmark$\\
-P7 rooms carry coupling & talk 8 $\to$ 10/10; co-movement 9/10, gte 10/10 & $\checkmark$\\
-B1 behavioral field (HH267) & 3/15; RE $T_B$ 0.075 [0.03, 0.12] & $\times$\\
-B2 behavior beyond style & 4/15; RE 0.038 [$-$0.01, 0.09] & $\times$\\
-NE06 / NE32 / G35 (native) & village-wide change / 3 of 9 / words follow rooms & $\times$ / $\times$ / $\sim$\\
+\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.53\columnwidth}p{0.11\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Result} & \textbf{Verdict}\\\hline
+P1 family field (r1, 1b) & 9/15; RE 0.080; gte 8/15, 0.085 & mixed\\
+P5, P6 no co-movement homophily (r1, 1b) & talk RE $-$0.003; content 1/15 & $\checkmark$\\
+A-P1 monotone style ladder & W: 0.080 $\to$ 0.040 $\to$ 0.039 $\to$ 0.026 & $\checkmark$\\
+A-P2 mostly style ($\rho_{\rm ns}\in(0.1,0.5]$) & bge 0.32, gte 0.47; 3/15 units & $\checkmark$\\
+A-P4 not speech-act mix & families differ in genre mix 6/15 & $\times$\\
+B-P1 newcomers start at lab & $a(1)=0.205$, $p=0.0045$ (20 joiners) & $\checkmark$\\
+B-P2 lab alignment does not fade & slope $-$0.034/day [$-$0.065, $-$0.003] & $\times$\\
+B-P4 newcomers converge on room & start nearer the centroid; no trend & $\times$\\
+C-P1 no content family coupling & $\Delta=0.029$ [0.010, 0.054]; 8/8 units & $\times$\\
+C-P2 no talk family coupling & $\Delta\beta=-0.0002$ [$-$0.0016, 0.0014] & $\checkmark$\\
 \end{tabular}}}
 
-\hobsb{../figures/r1b_behavior_vs_words.pdf}{(a) The family field per unit in three channels: raw words (gray), words after DQ5 style residualization (blue) and behavior (orange). Filled: $p<0.05$. Style-free words carry nothing. Behavior carries a little, mostly in the build weeks \#39--\#40. (b) Two-room units: the same-lab coefficient with the room held fixed. Behavior keeps a family term (RE 0.14); style-free words do not.}
+\hobsb{../figures/r2_obsb.pdf}{(a) Newcomers' lab alignment by day since joining (20 joiners; bands: joiner bootstrap). Raw content starts toward the newcomer's own lab and falls. Style-free content starts weaker. \#51 joiners (dotted, post hoc) start neutral. (b) Room outsiderness: positive means nearer the room centroid than incumbents. (c) Read-out pull by the receiver's and the sender's lab (point estimates): Anthropic models are the least moved receivers.}
 
-\hcaveats{The behavioral field can be harness, not disposition. It lives in file-write and commit cadence, which follow each provider's tool conventions. NE06 cannot separate the two, because the change hits every agent. Jev's labels read window evidence that can include an agent's narration. In \#51 roles dominate behavior, so same-role pairs are dropped. The no-coupling results exclude only couplings $\gtrsim 0.1$. The holdout (C1--C6) is untouched.}
+\hcaveats{The read-out contrast mixes homophily with lab main effects; with the receiver's lab fixed it is 0.013 [$-$0.013, 0.037]. Its power at half the pull is 0.55. The non-style family field is resolved only in gte; power at a third of the field is 0.30. The newcomer drift comes from joiners before \#51 (post hoc). The leave-family-out day mean was withdrawn as biased. The confirmatory run (C1--C6) has not run.}
 
-\hnext{Test the behavioral field against a harness covariate: tool-call conventions per provider. Use NE20 (Anthropic one call per turn, holdout) only if Vivian approves the confirmatory run.}
-
+\hnext{Fit the read-out pull as receiver susceptibility times sender potency plus a homophily term, pooled across units with shrinkage. Add the reserved \#51 tail only after Vivian's sign-off.}

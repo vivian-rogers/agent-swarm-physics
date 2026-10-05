@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; same in both embedding models; native: mixed)
+**Verdict (r2):** descriptive (round-2 rules are pooled across units; see the card's Round 2)
 **Role:** native (was: exploratory (round 1); native (round 1b: room × lab crossed, behavior channel))
 **Period:** regime II · mode C · 13 agents · two rooms (#best: GPT-5.4, Opus 4.6, Gemini 3.1 Pro; #rest: the other 10) · 5 days.
 **Units analysed:** 35
@@ -81,3 +82,17 @@ Within-unit stationarity (first vs second half of days, family field cos): Anthr
 
 - **Talk on the corrected table:** family homophily in talk timing (Δ > 0, p < 0.05) in no unit of this period.
 - **Reading:** the content field is unchanged in both models and still vanishes under either style rival; the behavioral field is reported in the card (B1–B4).
+
+<!-- r2:start -->
+## Round 2 (2026-10-05): graded style rival, read-out family contrast, newcomers
+*Pre-registered in the card (Round 2, 03:25 UTC), validated on synthetic skeletons, then run on non-reserved data. The round-2 verdicts are pooled across units; the numbers below are this period's contributions. Code: `analysis/r2_ladder.py`, `r2_readout.py`, `r2_encult.py`; data: `data/processed/H13-family-fields/r2/`.*
+
+| Unit | T raw (bge / gte) | T W3: within-agent style + function words (bge / gte) | T S-a (pooled; style-only null −0.046) | read-out J same / cross lab (bge) | Δ_J^adj [95% CI] | talk Δβ [95% CI] |
+| --- | --- | --- | --- | --- | --- | --- |
+| 35 | 0.323* / 0.347* | 0.283* / 0.284* | 0.058 | 0.017 / 0.050 | -0.040 [-0.156, 0.081] | 0.0400 [0.0240, 0.0569] |
+
+* lab-permutation p < 0.05. Pooled (card): W3 keeps 32% (bge) / 47% (gte) of the raw field; the read-out contrast Δ_J^adj = 0.029 [0.010, 0.054] over 8 regime-III units (half of it is lab-level susceptibility and potency, post hoc); talk shows no family contrast.
+
+**Newcomers joining in this period (R2-B; lab alignment a(d), bge raw, 5-statement means):**
+- GPT-5.4 (OpenAI): a(d) = 0.37, 0.30, 0.17, 0.26, 0.10; room outsiderness r(d) = –, –, –, –, –
+<!-- r2:end -->

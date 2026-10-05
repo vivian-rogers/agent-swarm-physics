@@ -1,6 +1,7 @@
 # H13: Model families carry their own fields, and couple by family
 
-**Status:** **exploratory round 1 done (2026-10-04).**
+**Status:** **exploratory round 2 done (2026-10-05, non-reserved data; see "Round 2").** Round 2: a graded style rival leaves 32% (bge) to 47% (gte) of the family content field (mostly, not only, style; round 1's pooled S-a was biased downward); newcomers start at their lab's position (a(1) 0.205, p 0.005) and drift away (kill for "fixed charge" fired); at the read-out call content pull is larger within labs (0.067 vs 0.039, Δ 0.029 [0.010, 0.054], 8/8 units; kill for "no family coupling" fired for content), about half of it lab-level susceptibility and potency (post hoc); talk shows no family term.
+**Round 1 (2026-10-04):**
 - **Families carry a stable content field, but it is writing style.** The field shows in 9/15 periods and is invariant across periods. It does not survive style residualization in any period.
 - **Families do not couple by family.** Talk-timing and content co-movement show no family homophily.
 - **Coupling follows rooms.**
@@ -16,10 +17,10 @@ Confirmatory script written, not run. Predictions were written 2026-10-03 23:50 
 
 | Impostor | Relevant? | How it was handled | Status |
 | --- | --- | --- | --- |
-| Scheduler field | partly | Cross-day surrogate for talk spins (b1, Null / baseline), on `activity_bins_fixed` but untrimmed. Close with trim-then-block-shift (§1, §3). | partly |
+| Scheduler field | partly | Cross-day surrogate for talk spins (b1, Null / baseline), on `activity_bins_fixed` but untrimmed. Round 2: the read-out design runs on each recipient's call clock (R2-C). | partly (round 1 talk spins); removed (R2-C) |
 | Exogenous field (kickoff/goal/operator) | yes | Day- or window-mean removal on every a, b and c observable (goal-field null, Null / baseline). | removed |
 | Shared model priors | yes | The object of the card: style rivals S-a, S-b and `style_resid_period` in both models remove the family field (P2, Round 1b). | removed |
-| Contemporaneous convergence | partly | Not handled for P7's "rooms carry coupling" (co-movement, not reads). Close with ledger reads or the in-flight placebo (§1). | open |
+| Contemporaneous convergence | partly | Not handled for P7's "rooms carry coupling" (co-movement, not reads). Round 2: the family coupling test now uses ledger reads with the in-flight placebo at matched age (R2-C). | removed for family coupling (R2-C); open for P7 |
 
 **Inputs:** round 1b uses both embedding models, `style_resid_period`, DQ5 dedupe, `activity_bins_fixed`, Jev v3.1 and `n_errors`. Still old: talk coupling is minute-bin co-movement, not ledger read-outs; the card does not name DQ4 as the source of commit rates.
 
@@ -157,11 +158,11 @@ Scored for exploratory round 1 (non-holdout; 15 counted units plus 51e). Mapping
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Lab from `roster.lab`, content from regime-whitened chat embeddings, talk spins from `activity_bins`; assumptions listed under Model and Observables. **Not family-invariant by construction:** the content state carries each family's writing style (style features alone separate families in 14/15 units). Regime II and III bases differ, so #35 is outside the cross-period checks. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Within-unit split-half stability of family fields: cos 0.31–0.85 (most > 0.5). The equal-time mean-field inversion assumes quasi-equilibrium; no Markov-order or update-order audit for talk spins. |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | The family field beats the lab-permutation null in 9/15 units (RE T = 0.080 [0.024, 0.137]). It does **not** beat the strongest relevant null, the style field (S-a: 0/15). Family coupling never beats its null (as predicted). No held-out-day likelihood comparison. |
-| D unfitted predictions | unfitted statistics and the model's signature | 1 | Leave-one-agent-out family classification beats chance in 7/15 units. Newcomers classified by earlier units' family fields: 4/11 vs 14% chance (p = 0.06). NE32 triplet: 1/3 aligns with the OpenAI field (descriptive). Round 1b: by behavior, newcomers 3/9 (chance 0.15, p 0.14). |
-| E interventional | predicts the change across a natural experiment | 0 | Round 1: none used. **Round 1b:** NE06 (Google-only scaffold change, #20) attempted on behavior and content: no Google-specific shift, and the manipulation itself is village-wide in the logs (actions per turn halved for every agent), so no family-specific intervention exists outside the holdout (NE20). |
+| D unfitted predictions | unfitted statistics and the model's signature | 2 (r2; 1b: 1) | Leave-one-agent-out family classification beats chance in 7/15 units. Newcomers classified by earlier units' family fields: 4/11 vs 14% chance (p = 0.06). NE32 triplet: 1/3 aligns with the OpenAI field (descriptive). Round 1b: by behavior, newcomers 3/9 (chance 0.15, p 0.14). **Round 2:** newcomers' join-day content points to their own lab's incumbent field (a(1) 0.205, relabelling p 0.0045; gte p 0.0014; 20 joiners). |
+| E interventional | predicts the change across a natural experiment | 1 (r2; 1b: 0) | Round 1: none used. **Round 1b:** NE06 (Google-only scaffold change, #20) attempted on behavior and content: no Google-specific shift, and the manipulation itself is village-wide in the logs (actions per turn halved for every agent), so no family-specific intervention exists outside the holdout (NE20). **Round 2:** agent entry used as a dated step (20 joiners; drift beyond incumbents −0.047 [−0.092, −0.004]); still no family-specific intervention. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 (1b; round 1: 1) | `analysis/synthetic.py` F1–F5. All tests have nominal size; power is reported at village N and sampling. The synthetic run exposed and fixed two estimator flaws before real data (invariance baseline; window-demeaned co-movement). **Round 1b:** every content result replicates with gte-modernbert (a different lineage), with DQ5's shared style residuals and after removing restatements or copies. Not done: whitening dimension. |
 | G ground truth | agrees with known structure | 1 | Families are recoverable from content (7/15) and from style features (10/15). Rooms come out as the coupling blocks (co-movement b_room > b_lab 9/10; talk b_room p < 0.05 5/10), consistent with H05. |
-| H comparative | beats the named rivals | 0 | For H13 as stated (a family *position* field, family coupling), the rivals win: the style rival absorbs the field (S-a 0/15; S-b leaves a period-specific part in only 3/14), and the room rival carries the coupling. The reframed reading (a stable, style-borne family field) is consistent with every rival comparison. |
+| H comparative | beats the named rivals | 1 (r2; 1b: 0) | For H13 as stated (a family *position* field, family coupling), the rivals win: the style rival absorbs the field (S-a 0/15; S-b leaves a period-specific part in only 3/14), and the room rival carries the coupling. The reframed reading (a stable, style-borne family field) is consistent with every rival comparison. **Round 2:** the graded style rival keeps 32–47% of the field (within-agent map); the read-out family contrast beats the in-flight convergence and room rivals but not lab main effects (post hoc). |
 | I transfer | holds in other same-mode periods, including the holdout | 1 | The family field is invariant across regime III periods (split-half cos 0.84 / 0.93 / 0.88 vs a regrouping null of 0.76, p = 0.008). Holdout transfer (C3) written, not run. |
 
 ## Prediction
@@ -556,3 +557,73 @@ Readings. (1) W3 holds size (RE CI > 0 in 0/20 replicates in S0, NL and SG; per-
 - **B-A1.** No estimator change. The size of the r statistic rests on the J0c world.
 - **C-A1 (blocks and pooling).** 1-h blocks in every unit, and fixed-weight pooling of the units' bootstrap draws (weights n₁n₀/(n₁ + n₀) for content, read items for talk). This replaces day blocks with inverse-variance pooling.
 - **C-A2 (power).** C-P1 keeps its rule, but it is now known to be reachable in only 30% of true-null worlds. The design excludes a family pull that doubles J̄ (Δ ≥ ≈ 0.031) with 80% power, not one of half that size. A C-P1 outcome with CI ∋ 0 and upper bound ≥ 0.5 J̄ reads "inconclusive at 0.5 J̄; Δ ≥ J̄ excluded" if the upper bound is < J̄.
+
+### Outcome vs prediction (run 2026-10-05 03:47–03:53 UTC; `analysis/r2_ladder.py`, `r2_encult.py`, `r2_readout.py`, then post hoc `r2_posthoc.py`)
+All CIs are 95%. RE = DerSimonian–Laird over the 15 counted units (jackknife SEs). Read-out values are pooled over 8 eligible regime-III units (38a, 40, 41, 44, 51a–d) by fixed weights with 1-h block bootstrap draws (C-A1).
+
+| Prediction | Observed | Verdict |
+| --- | --- | --- |
+| A-P1 monotone ladder | bge: L0 0.080 ≥ W1 0.040 ≥ W2 0.039 ≥ W3 0.026; L0 ≥ P1 0.012 ≥ P2 0.000 ≥ P3 −0.050. gte: 0.085 ≥ 0.054 ≥ 0.053 ≥ 0.040 | **pass** |
+| A-P2 mostly style: ρ_W3 ∈ (0.10, 0.50]; W3 p < 0.05 in ≤ 4/15 | **bge ρ 0.32**, W3 RE 0.026 [−0.013, 0.064], 3/15 (35, 40, 42); **gte ρ 0.47**, W3 RE 0.040 [0.002, 0.079], 3/15 (35, 40, 51a) | **pass** |
+| A-P3 function words beyond formatting: ρ_W3 ≤ 0.75 ρ_W2 | bge 0.32 vs 0.37 (pass); gte 0.473 vs 0.466 (miss by 0.007) | **mixed** |
+| A-P4 (amended) speech-act mix: T on agents' mean G, p < 0.05 in ≤ 5/15 | **6/15**; RE 0.124 [0.058, 0.190] | **fail** (families differ in speech-act mix) |
+| Reading (A-A2 rule) | bge: W3 CI ∋ 0 → *mostly style; non-style residual below ≈ half not resolved*. gte: W3 CI > 0, ρ ≤ 0.5 → *mostly style, with a non-style residual* | mostly style; "only style" not supported |
+| Kill (ρ_W3 > 0.5 with CI > 0) | ρ 0.32 / 0.47 | not fired |
+| A-A3 calibrated location (descriptive) | implied non-style field c* (synthetic S1 scale): bge W3 0.15, S-a 0.25, P3 0.18, L0 0.22; gte 0.20, 0.25, 0.19, 0.23. Real S-a −0.001 sits +0.045 above its style-only value (−0.046) | all four levels imply c* ≈ 0.15–0.25 |
+| B-P1 newcomers start at the lab | a(1) = **0.205** [0.053, 0.346], relabelling p **0.0045** (20 joiners); gte 0.244, p 0.0014 | **pass** |
+| B-P2 lab alignment does not fade | slope **−0.034 per day [−0.065, −0.003]** (16 joiners with ≥ 3 days); gte −0.030 [−0.060, −0.004]; minus incumbents' slope −0.047 [−0.092, −0.004] | **fail (kill fires)** |
+| B-P3 style-free start neutral: p ≥ 0.05, ≤ 0.5 × raw | `style_resid_period`: a(1) 0.093 (p 0.059) ≤ 0.102; gte 0.110 (p 0.054) ≤ 0.122 | **pass** (marginal) |
+| B-P4 room convergence: r(1) < 0, slope > 0 | r(1) **+0.094** [0.048, 0.140] (gte +0.111); slope −0.007 [−0.031, 0.014] | **fail** (newcomers start *nearer* the room centroid than incumbents) |
+| C-P1 no content family coupling at the read-out | J_same **0.067** [0.046, 0.092], J_cross **0.039** [0.031, 0.049]; **Δ_J^adj 0.029 [0.010, 0.054]**; gte 0.029 [0.008, 0.053]; `style_resid_period` 0.032 [0.012, 0.056]; pre-registered IVW pooling 0.031 [0.009, 0.053]; 8/8 units positive (sign p 0.004) | **fail (kill fires)** |
+| C-P2 no talk family coupling at the read-out | Δβ_talk **−0.0002 [−0.0016, 0.0014]** per read item; β̄ 0.0030 [0.0026, 0.0034]; upper bound < 0.5 β̄ = 0.0015 | **pass** (14 units) |
+| C-P3 replication of H50 | J^c_1 (all) 0.0425 [0.034, 0.053] (gte 0.046); point inside [0.018, 0.048], upper bound beyond it; H50 (16 other-defined units) 0.033 | **pass** (point) |
+| Regime II (#35, reported separately) | content Δ −0.040 [−0.156, 0.081]; talk Δβ +0.040 [0.024, 0.057] with β̄ 0.042 | descriptive |
+
+**Post hoc diagnostics** (`analysis/r2_posthoc.py`, written after seeing the table above; labelled post hoc).
+- **PH1, lab main effects.** The pre-registered contrast mixes homophily with lab-level susceptibility (receiver) and potency (sender), because same-lab rows are mostly Anthropic–Anthropic. Holding the receiver's lab fixed (same- vs cross-lab senders within each receiver lab × naming stratum), Δ = **0.013 [−0.013, 0.037]**. Holding the sender's lab fixed gives 0.014 [−0.011, 0.035]. So about half of Δ_J^adj is lab main effects; homophily beyond them is not resolved. Pooled read-out pull by receiver lab: Anthropic 0.028, OpenAI 0.057, Google 0.060, other 0.036; by sender lab: 0.048, 0.031, 0.051, 0.044 (point estimates, no CIs).
+- **PH2, shared roles.** Dropping #51 same-role pairs leaves Δ_J^adj = 0.027 [0.008, 0.050].
+- **PH4, newcomer splits.** The lab start and the drift come from the 13 joiners before #51: a(1) 0.305 [0.103, 0.473], slope −0.050 [−0.089, −0.007]. The 7 #51 joiners start neutral: a(1) 0.018 [−0.141, 0.182], slope −0.007. Without the join day the slope is −0.022 [−0.056, 0.015] (bge raw) and −0.043 [−0.074, −0.010] (style-free).
+- **Leave-family-out day mean (descriptive in the pre-registration): withdrawn.** It is biased by construction: same-family agents share the subtracted vector, which aligns them without any field (L0 0.39 with 13/15 "significant"). It was not run on synthetic data first.
+
+### Results
+**1. The family content field is mostly, not only, writing style (R2-A).** A within-agent style map removes only the embedding signature that formatting and function words carry inside each agent. With all 20 formatting features and 50 function words, genre kept, it leaves 32% (bge) to 47% (gte) of the raw field: RE T 0.026 [−0.013, 0.064] and 0.040 [0.002, 0.079]. The field that survives is concentrated in #35, #40 and #42 (bge) or #35, #40 and #51a (gte). Every pooled map, round 1's S-a included, is biased downward: under a style-only synthetic world S-a gives −0.046, not 0. The real S-a value (−0.001) sits 0.045 above that reference. All four levels place the non-style part at about a third of the raw field (c* 0.15–0.25). So round 1's "0/9 units survive" was partly an artefact of the rival's bias. The synthetic power at that size is only 0.30–0.75, so the residual is resolved in gte and not in bge.
+
+**2. Families differ in speech-act mix (A-P4).** Agents' mean genre vectors (reply share, parent kind, stance, mentions, DQ3 window states) carry a family term in 6/15 units, RE 0.124 [0.058, 0.190]. Removing genre from content barely changes the field (PG retains 0.66), so the content field is not the speech-act field. This bears on H13-R1: vendors differ in what kind of message they post, not only in prose.
+
+**3. Newcomers arrive at their lab's position and drift away (R2-B).** On their join day, newcomers' day-demeaned content points toward their own lab's incumbents (a(1) 0.205, p 0.0045; both models). The alignment then falls by 0.034 per day, beyond the incumbents' own drift (−0.047 [−0.092, −0.004]). Style-free content starts weaker (0.093, p 0.059) and drifts too. Newcomers also start nearer the room centroid than incumbents (r(1) +0.094) and stay there. The pre-registered kill for "the family field is a fixed charge" fires: part of a newcomer's lab alignment is lost within a week. *Post hoc:* this holds for the 13 joiners before #51; #51 joiners start neutral, because their private roles set their content from the first day.
+
+**4. Content couples more within labs at the read-out call, talk does not (R2-C).** A message read at the recipient's next call pulls the recipient's next statements toward it by J^c_1 = 0.067 when sender and recipient share a lab, and 0.039 when they do not. The same holds within named and unnamed rows (named 0.134 vs 0.069; unnamed 0.038 vs 0.016), in both embedding models, on style-residualized vectors, and in all 8 units. Rooms are fixed by design (reads happen within a room), and the in-flight placebo at matched age removes convergence and common drives. The pre-registered kill fires: round 1's "no family coupling" is withdrawn for content at the read-out. *Post hoc,* half of the contrast is lab-level susceptibility and potency: within a receiver lab, same-lab senders pull 0.013 [−0.013, 0.037] more. Talk shows no family contrast: a named read raises the recipient's talk probability by 0.063 (same lab) or 0.069 (cross lab).
+
+**5. Power.** Round 1's co-movement designs had an 80%-power MDE of about 0.026 (talk Δ) and 0.024 (content Δ) in estimator units, roughly 0.03–0.08 in true J_in − J_out. The read-out design has MDE ≈ 0.031 in cosine units (≈ J̄), so it detects a doubling of the within-lab pull. The real contrast (ratio 1.7) is near that size, which is why it is detected; a homophily of half that size (PH1) is not.
+
+### Impostors (round 2)
+| Impostor | Relevant? | How round 2 handles it | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes (C) | Read-out jump on each recipient's call clock, hop 1 vs the in-flight hop 0 at matched age; 1-h blocks | removed |
+| Exogenous field | yes | Day-mean removal (A, B); incumbents' same-day drift subtracted (B); in-flight placebo at matched age (C) | removed |
+| Shared model priors | yes | The object of R2-A (graded ladder, synthetic style-only reference); C rerun on `style_resid_period` vectors (0.032); lab main effects separated post hoc | partly (homophily vs lab main effects open) |
+| Contemporaneous convergence | yes (C) | Read vs posted-but-unread at matched age (STANDARDS §1); family-common drive world N3 holds size | removed |
+
+### Scorecard (round 2; old → new)
+| Axis | Score | Evidence |
+| --- | --- | --- |
+| A mapping | 1 → 1 | Graded style controls and read-out rows are defined from shared tables; content is still not lab-invariant by construction |
+| B assumptions | 1 → 1 | The family field is not a fixed per-agent charge for newcomers (B-P2 kill); per-segment style offsets (H46) are within-agent variation the W map learns from |
+| C adequacy | 1 → 1 | Beats the gentlest complete style control in gte (W3 CI > 0) but not in bge |
+| D unfitted | 1 → 2 | Newcomers' join-day content is predicted by incumbents' lab fields (a(1) p 0.0045 bge, 0.0014 gte); round 1's 4/11 (p 0.06) |
+| E interventional | 0 → 1 | Agent entry used as a dated step (20 joiners, incumbent-drift difference); no family-specific intervention |
+| F identifiability | 2 → 2 | All three estimators validated on real skeletons; two flaws found before real data (pooled-map bias; day-block SEs); one descriptive statistic withdrawn as biased (leave-family-out mean) |
+| G ground truth | 1 → 1 | Named items couple ×2–5 more (H50, H67), reproduced within both lab partitions |
+| H comparative | 0 → 1 | Beats the convergence and room rivals for read-out coupling; the style rival wins most but not all of the field; the lab-main-effect rival is not beaten for homophily |
+| I transfer | 1 → 1 | Read-out contrast positive in 8/8 units, both models; not run on reserved data |
+
+**Constants (proposed for `interpretation/swarm-constants.json`).**
+- ρ_ns = 0.32 (bge) / 0.47 (gte): share of the family content field left by a within-agent style map (20 formatting features + 50 function words, genre kept); W3 RE T 0.026 [−0.013, 0.064] / 0.040 [0.002, 0.079]; regimes II–III, 15 non-reserved units.
+- J^c_{1,same} = 0.067 [0.046, 0.092], J^c_{1,cross} = 0.039 [0.031, 0.049], Δ_J^adj = 0.029 [0.010, 0.054]: read-out content pull within vs across labs; regime III, 8 units, 1-h block bootstrap; homophily beyond lab main effects 0.013 [−0.013, 0.037] (post hoc).
+- Δβ_talk,fam = −0.0002 [−0.0016, 0.0014] per read item (β̄ 0.0030): no family term in talk response at the read-out; regime III, 14 units.
+- a_new(1) = 0.205 [0.053, 0.346] and da/dd = −0.034 [−0.065, −0.003] per day: newcomer lab alignment on the join day and its drift; 20 joiners, regimes I–III.
+- MDE₈₀(read-out Δ) ≈ 0.031 (≈ J̄); round-1 MDE₈₀ ≈ 0.026 (talk Δ) and 0.024 (content Δ), estimator units.
+
+**Operator value.** In a mixed-vendor swarm, expect a message to move a same-vendor reader's next statements about 1.7× as much as a cross-vendor reader's (0.067 vs 0.039), and expect no vendor effect on who replies. To compare content across vendors, use a within-agent style map, not a pooled one: in synthetic tests a pooled map pushes a style-only vendor field to −0.046 and can hide a non-style third of it.
+
+**Claim that stands:** model families carry a content field that is mostly but not only writing style (a within-agent style-and-function-word map keeps 32–47% of it, RE T 0.026 [−0.013, 0.064] bge, 0.040 [0.002, 0.079] gte), and at the read-out call a message pulls a same-lab reader's content more than a cross-lab reader's (0.067 vs 0.039; Δ 0.029 [0.010, 0.054], 8/8 regime-III units, rooms and in-flight convergence held fixed) while talk shows no family term (Δβ −0.0002 [−0.0016, 0.0014]). Excluded: homophily beyond lab-level susceptibility and potency (post hoc PH1, 0.013, CI ∋ 0); "only style" (power 0.30 at one third of the field); newcomer drift and the #51 split (B-P2 kill fired; split post hoc); room convergence of newcomers (B-P4 failed); the leave-family-out field (withdrawn, biased); #35 regime-II numbers (descriptive).

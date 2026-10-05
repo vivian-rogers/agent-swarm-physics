@@ -2,6 +2,7 @@
 
 **Verdict:** mixed
 **Verdict (1b):** mixed (round 1: mixed; same in both embedding models)
+**Verdict (r2):** descriptive (round-2 rules are pooled across units; see the card's Round 2)
 **Role:** replication (exploratory)
 **Period:** regime III · mode I · 15 agents · two rooms, reshuffled 04-27 · 5 days.
 **Units analysed:** 39
@@ -60,3 +61,17 @@ Within-unit stationarity (first vs second half of days, family field cos): Anthr
 
 - **Talk on the corrected table:** family homophily in talk timing (Δ > 0, p < 0.05) in no unit of this period.
 - **Reading:** the content field is unchanged in both models and still vanishes under either style rival; the behavioral field is reported in the card (B1–B4).
+
+<!-- r2:start -->
+## Round 2 (2026-10-05): graded style rival, read-out family contrast, newcomers
+*Pre-registered in the card (Round 2, 03:25 UTC), validated on synthetic skeletons, then run on non-reserved data. The round-2 verdicts are pooled across units; the numbers below are this period's contributions. Code: `analysis/r2_ladder.py`, `r2_readout.py`, `r2_encult.py`; data: `data/processed/H13-family-fields/r2/`.*
+
+| Unit | T raw (bge / gte) | T W3: within-agent style + function words (bge / gte) | T S-a (pooled; style-only null −0.046) | read-out J same / cross lab (bge) | Δ_J^adj [95% CI] | talk Δβ [95% CI] |
+| --- | --- | --- | --- | --- | --- | --- |
+| 39 | 0.173* / 0.214* | 0.103 / 0.112 | -0.125 | not eligible (< 200 hop-0 rows) | – | -0.0068 [-0.0157, -0.0007] |
+
+* lab-permutation p < 0.05. Pooled (card): W3 keeps 32% (bge) / 47% (gte) of the raw field; the read-out contrast Δ_J^adj = 0.029 [0.010, 0.054] over 8 regime-III units (half of it is lab-level susceptibility and potency, post hoc); talk shows no family contrast.
+
+**Newcomers joining in this period (R2-B; lab alignment a(d), bge raw, 5-statement means):**
+- GPT-5.5 (OpenAI): a(d) = 0.37, 0.60; room outsiderness r(d) = –, 0.15
+<!-- r2:end -->
