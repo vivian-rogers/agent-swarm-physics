@@ -275,6 +275,25 @@ Numbers: `data/processed/H40-call-clock-coupling/results/summary.json`, `replica
 - R1: on the pooled Gemini rows, S-eng (η_busy 0.6, η_wait 0) and S-wall (η = 1 on the total span) must be told apart: power ≥ 0.8 for the engagement rule under S-eng and for the exposure rule under S-wall.
 - R5: as in the validity rule, on G18, G31, G38, G41 and G51c.
 
+### Synthetic validation results (2026-10-05 ~03:40 UTC, before any round-2 real-data statistic; `analysis/round2.py r6syn / r1syn / r5syn`, `data/processed/H40-call-clock-coupling/round2/*syn*.parquet`)
+Truth on call starts jittered within their bounds (R6, R5) or on logged starts (R1); estimation on the ledger's point estimates; real items, real call schedules, real round-1 coefficients and agent intercepts.
+
+| World (truth) | Statistic | G38 mean (SD) | G44 mean (SD) | Pass? |
+| --- | --- | --- | --- | --- |
+| S1 call clock (η = 0) | η̂ base / D2 / D3 / D4 / D5 | +0.01 / +0.01 / +0.00 / +0.00 / +0.01 (≈ 0.05) | −0.01 / −0.01 / −0.01 / −0.01 / −0.02 (0.08–0.10) | yes: controls neither create nor remove η |
+| S6 call clock only at real talk calls | η̂ reply-given-talk; η̂ base | +0.01 (0.06); **−0.26** | +0.00 (0.04); **−0.13** | yes |
+| S7 as S6, −0.5 per log span given talk | η̂ reply-given-talk | −0.45 (0.04) | −0.43 (0.04) | yes (attenuated by ≈ 0.06; coverage 0.9 / 0.5) |
+| S8 call clock + detection loss at ≥ 2 new items | η̂ base; η̂ D5 | +0.02; −0.00 | −0.03; −0.03 | yes (D5 unbiased); this loss does not create η < 0 because δ absorbs it |
+
+- **R6 by-product (not a test):** the real talk-call schedule alone gives η̂ = −0.26 (G38) and −0.13 (G44) under a pure call clock, because talk calls follow shorter spans. So call-type composition can produce part of the negative η.
+- **R1 (6 periods pooled, 20 worlds each):** exposure rule (η̂_wait ≥ 0.3, CI above 0): power **1.00** under S-wall (η̂_wait 0.84), size 0.05 under S-call, 0.00 under S-eng. Engagement rule: power **0.00** under S-eng: the pooled η̂_wait CI half-width is 0.34, wider than the ±0.25 band. η̂_busy recovers 0.57 for 0.6 (CI above 0 in 75% of worlds). Under S-eng the total η̂ is only +0.17, and its CI is above 0 in 5% of worlds.
+- **R5 (10 worlds per clock):** the collapse statistic does not tell the clocks apart. The raw D_call < D_wall holds in 0.7–1.0 of call-clock worlds and in 0.5–1.0 of wall-clock worlds (G18 1.0 / 1.0; G51c 1.0 / 1.0; G41 1.0 / 0.9). The lab-balanced version picks the call clock in 1.0 (G18, G51c), 0.2 (G31, G41) and 0.0 (G38) of call-clock worlds.
+
+**Amendment A5 (2026-10-05 ~03:45 UTC, from the synthetic results above, before any round-2 real-data statistic):**
+- **R5 withdrawn as uninformative** by the pre-set validity rule (< 80% in 3/5 periods). The tertile collapse measures burial, dilution and agent heterogeneity, not the clock. P5 (round 1, 21/33) is re-scored as uninformative, not failed. The real-data R5 run is kept as descriptive only, for the multi-parent bias (pool sizes by tertile).
+- **R1: the engagement branch is unpowered by design** (power 0.00; a looser band, η_wait upper bound < 0.5 with η_busy > 0, reaches only 0.55, so I do not adopt it). Under the pre-set kill rule, a non-exposure result is reported as "exposure excluded; engagement vs call clock inconclusive". The exposure branch stays decisive (power 1.00, size 0.05).
+- **R6:** unchanged. Every diagnostic passed its synthetic check.
+
 ## Notes
 - 2026-10-04: H29's boundary pull (content channel) was considered as the per-call coupling. Its rows are built on H18's visibility rule and per-unit H29 tables; rebuilding them on the ledger is a separate project. Round 1 uses the reply channel; the content channel is a round-2 redirect.
 - 2026-10-04: compute limits: ≤ 2 threads per process, no pools larger than 2, no sub-agents.
