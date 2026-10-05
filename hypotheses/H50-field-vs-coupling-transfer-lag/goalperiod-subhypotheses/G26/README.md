@@ -41,4 +41,16 @@ Data: `data/processed/H50-field-vs-coupling-transfer-lag/G26/` (one JSON per uni
 - **C (adequacy):** the read-out jump is tested against shifted-time placebos (no-coupling synthetic worlds: false-positive rate 3/35 seeds); field excess against shifted inputs. Here: J₁ CI > 0 in 1/1 units.
 - **D (unfitted signature):** a step at the read-out call (onset hop 1) in 1/1 units; no unit shows the ungated signature (J₁ < 0).
 - **G (ground truth):** activity co-movement is carried by the schedule edges (edges-alone field excess above), as H38 found for regime III.
+## Round 2 (2026-10-05)
+*Predictions templated from the card's "Round 2" section (written 2026-10-05 02:50 UTC, before any round-2 statistic). Role: replication. Period numbers are inverse-variance means over the period's eligible units.*
+
+| statistic | estimate [95% CI] | reading |
+| --- | --- | --- |
+| R1 content jump J^c_1 (bge, all) | 0.043 [0.001, 0.086] | content couples at the read-out call (1 unit(s)) |
+| R1 J^c_1 named / unnamed | -0.022 [-0.094, 0.050] / 0.060 [0.020, 0.100] | address split |
+| R6 relay RD, C-hop ≥ 2 (all / naming C) | 0.001 [-0.042, 0.043] / -0.029 [-0.098, 0.040] | post hoc; biased in regime I (not scored) |
+| R2 kernel, logged-start recipients: k1 / k4 | 0.098 [0.065, 0.131] / 0.275 [0.166, 0.384] | regime-I kernel |
+| R2 chat-mode channel k1 (all recipients) | 0.025 [0.008, 0.042] | share of calls in chat mode after a read |
+
+
 ## Notes

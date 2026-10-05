@@ -7,6 +7,11 @@
 - **HH167's regime split fails.** Regime-I calls are not message-triggered (wake ratio 1.03–1.07). Both regimes have field-driven activity and coupling-driven talk.
 - **NE43** (as a native test): the nudge path vanishes after 08-20, while peer coupling and the day-start field persist. The bookends had already stopped after 08-04, which is a data finding.
 - **Scorecard:** A1 B1 C1 D1 E1 F1 G1 H2 I1.
+- **Round 2 (2026-10-05; pre-registered 02:50 UTC; see "Round 2").**
+  - **Content couples at the read-out call (regime III):** J^c_1 = 0.033 [0.027, 0.039] (bge; gte 0.046), CI > 0 in 10/16 units. Address-gated ×5 (named 0.077, unnamed 0.016).
+  - **Graph clause:** the pre-registered event study is inconclusive (length bias at the in-flight call, reproduced in synthetic worlds). Reads batch: C reads A and B's relay at the same call in 60% of cases. Post hoc relay RD at C-hops ≥ 2: 0.014 [0.006, 0.022], and 0.115 when the relay names C.
+  - **Regime I:** the hop-1 jump is not a latency artifact. The "continuing rise" is withdrawn. About 70% of the talk jump is a switch into chat mode (ΔP = 0.024 [0.019, 0.029]).
+  - Scorecard A1 B1 C1 **D2** E1 F1 G1 H2 I1.
 **Fields:** dynamics, stat mech, sociophysics, info theory
 **Literature:** none of the notes in `literature/` covers system identification; the method references are in the model folders: Cugliandolo, Kurchan & Peliti, *PRE* 55, 3898 (1997)† (`physics-models/02-nonequilibrium-ising`, response vs correlation); Filimonov & Sornette 2015† (`physics-models/09-hawkes`, nonstationary baselines fake endogeneity). Standard linear-systems tools (FIR/ARX identification, Welch cross-spectra, coherence, group delay) and regression-discontinuity design need no project note.
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population N(t) (variant *day-present*, H36); Regime; Driving / external field (human messages, nudges, operator bookends, platform errors); Interaction (broadcast) with **Exposure (turn read-out)** (H08; implemented by the shared context ledger); Action (turn-merged) via the ledger's calls; Agent state (vector), *whitened statement mean* basis (H01) for the content channel. **New named variants proposed for DEFINITIONS.md** (not edited here; outside H50's scope), defined under Model: *call cycle (hop)*, *read-out jump (gate coupling)*, *field share (measured)*, *coupling share (gated)*.
@@ -25,7 +30,7 @@
 | Shared model priors | no | The gate is a discontinuity at the read-out call; a family prior cannot create a step there. | n/a |
 | Contemporaneous convergence | yes | The read-out RD compares the call in flight with the read-out call, with shifted placebos (C2); κ ≈ 0.9–1.0, so the in-flight side is not elevated. Synthetic slow-drive worlds give J₁ ≈ 0. | removed |
 
-**Inputs:** round 1 uses the context ledger and `call_windows`; it never reads `activity_bins`, `outages` or `stall_minutes` (Amendment 8). Still old: the platform input uses `turn_errors` categories, not `turn_outcomes.failed`; the addressing split uses `chat_mentions_clean`, not the leading-@ target. The content channel (C3) is not done.
+**Inputs:** round 1 uses the context ledger and `call_windows`; it never reads `activity_bins`, `outages` or `stall_minutes` (Amendment 8). Still old: the platform input uses `turn_errors` categories, not `turn_outcomes.failed`; the addressing split uses `chat_mentions_clean`, not the leading-@ target. The content channel (C3) is done in round 2 (bge and gte, `style_resid_period` and `statement_flags` dedupe as variants).
 
 **Two layers:** 33 replication folders. Native tests: 4 (`G38` supported; `G51`, `NE14` and `NE43` mixed).
 
@@ -119,7 +124,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Calls, read-out calls and items come from the DQ1 ledger; the hop-1 rule agrees with the ledger's receiving call in 100% of pairs (checked in 3 units). Outcomes are per-call talk / work / idle; inputs come from `kicks_classified` and `turn_errors`. The same definitions are used in every regime. Limits: regime-I chat-mode starts are latency-placed (checked on logged-start recipients: J₁ 0.030 ± 0.008 vs 0.034); a talk+wait call is coded idle-plus-talk; content is not done. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | **Update-order audit done:** regime-I calls are not message-triggered (wake ratio 1.03–1.07 vs a uniform-arrival null), and regime-III pauses wake on their timer (0.99). So the gate's premise (influence only at the next scheduled call) holds. RD continuity is checked with shifted-time placebos. Linearity and stationarity within a unit are assumed. Field and coupling interact (non-additive shares, shown in synthetic worlds). |
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | J₁ beats the shifted-time placebo in 45/71 units (day or 1-hour-block bootstrap). The activity field excess beats the shifted-input null in 69/71 units (> 0.10). No held-out-day prediction. The synthetic null false-positive rate is 3/35 seeds (≈ 9% at nominal 5%), so per-unit significance is mildly anti-conservative. |
-| D unfitted predictions | unfitted statistics and the model's signature | 1 | The gated-coupling signature appears in 45 units: a step at the read-out call, onset at hop 1, no response before read-out, no unit with the ungated (J₁ < 0) pattern. The schedule-field signature (zero relative lag in call cycles) holds: onset IQR 9 s in #38 and 22 s in #51. Not predicted: regime III's plateau after the hop-2 drop, regime I's continuing rise, and the immediate (hop-1) nudge talk response. |
+| D unfitted predictions | unfitted statistics and the model's signature | 2 (round 2; was 1) | The gated-coupling signature appears in 45 units: a step at the read-out call, onset at hop 1, no response before read-out, no unit with the ungated (J₁ < 0) pattern. The schedule-field signature (zero relative lag in call cycles) holds: onset IQR 9 s in #38 and 22 s in #51. Not predicted: regime III's plateau after the hop-2 drop, regime I's continuing rise, and the immediate (hop-1) nudge talk response. **Round 2:** the content channel was never used in fitting. The pre-registered prediction of a hop-1 content jump with address gating holds: J^c_1 = 0.033 [0.027, 0.039] (bge; 0.046 with gte), named ×5. |
 | E interventional | predicts the change across a natural experiment | 1 | NE43 B→C (nudges off): the nudge path vanishes, peer J₁ is 0.69× (inside ±50%), activity ρ̄ does not fall. A→B (bookends off): the start-up step is unchanged, so the scaffold (not the message) starts agents. #38: agents are halted at the pause message. Two locked numeric bounds were missed on the trim variant; the room changes confound the comparisons. |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Gated swarms with real schedules. J₁ bias −2% to −17% in regime-III coupling worlds (−17%, −31% in regime-I worlds); ≈ 0 in field, slow-drive and edge-clustered-input worlds; dead time 2 recovered as onset hop 3 (5/5); the ungated rival gives J₁ < 0. The field excess is specific (≈ 0 without a field). CF f_C tracks the true coupling share in regime III (0.92 vs 0.93; 0.73 vs 0.82) but not in regime I. Robust to W × 3 (smaller, same sign) and to dropping low-confidence starts in regime III; not robust to that in regime I (see A). |
 | G ground truth | agrees with known structure | 1 | Agrees with the documented scaffold (chained 13-s computer-use calls; timer pauses; operator start at 16:01 UTC) and DQ1's ledger validation; agrees with H08 (read-out gating), H29 (influence is address-gated: regime-III J₁ is 0.17 for messages naming the recipient vs 0.004 otherwise), H38 (edge co-activation). |
@@ -274,7 +279,7 @@ Figures (`figures/`):
 **HH185–HH190.**
 - **HH185 (transfer function): tested.** Per-class FIR impulse responses (dead time, gain, decay) and call-level gate kernels.
 - **HH186 (Bode): tested.** Coherence and phase pooled by regime (`figures/bode.pdf`). The swarm passes the day-scale edge input, while human and nudge inputs are sparse and weakly coherent (γ² ≤ 0.05). The "more nudges add little" reading fits: nudges move single agents for a few minutes.
-- **HH187 (quantized lags): tested at hop resolution.** The response is quantized at the read-out call (hop 1, never hop 0). The hop-distance-on-the-read-out-graph clause is round 2.
+- **HH187 (quantized lags): tested at hop resolution.** The response is quantized at the read-out call (hop 1, never hop 0). The hop-distance-on-the-read-out-graph clause is round 2. Round 2: the event study is inconclusive; the post hoc relay RD supports it in regime III; reads batch (ρ = 1 in 60%).
 - **HH188 (T_eff(ω)): not tested.**
 - **HH189 (dead-time stability): descriptive.** No damped oscillation. Human and nudge kernels undershoot after their peak (activity is advanced, not added). No phase margin estimated.
 - **HH190 (per-agent transfer): partial.** Per-agent J₁ is strongly heterogeneous (Q = 685 on 16 df in I; 325 on 30 df in III) and tracks the agent's talk rate in regime III (r = 0.48). Lab medians are noisy.
@@ -284,18 +289,22 @@ Figures (`figures/`):
 - **Multiplicity and power.** Per-unit CIs come from a day bootstrap (1-hour blocks for units with < 3 days) and are mildly anti-conservative (synthetic false-positive rate ≈ 9%). 71 units × several statistics; the cross-unit counts are the evidence, not single units. The named-target and relay tests in #51 have about 100 pairs.
 - **Decomposition shares are model-based and non-additive.** CF f_C > 1 is overshoot at low talk co-movement (median per-pair talk ρ̄ 0.01–0.04). Activity field excess depends on the full-window grid (pre-start minutes are zero).
 - **NE43 confounds:** the #focus room split (08-05), the merge (08-24) and roster joins in C.
-- **Content channel not done** (C3).
+- **Content channel:** done in round 2 (see "Round 2"). Regime-I content beyond hop 1 is not validated.
 - **`activity_bins` bug notice:** H50 does not use that table; all series come from `call_windows`. Not affected.
 
 ## Round 2 redirects
 **What the direction is really after:** which levers move a swarm together (fields) and which only propagate through who reads whom (couplings), measured in the units the scaffold imposes (calls), so an operator knows what an input will do to collective behavior.
-- **H50-R1. Content gate (C3).** The read-out jump for content (whitened statement cosine to the source message), with H29's matched-age control, by hop. Does content couple at hop 1 the way talk does, and is it also address-gated in regime III?
-- **H50-R2. Validate the regime-I dead-time kernel.** Build regime-I synthetic worlds with mixed chat-mode and computer-use calls and planted dead times. Re-estimate the kernel on logged-start recipients only, and split read-out calls by mode.
+- **H50-R1. Content gate (C3).** *Done in round 2 (superseded; see "Round 2").* The read-out jump for content (whitened statement cosine to the source message), with H29's matched-age control, by hop. Does content couple at hop 1 the way talk does, and is it also address-gated in regime III?
+- **H50-R2. Validate the regime-I dead-time kernel.** *Done in round 2 (superseded; see "Round 2").* Build regime-I synthetic worlds with mixed chat-mode and computer-use calls and planted dead times. Re-estimate the kernel on logged-start recipients only, and split read-out calls by mode.
 - **H50-R3. HH188 frequency-dependent T_eff.** Compare spontaneous talk cross-spectra with the gated response spectrum per band; and HH189's phase margin from the hop kernel and the talk loop gain.
 - **H50-R4. HH190 agent impedance.** Per-agent kernels (gain, onset hop, persistence) against H29's net influence current and H32's information current; family and scaffold clustering with partial pooling.
 - **H50-R5. Human-input relay with power.** Pool the human-rich regime-I periods (#4–#6) and use the hop 2–4 kernel for bystanders, with 3W bandwidth.
-- **H50-R6. HH187 graph clause.** Lags vs hop distance on the read-out graph (A reads B reads C): does C's response to A appear at hop 2 of C's calls?
+- **H50-R6. HH187 graph clause.** *Done in round 2 (superseded; see "Round 2").* Lags vs hop distance on the read-out graph (A reads B reads C): does C's response to A appear at hop 2 of C's calls?
 - **H50-R7. Confirm on the holdout** (`confirm.py`: CP1–CP5, NE23 nudger off/on).
+- **H50-R8. Regime-I mode channel: field or coupling?** Is the switch into chat mode gated at the read-out call or set by the scheduler? Use scheduler ticks, logged starts and a matched in-flight placebo.
+- **H50-R9. Graph clause, confirmatory.** Pre-register the relay RD (C-hops ≥ 2, named vs unnamed) for the reserved data. Add the content relay: does C's statement move toward A after it reads B's relay?
+- **H50-R10. Length-dependent null worlds for every hop-indexed design.** Any profile indexed by calls around an event inherits the length bias of the in-flight call. Use a start-time RD, or validate on W0L-type worlds.
+- **H50-R11. Content gate in the two-room weeks** (#36–#44) with pooled age bins.
 
 ## Round 2 (2026-10-04/05): content gate, graph clause, regime-I kernel
 *Items H50-R1, H50-R6 and H50-R2. Predictions, nulls and kill rules written 2026-10-05 02:50 UTC, before any round-2 statistic on real data. Seen before writing: the round-1 results above; the regime-I call composition (chat-mode calls are 5–38% of regime-I calls and 78% of them talk; computer-use calls talk 4%; logged starts exist only in #23–#31, about 20% of calls); logged latencies (chat-mode talk median 8.7 s, chat-mode non-talk 14.1 s, computer-use 11.4–11.8 s). No content, relay or round-2 kernel statistic had been computed. Code: `analysis/r2_*.py`. Data: `data/processed/H50-field-vs-coupling-transfer-lag/r2/`. Reserved data are masked with `holdout_mask` in every script.*
@@ -364,6 +373,97 @@ Y_{p,h} = α_p + β_h + Σ_e γ_e 1[h − ρ_p = e] + ε, for e ∈ {−3, −2,
 - **P-R2d (mode split):** J₁ > 0 for recipients in chat mode at t_m, and for recipients in computer-use mode.
 - **Kill rules.** (i) If P-R2a fails, the regime-I kernel beyond hop 1 is not identifiable: it stays unvalidated. (ii) If on logged-start recipients the hop-4 kernel ≤ hop-1, the regime-I "continuing rise" is withdrawn as a latency-placement artifact. (iii) If K0 worlds give a significant all-recipient J₁, the round-1 regime-I all-recipient J₁ is reported as biased by that amount.
 
+### Round-2 amendments (dated; each says whether it is post hoc)
+- **R6-A1 (2026-10-05 ~03:40 UTC; synthetic-based, before any real R6 statistic).** In W1 worlds the raw event step G was 2–4× the per-relay truth, because other items read at the same call bundle in. Fix: controls for the other agent items (unnamed, named) read at the outcome call and at the call before. Also: 1-h blocks in every unit, because day blocks in 5-day units gave anti-conservative CIs. W2 is implemented as a one-call dead time for every read: almost every message is a relay of something, so "relays carry no effect" equals "no coupling".
+- **R6-A2 (POST HOC, after the real event study failed its pre-trend check).** Diagnosis worlds W0L and W1L: talk depends on the call's own interval to the next call (regime III: long calls are pauses; regime I: long calls are chat mode). Added estimator, also post hoc: a start-time RD at the relay posting time on C's calls, with anchors at C-hops ≥ 2 on A's clock (`r2lib.relay_rd`). This design is immune to the length bias of hop-indexed profiles, as in round-1 Amendment 2.
+- **R2-A1 (POST HOC).** Splitting on the mode of the in-flight call is invalid by construction: the in-flight call is the RD's left anchor, so its mode sets the left limit. The split now uses the mode of the recipient's last call that started before t_m − W (outside the anchor window). Also post hoc: K0flat, K1d0flat and K1d2flat worlds (talk rate independent of mode), to separate estimator artifacts from the mode sequence.
+- **R1:** the pre-registered estimator ran unchanged. Single-day units have no placebo statement 2 h away for some senders; those rows drop out of the placebo-corrected outcome only.
+
+### Round-2 results (non-reserved data)
+Code: `scheme/build_r2.py`; `analysis/r2lib.py`, `r2_content_synth.py`, `r2_content_run.py`, `r2_relay.py`, `r2_relay_rd.py`, `r2_kernel_I.py`, `r2_pairs.py`, `r2_write.py`, `r2_figs.py`. Data: `data/processed/H50-field-vs-coupling-transfer-lag/r2/` (17 MB of unit tables plus result parquets). Figure: `figures/r2_summary_col.pdf`. Estimates: 872 rows in `per_period_estimates` (round 2, plus a round-1 backfill of J₁ and the activity field excess). All CIs are 95%. Pooled numbers are inverse-variance means over units.
+
+**R1: content couples at the read-out call (regime III).**
+- *Synthetic (real skeleton, 5 seeds × 4 units).* Pooled over #51b, #38a and #51c:
+  - N0 (no pull): 0/5 false positives. The unmatched contrast is negative, which reproduces H29's failure.
+  - N1 (gated pull): bias −4% overall, −7% for named messages.
+  - N2 (ungated pull): J^c_1 = −0.010 (0/5 with CI > 0). N3 (dead time 1): J^c_1 = 0.005 (0/5), J^c_2 > 0.
+  - Regime I (#27): J^c_1 is attenuated about −40%.
+  - Power: the named effect at quarter strength is found in 5/5 seeds from 3 units. The real pool has 16 units.
+- *Real data.* 16 of 27 regime-III units are eligible; most two-room weeks (#36–#44) have < 200 hop-0 rows.
+
+  | statistic (regime III, bge unless noted) | estimate | units CI > 0 / < 0 |
+  | --- | --- | --- |
+  | **J^c_1, all** | **0.033 [0.027, 0.039]** | 10 / 0 of 16 |
+  | J^c_1, gte-modernbert | 0.046 [0.038, 0.055] | 12 / 0 |
+  | J^c_1, `style_resid_period` | 0.038 [0.031, 0.045] | 10 / 0 |
+  | J^c_1, self-repeats dropped | 0.032 [0.026, 0.037] | 11 / 0 |
+  | J^c_1, age × latency-tercile matched | 0.047 [0.040, 0.055] | 10 / 0 |
+  | **J^c_1 named / unnamed** | **0.077 [0.063, 0.091] / 0.016 [0.009, 0.022]** (×5) | 7 / 5 |
+  | named / unnamed, gte | 0.094 [0.083, 0.105] / 0.019 [0.011, 0.026] | |
+  | J^c_2 / J^c_3 (vs hop 0, matched age) | 0.039 [0.030, 0.047] / 0.011 [−0.005, 0.027] | |
+  | regime I (36 units): J^c_1 all / named / unnamed | 0.020 [0.014, 0.025] / 0.012 [0.003, 0.022] / 0.014 [0.009, 0.020] | 10 / 2 |
+  | regime I: J^c_2 | 0.051 [0.041, 0.061] (not validated) | |
+
+**R6: graph clause.**
+- **Pre-registered event study: inconclusive** (kill rule ii).
+  - Regime III: G = 0.014 (SE 0.001), but the pre-trend γ₋₂ = +0.032 (SE 0.001; significant in 16/25 units).
+  - Regime I: G = 0.032 (SE 0.001), but γ₋₂ = −0.092 (SE 0.002).
+  - Diagnosis (W0L, no coupling, talk tied to call length) reproduces both signs and sizes: regime III γ₋₂ = +0.019 (5/5 seeds) with a spurious G of +0.009 (4/5); #27 γ₋₂ = −0.113 vs −0.092 real.
+  - Cause: the reference call (e = −1) is the call in flight at the relay post, which is length-biased. It is a pause in regime III and a chat-mode call in regime I. The real profile is what a no-coupling world with length-dependent talk produces (figure b).
+  - The pre-registered synthetic worlds missed this: their talk did not depend on call length.
+- **P-R6d fails: reads batch.** C reads A and B's relay at the same call (ρ = 1) in 60% of relay pairs in regime III (ρ = 2: 19%) and in 41% in regime I (ρ = 2: 33%). Path length 2 collapses into one C-hop whenever B answers faster than C's next call (C pauses).
+- **Post hoc relay RD at C-hops ≥ 2 (length-robust).**
+  - Synthetic regime III: W0 −0.004, W0L −0.003; W1 0.020 vs truth 0.017; W1L 0.013 vs 0.016; W2 0.002.
+  - Synthetic regime I: W0L gives +0.025, so the estimator is not valid there.
+  - Real regime III (27 units): **J_relay = 0.014 [0.006, 0.022]** (5 / 0 units). Relays that name C: **0.115 [0.078, 0.152]**. Unnamed relays: 0.006 [−0.002, 0.014].
+  - So C's response to A via B steps up at the call that reads B's relay, two or more C-hops after A. It does so only when the relay names C (×19, as for direct reads: H67's ×19, round-1's 0.17 vs 0.004).
+
+**R2: regime-I kernel.**
+- *Synthetic, latency placement.* In mode-free worlds latency placement creates no jump and no rise. K0flat all-recipient k₁ = −0.007 (#27) and 0.004 (#24); logged-start recipients ≈ 0.
+- *Synthetic, dead time.* Dead times are recovered on all recipients: onset = d + 1 in 5/5, 5/5, 4/5 seeds (#27) and 5/5, 4/5, 4/5 (#24). On logged-start recipients: 4/5, 5/5, 5/5 (#27) and 3/5, 2/5, 4/5 (#24, only 2 logged agents).
+- *Synthetic, pre-registered K0 (talk by the real mode sequence, no coupling).* It produces a rising kernel in #27: all recipients k₄ − k₁ = +0.024; logged-start recipients +0.107. #24 shows ≈ 0. The cumulative kernel at hop 5 misses the truth by more than 30% in mode-based worlds. **P-R2a fails on shape (kill i):** beyond hop 1 the regime-I talk kernel mixes coupling with the real mode sequence.
+- *Real data (10 units, #24–#31), logged-start recipients.*
+  - k₁ = 0.030 [0.021, 0.039] (onset hop 1 in 5/10 units); k₃ = 0.047 [0.034, 0.060]; k₄ = 0.043 [0.020, 0.066]; k₆ = 0.024 [0.000, 0.048].
+  - k₄ − k₁ = +0.013, not significant. **P-R2c fails:** the "continuing rise" of round 1 is withdrawn. It is not shown to be a latency artifact; it is unsupported.
+  - The hop-1 jump is not a latency artifact: logged-start 0.030 vs all recipients 0.025 [0.020, 0.030].
+- **Chat-mode channel.** After a read, the next call is more often a chat-mode call: ΔP(chat mode) = 0.024 [0.019, 0.029] at hop 1, held at 0.026–0.041 to hop 6. With talk rates of 0.78 (chat) and 0.04 (computer use), switching mode accounts for about 0.018 of the 0.025 talk jump (about 70%).
+- **Mode split (R2-A1).** Recipients in chat mode before the message carry the jump: k₁ = 0.110 [0.087, 0.133] (logged-start 0.158 [0.110, 0.206]). Recipients in computer use: 0.005 [0.003, 0.008] (logged-start −0.006 [−0.014, 0.003]). **P-R2d: mixed.**
+
+**Outcome vs prediction (round 2).**
+
+| Prediction | Observed | Verdict |
+| --- | --- | --- |
+| P-R1a content couples at hop 1 (III, both models, ≥ 1/3 units) | 0.033 [0.027, 0.039] bge, 0.046 [0.038, 0.055] gte; 10/16 units | **supported** |
+| P-R1b named ≥ 3 × unnamed; unnamed CI includes 0 | ×5 (bge and gte); unnamed 0.016 [0.009, 0.022] | mostly supported (unnamed weakly > 0; kill ii not met) |
+| P-R1c J^c_1 ≥ J^c_2 | bge 0.033 vs 0.039 (overlap); gte 0.046 vs 0.033; named 0.077 vs 0.056 | mixed (onset at hop 1; content persists to hop 2) |
+| P-R1d regime I ≥ 0, unnamed couples | 0.020 [0.014, 0.025]; unnamed 0.014 [0.009, 0.020]; no named premium (named 0.012) | supported (attenuated; regime-I J^c_2 > J^c_1 not validated) |
+| P-R6a relay step G > 0, no pre-trend | G > 0 but pre-trend significant in both regimes; length bias reproduced in W0L | **inconclusive** (kill ii); post hoc RD: 0.014 [0.006, 0.022] (III) |
+| P-R6b naming C ≥ 3 × others | post hoc RD: 0.115 vs 0.006 (×19) | supported (post hoc estimator) |
+| P-R6c regime I G > 0 | event study invalid; RD biased in regime I | inconclusive |
+| P-R6d modal ρ = 2 | modal ρ = 1 (60% III, 41% I) | **failed** |
+| P-R2a dead time and shape recovered (logged) | onsets mostly recovered; shape fails in mode-based worlds | failed on shape (kill i) |
+| P-R2b no latency artifact | none in mode-free worlds; the mode sequence alone makes a rise in #27 | supported for latency; mode channel found |
+| P-R2c regime-I rise survives (logged) | k₄ − k₁ = +0.013, n.s. | **failed** (rise withdrawn) |
+| P-R2d J₁ > 0 in chat and computer-use mode | 0.110 vs 0.005 (logged: 0.158 vs −0.006) | mixed |
+
+**Rivals.**
+- **R1 (pure field) is rejected for content.** At matched age, read statements beat in-flight statements, and convergence cannot do this (N0 gives 0/5).
+- **R2 (ungated) is rejected for content.** The synthetic ungated world gives J^c_1 ≤ 0, while the real J^c_1 is > 0.
+- **The A-clock rival (a fixed dead time on the source's clock)** is beaten in regime III only by the post hoc RD: the step follows the relay's posting time.
+
+**Scorecard (old → new):**
+- **D 1 → 2:** the gated model predicted, before any content statistic, a hop-1 content jump with address gating. It holds in both embedding models and in 10/16 units.
+- **F stays 1:** R1 and the dead-time recovery pass. The pre-registered R6 worlds missed the length bias, and the regime-I kernel shape is not identifiable.
+- All other axes are unchanged.
+- A1 B1 C1 D1 E1 F1 G1 H2 I1 → **A1 B1 C1 D2 E1 F1 G1 H2 I1**.
+
+**For H67** (round-2 gain reconciliation): `data/processed/H50-field-vs-coupling-transfer-lag/r2/pair_J1.parquet` has the round-1 hop-1 talk jump per directed pair (sender → recipient, roster codes) and unit: 1,094 pairs with ≥ 300 reads, with SEs, read counts and named counts.
+
+### Round-3 redirects
+Listed under "Round 2 redirects" above (H50-R8 to R11, added 2026-10-05).
+
+**Claim that stands:** In regime III, content couples at the recipient's read-out call, as talk does. The matched-age content jump is J^c_1 = 0.033 [0.027, 0.039] (whitened cosine, bge; gte 0.046 [0.038, 0.055]), with CI > 0 in 10/16 units and none below 0. It is address-gated ×5 (named 0.077 vs unnamed 0.016). *Excluded:* the graph-clause event study (inconclusive: length bias); the relay RD (post hoc, supporting only); regime-I content beyond hop 1 and the regime-I kernel shape (not identifiable: chat-mode channel); the regime-I mode split (post hoc amendment R2-A1).
+
 ## Notes
 - 2026-10-04 05:40 UTC: round 1 started; card filled before any real-data statistic. The first attempt (2026-10-04 ~02:40 UTC) was cut off by an API limit after reading context and inspecting input counts; nothing had been written. DQ1's context ledger exists, so lags are in call cycles from the start (`exposure.lag_s` is not used: it overstates visibility lags).
 - 2026-10-04 ~06:00–06:50 UTC: synthetic validation (three iterations; estimator fixes listed under Amendments), scheme build (NE43 bookend finding), amendments, then period predictions at 07:00 UTC, then the real-data run.
@@ -372,3 +472,6 @@ Y_{p,h} = α_p + β_h + Σ_e γ_e 1[h − ρ_p = e] + ε, for e ∈ {−3, −2,
 - **Data finding (for the NE catalog):** the `automated` daily pause/resume bookends stop after **2026-08-04** (last resume and pause on 08-04), not on 08-21. Only the nudges stop after 08-20. NE43 as catalogued conflates two switch-offs.
 - **Data finding:** in #38 the pause bookend arrives as agents are halted: 94% of agents make no call after it, and last calls end within about 23 s (q90). The bookend is an announcement, not an input.
 - Proposed for `physics-models/DEFINITIONS.md` (outside H50's edit scope): *call cycle (hop)*, *read-out jump (gate coupling)*, *field excess (shifted-input null)*, *coupling share (CF, gated kernel)*, as defined in the Model section and Amendments.
+- 2026-10-05 02:50 UTC: round 2 pre-registered (commit 582aecd), before any round-2 statistic. Order: scheme (`build_r2.py`), R1 synthetic → R1 real; R6 synthetic → amendment R6-A1 → R6 real (pre-trend failed) → post hoc diagnosis (W0L) and relay RD; R2 synthetic (K0 rise found) → added mode-free worlds → R2 real → amendment R2-A1 (split outside the anchor window). Then the pair table for H67, estimates, period blocks, figure.
+- Data finding (round 2): in regime I, chat-mode calls talk 78% and computer-use calls 4%. After a peer message, the next calls are more often chat mode (ΔP 0.024). So regime-I "talk coupling" is mostly a mode switch.
+- Method finding (round 2): hop-indexed event profiles around an event are biased when the outcome depends on call length, because the in-flight call is length-biased. Start-time RDs are not (regime III). In regime I even the start-time RD is biased (+0.025) in a world where talk depends on call length. Proposed as an `infra/README.md` Known issue.

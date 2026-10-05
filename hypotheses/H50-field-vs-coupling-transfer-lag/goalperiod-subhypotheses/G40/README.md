@@ -42,4 +42,14 @@ Data: `data/processed/H50-field-vs-coupling-transfer-lag/G40/` (one JSON per uni
 - **C (adequacy):** the read-out jump is tested against shifted-time placebos (no-coupling synthetic worlds: false-positive rate 3/35 seeds); field excess against shifted inputs. Here: J₁ CI > 0 in 0/1 units.
 - **D (unfitted signature):** a step at the read-out call (onset hop 1) in 0/1 units; no unit shows the ungated signature (J₁ < 0).
 - **G (ground truth):** activity co-movement is carried by the schedule edges (edges-alone field excess above), as H38 found for regime III.
+## Round 2 (2026-10-05)
+*Predictions templated from the card's "Round 2" section (written 2026-10-05 02:50 UTC, before any round-2 statistic). Role: replication. Period numbers are inverse-variance means over the period's eligible units.*
+
+| statistic | estimate [95% CI] | reading |
+| --- | --- | --- |
+| R1 content jump J^c_1 (bge, all) | 0.002 [-0.050, 0.054] | CI includes 0 (1 unit(s)) |
+| R1 J^c_1 named / unnamed | -0.155 [-0.326, 0.016] / 0.000 [-0.055, 0.055] | address split |
+| R6 relay RD, C-hop ≥ 2 (all / naming C) | -0.009 [-0.042, 0.024] / 0.001 [-0.190, 0.192] | post hoc; valid in regime III only |
+
+
 ## Notes
