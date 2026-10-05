@@ -261,3 +261,57 @@ Frozen C1–C6 on #43, #45–#47, #49, #50 and the #51 tail (scored at ≥ 30 ep
 - `confirm.py` C4 and C5 (b_K, b_O) now run on segment O. The change is definitional and the frozen thresholds are untouched; the script is still not run.
 
 **Claim that stands:** restatements copy what is still in the agent's context window (in-context enrichment OR 3.38 [2.56, 4.46], 4/4 scorable periods, unchanged by the segment-cut recheck). Excluded: the self-share trigger (failed), the threshold (unpowered), and novel input ending loops (failed).
+
+## Round 2 (2026-10-05): own tokens, erasure dose, memory carrier
+*Predictions, nulls and kill rules written 2026-10-05 02:45 UTC, before any round-2 statistic on real data. Exploratory; non-reserved regime-III days only (`holdout_mask`, ledger `holdout`); `confirm.py` not run. Serves Q4 (where the loop's state lives) and Q5 (erasure as a lever).*
+
+**What I had seen first:** the round-1 results above; restatement counts by lab (OpenAI and DeepSeek carry 40–60% of restatements in G38 and G51 and lack dense prompt tokens); erased-pair counts (G38 77,809 pairs with 2,860 near-copies; G51 819,261 with 2,722); H45's prompt-token coverage (Anthropic and Google ≈ 100% of calls; other labs ≈ 97% of talk calls and 3–26% of all calls); memory snapshots are full texts of 20–50k characters. No round-2 covariate has been related to a restatement outcome.
+
+### R1 · Own content in tokens (H69-R1)
+**Variables** (at the producing call c of statement t; H45 `calls.parquet` and its ruler `calibration.json`):
+- P_c = prompt tokens; R_c = room tokens = a_L·Σk + b_L·Σchars + e_L·Σ(other room events) over the segment (lab L coefficients; other labs use the mean); W_c = P_c − R_c = own content.
+- W_0 = W at the first call of the H69 segment that has P. Own chat tokens C_c = a_L·O + b_L·(own chars), with O = `o_seg` (the room-message ruler applied to own messages).
+- **Own tool tokens** U_c = max(W_c − W_0 − C_c, 0): own actions and tool output added since the reset.
+- Samples: **dense** (Anthropic and Google agents, P on every call, W_0 exact; primary) and **all** (every lab; W_0 from the first P-bearing call with `ctx_pos` ≤ 3, else the statement is dropped).
+
+**Model.** The round-1 onset logit (agent effects, agent-day clusters) with log(1 + O), log(1 + U/1000), log(1 + K) and the round-1 controls (n_prev, lag, log(1 + `ctx_pos`), reads). b_U is the onset log-odds per log unit of own tool tokens at fixed own chat, room items and position. Variant: log P in place of log(1 + `ctx_pos`) (fill in tokens).
+
+| # | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R1-P1 | **Loops copy own chat, not own tool output.** Pooled b_U CI includes 0, and b_U < b_O (dense) | b_U CI > 0: onset rises with own content in general (density rival) | 0.50 |
+| R1-P2 | **Own chat survives.** Pooled b_O CI > 0 (dense) with U in the model | b_O CI includes 0: own chat count was a proxy for own tokens | 0.45 |
+| R1-P3 | descriptive: the fill coefficient (`ctx_pos`) with and without U, and the log-P variant (rival R3) | — | — |
+
+**Kill rule.** If b_U CI > 0 and b_O CI includes 0, Finding 3 ("own statements raise onset") is replaced by "own content in tokens raises onset". R1-P1 is a null prediction: it is read only where the synthetic power for b_U = 0.32 (round-1 b_O) is ≥ 0.8; otherwise it is inconclusive.
+
+### R2 · Erasure dose (H69-R2)
+- **R2a, dose across full erasures.** Every forced or voluntary erasure removes the whole segment, so it always removes the copied source. The removed dose differs: D = log(1 + (W_last − W_0)/1000), the own tokens in the segment at the last call before the reset (all labs; W_0 as in R1). Model: the round-1 exit logit (primary, A1) plus erasure × D_c (D centered over erasure rows; 0 elsewhere); the same term in the onset logit.
+  - **R2-P1 (source removal, H69):** the erasure effect is a step: pooled b_dose CI includes 0 (exit and onset). **Rival (proportional dose):** b_dose > 0 for exit (CI > 0). Read only where synthetic power ≥ 0.8 at b_dose = 0.7 per log unit; otherwise inconclusive. Credence 0.45 (incl. the power risk).
+- **R2b, NE22 cap (a partial trim that removes no own text).** From 2026-06-11 a call shows at most 200 unseen events; omitted events are other agents' (`cap_hit`, `n_omitted`). G51 non-reserved days: exit OR for a cap hit on a call in (call of t − 1, call of t]. **R2-P2:** OR CI includes 1 (no own text removed, no exit). With fewer than 20 exposed loop statements the test is inconclusive and only counts are reported. Credence that it is testable: 0.15.
+- **R2c, NE03 chat window: not run.** The limit is undocumented; only two non-reserved chat-mode days precede 2025-08-20 (#9 is reserved); the step coincides with NE27 (N 4 → 7); H45 found no first stage (chat-mode prompts bounded at ≈ 8–10k tokens before and after); H69's scheme covers regime III only.
+
+### R3 · Memory as the residual carrier (H69-R3)
+**Variables.** For each round-1 pair (t, u) with u erased (`in_seg` false):
+- M_t = the agent's latest memory snapshot (`agent_memories`) created before t's `t_call` (the memory in the prompt at t); M_u = the latest snapshot before u was posted.
+- Containment c(u, M) = the fraction of u's word 3-grams (lowercased word tokens) that occur in M. c_t = c(u, M_t), c_u = c(u, M_u). Statements with fewer than 5 three-grams are excluded.
+- in_mem = c_t ≥ 0.5 (variants 0.3, 0.7, continuous); **new_mem** = in_mem and c_u < 0.5 (written between u and t, i.e. at the intervening consolidation); old_mem = in_mem and c_u ≥ 0.5 (already in memory when u was posted).
+- Memory text is read in memory only and never stored; outputs are numbers per pair. `memory_stats` `lines_added` at the intervening consolidation is a descriptive dose (Known issue: two rows per consolidation; the append row is used).
+
+**Statistic.** Among erased pairs, the Mantel–Haenszel OR of a near-copy (round-1 rule) for in_mem vs not, strata agent × lag bin × calls bin, agent-day bootstrap (as round 1).
+
+| # | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R3-P1 | **Memory carries erased statements.** in_mem OR ≥ 2 pooled (CI > 1) and > 1 in ≥ 60% of scorable periods | OR CI includes 1 | 0.55 |
+| R3-P2 | **Carrier, not salience.** new_mem vs not-in-memory OR > 1 (CI > 1) pooled; and the in_mem OR stays > 1 (CI > 1) with strata extended by a c_u bin (0, (0, 0.5), ≥ 0.5) and a prior-copy bin (near-copies of u by later statements of u's segment: 0, 1, ≥ 2) | either fails: what the agent writes into memory is what it keeps returning to anyway | 0.35 |
+| R3-P3 | **Round-1 enrichment is a lower bound.** In-context vs erased-not-in-memory enrichment exceeds in-context vs all-erased enrichment (ratio of ORs > 1, bootstrap CI > 1) | ratio CI includes 1 | 0.45 |
+
+**Rivals:** R0 recency (OR ≈ 1); salience (P1 passes, P2 fails). **Scorable:** ≥ 100 erased near-copies with containment defined and synthetic power ≥ 0.8. **Kill rule:** if R3-P1's CI includes 1 where powered, memory is not a residual carrier and Caveat 4 ("enrichment is a lower bound because memory may carry erased statements") is withdrawn.
+
+### Synthetic validation plan (before any round-2 statistic on real data)
+`analysis/synthetic_r2.py`, on the real skeletons (real statements, calls, segments, O, U, K, positions, erasures, D, pairs, and real c_t, c_u):
+- **R1:** restatement sequences drawn from the onset and exit logits. W0: b_O 0.32, fill 0.40, b_U 0. WU: W0 plus b_U 0.32. Size and power of b_U and b_O.
+- **R2a:** exit log OR for an erasure ln 2.4. Step: b_dose 0. Prop: b_dose 0.7. Size and power.
+- **R3:** pair outcomes from a lag/call-distance decay with agent effects. M0: no memory effect. M1: in_mem log OR ln 3. M2 (salience): a latent salience raises both copying (+1 per SD) and memory inclusion (simulated in_mem, with c_u and prior copies as noisy proxies). Size of P1 and P2 under M0 and M2; power under M1.
+- Pass: size ≤ 0.10 and power ≥ 0.8 at real counts; otherwise the statistic is reported as inconclusive (dated amendment).
+
+**Verdict impact.** Round 2 adds rows to the G38, G40, G41, G51 and NE41 READMEs. A period verdict changes only if a kill rule fires.
