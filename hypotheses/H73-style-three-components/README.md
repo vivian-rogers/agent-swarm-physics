@@ -269,6 +269,76 @@ Targets: held-out goal periods (#1, #9, #14, #15, #22, #28, #29, #32, #34, #43, 
 - **H73-R3.** Excursion model: an Ornstein–Uhlenbeck process within a context segment on message position (H46-R2), with its direction random per segment; fit its variance growth and test it at NE41.
 - **H73-R4.** Model swaps: the NE30 test in the holdout (frozen as C6); in round 2 a larger leader sample (#45 is held out).
 
+## Round 2 (2026-10-05): conversation state, register transients, reset-and-hold out of sample
+*Scope: the coordinator's H73-R1 and R2, plus a fresh pre-registered test of H46's post hoc reset-and-hold shape (it replaces R3). R4 is not run (reserved data). Non-reserved data only (`holdout_mask` asserted in every script); no confirm run; no paid labels.*
+
+### Pre-registration (written 2026-10-05 04:44–04:46 UTC, committed 04:46 before any round-2 statistic on real data)
+*Facts seen before writing (sampling design only; no style, content or alignment statistic): `scheme/build_r2.py` gives 114,107 eligible messages (round 1's population plus conversation state). Pending @-mentions > 0 at 31–51% of messages and a DQ2 parent at 36–55% by regime and mode. Computer-use messages by the reset before them: regime I within-segment 9,464, one session reset 4,496; regime II 1,847 computer-use messages in all; regime III forced 7,640, voluntary 7,302, within 32,585. Source pairs (lag ≤ 300 s): read / in-flight 184,872 / 22,886 (regime I), 16,147 / 1,246 (II), 207,106 / 13,820 (III); the ledger marks 25–49% of items `uncertain`. Agent 40 (NE38) has 3 eligible days before 07-29 (323 messages). #12: 218 judge messages in 10 windows of 13–47 min. H46's round-2 section and the Known issues of 2026-10-05 (A5 scaling, reset-and-hold, read vs in-flight age matching, pooled-map bias) were read.*
+
+**Code and data (new, behind a switch; round-1 scripts and outputs are untouched).** `scheme/build_r2.py` → `data/processed/H73-style-three-components/r2/` (`messages_r2.parquet`, `src_pairs.parquet`); `analysis/r2lib.py`, `r2_synthetic.py`, `r2_run.py`, `r2_estimates.py`, `r2_figures.py`, `r2_period_cards.py`.
+
+**Style vectors (fixed now).** Round 1's 17-d type-controlled style `tc` (H73 ruler). Deviations d = x − q̂_{agent,unit} (agent × unit mean over eligible messages), clipped at ±3 per dimension (H46 R2-A1). Accommodation uses `tc16` = `tc` without `tc_at`, because the @ count is addressing, not style (`tc` reported). Inner products are divided by the dimension D.
+
+#### R2-1. Conversation-state model (H73-R1)
+**R2-1a. Decomposition with conversation state.** Round 1's O1 per eligible goal period with two context blocks, each beyond the base G (day field, time of day, chat vs computer-use mode level), A and R:
+- **Cf (fill, round 1):** fill-bin levels within computer-use mode plus agent slopes on z = log2(1 + ctx_pos).
+- **Cv (conversation state):** log2(1 + k_since_talk) (received items since the agent's last talk call), log2(1 + k_ctx) (received items in the context; 0 in chat mode), pending @-mentions (items naming the agent received since its previous talk call: dummies 1, 2+), pending nudge (1+), DQ2 thread depth (dummies 1, 2, 3+).
+- Unique shares u_Cf = ΔR²(Cf | G, A, R, Cv) and u_Cv = ΔR²(Cv | G, A, R, Cf), on round 1's scale (divided by κ − R²(G)). Null for Cv: Cv rows permuted within agent-day (100 draws).
+- **R2-1-P1.** u_Cv > u_Cf in ≥ 2/3 of regime-III eligible periods, and Cv permutation p < 0.05 in ≥ 2/3 of all eligible periods. Prior 60%. *Kill:* u_Cv ≤ u_Cf in ≥ half of regime-III periods (conversation state is not a better context variable than own fill).
+
+**R2-1b. Accommodation to read items, with the in-flight placebo.** Message B by agent j; source A = an eligible message of another main agent that j received with A.t in (t_prev, t_B), where t_prev is j's previous eligible message on that PT day, and lag t_B − t_A ≤ 300 s. **Read:** A was posted before the t_call of B's producing call (received at a call ≤ it; ledger-checked). **In flight:** posted after that t_call and before B (it could not be read). Outcome y = ⟨d_B, d_A⟩ / D.
+- **Strata (Known issues H54 r2, H08 r2):** lag {0–10, 10–20, 20–40, 40–80, 80–160 s} × before-message age t_B − t_prev {< 1, 1–5, 5–30, ≥ 30 min} × received density (agent items received in the 120 s before B: 1–2, 3–5, 6+).
+- **Estimator:** J = Σ_b w_b (ȳ_read,b − ȳ_inflight,b) / Σ_b w_b, w_b = n_r n_i / (n_r + n_i). Accommodation coefficient γ = J / s²_A, with s²_A = mean ⟨d_A, d_A⟩/D over the matched read pairs: the share of a read item's style deviation that B takes on, per item.
+- **Population:** primary drops ledger-`uncertain` items. Units: `period_units` with ≥ 200 read and ≥ 200 in-flight pairs in shared cells. Inference: 1-h blocks within PT day (B's hour), 400 draws, fixed-weight pooling of unit draws (H13 C-A1). Pooled per regime; regime III is primary, regime I secondary, regime II descriptive.
+- **Secondary:** named (A's item names j) vs unnamed; DQ2 parent pairs dropped; `uncertain` kept; change-score outcome ⟨x_B − x_prev, d_A⟩/D; `tc`; equal-time convergence level ȳ_inflight (descriptive).
+- **R2-1-P2 (accommodation through reading).** Regime-III pooled γ > 0 with CI > 0. Prior 45%.
+- **R2-1-P3 (address gating).** γ_named > γ_unnamed (paired-draw CI of the difference > 0). Prior 50%.
+- **Kill / negative.** Regime-III γ CI ∋ 0 with upper bound below the smallest effect of interest γ* (set from the synthetic power at 0.8, at most 0.05 per item): "no style accommodation through reading beyond convergence, γ < bound". CI ∋ 0 with the upper bound ≥ γ*: inconclusive.
+
+#### R2-2. Register as a transient (H73-R2)
+Shift vectors use round 1's `tc` (17-d, not clipped). Squared shift norms are split-half cross-products: an agent-day's messages (and the comparison agents' messages) are split at random into halves, the shift is computed in each half, and S = ⟨s⁽¹⁾, s⁽²⁾⟩ / D (unbiased for the squared true shift; mean of 20 splits).
+- **R2-2a #51 onset, daily event study.** Incumbents = round 1's G51 set (16 agents). Pre = #36–#44 regime-III non-reserved days. Day k = PT days since 07-06 (k = 0) up to 09-06. Shift of agent i on day k: s_i(k) = [x̄_{i,k} − q̂_{i,pre}] − mean_{j≠i}[x̄_{j,k} − q̂_{j,pre}] (difference-in-differences against the other incumbents, which removes the #51 goal field). Fit S_i(k) = S∞ + A e^{−k/τ} by least squares weighted by messages, τ on a grid of 0.25–60 days; day bootstrap (500). Placebo band: the same statistic at pseudo-onsets every 7 days inside #36–#44 (pre = the days before; k = 0–13), per agent.
+  - **R2-2-P1 (the Prankster's persona is an onset transient).** Agent 10: A > 0 (CI > 0); τ_P ∈ [0.5, 14] days with bootstrap upper bound < 30; mean S_10 over k = 21–60 at or below the 95th percentile of its placebo S. Prior 55%.
+  - **R2-2-P2 (register onset transients are general).** Over incumbents, mean S_i(k ≤ 2) − mean S_i(14 ≤ k ≤ 42) > 0 in a sign test (p < 0.05). Prior 45%.
+- **R2-2b NE38 (agent 40, 07-29; descriptive).** Pre = its eligible days before 07-29 (07-24, 07-27, 07-28). Same S(k) with the other #51 agents as comparison. Placebo: pseudo-dates 08-05, 08-12, 08-19, 08-26 with the 3 eligible days before each as pre. **Prediction:** mean S_40 over k = 0–2 exceeds every placebo value, and decays (k = 7–20 mean ≤ half the k = 0–2 mean). Prior 40%. One agent, a newcomer five days in: descriptive.
+- **R2-2c #12 judge register by minute (descriptive).** Residuals after G, A, C (round 1). Each judge message is projected on the unit vector of the leave-this-judge-out mean judge shift, relative to the judge's debater-message mean projection. Bins: minutes since the window start {0–5, 5–10, 10–20, ≥ 20} and the 30 min after the window ends (outside any window). **Predictions (assigned register = a step):** (i) the 0–5 min mean ≥ 0.5 × the window mean; (ii) no build-up: the slope per 10 min is ≤ 0 or its within-window permutation p ≥ 0.05; (iii) switch-off: the 30-min post-window mean < 0.5 × the window mean. Prior 50%.
+
+#### R2-3. Reset-and-hold, out of sample (new; replaces H73-R3)
+**What H46 saw.** H46's round 2 fitted the drift-and-reset model and found the reset-and-hold shape post hoc on **regime-III** context segments, all non-reserved units (#36–#44, #51), on `gp` and `tc` style. It never used regime I/II computer-use sessions. **Fresh sample:** regime I and II computer-use messages, segments cut at resets on computer-use calls (in regimes I/II these are session starts, `reset_session`). Regime III is reported as a secondary, **seen** sample (labelled), where only RH-P3 and the variance-component estimate are new statistics.
+
+**Model (fixed now).** In segment s of agent i: x_k = q_i + η_{i,d} + o_s + ε_k, with o_s drawn at the reset, held through the segment, independent across segments and with no common direction; Var o = κ_seg × per-message variance.
+
+**Statistics.** d = clipped deviation from the agent × unit mean; V̄ = mean ⟨d, d⟩/D. Pairs: consecutive eligible computer-use messages of one agent on one PT day. *Within* = same segment; *across* = exactly one computer-use reset between them. Within pairs are reweighted to the across pairs' time-gap distribution (0.1-decade bins), as in H46 O-R2b.
+- C(l) = mean ⟨d_a, d_b⟩/D at message lag l; ΔC(l) = C_within(l) − C_across(l).
+- ΔC_first: within pairs whose earlier message is the first of its segment (k = 1 → 2). ΔC_late: earlier message k ≥ 3. r = ΔC_first / ΔC_late.
+- Growth: Δ̄ = n-weighted mean of d_k − d_1 over k = 2…8 within segments (d_k = ⟨d, d⟩/D), as H46 O-R2a.
+- Carry-over: ρ_carry = [C_across,1 − C_across,2] / ΔC(1), where C_across,2 uses pairs of the agent's eligible messages on one day with exactly two resets between them (gap-matched to the one-reset pairs).
+- Common profile: the squared norm of the mean first-message deviation over segments (split-half, unbiased) as a share of ΔC(1).
+- κ_seg = ΔC(1) / V̄.
+- Scaled percentile T (H46 R2-A5): each across pair's distance ‖d_a − d_b‖² divided by its agent × unit median within-pair distance, ranked among same-agent within pairs at matched 0.05-decade gaps (else agent-free cells).
+- Inference: agent-cluster bootstrap (500).
+
+**Predictions.**
+- **RH-P0 (a reset moves style in regimes I/II).** T > ½ with CI > ½. Prior 65%.
+- **RH-P1 (offset present at the first message).** ΔC_first > 0 with CI > 0. Prior 55%.
+- **RH-P2 (no growth inside a segment).** r ≥ 0.5 and ΔC(3) / ΔC(1) ≥ 0.5 (no decay over lag); Δ̄ CI ∋ 0 or Δ̄ < 0.5 κ_seg V̄. Prior 55%.
+- **RH-P3 (random direction).** ρ_carry < 0.3 with CI upper < 0.5, and the common-profile share < 0.25. Prior 60%.
+- **RH-P4 (size).** κ_seg ∈ [0.02, 0.10] (H46: 0.046 [0.017, 0.072]). Prior 50%.
+- **Reading.** "Reset-and-hold confirmed out of sample" if P0–P4 pass in regimes I/II. *Kill:* ΔC(1) CI ∋ 0 (no held offset), or r < 0.33 (an excursion that grows from zero), or ρ_carry CI lower bound > 0.5 (the offset is carried, not redrawn).
+- **Task-switch check (an exogenous-field impostor).** A regime-I/II session reset is scheduled or chosen, not forced; a task switch at it would also look like an offset. The same T and ΔC(1) are computed on style-residualized content (DQ5 `statements_style_resid32`, bge). If content T has CI > ½ at session resets, the regime-I/II result reads "a segment offset, context and task not separated". At regime-III forced erasures content does not move (H46: 0.51).
+
+#### C0. Correction of round 1's N1 (not a test)
+Round 1's forced-erasure T_s 0.567 used unscaled 0.05-decade cells (Known issue, H46 r2). It is recomputed with A5 scaling; expected ≈ 0.55.
+
+#### Synthetic validation first (axis F; `analysis/r2_synthetic.py`, real schedules)
+Vectors: agent × unit constants (real), day jitter, real within-agent residuals permuted within agent (time structure destroyed). Worlds:
+- **Accommodation:** W0 none; W1 convergence (a room × day drive, OU in clock time with τ 20 min (10% of variance) plus τ 2 min (5%), entering each message at its producing call's t_call); W2 = W1 + accommodation γ per read item (0.02, 0.05); W3 = W1 with the drive loading falling with call age. Required: size ≤ 0.07 in W0, W1, W3; power ≥ 0.8 at γ*.
+- **Reset-and-hold:** S0 none; S_RH offset κ 0.05; S_OU an excursion from zero (φ 0.7, 0.9; stationary 0.05); S_carry offsets with carry-over 0.6 across resets. Required: RH reading correct in ≥ 80% of S_RH replicates; the r rule rejects S_OU (φ 0.7) in ≥ 80%; ΔC(1) CI > 0 in ≤ 7% of S0.
+- **Transients:** a planted Prankster transient (A = 2× the placebo median, τ 3 days) and a persistent shift; the fit recovers τ and separates them.
+Any estimator change after the synthetic run is a dated amendment, made before real data.
+
+**Estimates.** Rows to `per_period_estimates` (hypothesis H73, notes "round 2"): u_Cv and u_Cf per period; γ per unit; ΔC(1) and T per regime-I goal period with enough pairs; the #51 τ_P; #12 descriptive. Period READMEs get round-2 blocks.
+
 ## Notes
 - 2026-10-04 19:13 UTC: card written by the round-1 agent before any real-data style statistic. The Kolchinsky–Wolpert model (04) is listed on the stub but not tested: H46 already ran it, and HH265 does not ask for it.
 - 2026-10-04: the first drafts of the card and period READMEs carried hand-written timestamps (19:15, 19:30–19:50, 19:55, 19:58 UTC) that ran ahead of the clock. They were corrected from file modification times at 19:38 UTC. The order (card → synthetic → amendments → period predictions → real runs) is unchanged and is confirmed by the file times: messages.parquet 19:14, synthetic.json 19:27, period READMEs 19:28, replication.json 19:33.
