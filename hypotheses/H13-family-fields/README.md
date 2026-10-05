@@ -527,7 +527,7 @@ One folder per goal period (round-1b `Verdict (1b)` lines in each; unchanged); v
 
 **Estimates.** Per-unit rows to `per_period_estimates` (hypothesis H13, round 2): T at each ladder level (bge), J_same, J_cross, Δ_J^adj and Δβ_talk per unit; enculturation statistics per joiner unit. Period READMEs G35–G51 and NE32 get round-2 blocks.
 
-### Synthetic validation (run 2026-10-05 03:40–04:20 UTC, before any round-2 statistic on real data)
+### Synthetic validation (run 2026-10-05 03:28–03:45 UTC, before any round-2 statistic on real data)
 Outputs: `data/processed/H13-family-fields/r2/synthetic_{A,B,C}.json`. Values are means over replicates.
 
 **A (graded ladder; 15 units, 20 replicates per world).** Entries: RE T / share of replicates with RE CI > 0.
@@ -549,7 +549,7 @@ Readings. (1) W3 holds size (RE CI > 0 in 0/20 replicates in S0, NL and SG; per-
 
 **C (read-out; 8 eligible regime-III units: 38a, 40, 41, 44, 51a–d; 40 replicates).** Pre-registered day blocks with inverse-variance pooling gave false positives in 0.40 of N0 replicates (unit SEs from 3–8 day blocks are too small and noisy). After Amendment C-A1: N0 size 0.075, N1 0.05, N3 (family-common drive) 0.025, N4 (only named rows couple) 0.0 for Δ_J^adj; the unstratified Δ_J is biased in N4 (−0.010). Power at Δ = 0.5 J̄: **0.55**. Pooling hops 1–2, or using all regime-III units, does not raise it (0.15–0.40). The replicate SD of pooled Δ_J^adj is ≈ 0.011, so the 80%-power MDE is ≈ 0.031, about J̄. With a true Δ = 0 the "supported" rule (upper bound < 0.5 J̄) is met in 0.30 of replicates. Talk: T0 size 0.05; T1 (equal couplings) 0.10, a linear-probability bias of 20% of β̄; power at Δβ = 0.5 β̄ 0.90.
 
-### Amendments (2026-10-05 04:22 UTC, after the synthetic validation, before any round-2 statistic on real data)
+### Amendments (2026-10-05 03:46 UTC, committed 03:47 with the synthetic results, before any round-2 statistic on real data)
 - **A-A1 (pooled-map bias).** P-level and PG values are reported next to their S0 reference value. A-P1's clause "each P level ≤ the W level" is dropped as uninformative. A-P4's ρ_PG clause is dropped: S0 gives ρ_PG = 0.32 with no speech-act field. A-P4 is judged on T over agents' mean G vectors alone.
 - **A-A2 (the "only style" reading cannot be reached).** It needs W3 power ≥ 0.8 at one third of the raw field, and the synthetic gives 0.30. A W3 RE CI that includes 0 therefore reads "mostly style; a non-style residual below ≈ half of the raw field is not resolved". The stated exclusion bound is the W3 value with 0.8 power (≈ 0.045).
 - **A-A3 (calibrated location, descriptive, fixed now).** The real RE values of W3, S-a and P3 are placed on the synthetic S0/S1 curves (c grid) to give an implied non-style field size c*. Model-based; no verdict.
