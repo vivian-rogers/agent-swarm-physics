@@ -25,88 +25,191 @@
  "rated_by": "H74 agent (suggested)",
  "updated": "2026-10-05",
  "v2": {
-  "claim": "A schema diff of the raw record is an operator-grade change detector: 0/34 placebo false alarms; it dates NE14, NE17 and NE45 to the day and found 6 undocumented provider API changes. The fused five-channel alarm is too noisy (18% false alarms, AUC 0.68); topic shift remains the goal detector (AUC 0.89)",
-  "scope": "282 non-holdout days, 217 dated events; natives NE14, NE45, NE43, NE40",
+  "claim": "On 282 non-reserved days, a three-channel monitor with leave-one-period-out thresholds (schema diff ∪ log-count operator counters with two-day persistence ∪ H36's topic rule) has an out-of-sample per-day FAR of 0.085 [0.04, 0.17] and hits goal kickoffs at 0.57 (p 0.003) and room changes at 6/6; its counter channel alone dates all three undocumented drive steps (NE39, NE43a, NE43b) at FAR 1/82",
+  "scope": "282 non-reserved days, 82 placebo days, regimes I–III",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.63,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "ground truth agrees (documented events dated to the day)",
-    "x": 1.5,
-    "evidence": "natives NE14, NE45"
-   },
-   {
-    "factor": "calibrated null (placebo days)",
-    "x": 2,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "replication across events",
-    "x": 1.5,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "penalty: fused-alarm predictions failed; S channel credit partly post hoc",
-    "x": 0.8,
-    "evidence": "card §Results"
-   }
-  ],
-  "mechanism_level": "M1",
-  "fragile": false,
-  "value_if_true": 3.25,
-  "decision": "monitor the raw record's schema to catch platform changes; use topic shift for goals",
+  "credence": 0.72,
+  "mechanism_level": "M0",
+  "fragile": true,
+  "value_if_true": 3.0,
+  "decision": "operator monitor: three channels with stated hit and false-alarm rates; counters date drive changes",
   "magnitude": "material",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 2.05,
+  "generality": "any LLM swarm with standard logs",
+  "expected_usefulness": 2.16,
   "scientific_value": 3.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean",
-  "rated_at": "2026-10-04",
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; fragile if either; Δp 0.01, ΔV 0.00 (no adjudication needed)",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
+    "rater": "coordinator (round 2)",
     "credence": 0.71,
-    "value_if_true": 3,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater 4 (blind, 2026-10-04)",
-    "claim": "A daily record-schema diff (platform-wide new or retired field-name/type signatures) dates platform and provider format changes to the day with 0/34 placebo false alarms (NE14, NE17, NE45, six undocumented provider API changes); it does not see prompt-only or behavioral changes. Excluded: the fused five-channel alarm (FAR 0.18), NE40, M/O channels.",
-    "credence": 0.54,
-    "value_if_true": 3.5,
-    "mechanism_level": "M1",
+    "value_if_true": 3.0,
+    "mechanism_level": "M0",
     "fragile": false,
     "scientific_value": 3,
     "ladder": [
      {
-      "factor": "partial calibrated null (real placebo days: S FAR 0/34, Wilson upper ~0.10; synthetic S FAR 0 but synthetic noise mis-sized for the fused alarm)",
-      "x": 1.5,
-      "evidence": "Operating characteristics; Amendment 1; Caveats"
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
      },
      {
-      "factor": "partial replication (NE14, NE17, NE45 plus six provider changes dated; S hit on documented scaffold_tool only 0.26)",
-      "x": 1.5,
-      "evidence": "What it means 1; class table"
+      "factor": "calibrated null passed: leave-one-period-out conformal thresholds, out-of-sample FAR (one design with the synthetic study)",
+      "x": 2,
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "ground truth agrees (dated CHANGELOG and undocumented changes; S names the exact changed fields; scorecard G=2)",
+      "factor": "partial replication: 35 kickoffs, 6 room changes",
       "x": 1.5,
-      "evidence": "NE14/NE45 period READMEs; scorecard G"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "penalty: post hoc selection of the best channel among five and several classes; NE45 not blind",
+      "factor": "partly robust: C3 seed spread, catalog variants",
+      "x": 1.5,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: the undocumented-drive clause rests on 3 events",
       "x": 0.8,
-      "evidence": "Disclosure 'What I had seen'; P1 primary was the fused score"
+      "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "On 282 non-reserved days, the three-channel monitor (schema diff U log-count operator counters with two-day persistence U H36's topic rule C3) with leave-one-period-out thresholds has out-of-sample per-day FAR 0.085 [0.04, 0.17], hits goal kickoffs at 0.57 (p 0.003) and room changes 6/6; its counter channel D3 alone dates NE39, NE43a and NE43b at FAR 1/82.",
+    "credence": 0.72,
+    "value_if_true": 3.0,
+    "mechanism_level": "M1",
+    "fragile": true,
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary (R1 monitor, LOPO rule and kill rule fixed 03:50 UTC; D3 amended after synthetic, before real data)",
+      "x": 0.4,
+      "evidence": "card Round 2 Pre-registration; Amendment R2-A1"
+     },
+     {
+      "factor": "calibrated null (LOPO conformal thresholds; synthetic worlds with bootstrapped real tails predict OOS FAR 0.013-0.015 vs 0.012 real; random-date null)",
+      "x": 2,
+      "evidence": "card Round 2 Results R1/R3; scorecard F 1->2"
+     },
+     {
+      "factor": "partial replication (35 kickoffs across many periods, hit 0.57 vs chance 0.33; per-period r2 verdicts 11 supported / 11 mixed / 13 failed)",
+      "x": 1.5,
+      "evidence": "card Results by goal period; R1 table"
+     },
+     {
+      "factor": "partly robust (C3 over 9 bge surrogate seeds: union FAR 0.073-0.085; gte variant same FAR 0.085; S threshold sensitive to catalog completion)",
+      "x": 1.5,
+      "evidence": "card R1 'C3 seed spread'; 'Finding outside the plan'"
+     },
+     {
+      "factor": "ground truth agrees (dated documented and undocumented changes as answer key; G = 2)",
+      "x": 1.5,
+      "evidence": "card scorecard G; R1 table"
+     },
+     {
+      "factor": "penalty: forking paths on the drive clause (D3 counters chosen knowing NE39/NE43 signatures; only L-D3-persistence among six D variants dates NE39)",
+      "x": 0.7,
+      "evidence": "card R3 table; round-1 redirect H74-R3"
+     },
+     {
+      "factor": "penalty: class selection among 9 classes (goal and room clauses picked from a multi-class table; scaffold classes at chance)",
+      "x": 0.8,
+      "evidence": "card R1 table"
+     }
+    ],
+    "notes": "Fragile because round 1's scaffold-tool headline (hit 0.78) collapsed to chance and the S channel's FAR depends on cataloguing provider changes; the drive-step clause rests on 3 events and one D variant chosen with the targets known. The 0.085 FAR CI is wide (82 placebo days)."
    }
-  ],
-  "adjudicate": false
- }
+  ]
+ },
+ "v2_history": [
+  {
+   "claim": "A schema diff of the raw record is an operator-grade change detector: 0/34 placebo false alarms; it dates NE14, NE17 and NE45 to the day and found 6 undocumented provider API changes. The fused five-channel alarm is too noisy (18% false alarms, AUC 0.68); topic shift remains the goal detector (AUC 0.89)",
+   "scope": "282 non-holdout days, 217 dated events; natives NE14, NE45, NE43, NE40",
+   "direction": "positive",
+   "original_verdict": "mixed",
+   "credence": 0.63,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "ground truth agrees (documented events dated to the day)",
+     "x": 1.5,
+     "evidence": "natives NE14, NE45"
+    },
+    {
+     "factor": "calibrated null (placebo days)",
+     "x": 2,
+     "evidence": "card §Results"
+    },
+    {
+     "factor": "replication across events",
+     "x": 1.5,
+     "evidence": "card §Results"
+    },
+    {
+     "factor": "penalty: fused-alarm predictions failed; S channel credit partly post hoc",
+     "x": 0.8,
+     "evidence": "card §Results"
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": false,
+   "value_if_true": 3.25,
+   "decision": "monitor the raw record's schema to catch platform changes; use topic shift for goals",
+   "magnitude": "material",
+   "generality": "any LLM swarm",
+   "expected_usefulness": 2.05,
+   "scientific_value": 3.0,
+   "rater": "2 raters (coordinator + blind); log-odds mean",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.71,
+     "value_if_true": 3,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater 4 (blind, 2026-10-04)",
+     "claim": "A daily record-schema diff (platform-wide new or retired field-name/type signatures) dates platform and provider format changes to the day with 0/34 placebo false alarms (NE14, NE17, NE45, six undocumented provider API changes); it does not see prompt-only or behavioral changes. Excluded: the fused five-channel alarm (FAR 0.18), NE40, M/O channels.",
+     "credence": 0.54,
+     "value_if_true": 3.5,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3,
+     "ladder": [
+      {
+       "factor": "partial calibrated null (real placebo days: S FAR 0/34, Wilson upper ~0.10; synthetic S FAR 0 but synthetic noise mis-sized for the fused alarm)",
+       "x": 1.5,
+       "evidence": "Operating characteristics; Amendment 1; Caveats"
+      },
+      {
+       "factor": "partial replication (NE14, NE17, NE45 plus six provider changes dated; S hit on documented scaffold_tool only 0.26)",
+       "x": 1.5,
+       "evidence": "What it means 1; class table"
+      },
+      {
+       "factor": "ground truth agrees (dated CHANGELOG and undocumented changes; S names the exact changed fields; scorecard G=2)",
+       "x": 1.5,
+       "evidence": "NE14/NE45 period READMEs; scorecard G"
+      },
+      {
+       "factor": "penalty: post hoc selection of the best channel among five and several classes; NE45 not blind",
+       "x": 0.8,
+       "evidence": "Disclosure 'What I had seen'; P1 primary was the fused score"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
+  }
+ ]
 }

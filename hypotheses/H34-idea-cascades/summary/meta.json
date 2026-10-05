@@ -38,99 +38,110 @@
  "updated": "2026-10-05 (round 2)",
  "calibrated_by": "coordinator 2026-10-04 (suggested ratings kept)",
  "v2": {
-  "claim": "Idea cascades are subcritical (R̂ 0.09–0.40) and exposure-locked in 32/32 periods, but about half of the lock is convergence; leaders are not stronger idea seeders",
-  "scope": "32 periods; natives #35, #26",
+  "claim": "Idea branching is heterogeneous across ideas: a gamma mixture of idea-level branching ratios (α̂ 0.96, CV² ≈ 1) covers the tree-size tail in 28/32 periods where one ratio covers 9/32, and adopters out-spread inventors (non-root/root offspring 1.52, > 1 in 31/32, against ≤ 0.91 for every homogeneous reference); in the NE42 merge and split branching reversed with the room-size change (D +1.29 [+0.74, +2.11])",
+  "scope": "32 non-reserved periods; NE42",
   "direction": "positive",
   "original_verdict": "mixed",
-  "credence": 0.84,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "calibrated null",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "replication (32/32)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "synthetic identification",
-    "x": 1.5,
-    "evidence": "card §Synthetic"
-   },
-   {
-    "factor": "robust (ledger: 27 → 32/32; no embeddings involved)",
-    "x": 2,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "rival partly beaten (read > unread 30/32; unread/read 0.56)",
-    "x": 1.5,
-    "evidence": "card §Round 1b"
-   },
-   {
-    "factor": "penalty: multiplicity / forecast undercoverage",
-    "x": 0.7,
-    "evidence": "card §Round 1b"
-   }
-  ],
+  "credence": 0.75,
   "mechanism_level": "M1",
   "fragile": false,
   "value_if_true": 2.25,
-  "decision": "forecast idea spread; expect ~half of apparent spread to be convergence",
+  "decision": "science/model choice: idea spread is subcritical and heterogeneous; target adopters, not inventors",
   "magnitude": "small",
-  "generality": "any LLM swarm",
-  "expected_usefulness": 1.89,
-  "scientific_value": 3.2,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
-  "rated_at": "2026-10-04",
+  "generality": "read-out-gated LLM swarms",
+  "expected_usefulness": 1.69,
+  "scientific_value": 3.0,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; fragile if either; Δp 0.02, ΔV 0.50 (no adjudication needed)",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.89,
-    "value_if_true": 2,
+    "rater": "coordinator (round 2)",
+    "credence": 0.76,
+    "value_if_true": 2.0,
     "mechanism_level": "M1",
     "fragile": false,
-    "scientific_value": 3
+    "scientific_value": 3,
+    "ladder": [
+     {
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
+     },
+     {
+      "factor": "calibrated null passed: homogeneous and node-level references on the real skeleton (one synthetic suite)",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "replication: offspring ratio > 1 in 31/32",
+      "x": 2,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "partly robust: exact finite-N law, both size and offspring statistics",
+      "x": 1.5,
+      "evidence": "card §Round 2"
+     },
+     {
+      "factor": "penalty: the NE42 reversal is not specific (skeleton worlds give the same D)",
+      "x": 0.8,
+      "evidence": "card §Round 2"
+     }
+    ]
    },
    {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Scope: 32 non-holdout periods, hashed novel markers. Idea cascades are strongly subcritical in every period (R-hat 0.09-0.40, every CI < 1), exposure-driven beyond a common field, and heavier-tailed than one branching law; not critical s^-3/2.",
-    "credence": 0.76,
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "Idea branching is heterogeneous across ideas: a gamma mixture of idea-level R (median shape 0.96) covers the tree-size tail in 28/32 periods vs 9/32 for one R; non-root/root offspring 1.52 (> 1 in 31/32) against <= 0.91 for every homogeneous reference; in the NE42 merge and split, branching tracked the room-size change in a reversal (D +1.29 [+0.74, +2.11]).",
+    "credence": 0.74,
     "value_if_true": 2.5,
     "mechanism_level": "M1",
     "fragile": false,
-    "scientific_value": 3.5,
+    "scientific_value": 3,
     "ladder": [
      {
-      "factor": "replication 32/32 periods, 113/113 class cells",
-      "x": 2,
-      "evidence": "summary hresults P1"
+      "factor": "base: pre-registered primary (R1-P1, R1-P4, R2-P2 written 03:50 UTC; R1-P4 reading (b) fixed after synthetic, before real data)",
+      "x": 0.4,
+      "evidence": "card Round 2 Pre-registration; Amendment R2-A1"
      },
      {
-      "factor": "robust: survived round 1b ledger visibility (0.06-0.39 -> 0.09-0.40)",
+      "factor": "calibrated null (skeleton worlds: alpha at bound, LR 0 in 54/54; homogeneous non-root/root <= 0.91; node-level NB ~0.8); synthetic suite credited once",
       "x": 2,
-      "evidence": "card Round 1b"
+      "evidence": "card Synthetic validation R1 (S-R1a, S-R1b)"
      },
      {
-      "factor": "identified: synthetic shows a common field inflates R-hat, R_c recovers contagion (bias is toward criticality)",
+      "factor": "replication (tail 28/32, ratio > 1 in 31/32 periods)",
+      "x": 2,
+      "evidence": "card Round 2 Outcome vs prediction R1-P1, R1-P4"
+     },
+     {
+      "factor": "partly robust (paraphrase idea rule with two embeddings: tail covered 29-31/32, ratio > 1 median 1.2, but LR > 2.71 only 17-18/32; marker-rule variants not checked)",
       "x": 1.5,
-      "evidence": "summary hobsb"
+      "evidence": "card R1 'Semantic trees (secondary)'; scorecard F"
      },
      {
-      "factor": "penalty: 'idea' is a hashed marker rule; R-hat depends on the rule",
+      "factor": "intervention partly consistent (NE42 A-B-A reversal predicted in sign and size, but skeleton worlds without dilution also give 1.2-2.6)",
+      "x": 1.5,
+      "evidence": "card R2 results; Amendment R2-A2"
+     },
+     {
+      "factor": "rival beaten on held-out days (Gamma-FN beats one-R FN-GW 25/32, beta-binomial 21/32)",
+      "x": 1.5,
+      "evidence": "card R1-P3"
+     },
+     {
+      "factor": "single-unit limit on the NE42 clause (one event, 4 groups; beta across 6 boundaries 1.50 [-0.10, 3.10] includes 0)",
+      "x": 0.6,
+      "evidence": "card R2 'Dilution per read is not identified'"
+     },
+     {
+      "factor": "penalty: convergence and shared priors open (marker adoption about half convergence; R1/R2 statistics not net of it)",
       "x": 0.8,
-      "evidence": "summary hcaveats"
+      "evidence": "card Impostors (round 2)"
      }
-    ]
+    ],
+    "notes": "The weakest load-bearing clause is NE42: one event, and a constant per-read chance on the skeleton predicts the same reversal, so it is not specific. A bursty idea-specific field (salience) could also make spread shared along a tree; the ratio test excludes node-level overdispersion, not field-driven idea heterogeneity."
    }
-  ],
-  "adjudicate": false
+  ]
  },
  "v2_history": [
   {
@@ -141,6 +152,101 @@
    "expected_usefulness": 1.47,
    "rater": "coordinator first pass (from integrated reports); independent rater pending",
    "rated_at": "2026-10-04"
+  },
+  {
+   "claim": "Idea cascades are subcritical (R̂ 0.09–0.40) and exposure-locked in 32/32 periods, but about half of the lock is convergence; leaders are not stronger idea seeders",
+   "scope": "32 periods; natives #35, #26",
+   "direction": "positive",
+   "original_verdict": "mixed",
+   "credence": 0.84,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "calibrated null",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "replication (32/32)",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "synthetic identification",
+     "x": 1.5,
+     "evidence": "card §Synthetic"
+    },
+    {
+     "factor": "robust (ledger: 27 → 32/32; no embeddings involved)",
+     "x": 2,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "rival partly beaten (read > unread 30/32; unread/read 0.56)",
+     "x": 1.5,
+     "evidence": "card §Round 1b"
+    },
+    {
+     "factor": "penalty: multiplicity / forecast undercoverage",
+     "x": 0.7,
+     "evidence": "card §Round 1b"
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": false,
+   "value_if_true": 2.25,
+   "decision": "forecast idea spread; expect ~half of apparent spread to be convergence",
+   "magnitude": "small",
+   "generality": "any LLM swarm",
+   "expected_usefulness": 1.89,
+   "scientific_value": 3.2,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.89,
+     "value_if_true": 2,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "Scope: 32 non-holdout periods, hashed novel markers. Idea cascades are strongly subcritical in every period (R-hat 0.09-0.40, every CI < 1), exposure-driven beyond a common field, and heavier-tailed than one branching law; not critical s^-3/2.",
+     "credence": 0.76,
+     "value_if_true": 2.5,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3.5,
+     "ladder": [
+      {
+       "factor": "replication 32/32 periods, 113/113 class cells",
+       "x": 2,
+       "evidence": "summary hresults P1"
+      },
+      {
+       "factor": "robust: survived round 1b ledger visibility (0.06-0.39 -> 0.09-0.40)",
+       "x": 2,
+       "evidence": "card Round 1b"
+      },
+      {
+       "factor": "identified: synthetic shows a common field inflates R-hat, R_c recovers contagion (bias is toward criticality)",
+       "x": 1.5,
+       "evidence": "summary hobsb"
+      },
+      {
+       "factor": "penalty: 'idea' is a hashed marker rule; R-hat depends on the rule",
+       "x": 0.8,
+       "evidence": "summary hcaveats"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
   }
  ]
 }

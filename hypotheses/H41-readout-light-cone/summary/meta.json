@@ -31,99 +31,90 @@
  "rated_by": "H41 agent (suggested; round 2)",
  "updated": "2026-10-05",
  "v2": {
-  "claim": "Inside rooms, novel items follow the logged light cone (acausal ≤ 4%, median 0.6%) and rooms cage spread (75–100% of cross-room adoptions outside the cone in 7/8 two-room periods; NE42 82×/863×); spread runs at ~1 hop per 1.5–5 talk calls; about a third of fast adoptions are co-generated; agents hopping between rooms leak about half the time (#51, corrected 1b)",
-  "scope": "32 periods; natives NE42, G38, G31, G51",
+  "claim": "Cross-room leaks in two-room weeks follow shared projects more than item-specific reads: cross-room adopters read the source's freshly written artifacts far more than same-moment non-adopters both before and after their own use (pooled OR 9.6 vs 6.6), leaving an ordered excess of only Λ = 1.45 [1.09, 2.26]",
+  "scope": "#35, #36, #38, #42, #51 (regimes II–III)",
   "direction": "positive",
-  "original_verdict": "mixed (gating failed as pre-registered)",
-  "credence": 0.7,
-  "ladder": [
-   {
-    "factor": "base (pre)",
-    "x": 0.4
-   },
-   {
-    "factor": "replication (29/32 within-room bound)",
-    "x": 2,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "intervention consistent (NE42 merge/split)",
-    "x": 2,
-    "evidence": "native NE42"
-   },
-   {
-    "factor": "synthetic identification (132 configurations)",
-    "x": 1.5,
-    "evidence": "card §Synthetic"
-   },
-   {
-    "factor": "penalty: within-room check weak (a shared field also gives ~2%)",
-    "x": 0.7,
-    "evidence": "card §Results"
-   },
-   {
-    "factor": "penalty: gating only post hoc; no multiplicity correction",
-    "x": 0.8,
-    "evidence": "card §Results"
-   }
-  ],
-  "mechanism_level": "M1",
+  "original_verdict": "mixed",
+  "credence": 0.36,
+  "mechanism_level": "M0",
   "fragile": true,
-  "value_if_true": 2.75,
-  "decision": "monitoring: chat logs can't attribute cross-room leaks; rooms cage chat-borne spread",
-  "magnitude": "material",
-  "generality": "read-out-gated swarms",
-  "expected_usefulness": 1.92,
-  "scientific_value": 3.0,
-  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; updated after the room-index re-run (round 1b, 2026-10-04)",
-  "rated_at": "2026-10-04",
+  "value_if_true": 2.0,
+  "decision": "leak control: cross-room spread rides on shared projects; separate repos to separate rooms",
+  "magnitude": "small",
+  "generality": "read-out-gated LLM swarms with rooms",
+  "expected_usefulness": 0.72,
+  "scientific_value": 2.5,
+  "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; mechanism level = lower of the two; fragile if either; Δp 0.12, ΔV 0.00 (no adjudication needed)",
+  "rated_at": "2026-10-05",
+  "round": 2,
   "raters": [
    {
-    "rater": "coordinator",
-    "credence": 0.69,
-    "value_if_true": 2.5,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3
-   },
-   {
-    "rater": "independent rater 2 (blind, 2026-10-04)",
-    "claim": "Scope: 32 non-holdout periods, 134k novel markers. Within rooms, adoptions of novel items stay inside the logged read-out light cone (acausal share median 0.6%, max 4%), and the NE42 merge/split switches cross-group pickup on (x80-860) and off; cross-room leaks bypass the logged chat channel.",
-    "credence": 0.72,
-    "value_if_true": 3.0,
-    "mechanism_level": "M1",
-    "fragile": false,
-    "scientific_value": 3,
+    "rater": "coordinator (round 2)",
+    "credence": 0.3,
+    "value_if_true": 2.0,
+    "mechanism_level": "M0",
+    "fragile": true,
+    "scientific_value": 2.5,
     "ladder": [
      {
-      "factor": "replication: P2 holds in 29/32 (misses are cross-room)",
-      "x": 2,
-      "evidence": "summary hresults P2"
+      "factor": "base: pre-registered primary",
+      "x": "p0=0.40"
      },
      {
-      "factor": "intervention consistent: NE42 merge and split (A-B-A), goal-confounded",
-      "x": 2,
-      "evidence": "summary hresults NE42"
+      "factor": "null at its size limit (synthetic FPR 0.10 in the activity world)",
+      "x": 0.7,
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "partly robust: cone rebuilt after hop-count bug; single data version",
+      "factor": "partial replication: Λ > 1 in 4/5 periods, CI clears 1 in one",
       "x": 1.5,
-      "evidence": "summary hcaveats"
+      "evidence": "card §Round 2"
      },
      {
-      "factor": "penalty: hashed markers count co-generation as adoption",
-      "x": 0.8,
-      "evidence": "summary hcaveats"
-     },
-     {
-      "factor": "penalty: no multiplicity correction across 32 periods",
-      "x": 0.8,
-      "evidence": "summary hcaveats"
+      "factor": "penalty: leave-one-out loses significance without #35 or #51",
+      "x": 0.6,
+      "evidence": "card §Round 2"
      }
     ]
+   },
+   {
+    "rater": "independent rater (blind, 2026-10-05)",
+    "claim": "Cross-room leaks in two-room weeks follow shared projects more than item-specific reads: cross-room adopters read the source's freshly written artifacts far more than same-moment non-adopters both before and after their own use (pooled OR 9.6 vs 6.6), leaving an ordered excess of only Lambda = 1.45 [1.09, 2.26].",
+    "credence": 0.42,
+    "value_if_true": 2.0,
+    "mechanism_level": "M0",
+    "fragile": true,
+    "scientific_value": 2.5,
+    "ladder": [
+     {
+      "factor": "base: secondary (estimator Lambda and design pre-registered 03:50 UTC, but the pre-registered prediction was Lambda > 1 as an ordered-read leak; the 'shared projects dominate' reading was formed after seeing OR_post)",
+      "x": 0.3,
+      "evidence": "card R2 Predictions P-R2a; Round-2 results"
+     },
+     {
+      "factor": "calibrated null (Z0/Z1/Z3 size 0.10/0.00/0.04, Z2 power 1.00)",
+      "x": 2,
+      "evidence": "card Round-2 synthetic validation, R2"
+     },
+     {
+      "factor": "partial replication (5 periods; OR_post > 1 and > Lambda in 4/5; #35 reversed, both ORs < 1)",
+      "x": 1.5,
+      "evidence": "card R2 table"
+     },
+     {
+      "factor": "penalty: 'adopters are simply busier' rival not excluded (specificity ratio 1.46 [0.67, 3.90]); in-cone controls give the opposite reading (L_ctrl 0.78; round-1 repo lift 1.04)",
+      "x": 0.7,
+      "evidence": "card R2 'Channels', 'Card-literal comparison'; Round 1 leaks"
+     },
+     {
+      "factor": "penalty: pooled ORs dominated by one period (#51 OR 289 vs 284) with strong heterogeneity",
+      "x": 0.8,
+      "evidence": "card R2 table"
+     }
+    ],
+    "notes": "The Lambda significance flips under leave-one-out (#35 or #51), and the 'shared project' interpretation is not separated from general reading activity (specificity ratio CI includes 1). The control choice decides the reading: same-moment non-adopters show enrichment, in-cone controls do not."
    }
-  ],
-  "adjudicate": false
+  ]
  },
  "v2_history": [
   {
@@ -134,6 +125,101 @@
    "expected_usefulness": 1.95,
    "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V",
    "rated_at": "2026-10-04"
+  },
+  {
+   "claim": "Inside rooms, novel items follow the logged light cone (acausal ≤ 4%, median 0.6%) and rooms cage spread (75–100% of cross-room adoptions outside the cone in 7/8 two-room periods; NE42 82×/863×); spread runs at ~1 hop per 1.5–5 talk calls; about a third of fast adoptions are co-generated; agents hopping between rooms leak about half the time (#51, corrected 1b)",
+   "scope": "32 periods; natives NE42, G38, G31, G51",
+   "direction": "positive",
+   "original_verdict": "mixed (gating failed as pre-registered)",
+   "credence": 0.7,
+   "ladder": [
+    {
+     "factor": "base (pre)",
+     "x": 0.4
+    },
+    {
+     "factor": "replication (29/32 within-room bound)",
+     "x": 2,
+     "evidence": "card §Results"
+    },
+    {
+     "factor": "intervention consistent (NE42 merge/split)",
+     "x": 2,
+     "evidence": "native NE42"
+    },
+    {
+     "factor": "synthetic identification (132 configurations)",
+     "x": 1.5,
+     "evidence": "card §Synthetic"
+    },
+    {
+     "factor": "penalty: within-room check weak (a shared field also gives ~2%)",
+     "x": 0.7,
+     "evidence": "card §Results"
+    },
+    {
+     "factor": "penalty: gating only post hoc; no multiplicity correction",
+     "x": 0.8,
+     "evidence": "card §Results"
+    }
+   ],
+   "mechanism_level": "M1",
+   "fragile": true,
+   "value_if_true": 2.75,
+   "decision": "monitoring: chat logs can't attribute cross-room leaks; rooms cage chat-borne spread",
+   "magnitude": "material",
+   "generality": "read-out-gated swarms",
+   "expected_usefulness": 1.92,
+   "scientific_value": 3.0,
+   "rater": "2 raters (coordinator + blind); log-odds mean credence, mean V; updated after the room-index re-run (round 1b, 2026-10-04)",
+   "rated_at": "2026-10-04",
+   "raters": [
+    {
+     "rater": "coordinator",
+     "credence": 0.69,
+     "value_if_true": 2.5,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3
+    },
+    {
+     "rater": "independent rater 2 (blind, 2026-10-04)",
+     "claim": "Scope: 32 non-holdout periods, 134k novel markers. Within rooms, adoptions of novel items stay inside the logged read-out light cone (acausal share median 0.6%, max 4%), and the NE42 merge/split switches cross-group pickup on (x80-860) and off; cross-room leaks bypass the logged chat channel.",
+     "credence": 0.72,
+     "value_if_true": 3.0,
+     "mechanism_level": "M1",
+     "fragile": false,
+     "scientific_value": 3,
+     "ladder": [
+      {
+       "factor": "replication: P2 holds in 29/32 (misses are cross-room)",
+       "x": 2,
+       "evidence": "summary hresults P2"
+      },
+      {
+       "factor": "intervention consistent: NE42 merge and split (A-B-A), goal-confounded",
+       "x": 2,
+       "evidence": "summary hresults NE42"
+      },
+      {
+       "factor": "partly robust: cone rebuilt after hop-count bug; single data version",
+       "x": 1.5,
+       "evidence": "summary hcaveats"
+      },
+      {
+       "factor": "penalty: hashed markers count co-generation as adoption",
+       "x": 0.8,
+       "evidence": "summary hcaveats"
+      },
+      {
+       "factor": "penalty: no multiplicity correction across 32 periods",
+       "x": 0.8,
+       "evidence": "summary hcaveats"
+      }
+     ]
+    }
+   ],
+   "adjudicate": false
   }
  ]
 }
