@@ -489,3 +489,79 @@ Verdict rule: the core predictions (P-a1/a2, P-a4, P-c1/c2/c3, P-d1, P-d2) all s
 - **H16-R1.** Pólya urn: P(repeat) ∝ the share of the context that is own repeats. This predicts the aging exponent (about −0.8 in #51) from the measured context composition (E2).
 - **H16-R2.** One directed message works because it dilutes the urn; repeated messages add little once the context is diluted.
 - **H16-R3.** Trap depth is a model trait: some models loop more.
+
+## Round 2 (2026-10-05): Pólya urn, dilution, trap depth as a trait, and the mixture rival
+*Predictions, nulls and kill rules written 2026-10-05 ~03:30 UTC, before any round-2 outcome statistic on real data. Exploratory; non-reserved days only (`holdout_mask`; the ledger's `holdout` flag; #51 before 09-03 as in round 1). Serves Q5 (what gets a stuck agent out) and Q6 (trap kinetics). Code: `scheme/build_r2.py`, `analysis/r2lib.py`, `analysis/predict_r2.py`, `analysis/synthetic_r2.py`, `analysis/run_r2.py`. Numbers: `data/processed/H16-metastable-traps-kramers/r2/`. Rounds 1 and 1b reproduce unchanged (their code paths are not touched).*
+
+**What I had seen first.**
+- Rounds 1/1b of this card; H72 round 1 (gate aging −0.48 on the call clock survives starvation control; recent input *lowers* escape, β_s +0.23); RE-R1 (unaddressed chatter holds agents at the timer gate; a mention restores the no-news rate, OR 3.1); H69 round 2 (own tool tokens do not trigger restatement loops; an erasure ends loops as a step, not a dose); H44 (after a forced erasure agents re-read and pause less); H45 (room share follows inflow passively; the token ruler).
+- Structural counts with no outcome: the token ruler (an own idle call adds ≈ 320–370 prompt tokens, an active call 560–1,180, the prompt at a reset is 13–20k); composition at regime-III gates (G51 medians: token share of own repeats f_tok 0.021, call share f_call 0.19, entry share 0.058, recency share 0.10); 774 gates in G51 follow a context reset inside the trap (289 forced at the 41-call cap), 43 in G38 (41 forced); 3,875 G51 gates read a directed item at the gate.
+- **A structural fact about TS1r:** in regime III, 45–58% of TS1r spells end within 60 s of a CONSOLIDATE event, and 48% of G51 spells start with a consolidation call within 60 s of the last active row (median dwell 5.5 min). A consolidation is logged ≈ 3 min after the previous turn and counts as an active row, so these "spells" are the consolidation's own latency, not traps. Spell kinds at start in G51: consolidation 10,630; pause 7,133; silent 7,122.
+- **The urn-predicted exponents** (below, from `predict_r2.py`): computed from composition on the real skeleton with simulated outcomes. No observed escape entered.
+
+### Degrees of freedom and model
+- **State at a gate** (call clock, H72's shared `idle_gates`): the composition of the context segment (calls since the last reset; regime III). n_rep = own idle calls earlier in the segment; n_act = own active calls; k = room items in context; B = the prompt at a reset (system prompt, memory, room snapshot).
+- **Pólya urn (H16-R1).** P(escape at gate) = c_i (1 − f), with f the own-repeat share of the context. On the wall clock (TS1r, 30-s bins): cloglog h = α_i + ln(1 − f). Four rulers for "share of the context", fixed before data:
+  - **U-tok (primary):** f = n_rep τ_I / (B_L + n_rep τ_I + n_act τ_A + R), the token share (H45 room ruler for R; lab medians for τ_I, τ_A, B_L; `r2/ruler.json`).
+  - **U-call:** f = n_rep / (n_rep + n_act), the share of own calls in the segment that are idle.
+  - **U-entry:** f = n_rep / (n_rep + n_act + k), the share of context entries.
+  - **U-rec:** idle calls among the last 10 entries (recency urn).
+- **Rivals.** R1-intrinsic: aging with trap age at fixed composition (H72). **Mixture:** within-agent mixtures of spell kinds (consolidation latency, pause chains, silent spells; after work, talk or a failure) produce apparent aging with no aging inside any kind. **Context step:** a reset raises escape by a fixed step regardless of how much repeat content it removes (H69's finding for loops). **Address:** a message works because it names the agent, not because it dilutes.
+
+### R1 · The urn's exponent from composition (pre-registered numbers)
+Urn-predicted slopes on the real skeleton (100 simulated outcome sets; band = 2.5–97.5%). Gate: agent-FE logit of sustained escape on ln(trap age), with ln previous pause, hours into the day, others' activity and ln last-run length; the level c makes the mean escape 0.5 (0.3 / 0.7 in brackets). TS1r: agent-FE cloglog slope on ln elapsed in the deep window (≥ 10 min).
+
+| Urn | G51 gate β_pred [band] (level 0.3 / 0.7) | G38 gate β_pred | G51 TS1r β_pred [band] | G38 TS1r β_pred |
+| --- | --- | --- | --- | --- |
+| **U-tok (primary)** | **−0.02 [−0.05, 0.01]** (−0.02 / −0.03) | −0.02 [−0.15, 0.11] | **0.00 [−0.03, 0.04]** | 0.00 [−0.30, 0.39] |
+| U-call | −0.37 [−0.40, −0.34] (−0.28 / −0.56) | −0.17 [−0.33, −0.05] | −0.08 [−0.12, −0.04] | +0.01 [−0.49, 0.49] |
+| U-entry | −0.03 [−0.06, 0.00] | −0.09 [−0.19, 0.02] | +0.01 [−0.02, 0.04] | −0.01 |
+| U-rec | −0.04 [−0.07, 0.00] | −0.17 [−0.30, −0.06] | +0.01 [−0.03, 0.03] | −0.03 |
+
+The level c is set to the observed overall escape fraction when the observed slope is compared (interpolating the 0.3/0.5/0.7 values); that is a single level, not a slope.
+
+| # | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R1-P1 | **U-tok does not predict the exponent.** In G51 the observed gate slope and the observed TS1r slope each lie outside the U-tok band, with \|β_obs − β_pred\| > 0.2 | the observed slope's CI overlaps the band and \|Δ\| ≤ 0.2 (the urn predicts it) | 0.9 |
+| R1-P1b | U-call comes closest at the gate (\|Δ\| ≤ 0.2 in G51) but not on TS1r | — | 0.35 |
+| R1-P2 | **Composition does not absorb aging.** Adding ln(1 − f) to the gate model leaves ρ = 1 − β_a/β_a0 < 0.25 for every ruler (G51) | ρ ≥ 0.5 with β_f > 0, CI > 0 (urn absorbs aging) | 0.75 |
+| R1-P3 | **A forced reset inside a trap raises escape as a step** (NE41; exception (c), the transition is the object). G51: forced-reset OR > 1 with CI > 1 | OR CI includes 1 at power ≥ 0.8 | 0.6 |
+| R1-P4 | **The step is not a dose.** The interaction of the forced reset with the removed repeat content Δ_u = −ln(1 − f_pre) (U-call; U-tok variant) has a CI including 0 | CI > 0 (urn dose) | 0.6 |
+
+**Kill rule (R1).** If R1-P1 holds for U-tok and R1-P2 holds, the card states "the own-repeat share of the context does not set the aging exponent". If an urn ruler passes both P1 (gate and TS1r) and P2, "traps deepen by self-reinforcement as the context fills with the agent's own output" is adopted for that ruler. R1-P3/P4 are read only where the synthetic power is ≥ 0.8; otherwise inconclusive.
+
+### R2 · Does a directed message work by diluting the urn?
+Gate model as in R1 plus current reads at the gate: 1[≥ 1 directed item], 1[only undirected items], and Δ_k = ln(1 − f_with) − ln(1 − f_without), the urn-implied effect of the items read at the gate (U-tok primary, U-entry, U-rec).
+
+| # | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R2-P1 | **Address, not dilution.** Directed current reads raise escape more than undirected ones: the difference of the two log ORs has CI > 0 (G51). The urn predicts equal effects per item | difference CI includes 0 or < 0 | 0.75 |
+| R2-P2 | **The urn-implied kick is far too small.** The mean Δ_k at directed gates (U-tok, U-entry) is < 0.2 × the observed directed log OR | ratio ≥ 0.5 | 0.85 |
+| R2-P3 | **No dilution scaling.** The Δ_k coefficient's CI includes 0 (read only at power ≥ 0.8 for a coefficient of 1) | CI > 0 | 0.6 |
+| R2-P4 | **Saturation.** Two or more directed items add less than half the first item's log OR (G51) | ≥ 2 items' log OR ≥ 1.5 × the first's | 0.6 |
+
+### R3 · Trap depth as a model trait (CLAUDE.md exception (b))
+Every agent runs one model (one shared fine-tuned model string aside), so "model" = agent; lab is the coarser group.
+- **Depth:** D_{a,p} = −ln k_deep, with k_deep the censoring-aware exponential escape rate (escapes per minute of exposure) of agent a's TS1r spells after 10 min in period p. Cells with ≥ 5 deep escapes. Sampling variance 1/escapes.
+- **Invariance first (R3-P1):** for agents in ≥ 2 periods, the correlation of D_{a,p} with the agent's mean in the other periods (period-centred), pooled over periods; agent bootstrap CI. **Pass:** r > 0 with CI > 0. Credence 0.6. If it fails, no pooled per-model depth is reported (only per-period values).
+- **Partial pooling (R3-P2):** D_{a,p} = μ_p + u_agent + e, method-of-moments variance components with the sampling variance known; per-agent shrunk depth with intervals. Agent share of the non-sampling variance ≥ 0.2, permutation p < 0.05 (agent labels permuted within period). Credence 0.5. Lab share (same test with lab labels): credence 0.3 (shared-priors check).
+- **R3-P3 (G51, aging per model):** agent-specific deep TS1r slopes differ (Cochran Q p < 0.05). Credence 0.5.
+
+### Mixture rival (within-agent mixtures of spell kinds)
+Kinds fixed at spell start (never from the spell's future):
+- TS1r: **kind_start** (consol: a consolidation call starts within 60 s; else the first declared idle in the first 180 s: pause, wait, silent) × **last_kind** (the last active row is a real failure, a talk event, or other work).
+- Gates: **trap_kind** = the last active call before the trap failed / talked / worked.
+
+| # | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| M-P1 | **Aging survives within kinds.** The deep TS1r slope within pause-start spells (agent × kind FE) is < −0.3 with day-bootstrap CI below 0 in G51 | CI includes 0 or β ≥ −0.3 | 0.7 |
+| M-P1b | Same in G38 | — | 0.5 |
+| M-P2 | **The pure-mixture null fails.** On the real skeleton, constant hazards per agent × kind_start × last_kind cell (no aging inside any cell) give pooled agent-FE slopes whose 2.5th percentile lies above the observed G51 slope | observed slope inside the null's 95% range | 0.75 |
+| M-P3 | **Gate aging survives within trap kind:** after-work traps in G51, slope < −0.2 with CI below 0 | — | 0.75 |
+| M-P4 | Descriptive: the share of the pooled G51 TS1r slope explained by kind mixing, 1 − β_within/β_pooled | — | — |
+
+**Kill rule (mixture).** If M-P1 fails and M-P2 fails, the claim "traps age" is withdrawn as a mixture artifact for TS1r and stated only for gates (if M-P3 holds). Per-spell frailty (unobserved depth) is not separable from aging with single spells; the forced reset (R1-P3) is the one design that separates them (a frailty world gives no step; synthetic check).
+
+### Nulls and validation plan (before any real-data round-2 statistic)
+`analysis/synthetic_r2.py` on the real G51 and G38 skeletons. Gate worlds simulated **sequentially within traps** (stop at the first escape; censor at the real trap end): W0 null; W1 intrinsic aging (−0.5 per ln a); W2 urn (U-call, the strongest ruler); W3 per-trap frailty (SD 1.5), no conditional aging; W4 W1 + a forced-reset step (+0.7, no dose); W5 W1 + an address kick (+0.7 for a directed read, undirected 0). TS1r worlds: per-row draws on the deep skeleton with cell hazards (pure mixture) or within-cell aging (−0.5). R3: planted agent depths (SD 0.5 or 0) on the real agent × period skeleton.
+Pass: size ≤ 0.10 and power ≥ 0.8 at real counts; otherwise the statistic is reported as inconclusive (dated amendment).
