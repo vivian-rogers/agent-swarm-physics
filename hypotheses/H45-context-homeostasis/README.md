@@ -272,3 +272,70 @@ Targets: held-out regime-III periods #45, #46, #47, #49, #50 (scored), #43, #48 
 - **H45-R2.** Cadence as the agents' only intake lever: do call intervals shorten when the room's per-minute rate rises? NE44 (pause default) gives a contrast.
 - **H45-R3.** What fills the post-erasure talk dip? Use DQ3 behavior states and the work ledger at NE41, jointly with H44.
 - **H45-R4.** Run `confirm.py` on the holdout (#45–#50, 51m, NE22) after the reuse disclosures.
+
+## Round 2 (2026-10-05): do agents manage their intake at all?
+*Design, predictions, nulls and kill rules drafted 2026-10-05 04:27–04:37 UTC and written here at 04:37 UTC, before any round-2 statistic on real data. Looked at before this: schemas of `behavior_states_v3`, shared `calls`, `call_windows`, `pending_sets`; coverage only (DQ3 labelled share of non-reserved windows 0.50–0.92 per regime-II/III period; early wakes 0.004% of regime-III calls; `pause_s` present on pause calls only; rooms per period: one in G30–G33, three in G35–G44, ten in G51). No engagement, interval or post-reset relation was computed. R4 (the reserved-data confirmation) is not run.*
+
+**Question served:** Q4 (where the swarm's information lives) and Q5 (what an operator can set). Round 1 showed that the scaffold, not the agent, sets context composition. Round 2 asks whether agents manage their information intake in any other way: by attention (R1), by cadence (R2), or by what they do after an erasure (R3).
+
+**Common rules.** Non-reserved days only (`holdout_mask`; the H45 `calls.parquet` already excludes reserved days, asserted again). Fits are within one goal period. The pooled value is a DerSimonian–Laird random-effects pool of the per-period estimates (CLAUDE.md exception (d): per-period γ was not identified in round 1), always shown next to the per-period values. CIs: bootstrap over 1-h blocks within PT days (Known issue: day-cluster bootstraps under-cover in 5-day periods), B = 200 (B = 100 in G51). **Task-phase control** = the DQ3 v3.1 probability vector (10 of 11 states; `p_execute_task` is the reference) of the agent's 5-min window *before* the window that holds the call. The same-window vector is partly defined by the outcome (a window with replies is labelled communicative), so it is a sensitivity check only. Calls without a labelled previous window are dropped.
+
+### R1 · Context competition once task phase is controlled
+*Model:* round 1's rival 4 (HH158): per-talk engagement falls with own content W = P − R (own tool output, screenshots, own text) at fixed backlog k. *Rival:* task phase. Deep in work, an agent holds much own content and posts status, not replies; then γ_W < 0 is phase, not competition.
+- **Sample:** computer-use talk calls (round 1's `talk_rows`: not the first talk of the agent-day, k ≥ 1, W > 0) in regime-II/III periods with ≥ 500 such calls and a labelled previous window.
+- **M0** (round 1, PH1): cloglog for E1 (`eng_pending`) on ln k, ln(1 + R_old/500), ln(W/1000), previous talk in this segment, 5-call position bands, agent-day effects. **M1** = M0 + the lagged DQ3 vector. γ_W = the ln(W/1000) coefficient; retention ρ_W = γ_W(M1)/γ_W(M0).
+- **Steepening:** per (talk call, scored pending sender) units from the shared `pending_sets` (H18's rule): mention response `resp` ~ ln k + w̃ + ln k × w̃ + the item names the recipient + ln(1 + the sender's pending items) + lagged DQ3 + agent-day effects, cloglog; w̃ = ln W − the agent × period mean of ln W. Per-sender exponent β(w̃) = −(b_k + b_kW w̃); steepening = b_kW < 0. The mention outcome is used because reply parents carry a one-parent budget (Known issue). Talk-call k is not separable from reactive timing (H18 correction), so the identified check is G51's timer-wake batches (exogenous k; `wake_pending.resp5`).
+
+| # | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R1-P1 | DL-pooled γ_W(M1) < 0, CI below 0 | CI includes 0: own-content competition was task phase | 0.55 |
+| R1-P2 | retention ρ_W ≥ 0.5 | ρ_W < 0.5: most of round 1's γ_W was phase | 0.55 |
+| R1-P3 | \|γ_W(M1)\| above the 95th percentile of M1's γ_W in the phase-only synthetic world (leftover confounding from a lagged, imperfect phase control) | inside that band: not distinguishable from residual phase | 0.45 |
+| R1-P4 | b_kW < 0, DL CI below 0 (talk calls, mention outcome) | CI includes 0 at synthetic power ≥ 0.8 for b_kW = −0.15: a powered null | 0.25 |
+| R1-P5 | G51 timer wakes: b_kW < 0, the same sign as R1-P4 | opposite sign or CI includes 0 | 0.25 |
+
+**Kill rules.** R1-P1 fails *or* ρ_W < 0.5 → "own-content competition is task phase" (round 1's post hoc HH158 reading is withdrawn). R1-P4 fails with power ≥ 0.8 → "dilution does not steepen with fill".
+
+### R2 · Cadence as the only intake lever
+*Model:* an agent that manages its intake shortens its call interval when the room speeds up, to keep each batch small. A batch-holding controller gives ζ = d ln Δ / d ln(room rate) = −1; a passive agent gives ζ = 0 for read traffic. *Rivals:* (i) **common drive**: busy stretches are fast stretches for everyone (scheduler or task field), so read and unread traffic predict short intervals alike; (ii) **address gating** (Q1): only messages that name the agent shorten its interval; (iii) **talk composition**: reads cause talk calls, and talk calls are short (H40 r2: long tool calls lower talk propensity); (iv) **chatter hold** (H72 r2): undirected traffic *lengthens* pause chains in G51.
+- **Unit:** consecutive computer-use receiving calls of one agent in one PT day, regimes II–III. Interval Δ_c = t_call(c+1) − t_call(c); dropped if c+1 opens a segment by consolidation, if Δ ≤ 0 or Δ > 2 h.
+- **Exposures** (others' agent and human messages from `chat_core`; the automated speaker is excluded): *read* = posted in the call's room in [t_call − 10 min, t_call) (all of it is visible at c or earlier, by the ledger rule); *in flight* = posted in the room in [t_call, t_call + 10 min) (unseen at the decision), excluding messages that name the agent or are DQ2 reply children of its messages; *cross-room* = messages in the period's other rooms in [t_call − 10 min, t_call), per other room (periods with ≥ 2 rooms). Each is split into **directed** (names the agent; indicator ≥ 1) and **undirected** (ln(1 + n)).
+- **Model:** OLS of ln Δ_c on the six exposure terms, 5-call position bands, 30-min bins of active-day time, the lagged DQ3 vector, agent-day effects. ζ_u = the undirected read coefficient. **Partition contrasts:** Δζ_u = ζ_u − ζ_u(in flight); Δζ_u^× = ζ_u − ζ_u(cross-room); the same for directed. Non-talk subsample: calls c that do not talk.
+- **Call-length selection** (H50 Known issue): the design is anchored on call starts (the decision) with fixed clock windows, so it never samples the call in flight at a message. Per-call weighting over-represents fast stretches; a time-weighted fit (weights ∝ Δ) is a sensitivity check.
+- **NE44** (pause default 12 h → 5 min, 2026-06-11) sits inside #46, which is reserved data. The only non-reserved contrast is across periods: before (G35–G44) vs after (G51). It is confounded with NE21 (hours), NE43 (nudger off), N and the room design, so it is descriptive.
+
+| # | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R2-P1 (H45-R2 as posed) | DL Δζ_u < 0 with CI below 0 and ζ_u ≤ −0.1; same sign in ≥ 2/3 of periods | Δζ_u CI includes 0 or is positive: no read-gated intake lever | 0.20 |
+| R2-P2 (batch controller) | ζ_u CI includes −1 | CI lower bound > −0.5: no batch holding | 0.03 |
+| R2-P3 (address rival) | directed read − directed in flight < 0, CI below 0 | CI includes 0 | 0.60 |
+| R2-P4 (talk composition) | on non-talk calls \|Δζ_u\| < 0.05 and CI includes 0 | Δζ_u < 0 (CI) on non-talk calls: a lever beyond talk | 0.55 |
+| R2-P5 (chatter hold, G51 pause calls) | Δζ_u ≥ 0 at pause calls | Δζ_u < 0 (CI) | 0.50 |
+| R2-P6 (NE44, descriptive) | the sign class of Δζ_u is the same before (G35–G44 pool) and after (G51), difference < 0.1; pause calls ≥ 5× more common after | — | 0.50 |
+
+**Kill rule.** R2-P1 fails in the DL pool *and* in ≥ 2/3 of periods → "agents do not use cadence as an intake lever" (the scaffold's call clock sets intake).
+
+### R3 · What fills the post-erasure talk dip?
+*Round 1:* after a forced reset (NE41), talk falls to 0.74 × baseline for about ten calls; replies per call do not change. *Cited, not redone:* H44 r2 (a one-call re-reading spike with an ≈ 8-call tail, Θ_c +0.106; writes −20% to −32%; re-reading is working-set habit); H15 r2 (the first reads carry 4% [−23, +26] of the output dip). *Rivals:* (a) **work push** (H39: erasure pushes toward work); (b) **re-orientation** (the agent spends the calls reading itself back in); (c) **idle** (more pauses and waits); (d) **status talk follows in-context output**: agents post status about work they can see in context, the wipe removes that, and new status waits for new output.
+- **Sample:** regime-III segments opened by a forced reset, positions j = 1–40, non-reserved periods with forced resets (G36–G44, G51).
+- **R3-A kind accounting:** round 1's k-adjusted profile (position dummies j = 1–19, k bins, agent-day effects, baseline j 20–40) for the indicator of each call kind: talk, cu action, pause or wait, search, other. With one design for all kinds, the excess shares sum to zero at every j, so the fill shares φ_kind = mean δ(kind, j 1–10) / (− mean δ(talk, j 1–10)) sum to 1.
+- **R3-B behavior state:** the same profile for DQ3 groups of the call's own window, only for windows that hold no consolidation (the consolidation itself would mark the window as maintenance): orientation = self_maintenance + research_browse; communication = communicate_external + social + plan_coordinate; work = execute_task + debug_recover + verify_report; idle = idle + monitor_wait (+ meta in "other").
+- **R3-C work ledger:** the same profile for a DQ4 work commit at the call (shared `calls.n_work > 0`).
+- **R3-D status talk follows in-context output:** talk ~ the R3-A design + w_in (write calls among the previous five calls that are in the current segment) + w_out (write calls among the previous five that came before the reset, so are erased; non-zero only at j ≤ 5). Linear probability; absorption A = 1 − D_talk(with w)/D_talk(without w), D_talk = mean δ(talk, j 1–10).
+
+| # | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| R3-P1 | φ_cu ≥ 0.7; φ_pause+wait ≤ 0.3 (DL pool) | φ_pause+wait > 0.3: idle fills the dip | 0.60 |
+| R3-P2 | orientation excess > 0 and communication excess < 0 (CIs), work excess ≤ 0 | work excess > 0 (CI): work push | 0.45 |
+| R3-P3 | work commits per call at j 1–10 below baseline (CI < 0) | ≥ baseline: work push | 0.65 |
+| R3-P4 | b_in > 0 and b_in − b_out > 0 (CIs): talk follows writes still in context, not erased ones | b_in − b_out CI includes 0 | 0.40 |
+| R3-P5 | A ≥ 0.5 | A < 0.2: the dip is not an output gap | 0.20 |
+| R3-P6 | the talk dip's exponential τ (G51) lies inside H44's re-reading tail CI, ℓ₂ 8.2 [5.8, 11.8] calls | outside | 0.45 |
+
+**Kill rules.** R3-P2's work excess > 0 (CI) or R3-P3 ≥ baseline → work push stands and re-orientation fails. R3-P4 fails → status talk does not track in-context output.
+
+### Synthetic validation plan (axis F; before any round-2 statistic on real data)
+All worlds use the real non-reserved skeleton (calls, positions, k, W, R_old, room message streams, write sequences, DQ3 vectors), with outcomes planted at values fixed here; 20 replicates per world; units G38, G41 and G51 (R1, R2), G38, G41, G51 (R3).
+- **R1:** W0 phase only (truth uses the *same-window* DQ3 vector: communicate_external +0.6, social +0.4, plan_coordinate +0.3, idle −0.4 on the cloglog scale; γ_W = 0); W1 = W0 + γ_W = −0.3; per-sender W2 = phase + b_kW = −0.15; W2n = b_kW 0. Pass: M1 recovers W1 within ±0.1 in ≥ 80%; W0's M1 γ_W band gives R1-P3's threshold; b_kW size ≤ 0.10, power at −0.15 reported.
+- **R2:** S_drive (ln Δ = agent-day mean − 0.3 ln of the centred ±15-min room rate + N(0, 1); no read coupling); S_read (−0.2 per ln(1 + undirected read)); S_talk (talk probability rises with reads, talk calls 0.7 shorter in ln Δ; no direct effect); S_dir (directed read −0.5). Pass: Δζ_u size ≤ 0.10 in S_drive and S_dir; recovery within ±0.07 in S_read; non-talk Δζ_u size ≤ 0.10 in S_talk.
+- **R3:** S_mech (orientation +0.3 in windows that hold a consolidation, no behavior change); S_ctx (talk ∝ exp(0.6 w_in), real write sequences); S_pos (position dip 0.74, τ 6 calls, no write link); S_rec (talk ∝ exp(0.6 × all writes in the previous five calls)). Pass: consolidation-free R3-B excess size ≤ 0.10 in S_mech; b_in − b_out > 0 in ≥ 80% of S_ctx and size ≤ 0.10 in S_rec; A ≥ 0.5 in S_ctx and ≤ 0.2 in S_pos.
