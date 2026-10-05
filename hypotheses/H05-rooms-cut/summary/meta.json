@@ -1,13 +1,13 @@
 {
- "complete": 55,
+ "complete": 65,
  "faithfulness": 2.0,
  "usefulness": 2.5,
  "rationale": {
-  "complete": "Round 1 with per-period verdicts and the confirmatory NE15 run are done; robustness, rivals (Hawkes, shared artifacts) and per-period re-analysis of the pooled tests remain.",
-  "faithfulness": "Round 1b: talk block structure, pooled FE and the 05-11 split all strengthen on fixed data and survive DQ8's trim; HH248 (reads mediate the room effect) and NE42 attention reallocation were predicted before running and held; active-spin claims withdrawn; holdout run on buggy data stays inconclusive.",
+  "complete": "Round 2 tests the artifact rival (co-edit census, commit coupling, #focus), attention dilution on exogenous room size, and leak conductance through search and command output; EP and the holdout re-run remain.",
+  "faithfulness": "Round 1b: talk block structure, pooled FE and the 05-11 split all strengthen on fixed data and survive DQ8's trim; HH248 (reads mediate the room effect) and NE42 attention reallocation were predicted before running and held; active-spin claims withdrawn; holdout run on buggy data stays inconclusive. Round 2: rooms split artifacts (5/8 windows; NE42 0.56 -> 0); cross-room commit coupling inconclusive; pre-registered dilution tests failed (post hoc two-room-era 0.65); output leak conductance +0.26 per exposure beats matched placebos.",
   "usefulness": "\"Rooms decouple chat but not work\" is a validated design rule and a cheap monitor, but the chat half is nearly implied by the visibility scaffold and rests on one cut."
  },
- "one_line": "Rooms decouple chat only through what agents read; the effect is stronger on fixed data, and work is not room-structured.",
+ "one_line": "Rooms partition chat and artifacts alike; chat couples only through reads, items leak across rooms mainly via command output, and attention dilution is too small to explain re-cut jumps.",
  "models": [
   {
    "model": "02-nonequilibrium-ising",
@@ -34,8 +34,8 @@
    "note": "added from the model-folder mapping (2026-10-04); outcome not yet assessed"
   }
  ],
- "rated_by": "RE-R1 agent (suggested, round 1b); coordinator calibration pending",
- "updated": "2026-10-04",
+ "rated_by": "H05 round-2 agent (suggested); coordinator calibration pending",
+ "updated": "2026-10-05",
  "v2": {
   "claim": "Rooms are coupled blocks for talk, and the coupling runs through reading: co-location adds nothing once ledger read counts are controlled",
   "scope": "6 windows (talk spins); natives #focus (G51), NE42; holdout run inconclusive",

@@ -3,6 +3,7 @@
 
 **Verdict:** descriptive (not one of the P2 two-room windows; numbers reported for context)
 **Verdict (1b):** supported (round 1b: talk κ_x within − cross +0.022, p 0.004; fixed bins)
+**Verdict (2):** supported (R1-P1 artifacts follow rooms: cross/within co-edit 0.03)
 **Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime II · 12 agents · 5 days · room 2: 3, room 3: 9 · 39 within-room pairs, 27 cross-room pairs.
 
@@ -26,3 +27,11 @@ Source: `data/processed/H05-rooms-cut/explore_bin1.json`, `explore_bin5.json` (X
 ## Notes
 - Per-period inference has low power (H05 V4: 23–63% for a full cut at village coupling); the card's pooled tests carry the weight.
 - #35 is the post-split half of the NE15 test. Its numbers were seen in round 1, before the confirmatory run; only the pre-split baseline (#33–#34) was held out. See [../NE15/README.md](../NE15/README.md).
+
+## Round 2 (2026-10-05)
+Prediction (card, "Round 2", R1-P1, written 2026-10-05 03:25 UTC; descriptive, cross side not blind): rooms split artifacts, so the cross-room co-edit share of pair-days is ≤ 0.5 × the within-room share.
+
+- Same-day co-edit share: within 0.805 (195 pair-days), cross 0.022 (135); ratio 0.03. R1-P1: **supported**.
+- Cross-room pair-days with commit-response coupling E_x defined: 88, of which co-edit 3 (pooled R1-P2 contrast: inconclusive).
+- R3 (leaks): 23 cross-room candidate (agent, novel repo) pairs, 0 cross-room adoptions, 0 command-output exposures with matched placebos.
+- Source: `analysis/r2_run.py`, `data/processed/H05-rooms-cut/r2/r2_results.json`.

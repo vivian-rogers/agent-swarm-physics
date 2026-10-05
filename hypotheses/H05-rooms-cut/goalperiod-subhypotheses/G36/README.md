@@ -3,6 +3,7 @@
 
 **Verdict:** descriptive (not one of the P2 two-room windows; numbers reported for context)
 **Verdict (1b):** descriptive (round 1b: within > cross +0.010, p 0.12; regime II)
+**Verdict (2):** failed (R1-P1 artifacts follow rooms: cross/within co-edit 0.56)
 **Role:** replication (exploratory (round 1, non-holdout))
 **Period:** regime II · 11 agents · 5 days · room 2: 3, room 3: 8 · 24 within-room pairs, 21 cross-room pairs.
 
@@ -25,3 +26,11 @@ Source: `data/processed/H05-rooms-cut/explore_bin1.json`, `explore_bin5.json` (X
 
 ## Notes
 - Per-period inference has low power (H05 V4: 23–63% for a full cut at village coupling); the card's pooled tests carry the weight.
+
+## Round 2 (2026-10-05)
+Prediction (card, "Round 2", R1-P1, written 2026-10-05 03:25 UTC; descriptive, cross side not blind): rooms split artifacts, so the cross-room co-edit share of pair-days is ≤ 0.5 × the within-room share.
+
+- Same-day co-edit share: within 0.558 (190 pair-days), cross 0.314 (140); ratio 0.56. R1-P1: **failed**.
+- Cross-room pair-days with commit-response coupling E_x defined: 58, of which co-edit 28 (pooled R1-P2 contrast: inconclusive).
+- R3 (leaks): 1936 cross-room candidate (agent, novel repo) pairs, 48 cross-room adoptions, 48 command-output exposures with matched placebos. This period carries 48 of the 52 pooled output exposures (G 0.27 vs placebo 0.0).
+- Source: `analysis/r2_run.py`, `data/processed/H05-rooms-cut/r2/r2_results.json`.

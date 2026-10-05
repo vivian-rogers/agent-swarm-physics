@@ -2,6 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (HH248 holds; stay pairs recouple at the split)
+**Verdict (2):** mixed (artifacts split with the rooms; the coupling jump exceeds dilution)
 **Role:** native
 **Period:** #39 → #40 (merged in #universe-coordination; GPT-5 left in #rest and excluded) → #41; regime III; non-holdout.
 
@@ -25,3 +26,10 @@ Co-location and log reads correlate 0.82, so HH248's mediation test has little l
 
 ## Notes
 - The cut-arm DiDs of round 1 (X3 merge and split) are in the card's round-1b table: the split DiD is now significant (κ_x −0.020, p 0.027).
+
+## Round 2 (2026-10-05)
+Predictions (card, "Round 2", written 2026-10-05 03:25 UTC): R1-P1 cut pairs' co-editing falls ≥ 50% at the split; R2-P3 the merge drop of stay pairs' talk κ_x is no larger than dilution predicts (N_room^−0.45: ×0.85 at the merge, ×1 at #41 vs #39). R2-P3 is not blind (the round-1b levels were known).
+
+- R1-P1: cut pairs co-edit share 0.00 (#39) → **0.56** (#40 merged) → **0.00** (#41): **supported**. Rooms and artifacts move together.
+- R2-P3: stay pairs (39) κ_x 0.0106 → 0.0004 → 0.0226; dilution predicts 0.0093 at #40. Excess merge drop +0.0089 [0.0007, 0.0168]; #41 − #39 = +0.012 [0.003, 0.021]: **failed**. The jump is too large for dilution; #40's shared objective (a goal field) is the likely rest.
+- Source: `analysis/r2_run.py`, `data/processed/H05-rooms-cut/r2/r2_results.json`.

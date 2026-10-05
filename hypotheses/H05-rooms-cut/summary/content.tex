@@ -1,4 +1,4 @@
-\hwhat{A kinetic-Ising fit asks whether rooms make agents coupled blocks, on 99 non-holdout days (\#35--\#42, \#44, \#51 to 09-04). Round 1b uses the fixed activity table and day-edge-trimmed nulls. Within-room talk coupling beats cross-room coupling in 6/6 regime-III two-room windows (Fisher $p=6\times10^{-7}$). The per-period test passes in G38, G41, G42 and G44 (mixed G37, G39). The pooled two-way-FE effect of co-location on talk has $z=4.1$. Ledger read counts absorb it: with reads in the model, co-location falls to $z=0.2$. Activity spins show no room structure. Entropy production stays at the cross-day null in 15/18 windows, so it is unmeasurable here. \textbf{The holdout NE15} (03-16 split) passes the primary pair DiD: talk $\kappa_x$ $-0.022$ [$-0.038,-0.008$], $p_{\rm perm}=0.02$, and $J_{\rm out}$ falls to $\approx0$. The pooled TWFE misses ($z=1.4$), so the verdict is \textbf{inconclusive}. Unpredicted, $J_{\rm in}$ rises about $\times6$. The post-split window (\#35) is not held out.}
+\hwhat{A kinetic-Ising fit asks whether rooms make agents coupled blocks, on 99 non-holdout days (\#35--\#44, \#51 to 09-04). Within-room talk coupling beats cross-room coupling in 6/6 regime-III two-room windows (Fisher $p=6\times10^{-7}$). The pooled effect of co-location on talk ($z=5.1$) falls to $z=0.2$ once ledger read counts enter. \textbf{The holdout NE15} split passes the pair DiD ($\kappa_x$ $-0.022$, $p_{\rm perm}=0.02$) but misses the pooled test, so it is \textbf{inconclusive}. \textbf{Round 2} asks which channels cross rooms. Rooms split artifacts too: cross-room same-day co-editing is $\le0.04$ of the within-room rate in 5/8 windows, and NE42 cut pairs go $0.56\to0$ at the split. Cross-room commit coupling through a shared repo is not detectable (power 0.33). Room-size dilution exists ($k^{-0.65}$, post hoc) but predicts only $\times1.2$ per re-cut, not the $\times6$. Novel repos leak across rooms through command output at $+0.26$ adoptions per exposure (lift 21); history search shows none.}
 
 \hmodel{Model 02 (kinetic Ising). The spin $s_i(t)=\pm1$ says whether agent $i$ talks (talk spin) or acts (activity spin) in 1-min bin $t$; $s_i'=s_i(t{+}1)$. The field $h_i$ is the daily schedule; a cross-day surrogate removes it. $r_i$ is the room. $J_{\rm in}$ and $J_{\rm out}$ are the same- and cross-room couplings; a cut predicts $J_{\rm out}\to0$. $\Sigma_g$ is the Aguilera--Ito--Kolchinsky lower bound on the entropy production $\sigma$, with dual weights $\theta$. $\hat R$ and $D$ are block correlations and variances. $\alpha_{ij}$ and $\gamma_d$ are pair and day effects.}
 
@@ -14,26 +14,28 @@ J^{\rm MF}=D^{-1/2}\big(I-\hat R^{-1}\big)D^{-1/2}\\
 
 \hobs{../figures/summary_obs.pdf}{(a) The confirmatory pair difference-in-differences at the 03-16 split: the coupling change of the 18 separated pairs minus that of the 37 pairs that stay together (pre \#33--34, held out; post \#35, not held out). Talk coupling drops (C1 passes); activity does not. The 02-25 placebo separates no one and shows no change. Bars: day-bootstrap 95\% CIs; $p$: assignment permutation. (b) Block mean field: cross-room $J_{\rm out}$ falls to $\approx0$, and within-room $J_{\rm in}$ rises (unpredicted).}
 
-\htelos{A room is a read filter. Agents that do not read each other's chat stop timing their chat together, which is close to a restatement of the scaffold. To decouple two agents, stop them reading each other: with read counts known, co-location adds nothing ($z=0.2$). A pair DiD on 1-min talk spins detects a cut with 18 cut pairs and 5 post-split days, at only 25--60\% power. Activity, the actual work, is \emph{not} room-structured. Rooms reorganize conversation, not labor. The $\times6$ rise in within-room coupling suggests that attention is conserved and moves to roommates (HH90, now in H18). Entropy production is unmeasurable here and has no practical use.}
+\htelos{A room is a read filter, and it is also a work filter: the operator's split separates the repositories as well as the chat. To decouple two agents, stop them reading each other. With read counts known, co-location adds nothing ($z=0.2$). To move one item across rooms, put it in a command's output (a shared listing or README). One such exposure gives about a 1-in-4 adoption within 2 h, $3\times$ a same-room chat read. History search does not do it. Do not expect a room cut to change pair coupling by attention alone. Dilution gives $\times1.2$ for a $4\times$ smaller room; the observed jumps ($\approx0$ when merged, $\times2$ after the split) carry a goal field too.}
 
-\hbottom{Rooms cut chat coupling only through what agents read; work is not room-structured, and the holdout verdict, on the buggy table, stays inconclusive.}
+\hbottom{Rooms partition both chat and artifacts; items leak across mostly through command output and chat relays, and dilution is too small to explain the re-cut jumps.}
 
-\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.46\columnwidth}p{0.17\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b (fixed bins; trim)} & \textbf{Verdict (1b)}\\\hline
-P2 talk within $>$ cross & pooled $+0.014$ (5/6) $\to$ $+0.021$ (6/6, $p$ 6e-7); trim same & yes\\
-P2 per window & 3/6 supported $\to$ 4/6 (G42 now; G39 mixed) & mostly\\
-P2 active spins & 4/6, $p$ 0.01 $\to$ $p$ 0.17; trim 2/6 & no (withdrawn)\\
-P3 pooled TWFE, talk & $z$ 2.6 $\to$ 4.1; trim 3.3 & yes\\
-P3 split 05-11 DiD $<0$ & $-0.008$ n.s. $\to$ $-0.020$ ($p$ 0.03) & yes\\
-MF1 talk $J_{in}>J_{out}$, $J_{out}\ni 0$ & 6/6, 6/6 $\to$ 6/6, 4/6; trim 5/6, 3/6 & partly\\
-HH248: reads absorb the room & $\beta$(room) $+0.012$ ($z$ 5.1) $\to$ $+0.001$ ($z$ 0.2) given reads & yes (new)\\
-N2 \#focus cut & ledger reads $-95\%$; talk DiD $-0.006$ n.s. & as predicted\\
-N3 NE42 attention reallocation & stay pairs: merged $-0.010$, split $+0.022$ [0.013, 0.032] & yes (new)\\
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.45\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Result} & \textbf{Verdict}\\\hline
+P2 talk within $>$ cross (1b) & $+0.021$, 6/6, $p$ 6e-7; trim same & yes\\
+P3 split 05-11 DiD $<0$ (1b) & $-0.020$ ($p$ 0.03) & yes\\
+HH248: reads absorb the room (1b) & $\beta$(room) $z$ 5.1 $\to$ 0.2 given reads & yes\\
 Holdout C1 / C3 / C5 & pass / fail / mixed (buggy table) & not re-run\\
+R1-P1 rooms split artifacts & cross/within co-edit $\le0.04$ in 5/8; NE42 cut pairs $0.56\to0$ & yes\\
+R1-P2 cross-room commit coupling & $\Delta$ $-0.017$ ($p$ 0.76); within rooms $+0.017$ ($p$ 0.015) & inconclusive\\
+R1-P3 \#focus keeps commit coupling & DiD $-0.086$ [$-0.135,-0.036$] & no\\
+R2-P1/P2 dilution, pooled & $\hat\beta_\kappa$ 0.79 (wide); $\hat\beta_u$ $-0.34$ [$-0.55,-0.14$] & no\\
+R2 two-room era (post hoc) & $\hat\beta_u$ 0.65 [0.41, 0.90] & near 0.45\\
+R2-P3 NE42 / NE15 sizes & merge drop $>$ dilution; NE15 $\le$12\% of $\log 6$ & not dilution\\
+R3-P1 output / search leak & $+0.26$ [0.11, 0.42], lift 21 / 12 exposures & yes / n.p.\\
+R3-P3 leaks $<25\%$ of crossings & 22\% (relay 38\%, none logged 41\%) & yes\\
 \end{tabular}}
 
-\hobsb{../figures/r1b_summary_obs2.pdf}{(a) Two-way FE coefficients on talk coupling, regime-III non-holdout pair-days: co-location alone, co-location given log(1+ledger reads), and reads given co-location. Blue: fixed bins; orange: day-edge trimmed; bars 95\%. (b) NE42: talk coupling (left) and ledger reads (right) of the 42 pairs that stay together through the merge week.}
+\hobsb{../figures/r2_summary.pdf}{Round 2, non-holdout. (a) Share of pair-days on which both agents commit to a common repository, same vs different rooms, per two-room window. (b) Room-size dilution exponents with the room size set by the operator (pair and day FE); dashed: H18's 0.45; grey = pre-registered pooled tests, blue = two-room era (post hoc). (c) NE42 stay pairs' talk coupling vs the dilution prediction. (d) Excess adoptions of a novel repository within 2 h of a first exposure, over matched placebo items of the same agent at the same moment; bars: item bootstrap 95\%.}
 
-\hcaveats{Co-location and log reads correlate at 0.82, so HH248's mediation test has little leverage (SE $\times$2.2). NE42's merge week carries a shared objective. The holdout run used the buggy table. The corrected non-holdout analogues suggest attenuation, not a sign error, but only a re-run can decide. Entropy production stays unmeasurable.}
+\hcaveats{Co-location and log reads correlate at 0.82, so HH248 has little leverage. Rooms and artifacts are nearly collinear, so the artifact rival is not separable from the room effect. Cross-room commit coupling has power 0.33. The output leak rests on 52 exposures, 48 of them in \#36. The pooled dilution test was spoiled by one \#focus dyad (no @-mention is needed between two agents). The NE42 size check was not blind. The holdout run used the buggy table.}
 
-\hnext{Ask Vivian whether to re-run the NE12/NE15 holdout on the fixed panel with the same predictions. Test HH248 on reply probability per read (DQ2).}
+\hnext{Ask Vivian about a fixed-panel NE12/NE15 re-run. Fit a room-specific goal field at NE42 to see whether it absorbs the overshoot. Measure leaks with novel names and numbers (H41 markers), not only repositories.}
