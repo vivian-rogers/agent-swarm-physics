@@ -2,6 +2,7 @@
 
 **Verdict:** supported
 **Verdict (1b):** supported (native, 2026-10-04)
+**Verdict (r2):** mixed (round 2: first reads add 10–14% but carry ~4% of the dip; trail dose not shown)
 **Role:** native (round 1b, non-holdout; spans G36b–G51, one estimate per period plus a random-effects pool, exception (c))
 **Period:** regime III · all non-holdout periods with forced erasures (36b, 36c, 37, 38, 39, 40, 41, 42, 44, 51 to 09-04) · DQ1 context ledger: 21,165 forced (`reset_forced`) vs 16,357 voluntary (`reset_consol & ~reset_forced`) non-holdout events.
 
@@ -33,3 +34,20 @@ The 41-turn cap erases the context window at a time the scaffold sets, while the
 Also on the ledger: write-evidence calls −0.26 [−0.30, −0.23] (8/9); real failures **+0.27** [+0.12, +0.42] after a forced wipe (0/9 periods below 0); voluntary consolidations dip more (work −0.53), as in round 1 (task phase). The work lost in the ten post-wipe calls is 2.5–13% of a forced segment's work (median ≈ 10%; #37 2.5%, #41 13%), matching H44's independent 4–11%.
 
 **Reading.** Saving 7× more to memory at the wipe (dose 0.58 vs 0.09) does not shrink the output dip; if anything high-dose wipes dip slightly more. In KW terms the agent's own coarse-graining f is not what carries the session's semantic information; the dip is re-acquisition (H44: re-reading artifacts restores output), not memory.
+
+<!-- r2 begin -->
+## Round 2 (2026-10-05; native, pooled over the non-reserved regime-III periods)
+Pooled fit with agent × period × arm fixed effects, agent-day cluster bootstrap (B = 300); 42398 events (20592 forced). Predictions: card "Round 2".
+
+| Statistic | Estimate | Prediction | Verdict |
+| --- | --- | --- | --- |
+| R2 L × F (re-open last files) | 1.10 [1.01, 1.21] | ≥ 1.15, CI > 1 | direction yes, size no |
+| R2 M × F (new messages) | 1.14 [1.02, 1.28] | ≥ 1.10, CI > 1 | supported here; across periods heterogeneous |
+| R2 Gp × F (notes / search) | 0.93 [0.75, 1.14] | CI includes 1 | inconclusive (unpowered, A3) |
+| R2 Gn × F (note names repo) | 1.04 [0.92, 1.15] | CI includes 1 | supported |
+| R2 none of L, M, Gp (scramble by proxy) | 0.85 [0.75, 0.96] | — | descriptive |
+| R2 concentration RR(U12)/RR(U35) | 1.09 [0.95, 1.31] | > 1, CI > 1 | inconclusive (A5) |
+| R2 share of the dip carried by the first reads | 0.04 [-0.23, 0.26] | ≥ 0.25 | failed |
+| R1b trail T1 × F | 1.26 [1.02, 1.55] | between 1 and T2 | not ordered |
+| R1b trail T2 × F | 1.19 [0.99, 1.48] | ≥ 1.10, CI > 1 | not supported (CI reaches 0.99) |
+<!-- r2 end -->

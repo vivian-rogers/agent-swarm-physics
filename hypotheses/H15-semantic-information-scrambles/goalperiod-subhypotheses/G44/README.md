@@ -4,6 +4,7 @@
 **Verdict:** supported
 **Role:** replication (exploratory (round 1, non-holdout))
 **Verdict (1b):** supported (V* V_rel; forced work dip -0.41; 2026-10-04, `r1b/results.json`)
+**Verdict (r2):** descriptive (round-2 decisions are pooled; numbers below)
 **Period:** regime III · 18 agents with a viability value · 4 non-holdout active days.
 
 ## Why this period
@@ -40,3 +41,22 @@ Source: `data/processed/H15-semantic-information-scrambles/results.json` (`per_u
 
 ## Notes
 - Agent narration is not used; all variables come from logged actions, events, memory sizes and exposure.
+
+<!-- r2 begin -->
+## Round 2 (2026-10-05; replication; predictions in the card's "Round 2" section, written before the run)
+Forced erasures 352, pseudo-erasures 470 (≥ 10 window calls). Decisions are pooled (DerSimonian–Laird over periods and the NE41 pooled fit); these are this period's contributions.
+
+| Statistic | This period | Pooled |
+| --- | --- | --- |
+| R1a read-or-search share, calls 1–5, F − P | +0.009 [-0.045, +0.064] | +0.049 [+0.036, +0.063] |
+| R1a F events touching a pre-window file or A⁻ in calls 1–5 | 0.38 | 0.33 (P 0.32) |
+| R1b trail T2 × F (RR, V20) | 1.46 [0.63, 3.39] | 1.19 [0.99, 1.48] |
+| R2 re-open last files L × F (RR, V3) | 1.05 [0.62, 1.80] | 1.10 [1.01, 1.21] |
+| R2 new messages M × F | 0.77 [0.55, 1.07] | 1.14 [1.02, 1.28] |
+| R2 note names repo Gn × F | 1.28 [0.79, 2.07] | 1.04 [0.92, 1.15] |
+| R3 excess recall, window swap (E_s) | 0.089 [0.067, 0.108] | 0.090 [0.076, 0.104] |
+| R3 novel-term excess (novel E_s) | 0.041 [0.029, 0.054] | 0.043 [0.033, 0.052] |
+| R3 recall pre − post (retrospective) | 0.019 [0.009, 0.030] | +0.010 |
+
+Per-period intervals are cluster-robust sandwich (R1b, R2) or agent-day cluster bootstrap (R1a, R3). Not estimable here: Gp (< 10 events with the class in an arm). No verbatim text is stored; terms and file objects are hashes.
+<!-- r2 end -->

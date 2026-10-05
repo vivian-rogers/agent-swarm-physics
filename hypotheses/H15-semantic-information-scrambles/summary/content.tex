@@ -1,4 +1,4 @@
-\hwhat{The data is natural scrambles in non-holdout periods, per goal period, against a placebo-day null. A synthetic check on the real village skeleton calibrates the null (power 17--41\%). \textbf{Memory:} 12 losses of 50--80\% of an agent's memory and 20 newcomers with empty memories show no day-scale cost on the viability $V^*$. In round 1b memory loss gives $+0.29$ SD [$-0.05$, $+0.63$], and newcomers give $+0.20$ [$-0.13$, $+0.54$]: they progress \emph{more}. The rewrite control is null. \textbf{Chat cuts:} only 3 usable events exist. \textbf{Context:} consolidations wipe the context window (forced every 41 turns) but keep memory. The pre-registered forced-against-voluntary contrast has the wrong sign (task-phase confound). Post hoc, a forced wipe lowers output for about ten calls, whatever the agent saves to memory. On the round-1b work ledger the cost is $-39\%$ of work commits for ten calls (7/9 periods; about 10\% of output). D2.6 finds no homeostatic $V$ in the pre-registered pool. The holdout has not run.}
+\hwhat{The data is natural scrambles in non-reserved periods, per goal period, against placebo nulls calibrated on synthetic worlds built on the real village skeleton. \textbf{Rounds 1--1b:} losing 50--80\% of memory (12 events) or starting with an empty memory (20 newcomers) shows no day-scale cost on the viability $V^*$ ($+0.29$ SD [$-0.05$, $+0.63$]; newcomers $+0.20$). A forced context wipe (the 41-call cap) cuts work commits by 39\% for ten calls (7/9 periods), whatever the agent saves to memory. \textbf{Round 2} asks where that value sits. It compares 20,592 forced wipes with 21,806 mid-segment pseudo-wipes in nine regime-III periods, and 37,031 consolidation notes with the commands that follow them.}
 \hmodel{Model 04, Kolchinsky--Wolpert semantic information. The system $X$ is one agent: its memory $M$ (day-scale store) and its context window $C$ (session-scale store, filled by chat and events). $Y$ is the rest of the village. A scramble erases $M$ or $C$, or cuts $Y\to X$; $\hat p$ is the scrambled joint. $V$ is viability per agent-day (5 candidates) or per call (work). $u$ is its same-day residual, and $\delta$ is the fraction removed. $S$ is the semantic information and $\eta$ its share of $I(X;Y)$.}
 \hmath{\vspace{-8pt}
 \begin{gather*}
@@ -7,27 +7,29 @@ S=\min_f I(\hat p^{f})\ \text{s.t.}\ V[\hat p^{f}]=V[p],\quad \eta=\tfrac{S}{I}\
 u_{ad}=V_{ad}-\overline{V}_{-a,d}\\
 \widehat{\Delta V}=\bar u_{\rm post}-\big(\mu_a+\rho^{s}\,\mathbb{E}[h_{t_0-1}\mid u_{\rm pre}]\big)
 \end{gather*}\vspace{-6pt}}
-\hobs{../figures/summary_obs.pdf}{Round 1. Left: the write rate around consolidations, relative to turns $-20\ldots-11$ (regime III, pooled). A forced consolidation (41-turn cap, timing independent of task state) wipes the context. Output falls $\sim$45\% for ten turns, then recovers (post hoc). Voluntary consolidations dip alike after a write burst. Right: the day-scale $\Delta V$ on $V^*$ (meta over goal periods, 95\% CI). Memory loss, newcomers, the rewrite control and chat cuts are all consistent with zero.}
-\htelos{The working context keeps an agent productive. The agent rebuilds a long-term memory file from its environment within a day. That confirms what operators of LLM agents already suspect. The usable number is the cost of a context reset: $-39\%$ of committed work for about ten calls, about a tenth of output at a 41-turn cadence. To recover it, raise the cap or carry a task-state summary across the reset. Today's memory write does not recover the loss. That is scaffold engineering, not physics, and post hoc until the holdout check (C3) runs. Kolchinsky--Wolpert adds vocabulary (stored against observed information), but here it measures neither $S$ nor $\eta$, nor a viability function.}
-\hbottom{Memory and the agent's repo carry no measurable load-bearing information; a forced context wipe costs 39\% of committed work for ten calls, whatever the agent saves.}
+\hobs{../figures/r1b/F_r1b.pdf}{Round 1b. (a) Work commits per call around a context erasure on the DQ1 ledger, relative to calls $-20\ldots-11$. A forced wipe (41-call cap) cuts committed work by about 39\% for ten calls. Voluntary consolidations dip more after a work burst (task phase). (b) Day-scale scrambles on $V^*$ and on work output (meta over goal periods, 95\% CI). Only the chat cut (3 events) departs from zero.}
+\htelos{The working context keeps an agent productive, and its value is spread over the working state, not stored in a few items. Re-showing the last files or the newest messages after a wipe recovers at most a few percent of the lost work (4\% [$-23$, $+26$]). Agents re-read by habit, not by what was erased. The usable number stays the cost of a reset: $-39\%$ of committed work for about ten calls, about a tenth of output at a 41-call cadence. To recover it, raise the cap; a carried summary note will not do it, because notes are only about 11\% enacted and their content buys no output. The first-read share $\eta_{\rm first}\approx0.04$ is the closest this data comes to Kolchinsky--Wolpert's $\eta$.}
+\hbottom{A forced wipe costs 39\% of committed work for ten calls; the value is not in the few items read first (they carry 4\% of the dip), and memory notes are about 11\% enacted.}
 
 
-\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.50\columnwidth}p{0.14\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Round 1 $\to$ round 1b (improved data)} & \textbf{Verdict}\\\hline
-D2.6 choose $V^*$ & I: $V_{\rm rel}\to V_{\rm eng}$; III: $V_{\rm eng}\to V_{\rm rel}$ (real failures); $V_{\rm files}$ homeostatic (new) & inconcl.\\
-P1 memory loss $\le-0.25$ & $-0.55\,[-1.78,0.68]\to+0.29\,[-0.05,0.63]$ & $\times$\\
-P3 rewrite control null & $-0.10\to+0.21$ ($z$ $-1.1\to+1.5$) & $\checkmark$\\
-P4 newcomers pay & $+0.15\to+0.20$; progress $+0.31\,[0.06,0.56]$ & $\times$\\
-P5 forced $<$ voluntary & writes $z\,+4.9\to$ work $z\,+2.3$ & $\times$\\
-P5$'$ forced-wipe dip & writes $-0.44$ (8/9) $\to$ work $-0.39\,[-0.42,-0.35]$ (7/9) & $\checkmark$ (NE41)\\
-P6 chat cut harmless & $-0.72\to-0.59$ (3 events) & $\times$\\
-P11 artifact switch costs (new) & work $-0.00\,[-0.17,0.17]$; $\kappa_{\rm AS}\approx0<\kappa_{\rm ML}$ & $\times$\\
-NE41 memory dose (native) & $\rho=+0.01$; high$-$low tercile $-0.05\,[-0.10,0.01]$ & $\checkmark$\\
-NE29 lineage retired (native) & incumbents' work $z=+0.13$ & $\checkmark$\\
+\hresults{{\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.50\columnwidth}p{0.13\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Result (non-reserved)} & \textbf{Verdict}\\\hline
+P1 memory loss $\le-0.25$ (1b) & $+0.29\,[-0.05,0.63]$ & $\times$\\
+P4 newcomers pay (1b) & $+0.20$; progress $+0.31\,[0.06,0.56]$ & $\times$\\
+P5$'$ forced-wipe dip (1b) & work $-0.39\,[-0.42,-0.35]$ (7/9) & $\checkmark$\\
+R1a re-read $\ge+0.05$ & $+0.049\,[0.036,0.063]$; re-touch 0.33 vs 0.32 & mixed\\
+R1b trail softens dip & T2 $1.19\,[0.99,1.48]$; T1 $1.26$; 7-d $1.03$ & inconcl.\\
+R1c memory-loss re-read & $+0.04\,[-0.05,0.13]$, $n=32$ & inconcl.\\
+R2a last files $\ge1.15$ & $1.10\,[1.01,1.21]$ & partly\\
+R2b new messages $\ge1.10$ & $1.14\,[1.02,1.28]$; DL $1.02$ & mixed\\
+R2c note names repo $\approx1$ & $1.04\,[0.92,1.15]$ & $\checkmark$\\
+R2d first reads $\ge25\%$ of dip & $0.04\,[-0.23,0.26]$ & $\times$\\
+R3a notes performative & excess $0.090\,[0.076,0.104]$; novel $0.043$ & $\times$\\
+R3b notes retrospective & pre$-$post $+0.010\,[0.004,0.016]$ & $\checkmark$\\
 \end{tabular}}}
 
-\hobsb{../figures/r1b/F_r1b.pdf}{Round 1b. (a) Work commits per call around a context erasure on the DQ1 ledger, relative to calls $-20\ldots-11$. A forced wipe (41-turn cap) cuts committed work by about 39\% for ten calls. Voluntary consolidations dip more after a work burst (task phase). (b) Day-scale scrambles on $V^*$ and on work output (meta over goal periods, 95\% CI): memory loss, newcomers, the rewrite control, chat cuts and artifact switches. Only the chat cut (3 events) departs from zero.}
+\hobsb{../figures/r2/F_r2.pdf}{Round 2. (a) Ratio of ratios: how much more each class raises work output after a forced wipe than after a pseudo-wipe (pooled fit, agent-day bootstrap 95\% CI; gray: unpowered). The first two calls' reads (last files, new messages) add 10--14\% but remove only 4\% of the dip. A richer repo trail shows no dose order. (b) Excess recall of consolidation-note terms in the next segment's commands over the same agent's windows $\geq 3$ days away, per period. Dashed: the synthetic level of 10\% of a note enacted.}
 
-\hcaveats{The day-scale tests stay underpowered (synthetic power 17--41\%). $V^*$ moves in both regimes with the corrected reliability measure, so the period verdicts are replications under a changed yardstick. 118 of 172 artifact switches fall on a goal's first day, where the within-period estimator cannot reach them. The agents choose the other switches, as they choose voluntary consolidations. The erasure dip is post hoc in origin. NE41 replicates it with dated predictions on independent data, but the holdout check (C3) has not run. $V_{\rm files}$ passes D2.6 on 5 shocks and is outside the pre-registered pool.}
+\hcaveats{Day-scale and memory-loss tests see only large effects (power 17--41\%; shifts $\ge0.1$). The erasure dip is post hoc in origin; NE41 replicated it with dated predictions, but the reserved-data check (C3) has not run. The round-2 classes are chosen by the agent; the pseudo-wipe arm removes their association with output when nothing is erased, under a parallel-trends assumption. New messages carry value only in the pooled fit (G51-driven; across periods $\tau=0.17$). Notes are the next-session goal, not the full memory file; recall is a term-overlap proxy.}
 
-\hnext{Re-freeze \texttt{confirm\_ne30.py} on work commits and run C3. Pre-register $V_{\rm files}$ on new shocks.}
+\hnext{Re-freeze \texttt{confirm\_ne30.py} on work commits and run C3.}
