@@ -1,0 +1,19 @@
+% global-variables frame: swarm-level observables for interpretability (numbers from interpretation/swarm-constants.json)
+\begin{frame}{Global variables for swarm interpretability}
+\relax{\footnotesize\renewcommand{\arraystretch}{1.18}\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.75cm}>{\raggedright\arraybackslash}p{4.45cm}>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{3.85cm}@{}}
+\textcolor{muted}{\textbf{variable}} & \textcolor{muted}{\textbf{definition}} & \textcolor{muted}{\textbf{measured}} & \textcolor{muted}{\textbf{reads off}}\\ \hline
+loop gain $g$ & talk messages caused per read, at the read-out call & 0.13 (max 0.23) & distance to runaway, $\chi=1/(1-g)$\\
+Fano factor $\Phi$ & $\mathrm{Var}/\mathrm{mean}$ of talk counts & $=1/(1-g)^2$ (ratio 1.01) & $g$ from fluctuations alone\\
+schedule share $f$ & co-activation explained by $h^{\rm sched}(t)$ & 0.70--0.80 & how much synchrony is not coupling\\
+clock exponent $\eta$ & reply hazard per call $\propto(\Delta t)^{\eta}$ & $0.00\pm0.05$ (regime I: 0.51) & which clock carries the coupling\\
+$J_{\rm named}/J_{\rm unnamed}$ & hop-1 talk jump per read & 0.079 / 0.004 & the addressing lever\\
+branching ratio $\hat R$ & new adopters per idea adopter & 0.22 (0.09--0.40) & cascade size $1/(1-\hat R)$\\
+kickoff alignment & rank of own kickoff for day-1 content & first in 18/33 periods & strength of a goal field\\
+domain contrast $D$ & bimodality of room content & 5.3--6.1 (identical goals: 1.7) & room order parameter\\
+value per bit $\kappa_C$ & $\Delta\mathcal V/I$ for the context window & 5.2 [3.8, 7.9] & which channel matters\\
+erasure cost $\Delta W$ & output loss after a forced wipe & $-39\%$ for $\approx10$ calls & memory-cap trade-off\\
+slow-mode time $\tau_u$ & decay time of the collective content mode & 23--28\,d (regime I) & collective memory\\
+\end{tabular}}\par\vspace{0.4em}
+{\scriptsize\color{muted}Regime III unless noted. All are computable from logs of calls, reads and messages; none needs the model weights.}
+\end{frame}

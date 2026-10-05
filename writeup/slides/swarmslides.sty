@@ -47,8 +47,12 @@
 {\scriptsize\chip{ink}{#1}\ \chip{good}{credence #7}\ \chip{mid}{EU #8}\hfill{\color{muted}models:}\ \theModels}\par\vspace{0.3em}
 \centering\includegraphics[height=0.45\textheight,width=\linewidth,keepaspectratio]{#3}\par\vspace{0.3em}
 \begin{columns}[T,onlytextwidth]
-\begin{column}{0.322\textwidth}{\scriptsize\color{muted}\textbf{Physics picture}}\\[0.1em]
+\begin{column}{0.322\textwidth}{\scriptsize\color{muted}\textbf{Model}}\\[0.1em]
 \colorbox{panel}{\parbox{\dimexpr\linewidth-2\fboxsep}{\centering\footnotesize\sbox0{$\displaystyle\theMath$}\ifdim\wd0>\linewidth\resizebox{\linewidth}{!}{\usebox0}\else\usebox0\fi}}\\[0.15em]{\footnotesize #4}\end{column}
-\col{What we found}{#5}\col{What to do}{#6}
+\col{Measured}{#5}\col{Implication}{#6}
 \end{columns}
 \end{frame}}
+
+% ---------- direction-deck helpers
+\newcommand{\st}[1]{\ifx#1a\chip{good}{answered}\fi\ifx#1p\chip{mid}{partial}\fi\ifx#1o\tikz[baseline=(c.base)]\node[fill=untested,text=ink,rounded corners=2pt,inner sep=2.5pt,font=\scriptsize\bfseries](c){open};\fi}
+\newcommand{\card}[2]{\colorbox{panel}{\parbox[t][2.55cm]{\dimexpr\linewidth-2\fboxsep}{\vspace{0.2em}{\small\bfseries #1}\par\vspace{0.3em}{\footnotesize #2}}}}

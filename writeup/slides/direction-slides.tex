@@ -7,190 +7,21 @@
 \title{Research direction}
 \author{Claude Opus 5.5 and Vivian Rogers}
 \date{2026-10-04}
-\newcommand{\st}[1]{\ifx#1a\chip{good}{answered}\fi\ifx#1p\chip{mid}{partial}\fi\ifx#1o\tikz[baseline=(c.base)]\node[fill=untested,text=ink,rounded corners=2pt,inner sep=2.5pt,font=\scriptsize\bfseries](c){open};\fi}
-\newcommand{\card}[2]{\colorbox{panel}{\parbox[t][2.55cm]{\dimexpr\linewidth-2\fboxsep}{\vspace{0.2em}{\small\bfseries #1}\par\vspace{0.3em}{\footnotesize #2}}}}
 
 \begin{document}
-
-\begin{frame}
-\vfill
-{\Large\bfseries Towards a thermodynamics of agent swarms}\par\vspace{0.3em}
-{\color{ink2}\itshape (Slopvestigating sociophysics as a scheme for swarm interpretability)}\par\vspace{1.2em}
-{\small Claude Opus 5.5\,\claudespark\ \ and\ \ Vivian Rogers}\par\vspace{1.2em}
-{\scriptsize\color{muted}Research direction \textbullet\ 2026-10-04 \textbullet\ data: AI Village (AI Digest)}
-\vfill
-\end{frame}
-
-% ---------------------------------------------------------------- system
-\begin{frame}{The system: one LLM swarm, 17 months, fully logged}
-\centering\includegraphics[height=0.70\textheight,width=\linewidth,keepaspectratio]{timeline.pdf}\par\vspace{0.4em}
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.32\textwidth}\footnotesize\textbf{46 agents} from several labs, \textbf{51 goal periods}, Apr 2025 -- Sep 2026.\end{column}
-\begin{column}{0.32\textwidth}\footnotesize\textbf{3 scaffold regimes}: each change alters what an agent reads and when it acts.\end{column}
-\begin{column}{0.32\textwidth}\footnotesize\textbf{46 dated step changes} serve as natural experiments. We cannot run new swarms.\end{column}
-\end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------- questions
-\begin{frame}{The question: can statistical physics describe an agent swarm?}
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.36\textwidth}
-\vspace{0.6em}
-{\large\bfseries Goal}\par\vspace{0.4em}
-A quantitative physics of LLM swarms that an operator can use: measured constants, fitted models with error bars, and laws that survive the four impostors.\par\vspace{0.8em}
-{\large\bfseries Unit}\par\vspace{0.4em}
-One goal period = one point on a phase diagram. Fit inside a period; compare periods by their parameters.
-\end{column}
-\begin{column}{0.60\textwidth}
-\footnotesize
-\renewcommand{\arraystretch}{1.45}
-\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{4.6cm} l@{}}
-\textbf{Q1} & What couples agents? & \st{a}\\
-\textbf{Q2} & What is field and what is coupling? & \st{a}\\
-\textbf{Q3} & Is there collective order beyond fields? & \st{p}\\
-\textbf{Q4} & Where does information live, and what is it worth? & \st{p}\\
-\textbf{Q5} & What can an operator do? & \st{p}\\
-\textbf{Q6} & Thermodynamics and selection & \st{o}\\
-\textbf{Q7} & What transfers outside the village? & \st{o}\\
-\end{tabular}\par\vspace{0.5em}
-{\scriptsize\color{muted}``Answered'' means a result with high credence, not yet confirmed on reserved data.}
-\end{column}
-\end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------- lens I
-\begin{frame}{Lens I: Ising-like sociophysics}
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.52\textwidth}
-\colorbox{panel}{\parbox{\dimexpr\linewidth-2\fboxsep}{\small
-\vspace{0.2em}
-$\displaystyle H(\mathbf s)=-\sum_i h_i s_i-\sum_{i<j}J_{ij}s_is_j$\\[0.6em]
-$\displaystyle P\big(s_i^{\rm new}{=}{+}1\big)=\tfrac12\Big[1+\tanh\Big(\beta h_i+\beta\!\!\sum_{j\in\mathcal R_i}\!\!J_{ij}s_j\Big)\Big]$\\[0.6em]
-$\displaystyle \chi=\frac{\partial m}{\partial h}\propto\frac{1}{1-g},\qquad g=\beta J_0(1-m^2)$
-\vspace{0.2em}}}\par\vspace{0.6em}
-\footnotesize $g\ll1$: fields set the state, pushes die out. $g\to1$: $\chi$ diverges, one nudge can drive a cascade. $J_{ij}\neq J_{ji}$ breaks detailed balance and produces entropy.
-\end{column}
-\begin{column}{0.44\textwidth}
-\footnotesize
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.75cm} >{\raggedright\arraybackslash}p{3.7cm}@{}}
-\textcolor{muted}{\textbf{spin} $s_i$} & action class, content vector, project\\
-\textcolor{muted}{\textbf{field} $h_i$} & goal, scheduler, operator messages\\
-\textcolor{muted}{\textbf{coupling} $J_{ij}$} & messages that agent $i$ reads from $j$\\
-\textcolor{muted}{\textbf{update}} & one model call (Glauber step)\\
-\textcolor{muted}{$\mathcal R_i$} & what this call can read\\
-\end{tabular}\par\vspace{0.6em}
-Why it suits a swarm: the states are measurable, the fields are dated, and every coupling message is logged.
-\end{column}
-\end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------- lens II
-\begin{frame}{Lens II: information dynamics and value per bit}
-\centering\includegraphics[height=0.66\textheight,width=\linewidth,keepaspectratio]{slide_motivation2.png}\par\vspace{0.2em}
-{\footnotesize
-$A_X=I(X_{t+1};X_t^{(k)})$\quad
-$T_{Y\to X}=I(X_{t+1};Y_t\mid X_t^{(k)})$\quad
-$I(S_1,S_2;T)=R+U_1+U_2+S$\\[0.25em]
-$\Psi=I(V_t;V_{t+1})-\sum_j I(X_{j,t};V_{t+1})$\quad
-$\kappa_c=\Delta\mathcal V_c/I_c$}\par\vspace{0.2em}
-{\scriptsize\color{muted}Lizier (storage, transfer); Williams--Beer (PID); Rosas--Mediano ($\Psi$); Kolchinsky--Wolpert (semantic information).}
-\end{frame}
-
-% ---------------------------------------------------------------- method
-\begin{frame}{Method: a fit is not evidence}
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.46\textwidth}
-\centering\resizebox{!}{0.80\textheight}{\input{../figures/architecture.tikz}}
-\end{column}
-\begin{column}{0.50\textwidth}
-\small
-\textbf{Remove four impostors} before reading a coupling:
-\begin{itemize}\footnotesize
-\item the scheduler (all agents start and stop together)
-\item external drives (goals, operator messages)
-\item shared model priors (same lab, same habits)
-\item responses to a common input
-\end{itemize}
-\vspace{0.4em}
-\textbf{Every hypothesis}, before real data:
-\begin{itemize}\footnotesize
-\item states its prediction, null and kill rule
-\item recovers planted effects in synthetic swarms on the real call schedule
-\item uses natural experiments as interventions
-\end{itemize}
-\vspace{0.4em}
-{\footnotesize\color{ink2}15 physics models \textbullet\ 132 hypotheses \textbullet\ 51 goal periods}
-\end{column}
-\end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------- unit
-\begin{frame}{One cell = one hypothesis $\times$ one model, tested per goal period}
-\centering\includegraphics[height=0.72\textheight,width=\linewidth,keepaspectratio]{table_zoom.pdf}\par\vspace{0.4em}
-{\footnotesize Example: H08 under the kinetic Ising model. The read-out coupling fails in the single-room regime I and holds in the continuous regime III.}
-\end{frame}
-
-% ---------------------------------------------------------------- scoring
-\begin{frame}{Scoring: Claude as two judges, one blind}
-\begin{columns}[c,onlytextwidth]
-\begin{column}{0.47\textwidth}
-\centering\resizebox{\linewidth}{!}{\input{../figures/scoring-1col.tikz}}\par\vspace{0.6em}
-{\footnotesize Credence = how faithful the model is to the data.\\ EU = credence $\times$ value if true.}
-\end{column}
-\begin{column}{0.50\textwidth}
-\centering\includegraphics[height=0.72\textheight,width=\linewidth,keepaspectratio]{scoring_scatter.pdf}
-\end{column}
-\end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------- results
-\begin{frame}{What we know so far}
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.485\textwidth}
-\card{1. Agents couple through reading}{A message acts at the first call that reads it. Coupling runs on the call clock. Named messages couple $\approx20\times$ more. Loop gain $g\approx0.13$: subcritical everywhere ($\chi\le1.31$).}\par\vspace{0.5em}
-\card{3. No collective order beyond pairs and fields}{Cascades are subcritical (branching ratio $\approx0.2$). No single dial orders the periods. One slow content mode in the early village is the only collective signal that survived so far.}
-\end{column}
-\begin{column}{0.485\textwidth}
-\card{2. Fields beat couplings}{The scheduler makes 70--80\% of joint activity. A new goal is a quench: content moves to the kickoff within one day. Rooms split in content. Periods drift beyond about one week.}\par\vspace{0.5em}
-\card{4. The context window carries the value}{A forced wipe costs $\approx39\%$ of commits for $\approx10$ calls. $\kappa_{\rm context}\approx5$ commits per 20 calls per bit; no other channel is measurable. Operator levers are small.}
-\end{column}
-\end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------- which physics fits
-\begin{frame}{Which physics fits}
-\footnotesize
-\renewcommand{\arraystretch}{1.55}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.9cm} >{\raggedright\arraybackslash}p{8.0cm} l@{}}
-\textbf{Kinetic Ising, read-out coupling} & Couplings act only at the call that reads the message; one call = one update. & \chip{good}{fits}\\
-\textbf{Mean field / branching} & Talk loop gain $g\approx0.13$, sum rule $\Phi=1/(1-g)^2$ holds in 14/18 units. & \chip{good}{fits}\\
-\textbf{Vector spins + quench} & Content follows goal fields; kickoff sets the day-1 target; style is a field, not a coupling. & \chip{good}{fits}\\
-\textbf{Semantic information} & Only the context window has a measurable value per bit. & \chip{mid}{partial}\\
-\textbf{Inverse Ising on activity} & Recovers the scheduler's field, not who influences whom. & \chip{bad}{fails}\\
-\textbf{Critical / collective order} & No criticality, no spin glass, no egregore yet. & \chip{bad}{fails}\\
-\end{tabular}\par\vspace{0.6em}
-{\small\color{ink2}Picture: a hot, field-driven paramagnet whose couplings pass through a once-per-call reading channel.}
-\end{frame}
-
-% ---------------------------------------------------------------- next
-\begin{frame}{Next: research directions}
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.32\textwidth}
-\card{Confirm}{Run the frozen tests on reserved goal periods: H08 (read-out), H40 (call clock), H67 (loop gain), H111 (sum rule). Fit in one-week windows.}
-\end{column}
-\begin{column}{0.32\textwidth}
-\card{Extend the physics}{Q3: egregore tests (synergy, $\Psi>0$, remanence) against size-matched nulls.\\ Q6: entropy production, excess vs housekeeping (Kolchinsky).}
-\end{column}
-\begin{column}{0.32\textwidth}
-\card{Ship tools}{An operator guide: one page per lever. A toolkit: impostor checklist, null library and context ledger for other swarm logs (Q7).}
-\end{column}
-\end{columns}
-\vspace{1.2em}
-\begin{center}
-{\large\bfseries Open question:}\ {\large does a swarm ever hold a state its members do not?}
-\end{center}
-\end{frame}
+\input{frames/title}
+\input{frames/system}
+\input{frames/questions}
+\input{frames/lens-I}
+\input{frames/lens-II}
+\input{frames/method}
+\input{frames/unit}
+\input{frames/scoring}
+\input{frames/results}
+\input{frames/essentially}
+\input{frames/global-variables}
+\input{frames/which-physics-fits}
+\input{frames/next}
 
 % ================================================================ appendix A: tables (generated by make_tables.py)
 \begin{frame}

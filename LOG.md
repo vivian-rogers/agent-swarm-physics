@@ -5,6 +5,12 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-04 — Talk deck and physics titles
+
+- Thesis slide titles rewritten in technical physics language (37 files in `writeup/slides/theses/`); column heads now Model / Measured / Implication.
+- New frames: `frames/essentially.tex` (effective model: asynchronous Glauber spins with scheduler, goal and style fields plus a read-out coupling; context register erased every 40 calls) and `frames/global-variables.tex` (11 swarm-level observables with measured values from `interpretation/swarm-constants.json`).
+- `writeup/slides/talk-slides.tex` (19 slides) exported to `writeup/slides/talk-png/slide-NN.png` at 1920×1080. Direction deck now 71 slides (main slides moved to shared `frames/`).
+
 ## 2026-10-04 — Theses slide deck
 
 - Built `writeup/slides/theses-slides.tex` (beamer, 16:9, 16 pages): title slide plus one slide per top-15 EU thesis (H44, H50, H38, H08, H15, H54, H40, H46, H02, H69, H05, H36, H13, H67, H16). Each slide: claim title, credence/EU chips, figure, three short columns (physics picture, what we found, what to do). Content condensed from `writeup/hypothesis-summary-writeup/entries/`.

@@ -1,0 +1,14 @@
+% which-physics-fits frame (shared by direction-slides and talk-slides)
+\begin{frame}{Which physics fits}
+\footnotesize
+\renewcommand{\arraystretch}{1.55}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.9cm} >{\raggedright\arraybackslash}p{8.0cm} l@{}}
+\textbf{Kinetic Ising, read-out coupling} & Couplings act only at the call that reads the message; one call = one update. & \chip{good}{fits}\\
+\textbf{Mean field / branching} & Talk loop gain $g\approx0.13$, sum rule $\Phi=1/(1-g)^2$ holds in 14/18 units. & \chip{good}{fits}\\
+\textbf{Vector spins + quench} & Content follows goal fields; kickoff sets the day-1 target; style is a field, not a coupling. & \chip{good}{fits}\\
+\textbf{Semantic information} & Only the context window has a measurable value per bit. & \chip{mid}{partial}\\
+\textbf{Inverse Ising on activity} & Recovers the scheduler's field, not who influences whom. & \chip{bad}{fails}\\
+\textbf{Critical / collective order} & No criticality, no spin glass, no egregore yet. & \chip{bad}{fails}\\
+\end{tabular}\par\vspace{0.6em}
+{\small\color{ink2}Picture: a hot, field-driven paramagnet whose couplings pass through a once-per-call reading channel.}
+\end{frame}

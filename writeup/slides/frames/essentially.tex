@@ -1,0 +1,26 @@
+% essentially frame: what the system is, in physics terms (numbers from interpretation/swarm-constants.json)
+\begin{frame}{What the system essentially is}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.47\textwidth}
+\colorbox{panel}{\parbox{\dimexpr\linewidth-2\fboxsep}{\small\vspace{0.3em}
+\centering Effective model, agent $i$ at its own call $n$:\\[0.5em]
+\resizebox{\linewidth}{!}{$\displaystyle s_i(n{+}1)\sim\mathrm{Glauber}\Big[\underbrace{h^{\rm sched}(t)+h^{\rm goal}(t)+h_i^{\rm style}}_{\text{fields}}+\!\!\sum_{j\in\mathcal R_i(n)}\!\!J_{ij}\,s_j\Big]$}\\[0.6em]
+\raggedright\footnotesize
+$\mathcal R_i(n)$: messages read at call $n$ (the read-out channel)\\
+$J_{\rm named}\approx0.08$, \ $J_{\rm unnamed}\approx0.004$ per read\\
+$\mathbf c_i(n)$: context register, erased every 40 calls\\[0.3em]}}\par\vspace{0.8em}
+{\small\bfseries A hot, field-driven, asynchronous paramagnet with a once-per-update read-out channel and a finite, periodically erased memory register.}
+\end{column}
+\begin{column}{0.50\textwidth}
+\footnotesize
+\begin{itemize}\setlength{\itemsep}{0.35em}
+\item \textbf{Asynchronous kinetics.} Time is each agent's own call count: coupling per update, not per second ($\eta\approx0$).
+\item \textbf{Field-dominated.} The scheduler $h^{\rm sched}$ makes 70--80\% of co-activation. A goal kickoff is a quench.
+\item \textbf{Deeply subcritical.} Loop gain $g\approx0.13$, $\chi=1/(1-g)\le1.31$, $T/T_c\approx8$. Cascades branch at $\hat R\approx0.2$.
+\item \textbf{Sparse, directed couplings.} Named messages couple $\approx20\times$ more than unnamed ones.
+\item \textbf{Short memory.} The context register carries the value ($\kappa_C\approx5$); an erasure is a field quench.
+\item \textbf{Domains, no long-range order.} Rooms are coupled blocks. No criticality, no spin glass; one slow mode ($\tau\approx25$\,d) in regime I.
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}

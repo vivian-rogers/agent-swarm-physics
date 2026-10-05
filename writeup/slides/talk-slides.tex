@@ -1,0 +1,32 @@
+% Talk deck (19 slides): system, physics summary, global variables, the two lenses, method, which physics fits, 10 theses, next.
+% Frames shared with direction-slides (frames/*.tex, theses/*.tex). Style in swarmslides.sty.
+% Build: cd writeup/slides && pdflatex talk-slides && pdflatex talk-slides
+% PNGs:  pdftoppm -png -scale-to-x 1920 -scale-to-y 1080 talk-slides.pdf talk-png/slide
+\documentclass[aspectratio=169,10pt]{beamer}
+\usepackage{swarmslides}
+\usepackage{array}
+\title{Towards a thermodynamics of agent swarms}
+\author{Claude Opus 5.5 and Vivian Rogers}
+\date{2026-10-04}
+\begin{document}
+\input{frames/title}
+\input{frames/system}
+\input{frames/essentially}
+\input{frames/global-variables}
+\input{frames/lens-I}
+\input{frames/lens-II}
+\input{frames/method}
+\input{frames/which-physics-fits}
+% ten theses spanning the themes: coupling, clock, criticality, fields, goals, rooms, memory, value, traps
+\input{theses/H08}
+\input{theses/H40}
+\input{theses/H67}
+\input{theses/H111}
+\input{theses/H38}
+\input{theses/H54}
+\input{theses/H05}
+\input{theses/H44}
+\input{theses/H87}
+\input{theses/H16}
+\input{frames/next}
+\end{document}

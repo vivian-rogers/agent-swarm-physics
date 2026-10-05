@@ -1,12 +1,12 @@
 \begin{frame}
 \vfill{\Large\bfseries How agents couple: reading at the next call}\par\vspace{0.8em}
 {\small
-\chip{ink}{H50}\ Activity follows the scheduler; talk moves one read-out call at a time {\color{muted}(EU 2.98)}\\[0.25em]
-\chip{ink}{H08}\ A message acts only at the call that receives it {\color{muted}(EU 2.88)}\\[0.25em]
-\chip{ink}{H40}\ Agents couple per model call, not per minute {\color{muted}(EU 2.52)}\\[0.25em]
-\chip{ink}{H02}\ Activity timing does not show who influences whom {\color{muted}(EU 2.35)}\\[0.25em]
-\chip{ink}{H41}\ Novel items obey a read-out light cone; rooms cage them {\color{muted}(EU 1.92)}\\[0.25em]
-\chip{ink}{H18}\ Attention per sender dilutes as $k^{-0.45}$, not $1/k$ {\color{muted}(EU 1.29)}}
+\chip{ink}{H50}\ Fields act at zero lag; couplings act at hop 1 {\color{muted}(EU 2.98)}\\[0.25em]
+\chip{ink}{H08}\ Read-out coupling: $J_{ij}$ acts only at the receiving update {\color{muted}(EU 2.88)}\\[0.25em]
+\chip{ink}{H40}\ Glauber clock: coupling per update attempt, not per unit time ($\eta\approx0$) {\color{muted}(EU 2.52)}\\[0.25em]
+\chip{ink}{H02}\ Inverse Ising on activity recovers the field $h(t)$, not $J_{ij}$ {\color{muted}(EU 2.35)}\\[0.25em]
+\chip{ink}{H41}\ Spreading is bounded by a read-out light cone; rooms confine it {\color{muted}(EU 1.92)}\\[0.25em]
+\chip{ink}{H18}\ Sublinear attention dilution: per-sender response $\propto k^{-0.45}$ {\color{muted}(EU 1.29)}}
 \vfill
 \end{frame}
 \input{theses/H50}
@@ -18,13 +18,13 @@
 \begin{frame}
 \vfill{\Large\bfseries Subcritical swarms, fields and scaling}\par\vspace{0.8em}
 {\small
-\chip{ink}{H38}\ The runner, not the platform, makes most synchrony {\color{muted}(EU 2.93)}\\[0.25em]
-\chip{ink}{H36}\ A topic-shift alarm beats a fluctuation alarm {\color{muted}(EU 2.20)}\\[0.25em]
-\chip{ink}{H67}\ The talk loop sits far below runaway {\color{muted}(EU 2.17)}\\[0.25em]
-\chip{ink}{H34}\ Idea cascades die out: branching ratio near 0.2 {\color{muted}(EU 1.89)}\\[0.25em]
-\chip{ink}{H85}\ Room talk grows sublinearly with swarm size {\color{muted}(EU 1.60)}\\[0.25em]
-\chip{ink}{H111}\ Talk variance obeys a sum rule set by the loop gain {\color{muted}(EU 1.30)}\\[0.25em]
-\chip{ink}{H51}\ One coupling dial does not collapse the phase diagram {\color{muted}(EU 0.91)}}
+\chip{ink}{H38}\ Co-activation is a common-field effect: 70--80\% is the scheduler $h(t)$ {\color{muted}(EU 2.93)}\\[0.25em]
+\chip{ink}{H36}\ Goal changes are field steps: the mean shifts, susceptibility does not peak {\color{muted}(EU 2.20)}\\[0.25em]
+\chip{ink}{H67}\ Deep subcriticality: read-out loop gain $g\approx0.13$, $\chi\le1.31$ {\color{muted}(EU 2.17)}\\[0.25em]
+\chip{ink}{H34}\ Idea cascades are subcritical branching processes ($\hat R\approx0.2$) {\color{muted}(EU 1.89)}\\[0.25em]
+\chip{ink}{H85}\ Sublinear finite-size scaling of talk: $\propto N^{0.33}$ {\color{muted}(EU 1.60)}\\[0.25em]
+\chip{ink}{H111}\ Fluctuation--response sum rule $\Phi=1/(1-g)^2$ holds in regime III {\color{muted}(EU 1.30)}\\[0.25em]
+\chip{ink}{H51}\ No one-parameter scaling collapse of the phase diagram {\color{muted}(EU 0.91)}}
 \vfill
 \end{frame}
 \input{theses/H38}
@@ -37,12 +37,12 @@
 \begin{frame}
 \vfill{\Large\bfseries Goals as fields: quench, remanence, memory}\par\vspace{0.8em}
 {\small
-\chip{ink}{H54}\ The kickoff text sets the day-1 target {\color{muted}(EU 2.60)}\\[0.25em]
-\chip{ink}{H96}\ A goal switch is a quench, not hysteresis {\color{muted}(EU 1.11)}\\[0.25em]
-\chip{ink}{H82}\ Each agent carries the old goal into the new one {\color{muted}(EU 1.09)}\\[0.25em]
-\chip{ink}{H97}\ A kickoff erases position, more along the goal {\color{muted}(EU 1.06)}\\[0.25em]
-\chip{ink}{H88}\ A finished goal fades in a week to a small floor {\color{muted}(EU 0.93)}\\[0.25em]
-\chip{ink}{H103}\ Content memory fades with work, not with nights {\color{muted}(EU 0.59)}}
+\chip{ink}{H54}\ Kickoff quench: the day-1 order parameter aligns with the kickoff field {\color{muted}(EU 2.60)}\\[0.25em]
+\chip{ink}{H96}\ Goal switch is a quench with no coercive field (no hysteresis) {\color{muted}(EU 1.11)}\\[0.25em]
+\chip{ink}{H82}\ Remanence is carried by the agents, not by the shared record {\color{muted}(EU 1.09)}\\[0.25em]
+\chip{ink}{H97}\ Kickoff quench: positions reset and relax toward the goal axis {\color{muted}(EU 1.06)}\\[0.25em]
+\chip{ink}{H88}\ Collective memory relaxes to a floor in $\approx$1 week; not biexponential {\color{muted}(EU 0.93)}\\[0.25em]
+\chip{ink}{H103}\ Remanence decays per unit of work, not per night {\color{muted}(EU 0.59)}}
 \vfill
 \end{frame}
 \input{theses/H54}
@@ -54,11 +54,11 @@
 \begin{frame}
 \vfill{\Large\bfseries Rooms as magnetic domains}\par\vspace{0.8em}
 {\small
-\chip{ink}{H05}\ Rooms couple chat only through reading {\color{muted}(EU 2.20)}\\[0.25em]
-\chip{ink}{H47}\ Rooms bound coherence when they do different work {\color{muted}(EU 1.65)}\\[0.25em]
-\chip{ink}{H100}\ Rooms diverge on their own, not along the brief {\color{muted}(EU 1.06)}\\[0.25em]
-\chip{ink}{H102}\ Room domains are real; hoppers make no wall {\color{muted}(EU 0.77)}\\[0.25em]
-\chip{ink}{H108}\ The room split direction holds; pinning is unclear {\color{muted}(EU 0.21)}}
+\chip{ink}{H05}\ Two-block Ising: room coupling is mediated entirely by reads {\color{muted}(EU 2.20)}\\[0.25em]
+\chip{ink}{H47}\ Rooms set the coherence length only when room fields differ {\color{muted}(EU 1.65)}\\[0.25em]
+\chip{ink}{H100}\ Room content splits under an endogenous field, not the explicit one {\color{muted}(EU 1.06)}\\[0.25em]
+\chip{ink}{H102}\ Room domains exist ($D\approx6$); bridging agents pin no domain wall {\color{muted}(EU 0.77)}\\[0.25em]
+\chip{ink}{H108}\ Room order parameter: slow rotational diffusion; pinning unresolved {\color{muted}(EU 0.21)}}
 \vfill
 \end{frame}
 \input{theses/H05}
@@ -69,12 +69,12 @@
 \begin{frame}
 \vfill{\Large\bfseries The context window carries the value}\par\vspace{0.8em}
 {\small
-\chip{ink}{H44}\ A context wipe costs output, but the agent does not heat up {\color{muted}(EU 3.23)}\\[0.25em]
-\chip{ink}{H15}\ Memory loss costs nothing visible; a context wipe costs a tenth of output {\color{muted}(EU 2.73)}\\[0.25em]
-\chip{ink}{H69}\ Restatement loops copy the context window {\color{muted}(EU 2.34)}\\[0.25em]
-\chip{ink}{H16}\ Idle traps deepen with time {\color{muted}(EU 2.10)}\\[0.25em]
-\chip{ink}{H87}\ Only the context window buys commits per bit {\color{muted}(EU 1.57)}\\[0.25em]
-\chip{ink}{H71}\ Memory size returns to a set point without overshoot {\color{muted}(EU 1.11)}}
+\chip{ink}{H44}\ Context erasure is a field quench, not a temperature pulse {\color{muted}(EU 3.23)}\\[0.25em]
+\chip{ink}{H15}\ Semantic information: memory carries $\approx0$; context carries viability {\color{muted}(EU 2.73)}\\[0.25em]
+\chip{ink}{H69}\ Restatement loops are fixed points of the context window {\color{muted}(EU 2.34)}\\[0.25em]
+\chip{ink}{H16}\ Trap escape ages ($h\sim t^{-0.8}$); not Kramers kinetics {\color{muted}(EU 2.10)}\\[0.25em]
+\chip{ink}{H87}\ Value per bit: only the context window has $\kappa_c>0$ {\color{muted}(EU 1.57)}\\[0.25em]
+\chip{ink}{H71}\ Memory size is an overdamped first-order homeostat {\color{muted}(EU 1.11)}}
 \vfill
 \end{frame}
 \input{theses/H44}
@@ -86,8 +86,8 @@
 \begin{frame}
 \vfill{\Large\bfseries Identity: style and family fields}\par\vspace{0.8em}
 {\small
-\chip{ink}{H46}\ Style is a fingerprint, not a conserved charge {\color{muted}(EU 2.44)}\\[0.25em]
-\chip{ink}{H13}\ Model families share a writing style, not a coupling {\color{muted}(EU 2.17)}}
+\chip{ink}{H46}\ Style is a context-dressed charge: not conserved, still identifying {\color{muted}(EU 2.44)}\\[0.25em]
+\chip{ink}{H13}\ Family fields are a static style offset; no family-block coupling {\color{muted}(EU 2.17)}}
 \vfill
 \end{frame}
 \input{theses/H46}
@@ -95,11 +95,11 @@
 \begin{frame}
 \vfill{\Large\bfseries Collective order: herding, allocation, culture}\par\vspace{0.8em}
 {\small
-\chip{ink}{H11}\ Agents herd onto shared projects, whatever the goal {\color{muted}(EU 2.06)}\\[0.25em]
-\chip{ink}{H81}\ Regime-I culture drifts as a whole over about a month {\color{muted}(EU 1.07)}\\[0.25em]
-\chip{ink}{H35}\ The nudger buys glances, not committed work {\color{muted}(EU 1.07)}\\[0.25em]
-\chip{ink}{H89}\ Village content changes by transmission, not selection {\color{muted}(EU 0.98)}\\[0.25em]
-\chip{ink}{H94}\ Work goes to repos at max entropy, priced by ownership {\color{muted}(EU 0.92)}}
+\chip{ink}{H11}\ Potts coupling on projects is ferromagnetic in every goal mode {\color{muted}(EU 2.06)}\\[0.25em]
+\chip{ink}{H81}\ Regime-I content has a collective slow mode ($\tau\approx25$\,d) {\color{muted}(EU 1.07)}\\[0.25em]
+\chip{ink}{H35}\ The nudger is an inefficient Maxwell demon: bits buy activity, not work {\color{muted}(EU 1.07)}\\[0.25em]
+\chip{ink}{H89}\ Price decomposition: culture changes by transmission; selection $\approx0$ {\color{muted}(EU 0.98)}\\[0.25em]
+\chip{ink}{H94}\ Work allocation is a max-entropy state; ownership is the Lagrange multiplier {\color{muted}(EU 0.92)}}
 \vfill
 \end{frame}
 \input{theses/H11}

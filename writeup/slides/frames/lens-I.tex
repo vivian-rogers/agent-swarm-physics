@@ -1,0 +1,26 @@
+% lens-I frame (shared by direction-slides and talk-slides)
+\begin{frame}{Lens I: Ising-like sociophysics}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+\colorbox{panel}{\parbox{\dimexpr\linewidth-2\fboxsep}{\small
+\vspace{0.2em}
+$\displaystyle H(\mathbf s)=-\sum_i h_i s_i-\sum_{i<j}J_{ij}s_is_j$\\[0.6em]
+$\displaystyle P\big(s_i^{\rm new}{=}{+}1\big)=\tfrac12\Big[1+\tanh\Big(\beta h_i+\beta\!\!\sum_{j\in\mathcal R_i}\!\!J_{ij}s_j\Big)\Big]$\\[0.6em]
+$\displaystyle \chi=\frac{\partial m}{\partial h}\propto\frac{1}{1-g},\qquad g=\beta J_0(1-m^2)$
+\vspace{0.2em}}}\par\vspace{0.6em}
+\footnotesize $g\ll1$: fields set the state, pushes die out. $g\to1$: $\chi$ diverges, one nudge can drive a cascade. $J_{ij}\neq J_{ji}$ breaks detailed balance and produces entropy.
+\end{column}
+\begin{column}{0.44\textwidth}
+\footnotesize
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.75cm} >{\raggedright\arraybackslash}p{3.7cm}@{}}
+\textcolor{muted}{\textbf{spin} $s_i$} & action class, content vector, project\\
+\textcolor{muted}{\textbf{field} $h_i$} & goal, scheduler, operator messages\\
+\textcolor{muted}{\textbf{coupling} $J_{ij}$} & messages that agent $i$ reads from $j$\\
+\textcolor{muted}{\textbf{update}} & one model call (Glauber step)\\
+\textcolor{muted}{$\mathcal R_i$} & what this call can read\\
+\end{tabular}\par\vspace{0.6em}
+Why it suits a swarm: the states are measurable, the fields are dated, and every coupling message is logged.
+\end{column}
+\end{columns}
+\end{frame}
