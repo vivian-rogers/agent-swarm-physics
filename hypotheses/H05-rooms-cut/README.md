@@ -414,3 +414,19 @@ Ratings suggestion: completeness 55, faithfulness 2.0 (from 1.5), usefulness 2.5
 - Credence that R3-P1 passes for at least one channel: 0.6.
 
 **Synthetic validation first** (`analysis/r2_synthetic.py`), on real skeletons: real commit trains (R1), real talk-spin marginals, rooms and days (R2-P1), real pending sets (R2-P2), real items, candidates and exposure times (R3). Each estimator must recover a planted effect, hold size ≤ 0.10 at zero effect, and report power. Amendments after the synthetic step are dated and labelled.
+
+### Synthetic validation and amendments (2026-10-05, before any real-data round-2 statistic)
+`analysis/r2_synthetic.py`; numbers in `data/processed/H05-rooms-cut/r2/synthetic.json`. Every world keeps the real skeleton and replaces only the outcome.
+
+| Estimator | World (real skeleton) | Bias | Size at zero effect | Power |
+| --- | --- | --- | --- | --- |
+| R1-P2 Δ_cross (E_x, co-edit vs not, cross-room) | real days, rooms, co-edit flags and occupied commit bins; times redrawn on the pooled time-of-day profile; 40 reps | planted response p 0.1 / 0.2 / 0.3 → Δ +0.020 / +0.025 / +0.036 (SD 0.02–0.03) | 0.10 (null), 0.10 (shared same-day drive), **0.20** (drive shared by co-editors only) | 0.23 / 0.33 / 0.43 |
+| R2-P1 β̂_κ = −b/κ̄ | real talk-spin presence, minute rooms and talk rates; kinetic Ising J = J0·(k/10)^−β within rooms, shared time-of-day field, κ̄ ≈ 0.02 as in the data; 12 reps | true β 0 / 0.25 / 0.45 / 0.7 / 1 → mean β̂ −0.13 / 0.12 / 0.38 / 0.86 / 2.19 (SD 0.13–0.20); convex above 0.7 | CI excludes 0 in 0/12 at β = 0 | CI excludes 0 in 5/12 at β = 0.45 |
+| R2-P2 β̂_u (Poisson, pair + day FE) | real opportunity counts n per directed pair-day; responses redrawn; 100 reps | 0.44–0.45 at β = 0.45; 0.97 at β = 1 | 0.04–0.05 (also with a goal field on #40) | 1.00 at β = 0.45; coverage 0.88–0.91 |
+| R3 G − P0 (cross-room) | real items, candidates and exposure times; adoptions redrawn (background hazard timed on each agent's real artifact-use times); 40 reps | recovered within ±0.01 | 0/40 for both channels | at G − P0 = 0.05: output 0.40, search 0.00; at 0.10: output 0.88, search 0.13 |
+
+**Amendments (dated 2026-10-05, before real data; not post hoc):**
+- **A1 (R1).** Activity is counted in occupied 5-min bins, not commits. Eligibility is ≥ 2 occupied bins per agent. R1-P2 cannot reach power 0.8 (0.33 at p = 0.2). A null will therefore read "inconclusive", not "no channel". A pass reads "commit coupling or a drive shared by co-editors": that drive alone rejects in 20% of worlds.
+- **A2 (R2-P1).** The linearized β̂_κ is biased and convex: heavy-coupling small rooms dominate b. Decision rule, replacing "CI includes 0.45": the real β̂_κ is **consistent with** a world if it lies inside that world's synthetic 95% band: β = 0: [−0.43, 0.24]; β = 0.45: [0.13, 0.71]; β = 1: [1.98, 2.52]. "Dilution sets the size" passes if β̂_κ is in the β = 0.45 band and outside the β = 0 band. Power to exclude 0 at β = 0.45 is 0.42, so "no dilution" cannot be declared from R2-P1.
+- **A3 (R2-P2).** SE = √(SE_pair² + SE_day²) (cluster sandwich), because the larger of the two under-covered (0.84). Coverage is now 0.88–0.91. Read the 95% CI as about a 90% interval.
+- **A4 (R3).** The first version kept adopters whose follow-up was shorter than W and dropped non-adopters. That biased G upward (+0.02 at zero effect). Exposures with less than W of follow-up are now dropped. Only about 12 cross-room search exposures have matched placebos. R3-P1 is therefore unpowered for search: a null will read "inconclusive". Output is testable at G − P0 ≥ 0.10.
