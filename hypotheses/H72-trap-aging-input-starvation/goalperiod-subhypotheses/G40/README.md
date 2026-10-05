@@ -36,3 +36,23 @@ Verdict: **descriptive (no aging to explain)**.
 - C: the two-clock model is scored on held-out days (5 day folds); a adds -18.7 nats per 1,000 gates, s adds -14.5.
 - H: the starvation clock is the rival here; see the verdict.
 
+## Round 2 (2026-10-05): chatter hold
+
+**Round-2 verdict (chatter hold, R1):** descriptive (CI includes 0; power 0.23 at −0.25)
+
+*Prediction (written 2026-10-05 before running; card "Round 2", R1 and amendments R2-A1/A2):* escape at a wake falls with ln(1 + undirected items read at the 5 calls before it), β_C < 0, in the full model (agent FE + base + ln a + ln k + ln s_dir + dose + ln(1 − f_call)). Only G51 is powered (synthetic); elsewhere a CI including 0 is descriptive.
+
+*Result* (`analysis/run_r2.py`; `data/processed/H72-trap-aging-input-starvation/r2/results_r2.json`; day-block bootstrap 200):
+
+| Quantity | Estimate [95% CI] |
+| --- | --- |
+| wakes / sustained escapes (consolidation-start traps dropped) | 197 / 164 |
+| synthetic power for β_C = −0.25 | 0.23 |
+| β_C, full model | +0.09 [-0.73, +3.76] |
+| β_C, B + A + C | -0.13 [-0.58, +1.86] |
+| ln k (wake index), full model | +4.47 [-7.14, +11.87] |
+| ln s_dir (starvation), full model | -0.03 [-1.54, +0.30] |
+| ln(1 − f_call) (urn coefficient), full model | +6.21 [-7.89, +30.48] |
+| held-out gain over the base (nats per 1,000 wakes) | clocks -9.7 [-49.2, +45.5], starvation -139.2 [-217.0, -61.5], chatter -7.3 [-19.2, +0.5], self-share +70.6 [+10.2, +160.4] |
+| transfer of G51 slopes (held-out gain, nats per 1,000 wakes) | starvation -0.2 [-4.0, +4.5], chatter +7.2 [-0.6, +17.3], self-share +32.5 [+9.3, +69.7] |
+

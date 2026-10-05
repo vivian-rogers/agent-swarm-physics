@@ -2,12 +2,12 @@
 \input{../../../writeup/hypothesis-pages/hpage.tex}
 \def\hID{H72}
 \def\hTitle{Trap aging is input starvation}
-\def\hStatus{exploratory round 1 done (2026-10-04): failed. Trap aging is not input starvation. Card, design and predictions were written before any outcome; the synthetic validation came first (amendment A1). Replication on 18 goal periods ($\geq$ 200 idle gates each); nati...}
-\def\hStage{level: hypothesis  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-04}
-\def\hBadges{\hbadge{Complete}{60\%}{3987e5}{ffffff}\ \hbadge{Faithfulness}{1/5}{e34948}{0b0b0b}\ \hbadge{Usefulness}{2/5}{f5bcbb}{0b0b0b}}
+\def\hStatus{exploratory round 2 done (2026-10-05): starvation still failed, now on held-out log scores; in \#51 the context's self-share carries 65\% [59, 71] of the aging clocks' held-out information, chatter 22\%, directed-input starvation -1\%; undirected chatter adds a...}
+\def\hStage{level: descriptive  $\cdot$  pipeline checks 86\%  $\cdot$  updated 2026-10-05}
+\def\hBadges{\hbadge{Complete}{70\%}{2a78d6}{ffffff}\ \hbadge{Faithfulness}{1.5/5}{ee8584}{0b0b0b}\ \hbadge{Usefulness}{2/5}{f5bcbb}{0b0b0b}}
 \def\hPeriodSummary{6 failed, 15 descriptive}
-\def\hDate{Updated 2026-10-04}
-\def\hFooter{H72-trap-aging-input-starvation $\cdot$ generated 2026-10-04 12:55 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H72-trap-aging-input-starvation/README.md $\cdot$ ratings: H72 agent (suggested)}
+\def\hDate{Updated 2026-10-05}
+\def\hFooter{H72-trap-aging-input-starvation $\cdot$ generated 2026-10-04 21:25 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H72-trap-aging-input-starvation/README.md $\cdot$ ratings: H72 round-2 agent (suggested v1; coordinator writes v2)}
 \def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G03 & d & descriptive \\
 G04 & d & descriptive \\
 G06 & d & descriptive \\
@@ -20,10 +20,10 @@ G19 & d & descriptive \\
 G20 & d & descriptive \\\multicolumn{3}{l}{\textit{+11 more periods: see the card.}} \\\end{tabular}}
 \def\hScoreTable{\noindent\begin{tabular}{@{}lr@{\qquad}lr@{}}A mapping & 1 & F identifiability & 2 \\
 B assumptions & 1 & G ground truth & 1 \\
-C adequacy & 1 & H comparative & 0 \\
+C adequacy & 2 & H comparative & 1 \\
 D unfitted predictions & 1 & I transfer & 1 \\
-E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
-\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{H72-R1} Chatter hold as the object.\item \textbf{H72-R2} What does age measure?\item \textbf{H72-R3} Run analysis/confirm.py on the \#51 tail, \#45, \#47–\#50 and \#32 after commit and LOG disclosure.\end{itemize}}
+E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{descriptive}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{H72-R1} (done in round 2, 2026-10-05).\item \textbf{H72-R2} (done in round 2, 2026-10-05).\item \textbf{H72-R3} (open; needs re-freezing on round-2 statistics).\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage

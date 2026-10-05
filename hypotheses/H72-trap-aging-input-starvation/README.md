@@ -1,6 +1,7 @@
 # H72: Trap aging is input starvation
 
-**Status:** exploratory round 1 done (2026-10-04): **failed.** Trap aging is not input starvation. Card, design and predictions were written before any outcome; the synthetic validation came first (amendment A1). Replication on 18 goal periods (≥ 200 idle gates each); natives NE43, blocked spells (G27 + G51) and the #focus room (G51g). `analysis/confirm.py` is frozen and dry-run on stand-ins; **not run**.
+**Status:** exploratory round 2 done (2026-10-05): starvation still **failed**, now on held-out log scores; in #51 the context's self-share carries 65% [59, 71] of the aging clocks' held-out information, chatter 22%, directed-input starvation −1%; undirected chatter adds a small hold (β_C −0.085 [−0.140, −0.045]) that a directed read cancels. See "Round 2".
+**Round 1 status:** exploratory round 1 done (2026-10-04): **failed.** Trap aging is not input starvation. Card, design and predictions were written before any outcome; the synthetic validation came first (amendment A1). Replication on 18 goal periods (≥ 200 idle gates each); natives NE43, blocked spells (G27 + G51) and the #focus room (G51g). `analysis/confirm.py` is frozen and dry-run on stand-ins; **not run**.
 **Headline:** in every period where traps age with power (G17, G18, G38, G51), the aging slope survives the starvation control unchanged (G51: β_a0 −0.48 [−0.54, −0.41] → β_a −0.53 [−0.59, −0.44]; aging absorbed ρ −0.09). The input clock has the *opposite* sign to H72: recent input lowers escape (G51 β_s +0.23 [+0.11, +0.33]; CI above 0 in 7/18 periods, below 0 in 0/18). Recent chatter holds an idle agent at its gate. Directed starvation (no recent nudge or @-mention) does not absorb aging either (G51 β_s,dir +0.09). Blocked spells (Jev `p_blocked`) age at −0.54 (G51) and −0.70 (G27) with or without the directed clock.
 **Fields:** stat mech (aging, trap models), dynamics (renewal hazards, exogenous point processes), info theory (input supply)
 **Literature:** none of the notes in `literature/` covers aging hazards. Textbook references: Bouchaud, *J. Phys. I France* 2, 1705 (1992)† (trap model, aging from a broad trap-depth distribution); Cox, *Renewal Theory* (1962)†; Allison, *Discrete-time methods for the analysis of event histories* (1982)† (discrete-time hazard with time-varying covariates). † = not in `literature/`.
@@ -84,7 +85,7 @@ Shared builder `infra/shared/idle_gates.py` (written for H72 and H60; `--verify`
 | Contemporaneous convergence | yes | s counts only items read at earlier calls. In-flight placebo (messages posted during the gate call's model latency; A2): CI includes 0 in 16/18 periods; G51 +0.16 [+0.08, +0.25], and adding it leaves β_s at +0.24 | removed (small common term in G51) |
 
 ## Faithfulness scorecard
-Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness". Scored after round 1 (2026-10-04).
+Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness". Scored after round 1 (2026-10-04); rows C and H updated after round 2 (2026-10-05).
 **Rival models:** R1 intrinsic aging, R2 two clocks, R3 kick-only, R4 common field.
 **Locked holdout used for confirmation:** none. Planned targets (frozen in `analysis/confirm.py`, not run): #45 (regime III, long pauses), #47–#50 (regime III, short pauses), the #51 tail (09-07 → 09-18), #32 (regime I).
 
@@ -92,12 +93,12 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | --- | --- | --- | --- |
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Gates, clocks and input classes come from the DQ1 ledger and `call_windows`; assumptions listed. Not invariant: "idle" is a wait call in regime I and a pause in regime III, and in regime I input arrives at almost every call (median s ≤ 1.4 min) |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Discrete hazard per gate on the call clock with agent FE; the agent's own aging is in the model. Stationarity across NE43 holds only partly (Δβ_a −0.16 [−0.33, −0.01]). Day effects are not modelled (day-block CIs absorb them) |
-| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | On held-out days (5 day folds) trap age adds 14.9 [10.9, 19.0] nats per 1,000 gates in G51; starvation adds 1.3 [0.2, 2.4], with the wrong sign. The H72 model (starvation only) loses to the age clock in every powered period |
+| C adequacy | beats the null hierarchy, day-blocked held-out data | 2 | **Round 2:** starvation, chatter and self-share compared on day-blocked held-out log scores on the same G51 wakes (G(F) +19.8, G(C) +5.7, G(S) −0.4 nats per 1,000 wakes; ε_F 0.65 [0.59, 0.71]). Round 1: On held-out days (5 day folds) trap age adds 14.9 [10.9, 19.0] nats per 1,000 gates in G51; starvation adds 1.3 [0.2, 2.4], with the wrong sign. The H72 model (starvation only) loses to the age clock in every powered period |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | H72's signature (aging vanishes under control) is absent: the starvation-implied aging b_impl is +0.03 [+0.01, +0.04] in G51 against an observed −0.48. Predicted and held: blocked-spell aging untouched by directed input (N2), a-adds ≫ s-adds (P6) |
 | E interventional | predicts the change across a natural experiment | 1 | NE43 (nudger stop): the directed clock did not lengthen (×0.97), so the stop is not a starvation manipulation; escape at fixed age is unchanged (C indicator −0.18 [−0.40, +0.02]); β_a steepens slightly (−0.16) |
 | F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 | Parametric bootstrap on the real G51, G38, G18 designs: β_a, β_s within 0.02 of truth; the rule calls intrinsic aging "failed" 100% and null "supported" ≤ 5%. Day-bootstrap SD 1.0–1.6× Wald. Results stable under cloglog, the h ≥ 0.25 trim, dropping the first day and four input definitions |
 | G ground truth | agrees with known structure | 1 | Reproduces H16's gate aging on the ledger clock (G51 −0.48 vs TS2r −0.38) and blocked-spell aging (G27 −0.70, G51 −0.54 vs H16 −1.24, −0.39). The positive β_s matches RE-R1's "unaddressed chatter holds agents at the timer gate" |
-| H comparative | beats the named rivals | 0 | H72 loses to R1 (intrinsic aging) in 4/4 powered aging periods. R4 (common field) is mostly excluded: the in-flight placebo is ≈ 0 in 16/18 periods and leaves β_s unchanged; G51 shows a small common term (+0.16) |
+| H comparative | beats the named rivals | 1 | **Round 2:** the reconciled account (self-share + chatter hold) beats starvation (ε −0.01) and the intrinsic-aging and frailty proxy worlds (ε_F ≤ 0.22); H72's own starvation model still loses. Round 1: H72 loses to R1 (intrinsic aging) in 4/4 powered aging periods. R4 (common field) is mostly excluded: the in-flight placebo is ≈ 0 in 16/18 periods and leaves β_s unchanged; G51 shows a small common term (+0.16) |
 | I transfer | holds in other same-mode periods, including the holdout | 1 | The negative result transfers across regimes I and III (G17, G18, G38, G51) and across four input definitions. Holdout not used |
 
 **Faithfulness lever (HH260 aimed at H and D):** it moved both to a clear answer, against the hypothesis: the rival clock (trap age) wins (H 0 for the H72 model), and the unfitted signature is absent (D 1).
@@ -198,9 +199,9 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 - Amendment A1 (rule, before data) and A2 (placebo bug, post hoc) are labelled above.
 
 ## Round 2 redirects (2026-10-04)
-- **H72-R1. Chatter hold as the object.** Model the gate decision as a competition between the agent's own timer and the undirected-chatter rate: does escape at fixed age fall with the *number* of undirected items read in the last N calls, and does a mention cancel it (RE-R1's OR 3.1)?
-- **H72-R2. What does age measure?** Test H16-R1's urn: the self-share of the context items at the gate (own pause turns vs others' items, DQ1 `k_ctx`) as the aging variable, against trap age, on the same gates.
-- **H72-R3. Run `analysis/confirm.py`** on the #51 tail, #45, #47–#50 and #32 after commit and LOG disclosure.
+- **H72-R1 (done in round 2, 2026-10-05). Chatter hold as the object.** Model the gate decision as a competition between the agent's own timer and the undirected-chatter rate: does escape at fixed age fall with the *number* of undirected items read in the last N calls, and does a mention cancel it (RE-R1's OR 3.1)?
+- **H72-R2 (done in round 2, 2026-10-05). What does age measure?** Test H16-R1's urn: the self-share of the context items at the gate (own pause turns vs others' items, DQ1 `k_ctx`) as the aging variable, against trap age, on the same gates.
+- **H72-R3 (open; needs re-freezing on round-2 statistics). Run `analysis/confirm.py`** on the #51 tail, #45, #47–#50 and #32 after commit and LOG disclosure.
 
 ## Round 2 (2026-10-05): chatter hold as the object, and which mechanism carries the aging
 *Predictions, nulls and kill rules written 2026-10-05 ~04:00 UTC, before any round-2 outcome statistic on real data. Exploratory; reserved data excluded (`holdout_mask`; #51 before 09-03 as in H16 round 2). Serves Q5 (what keeps an idle agent idle) and Q4 (which input carries information to the wake decision). R3 (the frozen confirm script) is not run: it needs reserved data. Code: `scheme/build_r2.py`, `analysis/r2lib.py`, `analysis/synthetic_r2.py`, `analysis/run_r2.py`. Numbers: `data/processed/H72-trap-aging-input-starvation/r2/`. Round 1 reproduces unchanged (its code paths are not touched).*
@@ -300,6 +301,86 @@ A pure chatter world (W3) also produces apparent wake-index aging (b_k −0.15, 
 - **R2-A3 · ε is read only when G(A) > 0 with CI above 0.** The reconcile is read in G51 only; G38 and the 4-h regime-III periods are descriptive (power < 0.8). Transfer scores are descriptive.
 - **R2-A4 · RC-P4's band is 0.22**, the largest 97.5th percentile of ε(F) across the proxy worlds W1a, W1b, W1c and W5 (frailty).
 - **R2-A5 · RC-P2's F-versus-C difference is not powered** (0.63 in W6): a CI including 0 is inconclusive, not failed. F versus S is powered (1.00).
+- **R2-A6 · POST HOC bug fix (transfer only), after the first transfer numbers.** The first offset fit had no step halving. It diverged under quasi-separation in the small target periods and gave held-out losses of −25 to −750 nats per 1,000 wakes for every family, even near-zero offsets. `r2lib.fit_offset` now uses step halving and the same ridge as `hazard_fe.fit_binary`; only the transfer was re-run (`run_r2.py --transfer-only`). No R1, CV or in-sample number moved. Transfer scores were descriptive before the fix (R2-A3) and stay so.
+
+### Round-2 results (run 2026-10-05 ~04:20–04:35 UTC; exploratory, non-reserved)
+*Scripts: `analysis/run_r2.py`, `analysis/estimates_r2.py` (113 rows), `analysis/figure_r2.py` → `figures/r2_summary.pdf`. Numbers: `r2/results_r2.json`. CIs: day-block bootstrap (200 draws for slopes, 1,000 for held-out scores). G51 primary sample: 20,237 at-risk wakes (9,873 sustained escapes, 43 days, 29 agents) after dropping 1,124 wakes in consolidation-start traps. Compute: one local process, ≤ 2 threads, ≈ 5 min.*
+
+**R1 · Chatter hold (G51 unless noted)**
+
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| R1-P1 | β_C < 0, CI below 0 (full model, A1) | **−0.085 [−0.140, −0.045]** per ln(1 + U5) | **holds** |
+| R1-P2 | stays < 0 and moves < 30% from B + A + C | B + A + C −0.130 [−0.177, −0.093] → full −0.085 (34%) | **fails narrowly**: the sign and CI survive, but a third of the B + A + C dose is shared with self-share and starvation (the leak the synthetic predicted) |
+| R1-P3 | first wakes (k = 1) | −0.076 [−0.138, −0.024] (10,038 wakes) | **holds**: not survivor selection inside traps |
+| R1-P4 | agent + day FE; in-flight placebo ≈ 0, β_C moves < 0.05 | day FE −0.090 [−0.135, −0.046] ✓; placebo **+0.29 [+0.18, +0.39]** ✗; β_C with placebo −0.096 ✓ | **mixed**: day states do not make the dose; the in-flight term is again non-zero (round 1: +0.16) but leaves β_C unchanged |
+| R1-P5 | a directed read cancels the hold | interaction **+0.138 [+0.063, +0.205]** | **holds**: at wakes with a directed read the dose slope is +0.05 |
+| R1-P6 | competing-rates form fails (slope on ln λ_u ≠ −1, \|β\| < 0.5) | −0.094 [−0.148, −0.041] (B + A); −0.064 [−0.121, −0.013] (full) | **holds**: the hold is 10× weaker than a race between timer and chatter |
+| R1-P7 | CI below 0 in ≥ 1/3 of periods, above 0 in none | below 0 in 4/18 (G19, G20, G25, G51), **above 0 in 2/18 (G03, G17)**; point estimates negative in 9/18 | **fails** |
+| R1-P8 | descriptive | N = 3: −0.03 ± 0.02; N = 10: −0.13 ± 0.02; peer-only N = 5: −0.09 ± 0.02 (Wald); rate at fixed window: −0.052 [−0.109, −0.005]; directed dose ln(1 + D5): −0.07 [−0.18, +0.04] | the hold grows with the window: it is a slow accumulation, not the last call |
+
+Other full-model slopes in G51: wake index ln k −0.63 [−0.73, −0.47]; trap age ln a +0.08 [−0.04, +0.20] (timer-like once k is in, as H16 post hoc P2); starvation ln s_dir +0.05 [+0.01, +0.08] (round 1's +0.23 shrinks once the dose is in); urn coefficient on ln(1 − f_call) **+1.09 [0.81, 1.33]** (the urn's +1; H16 1.05).
+
+**Reconcile · Held-out log scores, G51** (nats per 1,000 wakes; ε = share of the clocks' held-out information made redundant)
+
+| Mechanism M | Gain G(M) | ε(M) | ε(F) − ε(M) |
+| --- | --- | --- | --- |
+| clocks A (ln a + ln k; reference) | +22.2 [17.5, 27.2] | — | — |
+| S, directed-input starvation | −0.4 [−0.8, +0.0] | **−0.01 [−0.03, −0.00]** | +0.67 [0.60, 0.73] |
+| C, chatter hold | +5.7 [3.9, 7.9] | **0.22 [0.17, 0.27]** | +0.43 [0.35, 0.52] |
+| F, context self-share | +19.8 [15.3, 24.3] | **0.65 [0.59, 0.71]** | — |
+| S + C + F | +20.9 [16.1, 25.4] | 0.69 [0.64, 0.75] | — |
+
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| RC-P1 | ε(S) < 0.1 | −0.01 [−0.03, −0.00] | **holds**: starvation explains no aging, held out as well as in-sample |
+| RC-P2 | ε(F) largest, both differences CI above 0 | +0.43 [0.35, 0.52] vs C; +0.67 [0.60, 0.73] vs S | **holds** |
+| RC-P3 | 0.25 ≤ ε(F) ≤ 0.75 | 0.65 | **holds** |
+| RC-P4 | ε(F) above the proxy band (0.22, A4) | 0.65 [0.59, 0.71] | **holds**: self-share is more than a stand-in for the wake index or per-trap frailty |
+| RC-P5 | ε(C) < ε(F); ε(C) CI below 0.25 | 0.22 [0.17, 0.27] | **fails narrowly** (upper bound 0.27): chatter carries about a fifth of aging, because the dose grows with trap depth |
+| RC-P6 | aging left over after S + C + F | ε(SCF) 0.69 [0.64, 0.75] < 1 | **holds**: 31% of the clocks' information (≈ 7 nats per 1,000 wakes) is in none of the three |
+| RC-P7 | G(C) > 0 | +5.7 [3.9, 7.9] | **holds** |
+| RC-P8 | TG(F) > 0 in G38; TG(S) CI includes 0 everywhere | TG(F) G38 **+10.2 [+0.2, +19.9]**; TG(S) G38 −1.1 [−1.9, −0.3], G41 −2.1 [−4.3, −0.2] | **mixed**: F holds; S fails as worded, in the direction *against* starvation (G51's starvation slope hurts elsewhere) |
+
+**Across periods (transfer, descriptive, A3/A6).** G51's self-share slope raises held-out scores in G37 +46 [+7, +121], G38 +10 [+0, +20] and G40 +32 [+9, +70]; G41 +16 [−4, +34]; G44 −1 [−14, +7]. The chatter slope transfers only to G41 (+18 [+1, +40]); the starvation slope never helps. In reverse, G38's self-share slope scores +19.8 [14.4, 25.1] on G51, the same as G51's own fit (+19.8): **the urn coefficient is portable across regime-III periods; chatter and starvation slopes are not.** G38's own reconcile agrees in direction (ε(F) 0.72 [0.41, 1.33], ε(C) −0.07, ε(S) 0.04; descriptive, A3).
+
+**Bridge to H16.** With trap age alone (no ln k) and H16's sample (consolidation-start traps kept), F absorbs ρ 0.26 of the age slope in this base (0.41 with them dropped), against H16's 0.47. The base differs: it holds the reset-at-wake step, which H16's absorption model left to F.
+
+**Findings (round 2).**
+1. **Aging lives in the context's self-share.** In #51, the share of the agent's own idle calls in its context makes 65% of the aging clocks' held-out information redundant. A world where aging is intrinsic to re-pausing or to per-trap depth gives at most 22%. The coefficient is the urn's +1 (1.09), and G38's coefficient predicts G51 as well as G51's own.
+2. **Input starvation explains none of it.** Time since the last directed read adds no held-out information (−0.4 nats per 1,000 wakes) and explains −1% of aging. H72's hypothesis fails on the held-out score as it did in-sample.
+3. **Chatter holds, weakly and slowly.** Each e-fold of undirected items read in the last five calls lowers the odds of a sustained escape by 8% (β_C −0.085). From no chatter to the 90th percentile (48 items) that is −0.33 logit. The hold survives day FE and first wakes. A directed read at the wake cancels it. It explains about a fifth of aging because chatter piles up as a trap deepens. The strong competing-rates form (slope −1) fails by a factor of ten.
+4. **About a third of aging is still unexplained** by self-share, chatter and starvation together.
+
+### Impostors (round 2)
+| Impostor | Relevant? | Handling | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Call clock; hour-of-day bins and others' activity in every model; agent + day FE leave β_C at −0.090 | removed |
+| Exogenous field | yes | Nudges and human messages enter as current reads; directed and undirected doses separated | removed |
+| Shared model priors | partly | Agent FE; no family split of β_C | partly |
+| Contemporaneous convergence / common field | yes | Dose counts only earlier reads; in-flight placebo +0.29 [+0.18, +0.39] is non-zero but leaves β_C unchanged (−0.096); first wakes −0.076 | partly (the in-flight term is unexplained; one candidate is that escaping calls have longer model latency, which lengthens the window) |
+
+### Scorecard (round 2; round 1 in brackets)
+A 1 [1] · B 1 [1] · **C 2 [1]** · D 1 [1] · E 1 [1] · F 2 [2] · G 1 [1] · **H 1 [0]** · I 1 [1].
+- **C 2:** three named mechanisms compared on day-blocked held-out log scores with CIs on the same wakes.
+- **D 1:** the urn's unfitted +1 holds (1.09) and G38's slope predicts G51; the competing-rates −1 fails.
+- **H 1:** the reconciled account (self-share + chatter) beats starvation and intrinsic-proxy worlds; H72's own model (starvation) still loses.
+- **I 1:** the self-share slope transfers to 3/5 regime-III periods; no reserved data used.
+
+### Old → new
+| Number | Round 1 | Round 2 |
+| --- | --- | --- |
+| G51 starvation slope β_s | +0.23 [+0.11, +0.33] (s_novel, a only) | +0.05 [+0.01, +0.08] (s_dir, full model) |
+| "Recent chatter holds agents" | read from β_s > 0 | dose β_C −0.085 [−0.140, −0.045]; cancelled by a directed read (+0.14) |
+| G51 aging | β_a0 −0.48 per ln a | ln a +0.08, ln k −0.63 (full model); clocks carry 22.2 nats per 1,000 wakes held out, 65% of it self-share |
+| Held-out comparison | a adds 14.9, s adds 1.3 | G(A) 22.2, G(F) 19.8, G(C) 5.7, G(S) −0.4 |
+| Urn coefficient | — (H16: 1.05) | 1.09 [0.81, 1.33] with chatter, starvation and the clocks in |
+
+**Verdicts:** period verdict lines unchanged (they score round 1's starvation claim). Each replication period README gains a Round 2 section with its chatter-hold verdict: supported G19, G20, G25, G51; failed G03, G17 (CI above 0); descriptive (unpowered, A2) elsewhere.
+
+**Operator reading.** To read how stuck an idle agent is, count its own pauses in the current context, not the time since anyone wrote to it: a context made of its own re-pauses is the trap, and erasing it works (H16). Do not expect quiet to help, and do not expect chatter to help either: 48 undirected messages lower the next-wake escape odds by about a quarter, unless one of them names the agent.
+
+**Claim that stands:** in #51, trap aging is carried by the context's self-share, not by input: ln(1 − own idle share of the context) makes 65% [59, 71] of the aging clocks' held-out information redundant (directed-input starvation −1%, chatter 22%; intrinsic-aging and frailty worlds ≤ 22%), with the urn's coefficient (1.09 [0.81, 1.33]) and a slope that transfers to G38 (+10 [+0, +20] nats per 1,000 wakes). Excluded: the chatter hold as more than a G51 result (β_C −0.085 [−0.140, −0.045] in G51; CI above 0 in G03 and G17; only G51 powered) and its full separability (R1-P2, 34% shared); the competing-rates form (slope −0.09, not −1); the in-flight placebo (+0.29, unexplained); transfer to the 4-h periods and the G38 reconcile (descriptive); the 31% of aging none of the three explains; the transfer numbers' post hoc fix (A6).
 
 ## Notes
 - 2026-10-04: round 1 started. The gate table is a new shared builder (`infra/shared/idle_gates.py`) because H60 needs the same table; registration in `build_all.py` is proposed in the report, not made (other agents are editing shared files).

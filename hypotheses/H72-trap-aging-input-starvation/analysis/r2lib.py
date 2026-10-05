@@ -302,16 +302,38 @@ def transfer(P_src: dict, P_tgt: dict, fam: str, k: int = 5) -> list:
     return [float(v.sum() * sc), float(np.percentile(bs, 2.5)), float(np.percentile(bs, 97.5))]
 
 
-def fit_offset(X, y, off, maxit=60):
+def fit_offset(X, y, off, maxit=60, ridge=1e-6, tol=1e-8):
+    """Logit with a fixed offset: Fisher scoring with step halving and the same tiny ridge as hazard_fe.fit_binary
+    (amendment R2-A6: the first version had no step halving and diverged under quasi-separation in small periods)."""
     beta = np.zeros(X.shape[1])
+    ybar = np.clip(y.mean(), 1e-3, 1 - 1e-3)
+    beta[0] = np.log(ybar / (1 - ybar)) - np.mean(off)
+    Rg = np.full(X.shape[1], ridge); Rg[0] = 0.0
+
+    def ll(bb):
+        mu = np.clip(1 / (1 + np.exp(-(X @ bb + off))), 1e-10, 1 - 1e-10)
+        return float(np.sum(y * np.log(mu) + (1 - y) * np.log(1 - mu))) - 0.5 * float(np.sum(Rg * bb ** 2))
+    ll_old = ll(beta)
     for _ in range(maxit):
         mu = np.clip(1 / (1 + np.exp(-(X @ beta + off))), 1e-10, 1 - 1e-10)
         W = mu * (1 - mu)
-        H = (X * W[:, None]).T @ X + np.diag(np.r_[0.0, np.full(X.shape[1] - 1, 1e-6)])
-        step = np.linalg.solve(H, X.T @ (y - mu))
-        beta = beta + step
-        if np.max(np.abs(step)) < 1e-7:
+        H = (X * W[:, None]).T @ X + np.diag(Rg)
+        g = X.T @ (y - mu) - Rg * beta
+        try:
+            step = np.linalg.solve(H, g)
+        except np.linalg.LinAlgError:
+            step = np.linalg.lstsq(H, g, rcond=None)[0]
+        t = 1.0
+        for _h in range(20):
+            bn = beta + t * step
+            ln = ll(bn)
+            if ln >= ll_old - 1e-9:
+                break
+            t /= 2
+        beta = bn
+        if abs(ln - ll_old) < tol * (1 + abs(ll_old)) and np.max(np.abs(t * step)) < 1e-6:
             break
+        ll_old = ln
     return beta
 
 
@@ -372,6 +394,22 @@ def subset(P: dict, mask: np.ndarray) -> dict:
             Q[k] = v
     Q["z"] = {k: v for k, v in Q["z"].items() if np.std(v) > 0}
     Q["n"] = int(mask.sum())
+    _, Q["day"] = np.unique(Q["day"], return_inverse=True)
+    return Q
+
+
+def subset_idx(P: dict, idx: np.ndarray) -> dict:
+    """Rows idx (integer, repeats allowed: a day-block bootstrap draw)."""
+    Q = {}
+    for k, v in P.items():
+        if isinstance(v, np.ndarray) and len(v) == P["n"]:
+            Q[k] = v[idx]
+        elif isinstance(v, dict):
+            Q[k] = {kk: vv[idx] for kk, vv in v.items()}
+        else:
+            Q[k] = v
+    Q["z"] = {k: v for k, v in Q["z"].items() if np.std(v) > 0}
+    Q["n"] = int(len(idx))
     _, Q["day"] = np.unique(Q["day"], return_inverse=True)
     return Q
 

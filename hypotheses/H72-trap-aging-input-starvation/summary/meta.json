@@ -1,29 +1,29 @@
 {
- "complete": 60,
- "faithfulness": 1.0,
+ "complete": 70,
+ "faithfulness": 1.5,
  "usefulness": 2.0,
  "rationale": {
-  "complete": "Round 1 done: card, impostor table and dated predictions before any outcome; synthetic validation on the real gate designs first (A1); replication on all 18 periods with >= 200 idle gates; 3 natives (NE43, blocked spells G27+G51, #focus); 108 estimate rows; confirm.py frozen and dry-run, not run. Missing: the beta_s-by-family split; holdout.",
-  "faithfulness": "The starvation model is refuted where it can be tested: in 4/4 powered aging periods the age slope survives every input definition (G51 -0.48 -> -0.53), cross-validation favours trap age (14.9 vs 1.3 nats per 1000 gates), and the starvation slope has the wrong sign. Scorecard A1 B1 C1 D1 E1 F2 G1 H0 I1. The negative is clean and well identified (synthetic F2), but the hypothesis's model fails.",
-  "usefulness": "Tells an operator that ambient input does not unstick aged idle agents (recent chatter holds them at the gate) and that trap depth must be capped by the scaffold or broken by a directed kick at a gate. Modest: it rules out a lever rather than adding one."
+  "complete": "Rounds 1 and 2 done. Round 2: chatter hold modelled as a dose on all 18 periods (synthetic power per period; only G51 powered) and the reconcile of starvation, chatter and context self-share on held-out log scores, pre-registered and validated on the real wake skeletons (10 worlds incl. frailty) before real data; frozen-slope transfer across regime-III periods; 113 new estimate rows. Reserved data not used; the frozen confirm script tests round-1 statistics and needs re-freezing.",
+  "faithfulness": "H72's own model (starvation) fails again, now on held-out data (eps_S -0.01). The reconciled account is identified: self-share makes 65% [59, 71] of the aging clocks' held-out information redundant against <= 22% in intrinsic-aging and frailty worlds, with the urn's coefficient (1.09) and a slope that transfers to G38 and back. Chatter hold -0.085 survives day FE and first wakes in G51 but does not replicate (CI above 0 in G03, G17). Scorecard A1 B1 C2 D1 E1 F2 G1 H1 I1.",
+  "usefulness": "Operator: judge an idle agent's stuckness by its own re-pauses in context, not by time since input; neither quiet nor chatter frees it; erase the context (H16) or name it. Small chatter effect (48 messages ~ x0.72 escape odds). The portable urn coefficient supports a cross-period stuck-agent monitor."
  },
- "one_line": "Trap aging is not input starvation: the age slope survives every input clock (G51 -0.48 -> -0.53), and recent chatter lowers escape (beta_s +0.23).",
+ "one_line": "Trap aging is not input starvation: in #51 the context's self-share carries 65% of the aging clocks' held-out information (starvation -1%, chatter 22%), and undirected chatter adds a weak hold (beta_C -0.085) that a mention cancels.",
  "models": [
   {
    "model": "09-hawkes",
    "role": "primary",
    "outcome": "refuted",
-   "note": "Past input reads do not set idle escape; only current reads kick"
+   "note": "Past directed input does not set idle escape (held-out eps_S -0.01); undirected chatter dose holds weakly (-0.085); a rates race (slope -1) fails"
   },
   {
    "model": "02-nonequilibrium-ising",
    "role": "secondary",
    "outcome": "supported",
-   "note": "Kinetic escape with intrinsic aging (rival R1) fits"
+   "note": "Kinetic escape whose aging is carried by the context's own-call share (urn coefficient 1.09; 65% of held-out aging information)"
   }
  ],
- "rated_by": "H72 agent (suggested)",
- "updated": "2026-10-04",
+ "rated_by": "H72 round-2 agent (suggested v1; coordinator writes v2)",
+ "updated": "2026-10-05",
  "v2": {
   "claim": "Trap aging is not input starvation: the idle-gate age slope survives the starvation control in 4/4 powered periods (G51 −0.53), and recent chatter lowers escape (β_s +0.23), so chatter holds idle agents at their gate",
   "scope": "18 periods (4 powered aging periods); natives NE43, blocked spells, #focus",
