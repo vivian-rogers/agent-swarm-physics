@@ -71,7 +71,7 @@ def main():
     ul = H.list_units().filter(pl.col("eligible")).sort("n_calls")
     ids = ul["unit_id"].to_list() if "--units" not in sys.argv else sys.argv[sys.argv.index("--units") + 1].split(",")
     rows = []
-    with ProcessPoolExecutor(2, max_tasks_per_child=4) as ex:
+    with ProcessPoolExecutor(2) as ex:
         for r in ex.map(run, ids):
             rows.append(r)
     pl.DataFrame(rows, infer_schema_length=None).write_parquet(H.DATA / "round2" / "r3_units.parquet")

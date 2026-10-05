@@ -1,6 +1,12 @@
 # H42: Cross-excitation is a delayed step at the next read-out
 
-**Status:** exploratory round 1 done (2026-10-04; non-holdout only). **Not supported as posed.**
+**Status:** exploratory round 2 done (2026-10-05; non-reserved data only): R2 two-layer call process, R3 Cox field, R1 thread check. **Round 2: a named read changes what the next call does; the call clock moves only through that; the named kernel survives a fitted field and H03's exponential term does not.**
+- **R2:** in regime III a named read raises talk at the read-out call by 0.076 [0.066, 0.086] per read and shortens the gap to the next call by about 3% (fragile). With the mark held fixed, the timing effect is not resolved (post hoc). No class switch beyond the call skeleton in regime I.
+- **R1:** agrees with H67 (0.082 vs 0.079, same data). Half the named effect comes with no exchange in progress: cold 0.046 vs thread-named 0.091.
+- **R3:** under a free per-day × 10-min Cox field, H03's exponential n_x falls 0.061 → 0.003 (survival 0.22). The general read-out kernel stays ≈ 0. The named kernel keeps 0.90 of its size and beats field-only S0 held out in 19/23 regime-III units.
+- Period verdicts (round-2 rule): 4 supported, 11 mixed, 20 failed. Round-2 scorecard A1 B1 C2 D1 E0 F2 G1 H2 I0.
+
+*Round 1 (kept):* exploratory round 1 done (2026-10-04; non-holdout only). **Not supported as posed.**
 - **Call clock, not coupling:** a read-out-aware model shows talk is locked to each agent's *own* call clock (+1.1 nats/event held out, 57/57 units).
 - **Small, regime-dependent excitation:** once that clock is modelled, messages read at a call barely change whether the agent talks: n_cross ≈ 0.004 per message, versus 0.061 for H03's exponential kernel. Regime I ≈ 0, regime III ≈ 0.01–0.05.
 - **Prediction reversed:** "exponential kernels understate n_cross" is the wrong way round.
@@ -138,7 +144,7 @@ Native predictions are in the `NE41/`, `NE14/`, `G51/` and `G27/` READMEs (writt
   - "B beats A_g" is weak evidence for gating, because B also absorbs ungated excitation.
 
 ## Faithfulness scorecard
-Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness". Scores are for the read-out cross kernel B on TALK, non-holdout units (exploratory).
+Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness". Scores are for the read-out cross kernel B on TALK, non-holdout units (exploratory); round-2 scores (2026-10-05) are for the named read-out kernel, with round 1's in brackets where they changed.
 **Rival models:** exponential cross-kernel from arrival (A, H03); the same kernel gated at the recipient's calls (A_g); read-out onset with a wall-clock tail (B_t); scheduler-only (S0); shared modulation (the shift and day-block nulls, the synthetic shared field).
 **Locked holdout used for confirmation:** none yet. `analysis/confirm.py` (dry-run on stand-ins) targets #51 tail, #28, #22, #29a, #43 (all allowed by `holdout_ledger.check`); NE20 and NE44 are blocked (H04's Hawkes run on #45–#50).
 
@@ -146,12 +152,12 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | --- | --- | --- | --- |
 | A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | **From fields:** events, read-outs and spans come from the ledger. My read-out rule reproduces `context_ledger_items` 100% (#27, #38). **Assumptions listed:** call starts are calibrated, not measured, for non-Gemini agents. **Not invariant:** the kernel's weight changes with regime (I ≈ 0, III ≈ 0.01–0.05) and across NE14. |
 | B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | **Audits passed:** update order (message → call mapping 100%; read-out assignment 100%). **Sensitivity:** robust to t_call_lo / t_call_hi and to 10-min edge trims (median n_x ratio 1.0). **Not done:** time-rescaling KS. **Stationarity:** handled by agent-day (× call-class) baselines only. |
-| C adequacy | beats the null hierarchy, day-blocked held-out data | 1 | **Call clock:** the call-clock world beats the H03 world on held-out likelihood in 57/57 units (median +1.10 nats/event). **Read-out cross term in that world:** beats S0 in only 42% of units (61% in regime III) and its shift null in 42%; it is below the synthetic shared-field floor in all but one period. |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | **Failed:** NE41 tail cut (R_forced = 3.1 ± 2.5) and G51 consistency. **Shape:** the hop-1 shape (100% of B's mass at calls 0–1 where B ≠ 0) is fitted, not predicted. |
+| C adequacy | beats the null hierarchy, day-blocked held-out data | 2 (round 1: 1) | **Call clock:** the call-clock world beats the H03 world on held-out likelihood in 57/57 units (median +1.10 nats/event). **Read-out cross term in that world:** beats S0 in only 42% of units (61% in regime III) and its shift null in 42%; it is below the synthetic shared-field floor in all but one period. **Round 2:** the named read-out kernel beats a fitted Cox field held out in 19/23 regime-III units; the call-level named jump beats the call-skeleton null. |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 (round 1: 0) | **Failed:** NE41 tail cut (R_forced = 3.1 ± 2.5) and G51 consistency. **Shape:** the hop-1 shape (100% of B's mass at calls 0–1 where B ≠ 0) is fitted, not predicted. **Round 2:** predicted before fitting, and held: the Cox field removes H03's exponential term (survival 0.22) and keeps the named one (0.90); cold-named ≥ half of thread-named. |
 | E interventional | predicts the change across a natural experiment | 0 | NE41 (quasi-random erasure) and NE14 (call-clock change) both failed. |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | **Recovers:** world B recovers planted read-out excitation (within ±25% in 15/16, median +6%; B or C_g selected 16/16). **Fails:** the pre-registered world inflates n_x by about 70% and returns 0.12–0.47 with none planted; a shared 15-min field gives up to 0.05 (world B) and 0.17 (exponential), above both empirical nulls; B absorbs about two thirds of planted ungated excitation. G1 failed as written. |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 (round 1: 1) | **Recovers:** world B recovers planted read-out excitation (within ±25% in 15/16, median +6%; B or C_g selected 16/16). **Fails:** the pre-registered world inflates n_x by about 70% and returns 0.12–0.47 with none planted; a shared 15-min field gives up to 0.05 (world B) and 0.17 (exponential), above both empirical nulls; B absorbs about two thirds of planted ungated excitation. G1 failed as written. **Round 2:** call-level estimators pass on real skeletons with a fitted field and a call-length world; the Cox field passes (shared field removed), with 25% attenuation of planted read-out excitation. |
 | G ground truth | agrees with known structure | 1 | **Agrees with known structure:** the hop-1 concentration matches H08's read-out jump and H50's "gated at exactly hop 1"; world A's exponential n_x (median 0.061) replicates H03's fast n_x ≈ 0.07 (0.074 in H03's round 1b). **Not checked:** the Claude Code input stream, which would be a talk-level ground truth. |
-| H comparative | beats the named rivals | 0 | **Loses to rivals:** in a coherent comparison the exponential world's cross gain exceeds the read-out cross gain in 2/3 of units; B ≥ A_g in only 40%; S0 is as good as B in 58% of units. The pre-registered wins over A are call-locking artifacts (G1). |
+| H comparative | beats the named rivals | 2 (round 1: 0) | **Loses to rivals:** in a coherent comparison the exponential world's cross gain exceeds the read-out cross gain in 2/3 of units; B ≥ A_g in only 40%; S0 is as good as B in 58% of units. The pre-registered wins over A are call-locking artifacts (G1). **Round 2:** the Cox shared-field rival and the call-skeleton rival are beaten for named reads; the exchange-in-progress rival explains half of the named jump. |
 | I transfer | holds in other same-mode periods, including the holdout | 0 | Regime-dependent (absent in regime I/II); no holdout run. |
 
 ## Results by goal period
@@ -417,6 +423,126 @@ Round 2 runs H42-R2 and R3 in full and R1 as a short consistency check. Non-rese
   - R2-P2 (log gap) is scored, with the fragility flag. Regime-I log gap and the unnamed session-start J are descriptive only (kill rule).
   - R2-P1: real power is below 0.8 (≈ 0.7 by scaling the 3-unit pool to the regime-III unit count), so a null reads "inconclusive", not "counts against".
   - R3: survival is reported next to the reference 0.67. Corrected n_x = n_x(cox10)/0.75 is shown as a secondary number. R3-P3's 0.10 threshold is read on the corrected scale as well.
+
+### Round 2 results (2026-10-05; non-reserved data: 71 units in 35 periods)
+*Code: `scheme/build_r2.py`; `analysis/r2lib.py`, `r2_synthetic.py`, `r2_synth_report.py`, `r2_run.py`, `r3lib.py`, `r3_synthetic.py`, `r3_run.py`, `r2_summarize.py`, `r2_write_periods.py`, `r2_figures.py`.*
+*Data: `data/processed/H42-readout-hawkes-kernel/round2/` (`r2_units`, `r2_long`, `r2_pools`, `r2_periods`, `r3/<unit>.json`, `r3_units`, `r3_periods`, `summary.json`, `synthetic/`; 70 MB).*
+*Figure: `figures/round2_col.pdf`. Estimates: 621 rows in `per_period_estimates`. The statistics are:*
+- `readout_talk_jump_named_callclock`, `readout_talk_jump_unnamed_callclock`
+- `readout_talk_jump_cold_named`, `readout_talk_jump_thread_named`
+- `readout_pause_jump_named_excess` (status underpowered), `readout_loggap_jump_named_excess` (status fragile)
+- `readout_chatnext_jump_unnamed_excess`, `readout_chatnext_jump_named_excess`
+- `cox_field_named_talk_per_message`, `cox_field_readout_nx`, `cox_field_exponential_nx`
+
+*Pools: DerSimonian–Laird random effects over units (95% CI). The call-level rows exclude unit × class cells with fewer than 20 matched-window reads. Regime III has 26 units (cold named: 24), regime I 40, regime II 3. The Hawkes fits cover all 71 units, 57 of them with held-out folds.*
+*Round 1 reproduces: the round-1 baseline refitted here gives the regime-III named kernel 0.142 per named message, against round 1's 0.145 (Spearman 0.999 over units).*
+
+#### Outcome vs prediction
+| # | Prediction | Observed | Outcome |
+| --- | --- | --- | --- |
+| R2-P1 | named read cuts pausing (III) | excess −0.0015 [−0.0033, 0.0003] per read (raw −0.0010) | **inconclusive** (CI includes 0; power < 0.8) |
+| R2-P2 | named read shortens the gap to the next call (III) | log gap excess −0.032 [−0.044, −0.019] per read (≈ −3%); 10/26 units < 0, none > 0 | **supported** (fragile: the pooled V0f check gave 0.011 > 0.01) |
+| R2-P3 | unnamed reads do not move the clock (III) | pause 0.0002 [−0.0004, 0.0007]; log gap 0.0010 [−0.0020, 0.0039] | **supported** |
+| R2-P4 | no class switch beyond the skeleton (I) | chat next: unnamed −0.0017 [−0.0032, −0.0002], named −0.0015 [−0.0076, 0.0047]; session start named +0.0055 [−0.0051, 0.0162] | **supported** |
+| R2-P5 | the mark moves more than the clock (III) | talk 0.076 vs pause \|−0.0015\| (ratio ≈ 50) | **supported** |
+| R3-P1 | H03's exponential term is mostly field | world-A n_x 0.061 → 0.003 (median); survival 0.22 (58 units) | **supported** |
+| R3-P2 | the general read-out term stays ≈ 0 | unsplit B beats field-only S0 held out in 14/57 CV units (25%) | **supported** |
+| R3-P3 | the named term survives the field (III) | 0.142 → 0.108 per named message (corrected 0.144); survival 0.90; Bmu beats field-only S0 held out in 19/23 CV units | **supported** |
+| R1-P1 | agreement with H67's 0.079 | H67-like window: IVW 0.082 [0.076, 0.087]; RE 0.082 [0.073, 0.091] | **supported** (robustness, same data) |
+| R1-P2 | cold named ≥ 0.5 × thread named, CI > 0 | cold 0.046 [0.037, 0.056] vs thread 0.091 [0.076, 0.105]; ratio 0.51 (IVW 0.55; excess 0.50) | **supported at the threshold** |
+| R1-P3 | a call-level field changes named J by < 20% | 0.0763 → 0.0766 (+0.4%) | **supported** |
+
+#### R2: a read changes the mark; the clock moves only through the mark
+- **The two layers.** Call starts are mechanical (chains, timers, the chat-mode schedule). So a read can only act through what the reading call does.
+- **Regime III, named reads.**
+  - Talk at the read-out call: +0.076 [0.066, 0.086] per read; the call-skeleton null gives −0.0001.
+  - Gap to the next call: −0.032 [−0.044, −0.019] in log, about 3% shorter per named read.
+  - Timer pauses: −0.0015 [−0.0033, 0.0003] per read (not resolved).
+  - On non-pause calls the gap effect is −0.022 [−0.033, −0.010]. So most of it is not fewer pauses.
+- **Post hoc mediation (conditions on a mediator; read as descriptive).**
+  - Within cells, talk calls are 0.22 shorter in log (≈ 20%), and a pause adds 2.3.
+  - With the mark held fixed, the named gap effect is −0.009 [−0.023, 0.005].
+  - About 2/3 of the timing effect is therefore the switch to a short talk call. No direct effect on the call clock is resolved.
+- **Unnamed reads.** Talk +0.0041 [0.0023, 0.0058] excess per read (H67: 0.004). Pause and gap ≈ 0.
+- **Regimes I–II: no class switch.**
+  - A read does not change the class of the next call beyond the skeleton. Chat next: unnamed −0.0017 [−0.0032, −0.0002] excess; the raw −0.0028 is mostly the skeleton (null −0.0020). Named −0.0015 [−0.0076, 0.0047].
+  - This agrees with H67's post hoc finding that the regime-I "read → chat mode" effect is the chat-turn schedule. Here the design is causal: the class of call c is fixed, and the outcome is call c + 1.
+  - Regime II (3 units): chat next named −0.028 [−0.045, −0.012]. Descriptive (3 units; G35, G36).
+- **Invalid by synthetic test (kill rule):** the regime-I log gap (+0.016 named, +0.013 unnamed, about what the call-length world VL gives) and the unnamed session start.
+
+#### R1: half the named effect is naming itself
+- **Agreement.** On H67's window the named jump is 0.082 [0.076, 0.087] (IVW) against H67's 0.079 [0.069, 0.089]. On the symmetric window it is 0.076 [0.066, 0.086]. Same data, independent code: robustness, not replication.
+- **Thread control (regime III).**
+  - Thread-named messages are 39–77% of named items per regime-III period. They answer the recipient or follow its recent address to the sender, and carry 0.091 [0.076, 0.105] per read (20/26 units > 0).
+  - Cold-named messages carry 0.046 [0.037, 0.056] (9/24 units > 0, none < 0).
+  - About half the named effect is an exchange already in progress; the other half is the name itself.
+- **Regime I.** Thread-named 0.012 [0.003, 0.020]; cold −0.002 [−0.008, 0.003]. The small regime-I named effect lives only inside exchanges.
+- **Field.** Room × day × 10-min fixed effects change the named jump by 0.4%.
+- **Scale vs round 1.** Round 1's 0.145 extra talk *events* per named message includes later calls (bins 0–15) and several messages per talk call. The call-level 0.076 counts talk *calls* at the read-out call.
+
+#### R3: how much of the round-1 cross terms survives a fitted field
+| Term (round 1) | Round-1 baseline (refit) | Cox field | Survival (median unit) | Held out: beats field-only S0 |
+| --- | --- | --- | --- | --- |
+| World A exponential (H03's n_x), all regimes | 0.061 | 0.003 | 0.22 | I 15/32, III 7/23 |
+| ... regime I / regime III | 0.084 / 0.018 | 0.020 / 0.000 | | |
+| World B read-out, all messages (regime III) | 0.013 | 0.001 (room field; per-day field 0.007) | ≈ 0 | 14/57 (all regimes) |
+| World B named, per named message (regime III) | 0.142 | 0.108 (room field; per-day 0.130; 5-min 0.122); corrected 0.144 | 0.90 (reference for real coupling 0.67) | 19/23; median +25 mnats/event |
+| World B named (regime I) | 0.010 | 0.007 | | 9/32 |
+| World B unnamed | ≈ 0 | ≈ 0 | | |
+
+- **H03's exponential cross term (n_x ≈ 0.06–0.07) is mostly field.** About 78% of it goes into a free 10-min common rate. In the synthetic worlds the same field removes a shared-field n_x of 0.09 (A) to 0.000, and keeps 75% of planted read-out excitation.
+- **The named read-out kernel survives at 0.90**, above the 0.67 a real call-scale coupling keeps in synthetic worlds. The general kernel does not survive.
+
+#### Period verdicts (round-2 rule)
+- 4 supported: G03 (regime I, one unit), G38, G40, G51.
+- 11 mixed: G06, G24, G26, G30 (I); G35, G36 (II); G37, G39, G41, G42, G44 (III). In the regime-III cases the named kernel beats the field, but the period's cold-named CI includes 0 (one or two units each).
+- 20 failed: all other regime-I periods and G33.
+- Each period README has a Round 2 block and a `**Round 2 verdict:**` line. The round-1 verdict line stays on top.
+
+#### Impostors (round 2)
+| Impostor | Round 2 | Status |
+| --- | --- | --- |
+| Scheduler field | Call-skeleton null (real skeleton, synthetic messages; 8 per unit); a per-day × room × 10-min Cox field in the Hawkes fits; room × day × 10-min fixed effects in the call design; all-present window | removed |
+| Exogenous field | human and nudge items as covariates; the Cox field absorbs any common drive slower than about 10 min; no kickoff-matched placebo | partly |
+| Shared model priors | agent × day × class cells; no family claim | n/a |
+| Contemporaneous convergence | in-flight placebo at matched lag; thread split (an exchange in progress); the cold-named effect survives | removed (talk) |
+
+#### Scorecard (round 2)
+| Axis | Score | Change |
+| --- | --- | --- |
+| A | 1 | unchanged (regime-dependent: III ≈ 0.08 per named read, I ≈ 0) |
+| B | 1 | the update order holds by construction (call starts are mechanical); the timing effect is fragile to call-length selection |
+| C | 2 | up from 1: the named kernel beats a fitted Cox field held out in 19/23 regime-III units, and the call-level jump beats the call-skeleton null |
+| D | 1 | up from 0: predicted before fitting, and held: the Cox field removes H03's exponential term (survival 0.22) and keeps the named one (0.90); cold ≥ half of thread |
+| E | 0 | no natural experiment in round 2 |
+| F | 2 | up from 1: call-level estimators pass on real skeletons with a fitted field and a call-length world; the Cox field passes S-R3a; known attenuation 25% |
+| G | 1 | unchanged |
+| H | 2 | up from 0: the Cox shared-field rival and the call-skeleton rival are beaten for named reads; the exchange-in-progress rival explains half |
+| I | 0 | no reserved-data run |
+
+#### Constants (proposed for `interpretation/swarm-constants.json`)
+| Symbol | Value | 95% interval | Scope |
+| --- | --- | --- | --- |
+| J_named (talk jump per named read, symmetric window) | 0.076 | [0.066, 0.086] | regime III, 26 units; robustness of H67's 0.079 |
+| J_cold (named, no exchange in progress) | 0.046 | [0.037, 0.056] | regime III, 24 units |
+| J_thread (named, inside an exchange) | 0.091 | [0.076, 0.105] | regime III, 26 units |
+| J_loggap,named (log gap to the next call per named read) | −0.032 | [−0.044, −0.019] | regime III, 26 units; fragile; −0.009 [−0.023, 0.005] with the mark held fixed (post hoc) |
+| n_named,Cox (extra talk per named message, Cox field) | 0.108 (median) | corrected 0.144; survival 0.90 | regime III, 27 units |
+| S_exp (survival of H03's exponential n_x under a 10-min Cox field) | 0.22 (median) | n/a | 58 units, all regimes |
+
+#### Round 3 redirects
+- **H42-R4. Reserved-data confirmation of the cold-named jump.** Re-freeze `confirm.py` C5 with the thread split (cold vs thread) and the Cox-field named kernel.
+- **H42-R5. Who answers a cold name.** Per-recipient cold-named weights against H29's naming pull and H16's escape from idle traps (directed reads).
+- **H42-R6. Timing without conditioning on the mark.** A design that separates direct clock effects from the talk switch without conditioning on a mediator, for example the reading call's own duration at fixed output class with a length-aware null.
+- **H42-R7. A finer Cox field.** Fit 2–5-min fields with a smoothness prior, to cut the 25% attenuation and set the field floor from data.
+
+**Claim that stands:** In regime III, a read message that names the recipient raises talk at its read-out call by 0.076 [0.066, 0.086] per read (26 units); half of it, 0.046 [0.037, 0.056], comes with no exchange in progress; the named Hawkes kernel survives a fitted Cox field (survival 0.90, beating field-only S0 held out in 19/23 units), while H03's exponential cross term mostly does not (survival 0.22); reads do not switch call class beyond the call skeleton.
+- *Excluded:*
+  - The log-gap timing effect (fragile; with the mark held fixed it is not resolved, post hoc).
+  - Pause (inconclusive, underpowered).
+  - The regime-I log gap and the unnamed session start (invalid by synthetic test).
+  - Regime II (3 units).
+  - The corrected Cox scale (model-based).
 
 ## Notes
 - 2026-10-04: The brief asked for activity turns first and talk second; TALK is primary here for the reason given under Prediction (decided before any fit).
