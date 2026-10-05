@@ -1,13 +1,13 @@
 {
- "complete": 45,
+ "complete": 60,
  "faithfulness": 2.5,
  "usefulness": 3.0,
  "rationale": {
-  "complete": "Round 1 done in two layers: replication on all 33 eligible kickoffs (per-period READMEs and an NE34 cross-kickoff folder) plus four period-native tests (G51 private goals with NE38, G44, G38, G26). Synthetic validation came first and led to Amendment 1; post hoc robustness checks (echo removal, DQ5 style residualization, chat-only, leave-one-period-out) are labelled. Five of the six variants HH179-HH184 were tested. The confirmatory script is written and dry-run, not run. Not done: embedding swap, #12 native, settling time, causal HH181.",
-  "faithfulness": "The core claim holds strongly on exploration data. The day-1 centroid identifies its own kickoff against strong nulls (swap with genericness correction, within-regime and neighbouring decoys, the previous state, echo removal, style) and fails only where the text names no shared target. #51 agents land on their own goal texts (0.95), and NE38 is a clean intervention. The frozen projects are the goal-named ones, and carry-over is rejected. But the specificity half (P3), the two-domain, family and plan variants all failed, P2 is mixed by its literal rule, there is one embedding model, and the holdout was not run. Scorecard A1 B1 C2 D1 E1 F1 G2 H1 I1.",
-  "usefulness": "A real design rule with an intervention behind it: day-1 content lands on what the kickoff names, #51 agents land on their own private goals (0.95), and Opus 5's 07-29 reassignment moved it onto its new goal within a day (DiD +0.61); frozen projects carry the goal's name. Not holdout-tested, and text specificity does not set spread. Calibrated 3.5 -> 3.0, the highest usefulness so far."
+  "complete": "Rounds 1 and 2 done. Round 1: replication on 33 kickoffs plus four natives, synthetic first. Round 2 (R5, R3, R1, R2; pre-registered and committed before any round-2 statistic, synthetic S6-S8 and Amendment R2-1 before the real runs): embedding swap for P1, G51 and NE38; per-agent read-out re-quench with a read vs in-flight contrast; #12 debates and #19/#21 two-option natives; first-plan read test. Not done: R4 (needs paid labels), R6, holdout.",
+  "faithfulness": "The core claim now holds in both embedding models (top-1 18/33 and 20/33; #51 0.95/0.96; NE38 +0.61/+0.56). Round 2 adds a partition-contrast result: human messages pull readers beyond unread in-flight messages at matched lag (C +0.11/+0.12), with in-flight carrying 40-50% (convergence). Agent plans fail as targets (reversed), two domains fail in every design, P3 failed, P2 mixed, and several round-1 secondaries (room-centroid P4, G38, agent susceptibility) are model-dependent. Holdout not run. Scorecard A1 B1 C2 D1 E1 F2 G2 H1 I1.",
+  "usefulness": "A design rule with interventions behind it, now model-robust: day-1 content lands on what the kickoff names; private goals pin agents; a reassignment moves an agent within a day. Round 2 adds operator timing: a human message moves its readers at their next message, the pull fades within ~10 min, and agent plans or two offered tasks do not steer or split the swarm."
  },
- "one_line": "Day-1 content lands on its kickoff (top-1 18/33), #51 agents on their private goals (0.95); frozen projects carry the goal's name; specificity sets no spread.",
+ "one_line": "Day-1 content lands on its kickoff in both embedding models (top-1 18/33, 20/33); #51 agents on private goals (0.95); human messages pull readers beyond unread convergence (+0.11); agent plans do not.",
  "models": [
   {
    "model": "11-vector-spins",
@@ -29,7 +29,7 @@
   }
  ],
  "rated_by": "H54 agent (suggested)",
- "updated": "2026-10-04",
+ "updated": "2026-10-04 (round 2)",
  "calibrated_by": "coordinator 2026-10-04 (usefulness 3.5 -> 3.0; others kept)",
  "v2": {
   "claim": "Day-1 content lands on what the kickoff names; agents land on private goals",

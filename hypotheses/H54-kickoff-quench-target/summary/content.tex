@@ -1,4 +1,4 @@
-\hwhat{The question is whether the kickoff text is the target into which a goal change quenches the swarm. Each day-1 content centroid is scored against its own kickoff and 32 others (genericness-corrected swap null). Four period-native tests follow. The centroid picks out its own kickoff (median percentile 1.0, top-1 in 18/33, $p=3\times10^{-6}$). The day-1 move points at the new text in 23/25 periods. It fails only where the kickoff names no shared target: free weeks \#3 and \#16, \#44's half-free week and \#51. In \#51 each agent lands on its own private goal (role-swap accuracy 0.95). A human reassignment re-targets an agent within a day (+0.61). Nine of 13 kickoff-frozen projects carry the goal's words (enrichment 3.2); only one pre-existed. Text specificity does not predict spread, and model families do not differ. The holdout is not run.}
+\hwhat{The question is whether the kickoff text is the target into which a goal change quenches the swarm. Each day-1 content centroid is scored against its own kickoff and 32 others (genericness-corrected swap null), in two embedding models. The centroid picks out its own kickoff (median percentile 1.0; top-1 18/33 with bge, 20/33 with gte). It fails only where the kickoff names no shared target. In \#51 each agent lands on its own private goal (0.95 / 0.96), and a reassignment moves one agent within a day (+0.61 / +0.56). Round 2 asks how text acts after day 1. A human message pulls each reader at its first message after the read-out call ($\Delta\approx0.09$). Reading adds $+0.11$ over unread in-flight messages at matched lag. Agent-written plans do not pull readers, and two offered targets do not split the swarm. The reserved confirmation data are not used yet.}
 
 \hmodel{Vector spins with a quench (model 11). Each agent's whitened statement vector $\mathbf s_i$ relaxes toward a target $\hat{\mathbf t}$ with depth $\lambda$. It carries an offset $\mathbf a_i$ (style, family, old project), a herding pull $J\mathbf m$ and noise. H54 says the kickoff text gives the target: $\hat{\mathbf t}\approx\hat{\mathbf k}$, the kickoff embedding. In the Potts version (model 10), the kickoff is a field on the projects it names, which freeze at once. Rivals: no target, inertia, genre, agent plans, family fields.}
 
@@ -10,26 +10,27 @@
 
 \hobs{../figures/summary_obs_page.pdf}{(a) Own-kickoff percentile of each day-1 centroid among 33 kickoffs. Squares mark an own kickoff ranked first. Grey: the 90\% band of the no-target null. Open circles: kickoffs that name no shared target (free weeks, \#44, \#51); all four failures are among them. (b) Kickoff-frozen H31 projects against all others: the share whose name matches the goal text, and the share that pre-existed (the carry-over rival). Frozen projects carry the goal's name and are new.}
 
-\htelos{Write the target into the kickoff text. Day-1 talk lands on it (top-1 in 18/33 periods), and the frozen project carries the goal's words (9/13). A private goal text pins each agent to its own target for weeks (0.95). Rewriting one agent's goal moves that agent within a day. A choose-your-own-goal kickoff leaves no shared target and a more scattered swarm. Text specificity (numbers, names, deadlines) does not tune how tightly agents cluster, so ``write a more specific prompt'' is not a validated dial. Agent-written plans, including an elected leader's goal announcement, do not act as targets the way human text does. Part of the effect is agents restating the kickoff; that is the mechanism, not a flaw.}
+\htelos{Write the target into the kickoff text. Day-1 talk lands on it in both embedding models, and the frozen project carries the goal's words (9/13). A private goal text pins each agent to its own target for weeks. A human message moves the agents who read it within their next message, but the pull is gone within about 10 minutes, and half of it shows up in unread messages too (convergence). Do not expect an agent's plan to steer the others: readers move away from it. Offering two tasks in one kickoff gives one mixed swarm, not two teams; assign people explicitly if you want a split. Text specificity is not a validated dial.}
 
-\hbottom{The kickoff or private goal text is the day-1 quench target and names the projects that freeze; its specificity does not set the swarm's spread.}
+\hbottom{The kickoff or private goal text is the day-1 quench target in both embedding models; later human messages re-quench readers briefly through reading, agent plans do not, and specificity does not set the spread.}
 
 \hresults{{\footnotesize\noindent\begin{tabular}{@{}p{0.34\columnwidth}p{0.45\columnwidth}p{0.15\columnwidth}@{}}
-\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\
-P1 own kickoff identified & median $\pi$ 1.0, top-1 18/33, $p=3\times10^{-6}$ & supported\\
-P1c move points at kickoff & median 0.91; jump $>0$ in 23/25 & supported\\
-P2 frozen = named & 9/13; goal text enrichment 3.2 ($p_{\rm strat}$ 0.006); 1/13 pre-existing & mixed (literal)\\
-P3 specificity sets spread & $\rho=+0.17$ (text); $-0.47$ (embedding, regime III) & failed\\
-HH180 human re-quench & $\Delta=0.04$, 57\% $>0$, $p=0.03$; $<1$ h & weak\\
-HH182 remanence & 0.24 $\to$ plateau 0.11; old kickoff erased & partial\\
-HH181 first plan completes target & central (70\%), unmoderated; \#26 leader no pull & failed\\
-HH183 two domains (\#44, \#38) & room swap 0.31, 0.58 & failed\\
-HH184 family susceptibility & lab $p=0.66$ & failed\\
-\#51 own goal; NE38 & swap 0.95 ($p=2\times10^{-4}$); DiD $+0.61$ & supported\\
+\textbf{Prediction} & \textbf{Observed (bge / gte)} & \textbf{Verdict}\\
+P1 own kickoff identified & median $\pi$ 1.0; top-1 18/33 / 20/33; $\rho_{\rm models}=0.75$ & supported\\
+P1c move points at kickoff & 0.91 / 0.97 & supported\\
+P2 frozen = named & 9/13; goal-text enrichment 3.2 & mixed\\
+P3 specificity sets spread & $\rho=+0.17$ / $+0.19$ & failed\\
+\#51 own goal; NE38 & 0.95 / 0.96; DiD $+0.61$ / $+0.56$ & supported\\
+R3 read-out re-quench & $\Delta$ 0.090 / 0.088, 181 msgs & supported\\
+R3 read $-$ in flight (matched) & $+0.11\,[0.05,0.17]$ / $+0.12$ & supported\\
+R2 first-plan readers & $-0.10$ / $-0.10$; read$-$in flight unpowered & failed\\
+R1 \#12 motion; team domains & percentile 1.0; $Q=+0.002$ ($p$ 0.40) & mixed\\
+R1 \#19/\#21 spontaneous domains & none (pct $\le0.87$) & as predicted\\
+HH184 family susceptibility & lab $p=0.66$ / $0.67$ & failed\\
 \end{tabular}}}
 
-\hobsb{../figures/summary_obs_b.pdf}{(a) \#51: share of agent pairs (different roles) for which own-goal alignment beats the swapped assignment, by week. Grey: the synthetic band without a private field. (b) NE38: daily alignment of Claude Opus 5 with its new and old goal texts around the 07-29 reassignment, against the other agents.}
+\hobsb{../figures/round2.pdf}{(a) Round 2, R3: pull of a human message on each reader, against the lag of the reader's first message after it (181 messages). Lines: messages produced after the read-out call. Orange: unread messages produced in flight (median lag 8 s). At matched lag, reading roughly doubles the pull. (b) Own-kickoff percentile per period in the two embedding models; labels mark periods below 0.75 in either.}
 
-\hcaveats{The test uses one embedding model (bge-small); the second model is not built yet. The target is a text-embedding proxy, and quoting is part of the measured effect. Removing near-echo statements lowers top-1 from 0.55 to 0.45 or 0.30. ``Named'' is name-token matching. Agents name repositories after goals, so the direction of naming is ambiguous. The design has 33 kickoffs, 22 of them in regime I. P2, \#44 and \#38 are underpowered (synthetic). The free-week moderator and the embedding-distinctiveness link are post hoc. \#23 is excluded to keep H10's confirmation blind.}
+\hcaveats{The target is a text-embedding proxy, and quoting is part of the effect (removing near-echoes lowers top-1 to 0.45 or 0.30). P1, \#51 and NE38 hold in both models; round-1's room-centroid re-quench, \#38's room swap and agent susceptibility do not agree across models. Only 93 in-flight pairs exist (83 at lag $<30$ s), so the read-out contrast rests on fast replies; a paired within-agent contrast is null because the read message comes later and the pull decays (post hoc). The plan test has no power for its causal contrast. ``Named'' is name-token matching. 33 kickoffs, 22 in regime I. \#23 is excluded to keep H10's confirmation blind.}
 
-\hnext{Run the holdout (14 kickoffs and the \#51 tail). Test HH181 causally on the context ledger: readers against not-yet-readers of the first plan. Use the \#12 debate motions as two concrete targets. Add LLM-rated specificity, settling time and an embedding swap.}
+\hnext{Run the confirmatory test on reserved data (14 kickoffs, the \#51 tail and reserved human messages), with the read-out contrast added. Fit the read-out pulse decay on the per-call clock. Test LLM-rated specificity (R4) and the remanence mechanism (R6).}

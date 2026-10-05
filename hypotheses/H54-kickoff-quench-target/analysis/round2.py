@@ -779,6 +779,81 @@ def run_synth(which):
     jdump(R2 / "synthetic.json", res)
 
 
+
+# ============================================================================== per_period_estimates
+def write_r2_estimates():
+    sys.path.insert(0, str(L.ROOT / "infra/shared"))
+    import estimates as ES
+    pu = pl.read_parquet(L.SHARED / "period_units.parquet").sort("goal_no", "seq")
+    first_unit = {g: u for g, u in zip(pu["goal_no"].to_list(), pu["unit_id"].to_list())} if False else \
+        {g: pu.filter(pl.col("goal_no") == g)["unit_id"][0] for g in pu["goal_no"].unique().to_list()}
+    ch = {"bge_small": "content_bge", "gte_modernbert": "content_gte"}
+    rows = []
+    # R5 / P1 per period, both models (day-1 unit)
+    for model, base in (("bge_small", L.OUT_BASE), ("gte_modernbert", L.OUT_BASE / "r2_gte")):
+        per = pl.read_parquet(base / "NE34" / "periods.parquet")
+        for r in per.iter_rows(named=True):
+            if r["pi"] is None or not np.isfinite(r["pi"]):
+                continue
+            rows.append({"period_unit": first_unit[r["goal_no"]], "goal_no": r["goal_no"], "statistic": "own_kickoff_percentile",
+                         "channel": ch[model], "estimate": r["pi"], "ci_lo": None, "ci_hi": None, "n": r["n_agents"], "n_kind": "agents",
+                         "method": "day-1 agent-mean centroid vs 33 kickoffs, genericness-corrected own percentile (H54 P1)",
+                         "null": "32 decoy kickoffs (uniform under R0)", "role": "replication", "ci_kind": "none",
+                         "unit_local": "day 1 after the kickoff", "source": f"{base.name}/NE34/periods.parquet", "post_hoc": False})
+        g51 = json.loads((base / "G51" / "native.json").read_text())
+        rows.append({"period_unit": "G51", "goal_no": 51, "statistic": "private_goal_role_swap_accuracy", "channel": ch[model],
+                     "estimate": g51["swap_accuracy"], "ci_lo": None, "ci_hi": None, "n": g51["n_pairs"], "n_kind": "agent pairs",
+                     "method": "role-swap pair accuracy, first day per agent on its current goal (H54 N1)",
+                     "null": f"role permutation p = {g51['p_perm']:.4f}", "role": "native", "ci_kind": "none",
+                     "source": f"{base.name}/G51/native.json", "post_hoc": False})
+        ne = g51["NE38"]["new"]
+        rows.append({"period_unit": "local:NE38", "goal_no": 51, "statistic": "ne38_did_new_goal_alignment", "channel": ch[model],
+                     "estimate": ne["did"], "ci_lo": ne["ci95"][0], "ci_hi": ne["ci95"][1], "ci_level": 0.95, "ci_kind": "percentile",
+                     "n": ne["n_pre_days"] + ne["n_post_days"], "n_kind": "Opus 5 day segments",
+                     "method": "DiD of alignment with the new goal, Opus 5 vs other agents, day bootstrap (H54 N1b)",
+                     "null": "0", "role": "native", "unit_local": "2026-07-24..2026-08-07", "source": f"{base.name}/G51/native.json",
+                     "post_hoc": False})
+    # R3 per period (human-message read-out re-quench, read arm), both models
+    for model in MODELS:
+        D = pl.read_parquet(R2 / f"r3_deltas_{model}.parquet").filter((pl.col("arm") == "read") & pl.col("delta").is_not_nan())
+        for g in sorted(D["goal_no"].unique().to_list()):
+            x = D.filter(pl.col("goal_no") == g)
+            pt = x.group_by("target_id").agg(pl.col("delta").mean())["delta"].to_numpy()
+            if len(pt) < 5:
+                continue
+            rng = np.random.default_rng(g)
+            bs = [rng.choice(pt, len(pt)).mean() for _ in range(2000)]
+            rows.append({"period_unit": ES.map_unit(g) or f"G{g:02d}", "goal_no": g, "statistic": "readout_requench_delta",
+                         "channel": ch[model], "estimate": float(pt.mean()), "ci_lo": float(np.percentile(bs, 5)),
+                         "ci_hi": float(np.percentile(bs, 95)), "ci_level": 0.90, "ci_kind": "percentile", "n": len(pt),
+                         "n_kind": "human messages", "method": "first chat message after the ledger read-out call minus last before, "
+                         "decoy-corrected alignment with the message (H54 R3-A), message bootstrap", "null": "0 (decoy messages)",
+                         "role": "replication", "source": "r2/r3_deltas", "post_hoc": False})
+    # R1 natives
+    r1 = json.loads((R2 / "r1.json").read_text())
+    for model in MODELS:
+        a = r1[model]["R1A"]
+        b = r1[model]["R1B"]
+        rows += [{"period_unit": "12a", "goal_no": 12, "statistic": "debate_team_domain_Q", "channel": ch[model], "estimate": a["mean_Q"],
+                  "ci_lo": None, "ci_hi": None, "n": a["n_debates"], "n_kind": "debates", "ci_kind": "none",
+                  "method": "within- minus between-team pair cosine of debaters in the deb phase, mean over debates (H54 R1-A)",
+                  "null": f"team re-split permutation p = {a['p_Q']:.3f}; DiD vs pre-draft {a['mean_DiD']:+.3f} (p = {a['p_DiD']:.3f})",
+                  "role": "native", "source": "r2/r1.json", "post_hoc": False},
+                 {"period_unit": "12a", "goal_no": 12, "statistic": "debate_own_motion_percentile", "channel": ch[model],
+                  "estimate": b["median_pi"], "ci_lo": None, "ci_hi": None, "n": b["n"], "n_kind": "debates", "ci_kind": "none",
+                  "method": "median genericness-corrected own-motion percentile of the deb-phase centroid (H54 R1-B)",
+                  "null": f"other debates' motions; Wilcoxon p = {b['p_wilcoxon']:.4f}", "role": "native", "source": "r2/r1.json",
+                  "post_hoc": False}]
+        for g in (19, 21):
+            o = r1[model][f"G{g}"]
+            rows.append({"period_unit": first_unit[g], "goal_no": g, "statistic": "two_option_domain_percentile", "channel": ch[model],
+                         "estimate": o["domain_pct"], "ci_lo": None, "ci_hi": None, "n": o["n_null_axes"], "n_kind": "null axes",
+                         "ci_kind": "none", "method": "reliable between-agent variance along t_A - t_B vs kickoff-difference axes, days 1-3 (H54 R1-D)",
+                         "null": "percentile >= 0.9 = domains (12% under one mixed target)", "role": "native", "unit_local": "days 1-3",
+                         "source": "r2/r1.json", "post_hoc": False})
+    out = ES.write_estimates(rows, hypothesis="H54")
+    print(f"wrote {out.height} H54 rows to per_period_estimates")
+
 # ============================================================================== main
 def main():
     ap = argparse.ArgumentParser()
@@ -798,8 +873,7 @@ def main():
     elif a.cmd == "r1":
         run_r1()
     elif a.cmd == "estimates":
-        import estimates_r2
-        estimates_r2.main()
+        write_r2_estimates()
     L.provenance(f"analysis/round2.py:{a.cmd}", ["H54 stmt + target tables", "DQ5 bge-small + gte-modernbert (chat, statements, "
                  "goal vectors, whiteners, style_resid_period32)", "context_ledger_items", "context_ledger_turns", "producing_calls",
                  "ground_truth_labels (#12)", "text_features", "rooms_timeline"], {"lag_bins_s": LAG_BINS})

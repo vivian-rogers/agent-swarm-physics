@@ -1,7 +1,7 @@
 # H54 × G12: Form two teams and debate each other, while one agent judges. Choose your teammates wisely! (2025-09-01 → 2025-09-05)
 
-**Verdict:** supported
-**Role:** replication
+**Verdict:** mixed (round 2 native R1: the debate centroid locks onto its own motion, median percentile 1.0 in both models; no team domains, Q +0.002, p 0.40; round-1 replication π 1.00)
+**Role:** native (round 2, R1); replication (round 1)
 **Period:** regime I · mode M · 7 agents with ≥ 3 day-1 statements · #general · 5 non-holdout active days. Day 1 = statements after the first kickoff message.
 
 ## Why this period
@@ -37,6 +37,19 @@ Data: `data/processed/H54-kickoff-quench-target/G12/results.json`; cross-kickoff
 ## Scorecard (period-specific axes)
 - **C:** own kickoff vs 32 decoy kickoffs (swap null): π = 1.00.
 - **G:** H31's frozen projects (where present) checked against the goal text and kickoff.
+
+## Round 2 native test: two concrete targets (H54-R1, 2026-10-04)
+*Prediction written in the card's "Round 2" section before any round-2 statistic (R1-A credence 0.45, R1-B 0.65). Synthetic S7 first.*
+**Why this period:** each debate assigns membership (DQ6 teams, re-drafted every debate) and two opposed targets (the two sides of one motion). Re-drafting decorrelates team from agent, so persistent agent offsets cannot fake team domains. The motion is an agent-set text that the human kickoff told the judge to set.
+- **Design:** debaters' agent vectors in the `deb` phase (≥ 2 statements; judge and bench out). R1-A: Q = within-team minus between-team pair cosine, against team re-splits, with a pre-draft placebo window (DiD). R1-B: own-motion percentile of the debate centroid among the other debates' motions (motion string by rule; 9 of 10 found; vectors only).
+
+| Test | bge | gte | Null / power | Verdict |
+| --- | --- | --- | --- | --- |
+| R1-A mean Q (10 debates) | +0.002 (p 0.40) | +0.001 (p 0.39) | re-split permutation; power 1.0 at Q ≈ 0.16, 0.36 at Q ≈ 0.04 | failed |
+| R1-A DiD vs pre-draft | −0.003 (p 0.54) | +0.000 (p 0.54) | false positives 0.085 at nominal 0.10 (S7) | failed |
+| R1-B own motion | median 1.0, top-1 6/9, p 0.012 | median 1.0, top-1 6/9, p 0.002 | other motions | supported |
+
+**Reading:** within a 10-minute debate the whole room's content locks onto the motion (one shared target). The two teams do not form separate content domains in the embedding: arguing pro and con of one motion looks like one topic. Data: `data/processed/H54-kickoff-quench-target/r2/r1.json`.
 
 ## Notes
 - 2026-10-04: folder written by `analysis/period_folders.py` after the round-1 run; the prediction above was dated in the card before the run.

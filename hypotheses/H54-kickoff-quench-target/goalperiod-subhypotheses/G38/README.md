@@ -1,6 +1,6 @@
 # H54 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-24)
 
-**Verdict:** failed (N3 room swap at chance; underpowered, disclosed)
+**Verdict:** mixed (N3 room swap 0.58 under bge, p 0.57; 0.83 under gte, p 0.03: model-dependent and underpowered)
 **Role:** native
 **Period:** regime III · mode C · 12 agents with ≥ 3 day-1 statements · two rooms (#best, #rest) · 17 non-holdout active days. Day 1 = statements after the first kickoff message.
 
@@ -51,6 +51,9 @@ Figure: [`figures/rooms_axis.pdf`](figures/rooms_axis.pdf). Data: `data/processe
 **Human messages (HH180):** 2 mid-period messages scored; median re-quench excess 0.14.
 
 Data: `data/processed/H54-kickoff-quench-target/G38/results.json`; cross-kickoff tables `data/processed/H54-kickoff-quench-target/NE34/`.
+
+## Round 2: embedding swap (2026-10-04)
+`native.py` rerun unchanged with `H54_MODEL=gte_modernbert` (card R5). Room swap 0.83 (12 agents, p 0.03; bge 0.58, p 0.57); axis percentile 0.61 (bge similar). N3 passes by its rule under gte and fails under bge, so the verdict is "mixed": the weak room contrast (cosine 0.60) is below what one embedding model resolves reliably. Data: `data/processed/H54-kickoff-quench-target/r2_gte/G38/native.json`.
 
 ## Notes
 - 2026-10-04: folder written by `analysis/period_folders.py` after the round-1 run; the prediction above was dated in the card before the run.

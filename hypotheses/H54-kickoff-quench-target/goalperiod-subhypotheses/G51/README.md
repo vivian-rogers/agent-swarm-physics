@@ -1,6 +1,6 @@
 # H54 × G51: Each agent: Maximize your assigned goal! (2026-07-06 → 2026-09-04)
 
-**Verdict:** supported (N1 and N1b; the shared-kickoff replication fails here, as private goals predict)
+**Verdict:** supported (N1 and N1b, in both embedding models; the shared-kickoff replication fails here, as private goals predict)
 **Role:** native
 **Period:** regime III · mode I/K · 21 agents with ≥ 3 day-1 statements · rooms · 45 non-holdout active days. Day 1 = statements after the first kickoff message.
 
@@ -55,6 +55,19 @@ Figure: [`../../figures/summary_obs_b.pdf`](../../figures/summary_obs_b.pdf) (we
 **Human messages (HH180):** 22 mid-period messages scored; median re-quench excess 0.10.
 
 Data: `data/processed/H54-kickoff-quench-target/G51/results.json`; cross-kickoff tables `data/processed/H54-kickoff-quench-target/NE34/`.
+
+## Round 2: embedding swap (2026-10-04)
+`native.py` rerun unchanged with `H54_MODEL=gte_modernbert` (card R5; prediction R5-N1 credence 0.7, R5-N1b 0.85, written before the run).
+
+| Test | bge (round 1) | gte (round 2) | Verdict |
+| --- | --- | --- | --- |
+| N1 role-swap accuracy | 0.95, p 0.0002 | 0.96, p 0.0002 (32 agents, 489 pairs) | supported |
+| weekly accuracy | 0.90–0.96 | 0.94–0.98 | no decay in either |
+| centered alignment | 0.36 | 0.41 (positive for 0.94) | supported |
+| N1b NE38 DiD, new goal | +0.61 [0.56, 0.66] | +0.56 [0.50, 0.63] | supported |
+| NE38 DiD, old goal | −0.29 [−0.38, −0.22] | −0.34 [−0.46, −0.26] | moves off the old target |
+
+#51 is the period where DQ5 found statement geometry least robust across models; the private-goal result holds anyway. Round 2's per-agent read-out test (R3) includes 22 #51 human messages. Data: `data/processed/H54-kickoff-quench-target/r2_gte/G51/native.json`.
 
 ## Notes
 - 2026-10-04: folder written by `analysis/period_folders.py` after the round-1 run; the prediction above was dated in the card before the run.

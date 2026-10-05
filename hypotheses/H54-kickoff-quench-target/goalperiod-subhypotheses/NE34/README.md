@@ -1,6 +1,6 @@
 # H54 × NE34: the kickoff as quench target, across all eligible goal changes
 
-**Verdict:** mixed (P1 supported: day-1 centroids identify their own kickoff; P2 mixed: frozen projects are the goal-text-named ones, enrichment 1.95 for any naming and 3.2 for goal-text naming; P3 failed: text specificity does not set the spread)
+**Verdict:** mixed (P1 supported in both embedding models; P2 mixed; P3 failed; round 2: human-message re-quench is read-out coupling (R3), the first plan is not a target (R2))
 **Role:** replication (cross-kickoff tests; exception (c), the transition is the object)
 **Period:** 33 eligible non-holdout kickoffs (#3–#51 minus holdout and #23), regimes I (22), II (3), III (8). Each period is compared in its own regime's whitened basis.
 
@@ -43,6 +43,23 @@ Data: `data/processed/H54-kickoff-quench-target/NE34/` (`periods.parquet`, `S_ki
 - **D:** unfitted: displacement direction, neighbour decoys, frozen-project naming, remanence plateau.
 - **E:** each kickoff is a step; predicted target identified in 29/33 (π ≥ 0.75).
 - **H:** rival R1 (carry-over, inertia) and R0 rejected; R2 (genre) controlled by genericness correction; R3 (first plan) partly (plans are central but name no frozen project); R4 (family) shows no susceptibility differences.
+
+## Round 2 (2026-10-04): embedding swap and read-out tests across kickoffs
+*Predictions in the card's "Round 2" section, written before any round-2 statistic; Amendment R2-1 after synthetic S6.*
+
+| Prediction | bge | gte | Verdict |
+| --- | --- | --- | --- |
+| R5-P1 P1 rule | median π 1.0, top-1 18/33, p 3e-6 | median π 1.0, top-1 20/33, p 2e-7 | supported |
+| per-period π agreement | – | Spearman 0.75 (p 6e-7); verdicts agree 29/33 | supported |
+| R5-P1c move points at the kickoff | 0.91 | 0.97 (jump > 0 in 21/25) | supported |
+| R3-A read-out re-quench (181 human messages) | mean Δ 0.090 [0.071, 0.109], 75% > 0 | 0.088 [0.069, 0.107], 71% > 0 | supported |
+| R3-B read minus in flight, matched lag × age | +0.11 [0.05, 0.17] | +0.12 [0.07, 0.18] | supported |
+| convergence share (in flight / read) | 0.48 | 0.40 | – |
+| R3-C named minus unnamed | +0.02 [−0.03, 0.08] | +0.03 [−0.03, 0.09] | failed |
+| R2-A first-plan readers (36 plans) | −0.105 [−0.153, −0.059] | −0.099 [−0.135, −0.062] | failed (reversed) |
+| R2-B plans, read minus in flight | −0.11 [−0.28, 0.12] | −0.00 [−0.17, 0.12] | inconclusive (power 0.05) |
+
+Post hoc: the read-out pull falls from 0.22 (first message < 30 s after reading) to ≈ 0 by 10 min; round-1 P4 (room centroids) does not replicate under gte (median 0.012, p 0.18). Data: `data/processed/H54-kickoff-quench-target/r2/` (`r3.json`, `r2.json`) and `r2_gte/NE34/`.
 
 ## Notes
 - 2026-10-04: written after the round-1 run by `analysis/period_folders.py`.

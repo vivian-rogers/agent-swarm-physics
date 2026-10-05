@@ -1,6 +1,7 @@
 # H54: The kickoff text is the quench target
 
-**Status:** exploratory round 1 done (2026-10-04, UTC). **Main finding: the kickoff text sets the day-1 target; how specific the text is does not set the spread.**
+**Status:** exploratory round 2 done (2026-10-04, UTC). **Main finding: the kickoff text sets the day-1 target in both embedding models; a human message moves each reader at its next message, beyond unread convergence; agent plans and spontaneous domains do not set targets.**
+- **Round 2 (R5, R3, R1, R2):** P1, #51 and NE38 hold under gte-modernbert (top-1 20/33; 0.96; DiD +0.56). Per-agent read-out re-quench Δ 0.09 in both models; reading adds +0.11–0.12 over in-flight messages at matched lag, and in-flight messages carry 40–50% of the pull. First-plan readers move *away* from the plan (−0.10). #12 debaters lock onto their motion (median percentile 1.0) but form no team domains; #19/#21 show one mixed target, no spontaneous domains. Details: "Round 2" below.
 - **Target (P1, supported).** The day-1 content centroid picks out its own kickoff among 33: median percentile 1.0, top-1 in 18/33, ≥ 0.9 in 26/33 (p = 3e-6). The day-1 move points at the new kickoff (median 0.91; jump > 0 in 92%). Failures are the kickoffs that name no shared target: free weeks #3 and #16, #51's private goals, #44's half-free week.
 - **Private goals (G51, native, supported).** In #51 each agent lands on its *own* goal text (role-swap accuracy 0.95, p = 0.0002), with no decay over 9 weeks. A human reassignment moves an agent onto its new goal within a day (NE38, DiD +0.61 [0.56, 0.66]).
 - **Frozen projects (P2, mixed by the rule).** 9 of 13 kickoff-frozen projects carry the goal text's words (base rate 0.22, enrichment 3.2, stratified p = 0.006), and only 1/13 pre-existed (the carry-over rival is rejected). P2 counts as mixed because its pre-registered "any naming" enrichment is 1.95.
@@ -22,13 +23,13 @@
 | Scheduler field | no | Day-level content centroids; no activity or timing statistic. | n/a |
 | Exogenous field (kickoff/goal/operator) | yes | The impostor is the object. The kickoff-swap null with a genericness correction, neighbour and within-regime decoys and the displacement test separate the target from genre (R2) and inertia (R1). | removed |
 | Shared model priors | yes | Rival R4: `style_resid` vectors keep top-1 at 0.52; lab effect on susceptibility p 0.66 (P7). | removed |
-| Contemporaneous convergence | partly | The main claim is a field claim. The first-plan centrality (P6) and human re-quench (P4) are influence claims with no read vs unread contrast. Close with the ledger tests in R2 and R3 (§1, row 4). | open |
+| Contemporaneous convergence | partly | The main claim is a field claim. Round 2: the human re-quench (R3) beats unread in-flight messages at matched lag and age (C +0.11–0.12, both models); in-flight messages carry 40–50% of the pull. The first-plan test (R2-B) has 9 in-flight pairs and no power. | partly |
 
-**Inputs:** round 1 uses shared `goal_fields`, deterministic `project_states`, DQ5 `style_resid`, the context ledger (receptive fraction) and DQ6 labels. Activity bins, work and failures are not inputs. Still old: content uses bge only (gte was not built; R5); H31's frozen events (read-only) use H11's original labels, though the own-rule check on shared labels agrees.
+**Inputs:** round 2 adds DQ5 gte-modernbert for P1, G51, NE38 and all round-2 tests, `producing_calls` (shared `visibility.py` rule) and the ledger's receiving calls. Round 1 uses shared `goal_fields`, deterministic `project_states`, DQ5 `style_resid`, the context ledger (receptive fraction) and DQ6 labels. Activity bins, work and failures are not inputs. Still old: content uses bge only (gte was not built; R5); H31's frozen events (read-only) use H11's original labels, though the own-rule check on shared labels agrees.
 
 **Two layers:** 30 replication folders (29 periods plus the `NE34` cross-kickoff folder). Native tests: 4 (`G51` supported; `G26` and `G44` mixed; `G38` failed).
 
-**Confirm script:** `analysis/confirm.py` exists, dry-run only. It uses no activity table and no visibility rule, so no re-freeze is required (holdout.md item 8). A gte sensitivity before the run would close the one-model gap.
+**Confirm script:** `analysis/confirm.py` exists, dry-run only. It uses no activity table and no visibility rule, so no re-freeze is required (holdout.md item 8). The gte sensitivity is done (round 2, R5): P1 and C2's #51 statistic hold under gte.
 
 ## Question
 Are the projects agents freeze onto at a kickoff the ones the goal text or kickoff names, and does the day-1 content centroid land on the kickoff embedding, with spread set by how specific the kickoff is?
@@ -124,7 +125,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | C adequacy | beats the null hierarchy, day-blocked held-out data | 2 | Parameter-free tests, so every period is out of sample. P1 beats the kickoff-swap null with genericness correction, within-regime and neighbouring-era decoys, the previous period's state (displacement), echo removal, and style residualization. #51 beats the role-permutation null (p = 0.0002). Holdout not run. |
 | D unfitted predictions | unfitted statistics and the model's signature | 1 | Passed: the move direction, neighbour decoys, goal-text naming of frozen projects (rejecting carry-over), the remanence plateau, NE38. Failed: the specificity → spread link (P3), family susceptibility (P7), the plan-vagueness moderator, previous-kickoff remanence, and two domains (#44, #38). |
 | E interventional | predicts the change across a natural experiment | 1 | NE34: each kickoff is a step, and the predicted target is identified in 29/33 (π ≥ 0.75) with the predicted move sign in 92%. NE38: the predicted sign of a single-agent reassignment is confirmed, with a large effect and tight CI. Failed: the #26 leader's announcement did not re-quench. Sizes were not predicted in advance. |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Synthetic validation with real counts and geometry: P1 is calibrated (0/200 under R0 and R1) and powered when the text proxy is faithful (≥ 0.5). P2 and N2 are underpowered (power stated). The counting artifact was found and the analysis corrected. Robust to style residualization, echo removal and chat-only. **The embedding-model swap is not done** (DQ5's second model was not built yet). |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 (r2; was 1) | Synthetic validation with real counts and geometry: P1 is calibrated (0/200 under R0 and R1) and powered when the text proxy is faithful (≥ 0.5). P2 and N2 are underpowered (power stated). The counting artifact was found and the analysis corrected. Robust to style residualization, echo removal and chat-only. Round 2: the embedding swap holds P1, #51 and NE38 under gte, and the read-out, debate and option estimators were calibrated on the real skeleton before use (S6–S8, Amendment R2-1). |
 | G ground truth | agrees with known structure | 2 | Agents' positions recover #51's assigned goal texts (DQ6 roles; 0.95) and Opus 5's documented 07-29 reassignment (NE38). #44 room assignments (DQ6) reproduce the instruction split in the #best room. H31's frozen events are matched to the goal texts. |
 | H comparative | beats the named rivals | 1 | R0 (no target) and R1 (inertia, carry-over) are rejected. R2 (genre) is controlled by the genericness correction, though synthetic shows that correction is incomplete. R3 (first plan) is only partly separated: plans are central (70%) but name no frozen project and are not used more after vague kickoffs. R4 (family) shows no susceptibility differences. |
 | I transfer | holds in other same-mode periods, including the holdout | 1 | Holds across regimes I (top-1 0.59), II and III (0.50) and across all goal modes except free choice. The holdout is not run (`confirm.py`: 14 held-out kickoffs, the #51 tail, held-out projects and human messages). |
@@ -201,7 +202,7 @@ Replication verdict rule (templated): supported if the own-kickoff percentile π
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [NE34](goalperiod-subhypotheses/NE34/README.md) | replication (cross-kickoff) | mixed | P1 supported (median π 1.0, top-1 18/33, p 3e-6); P2 mixed (9/13 frozen named by the goal text, enrichment 3.2); P3 failed (S_text ρ +0.17) |
+| [NE34](goalperiod-subhypotheses/NE34/README.md) | replication (cross-kickoff) | mixed | P1 supported in both models (top-1 18/33 bge, 20/33 gte); P2 mixed; P3 failed; r2: R3 read-out supported (C +0.11 / +0.12), R2 first plan failed (Δ −0.10) |
 | [G03](goalperiod-subhypotheses/G03/README.md) | replication | failed | π 0.00 (rank 33; free week); move π 0.25 |
 | [G04](goalperiod-subhypotheses/G04/README.md) | replication | supported | π 1.00 (rank 1); move π 1.00, jump 0.30 |
 | [G05](goalperiod-subhypotheses/G05/README.md) | replication | mixed | π 0.75 (rank 9; free week); move π 0.88 |
@@ -210,14 +211,14 @@ Replication verdict rule (templated): supported if the own-kickoff percentile π
 | [G08](goalperiod-subhypotheses/G08/README.md) | replication | supported | π 1.00 (rank 1); jump 0.44 |
 | [G10](goalperiod-subhypotheses/G10/README.md) | replication | supported | π 1.00 (rank 1) |
 | [G11](goalperiod-subhypotheses/G11/README.md) | replication | mixed | π 0.81 (rank 7; free week); spread 0.90 |
-| [G12](goalperiod-subhypotheses/G12/README.md) | replication | supported | π 1.00 (rank 1); jump 0.88; spread 0.49 |
+| [G12](goalperiod-subhypotheses/G12/README.md) | native (r2) | mixed | π 1.00 (rank 1); R1-B own motion median percentile 1.0 (both models); R1-A no team domains (Q +0.002, p 0.40) |
 | [G13](goalperiod-subhypotheses/G13/README.md) | replication | supported | π 0.91 (rank 4); jump 0.41 |
 | [G16](goalperiod-subhypotheses/G16/README.md) | replication | failed | π 0.12 (rank 29; free week); spread 0.87 |
 | [G17](goalperiod-subhypotheses/G17/README.md) | replication | supported | π 1.00 (rank 1); jump 0.27 |
 | [G18](goalperiod-subhypotheses/G18/README.md) | replication | supported | π 1.00 (rank 1); jump 0.33 |
-| [G19](goalperiod-subhypotheses/G19/README.md) | replication | supported | π 0.91 (rank 4); frozen build repo named by the goal text |
+| [G19](goalperiod-subhypotheses/G19/README.md) | native (r2) | mixed | π 0.91 (rank 4); both options readable; no spontaneous domains (percentile 0.10 / 0.79); no A → B sequence over all days |
 | [G20](goalperiod-subhypotheses/G20/README.md) | replication | supported | π 1.00 (rank 1); jump 0.33 |
-| [G21](goalperiod-subhypotheses/G21/README.md) | replication | supported | π 1.00 (rank 1); jump 0.50 |
+| [G21](goalperiod-subhypotheses/G21/README.md) | native (r2) | mixed | π 1.00 (rank 1); both options readable; no spontaneous domains (0.87 / 0.86); sequence sign differs by model |
 | [G24](goalperiod-subhypotheses/G24/README.md) | replication | supported | π 1.00 (rank 1; fallback kickoff) |
 | [G25](goalperiod-subhypotheses/G25/README.md) | replication | supported | π 0.94 (rank 3) |
 | [G26](goalperiod-subhypotheses/G26/README.md) | native | mixed | π 0.97 (rank 2); no pull toward the leader's announcement (decoy percentile 0.48); the announcement names no project |
@@ -228,13 +229,13 @@ Replication verdict rule (templated): supported if the own-kickoff percentile π
 | [G35](goalperiod-subhypotheses/G35/README.md) | replication | supported | π 0.97 (rank 2); both rooms' frozen fork repos named |
 | [G36](goalperiod-subhypotheses/G36/README.md) | replication | supported | π 1.00 (rank 1); jump 0.68 |
 | [G37](goalperiod-subhypotheses/G37/README.md) | replication | mixed | π 0.88 (rank 5; free week) |
-| [G38](goalperiod-subhypotheses/G38/README.md) | native | failed | room swap 0.58 (p 0.57; underpowered); #best tight, #rest on neither room text; π 0.91 |
+| [G38](goalperiod-subhypotheses/G38/README.md) | native | mixed | room swap 0.58 (bge, p 0.57) vs 0.83 (gte, p 0.03): model-dependent; π 0.91 |
 | [G39](goalperiod-subhypotheses/G39/README.md) | replication | supported | π 1.00 (rank 1); jump 0.56 |
 | [G40](goalperiod-subhypotheses/G40/README.md) | replication | supported | π 1.00 (rank 1); frozen hub named |
 | [G41](goalperiod-subhypotheses/G41/README.md) | replication | supported | π 1.00 (rank 1); both rooms' frozen projects named |
 | [G42](goalperiod-subhypotheses/G42/README.md) | replication | supported | π 1.00 (rank 1); jump 0.59 |
 | [G44](goalperiod-subhypotheses/G44/README.md) | native | mixed | room swap 0.31 (two domains failed); #rest spread 0.80 vs #best 0.50, depth −0.25 vs 0.37 (HH179 within the period); π 0.47 |
-| [G51](goalperiod-subhypotheses/G51/README.md) | native | supported | own private goal: role swap 0.95 (p 0.0002), flat over 9 weeks; NE38 DiD +0.61 [0.56, 0.66]; shared-kickoff π 0.25 |
+| [G51](goalperiod-subhypotheses/G51/README.md) | native | supported | own private goal: role swap 0.95 / 0.96 gte (p 0.0002), flat over 9 weeks; NE38 DiD +0.61 [0.56, 0.66] / +0.56 [0.50, 0.63] gte; shared-kickoff π 0.25 |
 
 ## Results
 *Exploratory round 1, 2026-10-04 (UTC); non-holdout periods only, #23 excluded.*
@@ -277,7 +278,7 @@ Replication verdict rule (templated): supported if the own-kickoff percentile π
 7. **No family susceptibility** (HH184): agents move toward the kickoff in 87% of cases, but neither lab nor agent identity predicts how far.
 
 **Caveats**
-- The target is a text-embedding proxy (bge-small, one model). The second embedding (DQ5 gte) was not built yet. Quoting the kickoff is part of the measured effect.
+- The target is a text-embedding proxy. Round 2 repeats P1, G51 and NE38 with DQ5's gte-modernbert (they hold); other round-1 results differ by model (P4, G38's room swap, P7's agent r; see Round 2). Quoting the kickoff is part of the measured effect.
 - "Named" uses name-token matching of canonical artifact names against the goal or kickoff text. Agents name repos after goals, so the naming direction is ambiguous. Strict URL naming never occurs.
 - H31's events (read-only) use H11's original labels; the own-rule check on deterministic labels agrees.
 - 33 kickoffs, 22 in regime I. P2 and the natives N2 and N3 are underpowered (stated). Specificity and moderator analyses are low-n. Mode moderation and the S_emb–spread link are post hoc.
@@ -379,9 +380,57 @@ Replication verdict rule (templated): supported if the own-kickoff percentile π
 
 **Overall round-2 rules.** R5 passes if R5-P1 and R5-N1b hold. The read-out claim (Q1/Q2 reading) is **supported** for human messages if R3-A and R3-B both hold, **convergence** if R3-A holds and R3-B fails, **failed** if R3-A fails. The same rule applies to plans with R2-A and R2-B. HH183 is **retired** for spontaneous domains if R1-D shows no domains in both periods with power ≥ 0.8 at the planted size; otherwise "inconclusive".
 
+### Round 2 results (2026-10-04, non-reserved data only)
+- **Code:** `analysis/round2.py` (`r5build`, `synth`, `r3`, `r2`, `r1`, `estimates`), `analysis/figures_r2.py`, `scheme/embed_targets.py`; `explore.py` and `native.py` rerun unchanged with `H54_MODEL=gte_modernbert`.
+- **Data:** `data/processed/H54-kickoff-quench-target/r2/` (targets, pair skeletons, per-pair Δ in both models, `r3.json`, `r2.json`, `r1.json`, `synthetic.json`) and `r2_gte/` (gte copies of every round-1 output). 90 `per_period_estimates` rows: own-kickoff π per period in both models, #51 and NE38, R3's per-period read-out Δ (periods with ≥ 5 messages), and the #12, #19, #21 natives.
+- **Figure:** [`figures/round2.pdf`](figures/round2.pdf): (a) per-agent pull toward a human message vs the lag of the reader's first message after it, read vs in flight; (b) own-kickoff percentile per period, bge vs gte.
+
+**Outcome vs prediction** (bge / gte; ± and brackets are 90% message-cluster bootstrap CIs unless marked)
+
+| ID | Credence | Outcome | Verdict |
+| --- | --- | --- | --- |
+| **R5-P1** P1 under gte; per-period agreement | 0.7 / 0.6 | gte: median π 1.0, top-1 20/33 (bge 18/33), Wilcoxon p 2e-7; within regime top-1 0.70. Per-period π Spearman 0.75 (p 6e-7); verdicts agree in 29/33. gte failures: #3, #11, #16, #24 (bge: #3, #16, #44, #51) | **supported** |
+| R5-P1c move points at the kickoff (gte) | 0.65 | median displacement percentile 0.97 (n 25); jump > 0 in 21/25 | supported |
+| **R5-N1** #51 role swap (gte) | 0.7 | 0.96 (32 agents, 489 pairs), p 0.0002; weekly 0.94–0.98 | **supported** |
+| **R5-N1b** NE38 (gte) | 0.85 | DiD +0.56 [0.50, 0.63] (95%, day bootstrap); off the old goal −0.34 [−0.46, −0.26] | **supported** |
+| **R3-A** read-out re-quench | 0.65 | 181 messages, 990 read pairs: median Δ 0.079 / 0.068; mean 0.090 [0.071, 0.109] / 0.088 [0.069, 0.107]; positive for 75% / 71% of messages; sign p 1e-11 / 5e-9 | **supported** |
+| **R3-B** read beats in flight at matched lag × age | 0.5 | C = +0.11 [0.05, 0.17] / +0.12 [0.07, 0.18] (93 in-flight pairs, 72 messages). Matched read 0.21 / 0.20 vs in flight 0.10 / 0.08: **convergence share 0.48 / 0.40** | **supported** |
+| R3-C named > unnamed recipients | 0.55 | +0.02 [−0.03, 0.08] / +0.03 [−0.03, 0.09] | failed (CI includes 0) |
+| **R2-A** readers move toward the first plan | 0.45 | 36 plans, 116 read pairs: mean Δ −0.105 [−0.153, −0.059] / −0.099 [−0.135, −0.062]; positive for 33% / 28%; raw move (no decoys) also negative (median −0.05 / −0.06) | **failed (reversed)** |
+| **R2-B** read beats in flight for plans | 0.35 | C −0.11 [−0.28, 0.12] / −0.00 [−0.17, 0.12]; 9 in-flight pairs; synthetic power 0.05 | inconclusive (unpowered) |
+| **R1-A** #12 team domains | 0.45 | 10 debates: mean Q +0.002 (p 0.40) / +0.001 (p 0.39); DiD vs pre-draft −0.003 (p 0.54) / +0.000 (p 0.54) | **failed** |
+| R1-B #12 own motion identified | 0.65 | median percentile 1.0 in both; top-1 6/9; Wilcoxon p 0.012 / 0.002 | supported |
+| R1-C both options readable (#19, #21) | 0.6 | #19 excess A 0.07 / 0.17, B 0.10 / 0.16; #21 A 0.44 / 0.43, B 0.30 / 0.31: 4/4 in both models | supported |
+| **R1-D** no spontaneous domains | 0.65 | domain percentile #19 0.10 / 0.79; #21 0.87 / 0.86 (all < 0.9) | **supported** (one mixed target; powered at the kickoff's scale) |
+| R1-E sequence A → B | 0.55 / 0.4 | #19 ρ −0.16 (p 0.65) / +0.01; #21 −0.60 / +0.70 (models disagree) | failed / no verdict |
+
+**Overall by the round-2 rules:** R5 passes. The human-message re-quench is **read-out coupling** (R3-A and R3-B hold in both models). The first-plan pull is **failed** (R2-A reversed; R2-B unpowered). HH183 is **retired** for spontaneous domains (#19, #21) and fails for assigned teams (#12).
+
+**Post hoc diagnostics** (labelled; not used for verdicts):
+- **The read-out pulse is short.** Read-arm Δ by the lag of the first post-read message: 0.22 ± 0.02 (< 30 s), 0.10 ± 0.015 (30–120 s), 0.06 ± 0.01 (2–10 min), ≈ 0 (10–60 min), in both models (SE, pairs). Half the pull is gone within about a minute.
+- **The paired within-agent contrast is null** (−0.01 [−0.05, 0.03] / −0.01 [−0.05, 0.03], 89 agent-messages). These agents were mid-exchange: their in-flight message comes at a median 8 s and their read message at 65 s. At 65 s the read pull has already decayed to the in-flight level (≈ 0.10). So the paired contrast confounds reading with lag; the matched-cell contrast (R3-B) does not.
+- **By regime:** regime I carries the contrast (C +0.12 [0.06, 0.18], 80 in-flight pairs). Regime III has R3-A (0.079 / 0.062, CI above 0) but only 13 in-flight pairs (C +0.07 [−0.18, 0.30]).
+- **R2's sign depends on decoy timing.** Decoys from ±60 min around the plan give −0.09 / −0.12, and decoys from before the plan give +0.10 / +0.12. The raw move away from the plan (−0.05 / −0.06) does not depend on decoys. The likely reading: the plan summarizes the discussion just before it, and readers then move on to execution. **Named recipients do move toward the plan** more than unnamed ones (+0.07 [0.02, 0.13] / +0.09 [0.03, 0.15]), the address pattern of H08 and H29 (named recipients respond more). The never-read control in two-room periods (7 plans) gives no contrast (median −0.03 / +0.01).
+- **#19 sequence in the first two days:** in both models, option A (build) leads on day 1 (excess 0.17 vs −0.03 bge; 0.27 vs 0.14 gte) and option B (make it popular) leads on day 2 (0.22 vs 0.04; 0.22 vs 0.15). The pre-registered all-days projection misses it.
+- **Round-1 results under gte** (same estimators): round-1 P4 (room-centroid human re-quench) **does not replicate** (median 0.012, sign p 0.18; bge 0.04, p 0.03). The per-agent read-out design (R3) replaces it. G38's room swap passes under gte (0.83, p 0.03; bge 0.58, p 0.57), so N3 is model-dependent. G44 fails in both (0.25), G26 shows no pull in both. P3 fails in both (S_text ρ +0.19). Remanence holds (last day > 0 in 24/28; 0.29 → plateau 0.09). P6 plan centrality weakens (22/33, p 0.13; bge p 0.003). P7's agent split-half r is 0.48 under gte (bge 0.09) with no lab effect (p 0.67): agent susceptibility is model-dependent, matching H97's P4.
+
+**Rivals.** Contemporaneous convergence is beaten for human messages at matched lag, but it carries 40–50% of the matched pull, so half of an apparent re-quench is convergence. R3 (agent-authored target) is now beaten more strongly: readers of the first plan do not move toward it. The exception is a debate motion that the human kickoff told a judge to set (R1-B). The one-embedding-model gap is closed for P1, G51 and NE38.
+
+**Scorecard changes (old → new):** F 1 → 2 (the embedding swap is done for P1, G51 and NE38, and every round-2 estimator was calibrated on the real skeleton before use). H 1 → 1 (convergence beaten for human messages; plans not). Others unchanged. Impostor row "contemporaneous convergence": open → **partly** (removed for human messages by R3-B; plans unpowered).
+
+**New constants** (non-reserved data; human messages ≥ 250 characters, not kickoffs; chat statements; regimes I and III):
+- Δ_read: per-agent read-out pull at the first post-read message, all lags ≤ 60 min: 0.090 [0.071, 0.109] (bge) / 0.088 [0.069, 0.107] (gte); 181 messages.
+- Δ_read(< 30 s): 0.22 ± 0.02 (SE) in both models; 157 pairs. Decays to ≈ 0 by 10 min (descriptive, post hoc).
+- C_read: read minus in-flight at matched lag and age: +0.11 [0.05, 0.17] / +0.12 [0.07, 0.18].
+- f_conv: in-flight share of the matched read pull: 0.48 (bge) / 0.40 (gte); no CI computed.
+- Own-kickoff top-1 rate: 18/33 (bge) / 20/33 (gte); per-period π agreement ρ 0.75.
+
+**Claim that stands:** Where a kickoff names a shared target, the day-1 content centroid identifies its own kickoff in both embedding models (median π 1.0; top-1 18/33 bge, 20/33 gte), #51 agents sit on their private goals (0.95 / 0.96), and a human message pulls each reader at its first post-read message by Δ ≈ 0.09, of which reading adds +0.11–0.12 over unread in-flight messages at matched lag. *Excluded:* text specificity as a dial (P3 failed), frozen-project naming (P2 mixed), agent-written plans as targets (R2-A reversed, R2-B unpowered), two domains (#44, #12 teams, #19/#21; #38 model-dependent), family susceptibility, round-1 P4 (does not replicate in gte), the paired within-agent contrast and the R3 decay profile (post hoc).
+
 ## Notes
 - 2026-10-04: promoted from HH169 (Vivian). Round 1 started; card design and predictions written before any real-data statistic.
 - 2026-10-04: one scorer fix before any outcome statistic: agent names (and their model version numbers) are masked before counting numbers and named entities in the specificity score.
 - 2026-10-04: round 1 run (synthetic → Amendment 1 → replication → natives → robustness). Post hoc analyses are labelled: mode moderation, echo removal, style residualization, chat-only #51, S_emb mechanics, P2 leave-one-period-out.
 - Proposed DEFINITIONS.md variants (H54): **quench target (kickoff)** = unit(W_r · kickoff embedding) of the period's kickoff messages (shared `goal_fields` rule); **own-target percentile** = genericness-corrected percentile of a day-1 centroid's cosine with its own kickoff among the other eligible kickoffs; **quench depth** = mean agent alignment with the own kickoff minus mean alignment with decoy kickoffs; **kickoff specificity score** (S_text, S_count, S_emb as defined above); **re-quench amplitude** = Δ_m above; **kickoff remanence** = A_ex(d) above.
+- 2026-10-04: round 2 run (R5, R3, R1, R2; R4 skipped, needs paid labels). Pre-registration committed before any round-2 statistic (17e394e); Amendment R2-1 committed before the R3/R2/R1 real runs.
 - 2026-10-04: H97's day-1 overshoot (intercept a_K +0.12 ± 0.02 above the settled plateau) is this card's day-1 remanence (kickoff excess 0.24 on day 1 → plateau 0.11) seen from the other side (see `../H97-quench-restoring-force/README.md`).

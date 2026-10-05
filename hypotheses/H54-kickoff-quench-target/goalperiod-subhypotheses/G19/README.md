@@ -1,7 +1,7 @@
 # H54 × G19: Create a popular daily puzzle game like Wordle (2025-11-03 → 2025-11-14)
 
-**Verdict:** supported
-**Role:** replication
+**Verdict:** mixed (round 2 native R1: both kickoff options readable; no spontaneous domains, as predicted (percentile 0.10 / 0.79); the predicted A → B sequence is not seen over all days; round-1 replication supported)
+**Role:** native (round 2, R1); replication (round 1)
 **Period:** regime I · mode C · 7 agents with ≥ 3 day-1 statements · #general · 10 non-holdout active days. Day 1 = statements after the first kickoff message.
 
 ## Why this period
@@ -39,6 +39,20 @@ Data: `data/processed/H54-kickoff-quench-target/G19/results.json`; cross-kickoff
 ## Scorecard (period-specific axes)
 - **C:** own kickoff vs 32 decoy kickoffs (swap null): π = 0.91.
 - **G:** H31's frozen projects (where present) checked against the goal text and kickoff.
+
+## Round 2 native test: two enumerated options (H54-R1, 2026-10-04)
+*Prediction written in the card's "Round 2" section before any round-2 statistic (R1-C 0.6, R1-D 0.65, R1-E 0.55). Synthetic S8 first.*
+**Why this period:** the kickoff names two concrete sub-targets, "A) make a daily puzzle game" vs "B) make it popular", without assigning agents to either. Spontaneous two-domain breaking (HH183) would split agents between them; a single quench would put every agent on a mix.
+- **Design:** option clauses embedded locally (both models, vectors only); u = unit(t_A − t_B). R1-C: excess alignment with each option over the other kickoffs, days 1–3. R1-D: reliable between-agent variance along u vs 496 kickoff-difference axes (percentile ≥ 0.9 = domains; 12% under one mixed target; power ≥ 0.8 at an agent-level side gap ≈ 0.25). R1-E: Spearman(day, swarm projection on u) < 0.
+
+| Test | bge / gte | Verdict |
+| --- | --- | --- |
+| R1-C excess, option A | 0.07 / 0.17 | supported |
+| R1-C excess, option B | 0.10 / 0.16 | supported |
+| R1-D domain percentile | 0.10 / 0.79 | supported (no domains) |
+| R1-E sequence ρ | −0.16 (p 0.65) / +0.01 | failed |
+
+Post hoc: option A (build) leads on day 1 and option B (make it popular) on day 2 in both models. Data: `data/processed/H54-kickoff-quench-target/r2/r1.json`.
 
 ## Notes
 - 2026-10-04: folder written by `analysis/period_folders.py` after the round-1 run; the prediction above was dated in the card before the run.
