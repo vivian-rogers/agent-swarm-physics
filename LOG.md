@@ -8,6 +8,7 @@ something, or make a decision worth remembering.
 ## 2026-10-04 — Talk deck and physics titles
 
 - Thesis slide titles rewritten in technical physics language (37 files in `writeup/slides/theses/`); column heads now Model / Measured / Implication.
+- Moved the 13 animations and poster frames from `writeup/visuals/<F>/anim*.{mp4,png}` to `writeup/animations/<F>.mp4` / `<F>_poster.png`; `vs.save_anim` redirects there, gallery, compendium, intuition notes and summary writeup repointed and rebuilt. mp4s stay gitignored.
 - New frames: `frames/essentially.tex` (effective model: asynchronous Glauber spins with scheduler, goal and style fields plus a read-out coupling; context register erased every 40 calls) and `frames/global-variables.tex` (11 swarm-level observables with measured values from `interpretation/swarm-constants.json`).
 - `writeup/slides/talk-slides.tex` (19 slides) exported to `writeup/slides/talk-png/slide-NN.png` at 1920×1080. Direction deck now 71 slides (main slides moved to shared `frames/`).
 

@@ -5,7 +5,7 @@ Usage:
     vs.use()                       # rcParams for RevTeX figures
     fig, ax = vs.figure("single")  # 3.4 in wide; "double" = 7.0 in
     vs.save(fig, "writeup/visuals/H08-.../fig")   # writes fig.pdf + fig.png
-    vs.save_anim(anim, "writeup/visuals/H08-.../anim", fps=24)  # anim.mp4 (+ poster frame)
+    vs.save_anim(anim, "writeup/visuals/H08-.../anim", fps=24)  # -> writeup/animations/H08-....mp4 (+ _poster.png)
 """
 from pathlib import Path
 import matplotlib as mpl
@@ -46,12 +46,18 @@ def label_end(ax, x, y, text, color, dx=4, **kw):
                 va="center", fontsize=7, **kw)
 
 def save(fig, stem):
-    stem = Path(stem); stem.parent.mkdir(parents=True, exist_ok=True)
+    stem = Path(stem)
+    if stem.name == "anim":  # writeup/visuals/<F>/anim -> writeup/animations/<F>
+        stem = Path(__file__).resolve().parent.parent / "animations" / stem.resolve().parent.name
+    stem.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(stem.with_suffix(".pdf")); fig.savefig(stem.with_suffix(".png"))
 
 def save_anim(anim, stem, fps=24, dpi=160, poster_frame=-1):
     """mp4 (H.264, yuv420p) plus a poster PNG of one frame; the writeup figure is separate (save)."""
-    stem = Path(stem); stem.parent.mkdir(parents=True, exist_ok=True)
+    stem = Path(stem)
+    if stem.name == "anim":  # writeup/visuals/<F>/anim -> writeup/animations/<F>
+        stem = Path(__file__).resolve().parent.parent / "animations" / stem.resolve().parent.name
+    stem.parent.mkdir(parents=True, exist_ok=True)
     w = mpl.animation.FFMpegWriter(fps=fps, codec="h264", bitrate=2400,
                                    extra_args=["-pix_fmt", "yuv420p", "-movflags", "+faststart"])
     anim.save(stem.with_suffix(".mp4"), writer=w, dpi=dpi)

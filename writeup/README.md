@@ -10,7 +10,8 @@ Start here.
 | `slides/talk-slides.pdf`, `slides/talk-png/` | Talk deck (19 slides) and its 1920×1080 PNG export: system, what the system essentially is (effective model), global variables for swarm interpretability, the two lenses, method, which physics fits, 10 theses, next steps. Frames shared with the direction deck (`slides/frames/`). |
 | `slides/direction-slides.pdf` | Beamer deck (16:9, 71 slides): research direction (11 slides: timeline, Q1–Q7, the two lenses with their math, method, scoring, results, which physics fits, next steps); appendix A: goal periods, hypothesis × model table, EU ranking (`slides/make_tables.py`, `figures/make_matrix_slides.py`); appendix B: 37 promising/intuitive thesis slides by theme (`slides/theses/H*.tex`, `slides/make_theme_appendix.py`). Shared style: `slides/swarmslides.sty`. |
 | `hypotheses-compendium.pdf` | Two-page summary of every hypothesis, with a linked contents table (credence, EU) and the figures appendix. Rebuild: `uv run python infra/summaries/build_summaries.py --compendium-only`. |
-| `visuals/` | 32 writeup figures and 13 animations (`H<NN>-*/fig.pdf`, `anim.mp4`). `visuals/index.html` plays them locally; `visuals/compendium.pdf` collects the figures. |
+| `visuals/` | 32 writeup figures (`H<NN>-*/fig.pdf`, rebuilt by each folder's `make.py`). `visuals/index.html` shows them with the animations; `visuals/compendium.pdf` collects the figures. |
+| `animations/` | The 13 animations (`H<NN>-<slug>.mp4`, 27 MB, gitignored) and their poster frames (`*_poster.png`). Written by `vs.save_anim` from `visuals/H<NN>-*/make.py`. |
 | `project-architecture.pdf`, `scoring-1col.pdf` | The one-column architecture and scoring figures (sources in `figures/`). |
 | `credence-faithfulness.pdf` | The full credence and faithfulness scoring diagram. |
 | `operator-guide/` | Operator guide (4 pp.). |

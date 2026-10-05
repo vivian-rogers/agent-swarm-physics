@@ -8,7 +8,7 @@ Static figure (fig.pdf/png, double column):
   (e) per-period work-commit dip over calls +1..+10 (forced) vs pseudo-erasures (gray)
   (f) command-loop recurrence after a forced wipe vs a no-reset boundary, per period
 
-Animation (anim.mp4): one agent's context window filling block by block (block colors sampled from the
+Animation (writeup/animations/H44-context-wipe.mp4): one agent's context window filling block by block (block colors sampled from the
 measured G51 call-category shares at each call offset), a forced wipe at the cap, re-reading, the measured
 write-share meter dipping and recovering, and one command loop broken by a wipe (loop is schematic).
 

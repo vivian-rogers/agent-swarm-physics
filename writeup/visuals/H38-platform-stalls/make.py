@@ -10,7 +10,7 @@ Inputs (read only; round 1b on the fixed activity table; non-holdout by construc
     conditioning: off-schedule minutes dropped, not-started / finished / consolidating agent-minutes imputed),
     E_trim (DQ8 all-present window), f_mask_scaffold, f_trim.
 Panel (a) and the animation are simulations of the same estimator (30-min block demeaning, g = 1 - 1/VR).
-Outputs: fig.pdf/png, anim.mp4 + anim_poster.png.
+Outputs: fig.pdf/png, writeup/animations/H38-platform-stalls.mp4 + H38-platform-stalls_poster.png.
 """
 from __future__ import annotations
 

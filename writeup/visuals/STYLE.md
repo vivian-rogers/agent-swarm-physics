@@ -5,7 +5,7 @@ For Vivian's writeup (RevTeX) and talks. One folder per hypothesis: `writeup/vis
 ## Every folder contains
 - `make.py`: builds everything from `data/processed/` (never `data/raw` text; never held-out rows). Runs with `uv run python writeup/visuals/H<NN>-<slug>/make.py`.
 - `fig.pdf` + `fig.png`: **the writeup figure**, static, RevTeX single column (3.4 in) or double (7.0 in). Required even when an animation exists.
-- `anim.mp4` + `anim_poster.png` (only when motion explains something a still cannot: a quench, a cascade, a split, a light cone). 8–25 s, ≤ 10 MB, 24 fps, 1280×720 or square 1080. Loops cleanly. Captions burned in as a short title plus a time counter.
+- an animation, written by `vs.save_anim(anim, HERE / "anim")` to `writeup/animations/<folder>.mp4` + `<folder>_poster.png` (only when motion explains something a still cannot: a quench, a cascade, a split, a light cone). 8–25 s, ≤ 10 MB, 24 fps, 1280×720 or square 1080. Loops cleanly. Captions burned in as a short title plus a time counter.
 - `caption.tex`: a 2–4 sentence figure caption in the house style (physicist voice, ASD-STE100 leaning, numbers with CIs, says which panel is the null). `\label{fig:H<NN>}`.
 - `README.md`: one paragraph: what it shows, which data, which numbers come from which card section.
 

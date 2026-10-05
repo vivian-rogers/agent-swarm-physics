@@ -6,6 +6,7 @@ import html, re
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+ANIM = HERE.parent / "animations"
 THEMES = [
     ("How agents couple: reading at the next call", ["H08", "H50", "H40", "H18", "H41"]),
     ("Subcritical swarms, fields and scaling", ["H67", "H111", "H34", "H51", "H38", "H85"]),
@@ -60,7 +61,7 @@ tex = [r"""\documentclass[aps,prl,reprint,superscriptaddress,nofootinbib]{revtex
 \author{Vivian Rogers}\affiliation{with Claude Opus 5.5}
 \date{2026-10-04}
 \begin{abstract}
-Writeup figures for the hypotheses with the clearest results, grouped by theme. Each figure is rebuilt by \texttt{writeup/visuals/H\textit{NN}-*/make.py} from processed, non-holdout data; animations (where they exist) are \texttt{anim.mp4} in the same folder, and the static figure here is the version for print. Numbers in captions come from the hypothesis cards; nothing here is holdout-confirmed. Data: AI Village (AI Digest).
+Writeup figures for the hypotheses with the clearest results, grouped by theme. Each figure is rebuilt by \texttt{writeup/visuals/H\textit{NN}-*/make.py} from processed, non-holdout data; animations (where they exist) are in \texttt{writeup/animations/}, and the static figure here is the version for print. Numbers in captions come from the hypothesis cards; nothing here is holdout-confirmed. Data: AI Village (AI Digest).
 \end{abstract}
 \maketitle
 """]
@@ -71,7 +72,7 @@ for theme, hs in THEMES:
         if not p:
             continue
         cap = caption_tex(p)
-        anim = " Animation: \\texttt{" + p.name.replace("_", "\\_") + "/anim.mp4}." if (p / "anim.mp4").exists() else ""
+        anim = " Animation: \\texttt{writeup/animations/" + p.name.replace("_", "\\_") + ".mp4}." if (ANIM / f"{p.name}.mp4").exists() else ""
         if anim:
             i = cap.rfind("\\label")
             j = cap.rfind("}", 0, i if i > 0 else len(cap))
@@ -95,9 +96,9 @@ for ti, (theme, hs) in enumerate(THEMES):
         parts = re.split(r"\.\s+", cap, maxsplit=1); first, rest = parts[0], (parts[1] if len(parts) > 1 else "")
         media = f'<img loading="lazy" src="{p.name}/fig.png" alt="{html.escape(first)}">'
         vid = ""
-        if (p / "anim.mp4").exists():
-            vid = (f'<video controls loop muted playsinline preload="none" poster="{p.name}/anim_poster.png">'
-                   f'<source src="{p.name}/anim.mp4" type="video/mp4"></video>')
+        if (ANIM / f"{p.name}.mp4").exists():
+            vid = (f'<video controls loop muted playsinline preload="none" poster="../animations/{p.name}_poster.png">'
+                   f'<source src="../animations/{p.name}.mp4" type="video/mp4"></video>')
         items.append(f'''<article id="{h}"><header><span class="hid">{h}</span><h3>{html.escape(first)}.</h3>
 <span class="badge">{"figure + animation" if vid else "figure"}</span></header>
 <div class="media">{vid}{media}</div>
@@ -127,7 +128,7 @@ details{{margin-top:8px;color:var(--ink2)}} summary{{cursor:pointer;font:13px sy
 .src{{font:12px ui-monospace,monospace;color:var(--muted)}}
 </style></head><body>
 <header class="top"><h1>Swarm physics: figures and animations</h1>
-<p>{sum(1 for _ in folders)} hypotheses · {sum(1 for p in folders.values() if (p/'anim.mp4').exists())} animations · AI Village data (AI Digest), non-holdout only · state 2026-10-04 · local file, not for upload</p></header>
+<p>{sum(1 for _ in folders)} hypotheses · {sum(1 for p in folders.values() if (ANIM/f'{p.name}.mp4').exists())} animations · AI Village data (AI Digest), non-holdout only · state 2026-10-04 · local file, not for upload</p></header>
 <nav><div>{"".join(toc)}</div></nav>
 <main>{"".join(cards)}</main></body></html>"""
 (HERE / "index.html").write_text(page)

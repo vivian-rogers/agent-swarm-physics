@@ -9,7 +9,7 @@ Static figure (fig.pdf/png, double column):
       and the onset odds after a forced erasure
 
 Inputs (processed, non-holdout): data/processed/H69-loops-context-fixed-points/results.json (segment-cut recheck).
-Animation (anim.mp4, schematic): colored blocks for one agent's statements; copies of in-context statements build a
+Animation (writeup/animations/H69-restatement-loops.mp4, schematic): colored blocks for one agent's statements; copies of in-context statements build a
 loop until a forced wipe empties the context.
 
 Run: uv run python writeup/visuals/H69-restatement-loops/make.py [--no-anim]

@@ -8,7 +8,7 @@ Inputs (read only, non-holdout by construction; asserted again here):
   data/processed/H67-lagged-criticality-dial/results/periods.parquet   per-period g_lag (RE pool, 95% CI), g_eq
   data/processed/H67-lagged-criticality-dial/results/units.parquet     per-unit shift-null q95
   data/processed/H25-criticality-dial/r1b/dial_daily.parquet           H25 daily Curie-Weiss dial (round 1b)
-Outputs: fig.pdf/png (writeup figure), anim.mp4 + anim_poster.png (simulation).
+Outputs: fig.pdf/png (writeup figure), writeup/animations/H67-subcritical-dial.mp4 + H67-subcritical-dial_poster.png (simulation).
 """
 from __future__ import annotations
 

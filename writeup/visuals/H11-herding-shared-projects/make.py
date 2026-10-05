@@ -4,7 +4,7 @@ Builds from data/processed/H11-potts-labor-vs-herding/r1b/ (round 1b, shared det
   fig.pdf / fig.png   (a) Potts cartoon; (b) #31: agents on the busiest project per 30-min window vs the
                       circular-shift null band; (c) co-location share vs its N2 null per unit (attention, work);
                       (d) coupling beyond agent fields z_N2 per period (attention, work), null band |z| < 2.
-  anim.mp4 + anim_poster.png   #31 week: agents (dots) move between project wells; well depth follows occupancy.
+  writeup/animations/H11-herding-shared-projects.mp4 + H11-herding-shared-projects_poster.png   #31 week: agents (dots) move between project wells; well depth follows occupancy.
 
 Usage: uv run python writeup/visuals/H11-herding-shared-projects/make.py [--no-anim]
 Non-holdout only (#31 and every unit shown are non-holdout; asserted with holdout_mask). No text is read.

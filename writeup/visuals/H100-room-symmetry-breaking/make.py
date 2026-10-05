@@ -8,7 +8,7 @@ Static (fig.pdf/png, double column):
   (d) remanence R between consecutive periods against the joint-relabel null (gray: mean +- 2 sd).
   All numbers in (b)-(d) are read from H100's results (raw_bge_small_style_resid.json), not recomputed.
 
-Animation (anim.mp4, 1280x720): #39 -> #40 (NE42 merge) -> #41, agents as points in a 2-D content plane spanned by
+Animation (writeup/animations/H100-room-symmetry-breaking.mp4, 1280x720): #39 -> #40 (NE42 merge) -> #41, agents as points in a 2-D content plane spanned by
 the #39 and #41 room differences (bge style-residualized statement vectors, day-centred, H100's leave-period-out agent
 constants removed, H100's field directions projected out). Built by writeup/visuals/_rooms_common.py; the in-plane
 angle reproduces H100's R(#39, #41) = -0.13.
@@ -433,7 +433,7 @@ def make_anim():
         return []
 
     anim = animation.FuncAnimation(fig, draw, frames=n_frames, interval=1000 / 24, blit=False)
-    out = HERE / "anim.mp4"
+    out = HERE.parent.parent / "animations" / (HERE.name + ".mp4")
     w = animation.FFMpegWriter(fps=24, codec="h264", bitrate=2400,
                                extra_args=["-pix_fmt", "yuv420p", "-movflags", "+faststart"])
     if "--poster-only" not in sys.argv:
@@ -442,7 +442,7 @@ def make_anim():
     angles_hist.clear()
     for fi in range(n_frames - FADE - 1):
         draw(fi)
-    fig.savefig(HERE / "anim_poster.png", dpi=160, bbox_inches=None)
+    fig.savefig(HERE.parent.parent / "animations" / (HERE.name + "_poster.png"), dpi=160, bbox_inches=None)
     plt.close(fig)
     print(f"frames {n_frames} = {n_frames / 24:.1f} s")
 

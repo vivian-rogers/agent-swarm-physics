@@ -9,7 +9,7 @@ Static figure (fig.pdf/png, double column):
   (c) aging slope beta_a per powered aging period, without and with the input-starvation clock (H72), and the
       input-clock slope beta_s; 0 = memoryless (Kramers)
 
-Animation (anim.mp4): a particle in a well that deepens with age (simulation), its escape hazard falling on the
+Animation (writeup/animations/H16-trap-aging.mp4): a particle in a well that deepens with age (simulation), its escape hazard falling on the
 right, and one directed kick at a pause gate that lets it out; then a fresh trap.
 
 Inputs: data/processed/H72-trap-aging-input-starvation/{gates.parquet, G17,G18,G38,G51/results.json}.

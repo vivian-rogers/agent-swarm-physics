@@ -4,7 +4,7 @@ fig.pdf/png  (a) content plane of one real kickoff (#38 -> #39, bge): agents' da
              night (gray) and across the kickoff (orange); (b) cross-agent memory rho on consecutive-day boundaries
              around 18 kickoffs (event study) against the placebo band of ordinary nights; (c) extra forgetting
              along / across the kickoff and the overshoot intercept (card meta-analysis).
-anim.mp4     the same kickoff in the content plane, frame by frame (active time only): before, snap, overshoot, settle.
+writeup/animations/H97-quench-restoring-force.mp4     the same kickoff in the content plane, frame by frame (active time only): before, snap, overshoot, settle.
 
 Inputs (read-only): data/processed/H97-quench-restoring-force/ (stmt, transitions, vectors, G<NN>/results.json,
 NE34/summary.json, NE34/transitions_all_configs.parquet, NE34/placebo_gaps.parquet), shared DQ5 statement vectors.

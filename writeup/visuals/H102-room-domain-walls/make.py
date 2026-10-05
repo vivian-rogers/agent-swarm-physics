@@ -9,7 +9,7 @@ Static (fig.pdf/png, double column):
       #focus; shared pipeline), stayers' leave-one-out positions (rug) and the hoppers' positions by room of statement;
   (d) dose-response: hopper-day s(home) vs hopping read-outs, with H102's fitted kappa_R and the powered coupling
       alternative kappa = 0.1.
-Animation (anim.mp4): the three #general hoppers with #focus statements in 51g (Claude Fable 5, Gemini 3.5 Flash,
+Animation (writeup/animations/H102-room-domain-walls.mp4): the three #general hoppers with #focus statements in 51g (Claude Fable 5, Gemini 3.5 Flash,
   GLM-5.2) as tokens on the wall axis over 08-05..08-21; each token is the running mean of the agent's statements in its
   current room stay; dots below are the individual statements, coloured by room.
 
@@ -341,9 +341,9 @@ def make_anim():
     w = animation.FFMpegWriter(fps=24, codec="h264", bitrate=2400,
                                extra_args=["-pix_fmt", "yuv420p", "-movflags", "+faststart"])
     if "--poster-only" not in sys.argv:
-        anim.save(HERE / "anim.mp4", writer=w, dpi=160)
+        anim.save(HERE.parent.parent / "animations" / (HERE.name + ".mp4"), writer=w, dpi=160)
     draw(n_frames - FADE - 1)
-    fig.savefig(HERE / "anim_poster.png", dpi=160)
+    fig.savefig(HERE.parent.parent / "animations" / (HERE.name + "_poster.png"), dpi=160)
     plt.close(fig)
     # the final running means must equal H102's s(home) and s(#focus) for these hoppers
     for a in HOPPERS:
