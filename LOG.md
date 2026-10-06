@@ -5,6 +5,13 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-06 — New dataset: swarmop Track 1
+
+- **Added** `data/raw/swarmop-track1/` (Divij Chawla, AI Swarm Dynamics Hackathon; shared privately for research — ask before redistributing or publishing derived data). 7,456 controlled runs, 21.8M agent turns: N agents settle a synthetic 2–3-option question; each round every agent reads k randomly drawn teammates (who-read-whom logged); designed conditions (N, k, rule fraction p, noise, no-memory, scripted starts, persuaders, model). Tarball SHA-256 and terms in `_source.md`. Raw 6.2 GB (1.0 GB tarball + 5.6 GB extracted); project now ~17.2 GB of the 20 GB budget.
+- **Started:** shared tables + loaders (`infra/swarmop/` → `data/processed/swarmop/`: runs, states, visible, roles, messages, questions; verify against raw) and a triage of all 132 hypotheses for porting (`hypotheses/swarmop-triage.md`: direct port / adapted / estimator calibration / not applicable). No statistics computed: the reserved split for swarmop must be locked first (Vivian's decision).
+- Vivian's goal: eventually rerun all hypotheses on this data.
+- Round-2 wave 3 (H52, H120, H58, H70, H45, H73, H57, H87, wave-2 shared-file pass) is still paused after the 10-05 stalls.
+
 ## 2026-10-04 — Round 2, wave 1 (git: `dev` branch from now on)
 
 - Vivian: all git work on the new `dev` branch (from 0e05247); `main` stays at the last published state.
