@@ -1,0 +1,34 @@
+{
+ "complete": 35,
+ "faithfulness": 0.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done to the precondition stop: dated predictions; structural count before any freeze time (17 units, 178 readers); synthetic on 5 real skeletons (W0-W3 x 500); Amendment A1; 51 structural estimates rows; period READMEs. Not done: freeze touches, K, anchors, natives N1/N2, W4, a frozen confirm.py.",
+  "faithfulness": "The model was not confronted with outcomes. The mapping of kickoff read-out calls is built and checked across regimes; the synthetic shows that read and clock alignment are not identifiable at the real read-delay spread. Scorecard A1 B0 C0 D0 E0 F1 G0 H0 I0.",
+  "usefulness": "An operator fact with a number: a day-start kickoff reaches 96% of agents within 2 active min (median about 1 min wall clock), so read-out spread cannot delay a freeze after such kickoffs. Whether a mid-day field freezes agents at their read is open."
+ },
+ "one_line": "Day-start kickoffs are read at boot by 171/178 agents (96%) within 2 active min, with at most 2 delayed active readers per unit (5 needed), so whether the freeze locks to each agent's read or to the kickoff clock is untestable on exploration data.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "untested",
+   "note": "Zero-temperature Potts freeze at the read-out update; precondition failed, no freeze time computed"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Asynchronous read-out updates; read and clock alignment coincide for day-start kickoffs"
+  }
+ ],
+ "rated_by": "H136 agent (suggested)",
+ "updated": "2026-10-07",
+ "v2": {
+  "claim": "In 17 non-reserved day-start kickoff units (G18-G44), 171/178 kickoff readers (96%) read the kickoff within 2 active min at day boot, with at most 2 delayed active readers per unit, so the read-locked vs clock freeze test is untestable on exploration data",
+  "scope": "17 kickoff units, regimes I-III; reserved kickoffs not examined",
+  "direction": "untestable",
+  "original_verdict": "inconclusive",
+  "credence": null
+ }
+}

@@ -175,6 +175,43 @@ The skeletons are G39, G40, G42, G44 #best and G26 (regime I). Each uses the rea
 - **Active-before window.** All kickoffs are posted just before the day window opens, so "30 active min before t_k" falls on the previous day's last half hour. The impostor control then selects agents who were active the evening before. It does not select agents who were active just before the kickoff. Any reserved-kickoff run should add a same-day variant (≥ 1 own call on the kickoff day before t_k). That variant is empty for all 17 exploration units.
 - **No unit qualifies under the synthetic pass rule** (power ≥ 0.8 and size ≤ 0.10 in the card's sample). The amendment the card requires before any freeze time therefore lists no qualifying unit.
 
+### 4. Predictions vs results
+| ID | Prediction | Result (95% CI, scope) | Verdict by the rule |
+| --- | --- | --- | --- |
+| S0 | ≥ 2 units with ≥ 5 delayed active readers | 0 of 17 units; maximum 2 (G39). Without the active-before condition, the maximum is 3 (G33, G39) | **failed** → kill untestable |
+| S1 | Below 10 delayed active readers, W1 vs W2 power < 0.8 | Card sample: power 0.00 in all 5 skeletons. All readers: 0.02–0.58, except G39 0.96 (one next-day reader) | **holds** |
+| P1 | Pooled b CI ∋ 1, excludes 0, outside W2's band | not computed (precondition stop) | untestable |
+| P2 | K ≤ 2 for ≥ 1/2 of frozen agents | not computed (precondition stop; the card's descriptive fallback was not run) | not run |
+| P3 | ρ(K, D_r) CI ∋ 0 among delayed active readers | not computed; O3 power under W2 is ≤ 0.08 even on all readers | untestable |
+| P4 (A1) | The kickoff-read anchor beats the peer-link anchor | not computed (precondition stop). The read, post and day-start anchors coincide by construction (A1) | not run |
+| P5 | Commits: median K ≥ 5, ρ ∋ 0 | not computed | not run |
+| N1 | G44: #best meets P2, P3; #rest < 1/3 frozen within 2 h | #best 0 and #rest 0 delayed active readers (4 and 12 readers). Previous day reserved | untestable |
+| N2 | G40: the kickoff-read anchor beats the hub-link anchor | 0 delayed active readers of 15. Not computed | untestable |
+| N3 | NE38 descriptive | excluded: the reassignment is an `agent_goals` row, not a readable message | n/a |
+| Kill (HH) | b CI ∋ 0 and excludes 1, or ρ < 0 with CI < 0, in qualifying units | no qualifying unit | **untestable** |
+
+**Read-out statistics** (descriptive, all 17 units; `per_period_estimates`, channel `readout`). 171 of 178 readers (96%) read within 2 active min. Per unit, the share is 0.79 [0.52, 0.92] in G39, 0.73 [0.43, 0.90] in G33, 0.91 [0.62, 0.98] in G35 and 1.00 in the other 14 units (Wilson 95%). The per-unit median wall-clock read delay is 31–88 s (bootstrap 95% CIs in the period READMEs). It is set mainly by the boot gap after the kickoff post.
+
+**Verdict by the card's rule: inconclusive.** The kill is untestable. P2 and P4 were not computed, so the "narrowed" outcome cannot be reached.
+
+### 5. Impostors (STANDARDS §1), as handled in round 1
+| Impostor | Relevant? | How it is handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes, decisive | The kickoff is posted about 1 min before the day window opens. Kickoff read and day boot therefore coincide for 142 of 178 readers, and for the other 36 they are one summary call apart. The delayed-active-reader control was counted and is empty (≤ 2 per unit). | open (untestable on exploration data) |
+| Exogenous field (kickoff, goal, operator) | yes, the object | The kickoff is the field. No other human messages were examined, because no freeze time was computed. | n/a (object of study) |
+| Shared model priors | partly | Not reached (no target or freeze data read). | open |
+| Contemporaneous convergence | yes | Not reached. The peer-link anchor (O4) and W4 were not run. | open |
+
+### 6. Scorecard (round 1)
+A 1 · B 0 · C 0 · D 0 · E 0 · F 1 · G 0 · H 0 · I 0 (details in the main scorecard below).
+
+### 7. Round-2 redirects
+- A test needs kickoffs that arrive **mid-day**, while agents are already calling. Candidates are mid-day operator reassignments that a chat message carries (DQ6 role rows with a `chat_core` source), room kickoffs posted inside a window, or NE events with readable messages. The day-start goal kickoffs cannot separate read from clock.
+- The reserved kickoffs (#45–#47, #49) are very likely day-start kickoffs too. If so, the same precondition will fail there. Check only the post time against the window start, which is a calendar fact, before spending a reserved use. A frozen `confirm.py` was not written in round 1, because no exploration pipeline for freeze times exists yet.
+- The G39 all-readers widening (post hoc idea; synthetic only) rests on one next-day reader. If pre-registered, it would need the late-starter (W3) contrast as its null.
+
+**Claim that stands:** In 17 non-reserved day-start kickoff units (G18–G44), 171 of 178 kickoff readers (96%) read the kickoff within 2 active min, at day boot, with at most 2 delayed active readers per unit. So the read-locked vs clock freeze test is untestable on exploration data. *Exclusions:* P1–P5, N1 and N2 not computed (precondition stop); NE38 excluded (no readable message); the G39 all-readers O1 power of 0.96 is a synthetic, post hoc widening and not a result.
+
 ## Faithfulness scorecard
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
 **Rival models:** R-clock (common delay after the post), R-copy (peer-link anchor), R-late starter, R-plan.
@@ -182,30 +219,43 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
-| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
-| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 0 | not run |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
-| E interventional | predicts the change across a natural experiment | 0 | not run |
-| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 0 | not run |
-| G ground truth | agrees with known structure | 0 | not run |
-| H comparative | beats the named rivals | 0 | not run |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | t_k, t_r,i, D_r and the delayed-active-reader flag are built from `kicks_classified`, DQ1 receipts and `call_windows` in 17 units across regimes I–III. The freeze touch and K were not built (precondition stop). |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not reached |
+| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 0 | not reached |
+| D unfitted predictions | unfitted statistics and the model's signature | 0 | not reached |
+| E interventional | predicts the change across a natural experiment | 0 | NE38 excluded (no readable message); no mid-day kickoff |
+| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 1 | Synthetic on 5 real skeletons (4 worlds × 500). Read vs clock is not identifiable at the real D_r spread (card-sample power 0; O3 power ≤ 0.08). The check worked and showed the design cannot. |
+| G ground truth | agrees with known structure | 0 | no ground truth for freeze times |
+| H comparative | beats the named rivals | 0 | not reached |
 | I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
 
 ## Results by goal period
-No kickoff has been run. Period folders (`goalperiod-subhypotheses/G<NN>/`, `NE38/`) are created with their dated predictions before each run. `goalperiod-subhypotheses/GNN/` is the unfilled template.
+Round 1 (2026-10-07). Each folder holds the structural counts and, where a skeleton was used, the synthetic power. `goalperiod-subhypotheses/GNN/` is the unfilled template.
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| kickoff units (precondition list) | replication | pending | not run |
-| G44 | native N1 | pending | not run |
-| G40 | native N2 | pending | not run |
-| NE38 | native N3 (descriptive) | pending | not run |
+| [G18](goalperiod-subhypotheses/G18/README.md) | replication | n/a (untestable) | 7 readers, 0 delayed active readers |
+| [G19](goalperiod-subhypotheses/G19/README.md) | replication | n/a (untestable) | 7 readers, 0 |
+| [G26](goalperiod-subhypotheses/G26/README.md) | replication (synthetic skeleton) | n/a (untestable) | 10 readers, 0; all-readers O1 power 0.02 |
+| [G30](goalperiod-subhypotheses/G30/README.md) | replication | n/a (untestable) | 11 readers, 0 (previous day reserved) |
+| [G31](goalperiod-subhypotheses/G31/README.md) | replication | n/a (untestable) | 11 readers, 0 |
+| [G33](goalperiod-subhypotheses/G33/README.md) | replication | n/a (untestable) | 11 readers, 0 (3 delayed; previous day reserved) |
+| [G35](goalperiod-subhypotheses/G35/README.md) | replication | n/a (untestable) | 11 readers, 0 (previous day reserved) |
+| [G36](goalperiod-subhypotheses/G36/README.md) | replication | n/a (untestable) | 12 readers, 0 |
+| [G37](goalperiod-subhypotheses/G37/README.md) | replication | n/a (untestable) | 12 readers, 0 |
+| [G38](goalperiod-subhypotheses/G38/README.md) | replication (#best, #rest) | n/a (untestable) | 3 + 9 readers, 0 |
+| [G39](goalperiod-subhypotheses/G39/README.md) | replication (synthetic skeleton) | n/a (untestable) | 14 readers, 2 (the maximum) |
+| [G40](goalperiod-subhypotheses/G40/README.md) | replication + native N2 | n/a (untestable) | 15 readers, 0 |
+| [G41](goalperiod-subhypotheses/G41/README.md) | replication | n/a (untestable) | 14 readers, 0 |
+| [G42](goalperiod-subhypotheses/G42/README.md) | replication (synthetic skeleton) | n/a (untestable) | 15 readers, 0 |
+| [G44](goalperiod-subhypotheses/G44/README.md) | replication + native N1 | n/a (untestable) | 4 + 12 readers, 0 (previous day reserved) |
+| [NE38](goalperiod-subhypotheses/NE38/README.md) | native N3 | n/a (excluded) | reassignment not a readable message |
 
 ## Results
-Not run.
+**Round 1 (2026-10-07): inconclusive; the kill is untestable on exploration data.** Every non-reserved goal kickoff is posted about 1 min before the day window opens, so each agent reads it at boot. In 17 units, 171 of 178 readers (96%) read within 2 active min, and no unit has more than 2 delayed active readers (5 needed). No freeze time was computed. Details: Round 1 above.
 
 ## Notes
 - 2026-10-07: card written from HH379 (approved by Vivian 2026-10-07). Round-1 order: structural counts (kickoff receipts, delayed active readers; no freeze time) → precondition note → period READMEs with dated predictions → synthetic → dated amendment naming the qualifying units → replication and natives → estimates rows (`h136_read_alignment_slope`, `h136_postread_call_lag`, `h136_lag_delay_rho`) → frozen `confirm.py` (dry run only).
 - H75's freeze times are on commits and a 0.25-h grid. H136's primary freeze touch uses action and intention mentions, which H75-R2 notes are about 25× denser than commits.
 - Compute: ≤ 2 threads, one heavy job at a time (STANDARDS §9).
+- 2026-10-07 (round 1): the precondition failed in 17/17 units; outcome analysis stopped before any freeze time. Estimates rows written: `h136_delayed_active_readers`, `h136_kickoff_read_delay_median_s`, `h136_share_read_within_2_active_min` (channel `readout`, 17 units each, `local:k<unit>`). The planned slope, lag and ρ rows were not written. No `confirm.py` was frozen.

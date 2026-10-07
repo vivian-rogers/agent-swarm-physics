@@ -1,0 +1,33 @@
+\hwhat{HH379 asks whether each agent commits to a kickoff's named target at its own first call that reads the kickoff, plus about one call, as a zero-temperature Potts spin aligns at its first update in a strong field. The rival is a common delay after the kickoff post (R-clock). The test needs agents who were active before the kickoff but read it late. H136 counted them first, before computing any freeze time. In 17 non-reserved kickoff units (G18--G44, regimes I--III), no unit has more than 2 such delayed active readers; 5 are needed. The kill is untestable on exploration data, and the outcome analysis stopped there.}
+
+\hmodel{Zero-temperature kinetic Potts quench with read-out updates (model 10; asynchronous updates, model 02). A field $h$ on the named target $x$ appears at the kickoff post $t_k$. Agent $i$ updates only at its own calls, and the field enters at its kickoff read-out call $t_{r,i}$ (DQ1 ledger). With $h$ above every other field, the agent freezes on $x$ $K_i$ calls after the read, with $K_i$ independent of the read delay $D_{r,i}$. R-clock instead freezes at $t_k+D_i$, truncated at the read.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+t_{f,i}=t_{r,i}+K_i\ \text{calls},\quad K_i\sim\mathrm{Geom},\quad K_i\perp D_{r,i}=t_{r,i}-t_k\\
+\text{R-clock: } t_{f,i}=\max(t_k+D_i,\,t_{r,i}),\quad D_i\perp D_{r,i}\\
+\text{O1: } D_{f,i}=a+b\,D_{r,i}\quad(\text{H136: } b=1;\ \text{R-clock: } b\approx0)
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/h136_obs.pdf}{Left: per kickoff unit, the kickoff readers, the readers with $D_r\geq2$ active min, and the delayed active readers (also active in the 30 active min before $t_k$); the dashed line is the precondition of 5. Right: synthetic O1 power (W1 read-locked) on five real skeletons, 500 runs per world, for the card's sample (all zero) and for all readers, with the size under W2 (clock).}
+
+\htelos{For an operator, a goal kickoff posted just before the day starts reaches every agent at boot: 96\% of 178 readers read it within 2 active minutes, with a median wall-clock delay of about 1 minute. At that spread, read-locked and clock-locked commitment predict the same timing. The question only matters for a field that arrives mid-day, while agents are busy or paused, and the exploration data have no such kickoff.}
+
+\hbottom{In 17 day-start kickoff units, 171 of 178 kickoff readers (96\%) read the kickoff within 2 active min, at day boot, with at most 2 delayed active readers per unit, so the read-locked vs clock freeze test is untestable on exploration data.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.38\columnwidth}p{0.44\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S0 $\geq2$ units with $\geq5$ delayed active readers & 0/17; max 2 (G39) & failed\\
+S1 power $<0.8$ below 10 readers & card sample 0.00 in 5/5 skeletons & holds\\
+P1 read alignment $b\ni1$ & not computed & untestable\\
+P2 $K\leq2$ for $\geq1/2$ & not computed (stop) & not run\\
+P3 $\rho(K,D_r)\ni0$ & not computed; O3 power $\leq0.08$ & untestable\\
+P4 (A1) read beats peer-link anchor & not computed; read $=$ post anchor & not run\\
+N1 G44 rooms & 0 + 0 delayed active readers & untestable\\
+N2 G40 hub link & 0 of 15 & untestable\\
+N3 NE38 & no readable message & excluded\\
+Overall & kill untestable & inconclusive\\
+\end{tabular}}
+
+\hcaveats{All 17 kickoffs are posted 0.6--1.6 min before the day window opens, so the kickoff read, the first call of the day and the post are the same instant to within one call: no reader has an own call between $t_k$ and $t_r$. The active-before window therefore reaches back to the previous evening, and in 5 units that day is reserved. Without the active-before condition the count is still at most 3. The synthetic all-readers power of 0.96 in G39 rests on one reader who read the next day, which is the late-starter impostor; it is not a result. Amendment A1 merged the post and day-start anchors in O4 before any outcome.}
+
+\hnext{Find fields that arrive mid-day through a readable message (operator reassignments with a chat source, room kickoffs inside a window). Check the reserved kickoffs' post times against the window start, a calendar fact, before spending a reserved use. Pre-register any all-readers widening with the late-starter world as its null.}
