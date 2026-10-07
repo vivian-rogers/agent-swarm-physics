@@ -1,6 +1,6 @@
 # H133 × G30: Adopt a park and get it cleaned! (2026-02-09 → 2026-02-13)
 
-**Verdict:** pending
+**Verdict:** failed
 **Role:** exploratory (replication)
 **Period:** regime I · mode C · 12 agents · 5 non-reserved active days. Units: 30a, 30b (`period_units`).
 
@@ -14,10 +14,23 @@ Units below the precondition (not tested): 30a.
 - Verdict rule for this folder: supported if the period's predictions hold; failed if a kill-rule quantity fires here; descriptive if a test is unpowered by the synthetic check (power < 0.8) or a term is not estimable (< 5 chosen rows with a read).
 
 ## Result
-Not run yet.
+*Run 2026-10-07 (`scheme/build.py`, `analysis/run.py`; non-reserved days; Amendments A1–A4 in the card).* Logit: Glauber conditional logit with project × active-hour effects, agent stay effects, habit ln(1 + d), held-before and share; agent-cluster sandwich CIs, agent-block bootstrap (200) where γ_nam enters. N1: within-cell permutation (1,000). η_sw: background calls (no read about another project); A2 model primary.
+
+| Unit | hops / births | γ_nam [95%] (n.e. = < 5 chosen rows) | γ_un | γ_if | N1 p | chosen/expected: named; unnamed; in-flight (post hoc) | η_sw A2 [95%] (card model) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 30b | 831 / 18 | n.e. (3 rows) | -0.05 [-0.62, +0.51] | n.e. (2) | 0.157 | 3/1.5; 25/26.1; 2/1.2 | -0.29 [-0.53, -0.04] (card -0.30) |
+
+
+
+**Verdict: failed.** η_sw CI < 0 in 30b: the opposite sign to P5 (η > 0).
+
+Data: `data/processed/H133-readout-glauber-potts/<unit>/`; per-unit results in `results/units.json`.
 
 ## Scorecard (period-specific axes)
-Filled after the run.
+- **C:** within-cell permutation null for named reads (descriptive under A1).
+- **D:** η_sw and the lag profile are not fitted by the logit.
+- **F:** see the card's synthetic section (η_sw recovery bias ≤ 0.02 in non-burst worlds; γ_nam not estimable at the planted 1.0).
 
 ## Notes
 - 2026-10-07: folder and prediction written before any H133 outcome statistic on this period (only the structural counts above were computed).
+- 2026-10-07: result filled (verdict failed).

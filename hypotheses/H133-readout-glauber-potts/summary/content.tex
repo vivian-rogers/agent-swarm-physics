@@ -1,0 +1,35 @@
+\hwhat{HH376 says that an agent changes project only at its own model call, by a Glauber update whose odds for project $b$ rise with the read messages that name the agent and link $b$; unnamed links add nothing, and without reads the switch rate is constant per call, not per hour. H133 labels every call with a project (shared \texttt{project\_calls}: 2.6\,M calls, 61,939 non-reserved hops) and fits a conditional logit with project $\times$ active-hour effects in 41 non-reserved units. \textbf{The coupling test is untestable as planned}: named reads about a non-current project are so rare that a planted $\gamma_\mathrm{nam}=1$ gives under 2 such hops per unit (power $\approx 0$; Amendment A1). \textbf{The clock test holds in regime II/III}: background switches do not scale with wall time ($\eta_\mathrm{sw}=-0.02\,[-0.07,+0.02]$, 24 units). The reserved periods are not run.}
+
+\hmodel{Models 10 (kinetic Potts) and 02 (asynchronous updates). At call $c$ agent $i$ on project $a$ stays or moves to an active project $b$ with heat-bath odds $e^{u_b}/(e^{u_\mathrm{stay}}+\sum_{b'}e^{u_{b'}})$. Reads enter $u_b$ as $\ln(1+N)$ counts of named, unnamed and named-but-in-flight messages linking $b$. A project-wide attention burst (H28) would raise all three counts together; a wall clock would make background hops grow with the call's span.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+u_\mathrm{stay}=\alpha_i+\phi\ln(1+d)\\
+u_b=\kappa_{b,h}+\textstyle\sum_{k}\gamma_k\ln(1+N^{k}_b)+\rho\,[\text{held}]+\beta_s s_b\\
+\mathrm{cloglog}\,P(\text{hop}\mid\text{no read})=\alpha_i+\eta_\mathrm{sw}\ln\mathrm{span}_c+\dots
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Background switch-span elasticity $\eta_\mathrm{sw}$ per unit (A2 model, agent-cluster 95\% CIs; blue regime I, red regime II/III; bands: random-effects means). No unit approaches the wall clock at 1. Regime II/III sits at 0; regime I is negative. (b) Post hoc, descriptive: hops onto a project in a read message, observed over the count expected without read terms, summed over units (Poisson 95\%). Named reads: 2.79; unnamed: 0.93; named in flight (not yet readable): 1.10.}
+
+\htelos{For an operator: an agent's spontaneous project switching is a per-call rate, so slowing its call rate slows its drift between projects, and long pauses do not add switches. Descriptively, a message that names an agent and links a project goes with about 2.8 times the expected switches onto that project. A link the agent reads without being named goes with none. To move an agent, name it in the message with the link. This rule is not yet a tested result.}
+
+\hbottom{In regime II/III an agent's background project-switch hazard runs on its own call clock (switch-span elasticity $-0.02\,[-0.07,+0.02]$, 24 units). Named-read coupling is untestable at the planted effect; post hoc, hops onto a project named to the agent are 2.8$\times$ expected, unnamed 0.93$\times$, in flight 1.1$\times$.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+F: O1--O3 testable & power $\approx0$ per unit at $\gamma=1$ & A1\\
+P1 $\gamma_\mathrm{nam}>0$ & 9/24 units (13 estimable); RE $+2.3$ & untestable\\
+P2 $\gamma_\mathrm{un}=0$, $\Delta\gamma>0$ & RE $\gamma_\mathrm{un}$ $+0.09\,[-0.16,0.34]$ & untestable\\
+P3 named $>$ in flight & $\gamma_\mathrm{if}$ in 3 units & untestable\\
+P4 $\eta_\mathrm{sw}\ni0,\not\ni1$ (II/III) & $-0.02\,[-0.07,+0.02]$ & holds\\
+P5 regime I $\eta_\mathrm{sw}>0$ & $-0.34\,[-0.51,-0.17]$ & failed\\
+P6 read-hop lag $\le1$: $\ge0.6$ & 0.55 & not met\\
+N2 \#51 timer wakes $\eta\ni0$ & $+0.46\,[+0.09,+0.84]$ & failed\\
+N4 G31 $\eta>0$ & $-0.22\,[-0.34,-0.09]$ & failed\\
+Kill B (wall clock) & CI excludes 1 in 41/41 & not fired\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic validation on four real skeletons. (a) $\eta_\mathrm{sw}$ is recovered without bias in null, H133, share and wall-clock worlds (200 runs each); an attention burst biases it to $+0.13$ on 51h. (b) Even stacking all 24 regime-II/III units, a count test of named-read hops has power 0.64 at the planted $\gamma_\mathrm{nam}=1$. It reaches 1.0 only at $\gamma_\mathrm{nam}=2$, so the per-unit coupling test was declared untestable before real data.}
+
+\hcaveats{The read ratios are post hoc and descriptive: they were added after the synthetic run made the planned test untestable, and units with few named hops are noisy. A named message may answer the reader's own earlier mention of the project (not yet controlled). Call hops are fine-grained: 26\% return to the previous project within 5 calls. $\eta_\mathrm{sw}<0$ in regime I and $>0$ at timer wakes are unexplained; a burst field can also give $\eta\approx+0.1$.}
+
+\hnext{Pre-register the named-read ratio with power at $\gamma\approx2$ and hierarchical shrinkage; control for the reader's own last touch of the project; split spans by gap kind to explain the regime-I and timer-wake elasticities. Confirm C1 (call clock) on \#45--\#47 and the \#51 tail.}

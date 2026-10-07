@@ -63,21 +63,14 @@ def eo_ratios(sk, n_perm=N_PERM, seed=0):
     ch = B["chosen"][nC:]
     ridx = B["ridx"]
     cells = sk.row_cell[ridx]
-    o = np.argsort(cells, kind="stable")
-    groups = [g for g in np.split(o, np.flatnonzero(np.diff(cells[o])) + 1) if g.size > 1]
     rng = np.random.default_rng(seed)
+    xs = {f: (sk.X[f][ridx] > 0).astype(float) for f in ("nam", "un", "if")}
+    T = {f: L.cell_perm_null(x, ch, cells, n_perm, rng) for f, x in xs.items()}
     out = {}
-    for f in ("nam", "un", "if"):
-        x = (sk.X[f][ridx] > 0).astype(float)
+    for f, x in xs.items():
         O, E = float(ch @ x), float(p @ x)
-        T = np.empty(n_perm)
-        for d in range(n_perm):
-            xp = x.copy()
-            for g in groups:
-                xp[g] = x[rng.permutation(g)]
-            T[d] = ch @ xp
-        out[f] = {"O": O, "E": E, "OE": O / E if E > 0 else None, "perm_p_one_sided": float((1 + np.sum(T >= O)) / (n_perm + 1)),
-                  "perm_q95": float(np.quantile(T, 0.95))}
+        out[f] = {"O": O, "E": E, "OE": O / E if E > 0 else None, "perm_p_one_sided": float((1 + np.sum(T[f] >= O - 1e-12)) / (n_perm + 1)),
+                  "perm_q95": float(np.quantile(T[f], 0.95)), "perm_q05": float(np.quantile(T[f], 0.05))}
     return out
 
 
@@ -120,7 +113,7 @@ def run_unit(u, boot=True):
     r["O2"] = contrast(f, "nam", "un")
     r["O3"] = contrast(f, "nam", "if")
     if boot and f.ok and "nam" in f.beta:
-        bs = L.bootstrap_fit(sk, [n for n in f.names if n != "phi"], B_BOOT, seed=7)
+        bs = L.bootstrap_weighted(sk, [n for n in f.names if n != "phi"], B_BOOT, seed=7)
         dr = bs["draws"]
         ci = {}
         for n in f.names:
@@ -130,7 +123,7 @@ def run_unit(u, boot=True):
             if a in f.names and b in f.names:
                 v = np.array([d.get(a, np.nan) - d.get(b, np.nan) for d in dr], float)
                 ci[f"{a}-{b}"] = (float(np.nanpercentile(v, 2.5)), float(np.nanpercentile(v, 97.5)), float(np.nanstd(v, ddof=1)))
-        r["boot"] = {"draws": len(dr), "ci": ci}
+        r["boot"] = {"draws": len(dr), "ci": ci, "method": bs["method"]}
     r["N1"] = L.score_perm(sk, L.FEATS, N_PERM, seed=3)
     r["EO_posthoc"] = eo_ratios(sk)
     nopt = L.n_options(sk)
@@ -195,6 +188,8 @@ def main():
     if p.exists():
         out = json.loads(p.read_text())
     for u in units:
+        if u in out and "--redo" not in sys.argv:
+            continue
         out[u] = run_unit(u, boot=boot)
         out[u]["regime"] = reg[u]
         p.write_text(json.dumps(out, indent=1, default=float))

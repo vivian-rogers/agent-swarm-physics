@@ -1,6 +1,6 @@
 # H133: Read-out Glauber Potts: an agent switches project only at a call, driven by the named messages it just read
 
-**Status:** round 1 in progress (2026-10-07): structural counts, synthetic validation and Amendments A1–A3 done before real data. Pre-registered. Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH376 (approved by Vivian 2026-10-07), before any H133 statistic on real data. No scheme, synthetic or analysis code exists yet.
+**Status:** exploratory round 1 **done (2026-10-07, non-reserved data): inconclusive by the card's rule.** Named-read coupling (P1–P3) is untestable at the planted effect (A1: power ≈ 0 per unit). Background switches run on the call clock in regime II/III (P4 holds: η_sw −0.02 [−0.07, +0.02]). P5, N2 and N4 fail: η_sw is −0.34 in regime I and +0.46 at G51 timer wakes. Post hoc and descriptive: hops onto a project in a named read are 2.8× expected; unnamed 0.93×; in-flight 1.1×. Card, predictions and kill rules were written 2026-10-07 from HH376 (approved by Vivian), before any H133 statistic on real data. Synthetic run and Amendments A1–A3 were committed before real data (c471f13).
 **Question (GOALS.md):** **Q1** (what couples agents: does project choice couple through named reads at the read-out call, as talk does?). Second: **Q2** (field vs coupling: is a project switch a response to a named read, or to a project-wide attention field that also produces the messages?).
 **Fields:** stat mech (kinetic Potts, Glauber single-spin updates), sociophysics (discrete choice with social input), dynamics (discrete-time hazards on the call clock)
 **Literature:** none in `literature/` covers kinetic Potts choice at a read-out. Cited from memory (†): Glauber, *J. Math. Phys.* 4, 294 (1963)† (single-spin-flip kinetics); McFadden (1974)† (conditional logit); Blume, *Games Econ. Behav.* 5, 387 (1993)† (logit dynamics).
@@ -169,38 +169,102 @@ A unit is testable with ≥ 30 project hops (call) and ≥ 20 named reads about 
 - **A2 (O4 model).** The card's O4 has size 0.13 on 51c in the H133 world W1, because the hop rate varies with the size of the option set. P4, P5, N2 and N4 use the O4 model plus ln(1 + n options) as primary (W1 size 0.055–0.105, bias ≤ 0.004). The card's model is reported next to it. Under an attention burst both versions give η ≈ +0.13 (51h), so η > 0 alone does not mean a wall clock.
 - **A3 (implementation notes, not changes):** N1's p uses the score for γ_nam at the fit without the nam and un terms. The permuted columns then do not enter the fitted probabilities, so no refit per draw is needed. A read term enters a fit only with ≥ 5 chosen rows having that read (Known issue H11 r2). CIs are agent-cluster sandwich (t, G − 1 df); the agent-block bootstrap (200) is run wherever γ_nam enters.
 
+- **A4 (implementation changes during the real-data run; no outcome-driven change).** Two slow steps were replaced after the first units had run. (1) N1's statistic is now T = Σ over chosen rows of ln(1 + N_nam), permuted within cells with an exact random-subset draw; the score form of A3 is dropped. On 31a and 36b the p values were unchanged (0.002, 0.001). (2) The agent-block bootstrap now uses frequency weights with a warm start; on 18b its γ_nam percentile CI was unchanged ([−1.07, +2.76]). All units were then rerun with the final code. A β ridge of 1e-8 was added so that an all-zero feature cannot make the Hessian singular.
+
+### Results on exploration data (run 2026-10-07; 41 units, 57,743 hops in option sets, 2,931 birth hops dropped)
+Per-unit tables are in the period folders. Data: `data/processed/H133-readout-glauber-potts/results/` (`units.json`, `summary.json`). Random-effects means are DerSimonian–Laird over units.
+
+| ID | Prediction | Result (95% CI) | Verdict by the rule |
+| --- | --- | --- | --- |
+| P1 | γ_nam > 0 (CI > 0, N1 p < 0.05) in ≥ ½ of regime-II/III units; RE mean CI > 0 | Untestable (A1). Descriptive: γ_nam enters in 13/24 units; CI > 0 with N1 p < 0.05 in 9/24 (36b, 44a, 51a, 51d–51g, 51i, 51l). The RE mean over the 13 is +2.30 [+1.64, +2.96], biased up because a unit enters only with ≥ 5 named hops. | untestable (inconclusive) |
+| P2 | γ_un CI ∋ 0 and Δγ CI > 0 in ≥ ½ | Untestable (A1). Descriptive: RE γ_un +0.09 [−0.16, +0.34] (20 units). Δγ CI > 0 in 9/13 units where both enter. | untestable |
+| P3 | γ_nam − γ_if > 0 (RE mean) | Untestable (A1). γ_if enters in 3 units: O3 +0.88 [−0.06, +1.82] (41), +1.68 [−0.01, +3.38] (51a), +3.78 [+1.74, +5.81] (51g). | untestable |
+| P4 | η_sw CI ∋ 0 and ∌ 1 (regime II/III RE mean, and N2) | RE η_sw −0.02 [−0.07, +0.02] (24 units; card model −0.03 [−0.07, +0.02]). The CI excludes 1 in 24/24 units and includes 0 in 18/24 (negative in 33, 36b, 37; positive in 41, 51c, 51d). | **holds** (RE mean) |
+| P5 | Regime I: η_sw > 0 (CI > 0); γ_nam smaller than regime III | RE η_sw −0.34 [−0.51, −0.17] (17 units): negative, CI < 0 in 5 units and > 0 in none. γ_nam enters in 3/17 regime-I units. | **failed** (opposite sign) |
+| P6 | ≥ 0.6 of hops with a recent named read have it at lag 0 or 1 | 0.55 (863 hops, regime II/III). Lags 0–5: 0.33, 0.21, 0.15, 0.11, 0.09, 0.10. | not met (0.3 < 0.55 < 0.6) |
+| N1 | G38: P1–P3 hold within project-hours | 38a only; γ_nam has 3 named hops (< 5). | untestable |
+| N2 | G51 timer wakes: η_sw CI ∋ 0, ∌ 1 | RE +0.46 [+0.09, +0.84] (11 units, A2 model); card model +0.31 [−0.00, +0.63]. | **failed** on the primary model (excludes 0) |
+| N3 | G40 hub hops in the first 2 h: γ_nam CI ∋ 0 | 76 hub hops; 1 had a named read about the hub; γ_nam not estimable. | untestable (descriptive: a field) |
+| N4 | G31: η_sw > 0 | RE −0.22 [−0.34, −0.09] (31a–31d). | **failed** |
+| Kill A | RE Δγ CI ∋ 0 with \|γ_un\| ≥ ½ γ_nam | Inputs not estimable (A1). Descriptively it would not fire: γ_un ≈ 0.09, γ_nam ≈ 2.3. | cannot fire |
+| Kill B | RE η_sw CI ∋ 1 and ∌ 0 | −0.02 [−0.07, +0.02] | **does not fire** |
+| Kill C | γ_if ≥ γ_nam with O3 CI ≤ 0 | O3 > 0 in the 3 estimable units | cannot fire (descriptive: not fired) |
+
+**Post hoc (descriptive; not a test).** Chosen option rows with a read about the destination, against the expectation of the fit without read terms (project × hour, agent, habit, held-before, share), summed over units. Poisson 95% intervals:
+
+| Read about the destination | Regime II/III: observed / expected = ratio | Regime I |
+| --- | --- | --- |
+| named (names the reader; read at the call) | 289 / 103.7 = **2.79** [2.48, 3.13]; unit permutation p < 0.05 in 16/24 | 35 / 16.8 = 2.08 [1.45, 2.90] |
+| unnamed (read at the call) | 766 / 827.0 = **0.93** [0.86, 0.99]; 7/24 | 125 / 100.9 = 1.24 [1.03, 1.48] |
+| named in-flight (posted, not yet readable) | 55 / 50.2 = **1.10** [0.83, 1.43]; 5/24 | 13 / 10.9 = 1.19 [0.64, 2.04] |
+
+Agents hop onto a project about 2.8 times as often as expected when they have just read a message that names them and links it. A link they read without being named gives no lift. A named link still in flight gives 1.1. This is the card's pattern (named > unnamed ≈ in-flight ≈ 1). It is descriptive only: A1 made the pre-registered tests untestable, and this ratio was chosen after the synthetic run.
+
+**Other fitted terms (regime II/III, descriptive).** Habit φ (stay utility per ln(1 + dwell)): median +0.54, CI > 0 in 22/24 units, so stickiness grows with dwell (as H129's hazard aging). Held-before: median +4.8, CI > 0 in 23/24. Share: median +23 per unit share, CI > 0 in 24/24 (R-share is a strong extra term, not a rival that excludes reads).
+
+**Verdict (card rule): inconclusive.** P1 is unpowered at the planted effect (A1), so the coupling part cannot be supported or failed. The clock part splits by regime: P4 holds in regime II/III; P5, N2 and N4 fail. Background switches are not on a wall clock anywhere (Kill B does not fire). In regime I and at G51 timer wakes, η_sw departs from 0 in opposite directions.
+
+**Impostors (round 1).**
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | The unit is the agent's own call. O4 tests the clock directly (η_sw −0.02 [−0.07, +0.02] in regime II/III). Agent effects and 4-h bins enter O4; agent stay effects and project × active-hour cells enter the logit. | removed (II/III); open (regime I, η < 0) |
+| Exogenous field (kickoff, goal, operator) | yes | Project × active-hour effects absorb a project field that lasts the hour. G40 hub: 1 of 76 early hub hops had a named read (field-like). The kickoff-drop variant was not run. | partly |
+| Shared model priors | partly | Agent stay effects only. The same-lab vs cross-lab split of γ_nam was built (`reads.parquet`) but not fitted, because γ_nam is untestable. | open |
+| Contemporaneous convergence | yes | Named in-flight placebo at matched lag: 1.10 [0.83, 1.43] vs named read 2.79 [2.48, 3.13] (post hoc, descriptive). O3 > 0 in the 3 estimable units. | partly (descriptive) |
+
+**New constants (exploration, non-reserved).**
+- η_sw (II/III) = −0.02 [−0.07, +0.02]: background switch-span elasticity, 24 regime-II/III units (A2 model).
+- η_sw (I) = −0.34 [−0.51, −0.17]: the same, 17 regime-I units.
+- η_sw (timer) = +0.46 [+0.09, +0.84]: the same on timer-wake background calls, 11 #51 units.
+- R_nam = 2.79 [2.48, 3.13]: post hoc observed/expected hops onto a project in a named read, regime II/III. R_un = 0.93 [0.86, 0.99]; R_if = 1.10 [0.83, 1.43].
+- f_flick = 0.257: share of call hops that return to the previous project at the next hop within 5 calls (all non-reserved hops, `project_calls --verify`).
+
+**Claim that stands:** In regime II/III, an agent's background project-switch hazard runs on its own call clock, not on wall time (switch-span elasticity −0.02 [−0.07, +0.02] over 24 units; a wall clock gives 1). **Exclusions:** the named-read coupling (P1–P3, N1, N3) is untestable at the planted effect (A1). The post hoc read ratios (named 2.79, unnamed 0.93, in-flight 1.10) are descriptive only. Regime I (η −0.34, P5 failed), G31 (N4 failed) and G51 timer wakes (η +0.46, N2 failed) are excluded. P6 is not met.
+
+## Round 2 redirects
+**What the direction is really after:** whether naming an agent in a message that links a project moves that agent onto the project, beyond the attention burst that produces the message. Round 1 saw a 2.8× lift only post hoc, so round 2 must test it with power at the observed scale.
+- **H133-R1. Test the named-read ratio with power at γ ≈ 2.** Pre-register R_nam as the primary statistic. The stacked count test has power 0.997 at γ_nam = 2. Keep units separate and use hierarchical shrinkage, not a stack.
+- **H133-R2. Add a sender-side impostor.** The named message may answer the reader's own earlier mention of the project. Condition on the reader's last touch of b.
+- **H133-R3. Explain η < 0 in regime I and η > 0 at timer wakes.** Split spans by gap kind (pause, long tool call, scheduled chat call). Test whether a long gap resets attention to the current project.
+- **H133-R4. Fit the deferred variants.** Same-lab vs cross-lab senders and the kickoff-drop variant.
+
 ## Faithfulness scorecard
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
 **Rival models:** R-field (H28 attention burst), R-broadcast (H53 link in context), R-share (H53, H93), R-wall clock.
-**Reserved periods used for confirmation:** none yet. Planned: #45–#47 and the #51 tail (frozen after round 1; not run).
+**Reserved periods used for confirmation:** none. Frozen and dry-run only: `analysis/confirm.py` (#45–#47 and the #51 tail; C1 = P4 on the A2 model; the read ratio descriptive). Dry run on stand-in 44a reproduces its η_sw (−0.09).
 
-| Axis | Test | Score | Evidence |
+| Axis | Test | Score | Evidence (round 1, 2026-10-07) |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
-| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
-| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 0 | not run |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
-| E interventional | predicts the change across a natural experiment | 0 | not run |
-| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 0 | not run |
-| G ground truth | agrees with known structure | 0 | not run |
-| H comparative | beats the named rivals | 0 | not run |
-| I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | per-call labels from strict mentions (`project_calls --verify`: 98.6% of mentions mapped, 0 recompute mismatches); η_sw is not invariant across regimes (−0.34 I, −0.02 II/III) |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | time-rescaling: per-call clock holds in II/III, not in regime I or at timer wakes; Markov order: 45% of read-linked hops come 2–5 calls after the read (O5) |
+| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 1 | within-cell permutation: named-read ratio beyond the null in 16/24 II/III units (post hoc, descriptive); no out-of-sample test |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 | O5 lag profile (0.55 at lag ≤ 1; P6 not met); in-flight and unnamed ratios ≈ 1, not fitted |
+| E interventional | predicts the change across a natural experiment | 0 | no NE test in round 1 |
+| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 1 | η_sw recovered (bias ≤ 0.02; W4 coverage 0.94–0.97); γ_nam not identifiable at the planted 1.0 (A1) |
+| G ground truth | agrees with known structure | 0 | none |
+| H comparative | beats the named rivals | 1 | R-wall clock rejected (Kill B); R-field and R-broadcast disfavoured only descriptively (in-flight 1.10, unnamed 0.93 vs named 2.79); R-share is a strong extra term |
+| I transfer | holds in other same-mode periods, including the reserved periods | 0 | reserved periods not run |
 
 ## Results by goal period
-No period has been run. Period folders (`goalperiod-subhypotheses/G<NN>/`) are created with their dated predictions before each period is run. `goalperiod-subhypotheses/GNN/` is the unfilled template.
+Round 1 (2026-10-07). Folders: `goalperiod-subhypotheses/G<NN>/` (23 goal periods, 41 units). Verdict per folder: descriptive = P4 holds (or a small η is unpowered) and the coupling is untestable; mixed = η_sw CI excludes 0 in some unit (Kill B never fires) or a native fails; failed = a native fails or regime-I η_sw < 0.
 
-| Period | Role | Verdict | Key numbers |
+| Period | Role | Verdict | Key numbers (η_sw A2 [95%]; named hops observed/expected) |
 | --- | --- | --- | --- |
-| replication units (precondition list) | replication | pending | not run |
-| G38 | native N1 | pending | not run |
-| G51 | native N2 | pending | not run |
-| G40 | native N3 | pending | not run |
-| G31 | native N4 | pending | not run |
+| G04, G12, G13, G18, G20, G24, G25, G26 | replication (regime I) | descriptive | η_sw CI ∋ 0 in each unit; γ_nam enters only in 18b and 26 |
+| G17, G19, G21, G30 | replication (regime I) | failed | η_sw < 0 (17: −0.93 [−1.38, −0.48]; 30b: −0.29 [−0.53, −0.04]) |
+| G31 | native N4 | failed | RE η_sw −0.22 [−0.34, −0.09] |
+| G33, G36, G37, G41 | replication (regime II/III) | mixed | η_sw CI excludes 0 in 33, 36b, 37 (< 0) and 41 (> 0); 36b γ_nam +3.68 [+1.35, +6.55] |
+| G38 | native N1 | descriptive | 38a η_sw −0.21 [−0.55, +0.13]; N1 untestable (3 named hops) |
+| G39, G42, G44 | replication (regime II/III) | descriptive | P4 holds; 44a γ_nam +1.51 [+0.24, +2.79] |
+| G40 | native N3 | descriptive | η_sw +0.07 [−0.21, +0.35]; 1 of 76 early hub hops had a named read |
+| G51 | native N2 | mixed | 51a–51l η_sw −0.10 to +0.10 (CI > 0 in 51c, 51d); timer wakes RE +0.46 [+0.09, +0.84] (N2 failed); named hops 241 / 78.6 expected |
 
 ## Results
-Not run.
+See "Round 1 (2026-10-07)" above: inconclusive by the card's rule. P4 holds in regime II/III. P5, N2 and N4 fail. P1–P3 are untestable. Post hoc and descriptive: named-read hop ratio 2.79 [2.48, 3.13].
 
 ## Notes
 - 2026-10-07: card written from HH376 (approved by Vivian 2026-10-07). Round-1 order: structural counts (no outcomes) → per-period READMEs with dated predictions → synthetic on the real skeletons → dated amendments → replication and natives → estimates rows (`h133_gamma_named`, `h133_gamma_unnamed`, `h133_gamma_inflight`, `h133_eta_switch`) → frozen `confirm.py` (dry run only).
 - Shared code: the per-call project label is needed by H133 and H134, so it goes in `infra/shared/project_calls.py` (STANDARDS §8), not in either card's folder.
 - Compute: ≤ 2 threads, one heavy job at a time (STANDARDS §9).
+- 2026-10-07: round 1 done. Shared builder `infra/shared/project_calls.py` (commit 18e52ee; used by H134 and H137). Synthetic and amendments committed before real data (c471f13). Estimates rows: `h133_eta_switch` (41 units), `h133_gamma_named` / `_unnamed` / `_inflight` (descriptive, where a term enters), and the natives `h133_eta_switch_timer` (#51 units), `h133_eta_switch_timer_RE` (G51) and `h133_eta_switch_RE` (G31).

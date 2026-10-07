@@ -278,7 +278,7 @@ def _build(sk: Skel, des: dict, agent_map: np.ndarray | None = None, xover: dict
     ch = yy[~stay]
     chosen[pos[ch]] = 1
     Gm = sp.csr_matrix((np.ones(nC + nR), (row_callpos, np.arange(nC + nR))), shape=(nC, nC + nR))
-    reg = np.zeros(P)
+    reg = np.full(P, 1e-8)
     reg[k + 1:] = RIDGE
     return {"Z": Z, "Gm": Gm, "rcp": row_callpos, "chosen": chosen, "ag": ag, "A": A, "K": K, "P": P, "k": k, "nC": nC,
             "nR": nR, "reg": reg, "Xr": Xr, "ridx": ridx}
@@ -294,17 +294,21 @@ def _probs(Z, Gm, rcp, theta, nC):
     return p, u, mx, den
 
 
-def newton(B: dict, theta0: np.ndarray | None = None, tol: float = 1e-7, max_iter: int = 60):
+def newton(B: dict, theta0: np.ndarray | None = None, tol: float = 1e-7, max_iter: int = 60,
+           w_call: np.ndarray | None = None):
+    """Damped Newton. w_call: optional per-call frequency weights (agent-block bootstrap multiplicities)."""
     Z, Gm, rcp, y, reg, nC = B["Z"], B["Gm"], B["rcp"], B["chosen"], B["reg"], B["nC"]
     P = B["P"]
     th = np.zeros(P) if theta0 is None else theta0.copy()
+    wc = np.ones(nC) if w_call is None else np.asarray(w_call, float)
+    wr = wc[rcp]
 
     def obj(t):
         u = Z @ t
         mx = np.full(nC, -np.inf)
         np.maximum.at(mx, rcp, u)
         lse = mx + np.log(Gm @ np.exp(u - mx[rcp]))
-        return float(y @ u - lse.sum() - 0.5 * np.sum(reg * t * t))
+        return float((wr * y) @ u - wc @ lse - 0.5 * np.sum(reg * t * t))
 
     f = obj(th)
     for it in range(max_iter):
@@ -313,10 +317,10 @@ def newton(B: dict, theta0: np.ndarray | None = None, tol: float = 1e-7, max_ite
         np.maximum.at(mx, rcp, u)
         e = np.exp(u - mx[rcp])
         p = e / (Gm @ e)[rcp]
-        g = Z.T @ (y - p) - reg * th
+        g = Z.T @ (wr * (y - p)) - reg * th
         Zp = sp.diags(p) @ Z
         M = Gm @ Zp
-        H = (Z.T @ Zp - M.T @ M + sp.diags(reg)).tocsc()
+        H = (Z.T @ (sp.diags(wr) @ Zp) - M.T @ (sp.diags(wc) @ M) + sp.diags(reg)).tocsc()
         try:
             step = spla.spsolve(H, g)
         except Exception:  # noqa: BLE001
@@ -335,6 +339,30 @@ def newton(B: dict, theta0: np.ndarray | None = None, tol: float = 1e-7, max_ite
         if abs(dec) < tol * (1 + abs(f)) and np.max(np.abs(s * step[:B["k"] + 1])) < 1e-6:
             return th, True, it + 1
     return th, True, max_iter
+
+
+def bootstrap_weighted(sk: Skel, feats: list, n: int, seed: int = 0) -> dict:
+    """Agent-block bootstrap by frequency weights: each draw resamples agents with replacement and refits the same
+    design with call weights = the agent's multiplicity (warm start at the full-data fit). Resampled copies of one
+    agent share its alpha (equivalent to distinct copies up to the ridge)."""
+    des = restricted_design(sk, sk.y, feats)
+    B = _build(sk, des)
+    th0, ok, _ = newton(B)
+    k = B["k"]
+    ag = B["ag"]
+    agents = np.unique(ag)
+    rng = np.random.default_rng(seed)
+    out = []
+    for _ in range(n):
+        draw = rng.choice(agents, size=agents.size, replace=True)
+        mult = np.bincount(draw, minlength=int(ag.max()) + 1).astype(float)
+        try:
+            thb, okb, _ = newton(B, th0, w_call=mult[ag])
+        except Exception:  # noqa: BLE001
+            continue
+        if okb:
+            out.append({n_: float(thb[i]) for i, n_ in enumerate(feats + ["phi"])})
+    return {"draws": out, "method": "agent-block frequency-weight bootstrap, warm start"}
 
 
 def sandwich(B: dict, th: np.ndarray, cluster: np.ndarray):
@@ -360,7 +388,8 @@ def sandwich(B: dict, th: np.ndarray, cluster: np.ndarray):
 
 
 def fit_logit(sk: Skel, y: np.ndarray | None = None, feats: list | None = None, call_mask=None,
-              xover: dict | None = None, theta0=None, min_chosen: int = MIN_CHOSEN, want_theta=False) -> Fit:
+              xover: dict | None = None, theta0=None, min_chosen: int = MIN_CHOSEN, want_theta=False,
+              inference: bool = True, agent_map: np.ndarray | None = None) -> Fit:
     y = sk.y if y is None else y
     feats = list(FEATS if feats is None else feats)
     des = restricted_design(sk, y, feats, call_mask)
@@ -377,10 +406,13 @@ def fit_logit(sk: Skel, y: np.ndarray | None = None, feats: list | None = None, 
     n_hops = int(ch.size)
     if n_hops < 5 or des["calls"].size == 0:
         return Fit(False, use, {}, {}, {}, None, int(des["calls"].size), int(des["ridx"].size), n_hops, 0, 0, pos)
-    B = _build(sk, des, xover=xover)
+    B = _build(sk, des, xover=xover, agent_map=None if agent_map is None else agent_map[des["calls"]])
     th, ok, it = newton(B, theta0)
     k = B["k"]
     names = use + ["phi"]
+    if not inference:
+        return Fit(ok, names, {n: float(th[i]) for i, n in enumerate(names)}, {}, {}, None, B["nC"], B["nR"], n_hops,
+                   B["K"], 0, pos)
     V, Gn = sandwich(B, th, B["ag"])
     se = np.sqrt(np.maximum(np.diag(V), 0))
     tq = stats.t.ppf(0.975, max(Gn - 1, 1))
@@ -451,7 +483,10 @@ def bootstrap_fit(sk: Skel, feats: list, n: int, seed: int = 0, y: np.ndarray | 
         am = np.concatenate(amap)
         bsk = _subset(sk, bc)
         bsk.y = _remap_y(sk, y, bc)
-        f = fit_logit(bsk, bsk.y, feats, min_chosen=0)
+        try:
+            f = fit_logit(bsk, bsk.y, feats, min_chosen=0, inference=False, agent_map=am)
+        except Exception:  # noqa: BLE001
+            continue
         if f.ok:
             out.append({n_: f.beta.get(n_, np.nan) for n_ in feats + ["phi"]})
         del am
@@ -460,36 +495,21 @@ def bootstrap_fit(sk: Skel, feats: list, n: int, seed: int = 0, y: np.ndarray | 
 
 # ============================================================================================ N1 score permutation
 def score_perm(sk: Skel, feats_full: list, n: int = 1000, seed: int = 0) -> dict:
-    """N1: permute (N_nam, N_un) jointly across option rows within each project x active-hour cell. Statistic: the score
-    for gamma_nam at the fit without the read terms nam and un (p does not depend on them, so no refit per draw)."""
-    rest = [f for f in feats_full if f not in ("nam", "un")]
-    des = restricted_design(sk, sk.y, rest)
+    """N1: permute N_nam (jointly with N_un; only N_nam enters the statistic) across the option rows of each project x
+    active-hour cell of the fitted design. Statistic: T = sum over chosen rows of ln(1 + N_nam), the within-cell
+    sufficient statistic for gamma_nam given the cell effects. Exact null by random c-subsets per cell."""
+    des = restricted_design(sk, sk.y, [f for f in feats_full if f not in ("nam", "un")])
     B = _build(sk, des)
-    th, ok, _ = newton(B)
-    Z, Gm, rcp, nC = B["Z"], B["Gm"], B["rcp"], B["nC"]
-    u = Z @ th
-    mx = np.full(nC, -np.inf)
-    np.maximum.at(mx, rcp, u)
-    e = np.exp(u - mx[rcp])
-    p = e / (Gm @ e)[rcp]
-    resid = (B["chosen"] - p)[nC:]          # option rows only
+    nC = B["nC"]
+    ch = B["chosen"][nC:]
     ridx = B["ridx"]
     xn = sk.X["nam"][ridx]
     cells = sk.row_cell[ridx]
-    T0 = float(resid @ xn)
+    T0 = float(ch @ xn)
     rng = np.random.default_rng(seed)
-    o = np.argsort(cells, kind="stable")
-    cs = cells[o]
-    bounds = np.flatnonzero(np.diff(cs)) + 1
-    groups = np.split(o, bounds)
-    groups = [g for g in groups if g.size > 1]
-    T = np.empty(n)
-    for d in range(n):
-        xp = xn.copy()
-        for g in groups:
-            xp[g] = xn[rng.permutation(g)]
-        T[d] = resid @ xp
-    return {"T_obs": T0, "p_one_sided": float((1 + np.sum(T >= T0)) / (n + 1)), "n_perm": n, "groups": len(groups)}
+    T = cell_perm_null(xn, ch, cells, n, rng)
+    return {"T_obs": T0, "p_one_sided": float((1 + np.sum(T >= T0 - 1e-12)) / (n + 1)), "n_perm": n,
+            "null_mean": float(T.mean()), "cells": int(np.unique(cells).size)}
 
 
 # ============================================================================================ background cloglog
@@ -699,3 +719,29 @@ def dersimonian_laird(est, se):
 def n_options(sk: Skel) -> np.ndarray:
     """Per call: ln(1 + number of options) (active projects other than the current one)."""
     return np.log1p(np.bincount(sk.row_call, minlength=sk.n_calls).astype(float))
+
+
+def cell_perm_null(x: np.ndarray, ch: np.ndarray, cells: np.ndarray, n: int, rng) -> np.ndarray:
+    """Null draws of T = ch . x when x is permuted across rows within each cell (exact, fast): in a cell with m rows
+    and c chosen rows, T_cell is the sum of x over a uniformly random c-subset of the cell's m values. Only cells with
+    c > 0 and some x != 0 contribute."""
+    o = np.argsort(cells, kind="stable")
+    cs = cells[o]
+    b = np.flatnonzero(np.diff(cs)) + 1
+    starts = np.concatenate([[0], b])
+    ends = np.concatenate([b, [cs.size]])
+    T = np.zeros(n)
+    for s0, e0 in zip(starts, ends):
+        idx = o[s0:e0]
+        c = int(ch[idx].sum())
+        v = x[idx]
+        if c == 0 or not np.any(v != 0):
+            continue
+        m = idx.size
+        if c == m:
+            T += v.sum()
+            continue
+        keys = rng.random((n, m))
+        sel = np.argpartition(keys, c - 1, axis=1)[:, :c]
+        T += v[sel].sum(axis=1)
+    return T

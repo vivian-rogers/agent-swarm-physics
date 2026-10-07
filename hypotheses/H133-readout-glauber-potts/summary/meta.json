@@ -1,0 +1,38 @@
+{
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: shared per-call label builder with --verify; structural counts, period predictions, real-skeleton synthetic (O1-O3 eligibility, fitted logit worlds, 200-run eta worlds) and Amendments A1-A3 committed before real data; replication on 41 units and natives G31, G38, G40, G51; estimates rows; confirm.py frozen and dry-run. Missing: reserved run, kickoff and lab-split variants, a powered coupling test.",
+  "faithfulness": "The card's coupling test is untestable at the planted effect (power ~0). The clock part is validated (eta recovered, bias <= 0.02) and holds in regime II/III but fails in regime I and at timer wakes. Scorecard A1 B1 C1 D1 E0 F1 G0 H1 I0.",
+  "usefulness": "Operator rule: project drift is a per-call rate (slow the calls to slow the drift); descriptively, naming the agent in the link message goes with 2.8x the switches, while a bare link does nothing. Moderate value; the coupling half is not yet a tested result."
+ },
+ "one_line": "Background project switches run on the call clock in regime II/III (switch-span elasticity -0.02 [-0.07, +0.02], 24 units); named-read coupling is untestable at the planted effect, though post hoc hops onto a project named to the agent are 2.8x expected (unnamed 0.93x, in flight 1.1x).",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "inconclusive",
+   "note": "Glauber read-out coupling not testable at the planted effect; descriptive named-read lift 2.8x with unnamed and in-flight near 1"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "asynchronous per-call updates hold for background switches in regime II/III; regime I and timer wakes deviate"
+  }
+ ],
+ "rated_by": "H133 agent (suggested)",
+ "updated": "2026-10-07",
+ "v2": {
+  "claim": "In regime II/III an agent's background project-switch hazard runs on its own call clock, not on wall time (switch-span elasticity -0.02 [-0.07, +0.02] over 24 units)",
+  "scope": "24 non-reserved regime-II/III units; regime I, G31 and #51 timer wakes excluded",
+  "direction": "positive",
+  "original_verdict": "inconclusive",
+  "credence": null,
+  "mechanism_level": "M0",
+  "fragile": false,
+  "rater": "independent rater pending",
+  "rated_at": null
+ }
+}
