@@ -5,6 +5,13 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — H133 finished; paper counts updated; dev pushed (public)
+
+- **H133 round 1 (agent report; commits 18e52ee, c471f13, 6176749): inconclusive by its own rule.** Named-read coupling (P1–P3, N1, N3) untestable at village counts (named reads about a non-current project ≈1e-4 of option rows; power 0.64 even pooling 24 units). Call clock for background project switches holds in regime II/III: η_sw = −0.02 [−0.07, +0.02] (24 units); regime I (−0.34), G31 and G51 timer wakes (+0.46) fail. Post hoc only: named-read hop ratio 2.79 [2.48, 3.13] vs unnamed 0.93 and in-flight 1.10. New shared builder `infra/shared/project_calls.py` (per-call project labels; 25.7% of call hops flicker back within 5 calls: cards wanting sustained switches need a minimum dwell).
+- **Known issue (from H133):** `copying.project_messages` misses 12% of strict chat mentions that fall outside any ledger call window.
+- **Paper:** Sec. III now says H133–H142: four failed, six inconclusive; Sec. VIII adds H133's call-clock check; OVERVIEW.md and the Appendix D grid regenerated (n/a or pending 118 of 2875).
+- **Pushed `dev` to GitHub** at Vivian's request (first push; repo is public). Pre-push scan: no secrets, no `data/` files. Vivian cleared the hypothesis-summary writeup (1f45f92) for GitHub. Paper: https://github.com/vivian-rogers/agent-swarm-physics/blob/dev/writeup/paper/paper.pdf
+
 ## 2026-10-07 — Paper figures redrawn in D3; page-1 figure; hypothesis × goal-period grid (`writeup/figures-js/`, `writeup/paper/`)
 
 - Vivian asked for better-looking figures (JS), a high-level figure on page 1 (later: small, one column), and the full table of hypotheses × goal periods; the paper may grow toward ~40 pages.
