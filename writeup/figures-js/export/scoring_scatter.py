@@ -17,6 +17,14 @@ import numpy as np
 
 from common import ROOT, write
 
+import sys
+sys.path.insert(0, str(ROOT / "writeup/figures"))
+import model_overrides as MO  # noqa: E402  (the paper's primary-model assignment)
+
+# model families for the marker colour (primary model of each card)
+FAMILY = {"01": "spins", "02": "spins", "10": "spins", "11": "fields", "03": "echoes", "09": "echoes",
+          "16": "relax", "17": "relax", "04": "info", "15": "info"}
+
 N_LABEL = 20
 
 
@@ -29,6 +37,11 @@ def main():
         hid = f.split("/hypotheses/")[1].split("/")[0].split("-")[0]
         rows.append(dict(id=hid, p=float(v["credence"]), V=float(v["value_if_true"]), eu=float(v["expected_usefulness"]),
                          m=v.get("mechanism_level", "M0"), fragile=bool(v.get("fragile", False))))
+    prim = {h["id"]: next((m["model"] for m in h["models"] if m.get("role") == "primary"), "")
+            for h in MO.load_hypotheses(scored_only=False)}
+    for r in rows:
+        r["model"] = prim.get(r["id"], "")
+        r["family"] = FAMILY.get(r["model"], "other")
     ps = [r["p"] for r in rows]
     checks = dict(n=len(rows), median_p=float(np.median(ps)), n_p06=sum(p >= 0.6 for p in ps),
                   m2=sorted(r["id"] for r in rows if r["m"] == "M2"))
@@ -38,7 +51,8 @@ def main():
     assert top[-1]["eu"] > sorted(rows, key=lambda r: -r["eu"])[N_LABEL]["eu"], "tie at the label cut"
     for r in rows:
         r["label"] = r in top
-    print(checks, "labelled:", [r["id"] for r in top])
+    import collections
+    print(checks, "labelled:", [r["id"] for r in top], "families:", collections.Counter(r["family"] for r in rows))
     write("scoring_scatter", dict(rows=rows, checks=checks, n_label=N_LABEL), "writeup/figures-js/export/scoring_scatter.py",
           ["hypotheses/H*/summary/meta.json (v2)"], dict(n_label=N_LABEL))
 

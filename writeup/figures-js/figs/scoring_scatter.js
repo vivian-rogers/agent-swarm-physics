@@ -1,22 +1,31 @@
 // Sec. III: credence p against value if true V for every scored claim; gray curves of equal EU = pV;
-// marker shape and color = mechanism depth; open marker = fragile; the top 20 by EU labelled.
+// colour = model family of the card's primary model; shape = mechanism depth; open = fragile; top 20 by EU labelled.
 // Data: data/processed/paper-figs/scoring_scatter.json (export/scoring_scatter.py).
 window.FIG = {
-  width: 3.40, height: 2.95,
+  width: 3.40, height: 3.35,
   draw(svg, D) {
     const { C, F } = S;
-    const W = 3.40 * 72, H = 2.95 * 72;
+    const W = 3.40 * 72, H = 3.35 * 72;
     const g = svg.append("g");
-    const M = { l: 27, r: 6, t: 5, b: 24 };
+    const M = { l: 27, r: 6, t: 5, b: 54 };
     const pw = W - M.l - M.r, ph = H - M.t - M.b;
     const gp = g.append("g").attr("transform", `translate(${M.l},${M.t})`);
     const x = d3.scaleLinear().domain([0, 4.0]).range([0, pw]);
     const y = d3.scaleLinear().domain([0.3, 1.0]).range([ph, 0]);
     const DEPTH = {
-      M0: { color: C.sky, shape: d3.symbolCircle, size: 13, label: "M0" },
-      M1: { color: C.coupling, shape: d3.symbolSquare, size: 11, label: "M1" },
-      M2: { color: C.vermillion, shape: d3.symbolDiamond, size: 17, label: "M2" },
+      M0: { shape: d3.symbolCircle, size: 13, label: "0: pattern" },
+      M1: { shape: d3.symbolSquare, size: 11, label: "1: signature" },
+      M2: { shape: d3.symbolDiamond, size: 17, label: "2: intervention" },
     };
+    const FAM = [
+      { key: "spins", label: "spins (M01, M02, M10)", color: "#0072B2" },
+      { key: "fields", label: "fields (M11)", color: "#E69F00" },
+      { key: "echoes", label: "echoes (M03, M09)", color: "#CC79A7" },
+      { key: "relax", label: "relaxation (M16, M17)", color: "#56B4E9" },
+      { key: "info", label: "info (M04, M15)", color: "#009E73" },
+      { key: "other", label: "other", color: "#c4c4c4" },
+    ];
+    const famCol = Object.fromEntries(FAM.map((f) => [f.key, f.color]));
 
     // axes
     S.axis(gp.append("g").attr("transform", `translate(0,${ph})`), x, "bottom",
@@ -65,28 +74,20 @@ window.FIG = {
     }
     const gpt = gp.append("g");
     for (const p of [...pts].sort((a, b) => a.eu - b.eu)) {
-      const st = DEPTH[p.m];
+      const st = DEPTH[p.m], col = famCol[p.family];
       gpt.append("path").attr("d", S.sym(st.shape, st.size)).attr("transform", `translate(${p.cx},${p.cy})`)
-        .attr("fill", p.fragile ? "#fff" : st.color).attr("stroke", p.fragile ? st.color : "#fff")
-        .attr("stroke-width", p.fragile ? 0.85 : 0.5);
+        .attr("fill", p.fragile ? "#fff" : col).attr("stroke", p.fragile ? col : "#fff")
+        .attr("stroke-width", p.fragile ? 0.9 : 0.5);
     }
 
-    // legend: upper left (low V, high p is nearly empty)
-    const lg = gp.append("g").attr("transform", `translate(4,${y(0.89)})`);
-    const card = lg.append("rect").attr("fill", "#fff");
-    S.text(lg, 0, -7.4, "mechanism depth", { size: 5.9, fill: C.ink2 });
-    const items = ["M0", "M1", "M2"].map((k) => ({ ...DEPTH[k], key: k }));
-    items.push({ label: "open: fragile", color: C.ink2, shape: d3.symbolCircle, size: 13, open: true });
-    items.forEach((it, i) => {
-      const yy = i * 7.4;
-      lg.append("path").attr("d", S.sym(it.shape, it.size)).attr("transform", `translate(2.5,${yy - 1.6})`)
-        .attr("fill", it.open ? "#fff" : it.color).attr("stroke", it.open ? it.color : "#fff").attr("stroke-width", it.open ? 0.85 : 0.5);
-      S.text(lg, 7.5, yy, it.label, { size: 5.9, fill: C.ink });
-    });
-    const bb = lg.node().getBBox();
-    card.attr("x", bb.x - 1.5).attr("y", bb.y - 1).attr("width", bb.width + 3).attr("height", bb.height + 2);
-    fixed.push({ x0: 4 + bb.x - 1.5, x1: 4 + bb.x + bb.width + 1.5, y0: y(0.89) + bb.y - 1, y1: y(0.89) + bb.y + bb.height + 1 });
-
+    // legend under the plot: colour = family (two rows), shape = depth, open = fragile
+    const ly0 = M.t + ph + 26;
+    S.text(g, 2, ly0, "model family", { size: 5.9, fill: C.ink2 });
+    S.legend(g, 42, ly0, FAM.slice(0, 3).map((f) => ({ label: f.label, color: f.color, size: 12 })), { gap: 6, size: 5.9 });
+    S.legend(g, 42, ly0 + 8, FAM.slice(3).map((f) => ({ label: f.label, color: f.color, size: 12 })), { gap: 6, size: 5.9 });
+    S.text(g, 2, ly0 + 17, "mechanism depth", { size: 5.9, fill: C.ink2 });
+    S.legend(g, 52, ly0 + 17, [...["M0", "M1", "M2"].map((k) => ({ label: DEPTH[k].label, shape: DEPTH[k].shape, size: DEPTH[k].size, color: C.ink2 })),
+      { label: "open: fragile", shape: d3.symbolCircle, size: 13, color: C.ink2, fill: "#fff", stroke: C.ink2, sw: 0.8 }], { gap: 6, size: 5.9 });
 
     // labels for the top 20 by EU: pick, for each label, the free spot that costs least
     const fs = 5.9, lh = 4.4;

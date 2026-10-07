@@ -45,9 +45,15 @@ We treat each physics model as an \emph{effective theory}: a small model that pr
 
 The record runs from April 2025 to September 2026 (Fig.~\ref{fig:timeline}). In that time 46 agents from several AI labs worked through 51 \emph{goal periods}, each the time for one shared goal, usually a working week. Each starts with a \emph{kickoff}, the message that announces the goal. The goals were open-ended tasks: raise money for a charity, build a personal website, hold a debate, forecast the abilities of AI, run a YouTube channel. Some weeks were holidays, and in the last period each agent got its own private goal (Appendix~\ref{app:goals} lists all 51). Three scaffold changes divide the record into three \emph{regimes}: one shared chat room in daily sessions (I); several \emph{rooms}, separate chat channels (II); and continuous operation, own room only, with forced wipes (III).
 
+\begin{figure}[t]
+\includegraphics[width=\columnwidth]{js/scoring_scatter.pdf}
+\caption{Every scored claim, by how likely it is to be true and how much it would matter. Each point is one hypothesis card (132 in all). Credence $p$: the judged probability that the card's claim is true (Sec.~\ref{sec:faith}). Value if true $V$ (0--5): how much the claim would change what we know or do. Gray curves: equal estimated usefulness $\mathrm{EU}=pV$. Color: the family of the card's main physics model. Shape: mechanism depth (0, a pattern that repeats; 1, the model's own signature is predicted and a rival fails; 2, a natural experiment also agrees). Open markers: fragile claims, whose headline changed between data versions. Labels: the 20 claims with the highest EU; points with the same $V$ are moved apart sideways. Look at the upper right: the few claims that are both credible and valuable come mostly from the spin and field families, and none is confirmed on reserved data.}
+\label{fig:scatter}
+\end{figure}
+
 \subsection*{Weak echoes, strong pulls}
 
-Two models hold up well, two more hold in part, and together they give one picture (Sec.~\ref{sec:picture}). Each agent behaves like a \emph{kinetic spin}: a unit with a few states, here talk, work or wait, that changes state only at its own calls. When a call takes twice as long, the chance of a reply hardly changes. For the dynamics, the unit of time is the call, not the minute.
+Two models hold up well, two more hold in part, and together they give one picture (Sec.~\ref{sec:picture}; Fig.~\ref{fig:scatter} shows every scored claim). Each agent behaves like a \emph{kinetic spin}: a unit with a few states, here talk, work or wait, that changes state only at its own calls. When a call takes twice as long, the chance of a reply hardly changes. For the dynamics, the unit of time is the call, not the minute.
 
 Influence needs reading, and it works best with a name. Replies jump at the read-out call, not before it, in 17 of 17 periods. A \emph{named message}, one that mentions the reader by name, raises the chance that the reading call is a talk call by 0.079 (CI 0.069--0.089). An unnamed message raises it by only 0.004 (CI 0.003--0.006). As at a noisy party, agents answer to their own name.
 

@@ -157,8 +157,8 @@ def main():
          "% Verdict column: meta.json v2.original_verdict (house wording: 'reserved' data; parentheses dropped if > 40 chars).",
          r"\section{All hypotheses by estimated usefulness}\label{app:eu}",
          f"All {n} hypotheses, sorted by estimated usefulness EU $=pV$. $p$: credence (faithfulness); $V$: value if true (0--5); "
-         "M: mechanism depth, how far the test reaches beyond a fit (M0: a pattern that repeats across goal periods; "
-         "M1: the model's own signature is predicted and a rival model fails; M2: in addition, a natural experiment agrees "
+         "D: mechanism depth, how far the test reaches beyond a fit (0: a pattern that repeats across goal periods; "
+         "1: the model's own signature is predicted and a rival model fails; 2: in addition, a natural experiment agrees "
          "and synthetic data recover the effect); $^\\ast$fragile; verdict: the hypothesis as originally posed, at its latest round. "
          "The scored claim for each is on its two-page summary in the compendium."]
     for b in range(0, n, PER):
@@ -170,10 +170,10 @@ def main():
               r"\label{tab:eu}" if b == 0 else "",
               r"\scriptsize\renewcommand{\arraystretch}{0.95}",
               r"\begin{tabular}{@{}r l p{0.51\textwidth} c c c c l@{}}",
-              r"\toprule \# & ID & hypothesis & $p$ & $V$ & EU & M & verdict\\ \midrule"]
+              r"\toprule \# & ID & hypothesis & $p$ & $V$ & EU & D & verdict\\ \midrule"]
         for k, r in enumerate(chunk, start=lo):
             L.append(f"{k} & {r['id']} & {tex(title_for(r))} & {pfmt(r)} & {r['V']:.2f} & "
-                     f"{r['EU']:.2f} & {r['M']} & {tex(short_verdict(r['verdict']))}\\\\")
+                     f"{r['EU']:.2f} & {r['M'][1:]} & {tex(short_verdict(r['verdict']))}\\\\")
         L += [r"\bottomrule", r"\end{tabular}", r"\end{table}"]
     OUT.write_text("\n".join(L) + "\n")
     print(f"wrote {OUT.relative_to(ROOT)}: {n} cards in {(n + PER - 1) // PER} blocks")

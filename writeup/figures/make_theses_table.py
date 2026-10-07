@@ -79,14 +79,14 @@ def main():
          r"\begin{table*}[t]",
          r"\caption{The 20 research theses with the highest estimated usefulness among those with credence $\geq 0.6$ "
          r"(Claude-judged, Sec.~\ref{sec:method}). $p$: credence (faithfulness); $V$: value if true (0--5); EU $=pV$; "
-         r"M: mechanism depth, how far the test reaches beyond a fit (M0: a pattern that repeats across goal periods; "
-         r"M1: the model's own signature is predicted and a rival model fails; M2: in addition, a natural experiment agrees "
+         r"D: mechanism depth, how far the test reaches beyond a fit (0: a pattern that repeats across goal periods; "
+         r"1: the model's own signature is predicted and a rival model fails; 2: in addition, a natural experiment agrees "
          r"and synthetic data recover the effect); $^\ast$fragile. No thesis has passed a confirmation test on reserved data.}",
          r"\label{tab:theses}",
          r"\scriptsize\renewcommand{\arraystretch}{1.05}",
          r"\begin{tabular}{@{}l p{0.70\textwidth} c c c c@{}}",
          r"\toprule",
-         r"ID & thesis (scored claim, short form) & $p$ & $V$ & EU & M\\ \midrule"]
+         r"ID & thesis (scored claim, short form) & $p$ & $V$ & EU & D\\ \midrule"]
     for r in rows:
         ent = THESES.get(r["id"])
         claim = r["claim"]
@@ -97,7 +97,7 @@ def main():
             L.append(f"% CHECK {r['id']}: no hand-written thesis for the current claim; raw claim cut to {MAXW} words")
         if words(text) > MAXW:
             L.append(f"% CHECK {r['id']}: {words(text)} words")
-        L.append(f"{r['id']} & {text} & {eu.pfmt(r)} & {r['V']:.2f} & {r['EU']:.2f} & {r['M']}\\\\")
+        L.append(f"{r['id']} & {text} & {eu.pfmt(r)} & {r['V']:.2f} & {r['EU']:.2f} & {r['M'][1:]}\\\\")
     L += [r"\bottomrule", r"\end{tabular}", r"\end{table*}"]
     OUT.write_text("\n".join(L) + "\n")
     checks = [l for l in L if l.startswith("% CHECK")]

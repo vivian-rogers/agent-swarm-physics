@@ -5,6 +5,12 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — Credence/value scatter moved to the introduction, coloured by model family; mechanism depth renamed D = 0/1/2
+
+- Vivian: the scatter (was Fig. 11, Sec. III) belongs much higher; colour hypotheses by model family. Now Fig. 3 in the introduction (page 4) with a self-contained caption (credence, value if true, EU, depth, fragile defined in plain words).
+- Colour = family of the card's primary model (paper's 17-model assignment): spins (M01, M02, M10) 62 cards, fields (M11) 23, info (M04, M15) 19, echoes (M03, M09) 11, relaxation (M16, M17) 7, other 10 (light gray). Palette validated (dataviz validator, all pairs): passes; teal/pink deutan ΔE 7.6 is in the floor band, so ID labels and the legend carry identity too. Legend moved under the plot.
+- Mechanism depth was written M0/M1/M2, which clashed with the M02–M17 model names: now "D" with values 0/1/2 in method.tex, the EU and theses tables and their generators (`writeup/figures/make_eu_table.py`, `make_theses_table.py`; tables edited in place, not regenerated, to keep hand-written thesis texts).
+
 ## 2026-10-07 — Step changes labelled in the coverage figures; M-number convention
 
 - Vivian asked what "NE" means and whether it equals a goal period (no: a natural experiment is a dated step change in the setup, tested before vs. after, often spanning two goal periods). Fig. 12 and the Appendix D grid now head that block "step changes in the setup (before vs. after)" and name each column by its change (short names from natural-experiments.md, in `export/hyp_grid.py: NE_LABEL`), with a gap separating it from the goal periods; captions and Table I (glossary) explain it.
