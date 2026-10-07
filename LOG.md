@@ -5,6 +5,15 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — Paper front revised: useful models merged into "What the system is", STE intro (`writeup/paper/`)
+
+- Vivian's request: move the useful models into Sec. II, write a structured ASD-STE100 introduction, and explain every equation in the ~5 summary pages (meaning, intuition, measurement from the logs).
+- **Sec. I** is now seven labeled parts: problem, why hard, approach (five rules), system and data, what we found, why it matters, paper map. **Sec. II** builds the picture model by model: 02+09 (read-out kinetic Ising, call clock, g / χ / Fano with the 1/(1−g)² argument, context-held self-field), 11+01 (vector-spin fields, field share, kickoff, quench), 16 (two-rate Langevin), 17 (Marchenko–Pastur edge, √(N/T) spike threshold, PR), then memory/groups and the observables.
+- **New Table I** (`sections/table_monitor.tex`): 16 observables with a use case each and two ranks, F (faithfulness 1–3) and U (usefulness 1–3), sorted F then U; scale rules in the caption; untested actions marked. The long table moved to Appendix B.
+- **Moved:** ranked cards, failed cards and verdicts of the four useful models are now Sec. IV "Evidence by model" (equations referenced back to Sec. II); the H111 Fano figure moved to Sec. IV; the timeline moved to Sec. III; the model gallery moved to Sec. IV. Dropped from Sec. II: the seven-line list and the "two dials are alarms" prose (now in the table caption and Appendix B).
+- **Abstract** rewritten in STE (~209 words); superagent and information-dynamics lines summarized as "tested and mostly dropped". Author name changed to "vivian @jazzloaf".
+- **Budget:** Sec. I + II span pages 1–6 (≈5.3 pages; Sec. III starts at mid-column on p. 6). Derived values labeled (χ ≈ 1.15, Φ_pred ≈ 1.32). `\mathbb 1` (undefined glyph) replaced by `\mathbf 1`.
+
 ## 2026-10-07 — Paper rewritten model-first (`writeup/paper/`)
 
 - Vivian's direction: a general-reader intro aimed at interpretability and swarm control, then "what the system is" with monitoring observables, then the models ordered by usefulness. The 2026-10-04 finding-first paper is archived in `writeup/archive/paper-2026-10-04/`.
