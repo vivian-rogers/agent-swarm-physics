@@ -1,6 +1,6 @@
 # H134: A Pólya-urn self-field holds an agent on its project: the leave odds fall as the project's share of the agent's own context rises
 
-**Status:** pre-registered (not run). Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH377 (approved by Vivian 2026-10-07), before any H134 statistic on real data. No scheme, synthetic or analysis code exists yet.
+**Status:** round 1 in progress (synthetic validation done 2026-10-07; amendments A1–A8 before real data). Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH377 (approved by Vivian 2026-10-07), before any H134 statistic on real data. No scheme, synthetic or analysis code exists yet.
 **Question (GOALS.md):** **Q4** (where does the swarm's information live: is project stickiness held by the context window, as idle traps are?). Second: **Q5** (operator lever: does a context reset release an agent from a project it is stuck on?).
 **Fields:** stat mech (kinetic Potts with a self-field; Pólya urn; aging), dynamics (renewal hazards, discrete-time survival), info theory (which store holds the state)
 **Literature:** none in `literature/` covers urn-driven aging. Cited from memory (†): Pólya & Eggenberger (1923)† (urn reinforcement); Bouchaud, *J. Phys. I France* 2, 1705 (1992)† (trap model, aging); Allison (1982)† (discrete-time hazards with time-varying covariates).
@@ -158,6 +158,43 @@ No period has been run. Period folders (`goalperiod-subhypotheses/G<NN>/`, `NE41
 
 ## Results
 Not run.
+
+## Round 1 (2026-10-07)
+
+### Structural counts (before any outcome statistic)
+Built by `scheme/build.py` from the shared per-call labels (`infra/shared/project_calls.py`, commit 18e52ee) and the DQ1 ledger, regime III, reserved rows dropped and asserted. 989,450 risk calls in 58,043 project visits (call). Mean project self-share f_proj 0.04 (G42) to 0.20 (G40); 61% of risk calls have f_proj > 0. Context segments are short: a forced reset comes at the 41-call cap. **Precondition:** 25 of 27 non-reserved regime-III units are testable (≥ 100 visits, ≥ 50 completed); 38c (59 visits) and 38d (76) are not. Forced resets inside visits with d ≥ 10: G51 7,777 (all 12 units ≥ 50), G38 1,179.
+
+### Synthetic validation (axis F)
+`analysis/synthetic.py` on the real visit and touch paths of 51c, 51h (G51) and 38a (G38): real calls, resets, touch patterns, f_proj and d. Only the leave outcome is simulated (first hit along each real path, censored at the real end). Agent intercepts SD 0.5; base rate −2.4 on the logit scale (near the counted completed-visit-per-call ratio). 200 runs per world (O3 variants: 100 runs on 51c and 51h). Intervals are agent-day cluster 95% intervals. Numbers: `data/processed/H134-polya-urn-project-stickiness/synthetic/summary.json`, `o3_*.json`, `o4pool_*.json`.
+
+| Test | Size (null worlds) | Power / bias at the planted value | Pass rule (G51) |
+| --- | --- | --- | --- |
+| O1 β_F > 0, model (b) | W0 0.04 / 0.03; W2 0.06 / 0.04; W3 0.04 / 0.01 (51c / 51h) | W1: β̂_F 1.01 / 1.01 (SD 0.14 / 0.15), power 1.00 / 1.00; 38a 0.99 | pass |
+| O1 β_F CI ∋ 1, model (b) | W4 (R-store) 0.00 / 0.00; W5 (β_F 0.5) 0.01 / 0.01 | W1 coverage 0.92 / 0.94 (38a 0.93) | pass |
+| **R-store fakes β_F > 0** | W4: β̂_F +0.22 / +0.26, CI > 0 in 0.61 / 0.68 (38a 0.47) | — | P1 is not specific; P2 carries the store test |
+| O1 model (a), no ln d | W3 frailty bias −0.08 / −0.19 (38a −0.40) | W1 unbiased | model (b) is primary (as the card says) |
+| β_d < 0, model (b) | W1 0.01 / 0.01 | W2 power 1.00 / 1.00, β̂_d −0.39 / −0.39 | pass |
+| O2 ε(F) above the proxy band | band (97.5% of W2–W4) 0.019 / 0.055 (38a 0.065) | W1: G(A) > 0 in only 0.13 / 0.27 of runs; ε above band 0.45 / 0.65; W5 0.00 / 0.05 | **fails (power)** |
+| O3 card design (forward from arrival), Kill A rule | W0 0.27 / 0.19; W1 0.22 / 0.23 | W2 0.99 / 0.98, W3 1.00 / 1.00, W4 0.62 / 0.28 | **fails (size)** |
+| O3 P90 of completed dwell | outside the band in 100% of runs in every world | — | biased: descriptive |
+| O3 with coefficient draws (forward) | W0 0.14 / 0.16; W1 0.20 / 0.14 | — | fails (size) |
+| **O3-pp** (posterior-predictive on the observed risk rows, coefficient draws) | W0 0.03 / 0.03; W1 0.02 / 0.02 | W2 1.00 / 1.00, W3 1.00 / 1.00, W4 1.00 / 1.00, W5 1.00 / 0.99 | pass |
+| O4 reset step, G51 pooled (7,760 resets, independent rows) | W0 0.03; W4 0.04 | W1: Δ̂ +0.086 vs predicted +0.101, power **0.52**; W5 0.27 | positive test valid; **negative unpowered** |
+| O4 reset step, G38 pooled (1,179) | W0 0.04; W4 0.03 | W1 power 0.23 | unpowered |
+| O4 pseudo-reset placebo (per unit) | 0.01–0.06 (two-sided) | — | pass |
+
+**What the synthetic shows about the design.** On the real skeleton, an urn with β_F = 1 makes almost no dwell aging. The self-share lives in segments of at most 41 calls, so it does not grow with dwell; G(A) > 0 in only 13–27% of W1 runs. The urn therefore cannot be the cause of strong observed aging, and ε(F) has nothing to absorb. O3-pp tests exactly this: does the fitted per-call rule without ln d reproduce the observed dwell slope.
+
+### Amendments (dated 2026-10-07, written before any real-data statistic)
+- **A1 (ruler).** f_proj = n_a / (n_own + ½), so 1 − f = (n_own − n_a + ½)/(n_own + ½). The card's pseudo-count (n_a + ½)/(n_own + 1) gives f = ½ at a segment start, which contradicts "a forced reset sets f_proj to 0". Variants use the same pseudo-count.
+- **A2 (CIs).** Agent-day block bootstrap (200 draws) replaces the day-block bootstrap. Units have 2–13 days, so day blocks are too few. Agent-day cluster SEs have size 0.01–0.06 in the null worlds.
+- **A3 (units).** A visit that crosses a unit boundary is split. Its rows keep their true dwell d (left truncation); the hazard by d handles late entry.
+- **A4 (kick term, exogenous variants).** K = ln(1 + N^nam_other) counts agent messages read at the call (ledger items, not omitted) that name the reader (`ment`) and link another project (`project_mentions_chat`). H133's read table is card-local, so H134 rebuilds the count. The kickoff variant drops the first 4 hours after the goal period's first day window opens.
+- **A5 (reset prediction).** Δ_pred = −β_F ln(1 − f_pre) with β_F from model (b) and f_post = 0 (A1). Δ_reset is the Mantel–Haenszel log odds ratio with the Robins–Breslow–Greenland SE; G51 and G38 pool unit log ORs by inverse variance.
+- **A6 (O3 primary).** The card's forward design fails size (0.14–0.27 with the true model). The primary O3 test is O3-pp: fit B + F + K (no ln d), draw coefficients from N(β̂, V_cluster), draw one Bernoulli leave per observed risk row, and compare the observed dwell slope γ and KM survival at d = 100, 300 with the 95% bands of 200 copies. The forward design is reported as descriptive. P90 of completed dwell is descriptive (biased in every world).
+- **A7 (untestable parts, declared before any outcome).** P3 and Kill B: power 0.45–0.65 < 0.8, so ε(F) is reported but cannot support or kill. N1's negative side and Kill C: power 0.52 in G51 (0.23 in G38) at the urn's predicted step, so a null reset step cannot kill H134; a positive step with CI > 0 still counts (size 0.03).
+- **A8 (P1 reading).** R-store makes β_F > 0 in 47–68% of runs, so P1 alone does not separate the urn from the store. P2 (CI ∋ 1) does: W4 gives CI ∋ 1 in 0–4% of runs (below the card's 10% switch, so O1 stays primary for P2).
+- Synthetic code saw the real visit paths and the structural counts. It computed no real-data outcome statistic.
 
 ## Notes
 - 2026-10-07: card written from HH377 (approved by Vivian 2026-10-07). Round-1 order: structural counts → period READMEs with dated predictions → synthetic → dated amendments → replication and natives → estimates rows (`h134_beta_urn`, `h134_eps_selfshare`, `h134_reset_step`, `h134_tail_calibration`) → frozen `confirm.py` (dry run only).
