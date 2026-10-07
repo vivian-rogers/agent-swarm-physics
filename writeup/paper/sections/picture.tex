@@ -1,25 +1,25 @@
-% picture: "What the system is" -- the effective picture, built model by model (models 02+09, 11+01, 16, 17),
+% picture: "What the system is" -- the effective picture, built model by model (M02+09, 11+01, 16, 17),
 % then the ranked observables. ASD-STE100 rules as in intro.tex. Revised 2026-10-07.
 % Numbers: scratchpad fact sheets of 2026-10-07 (latest scored round of each card). Derived values are labeled "derived".
 % Float calls sit one subsection before their text so that the floats land near it.
 \section{What the system is}\label{sec:picture}
 
-This section builds the effective picture, one model at a time (Fig.~\ref{fig:picture}). For each equation we give its meaning, a physical picture, its measurement from the logs and the best evidence; Sec.~\ref{sec:models} gives the full evidence. Values are for regime III, with 95\% confidence intervals (CIs) in brackets, unless we state otherwise. Table~\ref{tab:words} explains each special word in one line; the Introduction explains the call clock, the read-out call and the in-flight placebo.
+This section builds the effective picture, one model at a time (Fig.~\ref{fig:picture}). We name each physics model by its folder number: M02 is model 02, the kinetic Ising model, and so on up to M17 (Sec.~\ref{sec:method} lists all 17). For each equation we give its meaning, a physical picture, its measurement from the logs and the best evidence; Sec.~\ref{sec:models} gives the full evidence. Values are for regime III, with 95\% confidence intervals (CIs) in brackets, unless we state otherwise. Table~\ref{tab:words} explains each special word in one line; the Introduction explains the call clock, the read-out call and the in-flight placebo.
 
 \input{sections/glossary}
 \input{sections/fig_picture}
 \input{sections/table_monitor}
 \begin{figure}[t]
 \centering\includegraphics[width=\columnwidth]{js/s2_readout_example.pdf}
-\caption{A message acts at the read-out call of its reader (model 02, H08). One G38 message (star) and the calls of its room-mates (bars). Four agents had a call in flight (dark gray) when it was posted; they read it 7--24\,s later, at their next call (blue). Three agents were in a long pause; they read it 130--169\,s later and replied at that same call (triangles). Figure~\ref{fig:readoutjump} shows the same step in 17 periods.}
+\caption{A message acts at the read-out call of its reader (M02, H08). One G38 message (star) and the calls of its room-mates (bars). Four agents had a call in flight (dark gray) when it was posted; they read it 7--24\,s later, at their next call (blue). Three agents were in a long pause; they read it 130--169\,s later and replied at that same call (triangles). Figure~\ref{fig:readoutjump} shows the same step in 17 periods.}
 \label{fig:readout}
 \end{figure}
 
 % ------------------------------------------------------------------ 02 + 09
-\subsection{Agents are kinetic spins that couple at the read-out call (models 02 and 09)}\label{sec:p02}
+\subsection{Agents are kinetic spins that couple at the read-out call (M02 and M09)}\label{sec:p02}
 \begin{figure}[t]
 \centering\includegraphics[width=\columnwidth]{js/s2_kickoff_matrix.pdf}
-\caption{The kickoff text is a field vector (model 11, H54). Similarity of the day-1 content centroid of each period (rows) to each candidate kickoff text (columns), after we remove how generic each kickoff is; bge embeddings. Orange: more alike than average; purple: less. Look at the dark orange diagonal: the content of day 1 lands on the text that the operator wrote for that period. The own kickoff ranks first in 18/33 periods (Fig.~\ref{fig:kickoffrank}).}
+\caption{The kickoff text is a field vector (M11, H54). Similarity of the day-1 content centroid of each period (rows) to each candidate kickoff text (columns), after we remove how generic each kickoff is; bge embeddings. Orange: more alike than average; purple: less. Look at the dark orange diagonal: the content of day 1 lands on the text that the operator wrote for that period. The own kickoff ranks first in 18/33 periods (Fig.~\ref{fig:kickoffrank}).}
 \label{fig:kickoff}
 \end{figure}
 
@@ -45,7 +45,7 @@ P(Y_{ic}=1)=\sigma\Big(\beta\Big[h_i(t_{ic})+\!\!\sum_{m\in B_{ic}}\!\!\big(J_0+
 
 \textbf{The clock is the call.} On the \emph{call clock}, time is the count of an agent's own calls: an agent that waits ten minutes between calls has not aged. To test it, note that when a call takes twice as long, the chance of a reply changes by a factor $2^{\eta}$. Thus the elasticity $\eta=0$ means that calls set the clock, and $\eta=1$ means that wall time sets it. In regimes II and III, $\eta=-0.11$ [$-0.16$, $-0.06$] (H40); regime I gives $+0.51$ [0.41, 0.61], which we cannot explain.
 
-\textbf{Loop gain and its echoes.} Model 09 is a \emph{Hawkes process}: a model of events that trigger later events, first used for earthquake aftershocks~\cite{hawkes1971}. It counts the echoes of one message:
+\textbf{Loop gain and its echoes.} M09 is a \emph{Hawkes process}: a model of events that trigger later events, first used for earthquake aftershocks~\cite{hawkes1971}. It counts the echoes of one message:
 \begin{equation}
 \begin{gathered}
 g=\bar m\,\bar r\,J_1^\ast,\qquad \chi=\frac{1}{1-g},\\
@@ -69,20 +69,20 @@ g=\bar m\,\bar r\,J_1^\ast,\qquad \chi=\frac{1}{1-g},\\
 \textbf{Variant: the context holds a self-field.} The recent output of an agent stays in its context and acts as a field on the agent. Thus \emph{restatement loops}, in which an agent posts the same point again and again, copy what the context holds (H69). In \#51 (each agent had a private goal), a forced erasure inside an \emph{idle trap}, a long run of waits, lifts the chance of a lasting escape from 0.47 to 0.84 (H16). Only inside idle traps does the self-field act partly like an urn, in proportion to the share of the context that the agent's own waits fill (H16, H72). For project choice, the context acts as a reset step, not as a proportional urn: the share of the context about a project does not set the odds of leaving it (slope $+0.07$ [$-0.05$, $+0.19$]; an urn predicts 1), but a forced reset raises them ($+0.40$ [$+0.25$, $+0.54$] log-odds, G51; H134, Sec.~\ref{sec:m02}).
 
 % ------------------------------------------------------------------ 11 + 01
-\subsection{External fields set most of the state (models 11 and 01)}\label{sec:p11}
+\subsection{External fields set most of the state (M11 and M01)}\label{sec:p11}
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{js/m16_relaxation.pdf}
-\caption{A fast read kick on a slow, overdamped well (model 16). (a)~After a goal kickoff, alignment with the kickoff (relative to its level on days 4--5) overshoots on day 1 and settles by day 3. Nothing dips in the gray undershoot window ($U=-0.006$ [$-0.020$, $+0.008$], bge, 27 kickoffs, 90\% CI; H125). Gray squares: the same with gte embeddings. (b)~In \#51 the memory of an agent for its own content (orange) decays over about 100 of its calls. The pull of a read (blue) decays in about 7 (H130). We divide each series by its fitted amplitude; thin lines are $e^{-\gamma n}$. (c)~Simulation: state $x$ = slow well $s$ + short kicks at reads (ticks). Look at the gap between the two curves in (b): one rate cannot describe both.}
+\caption{A fast read kick on a slow, overdamped well (M16). (a)~After a goal kickoff, alignment with the kickoff (relative to its level on days 4--5) overshoots on day 1 and settles by day 3. Nothing dips in the gray undershoot window ($U=-0.006$ [$-0.020$, $+0.008$], bge, 27 kickoffs, 90\% CI; H125). Gray squares: the same with gte embeddings. (b)~In \#51 the memory of an agent for its own content (orange) decays over about 100 of its calls. The pull of a read (blue) decays in about 7 (H130). We divide each series by its fitted amplitude; thin lines are $e^{-\gamma n}$. (c)~Simulation: state $x$ = slow well $s$ + short kicks at reads (ticks). Look at the gap between the two curves in (b): one rate cannot describe both.}
 \label{fig:m16}
 \end{figure}
 
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{js/m17_modes.pdf}
-\caption{Collective modes against a calibrated random-matrix edge (model 17, H12). (a)~For each of 24 units, the top eigenvalue of the agent correlation matrix divided by the 95\% edge of a calibrated surrogate null; points in the gray band agree with noise. Activity mostly fails the trimmed block-shift null (7/24). Talk (21/24) and content (24/24, median ratio 1.52) carry a real mode. (b)~In the \#12 debates, one row per debate: the participation ratio while a motion is on (orange) is lower than after the verdict (open circle) in 7/9 debates (median $-25\%$, $p=0.010$). Look at the activity column in (a): when we trim the scheduler, its mode sits at the noise edge.}
+\caption{Collective modes against a calibrated random-matrix edge (M17, H12). (a)~For each of 24 units, the top eigenvalue of the agent correlation matrix divided by the 95\% edge of a calibrated surrogate null; points in the gray band agree with noise. Activity mostly fails the trimmed block-shift null (7/24). Talk (21/24) and content (24/24, median ratio 1.52) carry a real mode. (b)~In the \#12 debates, one row per debate: the participation ratio while a motion is on (orange) is lower than after the verdict (open circle) in 7/9 debates (median $-25\%$, $p=0.010$). Look at the activity column in (a): when we trim the scheduler, its mode sits at the noise edge.}
 \label{fig:m17}
 \end{figure}
 
-Model 11 treats the content of each agent as an arrow, a \emph{vector spin} $\mathbf s_i$. The arrow is the mean \emph{embedding} of the statements of the agent in a window, minus the regime mean and its style. (An embedding is a vector from a text model; similar meanings give near vectors.) As in a magnet, each arrangement of arrows has an energy $\mathcal H$, and arrangements of low energy are more probable, with weight $e^{-\beta\mathcal H}$:
+M11 treats the content of each agent as an arrow, a \emph{vector spin} $\mathbf s_i$. The arrow is the mean \emph{embedding} of the statements of the agent in a window, minus the regime mean and its style. (An embedding is a vector from a text model; similar meanings give near vectors.) As in a magnet, each arrangement of arrows has an energy $\mathcal H$, and arrangements of low energy are more probable, with weight $e^{-\beta\mathcal H}$:
 \begin{equation}
 \begin{gathered}
 -\beta\mathcal H=\sum_{i<j}J_{ij}\,\mathbf s_i\cdot\mathbf s_j+\sum_i\mathbf h_i\cdot\mathbf s_i ,\\
@@ -93,14 +93,14 @@ Model 11 treats the content of each agent as an arrow, a \emph{vector spin} $\ma
 
 \emph{Meaning.} A set of arrows is more probable when each arrow points along its field, and along other arrows where $J_{ij}>0$. The field has four parts: the scheduler, the goal, the room $r(i)$ and a constant term $\mathbf h_i^0$ for each agent, such as its style. The goal field points along the kickoff text $\hat{\mathbf g}$, with strength $h_g$.
 
-\emph{Picture.} A strong magnet turns all compass needles the same way, even when the needles do not touch. When you see aligned needles, find the magnet first. Model 01, the binary inverse Ising model, infers fields and couplings from on/off activity alone; it gives the gain and the field share in a simpler form~\cite{schneidman2006,meshulam2019}.
+\emph{Picture.} A strong magnet turns all compass needles the same way, even when the needles do not touch. When you see aligned needles, find the magnet first. M01, the binary inverse Ising model, infers fields and couplings from on/off activity alone; it gives the gain and the field share in a simpler form~\cite{schneidman2006,meshulam2019}.
 
 \emph{From the logs.} The \emph{field share} $f$ is the part of the excess co-activation (agents active at the same time, beyond chance) that the daily start and stop of the scheduler explain. We test it against a null that shifts the record of each agent in time by whole blocks: this keeps each agent's habits but breaks the timing between agents. For the goal, we rank the day-1 content against its own kickoff text and 32 others.
 
 \emph{Evidence.} The daily start and stop give 70--80\% of the co-activation ($f=0.72$ median over 8 periods; regime I 0.11; H38, fragile). The day-1 content ranks its own kickoff first in 18/33 periods (bge embeddings) and 20/33 (gte) (H54, Fig.~\ref{fig:kickoff}; bge and gte are two text-embedding models). Style identifies an agent at 0.85, against a chance level of 0.15 (H46), and rooms split content in 5/7 periods (H100). A goal switch is a \emph{quench}, a sudden change of the field. On day 1, the share of the old content state that persists beyond the new field falls to 0.18--0.27, against 0.85--0.89 across a night (H96).
 
 % ------------------------------------------------------------------ 16
-\subsection{Each agent relaxes as a fast kick on a slow well (model 16)}\label{sec:p16}
+\subsection{Each agent relaxes as a fast kick on a slow well (M16)}\label{sec:p16}
 
 Let the content of agent $i$ at its call $n$ be $x_i=s_i+k_i$, a slow part plus a fast part. A \emph{Langevin model} describes a particle that random kicks push and friction pulls back. Our two-rate version~\cite{uhlenbeck1930} gives
 \begin{align}
@@ -118,7 +118,7 @@ k_i(n+1)&=(1-\gamma_k)\,k_i(n)+\kappa\!\!\sum_{m\in B_{in}}\!\!(z_m-x_i)_\perp .
 \emph{Evidence.} In \#51 (private goals) a read pulls the next statement of the reader toward the sender: $J_K=0.044$ [0.038, 0.050], in 11/12 units (H130). The pull fades in about 7 calls ($\gamma_k\approx0.13$--0.17 per call); the own content relaxes in about 100 calls, roughly 1\,h ($\gamma_s=0.0094$ [0.0076, 0.0115]). The ratio is 14.8 [7.2, 30.4] (90\% CI). After a kickoff, alignment overshoots on day 1 and does not undershoot ($U=-0.006$ [$-0.020$, 0.008], 90\% CI; H125; Fig.~\ref{fig:m16}). We chose the two-rate form after the one-rate model failed, so it needs a pre-registered test.
 
 % ------------------------------------------------------------------ 17
-\subsection{Beyond one shared mode, few collective patterns rise above the noise (model 17)}\label{sec:p17}
+\subsection{Beyond one shared mode, few collective patterns rise above the noise (M17)}\label{sec:p17}
 
 Take $N$ agents and $T$ time samples in a window. The correlation matrix of the agents has eigenvalues $\lambda_1\ge\dots\ge\lambda_N$. Each eigenvalue tells how much of the joint variance one pattern of co-movement, a \emph{mode}, carries. Even independent agents show some chance correlation in a short record. Random-matrix theory gives this noise floor, the \emph{Marchenko--Pastur edge} $\lambda_+$, and the condition for a real mode~\cite{marchenko1967,baik2005}:
 \begin{equation}

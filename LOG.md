@@ -5,6 +5,11 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — Step changes labelled in the coverage figures; M-number convention
+
+- Vivian asked what "NE" means and whether it equals a goal period (no: a natural experiment is a dated step change in the setup, tested before vs. after, often spanning two goal periods). Fig. 12 and the Appendix D grid now head that block "step changes in the setup (before vs. after)" and name each column by its change (short names from natural-experiments.md, in `export/hyp_grid.py: NE_LABEL`), with a gap separating it from the goal periods; captions and Table I (glossary) explain it.
+- Vivian: write "M17" rather than "model 17" except where the short form has not been introduced recently. Convention introduced at the start of Sec. II and in Table I; 48 text and caption references converted, plus gallery titles, Table V rows and two headings. The Sec. IV–V subsection headings keep "Model NN: …" as the formal re-introduction.
+
 ## 2026-10-07 — Table II in physics terms with estimation windows; model × goal-period coverage figure
 
 - Vivian: which goal periods applied to which models (not uniform), when the Table II values are estimated, and physics language in the table's left column.

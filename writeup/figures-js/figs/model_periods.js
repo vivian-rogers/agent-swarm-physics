@@ -2,10 +2,10 @@
 // periods by regime and natural experiments. Each cell is a small stacked bar of the verdicts of that model's cards
 // in that period (height grows with the number of tests). Data: hyp_grid.json (export/hyp_grid.py).
 window.FIG = {
-  width: 7.05, height: 3.55, data: "hyp_grid",
+  width: 7.05, height: 4.2, data: "hyp_grid",
   draw(svg, D) {
     const { C } = S;
-    const W = 7.05 * 72, H = 3.55 * 72;
+    const W = 7.05 * 72, H = 4.2 * 72;
     const g = svg.append("g");
     const ORDER = ["02", "09", "11", "01", "16", "17", "04", "03", "15", "14", "08", "06", "10", "13"];
     const TIER = { "02": "useful", "09": "useful", "11": "useful", "01": "useful", "16": "useful", "17": "useful",
@@ -26,8 +26,8 @@ window.FIG = {
     const tot = (o) => d3.sum(Object.values(o));
     const maxN = d3.max(ORDER, (m) => d3.max(cnt.get(m), tot));
 
-    const L = 118, R = 64, top = 46, rowH = (H - top - 26) / ORDER.length;
-    const colW = (W - L - R) / P.length, x = (i) => L + i * colW;
+    const L = 118, R = 64, top = 104, rowH = (H - top - 26) / ORDER.length;
+    const GAP = 7, colW = (W - L - R - GAP) / P.length, x = (i) => L + i * colW + (P[i] && P[i].kind === "NE" ? GAP : 0);
     const hScale = (n) => (rowH - 2.2) * Math.sqrt(n / maxN);
 
     // reserved shading, regime bands, column labels
@@ -37,13 +37,19 @@ window.FIG = {
     for (const [k, ps] of bands) {
       const i0 = d3.min(ps, (p) => p.i), i1 = d3.max(ps, (p) => p.i) + 1;
       const col = k === "NE" ? C.ink2 : S.REG[k] || C.muted;
-      g.append("rect").attr("x", x(i0) + 0.4).attr("y", top - 6).attr("width", x(i1) - x(i0) - 0.8).attr("height", 2).attr("fill", col);
-      S.text(g, (x(i0) + x(i1)) / 2, top - 30, k === "NE" ? "natural experiments" : `regime ${k}`, { anchor: "middle", size: 6.4, fill: col });
+      g.append("rect").attr("x", x(i0) + 0.4).attr("y", top - 6).attr("width", x(i1 - 1) + colW - x(i0) - 0.8).attr("height", 2).attr("fill", col);
+      if (k !== "NE") S.text(g, (x(i0) + x(i1 - 1) + colW) / 2, top - 26, `regime ${k}`, { anchor: "middle", size: 6.4, fill: col });
     }
+    const iNE = P.findIndex((p) => p.kind === "NE");
+    const hdr = (a, b, label) => {
+      S.text(g, (x(a) + x(b) + colW) / 2, top - 96, label, { anchor: "middle", size: 6.8, fill: C.ink });
+      g.append("line").attr("x1", x(a) + 0.5).attr("x2", x(b) + colW - 0.5).attr("y1", top - 92.5).attr("y2", top - 92.5).attr("stroke", C.ink2).attr("stroke-width", 0.5);
+    };
+    hdr(0, iNE - 1, "goal periods (#)"); hdr(iNE, P.length - 1, "step changes in the setup (before vs. after)");
     P.forEach((p, i) => {
       g.append("text").attr("transform", `translate(${x(i) + colW / 2 + 1.8},${top - 8}) rotate(-90)`)
         .attr("font-family", S.F.tick).attr("font-size", 5.4).attr("fill", C.ink2)
-        .text(p.kind === "NE" ? p.id : p.id.replace(/^G0?/, ""));
+        .text(p.kind === "NE" ? p.label : p.id.replace(/^G0?/, ""));
     });
 
     // rows
@@ -77,6 +83,6 @@ window.FIG = {
       { label: "descriptive", rect: true, color: VC.descriptive }, { label: "failed", rect: true, color: VC.failed },
       { label: "reserved period", rect: true, color: "#f3ece0" },
     ], { gap: 10, size: 6.2 });
-    S.text(g, W - R + 5, H - 4, `bar height ∝ √(tests); max ${maxN}`, { size: 5.6, fill: C.muted });
+    S.text(g, W - R + 5, H - 4, "height \u221d \u221atests", { size: 5.8, fill: C.muted });
   },
 };

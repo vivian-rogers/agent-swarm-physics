@@ -26,6 +26,18 @@ from collect import verdict_key  # noqa: E402
 
 HYP = ROOT / "hypotheses"
 
+# Short names for the natural experiments (dated step changes in the setup), from hypotheses/natural-experiments.md.
+NE_LABEL = {
+    "NE03": "chat fetch limited", "NE04": "history search added", "NE06": "Gemini: 1 tool per turn",
+    "NE07": "prompt: don't idle", "NE09": "chat in work context", "NE10": "nudger on", "NE14": "continuous computer use",
+    "NE15": "rooms split (#best/#rest)", "NE16": "memory fix", "NE17": "outreach approval", "NE18": "search: verbatim, 10 days",
+    "NE21": "hours 4 h / 8 h", "NE24": "GitHub to GitLab", "NE27": "batch join (4 to 7)", "NE28": "two agents retire",
+    "NE29": "Sonnet 3.7 retires", "NE30": "Gemini 3 to 3.1 swap", "NE32": "newcomers isolated", "NE33": "batch join (#51)",
+    "NE34": "goal changes (kickoffs)", "NE36": "belief corrected", "NE38": "role reassigned", "NE39": "chat closed to public",
+    "NE40": "search model swapped", "NE41": "forced context erasure", "NE42": "rooms merged, split", "NE43": "daily bookends stop",
+    "NE44": "pause default 5 min", "NE45": "search schema change",
+}
+
 
 def main():
     hs = MO.load_hypotheses(scored_only=False)
@@ -61,7 +73,7 @@ def main():
             c = cal.get(int(m.group(2)), {})
             periods.append(dict(id=p, kind="G", goal=int(m.group(2)), regime=c.get("regime"), reserved=bool(c.get("holdout"))))
         else:
-            periods.append(dict(id=p, kind="NE", goal=None, regime=None, reserved=False))
+            periods.append(dict(id=p, kind="NE", goal=None, regime=None, reserved=False, label=NE_LABEL.get(p, p)))
     vc = {}
     for c in cells:
         vc[c["v"]] = vc.get(c["v"], 0) + 1

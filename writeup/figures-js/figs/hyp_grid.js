@@ -23,11 +23,11 @@ window.FIG = {
     // ---- columns
     const P = D.periods;
     const cellOf = new Map(D.cells.map((c) => [`${c.h}|${c.p}`, c]));
-    const L = 156, R = 6, top = 70;
-    const colW = (W - L - R) / P.length;
+    const L = 156, R = 6, top = 138;
+    const GAP = 7, colW = (W - L - R - GAP) / P.length;
     const nRows = d3.sum(mine, (g) => g.rows.length);
     const rowH = Math.min(7.0, (H - top - 6 - mine.length * 11) / nRows);
-    const x = (i) => L + i * colW;
+    const x = (i) => L + i * colW + (P[i] && P[i].kind === "NE" ? GAP : 0);
     const g = svg.append("g");
 
     // title line + legend
@@ -57,13 +57,19 @@ window.FIG = {
     for (const [k, ps] of bands) {
       const i0 = d3.min(ps, (p) => p.i), i1 = d3.max(ps, (p) => p.i) + 1;
       const col = k === "NE" ? C.ink2 : S.REG[k] || C.muted;
-      g.append("rect").attr("x", x(i0) + 0.4).attr("y", top - 7).attr("width", x(i1) - x(i0) - 0.8).attr("height", 2.2).attr("fill", col);
-      S.text(g, (x(i0) + x(i1)) / 2, top - 26, k === "NE" ? "natural experiments" : `regime ${k}`,
+      g.append("rect").attr("x", x(i0) + 0.4).attr("y", top - 7).attr("width", x(i1 - 1) + colW - x(i0) - 0.8).attr("height", 2.2).attr("fill", col);
+      if (k !== "NE") S.text(g, (x(i0) + x(i1 - 1) + colW) / 2, top - 22, `regime ${k}`,
         { anchor: "middle", size: 6.4, fill: col === C.ink2 ? C.ink2 : col });
     }
+    const iNE = P.findIndex((p) => p.kind === "NE");
+    const hdr = (a, b, label) => {
+      S.text(g, (x(a) + x(b) + colW) / 2, top - 98, label, { anchor: "middle", size: 6.8, fill: C.ink });
+      g.append("line").attr("x1", x(a) + 0.5).attr("x2", x(b) + colW - 0.5).attr("y1", top - 94.5).attr("y2", top - 94.5).attr("stroke", C.ink2).attr("stroke-width", 0.5);
+    };
+    hdr(0, iNE - 1, "goal periods (#)"); hdr(iNE, P.length - 1, "step changes in the setup (before vs. after)");
     // column labels (rotated)
     P.forEach((p, i) => {
-      const lab = p.kind === "NE" ? p.id : p.id.replace(/^G0?/, "");
+      const lab = p.kind === "NE" ? p.label : p.id.replace(/^G0?/, "");
       const t = g.append("text").attr("x", 0).attr("y", 0).attr("transform", `translate(${x(i) + colW / 2 + 1.9},${top - 9}) rotate(-90)`)
         .attr("font-family", S.F.tick).attr("font-size", 5.6).attr("fill", C.ink2).text(lab);
     });

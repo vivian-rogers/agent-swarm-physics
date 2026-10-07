@@ -1,4 +1,4 @@
-% models-partial: partly useful models 04, 03, 15, 14, 08. Model-first rewrite 2026-10-07.
+% models-partial: partly useful M04, M03, M15, M14, M08. Model-first rewrite 2026-10-07.
 % Numbers: scratchpad fact sheets 04_12_information, 03_15_05_06_14, 10_13_08_07_cross.
 \section{Partly useful models}\label{sec:partial}
 
@@ -15,7 +15,7 @@
 
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{js/h15_erasure.pdf}
-\caption{The context window carries the working state (model 04, H15). Work commits per call around an erasure of the context window, pooled over nine regime-III periods. Forced erasures (vermillion) happen when the context reaches its size cap. Voluntary ones (blue) happen when the agent chooses. Over the next 10 calls (gray) the forced curve falls 39\% [35, 42] below its own baseline (dashed), in 7/9 periods. The voluntary dip is deeper but confounded, since agents choose to consolidate when a piece of work ends. Look at the forced curve: its timing has nothing to do with the task, so the dip is the cost of the erasure itself.}
+\caption{The context window carries the working state (M04, H15). Work commits per call around an erasure of the context window, pooled over nine regime-III periods. Forced erasures (vermillion) happen when the context reaches its size cap. Voluntary ones (blue) happen when the agent chooses. Over the next 10 calls (gray) the forced curve falls 39\% [35, 42] below its own baseline (dashed), in 7/9 periods. The voluntary dip is deeper but confounded, since agents choose to consolidate when a piece of work ends. Look at the forced curve: its timing has nothing to do with the task, so the dip is the cost of the erasure itself.}
 \label{fig:erasure}
 \end{figure}
 
@@ -35,7 +35,7 @@
 
 \begin{figure*}[t]
 \includegraphics[width=\textwidth]{js/h87_kappa.pdf}
-\caption{The $\kappa$ table: only the context window buys commits per bit (model 04, H87). Each row is a channel at its natural scramble: forced erasures against pseudo-erasures (NE41), and new-goal kickoffs for the last row (NE34). Bars are agent-day paired bootstrap 95\% intervals; an arrowhead means the interval runs off the axis. (a)~Bits about where the agent works next, beyond its identity. Rows whose lower bound is under 0.02 bits (gray strip) are not identified. Human messages name no repository, so they carry 0 bits. (b)~Work commits per 20 calls lost when the channel is scrambled. (c)~Value per bit, $\kappa_c=\Delta V_c/I_c$, for identified rows; ``n.i.'' marks the others. Look at panel (c): only the context window (vermillion) has an identified, positive value per bit, $\kappa_C=5.2$ [3.8, 7.9]. The own artifact carries the most bits but no value ($\kappa_A=-0.6$).}
+\caption{The $\kappa$ table: only the context window buys commits per bit (M04, H87). Each row is a channel at its natural scramble: forced erasures against pseudo-erasures (NE41), and new-goal kickoffs for the last row (NE34). Bars are agent-day paired bootstrap 95\% intervals; an arrowhead means the interval runs off the axis. (a)~Bits about where the agent works next, beyond its identity. Rows whose lower bound is under 0.02 bits (gray strip) are not identified. Human messages name no repository, so they carry 0 bits. (b)~Work commits per 20 calls lost when the channel is scrambled. (c)~Value per bit, $\kappa_c=\Delta V_c/I_c$, for identified rows; ``n.i.'' marks the others. Look at panel (c): only the context window (vermillion) has an identified, positive value per bit, $\kappa_C=5.2$ [3.8, 7.9]. The own artifact carries the most bits but no value ($\kappa_A=-0.6$).}
 \label{fig:kappa}
 \end{figure*}
 
@@ -59,7 +59,7 @@
 
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{js/h34_cascades.pdf}
-\caption{Idea cascades are subcritical in every goal period (model 03, H34; round-1b data). (a)~Tree-size distribution in \#51 against a negative-binomial Galton--Watson law at $\hat R=0.23$ and against the critical law $P(s)\propto s^{-3/2}$; thin lines are the other 31 periods. (b)~$\hat R$ with 95\% CI for the 32 non-reserved periods against room size. Look at panel (b): every upper bound sits below 1. Round 2 adds that the heavy tail is a spread of $R$ across ideas.}
+\caption{Idea cascades are subcritical in every goal period (M03, H34; round-1b data). (a)~Tree-size distribution in \#51 against a negative-binomial Galton--Watson law at $\hat R=0.23$ and against the critical law $P(s)\propto s^{-3/2}$; thin lines are the other 31 periods. (b)~$\hat R$ with 95\% CI for the 32 non-reserved periods against room size. Look at panel (b): every upper bound sits below 1. Round 2 adds that the heavy tail is a spread of $R$ across ideas.}
 \label{fig:cascades}
 \end{figure}
 

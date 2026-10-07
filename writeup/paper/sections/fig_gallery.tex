@@ -12,16 +12,16 @@
   rl/.style={-{Stealth[length=1.5mm]},draw=inkc!70,line width=0.5pt},
   ttl/.style={anchor=west,font=\sffamily\small\bfseries},
   lab/.style={font=\sffamily\footnotesize,text=inkc}]
-% (a) Ising, models 02/01
-\node[ttl] at (-0.3,3.3) {(a) 02 kinetic Ising};
+% (a) Ising, M02/01
+\node[ttl] at (-0.3,3.3) {(a) M02 kinetic Ising};
 \node[ag,fill=spinup!85] (i1) at (0.3,2.3) {}; \node[ag,fill=spinup!85] (i2) at (1.4,2.6) {};
 \node[ag,fill=spindn!85] (i3) at (2.4,1.9) {}; \node[ag,fill=spinup!85] (i4) at (0.6,1.0) {};
 \node[ag,fill=spindn!85] (i5) at (1.8,0.7) {};
 \draw[rl] (i1)--(i2); \draw[rl] (i2)--(i3); \draw[rl] (i4)--(i5); \draw[rl] (i5)--(i3);
 \node[lab,align=center] at (1.3,-0.45) {flip at own call;\\links act at read-out};
-% (b) vector spins, model 11
+% (b) vector spins, M11
 \begin{scope}[xshift=3.6cm]
-\node[ttl] at (-0.3,3.3) {(b) 11 vector spins};
+\node[ttl] at (-0.3,3.3) {(b) M11 vector spins};
 \draw[-{Stealth[length=2.6mm]},draw=fieldc,line width=2.4pt] (2.65,0.5) -- (3.05,2.75);
 \node[lab,text=fieldc,anchor=west] at (2.95,2.9) {goal};
 \foreach \x/\y/\a/\c in {0.3/2.1/75/tw40, 1.3/2.25/105/tw85, 0.5/1.0/85/tw60, 1.6/1.3/65/tw25, 1.1/0.3/95/tw70, 2.1/2.0/80/tw50} {
@@ -29,9 +29,9 @@
   \draw[-{Stealth[length=2mm]},draw=\c,line width=1.6pt] (\x,\y) -- ++(\a:0.7);}
 \node[lab,align=center] at (1.4,-0.45) {aligned to the field,\\weakly to each other};
 \end{scope}
-% (c) Langevin, model 16
+% (c) Langevin, M16
 \begin{scope}[xshift=7.6cm]
-\node[ttl] at (-0.3,3.3) {(c) 16 Langevin};
+\node[ttl] at (-0.3,3.3) {(c) M16 Langevin};
 \draw[->,draw=nullc] (0,0.5) -- (3.0,0.5) node[lab,anchor=north east] at (3.0,0.45) {calls};
 \draw[->,draw=nullc] (0,0.5) -- (0,2.9);
 \draw[draw=inkc,line width=0.9pt,domain=0:2.9,smooth,samples=40,variable=\t] plot (\t,{0.5+1.9*exp(-\t/1.6)});
@@ -40,9 +40,9 @@
 \node[lab,anchor=west,text=spindn] at (0.25,0.85) {kick};
 \node[lab,align=center] at (1.5,-0.45) {two rates,\\ratio $\approx$15};
 \end{scope}
-% (d) collective modes, model 17
+% (d) collective modes, M17
 \begin{scope}[xshift=11.3cm]
-\node[ttl] at (-0.3,3.3) {(d) 17 modes};
+\node[ttl] at (-0.3,3.3) {(d) M17 modes};
 \draw[->,draw=nullc] (0,0.5) -- (3.1,0.5) node[lab,anchor=north east] at (3.1,0.45) {eigenvalue};
 \fill[nullc!45,domain=0.15:1.45,smooth,variable=\x] (0.15,0.5) -- plot (\x,{0.5+2.2*sqrt(max(0,(\x-0.15)*(1.45-\x)))}) -- (1.45,0.5) -- cycle;
 \draw[dashed,draw=inkc] (1.55,0.5) -- (1.55,2.6) node[lab,anchor=south] {edge};
@@ -50,9 +50,9 @@
 \node[lab,anchor=south,text=spindn] at (2.66,1.6) {mode};
 \node[lab,align=center] at (1.5,-0.45) {noise bulk;\\one mode above};
 \end{scope}
-% (e) branching, model 03
+% (e) branching, M03
 \begin{scope}[xshift=15.0cm]
-\node[ttl] at (-0.3,3.3) {(e) 03 branching};
+\node[ttl] at (-0.3,3.3) {(e) M03 branching};
 \node[ag,fill=pottsA!80,minimum size=4mm] (r) at (1.4,2.5) {};
 \node[ag,fill=pottsA!50,minimum size=4mm] (c1) at (0.8,1.5) {};
 \node[ag,fill=pottsA!50,minimum size=4mm] (c2) at (2.0,1.5) {};
@@ -61,6 +61,6 @@
 \node[lab,align=center] at (1.4,-0.45) {$\hat R\approx0.2$:\\trees die out};
 \end{scope}
 \end{tikzpicture}}
-\caption{The useful model families, from the most to the least useful. (a)~Kinetic Ising with read-out coupling (model 02): each agent is a two-state spin (two colors) that updates only at its own calls; links act at the read-out call. (b)~Vector spins (model 11): each agent's content is an arrow (color = angle); the goal is a strong field (orange), so the arrows align with it and only weakly with each other. (c)~Langevin relaxation (model 16): a read kick decays about 15 times faster than the agent's own well. (d)~Collective modes (model 17): a mode counts only above the calibrated noise edge. (e)~Branching (model 03): idea trees die out, $\hat R\approx0.2$.}
+\caption{The useful model families, from the most to the least useful. (a)~Kinetic Ising with read-out coupling (M02): each agent is a two-state spin (two colors) that updates only at its own calls; links act at the read-out call. (b)~Vector spins (M11): each agent's content is an arrow (color = angle); the goal is a strong field (orange), so the arrows align with it and only weakly with each other. (c)~Langevin relaxation (M16): a read kick decays about 15 times faster than the agent's own well. (d)~Collective modes (M17): a mode counts only above the calibrated noise edge. (e)~Branching (M03): idea trees die out, $\hat R\approx0.2$.}
 \label{fig:gallery}
 \end{figure*}
