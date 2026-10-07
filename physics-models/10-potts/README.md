@@ -65,6 +65,13 @@ Uniform-coupling q-state Potts in mean field. The order parameter is the dominan
 - Rare states make J poorly determined. Merge rare states into "other".
 - The equilibrium Potts model has symmetric couplings only; directed influence needs the kinetic version.
 
+## Named variants
+
+Added 2026-10-07. Each entry: what the variant changes, the cards and the latest verdict.
+
+- **Brock–Durlauf discrete choice** (H93): mean-field Potts written as a logit choice of project, with a share coupling J; multiple equilibria appear above a multiplicity boundary. Every period sits below the boundary at its point estimate (βĴ/γ_c ≤ 0.86), and no same-field replica lands in a second state. The share coefficient survives its placebos, but fast common repo bursts with no coupling give the same values. **Verdict:** failed (no multiple equilibria; J not identified).
+- **Maximum-entropy allocation** (H94): work episodes are spread over repos at maximum entropy given the constraints, with no coupling term. Given agent activity, repo sizes, ownership and rooms, the information left is ≤ 0.13 of I(agent; repo) in 23/24 units. Ownership acts as a goal-set price: λ_own median 2.2 nats in shared weeks vs 7.8 in own-role units. The NE42 merge moves the price and the concentration as predicted. **Verdict:** supported (refined form). Its concentration index κ also bears on growth order; see model 15's named variants.
+
 ## Hypothesis seeds
 
 - In collaborative weeks agents spread across subtasks (antiferromagnetic couplings, division of labor). In free weeks they herd onto the same project (ferromagnetic condensation; see goal #31).

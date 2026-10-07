@@ -61,6 +61,7 @@ $$\dot n=c\,n^{p}$$
 - p = 1: exponential growth, survival of the fittest.
 - p = 2 (hyperbolic): superlinear, winner-take-all, bistability; the hypercycle regime†.
 - Eigen's error threshold† (q^L σ > 1) bounds the length of a copied sequence with per-site fidelity q.
+- Tested in the village (H78, H11 round 2, H94): see "Named variants" below. p is not identified at village counts.
 
 **6. Closure: RAF and CAF sets (Hordijk 2023).** A reaction system Q = {X, R, C, F}: types, reactions, catalysis assignments and a food set.
 - R′ ⊆ R is a RAF if every reaction in R′ has a catalyst and all its reactants in the closure cl_{R′}(F).
@@ -176,6 +177,15 @@ Units have N = 4–32 agents; 71 non-holdout units span 283 days. The round-1 sy
 - **Mutation.** Projects fork and edit (H07). The selection theory excludes mutation, which is expected to raise costs.
 - **The error threshold never binds.** Git copies exactly (q ≈ 1); chat-borne ideas die for lack of reproduction (H34 R̂ ≈ 0.2), not from copying error.
 - **Fitness spread confounds growth order** (H78, 2026-10-04): first-order copying with repo fitness spread reproduces every observed p̂ (0.7–1.9) and reads a planted p = 0.5 as ≈ 1.0. Test p against fitness-spread null worlds on the real call schedule (see "Identifiability at village sizes").
+
+## Named variants
+
+Added 2026-10-07. Each entry: what the variant changes, the cards and the latest verdict.
+
+- **Growth order / attachment kernel** (sub-model 5 above; H11 round 2, H78, H94; cross-referenced from model 05):
+  - H78, growth order p of repo recruitment: p̂ 0.73 [−0.08, 1.54] (#31) and 1.05 [0.00, 2.09] (#41) in herding weeks, 1.94 [1.22, 2.67] in own-artifact #51, the opposite of the prediction. First-order copying with fitness spread reproduces every value. **Verdict:** failed (not identifiable).
+  - H11 round 2, the join kernel: agents join projects with a sublinear, time-symmetric co-arrival kernel (α 0.68 [0.38, 0.98] work, 0.52 [0.36, 0.67] attention; lag − lead ≈ 0), so it is not past-driven attachment. Read chat predicts joins better than artifacts. The Yule kernel fails. **Verdict:** mixed (sublinear co-arrival; no stigmergy).
+  - H94, repo-episode concentration κ: κ ≥ 1 in all 7 shared units; kickoff-named repos explain it in only 2 of 6; neutral copying fits κ in 5/24 units. **Verdict:** descriptive (H94's main claim, max-ent allocation, is supported; see model 10).
 
 ## Hypothesis seeds
 

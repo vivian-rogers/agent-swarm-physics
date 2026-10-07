@@ -67,7 +67,7 @@ At N ≲ 30 with short windows, inferring every J_ij is data-hungry and fragile.
 - **Block models:**
   - rooms as sublattices (J_in, J_out), HH82;
   - model families as K mean-field populations with a K×K coupling matrix, HH89.
-- **Spin-glass placement by moment matching:** the mean and spread of couplings from the correlation matrix's first two moments, placed on the Sherrington–Kirkpatrick diagram without full inference. HH87.
+- **Spin-glass placement by moment matching:** the mean and spread of couplings from the correlation matrix's first two moments, placed on the Sherrington–Kirkpatrick diagram without full inference. HH87. Tested as the SK spin-glass and aging variant (H20, H22): rejected. See "Named variants".
 - **Trade-off:** you give up agent-level heterogeneity, and gain robustness and *forward* falsifiability (faithfulness axis D). A good default before (or instead of) the full inverse problem.
 
 ## Pitfalls
@@ -85,6 +85,20 @@ At N ≲ 30 with short windows, inferring every J_ij is data-hungry and fragile.
 - A heat-capacity peak can be a finite-size or sampling artifact. Compare against the same analysis on shuffled data.
 - **Multi-information at swarm rates (H101):** raw I₂/I_N stays near 1 (0.89–0.95) even with a planted group term, so it is uninformative. Subset marginalization creates real subset-level higher order (17–33% false positives in pairwise worlds). A heterogeneous shared field leaves a larger remainder than a 4-agent group term. First-order bias corrections fail; use parametric bootstraps.
 - **Agent-level content disorder in shared-goal weeks is mostly style** (H98): the random-field contrast with #51 appears only after style residualization (raw disorder ratios 0.74–0.79 in contrast weeks).
+
+## Collective modes
+
+The eigenmodes of the agent correlation matrix (random-matrix edges, the uniform "market" mode, spiked-mode detection, mode lifetimes) have their own folder: [17 · Collective modes](../17-collective-modes/). H12, H91 and H92 used them under this model.
+
+## Named variants
+
+Added 2026-10-07. Each entry: what the variant changes, the cards and the latest verdict.
+
+- **Random-field Ising / O(n)** (H98): each agent has a static random field (its role, project or prior); pair couplings are weak. In #51 the random-field share is R 0.67–0.73, against 0.24–0.53 in shared-goal weeks #38–#41 (after style removal). **Verdict:** failed as posed; the static random field holds, but the dynamics are not independent of it (the niche acts through reads and replies).
+- **Barkhausen avalanches / zero-temperature random-field Ising** (H104): a stepped field should release bursts of switches with a crackling-noise tail. In #51, switching after a human message is ×1.09 [0.84, 1.32] (work) and ×1.07 [0.97, 1.18] (attention) the time-shuffle null; a planted τ = 3/2 avalanche gives ×1.87 and ×1.25. **Verdict:** failed (powered); the tail is not identifiable.
+- **Sherrington–Kirkpatrick spin glass and aging** (H20, H22; see "Spin-glass placement" above): H20 finds no content aging in 29 periods (random-effects A +0.020 bge, +0.022 gte), only a kickoff relaxation of about 4 active days. H22 finds no spin glass in #51: rivals co-move (read pull Γ +0.19 [+0.07, +0.31]). **Verdict:** rejected.
+- **Dilute ferromagnet / percolation** (H49): after day-edge trimming, regime III has 38 significant positive bonds over 4,318 pairs against ≈ 23 expected false ones. The bond graph is below percolation; the excess is a weak shift shared by all pairs. **Verdict:** refuted (a dense shared mode, not clusters).
+- **Exchange bias / hysteresis** (H110): an agent's own artifact pins its old goal state. Pinned agents keep more of the old state on day 1 (difference 0.30 [−0.01, 0.57] bge), but the effect is gone by day 2, is not tied to continued commits, and reverses under the any-repo definition. **Verdict:** mixed; the exchange-bias signature fails.
 
 ## Hypothesis seeds
 

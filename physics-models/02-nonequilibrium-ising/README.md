@@ -101,6 +101,14 @@ The fixed-order sweep is the subtle case. Each single-site update satisfies deta
 - **Gain closure (H67):** g_lag 0.127 matches the Fano-implied total gain 0.149 [0.123, 0.175]. Pair-level boundary estimators overstate it ×2 (+0.05 to +0.07 with no coupling); use agent × day × call-class cells.
 - **Erasure is a step field on loops (H69):** loop exit does not scale with the own tokens removed. Its output value is negative for command loops (H44: most are productive).
 
+## Named variants
+
+Added 2026-10-07. Each entry: what the variant changes, the cards and the latest verdict. Relaxation forms (OU wells, damped oscillators, a fast kick on a slow well) moved to [16 · Langevin relaxation](../16-langevin-relaxation/).
+
+- **Kramers escape** (H16 round 1): an idle agent sits in a double well and escapes at a memoryless rate set by a barrier; nudges lower the barrier. The escape hazard instead falls with time in the trap (aging) wherever power suffices (G51, G38, G37). **Verdict:** rejected.
+- **Context-held self-field / Pólya urn** (H16 round 2, H72 round 2, H69, H44): the agent's own recent calls in its context act as a self-field that reinforces the current state, and a forced erasure removes it. The urn predicts the G51 timer-wake (call-count) aging exponent with no fitted slope (−0.36 vs −0.35) but not the wall-clock one (−0.08 vs −0.77) (H16). The idle self-share carries 65% [59, 71] of the aging clocks' held-out information; starvation carries none (H72). A forced erasure inside a trap lifts escape 0.47 → 0.84 (H16). Agents copy their own text 3.4× [2.6, 4.5] more often while it is still in context (H69). A forced erasure is a field quench with a one-call spike and an ≈ 8-call tail (H44). **Verdict:** supported; it replaces Kramers. Details are in the round-2 sections of H16 and H72.
+- **Little model / update order** (H112, H123; the "Parallel" and "Fixed-order sweep" rows of the update-rule table): parallel updates should make 2-cycles, and a sweep should make equilibrium-looking statistics with nonzero entropy production. H112 finds no 2-cycles (co-switch departure RR 1.02 [0.92, 1.13] once a partner claim exists). H123 finds regime I self-clocked and asynchronous, not a sweep (order predictability 0.04 vs ≥ 0.5 for a sweep, 41/41 units), so the order alone makes no entropy production. **Verdict:** rejected (both).
+
 ## Hypothesis seeds
 
 - The village's update order is state-dependent: the probability that agent j acts next rises sharply after j is mentioned. Detailed balance is therefore broken by the scaffolding alone.

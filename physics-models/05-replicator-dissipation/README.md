@@ -50,6 +50,12 @@ LLM agents don't copy themselves. The replicators are **items that spread**: a c
 - n is at most ≈ 30, so the large-n approximations behind the formulas don't hold. Simulate the stated rules directly.
 - Token prices and scaffolding change over time (`CHANGELOG.md`), so cost is not comparable across regimes without normalization.
 
+## Named variants
+
+Added 2026-10-07. Each entry: what the variant changes, the cards and the latest verdict.
+
+- **Growth order / attachment kernel** (H11 round 2, H78, H94): the order p in ṅ = c n^p, and the join kernel behind it. The entry lives in model 15 ("Named variants", sub-model 5), because 15 carries the growth-order theory. Short form: p is not identified at village counts, because first-order copying with repo fitness spread reproduces every observed value (H78, this folder's pitfall). **Verdict:** failed (H78); joins are sublinear co-arrival (H11 round 2).
+
 ## Hypothesis seeds
 
 - Explicit retractions are rare and their rate scales with n² (uncopying); most deaths are silent degradation with rate ∝ n.

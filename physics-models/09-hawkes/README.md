@@ -67,6 +67,12 @@ $$\lambda_i(t) = \mu_i(t) + \sum_j \sum_{t_k^j < t} \phi_{ij}(t - t_k^j)$$
 - **Slow cross-kernels mimic shared modulation.** Cross-excitation with timescales of 10–30 min is indistinguishable from a common rate drive. Only fast cross terms (seconds to a few minutes) beat agent-shift nulls cleanly.
 - **Day windows with gaps.** Days containing two sessions with a long silence distort the within-day baseline shape. Split days at silences longer than about 1 h.
 
+## Named variants
+
+Added 2026-10-07. Each entry: what the variant changes, the cards and the latest verdict.
+
+- **Griffiths phase** (H114): a subcritical swarm with rare strong pairs should give heavy-tailed reply chains (rare regions of locally supercritical branching). Reply chains are heavier than uniform branching (Δh median 0.27 in regime I, 0.17 in regime III), but the excess is first-order thread momentum (h(1) − g_rep +0.16 in 54/54 units). Strong pairs exist in 18/66 units and carry the tail in 1/16. **Verdict:** failed.
+
 ## Hypothesis seeds
 
 - Most agent activity is endogenous: n > 0.5 for chat, with a time-varying baseline already accounted for.

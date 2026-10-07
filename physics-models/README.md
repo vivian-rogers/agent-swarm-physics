@@ -7,7 +7,12 @@ Simulator and theory code for a model goes in its folder.
 
 [`DEFINITIONS.md`](DEFINITIONS.md) is the shared dictionary: what "agent",
 "interaction", "regime", "entropy" and so on mean in terms of dataset fields.
-Every model and hypothesis uses it.
+Every model and hypothesis uses it. Its last section,
+[Instruments (not models)](DEFINITIONS.md#instruments-not-models), lists the
+methods that measure the swarm without modelling it (Markov state models,
+controllability, index policies, assembly index, mean-field inversions, change
+detectors, the Cox field null) and the estimators that belong to a model (the
+RMT-cleaned correlation of model 17).
 
 References marked † are not in `../literature/` and were written from memory.
 Verify them before citing.
@@ -31,6 +36,32 @@ Verify them before citing.
 | [13](13-cultural-evolution-conventions/) | Cultural evolution and conventions: naming game, drift, Price, stigmergy | sociophysics, cultural evolution | Names, terms and traces carried by agents and artifacts | Well-mixed rooms fix one convention, caged rooms keep dialects; committed minorities tip a convention through a fold; culture outlives carriers through the record |
 | [14](14-scaling-and-fluctuations/) | Scaling and fluctuations: Y ∝ N^β, Taylor's law, phenomenological RG, active order | stat mech, complex systems, active matter | Unit outputs vs N; per-agent means and variances; term usage series; content velocities | Taylor's pair covariance c_× gauges the shared field (c_T does not, H86); superlinear β would be a collective benefit; a field alone mimics a fixed point in α̃ but not in β̃ |
 | [15](15-stochastic-thermodynamics-selection/) | Stochastic thermodynamics of selection: excess/housekeeping, speed limits, RAF, assembly | thermodynamics, stat mech, origins of life | Ensemble fluxes between behavior or allocation states; repos as replicators; artifact reaction networks | Day edges are excess and work cycles are housekeeping; selection resolves only s ≥ e^{−σ*}; superlinear growth order means winner-take-all |
+| [16](16-langevin-relaxation/) | Langevin relaxation: Ornstein–Uhlenbeck wells, damped oscillators, two-rate kicks | stat mech, dynamics, stochastic processes | Agent content, style or memory size in a well; a collective mode | One rate sets both fluctuation and response; an overdamped well cannot undershoot; a fast kick on a slow well breaks the one-rate law |
+| [17](17-collective-modes/) | Collective modes: random-matrix spectra, spiked modes, mode lifetimes | stat mech, random-matrix theory, dynamics | Agent × agent correlation matrix per window; drift matrix of a VAR/OU fit | A mode is detectable only above ℓ = √(N/T); the uniform mode is a shared field; dynamic modes have lifetimes |
+
+## Status of each model (2026-10-07)
+
+From the model map of 132 cards (2026-10-07). The map ranks cards by a positive verdict for the model, a win against the strongest null, a prediction of a statistic that was not fitted, then credence; in-sample fit is not used. Verdicts of individual cards are in their folders and in `../hypotheses/OVERVIEW.md`.
+
+| # | Status | One line | Best-supported cards |
+| --- | --- | --- | --- |
+| 01 | partly useful | Works as a gauge (gain g, χ, field accounting); inferred couplings carry no information; every glassy, disordered or dilute variant is rejected | H67 H25 H64 H12 H18 H38 |
+| 02 | useful | Coupling acts at the read-out step, depends on whom a message names and runs on the call clock; fails in regime I | H08 H50 H40 H99 H44 H69 H131 H39 |
+| 03 | partly useful | Subcritical branching (R ≈ 0.2); links as causes of contagion are rejected | H34 H62 |
+| 04 | partly useful | Only the context window carries value | H15 H58 H87 H71 H113 |
+| 05 | rejected | The neutral null reproduces its statistics | — |
+| 06 | useful as the neutral null | Rejected as a model of the village; as a null it reproduces σ\*, p and RAF coverage | — |
+| 07 | untested | No card uses it | — |
+| 08 | partly useful, as an instrument | Copy vs transform separates fork lineages and restatement | H07 H23 |
+| 09 | partly useful | n, g and the Fano factor work as gauges; self-excitation as a mechanism is rejected | H111 H42 |
+| 10 | descriptive only | Every kinetic prediction fails; max-ent allocation holds | H94 |
+| 11 | useful as a field model | The goal and messages act as fields; rejected as a coupled ordered magnet | H54 H13 H21 H81 H96 H100 H47 H46 H73 H97 |
+| 12 | instrument | Its estimators (individuality, transfer) serve as tools; no claim has run on it | — |
+| 13 | descriptive only | Describes conventions and collective memory decay | H89 H88 |
+| 14 | partly useful, as gauges | The Taylor pair covariance and size laws are gauges | H86 H85 |
+| 15 | partly useful | The excess/housekeeping split localizes the scheduler; selection quantities are not identified | H76 H90 H79 |
+| 16 | partly useful | Overdamped with a day-1 overshoot; a fast read kick (≈ 7 calls) on a slow well (≈ 100 calls); every one-rate form fails | H97 H125 H127 H130 |
+| 17 | partly useful | Talk and content modes are real against a calibrated edge; the activity mode is the scheduler; clipping ties shrinkage; the spiked-mode predictions are untested | H12 H92 H81 |
 
 ## How they connect
 
@@ -44,6 +75,8 @@ Verify them before citing.
 - **12 is the information layer over 01, 04 and 08.** PID, O-information and causal emergence decompose the states that 01 fits pairwise. Krakauer individuality gives 04's semantic information a boundary test. The copy/transformation split stays in 08. Size-matched groupings are the shared null.
 - **13 carries 03, 06 and 10 into the record.** A naming game is Potts fixation (10) on a read graph. Drift uses 06's neutral null, and adoption cascades are 03's. Stigmergy moves memory into artifacts, where 04 and 12 measure it.
 - **14 adds size and scale to every model.** It asks how a statistic changes with N, with the mean or with the bin. The dilution law J ∝ N^−0.6 (01, H18) and per-pair branching (03, 09) are size laws. The Taylor pair covariance c_× is a field gauge for 01, 02 and 11.
+- **16 is the dynamics of 11's states.** It takes 11's content, style and memory variables and asks how they relax: one OU rate, an oscillator, or a fast kick on a slow well. The kick lives on 02's read-out step. A dynamic mode of 17 is one OU process of 16.
+- **17 is the spectral view of 01 and 11.** It counts the collective modes in the agent correlation matrix against a random-matrix null. Its uniform mode is the shared field of 01 and 11. Its dynamic modes have 16's lifetimes.
 - **15 is the thermodynamic layer over 02 and 05.** It adds the excess/housekeeping split and speed limits to 02's kinetic master equations. It adds selection resolution, growth order, RAF closure and assembly to 05's replicators. 06 is its neutral null.
 
 ## What held up (round 1, 2026-10-04)
@@ -84,13 +117,12 @@ From the round-2 sections of H08, H40, H44, H46, H50, H54, H67 and H69 (non-rese
 
 ## Candidates not yet written up
 
-Moved out of this list on 2026-10-04: partial information decomposition now lives in [12](12-information-dynamics/), and stigmergy / reinforced choice (Deneubourg choice function, nonlinear Pólya urn) in [13](13-cultural-evolution-conventions/).
+Moved out of this list on 2026-10-07: random-matrix theory now lives in [17](17-collective-modes/), and the OU part of drift–diffusion in [16](16-langevin-relaxation/). Moved out on 2026-10-04: partial information decomposition now lives in [12](12-information-dynamics/), and stigmergy / reinforced choice (Deneubourg choice function, nonlinear Pólya urn) in [13](13-cultural-evolution-conventions/).
 
 - **Mismatch cost** (Kolchinsky & Wolpert, *J. Stat. Mech.* 2017†): the extra dissipation from running a process tuned for one input distribution on another. Possible link: token overhead after regime changes.
 - **Information bottleneck** (Tishby, Pereira & Bialek 1999†; Kolchinsky, Tracey & Wolpert, *Entropy* 2019†): memory consolidation as compression that keeps what predicts the future.
 - **Activity-driven temporal networks** (Perra et al., *Sci. Rep.* 2012†): each agent activates at its own rate and makes a few links when active. The natural substrate for 03; the epidemic threshold depends on the spread of activity rates, not on a static network.
-- **Drift–diffusion and Markov state models in embedding space**: agents' message streams as trajectories; Kramers–Moyal drift/diffusion fields, or a discretized Markov state model with metastable states and probability currents. Shares its state space with 11 and ties to 02.
-- **Random matrix theory** (Marchenko–Pastur†): a tool for separating real structure in small-sample correlation and coupling matrices from noise. Supports 01.
+- **Drift–diffusion in embedding space**: agents' message streams as trajectories with Kramers–Moyal drift/diffusion fields. Shares its state space with 11 and ties to 02. The linear (OU) case is now [16](16-langevin-relaxation/). The Markov state model is an instrument (H17), listed in `DEFINITIONS.md` under "Instruments (not models)".
 - **Kuramoto synchronization**: phase-locking of agents' activity cycles. It is the n = 2 dynamics of 11 with intrinsic frequencies.
 
 ## Adding a model

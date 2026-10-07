@@ -54,7 +54,7 @@ Vector spins have a distinction that Ising lacks: responding *along* the current
 
 ## Mean-field forward version
 
-Mean-field O(n): **m** = L_n(β(J₀|**m**| + h)) **m̂**, with L_n(x) = I_{n/2}(x) / I_{n/2−1}(x) (modified Bessel functions; n = 3 gives the Langevin function coth x − 1/x). For unit spins the mean-field critical point is βJ₀ = n.
+Mean-field O(n): **m** = L_n(β(J₀|**m**| + h)) **m̂**, with L_n(x) = I_{n/2}(x) / I_{n/2−1}(x) (modified Bessel functions; n = 3 gives the Langevin function coth x − 1/x; this is a static equation of state, not the Langevin dynamics of model 16). For unit spins the mean-field critical point is βJ₀ = n.
 - **Fit:** (βJ₀, h) per period from polarization and its fluctuations, in a reduced embedding dimension n.
 - **Predict:**
   - the response along the field at kickoffs;
@@ -90,6 +90,17 @@ HH85.
 - Few agents (N ≲ 30) against high n: reduce the dimension before fitting couplings.
 - **Goal switches are quenches; content decays with work, not nights** (H96, H103): day-1 old-state persistence 0.2 vs 0.87 per ordinary night; remanence follows the active-hour clock (nights win 3–5/22 fits). Unit-normalized cosine decay times depend on amplitude: use ratio estimators.
 - **The kickoff day is a transient** (H107): its room direction is only half kept (c₁ ≈ 0.5) even under a room field; read directions from day 2 on. Goldstone diffusion scales as 1/(N|m|²), so a larger split looks "pinned" without any field (H108).
+
+## Collective modes and relaxation
+
+- **Collective modes** (eigenmodes of the agent content correlation matrix, the uniform mode as a shared field, random-matrix edges, mode lifetimes) have their own folder: [17 · Collective modes](../17-collective-modes/). H12, H81, H91, H92, H106 and H108 used them under this model.
+- **Relaxation dynamics** (OU wells, damped oscillators, a fast read kick on a slow well) have their own folder: [16 · Langevin relaxation](../16-langevin-relaxation/). H97, H125, H127 and H130 used them under this model. The *Langevin function* in "Mean-field forward version" above is a different object: a static equation of state.
+
+## Named variants
+
+Added 2026-10-07. Each entry: what the variant changes, the cards and the latest verdict.
+
+- **DeGroot averaging on the read-out graph** (H48): content settles by repeated averaging over whom each agent reads, so the settling time should be the mixing time of the read-out graph. Coverage takes minutes (90% of room-mate pairs have read each other 0.24 active h after a kickoff), but content settles with τ ≈ 4.5 h (bge) / 1.9 h (gte), about 10× longer. If reads drive settling, the pull per read is small (α ~ 1/250). **Verdict:** inconclusive; the literal (shallow-coverage) version is refuted on magnitude.
 
 ## Hypothesis seeds
 

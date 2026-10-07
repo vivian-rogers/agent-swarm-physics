@@ -64,6 +64,15 @@ Then the questions become:
 - The framework assumes an ensemble over initial conditions; the village is one long trajectory. Windows and replays approximate it.
 - Discretizing text into states is itself a coarse-graining, and answers depend on it.
 
+## Named variants
+
+Added 2026-10-07. Each entry: what the variant changes, the cards and the latest verdict.
+
+- **Maxwell demon / Sagawa–Ueda feedback accounting** (H35): the nudger as a feedback controller whose gain is bounded by the information it uses. It is near-efficient for glances (+0.08, η_SU 0.88) but buys no work: +0.22 commits/h [−0.29, +0.82] per nudge after placebo differencing. **Verdict:** mixed (efficient for glances, worthless for work).
+- **Set-point homeostat** (H45, H71): a stored quantity is held near a set point by a control loop.
+  - H45, the room share of an agent's context: not regulated (regulation index ≤ 0.22 in 32/32 periods, pooled 0.02 ± 0.01); it follows inflow as passive import predicts (model 05's null wins). **Verdict:** refuted.
+  - H71, memory size after compression: it reverts to a set point (φ⁺ 0.67 [0.63, 0.71] per cycle; CI excludes 1 in 37/37), but the loop is not first order (AR(2) median +0.19) and does not overshoot. A fast correction around a slowly drifting set point fits (post hoc; see [16](../16-langevin-relaxation/)). **Verdict:** mixed.
+
 ## Hypothesis seeds
 
 - Memory has low semantic efficiency: masking most of an agent's memory barely changes its next actions, until a threshold.
