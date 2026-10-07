@@ -5,6 +5,20 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — HH376–HH385 approved → H133–H142 pre-registered (kinetic Potts and vector spins)
+
+- Vivian approved HH376–HH385. They build on what held up: coupling acts only at the read-out call, through named messages, on the call clock; fields; the context-held self-field; a fast kick on a slow well.
+- Cards (all `pre-registered (not run)`): H133 read-out Glauber Potts, H134 Pólya-urn project stickiness, H135 detailed-balance Potts walker, H136 freeze at first kickoff read, H137 nonreciprocal Potts named pairs, H138 Glauber escape vs options, H139 two-rate variance split, H140 DeGroot read-out self-weight, H141 easy-plane anisotropy, H142 Langevin torque saturation.
+- Testability risks, written in the cards before any data:
+  - H136: reads follow posts within seconds, so there may be no late readers, as in H131.
+  - H137: one-way named pairs are few.
+  - H135: the HH's slope test is almost a counting identity; the card uses net flux on co-alive pairs instead.
+  - H139: the fast share may be below resolution.
+  - H140: regimes I and II cannot be tested; NE41 is not blind.
+  - H141: the room axis is weak.
+  - H142: power is limited to #51 and #38.
+- Each card lists the DEFINITIONS variants it needs. None is added to DEFINITIONS.md yet.
+
 ## 2026-10-07 — Physics-model folders reorganized (models 16 and 17, named variants, instruments)
 
 Vivian approved the model-map plan (132 cards × 15 models) on 2026-10-07. Folder numbers are append-only; nothing was renumbered. No card result or verdict changed.
