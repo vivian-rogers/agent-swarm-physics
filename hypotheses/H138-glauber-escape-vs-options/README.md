@@ -1,6 +1,6 @@
 # H138: Glauber escape from a project grows with the number of open options
 
-**Status:** pre-registered (not run). Card, observables, nulls and predictions written 2026-10-07 08:15–09:10 UTC, before any H138 statistic on real data. No scheme, synthetic or analysis code has run.
+**Status:** round 1 in progress (2026-10-07). Card, observables, nulls and predictions written 2026-10-07 08:15–09:10 UTC, before any H138 statistic on real data. Scheme built; synthetic validation done and committed with Amendments A1–A3 before any real-data hazard statistic.
 **Question (GOALS.md):** **Q2** (what is field and what is coupling: is an agent pulled off its project by the options on offer, as a Glauber Potts walker in a field predicts, or pushed off by an internal clock: finishing and trap aging?). Second: **Q5** (does an operator who opens more parallel projects raise the churn per call?).
 **Fields:** stat mech (kinetic Potts, heat-bath and Metropolis single-spin updates, escape rates), stochastic processes (discrete-time hazards with time-varying covariates)
 **Literature:** none in `literature/` covers kinetic Potts escape rates. Cited from memory (†): Glauber, *J. Math. Phys.* 4, 294 (1963)† (single-spin-flip kinetics; the attempt clock sets the rate); Wu, *Rev. Mod. Phys.* 54, 235 (1982)† (the Potts model); Allison (1982)† (discrete-time hazards). Model reference: [`physics-models/10-potts/README.md`](../../physics-models/10-potts/README.md).
@@ -167,8 +167,43 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 Other testable units get their period folders, with the replication prediction copied and dated, before the run.
 
+## Round 1 (2026-10-07)
+
+### Scheme and structural counts (no outcome statistic)
+`scheme/build.py` builds one row per (agent, 30-min window, visit) at risk: 19,398 work rows (952 leaves) and 26,019 attention rows (5,279 leaves) over 13 work periods (#36 split at 2026-03-24; #51 as 51a–51l) and 22 attention periods. Leaves (direct label changes) per unit-channel, from `counts.json`, decide testability (≥ 25):
+- **Work (13 testable):** #31 69, #38 44, #41 35, #44 58; 51a 38, 51c 46, 51d 47, 51e 25, 51f 88, 51g 282, 51h 44, 51i 31, 51j 27. Not testable: #30 17, #33 16, #35 0, 36a 4, 36bc 13, #37 8, #39 4, #40 12, #42 13, 51b 13, 51k 7, 51l 11.
+- **Attention (31 testable):** every unit except #23 (7), #27 (16) and #35 (11).
+- The work leave rate is about 0.12 per 100 own calls (#38: 44 leaves in 36,897 calls at risk), as H129 found.
+- The cross-fitted join model behind Z_alt is stable after a damped Newton fix (habit η 2.5–4.8 nats in the #51 units, as in H93). The first build's undamped solver diverged in #51; that build was never used for a statistic.
+
+### Synthetic validation (axis F), before real data
+`analysis/synthetic.py`: 200 replicates per world on the real skeleton of **every** testable unit-channel (13 work, 31 attention). The card's named skeletons (#31, #38, #41, #44, 51c, 51g work; #19, #38, 51d attention) are reported separately. Only leave outcomes are redrawn; rows, own calls, q series, births and actives are real. Base rates are calibrated to the real leave counts. Agent frailty θ_i ~ N(0, 0.5); aging γ_d = −0.3. Output: `data/processed/H138-glauber-escape-vs-options/synthetic/summary.json`.
+
+| World | Truth | Work: pooled mean ε̂_q · rejection of ε_q = 0 (13 units) | Card skeletons (6) | Attention: pooled mean · rejection (31 units) |
+| --- | --- | --- | --- | --- |
+| W0 renewal (R-finish) | 0 | 0.02 · **0.055** | −0.03 · 0.060 | −0.04 · 0.095 |
+| W1 Glauber | 1 | 1.07 · **0.89** | 1.05 · 0.90 | 1.08 · 1.00 |
+| W1 Glauber | 0.5 | 0.54 · **0.43** | 0.51 · 0.41 | 0.53 · 1.00 |
+| W2 co-arrival bursts | 0 | 0.43 · 0.105 | 0.39 · 0.050 | 0.21 · 0.385 |
+| W3 shared drive (N_active) | 0 | −0.05 · 0.040 | −0.04 · 0.075 | −0.03 · 0.060 |
+| W4 label noise (30% of leaves) | 0 | — | — | 0.29 · **0.855** |
+
+- **Bias and coverage (S1).** Pooled bias +0.07 (ε = 1) and +0.04 (ε = 0.5) in the work channel; per skeleton −0.19 to +0.22, inside Monte-Carlo error (per-unit SD 0.42–2.1). Per-unit 95% coverage 0.90–0.95. **S1 passes.**
+- **Size.** W0 0.055 and W3 0.040 (work, pooled); per skeleton 0.04–0.10. **Passes (≤ 0.10).**
+- **Power at ε_q = 0.5 (pooled, work): 0.43** on all 13 testable units (0.41 on the card's 6). **Below the card's 0.8.** At ε_q = 1 the power is 0.89. Per-unit power at ε = 1 is 0.10–0.63, so the 2/3-of-units clause of P1 cannot pass even if ε_q = 1.
+- **Lead placebo (S2).** O1 alone is fooled by W2 in some skeletons (51g 0.59, #44 0.20; pooled point estimate > 0 in 0.90 of replicates, pooled rejection 0.105). O3's false "lag > lead" rate in W2 is **0.100** pooled (0.040 on the card skeletons): at the card's limit of 0.10. O3's power at ε = 1 is 0.86 (work) and at ε = 0.5 is 0.42 (work), 0.995 (attention). **S2 passes, at the limit.**
+- **Attention label noise.** W4 (spurious switches at a rate ∝ q_live) gives pooled ε̂_q 0.29 and rejects ε_q = 0 in 0.855 of replicates. A positive attention ε̂_q of about 0.3 cannot be told from label noise.
+- **O4 power (S3).** At b_q = 1 with the 13 real work units, WLS with ln N_active and the own-role flag, and between-unit scatter τ = 0.5 (0.25): power 0.12 (0.28). **S3 passes: O4 is descriptive.**
+- **A test the data can make (found in the synthetic):** the pooled work CI's upper limit falls below 1 in 0.815 of W0 replicates (truth 0) and in 0.010 of W1 replicates (truth 1). So the HH-literal value ε_q = 1 can be rejected with power 0.82 and size 0.01, although ε_q = 0.5 cannot be told from 0.
+
+### Amendments (dated 2026-10-07, after the synthetic, before any real-data hazard statistic)
+- **A1 (estimator).** O1–O3 use the binary complementary log-log hazard per window with offset ln(own calls), which the card names as equivalent to the Poisson form. In a pilot (40 replicates, #31, #38, 51g) the Poisson form was attenuated by 0.1–0.2 at ε_q = 1, because a 30-min window holds about 45 own calls and the leave indicator saturates. The cloglog form is unbiased (table above). O4's reference rate r̂_u is the cloglog intercept of a model with the stay covariates only (no agent effects, no q terms) on all at-risk rows, at dwell 100 calls, a_a = 0, no own mark, non-owner; WLS weights are 1/(se² + τ²) with τ = 0.5. N1 (G38) uses q_live terciles among rows with q_live ≥ 1. N2 (G44) fits a pooled cloglog with a room term, owner, the stay covariates and an agent-cluster sandwich (agents are nested in rooms). The O3 per-unit CI is the paired agent-cluster bootstrap (500 draws); the synthetic used the sandwich SE of the same contrast. The Poisson form is kept as a variant. In the attention channel, "own mark in w − 1" is an own labelled window on a (there is no commit).
+- **A2 (untestability, declared before any outcome).** The card's rule: "O1 counts as a test only if … pooled power ≥ 0.8 at ε_q = 0.5". Work power is 0.43, so **the work O1 is not a valid test of ε_q = 0.5, and the HH381 kill cannot fire on the work channel** (it needs power ≥ 0.8). A work pooled CI that includes 0 is **inconclusive**. The attention channel has power 1.00 at ε_q = 0.5, but W4 shows that its positives below about 0.3 can be label noise; attention stays secondary, and an attention positive counts only if its pooled CI lower limit exceeds 0.29 (the W4 mean).
+- **A3 (added test, pre-data).** **Glauber-literal bound:** if the pooled work ε̂_q has its 95% CI upper limit below 1, the literal HH381 law (ε_q = 1 at fixed field) is rejected (synthetic power 0.82 at ε_q = 0, size 0.01). This is an added test, not the card's kill; it is reported beside the verdict rule.
+- **A4 (variants not run in round 1).** Active minutes as exposure, H129's expiry-then-arrival hop, the operator-message dummy and the same-lab split are not run (time). Room channel: untestable, as declared in the card.
+
 ## Results
-Not run.
+See Round 1 below the synthetic section once the real-data run is done.
 
 ## Notes
 - 2026-10-07 08:15 UTC: card written from HH381 (approved by Vivian 2026-10-07). Protocol for round 1: card → period predictions → synthetic on the real skeleton → dated amendments → replication and natives → estimates → frozen confirm script (not run) → summary.
