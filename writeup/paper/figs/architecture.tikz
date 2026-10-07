@@ -1,0 +1,51 @@
+% Single-column project-architecture flowchart (state 2026-10-04). \input by project-architecture.tex and paper.tex.
+% Needs: tikz with libraries arrows.meta, positioning, calc; xcolor.
+\definecolor{archIn}{HTML}{3f6fb5}
+\definecolor{archFd}{HTML}{3a7d6b}
+\definecolor{archHy}{HTML}{c2662d}
+\definecolor{archOut}{HTML}{6b6b6b}
+\begin{tikzpicture}[font=\scriptsize, node distance=3.6mm and 3mm,
+  bx/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center,
+             text width=3.55cm, inner sep=2.4pt, minimum height=8mm},
+  wide/.style={draw=#1, fill=#1!9, rounded corners=2pt, line width=0.6pt, align=center, text width=7.6cm, inner sep=2.4pt, minimum height=8mm},
+  ar/.style={-{Stealth[length=1.7mm]}, line width=0.6pt, draw=black!65},
+  lb/.style={font=\tiny\itshape, text=black!70, fill=white, inner sep=0.8pt}]
+
+% inputs
+\node[bx=archIn, minimum height=11mm] (raw) {\textbf{AI Village export}\\51 goal periods, 3 regimes,\\381k events, 2.5M turns};
+\node[bx=archIn, right=of raw.north east, anchor=north west, minimum height=11mm] (lit) {\textbf{Literature} (29 papers)\\+ zero-shot LLM labels,\\validated blind};
+
+% foundations
+\node[bx=archFd, below=of raw] (proc) {\textbf{Shared tables} (64 modules)\\context ledger, embeddings,\\reply graph, estimates};
+\node[bx=archFd, below=of lit] (pm) {\textbf{Physics models} 01--17\\+ 393 shared definitions};
+
+% goal periods and natural experiments
+\node[bx=archFd, below=of proc] (gp) {\textbf{Goal periods}\\the data split into 51 swarm\\goal periods, one unit each};
+\node[bx=archFd, below=of gp] (ne) {\textbf{Natural experiments}\\NE01--NE46 (interventions)};
+
+% ideas
+\node[wide=archHy, anchor=north west] (hh) at ($(ne.south west)+(0,-3.6mm)$) {%
+  \textbf{Hypohypotheses} HH001--HH385 $\rightarrow$ vetted by the PI $\rightarrow$ H numbers};
+
+% hypotheses
+\node[wide=archHy, below=of hh] (h) {%
+  \textbf{Hypotheses H01--H142} (132 scored)\\ question $\cdot$ model $\cdot$ scheme $\cdot$ impostor table $\cdot$\\ \emph{dated predictions before data} $\cdot$ synthetic check $\cdot$\\ replication + period-native tests $\cdot$ frozen confirm script};
+
+% scoring
+\node[wide=archHy, below=of h] (sc) {%
+  \textbf{Scoring}\quad credence (faithfulness) $\cdot$ estimated usefulness};
+
+% outputs
+\node[wide=archOut, below=of sc] (out) {\textbf{Research theses} $\rightarrow$ write-up};
+
+% arrows
+\draw[ar] (raw) -- (proc);
+\draw[ar] (lit) -- (pm);
+\draw[ar] (proc) -- (gp);
+\draw[ar] (gp) -- (ne);
+\draw[ar] (hh) -- node[lb, right]{graduates} (h);
+\draw[ar] (ne.west) -- ++(-2.2mm,0) |- node[lb, pos=0.25, rotate=90]{interventions} (h.west);
+\draw[ar] (pm.south) -- node[lb, right]{models} (pm.south |- hh.north);
+\draw[ar] (h) -- (sc);
+\draw[ar] (sc) -- (out);
+\end{tikzpicture}

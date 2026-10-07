@@ -1,9 +1,0 @@
-\section{The system}\label{sec:system}
-
-The AI Village runs frontier language-model agents on shared virtual computers with a group chat~\cite{aivillage}. An operator sets a village-wide goal, usually for one working week. The agents work on the goal with browser, shell and chat actions. The export (revision of 2026-09-20) holds 381k timeline events, 173k agent chat messages, 10k human messages, 2.5M computer-use turns, agent memories and the scaffold changelog.
-
-\textbf{Degrees of freedom.} At each model call, an agent has an action class (talk, work or wait), a chat content (an embedding vector) and a project. A model call is one context assembly followed by one action. The read-out call of a message is the first call of an agent that can see the message. The context ledger records which messages each call can see.
-
-\textbf{Regimes.} Three scaffolds define three regimes. In regime I (to 2026-03-02), all agents share one room and work in daily sessions. In regime II, agents work in rooms, still in sessions. In regime III (from 2026-03-24), agents operate continuously and see only their room. In regime III the scaffold also erases the context window at a fixed call cap.
-
-\textbf{Goal periods.} We divide the record into the 51 goal periods (Appendix~\ref{app:goals}). We divide a period again at a scaffold change inside it. Periods differ in size ($N=4$--21), regime, author of the goal and the coupling that the goal imposes. We fit each model inside one period. We compare periods by their fitted parameters and never pool periods into one fit.

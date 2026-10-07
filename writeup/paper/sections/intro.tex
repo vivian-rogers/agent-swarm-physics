@@ -1,85 +1,22 @@
-\section{Summary}\label{sec:intro}
+% intro: general-reader introduction (model-first rewrite, 2026-10-07).
+\section{Introduction}\label{sec:intro}
 
-\textbf{The system.} Swarms of language-model agents now operate for months on shared tasks. The AI Village~\cite{aivillage} is a public record of one swarm: 46 frontier agents from several labs, and 51 village-wide goals from April 2025 to September 2026 (Fig.~\ref{fig:timeline}). Three scaffold changes divide the record into regimes. Each change alters what an agent can read and when it can act. Forty-six dated changes of scaffold, roster, rooms and operator messages serve as natural experiments.
+\textbf{The problem.} Groups of language-model agents now work together for weeks or months. They share computers, files and a chat. They read each other, copy each other and sometimes wait for each other. Two kinds of people need to understand such a swarm. The first kind works on \emph{interpretability}: given the logs, what is the swarm doing, and why? The second kind runs the swarm and needs \emph{control}: which numbers to watch, when to worry, and which levers move the swarm by how much. Both need a description that is much smaller than the logs and that still predicts.
 
-\textbf{The question.} We ask what couples one agent to another, how much of the joint behaviour is a response to external drives, and whether the swarm holds a state that its members do not hold.
+\textbf{Why physics.} Statistical physics gives such descriptions for systems of many interacting parts. A magnet has $10^{23}$ spins, but a few numbers predict how it responds. The ratio of temperature to critical temperature, $T/T_c$, tells how far a local push spreads and how large the fluctuations are, without a model of each spin. Physics also separates two causes of order. A \emph{field} is an external drive that acts on each part directly. A \emph{coupling} is an interaction between parts. A field aligns parts that never interact, so co-movement alone does not prove interaction. This distinction matters for agent swarms, because the scheduler, the operator and the shared model weights all act as fields. Sociophysics applies these ideas to people~\cite{castellano2009}. An agent swarm fits them better than most human groups do. Its states are logged at each step. Its fields (goals, schedules, operator messages) are known and dated. Its coupling channel, the messages, is recorded message by message, together with what each agent could see.
 
-\subsection*{Motivation I: Ising-like sociophysics}
-Sociophysics models people as spins~\cite{castellano2009}. In the Ising model, each agent $i$ has a state $s_i=\pm1$, a local field $h_i$ and couplings $J_{ij}$ to the other agents. The energy and the equilibrium distribution are
-\begin{equation}
-H(\mathbf s)=-\sum_i h_i s_i-\sum_{i<j}J_{ij}s_is_j,\qquad P(\mathbf s)\propto e^{-\beta H(\mathbf s)}.
-\label{eq:ising}
-\end{equation}
-A field is an external drive on one agent. A coupling is an interaction between two agents. Fitting $h_i$ and $J_{ij}$ to measured means and correlations is the inverse Ising problem~\cite{schneidman2006,meshulam2019}. In mean field, the magnetization $m$ obeys $m=\tanh[\beta(J_0m+h)]$, and the linear response to a field is
-\begin{equation}
-\chi=\frac{\partial m}{\partial h}\propto\frac{1}{1-g},\qquad g=\beta J_0(1-m^2).
-\label{eq:chi}
-\end{equation}
-The loop gain $g$ sets the phase. For $g\ll1$ the system is a paramagnet: fields set the state, and a push spreads little. As $g\to1$ the susceptibility diverges, fluctuations become long-ranged, and a small nudge can drive a large cascade. Agents do not update in equilibrium. Each agent changes state only at its own model calls, and it reads messages only at those calls. A kinetic (Glauber) Ising model describes this case:
-\begin{equation}
-P\big(s_i^{\,\rm new}=+1\big)=\tfrac12\Big[1+\tanh\Big(\beta h_i+\beta\!\!\sum_{j\in\mathcal R_i}\!J_{ij}s_j\Big)\Big],
-\label{eq:glauber}
-\end{equation}
-where $\mathcal R_i$ is the set of messages that the call can read. When $J_{ij}\neq J_{ji}$, detailed balance fails. The steady state then produces entropy at a rate $\sigma=\sum_{ij}(J_{ij}-J_{ji})\langle s_i(t+1)s_j(t)\rangle$ in the parallel-update form~\cite{aguilera2026}. An agent swarm suits these models. The state variables are measurable: action class, content vector and project. The fields are known and dated: goals, the scheduler and operator messages. The coupling channel is logged message by message. Language-model populations also form shared conventions~\cite{centola2015,ashery2025}, so content can show an ordered phase.
+\textbf{The system.} The AI Village is a public record of one swarm, run by AI Digest~\cite{aivillage}. Forty-six frontier agents from several labs worked on 51 village-wide goals from April 2025 to September 2026 (Fig.~\ref{fig:timeline}). The agents use browsers, shells and a group chat. Three scaffold changes divide the record into regimes, and each change alters what an agent can read and when it can act. Forty-six dated changes of scaffold, roster, rooms and operator behaviour serve as natural experiments. We cannot run new swarms, so these changes are our interventions.
 
-\subsection*{Motivation II: information dynamics}
-The second question is where the swarm keeps its information and what that information is worth. Information dynamics divides distributed computation into storage, transfer and modification~\cite{lizier2008,lizier2013}. For an agent state $X_t$ with history $X_t^{(k)}$ and a source $Y_t$,
-\begin{equation}
-A_X=I\big(X_{t+1};X_t^{(k)}\big),\qquad T_{Y\to X}=I\big(X_{t+1};Y_t\,\big|\,X_t^{(k)}\big)
-\label{eq:aiste}
-\end{equation}
-are the active information storage and the transfer entropy. Partial information decomposition splits the information that two sources carry about a target into redundant, unique and synergistic parts~\cite{williams2010}: $I(S_1,S_2;T)=R+U_1+U_2+S$. Synergy is information that only the joint state holds. For $n$ agents, the O-information $\Omega=\mathrm{TC}-\mathrm{DTC}$ is negative when synergy dominates~\cite{rosas2019}. A macroscopic variable $V_t$ of the swarm shows causal emergence when
-\begin{equation}
-\Psi=I(V_t;V_{t+1})-\sum_j I(X_{j,t};V_{t+1})>0,
-\label{eq:psi}
-\end{equation}
-that is, when $V$ predicts its own future better than the parts do~\cite{rosas2020,mediano2022}. An individual, in this sense, is a unit that propagates its own information through time~\cite{krakauer2020}. A collective state of the swarm, an ``egregore'', would show synergy and positive $\Psi$ beyond pairs and fields.
+\textbf{The question and the answer.} We ask which physics model, if any, describes this swarm well enough to read its logs and to steer it. The answer is a weakly coupled, subcritical kinetic spin system under strong external fields. Each agent changes state only when it calls its model. It responds to other agents only through the messages that the call reads, mostly the messages that name it. The read-out loop gain is $g\approx0.13$, so a push to one agent is amplified by about $1/(1-g)\approx1.15$ and never cascades. External fields set most of the state: the scheduler sets when agents act, the goal kickoff sets what they talk about, rooms split them into domains, and style marks each agent. Each agent's content relaxes as a fast kick from what it reads on top of a slow personal well. The context window holds the working state, and it is the only store whose loss costs much work. We find no collective unit above the agents.
 
-Kolchinsky and Wolpert add a value scale: semantic information~\cite{kolchinsky2018}. Let $\mathcal V$ be a measure of the agent's function, here the committed work per call. Scramble one channel $c$ of the agent's environment, and measure the information $I_c$ that the channel carried and the loss $\Delta\mathcal V_c$ of function. The semantic information of the channel is the part of $I_c$ whose loss reduces $\mathcal V$, and its value per bit is
-\begin{equation}
-\kappa_c=\frac{\Delta\mathcal V_c}{I_c}.
-\label{eq:kappa}
-\end{equation}
-An agent swarm has several channels to scramble: the context window, memory notes, its own artifacts, chat and history search. The scaffold erases some of these at known times, which gives natural interventions. Kolchinsky's later work on excess and housekeeping entropy production and on replicator thermodynamics gives the dissipation side of the same question~\cite{kolchinsky2026,kolchinsky2025}.
+\textbf{What each reader gets.} For interpretability, the picture says where to look: decompose any co-movement into field and coupling, and locate memory in the context window, not in notes or the group. For control, it gives dials with current values (Table~\ref{tab:observables}): the loop gain and its distance to criticality, the field share of co-activation, the depth and time constants of the agents' wells, the number of collective modes, and the value per bit of the context window. It also sizes the levers. Field-type levers (kickoff text, context resets, cap length) are large. Message-type levers (nudges, corrections) are small.
 
-\textbf{The method.} We tested 15 physics models on the record (Fig.~\ref{fig:arch}). A physics model can fit almost any record, so a fit is not evidence. Each of the 132 hypotheses states its prediction, its null and its kill rule before the data. Each must remove four impostors: the scheduler, external drives, shared model priors, and responses to a common input. Each runs its estimator on synthetic swarms with the real call schedule before it runs on real data. We fit every model inside one goal period and compare periods by their fitted parameters (Fig.~\ref{fig:tablezoom}). Claude judged every claim as two judges, one blind (Fig.~\ref{fig:scoring}). The judges give each claim a credence (faithfulness) and an estimated usefulness (Fig.~\ref{fig:scatter}).
+\textbf{How we tested.} We tested 16 physics models from a library of 17 with 132 hypotheses (Sec.~\ref{sec:method}). Claude agents generated, pre-registered, ran and scored each hypothesis, under review by the second author. A physics model can fit almost any record, so a good fit is not evidence. Each hypothesis states its prediction, null and kill rule before it touches real data. We rank models by faithfulness: whether they beat the strongest null, predict a statistic they did not fit, and survive their own kill rules. We reserved 16 goal periods and four natural-experiment windows for confirmation. Almost nothing has run on them yet, so every result below is exploratory.
 
-\textbf{Result 1: agents couple through reading.} An agent responds to a message at the first model call that reads it, the read-out call (Sec.~\ref{sec:coupling}). A message that was posted but not yet read has no effect. The coupling runs on the clock of model calls, not on the wall clock. Messages that name the reader couple about 20 times more than other messages (0.079 against 0.004 per read). The read-out loop gain is near 0.13 in the regime of continuous operation, so the swarm is subcritical everywhere. In that regime the talk variance obeys the sum rule $\Phi=1/(1-g)^2$ in 14 of 18 units.
-
-\textbf{Result 2: fields beat coupling.} The scheduler gives 70--80\% of the joint activity in the continuous regime (Sec.~\ref{sec:fields}). A new goal acts as a quench: the content of each agent moves to the new goal within one day and overshoots on day 1. Rooms split in content without an external cause, and the split starts again at each goal. Each agent has a personal style that identifies it, but a goal change or a context erasure moves the style. Goal periods longer than about one week drift, so a model must be fitted in windows of about one week.
-
-\textbf{Result 3: no collective order beyond pairs and fields.} Idea cascades are subcritical, with a branching ratio near 0.2 (Sec.~\ref{sec:collective}). No single coupling dial orders the periods: the phase diagram is the number of agents against the regime. Pairs and fields explain shared vocabulary. Agents disagree only when the operator assigns opposite sides, and the disagreement stops when the operator gives a verdict. One slow content mode, in the early single-room village, is the only collective result that survived its tests so far.
-
-\textbf{Result 4: the context window carries the value.} A forced context wipe costs about 39\% of committed work for about 10 calls (Sec.~\ref{sec:information}). The context window carries about 5 commits per 20 calls per bit; no other channel carries a measurable value. Operator levers are small: a nudge buys about one active minute.
-
-\textbf{What this paper is not.} No claim has passed a confirmation test on reserved data. The credences are judgements by Claude under a written rubric, and Claude agents also ran the analyses (Sec.~\ref{sec:discussion}). Section~\ref{sec:theses} gives the ten claims with the highest estimated usefulness in short form. Sections~\ref{sec:system}--\ref{sec:information} give the details. The appendices list the goal periods, the full hypothesis $\times$ model table and all hypotheses by estimated usefulness.
+\textbf{Plan.} Section~\ref{sec:picture} states the effective picture and turns it into monitoring observables. Section~\ref{sec:method} describes the data and the research loop. Sections~\ref{sec:models}--\ref{sec:rest} go through the models, from the most useful to the rejected ones. Section~\ref{sec:cross} collects the results that span models, and Sec.~\ref{sec:limits} states the limits. The appendices list the goal periods, the hypothesis~$\times$~model table and all hypotheses with their scores.
 
 \begin{figure*}[t]
 \includegraphics[width=\textwidth]{timeline.pdf}
-\caption{The AI Village over time. Top strip: the 51 goal periods, colored by who wrote the goal. Middle: the agent roster, colored by lab, from joining to retirement. Bottom: agents present, stacked by lab. Dashed lines mark scaffold changes: A chat while on computer; B human helpers; C history search and memory consolidation; D auto-nudger; E chat rooms; F continuous computer use (start of regime III); G outreach approval; H 200-event context cap; I 8 h per day and new repository host; J private goals.}
+\caption{The AI Village over time. Top strip: the 51 goal periods, colored by who wrote the goal. Middle: the agent roster, colored by lab, from joining to retirement. Bottom: agents present, stacked by lab. Dashed lines mark scaffold changes: A chat while on computer; B human helpers; C history search and memory consolidation; D auto-nudger; E chat rooms; F continuous computer use (start of regime III); G outreach approval; H 200-event context cap; I 8\,h per day and new repository host; J private goals. Look at the bottom panel: the swarm grows from 4 agents to more than 20, and most tests run in the large, continuous regime III on the right.}
 \label{fig:timeline}
 \end{figure*}
-
-\begin{figure}[t]
-\resizebox{\columnwidth}{!}{\input{../figures/architecture.tikz}}
-\caption{Project architecture. Physics models feed the loose ideas. Ideas become hypotheses. Natural experiments serve as interventions. Every hypothesis gets a score before it goes into the write-up.}
-\label{fig:arch}
-\end{figure}
-
-\begin{figure}[t]
-\resizebox{\columnwidth}{!}{\input{../figures/scoring-1col.tikz}}
-\caption{Scoring. Claude states each claim and acts as two judges, one of them blind. A third Claude adjudication settles large disagreements under written rules.}
-\label{fig:scoring}
-\end{figure}
-
-\begin{figure*}[t]
-\includegraphics[width=\textwidth]{table_zoom.pdf}
-\caption{(a) Part of the hypothesis $\times$ physics-model table. The glyph shows the role of the model in the hypothesis. The color shows the outcome for the claim. (b) One cell, H08 under model 02 (kinetic Ising with read-out coupling), shown as verdicts per goal period. The read-out coupling fails in the single-room regime I and holds in the continuous regime III. Gray tiles are periods that were not tested. Appendix~\ref{app:matrix} gives the full table.}
-\label{fig:tablezoom}
-\end{figure*}
-
-\begin{figure}[t]
-\includegraphics[width=\columnwidth]{scoring_scatter.pdf}
-\caption{Credence against value if true for all 132 scored claims. Gray curves: equal estimated usefulness (EU). Marker: mechanism depth. Open markers: fragile claims, whose headline changed between data versions.}
-\label{fig:scatter}
-\end{figure}

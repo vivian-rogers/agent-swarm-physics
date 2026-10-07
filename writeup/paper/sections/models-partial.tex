@@ -1,0 +1,79 @@
+% models-partial: partly useful models 04, 03, 15, 14, 08. Model-first rewrite 2026-10-07.
+% Numbers: scratchpad fact sheets 04_12_information, 03_15_05_06_14, 10_13_08_07_cross.
+\section{Partly useful models}\label{sec:partial}
+
+% ---------------------------------------------------------------- 04
+\subsection{Model 04: semantic information and the context window}\label{sec:m04}
+
+\textbf{Model.} Semantic information is the part of the information between an agent and its environment whose loss lowers the agent's viability~\cite{kolchinsky2018,sowinski2023}. Let $V$ be committed work per 20 calls. Scramble one channel $c$ (context window, memory notes, own files, chat, history search), measure the information $I_c$ that it carried about where the agent works next, and the loss $\Delta V_c$. The value per bit is
+\begin{equation}
+\kappa_c=\Delta V_c/I_c .
+\label{eq:kappa}
+\end{equation}
+
+\textbf{Mapping.} The best scramble is the forced erasure: the scaffold erases the context window at a fixed cap, whatever the task state (NE41). Memory losses, newcomers with empty memories and a history-search outage scramble other channels.
+
+\textbf{Best-supported cards.}
+\begin{enumerate}
+\item \textbf{H15: the context window carries the work, as a working state.} A forced erasure cuts work commits by 39\% [35, 42] over the next 10 calls in 7/9 regime-III periods. Memory losses and empty-memory newcomers show no day-scale cost. The value is not in the few items read first after the wipe: re-opened files and new messages carry 4\% [$-23$, $+26$] of the dip. Consolidation notes are about 11\% enacted\cred{0.72}.
+\item \textbf{H58: the persistent unit is an agent and its own files.} The pair keeps its next-file information through a wipe (0.083 vs 0.088 bits). Re-reading its own files is the one other channel with identified value ($\kappa=0.77$ [0.25, 1.26] commits per bit at file level), and the re-reading is habit, not targeted recovery. A group store of strength $\rho\ge0.7$ is excluded in \#51 (power 0.95--1.00)\cred{0.71, rated on round 1}.
+\item \textbf{H71: memory size has a set point.} It returns to an agent-specific level each consolidation cycle ($\phi=0.67$ [0.63, 0.71]) with no overshoot; the loop has two timescales\cred{0.74}.
+\item \textbf{H87: the $\kappa$ table.} Over 18,760 forced erasures in nine periods, the erasure destroys $I_C=0.078$ [0.052, 0.104] bits and costs $\Delta V_C=0.41$ [0.36, 0.45] commits per 20 calls, so $\kappa_C=5.2$ [3.8, 7.9] commits per 20 calls per bit (Fig.~\ref{fig:kappa}). The own artifact carries the most bits ($I_A=0.137$) but no value at repository level ($\kappa_A=-0.6$ [$-1.6$, $+0.3$]). Memory notes, chat reads, human messages and history search carry at most 0.04 bits each, so their $\kappa$ is not identified\cred{0.63}. Only G38 (0.87) and G51 (7.0) identify $\kappa_C$ on their own, and they differ eightfold.
+\item \textbf{H35: the nudger is an efficient demon for glances, not for work.} It reads 1.42 bits of agent state per nudge, mostly trap age, and buys glances near the efficiency frontier ($\eta=0.88$ [0.26, 0.97]), but $+0.22$ [$-0.29$, $+0.82$] commits per hour, at most about 0.4\% of swarm commits\cred{0.61; fragile}.
+\item \textbf{H113: the read-out channel has an intermediate capacity.} Total uptake from a batch of $k$ messages grows as $k^{0.31\,[0.25,\,0.37]}$ in \#51, which excludes one message per call and no bottleneck\cred{0.64}.
+\end{enumerate}
+
+\textbf{What failed.} No group that shares work is a semantic-information superagent (H01). Agents do not regulate how much room chat enters their context (H45: regulation index $\le0.22$ in 32/32 periods). The history-search outage cost no measured continuity (H84), corrections do not free blocked agents (H55), and no fitted index policy beats a simple nudge rule (H60). The model's own signatures (stored semantic information, efficiency, plateau then collapse) need graded scrambles, which the record does not provide.
+
+\textbf{Verdict: partly useful}, as an accounting instrument for one agent. It prices the context window and finds no valuable group store. Most of its evidence rests on one intervention (NE41).
+
+\begin{figure*}[t]
+\includegraphics[width=\textwidth]{H87-kappa-table/fig.pdf}
+\caption{The $\kappa$ table: only the context window buys commits per bit (model 04, H87 with H70). Each row is a channel at its natural scramble (forced erasures; the kickoff for the last row), with agent-day paired bootstrap 95\% intervals. (a)~Bits about where to work. (b)~Output value lost. (c)~Value per bit. (d)~After an erasure agents return to their own repository. Look at panel (c): only the context window has an identified, positive value per bit ($\kappa_C=5.2$ [3.8, 7.9]); ``n.i.'' marks rows below the 0.02-bit identification floor.}
+\label{fig:kappa}
+\end{figure*}
+
+\input{sections/table_rest}
+
+% ---------------------------------------------------------------- 03
+\subsection{Model 03: subcritical branching of ideas}\label{sec:m03}
+
+\textbf{Model.} An idea marker (a link, a rare word) spreads as a Galton--Watson tree: each adopter recruits a random number of new adopters with mean $R$. The process is critical at $R=1$, where tree sizes follow $P(s)\propto s^{-3/2}$. With heterogeneous ideas, $R_{\rm idea}\sim\mathrm{Gamma}(\alpha,\mu/\alpha)$ and offspring are Poisson with that mean.
+
+\textbf{Best-supported cards.}
+\begin{enumerate}
+\item \textbf{H34: idea cascades are subcritical and heterogeneous.} The branching ratio is $\hat R=0.09$--0.40 (median 0.22), with its upper 95\% bound below 1 in 32/32 periods; no period shows the $s^{-3/2}$ law (Fig.~\ref{fig:cascades}). A gamma mixture of idea-level ratios (shape $\approx0.96$, CV$^2\approx1$) covers the tail in 28/32 periods, where one ratio covers 9/32. Adopters out-spread inventors (non-root/root offspring 1.52, predicted 1.50 by the fitted mixture, against $\le0.91$ for every homogeneous reference). This unfitted prediction passes\cred{0.75}. About half of the exposure lock is convergence, and paraphrase adoption is mostly convergence.
+\item \textbf{H62: ideas travel the reply graph.} A reply partner's exposure is followed by 2--3$\times$ more adoption per edge than room-only exposure (23/26 periods), but a shared thread field gives a similar premium, so transmission is not separated from field\cred{0.70}.
+\item \textbf{H41: rooms cage spread.} Inside rooms, 0--4\% of adoptions lie outside the logged read cone; the room merge (NE42) raised the cross-group hazard $\times82$ [21, 223]. Cross-room leaks follow shared projects ($\Lambda=1.45$ [1.09, 2.26]), but this fails leave-one-out\cred{0.36; fragile}.
+\end{enumerate}
+
+\textbf{What failed.} Links do not cause herding: recipients switch before they can read the link, and future links beat past ones in 9/11 periods (H28). Spread is not forecastable at first use beyond who posted it (H61). Attention dilution is one exponent, not two strategies (H68). Heavy reply chains come from thread momentum, not a Griffiths phase of rare strong pairs (H114).
+
+\textbf{Verdict: partly useful}, as a measurement of subcritical, heterogeneous branching. It is not a causal or epidemic-threshold model.
+
+\begin{figure*}[t]
+\includegraphics[width=\textwidth]{H34-idea-cascades/fig.pdf}
+\caption{Idea cascades are subcritical in every goal period (model 03, H34; round-1b data). (a)~Tree-size distribution in \#51 against a negative-binomial Galton--Watson law at $\hat R=0.23$ and against the critical law $P(s)\propto s^{-3/2}$; thin lines are the other 31 periods. (b)~$\hat R$ with 95\% CI for the 32 non-reserved periods against room size. Look at panel (b): every upper bound sits below 1. Round 2 adds that the heavy tail is a spread of $R$ across ideas.}
+\label{fig:cascades}
+\end{figure*}
+
+% ---------------------------------------------------------------- 15
+\subsection{Model 15: stochastic thermodynamics of selection}\label{sec:m15}
+
+\textbf{Model.} The entropy production of a driven Markov system splits into an excess part, from changes of the state distribution, and a housekeeping part, from steady cycles: $\sigma=\sigma_{\rm ex}+\sigma_{\rm hk}$~\cite{kolchinsky2026}. A maximum-entropy bound gives a lower estimate of collective entropy production beyond the parts~\cite{aguilera2026}. The same folder holds selection quantities for replicators~\cite{kolchinsky2025}.
+
+\textbf{Best-supported cards.} H76: 80--100\% of the swarm's debiased excess irreversibility lies in the first and last 30 minutes of the day (G51 0.80 [0.73, 0.90]; G38, G40 near 1.00), which take 12--25\% of the time; trimming to the all-present window removes 81--100\% of it. Kickoff excess and housekeeping are below the detection floor, as the synthetic run predicted\cred{0.73}. H90: the one collective arrow of time is address-bound talk in G51: an agent starts to talk in the minute after an agent who named it ($\sigma_{\rm nam}=7.6$ [4.3, 11.2]$\times10^{-3}$ nats/min, $p=0.01$); behaviour and activity irreversibility is individual (collective share 0.003)\cred{0.41}. H79: self-catalysis carries 85--99\% of the autocatalytic set; no catalytic cycle of three or more survives a rewired null\cred{0.72}.
+
+\textbf{What failed.} The Wasserstein speed limit is a counting identity that cannot fail; a Potts instant-freeze rival explains the slack (H75, H95). The selection affinity, the growth order and the autocatalytic coverage all sit inside a neutral copying null (H77, H78, H79). The assembly index adds nothing over compression (H80).
+
+\textbf{Verdict: partly useful}, as a measurement layer that localizes irreversibility at the scheduler's day edges. Its selection quantities are not identified at village counts.
+
+% ---------------------------------------------------------------- 14
+\subsection{Model 14: scaling and fluctuation gauges}\label{sec:m14}
+
+The pair covariance $c_\times$ of agents' activity is a working shared-field gauge: trimming removes 0.77 of it in regime III, matching the independent 70--80\% of H38, and leaves a shared share $\phi=0.04$ (H86)\cred{0.68}. Taylor's exponent fails as a field gauge, because agents on a call clock are more regular when faster ($b\approx0.85$). Room message volume grows sublinearly with the number of agents ($\beta=0.33$ [$-0.18$, 0.64]; H85)\cred{0.64}. Allometric exponents span one decade of $N$, so they are slopes, not laws. \textbf{Verdict: partly useful, as gauges.}
+
+% ---------------------------------------------------------------- 08
+\subsection{Model 08: copying versus transformation, as an instrument}\label{sec:m08}
+
+The decomposition of transmitted information into copied and transformed parts works as an instrument. The two role-play-game forks diverge gradually, and each shared change followed a read (H07)\cred{0.52}. Restatement loops copy in-context text (H69, Sec.~\ref{sec:m02}). A distilled leader copies vocabulary but not plans (H23)\cred{0.37}. A large read backlog does not make agents copy what they read, and below 15\,s unread pairs are near-copies as often as read pairs (H57)\cred{0.57}. \textbf{Verdict: partly useful, as an instrument}; its main lesson is that convergence imitates copying.

@@ -1,13 +1,90 @@
-\section{Method}\label{sec:method}
+% method: data, the research loop, impostors, faithfulness axes, scoring (model-first rewrite, 2026-10-07).
+\section{Data and method}\label{sec:method}
 
-\textbf{Pipeline.} Figure~\ref{fig:arch} shows the work flow. We collected 375 loose ideas and tagged each one with a physics model and a goal period. An idea becomes a hypothesis when it has a model, a data scheme and a prediction that can fail. Each of the 132 hypotheses has a card. The card states the question, the model, the observables, the null and the predictions with kill rules. The card gives a date for each prediction, before any statistic on real data. Claude agents planned and ran the work, one or two hypotheses per agent, under review by the first author.
+\input{sections/fig_gallery}
 
-\textbf{Fields and couplings.} A field is an external drive on all agents. A coupling is an interaction between agents. Four impostors make a field look like a coupling. The scheduler starts and stops agents together. External drives (goals, operator messages, human messages) push all agents at once. Shared model priors make agents of one family write alike. A common input makes agents respond at the same time. Every claim of coupling must remove all four. The strongest test is a partition contrast. A message that the reader read must act more than a message that the reader could not yet see at the same lag.
+\subsection{The record}
+The AI Village runs frontier language-model agents on shared virtual computers with a group chat~\cite{aivillage}. An operator sets a village-wide goal, usually for one working week, and the agents pursue it with browser, shell and chat actions. The export (revision of 2026-09-20) holds 381k timeline events, 173k agent chat messages, 10k human messages, 2.5M computer-use turns, agent memories and the scaffold changelog.
 
-\textbf{Two layers.} Each hypothesis runs in two layers. The replication layer applies one pipeline to every eligible goal period. The native layer tests the period or natural experiment that fits the hypothesis best. Before real data, each estimator runs on synthetic swarms. These swarms use the real call schedule, room history and roster, with the effect planted or absent. When the synthetic run shows a bias, a wrong size or no power, the card records a dated amendment before the real run.
+\textbf{Degrees of freedom.} A \emph{model call} is one context assembly followed by one action. At each call an agent has an action class (talk, work or wait), a content vector (the embedding of its statement, with two embedding models, bge and gte) and a project. A context ledger records which messages each call could see. It defines the read-out call of each message.
 
-\textbf{Reserved data.} Before exploration, we reserved 16 goal periods and four natural-experiment windows. No result in this paper uses them. Each hypothesis has a confirmation script, frozen by a hash. The script reads the reserved data only after sign-off by the first author. Three early hypotheses ran on the reserved data (H02, H04, H05). All other results are exploratory.
+\textbf{Regimes.} Three scaffolds define three regimes. In regime I (to 2026-03-02) all agents share one room and work in daily chat sessions. In regime II agents work in rooms, still in sessions. In regime III (from 2026-03-24) agents operate continuously and see only their room. In regime III the scaffold also erases each agent's context window at a fixed cap of 41 records and keeps its memory notes. The timing of these \emph{forced erasures} is set by the scaffold, not by the task, so they act as a natural experiment (NE41).
 
-\textbf{Scoring.} Claude judges every hypothesis (Fig.~\ref{fig:scoring}). First, Claude states the claim that stands in one scoped sentence. Then two Claude judges score the claim. Judge 1 is the coordinator, who saw the whole project. Judge 2 is blind and sees only the card and the evidence. Credence (faithfulness) starts at 0.4, 0.3 or 0.2, by the time when the prediction was written. Each passed check multiplies the odds of the claim. The checks are: the strongest null beaten, replication across periods, survival of data fixes, synthetic recovery, a natural experiment, a rival model beaten, and agreement with known structure. Weak inputs divide the odds. The credence cannot exceed 0.95. Estimated usefulness is the credence times a value if true from 0 to 5. The value depends on the decision that the claim changes. The two scores are averaged in log-odds. A third Claude adjudication settles differences larger than 0.25 in credence, under written rules. A mechanism depth and a fragile flag complete the score.
+\textbf{Unit of analysis.} We divide the record into its 51 goal periods (Appendix~\ref{app:goals}) and divide a period again at any scaffold change inside it. Periods differ in size ($N=4$--21 at the start), regime, goal author and the coupling that the goal imposes. We fit each model inside one period and compare periods by their fitted parameters, as points on a phase diagram. We never pool periods into one fit, except for named reasons: a shared instrument, an agent-level property, a boundary that is itself the object, or partial pooling with shrinkage when one period has too little data.
 
-\textbf{The table.} Each hypothesis names a primary physics model. It can also fit secondary, rival and null models. Figure~\ref{fig:tablezoom} and Appendix~\ref{app:matrix} show the table. Of the 132 claims, the median credence is 0.64, 84 claims reach 0.6, and 4 claims reach mechanism depth M2 (intervention, rival and synthetic recovery).
+\subsection{The research loop}
+Figure~\ref{fig:arch} shows the loop. Seventeen physics models each have a folder that states the model, its signature behaviour, its mapping onto the swarm, how to fit it and its pitfalls. We collected 385 loose ideas, each tagged with a model and a goal period. An idea becomes a hypothesis when it has a model, a data scheme and a prediction that can fail. Each hypothesis has a card that states its question, model, observables, null and predictions with kill rules, each with a date before any statistic on real data. Claude agents planned and ran the work, one or two hypotheses per agent, under review by the second author. Of 142 cards, 132 have run and are scored; the last ten were pre-registered on 2026-10-07 and have not run.
+
+\textbf{Impostors.} Four impostors make a field look like a coupling (Table~\ref{tab:impostors}). Each has produced false collective order in this project at least once. Every claim of coupling, influence or collective order must remove all four or say why one does not apply. The strongest test is a \emph{partition contrast}: a message that the reader has read must act more than a message that the reader could not yet see, at the same lag.
+
+\begin{table}[!tb]
+\caption{The four impostors and how the cards remove them.}
+\label{tab:impostors}
+\footnotesize\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}p{0.22\columnwidth}p{0.30\columnwidth}p{0.42\columnwidth}@{}}
+\toprule
+Impostor & What it fakes & Removal\\\midrule
+\rr Scheduler field & \rr synchrony, collective modes, day-edge irreversibility & \rr trim to the all-present window; block-shift nulls; per-call clocks (H38, H40, H12)\tabularnewline
+\rr External field (kickoff, goal, operator) & \rr content alignment, herding, ``leaders'' & \rr regress on goal directions and operator messages; kickoff-matched placebos (H54, H10)\tabularnewline
+\rr Shared model priors (family, style) & \rr family fields, conventions & \rr style residuals; leave-period-out agent means; cross-family controls (H13, H46)\tabularnewline
+\rr Simultaneous convergence & \rr copying, contagion, influence & \rr in-flight placebo: read vs posted-but-unread at matched lag (H08, H57, H34)\tabularnewline
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Two layers and synthetic checks.} Each hypothesis runs in two layers. The replication layer applies one pipeline to every eligible goal period. The native layer tests the periods or natural experiments that suit the hypothesis best, each with its own dated prediction. Before real data, each estimator runs on synthetic swarms that use the real call schedule, room history and roster, with the effect planted or absent. When the synthetic run shows a bias, a wrong size or no power, the card records a dated amendment before the real run. A negative claim needs a synthetic power of at least 0.8 at the size that would matter; otherwise it is ``inconclusive''.
+
+\textbf{Reserved data.} Before exploration we reserved 16 goal periods and four natural-experiment windows for confirmation. Each hypothesis has a frozen confirmation script that reads them only after sign-off by the second author. Three early hypotheses ran on reserved data (H02, H04, H05): one failed, one came out reversed, and one was inconclusive (Sec.~\ref{sec:limits}). Every other result in this paper is exploratory.
+
+\subsection{Faithfulness, not fit}\label{sec:faith}
+A physics model is \emph{faithful} to the swarm when it captures the mechanism that makes the data, not only the data's statistics. Most of our models fit by construction: a pairwise maximum-entropy model reproduces pairwise correlations exactly, and a flexible point process fits any sequence of times. We therefore separate fitting from faithfulness and score each model, mapping and window on nine axes (Table~\ref{tab:faith}), each 0 (not done or failed), 1 (partial) or 2 (passed). The principles are: fit is no evidence; beat the strongest null, not the weakest; predict what you did not fit, above all the model's own signature; use natural experiments as interventions; check the inference on synthetic data with the real sampling~\cite{talts2018}; and prefer designs in which two models predict opposite results.
+
+\begin{table}[!tb]
+\caption{Faithfulness axes, scored 0/1/2 per model, mapping and window. A claim is \emph{supported} when A = 2, B $\geq$ 1, C = 2, D = 2, F $\geq$ 1, H $\geq$ 1 and E = 2 or G = 2, all confirmed on reserved data; \emph{faithful} adds E = F = H = I = 2. No claim in this paper meets either level yet.}
+\label{tab:faith}
+\footnotesize\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}l@{\hspace{4pt}}p{0.2\columnwidth}p{0.68\columnwidth}@{}}
+\toprule
+ & axis & test \\ \midrule
+\rr A & \rr mapping & \rr every variable defined from dataset fields; invariant across families and regimes \tabularnewline
+\rr B & \rr assumptions & \rr stationarity (split halves); Markov order; time rescaling; update order \tabularnewline
+\rr C & \rr adequacy & \rr beats the null hierarchy on held-out days \tabularnewline
+\rr D & \rr unfitted predictions & \rr reproduces statistics left out of the fit, and the model's signature \tabularnewline
+\rr E & \rr interventional & \rr fitted before a natural experiment, predicts the change after it \tabularnewline
+\rr F & \rr identifiability & \rr synthetic recovery with village sampling; stable over bins, embeddings, halves \tabularnewline
+\rr G & \rr ground truth & \rr agrees with known structure: assigned leaders, rooms, families, scaffold changes \tabularnewline
+\rr H & \rr comparative & \rr beats the rival models named on the card \tabularnewline
+\rr I & \rr transfer & \rr holds in other periods of the same regime, including reserved data \tabularnewline
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{How we rank.} In Secs.~\ref{sec:models}--\ref{sec:rest}, the cards under each model are ranked by pre-registered faithfulness, in this order: a positive verdict for the model or its named variant; a win over the strongest null; a correct prediction of a statistic that was not fitted; survival of the card's own kill rules; then credence. In-sample fit is never used.
+
+\textbf{Scoring.} Claude judges every hypothesis twice (Fig.~\ref{fig:scoring}). First, Claude states the claim that stands in one scoped sentence. Judge 1 is the coordinator, who saw the whole project; Judge 2 is blind and sees only the card and its evidence. The \emph{credence} $p$ is the judged probability that the claim survives a test on reserved data. It starts at 0.4, 0.3 or 0.2, by when the prediction was written, and each passed check multiplies the odds; it is capped at 0.95. The value if true, $V$ from 0 to 5, depends on the decision that the claim would change, and the estimated usefulness is $\mathrm{EU}=pV$. A mechanism depth (M0: a pattern that repeats; M1: the model's own signature predicted and a rival fails; M2: also a natural experiment and synthetic recovery) and a fragile flag complete the score. A third Claude adjudication settles differences larger than 0.25 in credence. Over the 132 scored claims the median credence is 0.64; 82 claims reach 0.6, and two reach M2 (H16, H38) (Fig.~\ref{fig:scatter}). Credences in this paper are written as \cred{$p$}.
+
+\textbf{The table.} Each hypothesis names a primary model and can fit secondary, rival and null models. Figure~\ref{fig:tablezoom} shows part of the hypothesis~$\times$~model table; Appendix~\ref{app:matrix} shows all of it with 17 models, and Appendix~\ref{app:eu} lists all hypotheses by EU.
+
+\begin{figure}[t]
+\resizebox{\columnwidth}{!}{\input{figs/architecture.tikz}}
+\caption{The research loop. Physics models feed loose ideas; ideas that gain a model, a scheme and a falsifiable prediction become hypotheses; natural experiments serve as interventions; every hypothesis is scored before it enters the write-up. Follow the arrows down: nothing reaches the paper without dated predictions and a score.}
+\label{fig:arch}
+\end{figure}
+
+\begin{figure}[t]
+\resizebox{\columnwidth}{!}{\input{figs/scoring-1col.tikz}}
+\caption{Scoring. Claude states each claim and scores it as two judges, one of them blind; a third Claude adjudication settles large disagreements under written rules. The output is a credence $p$ and an estimated usefulness $\mathrm{EU}=pV$.}
+\label{fig:scoring}
+\end{figure}
+
+\begin{figure*}[t]
+\includegraphics[width=\textwidth]{table_zoom.pdf}
+\caption{(a)~Part of the hypothesis $\times$ physics-model table. The glyph shows the role of the model in the hypothesis; the color shows the outcome for the claim (green supported, gray mixed, red refuted, light gray untested). (b)~One cell, H08 under model 02 (kinetic Ising with read-out coupling), as verdicts per goal period. Look at how one cell resolves into many period-level tests; Appendix~\ref{app:matrix} gives the full table.}
+\label{fig:tablezoom}
+\end{figure*}
+
+\begin{figure}[t]
+\includegraphics[width=\columnwidth]{scoring_scatter.pdf}
+\caption{Credence against value if true for every scored claim. Gray curves: equal estimated usefulness (EU). Marker: mechanism depth. Open markers: fragile claims, whose headline changed between data versions. Look at the upper right: few claims are both credible and valuable, and none is confirmed on reserved data.}
+\label{fig:scatter}
+\end{figure}

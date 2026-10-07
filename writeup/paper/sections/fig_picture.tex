@@ -1,0 +1,76 @@
+% fig_picture: schematic of the effective picture (Sec. II). TikZ, few-word labels.
+% Spin states: red/blue (Ising up/down). Fields: orange. Read-out links: dark gray.
+\definecolor{spinup}{HTML}{CC3311}
+\definecolor{spindn}{HTML}{0072B2}
+\begin{figure*}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[font=\sffamily\small,
+  agent/.style={circle,draw=inkc,line width=0.5pt,minimum size=5.5mm,inner sep=0pt},
+  up/.style={agent,fill=spinup!85},
+  dn/.style={agent,fill=spindn!85},
+  link/.style={-{Stealth[length=1.6mm]},draw=inkc!70,line width=0.5pt},
+  field/.style={-{Stealth[length=2.4mm]},draw=fieldc,line width=2.2pt},
+  lab/.style={font=\sffamily\footnotesize,text=inkc}]
+% ---------------- (a) the swarm
+\node[lab,anchor=west,font=\sffamily\small\bfseries] at (-0.2,4.6) {(a) swarm};
+\node[draw=fieldc,fill=fieldc!15,rounded corners=2pt,minimum width=6.6cm,minimum height=0.55cm,lab] (F) at (3.3,3.95) {fields: scheduler $\cdot$ kickoff $\cdot$ room $\cdot$ style};
+\draw[dashed,rounded corners=6pt,draw=nullc] (0,0) rectangle (3.1,2.75);
+\draw[dashed,rounded corners=6pt,draw=nullc] (3.5,0) rectangle (6.6,2.75);
+\node[lab,text=nullc] at (1.55,-0.3) {room A};
+\node[lab,text=nullc] at (5.05,-0.3) {room B};
+\node[up] (a1) at (0.6,2.1) {}; \node[up] (a2) at (1.7,2.25) {}; \node[dn] (a3) at (2.55,1.5) {};
+\node[up] (a4) at (0.75,0.75) {}; \node[up] (a5) at (1.85,0.6) {};
+\node[dn] (b1) at (4.1,2.1) {}; \node[dn] (b2) at (5.2,2.25) {}; \node[up] (b3) at (6.05,1.4) {};
+\node[dn] (b4) at (4.25,0.7) {}; \node[dn] (b5) at (5.35,0.6) {};
+\foreach \x in {0.8,2.3,4.3,5.8} \draw[field] (\x,3.62) -- (\x,2.85);
+\draw[link] (a1) -- (a2); \draw[link] (a2) -- (a3); \draw[link] (a4) -- (a5);
+\draw[link] (b1) -- (b2); \draw[link] (b5) -- (b3); \draw[link] (b4) -- (b5);
+\draw[link,densely dotted] (a3) -- (b4);
+\node[lab,align=center] at (3.3,-0.85) {named read: weak, $g\approx0.13$};
+% ---------------- (b) the call clock
+\begin{scope}[xshift=7.6cm]
+\node[lab,anchor=west,font=\sffamily\small\bfseries] at (-0.2,4.6) {(b) call clock};
+\node[lab,anchor=east] at (0.35,3.3) {sender};
+\node[lab,anchor=east] at (0.35,1.6) {reader};
+\draw[->,draw=nullc] (0.45,0.6) -- (4.9,0.6) node[lab,anchor=north east] at (4.9,0.55) {time};
+\fill[nullc!35] (0.55,3.1) rectangle (1.9,3.5);
+\draw[-{Stealth[length=2mm]},draw=spindn,line width=1pt] (1.9,3.3) -- (1.9,2.45);
+\node[lab,anchor=south] at (1.9,3.5) {post};
+% reader calls
+\fill[nullc!35] (0.55,1.4) rectangle (1.35,1.8);
+\fill[nullc!60] (1.5,1.4) rectangle (2.75,1.8);
+\fill[spindn!80] (2.9,1.4) rectangle (3.75,1.8);
+\fill[nullc!35] (3.9,1.4) rectangle (4.7,1.8);
+\draw[densely dotted,draw=inkc] (1.9,2.45) -- (1.9,1.85);
+\draw[-{Stealth[length=2mm]},draw=spindn,line width=1pt] (1.9,2.45) to[out=-10,in=100] (3.3,1.85);
+\node[lab,anchor=north,align=center] at (2.12,1.35) {in flight:\\no effect};
+\node[lab,anchor=north,align=center] at (3.4,1.35) {read-out:\\acts};
+\end{scope}
+% ---------------- (c) the well
+\begin{scope}[xshift=13.0cm]
+\node[lab,anchor=west,font=\sffamily\small\bfseries] at (-0.2,4.6) {(c) one agent};
+\draw[draw=inkc,line width=0.9pt,domain=-2:2,smooth,variable=\x] plot ({\x+2.2},{0.42*\x*\x+0.8});
+\fill[fieldc] (2.2,0.8) circle (0.07);
+\node[lab,anchor=north] at (2.2,0.72) {well centre};
+\shade[ball color=spindn!70] (2.95,1.12) circle (0.17);
+\draw[-{Stealth[length=2mm]},draw=spindn,line width=1.1pt] (3.12,1.3) -- (3.7,1.95);
+\node[lab,anchor=south] at (3.75,2.2) {kick $\approx$7 calls};
+\draw[-{Stealth[length=2mm]},draw=inkc,line width=0.8pt] (2.7,1.22) to[bend left=25] (2.35,0.98);
+\node[lab,anchor=south] at (2.0,2.75) {well $\approx$100 calls};
+\draw[draw=inkc!60,line width=0.4pt] (2.0,2.72) -- (2.0,1.0);
+\end{scope}
+% ---------------- (d) memory
+\begin{scope}[xshift=18.4cm]
+\node[lab,anchor=west,font=\sffamily\small\bfseries] at (-0.2,4.6) {(d) memory};
+\foreach \y/\c in {0.7/35,1.1/45,1.5/55,1.9/65,2.3/75,2.7/85} \fill[spindn!\c!white] (0.3,\y) rectangle (2.5,\y+0.32);
+\draw[draw=inkc,line width=0.6pt] (0.2,0.6) rectangle (2.6,3.12);
+\node[lab,anchor=south] at (1.4,3.15) {context window};
+\node[lab,anchor=west,align=left] at (2.75,2.55) {erase:\\$-39\%$ work};
+\node[lab,anchor=west,align=left] at (2.75,1.3) {notes,\\search: $\approx0$};
+\node[lab] at (1.4,0.25) {no group store};
+\end{scope}
+\end{tikzpicture}}
+\caption{The effective picture. (a)~Agents are spins (two colors: two action states). Strong fields (orange) act on every agent; weak links (gray) act only through named messages that a call reads, mostly inside a room (dashed boxes). (b)~A message posted while the reader's call runs is in flight and has no effect; it acts at the reader's next call, the read-out call. (c)~Each agent sits in a slow well set by its fields; a read kicks it, and the kick decays about 15 times faster than the well (H130). (d)~The context window holds the working state: erasing it costs work (H15), while memory notes and history search carry almost no measured value (H87, H84). Look at the arrow widths in (a): fields, not links, set most of the state.}
+\label{fig:picture}
+\end{figure*}

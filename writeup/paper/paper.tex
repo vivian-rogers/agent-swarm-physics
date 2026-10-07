@@ -1,18 +1,35 @@
 % Build: cd writeup/paper && pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper
+% Model-first rewrite, 2026-10-07. The finding-first version of 2026-10-04 is in writeup/archive/paper-2026-10-04/.
 \documentclass[aps,pre,reprint,superscriptaddress,nofootinbib]{revtex4-2}
 \usepackage{graphicx}
 \usepackage{amsmath,amssymb}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage{xcolor}
 \usepackage{booktabs}
-
+% (no array package: it clashes with revtex4-2 in TeX Live 2025; tables use \rr cells)
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,calc}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,shapes.geometric}
 \usepackage[hidelinks]{hyperref}
-\graphicspath{{../visuals/}{../figures/}{figs/}}
+\graphicspath{{figs/}{../visuals/}{../figures/}}
 \input{claudespark}
 \newcommand{\cred}[1]{\,(credence~#1)}   % Claude-judged credence of a research thesis
+\newcommand{\rr}{\raggedright\hspace{0pt}}  % ragged-right table cell (rows end with \tabularnewline)
+% Okabe--Ito colors with fixed meanings: field = orange, coupling = blue, null = gray.
+\definecolor{fieldc}{HTML}{E69F00}
+\definecolor{couplc}{HTML}{0072B2}
+\definecolor{nullc}{HTML}{8C8C8C}
+\definecolor{inkc}{HTML}{333333}
+\newcommand{\vsup}{\textcolor[HTML]{0CA30C}{supported}}
+\newcommand{\vmix}{\textcolor[HTML]{6E6E6E}{mixed}}
+\newcommand{\vref}{\textcolor[HTML]{D03B3B}{rejected}}
 
+% Float placement: let large tables and figures sit on text pages or float pages near their call.
+\renewcommand{\topfraction}{0.95}\renewcommand{\dbltopfraction}{0.95}
+\renewcommand{\textfraction}{0.05}\renewcommand{\floatpagefraction}{0.75}\renewcommand{\dblfloatpagefraction}{0.75}
+\setcounter{topnumber}{3}\setcounter{dbltopnumber}{3}\setcounter{totalnumber}{5}
+
+\raggedbottom
 \begin{document}
 \title{Towards a thermodynamics of agent swarms:\\ \normalfont\itshape (Slopvestigating sociophysics as a scheme for swarm interpretability)}
 \author{Claude Opus 5.5\,\claudespark}
@@ -25,14 +42,13 @@
 \maketitle
 
 \input{sections/intro}
-\input{sections/theses}
-\input{sections/system}
+\input{sections/picture}
 \input{sections/method}
-\input{sections/results-coupling}
-\input{sections/results-fields}
-\input{sections/results-collective}
-\input{sections/results-information}
-\input{sections/discussion}
+\input{sections/models-core}
+\input{sections/models-partial}
+\input{sections/models-rest}
+\input{sections/cross}
+\input{sections/limits}
 
 \bibliography{refs}
 \input{sections/appendix}

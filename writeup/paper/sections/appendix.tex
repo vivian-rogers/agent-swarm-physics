@@ -14,11 +14,16 @@
 
 \clearpage
 \section{The full hypothesis $\times$ physics-model table}\label{app:matrix}
-Figure~\ref{fig:fullmatrix} shows every hypothesis against the 15 physics models. Glyph: the role of the model in the hypothesis (primary, secondary, rival, null, or tool, i.e. only its estimator is used). Color: whether that model held for the hypothesis's claim after round 1. Figure~\ref{fig:tablezoom} shows how one cell resolves into verdicts per goal period.
-\begin{figure*}[h]
-\includegraphics[width=\textwidth]{full_matrix.pdf}
-\caption{All 132 hypotheses (rows; H01--H66 left, H67--H132 right) against the 15 physics models (columns).}
+Figure~\ref{fig:fullmatrix} shows every scored hypothesis against the 17 physics models. Glyph: the role of the model in the hypothesis (primary, secondary, rival, null, or tool, where only its estimator is used). Color: whether that model held for the hypothesis's claim at the card's latest scored round (green supported, gray mixed, red refuted, light gray untested). Models 16 and 17 were added on 2026-10-07; the cards that test them (H97, H125, H127, H130 for 16; H12, H91, H92 for 17) carried model 11 or 01 before, which now shows as a secondary role. Figure~\ref{fig:tablezoom} shows how one cell resolves into verdicts per goal period.
+\begin{figure}[!h]
+\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{full_matrix.pdf}
+\caption{All 132 scored hypotheses (rows) against the 17 physics models (columns). Look down a column to see how a model fared across hypotheses.}
 \label{fig:fullmatrix}
-\end{figure*}
+\end{figure}
+
+\clearpage
+\section{The most useful claims}\label{app:theses}
+Table~\ref{tab:theses} gives the 20 claims with the highest estimated usefulness among those with credence of at least 0.6, in short form. Appendix~\ref{app:eu} lists all scored hypotheses by EU, with their faithfulness ($p$, M) and value ($V$). The scored claim for each is on its two-page summary in the compendium. Scores are the current values (round 2 where it exists).
+\input{sections/theses_table}
 \clearpage
 \input{sections/eu_table}
