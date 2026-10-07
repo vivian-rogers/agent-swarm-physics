@@ -12,6 +12,7 @@
 **Literature:** none new; builds on the round-1 results of H10, H54, H73, H75, H13 (cards linked below).
 **Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Population N(t); Regime (whitening per regime, no transition crosses a regime boundary); Driving / external field (the kickoff); Agent state, variant *vector*, in H54's form (unit regime-whitened statement vectors, d = 32, agent state = plain mean over a segment); H54's **quench target t̂_p** and **jump**. New named variants proposed for DEFINITIONS.md (not edited there; defined under Observables): **kickoff memory β**, **restoring susceptibility χ = 1 − β**, **extra forgetting Δβ**, **per-agent susceptibility χ_ip**.
 **From:** HH246 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/11-vector-spins/` (primary), `physics-models/02-nonequilibrium-ising/` (overdamped relaxation, secondary)
+**Model folder:** `physics-models/16-langevin-relaxation/` (added 2026-10-07)
 
 ## Source HH (verbatim from the HH list, including refinements)
 A restoring-force law for the quench. If the kickoff is a field, each agent's day-1 displacement should be proportional to its pre-kickoff distance from the target, with one susceptibility per agent: Δv_i ≈ χ_i (k̂ − v_i,prev). That is an unfitted shape prediction (linear, through the origin) the current analysis doesn't test. *Check:* per-agent day-1 displacement along k̂ vs pre-period distance; linearity, intercept 0, χ stability across kickoffs.
