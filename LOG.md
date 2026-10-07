@@ -5,6 +5,12 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — Table II in physics terms with estimation windows; model × goal-period coverage figure
+
+- Vivian: which goal periods applied to which models (not uniform), when the Table II values are estimated, and physics language in the table's left column.
+- **Table II:** left column now physics names and symbols (named/unnamed jump ratio (J0+JN)/J0, branching ratio g, susceptibility χ, Fano ratio, Galton–Watson R̂, clock elasticity η, quench overlap, field share, entropy production at the day edges, κ_C, well depth Δρ, relaxation times 1/γ, spectral edge ratio λ1/λ+, domain contrast Q, mode lifetimes). New "Estimated on" column with the units/periods/events behind each value, taken from the card READMEs (e.g. g and the named jump: 25 regime-III units #36b–#51; η: #38, #40, #41, #44; relaxation times: #51 only; κ table: 9 regime-III periods, 18,760 forced erasures). Group headers: couplings and response; external fields; memory and relaxation; collective modes and domains. Numbers unchanged.
+- **New Fig. 12 (Sec. IV start, `figs/model_periods.js`, data = hyp_grid.json):** primary model × goal period, stacked verdict bars per cell (height ∝ √tests). Most models tested on 31–41 of 49 period columns; model 15 regime III only (10 periods, 89% of tests); no card has 05, 07 or 12 as primary. New paragraph "Where each model was tested" separates coverage from the narrower headline windows.
+
 ## 2026-10-07 — H133 finished; paper counts updated; dev pushed (public)
 
 - **H133 round 1 (agent report; commits 18e52ee, c471f13, 6176749): inconclusive by its own rule.** Named-read coupling (P1–P3, N1, N3) untestable at village counts (named reads about a non-current project ≈1e-4 of option rows; power 0.64 even pooling 24 units). Call clock for background project switches holds in regime II/III: η_sw = −0.02 [−0.07, +0.02] (24 units); regime I (−0.34), G31 and G51 timer wakes (+0.46) fail. Post hoc only: named-read hop ratio 2.79 [2.48, 3.13] vs unnamed 0.93 and in-flight 1.10. New shared builder `infra/shared/project_calls.py` (per-call project labels; 25.7% of call hops flicker back within 5 calls: cards wanting sustained switches need a minimum dwell).
