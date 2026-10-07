@@ -1,0 +1,155 @@
+# H136: Zero-temperature Potts freeze at the read-out call: each agent commits to a named target at its first read of the kickoff, not at the kickoff time
+
+**Status:** pre-registered (not run). Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH379 (approved by Vivian 2026-10-07), before any H136 statistic on real data. No scheme, synthetic or analysis code exists yet.
+**Question (GOALS.md):** **Q1** (what couples agents to a field: does the kickoff act on each agent at its own read-out call, as messages do in H08?). Second: **Q5** (operator lever: a target named in a kickoff is adopted as soon as each agent reads it, so the read-out spread sets the freeze time).
+**Fields:** stat mech (zero-temperature kinetic Potts quench in a strong field), dynamics (event timing on the call clock), sociophysics (field vs copying)
+**Literature:** [Kolchinsky, Dechant, Yoshimura & Ito 2026](../../literature/kolchinsky-2026-generalized-free-energy-excess-housekeeping.md) (Wasserstein speed limit T ≥ W/Ā, which H75 found saturated by named kickoffs). Cited from memory (†): Glauber, *J. Math. Phys.* 4, 294 (1963)† (single-spin-flip kinetics; at zero temperature in a strong field each spin aligns at its first update).
+**Definitions used** (`physics-models/DEFINITIONS.md`): Agent; Regime; Driving / external field (the kickoff); **Exposure (ledger receiving call)** and **Receiving call**; **Agent state (categorical, project/artifact strict)** (H11) as the project map; H54's **quench target t̂_p** and kickoff naming rule (`infra/shared/kickoff_naming.py`); H75's **committing population**, **repo allocation p(t)**, **settling time T_e** and **agent settling time t_i**; H95's **speed-limit slack S** reading. New named variants proposed for DEFINITIONS.md (not edited there; defined under Data scheme and Observables): **kickoff read-out call t_r,i**, **read delay D_r**, **freeze touch t_f,i**, **post-read call lag K_i**, **delayed active reader**, **freeze anchor (kickoff read vs peer link)**.
+**From:** HH379 in `hypotheses/hypohypotheses/HYPOHYPOTHESES.md` · **Models:** `physics-models/10-potts/` (zero-temperature kinetic Potts in a strong field), `physics-models/02-nonequilibrium-ising/` (asynchronous updates at each agent's own calls; quench)
+
+## Source HH (verbatim from the HH list)
+- **HH379 · Freeze onto a named target happens at each agent's first read of the kickoff, not at the kickoff time.** H75/H95 found an instant freeze onto named targets. In a zero-temperature Potts model with a strong field, an agent commits at its first update after the field appears, and its updates are its calls that read the kickoff.
+  - *Prediction:* per-agent commit time equals the time of that agent's first call whose context includes the kickoff, plus about one call. Agents who read it late commit late, by the same delay.
+  - *Check:* kickoff messages; DQ1 context ledger; commit and first-action times per agent.
+  - *Kill:* commit times align with the kickoff timestamp, not with each agent's first read.
+  - *Impostors:* agents who start late both read and commit late. Use agents who were active before the kickoff but whose first post-kickoff call came later.
+  - *Models:* 10, 02 · *Builds on:* H75, H95, H54, HH374
+
+## What this card builds on (latest round of each cited card)
+- **H75 (round 1, 2026-10-04):** where the kickoff names an artifact (G39, G40, G51), the allocation freezes within 15–30 active min (T_e 0.25–0.5 h) with slack S 1.00–1.40: each agent's first post-kickoff commit lands on its settled repo. G41 (no shared target) settles in 9.5 h (S 5.1). In G44, the room with a named target settles in 0.75 h (S 2.5) and the free room in 4.25 h (S 14.5) at equal switch rates (3.3 vs 3.4 per agent-hour). Newcomers settle in a median 0.28 active h (0.01–2.5 h). Limits: the state is seen only at commits, and T_e sits on a 0.25-h grid.
+- **H95 (round 1, post hoc):** kickoffs that assign a concrete artifact give S 1.0–2.5 and T_e 0.25–0.75 h (G39, G40, G42, G44 #best, G51); open kickoffs give S 3.0–14.5 and T_e 4–13 h (G37, G38, G41, G44 #rest); exact Mann–Whitney p = 0.008. H95's pre-registered specificity gauge failed as a measurement.
+- **H54 (round 2, 2026-10-04):** the day-1 content centroid identifies its own kickoff (top-1 18/33 bge, 20/33 gte). A human message pulls each reader at its first post-read message by Δ ≈ 0.09; reading adds +0.11–0.12 over in-flight messages at matched lag, and in-flight messages carry 40–50% of the pull. 9 of 13 kickoff-frozen projects carry the goal text's words.
+- **H131 (HH374; round 1, 2026-10-04):** the read-aligned and clock-aligned switch-off could not be separated: no rival reply fell between a verdict and its speaker's read (0 in #12, 0 in #26). Verdict read delays had per-debate medians of 10–66 s (maximum 366 s) in #12 and 2–83 s in #26. That partition was empty on exploration data; H136 has the same risk.
+- **H53 (round 1):** read-out delays of present agents have a median of 25 s; 88% fall within 2 min in regimes I/II but only 67% in regime III (90% within ≈ 12 min; 95% within ≈ 29 min). In G40 the kickoff-frozen hub was link-seeded 2.4 min into the kickoff, and 8 agents adopted it within 2 h at receptive count 0.
+- **H128 (round 1):** the domain-wall fraction of work projects does not separate free from named kickoffs (freeze time p = 0.32, 7 vs 5 units). This disagrees with H75 and H95 on a different statistic; H136 tests per-agent timing, not the domain count.
+
+## Question
+After a kickoff that names a target, does each agent commit to the target at its own first call that has the kickoff in context (plus about one call)? Or do agents commit at a common delay after the kickoff post, whatever their read time?
+
+**Practical payoff:** if the freeze is read-locked, an operator who needs the whole swarm on a new target within T minutes must make every agent read the kickoff within T minus one call. In regime III that means waking paused agents, because 33% of present agents read after 2 min (H53).
+
+## Model
+**From:** `physics-models/10-potts/` (zero-temperature kinetic Potts) and `physics-models/02-nonequilibrium-ising/` (asynchronous updates).
+
+**H136 variant: a zero-temperature Potts quench with read-out updates.** At the kickoff post t_k a strong field h appears on the named target x. Agent i updates only at its own calls. At zero temperature with h larger than every other field (habit, ownership, share), the agent moves to x at its first update that sees h. The kickoff enters the agent's state at its kickoff read-out call t_r,i, the first call whose context holds the kickoff message (DQ1 ledger). So
+t_f,i = t_r,i + K_i calls, K_i small (0–2) and independent of the read delay D_r,i = t_r,i − t_k.
+At a finite temperature K_i is geometric, with a mean that rises as the field falls. It still does not depend on D_r.
+
+**Rivals.**
+- **R-clock (the HH's kill):** the freeze follows the kickoff post by a common delay, t_f,i = t_k + D_i with D_i independent of D_r (subject to t_f ≥ t_r). Late readers then commit sooner after reading (K falls with D_r).
+- **R-copy (H53, H28):** agents freeze when they read a peer's link to or work on x, not when they read the kickoff. The freeze anchors on the first peer-link read.
+- **R-late starter (the HH's impostor):** agents who start their day late read late and commit late. The anchor is the agent's first call of the day.
+- **R-plan:** agents plan for a fixed number of calls after their day starts, then commit. The anchor is again the first call of the day, with a longer lag.
+
+## Data scheme (`scheme/`)
+`scheme/build.py` writes `data/processed/H136-freeze-at-first-kickoff-read/` from shared tables only.
+- **Inputs:** `kicks_classified` (kind `goal_kickoff`; room kickoffs where DQ6 or H54 lists them), DQ1 `call_windows` and `context_ledger_items` (receiving calls of the kickoff message), `artifact_mentions` and `artifacts` (strict rule; project map as in `project_states`), DQ4 `work_commits` (agent-work filter; periods ≥ #30), `infra/shared/kickoff_naming.py` and `embeddings/goals.parquet` (named targets), `infra/shared/copying.py: project_messages` (peer links to the target), `calendar`, `period_units`, `roster`, `rooms_timeline`, `ground_truth_labels` (`room_assignment`, #44; role rows, #51). Read-only cross-check: H75's `agents.parquet` (settled repos, t_i). No message text.
+- **Kickoff unit:** one goal kickoff message (or one room kickoff in #38 and #44) with ≥ 1 named target. Named targets come from H54's naming rule (strict link in the kickoff, or a distinctive name token in the kickoff or goal text).
+- **Kickoff read-out call t_r,i (proposed variant):** the agent's receiving call of the kickoff message (`context_ledger_items.message_id`). **Read delay D_r,i** = t_r,i − t_k in active time (calendar windows).
+- **Freeze touch t_f,i (proposed variant; primary):** the agent's first strict touch of its target after t_k, from sources action and intention (work-side mentions, not chat announcements). The target is the named project on which the agent settles (H75's settled repo, held longest in the last 4 active hours of a 20-h horizon). Agents whose settled project is not named are "not frozen" and leave the timing sample. **Variants:** sources including chat; the first DQ4 agent work commit to the target (periods ≥ #30; H75's t_i).
+- **Post-read call lag K_i (proposed variant):** the number of the agent's own calls strictly after t_r,i and up to the freeze call (0 = the read call itself touched the target).
+- **Delayed active reader (proposed variant; the HH's impostor control):** an agent with ≥ 1 own call in the 30 active min before t_k and with D_r ≥ 2 min or ≥ 2 own calls after t_k.
+- **Peer-link anchor:** the agent's first receiving call, after t_k, of an agent message that links the target (`project_messages` × ledger).
+- **First call of the day:** the agent's first `call_windows` row on the kickoff's PT day.
+- **Output:** `agents.parquet` (unit, agent, t_k, t_r, D_r, active-before flag, t_f per variant, K per variant, peer-link anchor, first call of the day; target hashed), `results/`, `synthetic/`, `_provenance.json`. Expected < 5 MB.
+- **#51 note:** #51's private goals enter through `agent_goals`, not a chat message, so the ledger cannot time their read. #51 is excluded unless a DQ6 role row points to a readable message. NE38 is kept only if its reassignment is a readable message.
+- **Reserved rows** are dropped with the shared reserved-row mask in `infra/shared/common.py`.
+
+**Structural precondition (counted before any outcome; H131's lesson):** for each kickoff unit, count the delayed active readers and the spread of D_r among them. The kill test (O1, O3) is testable in a unit only with ≥ 5 delayed active readers. If no unit passes, the HH's kill is declared untestable on exploration data before any freeze time is computed.
+
+## Observables
+- **O1 · Read-alignment slope b:** across agents within a kickoff unit, Theil–Sen and OLS slope of D_f = t_f − t_k on D_r (active time). H136: b = 1. R-clock: b near 0 (above 0 only through truncation at t_f ≥ t_r, sized by the synthetic). Pooled across testable units by random effects (exception (d)), next to per-unit slopes.
+- **O2 · Post-read call lag K:** median K and the share with K ≤ 2, per unit and per variant.
+- **O3 · Lag independence:** Spearman ρ(K_i, D_r,i) among delayed active readers. H136: ρ ≈ 0. R-clock: ρ < 0.
+- **O4 · Anchor comparison:** the spread (median absolute deviation, in own calls) of the freeze relative to each anchor: kickoff read, peer-link read, first call of the day, kickoff post. H136 predicts the kickoff-read anchor gives the smallest spread.
+- **O5 · Freeze share (descriptive):** the share of the committing population whose settled project is named.
+
+## Null / baseline
+- **N1 · Synthetic worlds on the real skeletons (decision null):** W1 read-locked, W2 clock, W3 late starter, W4 copy (below). The observed b, K and ρ are read against W1 and W2 bands.
+- **N2 · Within-unit permutation of D_r:** permute read delays among the unit's delayed active readers (keeps both marginals, breaks the alignment). 2,000 draws for O1 and O3.
+- **Strongest rival:** R-clock with truncation, which can produce b > 0 when read delays are as long as commit delays.
+
+## Impostors (STANDARDS §1)
+| Impostor | Relevant? | How it is handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | yes | Day starts make late readers late committers (R-late starter). The decisive sample is delayed active readers (active before t_k); the first-call-of-the-day anchor is a rival in O4. | planned |
+| Exogenous field (kickoff, goal, operator) | yes, the object | The kickoff is the field. Other human messages after t_k are flagged; agents that read a human message about the target before their freeze are reported separately. | n/a (object of study) |
+| Shared model priors | partly | Every model may pick the same first project for a goal genre. The named-target restriction and H54's genericness correction address this partly; lab mix of K is reported. | planned (partly) |
+| Contemporaneous convergence | yes | Agents may copy early movers (R-copy). The peer-link anchor (O4) and a flag for agents whose freeze follows a peer-link read are reported; an in-flight placebo uses peer links posted but not yet read at the freeze call. | planned |
+
+## Design: two layers (STANDARDS §4)
+**Unit of analysis:** one kickoff (goal period, or room kickoff), a transition design (exception (c): the transition is the object). Kickoffs are compared as phase-diagram points; the pooled slope is a random-effects mean next to per-unit values.
+- **Replication (role `replication`):** every non-reserved kickoff with a named target that meets the precondition. Candidates: regime III G37, G38 (two room kickoffs), G39, G40, G41, G42, G44 (#best and #rest); regime II G33, G35, G36; regime I G30, G31 and the regime-I kickoffs with an H31 kickoff-frozen consensus event (listed from H31's events file at the structural pass).
+- **Natives (role `native`):**
+  - **N1 · G44 rooms (same day).** #best has a named target; #rest picks freely. H136 predicts a read-locked freeze in #best (K small, independent of D_r) and no freeze to time in #rest.
+  - **N2 · G40 (NE42 merge; R-copy test).** The kickoff named the hub, and a link seeded it 2.4 min in (H53). The anchor comparison (O4) decides between the kickoff read and the hub-link read.
+  - **N3 · NE38 (descriptive; one agent).** Opus 5's role reassignment on 2026-07-29: the read of the reassignment message (if it is a readable message) against the first touch of the new role's repo (H75: 2.0 h on commits).
+- **Reserved (confirmation only; never read in exploration):** the kickoffs of #43 and #45–#50 (H75's and H95's confirmation targets), the regime-I and II reserved kickoffs (#1, #9, #14, #15, #22, #28, #29, #32, #34) and the #51 tail. A frozen `analysis/confirm.py` is written after round 1 and runs only with Vivian's sign-off. Disclosure: the H95 agent read #47's setup lines (a Help Kit live within 11 minutes), so any #47 freeze-time result carries that disclosure. Reuse with H75, H95, H54 and H97 (kickoff family) is disclosed in `LOG.md` when run.
+
+## Synthetic validation plan (axis F; run before any real-data statistic)
+`analysis/synthetic.py` on the real kickoff skeletons of G39, G40, G42, G44 #best and one regime-I kickoff: real per-agent call times around t_k, real kickoff receipts, real peer-link receipts. 500 runs per world.
+- **W1 read-locked (H136):** freeze at the read call plus K calls, K ~ Geometric(0.5) − 1.
+- **W2 clock:** freeze at t_k + D, D log-normal with median 20 active min and log-SD 0.8 (H75's 15–30 min scale), truncated to after the read call.
+- **W3 late starter:** freeze at the agent's first call of the day plus a log-normal delay; reads unrelated.
+- **W4 copy:** freeze at the first peer-link read plus K calls.
+- **Read:** the power to separate W1 from W2 with O1 (b CI ∋ 1 and excludes 0) and O3 (ρ CI ∋ 0 vs ρ < 0) at the real D_r spread; the b that truncation alone gives in W2; the O4 anchor that wins in each world.
+- **Pass rule:** O1 and O3 count as the HH's kill test only in units where W1 vs W2 power is ≥ 0.8 and size ≤ 0.10. Elsewhere they are descriptive. A dated amendment, written before any freeze time is computed, records which units qualify.
+
+## Prediction
+*Written 2026-10-07, before any H136 statistic on real data. What I had seen: the cards of H75, H95, H54, H131, H53 and H128 at their latest rounds (numbers above); the `kicks_classified` kinds (51 goal kickoffs). No kickoff receipt, read delay, freeze time or call lag had been computed.*
+
+| ID | Prediction | Counts against | Credence |
+| --- | --- | --- | --- |
+| S0 (precondition) | ≥ 2 kickoff units have ≥ 5 delayed active readers (regime III kickoffs most likely) | < 2 units | 0.4 |
+| S1 | In units with fewer than 10 delayed active readers, W1 vs W2 power is < 0.8 | power ≥ 0.8 | 0.7 |
+| P1 (HH) | **Read alignment.** Pooled b CI ∋ 1 and excludes 0, outside W2's band | b CI ∋ 0 (R-clock) | 0.4 |
+| P2 (HH) | **About one call.** K ≤ 2 for ≥ 1/2 of frozen agents (freeze touch, action and intention sources) | median K ≥ 5 | 0.45 |
+| P3 (HH) | **Late readers lag by the same delay.** Spearman ρ(K, D_r) CI ∋ 0 among delayed active readers | ρ < 0 with CI < 0 | 0.45 |
+| P4 | **The kickoff read is the anchor.** O4 spread is smallest for the kickoff-read anchor in ≥ 2/3 of testable units | peer-link or day-start anchor smaller in > 1/3 | 0.45 |
+| P5 | On commits (DQ4 variant) the median K is ≥ 5 calls (commit latency, H75's 15–30 min) and ρ(K, D_r) still ∋ 0 | none (descriptive) | 0.5 |
+| N1 | G44: #best meets P2 and P3; #rest has < 1/3 of agents frozen on a named target within 2 active h | #best K large or ρ < 0 | 0.4 |
+| N2 | G40: the kickoff-read anchor beats the hub-link anchor (O4) | the hub-link anchor wins (R-copy) | 0.35 |
+| N3 | NE38: descriptive (one agent) | none (descriptive) | none |
+
+**Kill rules (from the HH, sharpened).**
+- **Kill (HH):** in units that pass the synthetic rule, the pooled b has a CI that includes 0 and excludes 1, or ρ(K, D_r) < 0 with CI < 0. Commit times then align with the kickoff post, and H136 fails.
+- **Untestable:** if S0 fails (no unit with ≥ 5 delayed active readers) or no unit passes the synthetic rule, the kill is untestable on exploration data. P2 and P4 are then reported as descriptive, and the reserved kickoffs are the only test.
+
+**Verdict rule.** *Supported:* P1, P2 and P3 hold in units that pass the synthetic rule, and P4 holds. *Narrowed ("freeze within about one call of the first read; read vs clock untestable"):* P2 and P4 hold with the kill untestable. *Failed:* the kill fires, or the peer-link anchor wins in ≥ 2/3 of units (R-copy). *Inconclusive:* otherwise.
+
+**My credence before data:** supported 0.15; narrowed 0.3; failed 0.2; inconclusive 0.35. The main risk is H131's: reads follow the kickoff within seconds for most active agents, so the read and clock alignments coincide.
+
+## Faithfulness scorecard
+Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
+**Rival models:** R-clock (common delay after the post), R-copy (peer-link anchor), R-late starter, R-plan.
+**Reserved periods used for confirmation:** none yet. Planned: the kickoffs of #45–#47 and #49 (frozen after round 1; not run).
+
+| Axis | Test | Score | Evidence |
+| --- | --- | --- | --- |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
+| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 0 | not run |
+| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
+| E interventional | predicts the change across a natural experiment | 0 | not run |
+| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 0 | not run |
+| G ground truth | agrees with known structure | 0 | not run |
+| H comparative | beats the named rivals | 0 | not run |
+| I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
+
+## Results by goal period
+No kickoff has been run. Period folders (`goalperiod-subhypotheses/G<NN>/`, `NE38/`) are created with their dated predictions before each run. `goalperiod-subhypotheses/GNN/` is the unfilled template.
+
+| Period | Role | Verdict | Key numbers |
+| --- | --- | --- | --- |
+| kickoff units (precondition list) | replication | pending | not run |
+| G44 | native N1 | pending | not run |
+| G40 | native N2 | pending | not run |
+| NE38 | native N3 (descriptive) | pending | not run |
+
+## Results
+Not run.
+
+## Notes
+- 2026-10-07: card written from HH379 (approved by Vivian 2026-10-07). Round-1 order: structural counts (kickoff receipts, delayed active readers; no freeze time) → precondition note → period READMEs with dated predictions → synthetic → dated amendment naming the qualifying units → replication and natives → estimates rows (`h136_read_alignment_slope`, `h136_postread_call_lag`, `h136_lag_delay_rho`) → frozen `confirm.py` (dry run only).
+- H75's freeze times are on commits and a 0.25-h grid. H136's primary freeze touch uses action and intention mentions, which H75-R2 notes are about 25× denser than commits.
+- Compute: ≤ 2 threads, one heavy job at a time (STANDARDS §9).
