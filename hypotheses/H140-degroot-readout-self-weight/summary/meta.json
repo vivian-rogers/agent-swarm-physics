@@ -1,0 +1,25 @@
+{
+ "complete": 50,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done on 25 non-reserved regime-III units (10 testable) plus 3 chat-mode O2 periods: dated period predictions, synthetic validation on 4 real skeletons (6 worlds, 100 runs) and a 12-unit power pool, Amendment A1 before data, both embedding models and 6 estimator variants, surrogate and permutation nulls, natives NE41 and #51 timer wakes, 478 estimate rows. No confirm script (failed card).",
+  "faithfulness": "HH383's self-weight law fails its pre-set kill with power 1.00 (pooled w1 -0.01 [-0.12, 0.10]); the read-weight part replicates H113 (a 0.22). The registered estimator could not separate a well or a field from HH383; A1 fixed most of that before data. C 1, D 1, E 1, F 1, H 1.",
+  "usefulness": "A clear negative for operators: context composition is not a lever on how much an agent sticks to itself; batch size is (k^0.22)."
+ },
+ "one_line": "Context self-share does not set the self-weight (pooled w1 -0.01 [-0.12, 0.10], power 1.00); the read weight is sublinear, a 0.22 [0.13, 0.31].",
+ "models": [
+  {"model": "11-vector-spins", "role": "primary", "outcome": "failed", "note": "DeGroot self-weight = context share killed; linear read update with k^0.22 weight holds"},
+  {"model": "02-nonequilibrium-ising", "role": "secondary", "outcome": "mixed", "note": "Kinetic update on the call clock fits the read term; the self-term is set outside the context"},
+  {"model": "04-semantic-information", "role": "secondary", "outcome": "supported", "note": "Read-out channel sublinear, as in H113"}
+ ],
+ "rated_by": "H140 round-1 agent (suggested)",
+ "updated": "2026-10-07",
+ "v2": {
+  "claim": "In regime III the weight of an agent's own recent content in its next statement does not rise with its context self-share (pooled w1 -0.01 [-0.12, 0.10], 25 units, power 1.00 at 0.5); read weight grows as k^0.22 [0.13, 0.31]",
+  "scope": "25 regime-III units of #37-#44 and #51 (10 testable); exploration days",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": null
+ }
+}

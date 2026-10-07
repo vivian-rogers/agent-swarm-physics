@@ -1,6 +1,6 @@
 # H140 × G37: regime-III shared-goal period #37 (2026-03-30 → 04-01)
 
-**Verdict:** pending
+**Verdict:** descriptive
 **Role:** exploratory (replication)
 **Period:** regime III · computer-use context segments · 12 agents · two rooms (#best / #rest) · 3 days. Fit units: unit 37 (`period_units`).
 
@@ -16,7 +16,16 @@ A non-reserved regime-III period with context segments, so s_self exists. It is 
 - Counts against: the card's kill clauses on this unit (per-unit verdicts are descriptive for the kill; the pool decides).
 
 ## Result
-Not run.
+Data: `data/processed/H140-degroot-readout-self-weight/G37/`, results `results/units_G37.json`. Run 2026-10-07 (exploration data; reserved days never enter the scheme). Estimator: Amendment A1 spec (primary) and the registered spec; agent-day cluster bootstrap, 300 draws.
+
+Every unit has < 300 scored talk calls (87 rows), so the period enters only the random-effects pool (card exception (d)); no per-unit verdict.
+
+| Observable | Observed (bge A1) |
+| --- | --- |
+| ŵ₁ | −0.27 [−1.02, 0.80]; gte 0.13 [−1.34, 2.88] |
+| â | 0.24 [−0.50, 0.90], not identified |
+
+The predictions are not scored here.
 
 ## Scorecard (period-specific axes)
-C, D, H: not run (all 0).
+C, D, H: 0 (descriptive only).

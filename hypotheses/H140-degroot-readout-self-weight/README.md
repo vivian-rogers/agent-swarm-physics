@@ -1,6 +1,6 @@
 # H140: DeGroot at the read-out call: the self-weight of a content step equals the agent's own share of its context
 
-**Status:** round 1 in progress (2026-10-07): synthetic validation done, Amendment A1 written before real data; real-data run pending. Card, observables, nulls and predictions written 2026-10-07 10:05–10:50 UTC, before any H140 statistic on real data.
+**Status:** exploratory round 1 done (2026-10-07, exploration data only). **Failed by kill clause 1:** the self-weight does not follow the context self-share (pooled ŵ₁ −0.01 [−0.12, 0.10], power 1.00 at 0.5). The read channel is sublinear as in H113 (â 0.22 [0.13, 0.31], 10 identified units). Amendment A1 (pre-data) changed the O1 estimator after the synthetic. Card, observables, nulls and predictions written 2026-10-07 10:05–10:50 UTC, before any H140 statistic on real data.
 **Question (GOALS.md):** **Q1** (what couples agents: is the read-out update a weighted mean of what the agent wrote and what it read, with weights set by what fills its context?). Second: **Q4** (where the swarm's information lives: in the context window, or in a well that the context does not hold?).
 **Fields:** sociophysics (DeGroot and Friedkin–Johnsen opinion dynamics), stat mech (linear vector-spin update), information theory (read-out channel capacity)
 **Literature:** none in `literature/` covers DeGroot averaging. Cited from memory (†): DeGroot, *J. Am. Stat. Assoc.* 69, 118 (1974)†; Friedkin & Johnsen, *J. Math. Sociol.* 15, 193 (1990)† (averaging with an anchor to an initial position). Filed notes used through H113: [Barrett 2015](../../literature/barrett-2015-synergy-redundancy-gaussian-systems.md) (Gaussian information of a linear channel). Model references: [`physics-models/11-vector-spins/README.md`](../../physics-models/11-vector-spins/README.md), [`physics-models/02-nonequilibrium-ising/README.md`](../../physics-models/02-nonequilibrium-ising/README.md), [`physics-models/04-semantic-information/README.md`](../../physics-models/04-semantic-information/README.md).
@@ -97,19 +97,19 @@ Worlds on the real skeletons of units 51c and 51g and of #38 and #41: every scor
 ## Faithfulness scorecard
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
 **Rival models:** R-well (H130's call-gap self-weight), R-linear (no bottleneck), R-capacity (one read per call), R-convergence (H57).
-**Reserved periods used for confirmation:** none (not run). Planned: talk calls of #43, #45–#47 and the #51 tail (talk calls and timer wakes), ledger family `readout_capacity` (shared with H113: disclose; H18 and H68 `dilution_addressing` plan the same targets). A frozen, guarded confirm script is written only after exploration and runs only with Vivian's sign-off.
+**Reserved periods used for confirmation:** none (round 1 is exploratory). Planned: talk calls of #43, #45–#47 and the #51 tail (talk calls and timer wakes), ledger family `readout_capacity` (shared with H113: disclose; H18 and H68 `dilution_addressing` plan the same targets). A frozen, guarded confirm script is written only after exploration and runs only with Vivian's sign-off.
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
-| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
-| C adequacy | beats the null hierarchy, day-blocked out-of-fold data | 0 | not run |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
-| E interventional | predicts the change across a natural experiment | 0 | not run |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 0 | not run |
-| G ground truth | agrees with known structure | 0 | not run |
-| H comparative | beats the named rivals | 0 | not run |
-| I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Round 1: ledger and DQ5 fields; s_self only in regime III |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Round 1: IV noise assumption; closure is a stationarity identity |
+| C adequacy | beats the null hierarchy, day-blocked out-of-fold data | 1 | Round 1: read term beats surrogates and in-flight; self-weight law does not beat its permutation null |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 | Round 1: wake batches reproduce â ≈ 0.2, ŵ₁ ≈ 0 |
+| E interventional | predicts the change across a natural experiment | 1 | Round 1: NE41 erased content keeps its weight (not blind) |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Round 1: 6 worlds × 4 skeletons; A1 before data; small field leakage |
+| G ground truth | agrees with known structure | 0 | none |
+| H comparative | beats the named rivals | 1 | Round 1: R-well beats HH383 for the self-weight |
+| I transfer | holds in other same-mode periods, including the reserved periods | 0 | reserved periods not run |
 
 ## Prediction
 *Written 2026-10-07 10:05–10:50 UTC, before running the analysis on real data.*
@@ -149,14 +149,22 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G38](goalperiod-subhypotheses/G38/README.md) | replication (two rooms, regime III) | pending | — |
-| [G51](goalperiod-subhypotheses/G51/README.md) | replication (51a–51l) + native N2 (timer wakes) | pending | — |
-| [NE41](goalperiod-subhypotheses/NE41/README.md) | native N1 (forced erasures) | pending | — |
-
-Other testable units (#37, #39–#42, #44; regime I/II O2 periods) get their period folders, with the predictions copied and dated, before the run.
+| [G13](goalperiod-subhypotheses/G13/README.md) | replication (O2 only, regime I) | descriptive | â 0.28 [0.16, 0.38] (bge, identified) |
+| [G16](goalperiod-subhypotheses/G16/README.md) | replication (O2 only, regime I) | descriptive | â 0.24 [0.05, 0.42] |
+| [G35](goalperiod-subhypotheses/G35/README.md) | replication (O2 only, regime II) | descriptive | â 0.38 [0.28, 0.46] |
+| [G36](goalperiod-subhypotheses/G36/README.md) | replication (O2 only, unit 36a) | n/a | untestable: one day, no leave-day-out well |
+| [G37](goalperiod-subhypotheses/G37/README.md) | replication | descriptive | 87 rows (pool only) |
+| [G38](goalperiod-subhypotheses/G38/README.md) | replication (two rooms, regime III) | failed | 38a ŵ₁ −0.62 [−1.19, −0.20]; â not identified |
+| [G39](goalperiod-subhypotheses/G39/README.md) | replication | descriptive | 100 rows (pool only) |
+| [G40](goalperiod-subhypotheses/G40/README.md) | replication | descriptive | 203 rows (pool only) |
+| [G41](goalperiod-subhypotheses/G41/README.md) | replication | mixed | ŵ₁ 0.29 [−0.21, 0.83]; â 0.26 [−0.04, 0.58] (identified) |
+| [G42](goalperiod-subhypotheses/G42/README.md) | replication | descriptive | 36 + 114 rows (pool only) |
+| [G44](goalperiod-subhypotheses/G44/README.md) | replication | descriptive | 131 + 245 rows (pool only) |
+| [G51](goalperiod-subhypotheses/G51/README.md) | replication (51a–51l) + native N2 (timer wakes) | mixed | ŵ₁ 0.03 [−0.09, 0.14]; â 0.23 [0.12, 0.34]; wakes ŵ₁ 0.04, â 0.19 |
+| [NE41](goalperiod-subhypotheses/NE41/README.md) | native N1 (forced erasures) | mixed | Δs_self −0.10; Δŵ_self −0.03 [−0.09, 0.03]; ratio 0.29 (gte 0.55) |
 
 ## Results
-Not run.
+See "Round 1 (2026-10-07)" below.
 
 ## Round 1 (2026-10-07)
 
@@ -196,8 +204,65 @@ What I had seen: the synthetic summaries above and the real skeleton counts (row
 8. **Not validated on synthetic:** the natives (NE41 first-call design, G51 wakes). They use the same estimator.
 Not amended: the predictions, credences, kill clauses and bands.
 
+### Real-data run (2026-10-07 14:45–15:05 UTC, exploration data only)
+*Code:* `scheme/build.py`; `analysis/run.py`, `analysis/score.py`, `analysis/figures.py`; post hoc `analysis/synthetic_closure_posthoc.py`. *Data:* `data/processed/H140-degroot-readout-self-weight/` (`G<NN>/` rows and Gram terms per model variant; `results/units_G<NN>.json`, `ne41.json`, `wakes.json`, `reg12.json`, `score.json`; 45 MB). *Figures:* [`figures/summary_obs.pdf`](figures/summary_obs.pdf), [`figures/summary_synth.pdf`](figures/summary_synth.pdf). *Estimates:* 478 rows in `per_period_estimates` (roles `replication`, `native`).
+*Inputs (old → new):* none; first run. Tables: `pending_sets`, `chat_core`, `producing_calls`, DQ1 `context_ledger_turns`, DQ5 `statements_{style_resid32,white32}_{bge_small,gte_modernbert}`, `goal_vectors` + `goals`, `statement_flags`, `period_units`.
+*Units:* 25 regime-III units (#37, 38a–e, #39, #40, #41, 42a–b, 44a–b, 51a–l); 10 are testable (≥ 300 scored talk calls: 38a, #41, 51a, 51c–h, 51k). Scored rows: 10,896 talk calls. Pools are DerSimonian–Laird over all 25 units (exception (d)).
+
+**Prediction vs result** (primary: A1 spec, bge `style_resid32`; gte in brackets where it matters)
+
+| # | Prediction | Result (95% CI) | Verdict by the rule |
+| --- | --- | --- | --- |
+| S1 | Recovery ±0.2; W-well false rate ≤ 0.10 | Recovery passed (bias −0.08 to −0.02). False rate: registered 0.14–1.00 (fails); A1 0.00–0.07 | **amended** (A1) |
+| S2 | Power at w₁ = 0.5 ≥ 0.8 (#51 pool) | 1.00 (A1 and registered) | passed: kill clause 1 is testable |
+| **P1** | Pooled ŵ₁ ∈ [0.5, 1.5], CI > 0; ŵ₁ > 0 in ≥ 1/2 of testable units | **−0.01 [−0.12, 0.10]** (gte −0.02 [−0.13, 0.08]); registered spec 0.07 [−0.01, 0.16] (gte 0.08 [−0.00, 0.16]). CI > 0 in 0/10 testable units (CI < 0 in 38a) | **failed; kill clause 1 fires** |
+| P2 | Pooled â ∈ [0.15, 0.40], CI excludes 1, < 0.7 | 0.22 [0.13, 0.31] over 10 identified units (gte 0.21 [0.13, 0.28], 10 units) | **supported**; kill clause 2 does not fire |
+| P3 | Registered ŵ₂ > 0 (CI); adding Δn lowers ŵ₁ ≥ 50% | ŵ₂ 0.35 [−0.33, 1.02]; ŵ₁ 0.077 → 0.073 (−6%) | failed |
+| P4 | γ̂_F/γ̂₁ ≤ 0.5 and contrast > 0 | γ̂_F 0.001 [−0.008, 0.010] vs γ̂₁ 0.069 [0.056, 0.082] (ratio 0.02; unit median 0.08); contrast +0.056 [0.042, 0.071] (gte +0.067 [0.049, 0.086]) | supported |
+| P5 | Σ̂ ∈ [0.8, 1.2] in ≥ 2/3 of k bins | 1.04–1.05 in 6/6 bins (CIs within [0.98, 1.12]) | passed, **but void** (post hoc: Σ̂ = 0.99–1.05 in W0, W-well and W-field too) |
+| N1 | NE41: Δŵ_self/Δs_self ∈ [0.5, 1.5] | Δs_self −0.10; Δŵ_self −0.03 [−0.09, 0.03] (gte −0.05 [−0.10, −0.01]); ratio 0.29 (gte 0.55) | mixed (not blind) |
+| N2 | G51 wakes: \|Δŵ₁\| < 0.3, â ∈ [0.15, 0.45] | ŵ₁ 0.04 [−0.34, 0.42] vs talk 0.02 (gte Δ 0.07); â 0.19 [0.07, 0.32] (gte 0.15 [0.05, 0.25]) | supported (weak: both ŵ₁ ≈ 0) |
+| O2 I/II | descriptive | #13 â 0.28 [0.16, 0.38], #16 0.24 [0.05, 0.42], #35 0.38 [0.28, 0.46]; 36a untestable (one day, no well) | descriptive |
+
+**Nulls.** N0: the pooled ŵ₁ CI includes 0. N1 (cross-day surrogate batches): γ̂₁ ≈ 0 (unit medians −0.011 to +0.008, except 38d at 0.076); the real γ̂₁ exceeds every surrogate draw in 19 of the 21 units that have other-day batches (exceptions 38d and 38e, 33 and 92 rows; one-day units have no surrogate). N2 (within-agent-day permutation of s_self): the observed ŵ₁ sits inside the null in every unit (p 0.08–0.91).
+
+**Robustness of P1** (pooled ŵ₁, bge, 25 units): chat-form s_self −0.05 [−0.15, 0.05]; p = last statement only −0.01 [−0.12, 0.11]; self-repeats dropped −0.00 [−0.13, 0.12]; window-field projection −0.04 [−0.16, 0.08]; `white32` −0.03 [−0.12, 0.07]; no Δn term −0.03 [−0.13, 0.08]. Only OLS (no instrument) gives 0.13 [0.04, 0.21], the size a field leaks into the registered spec on synthetic skeletons. Shape: in the largest unit (51g, 2,753 rows) the self-weight is flat over s_self deciles 0.26 → 0.95.
+
+**Verdict (card rule): failed.** Kill clause 1 fires with power 1.00, and P2 passes. As the card says: *the read channel is sublinear as in H113, but the self-weight is not the context share.* The NE41 native, read together with P1 (Amendment A1, item 2), points the same way: content that a forced reset erased keeps about 97% (bge) / 93% (gte) of the weight of in-context content (post hoc reading).
+
+**Impostor table (filled)**
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | n/a | Call-level design: one row per talk call; Δn and Δt enter as covariates. | n/a |
+| Exogenous field (kickoff, goal, operator) | yes | Goal, kickoff and room-kickoff directions projected out per room; human and nudge items excluded from the batch; leave-day-out wells as a regressor. The out-of-batch window field is a variant (it made field leakage worse on synthetic data). | removed |
+| Shared model priors | yes | `style_resid32` in both models; own recent content and the leave-day-out well are regressors; the two models agree (ŵ₁ −0.01 vs −0.02; â 0.22 vs 0.21). No same- vs other-lab split was run. | partly |
+| Contemporaneous convergence | yes | In-flight term γ_F in every fit (γ̂_F/γ̂₁ 0.02); matched-age contrast +0.056 [0.042, 0.071]; O2 scored only in 10 identified units. For the self-weight, synthetic fields leak ŵ₁ ≈ 0.04–0.14 under A1; the observed ŵ₁ ≈ 0 leaves no room for a hidden positive slope. | removed (read weight); partly (self-weight) |
+
+**Faithfulness scorecard (round 1)**
+
+| Axis | Score | Evidence |
+| --- | --- | --- |
+| A mapping | 1 | Every variable comes from ledger and DQ5 fields; s_self (call-entry form) exists only in regime-III computer-use mode. Limit: a linear vector update sees only linear uptake. |
+| B assumptions | 1 | IV relies on statement noise being independent across statements; OLS vs IV differ by 0.14, as errors-in-variables predicts. Stationarity per unit; closure Σ ≈ 1 is a stationarity identity, not a test. |
+| C adequacy | 1 | The read term beats surrogate batches (19/21 units) and the in-flight placebo. The HH383 self-weight law does not beat its permutation null in any unit. |
+| D unfitted predictions | 1 | Wake batches (k set by others) reproduce â ≈ 0.2 and ŵ₁ ≈ 0 without refitting the design; P5 is void. |
+| E interventional | 1 | NE41 (exogenous erasure): erased content keeps its weight (post hoc reading; not blind; registered ratio splits by model). |
+| F identifiability | 1 | 6 worlds × 4 skeletons × 100 runs; the registered estimator's failure was found and amended before data. Fields still leak a small positive ŵ₁ under A1. |
+| G ground truth | 0 | No ground truth for self-weights. |
+| H comparative | 1 | R-well beats HH383 for the self-weight (ŵ₁ ≈ 0; erased content keeps weight); R-linear, R-capacity and R-convergence lose for the read weight. R-well's call-gap form itself is not detected (P3 failed). |
+| I transfer | 0 | Reserved periods not run. Same null in 25 units and both models. |
+
+**Claim that stands:** In regime III (25 units of #37–#44 and #51, exploration days), the weight of an agent's own recent content in its next statement does not rise with its context self-share: pooled ŵ₁ = −0.01 [−0.12, 0.10] (bge; gte −0.02 [−0.13, 0.08]), against HH383's slope of 1, with synthetic power 1.00 at ŵ₁ = 0.5; the read weight is sublinear in the batch size, â = 0.22 [0.13, 0.31] over 10 identified units. Exclusions: P5 closure (void: Σ ≈ 1 in any stationary world); NE41 (not blind; ratio splits by model; the erased-content reading is post hoc); P3 (R-well's call-gap term not detected); the registered spec's #51 ŵ₁ 0.10 [0.01, 0.19] (within synthetic field leakage); regime I/II self-weight (untestable); unit 36a (untestable); G51 wake N2 (weak).
+
+**Round-2 redirects.**
+- **H140-R1. Where does the self-weight live?** Model the self-weight as the H130 well plus a wall-clock term; test the erased-content weight directly with a blind NE41 design (reserved forced resets, frozen script).
+- **H140-R2. Batch-size self-weight.** The A1 nuisance term ln(1 + k) has a negative weight (pooled −0.026 [−0.054, 0.001]): the self-weight may fall with the batch, not with the context share. Pre-register that as its own HH.
+- **H140-R3. A field-robust self-weight placebo.** Use another co-present agent's recent content as an unread placebo for p; under a field it gets the same s_self dependence.
+
 ## Notes
 - 2026-10-07 10:05 UTC: card written from HH383 (approved by Vivian 2026-10-07).
 - The HH's exponent "k^0.34 (H18/HH345)" is sharpened to H113's measured range: HH345's 0.34 was excluded by H113's talk-call pool (0.23 [0.16, 0.31]) while the timer-wake value (0.31 [0.25, 0.37]) contains it. P2 therefore tests the band [0.15, 0.40], with the HH's "not linear" as the kill.
 - The self-share here is the call-entry form (own receiving calls vs received items). H72's idle self-share (own idle calls among own calls) is a different ratio; both are context-held shares, and H140 reports their correlation as descriptive.
+- 2026-10-07: the round-1 agent's system clock read 08:55 UTC when it dated the new period folders, earlier than the 10:05 UTC written in this card's header. The order of events is: card committed (09b6153), then period predictions, then the synthetic, then A1 (commit 4eb8828), then real data.
 - **Proposed DEFINITIONS.md variants (H140):** *context self-share s_self (content, call-entry form) (H140)* = ctx_pos / (ctx_pos + k_ctx) at a call in computer-use mode, with a chat form n_own_chat / (n_own_chat + k_ctx); *DeGroot self-weight w_self (H140)* = the IV weight of the agent's own recent content (last two statements in the segment) in its next statement, fields projected out; *summed read weight W_read(k) (H140)* = k γ(k), the total weight of a k-message batch; *anchor weight w_anchor (H140)* = the weight on the leave-day-out well centre; *call gap Δn (H140)* = own calls between the latest own statement and the current one.

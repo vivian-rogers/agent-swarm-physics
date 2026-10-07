@@ -1,0 +1,33 @@
+\hwhat{H140 asks whether an agent's next statement is a DeGroot average of its own recent content and the batch it just read, with the self-weight equal to its share of its own context window. Each row is a regime-III talk call. The statement vector is regressed on the agent's last two statements (instrumented by older ones), the read batch, the unreadable in-flight messages and the agent's well centre. HH383 predicted a self-weight slope $w_1\approx1$ in the self-share. Over 25 units the pooled slope is $-0.01$ [$-0.12$, 0.10], with synthetic power 1.00 at $w_1=0.5$: the pre-set kill fires. The read weight is sublinear, $a=0.22$ [0.13, 0.31], as H113 found.}
+
+\hmodel{Models 11, 02 and 04: a linear vector-spin update on the call clock (Friedkin--Johnsen DeGroot). $y$: the reader's statement (DQ5 \texttt{style\_resid32}, goal and kickoff directions removed); $p$: its last two statements in the context segment; $s=\sum_{m\in B}x_m$: the read batch of size $k$; $s^F$: messages posted but not yet readable; $h$: the leave-day-out well centre. $s_{\rm self}=\mathrm{ctx\_pos}/(\mathrm{ctx\_pos}+k_{\rm ctx})$ is the agent's own share of its context. Amendment A1 (before data) adds wall-clock and batch-size nuisance terms to $w_{\rm self}$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+y=w_{\rm self}\,p+\gamma_1k^{-b}s+\gamma_Fs^F+w_{\rm anchor}h+\epsilon,\qquad W_{\rm read}(k)=\gamma_1k^{a},\ a=1-b\\
+w_{\rm self}=w_0+w_1s_{\rm self}+w_2(1-\gamma_{\rm auto})^{\Delta n}+w_3e^{-\Delta t/30\,{\rm min}}+w_5\ln(1+k)+w_6\ln(1+k_F)
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Left: self-weight slope $\hat w_1$ per testable unit ($\ge300$ talk calls; circles bge, squares gte; 95\% CI) and the DerSimonian--Laird pool over all 25 units (diamond). The gray band is HH383's prediction. Right: read-weight exponent $\hat a$ (bge); filled points are units where read messages beat in-flight messages at matched age (identified). The gray band is the registered P2 range; dotted line, no bottleneck.}
+
+\htelos{Changing what fills an agent's context does not change how much it sticks to its own recent content. An operator who wants an agent to listen more will not get it by trimming the agent's own turns from the context. Even a forced erasure leaves about 95\% of the weight on the erased content. The lever that does work is the batch: ten messages read at once carry only about $10^{0.22}\approx1.7$ times the pull of one.}
+
+\hbottom{The self-weight does not follow the context self-share (pooled $\hat w_1=-0.01$ [$-0.12$, 0.10], 25 regime-III units, power 1.00 at 0.5); the read weight grows as $k^{0.22}$ [0.13, 0.31].}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.44\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed} & \textbf{Verdict}\\\hline
+\raggedright S1 synthetic recovery, W-well size & \raggedright registered: size 0.14--1.00; A1: 0.00--0.07 & \raggedright amended\tabularnewline
+\raggedright S2 power at $w_1=0.5$ & \raggedright 1.00 (\#51 pool) & \raggedright passed\tabularnewline
+\raggedright P1 $\hat w_1\in[0.5,1.5]$, CI $>0$ & \raggedright $-0.01$ [$-0.12$, 0.10]; gte $-0.02$ & \raggedright failed (kill)\tabularnewline
+\raggedright P2 $\hat a\in[0.15,0.40]$ & \raggedright 0.22 [0.13, 0.31], 10 units & \raggedright supported\tabularnewline
+\raggedright P3 call-gap term $w_2>0$ & \raggedright 0.35 [$-0.33$, 1.02] & \raggedright failed\tabularnewline
+\raggedright P4 read beats in flight & \raggedright $\gamma_F/\gamma_1$ 0.02; $+0.056$ [0.042, 0.071] & \raggedright supported\tabularnewline
+\raggedright P5 closure $\Sigma\approx1$ & \raggedright 1.04--1.05 in 6/6 bins & \raggedright void\tabularnewline
+\raggedright N1 NE41 erasure & \raggedright $\Delta\hat w$/$\Delta s$ 0.29 (gte 0.55) & \raggedright mixed\tabularnewline
+\raggedright N2 \#51 timer wakes & \raggedright $\hat w_1$ 0.04; $\hat a$ 0.19 [0.07, 0.32] & \raggedright supported (weak)\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic worlds on the real skeletons of 51c, 51g, \#38 and \#41 (100 runs each): median $\hat w_1$ and 10--90\% range for the registered estimator (gray) and the A1 estimator (blue); dashed lines mark the truth. The registered estimator reads an Ornstein--Uhlenbeck well (W-well) or a time-local field (W-field) as a positive slope; A1 removes most of that leak before any real data were used.}
+
+\hcaveats{A time-local field still leaks a small positive slope (0.04--0.14) into A1 on synthetic data, so the real $\hat w_1\approx0$ is, if anything, an upper bound. The closure test is void: any stationary world gives $\Sigma\approx1$. The NE41 native is not blind (H46, H130, H44 were known) and its registered ratio splits by embedding model. Only 10 of 25 units have $\ge300$ scored calls. Chat-mode periods have no self-share.}
+
+\hnext{Model the self-weight as an H130 well plus a wall-clock term; a blind NE41 test of erased-content weight on reserved resets; a batch-size self-weight law (the A1 term $\ln(1+k)$ has weight $-0.026$).}
