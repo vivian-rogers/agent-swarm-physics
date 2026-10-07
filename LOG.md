@@ -5,6 +5,17 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — Physics-model folders reorganized (models 16 and 17, named variants, instruments)
+
+Vivian approved the model-map plan (132 cards × 15 models) on 2026-10-07. Folder numbers are append-only; nothing was renumbered. No card result or verdict changed.
+- **New model 16** `physics-models/16-langevin-relaxation/` (OU wells, damped oscillator, fast kick on a slow well). Tested by H97, H125, H127, H130; OU forms also in H46, H71, H81, H106. Combined result: overdamped with a day-1 overshoot (H97 +0.12; H125 E₁ +0.055, no undershoot); the kickoff field arrives at the read-out call and fades over about 64 calls (H127); in #51 a read kick decays in about 7 calls, about 15× faster than the agent's own well (about 100 calls; H130 ρ_γ 14.8 [7.2, 30.4]); every one-rate form fails. Status: partly useful (the two-rate form is post hoc). H97, H125, H127 and H130 now carry a "Model folder" line; their meta.json still list 11/02.
+- **New model 17** `physics-models/17-collective-modes/` (Vivian, same day: RMT is a model, not only an instrument). Static modes against a calibrated edge, the spiked-covariance (BBP) transition as falsifiable predictions, PR/IPR and eigenvector rotation, dynamic modes (VAR/OU, DMD) and lifetimes. Mapped cards: H12, H91, H92, H81, H106, H108, H101, H36. Status: partly useful; the BBP predictions are untested.
+- **Named variants** sections added to models 01, 02, 04, 05 (pointer), 09, 10, 11 and 15 (Kramers rejected, Pólya urn supported, random-field/Barkhausen/SK/dilute/exchange-bias, Little model, Griffiths, Brock–Durlauf, max-ent allocation, DeGroot, Maxwell demon, homeostat, growth order). Pointers to 16 and 17 in 01 and 11; model 11's Langevin *function* is marked as a different object.
+- **DEFINITIONS:** new "Instruments (not models)" section (MSM, driver nodes, index policies, assembly index, mean-field inversions, change and topic-shift detectors, Cox field null) plus "Estimators that belong to a model" (RMT-cleaned correlation with a calibrated edge → model 17). Existing entries got an "instrument, not a model" note.
+- **Index:** rows 16 and 17, a per-model status table, connection bullets, candidates list updated.
+- **Not done (needs a decision):** the matrix figures (`writeup/figures/make_matrix_slides.py`, `make_full_matrix.py`, `make_table_zoom.py`) hard-code models 01–15 and read models from each card's `summary/meta.json`; no card's meta.json lists 16 or 17 yet. Nothing was regenerated.
+- **Git note:** another agent's staged (uncommitted) edits sit in `physics-models/README.md`, `DEFINITIONS.md` and the 02/03/04/09/10/11/14 READMEs. These commits were built from HEAD plus this work only; the staged edits stay staged. Two "instrument" notes (on H36's r1w and H42's Cox-field entries) sit on lines that exist only in that staged section, so they will land when it is committed.
+
 ## 2026-10-06 — New dataset: swarmop Track 1
 
 - **Added** `data/raw/swarmop-track1/` (Divij Chawla, AI Swarm Dynamics Hackathon; shared privately for research — ask before redistributing or publishing derived data). 7,456 controlled runs, 21.8M agent turns: N agents settle a synthetic 2–3-option question; each round every agent reads k randomly drawn teammates (who-read-whom logged); designed conditions (N, k, rule fraction p, noise, no-memory, scripted starts, persuaders, model). Tarball SHA-256 and terms in `_source.md`. Raw 6.2 GB (1.0 GB tarball + 5.6 GB extracted); project now ~17.2 GB of the 20 GB budget.
