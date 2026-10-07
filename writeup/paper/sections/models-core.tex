@@ -1,25 +1,15 @@
-% models-core: the useful models, 02 (+09), 11 (+01), 16, 17. Model-first rewrite 2026-10-07.
+% models-core: evidence by model for the useful models, 02 (+09), 11 (+01), 16, 17. Figures and equations moved to picture.tex (2026-10-07).
 % Numbers: scratchpad fact sheets 02_09_kinetics, 11_01_16_fields (latest scored round of each card).
-\section{The useful models}\label{sec:models}
+\section{Evidence by model: the useful models}\label{sec:models}
 
-This section and the next go through the models in order of usefulness (Fig.~\ref{fig:gallery}). For each model we give the model in one equation, its mapping onto the swarm, its best-supported cards in the ranking order of Sec.~\ref{sec:faith}, what failed, and a verdict. Credences are the current judged values; none is confirmed on reserved data.
+\input{sections/fig_gallery}
 
+Section~\ref{sec:picture} stated the four useful models and their best evidence. This section gives the full evidence for each, and the next two sections cover the other models (Fig.~\ref{fig:gallery}). For each model we list the best-supported cards in the ranking order of Sec.~\ref{sec:faith}, what failed, and a verdict. Credences are the current judged values; none is confirmed on reserved data.
 
 % ---------------------------------------------------------------- 02 + 09
 \subsection{Model 02: kinetic Ising with read-out coupling (with 09 as gain bookkeeping)}\label{sec:m02}
 
-\textbf{Model.} The degree of freedom is the outcome of one model call: call $c$ of agent $i$ starts at $t_{ic}$ and is a talk call ($Y_{ic}=1$) or not. Its context holds the batch $B_{ic}$ of room messages that arrived after the previous call started. Glauber dynamics~\cite{glauber1963} with input only at the read-out call gives
-\begin{equation}
-P(Y_{ic}=1)=\sigma\Big(h_i(t_{ic})+\textstyle\sum_{m\in B_{ic}}J_{i,\mathrm{src}(m)}\Big).
-\label{eq:readout}
-\end{equation}
-This differs from plain kinetic Ising~\cite{aguilera2026} in three ways: the clock is the agent's own calls, the input is the read batch and not the current state of the others, and $J$ depends on whether the message names the reader. The Hawkes view (model 09~\cite{hawkes1971}) adds bookkeeping. The read-out loop gain $g=\bar m\,\bar r\,J_1^\ast$ counts the extra talk messages that one message causes at hop 1, from messages per talk call $\bar m$, readers per message $\bar r$ and the jump per read over the in-flight placebo $J_1^\ast$. A linear branching process then fixes the response and the fluctuations with no free parameter:
-\begin{equation}
-\chi=\frac{1}{1-g},\qquad
-\Phi=\frac{\mathrm{Var}\big(\sum_i n_i\big)}{\sum_i\mathrm{Var}(n_i)}=\frac{1}{(1-g)^2},
-\label{eq:fano}
-\end{equation}
-where $n_i$ are talk counts in long windows.
+\textbf{Model.} Eqs.~\eqref{eq:pic-kinetic}--\eqref{eq:fano} of Sec.~\ref{sec:p02}. This form differs from plain kinetic Ising~\cite{aguilera2026} in three ways: the clock is the agent's own calls, the input is the read batch and not the current state of the others, and $J$ depends on whether the message names the reader. The Hawkes view (model 09~\cite{hawkes1971}) adds the gain and Fano bookkeeping.
 
 \textbf{Mapping.} Spins are call outcomes (talk, mention, reply, content move). Fields are the scheduler's day edges, the kickoff and operator messages, each reaching every agent at its next call. Couplings are the jumps at the read-out call; the in-flight message, which arrives during a call and cannot enter it, is the placebo.
 
@@ -33,33 +23,22 @@ where $n_i$ are talk counts in long windows.
 \item \textbf{H42: a delayed step at the next read-out.} A read that names the recipient adds 0.076 [0.066, 0.086] talk at its read-out call (26 units); half of it, 0.046 [0.037, 0.056], comes with no exchange in progress, so the name itself acts. The named kernel keeps 0.90 of its size against a fitted shared (Cox) field, while a generic exponential cross term keeps 0.22\cred{0.80}. With per-agent call clocks as the baseline, wall-time cross-excitation falls from 0.061 to $n_{\rm cross}=0.004$.
 \end{enumerate}
 
+\begin{figure*}[t]
+\includegraphics[width=\textwidth]{H111-talk-fano-sum-rule/fig.pdf}
+\caption{A sum rule that links fluctuations to response for talk (models 02 and 09, H111; Eq.~\eqref{eq:fano}). (a)~In a simulated linear Hawkes swarm, the collective Fano ratio $\Phi$ of 10-min talk counts follows $1/(1-g)^2$ with no free parameter. (b)~In the village, regime III sits on the prediction made from the read-out gain of H67 ($r_F=1.01$ [0.94, 1.09], 18 units). Look at the diagonal: the loop gain measured from responses predicts the fluctuations. Regime I lies above it ($r_F=1.34$ [1.18, 1.52]), for a reason we cannot explain.}
+\label{fig:fano}
+\end{figure*}
+
 \textbf{Variant: the context-held self-field.} An agent's own recent output, held in its context window, acts as a field on itself, like a P\'olya urn. This variant replaces Kramers escape (H16) and carries four cards. Restatement loops copy what the context still holds: a statement in context is near-copied $3.38\times$ [2.56, 4.46] more often than an erased one at equal lag (4/4 periods), and an erasure ends loops as a step, not in proportion to the text removed (H69)\cred{0.88}. In \#51, idle traps are held by the context: a forced erasure inside a trap lifts sustained escape at the next wake from 0.47 to 0.84 (log OR $+2.68$ [2.31, 3.16]), and a directed read frees an agent by address, not by dilution ($+0.45$ [0.32, 0.58]) (H16)\cred{0.68}. The context's own idle share carries 65\% [59, 71] of the held-out information of the aging clocks; input starvation carries none (H72)\cred{0.65}. A forced erasure gives a one-call re-reading spike ($+0.106$ [0.089, 0.122], 9/9 periods) with a tail of 8.2 [5.8, 11.8] calls and a write dip of 20--32\%, by reference window (H44)\cred{0.85}.
 
 \textbf{What failed.} Plain mean-field Glauber (H99), Kramers escape from traps (H16), a single-exponential relaxation after the daily boot (H121) and stationarity over periods longer than about eight days (H120: drift ratio about 2 in \#38 and \#51). Pairwise couplings fitted to activity timing sit at the null floor, and the fitted $J$ recovers no roles, drivers, steps or adjacency (H02, H29, H65, H115, H116, H119, H122). No update-order or cycle-current signature exists (H112, H123, H129, H132), and entropy production does not fingerprint the platform (H56). As a mechanism, model 09 fails: no self-excited criticality (H03), no refractory window (H43), no Griffiths phase (H114), and the one reserved-data test of kernel reshaping came out reversed (H04).
 
 \textbf{Verdict: useful}, in regime III and in its read-out form. It is the positive core of the paper. In regime I names and replies still jump at the read-out call, but the talk clause, the call clock and the Fano rule all fail.
 
-\begin{figure*}[t]
-\includegraphics[width=\textwidth]{H08-context-is-the-coupling/fig.pdf}
-\caption{A message acts at the recipient's read-out call (model 02, H08). (a)~One G38 message: room-mates with a call in flight read it 7--24\,s later at their next call; agents in long gaps read it 130--169\,s later and reply at that call. (b, c)~The excess chance that a call names the sender jumps at the read-out call ($o=1$) and not at the call in flight ($o=0$), in G38 and in 17 non-reserved periods. Look at the step between $o=0$ and $o=1$, and at the flat other-room placebo.}
-\label{fig:readout}
-\end{figure*}
-
-\begin{figure*}[t]
-\includegraphics[width=\textwidth]{H111-talk-fano-sum-rule/fig.pdf}
-\caption{A fluctuation--response sum rule for talk (models 02 and 09, H111). (a)~In a simulated linear Hawkes swarm, the collective Fano ratio $\Phi$ of 10-min talk counts follows $1/(1-g)^2$ with no free parameter. (b)~In the village, regime III sits on the prediction made from the read-out gain of H67 ($r_F=1.01$ [0.94, 1.09], 18 units). Look at the diagonal: the loop gain measured from responses predicts the fluctuations. Regime I lies above it ($r_F=1.34$ [1.18, 1.52]), for a reason we cannot explain.}
-\label{fig:fano}
-\end{figure*}
-
 % ---------------------------------------------------------------- 11 + 01
 \subsection{Model 11: vector spins as a field model (with the 01 mean-field gauge)}\label{sec:m11}
 
-\textbf{Model.} Agent $i$ in window $t$ has a content vector $\mathbf s_i(t)$, the regime-whitened, style-residualized mean of its statement embeddings. The vector-spin Hamiltonian is
-\begin{equation}
--\beta\mathcal H=\sum_{i<j}J_{ij}\,\mathbf s_i\cdot\mathbf s_j+\sum_i\mathbf h_i(t)\cdot\mathbf s_i ,
-\label{eq:vector}
-\end{equation}
-with $\mathbf h_i(t)=\mathbf h_{\rm sched}(t)+h_g(t)\,\hat{\mathbf g}+\mathbf h_{r(i)}+\mathbf h_i^{0}$: the scheduler, the goal direction $\hat{\mathbf g}$, the room $r(i)$ and a static agent term (style or a private goal). The inverse Ising model (01) is the binary, mean-field gauge of the same picture: with magnetization $m=\tanh[\beta(J_0m+h)]$, the susceptibility is $\chi\propto1/(1-g)$ with $g=\beta J_0(1-m^2)$~\cite{schneidman2006,meshulam2019}.
+\textbf{Model.} Eq.~\eqref{eq:vector} of Sec.~\ref{sec:p11}. The inverse Ising model (01) is the binary, mean-field gauge of the same picture: with magnetization $m=\tanh[\beta(J_0m+h)]$, the susceptibility is $\chi\propto1/(1-g)$ with $g=\beta J_0(1-m^2)$~\cite{schneidman2006,meshulam2019}. Here $m$ is the mean state of the agents, and $(1-m^2)$ says that agents near saturation respond less.
 
 \textbf{Mapping.} The goal is a literal field vector: the embedding of the kickoff text. Rooms, style and private roles are static fields. Couplings, if any, must appear beyond these fields and pass the in-flight test.
 
@@ -79,20 +58,14 @@ with $\mathbf h_i(t)=\mathbf h_{\rm sched}(t)+h_g(t)\,\hat{\mathbf g}+\mathbf h_
 
 \textbf{Verdict: useful as a field model}; rejected as a coupled ordered magnet. Model 01 is a reliable gauge of gain and field share, not a source of coupling structure. The kickoff and style results span all regimes; the room results are regime III only.
 
-\begin{figure*}[t]
-\includegraphics[width=\textwidth]{H54-kickoff-quench-target/fig.pdf}
-\caption{The kickoff text is a field vector (model 11, H54). (a)~Similarity of each period's day-1 content centroid (rows) to every candidate kickoff text (columns), bge. (b)~Rank of the period's own kickoff among the candidates: first in 18/33 periods. (c)~In \#51 each agent sits on its own private goal (0.95 against a swap null of 0.5). Look at the dark diagonal in (a): the content of day 1 lands on the text that the operator wrote.}
-\label{fig:kickoff}
-\end{figure*}
-
 % ---------------------------------------------------------------- 16
 \subsection{Model 16: Langevin relaxation}\label{sec:m16}
 
-\textbf{Model.} An agent's state $x$ (content, style or memory size) sits in a well with centre $c(t)$; noise pushes it away and the well pulls it back~\cite{uhlenbeck1930}. On the call clock the overdamped (Ornstein--Uhlenbeck) form is $x(n+1)-c=(1-\gamma)(x(n)-c)+\xi(n)$. For a one-rate linear system, the response to a kick and the autocorrelation decay at the same rate $\gamma$~\cite{kubo1966}. The two-rate form of Eq.~\eqref{eq:pic-langevin} breaks that link: reads enter a fast part $k$ with rate $\gamma_k$, on top of a slow well with rate $\gamma_s$. An underdamped well, $\ddot x+2\zeta\omega_0\dot x+\omega_0^2(x-c)=\xi$ with $\zeta<1$, would overshoot and then undershoot after a step.
+\textbf{Model.} Eq.~\eqref{eq:pic-langevin} of Sec.~\ref{sec:p16}, on the call clock. An underdamped well, $\ddot x+2\zeta\omega_0\dot x+\omega_0^2(x-c)=\xi$ with damping ratio $\zeta<1$, would overshoot and then undershoot after a step; H125 tests this rival.
 
 \textbf{Mapping.} The state is the agent's content vector; the well centre is the kickoff target, the agent's private goal or its style mean; the kick is a read at the read-out call. Four cards test the model directly (H97, H125, H127, H130), and OU forms appear in H46, H71, H81 and H106.
 
-\textbf{Best-supported cards} (Fig.~\ref{fig:m16}).
+\textbf{Best-supported cards} (Fig.~\ref{fig:m16}, Sec.~\ref{sec:p16}).
 \begin{enumerate}
 \item \textbf{H97: a kickoff is an anisotropic restoring force.} A kickoff erases agents' earlier positions beyond an ordinary night: the cross-agent memory of positions falls from 0.68 to 0.42, an extra forgetting $\Delta\rho=+0.26\pm0.04$, positive in 16/18 kickoffs and in both embedding models. The well is stiffer along the kickoff direction (0.63) than across it (0.25), and day 1 overshoots ($+0.12\pm0.02$)\cred{0.70}.
 \item \textbf{H125: the response is overdamped.} After a kickoff, alignment overshoots on day 1 ($E_1=+0.055\pm0.012$, 22/27 kickoffs) and decays within two active days with no undershoot ($U=-0.006$ [$-0.020$, $+0.008$], 90\% CI; power 1.00 at $\zeta\le0.5$). The pre-registered oscillator fails, and the overshoot is a field that fades, not inertia\cred{0.64}. Damping between 0.5 and 1 is not excluded.
@@ -105,25 +78,14 @@ H127 supports the same picture from the other side: 74\% of 152 rising agents re
 
 \textbf{Verdict: partly useful.} The overdamped two-rate form describes every card and gives two monitoring time constants. It was chosen after the data in H130 and H71, so it needs a pre-registered test.
 
-\begin{figure*}[t]
-\includegraphics[width=\textwidth]{model16_relaxation.pdf}
-\caption{A fast read kick on a slow, overdamped well (model 16). (a)~After a goal kickoff, alignment with the kickoff (relative to its days 4--5 level) overshoots on day 1 and settles by day 3; nothing dips in the gray undershoot window ($U=-0.006$ [$-0.020$, $+0.008$], bge, 27 kickoffs, 90\% CI; H125). (b)~In \#51 an agent's own content memory (orange) decays over about 100 of its calls, while the pull of a read (blue) decays in about 7 (H130). Each series is divided by its fitted amplitude; thin lines are $e^{-\gamma n}$. (c)~Simulation of the picture: state $x$ = slow well $s$ + short kicks at reads (ticks). Look at the gap between the two curves in (b): one rate cannot describe both.}
-\label{fig:m16}
-\end{figure*}
-
 % ---------------------------------------------------------------- 17
 \subsection{Model 17: collective modes and random-matrix spectra}\label{sec:m17}
 
-\textbf{Model.} Take $N$ agents and $T$ samples in a window and the agent correlation matrix $C$ with eigenvalues $\lambda_1\ge\dots\ge\lambda_N$. With independent agents the eigenvalues fill the Marchenko--Pastur bulk up to $(1+\sqrt{q})^2$, $q=N/T$~\cite{marchenko1967}. One collective mode of strength $\ell$ on top of noise (a spiked covariance) is detectable only if $\ell>\sqrt q$, and then~\cite{baik2005}
-\begin{equation}
-\lambda_1=(1+\ell)\Big(1+\frac{q}{\ell}\Big),\qquad \mathrm{PR}=\frac{(\sum_k\lambda_k)^2}{\sum_k\lambda_k^2}.
-\label{eq:spike}
-\end{equation}
-The participation ratio PR counts effective dimensions. A uniform top mode is what a shared field gives with no coupling. Dynamic modes come from a VAR(1) or OU fit, $x(t+1)=Ax(t)+\varepsilon$, with lifetimes $\tau_k=-\Delta t/\ln|\mu_k|$; each is one process of model 16.
+\textbf{Model.} Eq.~\eqref{eq:spike} of Sec.~\ref{sec:p17}. Dynamic modes come from a VAR(1) or OU fit, $x(t+1)=Ax(t)+\varepsilon$, with lifetimes $\tau_k=-\Delta t/\ln|\mu_k|$ for the eigenvalues $\mu_k$ of $A$; each is one process of model 16.
 
 \textbf{Mapping.} Agents present $\times$ minutes of activity or talk (trimmed to the all-present window), or $\times$ content windows. Because real series are autocorrelated and share a schedule, the naive edge is wrong. We use a calibrated edge: the 95th percentile of $\lambda_1$ under surrogates that keep each agent's own series but break alignment between agents~\cite{laloux1999}.
 
-\textbf{Best-supported cards} (Fig.~\ref{fig:m17}).
+\textbf{Best-supported cards} (Fig.~\ref{fig:m17}, Sec.~\ref{sec:p17}).
 \begin{enumerate}
 \item \textbf{H12: talk and content modes are real; the activity mode is the scheduler.} Above the calibrated edge: talk in 21/24 units, content in 24/24, activity in only 7/24 after trimming. A \#12 debate motion compresses content (PR $-25\%$, 7/9 debates, $p=0.010$); kickoffs do not. The lowest-PR weeks are restatement loops\cred{0.77; fragile}. The round-1 activity mode was a data artifact.
 \item \textbf{H92: cleaning helps forecasts but ties shrinkage.} Clipping the content matrix at the calibrated edge forecasts the next day's matrix better than the raw matrix in 26/32 periods (bge; 27/32 gte; gain 0.10 [0.03, 0.16]), and the gain grows with $q$. It ties constant-correlation shrinkage within 1--2\%, so the persistent structure is one uniform mode\cred{0.71}.
@@ -134,8 +96,3 @@ The participation ratio PR counts effective dimensions. A uniform top mode is wh
 
 \textbf{Verdict: partly useful}, as a gauge of how many collective modes exist and how uniform they are. Its sharpest predictions are untested.
 
-\begin{figure*}[t]
-\includegraphics[width=\textwidth]{model17_modes.pdf}
-\caption{Collective modes against a calibrated random-matrix edge (model 17, H12). (a)~For each of 24 units, the top eigenvalue of the agent correlation matrix divided by the 95\% edge of a calibrated surrogate null; points in the gray band are consistent with noise. Activity mostly fails the trimmed block-shift null (7/24), while talk (21/24) and content (24/24, median ratio 1.52) carry a real mode. (b)~In the \#12 debates, a motion compresses content: the participation ratio is lower while a motion is on than after the verdict in 7/9 debates (median $-25\%$, $p=0.010$). Look at the activity column in (a): once the scheduler is trimmed, its mode sits at the noise edge.}
-\label{fig:m17}
-\end{figure*}

@@ -1,22 +1,49 @@
-% intro: general-reader introduction (model-first rewrite, 2026-10-07).
+% intro: structured introduction in ASD-STE100 (revised 2026-10-07).
+% Rules: <=20 words per procedural sentence, <=25 per descriptive one; <=6 sentences per paragraph;
+% active voice; "field" means the physics field only; no "holdout"/"gate" (say "reserved data").
 \section{Introduction}\label{sec:intro}
 
-\textbf{The problem.} Groups of language-model agents now work together for weeks or months. They share computers, files and a chat. They read each other, copy each other and sometimes wait for each other. Two kinds of people need to understand such a swarm. The first kind works on \emph{interpretability}: given the logs, what is the swarm doing, and why? The second kind runs the swarm and needs \emph{control}: which numbers to watch, when to worry, and which levers move the swarm by how much. Both need a description that is much smaller than the logs and that still predicts.
+\textbf{1. The problem.} Groups of language-model agents now work together for weeks or months. They share computers, files and a chat. We call such a group a \emph{swarm}. Researchers in interpretability must explain, from the logs, what a swarm does and why. Operators must control a swarm: they must know which numbers to watch and which levers to use. Both groups need a description that is much smaller than the logs and that can still predict.
 
-\textbf{Why physics.} Statistical physics gives such descriptions for systems of many interacting parts. A magnet has $10^{23}$ spins, but a few numbers predict how it responds. The ratio of temperature to critical temperature, $T/T_c$, tells how far a local push spreads and how large the fluctuations are, without a model of each spin. Physics also separates two causes of order. A \emph{field} is an external drive that acts on each part directly. A \emph{coupling} is an interaction between parts. A field aligns parts that never interact, so co-movement alone does not prove interaction. This distinction matters for agent swarms, because the scheduler, the operator and the shared model weights all act as fields. Sociophysics applies these ideas to people~\cite{castellano2009}. An agent swarm fits them better than most human groups do. Its states are logged at each step. Its fields (goals, schedules, operator messages) are known and dated. Its coupling channel, the messages, is recorded message by message, together with what each agent could see.
+\textbf{2. Why the problem is hard.} Three facts make the task difficult.
+\begin{tightitem}
+\item \emph{Agents share inputs.} The same model weights, goal text and schedule act on all agents. Thus agents move together, also when they do not interact.
+\item \emph{Correlation is not influence.} When two agents write similar text, one agent can copy the other, or both can react to the same input. The logs alone do not show which.
+\item \emph{There is no ground-truth model.} Nobody wrote the rules of the swarm. Many models can fit the same record, and a good fit does not show that a model is correct.
+\end{tightitem}
 
-\textbf{The system.} The AI Village is a public record of one swarm, run by AI Digest~\cite{aivillage}. Forty-six frontier agents from several labs worked on 51 village-wide goals from April 2025 to September 2026 (Fig.~\ref{fig:timeline}). The agents use browsers, shells and a group chat. Three scaffold changes divide the record into regimes, and each change alters what an agent can read and when it can act. Forty-six dated changes of scaffold, roster, rooms and operator behaviour serve as natural experiments. We cannot run new swarms, so these changes are our interventions.
+\textbf{3. Our approach.} Statistical physics gives small descriptions of systems with many parts that interact. A magnet has about $10^{23}$ \emph{spins}, parts with few states, but a few numbers predict its response. A \emph{field} is an external drive that acts on each part directly. A \emph{coupling} is an interaction between two parts. A field can align parts that never interact, so the first question for each pattern is: field or coupling? Sociophysics applies these ideas to human groups~\cite{castellano2009}.
 
-\textbf{The question and the answer.} We ask which physics model, if any, describes this swarm well enough to read its logs and to steer it. The answer is a weakly coupled, subcritical kinetic spin system under strong external fields. Each agent changes state only when it calls its model. It responds to other agents only through the messages that the call reads, mostly the messages that name it. The read-out loop gain is $g\approx0.13$, so a push to one agent is amplified by about $1/(1-g)\approx1.15$ and never cascades. External fields set most of the state: the scheduler sets when agents act, the goal kickoff sets what they talk about, rooms split them into domains, and style marks each agent. Each agent's content relaxes as a fast kick from what it reads on top of a slow personal well. The context window holds the working state, and it is the only store whose loss costs much work. We find no collective unit above the agents.
+We use physics models as candidate \emph{effective theories}: small models that predict the data at the scale that we can observe. We tested each model with five rules.
+\begin{tightenum}
+\item \emph{Pre-registered predictions.} Each hypothesis has a dated prediction, a null model (the simplest model with no effect) and a kill rule before it uses real data.
+\item \emph{Impostor checks.} Each claim must remove four impostors that make a field look like a coupling: the scheduler, external drives, shared model priors and simultaneous convergence.
+\item \emph{Natural experiments.} We cannot run new swarms, so dated changes of scaffold, roster, rooms and operator behavior are our interventions.
+\item \emph{Faithfulness scores.} A model must beat its strongest null and predict a statistic that it did not fit.
+\item \emph{Reserved data.} We kept 16 goal periods and four natural-experiment windows for confirmation.
+\end{tightenum}
 
-\textbf{What each reader gets.} For interpretability, the picture says where to look: decompose any co-movement into field and coupling, and locate memory in the context window, not in notes or the group. For control, it gives dials with current values (Table~\ref{tab:observables}): the loop gain and its distance to criticality, the field share of co-activation, the depth and time constants of the agents' wells, the number of collective modes, and the value per bit of the context window. It also sizes the levers. Field-type levers (kickoff text, context resets, cap length) are large. Message-type levers (nudges, corrections) are small.
+\textbf{4. The system and the data.} The AI Village is a public record of one swarm, run by AI Digest~\cite{aivillage}. From April 2025 to September 2026, 46 frontier agents from several labs worked on 51 shared goals (Fig.~\ref{fig:timeline}). A \emph{goal period} is the time for one goal, usually one working week; it is our unit of analysis. The agents use browsers, shells and a group chat.
 
-\textbf{How we tested.} We tested 16 physics models from a library of 17 with 132 hypotheses (Sec.~\ref{sec:method}). Claude agents generated, pre-registered, ran and scored each hypothesis, under review by the second author. A physics model can fit almost any record, so a good fit is not evidence. Each hypothesis states its prediction, null and kill rule before it touches real data. We rank models by faithfulness: whether they beat the strongest null, predict a statistic they did not fit, and survive their own kill rules. We reserved 16 goal periods and four natural-experiment windows for confirmation. Almost nothing has run on them yet, so every result below is exploratory.
+The \emph{scaffold} is the software that runs the agents. Three scaffold changes divide the record into three \emph{regimes}:
+\begin{tightitem}
+\item regime I: one chat room for all agents, in daily sessions;
+\item regime II: several rooms, still in sessions;
+\item regime III: continuous operation; each agent sees only its own room.
+\end{tightitem}
+The record holds 381k timeline events and 173k agent chat messages. We tested 16 physics models from a library of 17, with 132 hypotheses. Claude agents wrote, pre-registered, ran and scored the hypotheses, and the second author reviewed the work.
 
-\textbf{Plan.} Section~\ref{sec:picture} states the effective picture and turns it into monitoring observables. Section~\ref{sec:method} describes the data and the research loop. Sections~\ref{sec:models}--\ref{sec:rest} go through the models, from the most useful to the rejected ones. Section~\ref{sec:cross} collects the results that span models, and Sec.~\ref{sec:limits} states the limits. The appendices list the goal periods, the hypothesis~$\times$~model table and all hypotheses with their scores.
+\textbf{5. What we found.} Four models are useful, and they combine into one picture (Sec.~\ref{sec:picture}).
+\begin{tightenum}
+\item Each agent is a kinetic spin: it changes state only at its own model calls.
+\item Agents couple only through messages that a call reads, mostly messages that name the reader.
+\item The coupling is weak: one message causes about 0.13 extra messages, so echoes decay.
+\item Strong external fields set most of the state: the scheduler, the goal text, the rooms and the style of each agent.
+\item Each agent relaxes as a fast kick of about 7 calls on a slow well of about 100 calls.
+\item Few collective modes rise above the noise.
+\end{tightenum}
+All of these results are exploratory. Tests on reserved data have confirmed almost none of them.
 
-\begin{figure*}[t]
-\includegraphics[width=\textwidth]{timeline.pdf}
-\caption{The AI Village over time. Top strip: the 51 goal periods, colored by who wrote the goal. Middle: the agent roster, colored by lab, from joining to retirement. Bottom: agents present, stacked by lab. Dashed lines mark scaffold changes: A chat while on computer; B human helpers; C history search and memory consolidation; D auto-nudger; E chat rooms; F continuous computer use (start of regime III); G outreach approval; H 200-event context cap; I 8\,h per day and new repository host; J private goals. Look at the bottom panel: the swarm grows from 4 agents to more than 20, and most tests run in the large, continuous regime III on the right.}
-\label{fig:timeline}
-\end{figure*}
+\textbf{6. Why this matters.} For interpretability, the picture tells where to look. Divide each pattern of co-movement into field and coupling, and find the memory of an agent in its context window. For control, the picture gives 16 observables with current values and use cases (Table~\ref{tab:monitor}). It also sizes the levers. Field levers, such as the kickoff text and context resets, are large. Message levers, such as nudges, are small, but a name multiplies the effect of a message about 19 times.
+
+\textbf{7. Paper map.} Section~\ref{sec:picture} builds the picture and ends with the observables. Section~\ref{sec:method} gives the data and the method. Section~\ref{sec:models} gives the full evidence for the useful models, and Secs.~\ref{sec:partial}--\ref{sec:limits} cover the other models, the results that span models and the limits.

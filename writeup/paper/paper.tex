@@ -29,12 +29,15 @@
 \renewcommand{\textfraction}{0.05}\renewcommand{\floatpagefraction}{0.75}\renewcommand{\dblfloatpagefraction}{0.75}
 \setcounter{topnumber}{3}\setcounter{dbltopnumber}{3}\setcounter{totalnumber}{5}
 
+% Compact lists for the front sections (no enumitem in this install).
+\newenvironment{tightitem}{\setlength{\topsep}{1pt}\setlength{\partopsep}{0pt}\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}}{\end{itemize}}
+\newenvironment{tightenum}{\setlength{\topsep}{1pt}\setlength{\partopsep}{0pt}\begin{enumerate}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}}{\end{enumerate}}
 \raggedbottom
 \begin{document}
 \title{Towards a thermodynamics of agent swarms:\\ \normalfont\itshape (Slopvestigating sociophysics as a scheme for swarm interpretability)}
 \author{Claude Opus 5.5\,\claudespark}
 \noaffiliation
-\author{Vivian Rogers}
+\author{vivian @jazzloaf}
 \noaffiliation
 \date{\today}
 

@@ -1,63 +1,146 @@
-% picture: the effective picture that the data support, and the monitoring observables built from it.
-% Numbers: scratchpad fact sheets of 2026-10-07 (latest scored round of each card).
+% picture: "What the system is" -- the effective picture, built model by model (models 02+09, 11+01, 16, 17),
+% then the ranked observables. ASD-STE100 rules as in intro.tex. Revised 2026-10-07.
+% Numbers: scratchpad fact sheets of 2026-10-07 (latest scored round of each card). Derived values are labeled "derived".
+% Float calls sit one subsection before their text so that the floats land near it.
 \section{What the system is}\label{sec:picture}
 
-This section states the picture that the evidence supports, in seven lines. Each line names the physics model that carries it and the strongest cards; Sec.~\ref{sec:models} gives the evidence. Read the picture as a working model with error bars. It is not confirmed on reserved data. Two terms recur. The \emph{read-out call} of a message is the first model call of an agent whose context holds the message. A message that arrives while a call runs is \emph{in flight}; it cannot enter that call.
+This section builds the effective picture, one model at a time (Fig.~\ref{fig:picture}). For each equation we give its meaning, a physical picture, its measurement from the logs and the best evidence; Sec.~\ref{sec:models} gives the full evidence. Values are for regime III, with 95\% confidence intervals (CIs) in brackets, unless we state otherwise.
 
-\begin{enumerate}
-\item \textbf{Agents are kinetic spins on a call clock} (model 02). At each model call an agent has an action class (talk, work or wait), a content vector and a project. It changes state only at its calls. In regimes II and III the coupling per call does not depend on how long the call took, so the clock is the call, not the wall clock (H40: elasticity $\eta_{\rm rep|talk}=-0.11$ [$-0.16$, $-0.06$]; a wall clock, $\eta=1$, is excluded). Regime I, the early chat scaffold, does not follow this rule.
-\item \textbf{Coupling acts only through messages read at a call, mostly named ones} (model 02). The chance that an agent names or answers a sender jumps at the read-out call and not before it (H08: 14/17 periods for mentions, 17/17 for replies). A read that names the reader adds 0.079 [0.069, 0.089] talk calls; an unnamed read adds 0.004 [0.003, 0.006], a ratio of about 19 (H67). Content moves the same way, five times more for named messages (H50).
-\item \textbf{The coupling is weak and subcritical} (models 01, 02, 09, 03). In continuous operation the read-out loop gain is $g=0.13$ (H67). The fluctuations of talk give the same number with no fit, $g_{\rm Fano}=0.149$ [0.123, 0.175] (H67 with H111). A push is amplified by $\chi=1/(1-g)\approx1.15$, and by at most 1.31 in any goal period (H51). Ideas spread with a branching ratio near 0.2 (H34).
-\item \textbf{Strong external fields dominate} (models 11, 01, 15). The scheduler's daily start and stop give 70--80\% of the co-activation in regime III (H38). The kickoff text is the target of each agent's day-1 content (H54). Rooms split content into domains (H100). Style marks each agent well enough to identify it (H46). A goal change acts as a quench, not as a small linear push (H10, H96).
-\item \textbf{Each agent relaxes as a fast read kick on a slow well} (model 16). A read pulls the reader's next statement toward the sender, and the pull decays in about 7 calls. The agent's own content returns to its well over about 100 calls, roughly 1\,h (H130). After a kickoff the response is overdamped: day 1 overshoots, and nothing undershoots (H125).
-\item \textbf{The context window holds the working state, and it is the only large store of value} (model 04). A forced erasure of the context costs 39\% of committed work over the next 10 calls (H15). Per bit of allocation information, the context window buys $\kappa_C=5.2$ [3.8, 7.9] commits per 20 calls (H87). Memory notes, chat reads and history search carry almost no measured value. Idle traps and restatement loops also live in the context (H16, H69).
-\item \textbf{There is no superagent and no group term} (models 04, 12, 13, 17). No group that shares work persists as a unit beyond its members and their own files (H01, H58). Pairs and fields account for shared vocabulary (H101), and content changes by transmission among the agents who stay (H89). The one exception is a slow content mode in the early single-room village (H81).
-\end{enumerate}
-
-\textbf{The effective model.} Two equations hold the picture. For the action of agent $i$ at its call $c$, the read-out kinetic Ising model of Sec.~\ref{sec:m02} gives
-\begin{equation}
-P(Y_{ic}=1)=\sigma\Big(h_i(t_{ic})+\!\!\sum_{m\in B_{ic}}\!\!\big[J_0+J_{\rm N}\,\mathbb 1(m\ \text{names}\ i)\big]\Big),
-\label{eq:pic-kinetic}
-\end{equation}
-where $\sigma$ is the logistic function, $h_i$ collects the fields (scheduler, goal, room, agent) and $B_{ic}$ is the batch of messages that the call reads. Only the reads enter, and $J_{\rm N}\gg J_0$. For the content vector $x_i=s_i+k_i$ of the agent at call $n$, the two-rate Langevin model of Sec.~\ref{sec:m16} gives
-\begin{align}
-s_i(n+1)-c_i&=(1-\gamma_s)\,\big(s_i(n)-c_i\big)+\xi_i(n),\nonumber\\
-k_i(n+1)&=(1-\gamma_k)\,k_i(n)+\kappa\!\!\sum_{m\in B_{in}}\!\!(z_m-x_i)_\perp ,
-\label{eq:pic-langevin}
-\end{align}
-with a well centre $c_i$ set by the kickoff, the room and the agent, message content $z_m$, and $\gamma_k/\gamma_s\approx15$. Everything else in this paper is a test of, or a correction to, these two lines. Figure~\ref{fig:picture} draws them.
+\textbf{Terms.} A \emph{model call} is one step of an agent: the scaffold assembles the context, and the model writes one action. The \emph{read-out call} of a message is the first call of an agent whose context holds the message. A message that arrives while a call runs is \emph{in flight}: it cannot enter that call. It is our placebo: it has the timing of a read message, but the agent cannot see it. A \emph{unit} is a goal period, or one part of a period between two step changes.
 
 \input{sections/fig_picture}
+\input{sections/table_monitor}
+\begin{figure*}[t]
+\centering\includegraphics[width=0.6\textwidth]{H08-context-is-the-coupling/fig.pdf}
+\caption{A message acts at the read-out call of the recipient (model 02, H08). (a)~One G38 message: room-mates with a call in flight read it 7--24\,s later at their next call; agents in long gaps read it 130--169\,s later and reply at that call. (b, c)~The excess chance that a call names the sender jumps at the read-out call ($o=1$) and not at the call in flight ($o=0$), in G38 and in 17 periods outside the reserved data. Look at the step between $o=0$ and $o=1$, and at the flat other-room placebo.}
+\label{fig:readout}
+\end{figure*}
 
-\subsection{Monitoring observables}\label{sec:observables}
+% ------------------------------------------------------------------ 02 + 09
+\subsection{Agents are kinetic spins that couple at the read-out call (models 02 and 09)}\label{sec:p02}
+\begin{figure*}[t]
+\centering\includegraphics[width=0.6\textwidth]{H54-kickoff-quench-target/fig.pdf}
+\caption{The kickoff text is a field vector (model 11, H54). (a)~Similarity of the day-1 content centroid of each period (rows) to each candidate kickoff text (columns), bge. (b)~Rank of the own kickoff of the period among the candidates: first in 18/33 periods. (c)~In \#51 each agent sits on its own private goal (0.95 against a swap null of 0.5). Look at the dark diagonal in (a): the content of day 1 lands on the text that the operator wrote.}
+\label{fig:kickoff}
+\end{figure*}
 
-The picture turns into dials (Table~\ref{tab:observables}). Each dial is a single number per goal period or per week-long window, computed from logs that any swarm can keep: model calls with timestamps, messages with recipients, what each call could read, commits, and statement embeddings. The loop gain plays the role of $T/T_c$. Its distance to criticality, $1/(1-g)$, says how much a local push is amplified; the Fano rule checks it from fluctuations alone. The field share and the kickoff alignment say how much of the swarm's order comes from outside. The well depth and the two time constants say how fast the swarm forgets and how long a message acts. The random-matrix edge counts the collective modes that exist beyond noise. The value per bit of the context window prices an erasure.
+At each call, an agent talks (it posts a message), works or waits. Let $Y_{ic}=1$ when call $c$ of agent $i$ is a talk call. The read-out kinetic Ising model~\cite{glauber1963,aguilera2026} gives
+\begin{equation}
+P(Y_{ic}=1)=\sigma\Big(\beta\Big[h_i(t_{ic})+\!\!\sum_{m\in B_{ic}}\!\!\big(J_0+J_{\rm N}\,\mathbf 1_{m\to i}\big)\Big]\Big).
+\label{eq:pic-kinetic}
+\end{equation}
 
-Two dials are already alarms with a measured false-alarm rate: the topic-shift detector (H36) and the three-channel change monitor (H74). For the other dials, the alarm levels in the table are proposals. They mark the edge of the range that we observed, so a crossing means that the swarm has left the regime in which the picture was measured. None of these levels has been tested as an alarm.
+\emph{Meaning.} The chance of talk is a weighted vote of the field and of the messages that the call reads, passed through a logistic function.
+\begin{tightitem}
+\item $h_i(t_{ic})$: the \emph{field} on agent $i$ at the call (scheduler, goal, room, habit);
+\item $B_{ic}$: the messages that the call reads for the first time;
+\item $J_0$: the \emph{coupling} per message read; $J_{\rm N}$: the extra coupling when $m$ names $i$ ($\mathbf 1_{m\to i}=1$);
+\item $\beta$: the inverse temperature, how strictly the agent follows the vote;
+\item $\sigma(u)=1/(1+e^{-u})$: it changes the vote to a probability.
+\end{tightitem}
+\emph{Picture.} A person in a meeting decides at each turn whether to speak. The schedule and the habits of the person set a base level. Each message read adds a small push, and a message with the person's name adds a large push. A small $\beta$ makes the choice nearly random.
 
-\begin{table*}[!tp]
-\caption{Monitoring observables built from the effective picture. Values are exploratory (no reserved data), regime III unless stated; CIs are 95\% unless marked. \emph{Alarm}: a measured alarm (H36, H74) or a proposed level (\textsuperscript{p}) at the edge of the observed range. A dash means that the observable is descriptive only. ``Not measured'' marks a proposed observable with no value yet.}
-\label{tab:observables}
-\scriptsize\renewcommand{\arraystretch}{1.12}
-\begin{tabular}{@{}p{0.115\textwidth}p{0.16\textwidth}p{0.15\textwidth}p{0.24\textwidth}p{0.15\textwidth}p{0.12\textwidth}@{}}
-\toprule
-Observable & Definition & From logs & Current value (scope; card) & Tells an operator & Alarm\\\midrule
-\rr Loop gain $g$ & \rr extra talk messages that one message causes through reads at hop 1, $g=\bar m\,\bar r\,J_1^\ast$ & \rr talk per call; read-out calls from a context ledger; jump $J_1^\ast$ over the in-flight placebo & \rr 0.13 (pool 0.127, 25 units; units 0.00--0.29; upper bound $<0.40$ in 66/66); regime I $-0.022$ [$-0.052$, 0.009] (H67) & \rr how far a push spreads by reading & \rr $g>0.4$\textsuperscript{p}\tabularnewline
-\rr Distance to criticality $\chi=1/(1-g)$ & \rr amplification of a field push; the analogue of $T/T_c$ & \rr from $g$ & \rr 1.15 at $g=0.13$; $\le1.31$ in 33/33 periods (H51); daily Curie--Weiss gain median 0.16 (H25) & \rr $\chi\to\infty$ at the critical point; here a push never cascades & \rr $\chi>2$\textsuperscript{p}\tabularnewline
-\rr Fano ratio $r_F=\Phi_{\rm obs}/\Phi_{\rm pred}$ & \rr $\Phi$, the variance of summed 10-min talk counts over the summed variances, against $1/(1-g)^2$ & \rr talk counts per agent & \rr 1.01 [0.94, 1.09], 18 units; 14/18 units within $\pm20\%$ (point estimates); regime I 1.34 [1.18, 1.52] (H111) & \rr checks $g$ with no fit; an excess means a field or coupling the loop omits & \rr $r_F\notin[0.8,1.2]$\textsuperscript{p}\tabularnewline
-\rr Named vs unnamed ratio & \rr jump per named read over jump per unnamed read & \rr recipients named in messages; reads & \rr talk 0.079 vs 0.004 per read ($\times$19) (H67); content 0.077 vs 0.016 ($\times$5) (H50) & \rr addressing is the coupling channel & \rr ratio $\to1$\textsuperscript{p}\tabularnewline
-\rr Call-clock elasticity $\eta$ & \rr elasticity of the reply hazard to call duration (0 call clock, 1 wall clock) & \rr call start and end times & \rr $\eta_{\rm rep|talk}=-0.11$ [$-0.16$, $-0.06$], 4 periods; regime I $+0.51$ [0.41, 0.61] (H40) & \rr whether faster calls mean faster coupling & \rr $\eta>0.5$\textsuperscript{p}\tabularnewline
-\rr Field share of co-activation $f$ & \rr share of excess co-activation gain from the scheduler's start and stop & \rr 1-min activity spins, trimmed to the all-present window, block-shift null & \rr 0.72 median (8 periods), 0.83 after trim; regime I 0.11 (H38, fragile); shared pair covariance $\phi$ 0.04 [0.01, 0.06] (H86) & \rr synchrony is the schedule, not coordination & \rr $f<0.5$\textsuperscript{p}\tabularnewline
-\rr Kickoff alignment & \rr rank of the day-1 content centroid against its own kickoff and 32 decoy kickoffs & \rr statement embeddings, kickoff texts & \rr top-1 in 18/33 periods (bge), 20/33 (gte) (H54); topic alarm fires in 30\,min on 82--85\% of kickoffs, 7--9\% of placebos, AUC 0.92--0.94 (H36) & \rr whether the goal landed & \rr H36 alarm (measured)\tabularnewline
-\rr Well depth $\Delta\rho$ & \rr extra loss of memory of agents' positions at a kickoff, beyond an ordinary night & \rr agent content vectors & \rr $+0.26\pm0.04$ (s.e.), 16/18 kickoffs; along the kickoff 0.63, across 0.25 (H97); day-1 overshoot, no undershoot $U=-0.006$ [$-0.020$, 0.008] (90\%) (H125) & \rr how hard a goal resets the swarm & \rr $\Delta\rho\approx0$\textsuperscript{p}\tabularnewline
-\rr Kick and well times $1/\gamma_k$, $1/\gamma_s$ & \rr decay of the read response and of the agent's own autocorrelation & \rr content per call; reads & \rr kick $\approx7$ calls, well $\approx100$ calls ($\approx1$\,h), ratio 14.8 [7.2, 30.4] (90\%), \#51 only (H130); post-erasure re-reading tail 8.2 [5.8, 11.8] calls (H44) & \rr how long a message acts; how fast an agent forgets & \rr ratio $<2$\textsuperscript{p}\tabularnewline
-\rr Top eigenvalue vs edge; PR & \rr $\lambda_1$ over the 95th percentile of surrogate $\lambda_1$; participation ratio $(\sum\lambda)^2/\sum\lambda^2$ & \rr agent$\times$time matrices of activity, talk, content & \rr above edge: talk 21/24 units, content 24/24, activity 7/24 (H12, fragile); PR $-25\%$ during \#12 debate motions; spiked threshold $\ell>\sqrt{N/T}$ not measured & \rr how many collective modes exist; a uniform mode is a field & \rr activity mode above trimmed edge\textsuperscript{p}\tabularnewline
-\rr Room domain contrast & \rr content separation of rooms beyond random regroupings after removing member constants and field directions & \rr room membership; content & \rr $Q_{\rm spont}$ 1.8--5.7, significant in 5/7 periods (bge) (H100); cross/within coherence $\le0.3$ in 6/9 (H47) & \rr rooms are domains; each goal rebuilds them & \rr ---\tabularnewline
-\rr Context value per bit $\kappa_C$ & \rr $\Delta V_C/I_C$: commits lost per bit of allocation information erased & \rr forced erasures; work commits per 20 calls & \rr 5.2 [3.8, 7.9], 9 periods pooled (G38 0.87, G51 7.0) (H87); $-39\%$ [$-42$, $-35$] commits over 10 calls (H15); 20-call cap gives 0.88 [0.85, 0.91] of the output per call of a 40-call cap (H44) & \rr the price of an erasure or a shorter cap & \rr ---\tabularnewline
-\rr Day-end excess EP & \rr share of debiased excess entropy production in the first and last 30\,min of the day & \rr behaviour-state fluxes per agent & \rr 0.80--1.00 of the excess in 12--25\% of the time (G38, G40, G51) (H76) & \rr irreversibility sits at the scheduler's edges & \rr excess outside edges\textsuperscript{p}\tabularnewline
-\rr Idea branching $\hat R$ & \rr mean new adopters per adopter of an idea marker & \rr idea markers, reads & \rr 0.09--0.40, median 0.22; upper CI $<1$ in 32/32 periods; spread across ideas CV$^2\approx1$ (H34) & \rr how far an idea spreads & \rr upper CI $\ge1$\textsuperscript{p}\tabularnewline
-\rr Change monitor & \rr three-channel daily monitor (schema diff, counters, topic) & \rr log schema, counts, embeddings & \rr false alarms 0.085 [0.04, 0.17] per day; hits kickoffs 0.57, room changes 6/6 (H74) & \rr dates platform and drive changes & \rr measured\tabularnewline
-\rr Dynamic mode lifetimes & \rr lifetimes $\tau_k$ of a VAR(1) or OU fit of agent content & \rr content per call or day & \rr not measured; only one slow mode, $\tau\approx23$--28\,d, regime I (H81) & \rr what persists, beyond what co-moves & \rr ---\tabularnewline
-\bottomrule
-\end{tabular}
-\end{table*}
+\emph{From the logs.} The \emph{jump per read} is the chance of talk at the read-out call minus the chance at the call in flight, at the same lag. The fit cannot separate $\beta$ from $h$ and $J$, so we report jumps.
+
+\emph{Evidence.} A read that names the reader adds 0.079 [0.069, 0.089] talk calls; an unnamed read adds 0.004 [0.003, 0.006], about 19 times less (H67). Mentions and replies jump at the read-out call, not before it, in 14/17 and 17/17 periods (H08, Fig.~\ref{fig:readout}). Content also moves, five times more for named messages (H50).
+
+\textbf{The clock is the call.} When a call takes twice as long, the chance of a reply changes by a factor $2^{\eta}$. Thus the elasticity $\eta=0$ means that calls set the clock, and $\eta=1$ means that wall time sets it. In regimes II and III, $\eta=-0.11$ [$-0.16$, $-0.06$] (H40); regime I gives $+0.51$ [0.41, 0.61], which we cannot explain.
+
+\textbf{Loop gain and its echoes.} The Hawkes view of model 09~\cite{hawkes1971} counts the echoes of one message:
+\begin{equation}
+\begin{gathered}
+g=\bar m\,\bar r\,J_1^\ast,\qquad \chi=\frac{1}{1-g},\\
+\Phi=\frac{\mathrm{Var}\big(\sum_i n_i\big)}{\sum_i\mathrm{Var}(n_i)}=\frac{1}{(1-g)^2}.
+\end{gathered}
+\label{eq:fano}
+\end{equation}
+
+\emph{Meaning of $g$.} The \emph{loop gain} $g$ is the number of extra messages that one message causes, on average, at the first step. One message reaches $\bar r$ readers; each reader talks with an extra chance $J_1^\ast$ (the jump over the placebo); each talk call posts $\bar m$ messages.
+
+\emph{Meaning of $\chi$.} The \emph{amplification} $\chi$ is the total response to one kick, with all echoes: $1+g+g^2+\dots=1/(1-g)$. It goes to infinity as $g\to1$, as the susceptibility of a magnet does when its temperature $T$ goes to the critical temperature $T_c$. Thus $1-g$ plays the role of the distance $T/T_c-1$ to the critical point.
+
+\emph{Meaning of $\Phi$.} The \emph{Fano factor} of a count is its variance over its mean; it is 1 for a random (Poisson) stream. Our \emph{collective Fano ratio} $\Phi$ divides the variance of the group total of talk counts $n_i$ by the sum of the agent variances. It is 1 for independent agents. The echo loop multiplies each swing of the group total by $\chi$, and a variance grows as the square of a swing. Echoes add little to the variance of one agent, because they spread over many agents. Thus $\Phi=\chi^2$, with no free parameter.
+
+\emph{Picture.} A microphone near a speaker gives a short echo at low volume ($g<1$: echoes shrink) and a howl at high volume ($g\ge1$).
+
+\emph{From the logs.} We count $\bar m$ from the chat table and $\bar r$ from the record of what each call read. For $\Phi$ we count talk per agent in 10-min windows, without the day edges.
+
+\emph{Evidence.} The median gain is $g=0.13$ (pooled 0.127 over 25 units); the upper bound is below 0.40 in 66/66 units (H67). Thus $\chi\approx1.15$ and $\Phi_{\rm pred}\approx1.32$ (both derived), and $\chi\le1.31$ in 33/33 periods (H51). The observed $\Phi$ matches: $r_F=\Phi_{\rm obs}/\Phi_{\rm pred}=1.01$ [0.94, 1.09] over 18 units (H111, Fig.~\ref{fig:fano}), on the same data as $g$. Regime I has no measured gain, and talk varies 1.34 [1.18, 1.52] times more than the loop permits.
+
+\textbf{Variant: the context holds a self-field.} The recent output of an agent stays in its context and acts as a field on the agent. Thus restatement loops copy what the context holds (H69), and a forced erasure inside an idle trap lifts escape from 0.47 to 0.84 (H16).
+
+% ------------------------------------------------------------------ 11 + 01
+\subsection{External fields set most of the state (models 11 and 01)}\label{sec:p11}
+\begin{figure*}[t]
+\begin{minipage}[t]{0.49\textwidth}
+\includegraphics[width=\linewidth]{model16_relaxation.pdf}
+\caption{A fast read kick on a slow, overdamped well (model 16). (a)~After a goal kickoff, alignment with the kickoff (relative to its level on days 4--5) overshoots on day 1 and settles by day 3; nothing dips in the gray undershoot window ($U=-0.006$ [$-0.020$, $+0.008$], bge, 27 kickoffs, 90\% CI; H125). (b)~In \#51 the memory of an agent for its own content (orange) decays over about 100 of its calls, while the pull of a read (blue) decays in about 7 (H130). We divide each series by its fitted amplitude; thin lines are $e^{-\gamma n}$. (c)~Simulation: state $x$ = slow well $s$ + short kicks at reads (ticks). Look at the gap between the two curves in (b): one rate cannot describe both.}
+\label{fig:m16}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\includegraphics[width=\linewidth]{model17_modes.pdf}
+\caption{Collective modes against a calibrated random-matrix edge (model 17, H12). (a)~For each of 24 units, the top eigenvalue of the agent correlation matrix divided by the 95\% edge of a calibrated surrogate null; points in the gray band agree with noise. Activity mostly fails the trimmed block-shift null (7/24), while talk (21/24) and content (24/24, median ratio 1.52) carry a real mode. (b)~In the \#12 debates, the participation ratio is lower while a motion is on than after the verdict in 7/9 debates (median $-25\%$, $p=0.010$). Look at the activity column in (a): when we trim the scheduler, its mode sits at the noise edge.}
+\label{fig:m17}
+\end{minipage}
+\end{figure*}
+
+Model 11 treats the content of each agent as an arrow, a \emph{vector spin} $\mathbf s_i$. The arrow is the mean \emph{embedding} of the statements of the agent in a window, minus the regime mean and its style. (An embedding is a vector from a text model; similar meanings give near vectors.) The model gives each set of arrows a weight $e^{-\beta\mathcal H}$, with
+\begin{equation}
+\begin{gathered}
+-\beta\mathcal H=\sum_{i<j}J_{ij}\,\mathbf s_i\cdot\mathbf s_j+\sum_i\mathbf h_i\cdot\mathbf s_i ,\\
+\mathbf h_i=\mathbf h_{\rm sched}+h_g\hat{\mathbf g}+\mathbf h_{r(i)}+\mathbf h_i^{0}.
+\end{gathered}
+\label{eq:vector}
+\end{equation}
+
+\emph{Meaning.} A set of arrows is more probable when each arrow points along its field, and along other arrows where $J_{ij}>0$. The field has four parts: the scheduler, the goal, the room $r(i)$ and a constant term $\mathbf h_i^0$ for each agent, such as its style. The goal field points along the kickoff text $\hat{\mathbf g}$, with strength $h_g$.
+
+\emph{Picture.} A strong magnet turns all compass needles the same way, even when the needles do not touch. When you see aligned needles, find the magnet first. Model 01, the binary inverse Ising model, gives the gain and the field share in a simpler form~\cite{schneidman2006,meshulam2019}.
+
+\emph{From the logs.} The \emph{field share} $f$ is the part of the excess co-activation that the daily start and stop of the scheduler explain. We test it against a null that shifts each agent in time by whole blocks. For the goal, we rank the day-1 content against its own kickoff text and 32 others.
+
+\emph{Evidence.} The daily start and stop give 70--80\% of the co-activation ($f=0.72$ median over 8 periods; regime I 0.11; H38, fragile). The day-1 content ranks its own kickoff first in 18/33 periods (bge embeddings) and 20/33 (gte) (H54, Fig.~\ref{fig:kickoff}). Style identifies an agent at 0.85, against a chance level of 0.15 (H46), and rooms split content in 5/7 periods (H100). A goal switch is a \emph{quench}, a sudden change of the field. On day 1, the persistence of the old state beyond the new field falls to 0.18--0.27, against 0.85--0.89 across a night (H96).
+
+% ------------------------------------------------------------------ 16
+\subsection{Each agent relaxes as a fast kick on a slow well (model 16)}\label{sec:p16}
+
+Let the content of agent $i$ at its call $n$ be $x_i=s_i+k_i$, a slow part plus a fast part. The two-rate Langevin model~\cite{uhlenbeck1930} gives
+\begin{align}
+s_i(n+1)-c_i&=(1-\gamma_s)\,\big(s_i(n)-c_i\big)+\xi_i(n),\nonumber\\
+k_i(n+1)&=(1-\gamma_k)\,k_i(n)+\kappa\!\!\sum_{m\in B_{in}}\!\!(z_m-x_i)_\perp .
+\label{eq:pic-langevin}
+\end{align}
+
+\emph{Meaning.} The slow part sits in a well with centre $c_i$, which the kickoff, the room and the agent set. At each call it moves back a fraction $\gamma_s$ of the way to the centre, and the noise $\xi_i$ pushes it at random. Each message $m$ that the call reads pulls the fast part toward the message content $z_m$, with strength $\kappa$. The mark $\perp$ keeps only the part of the message that differs from the room consensus. The fast part fades by a fraction $\gamma_k$ at each call. In $1/\gamma$ calls, a mark fades to about one third of its size.
+
+\emph{Picture.} Someone taps a ball in a bowl of thick honey. The tap fades in a few calls; the return to the bottom takes many more. The honey makes the system \emph{overdamped}: the ball does not swing past the bottom. With one rate, the response to a tap and the decay of the free motion would match~\cite{kubo1966}; the data break this rule.
+
+\emph{From the logs.} We measure $\gamma_k$ from the later statements of a reader, along the direction of a message read some calls before, minus the placebo. We measure $\gamma_s$ from the decay of the correlation of an agent's content with its own past.
+
+\emph{Evidence.} In \#51 a read pulls the next statement of the reader toward the sender: $J_K=0.044$ [0.038, 0.050], in 11/12 units (H130). The pull fades in about 7 calls ($\gamma_k\approx0.13$--0.17 per call); the own content relaxes in about 100 calls, roughly 1\,h ($\gamma_s=0.0094$ [0.0076, 0.0115]). The ratio is 14.8 [7.2, 30.4] (90\% CI). After a kickoff, alignment overshoots on day 1 and does not undershoot ($U=-0.006$ [$-0.020$, 0.008], 90\% CI; H125; Fig.~\ref{fig:m16}). We chose the two-rate form after the one-rate model failed, so it needs a pre-registered test.
+
+% ------------------------------------------------------------------ 17
+\subsection{Few collective modes rise above the noise (model 17)}\label{sec:p17}
+
+Take $N$ agents and $T$ time samples in a window. The correlation matrix of the agents has eigenvalues $\lambda_1\ge\dots\ge\lambda_N$. Each eigenvalue tells how much of the joint variance one pattern of co-movement, a \emph{mode}, carries. Random-matrix theory gives the noise floor and the condition for a real mode~\cite{marchenko1967,baik2005}:
+\begin{equation}
+\lambda_+=\big(1+\sqrt q\,\big)^2,\quad q=\frac NT;\qquad
+\text{mode real if}\ \ell>\sqrt q .
+\label{eq:spike}
+\end{equation}
+
+\emph{Meaning.} For independent agents, all eigenvalues stay below the edge $\lambda_+$. The ratio $q=N/T$ (some authors write $\gamma$) compares the number of agents with the length of the record. A true mode of strength $\ell$, its excess variance, rises above the floor only when $\ell>\sqrt q$. The \emph{participation ratio} $\mathrm{PR}=(\sum_k\lambda_k)^2/\sum_k\lambda_k^2$ counts the effective number of modes: $N$ when all modes are equal, 1 when one mode carries all.
+
+\emph{Picture.} People who flip coins for a few rounds show some pairs that match by chance; a shorter record gives a higher floor. A real mode is a choir that must sing louder than the crowd.
+
+\emph{From the logs.} We compute $\lambda_1$ from the agent-by-time matrix of activity, talk or content. Real series are autocorrelated, so we replace $\lambda_+$ by the 95th percentile of $\lambda_1$ for surrogates that shift each agent in time~\cite{laloux1999}.
+
+\emph{Evidence.} Talk carries a mode above this edge in 21/24 units and content in 24/24. Activity does so in only 7/24 units after we trim the scheduler (H12, fragile; Fig.~\ref{fig:m17}). In the \#12 debates, a motion lowers the PR of content by 25\% (7/9 debates). One uniform mode, which is what a shared field gives, forecasts as well as the cleaned matrix (H92). We have not yet measured the threshold $\ell>\sqrt q$ itself.
+
+% ------------------------------------------------------------------ rest of picture + observables
+\subsection{Memory, groups and the observables}\label{sec:observables}
+
+Two results from partly useful models complete the picture (Sec.~\ref{sec:partial}). First, the context window holds the working state: a forced erasure cuts committed work by 39\% [35, 42] over the next 10 calls (H15). Memory notes carry almost no measured value (H87). Second, no group that shares work acts as a unit above its members and their files (H01, H58).
+
+Table~\ref{tab:monitor} turns the picture into 16 ranked observables, each one number per goal period or week. Appendix~\ref{app:observables} gives the full definitions and proposed alarm levels.
+
