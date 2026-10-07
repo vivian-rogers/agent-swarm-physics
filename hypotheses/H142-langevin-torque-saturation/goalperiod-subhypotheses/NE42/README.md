@@ -1,6 +1,6 @@
 # H142 × NE42: the #best/#rest merge and split back (2026-05-04 / 2026-05-11)
 
-**Verdict:** pending
+**Verdict:** descriptive
 **Role:** exploratory (native N2)
 **Period:** #39 (2026-04-27 → 05-04, two rooms) → #40 (05-04 → 05-11, one merged room #universe-coordination; GPT-5 alone in #rest) → #41 (05-11 → 05-18, the same two rooms again). Regime III. Each side is its own goal period, so the design compares fitted parameters across the boundary (CLAUDE.md exception (c)).
 
@@ -15,10 +15,16 @@ The merge raised batch sizes about ×1.5 at fixed agents (H113 N3), with no chan
 - Confound: each boundary is also a goal change (new kickoff), so a shift in n_sat cannot be blamed on the merge alone.
 
 ## Result
-Not run.
+*Round 1, 2026-10-07 (exploratory). Descriptive by the folder's own rule: #40 is not field-identified by H113, and no NE42 side has power ≥ 0.8 (after A4: bge #39 0.47, #40 0.62, #41 0.63; gte 0.64, 0.70, 0.68). n̂_sat sits on a grid edge (0.1 or 150) on most sides, so no side has an identified saturation scale.*
+- **bge**: mean ledger k 6.3 (#39) → 10.2 (#40) → 6.7 (#41).
+  - 39 → 40: n̂_sat 150.00 → 0.10; Δ ln n̂_sat -7.31 [-7.31, 6.09]; |Δ| < ln 1.5: False; counts against: False.
+  - 40 → 41: n̂_sat 0.10 → 150.00; Δ ln n̂_sat 7.31 [-3.66, 7.31]; |Δ| < ln 1.5: False; counts against: False.
+- **gte**: mean ledger k 6.3 (#39) → 10.2 (#40) → 6.7 (#41).
+  - 39 → 40: n̂_sat 21.34 → 150.00; Δ ln n̂_sat 1.95 [-5.12, 4.70]; |Δ| < ln 1.5: False; counts against: False.
+  - 40 → 41: n̂_sat 150.00 → 0.90; Δ ln n̂_sat -5.12 [-7.31, 5.12]; |Δ| < ln 1.5: False; counts against: False.
 
 ## Scorecard (period-specific axes)
-E: not run (0).
+E: 0 (descriptive; unpowered sides).
 
 ## Notes
 - GPT-5's calls in #rest during #40 are excluded (one agent in a separate room).

@@ -91,11 +91,30 @@ def build(g: int, models=S.MODELS) -> dict:
     return cnt
 
 
+def build_raw(g: int, models=S.MODELS):
+    """Post hoc (2026-10-07, after the round-1 run): rows with the raw projection, on the same centroids."""
+    d = OUT / f"G{g:02d}"
+    calls, items = S.frames_talks(PS / f"G{g:02d}")
+    for model in models:
+        z = np.load(d / f"centroids_{model}.npz")
+        cents = {str(k): v for k, v in zip(z["days"], z["C"])}
+        P = S.project_calls(g, calls, items, model, field=False)
+        rows, _, _, _ = S.rows_frame(P, cents, K_MAIN, g)
+        rows.write_parquet(d / f"rows_{model}_raw.parquet", compression="zstd")
+        print(g, model, len(rows), flush=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--period", type=int, action="append")
     ap.add_argument("--all", action="store_true")
+    ap.add_argument("--raw", action="store_true", help="post hoc variant: P_c without the window field (H113 A1's raw "
+                    "projection), same day-fold centroids; writes rows_<model>_raw.parquet only")
     a = ap.parse_args()
+    if a.raw:
+        for g in (a.period or []):
+            build_raw(g)
+        return
     periods = periods_available() if a.all or not a.period else a.period
     OUT.mkdir(parents=True, exist_ok=True)
     for g in periods:

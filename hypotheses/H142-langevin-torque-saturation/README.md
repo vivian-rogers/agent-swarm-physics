@@ -1,6 +1,6 @@
 # H142: The content response to aligned reads saturates as a Langevin-function torque
 
-**Status:** round 1 in progress (2026-10-07): synthetic validation done, Amendments A1–A3 written before real data. Pre-registered Card, observables, nulls and predictions written 2026-10-07 11:45–12:30 UTC, before any H142 statistic on real data. No scheme, synthetic or analysis code has run.
+**Status:** round 1 done (2026-10-07, exploration data only): **failed by the pre-set kill.** At fixed batch size and hot topic, the step toward a direction does not grow with the number of aligned reads (pooled ΔLL(Langevin − line) −9.0 [−17.2, −2.2] nats, bge; f̂(1) 0.000 [−0.002, 0.002] on #51); only the newest item pulls. Amendments A1–A4 (before scored data). Card, observables, nulls and predictions written 2026-10-07 11:45–12:30 UTC, before any H142 statistic on real data.
 **Question (GOALS.md):** **Q1** (what couples agents: how does the read-out pull toward one direction grow with the number of reads that point that way in one call?). Second: **Q5** (how many aligned messages does an operator need to send in one batch to move an agent most of the way?).
 **Fields:** stat mech (mean-field vector spins: the Langevin function as the n = 3 equation of state, saturation of the magnetization), information theory (read-out channel capacity)
 **Literature:** none in `literature/` covers the Langevin function. Cited from memory (†): Langevin, *J. Phys. Theor. Appl.* 4, 678 (1905)† (paramagnetism of classical moments, L(x) = coth x − 1/x); Stanley, *Phys. Rev.* 176, 718 (1968)† (n-vector models). Model reference: [`physics-models/11-vector-spins/README.md`](../../physics-models/11-vector-spins/README.md) (mean-field section). Name clash: this is the static Langevin *function*, not the Langevin *dynamics* of [`physics-models/16-langevin-relaxation/`](../../physics-models/16-langevin-relaxation/README.md).
@@ -100,15 +100,15 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
-| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
-| C adequacy | beats the null hierarchy, day-blocked out-of-fold data | 0 | not run |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
-| E interventional | predicts the change across a natural experiment | 0 | not run |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 0 | not run |
-| G ground truth | agrees with known structure | 0 | not run |
-| H comparative | beats the named rivals | 0 | not run |
-| I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Ledger rows, DQ5 vectors, fold centroids; both models agree; regime invariance not tested |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | A1: call FE do not fix the per-read slope; k-bin amplitudes fix it |
+| C adequacy | beats the null hierarchy, day-blocked out-of-fold data | 0 | Langevin does not beat the line out of fold (bge pool −9.0 [−17.2, −2.2]) |
+| D unfitted predictions | unfitted statistics and the model's signature | 0 | Δ_curv undefined; n̂_sat on grid edges |
+| E interventional | predicts the change across a natural experiment | 0 | NE42 descriptive; N1 fails |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 | n̂_sat recovered; sizes ≤ 0.03; power ≥ 0.87 on scored units; flat result survives K = 12, dedupe, raw projection, day cells |
+| G ground truth | agrees with known structure | 0 | n/a |
+| H comparative | beats the named rivals | 0 | beats neither line nor power law; the newest item (R-recency) is the only pull |
+| I transfer | holds in other same-mode periods, including the reserved periods | 0 | reserved periods not run |
 
 ## Prediction
 *Written 2026-10-07 11:45–12:30 UTC, before running the analysis on real data.*
@@ -148,11 +148,17 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G38](goalperiod-subhypotheses/G38/README.md) | replication (identified in both models; large batches) | pending | — |
-| [G51](goalperiod-subhypotheses/G51/README.md) | replication + native N1 (timer wakes) | pending | — |
-| [NE42](goalperiod-subhypotheses/NE42/README.md) | native N2 (room merge raises k at fixed agents) | pending | — |
+| [G13](goalperiod-subhypotheses/G13/README.md) | replication (scored, both models) | failed | ΔLL(L − line) −3.2 [−8.1, 0.3] bge, −1.3 [−3.1, 0.0] gte; f̂ flat |
+| [G16](goalperiod-subhypotheses/G16/README.md) | replication (scored gte only) | failed | gte +8.4 [3.9, 14.3] but no positive f̂ bin (kill clause a); bge −1.1 (unscored) |
+| [G35](goalperiod-subhypotheses/G35/README.md) | replication (unpowered) | descriptive | rising f̂ with in-flight as large (field signature) |
+| [G36](goalperiod-subhypotheses/G36/README.md) | replication (< 200 rows) | descriptive | f̂(1) 0.017 [0.005, 0.030] bge; no shape |
+| [G37](goalperiod-subhypotheses/G37/README.md) | replication (< 200 rows) | descriptive | f̂(1) 0.020 [0.000, 0.039] bge; no shape |
+| [G38](goalperiod-subhypotheses/G38/README.md) | replication (scored, both models) | failed | −5.1 [−12.1, 0.9] bge, −6.8 [−10.9, −2.9] gte; newest +0.019 |
+| [G39](goalperiod-subhypotheses/G39/README.md) | replication (unpowered) | descriptive | n̂_sat on grid edge |
+| [G51](goalperiod-subhypotheses/G51/README.md) | replication + native N1 | failed | −0.7 [−2.0, 0.5] bge, +5.7 [−1.8, 11.7] gte; f̂(1) 0.000; wakes N1 fail |
+| [NE42](goalperiod-subhypotheses/NE42/README.md) | native N2 | descriptive | n̂_sat unidentified on all sides |
 
-Other testable periods (#13, #16, #35, #36, #37, #39) get their period folders, with the replication predictions copied and dated, before the run.
+The other 24 non-reserved periods were run as descriptive rows only (`results/periods.json`, estimates table).
 
 ## Results
 See "Round 1 (2026-10-07)" below.
@@ -221,6 +227,65 @@ Langevin beats the power law (ΔLL(L − pow) CI > 0) in W-L3 in 0.63 / 0.43 / 1
 
 **Not run:** N1 cross-day surrogate batches. Direction labels come from day-fold centroids, so u on one day does not match u on another day; a surrogate batch would need a cross-day centroid match, which the card does not define. N2 (within room × hour permutation of the aligned-count vectors) is run on the eligible bge periods.
 
+
+### Step 3: exploration data (2026-10-07, after A1–A4)
+`analysis/run.py --perms 50` on all 34 non-reserved periods in both models (`results/periods.json`, `pooled.json`, `natives.json`, `nulls.json`). Scored units: bge #13, #38, #51; gte #13, #16, #38, #51. Pools follow exception (d): ΔLL summed over scored periods with per-period day bootstraps; f̂ and ln n̂_sat pooled by DerSimonian–Laird random effects.
+
+**What the data show.** On every scored period the step toward a direction does not rise with the number of aligned reads. f̂(n) sits at 0 within ±0.01 and turns slightly negative at n ≥ 3 on #13 and #51 (bge). The newest batch item carries the only directional pull: +0.0103 [0.0074, 0.0137] on #51 (bge), +0.0127 [0.0096, 0.0158] (gte), +0.019 [0.008, 0.031] on #38 (bge). For scale, the H113-calibrated linear channel gives f̂(1) ≈ 0.02 on the #51 skeleton; the observed #51 f̂(1) is 0.0000 [−0.0022, 0.0023] (bge).
+
+| # | Prediction | Result (bge; gte) | Verdict by the rule |
+| --- | --- | --- | --- |
+| **P1** (primary) | pooled ΔLL(L − line) > 0 with CI > 0, and > 0 in ≥ 2/3 of powered periods | −9.0 [−17.2, −2.2] nats, 0/3 positive; +6.1 [−4.1, 15.7], 2/4 positive | **failed (kill)** |
+| P2 | pooled Δ_curv > 0 with CI > 0 | undefined: pooled f̂(3) −0.0075 [−0.0117, −0.0033] (bge), f̂(6+) −0.012 [−0.017, −0.007] (gte) | failed |
+| P3 | pooled n̂_sat ∈ [1.5, 6] | 37 [3.4, 407] (bge, RE pool, 3 periods); 12 [1.8, 77] (gte) | failed |
+| P4 | ĝ(1)/f̂(1) ≤ 0.5 and read − in-flight at n = 1 > 0 | contrast −0.0025 [−0.0078, 0.0029]; −0.0007 [−0.012, 0.010]; ratio undefined (f̂(1) CI includes 0) | failed |
+| N1 | #51 wakes: ΔLL CI > 0 and n̂_sat within ×1.5 of talk | −5.3 [−13.3, 1.0]; −7.4 [−18.7, 0.1]; n̂_sat at the grid edges | failed |
+| N2 | NE42: |Δ ln n̂_sat| < ln 1.5 | n̂_sat on grid edges (0.1 or 150) on most sides; Δ CIs span the grid | descriptive (folder rule: #40 unidentified, sides unpowered) |
+| Kill | linear curve, or line as good out of fold, with power ≥ 0.8 | fires in every scored unit (both clauses in 6 of 7; #16 gte by clause (a) only) | **fires** |
+
+Per scored unit, ΔLL(L − line) out of fold: #13 −3.2 [−8.1, 0.3] / −1.3 [−3.1, 0.0]; #38 −5.1 [−12.1, 0.9] / −6.8 [−10.9, −2.9]; #51 −0.7 [−2.0, 0.5] / +5.7 [−1.8, 11.7]; #16 (gte) +8.4 [3.9, 14.3]. The #16 gte value is the only CI above 0. Its f̂(n) has no positive bin and its power law fits as well (ΔLL(L − pow) 0.9 [−0.7, 2.6]); bge #16 gives −1.1 [−5.7, 3.3].
+
+**Nulls.** The within room × hour permutation of the aligned-count vectors (N2-null; 50 permutations, 25 on #51) brackets every observed bge value: ΔLL(L − line) 95% bands #13 [−7.2, 10.0], #38 [−6.4, 4.2], #51 [−14.9, 4.8]; the observed f̂(1) lies inside its band on #38 and #51 and at the top edge on #13 (0.0056 vs [−0.0068, 0.0056]). N1 (cross-day surrogates) not run (see Step 2).
+
+**Sensitivity (bge, eligible periods).** K = 12 directions: ΔLL(L − line) #13 −1.5 [−3.9, 0.1], #38 −0.8 [−2.4, 0.0], #51 −4.1 [−9.9, 0.1]. Responses flagged as self-repeat, cross-echo or template removed: #13 −2.2 [−5.2, 0.1], #38 −1.8 [−5.5, 1.2], #51 −0.7 [−2.0, 0.5]. The card's pooled-amplitude form (pre-A1) gives the same picture on real data: #13 0.0, #38 −1.9 [−4.4, −0.4], #51 +2.5 [−7.0, 11.2] (bge).
+
+**Post hoc (2026-10-07, after the run; `analysis/posthoc.py`, `results/posthoc.json`).** Question: does the projection or the FE choice erase the curve? Variants on #13, #38, #51 (bge) and #51 (gte): the raw projection (no window field, H113 A1's primary), direction × room × day cells, and both. f̂(1) stays within [−0.004, 0.010] in all 16 fits. The newest-item pull stays at 0.008–0.021 with CI > 0 on #38 and #51. ΔLL(L − line) has CI above 0 in 1 of 16 fits (#38 raw + day: +8.4 [0.2, 18.2]). So the flat curve is not an artifact of the window-field projection or of hour cells.
+
+**Descriptive periods.** No unscored period shows a Langevin curve. The two gte-identified but unpowered periods differ: #35 has a monotone rising f̂ (gte 0.022 → 0.073 at 6+; bge 0.022 → 0.058) with ĝ(1) as large as f̂(1) (bge ĝ(1)/f̂(1) 2.6 [1.4, 4.7]), the field signature; #36 and #37 have f̂(1) 0.016–0.036 with CI > 0 and too few rows for a shape.
+
+### Impostor table (round 1)
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | n/a | Call-level rows; no time-binned synchrony statistic. | n/a |
+| Exogenous field (kickoff, goal, operator; hot topics) | yes | Goal, kickoff, room-kickoff and window-field directions projected out; direction × room × hour FE; human and nudge items excluded. Synthetic W-field (×1, ×4) gives false "Langevin beats line" ≤ 0.03 and false Δ_curv > 0 ≤ 0.01. The permutation null brackets the observed values. #35 shows the field signature and is unscored. | removed |
+| Shared model priors | yes | `style_resid32` in both models; call FE absorb the reader's state; both models agree on the flat curve. | removed |
+| Contemporaneous convergence | yes | In-flight count dummies in every fit. The read and in-flight curves are both flat on scored periods (read − in-flight at n = 1: −0.0025 [−0.0078, 0.0029], bge pool), so no convergence effect needs removing. | removed |
+
+### Scorecard (A–I, round 1)
+| Axis | Test | Score | Evidence |
+| --- | --- | --- | --- |
+| A mapping | variables defined from dataset fields; invariant across families and regimes | 1 | Rows built from ledger pending sets, DQ5 vectors and fold centroids; both models agree; variants proposed for DEFINITIONS.md (not added). Every scored period lies in one regime; invariance across regimes is not tested. |
+| B assumptions | stationarity, update order | 1 | A1 found that call FE do not hold the per-read slope fixed; the k-bin amplitudes fix it. Day-fold stability not tested beyond the leave-one-day-out fits. |
+| C adequacy | beats the null hierarchy out of fold | 0 | The Langevin form does not beat the line out of fold (bge pool −9.0 [−17.2, −2.2]). |
+| D unfitted predictions | signature statistics | 0 | Δ_curv undefined (no positive curve); n̂_sat on grid edges. |
+| E interventional | NE prediction | 0 | NE42 descriptive; N1 (#51 wakes) fails. |
+| F identifiability | synthetic recovery at village sampling | 2 | n̂_sat recovered within the grid step (n_sat 1 and 3); size ≤ 0.03 for W-lin, W-sel, W-recent, W-field on the main skeletons; power ≥ 0.87 on every scored unit; A1–A4 written before scored data. |
+| G ground truth | known structure | 0 | No ground-truth labels apply. |
+| H comparative | beats named rivals | 0 | Beats neither R-linear nor R-power; R-recency (the newest item) is the only measured pull. |
+| I transfer | other periods, reserved data | 0 | Reserved periods not run. |
+
+**Hypothesis verdict (card rule): failed.** The kill fires in both models with power ≥ 0.8 in every scored unit. Status set below.
+
+**New constants (round 1).**
+- f̂(1) (step toward u per one aligned, non-newest read, fixed k and hot topic): #51 0.0000 [−0.0022, 0.0023] (bge), 0.0002 [−0.0022, 0.0023] (gte); bge pool of #13, #38, #51: 0.0012 [−0.0018, 0.0043]. Units: projection of the reader's projected `style_resid32` statement on a unit centroid.
+- β_new (newest batch item aligned with u): #51 0.0103 [0.0074, 0.0137] (bge), 0.0127 [0.0096, 0.0158] (gte); #38 0.019 [0.008, 0.031] (bge); #16 0.027 [0.014, 0.039] (gte).
+
+**Claim that stands:** At fixed batch size and fixed hot topic, the content step toward a direction does not grow with the number of aligned reads in the batch: on the powered, field-identified periods (bge #13, #38, #51; gte adds #16) a line fits as well as the Langevin form out of fold (pooled ΔLL(L − line) −9.0 [−17.2, −2.2] nats, bge) and f̂(1) = 0.000 [−0.002, 0.002] on #51, while only the newest item pulls (+0.010 [0.007, 0.014], #51 bge). Exclusions: P2 and P3 undefined (no positive curve to shape); NE42 descriptive (unpowered, #40 unidentified); #16 gte's positive ΔLL is single-model and unreplicated; #35's rising curve is field-type (unscored); post hoc variants are diagnostics only; the gte pool (+6.1 [−4.1, 15.7]) does not exclude 0.
+
+## Round 2 redirects (proposed by the round-1 agent, 2026-10-07)
+- **H142-R1. Newest-item channel.** Fit the directional pull of the newest item against its age and rank at fixed k (H113 P7 recast per direction); test whether "send it last" has a measurable saturation in repeats.
+- **H142-R2. Named aligned items.** On #51, H29's named pull should appear per direction; the named-count slope here is 0.0026 [−0.0007, 0.0060] (bge) and 0.0107 [0.0077, 0.0140] (gte). Resolve the model split.
+- **H142-R3. Where does H113's uptake go?** H113 sees uptake along the batch sum; this card sees none along cluster directions beyond the newest item. Decompose H113's y·s into newest, aligned-cluster and off-cluster parts on the same calls.
 
 ## Notes
 - 2026-10-07 11:45 UTC: card written from HH385 (approved by Vivian 2026-10-07). In the source HH quote, the HH list's word for out-of-sample data is written as "[out-of-fold]" to follow the house style; the meaning is unchanged.

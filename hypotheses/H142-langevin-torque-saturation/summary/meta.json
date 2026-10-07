@@ -1,0 +1,24 @@
+{
+ "complete": 50,
+ "faithfulness": 1.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: structural count on 34 non-reserved periods before outcomes, synthetic validation on 3 real skeletons (10 worlds, 100 runs) plus a power set on 10 periods and the #51 wakes, Amendments A1-A4 before scored data, both embedding models, K = 12 and dedupe sensitivities, within-hour permutation null, post hoc projection and FE variants, natives N1 (#51 wakes) and N2 (NE42), 760 estimate rows. No confirm script (failed card).",
+  "faithfulness": "HH385's Langevin saturation fails its pre-set kill with power >= 0.87 in every scored unit: the line fits as well out of fold (bge pool -9.0 [-17.2, -2.2]) and the step curve is flat. The synthetic check found a real flaw in the card's design (call effects do not hold the per-read slope) and A1 fixed it before data. C 0, D 0, E 0, F 2, H 0.",
+  "usefulness": "A usable negative for operators: repeating a point in one batch does not add pull; the newest message is the only directional lever (+0.010 per direction on #51)."
+ },
+ "one_line": "No saturation to find: at fixed batch size and topic the step toward a direction does not grow with aligned reads (pooled ΔLL(L - line) -9.0 [-17.2, -2.2], bge); only the newest item pulls.",
+ "models": [
+  {"model": "11-vector-spins", "role": "primary", "outcome": "refuted", "note": "Langevin saturation in aligned reads killed; the step curve is flat"},
+  {"model": "04-semantic-information", "role": "rival", "outcome": "mixed", "note": "Linear channel at fixed k fits as well; per-direction slope is ~0"}
+ ],
+ "rated_by": "H142 round-1 agent (suggested)",
+ "updated": "2026-10-07",
+ "v2": {
+  "claim": "At fixed batch size and hot topic, the content step toward a direction does not grow with the number of aligned reads: the Langevin form does not beat a line out of fold (pooled ΔLL -9.0 [-17.2, -2.2] nats, bge, #13 #38 #51) and f(1) = 0.000 [-0.002, 0.002] on #51; only the newest item pulls (+0.010 [0.007, 0.014])",
+  "scope": "powered, field-identified periods: bge #13, #38, #51; gte #13, #16, #38, #51; exploration days",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": null
+ }
+}

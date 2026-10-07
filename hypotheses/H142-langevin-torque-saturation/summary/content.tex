@@ -1,0 +1,33 @@
+\hwhat{H142 asks whether the content step toward a direction saturates with the number of aligned reads in one batch, as a classical moment saturates in a field (the Langevin function). Rows are (talk call, direction) pairs; directions are day-fold clusters of reader statements. Synthetic checks on real skeletons showed that the card's form mistakes H113's linear channel for saturation (60--100\% of runs), so Amendment A1 lets the amplitude vary with batch size. On the powered, field-identified periods (bge \#13, \#38, \#51; gte adds \#16) the step does not grow with aligned reads at all: the pooled out-of-fold $\Delta$LL(Langevin $-$ line) is $-9.0$ [$-17.2$, $-2.2$] nats (bge), and $\hat f(1)=0.000$ [$-0.002$, 0.002] on \#51. The pre-set kill fires. Only the newest batch item pulls.}
+
+\hmodel{Model 11 (vector spins, mean-field equation of state). The reader's projected statement is a moment; each aligned read adds to a field along a direction $u$, one of $K=8$ day-fold cluster centroids. $n$: aligned reads (cosine $\ge0.3$) in the ledger batch of size $k$. $\alpha_c$: call effect; $\delta$: direction $\times$ room $\times$ hour effect (hot topic). Rivals: a line in $n$ (H113 at fixed $k$), a power law, the newest item.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+y_{c,u}=\alpha_c+\delta_{u,\mathrm{room},h}+a_{b(k)}\,h(n_{c,u})+g(n^F_{c,u})+\beta_{\rm new}\,\mathrm{newest}_{c,u}+\beta_{\rm name}\,n^{\rm name}_{c,u}+\epsilon\\
+h(n)\in\{\,n,\ n^p,\ L(cn)\,\},\quad L(x)=\coth x-1/x,\quad n_{\rm sat}=3/c,\quad \Delta_{\rm curv}=\ln\tfrac{f(2)}{f(1)}-\ln\tfrac{f(6+)}{f(3)}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/summary_obs.pdf}{Left: the model-free step curve $\hat f(n)$ (95\% agent-day cluster bootstrap) on the three scored bge periods; it is flat at zero, not a saturating rise. Right: out-of-fold $\Delta$LL(Langevin $-$ line) per 1000 rows for every period (circles bge, squares gte; dark = scored; green CI $>0$, red $<0$, gray includes 0).}
+
+\htelos{For an operator the answer is simple. Repeating the same point in one batch does not move an agent further toward it: the second to sixth aligned message adds nothing measurable once the batch size and the topic of the hour are held fixed. What moves the next statement is the newest message (+0.010 [0.007, 0.014] per direction on \#51). Put the key point last; do not send it several times in one batch. The Langevin picture is not needed to say this; the curve has no rise to saturate.}
+
+\hbottom{The step toward a direction does not grow with the number of aligned reads at fixed batch size and topic; the Langevin form does not beat a line out of fold, and only the newest item pulls.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.46\columnwidth}p{0.17\columnwidth}@{}}
+\textbf{Prediction} & \textbf{Observed (bge; gte)} & \textbf{Verdict}\\\hline
+\raggedright P1 pooled $\Delta$LL(L$-$line) $>0$ & \raggedright $-9.0$ [$-17.2$, $-2.2$]; $+6.1$ [$-4.1$, 15.7] & \raggedright failed (kill)\tabularnewline
+\raggedright P2 $\Delta_{\rm curv}>0$ & \raggedright undefined: no positive $\hat f$ bins & \raggedright failed\tabularnewline
+\raggedright P3 $n_{\rm sat}\in[1.5,6]$ & \raggedright 37 [3.4, 407]; 12 [1.8, 77] & \raggedright failed\tabularnewline
+\raggedright P4 read beats in flight & \raggedright $-0.0025$ [$-0.0078$, 0.0029] & \raggedright failed\tabularnewline
+\raggedright N1 \#51 wakes & \raggedright $-5.3$ [$-13.3$, 1.0]; $-7.4$ [$-18.7$, 0.1] & \raggedright failed\tabularnewline
+\raggedright N2 NE42 $n_{\rm sat}$ fixed & \raggedright $n_{\rm sat}$ unidentified, sides unpowered & \raggedright descriptive\tabularnewline
+\raggedright S1 power at \#51 & \raggedright 1.00, size 0.02 (after A1) & \raggedright supported\tabularnewline
+\raggedright S2 $\Delta_{\rm curv}$ size & \raggedright $\le0.01$ & \raggedright supported\tabularnewline
+\raggedright S3 $<1/2$ powered & \raggedright 3/6; 4/7 & \raggedright failed\tabularnewline
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic worlds on the real skeletons of \#13, \#38, \#51 (100 runs each). Left: with batch-size amplitudes (A1), the Langevin worlds pass (power 0.99--1.00) and the linear, selection, newest-item and field worlds stay $\le0.03$. The power-law world also beats the line; $\Delta$LL(L $-$ power) separates it (0.00). Right: the card's original single amplitude passes the linear and selection worlds in 40--100\% of runs.}
+
+\hcaveats{Directions are clusters of reader statements, a coarse ruler; an aligned read is one with cosine $\ge0.3$ to a centroid. The direction $\times$ room $\times$ hour effects and the window-field projection could absorb real uptake that follows the hour's topic; post hoc variants without them keep the flat curve. The result is a null at the H113-calibrated effect size (power $\ge0.87$), not a bound on tiny effects. \#16 (gte only) shows a positive $\Delta$LL with no positive bin. Reserved periods were not run.}
+
+\hnext{Decompose H113's batch uptake into newest, aligned-cluster and off-cluster parts on the same calls; fit the newest-item pull against age and rank.}
