@@ -1,6 +1,6 @@
 # H141: Content moves on an easy plane set by the goal and room texts: slow along it, fast across it
 
-**Status:** round 1 in progress (2026-10-07): synthetic validation done, Amendment A1 written before real data. Card, observables, nulls and predictions written 2026-10-07 10:55–11:40 UTC, before any H141 statistic on real data.
+**Status:** exploratory round 1 done (2026-10-07; non-reserved data only). **Failed (kill fires in all three variants): content is not slower along the goal/kickoff/room text plane than across it.** Pooled ρ_A = γ_⊥/γ_∥ 0.68, 90% CI [0.50, 0.94] (bge; gte 0.78 [0.60, 1.02]; white32 0.76 [0.53, 1.07]) over 25 units of #37–#44 and #51. The plane is no slower than random planes (1/15 testable units above the 95th percentile) and has no extra day-scale memory (pooled variogram contrast −0.02 [−0.10, 0.06]). The reverse (hard-axis) kill does not fire. Synthetic validation and Amendment A1 (O3 estimator replaced, P3 and P4 operationalized) came before real data. Scorecard A1 B1 C0 D0 E0 F2 G1 H1 I1. Card, observables, nulls and predictions written 2026-10-07 10:55–11:40 UTC.
 **Question (GOALS.md):** **Q2** (what is field and what is coupling: do the operator's goal and room texts set the directions in which agent content is soft and slow, an anisotropic well?). Second: **Q3** (are the slow directions of content set by fields, or are they content's own collective modes?).
 **Fields:** stat mech (anisotropic Langevin relaxation, easy-plane and hard-axis anisotropy in vector spins, fluctuation–dissipation), dynamics (mode lifetimes)
 **Literature:** none in `literature/` covers anisotropic OU processes. Cited from memory (†): Uhlenbeck & Ornstein, *Phys. Rev.* 36, 823 (1930)† (vector OU with a stiffness matrix); Chaikin & Lubensky, *Principles of Condensed Matter Physics* (1995)† (easy-plane anisotropy; soft modes). Model references: [`physics-models/16-langevin-relaxation/README.md`](../../physics-models/16-langevin-relaxation/README.md) (vector form ẋ = −Γ(x − c) + ξ), [`physics-models/11-vector-spins/README.md`](../../physics-models/11-vector-spins/README.md) (anisotropy; "transverse, and Goldstone physics"), [`physics-models/17-collective-modes/README.md`](../../physics-models/17-collective-modes/README.md) (dynamic modes as eigenmodes of Γ; content uses about 5–12 of 32 whitened dimensions).
@@ -21,10 +21,10 @@
 
 | Impostor | Relevant? | How it is handled (planned) | Status |
 | --- | --- | --- | --- |
-| Scheduler field | partly | Per-call clock (H40); lags only within a PT day for the call-scale test; the day-scale test uses noise-corrected day-to-day persistence of agent-day means (H108's method), which has no within-day timing. | removed (planned) |
-| Exogenous field (kickoff, goal, operator) | yes (central) | The plane is the field. The HH's impostor (a plane fit to the same data) is removed by building E from goal, kickoff and room-kickoff texts only. A common goal-phase drift along E would fake slowness, so the primary autocovariance subtracts the cross-agent covariance at the same wall lag (H130 A1 point 3); the raw version is a variant. | removed (planned) |
-| Shared model priors (family, style) | yes | `style_resid_period` vectors; wells (leave-day-out) absorb each agent's prior; `white32` and gte variants. | removed (planned) |
-| Contemporaneous convergence | partly | Only the kick part (P4) is an influence claim; it uses H130's read-minus-in-flight design at matched posting age. The autocorrelation part is own-agent only. | removed (planned) |
+| Scheduler field | partly | Per-call clock (H40); lags only within a PT day for the call-scale test; the day-scale test uses noise-corrected day-to-day persistence of agent-day means (H108's method), which has no within-day timing. | removed (A1: the day-scale test is the noise-corrected day variogram) |
+| Exogenous field (kickoff, goal, operator) | yes (central) | The plane is the field. The HH's impostor (a plane fit to the same data) is removed by building E from goal, kickoff and room-kickoff texts only. A common goal-phase drift along E would fake slowness, so the primary autocovariance subtracts the cross-agent covariance at the same wall lag (H130 A1 point 3); the raw version is a variant. | removed (the raw variant gives the same verdict: pooled ρ_A 0.81 [0.66, 0.98]) |
+| Shared model priors (family, style) | yes | `style_resid_period` vectors; wells (leave-day-out) absorb each agent's prior; `white32` and gte variants. | removed (all three variants: kill fires) |
+| Contemporaneous convergence | partly | Only the kick part (P4) is an influence claim; it uses H130's read-minus-in-flight design at matched posting age. The autocorrelation part is own-agent only. | removed for the kick (P4 inconclusive); n/a for the autocorrelation |
 
 **Inputs:** current tables only (DQ5 vectors in both models, shared goal vectors, DQ1 ledger).
 
@@ -102,19 +102,20 @@ Worlds keep the real statements, call clock, reads and resets of units 51c and 5
 ## Faithfulness scorecard
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
 **Rival models:** R-hard-axis (H97), R-iso, R-modes (model 17), R-drive, R-text-room (H100).
+**Overall A–I (round 1):** A1 B1 C0 D0 E0 F2 G1 H1 I1.
 **Reserved periods used for confirmation:** none (not run). Planned: the reserved weeks #45–#47 (shared goals; #45 has room-level structure through NE19) and the #51 tail, ledger family `content_alignment`. Overlaps to disclose: H97 and H54 on reserved kickoffs; H100, H102, H107, H108, H109 on #45–#48 content; H130 on the #51 tail. A frozen, guarded confirm script is written only after exploration and runs only with Vivian's sign-off.
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
-| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
-| C adequacy | beats the null hierarchy, day-blocked out-of-fold data | 0 | not run |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
-| E interventional | predicts the change across a natural experiment | 0 | not run |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 0 | not run |
-| G ground truth | agrees with known structure | 0 | not run |
-| H comparative | beats the named rivals | 0 | not run |
-| I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | E is built from texts only (goal, kickoff, room kickoffs, #51 role texts); same verdict in bge, gte and white32; regime III only. |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | One exponential plus plateau per subspace; a slow plane (γ ≲ 0.001/call) is not resolved inside a day (A1), so the day variogram carries the long-memory test. No stationarity audit. |
+| C adequacy | beats the null hierarchy, day-blocked out-of-fold data | 0 | The text plane does not beat the random-plane band (1/15 units) or isotropy (pooled ρ_A 0.68 [0.50, 0.94]). |
+| D unfitted predictions | unfitted statistics and the model's signature | 0 | No along-plane day memory (P5 0/15); the FDT check V_A′ ≈ ρ̂_A holds in 7/15 units, but only because both are ≈ 1; the kick decay ratio is inconclusive. |
+| E interventional | predicts the change across a natural experiment | 0 | NE38: the slow axis does not rotate with the role (descriptive, one agent). |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 2 | 5 worlds × 100 replicates on 4 real skeletons: ρ_A unbiased (pooled bias ≤ 0.09 in W-iso/W-easy/W-hard), kill size 100% in W-iso and 2–6% false in anisotropic worlds; the registered O3 was shown biased and replaced before real data (A1). |
+| G ground truth | agrees with known structure | 1 | Room-kickoff text axis not slow (agrees with H100's chance field share); swap planes no slower than own planes. |
+| H comparative | beats the named rivals | 1 | R-iso wins. R-hard-axis only weakly (ρ_A < 1 in bge, not < ⅓). R-modes: the cross-fitted principal subspace is not slow either (pooled 0.72 [0.32, 1.60]). R-drive: irrelevant (raw and corrected agree). |
+| I transfer | holds in other same-mode periods, including the reserved periods | 1 | The null result holds in shared-goal weeks (0.90 [0.41, 1.97]) and #51 (0.67 [0.45, 0.99]); reserved periods not run. |
 
 ## Prediction
 *Written 2026-10-07 10:55–11:40 UTC, before running the analysis on real data.*
@@ -156,12 +157,17 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G38](goalperiod-subhypotheses/G38/README.md) | replication + native N1 (room-kickoff axes) | pending | — |
-| [G44](goalperiod-subhypotheses/G44/README.md) | replication + native N1 (room-kickoff axes) | pending | — |
-| [G51](goalperiod-subhypotheses/G51/README.md) | replication (51a–51l) + native N2 (per-agent planes) | pending | — |
-| [NE38](goalperiod-subhypotheses/NE38/README.md) | native N3 (one agent's plane rotates) | pending | — |
+| [G37](goalperiod-subhypotheses/G37/README.md) | replication | failed | ρ_A unresolved (CI 0–1825); random pct 0.17 |
+| [G38](goalperiod-subhypotheses/G38/README.md) | replication + native N1 (room-kickoff axes) | failed | 38a ρ_A 0.93 [0.00, 2.62]; N1: text room axis not slow (3/3), m̂ not slow either (0/3) |
+| [G39](goalperiod-subhypotheses/G39/README.md) | replication | failed | ρ_A 1.38 [0.63, 14.6]; pct 0.72 |
+| [G40](goalperiod-subhypotheses/G40/README.md) | replication | failed | ρ_A 1.92 [0.38, 74]; pct 0.86 |
+| [G41](goalperiod-subhypotheses/G41/README.md) | replication | failed | ρ_A 0.62 [0.17, 2.05]; pct 0.17 |
+| [G42](goalperiod-subhypotheses/G42/README.md) | replication | failed | 42b ρ_A 1.45 [0.23, 45]; pct 0.71 |
+| [G44](goalperiod-subhypotheses/G44/README.md) | replication + native N1 (room-kickoff axes) | descriptive | two 2-day units; text room axis below 90th pct 2/2; m̂ above 95th 0/2 |
+| [G51](goalperiod-subhypotheses/G51/README.md) | replication (51a–51l) + native N2 (per-agent planes) | failed | own-plane pooled ρ_A 0.67 [0.45, 0.99]; 0/7 above random 95th; P4 ratio 0.42 [0.17, 0.75] inconclusive |
+| [NE38](goalperiod-subhypotheses/NE38/README.md) | native N3 (one agent's plane rotates) | descriptive | after: new axis more persistent (0.85 vs 0.54); before: also new > old; no flip |
 
-Other testable units (#37, #39–#42) get their period folders, with the replication predictions copied and dated, before the run.
+Period folders for #37 and #39–#42 were added 2026-10-07 ~12:40 UTC with the replication predictions copied, before the run.
 
 ## Round 1 (2026-10-07)
 
@@ -195,11 +201,55 @@ Registered synthetic predictions:
 
 **Disclosure (2026-10-07, before this amendment).** A schema probe of `producing_calls` printed per-period statement counts for some reserved periods (#47–#50; counts only, no outcome). No content of reserved periods was read.
 
+### Results (real data, run 2026-10-07 after A1)
+Primary `style_resid_period` × bge; gte and white32 in brackets where they differ. 25 units (15 testable: ≥ 3 days, ≥ 4 agents). Per-unit numbers are in the period folders. Figure: `figures/summary_obs.pdf` (a: subspace autocorrelation in 38a and 51g; b: ρ_A per unit against the random-plane band; c: day variogram persistence along vs across E). Data: `results/{units.pkl, units.parquet, summary.json, kick.json, ne38.json}`. Estimates: 417 rows (`hypothesis == "H141"`).
+
+| # | Prediction (rule) | Result (number, CI) | Verdict by the rule |
+| --- | --- | --- | --- |
+| P1 | pooled ρ_A ≥ 10 with lower 90% bound ≥ 3 | 0.68 [0.50, 0.94] (gte 0.78 [0.60, 1.02]; white32 0.76 [0.53, 1.07]); I² 0 | failed (underpowered as a positive test, A1; superseded by the kill) |
+| **Kill (HH384)** | pooled 90% CI inside [⅓, 3] | inside in all three variants | **fires** |
+| Reverse kill (R-hard-axis) | pooled < ⅓ with upper 90% < 1 | point 0.68 (> ⅓) | does not fire |
+| P2 | ρ_A above the random 95th percentile in ≥ 1/2 of testable units | 1/15 (gte 0/15; white32 2/15) | failed (≤ 1/4) |
+| P3 (A1: V_A′) | V_A′ within ×2 of ρ̂_A in ≥ 1/2 of units | 7/15 (gte 9/15; white32 4/15); registered lag-0 V_A: 10/15 | mixed (trivial: V_A′ median 1.05, ρ̂_A ≈ 1) |
+| P4 (across clause) | pooled lag-1/lag-0 kick ratio ≤ ¼, upper 95% < ½ | 0.42 [0.17, 0.75] (#51, 12 units; lag-0 coefficient 0.0027, SE 0.0006) | inconclusive |
+| P4 (along clause) | along-plane kick decays more slowly | — | untestable (A1 point 4) |
+| P5 (A1: variogram) | P_∥(1) > P_⊥(1) with CI in ≥ 1/2 of testable units | 0/15 (gte 1/15; white32 1/15); pooled contrast −0.02 [−0.10, 0.06] | failed: none of 15 units, and the pooled CI excludes the planted easy-plane size (+0.41) |
+| O6 / R-modes | cross-fitted principal subspace ρ_A ≥ 3 → "narrowed" | pooled 0.72 [0.32, 1.60] (gte 0.48; white32 0.41) | not narrowed |
+| N1 (G38) | text room axis < 90th pct and m̂ > 95th pct with ρ_A ≥ 3 | text axis < 90th in 3/3 rule units (all variants); m̂ in 0/3 | failed (first clause holds) |
+| N1 (G44) | as G38 | 2-day units only: 2/2 and 0/2 | descriptive |
+| N2 (G51) | own-plane pooled ρ_A ≥ 3 and > half of testable units above the 95th pct | 0.67 [0.45, 0.99] (gte 0.75 [0.55, 1.02]); 0/7 units | failed (pooled CI inside [⅓, 3]) |
+| N2 control (G51) | swap plane not slower than random (median pct < 0.90) | median pct 0.56 | consistent |
+| N3 (NE38) | the slow axis rotates with the role | after: new 0.85 > old 0.54; before: new 0.82 > old (unstable) | not consistent (descriptive) |
+
+**Hypothesis-level verdict: failed** (the kill fires; the reverse kill does not).
+
+**Post hoc (labelled, not scored).** The text plane carries more content variance per dimension than random planes: V_A median 1.20 (gte 1.21), above the random-plane 95th percentile in 8/15 testable units (gte 10/15, white32 10/15). The texts point into content's high-variance space, but content does not move more slowly there. The cross-fitted principal subspace overlaps E only weakly (median squared-cosine share 0.06 per dimension). The agent's own goal axis alone (d = 1, #51) gives pooled ρ_A 0.60 [0.36, 0.99] (gte 0.44 [0.30, 0.63]): if anything faster along the own goal, the H97 direction, but not a hard axis by the rule.
+
+### Impostors (filled in)
+| Impostor | How round 1 handled it | Status |
+| --- | --- | --- |
+| Scheduler field | Call-clock lags only within a PT day; day scale by the day variogram (no within-day timing); per-unit bootstrap over agent-days or agents. | removed |
+| Exogenous field | E from texts only; drive correction subtracts the cross-agent covariance at the same wall lag per subspace; raw variant agrees (0.81 [0.66, 0.98]); day-centred variogram agrees. | removed |
+| Shared model priors | `style_resid_period` vectors, leave-day-out wells; gte and white32 give the same verdict. | removed |
+| Contemporaneous convergence | Only P4 is an influence claim; it uses H130's sender-specific dose design with an in-flight column and generic-reading totals. | removed (P4 inconclusive) |
+
+### Scorecard (round 1)
+A1 B1 C0 D0 E0 F2 G1 H1 I1 (evidence in the Faithfulness scorecard above).
+
+**Claim that stands:** in regime-III units of #37–#44 and #51 (25 non-reserved units), agent content decays along the goal/kickoff/room text plane at a rate within ×3 of its rate across the plane (pooled ρ_A = γ_⊥/γ_∥ 0.68, 90% CI [0.50, 0.94], bge; gte 0.78 [0.60, 1.02]); the plane is no slower than random planes (1/15 units) and has no extra day-scale memory (variogram contrast −0.02 [−0.10, 0.06]). Exclusions: P1 as a positive test (underpowered on the call clock, A1); P3 (trivial near isotropy); P4 (kick ratio inconclusive; along clause untestable); N1's m̂ clause (failed on the call clock; H108's day-scale persistence not retested); NE38 (one agent, descriptive); the variance-share observation (post hoc).
+
+### Round 2 redirects
+- **H141-R1. Where is content slow?** The text plane and the top principal subspace are both near-isotropic in memory. Fit the full 32 × 32 relaxation matrix Γ per unit (model 17) on the call clock and on the day variogram, and test whether any stable slow mode exists.
+- **H141-R2. Soft but not slow.** The post-hoc variance excess along E (V_A ≈ 1.2) suggests the texts set a static field, not a stiffness. Test it as a field: the mean projection on E per agent-day against the random band, by period and by role.
+- **H141-R3. Room axis at the day scale.** Rerun N1 with the day variogram for m̂ in #38 (H108's object), cross-fitted.
+
 ## Results
-Not run.
+See the Round 1 section above.
 
 ## Notes
 - 2026-10-07 10:55 UTC: card written from HH384 (approved by Vivian 2026-10-07).
+- 2026-10-07 14:30–14:50 UTC: synthetic validation and Amendment A1; committed before real data (b4def0c).
+- 2026-10-07 ~15:00 UTC: first real-data run crashed on #51 (a seed bug in the swap control) after printing per-unit ρ_A for #37–#44; fixed without any change to estimators or rules, then rerun. A second fix after real data: the NE38 native gained the A1 variogram estimator (the registered estimator is kept and gives the same orders).
 - HH384 also relates to model 17: E is a field-defined candidate for the slow eigenmodes of Γ; the cross-fitted principal subspace is the data-defined one.
 - The HH's "fast white noise" across the plane is not testable at lag 0 (statement noise enters only there); P4 tests the kick part, O1 the lag ≥ 1 part.
 - **Proposed DEFINITIONS.md variants (H141):** *text plane E (H141)* = Gram–Schmidt span of the period's whitened goal-text and kickoff vectors (plus room-kickoff vectors where they exist; in #51, the agent's goal vector plus the village goal), built from texts only; *subspace autocorrelation C_P(τ) (H141)* = per-dimension own autocovariance of content projected by P on the call clock, drive-corrected; *anisotropy ratio ρ_A (H141)* = γ_⊥ / γ_∥ from C_P fits; *subspace variance ratio V_A (H141)* = per-dimension content variance along E over across E; *random-plane band (H141)* = the distribution of a subspace statistic over Haar-random planes of the same dimension in the same unit.

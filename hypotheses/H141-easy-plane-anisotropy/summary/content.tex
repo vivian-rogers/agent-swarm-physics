@@ -1,0 +1,35 @@
+\hwhat{HH384 proposed that the operator's texts set an easy plane for agent content: along the span of the goal, kickoff and room-kickoff texts, content should relax at least $10\times$ more slowly than across it. H141 builds that plane from texts only and measures memory along and across it in 25 regime-III units of \#37--\#44 and \#51 (\#51 with each agent's own role text), in two embedding models. Content is not slower along the plane. The pooled anisotropy ratio is $\rho_A=0.68$ (90\% CI [0.50, 0.94]; gte 0.78 [0.60, 1.02]), so the kill fires. The plane is no slower than random planes, and it has no extra day-to-day memory. The reserved periods are not run.}
+
+\hmodel{An anisotropic Ornstein--Uhlenbeck well on the call clock (model 16, anisotropy language of model 11). $x$ is an agent's 32-d whitened, style-residualized content minus its leave-day-out well. $\Gamma$ relaxes $x$ at $\gamma_\parallel$ inside the text plane $E$ and at $\gamma_\perp$ across it. With isotropic noise, the variance ratio equals the rate ratio. Rivals: isotropy, a hard goal axis (H97), content's own principal modes, and a common drift.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+x(n{+}1)=\bigl(1-\gamma_\parallel P_E-\gamma_\perp(1-P_E)\bigr)\,x(n)+\xi(n),\qquad \rho_A=\gamma_\perp/\gamma_\parallel\\
+C_P(\tau)=\langle Px_B\!\cdot\!Px_{B'}\rangle-C^{\times}_P(|t_{B'}-t_B|)=A_Pe^{-\gamma_P\tau}+B_P\\
+P_P(1)=1-G_P(1)/G_P(\ge2),\quad G_P(\ell)=\tfrac12\langle|P(\bar z_d-\bar z_{d+\ell})|^2\rangle-\text{noise}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Drive-corrected subspace autocorrelation along (solid) and across (dashed) the text plane in 38a and 51g, normalized at lag 1--3 calls. (b) $\ln\rho_A$ per unit with 90\% agent-day bootstrap CIs (blue: testable units); gray bars are the 5--95\% band of 200 random planes; the dotted line is HH384's $\rho_A=10$. (c) Day-to-day persistence from the noise-corrected day variogram, along against across $E$; points sit on the diagonal.}
+
+\htelos{For an operator, a goal or kickoff text does not make agents hold its themes longer than other themes. Content along the text directions turns over at about the same rate as other content (rate ratio 0.5--1.0, 90\% CI), within a working day and from day to day. Do not rely on the goal text to keep a theme alive; restate it. The texts do point into content's high-variance space (post hoc: variance per dimension $\approx1.2\times$ random), so they shape where content sits, not how long it stays.}
+
+\hbottom{In 25 regime-III units, content decays along the goal/kickoff/room text plane at a rate within $\times3$ of its rate across it (pooled $\rho_A$ 0.68 [0.50, 0.94], bge; gte 0.78 [0.60, 1.02]); the plane is no slower than random planes (1/15 units) and has no extra day-scale memory (contrast $-0.02$ [$-0.10$, 0.06]).}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.47\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+P1 pooled $\rho_A\ge10$ & 0.68 [0.50, 0.94]; gte 0.78 & failed\\
+Kill: CI inside $[\frac13,3]$ & inside, all 3 variants & \textbf{fires}\\
+Reverse kill $\rho_A<\frac13$ & 0.68 & no\\
+P2 above random 95th pct & 1/15 units & failed\\
+P3 $V_A'\approx\rho_A$ & 7/15; both $\approx1$ & mixed\\
+P4 kick lag-1/lag-0 $\le\frac14$ & 0.42 [0.17, 0.75] & inconclusive\\
+P5 day memory $P_\parallel>P_\perp$ & 0/15; $-0.02$ [$-0.10$, 0.06] & failed\\
+N1 \#38 room axes & text axis not slow 3/3; $\hat m$ not slow 0/3 & failed\\
+N2 \#51 own planes & 0.67 [0.45, 0.99]; 0/7 & failed\\
+N3 NE38 rotation & order does not flip & descriptive\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic.pdf}{Synthetic validation on the real skeletons of 51c, 51g, 38a and 41 (100 replicates per world). (a) The call-clock $\ln\rho_A$ is unbiased in the isotropic, hard and drift worlds; in the easy world ($\rho_A=10$) the slow rate often hits the fit edge, so the day scale carries the slowness test. (b) The amended day variogram separates the easy world from all others; the registered split-half estimator did not (it also flagged the fast plane), so it was replaced before real data.}
+
+\hcaveats{The registered day-scale estimator was replaced before real data (A1), and P3 and P4 were operationalized then. The call clock cannot resolve along-plane memory beyond a day ($\gamma\lesssim0.001$/call), so P1 alone is underpowered; the kill and the day variogram carry the verdict. Short units (1--2 days) enter only the pool. The kick split cannot see an along-plane kick. NE38 is one agent with 3--10 day pairs.}
+
+\hnext{Fit the full relaxation matrix per unit to find any slow mode; test the texts as a static field (the post-hoc variance excess); rerun the \#38 room axis with the day variogram.}

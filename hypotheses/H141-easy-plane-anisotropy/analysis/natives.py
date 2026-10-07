@@ -40,9 +40,12 @@ def persistence(Da: L.Data, axes: dict) -> dict:
     out = {"days": days, "n_pairs": float(DA.npairs.sum()), "n_statements": Da.st.height}
     if DA.npairs.sum() < 1:
         return out
+    VA = L.day_vario(Da, days, min_stmt=4)
+    out["vg_n_pairs1"], out["vg_n_pairs2"] = float(VA.c1.sum()), float(VA.c2.sum())
     for name, u in axes.items():
         P = np.outer(u, u)[None]
-        out[f"P_{name}"] = float(L.day_persistence(DA, P)[0])
+        out[f"P_{name}"] = float(L.day_persistence(DA, P)[0])                 # registered (superseded, A1)
+        out[f"vg_P_{name}"] = float(L.vario_persistence(VA, P)[0])           # A1 primary
     return out
 
 
@@ -55,10 +58,11 @@ def main():
         after = arm(D, "a40", LAST_AFTER)
         r = {"before": persistence(before, axes), "after": persistence(after, axes)}
         b, a = r["before"], r["after"]
-        if all(k in b for k in ("P_new", "P_old")) and all(k in a for k in ("P_new", "P_old")):
-            r["consistent"] = bool(a["P_new"] > a["P_old"] and b["P_old"] > b["P_new"])
-            r["after_order"] = bool(a["P_new"] > a["P_old"])
-            r["before_order"] = bool(b["P_old"] > b["P_new"])
+        for tag in ("vg_", ""):
+            if all(np.isfinite(x.get(f"{tag}P_{k}", np.nan)) for x in (a, b) for k in ("new", "old")):
+                r[f"{tag}consistent"] = bool(a[f"{tag}P_new"] > a[f"{tag}P_old"] and b[f"{tag}P_old"] > b[f"{tag}P_new"])
+                r[f"{tag}after_order"] = bool(a[f"{tag}P_new"] > a[f"{tag}P_old"])
+                r[f"{tag}before_order"] = bool(b[f"{tag}P_old"] > b[f"{tag}P_new"])
         res[f"{model}|{variant}"] = r
         print(model, variant, json.dumps(r), flush=True)
     (L.DATA / "results").mkdir(parents=True, exist_ok=True)

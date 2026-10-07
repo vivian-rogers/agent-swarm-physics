@@ -112,7 +112,7 @@ def main():
                 A = L.accumulate(Du)
                 extra = dict(extra_common)
                 if goal == 51 and vi == 0:
-                    for s, spec in enumerate(swap_specs(Du, 1000 + s)):
+                    for s, spec in enumerate(swap_specs(Du, 1000)):
                         extra[f"swap{s}"] = spec
                 r = L.analyze_unit(Du, A, days, B=a.B, n_rand=a.n_rand, seed=17, extra_planes=extra)
                 r.update({"unit": u, "goal": goal, "model": model, "variant": variant,

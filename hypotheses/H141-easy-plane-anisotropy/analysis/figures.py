@@ -99,15 +99,15 @@ def real():
     ax[1].set_title("(b) ρ_A per unit; gray bar = random planes 5–95%", loc="left")
     # (c) day-scale persistence along vs across
     for r in rows:
-        if r.get("P_par") is None or not r["testable"]:
+        if r.get("vg_P_par") is None or not r["testable"]:
             continue
-        ax[2].plot(r["P_perp"], r["P_par"], "o", color=RED if r["goal"] == 51 else BLUE, ms=3)
-        ax[2].annotate(r["unit"], (r["P_perp"], r["P_par"]), fontsize=5, xytext=(2, 2), textcoords="offset points")
-    lim = [-0.2, 1.0]
+        ax[2].plot(r["vg_P_perp"], r["vg_P_par"], "o", color=RED if r["goal"] == 51 else BLUE, ms=3)
+        ax[2].annotate(r["unit"], (r["vg_P_perp"], r["vg_P_par"]), fontsize=5, xytext=(2, 2), textcoords="offset points")
+    lim = [-0.1, 0.8]
     ax[2].plot(lim, lim, color="k", lw=0.5)
     ax[2].set_xlabel("P_⊥(1) across E")
     ax[2].set_ylabel("P_∥(1) along E")
-    ax[2].set_title("(c) day-to-day persistence", loc="left")
+    ax[2].set_title("(c) day persistence (variogram, A1)", loc="left")
     fig.tight_layout()
     fig.savefig(FIG / "summary_obs.pdf")
     fig.savefig(FIG / "summary_obs.png", dpi=150)

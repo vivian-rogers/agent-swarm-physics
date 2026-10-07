@@ -1,0 +1,40 @@
+{
+ "complete": 50,
+ "faithfulness": 1.0,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic validation on 4 real skeletons (5 worlds x 100 replicates) plus a kick check, forcing a dated pre-data amendment (day-scale estimator replaced; P3/P4 operationalized; #44 plane rank); replication on 25 units x 3 vector variants (both models); natives G38, G44, G51, NE38; 417 estimates rows. Missing: reserved-period confirmation, full relaxation-matrix fit.",
+  "faithfulness": "The easy-plane model fails: the kill fires in all variants (pooled rho_A 0.68 [0.50, 0.94] bge; 0.78 [0.60, 1.02] gte); the text plane is inside the random-plane band and has no extra day memory (variogram contrast -0.02 [-0.10, 0.06]). Isotropy (R-iso) wins; the hard-axis rival only weakly. Scorecard A1 B1 C0 D0 E0 F2 G1 H1 I1.",
+  "usefulness": "A clean, well-powered negative: goal and kickoff texts do not make their themes persist longer than other content; operators must restate goals to keep themes alive."
+ },
+ "one_line": "Agent content is not slower along the goal/kickoff/room text plane than across it (pooled rho_A 0.68 [0.50, 0.94], 25 units, kill fires); the plane is no slower than random planes and has no extra day-scale memory.",
+ "models": [
+  {
+   "model": "16-langevin-relaxation",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "Anisotropic OU well with an easy text plane: rho_A within x3 of 1 (kill)"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "Easy-plane anisotropy set by the field texts: not seen at call or day scale"
+  },
+  {
+   "model": "17-collective-modes",
+   "role": "rival",
+   "outcome": "refuted",
+   "note": "R-modes: the cross-fitted principal subspace is not slow either (pooled 0.72 [0.32, 1.60])"
+  }
+ ],
+ "rated_by": "H141 agent (suggested)",
+ "updated": "2026-10-07",
+ "v2": {
+  "claim": "In 25 regime-III units of #37-#44 and #51, agent content decays along the goal/kickoff/room text plane at a rate within x3 of its rate across it (pooled rho_A 0.68 [0.50, 0.94], bge; gte 0.78 [0.60, 1.02]); the plane is no slower than random planes and has no extra day-scale memory",
+  "scope": "regime III, #37-#44 and #51 non-reserved units; natives G38, G44, G51, NE38",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": null
+ }
+}

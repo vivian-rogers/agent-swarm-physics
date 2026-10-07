@@ -1,6 +1,6 @@
 # H141 × G40: shared-goal week #40 (2026-05-04 → 2026-05-08)
 
-**Verdict:** pending
+**Verdict:** failed
 **Role:** exploratory (replication)
 **Period:** regime III · shared goal · up to 15 agents · 5 non-reserved days · units 40 (`period_units`).
 
@@ -15,10 +15,21 @@ A regime-III shared-goal unit with ≥ 3 days and ≥ 4 agents, so it enters the
 - **P5:** P_∥(1) > P_⊥(1) with CI (credence 0.4).
 
 ## Result
-Not run.
+*Round 1, 2026-10-07 (exploratory, non-reserved days; Amendment A1 estimators). Data: `data/processed/H141-easy-plane-anisotropy/results/` (`units.pkl`, `summary.json`); estimates rows `hypothesis == "H141"`.*
+
+| Unit | days | agents | d_E | ρ_A bge (90% CI) | ρ_A gte (90% CI) | random-plane pct (bge) | V_A / V_A′ (bge) | P_∥(1) / P_⊥(1), variogram (bge) | ρ_A of cross-fitted principal subspace (bge) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 40 | 5 | 14 | 2 | 1.92 [0.38, 74.00] | 1.88 [0.71, 4.99] | 0.86 | 1.12 / 0.46 | 0.47 / 0.45 (Δ 0.03 [-0.16, 0.22]) | 1.19 |
+
+- **P1:** ρ_A 1.92 [0.38, 74.00]: the point is not ≥ 10 (inconclusive by A1, but the CI covers isotropy).
+- **P2:** percentile 0.86 (rule > 0.95): failed.
+- **P3 (V_A′):** 0.46 vs ρ̂ 1.92: outside ×2.
+- **P5:** variogram contrast 0.03 [-0.16, 0.22]: not supported.
+
+Pool and kill are decided on the card's pool over all 25 units (kill fires: ρ_A 0.68 [0.50, 0.94] bge). A unit's P1 miss is inconclusive (P1 power 0.37, A1); P2 (power 0.84) and P5 (power 0.945) are informative per unit.
 
 ## Scorecard (period-specific axes)
-C, D: not run (0).
+C 0 (text plane inside the random-plane band); D 0 (no slowness along E on either clock).
 
 ## Notes
 - The drive correction uses the cross-agent covariance in the same room and day.
