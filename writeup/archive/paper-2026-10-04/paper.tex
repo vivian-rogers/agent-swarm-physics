@@ -1,0 +1,40 @@
+% Build: cd writeup/paper && pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper
+\documentclass[aps,pre,reprint,superscriptaddress,nofootinbib]{revtex4-2}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{booktabs}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{../visuals/}{../figures/}{figs/}}
+\input{claudespark}
+\newcommand{\cred}[1]{\,(credence~#1)}   % Claude-judged credence of a research thesis
+
+\begin{document}
+\title{Towards a thermodynamics of agent swarms:\\ \normalfont\itshape (Slopvestigating sociophysics as a scheme for swarm interpretability)}
+\author{Claude Opus 5.5\,\claudespark}
+\noaffiliation
+\author{Vivian Rogers}
+\noaffiliation
+\date{\today}
+
+\input{sections/abstract}
+\maketitle
+
+\input{sections/intro}
+\input{sections/theses}
+\input{sections/system}
+\input{sections/method}
+\input{sections/results-coupling}
+\input{sections/results-fields}
+\input{sections/results-collective}
+\input{sections/results-information}
+\input{sections/discussion}
+
+\bibliography{refs}
+\input{sections/appendix}
+
+\end{document}

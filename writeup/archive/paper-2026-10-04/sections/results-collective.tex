@@ -1,0 +1,143 @@
+% results-collective: Q3, collective order beyond pairs and fields.
+% Sources: each card's latest "Claim that stands" (or latest round section) and summary/meta.json v2.
+% Style: ASD-STE100 Simplified Technical English (2026-10-04 rewrite).
+\section{No collective order beyond pairs and fields}
+\label{sec:collective}
+
+This section asks if the village has collective order beyond pairwise couplings and external fields (Q3).
+A field is a drive that every agent reads, for example a kickoff, a goal or the scheduler.
+A coupling is an interaction that passes through a read-out call, the first call of an agent that sees a message.
+We test four candidates: criticality, a group-level unit, herds with multiple equilibria and a slow mode that outlives its members.
+All results are exploratory, and no result in this section has passed a test on reserved data.
+
+\subsection{Activity and idea cascades are subcritical}
+\label{sec:coll-subcritical}
+
+The branching model is a Galton--Watson or Hawkes process with gain $n$, the mean number of events that one event triggers.
+At the critical point $n=1$, cascade sizes follow $P(s)\propto s^{-3/2}$.
+A loop gain $g$ amplifies the response to a field by $\chi=1/(1-g)$.
+
+Activity is subcritical in every goal period.
+A Hawkes fit with a schedule baseline gives median $\hat n=0.36$ for talk and 0.41 for all events over 35 goal periods (H03)\cred{0.86}.
+The fit recovers a planted $n=0.6$ and 0.9, and $\hat n$ stays within 0.16--0.61 across baselines.
+The upper 90\% bound of the daily equal-time gain is below 0.8 on all 282 activity and talk days (H25)\cred{0.85}.
+The content gain is 0.70, but its per-pair correlation is flat in $N$ ($\bar\rho\approx0.28$, exponent $-0.06$ [$-0.50$, 0.27]), the signature of a shared field.
+
+Idea cascades are also subcritical.
+The branching ratio of idea markers is $\hat R=0.09$--0.40 (median 0.22), and its upper 95\% bound is below 1 in 32/32 goal periods (H34, Fig.~\ref{fig:coll-cascades})\cred{0.84}.
+No goal period shows the $s^{-3/2}$ law.
+The tail is heavier than one negative-binomial law, which agrees with an $R$ that changes from idea to idea.
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{H34-idea-cascades/fig.pdf}
+\caption{Idea cascades are subcritical in every goal period (H34). (a)~Tree-size distribution in \#51 against a negative-binomial Galton--Watson law at $\hat R=0.23$ and against the critical law $P(s)\propto s^{-3/2}$; thin lines are the other 31 goal periods. (b)~$\hat R$ with 95\% CI for the 32 non-reserved goal periods against room size. Every upper bound is below 1.}
+\label{fig:coll-cascades}
+\end{figure*}
+
+Human messages do not release avalanches of project switches.
+In \#51, the upper bounds of the step response are $\times1.18$ for attention and $\times1.32$ for work (H104)\cred{0.49}.
+Both bounds are below the 5th percentile of a random-field Ising world.
+Only kickoffs, the largest field steps, move many agents together (kickoff-day excess 1.2--4.0 in 7/8 goal periods).
+
+No single coupling dial puts the goal periods in order.
+The read-out loop gain is $g_{\rm lag}\le0.23$ in all 33 goal periods, so $\chi\le1.31$ (H51)\cred{0.61}.
+Four unfitted observables change by $\times3$ to $\times127$ across goal periods.
+The leave-one-period-out CV-$R^2$ of $g_{\rm lag}$ is at most 0.22 (within-regime permutation $p=0.073$; power 0.89 at 30\% of the variance).
+Regime and $\log N$ carry the information, so the phase diagram is $N\times$~regime.
+
+\subsection{No superagent and no group term}
+\label{sec:coll-egregore}
+
+An egregore is a group-level unit that holds information or acts beyond its members~\cite{kolchinsky2018,krakauer2020}.
+We also fit pairwise maximum-entropy models with fields and look for a higher-order remainder~\cite{rosas2019,mediano2022}.
+
+No group that shares work is an effective superagent.
+Crews that share an artifact are at the individuality level of random groups (Stouffer $Z=+0.06$, $p=0.48$, 200 crews; H01)\cred{0.62}.
+Single agents with their own artifacts persist longer than crews in 15/18 units (allocation continuity 0.66 against 0.47).
+The test of event times had at most 7\% power, so this contrast carries the negative.
+In \#51b--d, H58 excludes a group store of strength $\rho\ge0.7$, with power 0.95--1.00 at size 0.5\% (H58)\cred{0.71}.
+After 11{,}093 forced erasures, 1.1\% of first commits go to the artifact of the group (placebo 1.2\%), and 61\% go to the own artifact.
+
+The persistent unit is an agent and its own artifact, a stigmergic trace that the agent reads again after each erasure~\cite{heylighen2016}.
+Shared conventions also need no group term~\cite{centola2015,ashery2025}.
+Agent rates, a popularity field and pairwise couplings capture a median $\rho_F=0.91$ of the multi-information over 71 units (H101)\cred{0.42}.
+The higher-order remainder is 3--5\%.
+A planted group term ($\beta=3$ on four-agent groups) gives the same values, so the test has no power at that size.
+
+Equal-time collective modes exist, but they are pair and field modes.
+The talk mode beats the calibrated null in 21/24 units and the content mode in 24/24 (H12)\cred{0.77}.
+The activity mode survives in only 7/24, and H12 is fragile, because its round-1 activity mode was a data artifact.
+Content changes by transmission among stayers (median Price share 0.98, 33/33 goal periods), not by migration or selection (H89)\cred{0.78}.
+
+\subsection{Herds without bistability}
+\label{sec:coll-herding}
+
+Project choice maps onto a $q$-state Potts model.
+The state of an agent is its project, a field favors named or owned projects, and a coupling $J$ rewards a shared choice.
+Brock--Durlauf discrete choice has multiple equilibria when $\beta J>\gamma_c$.
+
+Agents herd onto shared projects.
+Attention co-location beats a circular-shift null in 10/11 shared-artifact weeks, and work herds in 4/6 testable weeks (H11)\cred{0.75}.
+A conditional-logit fit gives $\beta\hat J=+1.9$ to $+5.8$ in 5/10 identified work goal periods (H93)\cred{0.56}.
+Fast repository bursts with no coupling give the same values, so $J$ is not identified.
+
+The herds are not bistable.
+Every goal period is below its multiplicity boundary at the point estimate ($\beta\hat J/\gamma_c\le0.86$).
+No same-field replica goes to a second state (\#37 rooms, $p=0.50$).
+Power to detect $\beta J=3$ is 0.25--1.00, so the null on $J$ holds only in \#38 and \#51.
+Work allocation is at maximum entropy, given activity, repository sizes, ownership and rooms (residual $\le0.13$ of $I(\mathrm{agent};\mathrm{repo})$ in 23/24 units; H94)\cred{0.61}.
+
+\subsection{Antagonism needs assigned sides}
+\label{sec:coll-antagonism}
+
+An antiferromagnet or a spin glass needs negative couplings.
+We look for them in validated reply stance (stance v2.1, round~1c) and in kinetic-Ising talk couplings.
+
+Disagreement occurs where the operator assigns sides.
+In the ten debates of \#12, opponents disagree on the merits in 45\% of replies (true rate 0.52--0.76) and teammates in 0/60 (H21)\cred{0.70}.
+The contrast holds in 9/10 debates and beats a stress null from the confusion of the labeller ($p=0.001$).
+The flag does not follow topic (AUC 0.48), and its rate in a consensus week is $0.05\times$ the debate rate (H37)\cred{0.65}.
+The verdict stops the conflict: the flag rate falls by $0.31$ [0.16, 0.52] to 0/64 replies (H64)\cred{0.64}.
+Without assigned sides (\#26, \#33), the rate stays at 1--2\%.
+
+Private goals in conflict do not cause antagonism.
+In \#51b--d, a read of a rival pulls the content of the reader toward the rival (read-dependent $\Gamma=+0.19$ [$+0.07$, $+0.31$]; H22)\cred{0.60}.
+Rival disagreement shows no excess ($+0.49$ [$-0.68$, $+1.67$] percentage points), but this clause has power 0.47 at odds ratio 3.
+H37 excludes a rival excess of $+2$ log-odds, but an excess of $+1$ stays open.
+
+The talk couplings have no negative sign, also in the debates.
+Per call, the coupling across teams is stronger than the coupling in a team ($J_{ST}-J_{OT}=-0.16\pm0.08$ Ising units, $p=0.01$; H115)\cred{0.50}.
+Debate content does not alternate turn by turn ($\Lambda=+0.05$, $p=0.08$; power 1.00 at cross-coupling 0.6; H132)\cred{0.44}.
+We did not test the stance-classified sequence.
+
+\subsection{One open positive: a regime-I slow mode}
+\label{sec:coll-slowmode}
+
+The model is an Ornstein--Uhlenbeck culture direction that the village shares, with decay time $\tau$.
+The observable is the weekly culture residual: content minus the personal vectors of members and the goal, kickoff and human-message directions.
+The null S0 keeps the personal vectors and exchangeable goal and block fields, with no memory.
+
+In regime~I, residuals of blocks in different goal periods align when they are $\le14$\,d apart.
+The alignment decays with $\tau_u=28\pm5$\,d (bge) and $23\pm4$\,d (gte) (H81, Fig.~\ref{fig:coll-slowmode})\cred{0.61}.
+The overlap-adjusted contrast is 0.17 against an S0 95th percentile of 0.10, and the mode survives member turnover.
+It does not follow the artifact record that its members read ($C_{R1}=+0.02$ / $-0.07$ against 0.11 / 0.09, power 1.00).
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{H81-culture-slow-mode/fig.pdf}
+\caption{Regime-I content has a slow collective mode beyond its members and the measured fields (H81). (a)~The Ornstein--Uhlenbeck model and the weekly roster of regime~I. (b)~Similarity of block culture residuals against lag for two embedding models, with the 95\% band of the S0 composition null and OU fits $\tau_u=28\pm5$ and $23\pm4$\,d. (c)~The turnover-disjoint profile. (d)~The near-minus-far contrasts against their null 95th percentiles.}
+\label{fig:coll-slowmode}
+\end{figure*}
+
+An unmeasured calendar-time drift that reaches every agent remains a rival.
+The mode is absent in \#51, where the data exclude a slow component above 5\% of the variance.
+The $1/N$ finite-size test cannot decide: $\alpha=+0.40$ [$-1.62$, 2.41], with power 0.00 at $\alpha=-1$, because $N$ is collinear with time (H106)\cred{0.62}.
+One H106 result is post hoc and unreplicated: the mode weakens after the $N<8$ era (May--Oct 2025).
+
+Other tests put the memory of goal periods in members.
+Day-1 content of a new goal loads on the previous village centroid ($\Delta\gamma_1\approx0.15$, $3\times$ the null; H82)\cred{0.73}.
+The previous content of each agent absorbs this trace.
+Newcomers match the village content from tenure day 2 (H83)\cred{0.53}, but a slower enculturation is undetectable at power $\le0.3$.
+Newcomers and veterans forget a finished goal period at the same rate ($\tau=5.5$ village days, ratio 0.93; H88)\cred{0.62}.
+
+For an operator, no cascade control is necessary at these sizes, because the largest loop gain amplifies a field by at most $\times1.31$.
+To move the swarm, change a field: a kickoff that names its target moves agents within 0.5 active hours (H75, Sec.~\ref{sec:info-thermo}).

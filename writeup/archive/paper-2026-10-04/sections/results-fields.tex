@@ -1,0 +1,84 @@
+% results-fields: external fields (scheduler, goal, rooms, style) and the stationary window.
+% Sources: hypothesis cards (latest round) and summary/meta.json v2 claims; credences are v2.
+% Style: ASD-STE100 Simplified Technical English (2026-10-04 rewrite, trimmed to ~1,300 words).
+\section{Fields beat coupling}
+\label{sec:fields}
+
+A field is an external drive that acts on an agent whether or not the agent reads the others. This section measures the field part of the swarm's state (Q2). Agent $i$ in window $t$ has binary activity and talk spins, or a content vector $\mathbf s_i(t)$, the regime-whitened, style-residualized mean of its statement embeddings. Our model is a vector-spin system (model 11),
+\begin{equation}
+-\beta\mathcal H=\sum_{i<j}J_{ij}\,\mathbf s_i\cdot\mathbf s_j+\sum_i\mathbf h_i(t)\cdot\mathbf s_i ,
+\label{eq:fields-H}
+\end{equation}
+with $\mathbf h_i(t)=\mathbf h_{\rm sched}(t)+h_g(t)\,\hat{\mathbf g}+\mathbf h_{r(i)}+\mathbf h_i^{0}$. The four terms are the scheduler, the goal $\hat{\mathbf g}$, the room $r(i)$ and a static agent term (style or a private goal). The scheduler term acts on activity, and the other terms act on content.
+
+All results here are exploratory and use non-reserved periods only, and no claim passed a confirmation test on reserved goal periods. Only H05 ran its confirmation test on reserved data. The result was inconclusive, and the run used an activity table that dropped about half of all events.
+
+\subsection{The scheduler sets activity synchrony}
+
+In regime III the runner starts and stops all agents within minutes of each other. These shared edges are a field on the activity spins. The scheduler explains a median share $f=0.72$ of the excess co-activation gain in the 8 significant regime-III periods (H38)\cred{0.90}. After the all-present trim the share is 0.83, and in regime I it is 0.11. After the trim and a block-shift null, only 3 of 8 regime-III periods keep a significant excess, against 16 of 18 in regime I. H38 is fragile: a table repair changed the share of joint silences from 14.3\% to 5.3\% of non-reserved minutes.
+
+The field is in the runner. When the operator's pause and resume messages stop (NE43, 2025-08-05), the day-edge share does not fall (0.189 to 0.135, $p=0.08$). H50 finds the same field in call windows (0.67 in regime III).
+
+Taylor's exponent does not see this field: $b=0.85$ (IQR 0.21--1.21, 70 units), because faster agents are more regular (H86)\cred{0.68}. In regime III, the trim removes 0.77 of the pair covariance. About 90\% of excess activity variance is private to the agent. Practical value: trim each day to its all-present window before you measure activity synchrony.
+
+\subsection{A goal is a field, and a kickoff is a quench}
+
+A kickoff message names a target. On day 1, a period's content centroid is nearer its own kickoff than the 32 other eligible kickoffs in 18 of 33 periods ($p=3\times10^{-6}$; H54)\cred{0.92}. The misses (\#3, \#16, \#44, \#51) name no shared target.
+
+The goal is not a small linear push (H10)\cred{0.79}. The Legendre form $P_A\propto P_F\,e^{\lambda y}$ predicts who moves from free-week fluctuations along the goal. This prediction fails in all 8 input configurations (Stouffer $p$ 0.84--0.96). The kickoff push is 1.4--3.1 free-week standard deviations, far outside linear response.
+
+At a kickoff, the cross-agent memory of earlier positions falls from $\rho_0=0.68$ across ordinary nights to 0.42 (Fig.~\ref{fig:fields-quench}). The extra forgetting is $\Delta\rho=+0.26\pm0.04$ (s.e.; 90\% CI $\pm0.07$), positive in 16 of 18 kickoffs and in both embedding models (H97)\cred{0.70}. The data do not show that the susceptibility is an agent constant (split-half $r=0.30$, power 0.30).
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{H97-quench-restoring-force/fig.pdf}
+\caption{\textbf{A kickoff is an anisotropic restoring force (H97).} (a)~One kickoff (\#38$\to$\#39) in the plane of the new kickoff direction and the old-state direction. Gray: ordinary-night moves. (b)~Cross-agent memory of positions falls from 0.68 across 161 ordinary nights (gray) to 0.42 at 18 kickoffs (black). (c)~Extra forgetting is $0.63\pm0.27$ along the kickoff direction and $0.25\pm0.04$ across it. Day~1 overshoots the settled level by $a=+0.12\pm0.02$.}
+\label{fig:fields-quench}
+\end{figure*}
+
+For the old state, a goal switch is a quench, not a hysteresis loop (H96)\cred{0.74}. On day 1, the field-orthogonal remanence of the old state falls by $\Delta R_1=-0.62$ [$-0.78$, $-0.45$] over 24 transitions (bge). The hysteresis test has power 0.50, and its measured sign is opposite to the prediction.
+
+A trace of the previous period remains, but in the members (H82)\cred{0.73}. On day 1, agents load on the previous village centroid with an excess $\Delta\gamma_1=0.158$ over 25 boundaries, three times the null 95th percentile of 0.055. With each agent's own previous content in the regression, the excess falls to $-0.02$ (post hoc).
+
+H103 predicted that nights demagnetize content. The night clock fits best in only 5 of 22 periods with decay, and the night step is $\beta_N=-0.001$ [$-0.023$, $+0.021$] over 41 units (H103)\cred{0.59}. At a clock-selection accuracy of 0.82, this is a failure, not an inconclusive test. Content memory decays with active work, not with idle hours.
+
+A kickoff raises the on-goal occupancy from a decoy floor of about 0.03 to 0.23--0.44 over 16 kickoffs (H105)\cred{0.36}. This result is descriptive, and the village data cannot identify the tilt test. Practical value: before a goal change, do not clear the swarm. The kickoff erases 70--80\% of the old state by day~1.
+
+\subsection{Rooms are domains}
+
+In regime III the agents sit in rooms (\#best and \#rest). For talk, a room filters reads. Co-location raises talk co-movement by $+0.0123$ ($z=5.1$). With ledger read counts in the model, the co-location term falls to $+0.0013$ ($z=0.2$), and reads carry the effect ($z=2.1$; H05)\cred{0.88}. But co-location and log reads correlate at 0.82, so the interval on the residual room term still includes half the room effect.
+
+Content coherence also stops at the room boundary. The cross-room to within-room ratio of pair content correlation is $C_B\le0.3$ in 6 of 9 multi-room periods (H47)\cred{0.66}. At the NE42 merge and split, the boundary moves with the channel (difference in differences 1.0 [0.50, 1.34]). Human naming-game experiments show the same channel dependence~\cite{centola2015}.
+
+Rooms with identical kickoffs still separate in content (Fig.~\ref{fig:fields-rooms}). We remove each member's leave-period-out constant and the measured room-field directions. The \#best/\#rest separation still exceeds random regroupings in 5 of 7 regime-III periods in bge (H100)\cred{0.71}. Composition explains 0.03--0.18 of the separation where rooms separate. The split direction does not persist across goals (six of six consecutive pairs $|z|<2$). We do not identify the residual as coupling, and it can contain room-specific work fields.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{H100-room-symmetry-breaking/fig.pdf}
+\caption{\textbf{The room content split is spontaneous and forms again at each goal (H100).} (a)~Two-block soft-spin simulation with and without a room field. (b)~Relabel excess $Q$ per period before and after removal of composition and measured field directions (gray: null 95th percentile). (c)~Composition and spontaneous shares. (d)~Remanence of the split direction between consecutive periods against the joint-relabel null. After both removals, the rooms differ beyond random groupings in 5 of 7 regime-III periods (bge), and no split direction survives a goal change.}
+\label{fig:fields-rooms}
+\end{figure*}
+
+The onset of the split has no single shape (H107)\cred{0.35}. In \#37 and \#39 it grows from near zero over the week, but in \#41 and \#42 it is 70--90\% formed on day 1. The split direction diffuses faster with identical kickoffs than with room kickoffs, $R_D=4.7$ [2.1, 5.9] (H108)\cred{0.42}. The contrast rests on \#38 ($R_D=1.4$ without it), and split size confounds it. We do not claim a Goldstone mode.
+
+Where rooms do different work, content forms two domains (H102)\cred{0.51}. The bimodality of stayers is $D=5.3$--6.1 in \#38, \#41, \#44 and \#51g, against 1.70 in identical-kickoff weeks. The wall between them has no interior: agents who move between rooms take the content of the room they speak in. The prediction of a wall with finite width failed by its kill rule.
+
+Room order is not in the context window (H109)\cred{0.62}. Over 3,477 forced erasures, the change in room alignment is $\delta_F=-0.08$ [$-0.23$, 0.07] (bge), which excludes a 30\% drop. The erasure scrambles one information channel~\cite{kolchinsky2018}, so the order is in the agent's work, prompt or memory.
+
+A room merger does not add a coupling (H119)\cred{0.54}. In the merged week of NE42, cross-room talk coupling did not increase ($-0.02$ [$-0.13$, 0.09] per pair; power 0.95 at $J=0.3$). A read path is necessary but not sufficient, because a larger room dilutes the coupling per pair. The prediction that the fitted adjacency follows the merge failed by its kill rule.
+
+Rooms that fork from one state also separate fast (H118)\cred{0.52}. At NE15, the two copies of the role-play game have content overlap $q=0.51$ in the first active hour, against 0.80 for identical replicas. Practical value: to keep two groups apart in content, give them different work, not only different rooms.
+
+\subsection{Random fields and style}
+
+In \#51 each agent's private goal is a quenched random field (H98)\cred{0.49}. After style removal, the disorder ratio is $R=0.67$--0.73 in all five \#51 units, against 0.24--0.53 in shared-goal weeks. The pre-registered test of independent agents failed: day-to-day overlaps synchronize beyond the shift null in 2 of 5 units.
+
+The model-family field in content is writing style (H13)\cred{0.87}. It appears in 9 of 15 periods but survives style residualization in none. Style is mostly an agent constant (H73)\cred{0.80}. Three components explain a median 0.72 of systematic style variance in 34 of 34 periods, and the agent constant takes 0.55. Style is not conserved, though: it drifts as the context fills and returns toward the agent mean at a forced erasure (H46)\cred{0.75}.
+
+A shared model prior is one of the four impostors, because identical LLMs can develop a collective bias with no individual bias~\cite{ashery2025}. Residualize on the per-agent style constant before you interpret a family or convention effect.
+
+\subsection{Fields drift: the stationary window}
+
+A fit within a period assumes a stationary state. In \#38 (17 days), the kinetic-Ising parameters differ between halves about twice as much as between random day halves (H120)\cred{0.68}. The drift ratio is $R=1.95$ for activity and 2.18 for talk (Holm-corrected $p\le0.008$). The \#51 main body drifts by the same amount ($R=2.17$, 2.14). The 8-day unit 38a shows no drift ($R=1.28$, $p=0.13$, power 0.85). At these counts, an out-of-sample version of the maximum-entropy bound of Ref.~\cite{aguilera2026} cannot test drift in entropy production (power $\le0.30$).
+
+Thus the stationary window is about one week, and a fit on a longer unit puts the field drift into the couplings. Practical value: split periods longer than eight days into units of at most eight days before you fit $J$ or $\mathbf h$.
