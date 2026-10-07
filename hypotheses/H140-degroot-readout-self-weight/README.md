@@ -1,6 +1,6 @@
 # H140: DeGroot at the read-out call: the self-weight of a content step equals the agent's own share of its context
 
-**Status:** pre-registered (not run). Card, observables, nulls and predictions written 2026-10-07 10:05–10:50 UTC, before any H140 statistic on real data. No scheme, synthetic or analysis code has run.
+**Status:** round 1 in progress (2026-10-07): synthetic validation done, Amendment A1 written before real data; real-data run pending. Card, observables, nulls and predictions written 2026-10-07 10:05–10:50 UTC, before any H140 statistic on real data.
 **Question (GOALS.md):** **Q1** (what couples agents: is the read-out update a weighted mean of what the agent wrote and what it read, with weights set by what fills its context?). Second: **Q4** (where the swarm's information lives: in the context window, or in a well that the context does not hold?).
 **Fields:** sociophysics (DeGroot and Friedkin–Johnsen opinion dynamics), stat mech (linear vector-spin update), information theory (read-out channel capacity)
 **Literature:** none in `literature/` covers DeGroot averaging. Cited from memory (†): DeGroot, *J. Am. Stat. Assoc.* 69, 118 (1974)†; Friedkin & Johnsen, *J. Math. Sociol.* 15, 193 (1990)† (averaging with an anchor to an initial position). Filed notes used through H113: [Barrett 2015](../../literature/barrett-2015-synergy-redundancy-gaussian-systems.md) (Gaussian information of a linear channel). Model references: [`physics-models/11-vector-spins/README.md`](../../physics-models/11-vector-spins/README.md), [`physics-models/02-nonequilibrium-ising/README.md`](../../physics-models/02-nonequilibrium-ising/README.md), [`physics-models/04-semantic-information/README.md`](../../physics-models/04-semantic-information/README.md).
@@ -157,6 +157,44 @@ Other testable units (#37, #39–#42, #44; regime I/II O2 periods) get their per
 
 ## Results
 Not run.
+
+## Round 1 (2026-10-07)
+
+### Synthetic validation (axis F; run 2026-10-07 08:55–14:38 UTC, before any real-data H140 statistic)
+*Code:* `scheme/h140scheme.py` (skeleton and per-row Gram terms), `analysis/h140lib.py` (estimators), `analysis/synthetic.py`. *Data:* `data/processed/H140-degroot-readout-self-weight/synthetic/` (`runs_main.parquet`, `summary_main.json`, `runs_pool.parquet`, `summary_pool.json`).
+*Skeletons:* units 51c and 51g, #38 (all five units) and #41, every statement with its real author, time, room, call index, context segment, s_self, batch, in-flight set and window field. Only the vectors are synthetic. 100 replicates per world; agent-day cluster bootstrap 200 draws; b grid −0.5 to 1.5 in steps of 0.02. Scale calibrated to the real median |y⊥|² (the estimator is scale-free). The only real-vector statistic computed was |y⊥|². Worlds: W0 (no coupling), W-DG (w₁ = 1, b = 0.75), W-DGh (w₁ = 0.5, power), W-lin (w₁ = 1, b = 0), W-well (H130 OU, γ 0.0094, read kicks 0.044 decaying at 0.15/call), W-field (room field, τ 30 min, no reading). Scored rows per skeleton (≥ 4 own statements earlier in the segment, for the instrument): 51c 555, 51g 2,753, #38 746, #41 433.
+
+Median ŵ₁ and the share of runs with the ŵ₁ CI above 0 (registered spec / A1 spec, below):
+
+| World (true w₁) | 51c | 51g | #38 | #41 |
+| --- | --- | --- | --- | --- |
+| W0 (0) | 0.01, 0.00 / 0.01, 0.00 | 0.00, 0.00 / 0.00, 0.00 | −0.01, 0.00 / 0.02, 0.00 | −0.02, 0.00 / −0.02, 0.00 |
+| W-DG (1) | 0.98, 1.00 / 0.97, 1.00 | 0.92, 1.00 / 0.92, 1.00 | 0.97, 1.00 / 0.98, 1.00 | 0.94, 1.00 / 0.92, 1.00 |
+| W-DGh (0.5) | 0.48, 0.92 / 0.49, 0.86 | 0.45, 1.00 / 0.45, 1.00 | 0.47, 1.00 / 0.48, 1.00 | 0.51, 0.95 / 0.50, 0.85 |
+| W-lin (1) | 0.99, 1.00 / 0.96, 1.00 | 0.91, 1.00 / 0.90, 1.00 | 0.95, 1.00 / 0.96, 1.00 | 0.92, 1.00 / 0.91, 1.00 |
+| **W-well (0)** | 0.31, **0.84** / 0.03, 0.07 | 0.19, **1.00** / 0.04, 0.00 | 0.06, **0.14** / −0.07, 0.00 | 0.15, **0.51** / −0.07, 0.00 |
+| **W-field (0)** | 0.32, **1.00** / 0.05, 0.24 | 0.35, **1.00** / 0.04, 0.39 | 0.53, **1.00** / 0.14, 0.73 | 0.34, **1.00** / 0.06, 0.22 |
+
+- **S1, first clause (recovery): passed.** W-DG bias of the median ŵ₁ is −0.08 to −0.02 (registered and A1), inside ±0.2. Coverage of w₁ = 1 is 0.87–0.94, except 51g (0.29–0.39: a −0.08 bias against CI width 0.16).
+- **S1, second clause (W-well false rate ≤ 0.10 with the Δn term): failed for the registered estimator** (0.14, 0.51, 0.84, 1.00). The card's rule then applies: *the Δn term alone cannot separate the two, and P1 is read only together with the NE41 native.*
+- **A time-local field also fakes the HH's sign.** W-field gives ŵ₁ 0.32–0.53 with the CI above 0 in every run (registered spec). The mechanism: the batch term absorbs part of the field, and it absorbs less when k is small, which is when s_self is high. So "ŵ₁ > 0" is not evidence for HH383 by itself.
+- **S2 (power for w₁ = 0.5 in the pool of #51 units): passed.** The DL pool over the #51 units gives a CI above 0 in 100/100 runs (registered and A1). Per unit: 0.81 (A1) and 0.87 (registered) of runs. Caveat: one-day units (51b, 51k, 51l) have no leave-day-out well inside a one-unit skeleton, so the pool used 9 units. Real data take the well from all #51 days, so they do not lose these units.
+- **O2 (exponent).** A1 recovers a = 0.25 (W-DG, W-DGh) and a = 1 (W-lin) with |bias| ≤ 0.06. Coverage is 0.91–0.99, except 51g W-DG (0.75). W-field yields â 0.36–0.52 with the CI excluding 1 in every run: a field alone gives an exponent inside P2's band. So O2 is scored only where the read − in-flight contrast CI is > 0 and r < 0.7 (H113's A1 rule, as the card says).
+- **P3's call-gap term.** With the registered spec, ŵ₂ > 0 (CI) in 0.65–0.94 of W-well runs and in 0.01–0.06 of W-DG runs. With the A1 spec the wall-clock term takes the persistence: ŵ₂ > 0 in only 0.00–0.12 of W-well runs.
+- **The window-field projection (the card's f_c in P_c) makes fields worse** (W-field false rate 0.49–1.00 under A1-F vs 0.22–0.73 under A1). As in H113's A1, the raw projection (goal, kickoff and room kickoff only) is primary and F is a variant.
+- **OLS (no instrument)** gives the same ŵ₁ in W-DG (0.96–0.99), so errors-in-variables bias is small here.
+
+### Amendment A1 (2026-10-07 14:40 UTC, after the synthetic, before any real-data H140 statistic)
+What I had seen: the synthetic summaries above and the real skeleton counts (rows, has-instrument rows, k, k_F, s_self quantiles: #38 s_self median 0.82, #41 0.62, #51 0.53). No real self-weight, read weight or contrast.
+1. **Primary O1 estimator = A1 spec.** w_self(c) = w₀ + w₁ s_self + w₂ (1 − 0.0094)^{Δn} + w₃ e^{−Δt/30 min} + w₅ ln(1 + k) + w₆ ln(1 + k_F), all terms multiplying p_c and instrumented by the same terms times z_c. Δt is the wall-clock time from p_c's latest statement to y_c. The three added terms are nuisance controls. The wall-clock term absorbs time-local persistence (fields, kicks). The batch-size terms absorb the field share that the batch term takes up. A1 meets S1 on all four skeletons: W-well false rate 0.00–0.07; W-DG bias −0.08 to −0.02. The registered spec is reported next to it in every table.
+2. **P1 is read together with NE41** (the card's own rule, because the registered estimator failed S1's second clause).
+3. **Fields still leak into ŵ₁ under A1**, at ŵ₁ ≈ 0.04–0.14 (CI above 0 in 22–73% of unit runs and in 95% of pooled runs). A field never puts ŵ₁ in P1's band [0.5, 1.5]. P1's thresholds are unchanged. Kill clause 1 is unchanged: a field can only make it harder to fire.
+4. **P3 is scored with the registered spec's ŵ₂** (the call-gap test that has power against R-well). A1's ŵ₂ and ŵ₃ are reported.
+5. **P_c without f_c** (raw projection primary; F is a variant). O2 needs H113's identification rule (unchanged).
+6. **γ̂_auto.** H130's drive-corrected estimator lives in a hypothesis folder (STANDARDS §8: no imports from there). γ_auto is fixed at H130's 0.0094 per call in every unit. This choice changes only the shape of the call-gap regressor, and its weight is free.
+7. **Scoring filters (pre-data clarifications).** A row needs ≥ 4 own statements earlier in the segment (the instrument needs the third and fourth last), a leave-day-out well (≥ 10 statements on other days) and a non-templated y (`statement_flags.templated`). A variant drops self-repeats (`self_repeat_both`). Testable units: ≥ 300 such rows.
+8. **Not validated on synthetic:** the natives (NE41 first-call design, G51 wakes). They use the same estimator.
+Not amended: the predictions, credences, kill clauses and bands.
 
 ## Notes
 - 2026-10-07 10:05 UTC: card written from HH383 (approved by Vivian 2026-10-07).
