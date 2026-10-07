@@ -1,6 +1,6 @@
 # H134: A Pólya-urn self-field holds an agent on its project: the leave odds fall as the project's share of the agent's own context rises
 
-**Status:** round 1 in progress (synthetic validation done 2026-10-07; amendments A1–A8 before real data). Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH377 (approved by Vivian 2026-10-07), before any H134 statistic on real data. No scheme, synthetic or analysis code exists yet.
+**Status:** failed (round 1, 2026-10-07). Kill A fires (the self-share rule misses dwell aging in 25/25 units) and P1 fails (urn slope +0.07 [−0.05, +0.19]). A forced reset still releases agents (+0.40 [+0.25, +0.54] in G51), as a step 24× the urn's size. Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH377 (approved by Vivian 2026-10-07), before any H134 statistic on real data. No scheme, synthetic or analysis code exists yet.
 **Question (GOALS.md):** **Q4** (where does the swarm's information live: is project stickiness held by the context window, as idle traps are?). Second: **Q5** (operator lever: does a context reset release an agent from a project it is stuck on?).
 **Fields:** stat mech (kinetic Potts with a self-field; Pólya urn; aging), dynamics (renewal hazards, discrete-time survival), info theory (which store holds the state)
 **Literature:** none in `literature/` covers urn-driven aging. Cited from memory (†): Pólya & Eggenberger (1923)† (urn reinforcement); Bouchaud, *J. Phys. I France* 2, 1705 (1992)† (trap model, aging); Allison (1982)† (discrete-time hazards with time-varying covariates).
@@ -136,28 +136,35 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
-| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
-| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 0 | not run |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
-| E interventional | predicts the change across a natural experiment | 0 | not run |
-| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 0 | not run |
-| G ground truth | agrees with known structure | 0 | not run |
-| H comparative | beats the named rivals | 0 | not run |
-| I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | round 1: f_proj, d, visits from `project_calls` + ledger; ruler amended (A1); 27% flicker hops |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | round 1: censoring audited in synthetic; forward O3 replaced (A6); hazard depends on dwell |
+| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 0 | round 1: G(F) −0.03 [−0.18, +0.09] held out in G51 |
+| D unfitted predictions | unfitted statistics and the model's signature | 0 | round 1: dwell slope outside the O3-pp band in 25/25 units |
+| E interventional | predicts the change across a natural experiment | 1 | round 1: NE41 step +0.40 [+0.25, +0.54], right sign, 24× the urn's size |
+| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 1 | round 1: β_F, β_d, O3-pp pass; ε(F) and the step's null side unpowered |
+| G ground truth | agrees with known structure | 0 | none available |
+| H comparative | beats the named rivals | 0 | round 1: intrinsic aging (β_d −0.6) beats the urn |
+| I transfer | holds in other same-mode periods, including the reserved periods | 0 | round 1: β_F differs by goal type (N2 +0.84 [+0.31, +1.37]) |
 
 ## Results by goal period
-No period has been run. Period folders (`goalperiod-subhypotheses/G<NN>/`, `NE41/`) are created with their dated predictions before each run. `goalperiod-subhypotheses/GNN/` is the unfilled template.
+Round 1 (2026-10-07), exploration units only. Each folder holds its dated prediction (written before the run) and its results. `goalperiod-subhypotheses/GNN/` is the unfilled template.
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| regime-III replication units (precondition list) | replication | pending | not run |
-| NE41 (G51, G38) | native N1 | pending | not run |
-| G39, G42 vs G37, G38, G41 | native N2 | pending | not run |
-| G38 | native N3 (descriptive) | pending | not run |
+| [G36](goalperiod-subhypotheses/G36/) (36b, 36c) | replication | failed | β_F +0.20, −0.26; γ outside band 2/2 |
+| [G37](goalperiod-subhypotheses/G37/) | replication, N2 shared | failed | β_F −0.67 [−0.96, −0.14]; γ −0.74 vs band [−0.41, −0.22] |
+| [G38](goalperiod-subhypotheses/G38/) (38a, 38b, 38e) | replication, N2 shared, N3 | failed | β_F −0.19 to +0.09; γ −0.69 to −0.92 outside 3/3 |
+| [G39](goalperiod-subhypotheses/G39/) | replication, N2 own-role | failed | β_F +0.61 [−0.01, +1.25]; γ outside |
+| [G40](goalperiod-subhypotheses/G40/) | replication | mixed | β_F +1.26 [+0.70, +2.09] (urn-sized); γ −0.90 vs band [−0.30, −0.13] |
+| [G41](goalperiod-subhypotheses/G41/) | replication, N2 shared | failed | β_F −0.35 [−0.63, +0.19]; γ outside |
+| [G42](goalperiod-subhypotheses/G42/) (42a, 42b) | replication, N2 own-role | failed | β_F +0.57, +0.31 (wide CIs); γ outside 2/2 |
+| [G44](goalperiod-subhypotheses/G44/) (44a, 44b) | replication | failed | β_F +0.44, −0.12; γ outside 2/2 |
+| [G51](goalperiod-subhypotheses/G51/) (51a–51l) | replication | failed | β_F RE +0.13 [+0.03, +0.23]; β_d RE −0.58 [−0.62, −0.55]; γ outside 12/12 |
+| [NE41](goalperiod-subhypotheses/NE41/) (G51, G38) | native N1 | failed | Δ_reset G51 +0.40 [+0.25, +0.54] vs urn +0.016; placebo −0.02 |
+| G39, G42 vs G37, G38, G41 | native N2 | failed | difference +0.84 [+0.31, +1.37] |
 
 ## Results
-Not run.
+See "Round 1 (2026-10-07)" below the scorecard: failed. Not run on reserved data.
 
 ## Round 1 (2026-10-07)
 
@@ -195,6 +202,65 @@ Built by `scheme/build.py` from the shared per-call labels (`infra/shared/projec
 - **A7 (untestable parts, declared before any outcome).** P3 and Kill B: power 0.45–0.65 < 0.8, so ε(F) is reported but cannot support or kill. N1's negative side and Kill C: power 0.52 in G51 (0.23 in G38) at the urn's predicted step, so a null reset step cannot kill H134; a positive step with CI > 0 still counts (size 0.03).
 - **A8 (P1 reading).** R-store makes β_F > 0 in 47–68% of runs, so P1 alone does not separate the urn from the store. P2 (CI ∋ 1) does: W4 gives CI ∋ 1 in 0–4% of runs (below the card's 10% switch, so O1 stays primary for P2).
 - Synthetic code saw the real visit paths and the structural counts. It computed no real-data outcome statistic.
+
+### Results on exploration data (2026-10-07)
+`analysis/run.py` per unit, `analysis/summarize.py` across units; post hoc `analysis/posthoc.py`. 25 testable regime-III units, 989,450 risk calls. Numbers: `data/processed/H134-polya-urn-project-stickiness/results/summary.json`. Figure: `figures/round1_summary.pdf`.
+
+| ID | Prediction | Result [95% CI] | Verdict by the rule |
+| --- | --- | --- | --- |
+| P1 | β_F > 0 (CI > 0), model (b), in ≥ 2/3 of units | 3/25 (G40, 51a, 51c); one unit below 0 (G37 −0.67 [−0.96, −0.14]) | **fails** |
+| P2 | β_F CI ∋ 1 in ≥ 1/2, and RE mean CI ∋ 1 | 6/25; RE mean +0.07 [−0.05, +0.19] (τ² 0.05) | **fails** |
+| P3 | ε(F) above the proxy band in G51 | ε(F) +0.001 [−0.005, +0.008] vs band 0.055; G(A) 13.2 [11.0, 15.8] nats per 1,000 risk calls | untestable (A7); inside the band |
+| P4 | γ and KM(100), KM(300) inside the O3-pp bands in ≥ 1/2 | γ inside 0/25; KM(100) 7/25; KM(300) 1/25 | **fails** |
+| Kill A | γ or KM(100) outside in ≥ 1/2 (power ≥ 0.99) | 25/25 outside | **fires** |
+| Kill B | ε(F) inside the band | inside, but unpowered (A7) | not applied |
+| P5 | β_d < 0 (CI < 0) in G51 | RE mean −0.58 [−0.62, −0.55]; 12/12 G51 units; all 25 units −0.26 to −0.83 | **holds** |
+| N1 | G51 Δ_reset > 0 (CI > 0), obs/pred in [0.5, 2], placebo ∋ 0 | +0.40 [+0.25, +0.54] vs urn +0.016 (ratio 24); placebo −0.02 [−0.19, +0.14] | **fails** (step 24× the urn's) |
+| Kill C | Δ_reset CI ∋ 0 | CI > 0 | does not fire |
+| N2 | own-role vs shared-goal β_F differ by < 0.3 | own-role +0.54 [+0.06, +1.03], shared −0.30 [−0.50, −0.09]; difference +0.84 [+0.31, +1.37] | **fails** |
+| N3 | G38 simulated γ between H129's work and attention values | fitted rule −0.04 to −0.43 (O3-pp), −0.29 to −0.62 (forward); observed −0.69 to −0.92 | descriptive: the rule sits in the work range, the data in the attention range |
+
+**Descriptive and variant results.**
+- The card's forward O3 design (failed size, A6): γ inside 8/25 (mostly G51, where the double censoring pulls the simulated slope down), KM(100) inside 3/25, both inside 0/25. Kill A would fire under it too.
+- Self-share variants, model (b): f_lab and f_rec stay within −0.5 to +0.9. f_entry, which adds the room's read items about the project, gives larger slopes in G51 (+0.5 to +1.4). That variant mixes the agent's own share with others' messages; it is reported, not tested.
+- Kick term (A4): named reads about another project raise leaving, K +0.58 to +1.22 with CI > 0 in 6/12 G51 units (also 36b). This agrees with H133's read-out coupling; it is not one of this card's predictions.
+- O5 (HH-literal calibration curve, raw, no adjustment): the stay probability per call is 0.95–0.99 at f_proj = 0. In G51 it falls to 0.77–0.89 in the top decile (f_proj ≈ 0.46); in G38–G42 it stays flat (0.92–0.99). It never tracks f_proj itself, so "P(stay) = f" fails literally, as the card expected. The raw fall is the opposite of the urn's direction; model (b) adjusts it for dwell and agent.
+- **Post hoc (after the O4 result):** 26.7% of completed visits end in a flicker (A → B → A within 5 calls). With flickers counted as stays, the reset step is +0.46 [+0.30, +0.62] in G51 and +0.59 [+0.07, +1.11] in G38; placebos +0.05 [−0.14, +0.23] and +0.05 [−0.57, +0.67]. The step is a sustained release, not a flicker.
+
+**Reading.** Project stickiness ages strongly (β_d about −0.6 per e-fold of dwell, CI < 0 in 25/25 units). The project self-share does not carry it: its slope is near 0 (RE +0.07), it explains none of the dwell clock's held-out information (G(F) −0.03 [−0.18, +0.09]), and a rule built on it misses the dwell slope in every unit. The synthetic shows why. Segments last at most 41 calls, so the self-share cannot grow with a dwell of hundreds of calls. The context still matters: a forced reset releases the agent (+0.40 log-odds) at fixed dwell and self-share decile. That is a step, not the urn's dose, as H69 found for loops and H16 for idle traps (4.6× the urn). R-store's "no step" is rejected; R-intrinsic aging (or frailty) carries the dwell aging.
+
+**Verdict: failed.** Kill A fires and P1 fails (card's verdict rule). N1's step is real but 24× the urn's prediction, so the "narrowed" reading also fails (P1 and P3 do not hold).
+
+### Impostor table (round 1)
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Own-call clock; hour-since-window bins, previous call kind and first call of the day in z. The reset contrast compares calls of the same agent at the same dwell and self-share decile. No wall-clock test was run. | partly |
+| Exogenous field (kickoff, goal, operator) | yes | Kick term K in every model. Variants: drop the first 4 h of each goal period (β_F moves by ≤ 0.3 except G40, +1.26 → +1.94, and 42a, +0.57 → −0.51, both with wide CIs), drop calls that read a human message (β_F moves by ≤ 0.2). N2 shows β_F differs by goal type, so a goal field shapes the slope. | partly |
+| Shared model priors | partly | Agent fixed effects. The lab split of β_F was not run (β_F ≈ 0 left nothing to split). | partly |
+| Contemporaneous convergence | n/a | Within-agent persistence, not co-movement. | n/a |
+| (HH) long projects fill the context and last long | yes | Moot for β_F, which is near 0. The reset step is measured at fixed dwell decile and self-share decile, with a pseudo-reset placebo near 0. | removed (for O4) |
+
+### Scorecard (round 1)
+| Axis | Score | Evidence |
+| --- | --- | --- |
+| A mapping | 1 | f_proj, d and visits are defined from `project_calls` and the ledger; the ruler was amended (A1); 27% of hops are flickers. |
+| B assumptions | 1 | Segment cut and censoring audited in synthetic; the forward O3 design failed size and was replaced (A6). The leave hazard is not Markov in self-share (dwell dependence). |
+| C adequacy | 0 | Self-share adds no held-out information in G51 (G(F) −0.03 [−0.18, +0.09]). |
+| D unfitted predictions | 0 | The dwell slope lies outside the O3-pp band in 25/25 units. |
+| E interventional | 1 | NE41: the reset step has the predicted sign and survives the placebo, but it is 24× the urn's size. |
+| F identifiability | 1 | β_F, β_d and O3-pp pass size and power; ε(F) and the reset step's null side are unpowered (A7). |
+| G ground truth | 0 | none available. |
+| H comparative | 0 | R-intrinsic aging (β_d −0.6) beats the urn; R-store's no-step prediction fails, but so does the urn's size. |
+| I transfer | 0 | β_F differs between own-role and shared-goal weeks (+0.84 [+0.31, +1.37]); reserved periods not used. |
+
+**Claim that stands:** In 25 regime-III units, an agent's project self-share in its context does not set its leave odds (urn slope random-effects mean +0.07 [−0.05, +0.19], urn value 1), and a per-call rule built on it misses the observed dwell aging in 25/25 units; the context acts as a step instead: a forced reset raises leaving by +0.40 [+0.25, +0.54] log-odds in G51 (24× the urn's prediction, placebo −0.02). *Excluded:* ε(F) and Kill B (unpowered, A7); the card's forward O3 design (failed size) and P90 (biased); the sustained-leave reset step (post hoc); the f_entry variant and the kick term K (descriptive); G38's reset step (unpowered, CI ∋ 0).
+
+## Round 2 redirects
+**What the direction is really after:** where an agent's project commitment is stored, and which operator action releases it; round 1 says the context acts as a reset step, not as a self-share dose.
+- **H134-R1. Reset as a step clock.** Model the reset as a step in the leave hazard (own calls since the last forced reset) and measure its decay over the next calls (H44's 8-call tail).
+- **H134-R2. Aging vs frailty.** Separate intrinsic dwell aging from per-visit frailty with repeat visits to the same project.
+- **H134-R3. Goal-type slope.** Explain N2: why the self-share slope is positive in own-role weeks and negative in shared-goal weeks.
+- **H134-R4. Sustained hops.** Re-run with a minimum-dwell label (no A → B → A flickers) as the primary hop definition.
 
 ## Notes
 - 2026-10-07: card written from HH377 (approved by Vivian 2026-10-07). Round-1 order: structural counts → period READMEs with dated predictions → synthetic → dated amendments → replication and natives → estimates rows (`h134_beta_urn`, `h134_eps_selfshare`, `h134_reset_step`, `h134_tail_calibration`) → frozen `confirm.py` (dry run only).

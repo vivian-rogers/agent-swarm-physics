@@ -1,0 +1,36 @@
+{
+ "complete": 45,
+ "faithfulness": 0.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: structural counts, dated period predictions, synthetic validation on real visit paths (6 worlds x 200 runs x 3 skeletons, plus O3 variants and pooled O4 power) and amendments A1-A8 committed before real data; replication on 25 regime-III units; natives NE41 (G51, G38), N2, N3; post hoc flicker check; estimates rows. Missing: confirm.py on reserved periods; lab split.",
+  "faithfulness": "The urn is refuted: slope +0.07 [-0.05, +0.19] vs 1, and the fitted rule misses the dwell slope in 25/25 units (test size 0.02-0.03, power >= 0.99). The reset step exists but is 24x the urn's prediction. Scorecard A1 B1 C0 D0 E1 F1 G0 H0 I0.",
+  "usefulness": "Operator rule: a forced context reset releases an agent from its project (about x1.5 leave odds at the next call in #51), independent of how much of the context the project fills; dwell aging is not a context effect."
+ },
+ "one_line": "The context's project self-share does not hold an agent on its project (urn slope +0.07 [-0.05, +0.19], urn 1; dwell aging missed in 25/25 units), but a forced reset releases it as a step (+0.40 [+0.25, +0.54] log-odds in G51, 24x the urn).",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "kinetic Potts walker with a Polya-urn self-field: slope ~0, dwell aging not reproduced"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "escape kinetics age with dwell (beta_d -0.6); a reset gives a release step, not an urn dose"
+  },
+  {
+   "model": "08-copying-vs-transformation",
+   "role": "secondary",
+   "outcome": "refuted",
+   "note": "copying of the agent's own recent project calls does not set the leave odds"
+  }
+ ],
+ "rated_by": "H134 round-1 agent (suggested v1; coordinator writes v2)",
+ "updated": "2026-10-07",
+ "v2": {
+  "credence": null
+ }
+}

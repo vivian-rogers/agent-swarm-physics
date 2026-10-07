@@ -177,7 +177,7 @@ def main():
               f"bd {r['bd_b']:+.2f} [{r['bd_b_ci'][0]:+.2f},{r['bd_b_ci'][1]:+.2f}] "
               f"gamma obs {r['O3']['gamma']['obs']:+.2f} sim {r['O3']['gamma']['sim_med']:+.2f} "
               f"{'pp ' + format(r['O3pp']['gamma']['sim_med'], '+.2f') if 'O3pp' in r else ''} "
-              f"O4 {r['O4']['lor']:+.2f}±{r['O4']['se']:.2f} pred {r['O4']['pred']:+.3f} "
+              f"O4 {r['O4']['lor']}±{r['O4']['se']} pred {r['O4']['pred']} "
               f"GA {r['O2']['G_A'] if r['O2'] else None}")
     if a.write_estimates:
         write_est(S, R)
@@ -208,7 +208,7 @@ def write_est(S, R):
                      "method": f"observed dwell slope gamma minus simulated ({key}), 95% simulation band",
                      "null": "0 (the per-call rule reproduces the dwell slope)"})
         o4 = r["O4"]
-        if o4["se"] is not None and np.isfinite(o4["se"]):
+        if o4["se"] is not None and o4["lor"] is not None and np.isfinite(o4["se"]):
             rows.append({**base, "statistic": "h134_reset_step", "estimate": o4["lor"], "se": o4["se"],
                          "ci_lo": o4["lor"] - Z * o4["se"], "ci_hi": o4["lor"] + Z * o4["se"], "ci_kind": "se_z",
                          "method": "MH log OR leave at first call after forced reset vs matched calls (agent x dwell decile x f decile)",

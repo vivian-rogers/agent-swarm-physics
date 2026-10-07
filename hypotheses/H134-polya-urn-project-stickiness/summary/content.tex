@@ -1,0 +1,33 @@
+\hwhat{The claim (HH377): an agent stays on a project because its own context is full of that project. The field toward the current project is $-\ln(1-f)$, with $f$ the share of the agent's own calls in the context segment that touched the project (a P\'olya urn, as H16 and H72 found for idle traps). The urn predicts a leave slope of $1$ on $\ln(1-f)$, and its per-call rule should reproduce the observed aging of project dwell without fitting it. On 25 regime-III units (989{,}450 calls, 58{,}043 project visits) the slope is $+0.07$ [$-0.05$, $+0.19$], and the rule misses the dwell aging in 25/25 units. The context still matters as a step: a forced reset raises leaving by $+0.40$ log-odds in G51, 24 times the urn's prediction. The reserved data are not used.}
+
+\hmodel{Model 10 (kinetic Potts walker) with a self-field, model 02 (escape kinetics), model 08 (self-copying). A visit is a run of calls with one carried project label (shared per-call labels, expiry after 100 own calls). At each own call the agent leaves (touches a new project) or stays. Base terms: agent effects, time in the day, previous call kind, reset at the call, named reads about other projects ($K$). Rivals: the artifact store holds the project (no reset step), intrinsic aging, per-visit frailty.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\operatorname{logit}P(\text{leave}_c)=\alpha_i+z_c\!\cdot\!\delta+\beta_F\ln(1-f_c)+\beta_d\ln d_c+\gamma_R K_c\\
+f_c=\frac{n_a}{n_{\rm own}+\tfrac12}\quad(\text{0 after a reset})\\
+\text{urn: }\beta_F=1,\ \beta_d=0;\qquad \Delta_{\rm reset}=-\beta_F\ln(1-f_{\rm pre})
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/round1_summary.pdf}{(a) Urn slope $\beta_F$ per unit with agent-day block-bootstrap 95\% CIs; the dashed line is the urn's value 1. (b) Observed dwell slope $\gamma$ (red) against the 95\% band of the fitted per-call rule without dwell (grey, posterior-predictive on the observed risk calls). (c) Leave log odds ratio at the first call after a forced reset, matched on agent, dwell and self-share decile, with the urn's predicted step (red).}
+
+\htelos{A context reset frees an agent from its project, but not in proportion to how much of the context the project fills. In \#51 a forced reset raises the leave odds by a factor of about 1.5 at the next call, at fixed dwell. To move an agent off a stuck project, reset its context; do not expect a context crowded with other work to loosen it. Agents get stickier the longer they stay (leave odds fall by about 45\% per e-fold of dwell), and the self-share does not explain it.}
+
+\hbottom{Project stickiness ages strongly, but the context's project self-share does not carry it; a context reset releases the agent as a step, not as the urn's dose.}
+
+\hresults{\footnotesize\begin{tabular}{@{}p{0.37\columnwidth}p{0.44\columnwidth}l@{}}
+\hline
+prediction & observed & verdict\\\hline
+P1 $\beta_F>0$ in $\ge2/3$ units & 3/25 & fails\\
+P2 $\beta_F$ CI $\ni1$; RE mean $\ni1$ & 6/25; RE $+0.07$ [$-0.05$, $+0.19$] & fails\\
+P3 $\varepsilon(F)$ above proxy band & $+0.001$ vs band $0.055$ & unpowered\\
+P4 dwell tail follows (Kill A) & $\gamma$ outside band 25/25 & fails\\
+P5 aging left over ($\beta_d<0$) & G51 $-0.58$ [$-0.62$, $-0.55$] & holds\\
+N1 reset step $\approx$ urn's & $+0.40$ [$+0.25$, $+0.54$] vs $+0.016$ & fails\\
+\ \ placebo (20 calls earlier) & $-0.02$ [$-0.19$, $+0.14$] & holds\\
+N2 same slope by goal type & difference $+0.84$ [$+0.31$, $+1.37$] & fails\\
+\hline
+\end{tabular}}
+
+\hcaveats{Hops come from mentions: 27\% are flickers (A$\to$B$\to$A within 5 calls); without them the reset step is $+0.46$ (post hoc). Context segments last at most 41 calls, so on this skeleton even a true urn makes little dwell aging; $\varepsilon(F)$ and a null reset step were unpowered (synthetic power 0.45--0.65 and 0.52), and both were declared before the data. The card's forward tail test failed its size check (0.14--0.27) and was replaced by a posterior-predictive test (size 0.02--0.03). The richer self-share that counts the room's messages about the project gives larger slopes in G51 ($+0.5$ to $+1.4$); it is reported, not tested.}
+
+\hnext{Model the reset as a step clock (own calls since the last forced reset) and measure its decay. Separate intrinsic aging from per-visit frailty with repeat visits to one project. Explain why the self-share slope is positive in own-role weeks and negative in shared-goal weeks. Re-run with a minimum-dwell hop.}
