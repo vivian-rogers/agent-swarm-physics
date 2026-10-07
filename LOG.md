@@ -19,6 +19,7 @@ something, or make a decision worth remembering.
   - Table zoom: H08's 11 red period tiles are strict per-period verdicts (all clauses incl. talk volume); caption now says so next to the 14/17 and 17/17 jumps.
 - **Known issues (not fixed):** H15 round-1b `consolidation_profile.parquet` is grouped by call kind, not forced/voluntary: a column-name clash in `hypotheses/H15-semantic-information-scrambles/scheme/build.py` (round-1b branch, ~lines 531–537). `writeup/figures/make_scoring_scatter.py` crashes on H133–H142 (no credence yet).
 - Paper: 30 pages, builds clean.
+- **Fig. 1 redone** (Vivian: not good enough; same-size nodes): ring of the 32 agents grouped by lab with model names; fill = state in the 10-min window; gray chords = named messages that day, dark arrows = the 41 mentions in the window (28 from DeepSeek V4-Pro to 13 agents); orange ring = fields; side panel with the three regime-III numbers (named 0.079 vs unnamed 0.004, g = 0.13 vs 1, field share 72% median, fragile).
 
 ## 2026-10-07 — Paper: more single-column figures (`writeup/paper/`, `writeup/visuals/`)
 

@@ -12,6 +12,8 @@ All days checked against the reserved data with holdout_mask.
 """
 from __future__ import annotations
 
+import datetime as dt
+
 import numpy as np
 import polars as pl
 
@@ -81,6 +83,15 @@ def main():
                   calls=int(r["calls"]), talks=int(r["talks"]), msgs=int(msgs.get(r["agent"], 0)),
                   state=snap.get(r["agent"], "off")) for r in agents.sort("agent").iter_rows(named=True)]
     links = [dict(source=int(r["agent"]), target=int(r["mentions_roster"]), n=int(r["n"])) for r in e.iter_rows(named=True)]
+    # named messages posted inside the snapshot window [t - SNAP_W, t): the couplings acting at that moment
+    t_lo = day_start + dt.timedelta(minutes=best - SNAP_W); t_hi = day_start + dt.timedelta(minutes=best)
+    en = (mc.filter((pl.col("t") >= t_lo) & (pl.col("t") < t_hi))
+          .explode("mentions_roster", empty_as_null=True).drop_nulls("mentions_roster")
+          .filter(pl.col("mentions_roster").is_in(list(ag)) & (pl.col("mentions_roster") != pl.col("agent"))
+                  & pl.col("agent").is_in(list(ag)))
+          .group_by("agent", "mentions_roster").agg(pl.len().alias("n")))
+    links_now = [dict(source=int(r["agent"]), target=int(r["mentions_roster"]), n=int(r["n"])) for r in en.iter_rows(named=True)]
+    msgs_now = int(cc.filter((pl.col("t") >= t_lo) & (pl.col("t") < t_hi)).height)
 
     # ---------------- raster over three days (each day from its first to its last call)
     rc = calls(RASTER_DAYS)
@@ -104,7 +115,7 @@ def main():
     first_off = (cw["t_call"].min() - day_start).total_seconds() / 60.0   # raster days start at the first call
     data = dict(day=DAY, goal=GOAL, snapshot=dict(t_min=best, t_from_first=best - first_off, window_min=SNAP_W, n_up=st.count("up"),
                                                  n_down=st.count("down"), n_off=st.count("off")),
-                nodes=nodes, links=links, raster=dict(bin_min=RBIN, order=order, days=days),
+                nodes=nodes, links=links, links_now=links_now, msgs_now=msgs_now, raster=dict(bin_min=RBIN, order=order, days=days),
                 totals=dict(calls=int(cw.height), talk_share=float(cw["talk"].mean()), agent_msgs=int(cc.height),
                             named_msgs=int(mc.filter(pl.col("mentions_roster").list.len() > 0).height),
                             pairs=len(links)))
