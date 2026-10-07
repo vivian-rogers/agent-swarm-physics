@@ -1,6 +1,6 @@
 # H142: The content response to aligned reads saturates as a Langevin-function torque
 
-**Status:** pre-registered (not run). Card, observables, nulls and predictions written 2026-10-07 11:45–12:30 UTC, before any H142 statistic on real data. No scheme, synthetic or analysis code has run.
+**Status:** round 1 in progress (2026-10-07): synthetic validation done, Amendments A1–A3 written before real data. Pre-registered Card, observables, nulls and predictions written 2026-10-07 11:45–12:30 UTC, before any H142 statistic on real data. No scheme, synthetic or analysis code has run.
 **Question (GOALS.md):** **Q1** (what couples agents: how does the read-out pull toward one direction grow with the number of reads that point that way in one call?). Second: **Q5** (how many aligned messages does an operator need to send in one batch to move an agent most of the way?).
 **Fields:** stat mech (mean-field vector spins: the Langevin function as the n = 3 equation of state, saturation of the magnetization), information theory (read-out channel capacity)
 **Literature:** none in `literature/` covers the Langevin function. Cited from memory (†): Langevin, *J. Phys. Theor. Appl.* 4, 678 (1905)† (paramagnetism of classical moments, L(x) = coth x − 1/x); Stanley, *Phys. Rev.* 176, 718 (1968)† (n-vector models). Model reference: [`physics-models/11-vector-spins/README.md`](../../physics-models/11-vector-spins/README.md) (mean-field section). Name clash: this is the static Langevin *function*, not the Langevin *dynamics* of [`physics-models/16-langevin-relaxation/`](../../physics-models/16-langevin-relaxation/README.md).
@@ -155,7 +155,70 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 Other testable periods (#13, #16, #35, #36, #37, #39) get their period folders, with the replication predictions copied and dated, before the run.
 
 ## Results
-Not run.
+See "Round 1 (2026-10-07)" below.
+
+## Round 1 (2026-10-07)
+*Round-1 agent, exploration data only. Reserved goal periods and windows are masked by construction (`pending_sets` drops them; every other table passes `holdout_mask`). Code: `scheme/build.py`, `scheme/h142scheme.py`, `analysis/h142lib.py`, `analysis/synthetic.py`, `analysis/run.py`, `analysis/write_estimates.py`, `analysis/figures.py`. Data: `data/processed/H142-langevin-torque-saturation/` (122 MB; #51 batch vectors are most of it).*
+
+### Step 1: structural count (before any outcome, 2026-10-07 ~10:40 UTC)
+`scheme/build.py --all` built the (call, direction) rows for 34 non-reserved periods in both models. Rows with n_u ≥ 4 (`counts.json`; no step was read):
+
+| Period | H113-identified | rows n_u ≥ 4, bge / gte | largest n with ≥ 50 rows (O5), bge / gte | ≥ 200 rows |
+| --- | --- | --- | --- | --- |
+| #13 | bge, gte | 909 / 1051 | 9 / 8 | both |
+| #16 | gte | 383 / 380 | 5 / 5 | both |
+| #35 | gte | 387 / 405 | 5 / 6 | both |
+| #36 | bge, gte | 153 / 159 | 4 / 4 | neither |
+| #37 | bge, gte | 76 / 64 | 2 / 2 | neither |
+| #38 | bge, gte | 552 / 578 | 6 / 6 | both |
+| #39 | bge | 210 / 164 | 4 / 4 | bge only |
+| #40 | none | 771 / 712 | 7 / 6 | both |
+| #41 | none | 467 / 493 | 5 / 6 | both |
+| #51 talk calls | bge, gte | 30,758 / 28,953 | 36 / 35 | both |
+| #51 timer wakes | (native) | 2,193 / 2,035 | 11 / 11 | both |
+
+About 67–71% of batch items reach cos ≥ 0.3 with a fold centroid. #36 and #37 fail the 200-row rule and are descriptive.
+
+### Step 2: synthetic validation (axis F; before any real step statistic)
+`analysis/synthetic.py` on the real skeletons of #13, #38 and #51 (bge; 100 runs per world; W-L3 at ×3 amplitude, 50 runs). Only y is synthetic: real calls, batches, in-flight sets, aligned counts, newest and named flags, rooms, hours, day-fold centroids and projected batch vectors. The real step is never read; only the period mean of |y⊥|² sets the noise. Every world except W0 has the same directional signal energy as W-lin with γ₁ = 0.15, b = 0.75 (H113's measured range); W-field has ×4 (strong) and W-field1 ×1. W-field is a hot-topic field with no reading: a two-sided exponential (τ = 30 min) rate of the room's own statements per direction, plus an independent room × topic OU walk.
+
+**Finding that forced Amendment A1.** With the card's form (call effects and one amplitude for f), the linear channel W-lin is called "Langevin beats the line" in 70% (#13), 61% (#38) and 100% (#51) of runs, and W-sel in 80%, 40% and 100%. The call effect α_c fixes the level, not the slope. The slope γ(k) falls with k, and n_u rises with k (corr 0.82 on #51), so a linear channel gives a concave pooled curve.
+
+Decision rates under the amended design (A1: amplitude free per batch-size bin):
+
+| World | Langevin beats line (ΔLL CI > 0), #13 / #38 / #51 | Δ_curv CI > 0 | all f̂ CIs include 0 | read − in-flight CI > 0 at n = 1 | n̂_sat median [IQR] (#51) |
+| --- | --- | --- | --- | --- | --- |
+| W0 no coupling | 0.02 / 0.01 / 0.00 | 0.00 / 0.00 / 0.00 | 0.78 / 0.80 / 0.77 | 0.05 / 0.05 / 0.04 | — |
+| W-lin | 0.02 / 0.00 / 0.02 | 0.00 / 0.01 / 0.00 | 0 | 1.00 / 0.60 / 1.00 | 150 (grid edge) |
+| W-sel | 0.03 / 0.00 / 0.00 | 0.01 / 0.00 / 0.00 | 0 | 0.93 / 0.29 / 1.00 | 50 |
+| W-recent | 0.01 / 0.02 / 0.00 | 0.01 / 0.00 / 0.00 | 0.53 / 0.67 / 0.78 | 0.02 / 0.00 / 0.00 | — |
+| W-pow (p = 0.3) | 1.00 / 0.97 / 1.00 | 0.01 / 0.00 / 0.00 | 0 | 1.00 | 1.46 [1.29, 1.46] |
+| W-field1 (×1) | 0.01 / 0.02 / 0.00 | 0.00 / 0.00 / 0.00 | 0.74 / 0.68 / 0.57 | 0.03 / 0.04 / 0.03 | — |
+| W-field (×4) | 0.02 / 0.01 / 0.01 | 0.01 / 0.00 / 0.00 | 0.58 / 0.73 / 0.18 | 0.00 / 0.02 / 0.00 | — |
+| W-L1 (n_sat 1) | 0.99 / 1.00 / 1.00 | 0.35 / 0.15 / 0.99 | 0 | 1.00 | 0.90 [0.90, 1.01] |
+| W-L3 (n_sat 3) | 1.00 / 0.98 / 1.00 | 0.82 / 0.54 / 1.00 | 0 | 1.00 | 3.04 [2.69, 3.04] |
+| W-L3 ×3 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 | 0 | 1.00 | 3.04 |
+
+Langevin beats the power law (ΔLL(L − pow) CI > 0) in W-L3 in 0.57 / 0.39 / 1.00 of runs and in W-pow in 0.02 / 0.01 / 0.00. n̂_sat is recovered within the grid step (bias ≤ 0.1 at n_sat 1 and 3). The agent-day cluster bootstrap of f̂ is calibrated: in W0, 77–80% of runs have all five CIs covering 0, against 0.95⁵ = 0.774 at nominal coverage. A day-cluster bootstrap covers less (58–71%), so the card's agent-day clusters stay.
+
+**Power at each period's real counts** (W-L3 pass rate on the period's own skeleton, 100 runs; `summary_power.json`; bge / gte): #13 1.00 / 0.98; #16 0.79 / 0.87; #35 0.30 / 0.34; #36 0.28 / 0.18; #37 0.21 / 0.28; #38 0.98 / 0.90; #39 0.24 / 0.54; #40 0.28 / 0.22; #41 0.35 / 0.61; #51 talk 1.00 / 1.00; #51 wakes 0.90 / 0.81. W-lin size on these skeletons is 0.00–0.14 (#37: 0.14, three days only). At ×3 amplitude every skeleton except #37 reaches ≥ 0.92.
+
+**Scored units (identified by H113, ≥ 200 rows, power ≥ 0.8), fixed before any outcome:** bge #13, #38, #51; gte #13, #16, #38, #51; natives: #51 wakes (both models). Every other period, including all three NE42 sides, is descriptive.
+
+| # | Prediction | Result | Verdict |
+| --- | --- | --- | --- |
+| S1 | O3 separates W-L3 from W-lin and W-sel at #51 (power ≥ 0.8) | power 1.00; size 0.02 (W-lin), 0.00 (W-sel), after A1. Card form: size 1.00 | supported (after A1); failed as written |
+| S2 | Δ_curv false "> 0" ≤ 0.10 in W-pow, W-lin, W-recent | ≤ 0.01 on all three skeletons | supported |
+| S3 | fewer than half of H113's identified periods powered | bge 3/6, gte 4/7 (not fewer than half) | failed |
+
+**Amendment A1 (2026-10-07 ~11:15 UTC, after the synthetic check, before any real step statistic; not post hoc).** The card's design cannot separate the Langevin form from H113's linear channel: the call effect holds the level fixed, not the per-read slope γ(k). Change: each shape's amplitude is free per batch-size bin (26 log-spaced k bins, edge ratio ≤ 1.25 above k = 8): f(n; k) = a_b · h(n), with h linear, n^p or L(c n) and c, p shared. O3, P1, P3 and the kill use this form. The card's one-amplitude form is reported as the variant "pooled amplitude". O1, O2 and O4 keep the card's dummies (pooled over k): their false rates in W-lin, W-pow and W-recent are ≤ 0.01. Test marked **amended**.
+
+**Amendment A2 (same time; not post hoc).** The card's W-field rule ("f̂ CI includes 0 at every n in ≥ 90% of runs") cannot be met by any calibrated estimator: with five 95% CIs it holds in 77% of no-coupling runs. The field does leak into f̂ levels on #51 (18% with the strong field vs 77% in W0). It does not leak into the shape decisions: false "Langevin beats line" ≤ 0.02 and false Δ_curv > 0 ≤ 0.01 under both field strengths. Change: the shape tests (O2, O3) need false rates ≤ 0.10 under W-field (met). A level f̂(n) counts as read uptake only where the read − in-flight contrast at n = 1 has CI > 0 (false rate ≤ 0.04 under the field, H113 A1's rule). Rule marked **amended**.
+
+**Amendment A3 (same time).** The card does not set the CI method for ĉ and n̂_sat. They use a day bootstrap (300 draws) of the profile fit. O1, O2 and O4 keep the card's agent-day cluster bootstrap (300 draws); ΔLL uses the paired day-fold bootstrap (1000 draws).
+
+**Not run:** N1 cross-day surrogate batches. Direction labels come from day-fold centroids, so u on one day does not match u on another day; a surrogate batch would need a cross-day centroid match, which the card does not define. N2 (within room × hour permutation of the aligned-count vectors) is run on the eligible bge periods.
+
 
 ## Notes
 - 2026-10-07 11:45 UTC: card written from HH385 (approved by Vivian 2026-10-07). In the source HH quote, the HH list's word for out-of-sample data is written as "[out-of-fold]" to follow the house style; the meaning is unchanged.
