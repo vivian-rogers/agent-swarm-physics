@@ -1,0 +1,34 @@
+\hwhat{H130 found that in \#51 a read kicks the reader's content ($J_K=0.044$) and the kick fades within $\approx$7 calls, while the agent's own well relaxes in $\approx$100 calls. HH382 asked whether that fast kick fixes, with no new fit, how much of an agent's content variance is fast. H139 measures the own content autocovariance at 1-call resolution in 15 regime-III units (\#37--\#42, \#51) and compares its fast amplitude with the shot-noise prediction. A synthetic check on the real skeletons decided first whether the prediction is resolvable. It is not: the predicted fast amplitude is 7 to $>$1{,}000 times below the smallest resolvable one in every unit. The verdict is inconclusive (below resolution).}
+
+\hmodel{Two-rate Langevin relaxation (model 16) on the per-call clock. Content $x=s+k$: a slow part $s$ held by the agent's private well (rate $\gamma_s$) and a fast part $k$ made of read kicks of size $J$ that decay at $\gamma_k$. For independent kick directions, Campbell's theorem fixes the fast amplitude from the read rate $\bar r$ (DQ1 ledger), $J$ and $\gamma_k$ (H130). The own autocovariance, corrected for the common drive, then has two exponentials and a plateau.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+C(\tau)=A_k(1-\gamma_k)^\tau+A_s(1-\gamma_s)^\tau+B,\quad \tau\ge1\ \text{call}\\
+A_k^{\rm pred}=\bar r\,J^2/[1-(1-\gamma_k)^2],\qquad Q_k=\hat A_k/A_k^{\rm pred}\\
+\text{S1: } A_{\min}>2A_k^{\rm pred}\ \Rightarrow\ \text{P1 untestable}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs_col.pdf}{Fitted fast amplitude $\hat A_k$ (blue, 95\% agent-day bootstrap CI) per testable unit, the predicted $A_k^{\rm pred}$ (orange) and the smallest resolvable amplitude $A_{\min}$ (gray bar: synthetic; open triangle: rescaled to the real noise level, post hoc). The prediction sits far below both resolution marks in every unit.}
+
+\htelos{For an operator, the read channel is not visible in an agent's overall content fluctuations: at about one read per call, H130's kick predicts a fast share of $\approx$2.5\% of the dynamic content variance (median), well inside the noise of $\sim$10$^3$--10$^4$ statement pairs per unit. To see what reading does to an agent, measure the response along the sender's direction (H130's dose design), not the agent's total variance.}
+
+\hbottom{In 15 regime-III units the read-driven fast content variance predicted from H130's kick (median $A_k^{\rm pred}$ 0.0044, $\approx$2.5\% of the dynamic variance) lies 7 to $>$1{,}000$\times$ below the smallest resolvable fast amplitude, so HH382's variance-split test is untestable at this data size.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.33\columnwidth}p{0.47\columnwidth}p{0.18\columnwidth}@{}}
+\textbf{Prediction (dated)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S1 $A_{\min}>2A_k^{\rm pred}$ & 15/15 units; ratio 92--$>$2{,}000 (6.8--9{,}993 real scale) & as predicted\\
+S2 $Q_k$ unbiased $\pm$30\% & not resolvable at $\times$5, $\times$20 & failed\\
+S3 $R_{\rm fast}$ separates worlds & 37--59\% of replicates & failed\\
+P1 $Q_k\in[0.5,2]$ (kill) & $\hat A_k$ $-$0.058 [$-$0.099, $-$0.017] vs 0.0044 & untestable\\
+P2 fast part $\propto$ reads & not computed & untestable\\
+P3 slow share $\ge0.8$ & 13/15 units & non-diagnostic\\
+P4 slow share is an agent constant & $\rho$ $-$0.20, $p$ 0.81 & failed\\
+P5 two rates beat one & 9/15 (null 34--58\%) & non-diagnostic\\
+N1 NE41 fast part erased & $R_{\rm slow}$ 1.06 [0.98, 1.14] & untestable\\
+\end{tabular}}
+
+\hobsb{../figures/synthetic_col.pdf}{Synthetic check on the real skeletons of 15 units (real statements, calls, ledger reads, resets; 50--100 replicates per world). Share of replicates in which $\hat A_k$'s 95\% CI excludes 0, against the planted fast amplitude. Blue: \#51 units; orange: \#37--\#42 units. The gray band is the range of $A_k^{\rm pred}$. Detection reaches 80\% only at $A_k\approx0.6$--3.}
+
+\hcaveats{The synthetic noise level was higher than the real one; rescaling to the real bootstrap SE (post hoc) still leaves $A_{\min}/A_k^{\rm pred}\ge6.8$. The drive correction subtracts conversational co-movement at short wall lags, and the lag-1 covariance sits below the lag-2 covariance in 14/15 units, so the constrained $\hat A_k$ is negative (post hoc). $\gamma_{\rm kick}$ was not re-estimated in the shared weeks. Agent-level slow shares are unstable.}
+
+\hnext{Measure the read echo along sender directions (H130's dose design), which has the power the variance split lacks. Explain the lag-1 dip (reply vs own-task alternation, or producing-call errors). Correct for the drive with unread partners only, and calibrate the synthetic noise to the real variance before new power claims.}

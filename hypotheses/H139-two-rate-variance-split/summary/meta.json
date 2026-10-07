@@ -1,0 +1,34 @@
+{
+ "complete": 45,
+ "faithfulness": 0.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: card and dated predictions before data; synthetic validation on 15 real skeletons (11,600 replicates, registered and added worlds) committed with Amendment A1 before real data; replication on 15 testable units in 8 regime-III periods x 3 vector variants x 3 drive modes; NE41 native; 475 estimates rows. Missing: no confirm script (nothing resolved to confirm); gamma_kick not re-estimated in shared weeks.",
+  "faithfulness": "The model's unfitted prediction is 7 to >1,000x below resolution in every unit, so the HH382 test is untestable (inconclusive). The slow part behaves (gamma_s ~0.013/call in #51, R_slow 1.06 across erasures), but the fast form is contradicted at lag 1 (dip in 14/15 units, post hoc). Scorecard A1 B1 C0 D0 E1 F1 G0 H0 I0.",
+  "usefulness": "A negative result about method: the read channel cannot be seen in total content variance at village data sizes; measure it along sender directions instead."
+ },
+ "one_line": "The read-driven fast content variance predicted from H130's kick (median 0.0044, ~2.5% of dynamic variance) is 7 to >1,000x below what the own autocovariance resolves in 15 regime-III units: HH382's variance split is untestable (inconclusive, below resolution).",
+ "models": [
+  {
+   "model": "16-langevin-relaxation",
+   "role": "primary",
+   "outcome": "untested",
+   "note": "Two-rate form: fast amplitude below resolution in every unit; slow rate ~0.013/call in #51"
+  },
+  {
+   "model": "11-vector-spins",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Linear vector dynamics on the call clock; read-kick share of variance unresolvable"
+  }
+ ],
+ "rated_by": "H139 agent (suggested)",
+ "updated": "2026-10-07",
+ "v2": {
+  "claim": "In 15 regime-III units the read-driven fast content variance predicted from H130's kick (median A_k^pred 0.0044, about 2.5% of the dynamic variance) lies 7 to more than 1,000 times below the smallest resolvable fast amplitude, so HH382's variance-split test is untestable at this data size",
+  "scope": "#37-#42 and #51 non-reserved, 15 units with >= 3 days; NE41",
+  "direction": "null",
+  "original_verdict": "inconclusive",
+  "credence": null
+ }
+}

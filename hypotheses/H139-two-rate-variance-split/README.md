@@ -1,6 +1,7 @@
 # H139: A fast read kick on a slow private well predicts how content variance splits between the two
 
-**Status:** pre-registered (not run). Card, observables, nulls and predictions written 2026-10-07 09:15–10:00 UTC, before any H139 statistic on real data. No scheme, synthetic or analysis code has run.
+**Status:** exploratory round 1 done (2026-10-07; non-reserved only). **Inconclusive (below resolution).** The synthetic check (S1) fired in all 15 testable units before real data: the read-driven fast amplitude that H130's kick predicts is 90 to > 2,000 times smaller than the smallest fast amplitude the own autocovariance resolves (7 to > 1,000 times on the real noise scale, post hoc). P1 (the HH382 test) and P2 are untestable; the kill cannot fire. P3 and P5 pass but are non-diagnostic; P4 fails. N1 (NE41) is untestable; the slow part passes forced erasures (R_slow 1.06 [0.98, 1.14], descriptive). Post hoc: the drive-corrected fast amplitude is negative (pooled −0.058 [−0.099, −0.017]), because the lag-1 covariance sits below the lag-2 covariance in 14/15 units. Scorecard A1 B1 C0 D0 E1 F1 G0 H0 I0.
+*Pre-registration: card, observables, nulls and predictions written 2026-10-07 09:15–10:00 UTC, before any H139 statistic on real data.*
 **Question (GOALS.md):** **Q2** (what is field and what is coupling: how much of an agent's content variance is the read channel, and how much is its own well?). Second: **Q1** (does the read kick measured from doses also show up, with the predicted size, in the agent's own fluctuations?).
 **Fields:** stat mech (two-rate Langevin relaxation, Ornstein–Uhlenbeck processes, fluctuation–response consistency), stochastic processes (shot noise with exponential memory)
 **Literature:** none in `literature/` covers OU processes. Cited from memory (†): Uhlenbeck & Ornstein, *Phys. Rev.* 36, 823 (1930)†; Kubo, *Rep. Prog. Phys.* 29, 255 (1966)† (for a linear Langevin system the impulse response and the autocorrelation decay at one rate); Campbell's theorem for shot noise (Rice, *Bell Syst. Tech. J.* 23, 282 (1944)†): the variance of a sum of decaying kicks is rate × kick² × memory. Model references: [`physics-models/16-langevin-relaxation/README.md`](../../physics-models/16-langevin-relaxation/README.md) (section 4, "two-rate form: a fast kick on a slow well"), [`physics-models/11-vector-spins/README.md`](../../physics-models/11-vector-spins/README.md).
@@ -21,10 +22,10 @@
 
 | Impostor | Relevant? | How it is handled (planned) | Status |
 | --- | --- | --- | --- |
-| Scheduler field | partly | Content statistics on the per-call clock (H40); lags only within a PT day, so nights and day edges never enter a lag. | removed (planned) |
-| Exogenous field (kickoff, goal, operator) | yes (the HH's impostor) | Drive correction as in H130 A1: the agent's own autocovariance minus the cross-agent covariance at the same wall lag (a common topic drift is shared by all agents). Variant: room × hour means subtracted first (the HH's wording). Wells (leave-day-out) remove static fields. | removed (planned) |
-| Shared model priors (family, style) | yes | `style_resid_period` vectors; wells absorb each agent's prior; `white32` and gte variants. | removed (planned) |
-| Contemporaneous convergence | yes | The kick inputs (J_K, γ_kick) come from H130's read-minus-in-flight estimators, so convergence is not counted as a kick. The autocovariance side is own-agent only; the drive correction removes shared time-local fields. | removed (planned) |
+| Scheduler field | partly | Content statistics on the per-call clock (H40); lags only within a PT day, so nights and day edges never enter a lag. | removed |
+| Exogenous field (kickoff, goal, operator) | yes (the HH's impostor) | Drive correction as in H130 A1: the agent's own autocovariance minus the cross-agent covariance at the same wall lag, per room class. Variant: room × hour means subtracted first (the HH's wording). Wells (leave-day-out) remove static fields. Round 1: in the synthetic, a strong 5-min drive still gives a false Â_k > 0 in 5–27% of replicates. On real data the correction also subtracts pair co-movement at short wall lags (post hoc reading of the negative Â_k). | partly |
+| Shared model priors (family, style) | yes | `style_resid_period` vectors; wells absorb each agent's prior; `white32` and gte variants give the same signs. | removed |
+| Contemporaneous convergence | yes | The kick inputs (J_K, γ_kick) come from H130's read-minus-in-flight estimator (re-run here for #37–#42). The autocovariance side is own-agent only. The P1 comparison it would protect is untestable (S1). | partly (moot for P1) |
 
 **Inputs:** current tables only (DQ1 ledger, DQ5 vectors with both embedding models, `statement_flags` dedupe).
 
@@ -104,19 +105,19 @@ Worlds keep each unit's real statements, producing calls, call clock, reads and 
 ## Faithfulness scorecard
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
 **Rival models:** R-innovation (own fast noise), R-one-rate (no fast part), R-segment-offset (H46-type), R-drive (common topic drift).
-**Reserved periods used for confirmation:** none (not run). Planned: the #51 tail (2026-09-07 → 09-21) and #45–#47, ledger families `kick_response` and `content_alignment`. Overlaps to disclose: H130 (#51 tail, same families), H54, H97, H100, H102, H107, H108, H109 on #45–#47 content. A frozen, guarded confirm script is written only after exploration and runs only with Vivian's sign-off.
+**Reserved periods used for confirmation:** none. Planned: the #51 tail (2026-09-07 → 09-21) and #45–#47, ledger families `kick_response` and `content_alignment`. Overlaps to disclose: H130 (#51 tail, same families), H54, H97, H100, H102, H107, H108, H109 on #45–#47 content. A frozen, guarded confirm script is written only after exploration and runs only with Vivian's sign-off.
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
-| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
-| C adequacy | beats the null hierarchy, day-blocked out-of-fold data | 0 | not run |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
-| E interventional | predicts the change across a natural experiment | 0 | not run |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 0 | not run |
-| G ground truth | agrees with known structure | 0 | not run |
-| H comparative | beats the named rivals | 0 | not run |
-| I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Read rate from the ledger; wells, clock and autocovariance from DQ5 and `call_windows`. Same signs with bge, gte and white32. Regime III only. |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | The slow part behaves (γ_s 0.0075–0.023/call in #51, H130 γ_auto 0.0094). The fast form A_k (1−γ_k)^τ ≥ 0 is contradicted at τ = 1: lag-1 covariance < lag-2 covariance in 14/15 units (post hoc). |
+| C adequacy | beats the null hierarchy, day-blocked out-of-fold data | 0 | Two-rate beats one-rate out of fold in 9/15 units; the W0 size of that comparison is 34–58%. |
+| D unfitted predictions | unfitted statistics and the model's signature | 0 | The unfitted prediction (A_k^pred) is below resolution in every unit (S1). |
+| E interventional | predicts the change across a natural experiment | 1 | NE41: the slow part passes forced erasures (R_slow 1.06 [0.98, 1.14], 15 units). The fast part is untestable (S1, S3). Descriptive. |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | 11,600 replicates on 15 real skeletons: Â_k unbiased (L3 bias −11% to +7%), W0 false rate ≤ 0.08. But the target amplitude is 90 to > 2,000× below A_min, and the synthetic noise scale exceeded the real one (post hoc). |
+| G ground truth | agrees with known structure | 0 | No known structure tested. |
+| H comparative | beats the named rivals | 0 | H139, R-one-rate and R-segment-offset are indistinguishable at this resolution. Post hoc: no positive fast part above +0.07 in 14/15 units, which bounds R-innovation only in absolute terms. |
+| I transfer | holds in other same-mode periods, including the reserved periods | 0 | Nothing resolved to transfer; reserved periods not used. |
 
 ## Prediction
 *Written 2026-10-07 09:15–10:00 UTC, before running the analysis on real data.*
@@ -157,11 +158,21 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G38](goalperiod-subhypotheses/G38/README.md) | replication (transfer to a shared-goal week) | pending | — |
-| [G51](goalperiod-subhypotheses/G51/README.md) | replication (51a–51l) + native N2 | pending | — |
-| [NE41](goalperiod-subhypotheses/NE41/README.md) | native N1 (forced erasures, regime III) | pending | — |
+Primary variant `style_resid_period` × bge, drive-corrected. "n/a (inconclusive)" = S1 fired before real data, so the registered test is untestable there.
 
-Other testable units (#39–#42, #44) get their period folders, with the replication predictions copied and dated, before the run.
+| Period | Role | Verdict | Key numbers |
+| --- | --- | --- | --- |
+| [G37](goalperiod-subhypotheses/G37/README.md) | replication (1 unit, 3 days) | n/a (inconclusive: below resolution) | A_k^pred 0.019; Â_k −0.043 [−0.142, 0.033]; A_min/A_k^pred > 150 (8.6 real scale) |
+| [G38](goalperiod-subhypotheses/G38/README.md) | replication (38a, 38b, 38e testable) | n/a (inconclusive: below resolution) | A_k^pred 0.0004–0.0051; Â_k −0.22 to +0.22, CIs span 0 except 38b (below 0) |
+| [G39](goalperiod-subhypotheses/G39/README.md) | replication (1 unit) | n/a (inconclusive: below resolution) | A_k^pred 0.0019; Â_k −0.066 [−0.323, 0.062] |
+| [G40](goalperiod-subhypotheses/G40/README.md) | replication (1 unit) | n/a (inconclusive: below resolution) | A_k^pred 0.0020; Â_k 0.035 [−0.031, 0.072] |
+| [G41](goalperiod-subhypotheses/G41/README.md) | replication (1 unit) | n/a (inconclusive: below resolution) | J_K 0.003 [−0.02, 0.02]; A_k^pred 0.00002; Â_k −0.247 [−0.331, −0.150] |
+| [G42](goalperiod-subhypotheses/G42/README.md) | replication (42b testable) | n/a (inconclusive: below resolution) | A_k^pred 0.0038; Â_k −0.038 [−0.200, 0.018] |
+| [G44](goalperiod-subhypotheses/G44/README.md) | replication (2 units < 3 days) | descriptive | no unit ≥ 3 days |
+| [G51](goalperiod-subhypotheses/G51/README.md) | replication (51a–51l) + native N2 | n/a (inconclusive: below resolution) | A_k^pred 0.003–0.018; pooled Â_k −0.053 [−0.093, −0.012]; P4 ρ −0.20, p 0.81 |
+| [NE41](goalperiod-subhypotheses/NE41/README.md) | native N1 (forced erasures, regime III) | descriptive | R_slow 1.06 [0.98, 1.14]; R_fast 1.28 [0.58, 1.98] (untestable) |
+
+The folders G37, G39–G42 and G44 were created after the run (the card's note asked for them before it). Their predictions are the card's registered P1, P3 and P5, copied with that disclosure.
 
 ## Results
 See Round 1 below.
@@ -189,7 +200,7 @@ See Round 1 below.
 
 Data: `synthetic/runs_<unit>.parquet` (15 units, 11,600 replicates), `synthetic/summary.json`.
 
-**Amendment A1 (2026-10-07 14:35 UTC, after the synthetic, before any real-data statistic).**
+**Amendment A1 (2026-10-07 14:31 UTC, after the synthetic, before any real-data statistic).**
 1. **P1 is untestable (S1 fires in every testable unit).** The resolvable fast amplitude is 92 to > 2,000 times the predicted one. By decision rule (i) the HH382 kill cannot fire, and P1 reports only an upper bound on Â_k (and Q_k). If a unit's Â_k is resolved, the report is the lower bound Q_k ≥ A_min / A_k^pred, as the card says. **By the hypothesis-level rule the verdict is "inconclusive (below resolution)"**, fixed now, before real data.
 2. **Shared-week kick inputs.** J_K is re-estimated with H130's read-jump estimator (copied into `h139lib`). γ_kick is not re-estimated in shared weeks; 0.15 (H130's pooled value) is used. S1 stays fired in a shared-week unit unless its J_K ≥ J* (0.65–1.37 there). For #51, H130's per-unit γ_kick (0.07–0.51, all inside [0.03, 1]) and J_K are used, as registered.
 3. **P2 is untestable.** Per-agent fits use a subset of the unit's pairs, so the agent-level resolution is coarser than the unit-level one, which is already ≥ 90× too coarse. The registered criterion (Â_k,i > 0 in ≥ 90% of draws) has power near its size at A_k^pred. P2 is not computed.
@@ -198,8 +209,59 @@ Data: `synthetic/runs_<unit>.parquet` (15 units, 11,600 replicates), `synthetic/
 6. A resolved Â_k on real data is read as "fast variance of some origin", not as R-innovation, unless the room × hour variant agrees: a fast drive leaks into the corrected Â_k in 5–27% of replicates.
 
 
+### Real data (run 2026-10-07 14:32 UTC, after the commit of the synthetic and A1)
+15 testable units (≥ 3 days: 37, 38a, 38b, 38e, 39, 40, 41, 42b, 51a, 51c–51h) plus 11 short units (descriptive). 8 periods, 3 vector variants, 3 autocovariance modes (drive-corrected, raw, room × hour). Data: `results/{units,agents}_G<NN>.parquet`, `inputs_G<NN>.json`, `summary.json`. Figures: `figures/summary_obs_col.pdf`, `figures/synthetic_col.pdf`. Estimates: 475 rows in `per_period_estimates` (`hypothesis == "H139"`).
+
+**Headline.** The test HH382 asks for cannot be done at this data size. The read-driven fast part that H130's kick predicts is A_k^pred = 0.0004–0.019 |x|² units (median 0.0044), 0.01–22% of the dynamic content variance (median 2.5%; A_s + B ≈ 0.09–0.31). The smallest fast amplitude the autocovariance resolves is 7 to > 1,000 times larger in every unit. So the verdict is inconclusive (below resolution), as fixed in A1 before real data. What the data do show (post hoc): no positive fast component above +0.07 in 14/15 units, and a lag-1 dip that the model cannot express.
+
+**Kick inputs.** #51: H130's per-unit J_K (0.043–0.055) and γ_kick (0.07–0.52). #37–#42 (re-estimated, H130's read jump): J_K 0.003 (41) to 0.166 (37); every upper 95% bound (≤ 0.22) lies below the J* needed for testability (0.65–1.49). S1 therefore holds with the real inputs in all 15 units. Read rate r̄: 0.74–1.20 per call (#51), 0.19–0.55 (#37–#42); talk calls only 0.7–1.3 (#51).
+
+**Resolution check on the real noise scale (post hoc).** The synthetic noise level was larger than the real one: the bootstrap SE of Â_k is 0.02–0.07 on real data vs 0.17–1.17 in W1. Scaling A_min by the real SE (A_min ≈ 3.4 SE, from the synthetic) gives A_min = 0.075–0.50 and A_min / A_k^pred = 6.8 (51d) to 9,993 (41). S1 still holds (> 2) in 15/15 units.
+
+| # | Prediction | Result (primary; variants) | Verdict by the rule |
+| --- | --- | --- | --- |
+| S1 | A_min > 2 A_k^pred in #51 units | fires in 15/15 units (synthetic; real inputs; real noise scale) | **supported** (as predicted) |
+| S2 | Q_k unbiased ±30% in W1×5, W1×20 | bias not resolvable (−108% to +4,057%); unbiased at A ≥ 1 | failed |
+| S3 | R_fast separates Wctx from W1 in ≥ 80% | 37–59% | failed (N1 descriptive) |
+| **P1** (HH, kill) | pooled Q_k in [⅔, 1.5], 90% CI inside [0.5, 2] | **untestable (S1, A1.1).** Bound only: pooled Â_k −0.058 [−0.099, −0.017] (I² 0.72, 15 units); A_k^pred median 0.0044. Per-unit 95% upper bounds ≤ +0.072 except 38e (+0.30). gte −0.041 [−0.081, −0.001]; white32 −0.042 [−0.077, −0.008]; raw +0.024 [−0.005, 0.054]; room × hour −0.006 [−0.046, 0.034]. No unit has Â_k resolved above 0 (primary). | **untestable → inconclusive (below resolution)**; kill cannot fire |
+| P2 | slope of ln Â_k,i on ln r̄_i in [0.5, 1.5] | not computed (A1.3) | untestable |
+| P3 | f_s ≥ 0.8 in ≥ 2/3 of units | 13/15 (f_s > 1 in 11 units because Â_k < 0) | passes; non-diagnostic (A1.5) |
+| P4 | split-unit Spearman of f_s ≥ 0.3, p < 0.05 (#51) | ρ −0.20 [−0.61, 0.27], permutation p 0.81, 23 agents; agent-level f_s unstable (median 0.12, IQR 0.00–0.78) | failed |
+| P5 | two-rate beats one-rate out of fold in ≥ 1/2 | 9/15 (W0 size 34–58%) | passes; non-diagnostic (A1.5) |
+| N1 (NE41) | R_fast < 0.5 and R_slow ≥ 0.8 | R_fast 1.28 [0.58, 1.98] (pooled; per unit −38 to +3.3); R_slow 1.06 [0.98, 1.14] (I² 0.12) | untestable (S1); descriptive |
+| N2 (G51) | #51 replicates P1–P4 | P1, P2 untestable; P3 passes (non-diagnostic); P4 failed. Pooled #51 Â_k −0.053 [−0.093, −0.012], 7 units | n/a (inconclusive) |
+
+**Hypothesis-level verdict (rule fixed in the card and A1): inconclusive (below resolution).** The kill did not fire and could not fire.
+
+**Post hoc findings (labelled; not tests of the card).**
+1. **Lag-1 dip.** The own covariance at a 1-call lag is lower than at a 2-call lag in 14/15 units, in all three modes (e.g. 51g raw: 0.22 at τ = 1, 0.24 at τ = 2, 0.29 at τ = 3). Statements on consecutive calls are less alike than statements 2–7 calls apart. A fast part made of decaying kicks (A_k ≥ 0) cannot give this. Candidates: alternation between replies and own-task statements, or producing-call attribution errors at 1-call lags. This is why the constrained Â_k is negative in 7/15 units (CI below 0).
+2. **The drive correction cuts short-lag covariance.** Corrected minus raw is −0.10 to −0.15 at lags 1–3 in #51 units, vs about −0.03 at the longest lags: the cross-agent covariance at short wall lags (conversation, H130's pair co-movement) is subtracted from own-agent pairs. The synthetic had no such pair co-movement, so it did not show this bias.
+3. **Slow part.** In #51 the fitted slow rate is γ_s 0.0075–0.023 per call (median 0.013), close to H130's γ_auto 0.0094. The slow part survives forced erasures (R_slow 1.06), as H130's R_C 1.03 did.
+4. **Fast-share scale.** The predicted fast share is 1.1–8.1% of the dynamic variance in #51 units (0.01–22% over all 15) (not 0.2% per read, as the card's estimate from H130's rounded numbers said): the dynamic content variance (A_s + B ≈ 0.2) is far smaller than the synthetic assumed (6.4).
+
+### Impostors (round 1)
+| Impostor | Status | Note |
+| --- | --- | --- |
+| Scheduler field | removed | per-call clock; within-day lags only |
+| Exogenous field | partly | drive correction leaves 5–27% false Â_k > 0 under a 5-min drive (synthetic); it over-subtracts conversation at short wall lags on real data (post hoc) |
+| Shared model priors | removed | style_resid, leave-day-out wells; gte and white32 agree in sign |
+| Contemporaneous convergence | partly (moot) | kick inputs are read-minus-in-flight; P1, which it protects, is untestable |
+
+**Scorecard (round 1):** A1 B1 C0 D0 E1 F1 G0 H0 I0 (table above).
+
+**Claim that stands:** in regime-III units (#37–#42 and #51; 15 units with ≥ 3 days), the fast content variance that H130's read kick predicts (A_k^pred median 0.0044 |x|² units, median 2.5% of the dynamic variance) lies 7 to > 1,000 times below the smallest fast amplitude the own autocovariance resolves, so HH382's variance-split test is untestable at this data size. Exclusions: P1 and P2 (untestable; verdict inconclusive), N1 (untestable; R_fast descriptive), P3 and P5 (pass but non-diagnostic), P4 (failed; agent-level shares unstable), the negative Â_k and the lag-1 dip (post hoc), R_slow 1.06 (descriptive).
+
+### Round 2 redirects
+- **What the direction is really after:** how much of an agent's moment-to-moment content is the echo of what it read.
+- **H139-R1. Measure the echo where it is large.** Use H130's dose design (projection on the sender direction) instead of the total autocovariance: it isolates the read channel and has the power the variance split lacks.
+- **H139-R2. The lag-1 dip.** Split τ = 1 pairs by call kind (talk vs work), by reply status (DQ2) and by producing-call confidence, to tell alternation from attribution error.
+- **H139-R3. Drive correction without conversation.** Subtract the cross-agent covariance only from pairs of agents that did not read each other in the window (an unread-partner correction), and re-run the synthetic with pair co-movement planted.
+- **H139-R4. Calibrate the synthetic noise scale** to the real |x|² and dynamic variance before any new power claim.
+
 ## Notes
 - 2026-10-07 09:15 UTC: card written from HH382 (approved by Vivian 2026-10-07).
+- 2026-10-07 08:38–09:44 UTC (system clock UTC): synthetic validation on 15 real skeletons. An API session limit then paused the work; on resume the on-disk outputs were checked and nothing was re-run.
+- 2026-10-07 14:31 UTC: Amendment A1 written; 14:32 UTC: scheme, code, synthetic and A1 committed (84664aa) before any real-data statistic. 14:32 UTC: real-data run. A dry run on random vectors tested the pipeline first.
 - The HH says the slow part "matches the H46/H73 agent constant". H46 and H73 measure *style* (17-d text features), not content. H139 tests the content analog: whether the slow share is an agent constant (P4). The style numbers are not used as a target.
 - The HH's "variance at lags of 1 call or less" is sharpened to the fitted fast component A_k: at lag 1 the slow part still holds most of the covariance, so a lag-1 cut would mix the two.
 - **Risk flagged before data:** by H130's rounded numbers the predicted fast share is ≈ 0.2% of dynamic content variance per read per call. If the synthetic shows this is below resolution (S1), HH382's numeric test is untestable at this data size, and only an upper or lower bound is reported.
