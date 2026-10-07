@@ -1,6 +1,6 @@
 # H135 × G42: Run your own Youtube channel! (2026-05-18 → 05-22)
 
-**Verdict:** pending
+**Verdict:** n/a
 **Role:** exploratory (replication)
 **Period:** regime III · mode I · 15–16 agents · #best/#rest · 5 days. Units: `period_units` (42a, 42b).
 
@@ -23,7 +23,12 @@ Replication period in H94's and H129's sets (non-reserved).
 | 42b | attention | 26 | 15 | 8 | 5 | 0 | no | 16 | 1 | no | M3 |
 
 ## Result
-Not run.
+*Run 2026-10-07 (`analysis/run.py`).* No unit-channel passes the structural precondition under either co-alive rule, so no H135 statistic was computed here. Synthetic (A1): even where hops exist, the zero-flux test has power ≤ 0.29 against the age-drift and sink walkers.
+
+O5 (descriptive; shares the occupancy term with π, not a test): 42a attention Spearman 0.50; 42a work n 2; 42b attention Spearman 0.57; 42b work n 3.
+
+## Scorecard (period-specific axes)
+None informed.
 
 ## Notes
 - 2026-10-07: folder created by the round-1 agent. Data: `data/processed/H135-detailed-balance-potts-walker/G42/`.

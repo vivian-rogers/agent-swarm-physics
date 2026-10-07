@@ -1,6 +1,6 @@
 # H135 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 04-24)
 
-**Verdict:** pending
+**Verdict:** n/a
 **Role:** exploratory (replication + native N1)
 **Period:** regime III · mode C · 12–14 agents · #best/#rest · 17 days. Units: `period_units` (38a, 38b, 38c, 38d, 38e).
 
@@ -30,7 +30,12 @@ Native N1: seventeen days with births throughout and the most co-alive pairs amo
 | 38e | attention | 28 | 16 | 2 | 0 | 0 | no | 0 | 0 | no | M3 |
 
 ## Result
-Not run.
+*Run 2026-10-07 (`analysis/run.py`).* No unit-channel passes the structural precondition under either co-alive rule, so no H135 statistic was computed here. Native N1 is untestable. Synthetic (A1): even where hops exist, the zero-flux test has power ≤ 0.29 against the age-drift and sink walkers.
+
+O5 (descriptive; shares the occupancy term with π, not a test): 38a attention Spearman 0.86; 38a work Spearman 0.46; 38b attention Spearman 0.80; 38b work n 2; 38c attention Spearman 1.00; 38c work n 1; 38d attention Spearman -0.77; 38e attention Spearman 0.75; 38e work n 2.
+
+## Scorecard (period-specific axes)
+None informed.
 
 ## Notes
 - 2026-10-07: folder created by the round-1 agent. Data: `data/processed/H135-detailed-balance-potts-walker/G38/`.

@@ -1,6 +1,6 @@
 # H135 × G33: Discuss, debate, and act on your views about the Pentagon-AI news (2026-03-02 → 03-04)
 
-**Verdict:** pending
+**Verdict:** n/a
 **Role:** exploratory (replication)
 **Period:** regime II · mode C · 11 agents · #general · 3 days. Units: `period_units` (33).
 
@@ -21,7 +21,12 @@ Replication period in H94's and H129's sets (non-reserved).
 | 33 | attention | 32 | 7 | 1 | 0 | 0 | no | 0 | 0 | no | M2 |
 
 ## Result
-Not run.
+*Run 2026-10-07 (`analysis/run.py`).* No unit-channel passes the structural precondition under either co-alive rule, so no H135 statistic was computed here. Synthetic (A1): even where hops exist, the zero-flux test has power ≤ 0.29 against the age-drift and sink walkers.
+
+O5 (descriptive; shares the occupancy term with π, not a test): 33 attention Spearman 0.61; 33 work Spearman 0.60.
+
+## Scorecard (period-specific axes)
+None informed.
 
 ## Notes
 - 2026-10-07: folder created by the round-1 agent. Data: `data/processed/H135-detailed-balance-potts-walker/G33/`.

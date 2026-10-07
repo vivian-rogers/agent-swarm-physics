@@ -1,6 +1,6 @@
 # H135: Max-ent allocation as the steady state of a detailed-balance Potts walker: hop-rate ratios from max-ent occupancies
 
-**Status:** round 1 in progress (2026-10-07): scheme built and cross-checked, structural counts and synthetic validation done, Amendment A1 written before any real-data outcome. Pre-registered 2026-10-07 from HH378 (approved by Vivian 2026-10-07).
+**Status:** round 1 done (2026-10-07, non-reserved data only): **inconclusive** by the card's rule. The primary co-alive rule leaves 0/62 unit-channels testable, and the zero-flux test is unpowered against the age-drift and sink walkers (Amendment A1). On the five #51 attention units testable under the 80% variant, destinations are not heat-bath (ψ 0.44 [0.41, 0.48], habit ρ 1.9 [1.4, 2.4], 5/5). Pre-registered 2026-10-07 from HH378 (approved by Vivian 2026-10-07).
 **Question (GOALS.md):** **Q6** (thermodynamics and selection: is the project walk reversible, so that its steady state is the max-ent allocation?). Second: **Q2** (field vs coupling: are hop rates set by a static field, the max-ent prices, or by a flux toward crowded projects?).
 **Fields:** stochastic thermodynamics (detailed balance, pair flux, Kolmogorov criterion), stat mech (kinetic Potts walker, heat-bath and Metropolis rates), info theory (max-ent allocation)
 **Literature:** [Kolchinsky, Dechant, Yoshimura & Ito 2026](../../literature/kolchinsky-2026-generalized-free-energy-excess-housekeeping.md) (excess vs housekeeping; a reversible walker has neither cycle currents nor a net pair flux at steady state); [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (EP as statistical irreversibility). Cited from memory (†): Kelly, *Reversibility and Stochastic Networks* (1979)† (detailed balance, Kolmogorov's criterion); Jaynes, *Phys. Rev.* 106, 620 (1957)† (max-ent).
@@ -72,7 +72,7 @@ Between two projects that both live through the window, do agents hop as often f
 ## Impostors (STANDARDS §1)
 | Impostor | Relevant? | How it is handled | Status |
 | --- | --- | --- | --- |
-| Scheduler field | partly | Rates are per own call (H129's dwell clock), not per wall hour. Nights add no calls and no hops. | planned (removed) |
+| Scheduler field | partly | Rates are per own call (H129's dwell clock), not per wall hour. Nights add no calls and no hops. | removed (round 1: T and hazards in own calls) |
 | Exogenous field (kickoff, goal, operator) | yes | A kickoff is a potential: it makes flux into the named repo at the start (excess). Co-alive pairs exclude repos born at the kickoff; a variant drops the first 4 active hours after each kickoff. Ownership and rooms are fields inside π (H94). | planned (partly) |
 | Shared model priors | partly | A shared genre order of work (build → test → document) would give the same flux in every agent. Projects are repos, not types; the lab mix of the hops on the pairs with the largest |n_ab − n_ba| is reported. | planned (partly) |
 | Contemporaneous convergence | n/a | The statistics are within-agent hop orders and pair counts, not co-movement between agents. | n/a |
@@ -129,25 +129,36 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
-| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
-| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 0 | not run |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
-| E interventional | predicts the change across a natural experiment | 0 | not run |
-| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 0 | not run |
-| G ground truth | agrees with known structure | 0 | not run |
-| H comparative | beats the named rivals | 0 | not run |
-| I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Hops and quanta rebuilt from shared builders equal H129's and H94's files exactly; owners from non-reserved commits differ for 37 repos. Attention labels are mentions, not work. Only #51 attention passes the precondition. |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Own-call clock (no wall time). Dwell aging built into every world. The walk is not Markov: habit ρ 1.2–2.6 in 5/5 testable units. |
+| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 0 | The heat-bath destination law fails in 5/5 (ψ 0.39–0.50, CI excludes 1; calibrated LR p 0.01). No out-of-sample test. |
+| D unfitted predictions | unfitted statistics and the model's signature | 0 | The signature that π (fitted on quanta, not hops) predicts, ψ = 1, fails. The flux signature is unpowered (A1). |
+| E interventional | predicts the change across a natural experiment | 0 | N3 (NE42 hub) unpowered (W2 beyond the W0 band in 0/200 runs); N2 (G44 rooms) untestable. |
+| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 1 | O4 recovers ψ and ρ (W0 ψ 1.00 ± 0.03–0.08, coverage 0.92–1.00; W4 ρ 2.0). O1 is an identity; O2/O3 power ≤ 0.29 against W1/W2; χ² LR invalid (recalibrated). |
+| G ground truth | agrees with known structure | 0 | The assigned-room contrast (G44) is untestable. |
+| H comparative | beats the named rivals | 1 | R-habit beats heat-bath on destinations (ρ 1.9 [1.4, 2.4]); ψ sits in the Metropolis band in 4/5. R-age and R-sink cannot be told from W0 by flux (A1). |
+| I transfer | holds in other same-mode periods, including the reserved periods | 0 | Five own-role #51 attention units only; reserved periods not run. |
+
+**Round 1 scorecard:** A1 B1 C0 D0 E0 F1 G0 H1 I0.
 
 ## Results by goal period
-No period has been run. Period folders (`goalperiod-subhypotheses/G<NN>/`) are created with their dated predictions before each run. `goalperiod-subhypotheses/GNN/` is the unfilled template.
+Per-period folders hold the structural counts, dated predictions and results.
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| replication unit-channels (precondition list) | replication | pending | not run |
-| G38 | native N1 | pending | not run |
-| G44 | native N2 | pending | not run |
-| G40 | native N3 | pending | not run |
+| [G30](goalperiod-subhypotheses/G30/README.md) | replication | n/a | untestable: ≤ 73 co-alive hops, ≤ 1 pair ≥ 4 |
+| [G31](goalperiod-subhypotheses/G31/README.md) | replication | n/a | untestable (31a attention: 41 / 51 co-alive hops) |
+| [G33](goalperiod-subhypotheses/G33/README.md) | replication | n/a | untestable (0 co-alive hops) |
+| [G35](goalperiod-subhypotheses/G35/README.md) | replication | n/a | untestable (≤ 1 co-alive hop) |
+| [G36](goalperiod-subhypotheses/G36/README.md) | replication | n/a | untestable (≤ 21 co-alive hops) |
+| [G37](goalperiod-subhypotheses/G37/README.md) | replication | n/a | untestable (≤ 33) |
+| [G38](goalperiod-subhypotheses/G38/README.md) | replication + native N1 | n/a | N1 untestable (≤ 10 co-alive hops primary, ≤ 49 variant) |
+| [G39](goalperiod-subhypotheses/G39/README.md) | replication | n/a | untestable (41 co-alive hops, 4 pairs) |
+| [G40](goalperiod-subhypotheses/G40/README.md) | replication + native N3 | descriptive | N3 unpowered; hub flux days 1–2: work 0.00 (5/5), attention 0.04 (12/11); W0 bands [0.20, 1.00], [−0.00, 0.29] |
+| [G41](goalperiod-subhypotheses/G41/README.md) | replication | n/a | untestable (0 co-alive hops) |
+| [G42](goalperiod-subhypotheses/G42/README.md) | replication | n/a | untestable (≤ 5) |
+| [G44](goalperiod-subhypotheses/G44/README.md) | replication + native N2 | n/a | N2 untestable (≤ 31 co-alive hops) |
+| [G51](goalperiod-subhypotheses/G51/README.md) | replication (51a–51l) | mixed | 80% variant, 5 attention units: m_π inside the W0 band 5/5; heat-bath destinations rejected 5/5 (ψ 0.39–0.50, ρ 1.2–2.6) |
 
 ## Results
 ## Round 1 (2026-10-07)
@@ -202,7 +213,64 @@ No period has been run. Period folders (`goalperiod-subhypotheses/G<NN>/`) are c
 4. **N3 is unpowered** (W2 exceeds the W0 band in 0/200 runs) and is reported descriptively.
 5. Not amended: units, co-alive rules, precondition, thresholds, credences, the verdict rule.
 
+### R1.2 Exploration results (run 2026-10-07 after commit 4e7440d; non-reserved data)
+*`analysis/run.py`; results in `data/processed/H135-detailed-balance-potts-walker/results/results.json`; figure [`figures/summary_obs.pdf`](figures/summary_obs.pdf).* Five unit-channels, all #51 attention, 80% co-alive variant (the primary rule leaves none). Pair-bootstrap 95% CIs (1,000 draws); ψ and ρ with Wald CIs; bands from 200 synthetic runs on each unit's own skeleton.
+
+| Unit | Hops / co-alive hops | O1 slope [CI]; r [CI]; pairs | O1 split: r of flux term / occupancy term | m_π [CI]; W0 band | m_2^co [CI]; W0 band | ψ [CI] | ρ [CI] | LR calibrated p |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 51a | 243 / 134 | 1.58 [0.93, 2.68]; 0.69 [0.25, 0.94]; 12 | 0.26 / 0.73 | 0.015 [−0.11, 0.15]; [−0.06, 0.09] in | −0.015 [−0.13, 0.12]; [−0.05, 0.09] in | 0.50 [0.41, 0.58] | 1.21 [0.88, 1.55] | 0.01 |
+| 51c | 355 / 126 | 1.37 [0.56, 3.76]; 0.74 [0.32, 0.93]; 12 | 0.03 / 0.89 | −0.042 [−0.20, 0.09]; [−0.05, 0.09] in | 0.095 [−0.03, 0.23]; [−0.06, 0.08] **above** (W0 p 0.005; inside the W1 band [0.005, 0.11]) | 0.50 [0.43, 0.57] | 1.18 [0.88, 1.48] | 0.01 |
+| 51f | 418 / 175 | 1.60 [1.03, 2.31]; 0.80 [0.57, 0.92]; 13 | −0.36 / 0.83 | −0.029 [−0.12, 0.04]; [−0.04, 0.08] in | 0.006 [−0.07, 0.09]; [−0.07, 0.05] in | 0.39 [0.33, 0.45] | 2.21 [1.94, 2.48] | 0.01 |
+| 51g | 1040 / 406 | 1.11 [0.96, 1.33]; 0.90 [0.81, 0.96]; 27 | −0.07 / 0.94 | −0.005 [−0.06, 0.05]; [−0.03, 0.05] in | −0.044 [−0.10, 0.01]; [−0.05, 0.05] in | 0.44 [0.40, 0.47] | 2.35 [2.19, 2.51] | 0.01 |
+| 51h | 321 / 156 | 1.37 [0.99, 2.07]; 0.91 [0.77, 0.98]; 10 | −0.07 / 0.97 | 0.051 [−0.03, 0.16]; [−0.05, 0.07] in | 0.026 [−0.05, 0.13]; [−0.07, 0.07] in | 0.43 [0.36, 0.50] | 2.56 [2.22, 2.90] | 0.01 |
+
+**Random-effects means (DerSimonian–Laird, k = 5; exception (d)):** m_π −0.002 [−0.040, 0.036] (τ² 0); W0-centred m_π −0.015 [−0.053, 0.023]; m_2^co −0.005 [−0.047, 0.036]; W0-centred −0.008 [−0.048, 0.032]; β_π −0.02 [−0.11, 0.06]; θ −0.02 [−0.11, 0.06]; **ψ 0.44 [0.41, 0.48]; ρ 1.91 [1.38, 2.44]** (τ² 0.35). The calibrated LR p is 1/101 in every unit: every observed χ² p lies below all 100 W0 values.
+
+**Prediction vs result (each rule applied literally):**
+
+| ID | Prediction | Result | Verdict by the rule |
+| --- | --- | --- | --- |
+| S1 | O1 passes in > 0.2 of W1–W3 runs | up to 1.00 (W3, 51g); 0.61 (W1, 51c) | **holds** (synthetic) |
+| P1 (HH) | O1 slope in [0.5, 2], r > 0, p < 0.05 in ≥ 2/3 | 5/5 (slopes 1.11–1.60) | holds as written; **read as consistent only** (S1, A1). The occupancy term carries it (r 0.73–0.97); the flux term does not (r −0.36 to 0.26). |
+| P1b (HH) | ≥ 1/2 of pairs with ≥ 3 hops each way within ×1.5 | 0.50–0.67 in 5/5 (3–15 pairs per unit) | holds as written; descriptive (O1 identity, few pairs) |
+| P2 | m_π inside the W0 band in ≥ 2/3, RE CI ∋ 0 | 5/5 inside; RE −0.002 [−0.040, 0.036] | holds as written; **unpowered** (A1): not evidence of detailed balance |
+| P3 | m_2^co inside the W0 band in ≥ 2/3 | 4/5 (51c above) | holds as written; unpowered (A1) |
+| P4 | ψ CI ∋ 1, ρ CI ∋ 0, LR p ≥ 0.05 in ≥ 1/2 | 0/5 on each condition | **failed** |
+| P4 "counts against" | ρ > 0 with CI > 0 (H93 habit) in > 1/2 | 5/5 | **R-habit holds** |
+| N1 (G38) | m_π, m_2^co inside the W0 band | — | untestable (precondition) |
+| N2 (G44) | #best one-way, #rest balanced | — | untestable (precondition) |
+| N3 (G40) | hub flux days 1–2 beyond the W0 band | work 0.00 (5 in / 5 out), band [0.20, 1.00]; attention 0.04 (12 / 11), band [−0.00, 0.29] | no excess flux into the hub; **unpowered** (A1), counts seen before the band |
+| Kill A | r CI ∋ 0 or slope outside [0.5, 2] in ≥ 1/2 | 0/5 | does not fire (consistent only) |
+| Kill B | RE mean CI excludes 0 and W0-centred RE CI excludes 0 | both CIs contain 0 | does not fire (unpowered) |
+
+**Verdict by the card's rule: inconclusive.** The primary co-alive rule leaves < 3 testable unit-channels, and O2 is unpowered (A1). On the variant units the pattern matches the card's "narrowed" row (P2, P3 hold as written; P4 fails), but with an unpowered P2 that row cannot be claimed.
+
+**O5 (descriptive):** in 39 unit-channels with ≥ 10 owned agent–project pairs, the observed log ratio of hop-in to hop-out rates for an owned project tracks the heat-bath log-odds ln[π_i(own)/(1 − π_i(own))] (Spearman median 0.84, positive in 39/39). The observed in-rate exceeds the prediction (median residual +0.21 nats, positive in 32/39). Like O1, this ratio shares the occupancy term with π, so it is not a test.
+
+**Post hoc readings (labelled; not scored).**
+- The observed ψ lies inside the Metropolis world's band in 4/5 units (51c, 51f, 51g, 51h; 51a 0.50 just above [0.32, 0.48]). Destinations respond to π_i with about 0.44 of the heat-bath exponent, and agents return to projects they held before (ρ ≈ 2 nats, H93's habit scale).
+- The co-alive age flux is zero on average (RE −0.005 [−0.047, 0.036]), while H129 found m_2 > 0 in 30/37 unit-channels on all hops. With A1's argument (an age preference among co-alive projects is a field), this places H129's drift in births and deaths, not in hops between living projects. This is a reading of two different statistics, not a test.
+
+**Impostors (round 1):**
+
+| Impostor | Status | Round-1 handling |
+| --- | --- | --- |
+| Scheduler field | removed | Occupancy, hazards and the walker run on own calls; nights add nothing. |
+| Exogenous field | partly | Ownership and rooms are inside π. The kickoff variant (drop the first 4 active hours) was not run; only 51a contains a kickoff, and its result matches the other four units. |
+| Shared model priors | open | The lab mix of the largest-flux pairs was not computed; with no flux beyond the W0 band there is little to explain. |
+| Contemporaneous convergence | n/a | Within-agent hop orders and pair counts. |
+| Birth and death | partly | The 80% variant admits projects absent for ≤ 20% of the unit; the strict rule leaves nothing testable. Cross-fit π not run. |
+| Counting identity | removed | O1 (and O5) are declared identities (S1, A1) and carry no claim. |
+
+**Claim that stands:** In the five own-role #51 attention units testable under the 80% co-alive variant, agents do not pick hop destinations by a heat-bath law on the max-ent occupancies: the destination slope is ψ = 0.44 [0.41, 0.48] instead of 1, with a return-to-held-project bonus ρ = 1.9 [1.4, 2.4] nats, 5/5 units (ψ CI excludes 1 and ρ CI excludes 0 in each). *Excluded:* zero net flux on co-alive pairs (P2, P3: unpowered, power ≤ 0.29 against age-drift and sink walkers), the HH's rate-ratio slope (O1: occupancy identity), O5 (identity), natives N1 and N2 (untestable), N3 (unpowered, counts seen before the band), the work channel and every period outside #51 (untestable), the Metropolis and births readings (post hoc), the origin × destination LR result (calibrated p 0.01 in 5/5, but calibrated on a walker without habit).
+
+## Round 2 redirects (proposed by the round-1 agent, 2026-10-07)
+- **H135-R1. A flux test with power.** Zero pair flux only has power against cycle forces and time-varying fields. Replace O2 with a test against a nonreciprocal or time-varying field, for example flux into a project during the hours after its owner arrives (H137's one-way pairs).
+- **H135-R2. Destination law.** Fit u_b = ψ ln π_i(b) + ρ held + λ age on all hops (no co-alive restriction), per unit, and compare ψ across own-role and shared weeks. This tests whether ψ < 1 is general or an attention-channel effect.
+- **H135-R3. Cross-fit π** (odd/even days) to check that ψ < 1 is not attenuation from noise in π_i.
+
 ## Notes
-- 2026-10-07: card written from HH378 (approved by Vivian 2026-10-07). Round-1 order: rebuild hops and π, check against H129 and H94 files → structural counts → period READMEs with dated predictions → synthetic → dated amendments → replication and natives → estimates rows (`h135_rate_ratio_slope`, `h135_net_maxent_flux`, `h135_coalive_age_flux`, `h135_heatbath_psi`) → frozen `confirm.py` (dry run only).
+- 2026-10-07: card written from HH378 (approved by Vivian 2026-10-07).
+- 2026-10-07: round 1 by the round-1 agent. Order: build and cross-check → structural counts → period predictions → synthetic → A1 → commit 4e7440d → real run → estimates (22 rows) → summary. `confirm.py` not written: the primary test is unpowered, so a frozen confirmation of it would test nothing; round 2 should first fix the flux test (H135-R1). Round-1 order: rebuild hops and π, check against H129 and H94 files → structural counts → period READMEs with dated predictions → synthetic → dated amendments → replication and natives → estimates rows (`h135_rate_ratio_slope`, `h135_net_maxent_flux`, `h135_coalive_age_flux`, `h135_heatbath_psi`) → frozen `confirm.py` (dry run only).
 - The HH's "π_b / π_a not fitted from the hops" is true: π comes from work quanta. But H94's marginals equal the observed repo sizes, so the HH's ratio test shares the occupancy term with the rates (fact 1). This is stated before data.
 - Compute: ≤ 2 threads, one heavy job at a time (STANDARDS §9).

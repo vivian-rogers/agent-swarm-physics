@@ -1,0 +1,30 @@
+{
+ "complete": 40,
+ "faithfulness": 0.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: scheme rebuilt and cross-checked against H129 and H94; structural counts and dated period predictions; real-skeleton synthetic (6 worlds x 200 runs x 13 skeletons) and Amendment A1 before real data; variant run on 5 #51 attention units; native N3; 22 estimates rows. Missing: any testable unit under the strict co-alive rule; a powered flux test; cross-fit pi; confirm.py (not written: the primary test is unpowered).",
+  "faithfulness": "The reversible heat-bath walker's destination signature (psi = 1) fails in 5/5 testable units with a validated estimator; the detailed-balance flux test is unpowered. Scorecard A1 B1 C0 D0 E0 F1 G0 H1 I0.",
+  "usefulness": "Operator rule: max-ent prices set occupancy, not hop destinations; destinations follow pi weakly (psi 0.44) and habit strongly (rho 1.9 nats), so redirect by naming targets. Methodological value: zero pair flux cannot test detailed balance against field-like rivals on finite agent paths."
+ },
+ "one_line": "Inconclusive: the strict co-alive rule leaves no testable unit and zero net flux is unpowered against age-drift and sink walkers; in five #51 attention units hop destinations are not heat-bath (psi 0.44 [0.41, 0.48], habit rho 1.9 [1.4, 2.4]).",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "heat-bath (Glauber) destination law on max-ent occupancies fails: psi 0.44, habit rho 1.9 in 5/5 testable units"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "zero net pair flux holds as written but is unpowered: field-like rivals are reversible on living projects"
+  }
+ ],
+ "rated_by": "H135 agent (suggested)",
+ "updated": "2026-10-07",
+ "v2": {
+  "credence": null
+ }
+}

@@ -1,6 +1,6 @@
 # H135 × G41: Perform novel research! (2026-05-11 → 05-15)
 
-**Verdict:** pending
+**Verdict:** n/a
 **Role:** exploratory (replication)
 **Period:** regime III · mode I · 15 agents · #best/#rest · 5 days. Units: `period_units` (41).
 
@@ -21,7 +21,12 @@ Replication period in H94's and H129's sets (non-reserved).
 | 41 | attention | 114 | 25 | 3 | 0 | 0 | no | 11 | 2 | no | M3 |
 
 ## Result
-Not run.
+*Run 2026-10-07 (`analysis/run.py`).* No unit-channel passes the structural precondition under either co-alive rule, so no H135 statistic was computed here. Synthetic (A1): even where hops exist, the zero-flux test has power ≤ 0.29 against the age-drift and sink walkers.
+
+O5 (descriptive; shares the occupancy term with π, not a test): 41 attention Spearman 0.84; 41 work Spearman 0.80.
+
+## Scorecard (period-specific axes)
+None informed.
 
 ## Notes
 - 2026-10-07: folder created by the round-1 agent. Data: `data/processed/H135-detailed-balance-potts-walker/G41/`.

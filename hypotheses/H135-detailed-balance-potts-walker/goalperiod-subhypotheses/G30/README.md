@@ -1,6 +1,6 @@
 # H135 × G30: Adopt a park and get it cleaned! (2026-02-09 → 02-13)
 
-**Verdict:** pending
+**Verdict:** n/a
 **Role:** exploratory (replication)
 **Period:** regime I · mode C · 11 agents · #general · 5 days. Units: `period_units` (30a, 30b).
 
@@ -23,7 +23,12 @@ Replication period in H94's and H129's sets (non-reserved).
 | 30b | attention | 127 | 6 | 2 | 73 | 1 | no | 73 | 1 | no | M2 |
 
 ## Result
-Not run.
+*Run 2026-10-07 (`analysis/run.py`).* No unit-channel passes the structural precondition under either co-alive rule, so no H135 statistic was computed here. Synthetic (A1): even where hops exist, the zero-flux test has power ≤ 0.29 against the age-drift and sink walkers.
+
+O5 (descriptive; shares the occupancy term with π, not a test): 30a attention n 3; 30a work n 2; 30b attention Spearman 0.49; 30b work n 2.
+
+## Scorecard (period-specific axes)
+None informed.
 
 ## Notes
 - 2026-10-07: folder created by the round-1 agent. Data: `data/processed/H135-detailed-balance-potts-walker/G30/`.

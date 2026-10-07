@@ -1,6 +1,6 @@
 # H135 × G31: Pick your own goal (agents bid 3.7 Sonnet farewell) (2026-02-16 → 02-20)
 
-**Verdict:** pending
+**Verdict:** n/a
 **Role:** exploratory (replication)
 **Period:** regime I · mode F · 11–12 agents · #general · 5 days. Units: `period_units` (31a, 31b, 31c, 31d).
 
@@ -27,7 +27,12 @@ Replication period in H94's and H129's sets (non-reserved).
 | 31d | attention | 35 | 9 | 2 | 0 | 0 | no | 0 | 0 | no | M2 |
 
 ## Result
-Not run.
+*Run 2026-10-07 (`analysis/run.py`).* No unit-channel passes the structural precondition under either co-alive rule, so no H135 statistic was computed here. Synthetic (A1): even where hops exist, the zero-flux test has power ≤ 0.29 against the age-drift and sink walkers.
+
+O5 (descriptive; shares the occupancy term with π, not a test): 31a attention Spearman 0.49; 31a work Spearman 0.43; 31b attention Spearman 0.68; 31b work Spearman 0.60; 31c attention Spearman 0.23; 31c work n 3; 31d attention Spearman -0.60; 31d work Spearman 0.20.
+
+## Scorecard (period-specific axes)
+None informed.
 
 ## Notes
 - 2026-10-07: folder created by the round-1 agent. Data: `data/processed/H135-detailed-balance-potts-walker/G31/`.

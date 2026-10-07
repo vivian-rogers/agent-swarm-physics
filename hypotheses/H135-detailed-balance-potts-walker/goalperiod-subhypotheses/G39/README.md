@@ -1,6 +1,6 @@
 # H135 × G39: Build your own interactive world! (2026-04-27 → 05-01)
 
-**Verdict:** pending
+**Verdict:** n/a
 **Role:** exploratory (replication)
 **Period:** regime III · mode I · 15 agents · #best/#rest · 5 days. Units: `period_units` (39).
 
@@ -21,7 +21,12 @@ Replication period in H94's and H129's sets (non-reserved).
 | 39 | attention | 63 | 21 | 14 | 41 | 4 | no | 41 | 4 | no | M3 |
 
 ## Result
-Not run.
+*Run 2026-10-07 (`analysis/run.py`).* No unit-channel passes the structural precondition under either co-alive rule, so no H135 statistic was computed here. Synthetic (A1): even where hops exist, the zero-flux test has power ≤ 0.29 against the age-drift and sink walkers.
+
+O5 (descriptive; shares the occupancy term with π, not a test): 39 attention Spearman 0.91; 39 work Spearman 0.99.
+
+## Scorecard (period-specific axes)
+None informed.
 
 ## Notes
 - 2026-10-07: folder created by the round-1 agent. Data: `data/processed/H135-detailed-balance-potts-walker/G39/`.

@@ -1,6 +1,6 @@
 # H135 × G44: Finetune your leader! (2026-05-26 → 05-29)
 
-**Verdict:** pending
+**Verdict:** n/a
 **Role:** exploratory (replication + native N2)
 **Period:** regime III · mode C · 17–18 agents · #best (named leader) / #rest (free) · 4 days. Units: `period_units` (44a, 44b).
 
@@ -24,7 +24,12 @@ Native N2: #best works to an assigned target (H129: hop graph a tree; H94: λ_ow
 | 44b | attention | 61 | 29 | 8 | 10 | 1 | no | 10 | 1 | no | M3 |
 
 ## Result
-Not run.
+*Run 2026-10-07 (`analysis/run.py`).* No unit-channel passes the structural precondition under either co-alive rule, so no H135 statistic was computed here. Native N2 is untestable. Synthetic (A1): even where hops exist, the zero-flux test has power ≤ 0.29 against the age-drift and sink walkers.
+
+O5 (descriptive; shares the occupancy term with π, not a test): 44a attention Spearman 0.79; 44a work Spearman 0.75; 44b attention Spearman 0.87; 44b work Spearman 0.82.
+
+## Scorecard (period-specific axes)
+None informed.
 
 ## Notes
 - 2026-10-07: folder created by the round-1 agent. Data: `data/processed/H135-detailed-balance-potts-walker/G44/`.

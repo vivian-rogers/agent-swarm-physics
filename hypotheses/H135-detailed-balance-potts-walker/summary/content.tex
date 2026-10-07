@@ -1,0 +1,32 @@
+\hwhat{HH378 says that H94's max-ent allocation is the steady state of a reversible kinetic Potts walker, so the hop-rate ratio between two projects equals their max-ent occupancy ratio. H135 rebuilds every agent's project hops (work host labels; attention labels) and refits H94's max-ent occupancies $\pi$ per period unit on non-reserved data, then tests zero net flux between projects that live through the unit and the heat-bath destination law. \textbf{The round is inconclusive by the card's rule.} The strict co-alive rule leaves 0/62 unit-channels testable, and the zero-flux test has no power against the rival walkers. On the five \#51 attention units testable under the card's 80\% variant, \textbf{destinations are not heat-bath}: $\psi=0.44$ [0.41, 0.48] instead of 1, with a habit bonus $\rho=1.9$ nats.}
+
+\hmodel{Models 10 and 15. Agent $i$ walks on the available projects with field $h_i(j)=\ln\pi_i(j)$, $\pi_i$ the agent-conditional of H94's max-ent fit (margins, ownership, rooms). At each own call it updates with an aging hazard; the heat-bath update draws the new project from $\pi_i$. Detailed balance then gives zero net flux on every pair and destinations $\propto\pi_i$. Rivals: age drift, herding sink, cycle force, habit.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\frac{k_{ab}}{k_{ba}}=\frac{n_{ab}}{n_{ba}}\frac{T_b}{T_a}\overset{\text{DB}}{=}\frac{\pi_b}{\pi_a},\qquad m_\pi=\frac{\sum_{\text{pairs}}(n_{ab}-n_{ba})\,\mathrm{sgn}\ln(\pi_b/\pi_a)}{\sum(n_{ab}+n_{ba})}\\
+P(b\mid\text{hop from }a)\propto\exp\!\big[\psi\ln\pi_i(b)+\rho\,[b\text{ held}]\big],\qquad \text{heat-bath: }\psi=1,\ \rho=0
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{Observed statistics per testable unit (\#51 attention, 80\% co-alive variant; dots with 95\% CIs) against 200 synthetic runs on each unit's own skeleton (boxes, 2.5--97.5\%). Left: the destination slope $\psi$ sits far below the heat-bath band (gray) and inside the Metropolis band (blue) in 4/5 units. Middle and right: the net max-ent flux and the co-alive age flux sit inside the heat-bath band, but the synthetic shows this test cannot reject the rivals.}
+
+\htelos{For an operator: the max-ent prices (ownership, rooms) set where agents spend their time, but they do not set where a moving agent goes next. A hopping agent responds to a project's max-ent weight with less than half the heat-bath exponent and prefers projects it has held before by about $e^{1.9}\approx7\times$. To redirect agents, name the target explicitly; raising its general attractiveness moves hop destinations only weakly.}
+
+\hbottom{In five own-role \#51 attention units, hop destinations are not heat-bath on the max-ent occupancies ($\psi=0.44$ [0.41, 0.48], habit $\rho=1.9$ [1.4, 2.4], 5/5); zero net flux holds as written but is unpowered, so detailed balance is neither shown nor refuted.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+Precondition (strict co-alive) & 0/62 unit-channels; 5 under the 80\% variant & untestable\\
+S1 O1 is an identity & passes in up to 1.00 of cycle-world runs & holds\\
+P1 rate-ratio slope (HH) & 1.11--1.60, $r>0$ in 5/5 & consistent only\\
+P2 zero net flux $m_\pi$ & 5/5 inside band; RE $-0.002$ [$-0.04$, 0.04] & unpowered\\
+P3 zero co-alive age flux & 4/5 inside & unpowered\\
+P4 heat-bath destinations & 0/5 ($\psi$ 0.39--0.50; $\rho$ 1.2--2.6) & failed\\
+N1 \#38, N2 \#44 & too few co-alive hops & untestable\\
+N3 \#40 hub flux days 1--2 & 0.00 work, 0.04 attention & unpowered\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic validation on the five testable skeletons (200 runs per world; dots = mean, bars = range over skeletons). O1 passes as often in the cycle world as in the reversible one, so it is an occupancy identity. The flux statistics leave the heat-bath band in at most 0.29 of age-drift and sink runs: a fixed age preference and symmetric herding are themselves reversible on living projects. Only a cycle force produces flux.}
+
+\hcaveats{Only own-role \#51 attention units are testable, and only under the 80\% co-alive variant; attention labels are artifact mentions, not work. The origin $\times$ destination LR test was recalibrated after the synthetic (its $\chi^2$ form rejects 0.76--1.00 of heat-bath runs). $\psi<1$ may partly be attenuation from noise in $\pi_i$ (cross-fit not run). The N3 hub counts were seen before the band. Owners come from non-reserved commits (37 repos differ from H94).}
+
+\hnext{Build a flux test with power: a time-varying or nonreciprocal field (flux after an owner arrives; H137's one-way pairs). Fit the destination law on all hops in every unit and compare $\psi$ across own-role and shared weeks. Cross-fit $\pi$ on odd and even days.}

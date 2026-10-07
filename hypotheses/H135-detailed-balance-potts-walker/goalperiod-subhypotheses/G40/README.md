@@ -1,6 +1,6 @@
 # H135 × G40: Connect your worlds into a 3D universe! (2026-05-04 → 05-08)
 
-**Verdict:** pending
+**Verdict:** descriptive
 **Role:** exploratory (replication + native N3)
 **Period:** regime III · mode C · 15 agents · #universe-coordination (NE42 merge) · 5 days. Units: `period_units` (40).
 
@@ -23,7 +23,20 @@ Native N3: NE42 merge. A named hub took 73% of the work quanta (H94). The flux i
 | 40 | attention | 50 | 12 | 2 | 5 | 1 | no | 32 | 4 | no | M3 |
 
 ## Result
-Not run.
+*Run 2026-10-07 (`analysis/run.py`, synthetic on the G40 skeleton, 200 runs per world).* Hub = the top-π repo (quanta share 0.73).
+
+| Test | Observed | W0 band (2.5–97.5%) | Power (sink W2 beyond the band) | Verdict |
+| --- | --- | --- | --- | --- |
+| N3 hub flux days 1–2, work | 0.00 (5 in / 5 out) | [0.20, 1.00] | 0/200 | descriptive (below the band) |
+| N3 hub flux days 1–2, attention | 0.04 (12 / 11) | [-0.00, 0.29] | 0/200 | descriptive (inside) |
+| N3 later days, co-alive pairs | — | — | — | untestable (7 / 5 co-alive hops) |
+
+No excess flux into the hub: as many agents left it as entered it on days 1–2. The test is unpowered (Amendment A1): a heat-bath walker that starts agents on their own worlds already gives a positive hub flux (W0 median 0.33 work, 0.09 attention), and the sink walker gives less, not more. The in/out counts were seen before the band (disclosed above).
+
+O5 (descriptive; shares the occupancy term with π, not a test): 40 attention Spearman 0.96; 40 work Spearman 0.93.
+
+## Scorecard (period-specific axes)
+- E: 0 (unpowered).
 
 ## Notes
 - 2026-10-07: folder created by the round-1 agent. Data: `data/processed/H135-detailed-balance-potts-walker/G40/`.
