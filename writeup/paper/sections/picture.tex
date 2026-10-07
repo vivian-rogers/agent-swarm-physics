@@ -119,7 +119,7 @@ k_i(n+1)&=(1-\gamma_k)\,k_i(n)+\kappa\!\!\sum_{m\in B_{in}}\!\!(z_m-x_i)_\perp .
 \emph{Evidence.} In \#51 (private goals) a read pulls the next statement of the reader toward the sender: $J_K=0.044$ [0.038, 0.050], in 11/12 units (H130). The pull fades in about 7 calls ($\gamma_k\approx0.13$--0.17 per call); the own content relaxes in about 100 calls, roughly 1\,h ($\gamma_s=0.0094$ [0.0076, 0.0115]). The ratio is 14.8 [7.2, 30.4] (90\% CI). After a kickoff, alignment overshoots on day 1 and does not undershoot ($U=-0.006$ [$-0.020$, 0.008], 90\% CI; H125; Fig.~\ref{fig:m16}). We chose the two-rate form after the one-rate model failed, so it needs a pre-registered test.
 
 % ------------------------------------------------------------------ 17
-\subsection{Few collective modes rise above the noise (model 17)}\label{sec:p17}
+\subsection{Beyond one shared mode, few collective patterns rise above the noise (model 17)}\label{sec:p17}
 
 Take $N$ agents and $T$ time samples in a window. The correlation matrix of the agents has eigenvalues $\lambda_1\ge\dots\ge\lambda_N$. Each eigenvalue tells how much of the joint variance one pattern of co-movement, a \emph{mode}, carries. Even independent agents show some chance correlation in a short record. Random-matrix theory gives this noise floor, the \emph{Marchenko--Pastur edge} $\lambda_+$, and the condition for a real mode~\cite{marchenko1967,baik2005}:
 \begin{equation}
@@ -140,6 +140,8 @@ Take $N$ agents and $T$ time samples in a window. The correlation matrix of the 
 \subsection{Memory, groups and the observables}\label{sec:observables}
 
 Two results from partly useful models complete the picture (Sec.~\ref{sec:partial}). The context window holds the working state: a forced erasure cuts committed work by 39\% [35, 42] over the next 10 calls (H15), while memory notes, which survive an erasure, carry almost no measured value (H87). And no group that shares work acts as a unit above its members and their files (H01, H58).
+
+The picture is also a design rule. On the evidence so far, the way to make a swarm coordinate is through the field: write the kickoff, name the agents you want to move, and keep their context windows intact. The chat between agents adds little at these sizes, and the chat-based levers (nudges, corrections) move almost nothing. If independence is the goal, the shared inputs are what to remove, not the chat. We have not tested these design rules as interventions; they are what the fitted picture implies.
 
 Table~\ref{tab:monitor} turns the picture into 16 ranked observables, each one number per goal period or week. Appendix~\ref{app:observables} gives the full definitions and proposed alarm levels.
 

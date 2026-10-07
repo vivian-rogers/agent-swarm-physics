@@ -5,6 +5,15 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — Paper taste pass: Quanta-style intro tightened, abstract cut, stale counts fixed (`writeup/paper/`)
+
+- Vivian's request: a pass over the paper to make it better, no "riddle speak" in the first ~7 pages, deeper jargon allowed after; add my own taste.
+- **Abstract** rewritten as a plain scientific abstract (282 words); the inline glossary is gone (Table I and the Introduction define terms). "16 models" → "17 candidate models". The "tested and mostly dropped" sentence stays.
+- **Intro:** clipped one-liners replaced by full sentences ("Its notes do not rescue it", "Messages obey the same rule from the other side"); the four rules are now a numbered list; "Weak echoes, strong pulls" rewritten as flowing prose that ends on the concert-crowd payoff (the swarm is mostly the concert; the wave exists but is faint); El et al. paragraph moved up next to the magnet/crowd question; "the second author" → "the human author".
+- **Sec. II:** model-17 subsection retitled "Beyond one shared mode, few collective patterns rise above the noise" (one uniform mode is above the edge; the old title contradicted the evidence). Added a short "design rule" paragraph before the observables table (coordinate through the field; chat levers are small; not tested as interventions).
+- **Sec. III** card counts updated: H133–H142 ran on 2026-10-07 (4 failed, 5 inconclusive, 1 running), results in cards, not yet scored, not in the paper's counts. **Sec. VIII** retitled "Limits and outlook" with one honest line on those ten cards.
+- Build clean (27 pages, no overfull boxes). Secs. I–II still end on page 7.
+
 ## 2026-10-07 — Paper front revised: useful models merged into "What the system is", STE intro (`writeup/paper/`)
 
 - Vivian's request: move the useful models into Sec. II, write a structured ASD-STE100 introduction, and explain every equation in the ~5 summary pages (meaning, intuition, measurement from the logs).
