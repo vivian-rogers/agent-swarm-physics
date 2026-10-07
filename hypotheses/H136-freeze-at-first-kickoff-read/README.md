@@ -205,12 +205,13 @@ The skeletons are G39, G40, G42, G44 #best and G26 (regime I). Each uses the rea
 ### 6. Scorecard (round 1)
 A 1 · B 0 · C 0 · D 0 · E 0 · F 1 · G 0 · H 0 · I 0 (details in the main scorecard below).
 
-### 7. Round-2 redirects
-- A test needs kickoffs that arrive **mid-day**, while agents are already calling. Candidates are mid-day operator reassignments that a chat message carries (DQ6 role rows with a `chat_core` source), room kickoffs posted inside a window, or NE events with readable messages. The day-start goal kickoffs cannot separate read from clock.
-- The reserved kickoffs (#45–#47, #49) are very likely day-start kickoffs too. If so, the same precondition will fail there. Check only the post time against the window start, which is a calendar fact, before spending a reserved use. A frozen `confirm.py` was not written in round 1, because no exploration pipeline for freeze times exists yet.
-- The G39 all-readers widening (post hoc idea; synthetic only) rests on one next-day reader. If pre-registered, it would need the late-starter (W3) contrast as its null.
-
 **Claim that stands:** In 17 non-reserved day-start kickoff units (G18–G44), 171 of 178 kickoff readers (96%) read the kickoff within 2 active min, at day boot, with at most 2 delayed active readers per unit. So the read-locked vs clock freeze test is untestable on exploration data. *Exclusions:* P1–P5, N1 and N2 not computed (precondition stop); NE38 excluded (no readable message); the G39 all-readers O1 power of 0.96 is a synthetic, post hoc widening and not a result.
+
+## Round 2 redirects
+**What the direction is really after:** whether a field acts on each agent at its own read-out call; this needs a field that arrives while agents are already calling, not at day boot.
+- **H136-R1. Mid-day fields.** Test read vs clock on fields that a chat message carries mid-day: operator reassignments with a `chat_core` source in DQ6, room kickoffs posted inside a window, or NE events with readable messages. Day-start goal kickoffs cannot separate read from clock.
+- **H136-R2. Reserved kickoffs: check the post time first.** The reserved kickoffs (#45–#47, #49) are probably day-start kickoffs too, and then the same precondition fails. Compare each post time with its window start (a calendar fact) before spending a reserved use. No `confirm.py` was frozen in round 1, because no freeze-time pipeline exists yet.
+- **H136-R3. All-readers widening (post hoc idea).** The G39 all-readers O1 power (0.96, synthetic) rests on one next-day reader. If pre-registered, it needs the late-starter world (W3) as its null.
 
 ## Faithfulness scorecard
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".

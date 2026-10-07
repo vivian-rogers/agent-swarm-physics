@@ -1,6 +1,6 @@
 # H136 × NE38: Opus 5's role reassignment (2026-07-29)
 
-**Verdict:** n/a (excluded by the card's rule: the reassignment is not a readable message)
+**Verdict:** n/a (excluded)
 **Role:** exploratory
 **Period:** #51 (non-reserved part) · one agent (Claude Opus 5) · single-agent descriptive native (N3).
 

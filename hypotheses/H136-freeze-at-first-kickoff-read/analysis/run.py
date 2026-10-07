@@ -97,7 +97,7 @@ def readme(goal: int, rows: list[dict], syn: dict) -> str:
     pred = PRED.get(f"G{goal}", "Replication (card, written 2026-10-07): if the unit has ≥ 5 delayed active readers, "
                     "P1 (b CI ∋ 1, excludes 0), P2 (K ≤ 2 for ≥ 1/2 of frozen agents), P3 (ρ(K, D_r) CI ∋ 0). "
                     "Otherwise the kill is untestable here.")
-    lines = [title, "**Verdict:** n/a (untestable: structural precondition not met; no freeze time computed)\n",
+    lines = [title, "**Verdict:** n/a (untestable)\n",
              "**Role:** exploratory\n",
              f"**Period:** regime {'I' if goal <= 32 else 'II' if goal <= 36 else 'III'} · kickoff unit(s): "
              + ", ".join(f"{r['unit']} ({r['n']} readers)" for r in rows) + f" · layer: {role_line}.\n\n",
@@ -137,7 +137,7 @@ def readme(goal: int, rows: list[dict], syn: dict) -> str:
 
 def ne38_readme() -> str:
     return ("# H136 × NE38: Opus 5's role reassignment (2026-07-29)\n\n"
-            "**Verdict:** n/a (excluded by the card's rule: the reassignment is not a readable message)\n"
+            "**Verdict:** n/a (excluded)\n"
             "**Role:** exploratory\n"
             "**Period:** #51 (non-reserved part) · one agent (Claude Opus 5) · single-agent descriptive native (N3).\n\n"
             "## Why this period\nA field change on one agent: the read of the reassignment against the first touch of "

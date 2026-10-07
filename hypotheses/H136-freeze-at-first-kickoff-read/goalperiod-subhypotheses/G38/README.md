@@ -1,6 +1,6 @@
 # H136 × G38: kickoff read-out and freeze (kickoff day 2026-04-02)
 
-**Verdict:** n/a (untestable: structural precondition not met; no freeze time computed)
+**Verdict:** n/a (untestable)
 **Role:** exploratory
 **Period:** regime III · kickoff unit(s): G38best (3 readers), G38rest (9 readers) · layer: replication.
 
