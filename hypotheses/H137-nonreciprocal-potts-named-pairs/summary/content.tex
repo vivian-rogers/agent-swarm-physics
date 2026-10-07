@@ -1,0 +1,33 @@
+\hwhat{HH380 says that a one-way name steers project choice: when agent $j$ names agent $i$ and $i$ does not name $j$ back, $i$ should join $j$'s project more often than $j$ joins $i$'s, so project hops break detailed balance only along one-way named pairs. H137 builds follow hops from the shared per-call project labels in 71 non-reserved units, classifies every agent pair by naming (one-way, mutual, none) and fits the follow direction against the naming direction with popularity controls. \textbf{The test cannot decide at village counts}: on real skeletons a coupling of $J=1$ moves one-way follow counts by 1--3\%, and the pooled power is 0.18. Descriptively, once each agent's hop propensity is controlled, follow direction does not track naming ($\theta_\mathrm{name}=+0.01\,[-0.07,+0.08]$, 41 testable units).}
+
+\hmodel{Models 10, 02 and 15. Kinetic Potts walker: at its call $c$ agent $i$ hops to project $b$ with utility $u_b=\kappa_b+\sum_j J\ln(1+R_{i\leftarrow j}(c))\,[\sigma_j(c)=b]+\text{habit}+\text{share}$, where $R_{i\leftarrow j}$ counts $j$'s messages naming $i$ read in $i$'s last 10 calls. Couplings exist only from named senders, so $J_{i\leftarrow j}\neq J_{j\leftarrow i}$ on one-way pairs, and the pair current runs from namer to named. The pair entropy production is Schnakenberg's edge term.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\mathrm{logit}\,P(a\ \text{joins}\ b)=\theta_\mathrm{name}z_{ab}+\delta\,\Delta\ln\mathrm{pop}+\epsilon\,\Delta\ln\mathrm{indeg}+\epsilon_\mathrm{act}\,\Delta\ln\mathrm{act}\\
+\sigma_{ij}=(F_{i\leftarrow j}-F_{j\leftarrow i})\ln\frac{F_{i\leftarrow j}+\frac12}{F_{j\leftarrow i}+\frac12},\qquad A=\ln\frac{F_\mathrm{named\leftarrow namer}+\frac12}{F_\mathrm{namer\leftarrow named}+\frac12}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/summary_obs.pdf}{(a) Follow-direction coefficient $\theta_\mathrm{name}$ per testable unit (95\% pair-bootstrap CIs). Gray: the card's estimator (popularity and in-degree controls). Blue: Amendment A1 (adds each member's hop propensity). The blue band is the pooled A1 estimate over 62 units. The card's estimator sits below zero; A1 sits on zero. (b) Pooled rate of moving onto the namer's project at a call that read a named message, against a call with a named message still in flight (matched lag).}
+
+\htelos{For an operator: naming an agent does not recruit it to your project. Over 1,130 one-way named pairs, named agents joined their namers' projects no more often than the reverse, once each agent's hop rate is controlled. Agents who name others also hop more, so raw counts make the namer look like the follower. To move an agent, H137 gives no lever; a direct request at the hop call is the next thing to test.}
+
+\hbottom{Untestable at village counts (pooled power 0.18 at $J=1$). Descriptively, follow hops show no naming direction once hop propensity is controlled ($\theta_\mathrm{name}=+0.01\,[-0.07,+0.08]$, 41 units); the card's uncontrolled $-0.39$ is a propensity artifact.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.34\columnwidth}p{0.48\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S0 power $\ge0.8$ at $J=1$ & 0.18 (P1, 62 units); 0.00 (P3) & failed\\
+P1 $\theta_\mathrm{name}>0$ & A1 $+0.01\,[-0.07,+0.08]$; card $-0.39\,[-0.55,-0.23]$ & untestable\\
+P2 symmetric otherwise & 33/41 units inside N1b (A2) & descriptive\\
+P3 $\sigma_\mathrm{one}-\sigma_\mathrm{none}>0$ & excess over N1b $+0.9\,[-1.4,+3.3]$ & untestable\\
+P4 read $>$ in-flight & $+6.6\,[+4.6,+8.7]\times10^{-3}$ & descriptive\\
+P5 one-way $<1/3$ & median 0.35; 19/41 units & not supported\\
+N1 G51 $\theta>0$ & $-0.07\,[-0.21,+0.07]$ & not met\\
+N2 G38 same room & $+0.15\,[-0.20,+0.40]$; cross-room 1 pair & not met\\
+Popularity kill & raw $A=-0.38\,[-0.44,-0.31]$ & no fire\\
+\end{tabular}}
+
+\hobsb{../figures/summary_synth.pdf}{Synthetic validation on 11 real skeletons (G38, G31, 51c, 51h; 60--300 runs per world). (a) Rejection rates. The card's P1 never rejects, because its $\theta_\mathrm{name}$ is biased negative. A1 has size $\le0.013$ but power 0.02 at $J=1$ and 0.67 only at $J=5$. P4 has power 0.36 at $J=1$, but co-arrival (W3) fakes it in 74\% of runs. (b) Bias: with no following (W0) the card's $\theta_\mathrm{name}$ is $-0.21\pm0.09$, because namers hop more; A1 removes the bias.}
+
+\hcaveats{Every result is descriptive: S0 failed, so no statistic is a powered test, and both HH kills need power to fire. Amendments A1--A3 (propensity control, propensity-adjusted direction null, null-centred contrast) were written before real data. At the full pool A1 keeps a +0.04 bias. All pair-EP classes exceed their nulls, so pair direction carries structure that naming does not explain. The $J\approx5$ exclusion and the class-excess comparison are post hoc. Attention labels only; no work-channel follows.}
+
+\hnext{Move the coupling test to the hop call (conditional logit over destinations with the namer's project as an alternative), add a same-hour co-arrival exclusion before reading P4, and build a pair-persistence null for $\sigma$. Confirm only what then passes on \#45--\#47.}

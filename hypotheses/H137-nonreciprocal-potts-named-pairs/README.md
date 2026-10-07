@@ -1,6 +1,6 @@
 # H137: Nonreciprocal Potts: project hops break detailed balance only along named pairs
 
-**Status:** round 1 in progress (2026-10-07). Synthetic validation done; S0 failed (pooled power at J = 1 is 0.18), so H137 is untestable at village counts on exploration data. Amendments A1–A3 were written before any real-data statistic. Exploration run pending (descriptive).
+**Status:** round 1 done (2026-10-07): **inconclusive — untestable at village counts** (S0 failed: pooled synthetic power 0.18 at J = 1). Descriptive result: no naming direction in follow hops once hop propensity is controlled (θ_name +0.01 [−0.07, +0.08], 41 units). Amendments A1–A3 written before any real-data statistic. Reserved periods untouched; no confirm script frozen (nothing qualifies).
 **Question (GOALS.md):** **Q1** (what couples agents: does a directed name make the named agent follow the namer's project?). Second: **Q6** (thermodynamics: is the irreversibility of project hopping carried by named pairs, as H90 found for talk?).
 **Fields:** stat mech (nonreciprocal kinetic Potts, directed couplings), stochastic thermodynamics (pair currents, Schnakenberg affinities, AIK bound), sociophysics (following and leadership)
 **Literature:** [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (EP lower bound from antisymmetric observables; θ_ij − θ_ji ≈ β(w_ij − w_ji) in a kinetic Ising model with asymmetric couplings); [Kolchinsky, Dechant, Yoshimura & Ito 2026](../../literature/kolchinsky-2026-generalized-free-energy-excess-housekeeping.md) (pair currents and housekeeping). Cited from memory (†): Schnakenberg, *Rev. Mod. Phys.* 48, 571 (1976)† (edge affinities); Fruchart, Hanai, Littlewood & Vitelli, *Nature* 592, 363 (2021)† (nonreciprocal phase transitions).
@@ -127,25 +127,26 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
-| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
-| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 0 | not run |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
-| E interventional | predicts the change across a natural experiment | 0 | not run |
-| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 0 | not run |
-| G ground truth | agrees with known structure | 0 | not run |
-| H comparative | beats the named rivals | 0 | not run |
-| I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | round 1 §7 |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | pair independence fails in synthetic → A2 (round 1 §7) |
+| C adequacy | beats the null hierarchy, day-blocked out-of-sample data | 0 | no powered test (S0) |
+| D unfitted predictions | unfitted statistics and the model's signature | 0 | P2 symmetry only (descriptive) |
+| E interventional | predicts the change across a natural experiment | 0 | G38 room contrast not formable |
+| F identifiability | synthetic recovery with village sampling; survives preprocessing variants | 1 | 8 worlds on real skeletons; card θ biased, A1 repairs; J = 1 power 0.18 |
+| G ground truth | agrees with known structure | 0 | none |
+| H comparative | beats the named rivals | 0 | rivals separated only in synthetic |
+| I transfer | holds in other same-mode periods, including the reserved periods | 0 | reserved periods not used |
 
 ## Results by goal period
 Period folders (`goalperiod-subhypotheses/G<NN>/`) were created 2026-10-07 with structural counts and dated predictions before the exploration run.
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| replication units (precondition list) | replication | pending | not run |
-| G51 (51a–51l pooled) | native N1 | pending | not run |
-| G38 | native N2 | pending | not run |
-| G44 | native N3 (descriptive) | pending | not run |
+| 41 testable units (G11, G13, G18, G19, G20, G24–G27, G30, G31, G33, G35–G41, G44, G51) | replication | descriptive | pooled θ_name A1 +0.008 [−0.068, +0.082]; A1 CI > 0 in 0/41 units; P2 (N1b) 33/41 |
+| G42 (42a, 42b) | below the precondition | n/a | pooled fit only |
+| G51 (51a–51l pooled) | native N1 | descriptive | θ_name A1 −0.07 [−0.21, +0.07] |
+| G38 | native N2 | descriptive | same-room +0.15 [−0.20, +0.40]; cross-room not estimable (1 pair) |
+| G44 | native N3 (descriptive) | descriptive | #best −0.72 [−2.30, +1.63]; #rest +0.16 [−0.20, +0.55] |
 
 ## Results
 See "Round 1 (2026-10-07)" below.
@@ -210,7 +211,63 @@ Order run: structural counts (no follow direction) → period folders with dated
 **S0 fails.** 41 units pass the precondition. The pooled synthetic power at J = 1 is 0.18 for P1 and 0.00 for P3, both far below 0.8. By the card's rule, **H137 is untestable at village counts on the exploration data**. The kill rules need power ≥ 0.8, so they cannot fire. The verdict is "inconclusive" whatever the outcomes. The exploration run that follows computes every pre-registered statistic as descriptive. The popularity kill has no power clause, so it is applied literally.
 
 
+### 5. Exploration run (2026-10-07, after the commit of sections 1–4; all results descriptive)
+`analysis/run.py` covers 62 units with follow rows (41 testable). It produced 45,265 follow-hop rows, 39,387 of them in classified pairs. Output: `results/round1.json`, `results/units.parquet`, `follows.parquet`, `pairs.parquet` (5.6 MB in total). Pooled CIs use a pair bootstrap within unit (1,000 draws). Nulls use 2,000 draws; per unit, 500.
+
+| ID | Prediction | Result (95% CI, scope) | Verdict by the rule |
+| --- | --- | --- | --- |
+| S0 | ≥ 1 testable unit and pooled power ≥ 0.8 at J = 1 | 41 testable units; power 0.18 (P1 A1, 62 units), 0.00 (P3) | **failed** → untestable |
+| P1 | θ_name > 0, CI > 0, N2 p < 0.05 (pooled) | A1: **+0.008 [−0.068, +0.082]**, N2 p 0.78 (62 units, 41 of them testable; 1,130 one-way pairs, 19,285 rows). Partial pooling (DerSimonian–Laird, 41 testable units): +0.002 [−0.063, +0.067], τ² = 0. Card: −0.39 [−0.55, −0.23] (the propensity bias; W0 gives −0.21). Per unit: A1 CI > 0 in 0 of 41, < 0 in 2 (30a, 38e) | untestable (S0); descriptive null |
+| P2 | σ_mutual, σ_none inside their nulls in ≥ 2/3 of testable units | N1b (A2): 33 of 41 (0.80). Card's N1 flip: 8 of 41 (N1 rejects in 79% of W0 unit tests) | descriptive; holds under A2 |
+| P3 | σ_one − σ_none > 0, CI > 0 (pooled) | Card: +4.9 [+2.6, +7.3] (the rule passes literally, but its W0 size is 0.18 and W2 size 0.69). A3 excess over N1b: +0.9 [−1.4, +3.3]. N1b p 0.0005, but σ_mutual and σ_none also exceed N1b (p 0.0005) | untestable (S0); no naming-specific excess |
+| P4 | follow rate after a read named message > after an in-flight one | 18.2 vs 11.6 per 1,000 (call, sender) rows; difference **+6.6 [+4.6, +8.7] × 10⁻³** (39,595 read, 27,317 in-flight rows). Per unit: CI > 0 in 5 of 41, < 0 in 0 | descriptive (W3 co-arrival size 0.74; power 0.68) |
+| P5 | one-way pairs < 1/3 of classified pairs in most units | median 0.35; < 1/3 in 19 of 41 testable units; ≥ 1/2 in 12 | not supported (neither side of the rule) |
+| N1 | G51 pooled: θ_name > 0, CI > 0 | A1 −0.07 [−0.21, +0.07] (478 one-way pairs, 12 units); card −0.78 [−1.04, −0.54] | not met; untestable (S0) |
+| N2 | G38: same-room θ_name > 0; cross-room not | same-room +0.15 [−0.20, +0.40] (44 pairs); cross-room 1 one-way pair (27 rows), not estimable | not met; contrast not formable |
+| N3 | G44 descriptive | #best −0.72 [−2.30, +1.63] (9 pairs); #rest +0.16 [−0.20, +0.55] (25 pairs); no cross-room follows | descriptive |
+| Kill (HH) | σ contrast and θ_name CIs ∋ 0 at power ≥ 0.8 | the power clause is not met | cannot fire |
+| Kill (popularity) | raw O1 > 0 but θ_name (card controls) CI ∋ 0 | raw O1 = **−0.38 [−0.44, −0.31]** (1,130 one-way pairs). The named member follows the namer less often, not more | does not fire |
+
+**Impostor and robustness variants (pooled θ_name A1).** Same-lab pairs: +0.05 [−0.07, +0.17] (206 one-way pairs). Cross-lab pairs: −0.00 [−0.08, +0.08]. Labels E = 50: −0.00 [−0.08, +0.08]; E = 300: +0.00 [−0.07, +0.08]. Kickoff variant (drop hops in the first 4 h of the period and hops onto kickoff-named projects): −0.02 [−0.10, +0.08]. The card's estimator stays negative in every variant (−0.08 to −0.51), as the propensity bias predicts.
+
+**Post hoc (bound on J).** The pooled A1 upper limit, +0.082, is close to the synthetic mean at J = 3 (+0.084 on the 11 skeletons) and well below the mean at J = 5 (+0.139). The full-pool W0 bias is about +0.04. The exploration data therefore exclude a named-read coupling of J ≈ 5 on the log-odds scale. They do not exclude J ≤ 3. This bound is approximate: it compares a real CI with synthetic means from a different unit set.
+
+**Post hoc (σ classes).** Every class mean exceeds N1b (pooled p 0.0005 for one-way, mutual and none). Real pairs have more persistent direction than a propensity-only world. Naming does not explain it: the one-way excess over N1b (+1.6) is close to the mutual (+1.4) and none (+0.7) excesses.
+
+**Verdict by the card's rule: inconclusive** (S0 failed; H137 is untestable at village counts on exploration data).
+
+### 6. Impostors (STANDARDS §1), as handled in round 1
+| Impostor | Relevant? | How it is handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Direction, not timing, is the statistic. Co-arrival (W3) was simulated: it biases the card's θ (−0.43) but not A1 (−0.03 ± 0.04, size 0.007). It fakes P4 (size 0.74), so P4 is descriptive. | partly |
+| Exogenous field (kickoff, goal, operator) | yes | Kickoff variant (first 4 h dropped; kickoff-named projects dropped): A1 −0.02 [−0.10, +0.08], unchanged. | partly (kickoff only; no goal-field regression) |
+| Shared model priors | partly | Same-lab +0.05 [−0.07, +0.17] vs cross-lab −0.00 [−0.08, +0.08]. Receiver lab not held fixed. | partly |
+| Contemporaneous convergence | yes | O4 read vs in-flight at matched lag: +6.6 [+4.6, +8.7] × 10⁻³. Co-arrival fakes it in 74% of W3 runs, so it does not remove the impostor. | open |
+| (HH) Leaders get named and attract hops | yes | Popularity, in-degree and (A1) propensity controls; N2 within popularity strata. The real raw asymmetry is negative (−0.38): named agents are followed less, because namers hop more. The popularity kill does not fire. | removed for θ (A1); n/a for the kill |
+| (new) Hopper propensity | yes, decisive | Active agents both name more and hop more, so the namer "follows" the named. This causes the card's θ of −0.39 (W0 −0.21). A1 controls it. | removed by A1 (residual bias +0.04 at full pool) |
+
+### 7. Faithfulness scorecard (round 1)
+| Axis | Score | Evidence |
+| --- | --- | --- |
+| A mapping | 1 | Follow hop, naming class and pair EP are defined from shared per-call labels, the ledger and mentions, in regimes I–III. Not checked across label families (attention only). |
+| B assumptions | 1 | Synthetic audit of the pair-independence assumption: it fails (flicker, propensity), so N1 was replaced (A2). Markov order and stationarity are not audited. |
+| C adequacy | 0 | No statistic is a valid, powered test (S0). |
+| D unfitted predictions | 0 | P2 holds under A2 (33/41), but it is a symmetry statement with no power definition. |
+| E interventional | 0 | No natural experiment used; the G38 room contrast could not be formed. |
+| F identifiability | 1 | Synthetic on real skeletons, 8 worlds, sizes and powers recorded. The card's estimator is biased; A1 repairs it. J = 1 is not identifiable at village counts (power 0.18). |
+| G ground truth | 0 | none |
+| H comparative | 0 | Rivals were separated only in synthetic. On real data no rival is excluded. |
+| I transfer | 0 | Reserved periods not used. |
+
+**Claim that stands:** in 41 testable exploration units (regimes I–III, 1,130 one-way named pairs), agents do not join the projects of the agents who name them once each agent's hop propensity is controlled (θ_name +0.01 [−0.07, +0.08]). The card's uncontrolled θ_name of −0.39 is a propensity artifact, which the no-following world reproduces (−0.21). *Exclusions:* P1, P3 and both HH kills are untestable (pooled power 0.18 at J = 1). The read-over-in-flight follow excess (+6.6 [+4.6, +8.7] × 10⁻³) is descriptive, because co-arrival fakes it in 74% of runs. The J ≈ 5 exclusion and the σ-class excess are post hoc.
+
+## Round 2 redirects (proposed by the round-1 agent, 2026-10-07)
+- Move the coupling test to the hop call. Use a conditional logit over destinations at each hop (H133's design) with the namer's project as an alternative. That uses every named read at a hop, not pair totals, and should gain power. Add a co-arrival control (the partner's own recent arrival) before reading O4.
+- Build a pair-persistence null (a Markov chain per agent, or a time shift per agent-day) for σ. All classes exceed N1b, so pair direction has structure that N1b misses.
+- Re-run P4 with a same-hour co-arrival exclusion. If the excess survives at size ≤ 0.10, it is the only H137 signal worth confirming on #45–#47.
+
 ## Notes
+- 2026-10-07 (round 1): shared code used, not copied: `infra/shared/project_calls.py` (labels). H137's pair and follow-hop helpers live in `analysis/h137lib.py`; move them to `infra/shared/` if H133/H134 need follow hops.
 - 2026-10-07: card written from HH380 (approved by Vivian 2026-10-07). Round-1 order: structural counts (follow hops by class; no direction) → precondition note → period READMEs with dated predictions → synthetic → dated amendments → replication and natives → estimates rows (`h137_theta_name`, `h137_pair_ep_oneway`, `h137_pair_ep_none`, `h137_follow_read_vs_inflight`) → frozen `confirm.py` (dry run only).
 - The HH's "i moves to j's project after j named i" is implemented twice: with static per-unit naming classes (HH-literal, O1–O3) and with read named messages at the hop call (O4, read-named follow hop).
 - Compute: ≤ 2 threads, one heavy job at a time (STANDARDS §9).

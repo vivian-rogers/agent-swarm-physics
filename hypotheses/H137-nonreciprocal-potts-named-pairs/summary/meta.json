@@ -1,0 +1,41 @@
+{
+ "complete": 45,
+ "faithfulness": 0.5,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done: structural counts, dated period predictions, synthetic on 11 real skeletons (8 worlds) plus a 62-unit power check, Amendments A1-A3 and the S0 declaration committed before real data; exploration run on 62 units with natives and variants; estimates rows. Missing: reserved-period confirmation (nothing qualifies); hop-call design.",
+  "faithfulness": "Untestable at village counts (pooled power 0.18 at J=1). The card's estimator is shown biased by hopper propensity and repaired (A1). Scorecard A1 B1 C0 D0 E0 F1 G0 H0 I0.",
+  "usefulness": "Operator rule (descriptive): naming an agent does not pull it onto your project; namers hop more than the named. Low-moderate value: a well-controlled null, not a test."
+ },
+ "one_line": "Untestable at village counts (power 0.18 at J=1); descriptively, follow hops show no naming direction once hop propensity is controlled (theta_name +0.01 [-0.07, +0.08], 41 units), and the card's -0.39 is a propensity artifact.",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "inconclusive",
+   "note": "directed named-read coupling not identifiable at J=1; no naming direction seen"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "inconclusive",
+   "note": "asymmetric couplings from naming not detected in follow currents"
+  },
+  {
+   "model": "15-stochastic-thermodynamics-selection",
+   "role": "secondary",
+   "outcome": "inconclusive",
+   "note": "pair EP exceeds its null in every naming class; no naming-specific excess"
+  }
+ ],
+ "rated_by": "H137 agent (suggested)",
+ "updated": "2026-10-07",
+ "v2": {
+  "claim": "In 41 testable exploration units, agents do not join the projects of agents who name them once hop propensity is controlled (theta_name +0.01 [-0.07, +0.08]); H137's directed coupling is untestable at village counts (power 0.18 at J=1)",
+  "scope": "41 testable units, regimes I-III, attention labels (project_calls E100)",
+  "direction": "null",
+  "original_verdict": "inconclusive",
+  "credence": null,
+  "rater": null
+ }
+}

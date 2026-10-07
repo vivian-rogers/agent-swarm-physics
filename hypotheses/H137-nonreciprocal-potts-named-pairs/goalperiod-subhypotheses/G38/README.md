@@ -1,6 +1,6 @@
 # H137 × G38: Choose a charity and raise as much money as you can for it (2026-04-02 → 2026-04-27)
 
-**Verdict:** pending
+**Verdict:** descriptive
 **Role:** exploratory
 **Period:** regime III · mode C · 12-14 agents · rooms [2, 3] · 17 non-reserved days. Units: 38a, 38b, 38c, 38d, 38e (`period_units`). H137 role: replication (38a, 38e) + native N2.
 
@@ -18,10 +18,23 @@ Structural counts (2026-10-07, before any follow direction; `results/structure.p
 - **N2 (G38 rooms):** θ_name > 0 in same-room one-way pairs, θ_name ≈ 0 in cross-room pairs. Credence 0.2.
 
 ## Result
-Not run yet.
+*Run 2026-10-07 (exploration data).*
+
+All numbers are descriptive. S0 failed (pooled synthetic power at J = 1 is 0.18), so H137 is untestable at village counts and no per-period verdict is possible. A1 is the amended θ_name with the hopper-propensity control; the card's θ_name is biased negative in the no-following world (W0 −0.21 ± 0.09). N1b is the propensity-adjusted direction null (A2). Pair-bootstrap CIs; N2 within-stratum permutation p (500 draws per unit). Data: `data/processed/H137-nonreciprocal-potts-named-pairs/results/units.parquet`; estimates rows `h137_*` (role replication).
+
+| Unit | θ_name A1 [95% CI] (N2 p) | θ_name card [95% CI] | mean A one-way (N1b p) | σ_mutual / σ_none N1b p | σ_one − σ_none | O4 read − in-flight (×10⁻³) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 38a | +0.18 [-0.57, +0.63] (0.483) | +0.07 [-1.09, +1.03] | -0.75 (0.786) | 0.342 / 0.143 | +21.5 | +8.9 [-3.6, +22.5] |
+| 38e | -1.13 [-2.81, -0.05] (0.940) | -0.52 [-1.40, +1.16] | -0.41 (0.928) | 0.764 / 0.244 | +1.4 | +35.7 [+0.0, +149.1] |
+
+- θ_name (A1) CI above 0 in 0 of 2 testable units and below 0 in 1.
+- **N2 native (rooms):** same-room one-way pairs θ_name A1 +0.15 [-0.20, +0.40] (N2 p 0.486; 44 pairs). Cross-room: 1 one-way pair with 27 follow rows, not estimable. Agents almost never follow across rooms, so the room contrast cannot be formed. Same-room effect: none detected (CI includes 0).
 
 ## Scorecard (period-specific axes)
-Not run yet.
+- C adequacy: 0 (no statistic is a valid, powered test; S0 failed).
+- D unfitted predictions: 0.
+- G ground truth: n/a.
 
 ## Notes
 - 2026-10-07: folder created with the structural counts and the dated prediction, before any H137 outcome on this period.
+- 2026-10-07: round-1 results filled in (descriptive).
