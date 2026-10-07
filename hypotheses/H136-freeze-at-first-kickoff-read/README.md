@@ -1,6 +1,6 @@
 # H136: Zero-temperature Potts freeze at the read-out call: each agent commits to a named target at its first read of the kickoff, not at the kickoff time
 
-**Status:** pre-registered (not run). Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH379 (approved by Vivian 2026-10-07), before any H136 statistic on real data. No scheme, synthetic or analysis code exists yet.
+**Status:** round 1 done (2026-10-07): **inconclusive; the HH's kill is untestable on exploration data.** The structural precondition failed in 17 of 17 kickoff units (at most 2 delayed active readers per unit; 5 needed), so no freeze time was computed. The reserved kickoffs are the only remaining test. Card first written 2026-10-07 from HH379 (approved by Vivian 2026-10-07), before any H136 statistic on real data.
 **Question (GOALS.md):** **Q1** (what couples agents to a field: does the kickoff act on each agent at its own read-out call, as messages do in H08?). Second: **Q5** (operator lever: a target named in a kickoff is adopted as soon as each agent reads it, so the read-out spread sets the freeze time).
 **Fields:** stat mech (zero-temperature kinetic Potts quench in a strong field), dynamics (event timing on the call clock), sociophysics (field vs copying)
 **Literature:** [Kolchinsky, Dechant, Yoshimura & Ito 2026](../../literature/kolchinsky-2026-generalized-free-energy-excess-housekeeping.md) (Wasserstein speed limit T ≥ W/Ā, which H75 found saturated by named kickoffs). Cited from memory (†): Glauber, *J. Math. Phys.* 4, 294 (1963)† (single-spin-flip kinetics; at zero temperature in a strong field each spin aligns at its first update).
@@ -118,6 +118,62 @@ At a finite temperature K_i is geometric, with a mean that rises as the field fa
 **Verdict rule.** *Supported:* P1, P2 and P3 hold in units that pass the synthetic rule, and P4 holds. *Narrowed ("freeze within about one call of the first read; read vs clock untestable"):* P2 and P4 hold with the kill untestable. *Failed:* the kill fires, or the peer-link anchor wins in ≥ 2/3 of units (R-copy). *Inconclusive:* otherwise.
 
 **My credence before data:** supported 0.15; narrowed 0.3; failed 0.2; inconclusive 0.35. The main risk is H131's: reads follow the kickoff within seconds for most active agents, so the read and clock alignments coincide.
+
+## Round 1 (2026-10-07)
+Order run: structural pass (no freeze time) → precondition record → synthetic on real skeletons → Amendment A1 → stop. Code: `scheme/h136lib.py`, `scheme/structure.py`, `analysis/synthetic.py`, `analysis/run.py`, `analysis/figures.py`. Data: `data/processed/H136-freeze-at-first-kickoff-read/` (`structure/`, `synthetic/`, `results/`; < 1 MB). Every call and receipt row passes `holdout_mask`; reserved days are dropped.
+
+### 1. Structural precondition (counted 2026-10-07, before any freeze time)
+**Units (17).** The card's candidates: G30, G31, G33, G35, G36, G37, G38 (#best, #rest), G39, G40, G41, G42, G44 (#best, #rest). H31's `events_ep_w30` adds the regime-I kickoffs with a kickoff-frozen event (frozen, t0 ≤ 0.75 h): G18, G19, G26 (G30 is already listed). Kickoff messages are the `kicks_classified` human kickoffs (goal_fields rule); t_k is the unit's first kickoff message; t_r,i is the first DQ1 receiving call of any unit kickoff message. "Own calls" exclude summary calls (consolidate, session start and stop; H75's rule). The named-target condition was not evaluated, because no unit passed the count.
+
+**Rule as applied.** A delayed active reader has ≥ 1 own call in the 30 active min before t_k, and D_r ≥ 2 active min or ≥ 2 own calls in (t_k, t_r). Active minutes concatenate the calendar windows.
+
+| Unit | Readers | Active before | Delayed | Delayed active readers | Read = first call of day | Max D_r (active min) |
+| --- | --- | --- | --- | --- | --- | --- |
+| G18 | 7 | 7 | 0 | 0 | 1 | 0.2 |
+| G19 | 7 | 7 | 0 | 0 | 5 | 0.2 |
+| G26 | 10 | 10 | 0 | 0 | 7 | 0.6 |
+| G30 | 11 | 0 (prev. day reserved) | 0 | 0 | 1 | 0.5 |
+| G31 | 11 | 11 | 0 | 0 | 7 | 0.6 |
+| G33 | 11 | 0 (prev. day reserved) | 3 | 0 | 5 | 18.8 |
+| G35 | 11 | 0 (prev. day reserved) | 1 | 0 | 11 | 5.7 |
+| G36 | 12 | 12 | 0 | 0 | 8 | 1.1 |
+| G37 | 12 | 12 | 0 | 0 | 12 | 0.0 |
+| G38 #best | 3 | 3 | 0 | 0 | 3 | 0.0 |
+| G38 #rest | 9 | 8 | 0 | 0 | 9 | 0.8 |
+| G39 | 14 | 12 | 3 | **2** | 13 | 243.9 |
+| G40 | 15 | 15 | 0 | 0 | 15 | 1.4 |
+| G41 | 14 | 14 | 0 | 0 | 14 | 0.2 |
+| G42 | 15 | 15 | 0 | 0 | 15 | 0.3 |
+| G44 #best | 4 | 0 (prev. day reserved) | 0 | 0 | 4 | 1.4 |
+| G44 #rest | 12 | 0 (prev. day reserved) | 0 | 0 | 12 | 0.2 |
+
+- **Pooled (descriptive):** 178 kickoff readers. 171 (96%) read within 2 active min. The wall-clock read delay has a median of 68 s and a 90th percentile of 93 s; most of it is the gap between the kickoff post and the day window start.
+- **Why.** Every kickoff in these units is posted 0.6–1.6 min *before* the day window opens. The agents boot at the window start, so the kickoff read is the agent's first decision call of the day in 142 of 178 cases. In the other 36 it is a summary or session-start call just before it. No reader has any own call between t_k and t_r (0 of 178).
+- **Sensitivity.** Dropping the active-before condition entirely gives at most 3 delayed readers per unit (G33, G39). The count also fails for the 5 units whose previous day is reserved. The failure does not depend on the masked days.
+- **Declared 2026-10-07, before any freeze time:** S0 fails (0 units with ≥ 5 delayed active readers; the card expected ≥ 2). **The HH's kill (O1, O3) is untestable on exploration data in all 17 units.** As instructed for this run, the outcome analysis stops for these units. No freeze touch, commit time, settled project, call lag K or peer-link read was computed. P2 and P4, which the card would report as descriptive, were therefore not computed either.
+- **NE38 (native N3):** excluded by the card's own rule. DQ6's role row for Opus 5's new role (2026-07-29) cites `agent_goals`, not a chat message, so the ledger cannot time its read.
+- **#51:** excluded by the card's #51 note (private goals via `agent_goals`).
+
+### 2. Synthetic validation (real skeletons; 500 runs per world; seed 20261007)
+The skeletons are G39, G40, G42, G44 #best and G26 (regime I). Each uses the real t_r and real own-call times after it. The worlds are W0 (no coupling: a random own call in the first 240 active min), W1 (read-locked), W2 (clock, the strongest rival) and W3 (late starter). W4 (copy) was not run, because it needs the named target's peer-link reads, which the stop keeps closed. A read-lock call means the Theil–Sen 95% CI of b contains 1 and excludes 0. A clock call means the Fisher-z 95% CI of ρ(K, D_r) lies below 0.
+
+| Skeleton | n (card sample / all readers) | O1 power W1 (card / all) | O1 size W2 (all) | O1 rate W3 (all) | O3 power W2 (all) | O3 size W1 (all) | Passes the card's rule |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| G39 | 2 / 14 | 0.00 / 0.96 | 0.05 | 0.10 | 0.07 | 0.02 | no (card sample); all-readers only |
+| G40 | 0 / 15 | 0.00 / 0.58 | 0.00 | 0.00 | 0.05 | 0.00 | no |
+| G42 | 0 / 15 | 0.00 / 0.31 | 0.00 | 0.00 | 0.08 | 0.02 | no |
+| G44 #best | 0 / 4 | 0.00 / 0.51 | 0.01 | 0.01 | 0.00 | 0.00 | no |
+| G26 | 0 / 10 | 0.00 / 0.02 | 0.00 | 0.00 | 0.06 | 0.02 | no |
+
+- **S1 (power < 0.8 below 10 delayed active readers): holds.** The card sample has 0–2 readers, so O1 and O3 make no decision (power 0). The truncation bias of W2's slope is not identifiable at this D_r spread: W2's median b is −0.8 to 2.0, and its 90% band reaches −64 to +112.
+- **O3 cannot detect R-clock** even when all readers are used: the power is ≤ 0.08 in every skeleton. Most readers have D_r = 0, so ρ(K, D_r) has almost no spread.
+- **The all-readers O1 in G39 (power 0.96, size 0.05) is a widening, not the card's test.** Its leverage is one reader who read the next day (D_r 244 active min, not active before t_k). That reader is the late-starter case, and W3 gives a read-lock call in 10% of runs. This is recorded as a round-2 idea, not as a test.
+- **O4 anchors coincide.** No own call falls between t_k and t_r, so the kickoff-read and kickoff-post anchors give the same call count for every reader. In 76–100% of runs no anchor wins strictly, in every world.
+
+### 3. Amendment A1 (2026-10-07, before any freeze time; not post hoc on outcomes)
+- **O4 / P4 amended.** On exploration skeletons the kickoff-read and kickoff-post anchors are identical in own-call units (0 of 178 readers have a call in between). The first call of the day differs from them by at most one summary call. O4 can therefore separate the kickoff read only from the peer-link anchor. P4 is restated as "the kickoff-read anchor beats the peer-link anchor". The day-start and post anchors are reported as tied by construction.
+- **Active-before window.** All kickoffs are posted just before the day window opens, so "30 active min before t_k" falls on the previous day's last half hour. The impostor control then selects agents who were active the evening before. It does not select agents who were active just before the kickoff. Any reserved-kickoff run should add a same-day variant (≥ 1 own call on the kickoff day before t_k). That variant is empty for all 17 exploration units.
+- **No unit qualifies under the synthetic pass rule** (power ≥ 0.8 and size ≤ 0.10 in the card's sample). The amendment the card requires before any freeze time therefore lists no qualifying unit.
 
 ## Faithfulness scorecard
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
