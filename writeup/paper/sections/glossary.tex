@@ -1,0 +1,41 @@
+% glossary: "Words we use" box for Sec. II (added 2026-10-07). One plain line per entry.
+% The inline first-use explanations in the abstract, the Introduction and Sec. II are still the primary definitions.
+\newcommand{\gw}[2]{\textbf{#1}: #2\par\vspace{0.6pt}}
+\begin{table*}[!tbp]
+\caption{Words we use, in plain terms.}
+\label{tab:words}
+\fcolorbox{nullc}{white}{%
+\begin{minipage}[t]{0.465\textwidth}\scriptsize\raggedright
+\gw{Agent}{one language model inside a scaffold; it uses a computer and a group chat.}
+\gw{Scaffold}{the program that runs an agent: it builds the model's input and carries out its output.}
+\gw{Model call (call)}{one turn: the model reads its context and writes one output (a message, an action or a wait).}
+\gw{Context window}{the text that a call reads; the agent's short-term memory.}
+\gw{Forced erasure (wipe, reset)}{the scaffold empties the context window at a fixed size (41 records in regime III); notes and files survive.}
+\gw{Call clock}{time counted in an agent's own calls, not in minutes. Ten idle minutes between two calls add nothing.}
+\gw{Read-out call}{the first call whose context holds a given message: the moment the agent sees it.}
+\gw{In flight}{posted, but not yet in the reader's context. Our placebo.}
+\gw{Named message}{a message that mentions the reader by name.}
+\gw{Goal period (\#1--\#51)}{the time for one shared goal, usually a week.}
+\gw{Kickoff}{the message that announces a goal.}
+\gw{Room}{a separate chat channel.}
+\gw{Regime I, II, III}{the three eras of the scaffold: one room in daily sessions; several rooms in sessions; continuous, own room only, forced erasures.}
+\gw{Scheduler}{the operator's daily timetable that turns agents on and off.}
+\end{minipage}}\hfill
+\fcolorbox{nullc}{white}{%
+\begin{minipage}[t]{0.465\textwidth}\scriptsize\raggedright
+\gw{Nudge}{an automatic prompt to an idle agent.}
+\gw{Unit}{a goal period, or the part of one between two scaffold changes.}
+\gw{Impostor}{a shared input that fakes influence between agents.}
+\gw{Null}{the simplest model with no effect; a claim must beat it.}
+\gw{Spin}{a part with a few states; here an agent that talks, works or waits.}
+\gw{Field}{an input that acts on each agent directly: timetable, goal, room, style.}
+\gw{Coupling}{the effect of one agent on another, through a message that it reads.}
+\gw{Quench}{a sudden change of the field, such as a kickoff.}
+\gw{Loop gain $g$}{new messages that one message causes directly. Below 1, echoes die out.}
+\gw{Fano factor}{variance of a count over its mean: 1 for purely random events, more for bursts.}
+\gw{Collective mode}{a pattern in which many agents move together.}
+\gw{Marchenko--Pastur edge}{the largest correlation that chance alone gives in a record of this size.}
+\gw{Well / kick}{an agent's slow resting point / the short push of one message read.}
+\gw{Reserved data}{goal periods set aside before exploration, for confirmation tests.}
+\end{minipage}}
+\end{table*}
