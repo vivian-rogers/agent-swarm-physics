@@ -1,6 +1,6 @@
 # H133: Read-out Glauber Potts: an agent switches project only at a call, driven by the named messages it just read
 
-**Status:** pre-registered (not run). Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH376 (approved by Vivian 2026-10-07), before any H133 statistic on real data. No scheme, synthetic or analysis code exists yet.
+**Status:** round 1 in progress (2026-10-07): structural counts, synthetic validation and Amendments A1–A3 done before real data. Pre-registered. Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH376 (approved by Vivian 2026-10-07), before any H133 statistic on real data. No scheme, synthetic or analysis code exists yet.
 **Question (GOALS.md):** **Q1** (what couples agents: does project choice couple through named reads at the read-out call, as talk does?). Second: **Q2** (field vs coupling: is a project switch a response to a named read, or to a project-wide attention field that also produces the messages?).
 **Fields:** stat mech (kinetic Potts, Glauber single-spin updates), sociophysics (discrete choice with social input), dynamics (discrete-time hazards on the call clock)
 **Literature:** none in `literature/` covers kinetic Potts choice at a read-out. Cited from memory (†): Glauber, *J. Math. Phys.* 4, 294 (1963)† (single-spin-flip kinetics); McFadden (1974)† (conditional logit); Blume, *Games Econ. Behav.* 5, 387 (1993)† (logit dynamics).
@@ -131,6 +131,43 @@ A new shared builder, `infra/shared/project_calls.py` (to be written in round 1,
 **Verdict rule.** *Supported:* P1, P2, P3 and P4 hold. *Narrowed:* P1 and P3 hold but P2 fails (reads couple, address does not matter), or P4 fails. *Failed:* any kill fires. *Inconclusive:* the precondition leaves < 3 testable regime-II/III units, or P1 is unpowered.
 
 **My credence before data:** supported 0.15; narrowed 0.3; failed 0.35; inconclusive 0.2. The strongest reason for doubt: H53's first-link step (F1 22.5) comes from broadcast links, and H28's pre-read switching (6.5×) says links and switches share a burst.
+
+## Round 1 (2026-10-07)
+
+### Shared builder and scheme
+- **Per-call labels:** `infra/shared/project_calls.py` (commit 18e52ee, `--verify`) writes `data/processed/shared/project_calls.parquet` and `project_call_touches.parquet`. It implements the card's *agent state (categorical, project per call)* and *project hop (call)* variants. Verify on non-reserved rows: all invariants hold; an independent recompute on G38 and G51 has 0 mismatches. 98.6% of strict mentions map to a call. The W30 `project_states` mode is among the window's call touches in 98.2% of windows.
+- **Call hops are fine-grained:** 61,939 non-reserved hops, 7–14× H129's W30 attention hops per period. 25.7% return to the previous project at the next hop within 5 calls (A → B → A).
+- **Scheme:** `scheme/build.py` writes `data/processed/H133-readout-glauber-potts/<unit>/` (calls, reads, touches, labels; project names hashed; 42 MB). Non-reserved units only; the reserved flag is asserted false.
+
+### Structural precondition (frozen 2026-10-07, counts only, before any outcome)
+A unit is testable with ≥ 30 project hops (call) and ≥ 20 named reads about a project other than the reader's current one (`structural_counts.json`).
+- **Regime I (17):** 4c, 12a, 13, 17, 18b, 19a, 20d, 21a, 21b, 24, 25, 26, 30b, 31a–31d.
+- **Regime II/III (24):** 33, 36a, 36b, 36c, 37, 38a, 39, 40, 41, 42a, 44a, 44b, 51a–51l.
+- **Below the precondition:** 38b–38e, 35, 42b and most early regime-I units. G38's native N1 therefore rests on 38a only.
+
+### Synthetic validation (axis F; run before any real-data statistic)
+`analysis/synthetic.py` on the real skeletons of 38a, 31a, 51c and 51h (real risk calls, option sets, reads with naming flags, project activity, dwell). The hop rate is calibrated to each skeleton's hop count. Output: `data/processed/H133-readout-glauber-potts/synthetic/`.
+- **Design facts.** An option set holds 5–141 active projects per call (38a: 44; 51c: 67). Named reads about a non-current project are rare: 97–451 option rows per unit out of 0.5–5 million.
+- **Part A: O1–O3 cannot be estimated.** Expected chosen rows with a named read under W1 (γ_nam = 1.0): 0.27 (38a), 0.30 (31a), 0.50 (51c), 1.19 (51h). A read term needs ≥ 5 chosen rows (Known issue H11 r2). P(≥ 5) is 9e-6 to 7.5e-3 per unit at γ_nam = 1.0, and ≤ 0.5 even at γ_nam = 3.
+- **Stacks (complete pooling; not allowed as a test, reported for scale).** A count test of chosen named rows has power 0.61 (12 #51 units) and 0.64 (24 regime-II/III units) at γ_nam = 1.0. It has power 0.25 at 0.5. It reaches 0.997–0.999 only at γ_nam = 2.0. Regime I: 0.17 at 1.0.
+- **Part B: fitted runs (50 per world; 38a, 31a).** γ_nam entered in 0/600 runs and γ_if in 0/600, so O1, O2 and O3 were never estimable. γ_un entered in 0–78% of runs. Its false-positive rate was 0.00–0.06 in W0, W1, W3 and W5; its power in W2 (γ_un = 1) was 0.02 (38a) and 0.14 (31a). The share term detects W5 (β_J = 2) in 0.64 / 0.72 of runs.
+- **Part C: background switch-span elasticity η_sw (200 runs per world, 4 skeletons).**
+
+| World (truth) | Card model: median η (sd); P(CI excludes 0); P(CI excludes 1) | With ln(1 + n options): median η; P(excl. 0) |
+| --- | --- | --- |
+| W0 null (η = 0) | −0.009 to −0.001 (0.02–0.06); 0.03–0.09; 1.00 | same; 0.035–0.09 |
+| W1 H133 (η = 0) | −0.019 to −0.001; 0.035–**0.13** (51c); 1.00 | −0.001 to 0.004; 0.055–0.105 |
+| W3 burst (η = 0) | −0.023 to +0.015; 0.06–0.08; **51h: +0.131, 0.975**; 1.00 | same pattern; 51h 0.975 |
+| W4 wall clock (η = 1) | 1.000–1.004 (0.02–0.05); 1.00; 0.04–0.065 | same |
+| W5 share (η = 0) | −0.018 to −0.002; 0.05–0.10; 1.00 | 0.065–0.075 |
+
+  - Timer-wake background calls (51c 992, 51h 574 calls): bias ≤ 0.05 in W0, W1, W5 and +0.07 in W4. Power to exclude 1 is 0.955–1.00 at η = 0. Size is 0.05–0.075. In 51h W3 the bias is +0.22 and the size 0.185.
+  - Reading: the "excludes 1" half of P4 and Kill B are valid tests everywhere (power 1.00, W4 coverage 0.935–0.965). The "includes 0" half has size ≤ 0.10 except under an attention burst on 51h (η ≈ +0.13). A small positive η therefore cannot separate a wall clock from a burst field.
+
+### Amendments (dated 2026-10-07, written after the synthetic run and before any real-data statistic)
+- **A1 (O1, O2, O3 untestable; the card's untestability rule fires).** At the planted γ_nam = 1.0 and 0.5, O1 has power ≈ 0 per unit (Part A, B). P1, P2, P3, native N1 (G38) and native N3 (G40) are **untestable**. The coupling verdict is "inconclusive" by the card's rule. Real-data logit coefficients are reported only as descriptive, where a term enters. N1 (within-project-hour permutation) is reported as a descriptive p. A pooled observed/expected count of chosen rows with a named, unnamed or in-flight read, at the fit without read terms, is added **post hoc** (descriptive; the stacks above give its scale). Kill A and Kill C cannot fire, because their inputs are not estimable.
+- **A2 (O4 model).** The card's O4 has size 0.13 on 51c in the H133 world W1, because the hop rate varies with the size of the option set. P4, P5, N2 and N4 use the O4 model plus ln(1 + n options) as primary (W1 size 0.055–0.105, bias ≤ 0.004). The card's model is reported next to it. Under an attention burst both versions give η ≈ +0.13 (51h), so η > 0 alone does not mean a wall clock.
+- **A3 (implementation notes, not changes):** N1's p uses the score for γ_nam at the fit without the nam and un terms. The permuted columns then do not enter the fitted probabilities, so no refit per draw is needed. A read term enters a fit only with ≥ 5 chosen rows having that read (Known issue H11 r2). CIs are agent-cluster sandwich (t, G − 1 df); the agent-block bootstrap (200) is run wherever γ_nam enters.
 
 ## Faithfulness scorecard
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
