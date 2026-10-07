@@ -228,7 +228,7 @@ def run_channel(ch: str, args, rng) -> dict:
             # variants (named in the card)
             for qv in ("q_cum", "q_room", "q_read"):
                 kv = L.coef(L.fit(dp, "O1", qv), "lnq")
-                res[f"var_{qv}"], res[f"var_{qv}_lo"], res[f"var_{qv}_hi"] = kv["est"], kv["lo"], kv["hi"]
+                res[f"var_{qv}"], res[f"var_{qv}_lo"], res[f"var_{qv}_hi"], res[f"var_{qv}_se"] = kv["est"], kv["lo"], kv["hi"], kv["se"]
             dnf = dp.with_columns(pl.when(pl.col("q_named") > 0).then(pl.col("q_named").cast(pl.Float64).log()).otherwise(0.0).alias("ln_named"),
                                   pl.when(pl.col("q_free") > 0).then(pl.col("q_free").cast(pl.Float64).log()).otherwise(0.0).alias("ln_free"),
                                   (pl.col("q_named") == 0).cast(pl.Float64).alias("named0"),
@@ -236,10 +236,12 @@ def run_channel(ch: str, args, rng) -> dict:
             rnf = L.fit(dnf, "base", extra=["ln_named", "ln_free", "named0", "free0"])
             for nm in ("ln_named", "ln_free"):
                 kv = L.coef(rnf, nm)
-                res[f"var_{nm}"], res[f"var_{nm}_lo"], res[f"var_{nm}_hi"] = kv["est"], kv["lo"], kv["hi"]
+                res[f"var_{nm}"], res[f"var_{nm}_lo"], res[f"var_{nm}_hi"], res[f"var_{nm}_se"] = kv["est"], kv["lo"], kv["hi"], kv["se"]
             kp = L.coef(L.fit(dp, "O1", link="poisson"), "lnq")
-            res["var_poisson_eps"], res["var_poisson_lo"], res["var_poisson_hi"] = kp["est"], kp["lo"], kp["hi"]
+            res["var_poisson"], res["var_poisson_lo"], res["var_poisson_hi"], res["var_poisson_se"] = kp["est"], kp["lo"], kp["hi"], kp["se"]
             if res["testable"]:
+                # post hoc covariate ladder (labelled post hoc in the card): which control moves eps_q
+                res.update(ladder(dp))
                 # O3 paired agent-cluster bootstrap
                 bs = agent_boot(dp, lambda db: (lambda r: L.coef(r, "lnq")["est"] - L.coef(r, "lnlead")["est"])(L.fit(db, "O3")),
                                 args.boot, rng)
@@ -258,6 +260,45 @@ def run_channel(ch: str, args, rng) -> dict:
         U[u] = res
         print(f"{ch} {u}: leaves {nl} eps {res.get('eps_q')} ({time.time() - t0:.0f}s)", flush=True)
     return U
+
+
+def ladder(dp: pl.DataFrame) -> dict:
+    """POST HOC: eps_q under (a) agent FE only, (b) + spline, (c) O1 (+ stay covariates), (d) O1 + window-in-day
+    dummies (first and second window of the day), (e) O1 without agent FE."""
+    out = {}
+    gid = dp.with_columns((pl.col("g") - pl.col("g").min().over("day")).alias("wid"))
+    gid = gid.with_columns((pl.col("wid") == 0).cast(pl.Float64).alias("w0"), (pl.col("wid") == 1).cast(pl.Float64).alias("w1"))
+    y = gid["leave"].to_numpy().astype(float)
+    off = np.log(gid["calls"].to_numpy().astype(float))
+    q = gid["q_live"].to_numpy().astype(float)
+    Xq = np.c_[np.where(q > 0, np.log(np.maximum(q, 1)), 0.0), (q == 0).astype(float)]
+    B, _, _ = L.ns_basis(gid["g"].to_numpy().astype(float), 3)
+    Xs, nms, _, _ = L.design(gid, "O1")
+    stay = np.column_stack([Xs[:, nms.index(n)] for n in L.STAY if n in nms]) if any(n in nms for n in L.STAY) else np.zeros((len(y), 0))
+    W = np.c_[gid["w0"].to_numpy(), gid["w1"].to_numpy()]
+    ag = gid["agent"].to_numpy()
+    specs = {"ph_a_fe_only": (np.c_[Xq], ag), "ph_b_fe_spline": (np.c_[Xq, B], ag), "ph_c_o1": (np.c_[Xq, stay, B], ag),
+             "ph_d_o1_daywin": (np.c_[Xq, stay, B, W], ag), "ph_e_no_fe": (np.c_[Xq, stay, B], np.zeros(len(y), int))}
+    for k, (X, a) in specs.items():
+        keep = [j for j in range(X.shape[1]) if np.ptp(X[:, j]) > 0]
+        if 0 not in keep:
+            continue
+        X = X[:, keep]
+        r = L.cloglog_fe(y, X, off, a)
+        se = float(np.sqrt(max(r["cov"][0, 0], 0)))
+        if k == "ph_e_no_fe":
+            # cluster by agent for the no-FE fit
+            lev, inv = np.unique(ag, return_inverse=True)
+            Z = np.hstack([X, np.ones((len(y), 1))])
+            eta = Z @ np.r_[r["b"], list(r["alpha"].values())[0]] + off
+            e = np.exp(np.clip(eta, -30, 5)); Sv = np.exp(-e); mu = np.clip(1 - Sv, 1e-12, 1 - 1e-12)
+            w = (e * Sv) ** 2 / (mu * (1 - mu)); u = y * e * Sv / mu - (1 - y) * e
+            Hinv = np.linalg.pinv((Z * w[:, None]).T @ Z)
+            Sc = np.zeros((len(lev), Z.shape[1])); np.add.at(Sc, inv, Z * u[:, None])
+            se = float(np.sqrt((Hinv @ (Sc.T @ Sc * len(lev) / max(len(lev) - 1, 1)) @ Hinv)[0, 0]))
+        out[k] = float(r["b"][0])
+        out[k + "_se"] = se
+    return out
 
 
 def pool(units: list[dict], est: str, se: str) -> dict:
@@ -390,7 +431,14 @@ def score(ch: str, U: dict, syn: dict) -> dict:
     P3 = p_d["lo"] is not None and p_d["lo"] > 0
     P4 = len(rown) > 0 and sum(1 for x in rown if 0.5 <= x <= 2) >= len(rown) / 2
     kill = bool(P1_against and power is not None and power >= 0.8)
-    return {"n_testable": len(T), "units_ci_above0": n_pos, "pool_eps_q": p_eps, "pool_eps_Z": p_Z,
+    variants = {k: pool(T, k, k + "_se") for k in ("var_q_cum", "var_q_room", "var_q_read", "var_ln_named", "var_ln_free",
+                                                     "var_poisson")}
+    lad = {k: pool(T, k, k + "_se") for k in ("ph_a_fe_only", "ph_b_fe_spline", "ph_c_o1", "ph_d_o1_daywin", "ph_e_no_fe")}
+    perm_sig = sum(1 for u in T if u.get("perm_p") is not None and u["perm_p"] < 0.05)
+    glauber_literal_rejected = bool(p_eps["hi"] is not None and p_eps["hi"] < 1)
+    return {"variants": variants, "posthoc_ladder": lad, "perm_p_lt_005": perm_sig, "A3_glauber_literal_rejected": glauber_literal_rejected,
+            "n_testable": len(T), "units_ci_above0": n_pos,
+            "units_ci_below0": sum(1 for u in T if u["eps_hi"] is not None and u["eps_hi"] < 0), "pool_eps_q": p_eps, "pool_eps_Z": p_Z,
             "oof_z_wins": int(sum(zw)), "oof_n": len(zw), "pool_o3_diff": p_d, "R_own": dict(zip([u["unit"] for u in both], rown)),
             "P1_pass": bool(P1), "P1_counts_against": bool(P1_against), "P2_pass": bool(P2), "P2_counts_against": bool(P2_against),
             "P3_pass": bool(P3), "P4_pass": bool(P4), "synthetic_power_eps05": power, "kill_fires": kill,
@@ -413,7 +461,7 @@ def estimates_rows(U: dict, ch: str) -> list[dict]:
         base = {"period_unit": unit, "goal_no": g, "channel": f"{ch} (host W30 E100)" if ch == "work" else "attention (project_states W30)",
                 "role": "replication", "unit_local": ul, "first_day": fd, "last_day": ld, "post_hoc": False,
                 "status": "testable" if r["testable"] else "descriptive (<25 leaves)", "source": "hypotheses/H138-glauber-escape-vs-options/analysis/run.py"}
-        if r.get("eps_q") is not None:
+        if r.get("eps_q") is not None and r["testable"]:
             rows.append({**base, "statistic": "h138_option_elasticity", "estimate": r["eps_q"], "ci_lo": r["eps_lo"],
                          "ci_hi": r["eps_hi"], "se": r["eps_se"], "n": float(r["leaves"]), "n_kind": "leaves",
                          "ci_kind": "se_t", "ci_level": 0.95, "method": "cloglog per-call hazard, agent FE, ns(active time, 3 df), agent-cluster sandwich t(G-1)",
@@ -447,8 +495,13 @@ def main():
     ap.add_argument("--perm", type=int, default=1000)
     ap.add_argument("--boot", type=int, default=500)
     ap.add_argument("--no-estimates", action="store_true")
+    ap.add_argument("--estimates-only", action="store_true", help="rewrite the estimates rows from results/results.json")
     a = ap.parse_args()
     RES.mkdir(parents=True, exist_ok=True)
+    if a.estimates_only:
+        out = json.loads((RES / "results.json").read_text())
+        write_rows(out["work"]["units"], out["attention"]["units"], out["natives"])
+        return
     rng = np.random.default_rng(20261008)
     syn = json.loads((L.D / "synthetic" / "summary.json").read_text())
     W = run_channel("work", a, rng)
@@ -466,28 +519,31 @@ def main():
     print(json.dumps({k: out[k]["O4"] for k in ("work", "attention")}, indent=1, default=float)[:2000])
     print(json.dumps(out["natives"], indent=1, default=float))
     if not a.no_estimates:
-        import estimates as E
-        rows = estimates_rows(W, "work") + estimates_rows(A, "attention")
-        nat = out["natives"]
-        n1 = nat["N1_G38"]
-        if n1.get("obs_over_pred") is not None:
-            rows.append({"period_unit": "G38", "goal_no": 38, "channel": "work (host W30 E100)", "role": "native",
-                         "statistic": "h138_tercile_ratio_obs_over_pred", "estimate": n1["obs_over_pred"], "ci_lo": None,
-                         "ci_hi": None, "n": float(n1["leaves_bot"] + n1["leaves_top"]), "n_kind": "leaves", "ci_kind": "none",
-                         "method": "top/bottom q_live tercile hazard ratio over (q ratio)^eps_q", "null": "within x1.5 of 1"})
-        n2 = nat["N2_G44"]
-        rows.append({"period_unit": "G44", "goal_no": 44, "channel": "work (host W30 E100)", "role": "native",
-                     "statistic": "h138_room_hazard_ratio_rest_best", "estimate": n2["hr_rest_over_best"], "ci_lo": n2["hr_lo"],
-                     "ci_hi": n2["hr_hi"], "n": float(n2["leaves_best"] + n2["leaves_rest"]), "n_kind": "leaves",
-                     "ci_kind": "se_t", "ci_level": 0.95, "method": "cloglog per-call hazard, room + owner + stay covariates, agent-cluster sandwich",
-                     "null": f"predicted (q_room ratio) {n2['pred_ratio']:.2f}"})
-        p3 = nat["N3_G51"]["pool_all_fitted"]
-        rows.append({"period_unit": "G51", "goal_no": 51, "channel": "work (host W30 E100)", "role": "native",
-                     "statistic": "h138_option_elasticity_pooled", "estimate": p3["est"], "ci_lo": p3["lo"], "ci_hi": p3["hi"],
-                     "se": p3["se"], "n": float(p3["k"]), "n_kind": "units", "ci_kind": "se_z", "ci_level": 0.95,
-                     "method": "DerSimonian-Laird pool of per-unit eps_q over 51a-51l (non-reserved)", "null": "eps_q = 0"})
-        E.write_estimates(rows, hypothesis="H138")
-        print(f"wrote {len(rows)} estimates rows")
+        write_rows(W, A, out["natives"])
+
+
+def write_rows(W: dict, A: dict, nat: dict):
+    import estimates as E
+    rows = estimates_rows(W, "work") + estimates_rows(A, "attention")
+    n1 = nat["N1_G38"]
+    if n1.get("obs_over_pred") is not None:
+        rows.append({"period_unit": "G38", "goal_no": 38, "channel": "work (host W30 E100)", "role": "native",
+                     "statistic": "h138_tercile_ratio_obs_over_pred", "estimate": n1["obs_over_pred"], "ci_lo": None,
+                     "ci_hi": None, "n": float(n1["leaves_bot"] + n1["leaves_top"]), "n_kind": "leaves", "ci_kind": "none",
+                     "method": "top/bottom q_live tercile hazard ratio over (q ratio)^eps_q", "null": "within x1.5 of 1"})
+    n2 = nat["N2_G44"]
+    rows.append({"period_unit": "G44", "goal_no": 44, "channel": "work (host W30 E100)", "role": "native",
+                 "statistic": "h138_room_hazard_ratio_rest_best", "estimate": n2["hr_rest_over_best"], "ci_lo": n2["hr_lo"],
+                 "ci_hi": n2["hr_hi"], "n": float(n2["leaves_best"] + n2["leaves_rest"]), "n_kind": "leaves",
+                 "ci_kind": "se_t", "ci_level": 0.95, "method": "cloglog per-call hazard, room + owner + stay covariates, agent-cluster sandwich",
+                 "null": f"predicted (q_room ratio) {n2['pred_ratio']:.2f}"})
+    p3 = nat["N3_G51"]["pool_all_fitted"]
+    rows.append({"period_unit": "G51", "goal_no": 51, "channel": "work (host W30 E100)", "role": "native",
+                 "statistic": "h138_option_elasticity_pooled", "estimate": p3["est"], "ci_lo": p3["lo"], "ci_hi": p3["hi"],
+                 "se": p3["se"], "n": float(p3["k"]), "n_kind": "units", "ci_kind": "se_z", "ci_level": 0.95,
+                 "method": "DerSimonian-Laird pool of per-unit eps_q over 51a-51l (non-reserved)", "null": "eps_q = 0"})
+    E.write_estimates(rows, hypothesis="H138")
+    print(f"wrote {len(rows)} estimates rows")
 
 
 if __name__ == "__main__":

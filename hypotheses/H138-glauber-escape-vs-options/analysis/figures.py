@@ -48,7 +48,7 @@ def main():
     U = [u for u in R["work"]["units"].values() if u["unit"] in o4.get("units", [])]
     x = np.log([u["O6_qbar"] for u in U])
     yv = [u["O6_ln_r"] for u in U]
-    cols = [RED if u["own_role"] else BLUE for u in U]
+    cols = [RED if u["own_role"] else BLUE for u in U]   # red: own-role units, blue: shared-goal units
     ax[2].scatter(x, yv, c=cols, s=18)
     for u, xi, yi in zip(U, x, yv):
         ax[2].annotate(u["unit"], (xi, yi), fontsize=6)
@@ -58,6 +58,7 @@ def main():
     fig.tight_layout()
     (CARD / "figures").mkdir(exist_ok=True)
     fig.savefig(CARD / "figures" / "h138_round1.png", dpi=130)
+    fig.savefig(CARD / "figures" / "h138_round1.pdf")
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 2, figsize=(10, 3.8))
@@ -73,6 +74,7 @@ def main():
         ax[k].set_title(f"{ch}: synthetic worlds (line = truth)", fontsize=10)
     fig.tight_layout()
     fig.savefig(CARD / "figures" / "h138_synthetic.png", dpi=130)
+    fig.savefig(CARD / "figures" / "h138_synthetic.pdf")
     plt.close(fig)
 
     n1 = R["natives"]["N1_G38"]

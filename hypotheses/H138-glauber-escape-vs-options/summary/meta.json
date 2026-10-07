@@ -1,0 +1,34 @@
+{
+ "complete": 45,
+ "faithfulness": 1.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done on exploration units: card and dated predictions before data; scheme on both channels (13 work, 31 attention testable units); real-skeleton synthetic (W0-W4, 200 replicates per world on every testable unit) and Amendments A1-A4 committed before real data; O1-O6, N1-N3, permutation null, lead-placebo bootstrap, variants; 235 estimates rows; period READMEs. Missing: confirm.py for the reserved periods; active-minutes exposure and expiry-hop variants; call-clock rows.",
+  "faithfulness": "The Glauber signature eps_q = 1 is rejected (work upper limit 0.32, power 0.82, size 0.01) and no channel shows a positive pooled elasticity; the card's kill is unpowered in the work channel (0.43), so the verdict by rule is inconclusive. Scorecard A1 B1 C0 D1 E0 F1 G1 H0 I0.",
+  "usefulness": "Operator rule: the number of open projects does not set per-call churn (about 0.06-0.3 work leaves per 100 own calls); plan reassignment from task length. Moderate value: a clear negative on the Glauber law with an unpowered kill."
+ },
+ "one_line": "An agent's per-call chance of leaving its project does not grow with the number of other open projects (pooled option elasticity -0.66 [-1.64, 0.32] work, 13 units; -0.28 [-0.42, -0.15] attention, 31 units), so the Glauber law eps_q = 1 is rejected; the HH381 kill is unpowered (0.43).",
+ "models": [
+  {
+   "model": "10-potts",
+   "role": "primary",
+   "outcome": "refuted",
+   "note": "kinetic Potts walker with Glauber escape: leave hazard does not scale with the number of open options (eps_q = 1 rejected); the eps_q = 0 vs 0.5 kill is unpowered"
+  },
+  {
+   "model": "02-nonequilibrium-ising",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "the call-clock attempt rate works as an exposure; the escape term it would scale does not appear"
+  }
+ ],
+ "rated_by": "H138 agent (suggested)",
+ "updated": "2026-10-07",
+ "v2": {
+  "claim": "Within goal periods, an agent's per-call chance of leaving its project does not rise with the number of other open projects: pooled option elasticity -0.66 [-1.64, 0.32] (work, 13 units) and -0.28 [-0.42, -0.15] (attention, 31 units), so the Glauber law eps_q = 1 is rejected (work upper limit 0.32; power 0.82, size 0.01)",
+  "scope": "13 work and 31 attention non-reserved units, regimes I-III (G18-G51); natives G38, G44, G51",
+  "direction": "negative",
+  "original_verdict": "inconclusive",
+  "credence": null
+ }
+}

@@ -1,0 +1,36 @@
+\hwhat{HH381 says that an agent working on one project leaves it the way a Glauber spin leaves its Potts state: at each of its own calls, the chance of leaving grows in proportion to the number of other open options, $h\propto(q-1)e^{-\beta\Delta}$. H138 builds one row per agent, 30-min window and project visit (work: DQ4 host labels; attention: strict project mentions) and fits the leave hazard per own call against the number of projects other agents held in the last 2 active hours. \textbf{Leaving does not rise with the open options}: the pooled option elasticity is $-0.66\,[-1.64,0.32]$ in the work channel (13 units) and $-0.28\,[-0.42,-0.15]$ in the attention channel (31 units). The literal law $\varepsilon_q=1$ is rejected. The card's kill ($\varepsilon_q=0$ vs 0.5) is unpowered in the work channel (0.43), so the verdict by its rule is inconclusive.}
+
+\hmodel{Models 10 (kinetic Potts) and 02 (single-spin kinetics). Heat-bath walker on the agent's call clock: from project $a$ it moves to $b$ with probability $\nu e^{u_b}/(e^{u_a}+\sum_{b'}e^{u_{b'}})$. For rare leaves $h\approx\nu e^{-u_a}Z_\mathrm{alt}$; with equal attractions $Z_\mathrm{alt}=(q-1)e^{u}$, so $\varepsilon_q=\partial\ln h/\partial\ln(q-1)=1$ at a fixed stay field. Rival R-finish: the agent leaves when its task ends, $\varepsilon_q\approx0$.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+\mathrm{cloglog}\,P(\text{leave in }w)=\ln c_{iw}+\theta_i+s(t)+\varepsilon_q\ln q_\mathrm{live}+\gamma_d\ln(1+d)+\beta_a\ln(1+a_a)+\beta_c m+\beta_\mathrm{own}o\\
+q_\mathrm{live}(i,w)=\#\{b\neq a:\ \text{held by }j\neq i\text{ in }w-4..w-1\},\qquad Z_\mathrm{alt}=\textstyle\sum_{b\in C}e^{\hat u_b}
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/h138_round1.pdf}{(a) Work and (b) attention option elasticity $\hat\varepsilon_q$ per testable unit (cloglog hazard per own call, agent effects, active-time spline; agent-cluster 95\% CIs; green CI above 0, red below 0). Black: DerSimonian--Laird pool. Dashed line: the Glauber value 1. (c) Cross-unit reference leave rate against the mean number of open options (blue shared-goal, red own-role units); the slope is not identified (power 0.12).}
+
+\htelos{For an operator: opening more parallel projects does not make agents drop their current one faster. Expect about 0.06--0.3 leaves per 100 own calls in the work channel whatever the number of open projects; in own-role weeks agents leave slightly less when many projects are live. Plan churn from task length, not from the size of the menu. Whether naming a target project pulls agents is open (a small attention signal, below the label-noise level).}
+
+\hbottom{Within goal periods the per-call leave hazard does not grow with the number of open projects (pooled elasticity $-0.66\,[-1.64,0.32]$ work, $-0.28\,[-0.42,-0.15]$ attention), so the Glauber law $\varepsilon_q=1$ is rejected; the HH381 kill itself is unpowered.}
+
+\hresults{\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.36\columnwidth}p{0.46\columnwidth}p{0.16\columnwidth}@{}}
+\textbf{Prediction (locked)} & \textbf{Observed} & \textbf{Verdict}\\\hline
+S1--S3 synthetic & unbiased; size 0.055; power 0.43 at 0.5 & passed\\
+P1 $\varepsilon_q>0$ (work) & 1/13 units; pool $-0.66\,[-1.64,0.32]$ & against\\
+A3 bound $\varepsilon_q<1$ & upper limit 0.32 & $\varepsilon_q=1$ rejected\\
+P2 $\varepsilon_Z\in[0.5,1.5]$ & $0.22\,[-0.12,0.55]$; $Z$ wins 8/13 & not passed\\
+P3 lag $>$ lead & $-0.51\,[-1.47,0.45]$ & failed\\
+P4 $R_\mathrm{own}\in[0.5,2]$ & 0/13 & failed\\
+P5 cross-unit $b_q$ & $-0.32\,[-4.5,5.3]$ & descriptive\\
+N1 G38 terciles & ratio 2.89 vs $\times1.5$ & against\\
+N2 G44 rooms & HR 1.97 vs 3.32 (15 leaves) & descriptive\\
+N3 G51 & $-1.83\,[-3.19,-0.46]$ & failed\\
+Kill (work) & CI includes 0; power 0.43 & untestable\\
+Attention & $-0.28\,[-0.42,-0.15]$; power 1.00 & against\\
+\end{tabular}}
+
+\hobsb{../figures/h138_synthetic.pdf}{Synthetic validation on the real skeleton of every testable unit (200 replicates per world): pooled $\hat\varepsilon_q$ by world (line: truth) with its rejection rate of $\varepsilon_q=0$. The estimator is unbiased; renewal (W0) and shared-drive (W3) worlds keep size 0.04--0.06. Work power is 0.89 at $\varepsilon_q=1$ but 0.43 at 0.5. Attention label noise (W4) fakes $\hat\varepsilon_q\approx0.3$.}
+
+\hcaveats{Work leaves are few outside \#51 (25--88 per unit), so no single work unit has power 0.8. The attention negative appears only after the active-time spline (agent-only fit $+0.18\,[-0.02,0.38]$; post hoc). The \#51 negative rests on Wald CIs; the within-day permutation gives $p\ge0.095$ in each \#51 unit. Labels are 30-min windows, coarser than read-out delays. Reserved periods were not run.}
+
+\hnext{Refit on the call clock (one row per own call) to raise power and make the lead placebo work; explain the negative elasticity with a same-time cross-agent $q$ shuffle; test kickoff-named against free options with H54's targets; reconcile the rising work dwell hazard with H129's aging.}

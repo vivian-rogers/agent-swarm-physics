@@ -1,6 +1,6 @@
 # H138 × G25: replication unit (2025-12-29 → 2026-01-05)
 
-**Verdict:** pending
+**Verdict:** descriptive
 **Role:** exploratory (replication)
 **Period:** regime I · mode C · 10 agents · 5 days. No split used (whole period, as in H11/H129).
 
@@ -14,10 +14,17 @@ Attention channel only: 48 attention leaves (testable, ≥ 25); no DQ4 work chan
 - Counts against: ε̂_q CI includes 0 with synthetic power ≥ 0.8 at ε_q = 0.5 (pooled).
 
 ## Result
-Not run.
+*Round 1, 2026-10-07 (exploration). Estimator: cloglog hazard per own call, agent effects, active-time spline, agent-cluster sandwich (card Amendment A1). Power from the real-skeleton synthetic (W1 worlds, 200 replicates).*
+
+| Channel · unit | Leaves | ε̂_q [95% CI] | permutation p | ε̂_q − ε̂_lead [boot CI] | ε̂_Z | power at ε 0.5 / 1 | Verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| attention · 25 | 48 | −0.42 [−1.34, 0.51] | 0.249 | −0.51 [−1.44, 0.79] | 0.07 [−0.99, 1.12] | 0.27 / 0.58 | P1 fails; unpowered |
+
+- Period verdict: **descriptive**. No unit has a CI above 0, and the unit power at ε_q = 0.5 is below 0.8, so a null here is unpowered.
+- Data: `data/processed/H138-glauber-escape-vs-options/G25/`, results in `results/results.json`.
 
 ## Scorecard (period-specific axes)
-C, H: not run (0).
+C 0 (the Glauber term does not beat ε_q = 0 here); H 0 (R-finish not beaten; lead placebo unpowered).
 
 ## Notes
 - Leave counts are structural (from `scheme/build.py`, counts.json) and set testability only.

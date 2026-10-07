@@ -1,6 +1,6 @@
 # H138: Glauber escape from a project grows with the number of open options
 
-**Status:** round 1 in progress (2026-10-07). Card, observables, nulls and predictions written 2026-10-07 08:15–09:10 UTC, before any H138 statistic on real data. Scheme built; synthetic validation done and committed with Amendments A1–A3 before any real-data hazard statistic.
+**Status:** round 1 done (2026-10-07, exploration units only): **inconclusive** by the card's rule; the literal Glauber law ε_q = 1 is rejected (added bound A3). Pooled option elasticity −0.66 [−1.64, 0.32] (work, 13 units; power 0.43 at ε_q = 0.5, so the HH381 kill cannot fire) and −0.28 [−0.42, −0.15] (attention, 31 units). Card, observables, nulls and predictions written 2026-10-07 08:15–09:10 UTC before any real-data statistic; synthetic and Amendments A1–A4 committed (3fb2a8b) before the real-data run. Reserved periods not run; no confirm script yet.
 **Question (GOALS.md):** **Q2** (what is field and what is coupling: is an agent pulled off its project by the options on offer, as a Glauber Potts walker in a field predicts, or pushed off by an internal clock: finishing and trap aging?). Second: **Q5** (does an operator who opens more parallel projects raise the churn per call?).
 **Fields:** stat mech (kinetic Potts, heat-bath and Metropolis single-spin updates, escape rates), stochastic processes (discrete-time hazards with time-varying covariates)
 **Literature:** none in `literature/` covers kinetic Potts escape rates. Cited from memory (†): Glauber, *J. Math. Phys.* 4, 294 (1963)† (single-spin-flip kinetics; the attempt clock sets the rate); Wu, *Rev. Mod. Phys.* 54, 235 (1982)† (the Potts model); Allison (1982)† (discrete-time hazards). Model reference: [`physics-models/10-potts/README.md`](../../physics-models/10-potts/README.md).
@@ -21,10 +21,10 @@
 
 | Impostor | Relevant? | How it is handled (planned) | Status |
 | --- | --- | --- | --- |
-| Scheduler field | partly | Exposure is the agent's own calls per window (the Glauber attempt clock, H40), not wall time. Agent fixed effects absorb each agent's hop propensity; a spline in active time absorbs within-unit drift. Windows never span a night. Active minutes as exposure is a variant. | removed (planned) |
+| Scheduler field | partly | Exposure is the agent's own calls per window (the Glauber attempt clock, H40), not wall time. Agent fixed effects absorb each agent's hop propensity; a spline in active time absorbs within-unit drift. Windows never span a night. Active minutes as exposure is a variant. | removed (round 1: window-of-day and ln N_active checks leave ε̂_q unchanged) |
 | Exogenous field (kickoff, goal, operator) | yes (central) | Within a unit the goal field is fixed, so the primary test uses within-unit variation of q. Kickoff-named projects are counted apart (q_named, q_free; `replicator_hosts.kickoff_named`). Operator messages that name a project enter as a window dummy (variant). Across units: goal mode, H54's own-target percentile and log N as covariates. | removed within units; partly across |
 | Shared model priors (family, style) | partly | Agent fixed effects absorb each agent's hop propensity. A same-lab vs other-lab split of ε_q is a variant. | partly |
-| Contemporaneous convergence | yes | H11 round 2 found joins are time-symmetric co-arrival. Lead placebo: options that appear in the 2 active hours *after* the leave (q_lead) enter beside the lagged count. Read variant: q_read counts only options the agent could have read (DQ1 ledger). | removed (planned, by the lead placebo) |
+| Contemporaneous convergence | yes | H11 round 2 found joins are time-symmetric co-arrival. Lead placebo: options that appear in the 2 active hours *after* the leave (q_lead) enter beside the lagged count. Read variant: q_read counts only options the agent could have read (DQ1 ledger). | partly (round 1: the work lead placebo is unpowered, 0.42 at ε 0.5) |
 
 **Inputs:** current shared tables only (DQ4 work ledger, deterministic `project_states`, DQ1 ledger, `activity_bins_fixed`). No old activity table.
 
@@ -106,19 +106,19 @@ Worlds keep each testable unit's real agents, windows, own-call counts, project 
 ## Faithfulness scorecard
 Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = passed. Scheme and promotion thresholds: `writeup/paper.tex`, Sec. "Assessing model faithfulness".
 **Rival models:** R-finish (renewal clock), R-coarrival (co-arrival bursts), R-field (goal field across periods), R-capacity (bounded menu), R-label-noise (attention channel).
-**Reserved periods used for confirmation:** none (not run). Planned: the reserved weeks #45, #46, #47 (shared goals) and the #51 tail (2026-09-07 → 09-21), work and attention channels, ledger family `project_potts`. A frozen, guarded confirm script is written only after exploration, and it runs only with Vivian's sign-off. Overlaps to disclose: H93, H94, H129, H77/H78 and H104 plan project statistics on the same targets.
+**Reserved periods used for confirmation:** none (round 1 used exploration units only). Planned: the reserved weeks #45, #46, #47 (shared goals) and the #51 tail (2026-09-07 → 09-21), work and attention channels, ledger family `project_potts`. A frozen, guarded confirm script is written only after exploration, and it runs only with Vivian's sign-off. Overlaps to disclose: H93, H94, H129, H77/H78 and H104 plan project statistics on the same targets.
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 0 | not run |
-| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 0 | not run |
-| C adequacy | beats the null hierarchy, day-blocked out-of-fold data | 0 | not run |
-| D unfitted predictions | unfitted statistics and the model's signature | 0 | not run |
-| E interventional | predicts the change across a natural experiment | 0 | not run |
-| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 0 | not run |
-| G ground truth | agrees with known structure | 0 | not run |
-| H comparative | beats the named rivals | 0 | not run |
-| I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
+| A mapping | variables defined from dataset fields; assumptions listed; invariant across families and regimes | 1 | Round 1: leave, exposure, q_live, Z_alt, owner from DQ4, project_states, call_windows, DQ1; two channels, regimes I–III; family invariance not tested |
+| B assumptions | stationarity, Markov order, time-rescaling, update-order audit | 1 | Round 1: per-call cloglog with agent effects and a time spline; dwell measured (work γ_d +0.27, attention −0.09); no Markov-order audit |
+| C adequacy | beats the null hierarchy, day-blocked out-of-fold data | 0 | Round 1: the Glauber term does not beat ε_q = 0; out-of-fold Z_alt vs q_live unstable |
+| D unfitted predictions | unfitted statistics and the model's signature | 1 | Round 1: signature ε_q = 1 rejected (A3); G38 tercile ratio 2.89 (outside ×1.5); R_own 0/13 |
+| E interventional | predicts the change across a natural experiment | 0 | Round 1: no NE; G44 cross-room contrast descriptive |
+| F identifiability | synthetic recovery with village sampling; robust to preprocessing | 1 | Round 1: unbiased, size 0.04–0.06; power 0.89 at ε 1, 0.43 at ε 0.5 (work); attention positives < 0.3 not identified (W4) |
+| G ground truth | agrees with known structure | 1 | Round 1: owners leave less (attention −0.70 [−1.02, −0.38]), as H94 in sign |
+| H comparative | beats the named rivals | 0 | Round 1: does not beat R-finish (ε_q ≈ 0 or below); R-coarrival not separable in work |
+| I transfer | holds in other same-mode periods, including the reserved periods | 0 | Reserved periods not run |
 
 ## Prediction
 *Written 2026-10-07 08:15–09:10 UTC, before running the analysis on real data.*
@@ -158,14 +158,31 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 **My credence before data:** supported 0.15; narrowed 0.2; failed 0.4; inconclusive 0.25. Reason for the low prior: H129's own-role and shared units have about the same hop rate per call although their ownership prices differ by about 5.6 nats (H94), and H11 found co-arrival with no arrow of time.
 
 ## Results by goal period
+Round 1 (2026-10-07). ε̂_q with 95% CI; W = work (host labels), A = attention. Period verdicts: supported (P1 and P3 pass), failed (CI below 0, or a powered null), descriptive (unpowered or < 25 leaves).
+
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G31](goalperiod-subhypotheses/G31/README.md) | replication (regime I free week; most work switches outside #51) | pending | — |
-| [G38](goalperiod-subhypotheses/G38/README.md) | replication + native N1 (births all week) | pending | — |
-| [G44](goalperiod-subhypotheses/G44/README.md) | replication + native N2 (two rooms, two prices) | pending | — |
-| [G51](goalperiod-subhypotheses/G51/README.md) | replication (51a–51l) + native N3 (own-role) | pending | — |
+| [G18](goalperiod-subhypotheses/G18/README.md) | replication (A) | descriptive | A 0.26 [−0.29, 0.82]; power 0.52 |
+| [G19](goalperiod-subhypotheses/G19/README.md) | replication (A) | descriptive | A −0.14 [−0.61, 0.33]; power 0.71 |
+| [G20](goalperiod-subhypotheses/G20/README.md) | replication (A) | descriptive | A −0.26 [−1.07, 0.56] |
+| [G21](goalperiod-subhypotheses/G21/README.md) | replication (A) | descriptive | A −0.91 [−2.35, 0.53] |
+| [G24](goalperiod-subhypotheses/G24/README.md) | replication (A) | descriptive | A −0.32 [−1.09, 0.44] |
+| [G25](goalperiod-subhypotheses/G25/README.md) | replication (A) | descriptive | A −0.42 [−1.34, 0.51] |
+| [G26](goalperiod-subhypotheses/G26/README.md) | replication (A) | descriptive | A −0.69 [−2.06, 0.67]; permutation p 0.026 |
+| [G30](goalperiod-subhypotheses/G30/README.md) | replication (A; W 17 leaves) | failed | A −0.38 [−0.69, −0.07] (sign reversed) |
+| [G31](goalperiod-subhypotheses/G31/README.md) | replication (W, A) | descriptive | W −0.07 [−1.23, 1.09] (unpowered, 0.14); A (secondary) −0.36 [−0.67, −0.05] |
+| [G33](goalperiod-subhypotheses/G33/README.md) | replication (A; W 16 leaves) | descriptive | A 0.97 [−1.53, 3.47] |
+| [G36](goalperiod-subhypotheses/G36/README.md) | replication (A: 36a, 36bc) | descriptive | A 36a −4.53 [−9.41, 0.35]; 36bc −0.31 [−0.87, 0.24] |
+| [G37](goalperiod-subhypotheses/G37/README.md) | replication (A) | descriptive | A −0.68 [−1.99, 0.64] |
+| [G38](goalperiod-subhypotheses/G38/README.md) | replication + native N1 | descriptive | W −0.73 [−1.76, 0.30]; N1 tercile ratio 2.89 (outside ×1.5), unpowered |
+| [G39](goalperiod-subhypotheses/G39/README.md) | replication (A) | descriptive | A 1.81 [−2.20, 5.82] |
+| [G40](goalperiod-subhypotheses/G40/README.md) | replication (A) | descriptive | A 0.43 [−3.14, 3.99] |
+| [G41](goalperiod-subhypotheses/G41/README.md) | replication (W, A) | supported | W 1.86 [0.25, 3.47], lead placebo 1.80 [0.33, 4.29]; A −0.51 [−1.28, 0.25] |
+| [G42](goalperiod-subhypotheses/G42/README.md) | replication (A) | descriptive | A −0.95 [−2.57, 0.67] |
+| [G44](goalperiod-subhypotheses/G44/README.md) | replication + native N2 | descriptive | W 0.27 [−5.21, 5.74]; N2 HR 1.97 [0.41, 9.53] vs 3.32 (#best 15 leaves) |
+| [G51](goalperiod-subhypotheses/G51/README.md) | replication (51a–51l) + native N3 | failed | W pooled −1.83 [−3.19, −0.46]; A pooled −0.33 [−0.78, 0.12] |
 
-Other testable units get their period folders, with the replication prediction copied and dated, before the run.
+Not testable in either channel (< 25 leaves): #23, #27, #35; work-only < 25: #30, #33, #36, #37, #39, #40, #42, 51b, 51k, 51l.
 
 ## Round 1 (2026-10-07)
 
@@ -202,8 +219,82 @@ Other testable units get their period folders, with the replication prediction c
 - **A3 (added test, pre-data).** **Glauber-literal bound:** if the pooled work ε̂_q has its 95% CI upper limit below 1, the literal HH381 law (ε_q = 1 at fixed field) is rejected (synthetic power 0.82 at ε_q = 0, size 0.01). This is an added test, not the card's kill; it is reported beside the verdict rule.
 - **A4 (variants not run in round 1).** Active minutes as exposure, H129's expiry-then-arrival hop, the operator-message dummy and the same-lab split are not run (time). Room channel: untestable, as declared in the card.
 
+### Real data (exploration units only; run 2026-10-07 after commit 3fb2a8b)
+`analysis/run.py` (O1–O6, N1–N3, N1 permutation null with 1,000 draws, O3 bootstrap with 500 draws, variants) → `results/results.json`; `analysis/posthoc.py` → `results/posthoc.json` (post hoc). Scheme note: a "labelled window" of another agent is a window in which that agent holds the label (the host label carried forward until expiry), in both channels. Every estimate below is per unit, then pooled by DerSimonian–Laird (exception (d)); "[ ]" is a 95% CI.
+
+**Prediction vs result**
+
+| # | Prediction | Result | Verdict by the rule |
+| --- | --- | --- | --- |
+| S1 | O1 unbiased (±0.2) in W1; size ≤ 0.10 in W0 | bias +0.07 / +0.04; size 0.055 (W0), 0.040 (W3) | passed |
+| S2 | O1 fooled by W2; O3 false rate ≤ 0.10 | O1 pooled rejection 0.105 (51g 0.59); O3 false rate 0.100 | passed (at the limit) |
+| S3 | O4 power < 0.5 at b_q = 1 | 0.12 (τ 0.5), 0.28 (τ 0.25) | passed: O4 descriptive |
+| **P1** (primary, work) | ε̂_q CI > 0 in ≥ 2/3 of units; pooled CI includes 1, excludes 0 | **1/13 units CI > 0** (#41: 1.86 [0.25, 3.47]); 1/13 CI < 0 (51g: −2.07 [−3.72, −0.41]); **pooled ε_q −0.66 [−1.64, 0.32]** (τ² 1.19) | **counts against**; unpowered (power 0.43, A2), so not a kill |
+| A3 (added) | Glauber-literal bound: pooled work CI upper < 1 rejects ε_q = 1 | upper limit **0.32** | **ε_q = 1 rejected** (power 0.82, size 0.01) |
+| P2 | pooled ε_Z ∈ [0.5, 1.5]; Z_alt wins the out-of-fold score in ≥ 1/2 units | ε_Z 0.22 [−0.12, 0.55]; Z_alt wins in 8/13 | not passed (ε_Z below 0.5); not counted against (CI reaches 0.55) |
+| P3 | pooled ε_q − ε_lead > 0, CI above 0 | −0.51 [−1.47, 0.45] | failed (unpowered: 0.42 at ε 0.5) |
+| P4 | R_own ∈ [0.5, 2] in ≥ 1/2 of units with both visit kinds | 0/13 (R_own −0.72 to 0.43); pooled β̂_own −0.48 [−1.32, 0.36] | failed |
+| P5 (HH-literal, descriptive) | b̂_q ∈ [0.5, 1.5], CI > 0 | b̂_q −0.32 [−4.52, 5.34] (13 units); with H54's π −0.19 [−6.06, 5.87] | descriptive; sign counts against |
+| N1 (G38) | ε̂_q CI > 0; tercile hazard ratio = (q ratio)^ε̂ within ×1.5 | ε̂_q −0.73 [−1.76, 0.30] (permutation p 0.18); top/bottom tercile hazard 1.20 (0.184 vs 0.153 per 100 calls at q̄ 5.2 vs 1.6); predicted 0.41; ratio 2.89 | counts against; unpowered (unit power 0.29) |
+| N2 (G44) | room hazard ratio #rest/#best = q_room ratio within ×2 | #best has 15 leaves (< 25): **descriptive**. HR 1.97 [0.41, 9.53]; predicted 3.32 (q_room 10.4 vs 3.1); ratio 0.59 | descriptive (inside ×2, same sign) |
+| N3 (G51) | pooled ε_q over 51a–51l CI > 0; β̂_own < 0 with CI | **ε_q −1.83 [−3.19, −0.46]** (12 units; testable 9: −1.83 [−2.86, −0.79], τ² 0); β̂_own −1.63 [−3.27, 0.00] | **failed** (sign reversed) |
+| Kill (HH381, work) | pooled CI includes or lies below 0 *and* power ≥ 0.8 | CI includes 0; power 0.43 | **does not fire** (untestable, A2) |
+| Attention (secondary) | same as P1 | 0/31 units CI > 0; 3/31 CI < 0; **pooled −0.28 [−0.42, −0.15]**; power 1.00 at ε 0.5; P3 −0.36 [−0.51, −0.20] (lead > lag) | the kill rule, applied to this channel, would fire |
+
+**Hypothesis-level verdict by the card's rule: inconclusive.** P1 fails and P3 fails, but the work kill is unpowered (A2). Beside the rule: the added bound A3 rejects the literal law ε_q = 1 in the work channel (upper limit 0.32), and the secondary attention channel gives a powered negative (−0.28 [−0.42, −0.15]).
+
+**Variants named in the card (pooled; work · attention).**
+- q_cum (H11's choice set): −0.05 [−2.42, 2.32] · −0.41 [−0.86, 0.04].
+- q_room (options in the agent's own room): −0.09 [−0.91, 0.73] · −0.14 [−0.27, −0.00].
+- q_read (options read in the DQ1 ledger in the last 2 active hours): −0.10 [−0.68, 0.47] · −0.02 [−0.14, 0.09].
+- q_named / q_free (fitted together): named +0.23 [−0.09, 0.55] (7 units) · **+0.17 [+0.03, +0.31]** (22 units); free −0.49 [−1.20, 0.23] · **−0.22 [−0.40, −0.04]**. The attention named term is below the W4 label-noise level (0.29), so by A2 it does not count as a positive.
+- Poisson form (the card's first form): −0.68 [−1.53, 0.17] · −0.21 [−0.31, −0.11].
+- N1 permutation null (within agent and day): p < 0.05 in 1/13 work units (#41, p 0.010) and 6/31 attention units (both signs). Every #51 work unit has p ≥ 0.095, so the Wald CIs of the #51 negatives may be too narrow.
+
+**Stay-side terms (O1 covariates; descriptive).**
+- Dwell: work γ̂_d **+0.27 [+0.19, +0.34]** (13/13 units positive): the direct-leave hazard rises with own calls on the repo. Attention γ̂_d −0.09 [−0.12, −0.05] (aging, as H129). The work sign differs from H129's aging; H129's hop includes expiry-then-arrival, which this direct-leave design censors.
+- Owner: attention β̂_own **−0.70 [−1.02, −0.38]** (owners leave less, as H94's price predicts in sign); work −0.48 [−1.32, 0.36]. Both are about 1/10 of λ_own or less (R_own −0.42 to 0.25 in attention, 0/22 in [0.5, 2]).
+
+**O6 descriptive.** Leaves per 100 own calls: work 0.06–0.31 in testable units (0.12 in #38); attention 0.12–0.87. Mean open options q̄: work 3.0 (#38) to 20.9 (51j); attention 2.2–25.2. Share of leaves that go to a project born in the 2 h before: work 0.09–0.69 (#41 0.69, #38 0.52, #51 units 0.09–0.45); attention 0.03–0.58.
+
+**Post hoc (not pre-registered; labelled post hoc).**
+- *Covariate ladder* (pooled ε̂_q, work · attention): agent effects only −0.17 [−1.02, 0.67] · +0.18 [−0.02, 0.38]; plus the active-time spline −0.40 [−1.35, 0.54] · −0.20 [−0.40, 0.00]; O1 (plus stay terms) −0.66 · −0.28; plus first/second-window-of-day dummies −0.80 [−1.82, 0.21] · −0.30 [−0.47, −0.13]; O1 without agent effects −1.87 [−3.11, −0.62] · −0.30 [−0.42, −0.19]. The attention sign turns negative when the within-unit time trend is removed; no specification gives a positive pooled elasticity.
+- *Co-activity:* adding ln N_active(w) leaves ε̂_q unchanged (work −0.60 [−1.51, 0.32]; attention −0.36 [−0.53, −0.19]; #51 work −1.73 [−2.81, −0.66]); corr(ln q, ln N) is −0.10 (work) and 0.02 (attention). A shared activity drive does not make the negative.
+
+### Impostors (STANDARDS §1), as handled in round 1
+
+| Impostor | Relevant? | How it was handled | Status |
+| --- | --- | --- | --- |
+| Scheduler field | partly | Exposure = own calls (call clock); agent effects; 3-df spline in active time; windows inside days. Post hoc: window-of-day dummies and ln N_active leave ε̂_q unchanged. Active minutes as exposure not run (A4). | removed |
+| Exogenous field (kickoff, goal, operator) | yes | Within a unit the goal is fixed. Named vs free options split (attention: named +0.17, free −0.22). Across units, O4 with ln N, own-role and H54's π is descriptive (power 0.12). Operator dummy not run. | removed within units; partly across |
+| Shared model priors | partly | Agent effects absorb each agent's hop propensity; same-lab split not run. | partly |
+| Contemporaneous convergence | yes | Lead placebo O3 (work −0.51 [−1.47, 0.45], unpowered; attention lead > lag, −0.36 [−0.51, −0.20]); q_read variant (DQ1 ledger) ≈ 0. | partly |
+
+### Scorecard (round 1)
+
+| Axis | Score | Evidence |
+| --- | --- | --- |
+| A mapping | 1 | Leave, exposure, q_live, Z_alt and owner defined from DQ4, project_states, call_windows and the DQ1 ledger; two channels, regimes I–III. Invariance across families not tested. |
+| B assumptions | 1 | Per-call cloglog hazard with agent effects and a time spline; dwell structure measured (work γ_d > 0, attention < 0). No Markov-order or update-order audit. |
+| C adequacy | 0 | The Glauber term does not beat ε_q = 0 (work CI includes 0; attention CI below 0). Out-of-fold Z_alt vs q_live score is unstable (|Δ| up to 18 nats per leave in small units). |
+| D unfitted predictions | 1 | Unfitted checks run: G38 tercile ratio (2.89, outside ×1.5), O4 slope (descriptive), ownership ratio R_own (0/13). The model's signature ε_q = 1 is rejected. |
+| E interventional | 0 | No natural experiment used; G44's cross-room contrast is descriptive (15 #best leaves). |
+| F identifiability | 1 | Real-skeleton synthetic: unbiased (≤ 0.07 pooled), size 0.04–0.06; power 0.89 at ε 1 but 0.43 at ε 0.5 (work). Attention positives below 0.3 are not identified (W4). |
+| G ground truth | 1 | Owners leave less in the attention channel (−0.70 [−1.02, −0.38]), agreeing in sign with H94's ownership structure; magnitude about 1/10 of λ_own. |
+| H comparative | 0 | Glauber does not beat R-finish (ε_q ≈ 0 or below); the lead placebo cannot separate R-coarrival in the work channel. |
+| I transfer | 0 | Reserved periods not run. No positive elasticity in regimes I–III or in either channel (exploration only). |
+
+**Claim that stands:** Within goal periods, an agent's per-call chance of leaving its project does not rise with the number of other open projects: the pooled option elasticity is −0.66 [−1.64, 0.32] in the work channel (13 units) and −0.28 [−0.42, −0.15] in the attention channel (31 units), so HH381's Glauber law ε_q = 1 is rejected (work upper limit 0.32; power 0.82, size 0.01). *Exclusions:* the HH381 kill (ε_q = 0 vs 0.5) is untestable in the work channel (power 0.43); the attention negative is secondary and depends on the active-time spline (post hoc ladder); G51's negative (−1.83) rests on Wald CIs with permutation p ≥ 0.095 per unit; #41's single positive unit (1/13); P2's out-of-fold scores (unstable); O4 and N2 (descriptive); the named-option term (below the label-noise level).
+
+### Round 2 redirects
+- **H138-R1. Move to the call clock.** One row per own call (not per 30-min window) raises the work power and lets the lead placebo work at the read-out scale (Known issue: 30-min lead placebos cannot separate co-arrival).
+- **H138-R2. Explain the negative elasticity.** Test whether q_live rises inside a unit while leaving falls (project accumulation vs settling) with a same-time cross-agent q shuffle, and whether the #51 negative survives a permutation-calibrated pool.
+- **H138-R3. Named vs free options.** The attention split (named +0.17, free −0.22) suggests that only kickoff-named options pull. Test it with H54's targets on the call clock.
+- **H138-R4. Reconcile dwell.** Direct-leave hazards rise with dwell in the work channel (+0.27) while H129's hops age; fit both definitions on the same rows.
+- **H138-R5. Confirmation.** Freeze `confirm.py` for #45–#47 and the #51 tail (not written in round 1).
+
 ## Results
-See Round 1 below the synthetic section once the real-data run is done.
+**Round 1 (2026-10-07): inconclusive by the card's rule; the Glauber law ε_q = 1 is rejected.** Within goal periods the per-call leave hazard does not rise with the number of open projects: pooled ε_q −0.66 [−1.64, 0.32] (work, 13 units) and −0.28 [−0.42, −0.15] (attention, 31 units). The work kill is unpowered (0.43 at ε_q = 0.5), so the card's verdict is inconclusive; the added bound A3 rejects ε_q = 1 (upper limit 0.32). Own-role #51 units give a negative elasticity (−1.83 [−3.19, −0.46]). Details: Round 1 above.
 
 ## Notes
 - 2026-10-07 08:15 UTC: card written from HH381 (approved by Vivian 2026-10-07). Protocol for round 1: card → period predictions → synthetic on the real skeleton → dated amendments → replication and natives → estimates → frozen confirm script (not run) → summary.
