@@ -311,6 +311,14 @@ Two builders and two libraries are now shared, and `semantic_kappa` is extended.
   - H100: `analysis/h100lib.remanence` (null loop) → `relabel.remanence_test`.
   - Hand-rolled "room at t" filters that already treat null `t_end` correctly (H06, H11, H85, H26, H66, `project_states`) could switch to `rooms_asof.room_asof`.
 
+### Per-call project labels (H133 round 1, 2026-10-07): `infra/shared/project_calls.py`
+One project label per model call, for H133 (read-out Glauber Potts), H134 (Pólya-urn stickiness) and H137 (named-pair follows). Registered in `build_all.py` with `--verify`. Outputs in `data/processed/shared/` (all days, `holdout` flagged; exploration filters `~holdout`):
+- `project_calls.parquet` (2.6 M calls, 54 MB): unit, regime, ctx mode, kind, `t_call` / `t_first` / `t_end`, `span_s` (gap to the previous call of the agent-day), `proj` (the call's modal touched project), `carry`, `since` (own calls since the last touch), `label` (E = 100), `prev_label`, `hop`, `arrive`, and the E = 50 / 300 variants.
+- `project_call_touches.parquet` (3.7 MB): one row per (call, touched project) with the mention count (H134's f_proj counts).
+- **Rule.** A strict agent mention (`project_states` project map, sources action + chat + intention, deduped per agent × source × ref × project) touches the call with t_first ≤ t ≤ t_end + 1 s. Modal ties go to the latest mention, then the earliest-seen project. The label carries over untouched calls and expires after E own calls; carry blocks are agent × goal period × reserved flag. A hop is a touch of a project other than the previous call's label; expiry is not a hop.
+- **Verify (non-reserved rows):** all invariants hold, and an independent Python recompute of carry and hops on G38 and G51 has 0 mismatches. 98.6% of strict mentions map to a call (action 99.3%, intention 99.7%, chat 87.6%). The W30 `project_states` modal project is among the window's call touches in 98.2% of windows.
+- **Hops are much finer than window hops.** There are 61,939 non-reserved hops (regime III 56,697), 7–14× H129's W30 attention hops per period. 25.7% return to the previous project at the next hop within 5 calls (A → B → A flicker). Cards that want sustained switches should add a minimum dwell.
+
 ## Known issues
 
 - **Hop-indexed event profiles are biased when the outcome depends on call length** (H50 r2): the reference call in flight at an event is length-biased (a pause in regime III, a chat-mode call in regime I). A no-coupling world with length-dependent talk reproduced the real pre-trends (regime III γ₋₂ +0.019 vs +0.032 real; #27 −0.113 vs −0.092). Use start-time RDs with anchors outside the in-flight call.

@@ -50,6 +50,7 @@ Steps (outputs in data/processed/shared/):
   round-3 consolidation (2026-10-04; each takes --verify):
   search_events        search_events (H84 / H56 history-search rows: answer repo ids + NE40 answer features; raw pass)
   channel_pointers     channel_pointers/ events (H70 scramble events + H87 pointers), repo_ids, search_calls (H84)
+  project_calls        project_calls, project_call_touches (H133 / H134 / H137 per-call project label and hops; 2026-10-07)
   libraries (lib: no build step; `--verify` runs their self-checks / reproductions): hazard_fe, semantic_kappa,
   kickoff_naming, idea_markers, idea_ledger, replicator_hosts, replicator_fit, replicator_sim, read_response,
   rooms_asof (H100 / H102 room of each statement), relabel (H100 joint two-period room relabel),
@@ -213,6 +214,10 @@ STEPS = [
               "context_ledger"],
      "outputs": ["channel_pointers/events.parquet", "channel_pointers/repo_ids.parquet",
                  "channel_pointers/search_calls.parquet"]},
+    # 2026-10-07 (H133 round 1; used by H133, H134, H137)
+    {"name": "project_calls", "cmd": "py", "script": "project_calls.py",
+     "deps": ["build_artifacts", "period_units", "context_ledger", "project_states"],
+     "outputs": ["project_calls.parquet", "project_call_touches.parquet"]},
     # libraries: nothing to build; registered so that --verify runs their checks and --list shows their deps
     {"name": "hazard_fe", "cmd": "py", "script": "hazard_fe.py", "lib": True, "deps": [], "outputs": []},
     {"name": "semantic_kappa", "cmd": "py", "script": "semantic_kappa.py", "lib": True, "deps": [], "outputs": []},
