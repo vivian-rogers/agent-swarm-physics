@@ -164,7 +164,39 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 Other testable units (#39–#42, #44) get their period folders, with the replication predictions copied and dated, before the run.
 
 ## Results
-Not run.
+See Round 1 below.
+
+## Round 1 (2026-10-07)
+*Exploratory, non-reserved data only. Code: `scheme/build.py`, `analysis/{h139lib,synthetic,summarize_synthetic,run_units,summarize}.py`. Data: `data/processed/H139-two-rate-variance-split/` (`G37…G51/{statements,reads,calls}.parquet`, `synthetic/`, `results/`; 28 MB before results).*
+
+### Synthetic validation (axis F; run 2026-10-07 08:38–09:44 UTC, before any real-data statistic)
+**Design.** Real skeletons: each unit's real statements, producing calls, per-call clock, ledger reads and forced resets. Only the 32-d vectors are synthetic: z = h + s + k + o + D + ε (well 0.25, slow OU 0.2 at γ_s 0.01, statement noise 0.6 per dimension; room drive 0.05 per dimension at 30 min unless stated). Read kicks k: J = 0.044 along a random unit direction per read message (the same direction for every reader of that message), γ_k = 0.15. Own fast innovations o: AR(1) at γ_k. The estimator is the registered one: drive-corrected O1 in 14 lag bins, constrained two-rate WLS with γ_k fixed at the planted value, 200 agent-day bootstrap draws. Detection = Â_k 95% CI above 0.
+- Registered units (51c, 51d, 51g, 38a, 38b, 38e, 41): 100 replicates of W0, W1, W1×5, W1×20, Wctx; plus (added here, not registered) Wdrive (R-drive: no fast part, drive 0.2 per dimension at 5 min), Wslow (W1 under a 3-h drive), a ladder L0.1–L3 (W1 plus own fast innovations, total fast amplitude A = 0.1, 0.3, 0.5, 1, 2, 3 in units of |x|²), and Lctx3 (L3 with the whole fast part erased at forced resets).
+- Other testable units (51a, 51e, 51f, 51h, 37, 39, 40, 42b; added): 50 replicates of W0, W1 and the ladder, so S1 is checked in every unit with ≥ 3 days.
+- Read rate r̄ (ledger, all calls of the unit's agents on their statement days): 0.74–1.20 per call in #51 units, 0.19–0.55 in #37–#42. **A_k^pred = r̄ J² /[1 − (1 − γ_k)²] = 0.0013–0.0084** (in |x|² units; dynamic |x|² ≈ 6–7).
+
+| Rule / prediction | Result (per unit) | Outcome |
+| --- | --- | --- |
+| (i) / **S1** A_min > 2 A_k^pred | A_min (80% detection) 0.59 (51g) – 2.9 (38b); not reached at A = 3 in 37, 38e, 39, 42b. **A_min / A_k^pred = 92 (51g, 90% CI rule) to > 2,000.** SE of Â_k in W1 0.17 (51g) – 1.17 (38e). | **S1 fires in 15/15 testable units** (95% and 90% CI rules) |
+| J needed for testability, J* = √(A_min / (2 r̄ · 3.6)) | 0.31 (51d) – 1.37 (38b); ≥ 7× H130's J_K 0.044 in every unit | — |
+| (ii) / **S2** Q_k unbiased ±30% in W1×5, W1×20 | W1×20 bias −108% to +1,116%; W1×5 −1,215% to +4,057% (Monte Carlo SE of the mean Â_k 0.02–0.12 vs true 0.03–0.17). At resolvable amplitudes the estimator is unbiased: L3 bias −11% to +7% (all 15 units), L1 −37% to +10%; 95% coverage 0.74–0.98. | **S2 fails** (bias not resolvable at the registered amplitudes) |
+| (iii) false Â_k > 0 in W0 ≤ 0.10 | 0.00–0.08 | passes |
+| (iv) / **S3** R_fast separates Wctx (< 0.3) from W1 (> 0.7) in ≥ 80% | Wctx < 0.3: 0.41–0.53; W1 > 0.7: 0.37–0.59. Added check at A = 3: Lctx3 < 0.3 in 0.58–0.89, L3 > 0.7 in 0.55–0.80 (both ≥ 0.8 only in 51g). | **S3 fails** → N1 descriptive |
+| R-drive (added) | Strong 5-min drive, no fast part: false Â_k > 0 in 5–27% of replicates (corrected); the raw estimator reads Â_k ≈ 4.4–5.2. | the drive correction removes most, not all, of a fast drive |
+| P3 size (added) | f_s ≥ 0.8 in 91–100% of W1 replicates (and of W0) | P3 cannot fail when the fast part is at A_k^pred |
+| P5 size (added) | two-rate beats one-rate out of fold in 34–58% of W0 replicates; 84–100% at A ≥ 2 | P5 is a coin flip when the fast part is unresolved |
+| Free-rate fit (added) | γ̂_k 0.13–0.19 at A = 2–3 in #51 units (planted 0.15) | recovers γ_k when resolvable |
+
+Data: `synthetic/runs_<unit>.parquet` (15 units, 11,600 replicates), `synthetic/summary.json`.
+
+**Amendment A1 (2026-10-07 14:35 UTC, after the synthetic, before any real-data statistic).**
+1. **P1 is untestable (S1 fires in every testable unit).** The resolvable fast amplitude is 92 to > 2,000 times the predicted one. By decision rule (i) the HH382 kill cannot fire, and P1 reports only an upper bound on Â_k (and Q_k). If a unit's Â_k is resolved, the report is the lower bound Q_k ≥ A_min / A_k^pred, as the card says. **By the hypothesis-level rule the verdict is "inconclusive (below resolution)"**, fixed now, before real data.
+2. **Shared-week kick inputs.** J_K is re-estimated with H130's read-jump estimator (copied into `h139lib`). γ_kick is not re-estimated in shared weeks; 0.15 (H130's pooled value) is used. S1 stays fired in a shared-week unit unless its J_K ≥ J* (0.65–1.37 there). For #51, H130's per-unit γ_kick (0.07–0.51, all inside [0.03, 1]) and J_K are used, as registered.
+3. **P2 is untestable.** Per-agent fits use a subset of the unit's pairs, so the agent-level resolution is coarser than the unit-level one, which is already ≥ 90× too coarse. The registered criterion (Â_k,i > 0 in ≥ 90% of draws) has power near its size at A_k^pred. P2 is not computed.
+4. **N1 is untestable and descriptive.** S1 fires in every NE41 unit, and S3 fails. R_fast and R_slow are reported descriptively.
+5. **P3 and P5 are non-diagnostic** at this resolution (sizes above). They are computed as registered and labelled non-diagnostic. P4 is computed as registered (its permutation null sizes it).
+6. A resolved Â_k on real data is read as "fast variance of some origin", not as R-innovation, unless the room × hour variant agrees: a fast drive leaks into the corrected Â_k in 5–27% of replicates.
+
 
 ## Notes
 - 2026-10-07 09:15 UTC: card written from HH382 (approved by Vivian 2026-10-07).
