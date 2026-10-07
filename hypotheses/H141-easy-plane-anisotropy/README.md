@@ -1,6 +1,6 @@
 # H141: Content moves on an easy plane set by the goal and room texts: slow along it, fast across it
 
-**Status:** pre-registered (not run). Card, observables, nulls and predictions written 2026-10-07 10:55–11:40 UTC, before any H141 statistic on real data. No scheme, synthetic or analysis code has run.
+**Status:** round 1 in progress (2026-10-07): synthetic validation done, Amendment A1 written before real data. Card, observables, nulls and predictions written 2026-10-07 10:55–11:40 UTC, before any H141 statistic on real data.
 **Question (GOALS.md):** **Q2** (what is field and what is coupling: do the operator's goal and room texts set the directions in which agent content is soft and slow, an anisotropic well?). Second: **Q3** (are the slow directions of content set by fields, or are they content's own collective modes?).
 **Fields:** stat mech (anisotropic Langevin relaxation, easy-plane and hard-axis anisotropy in vector spins, fluctuation–dissipation), dynamics (mode lifetimes)
 **Literature:** none in `literature/` covers anisotropic OU processes. Cited from memory (†): Uhlenbeck & Ornstein, *Phys. Rev.* 36, 823 (1930)† (vector OU with a stiffness matrix); Chaikin & Lubensky, *Principles of Condensed Matter Physics* (1995)† (easy-plane anisotropy; soft modes). Model references: [`physics-models/16-langevin-relaxation/README.md`](../../physics-models/16-langevin-relaxation/README.md) (vector form ẋ = −Γ(x − c) + ξ), [`physics-models/11-vector-spins/README.md`](../../physics-models/11-vector-spins/README.md) (anisotropy; "transverse, and Goldstone physics"), [`physics-models/17-collective-modes/README.md`](../../physics-models/17-collective-modes/README.md) (dynamic modes as eigenmodes of Γ; content uses about 5–12 of 32 whitened dimensions).
@@ -162,6 +162,38 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | [NE38](goalperiod-subhypotheses/NE38/README.md) | native N3 (one agent's plane rotates) | pending | — |
 
 Other testable units (#37, #39–#42) get their period folders, with the replication predictions copied and dated, before the run.
+
+## Round 1 (2026-10-07)
+
+*Exploratory, non-reserved data only. Synthetic validation and Amendment A1 written 2026-10-07 14:30–14:50 UTC, after the synthetic runs and before any real-data statistic of this card. Code: `scheme/build.py`, `analysis/{h141lib,synthetic,synthetic_kick,kick,run_units,natives,summarize,figures}.py`. Data: `data/processed/H141-easy-plane-anisotropy/`.*
+
+### Synthetic validation (axis F)
+Real skeletons of units 51c, 51g, 38a and 41: real statements, producing calls, per-call clock, rooms and the real text planes (texts only). Content is synthetic: wells 0.25 and statement noise 0.6 with a low-rank covariance (8 active Haar directions carry 3/4 of the variance), an OU state of variance 0.2 per direction at γ = 0.01 with isotropic innovations (so fluctuation–dissipation holds), carried across nights on the call clock. 100 replicates × 5 worlds × 4 units; agent-day bootstrap 100; 200 random planes. Pools are DerSimonian–Laird pools of ln ρ_A over the four units of one replicate. Figure: `figures/synthetic.pdf`. Data: `synthetic/{runs.parquet, summary.json}`.
+
+| World (planted ln ρ_A) | median pooled ln ρ_A (bias) | pool within ±0.5 | slow-edge fits (γ_∥ at 1e-4) | kill fires (pool) | reverse kill fires | P1 passes | unit pct > 0.95 (P2) | O3 as registered: P_∥ > P_⊥ with CI | O3 variogram (A1): P_∥ > P_⊥ with CI | V_A within ×2 of ρ̂ (lag 0 / lag 1–3) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| W-iso (0) | −0.01 (−0.01) | 1.00 | 0% | 1.00 | 0.00 | 0.00 | 0.045 | 0.058 | 0.052 | 0.96 / 0.95 |
+| W-easy (+2.30) | +2.39 (+0.09) | 0.31 | 35% | 0.02 | 0.00 | 0.37 | 0.84 | 0.83 | 0.945 | 0.38 / 0.20 |
+| W-hard (−1.10) | −1.11 (−0.01) | 1.00 | 0% | 0.06 | 0.52 | 0.00 | 0.003 | **0.235** | 0.072 | 0.27 / 0.80 |
+| W-modes (0) | −0.18 (−0.18) | 0.98 | 0% | 1.00 | 0.00 | 0.00 | **0.010** | 0.013 | 0.005 | 0.95 / 0.86 |
+| W-drive (0) | −0.04 (−0.04) | 1.00 | 0.3% | 1.00 | 0.00 | 0.00 | 0.11 | 0.052 | 0.075 | 0.88 / 0.84 |
+
+Registered synthetic predictions:
+- **S1 (O2 bias ≤ 0.5):** passes on the median pooled estimate in W-easy (+0.09), W-iso (−0.01) and W-hard (−0.01). But W-easy is **not resolved**: γ_∥ = 0.001 sits at the slow edge of the fit in 35% of unit fits, and only 31% of pools land within ±0.5 (pooled SE ≈ 0.89). The card's conditional rule fires (A1 point 1).
+- **S2 (drive correction):** the first clause fails. Without the correction W-drive gives ρ_A > 3 in only 2.8% of unit fits (rule: > 50%): a 1–6 h common drift does not fake along-plane slowness on the call clock, because the free plateau B absorbs it. With the correction, ρ_A > 3 in 3.5% and ρ_A ∈ [⅓, 3] in 94% (rule ≥ 90%). The correction is harmless but its remedy is untested.
+- **S3 (random-plane band controls W-modes):** passes: the text plane's percentile exceeds 0.95 in 1.0% of W-modes fits (rule ≤ 10%). The cross-fitted principal subspace finds the planted slow modes (median ln ρ_A +1.88).
+- **Size and power of the rules.** The kill fires in 100% of W-iso pools and in 2% (W-easy) or 6% (W-hard) of anisotropic pools. The reverse kill fires in 52% of W-hard pools (planted exactly at the boundary ρ = ⅓) and never in W-iso. P1's power in W-easy is 0.37.
+- **P4 kick split (added check, `synthetic_kick.py`, 51c, 10 replicates per world, κ = 0.006).** The along-plane response carries almost no kick (median lag-0 coefficient 0.006, SE 0.007), because the sender direction projects weakly on a 2-d plane. Across the plane, a pool of 7 units puts the lag-1/lag-0 ratio ≤ ¼ in 95% of one-call-kick worlds (planted 0) and ≥ ½ in 100% of fast-kick worlds (planted 0.85, estimated 1.36: biased up).
+
+### Amendment A1 (2026-10-07 14:50 UTC, after the synthetic, before any real-data statistic)
+1. **O3 becomes the primary test of along-plane slowness** (the card's conditional rule). The call clock cannot resolve γ_∥ ≈ 0.001 inside a day. P1 and both kill rules stay on the pooled call-clock ρ_A, where their size is right. **P1 is underpowered** (power 0.37 < 0.8): a P1 miss is "inconclusive", not evidence against an easy plane; only the kill can refute HH384.
+2. **O3 estimator replaced.** The registered form (H108's split-half ratio with a leave-pair-out well) measures the share of well-estimation error, not memory: the error is shared by both days of a pair and dominates where the dynamic variance is small, so the fast plane of W-hard shows P_∥ > P_⊥ with CI in 23.5% of fits (the slow plane of W-easy in 83%). New primary O3, the **noise-corrected day variogram**: G_P(ℓ) = mean over agent day pairs at day lag ℓ of |P(z̄_d − z̄_d′)|² minus the split-half noise of both day means (|P(z̄ᵃ − z̄ᵇ)|² · n_a n_b / n²); **P_P(1) = 1 − G_P(1)/G_P(≥ 2)**. The well cancels in day differences. Size 5.2% (W-iso), 7.2% (W-hard), 0.5% (W-modes), 7.5% (W-drive); power 0.945 per unit (W-easy). P5 is scored on this estimator. The registered estimator and a day-centred variant are reported.
+3. **P3 uses the lag 1–3 variance ratio.** The registered lag-0 V_A includes statement noise and is pulled toward 1 (W-easy 2.8 for a planted 10). The noise-free V_A′ (drive-corrected covariance per dimension in call-lag bin 1–3) recovers 8.2. P3 is scored with V_A′; V_A is reported. Where ρ̂_A is unresolved (along-plane memory beyond a day), P3 cannot pass by construction (W-easy 20%).
+4. **P4.** The along-plane clause ("the along-plane kick decays more slowly") is **untestable** (no along-plane signal at κ ≈ 0.006). The across-plane clause is scored on #51 units only, where H130 validated the dose design: pass if the pooled lag-1/lag-0 ratio is ≤ ¼ with its upper 95% bound < ½; fail if the point is ≥ ½; otherwise inconclusive. The pool is the DL-weighted ratio of lag-1 to lag-0 coefficients, with a percentile CI from the per-unit bootstrap draws.
+5. **#44 plane.** In whitened coordinates the #44 kickoff is a linear combination of its two room kickoffs (Gram–Schmidt residual 0.0008), so d_E = 3 in #44, not 4. The scheme now drops text directions with a residual below 0.05. #38 keeps d_E = 4 (smallest residual 0.37–0.54).
+6. **Operational rules fixed now.** *Testable unit:* ≥ 3 days and ≥ 4 agents. *Pools:* DL of ln ρ_A over all units with a finite fit (short units included, CLAUDE.md exception (d)), plus separate shared-goal and #51 pools. *P2:* share of the unit's 200 Haar planes with a lower ρ_A. *N1:* scored per unit with ≥ 3 days (#38: 38a, 38b, 38e; majority rule); #44 has only 2-day units, so N1 there is descriptive. *N2:* pooled #51 ρ_A ≥ 3 and more than half of the testable #51 units above the 95th percentile; the swap control is "consistent" if the median swap percentile is below 0.90. *N3:* "consistent" if both orders hold in a variant (descriptive). *Narrowed verdict:* the pooled ρ_A of the cross-fitted principal subspace ≥ 3 while P2 fails.
+
+**Disclosure (2026-10-07, before this amendment).** A schema probe of `producing_calls` printed per-period statement counts for some reserved periods (#47–#50; counts only, no outcome). No content of reserved periods was read.
 
 ## Results
 Not run.
