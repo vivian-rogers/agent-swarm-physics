@@ -1,32 +1,44 @@
-"""Hypothesis x physics-model table (H01-H20 sample) zooming into one cell's goal-period verdicts.
+"""Hypothesis x physics-model table (H01-H20 sample, 17 models) zooming into one cell's goal-period verdicts.
 
-Usage: uv run python writeup/figures/make_table_zoom.py   -> writeup/figures/table_zoom.{pdf,png}
+Panel (a): meta.json `models` plus writeup/figures/model_overrides.py (2026-10-07).
+Panel (b): the latest per-period verdict in each period README of the zoomed card
+(Verdict (r2) > Verdict (2) > Verdict (1c) > Verdict (1b) > Verdict).
+
+Usage: uv run python writeup/figures/make_table_zoom.py
+    -> writeup/figures/table_zoom.{pdf,png} and writeup/paper/figs/table_zoom.pdf
 """
 import re, sys
 from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, ConnectionPatch
 sys.path.insert(0, "writeup/visuals"); import vstyle as vs
-sys.path.insert(0, "dashboard"); import collect
+sys.path.insert(0, "writeup/figures"); import model_overrides as mo
+collect = mo.collect
 
 vs.use()
 ZOOM_H, ZOOM_M = "H08", "02"
-hs = {}
-for d in sorted(collect.HYP.iterdir()):
-    if d.is_dir() and re.match(r"^H\d{2,}-", d.name):
-        h = collect.hypothesis(d); hs[h["id"]] = h
+hs = {h["id"]: h for h in mo.load_hypotheses()}
 rows = [f"H{i:02d}" for i in range(1, 21)]
-cols = [f"{i:02d}" for i in range(1, 16)]
-MNAME = {"01": "inverse Ising", "02": "kinetic Ising", "03": "contagion", "04": "semantic info", "05": "replicators",
-         "06": "neutral", "07": "fluct. env.", "08": "copying", "09": "Hawkes", "10": "Potts", "11": "vector spins",
-         "12": "info dynamics", "13": "conventions", "14": "scaling", "15": "stoch. thermo"}
+cols = mo.COLS
+MNAME = mo.NAME
+LATEST = ("Verdict (r2)", "Verdict (2)", "Verdict (1c)", "Verdict (1b)", "Verdict")
+
+
+def latest_verdicts(h):
+    """Per-period verdict from the latest round written in each period README."""
+    out = {}
+    for p in h["periods"]:
+        t = (collect.ROOT / p["path"]).read_text(errors="replace")
+        v = next((x for x in (collect.field(t, k) for k in LATEST) if x), "")
+        out[p["period"]] = collect.verdict_key(v)
+    return out
 OUT = {"supported": "#0ca30c", "mixed": "#8c8c8c", "refuted": "#d03b3b"}
 ROLE = {"primary": ("o", 46), "secondary": ("o", 18), "rival": ("D", 20), "null": ("s", 20), "tool": ("^", 20)}
 
 fig = plt.figure(figsize=(7.0, 3.35))
 ax = fig.add_axes([0.07, 0.17, 0.40, 0.70])
 for i, hid in enumerate(rows):
-    for m in (hs.get(hid, {}).get("models") or []):
+    for m in sorted(hs.get(hid, {}).get("models") or [], key=lambda m: m["role"] != "primary"):
         if m["model"] not in cols:
             continue
         j = cols.index(m["model"])
@@ -54,7 +66,7 @@ for k, (lab, c) in enumerate([("supported", OUT["supported"]), ("mixed", OUT["mi
 # (b) the zoomed cell: verdict per goal period
 VC = {"supported": "#0ca30c", "failed": "#d03b3b", "mixed": "#8c8c8c", "descriptive": "#a9d8a9"}
 h = hs[ZOOM_H]
-verd = {p["period"]: p["verdict"] for p in h["periods"]}
+verd = latest_verdicts(h)
 bx = fig.add_axes([0.55, 0.22, 0.43, 0.58]); bx.axis("off")
 ncol = 17
 for g in range(1, 52):
@@ -70,12 +82,12 @@ for g in range(1, 52):
     bx.add_patch(Rectangle((c, -r - 0.10), 0.88, 0.06, color={"I": vs.C["sky"], "II": vs.MUTED, "III": vs.C["blue"]}[reg], lw=0))
 nes = [p for p in h["periods"] if p["period"].startswith("NE")]
 for k, p in enumerate(nes):
-    bx.add_patch(Rectangle((k * 2.6, -3.55), 2.4, 0.7, color=VC.get(p["verdict"], "#e3e3e3"), ec="white"))
+    bx.add_patch(Rectangle((k * 2.6, -3.55), 2.4, 0.7, color=VC.get(verd[p["period"]], "#e3e3e3"), ec="white"))
     bx.text(k * 2.6 + 1.2, -3.2, p["period"], fontsize=5, ha="center", va="center", color="white")
 bx.set_ylim(-3.7, 1.05)
 title = f"(b) one cell: {ZOOM_H} × {ZOOM_M} ({MNAME[ZOOM_M]}), verdict per goal period"
 fig.text(0.55, 0.88, title, fontsize=7.5)
-fig.text(0.55, 0.835, h["title"][:78], fontsize=6.2, color=vs.INK2)
+fig.text(0.55, 0.835, mo.clean_title(h["title"])[:78], fontsize=6.2, color=vs.INK2)
 lg = [("supported", VC["supported"]), ("failed", VC["failed"]), ("mixed", VC["mixed"]), ("descriptive", VC["descriptive"]), ("not tested", "#e3e3e3")]
 for k, (lab, c) in enumerate(lg):
     fig.patches.append(Rectangle((0.55 + 0.085 * k, 0.12), 0.012, 0.025, color=c, transform=fig.transFigure, figure=fig))
@@ -86,4 +98,5 @@ con = ConnectionPatch(xyA=(zj + 0.5, zi), coordsA=ax.transData, xyB=(-0.25, 0.4)
                       arrowstyle="-|>", color=vs.INK, lw=1.0, mutation_scale=8, connectionstyle="arc3,rad=-0.15")
 fig.add_artist(con)
 vs.save(fig, "writeup/figures/table_zoom")
-print("ok", ZOOM_H, ZOOM_M, len(nes), "NE chips")
+fig.savefig("writeup/paper/figs/table_zoom.pdf")
+print("ok", ZOOM_H, ZOOM_M, len(nes), "NE chips;", {k: v for k, v in sorted(verd.items())})
