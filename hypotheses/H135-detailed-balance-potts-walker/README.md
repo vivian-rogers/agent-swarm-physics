@@ -1,6 +1,6 @@
 # H135: Max-ent allocation as the steady state of a detailed-balance Potts walker: hop-rate ratios from max-ent occupancies
 
-**Status:** pre-registered (not run). Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH378 (approved by Vivian 2026-10-07), before any H135 statistic on real data. No scheme, synthetic or analysis code exists yet.
+**Status:** round 1 in progress (2026-10-07): scheme built and cross-checked, structural counts and synthetic validation done, Amendment A1 written before any real-data outcome. Pre-registered 2026-10-07 from HH378 (approved by Vivian 2026-10-07).
 **Question (GOALS.md):** **Q6** (thermodynamics and selection: is the project walk reversible, so that its steady state is the max-ent allocation?). Second: **Q2** (field vs coupling: are hop rates set by a static field, the max-ent prices, or by a flux toward crowded projects?).
 **Fields:** stochastic thermodynamics (detailed balance, pair flux, Kolmogorov criterion), stat mech (kinetic Potts walker, heat-bath and Metropolis rates), info theory (max-ent allocation)
 **Literature:** [Kolchinsky, Dechant, Yoshimura & Ito 2026](../../literature/kolchinsky-2026-generalized-free-energy-excess-housekeeping.md) (excess vs housekeeping; a reversible walker has neither cycle currents nor a net pair flux at steady state); [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (EP as statistical irreversibility). Cited from memory (†): Kelly, *Reversibility and Stochastic Networks* (1979)† (detailed balance, Kolmogorov's criterion); Jaynes, *Phys. Rev.* 106, 620 (1957)† (max-ent).
@@ -150,7 +150,57 @@ No period has been run. Period folders (`goalperiod-subhypotheses/G<NN>/`) are c
 | G40 | native N3 | pending | not run |
 
 ## Results
-Not run.
+## Round 1 (2026-10-07)
+
+### R1.0 Build, cross-check and structural counts (before any outcome)
+- **Code:** `scheme/build.py` (hops, occupancy T, π, availability, co-alive flags, age ranks), `analysis/h135lib.py` (statistics, nulls, walker), `analysis/synthetic.py`, `analysis/run.py`.
+- **Data:** `data/processed/H135-detailed-balance-potts-walker/` (7 MB; names hashed).
+- **Cross-check (read-only):** the rebuilt hops equal H129's files in every period and both channels (same multisets of agent, origin, destination; whole-period units outside #51). The rebuilt work quanta equal H94's in every period. **Owner deviation:** I take the owner from non-reserved commits only (the reserved-row rule). H94 used all DQ4 rows. The owner differs for 37 repos (G31 11, G33 1, G35 1, G37 1, G38 18, G51 5).
+- **Implementation choices fixed before any outcome:**
+  1. Units are the `period_units` units, as the card says (H129 used whole periods outside #51).
+  2. O1 enters each pair in both orientations, so the Deming slope (δ = 1) and r are fitted through the origin. y = ln[(n_ab + ½)/(n_ba + ½)] + ln(T_b/T_a). Pass = slope in [0.5, 2], r > 0 and p < 0.05 (t test, k − 1 df; pair bootstrap CIs on real data).
+  3. O2's binomial fit orients each pair from the older to the newer project. θ is then the age flux and β_π the max-ent flux, fitted together.
+  4. O4's choice set is every project available at the hop time except the origin. ln π_i is clipped at −15 (capped λ_own cells). ρ = destination held before by the agent in the unit. ω has one parameter per ordered pair with ≥ 3 hops; the LR test has that many degrees of freedom.
+  5. The W0 band is the 2.5–97.5% range of 200 W0 runs on the unit's skeleton. **Kill B** fires if the DerSimonian–Laird mean of m_π (or m_2^co) has a CI excluding 0 **and** the same mean of the W0-centred value (observed − W0 median) has a CI excluding 0. Per-unit SEs come from a 1,000-draw pair bootstrap.
+  6. Occupancy T: work = own calls inside each host visit; attention = own calls inside the agent's 30-min windows labelled with the project.
+- **Structural precondition (counts only; per-period tables in the G folders):**
+  - **Primary co-alive rule: 0 of 62 unit-channels pass.** The largest co-alive hop counts are 86 (51g attention, 6 pairs ≥ 4) and 73 (30b attention, 1 pair). By the card's verdict rule (< 3 testable unit-channels), **H135 is inconclusive on its primary definition.** This is declared before any outcome.
+  - **Card's 80% co-alive variant: 5 unit-channels pass**, all #51 attention: 51a, 51c, 51f, 51g, 51h (105–406 co-alive hops, 10–27 pairs ≥ 4). The work channel passes nowhere (best: 51g 118 hops but 7 pairs). The variant is run as the card defines it. Its result is scoped to own-role #51 attention units.
+  - **Natives:** N1 (G38) and N2 (G44) are untestable under both rules. N3's first part (hub flux on days 1–2, G40) does not use co-alive pairs and is run; its later-day part is untestable (co-alive hops 7 work, 5 attention).
+  - **Disclosure (N3):** while counting G40 hub hops, I printed the in/out split before the W0 band existed (days 1–2: work 5/5, attention 12/11). N3's result is marked "seen before the band".
+
+### R1.1 Synthetic validation (axis F; before any real-data outcome)
+*Run 2026-10-07 (`analysis/synthetic.py`, `analysis/synth_summary.py`; summary in `data/processed/H135-detailed-balance-potts-walker/synthetic/summary.json`).* Thirteen real skeletons: the card's six (31a, 38a, 41, 44a, 51c work; 38a attention), the five variant-testable units (51a, 51c, 51f, 51g, 51h attention) and G40 (both channels, for N3). Real agents, own-call clocks, availability windows and first labels; π from each unit's own fit. 200 runs per world. All worlds share the field ln π_i; W1–W4 add their force on top (W1: age z, λ 1.5, habit 2; W2: sink, (occupants + 1)^1.5; W3: cycle κ 2, habit 2; W4: habit 2). Dwell hazard logistic(c + γ ln d), γ = −0.3, c calibrated per world to the unit's hop count. "Beyond the band" = outside the 2.5–97.5% range of W0 runs 0–99; the size in W0 is read on runs 100–199.
+
+**Variant rule (80% co-alive), the five testable skeletons:**
+
+| Statistic | W0 | W0M | W1 age | W2 sink | W3 cycle | W4 habit | Pass rule |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| O1 pass rate | 0.31–0.99 | — | 0.00–0.61 | 0.01–0.40 | 0.47–1.00 | — | ≥ 0.8 in W0 and ≤ 0.2 in W1–W3: **fails on 5/5** |
+| m_π beyond the W0 band | 0.03–0.09 | 0.06–0.18 | 0.01–0.12 | 0.01–0.13 | 0.00–0.10 | — | size ≤ 0.10, power ≥ 0.8: **fails on 5/5** (power ≤ 0.13) |
+| m_2^co beyond the W0 band | 0.02–0.07 | 0.08–0.15 | 0.04–0.29 | 0.01–0.07 | 0.04–0.44 | — | **fails on 5/5** (power ≤ 0.29) |
+| pair-flip null N1, rejection | 0.00 | — | — | — | — | — | conservative, not liberal |
+| ψ (mean ± sd) | 1.00 ± 0.03–0.08 | 0.39–0.47 | 0.50–0.70 | — | — | 1.00–1.02 | W0 CI coverage of 1: 0.92–1.00 |
+| ρ (mean) | −0.02 to 0.02 | 0.09–0.17 | 1.9–3.2 | — | — | 1.93–2.01 | recovers the planted 0 and 2 |
+| LR interaction, χ² p < 0.05 | **0.76–1.00** (100 runs) | — | — | — | — | — | invalid as χ² |
+
+**Card's six skeletons, primary rule:** co-alive hops per run are 0–41 (38a work 0; 41 work 1.3; 44a work 2.7; 51c work 12.5; 31a work 24.6; 38a attention 40.9). O1 passes in ≤ 0.34 of W0 runs, and O2 and O3 have no power. This matches the structural count: the primary test cannot be run.
+
+**N3 (G40):** the W0 band of the day-1–2 hub flux is [0.20, 1.00] (work) and [−0.02, 0.29] (attention). The sink world W2 exceeds the upper edge in 0/200 runs on both channels. In the always-hop worlds the hub flux is lower than in W0, because a heat-bath update can keep an agent on the hub.
+
+**What the synthetic shows.**
+1. **O1 is a near-identity (S1 holds in synthetic).** It passes in up to 1.00 of cycle-world runs (W3 on 51g) and 0.61 of age-world runs (51c). The occupancy term ln(T_b/T_a) carries the slope, as fact 1 said.
+2. **Zero net flux cannot tell the card's rivals from W0.** A fixed age preference among co-alive projects is one more static field. Destinations drawn ∝ w(b) among b ≠ a, with a state-independent leave hazard, give an embedded jump chain with ν(a) ∝ w(a)(W − w(a)), and ν(a)P(a→b) ∝ w(a)w(b) is symmetric. A symmetric occupancy (herding) term is a reversible Potts coupling. So W1 and W2 carry almost no flux between co-alive projects; only the cycle force W3 does (m_2^co power 0.04–0.44). Fact 2 adds a bound: one agent's net flow through a project is −1, 0 or +1, so the pair flux grows with agents, not hops. H129's m_2 > 0 must come from births, which the co-alive rule removes.
+3. **O4 is the one valid test.** ψ and ρ are recovered without bias, and they separate heat-bath (ψ 1, ρ 0) from Metropolis (ψ ≈ 0.4), habit (ρ ≈ 2) and age drift (ψ 0.5–0.7, ρ 2–3).
+4. **The LR interaction test is invalid with a χ² reference.** I gave ω a parameter for each ordered pair with ≥ 3 hops; that choice uses the outcome and inflates the statistic.
+
+### Amendment A1 (2026-10-07, after the synthetic, before any real-data outcome)
+*What I had seen:* the synthetic summaries above and the structural counts. No real m_π, m_2^co, slope, ψ or LR value.
+1. **O1 is descriptive.** It fails its pass rule on every testable skeleton. Kill A is scored as written; a pass reads "consistent", never support.
+2. **O2 and O3 are descriptive; H135's primary test is unpowered.** Power against W1 and W2 is ≤ 0.29 on every testable skeleton (rule: ≥ 0.8). By the card's verdict rule ("O2 unpowered"), **H135 is inconclusive in round 1 whatever the data show.** m_π and m_2^co are still reported against the W0 band, and Kill B is scored as written. Kill B cannot fire on a null-only band with this power, and a non-firing Kill B is not evidence of detailed balance.
+3. **O4's LR test is recalibrated:** the observed χ² p is ranked among the χ² p values of 100 W0 runs on the same skeleton (`synthetic/lrnull_<unit>_attention.parquet`); calibrated p = (1 + #W0 runs with p ≤ observed)/(101). P4 becomes: ψ CI ∋ 1, ρ CI ∋ 0 and calibrated LR p ≥ 0.05, in ≥ 1/2 of testable unit-channels. **O4 (with P4) is the only test that can decide anything in round 1.**
+4. **N3 is unpowered** (W2 exceeds the W0 band in 0/200 runs) and is reported descriptively.
+5. Not amended: units, co-alive rules, precondition, thresholds, credences, the verdict rule.
 
 ## Notes
 - 2026-10-07: card written from HH378 (approved by Vivian 2026-10-07). Round-1 order: rebuild hops and π, check against H129 and H94 files → structural counts → period READMEs with dated predictions → synthetic → dated amendments → replication and natives → estimates rows (`h135_rate_ratio_slope`, `h135_net_maxent_flux`, `h135_coalive_age_flux`, `h135_heatbath_psi`) → frozen `confirm.py` (dry run only).
