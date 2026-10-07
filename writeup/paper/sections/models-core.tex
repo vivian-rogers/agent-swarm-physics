@@ -14,14 +14,14 @@ Section~\ref{sec:picture} stated the four useful models and their best evidence.
 \textbf{Mapping.} Spins are call outcomes (talk, mention, reply, content move). Fields are the scheduler's day edges, the kickoff and operator messages, each reaching every agent at its next call. Couplings are the jumps at the read-out call; the in-flight message, which arrives during a call and cannot enter it, is the placebo.
 
 \begin{figure}[t]
-\includegraphics[width=\columnwidth]{H08-context-is-the-coupling/fig_bc.pdf}
-\caption{The response starts at the read-out call (model 02, H08). (a)~In G38, the excess chance that a call names the sender of a message, by the reader's call offset $o$ from the read-out call ($o=1$). It is flat at the call in flight ($o=0$, posted but not yet in the context) and jumps at $o=1$; the other-room placebo (gray) stays at zero. (b)~The jump $D=G(1)-G(0)$ in 17 periods outside the reserved data, for replies (filled) and mentions (open), with the other-room null (gray squares). Look at the step between $o=0$ and $o=1$ in (a), and at the gray squares at zero in (b).}
+\includegraphics[width=\columnwidth]{js/h08_readout_jump.pdf}
+\caption{The response starts at the read-out call (model 02, H08). (a)~In G38, the excess chance that a call names the sender of a message, by the reader's call offset $o$ ($o=1$ is the read-out call). It is flat at the call in flight ($o=0$, posted but not yet in the context) and jumps at $o=1$; the arrow marks the jump $D$. The other-room placebo (gray) stays at zero. (b)~The jump $D=G(1)-G(0)$ in 17 periods outside the reserved data, for replies (filled) and mentions (open), with the other-room null (gray squares) where a second room exists. Look at the step between $o=0$ and $o=1$ in (a), and at the gray squares at zero in (b).}
 \label{fig:readoutjump}
 \end{figure}
 
 \begin{figure}[t]
-\includegraphics[width=\columnwidth]{h67_named_col.pdf}
-\caption{The loop gain is small, and reads that name the reader carry about half of it (model 02, H67). Each bar is a regime-III unit (a goal period, or the part of one between two scaffold changes). The bar height is the read-out loop gain $g$: the number of extra talk calls that one message causes directly. The dark part comes from reads that name the reader; the light part from all other reads, which are far more numerous. Black lines: 95\% CI. Look at the scale: every unit sits far below $g=1$, where echoes would run away.}
+\includegraphics[width=\columnwidth]{js/h67_named.pdf}
+\caption{The loop gain is small, and reads that name the reader carry about half of it (model 02, H67). Each bar is a regime-III unit (a goal period, or the part of one between two scaffold changes). The bar height is the read-out loop gain $g$: the number of extra talk calls that one message causes directly. The dark part comes from reads that name the reader, and the light part from all other reads, which are far more numerous. In three units the named part alone exceeds $g$, so there the other reads add nothing. Black lines: 95\% CI (cut at 0). The dashed line at the top is $g=1$, where echoes would run away. Look at the scale: every unit sits far below $g=1$.}
 \label{fig:named}
 \end{figure}
 
@@ -36,8 +36,8 @@ Section~\ref{sec:picture} stated the four useful models and their best evidence.
 \end{enumerate}
 
 \begin{figure}[t]
-\includegraphics[width=\columnwidth]{H111-talk-fano-sum-rule/fig_col.pdf}
-\caption{A sum rule that links fluctuations to response for talk (models 02 and 09, H111; Eq.~\eqref{eq:fano}). (a)~In a simulated linear Hawkes swarm, the collective Fano ratio $\Phi$ of 10-min talk counts follows $1/(1-g)^2$ with no free parameter. (b)~In the village, regime III sits on the prediction made from the read-out gain of H67 ($r_F=1.01$ [0.94, 1.09], 18 units). Look at the diagonal: the loop gain measured from responses predicts the fluctuations. Regime I lies above it ($r_F=1.34$ [1.18, 1.52]), for a reason we cannot explain.}
+\includegraphics[width=\columnwidth]{js/h111_fano.pdf}
+\caption{A sum rule that links fluctuations to response for talk (models 02 and 09, H111; Eq.~\eqref{eq:fano}). (a)~In a simulated linear Hawkes swarm, the collective Fano ratio $\Phi$ of 10-min talk counts follows $1/(1-g)^2$ (room-adjusted for 15 agents) with no free parameter. (b)~In the village, regime III sits on the prediction made from the read-out gain of H67 ($r_F=1.01$ [0.94, 1.09], 18 units). Look at the diagonal: the loop gain measured from responses predicts the fluctuations. Regime I lies above it ($r_F=1.34$ [1.18, 1.52]), for a reason we cannot explain.}
 \label{fig:fano}
 \end{figure}
 
@@ -55,8 +55,8 @@ Section~\ref{sec:picture} stated the four useful models and their best evidence.
 \textbf{Mapping.} The goal is a literal field vector: the embedding of the kickoff text. Rooms, style and private roles are static fields. Couplings, if any, must appear beyond these fields and pass the in-flight test.
 
 \begin{figure}[t]
-\includegraphics[width=\columnwidth]{H54-kickoff-quench-target/fig_bc.pdf}
-\caption{The own kickoff is the target (model 11, H54). (a)~Rank of the period's own kickoff text among 33 candidates, by the similarity of Fig.~\ref{fig:kickoff}: first in 18/33 periods, against a swap null whose median rank is 17 (gray band: 90\%). Free weeks and private-goal periods (open squares) have no shared target and rank low, as they should. (b)~In \#51, where each agent had a private goal, an agent's content matches its own goal text better than a swapped agent's goal in 95\% of pairs, every week (chance 0.5).}
+\includegraphics[width=\columnwidth]{js/h54_kickoff_rank.pdf}
+\caption{The own kickoff is the target (model 11, H54). (a)~Rank of the period's own kickoff text among 33 candidates, by the similarity of Fig.~\ref{fig:kickoff}: first in 18/33 periods, against a swap null whose median rank is 17 (gray band: 90\%). Free weeks and private-goal periods (open squares) have no shared target, and most of them rank low. (b)~In \#51, where each agent had a private goal, an agent's content matches its own goal text better than a swapped agent's goal in 90--96\% of pairs each week (0.95 over all weeks; chance 0.5). Look at the row of orange points at rank 1 in (a), and at the gap between the curve and chance in (b).}
 \label{fig:kickoffrank}
 \end{figure}
 

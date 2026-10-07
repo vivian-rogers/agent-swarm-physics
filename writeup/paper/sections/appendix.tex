@@ -51,6 +51,21 @@ Figure~\ref{fig:fullmatrix} shows every scored hypothesis against the 17 physics
 \end{figure}
 
 \clearpage
+\section{Every hypothesis on every goal period}\label{app:grid}
+Figures~\ref{fig:grid1} and~\ref{fig:grid2} show the full record: each of the 142 hypotheses (rows) on each goal period and natural experiment (columns) that it was tested on: 2875 period entries, of which 141 are n/a or pending. The rows are grouped by the primary physics model of each card, in the order of Secs.~\ref{sec:models}--\ref{sec:rest}. A cell is the verdict of that period's test: its round-2 verdict where one exists, else round~1b, else round~1 (the same rule as \texttt{hypotheses/OVERVIEW.md}). ``Mixed'' includes tests that were inconclusive. Cells with a black outline are confirmatory tests on reserved data; shaded columns are reserved goal periods. Cards in gray type (H133--H142, run on 2026-10-07) are not yet scored. A row of mostly green cells is not by itself a supported claim: some cards pass in many periods and fail their strongest null (Sec.~\ref{sec:faith}).
+
+\begin{figure*}[p]
+\includegraphics[width=\textwidth]{js/hyp_grid_1.pdf}
+\caption{Every hypothesis on every goal period, part 1: the useful models 02, 09, 11 and 01. Columns: goal periods by regime, then natural experiments (NE).}
+\label{fig:grid1}
+\end{figure*}
+
+\begin{figure*}[p]
+\includegraphics[width=\textwidth]{js/hyp_grid_2.pdf}
+\caption{Every hypothesis on every goal period, part 2: the useful models 16 and 17, the partly useful models, the rest, and the framework cards.}
+\label{fig:grid2}
+\end{figure*}
+
 \section{The most useful claims}\label{app:theses}
 Table~\ref{tab:theses} gives the 20 claims with the highest estimated usefulness among those with credence of at least 0.6, in short form. Appendix~\ref{app:eu} lists all scored hypotheses by EU, with their faithfulness ($p$, M) and value ($V$). The scored claim for each is on its two-page summary in the compendium. Scores are the current values (round 2 where it exists).
 \input{sections/theses_table}

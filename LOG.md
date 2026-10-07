@@ -5,6 +5,21 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — Paper figures redrawn in D3; page-1 figure; hypothesis × goal-period grid (`writeup/figures-js/`, `writeup/paper/`)
+
+- Vivian asked for better-looking figures (JS), a high-level figure on page 1 (later: small, one column), and the full table of hypotheses × goal periods; the paper may grow toward ~40 pages.
+- **Pipeline.** `writeup/figures-js/`: D3 figures printed to vector PDF by headless Chrome (puppeteer-core + installed Chrome), set in the paper's Latin Modern fonts (LM Roman 7/8, LM Math). `lib/style.js` holds the shared look; `lib/render.mjs` renders `figs/<name>.js` (`name@v` variants); `export/<name>.py` writes small JSON to `data/processed/paper-figs/` (gitignored, provenance in `_provenance.json`). README has the contract and style rules. Outputs: `writeup/paper/figs/js/*.pdf`.
+- **New figures.** Fig. 1 (page 1, one column): goal period 51 on 2026-09-04 as a spin network at one moment (red talk / blue work / white no call in the last 10 min; gray arcs = named messages, 171 pairs; orange = fields). Appendix D: every hypothesis × every goal period and NE (two full pages, rows grouped by primary model in the paper's order, red–gray–green verdicts by the OVERVIEW.md rule, reserved columns shaded, confirmatory tests outlined; 2875 entries, 141 n/a or pending).
+- **Redrawn (5 parallel agents, every number asserted against the text):** read-out example, kickoff matrix, model 16, model 17 (Sec. II); H08 jump, H67 named share, H111 Fano, H54 rank (Sec. IV); H15 erasure, H34 cascades (Sec. V); κ table and rooms (cut to three panels each); H67 scheduler dial (Sec. VII); timeline, scoring scatter, table zoom (Sec. III). Only the appendix model matrix is still matplotlib.
+- **Errors found and fixed while redrawing:**
+  - My earlier `h15_erasure_col` plotted round-1 write turns under a round-1b "work commits" label. The new figure rebuilds the round-1b forced/voluntary profile (pooled dip −37.7%; printed −39% [35, 42] from `r1b_extra.json`). Superseded scripts and outputs removed.
+  - My earlier `h67_named_col` stacked `g_named + g_unnamed`, which come from a separate two-kernel fit and do not sum to g (3 units have g_unnamed < 0). New bars are g, with the named part overlaid; caption says so.
+  - H54 caption claimed open squares "rank low, as they should" (2 of 9 rank first) and "95% of pairs every week" (weekly 0.895–0.959; 0.95 is pooled). Captions corrected.
+  - H100: the old gray bars used a normal approximation of the 95th percentile, which put #42 (p = 0.069) above its bar. The exporter re-runs H100's relabel null with its seed and uses empirical percentiles; bars and significance now agree in 7/7.
+  - Table zoom: H08's 11 red period tiles are strict per-period verdicts (all clauses incl. talk volume); caption now says so next to the 14/17 and 17/17 jumps.
+- **Known issues (not fixed):** H15 round-1b `consolidation_profile.parquet` is grouped by call kind, not forced/voluntary: a column-name clash in `hypotheses/H15-semantic-information-scrambles/scheme/build.py` (round-1b branch, ~lines 531–537). `writeup/figures/make_scoring_scatter.py` crashes on H133–H142 (no credence yet).
+- Paper: 30 pages, builds clean.
+
 ## 2026-10-07 — Paper: more single-column figures (`writeup/paper/`, `writeup/visuals/`)
 
 - Vivian asked for more single-column figures. Before: 3 single-column (arch, scoring, scatter) and 12 double-column floats.

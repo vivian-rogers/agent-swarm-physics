@@ -2,8 +2,8 @@
 \section{Data and method}\label{sec:method}
 
 \begin{figure*}[t]
-\includegraphics[width=\textwidth]{timeline.pdf}
-\caption{The AI Village over time. Top strip: the 51 goal periods, colored by who wrote the goal. Middle: the agent roster, colored by lab, from joining to retirement. Bottom: agents present, stacked by lab. Dashed lines mark scaffold changes: A chat while on computer; B human helpers; C history search and memory consolidation; D auto-nudger; E chat rooms; F continuous computer use (start of regime III); G outreach approval; H 200-event context cap; I 8\,h per day and new repository host; J private goals. Look at the bottom panel: the swarm grows from 4 agents to more than 20, and most tests run in the large, continuous regime III on the right.}
+\includegraphics[width=\textwidth]{js/timeline.pdf}
+\caption{The AI Village over time. Top strip: the 51 goal periods, shaded by who wrote the goal (key at lower left). Middle: one lane per agent from joining to retirement, grouped and colored by lab; the number after each lab is its count of agents (46 in all). Bottom: agents present, stacked by lab. Brackets mark regimes I, II and III. Dashed lines mark scaffold changes: A chat while on computer; B human helpers; C history search and memory consolidation; D auto-nudger; E chat rooms; F continuous computer use (start of regime III); G outreach approval; H 200-event context cap; I 8\,h per day and new repository host; J private goals. Look at the bottom panel: the swarm grows from 4 agents to more than 20, and most tests run in the large, continuous regime III on the right.}
 \label{fig:timeline}
 \end{figure*}
 
@@ -82,13 +82,13 @@ A physics model is \emph{faithful} to the swarm when it captures the mechanism t
 \end{figure}
 
 \begin{figure*}[t]
-\includegraphics[width=\textwidth]{table_zoom.pdf}
-\caption{(a)~Part of the hypothesis $\times$ physics-model table. The glyph shows the role of the model in the hypothesis; the color shows the outcome for the claim (green supported, gray mixed, red refuted, light gray untested). (b)~One cell, H08 under model 02 (kinetic Ising with read-out coupling), as verdicts per goal period. Look at how one cell resolves into many period-level tests; Appendix~\ref{app:matrix} gives the full table.}
+\includegraphics[width=\textwidth]{js/table_zoom.pdf}
+\caption{(a)~Part of the hypothesis $\times$ physics-model table (H01--H20). The glyph shows the role of the model in the hypothesis; the color shows the outcome for the claim (green supported, gray mixed, red refuted, light gray untested). (b)~One cell, H08 under model 02 (kinetic Ising with read-out coupling), as verdicts per goal period (green supported, red failed, hatched reserved data, light gray not tested) and across three natural experiments (outlined: descriptive only). A period passes only if every pre-registered clause passes, including one on talk volume; so a period can fail while its mention and reply jumps hold (14/17 and 17/17 periods). Look at how one cell resolves into many period-level tests; Appendix~\ref{app:matrix} gives the full table.}
 \label{fig:tablezoom}
 \end{figure*}
 
 \begin{figure}[t]
-\includegraphics[width=\columnwidth]{scoring_scatter.pdf}
-\caption{Credence against value if true for every scored claim. Gray curves: equal estimated usefulness (EU). Marker: mechanism depth. Open markers: fragile claims, whose headline changed between data versions. Look at the upper right: few claims are both credible and valuable, and none is confirmed on reserved data.}
+\includegraphics[width=\columnwidth]{js/scoring_scatter.pdf}
+\caption{Credence against value if true for every scored claim. Gray curves: equal estimated usefulness (EU). Marker: mechanism depth (M0 circle, M1 square, M2 diamond). Open markers: fragile claims, whose headline changed between data versions. Labels: the 20 claims with the highest EU; points with the same value are moved apart sideways. Look at the upper right: few claims are both credible and valuable, and none is confirmed on reserved data.}
 \label{fig:scatter}
 \end{figure}

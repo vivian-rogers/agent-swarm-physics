@@ -10,7 +10,7 @@ This section builds the effective picture, one model at a time (Fig.~\ref{fig:pi
 \input{sections/fig_picture}
 \input{sections/table_monitor}
 \begin{figure}[t]
-\centering\includegraphics[width=\columnwidth]{H08-context-is-the-coupling/fig_a.pdf}
+\centering\includegraphics[width=\columnwidth]{js/s2_readout_example.pdf}
 \caption{A message acts at the read-out call of its reader (model 02, H08). One G38 message (star) and the calls of its room-mates (bars). Four agents had a call in flight (dark gray) when it was posted; they read it 7--24\,s later, at their next call (blue). Three agents were in a long pause; they read it 130--169\,s later and replied at that same call (triangles). Figure~\ref{fig:readoutjump} shows the same step in 17 periods.}
 \label{fig:readout}
 \end{figure}
@@ -18,8 +18,8 @@ This section builds the effective picture, one model at a time (Fig.~\ref{fig:pi
 % ------------------------------------------------------------------ 02 + 09
 \subsection{Agents are kinetic spins that couple at the read-out call (models 02 and 09)}\label{sec:p02}
 \begin{figure}[t]
-\centering\includegraphics[width=\columnwidth]{H54-kickoff-quench-target/fig_a.pdf}
-\caption{The kickoff text is a field vector (model 11, H54). Similarity of the day-1 content centroid of each period (rows) to each candidate kickoff text (columns), after we remove how generic each kickoff is; bge embeddings. Look at the dark diagonal: the content of day 1 lands on the text that the operator wrote for that period. The own kickoff ranks first in 18/33 periods (Fig.~\ref{fig:kickoffrank}).}
+\centering\includegraphics[width=\columnwidth]{js/s2_kickoff_matrix.pdf}
+\caption{The kickoff text is a field vector (model 11, H54). Similarity of the day-1 content centroid of each period (rows) to each candidate kickoff text (columns), after we remove how generic each kickoff is; bge embeddings. Orange: more alike than average; purple: less. Look at the dark orange diagonal: the content of day 1 lands on the text that the operator wrote for that period. The own kickoff ranks first in 18/33 periods (Fig.~\ref{fig:kickoffrank}).}
 \label{fig:kickoff}
 \end{figure}
 
@@ -71,14 +71,14 @@ g=\bar m\,\bar r\,J_1^\ast,\qquad \chi=\frac{1}{1-g},\\
 % ------------------------------------------------------------------ 11 + 01
 \subsection{External fields set most of the state (models 11 and 01)}\label{sec:p11}
 \begin{figure}[t]
-\includegraphics[width=\columnwidth]{model16_relaxation.pdf}
-\caption{A fast read kick on a slow, overdamped well (model 16). (a)~After a goal kickoff, alignment with the kickoff (relative to its level on days 4--5) overshoots on day 1 and settles by day 3; nothing dips in the gray undershoot window ($U=-0.006$ [$-0.020$, $+0.008$], bge, 27 kickoffs, 90\% CI; H125). (b)~In \#51 the memory of an agent for its own content (orange) decays over about 100 of its calls, while the pull of a read (blue) decays in about 7 (H130). We divide each series by its fitted amplitude; thin lines are $e^{-\gamma n}$. (c)~Simulation: state $x$ = slow well $s$ + short kicks at reads (ticks). Look at the gap between the two curves in (b): one rate cannot describe both.}
+\includegraphics[width=\columnwidth]{js/m16_relaxation.pdf}
+\caption{A fast read kick on a slow, overdamped well (model 16). (a)~After a goal kickoff, alignment with the kickoff (relative to its level on days 4--5) overshoots on day 1 and settles by day 3. Nothing dips in the gray undershoot window ($U=-0.006$ [$-0.020$, $+0.008$], bge, 27 kickoffs, 90\% CI; H125). Gray squares: the same with gte embeddings. (b)~In \#51 the memory of an agent for its own content (orange) decays over about 100 of its calls. The pull of a read (blue) decays in about 7 (H130). We divide each series by its fitted amplitude; thin lines are $e^{-\gamma n}$. (c)~Simulation: state $x$ = slow well $s$ + short kicks at reads (ticks). Look at the gap between the two curves in (b): one rate cannot describe both.}
 \label{fig:m16}
 \end{figure}
 
 \begin{figure}[t]
-\includegraphics[width=\columnwidth]{model17_modes.pdf}
-\caption{Collective modes against a calibrated random-matrix edge (model 17, H12). (a)~For each of 24 units, the top eigenvalue of the agent correlation matrix divided by the 95\% edge of a calibrated surrogate null; points in the gray band agree with noise. Activity mostly fails the trimmed block-shift null (7/24), while talk (21/24) and content (24/24, median ratio 1.52) carry a real mode. (b)~In the \#12 debates, the participation ratio is lower while a motion is on than after the verdict in 7/9 debates (median $-25\%$, $p=0.010$). Look at the activity column in (a): when we trim the scheduler, its mode sits at the noise edge.}
+\includegraphics[width=\columnwidth]{js/m17_modes.pdf}
+\caption{Collective modes against a calibrated random-matrix edge (model 17, H12). (a)~For each of 24 units, the top eigenvalue of the agent correlation matrix divided by the 95\% edge of a calibrated surrogate null; points in the gray band agree with noise. Activity mostly fails the trimmed block-shift null (7/24). Talk (21/24) and content (24/24, median ratio 1.52) carry a real mode. (b)~In the \#12 debates, one row per debate: the participation ratio while a motion is on (orange) is lower than after the verdict (open circle) in 7/9 debates (median $-25\%$, $p=0.010$). Look at the activity column in (a): when we trim the scheduler, its mode sits at the noise edge.}
 \label{fig:m17}
 \end{figure}
 

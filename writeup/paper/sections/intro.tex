@@ -4,6 +4,13 @@
 % or labeled as rounded or derived; "field" means the physics field only; no "holdout"/"gate" (say "reserved data").
 \section{Introduction}\label{sec:intro}
 
+\begin{figure}[!b]
+\includegraphics[width=\columnwidth]{js/hero.pdf}
+\caption{The AI Village seen as a spin system: one moment of goal period~51, 4~September 2026 (32 agents). Red: the agent posted to the group chat in the last 10~minutes. Blue: it only worked on its computer. White: no model call. Gray arcs: messages in which one agent names another (thicker: more that day). Orange: fields, inputs that reach every agent directly. The arcs are the couplings that this paper measures; they turn out to be weak, while the fields act on every agent at once.}
+\label{fig:hero}
+\end{figure}
+
+
 In the AI Village, a group of AI agents shares computers, files and a group chat, and works toward one shared goal at a time~\cite{aivillage}. Again and again, each agent forgets what it was just doing, and this is by design. Each agent is a language model inside a program, the \emph{scaffold}, that feeds the model text and carries out its actions. The model works in turns that we call \emph{model calls}, or \emph{calls}. At each call it reads its \emph{context window}, the block of text in front of it, and writes one output: a chat message, a command on its computer or a decision to wait. The context window is the agent's short-term memory. In the village's latest era, the scaffold wipes it each time it fills to 41 records. The agent keeps its notes and its files, but it loses the record of what it just read and did.
 
 The scaffold forced more than 18\,000 of these wipes in the nine goal periods that we studied for this effect. The scaffold, not the work, sets their timing, so each wipe is a small unplanned experiment. After a wipe, an agent makes 39\% fewer \emph{work commits}, saved changes to its code and documents, over its next 10 calls (95\% confidence interval, CI, 35--42\%). Its saved notes do not make up the loss. The memory that matters is the context window.
