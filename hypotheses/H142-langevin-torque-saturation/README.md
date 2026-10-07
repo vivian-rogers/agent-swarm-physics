@@ -184,30 +184,30 @@ About 67–71% of batch items reach cos ≥ 0.3 with a fold centroid. #36 and #3
 
 **Finding that forced Amendment A1.** With the card's form (call effects and one amplitude for f), the linear channel W-lin is called "Langevin beats the line" in 70% (#13), 61% (#38) and 100% (#51) of runs, and W-sel in 80%, 40% and 100%. The call effect α_c fixes the level, not the slope. The slope γ(k) falls with k, and n_u rises with k (corr 0.82 on #51), so a linear channel gives a concave pooled curve.
 
-Decision rates under the amended design (A1: amplitude free per batch-size bin):
+Decision rates under the amended design (A1 with A4's bin merging; rerun 2026-10-07 after A4, same seeds):
 
 | World | Langevin beats line (ΔLL CI > 0), #13 / #38 / #51 | Δ_curv CI > 0 | all f̂ CIs include 0 | read − in-flight CI > 0 at n = 1 | n̂_sat median [IQR] (#51) |
 | --- | --- | --- | --- | --- | --- |
 | W0 no coupling | 0.02 / 0.01 / 0.00 | 0.00 / 0.00 / 0.00 | 0.78 / 0.80 / 0.77 | 0.05 / 0.05 / 0.04 | — |
-| W-lin | 0.02 / 0.00 / 0.02 | 0.00 / 0.01 / 0.00 | 0 | 1.00 / 0.60 / 1.00 | 150 (grid edge) |
-| W-sel | 0.03 / 0.00 / 0.00 | 0.01 / 0.00 / 0.00 | 0 | 0.93 / 0.29 / 1.00 | 50 |
-| W-recent | 0.01 / 0.02 / 0.00 | 0.01 / 0.00 / 0.00 | 0.53 / 0.67 / 0.78 | 0.02 / 0.00 / 0.00 | — |
-| W-pow (p = 0.3) | 1.00 / 0.97 / 1.00 | 0.01 / 0.00 / 0.00 | 0 | 1.00 | 1.46 [1.29, 1.46] |
-| W-field1 (×1) | 0.01 / 0.02 / 0.00 | 0.00 / 0.00 / 0.00 | 0.74 / 0.68 / 0.57 | 0.03 / 0.04 / 0.03 | — |
-| W-field (×4) | 0.02 / 0.01 / 0.01 | 0.01 / 0.00 / 0.00 | 0.58 / 0.73 / 0.18 | 0.00 / 0.02 / 0.00 | — |
-| W-L1 (n_sat 1) | 0.99 / 1.00 / 1.00 | 0.35 / 0.15 / 0.99 | 0 | 1.00 | 0.90 [0.90, 1.01] |
-| W-L3 (n_sat 3) | 1.00 / 0.98 / 1.00 | 0.82 / 0.54 / 1.00 | 0 | 1.00 | 3.04 [2.69, 3.04] |
+| W-lin | 0.00 / 0.00 / 0.02 | 0.00 / 0.01 / 0.00 | 0 | 1.00 / 0.60 / 1.00 | 150 (grid edge) |
+| W-sel | 0.01 / 0.00 / 0.00 | 0.01 / 0.00 / 0.00 | 0 | 0.93 / 0.29 / 1.00 | 50 |
+| W-recent | 0.02 / 0.00 / 0.00 | 0.01 / 0.00 / 0.00 | 0.53 / 0.67 / 0.78 | 0.02 / 0.00 / 0.00 | — |
+| W-pow (p = 0.3) | 1.00 / 0.98 / 1.00 | 0.01 / 0.00 / 0.00 | 0 | 1.00 | 1.46 [1.29, 1.46] |
+| W-field1 (×1) | 0.03 / 0.02 / 0.00 | 0.00 / 0.00 / 0.00 | 0.74 / 0.68 / 0.57 | 0.03 / 0.04 / 0.03 | — |
+| W-field (×4) | 0.01 / 0.02 / 0.01 | 0.01 / 0.00 / 0.00 | 0.58 / 0.73 / 0.18 | 0.00 / 0.02 / 0.00 | — |
+| W-L1 (n_sat 1) | 1.00 / 1.00 / 1.00 | 0.35 / 0.15 / 0.99 | 0 | 1.00 | 0.90 [0.90, 1.01] |
+| W-L3 (n_sat 3) | 1.00 / 0.99 / 1.00 | 0.82 / 0.54 / 1.00 | 0 | 1.00 | 3.04 [2.69, 3.04] |
 | W-L3 ×3 | 1.00 / 1.00 / 1.00 | 1.00 / 1.00 / 1.00 | 0 | 1.00 | 3.04 |
 
-Langevin beats the power law (ΔLL(L − pow) CI > 0) in W-L3 in 0.57 / 0.39 / 1.00 of runs and in W-pow in 0.02 / 0.01 / 0.00. n̂_sat is recovered within the grid step (bias ≤ 0.1 at n_sat 1 and 3). The agent-day cluster bootstrap of f̂ is calibrated: in W0, 77–80% of runs have all five CIs covering 0, against 0.95⁵ = 0.774 at nominal coverage. A day-cluster bootstrap covers less (58–71%), so the card's agent-day clusters stay.
+Langevin beats the power law (ΔLL(L − pow) CI > 0) in W-L3 in 0.63 / 0.43 / 1.00 of runs and in W-pow in 0.00 / 0.00 / 0.00. n̂_sat is recovered within the grid step (bias ≤ 0.1 at n_sat 1 and 3). The agent-day cluster bootstrap of f̂ is calibrated: in W0, 77–80% of runs have all five CIs covering 0, against 0.95⁵ = 0.774 at nominal coverage. A day-cluster bootstrap covers less (58–71%), so the card's agent-day clusters stay.
 
-**Power at each period's real counts** (W-L3 pass rate on the period's own skeleton, 100 runs; `summary_power.json`; bge / gte): #13 1.00 / 0.98; #16 0.79 / 0.87; #35 0.30 / 0.34; #36 0.28 / 0.18; #37 0.21 / 0.28; #38 0.98 / 0.90; #39 0.24 / 0.54; #40 0.28 / 0.22; #41 0.35 / 0.61; #51 talk 1.00 / 1.00; #51 wakes 0.90 / 0.81. W-lin size on these skeletons is 0.00–0.14 (#37: 0.14, three days only). At ×3 amplitude every skeleton except #37 reaches ≥ 0.92.
+**Power at each period's real counts** (W-L3 pass rate on the period's own skeleton, 100 runs, after A4; `summary_power.json`; bge / gte): #13 1.00 / 1.00; #16 0.91 / 0.87; #35 0.67 / 0.61; #36 0.40 / 0.40; #37 0.40 / 0.24; #38 0.99 / 0.93; #39 0.47 / 0.64; #40 0.62 / 0.70; #41 0.63 / 0.68; #51 talk 1.00 / 1.00; #51 wakes 0.99 / 1.00. W-lin size on these skeletons (bge) is 0.00–0.16 (#16: 0.12, #37: 0.16; both above 0.10). At ×3 amplitude every skeleton reaches ≥ 0.92. Before A4 the small skeletons had lower power (e.g. #35 0.30, #41 0.35), because sparse bins broke folds.
 
 **Scored units (identified by H113, ≥ 200 rows, power ≥ 0.8), fixed before any outcome:** bge #13, #38, #51; gte #13, #16, #38, #51; natives: #51 wakes (both models). Every other period, including all three NE42 sides, is descriptive.
 
 | # | Prediction | Result | Verdict |
 | --- | --- | --- | --- |
-| S1 | O3 separates W-L3 from W-lin and W-sel at #51 (power ≥ 0.8) | power 1.00; size 0.02 (W-lin), 0.00 (W-sel), after A1. Card form: size 1.00 | supported (after A1); failed as written |
+| S1 | O3 separates W-L3 from W-lin and W-sel at #51 (power ≥ 0.8) | power 1.00; size 0.02 (W-lin), 0.00 (W-sel), after A1/A4. Card form: size 1.00 | supported (after A1); failed as written |
 | S2 | Δ_curv false "> 0" ≤ 0.10 in W-pow, W-lin, W-recent | ≤ 0.01 on all three skeletons | supported |
 | S3 | fewer than half of H113's identified periods powered | bge 3/6, gte 4/7 (not fewer than half) | failed |
 
@@ -216,6 +216,8 @@ Langevin beats the power law (ΔLL(L − pow) CI > 0) in W-L3 in 0.57 / 0.39 / 1
 **Amendment A2 (same time; not post hoc).** The card's W-field rule ("f̂ CI includes 0 at every n in ≥ 90% of runs") cannot be met by any calibrated estimator: with five 95% CIs it holds in 77% of no-coupling runs. The field does leak into f̂ levels on #51 (18% with the strong field vs 77% in W0). It does not leak into the shape decisions: false "Langevin beats line" ≤ 0.02 and false Δ_curv > 0 ≤ 0.01 under both field strengths. Change: the shape tests (O2, O3) need false rates ≤ 0.10 under W-field (met). A level f̂(n) counts as read uptake only where the read − in-flight contrast at n = 1 has CI > 0 (false rate ≤ 0.04 under the field, H113 A1's rule). Rule marked **amended**.
 
 **Amendment A3 (same time).** The card does not set the CI method for ĉ and n̂_sat. They use a day bootstrap (300 draws) of the profile fit. O1, O2 and O4 keep the card's agent-day cluster bootstrap (300 draws); ΔLL uses the paired day-fold bootstrap (1000 draws).
+
+**Amendment A4 (2026-10-07 ~12:20 UTC; triggered by real data on descriptive periods only; not a change of hypothesis).** The first real-data pass (`run.py`, stopped after #2–#12, all descriptive, and an earlier test on #37, descriptive) gave ΔLL(L − line) = −7,443 nats on #11 (gte). One day fold held all rows of three high-k bins, so its amplitudes had no training support. Change: sparse batch-size bins merge (top down) until each amplitude bin has ≥ 100 rows with n ≥ 1 on ≥ 3 days (`h142lib.Design._merge_kbins`). #51 keeps all 26 bins; #13 and #38 merge to 15. The synthetic sets were rerun with A4 (tables above). Seen before A4: only the ΔLL, n̂_sat and verdict lines of #2–#12 and #37 (all unscored). No scored period was run before A4.
 
 **Not run:** N1 cross-day surrogate batches. Direction labels come from day-fold centroids, so u on one day does not match u on another day; a surrogate batch would need a cross-day centroid match, which the card does not define. N2 (within room × hour permutation of the aligned-count vectors) is run on the eligible bge periods.
 

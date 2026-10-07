@@ -31,6 +31,7 @@ F_BINS = [(1, 1), (2, 2), (3, 3), (4, 5), (6, 10_000)]
 K_BINS = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 8), (9, 10), (11, 13), (14, 16), (17, 20), (21, 25), (26, 32),
           (33, 40), (41, 50), (51, 63), (64, 80), (81, 100), (101, 126), (127, 160), (161, 200), (201, 250), (251, 320),
           (321, 400), (401, 500), (501, 10 ** 7)]
+MIN_BIN_ROWS, MIN_BIN_DAYS = 100, 3      # A4 (2026-10-07): support of each amplitude bin
 C_GRID = np.exp(np.linspace(np.log(0.02), np.log(30.0), 61))
 P_GRID = np.round(np.r_[np.linspace(0.05, 1.5, 30), 1.0], 4)
 LN_2PI = math.log(2 * math.pi)
@@ -73,6 +74,8 @@ class Design:
             kb[(k >= lo) & (k <= hi)] = j
         if amplitude == "pooled":
             kb = np.where(k >= 1, 0, -1)
+        else:
+            kb = self._merge_kbins(kb, n, rows["pt_date"].to_numpy())
         self.call = np.unique(rows["call"].to_numpy(), return_inverse=True)[1]
         cell_key = (rows["u"].cast(pl.Int64) * 1_000_000_000 + rows["room"].cast(pl.Int64).fill_null(-1) * 10_000_000
                     + rows["hour"].cast(pl.Int64)).to_numpy()
@@ -148,6 +151,31 @@ class Design:
                 A[g] = T[g].T @ (self.G_day @ T[g])
             self.A_day[s] = A
         self.Ad_day = np.einsum("ip,dij,jq->dpq", self.T_d, self.G_day, self.T_d, optimize=True)
+
+    @staticmethod
+    def _merge_kbins(kb: np.ndarray, n: np.ndarray, day: np.ndarray) -> np.ndarray:
+        """A4: merge sparse batch-size bins (top down, then the lowest upward) until every amplitude bin has
+        >= MIN_BIN_ROWS rows with n >= 1 on >= min(MIN_BIN_DAYS, n_days) days, so no leave-one-day-out fold
+        loses an amplitude's whole support."""
+        pos = n >= 1
+        need_d = min(MIN_BIN_DAYS, len(np.unique(day)))
+        bins = sorted(set(kb[pos].tolist()))
+        stats = {b: (int((kb[pos] == b).sum()), set(day[pos][kb[pos] == b].tolist())) for b in bins}
+        groups = [[b] for b in bins]
+
+        def ok(g):
+            return sum(stats[b][0] for b in g) >= MIN_BIN_ROWS and len(set().union(*[stats[b][1] for b in g])) >= need_d
+        i = len(groups) - 1
+        while i > 0:
+            if not ok(groups[i]):
+                groups[i - 1] = groups[i - 1] + groups[i]; groups.pop(i)
+            i -= 1
+        while len(groups) > 1 and not ok(groups[0]):
+            groups[1] = groups[0] + groups[1]; groups.pop(0)
+        mp = {b: j for j, g in enumerate(groups) for b in g}
+        out = np.full(len(kb), -1)
+        out[pos] = [mp[b] for b in kb[pos]]
+        return out
 
     def _T(self, W: np.ndarray) -> np.ndarray:
         P = self.Pe + self.q
