@@ -5,6 +5,15 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — Paper rewritten model-first (`writeup/paper/`)
+
+- Vivian's direction: a general-reader intro aimed at interpretability and swarm control, then "what the system is" with monitoring observables, then the models ordered by usefulness. The 2026-10-04 finding-first paper is archived in `writeup/archive/paper-2026-10-04/`.
+- **New structure** (24 pages: body ≈ 18 with references, appendix 6): I intro; II what the system is (seven-line picture, two-equation effective model, schematic, monitoring-observables table: g, 1/(1−g), Fano r_F, named/unnamed ratio, call-clock η, field share f, kickoff alignment, well depth Δρ, kick/well times, λ₁/edge and PR, room contrast, κ_C, day-end excess EP, idea R̂, change monitor, dynamic mode lifetimes); III data and method (research loop figure, impostor table, faithfulness axes A–I, scoring figure, table zoom, scatter); IV useful models (02+09, 11+01, 16, 17); V partly useful (04, 03, 15, 14, 08); VI the other models (one table); VII results that span models; VIII limits; appendices A goal periods, B 17-model matrix, C top-20 theses, D all hypotheses by EU.
+- **Numbers** come from the 2026-10-07 fact sheets (latest scored round per card). Stale values fixed (H05, H08, H13, H15, H16, H34, H36, H40, H41, H42, H44, H46, H50, H54, H67, H69, H72 and others). H05: card text keeps 0.88, meta.json 0.56; the paper uses 0.56 with a footnote. Left out as unverifiable: "about 20 s when busy" (H08), "161 ordinary nights" and "±0.04 across" (H97 caption), T/T_c ≈ 6 (derived, not on H25).
+- **Figures:** new TikZ schematics (system picture; model schematics for the useful models only, per Vivian: Ising red/blue nodes for 02, angle-colored arrows plus an orange field for 11, no Potts); new `figs/model16_relaxation.pdf` (H125 + H130) and `figs/model17_modes.pdf` (H12), plotting only; card figures reused for H08, H111, H54, H87, H34, H100. Matrix, table zoom, slides and scatter regenerated with 17 columns through `writeup/figures/model_overrides.py`; EU and theses tables generated from meta.json v2 (`make_eu_table.py`, `make_theses_table.py`; theses texts hand-edited).
+- **Build note:** `array` clashes with revtex4-2 in this TeX Live 2025 install ("Extra \or"); the paper no longer loads it and uses `\rr` ragged cells with `\tabularnewline`. `lmodern` added (scalable T1 fonts).
+- **Open:** the observable alarm levels are proposals (only H36 and H74 are measured alarms); the two-rate form is post hoc; H70/H87 values touch reserved days; nothing confirmed on reserved data.
+
 ## 2026-10-07 — HH376–HH385 approved → H133–H142 pre-registered (kinetic Potts and vector spins)
 
 - Vivian approved HH376–HH385. They build on what held up: coupling acts only at the read-out call, through named messages, on the call clock; fields; the context-held self-field; a fast kick on a slow well.
