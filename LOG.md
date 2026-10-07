@@ -5,6 +5,15 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-07 — Paper: more single-column figures (`writeup/paper/`, `writeup/visuals/`)
+
+- Vivian asked for more single-column figures. Before: 3 single-column (arch, scoring, scatter) and 12 double-column floats.
+- **Split card figures into panels.** `writeup/visuals/H08,H54,H111,H34/make.py` refactored into `panel_*` functions; each still writes the double-column `fig.pdf` and now also single-column files: H08 `fig_a` (the one-message raster) and `fig_bc` (G38 offset profile, 17-period jumps); H54 `fig_a` (kickoff similarity matrix) and `fig_bc` (own-kickoff rank, #51 private goals); H111 `fig_col` and H34 `fig_col` (panels a over b).
+- **New single-column figures from card results** (read-only, writeup style): `writeup/paper/figs/make_card_cols.py` → `h67_named_col` (regime-III loop gain per unit, split into named and unnamed reads; median named share 0.54) and `h67_dial_col` (read-out gain vs equal-time dial per period: the scheduler impostor, large in regime I); `make_h15_col.py` → `h15_erasure_col` (work commits per call around forced vs voluntary erasures, from H15's own `f4` panel). An H50 field-share panel was drawn and dropped (its talk "coupling share" > 1 would confuse next to H38's field share).
+- **Placement.** Sec. II now has four single-column figures (H08 a, H54 a, model 16, model 17; the model 16/17 minipage pair became two floats). Sec. IV: H08 bc, H67 named, H111 col, H54 bc. Sec. V: H15 erasure, H34 col. Sec. VII: H67 dial. Double-column floats left: picture schematic, timeline, table zoom, gallery, κ table (4 panels), rooms (4 panels).
+- Skipped H40's `eta_by_gap.pdf`: its round-1 pooled η for regime III (−0.16 [−0.32, 0.01]) differs from the paper's round-2 η_rep|talk (−0.11 [−0.16, −0.06]); a figure with a different number than the text would mislead.
+- Build clean, 28 pages (was 27); Secs. I–II end on page 7.
+
 ## 2026-10-07 — Paper taste pass: Quanta-style intro tightened, abstract cut, stale counts fixed (`writeup/paper/`)
 
 - Vivian's request: a pass over the paper to make it better, no "riddle speak" in the first ~7 pages, deeper jargon allowed after; add my own taste.

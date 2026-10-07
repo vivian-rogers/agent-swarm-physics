@@ -3,6 +3,8 @@
     uv run python writeup/visuals/H08-context-is-the-coupling/make.py            # fig + animation
     uv run python writeup/visuals/H08-context-is-the-coupling/make.py --no-anim  # fig only
 
+Writes fig.pdf (double column, a|b|c) and the single-column fig_a.pdf, fig_bc.pdf used by writeup/paper.
+
 Reads only processed outputs: data/processed/H08-context-is-the-coupling/r1b/ (c9.json per period, G38 readout and
 turns), plus the shared chat_core (message time, room, sender; no text) and roster (names). Non-holdout only; the
 example day is checked against the locked holdout.
@@ -127,24 +129,22 @@ def draw_raster(ax, ex, x0=-35, x1=None, upto=None, show_reply=True, fs=7):
     return x1
 
 
-def fig_static(c9, ex):
-    vs.use()
-    fig = plt.figure(figsize=(vs.W["double"], 2.55))
-    gs = fig.add_gridspec(1, 3, width_ratios=[1.55, 1.0, 1.0], wspace=0.42, left=0.13, right=0.99, bottom=0.17, top=0.88)
-    # (a) the real example
-    ax = fig.add_subplot(gs[0])
-    draw_raster(ax, ex, fs=6.5)
+def panel_a(ax, ex, fs=6.5, ncol=4):
+    """(a) one real message: calls, in-flight call, receiving call, replies."""
+    from matplotlib.lines import Line2D
+    draw_raster(ax, ex, fs=fs)
     ax.set_xlabel("time since the message (s)")
     ax.set_title("(a) one message, %s %s" % (EX_PERIOD, ex["day"]), loc="left")
-    from matplotlib.lines import Line2D
     h = [Rectangle((0, 0), 1, 1, color=CALL), Rectangle((0, 0), 1, 1, color=INFL),
          Rectangle((0, 0), 1, 1, color=vs.COUPLING),
          Line2D([], [], marker="v", ls="", color=vs.COUPLING, ms=5)]
-    ax.set_ylim(-1.75, len(ex["lanes"]) - 0.4)
+    ax.set_ylim(-1.75 if ncol == 4 else -2.6, len(ex["lanes"]) - 0.4)
     ax.legend(h, ["model call", "in flight at the post", "receiving call", "reply to sender"], loc="lower center",
-              fontsize=6, handlelength=1.2, borderaxespad=0.1, ncol=4, columnspacing=0.9)
-    # (b) G38 offset profile: own room vs other-room placebo (mentions, the pre-registered response)
-    ax = fig.add_subplot(gs[1])
+              fontsize=6, handlelength=1.2, borderaxespad=0.1, ncol=ncol, columnspacing=0.9)
+
+
+def panel_b(ax, c9, title="(b) %s, 17 days" % EX_PERIOD):
+    """(b) G38 offset profile: own room vs other-room placebo (mentions, the pre-registered response)."""
     d = c9[EX_PERIOD]
     o = np.arange(-2, 4)
     for key, col, lab, mk in (("other_room", vs.NULL, "other-room placebo", "s"), ("primary", vs.COUPLING, "own room", "o")):
@@ -162,11 +162,14 @@ def fig_static(c9, ex):
     ax.set_ylim(-0.26, 1.75)
     ax.set_xlabel("recipient's call offset $o$")
     ax.set_ylabel("addresses sender: excess (pp)")
-    ax.set_title("(b) %s, 17 days" % EX_PERIOD, loc="left")
+    ax.set_title(title, loc="left")
     ax.legend(loc="upper left", fontsize=6, handlelength=1.4)
     ax.set_xlim(-2.4, 3.4)
-    # (c) jump D per period
-    ax = fig.add_subplot(gs[2])
+
+
+def panel_c(ax, c9, title="(c) all 17 periods"):
+    """(c) jump D per period, with the other-room null."""
+    from matplotlib.lines import Line2D
     y = np.arange(len(PERIODS))[::-1]
     for yi, g in zip(y, PERIODS):
         dd = c9[g]
@@ -187,15 +190,41 @@ def fig_static(c9, ex):
     ax.set_yticklabels([f"{g} {regime_of(g)}" for g in PERIODS], fontsize=5.6)
     ax.set_ylim(-0.8, len(PERIODS) - 0.4)
     ax.set_xlabel("jump $D=G(1)-G(0)$ (pp)")
-    ax.set_title("(c) all 17 periods", loc="left")
-    from matplotlib.lines import Line2D
+    ax.set_title(title, loc="left")
     h = [Line2D([], [], marker="o", color=vs.COUPLING, ms=3.2, lw=1.1),
          Line2D([], [], marker="o", mfc="white", mec=vs.COUPLING, color=vs.COUPLING, ms=3, lw=0.8),
          Line2D([], [], marker="s", color=vs.MUTED, mfc=vs.NULL, mec=vs.INK2, ms=2.6, lw=0.8)]
     ax.legend(h, ["reply to sender", "names sender", "other room (null)"], loc="upper right", fontsize=5.6,
               handlelength=1.3, borderaxespad=0.1)
     ax.grid(axis="y", visible=False)
+
+
+def fig_static(c9, ex):
+    """Double-column figure: (a) | (b) | (c)."""
+    vs.use()
+    fig = plt.figure(figsize=(vs.W["double"], 2.55))
+    gs = fig.add_gridspec(1, 3, width_ratios=[1.55, 1.0, 1.0], wspace=0.42, left=0.13, right=0.99, bottom=0.17, top=0.88)
+    panel_a(fig.add_subplot(gs[0]), ex)
+    panel_b(fig.add_subplot(gs[1]), c9)
+    panel_c(fig.add_subplot(gs[2]), c9)
     vs.save(fig, HERE / "fig")
+    plt.close(fig)
+
+
+def fig_cols(c9, ex):
+    """Single-column figures for the paper: fig_a (the example alone) and fig_bc (profile and per-period jumps)."""
+    vs.use()
+    fig = plt.figure(figsize=(vs.W["single"], 2.35))
+    ax = fig.add_axes([0.26, 0.17, 0.72, 0.74])
+    panel_a(ax, ex, fs=6.5, ncol=2)
+    ax.set_title("one message, %s %s" % (EX_PERIOD, ex["day"]), loc="left")
+    vs.save(fig, HERE / "fig_a")
+    plt.close(fig)
+    fig = plt.figure(figsize=(vs.W["single"], 2.45))
+    gs = fig.add_gridspec(1, 2, width_ratios=[0.85, 1.0], wspace=0.55, left=0.14, right=0.99, bottom=0.18, top=0.9)
+    panel_b(fig.add_subplot(gs[0]), c9, title="(a) %s, 17 days" % EX_PERIOD)
+    panel_c(fig.add_subplot(gs[1]), c9, title="(b) all 17 periods")
+    vs.save(fig, HERE / "fig_bc")
     plt.close(fig)
 
 
@@ -291,6 +320,7 @@ def main():
     print("example msg", ex["msg"], ex["day"], [(l["name"], round(l.get("W", 0), 1), l.get("infl"), l.get("replied"))
                                                 for l in ex["lanes"]])
     fig_static(c9, ex)
+    fig_cols(c9, ex)
     if not a.no_anim:
         make_anim(ex, c9)
 

@@ -8,6 +8,7 @@ fig.pdf/png  (a) genericness-corrected target score of every day-1 content centr
 Inputs (read-only): data/processed/H54-kickoff-quench-target/NE34/{S_kick.npy, periods.parquet, results.json},
 G51/native.json; shared period_affordances (mode F = free week).
 Usage: uv run python writeup/visuals/H54-kickoff-quench-target/make.py
+Writes fig.pdf (double column) and the single-column fig_a.pdf (matrix) and fig_bc.pdf (rank, #51) for writeup/paper.
 """
 from __future__ import annotations
 
@@ -41,8 +42,7 @@ def corrected(S):
     return S - cm
 
 
-def main():
-    vs.use()
+def load():
     S = np.load(D / "NE34/S_kick.npy")
     per = pl.read_parquet(D / "NE34/periods.parquet")
     res = json.load(open(D / "NE34/results.json"))["P1"]
@@ -55,13 +55,13 @@ def main():
     Sh = corrected(S)
     rank = np.array([1 + (np.delete(Sh[i], i) > Sh[i, i]).sum() for i in range(n)])
     assert rank.tolist() == per["rank"].to_list(), "rank mismatch with the card table"
-    top1 = int((rank == 1).sum())
+    free = np.array([mode.get(g) == "F" or g in (44, 51) for g in goals])
+    return dict(Sh=Sh, goals=goals, n=n, rank=rank, free=free, res=res, g51=g51, top1=int((rank == 1).sum()))
 
-    fig = plt.figure(figsize=(vs.W["double"], 2.55))
-    gs = fig.add_gridspec(1, 3, width_ratios=[1.05, 1.35, 0.85], wspace=0.5)
-    a0, a1, a2 = (fig.add_subplot(gs[0, i]) for i in range(3))
 
-    # (a) score matrix
+def panel_a(fig, a0, d, title="(a) day 1 vs every kickoff (bge)", cb_frac=0.046):
+    """(a) score matrix: day-1 centroid of each period against every candidate kickoff."""
+    Sh, goals, n = d["Sh"], d["goals"], d["n"]
     v = np.nanpercentile(np.abs(Sh), 98)
     im = a0.imshow(Sh, cmap=vs.DIV, norm=TwoSlopeNorm(0, -v, v), interpolation="nearest")
     for i in range(n):
@@ -71,16 +71,18 @@ def main():
     a0.set_yticks(tk); a0.set_yticklabels([f"#{goals[i]}" for i in tk], fontsize=6)
     a0.set_xlabel("candidate kickoff text"); a0.set_ylabel("day-1 content centroid")
     a0.grid(False)
-    cb = fig.colorbar(im, ax=a0, fraction=0.046, pad=0.03)
+    cb = fig.colorbar(im, ax=a0, fraction=cb_frac, pad=0.03)
     cb.ax.tick_params(labelsize=5.5); cb.ax.set_xlabel("score", fontsize=6, labelpad=2)
-    a0.set_title("(a) day 1 vs every kickoff (bge)", loc="left")
+    a0.set_title(title, loc="left")
 
-    # (b) rank of the own kickoff
+
+def panel_b(a1, d, title="(b) the own kickoff ranks first", legend_below=False):
+    """(b) rank of the own kickoff among the 33 candidates, against the swap null."""
+    n, rank, free, goals, res, top1 = d["n"], d["rank"], d["free"], d["goals"], d["res"], d["top1"]
     x = np.arange(n)
     lo, hi = 0.05 * n, 0.95 * n
     a1.axhspan(lo, hi, color=vs.NULL, alpha=0.35, lw=0, label="swap null (90% band, median)")
     a1.axhline((n + 1) / 2, color=vs.MUTED, lw=0.8, ls="--")
-    free = np.array([mode.get(g) == "F" or g in (44, 51) for g in goals])
     a1.vlines(x, rank, n + 1, color=vs.GRID, lw=0.6, zorder=1)
     a1.scatter(x[~free], rank[~free], s=16, color=vs.FIELD, edgecolor=vs.INK, lw=0.5, zorder=3,
                label="named shared target")
@@ -93,15 +95,22 @@ def main():
     a1.set_xlim(-0.8, n - 0.2)
     a1.set_xlabel("goal period")
     a1.set_ylabel("rank of the own kickoff (of 33)")
-    a1.legend(loc="lower left", bbox_to_anchor=(0.02, 0.1), fontsize=5.8, borderaxespad=0.2, handletextpad=0.3,
-              frameon=True, facecolor="white", edgecolor="none", framealpha=0.85)
+    if legend_below:
+        a1.legend(loc="upper left", bbox_to_anchor=(-0.02, -0.28), fontsize=5.8, borderaxespad=0, handletextpad=0.3,
+                  frameon=False, ncol=1)
+    else:
+        a1.legend(loc="lower left", bbox_to_anchor=(0.02, 0.1), fontsize=5.8, borderaxespad=0.2, handletextpad=0.3,
+                  frameon=True, facecolor="white", edgecolor="none", framealpha=0.85)
     a1.text(0.98, 0.47, f"top-1 in {top1}/{n}\nmedian percentile {res['median_pi']:.1f}\n"
             f"p = {res['p_wilcoxon']:.0e}".replace("e-0", "e−"), transform=a1.transAxes, ha="right", va="top",
             fontsize=6.3, color=vs.INK)
     a1.grid(axis="x", visible=False)
-    a1.set_title("(b) the own kickoff ranks first", loc="left")
+    a1.set_title(title, loc="left")
 
-    # (c) #51 private goals, weekly
+
+def panel_c(a2, d, title="(c) #51: each agent on its own goal"):
+    """(c) #51 private goals, weekly role-swap accuracy."""
+    g51 = d["g51"]
     wk = g51["weekly"]
     w = np.array([r["week"] for r in wk]) + 1
     acc = np.array([r["swap_accuracy"] for r in wk]); npairs = np.array([r["n_pairs"] for r in wk])
@@ -115,13 +124,35 @@ def main():
     a2.set_ylabel("own goal beats a swapped goal")
     a2.text(0.5 + 0.2, 0.79, f"all weeks {g51['swap_accuracy']:.2f}\n(p = {g51['p_perm']:.4f})", fontsize=6.3,
             color=vs.INK, va="top")
-    a2.set_title("(c) #51: each agent on its own goal", loc="left")
+    a2.set_title(title, loc="left")
+    return acc
 
+
+def main():
+    vs.use()
+    d = load()
+    # double column: a | b | c
+    fig = plt.figure(figsize=(vs.W["double"], 2.55))
+    gs = fig.add_gridspec(1, 3, width_ratios=[1.05, 1.35, 0.85], wspace=0.5)
+    a0, a1, a2 = (fig.add_subplot(gs[0, i]) for i in range(3))
+    panel_a(fig, a0, d); panel_b(a1, d); acc = panel_c(a2, d)
     vs.save(fig, HERE / "fig")
     plt.close(fig)
-    print("top1", top1, "of", n, "median pi", res["median_pi"], "p", res["p_wilcoxon"])
-    print("weekly", np.round(acc, 3).tolist(), "overall", g51["swap_accuracy"])
-    print("free ranks", {g: int(r) for g, r, f in zip(goals, rank, free) if f})
+    # single column: the matrix alone
+    fig, ax = plt.subplots(figsize=(vs.W["single"], 2.9))
+    panel_a(fig, ax, d, title="day 1 of each period vs every kickoff text (bge)")
+    vs.save(fig, HERE / "fig_a")
+    plt.close(fig)
+    # single column: rank and #51 side by side
+    fig = plt.figure(figsize=(vs.W["single"], 2.75))
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.45, 1.0], wspace=0.5, left=0.12, right=0.99, bottom=0.34, top=0.92)
+    panel_b(fig.add_subplot(gs[0]), d, title="(a) the own kickoff ranks first", legend_below=True)
+    panel_c(fig.add_subplot(gs[1]), d, title="(b) #51: own goal")
+    vs.save(fig, HERE / "fig_bc")
+    plt.close(fig)
+    print("top1", d["top1"], "of", d["n"], "median pi", d["res"]["median_pi"], "p", d["res"]["p_wilcoxon"])
+    print("weekly", np.round(acc, 3).tolist(), "overall", d["g51"]["swap_accuracy"])
+    print("free ranks", {g: int(r) for g, r, f in zip(d["goals"], d["rank"], d["free"]) if f})
 
 
 if __name__ == "__main__":

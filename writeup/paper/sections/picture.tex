@@ -9,19 +9,19 @@ This section builds the effective picture, one model at a time (Fig.~\ref{fig:pi
 \input{sections/glossary}
 \input{sections/fig_picture}
 \input{sections/table_monitor}
-\begin{figure*}[t]
-\centering\includegraphics[width=0.6\textwidth]{H08-context-is-the-coupling/fig.pdf}
-\caption{A message acts at the read-out call of the recipient (model 02, H08). (a)~One G38 message: room-mates with a call in flight read it 7--24\,s later at their next call; agents in long gaps read it 130--169\,s later and reply at that call. (b, c)~The excess chance that a call names the sender jumps at the read-out call ($o=1$) and not at the call in flight ($o=0$), in G38 and in 17 periods outside the reserved data. Look at the step between $o=0$ and $o=1$, and at the flat other-room placebo.}
+\begin{figure}[t]
+\centering\includegraphics[width=\columnwidth]{H08-context-is-the-coupling/fig_a.pdf}
+\caption{A message acts at the read-out call of its reader (model 02, H08). One G38 message (star) and the calls of its room-mates (bars). Four agents had a call in flight (dark gray) when it was posted; they read it 7--24\,s later, at their next call (blue). Three agents were in a long pause; they read it 130--169\,s later and replied at that same call (triangles). Figure~\ref{fig:readoutjump} shows the same step in 17 periods.}
 \label{fig:readout}
-\end{figure*}
+\end{figure}
 
 % ------------------------------------------------------------------ 02 + 09
 \subsection{Agents are kinetic spins that couple at the read-out call (models 02 and 09)}\label{sec:p02}
-\begin{figure*}[t]
-\centering\includegraphics[width=0.6\textwidth]{H54-kickoff-quench-target/fig.pdf}
-\caption{The kickoff text is a field vector (model 11, H54). (a)~Similarity of the day-1 content centroid of each period (rows) to each candidate kickoff text (columns), bge. (b)~Rank of the own kickoff of the period among the candidates: first in 18/33 periods. (c)~In \#51 each agent sits on its own private goal (0.95 against a swap null of 0.5). Look at the dark diagonal in (a): the content of day 1 lands on the text that the operator wrote.}
+\begin{figure}[t]
+\centering\includegraphics[width=\columnwidth]{H54-kickoff-quench-target/fig_a.pdf}
+\caption{The kickoff text is a field vector (model 11, H54). Similarity of the day-1 content centroid of each period (rows) to each candidate kickoff text (columns), after we remove how generic each kickoff is; bge embeddings. Look at the dark diagonal: the content of day 1 lands on the text that the operator wrote for that period. The own kickoff ranks first in 18/33 periods (Fig.~\ref{fig:kickoffrank}).}
 \label{fig:kickoff}
-\end{figure*}
+\end{figure}
 
 At each call, an agent talks (it posts a message), works or waits. Let $Y_{ic}=1$ when call $c$ of agent $i$ is a talk call. A \emph{kinetic Ising model} describes a magnet in which each spin flips now and then, with a chance set by the field and by its neighbors. In our read-out version, an agent can flip only at its own calls, and only the messages that the call reads count as neighbors~\cite{glauber1963,aguilera2026}:
 \begin{equation}
@@ -70,18 +70,17 @@ g=\bar m\,\bar r\,J_1^\ast,\qquad \chi=\frac{1}{1-g},\\
 
 % ------------------------------------------------------------------ 11 + 01
 \subsection{External fields set most of the state (models 11 and 01)}\label{sec:p11}
-\begin{figure*}[t]
-\begin{minipage}[t]{0.49\textwidth}
-\includegraphics[width=\linewidth]{model16_relaxation.pdf}
+\begin{figure}[t]
+\includegraphics[width=\columnwidth]{model16_relaxation.pdf}
 \caption{A fast read kick on a slow, overdamped well (model 16). (a)~After a goal kickoff, alignment with the kickoff (relative to its level on days 4--5) overshoots on day 1 and settles by day 3; nothing dips in the gray undershoot window ($U=-0.006$ [$-0.020$, $+0.008$], bge, 27 kickoffs, 90\% CI; H125). (b)~In \#51 the memory of an agent for its own content (orange) decays over about 100 of its calls, while the pull of a read (blue) decays in about 7 (H130). We divide each series by its fitted amplitude; thin lines are $e^{-\gamma n}$. (c)~Simulation: state $x$ = slow well $s$ + short kicks at reads (ticks). Look at the gap between the two curves in (b): one rate cannot describe both.}
 \label{fig:m16}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.49\textwidth}
-\includegraphics[width=\linewidth]{model17_modes.pdf}
+\end{figure}
+
+\begin{figure}[t]
+\includegraphics[width=\columnwidth]{model17_modes.pdf}
 \caption{Collective modes against a calibrated random-matrix edge (model 17, H12). (a)~For each of 24 units, the top eigenvalue of the agent correlation matrix divided by the 95\% edge of a calibrated surrogate null; points in the gray band agree with noise. Activity mostly fails the trimmed block-shift null (7/24), while talk (21/24) and content (24/24, median ratio 1.52) carry a real mode. (b)~In the \#12 debates, the participation ratio is lower while a motion is on than after the verdict in 7/9 debates (median $-25\%$, $p=0.010$). Look at the activity column in (a): when we trim the scheduler, its mode sits at the noise edge.}
 \label{fig:m17}
-\end{minipage}
-\end{figure*}
+\end{figure}
 
 Model 11 treats the content of each agent as an arrow, a \emph{vector spin} $\mathbf s_i$. The arrow is the mean \emph{embedding} of the statements of the agent in a window, minus the regime mean and its style. (An embedding is a vector from a text model; similar meanings give near vectors.) As in a magnet, each arrangement of arrows has an energy $\mathcal H$, and arrangements of low energy are more probable, with weight $e^{-\beta\mathcal H}$:
 \begin{equation}

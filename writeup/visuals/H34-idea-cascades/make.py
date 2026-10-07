@@ -9,7 +9,7 @@ Inputs (read only; round 1b = context-ledger visibility; non-holdout by construc
   data/processed/H34-idea-cascades/r1b/G<NN>/trees.parquet            exposure-tree sizes (hashed ideas; no text)
   data/processed/H67-lagged-criticality-dial/results/periods.parquet  regime label per goal period
 The GW-NB size law is H34's own (hypotheses/H34-idea-cascades/analysis/h34stats.py, imported read-only).
-Outputs: fig.pdf/png, writeup/animations/H34-idea-cascades.mp4 + H34-idea-cascades_poster.png (simulation).
+Outputs: fig.pdf/png (double column), fig_col.pdf (single column, a over b, for writeup/paper), writeup/animations/H34-idea-cascades.mp4 + H34-idea-cascades_poster.png (simulation).
 """
 from __future__ import annotations
 
@@ -66,12 +66,8 @@ def wilson(k, n, z=1.96):
 
 
 # ----------------------------------------------------------------------------------------- static
-def make_fig():
-    vs.use()
-    p = load()
-    fig, (ax, bx) = plt.subplots(1, 2, figsize=(vs.W["double"], 2.8), gridspec_kw={"width_ratios": [1.15, 1]})
-
-    # (a) cascade-size CCDF, #51 against the homogeneous branching law and the critical law
+def panel_a(ax, p):
+    """(a) cascade-size CCDF, #51 against the homogeneous branching law and the critical law."""
     for g in p["goal"].to_list():
         if g == 51:
             continue
@@ -110,8 +106,11 @@ def make_fig():
          Line2D([], [], color=vs.C["sky"], lw=0.6, label="31 other periods")]
     ax.legend(h, [h[0].get_label(), f"one branching law, GW-NB($\\hat R$, $\\hat k$={r['k']:.1f}), 95%",
                   "31 other periods"], loc="lower left", handlelength=1.6)
+    return r, sz, pm, N
 
-    # (b) branching ratio of every period against the critical point
+
+def panel_b(bx, p):
+    """(b) branching ratio of every period against the critical point."""
     for rg in ("I", "II", "III"):
         v = p.filter(pl.col("regime") == rg)
         xN = v["N_room"].to_numpy() * np.exp(np.random.default_rng(7).uniform(-0.04, 0.04, v.height))
@@ -134,8 +133,25 @@ def make_fig():
     bx.set_ylabel(r"idea branching ratio $\hat R$ (95% CI)")
     bx.set_title("(b) every period far below $R = 1$", loc="left")
     bx.legend(loc="center left", bbox_to_anchor=(0.0, 0.38), handletextpad=0.2)
+    return med
+
+
+def make_fig():
+    vs.use()
+    p = load()
+    # double column: a | b
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(vs.W["double"], 2.8), gridspec_kw={"width_ratios": [1.15, 1]})
+    r, sz, pm, N = panel_a(ax, p)
+    med = panel_b(bx, p)
     fig.tight_layout(w_pad=1.4)
     vs.save(fig, HERE / "fig")
+    plt.close(fig)
+    # single column: a over b
+    fig, (ax, bx) = plt.subplots(2, 1, figsize=(vs.W["single"], 4.9))
+    panel_a(ax, p)
+    panel_b(bx, p)
+    fig.tight_layout(h_pad=1.2)
+    vs.save(fig, HERE / "fig_col")
     plt.close(fig)
     p5_obs = (sz >= 5).mean(); p5_gw = pm[4:].sum()
     print(f"#51 R {r['R']:.3f} k {r['k']:.2f} N {N}; P(s>=5) obs {p5_obs:.4f} vs GW-NB {p5_gw:.4f}; median R {med:.3f}")

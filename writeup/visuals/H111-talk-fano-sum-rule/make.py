@@ -6,7 +6,7 @@ Inputs (read only; non-holdout by construction, asserted again here):
   data/processed/H111-talk-fano-sum-rule/results/units.parquet   per-unit Phi(10 min), CIs, Phi_pred, g_lag (H67), null
   data/processed/H111-talk-fano-sum-rule/results/summary.json    pooled r_F per regime
 Panel (a) is a simulation (linear Hawkes swarm in one room); panel (b) is the measured village quantity.
-Outputs: fig.pdf / fig.png.
+Outputs: fig.pdf / fig.png (double column, a|b) and fig_col.pdf (single column, a over b) for writeup/paper.
 """
 from __future__ import annotations
 
@@ -68,12 +68,8 @@ def load():
     return u, s
 
 
-def main():
-    vs.use()
-    u, s = load()
-    fig, (ax, bx) = plt.subplots(1, 2, figsize=(vs.W["double"], 2.9), gridspec_kw={"width_ratios": [1, 1.15]})
-
-    # (a) simulation: the sum rule in a linear Hawkes swarm
+def panel_a(ax):
+    """(a) simulation: the sum rule in a linear Hawkes swarm."""
     n = 15
     gg = np.linspace(0, 0.62, 200)
     ax.plot(gg, phi_pred(gg, n), color=vs.INK, lw=1.3, zorder=2)
@@ -97,8 +93,11 @@ def main():
     ax.set_title("(a) simulation: linear Hawkes talk swarm", loc="left")
     ax.legend(handles=[Line2D([], [], marker="o", ls="", mfc="white", mec=vs.COUPLING, label="simulated (8 runs, 95%)")],
               loc="lower right", bbox_to_anchor=(1.0, 0.1))
+    return gs, m, n
 
-    # (b) village: observed vs predicted, per unit
+
+def panel_b(bx, u, s):
+    """(b) village: observed vs predicted Fano ratio, per unit."""
     lim = (0.45, float(u["phi_10"].max()) + 0.12)
     xx = np.linspace(*lim, 10)
     bx.fill_between(xx, 0.8 * xx, 1.2 * xx, color=vs.COUPLING, alpha=0.07, lw=0, zorder=0)
@@ -123,8 +122,9 @@ def main():
             fontsize=6.3, color=vs.COUPLING, va="bottom", ha="right", transform=bx.transAxes)
     bx.text(0.985, 0.10, f"regime I (21 units): pooled $r_F$ = {r1[0]:.2f} [{r1[1]:.2f}, {r1[2]:.2f}]",
             fontsize=6.3, color=REG_C["I"], va="bottom", ha="right", transform=bx.transAxes)
-    bx.text(1.80, 1.87, r"$\Phi_{obs}=\Phi_{pred}$", rotation=34, fontsize=6.3, ha="center", va="bottom", color=vs.INK)
-    bx.text(1.62, 2.02, "±20%", fontsize=6.0, color=vs.COUPLING, rotation=34)
+    bx.text(1.80, 1.84, r"$\Phi_{obs}=\Phi_{pred}$", rotation=45, transform_rotates_text=True, fontsize=6.3,
+            ha="center", va="bottom", color=vs.INK)
+    bx.text(1.60, 1.98, "±20%", fontsize=6.0, color=vs.COUPLING, rotation=45, transform_rotates_text=True)
     bx.set_xlim(0.8, 2.1)
     bx.set_ylim(*lim)
     bx.set_xlabel(r"predicted $\Phi_{pred} = 1/(1-g_{lag})^2$ (room-adjusted, from H67)")
@@ -133,8 +133,25 @@ def main():
     h = [Line2D([], [], marker=REG_M[r], ls="", mfc=REG_C[r], mec="white", ms=4.5, label=f"regime {r}")
          for r in ("I", "II", "III")]
     bx.legend(handles=h, loc="upper right", ncol=3, handletextpad=0.2, columnspacing=0.8)
+    return q95
+
+
+def main():
+    vs.use()
+    u, s = load()
+    # double column: a | b
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(vs.W["double"], 2.9), gridspec_kw={"width_ratios": [1, 1.15]})
+    gs, m, n = panel_a(ax)
+    q95 = panel_b(bx, u, s)
     fig.tight_layout(w_pad=1.5)
     vs.save(fig, HERE / "fig")
+    plt.close(fig)
+    # single column: a over b
+    fig, (ax, bx) = plt.subplots(2, 1, figsize=(vs.W["single"], 5.0))
+    panel_a(ax)
+    panel_b(bx, u, s)
+    fig.tight_layout(h_pad=1.2)
+    vs.save(fig, HERE / "fig_col")
     plt.close(fig)
     print("sim means", dict(zip(gs, np.round(m, 3))), "pred", np.round(phi_pred(gs, n), 3))
     print("units by regime", u.group_by("regime").len().sort("regime").to_dicts(), "null q95 median", q95)

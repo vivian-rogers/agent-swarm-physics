@@ -13,9 +13,15 @@
 
 \textbf{Mapping.} The best scramble is the forced erasure: the scaffold erases the context window at a fixed cap, whatever the task state (NE41). Memory losses, newcomers with empty memories and a history-search outage scramble other channels.
 
+\begin{figure}[t]
+\includegraphics[width=\columnwidth]{h15_erasure_col.pdf}
+\caption{The context window carries the working state (model 04, H15). Work commits per call around an erasure of the context window, pooled over nine regime-III periods: forced erasures (vermillion), which the scaffold triggers when the context reaches its size cap, and voluntary ones (blue), which the agent chooses. Over the next 10 calls (gray) the forced curve sits 39\% [35, 42] below its own baseline. Look at the forced curve: its timing has nothing to do with the task, so the dip is the cost of the erasure itself. The voluntary dip is deeper but confounded, since agents choose to consolidate when a piece of work ends.}
+\label{fig:erasure}
+\end{figure}
+
 \textbf{Best-supported cards.}
 \begin{enumerate}
-\item \textbf{H15: the context window carries the work, as a working state.} A forced erasure cuts work commits by 39\% [35, 42] over the next 10 calls in 7/9 regime-III periods. Memory losses and empty-memory newcomers show no day-scale cost. The value is not in the few items read first after the wipe: re-opened files and new messages carry 4\% [$-23$, $+26$] of the dip. Consolidation notes are about 11\% enacted\cred{0.72}.
+\item \textbf{H15: the context window carries the work, as a working state.} A forced erasure cuts work commits by 39\% [35, 42] over the next 10 calls (Fig.~\ref{fig:erasure}) in 7/9 regime-III periods. Memory losses and empty-memory newcomers show no day-scale cost. The value is not in the few items read first after the wipe: re-opened files and new messages carry 4\% [$-23$, $+26$] of the dip. Consolidation notes are about 11\% enacted\cred{0.72}.
 \item \textbf{H58: the persistent unit is an agent and its own files.} The pair keeps its next-file information through a wipe (0.083 vs 0.088 bits). Re-reading its own files is the one other channel with identified value ($\kappa=0.77$ [0.25, 1.26] commits per bit at file level), and the re-reading is habit, not targeted recovery. A group store of strength $\rho\ge0.7$ is excluded in \#51 (power 0.95--1.00)\cred{0.71, rated on round 1}.
 \item \textbf{H71: memory size has a set point.} It returns to an agent-specific level each consolidation cycle ($\phi=0.67$ [0.63, 0.71]) with no overshoot; the loop has two timescales\cred{0.74}.
 \item \textbf{H87: the $\kappa$ table.} Over 18,760 forced erasures in nine periods, the erasure destroys $I_C=0.078$ [0.052, 0.104] bits and costs $\Delta V_C=0.41$ [0.36, 0.45] commits per 20 calls, so $\kappa_C=5.2$ [3.8, 7.9] commits per 20 calls per bit (Fig.~\ref{fig:kappa}). The own artifact carries the most bits ($I_A=0.137$) but no value at repository level ($\kappa_A=-0.6$ [$-1.6$, $+0.3$]). Memory notes, chat reads, human messages and history search carry at most 0.04 bits each, so their $\kappa$ is not identified\cred{0.63}. Only G38 (0.87) and G51 (7.0) identify $\kappa_C$ on their own, and they differ eightfold.
@@ -51,11 +57,11 @@
 
 \textbf{Verdict: partly useful}, as a measurement of subcritical, heterogeneous branching. It is not a causal or epidemic-threshold model.
 
-\begin{figure*}[t]
-\includegraphics[width=\textwidth]{H34-idea-cascades/fig.pdf}
+\begin{figure}[t]
+\includegraphics[width=\columnwidth]{H34-idea-cascades/fig_col.pdf}
 \caption{Idea cascades are subcritical in every goal period (model 03, H34; round-1b data). (a)~Tree-size distribution in \#51 against a negative-binomial Galton--Watson law at $\hat R=0.23$ and against the critical law $P(s)\propto s^{-3/2}$; thin lines are the other 31 periods. (b)~$\hat R$ with 95\% CI for the 32 non-reserved periods against room size. Look at panel (b): every upper bound sits below 1. Round 2 adds that the heavy tail is a spread of $R$ across ideas.}
 \label{fig:cascades}
-\end{figure*}
+\end{figure}
 
 % ---------------------------------------------------------------- 15
 \subsection{Model 15: stochastic thermodynamics of selection}\label{sec:m15}
