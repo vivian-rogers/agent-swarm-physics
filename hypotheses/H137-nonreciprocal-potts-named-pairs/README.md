@@ -1,6 +1,6 @@
 # H137: Nonreciprocal Potts: project hops break detailed balance only along named pairs
 
-**Status:** pre-registered (not run). Card, observables, nulls, predictions and kill rules written 2026-10-07 from HH380 (approved by Vivian 2026-10-07), before any H137 statistic on real data. No scheme, synthetic or analysis code exists yet.
+**Status:** round 1 in progress (2026-10-07). Synthetic validation done; S0 failed (pooled power at J = 1 is 0.18), so H137 is untestable at village counts on exploration data. Amendments A1–A3 were written before any real-data statistic. Exploration run pending (descriptive).
 **Question (GOALS.md):** **Q1** (what couples agents: does a directed name make the named agent follow the namer's project?). Second: **Q6** (thermodynamics: is the irreversibility of project hopping carried by named pairs, as H90 found for talk?).
 **Fields:** stat mech (nonreciprocal kinetic Potts, directed couplings), stochastic thermodynamics (pair currents, Schnakenberg affinities, AIK bound), sociophysics (following and leadership)
 **Literature:** [Aguilera, Ito & Kolchinsky 2026](../../literature/aguilera-2026-entropy-production-nonequilibrium-maxent.md) (EP lower bound from antisymmetric observables; θ_ij − θ_ji ≈ β(w_ij − w_ji) in a kinetic Ising model with asymmetric couplings); [Kolchinsky, Dechant, Yoshimura & Ito 2026](../../literature/kolchinsky-2026-generalized-free-energy-excess-housekeeping.md) (pair currents and housekeeping). Cited from memory (†): Schnakenberg, *Rev. Mod. Phys.* 48, 571 (1976)† (edge affinities); Fruchart, Hanai, Littlewood & Vitelli, *Nature* 592, 363 (2021)† (nonreciprocal phase transitions).
@@ -138,7 +138,7 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | I transfer | holds in other same-mode periods, including the reserved periods | 0 | not run |
 
 ## Results by goal period
-No period has been run. Period folders (`goalperiod-subhypotheses/G<NN>/`) are created with their dated predictions before each run. `goalperiod-subhypotheses/GNN/` is the unfilled template.
+Period folders (`goalperiod-subhypotheses/G<NN>/`) were created 2026-10-07 with structural counts and dated predictions before the exploration run.
 
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
@@ -148,7 +148,67 @@ No period has been run. Period folders (`goalperiod-subhypotheses/G<NN>/`) are c
 | G44 | native N3 (descriptive) | pending | not run |
 
 ## Results
-Not run.
+See "Round 1 (2026-10-07)" below.
+
+## Round 1 (2026-10-07)
+Order run: structural counts (no follow direction) → period folders with dated predictions → synthetic on real skeletons → Amendments A1–A3 → S0 declared failed → commit → exploration run (descriptive). Code: `analysis/h137lib.py` (skeletons, follow hops, statistics), `analysis/real_labels.py` (per-call labels from `infra/shared/project_calls.py`), `analysis/structure.py`, `analysis/synthetic.py`, `analysis/synthetic_summary.py`, `analysis/run.py`, `analysis/figures.py`; `scheme/build.py` runs the structural step. Data: `data/processed/H137-nonreciprocal-potts-named-pairs/` (`results/`, `synthetic/`). Every call, ledger and chat row passes the shared reserved-row mask (`infra/shared/common.py`); `real_labels` asserts that no reserved row reaches H137.
+
+**Implementation choices (fixed before data).** Per-call labels: `project_calls` (E = 100; E = 50 and 300 variants). j's current project at i's call c: the label of j's latest call with t_call < t_call(c) and t_first ≤ t_call(c). j is present if that call started ≤ 60 min before and on the same PT day. Named reads: ledger items received in i's last 10 calls (c included), agent senders, `ment` flag, not omitted. O1 and O3 use pairs with ≥ 1 follow hop. O2 rows are oriented a < b with no intercept, so unit effects are not identified and are dropped. A ridge of 0.01 stops separation in small units.
+
+### 1. Structural counts (2026-10-07, before any follow direction; `results/structure.parquet`)
+- 71 non-reserved units have per-call labels and ≥ 2 agents. They hold 61,952 project hops (call) and 23,926 follow hops (45,265 hopper–target rows). Regime-I periods before #11 have 0–87 hops per unit.
+- **Precondition (≥ 20 follow-hop rows in one-way pairs, ≥ 8 one-way pairs with a follow hop): 41 units pass.** They are G11, G13, 18b, 19a, 19b, 20d, G24–G27, 30a, 30b, 31a–31d, G33, G35, 36a–36c, G37, 38a, 38e, G39, G40, G41, 44a, 44b and 51a–51l. 38b–38d, 42a and 42b fall below it and enter only the pooled fit.
+- **Naming classes (O5, P5).** Over all units: 1,584 one-way, 1,082 mutual, 3,228 none and 1,081 weak pairs. In the 41 testable units the one-way share of classified pairs has a median of 0.35. It is below 1/3 in 19 of 41 units and ≥ 1/2 in 12. One-way naming is common, so R-reciprocal (H90 N2) does not starve the test of pairs.
+
+### 2. Synthetic validation (real skeletons; seed 20261007)
+**Skeletons.** The card's G38 (38a–38e), G31 (31a–31d), 51c and 51h, simulated unit by unit and pooled (11 units, 14,500 hops per run). A second set runs every unit with follow rows (62 units, 59,000 hops per run; the real pool has 61,952) for the pooled-power rule.
+
+**Simulator (calibrated on structural counts only).** Each agent hops at its real per-call hop rate. 25.7% of hops return to the previous project within 1–5 own calls (the `project_calls` flicker share). Destinations mix the agent's own labelled-call profile with global project popularity; the mix and the share weight are tuned in W0 to the real follow-hop fraction of each unit (0.30–0.56). The hop rate is held at the real rate in every world, so the coupling moves destinations, not hop counts. Worlds: W0 none; W1 J = 1 and 0.5 (and J = 3, 5 added for the minimum detectable J); W2 popularity (log-odds 1 per e-fold of naming in-degree); W3 co-arrival (30% of hops in same-hour pairs); W4 broadcast (J = 1 on all reads). Runs: W0 and W1 300; W2, W3, W4 and W1 J = 0.5 150; J = 3 and 5 60; all-units 60 per world. The run counts below 300 are a compute cut (machine load), not a choice by result.
+
+**Rejection rates and bias, pooled over the 11 skeleton units** (`results/synthetic_table_calls.json`):
+
+| Statistic | W0 | W2 popul. | W3 co-arr. | W4 broadc. | W1 J = 0.5 | W1 J = 1 | J = 3 | J = 5 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| θ_name card (pop + in-degree), mean ± sd | −0.21 ± 0.09 | −0.31 ± 0.08 | −0.43 ± 0.05 | −0.13 ± 0.09 | −0.19 ± 0.09 | −0.19 ± 0.10 | −0.08 ± 0.11 | −0.01 ± 0.10 |
+| θ_name card, CI excludes 0 (either sign) | 0.07 | 0.25 | 1.00 | 0.02 | 0.05 | 0.06 | 0.00 | 0.00 |
+| P1 card (CI > 0 and N2 p < 0.05) | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| θ_name A1 (+ hopper propensity), mean ± sd | 0.01 ± 0.05 | −0.00 ± 0.04 | −0.03 ± 0.04 | 0.02 ± 0.04 | 0.01 ± 0.06 | 0.02 ± 0.05 | 0.08 ± 0.05 | 0.14 ± 0.04 |
+| P1 A1 | 0.003 | 0.000 | 0.007 | 0.013 | 0.02 | 0.02 | 0.17 | 0.67 |
+| O1 raw mean A (one-way), mean | −0.38 | −0.46 | −0.32 | −0.36 | −0.38 | −0.36 | −0.31 | −0.28 |
+| O1 vs N1 flip, p < 0.05 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| O1 vs N1b (A2), p < 0.05 | 0.04 | 0.05 | 0.02 | 0.15 | 0.07 | 0.08 | 0.38 | 0.62 |
+| σ_mutual vs N1 flip (pooled) | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| σ_none vs N1 flip (pooled) | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| σ_mutual / σ_none vs N1b (pooled) | 0.26 / 0.62 | 0.13 / 0.59 | 0.22 / 0.10 | 0.19 / 0.51 | 0.25 / 0.55 | 0.20 / 0.59 | 0.17 / 0.72 | 0.15 / 0.73 |
+| P2 per testable unit: rejects vs N1 flip / vs N1b | 0.79 / 0.10 | 0.86 / 0.09 | 0.74 / 0.05 | 0.85 / 0.09 | 0.80 / 0.10 | 0.80 / 0.10 | 0.80 / 0.10 | 0.80 / 0.10 |
+| P3 card (σ_one − σ_none, CI > 0) | 0.18 | 0.69 | 0.55 | 0.41 | 0.16 | 0.22 | 0.20 | 0.28 |
+| P3 vs N1b (A3) | 0.01 | 0.00 | 0.04 | 0.01 | 0.01 | 0.00 | 0.00 | 0.02 |
+| P4 (read − in-flight follow rate, CI > 0) | 0.06 | 0.07 | 0.74 | 0.30 | 0.20 | 0.36 | 0.95 | 1.00 |
+
+**At the pooled real counts (62 units; `results/synthetic_table_calls_all.json`):** P1 A1 rejects in 0.13 of W0 runs and 0.18 of W1 (J = 1) runs (θ_A1 0.037 ± 0.023 in W0, 0.045 ± 0.025 in W1). P4 rejects in 0.07 of W0 runs and 0.68 of W1 runs.
+
+**What the synthetic shows.**
+- **The card's O2 is biased by hopper propensity.** In W0 (no following) θ_name with popularity and in-degree controls is −0.21 ± 0.09. Namers hop more than the agents they name, so the namer joins the named. A coupling of J = 5 only brings it back to 0. A hopper-propensity term removes the bias at the skeleton scale (W0 0.01 ± 0.05). At the full pool a residual bias of +0.04 ± 0.02 remains (size 0.13).
+- **The coupling is too weak to see at village counts.** A named read raises the odds of a namer's project by (1 + R)^J, but named reads are present at a small fraction of hops, and agents mostly hop between their own projects. J = 1 moves the one-way follow counts by 1–3%. P1 A1 power at J = 1 is 0.02 (11 units) and 0.18 (62 units). The minimum detectable coupling is about J = 5 for P1 (power 0.67 on 11 units).
+- **The direction-flip null (N1) is invalid.** Follow hops inside a pair are not independent coin flips (hop-rate differences, flicker returns, habit). N1 rejects σ_mutual and σ_none in 100% of pooled W0 runs and in 79% of per-unit tests. P2 would fail in every world.
+- **The P3 contrast is set by hop volume, not naming.** σ grows with a pair's hop count. The card's bootstrap rule rejects in 18% of W0 runs and 69% of W2 runs.
+- **P4 has the most power but is fooled by co-arrival.** It rejects in 0.36 (11 units) and 0.68 (62 units) of J = 1 runs, at size 0.06–0.07 in W0. It also rejects in 74% of W3 (co-arrival) runs and 30% of W4 (broadcast) runs.
+
+### 3. Amendments (2026-10-07, before any real-data H137 statistic; decided on synthetic results only)
+- **A1 (O2, P1, N1, N2):** θ_name adds the hopper-propensity control ε_act · [ln(1 + act_a) − ln(1 + act_b)]. act is the leave-pair-out follow hops made by each member. N2 permutes within the same strata. The card's θ_name (popularity and in-degree only) is reported next to it as "card". The popularity kill uses the card's controls, as written.
+- **A2 (O1, P2):** N1 is replaced by N1b, a propensity-adjusted direction null. Each follow-hop row of a classified pair gets its direction from the control-only logit (popularity, in-degree, propensity), with weights kept. N1 is still reported.
+- **A3 (O3, P3):** the class contrast σ_one − σ_none is tested against its N1b null and reported as an excess over the N1b mean. The card's pair-bootstrap rule is still reported.
+- **Pass rule applied (size ≤ 0.10 in W0, W2, W3, W4 and power ≥ 0.8 at J = 1 on the pooled real counts).** No statistic passes:
+  - P1 (A1): power 0.18 at 62 units, size 0.13;
+  - P3 (A3): power 0.00;
+  - O1 (A2): power 0.08, W4 size 0.15;
+  - P2 (A2): per-unit size 0.05–0.10, but a test of symmetry has no power at J = 1;
+  - P4: power 0.68 at 62 units, W3 size 0.74.
+  All are **descriptive** for round 1.
+
+### 4. S0 declared (2026-10-07, before any outcome)
+**S0 fails.** 41 units pass the precondition. The pooled synthetic power at J = 1 is 0.18 for P1 and 0.00 for P3, both far below 0.8. By the card's rule, **H137 is untestable at village counts on the exploration data**. The kill rules need power ≥ 0.8, so they cannot fire. The verdict is "inconclusive" whatever the outcomes. The exploration run that follows computes every pre-registered statistic as descriptive. The popularity kill has no power clause, so it is applied literally.
+
 
 ## Notes
 - 2026-10-07: card written from HH380 (approved by Vivian 2026-10-07). Round-1 order: structural counts (follow hops by class; no direction) → precondition note → period READMEs with dated predictions → synthetic → dated amendments → replication and natives → estimates rows (`h137_theta_name`, `h137_pair_ep_oneway`, `h137_pair_ep_none`, `h137_follow_read_vs_inflight`) → frozen `confirm.py` (dry run only).
