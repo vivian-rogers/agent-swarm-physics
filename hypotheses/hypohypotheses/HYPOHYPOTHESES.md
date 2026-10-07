@@ -1301,60 +1301,70 @@ Model 10 (Potts) held only as bookkeeping: H94's max-ent allocation is supported
   - *Kill:* unnamed reads move the switch rate as much as named ones, or the rate scales with wall-clock time.
   - *Impostors:* a project that is hot gets both named messages and switches (common field). Compare the same project within one hour, across calls with and without a named read.
   - *Models:* 10, 02 · *Builds on:* H08, H67, H11, H53, H40
+  *Status (2026-10-07):* approved by Vivian → H133.
 - **HH377 · A Pólya-urn self-field explains project stickiness: an agent's stay probability equals its own share of its recent context.** H72 round 2 found that the context self-share carries 65% of trap aging. The kinetic Potts version: the field toward the current project is the fraction of the agent's own recent context about that project.
   - *Prediction:* P(stay | call) is a rising function of own-context share for the current project, with slope near 1 on the logit scale. The dwell-time distribution that this rule predicts (heavy-tailed, aging) matches the observed one without fitting the tail.
   - *Check:* H72's self-share; project labels per call; simulate dwell times from the fitted per-call rule.
   - *Kill:* the predicted dwell tail misses the observed tail by more than its CI, or self-share adds nothing beyond the agent's time on the project.
   - *Impostors:* long projects fill the context and also last long. Use within-dwell variation of self-share, for example after a wipe (H44).
   - *Models:* 10, 02, 08 · *Builds on:* H72, H16, H44, H69
+  *Status (2026-10-07):* approved by Vivian → H134.
 - **HH378 · Max-ent allocation is the steady state of a detailed-balance Potts walker: predict hop rates from occupancies.** H94 found allocation is max-ent given activity, sizes, ownership and rooms, and H129 found no cycle currents. Together these say the project walk is a reversible kinetic Potts process. Detailed balance then fixes the ratio of the two hop rates between any pair of projects.
   - *Prediction:* for each pair (a, b), k_ab / k_ba = π_b / π_a, where π is the H94 max-ent marginal. This ratio is not fitted from the hops. It holds within ×1.5 for most pairs.
   - *Check:* H94 marginals; H129 hop counts per pair per period.
   - *Kill:* the log rate ratio and the log occupancy ratio are uncorrelated, or their slope is outside [0.5, 2].
   - *Impostors:* project birth and death create one-way hops. Restrict to pairs where both projects live through the window.
   - *Models:* 10, 15 · *Builds on:* H94, H129, H93
+  *Status (2026-10-07):* approved by Vivian → H135.
 - **HH379 · Freeze onto a named target happens at each agent's first read of the kickoff, not at the kickoff time.** H75/H95 found an instant freeze onto named targets. In a zero-temperature Potts model with a strong field, an agent commits at its first update after the field appears, and its updates are its calls that read the kickoff.
   - *Prediction:* per-agent commit time equals the time of that agent's first call whose context includes the kickoff, plus about one call. Agents who read it late commit late, by the same delay.
   - *Check:* kickoff messages; DQ1 context ledger; commit and first-action times per agent.
   - *Kill:* commit times align with the kickoff timestamp, not with each agent's first read.
   - *Impostors:* agents who start late both read and commit late. Use agents who were active before the kickoff but whose first post-kickoff call came later.
   - *Models:* 10, 02 · *Builds on:* H75, H95, H54, HH374
+  *Status (2026-10-07):* approved by Vivian → H136.
 - **HH380 · Nonreciprocal Potts: project hops break detailed balance only along named pairs.** H90 found the collective arrow of time only in named talk. A kinetic Potts model with directed couplings, only from named senders, makes the pair hop flows asymmetric where naming is one-way.
   - *Prediction:* the joint hop current between agents i and j (i moves to j's project after j named i) is asymmetric when naming is one-way and symmetric when naming is mutual or absent. The pair EP is positive only for named pairs.
   - *Check:* H129 hop sequences; H67 name graph; AIK pair EP (model 15).
   - *Kill:* the pair asymmetry is the same for named and unnamed pairs.
   - *Impostors:* leaders both get named and attract hops. Condition on the target agent's popularity.
   - *Models:* 10, 02, 15 · *Builds on:* H90, H129, H67
+  *Status (2026-10-07):* approved by Vivian → H137.
 - **HH381 · The Potts escape rate grows with the number of open options as Glauber predicts.** In a Glauber Potts model at a fixed field, the rate of leaving the current state rises with the number q of available alternatives, roughly as (q − 1) e^{−βΔ}.
   - *Prediction:* across periods, the per-call leave rate rises with the number of live projects (or rooms) with slope near 1 on a log–log plot of rate vs q − 1, after controlling for the goal field.
   - *Check:* per-period q from the project and room ledgers; per-call leave rates.
   - *Kill:* the leave rate is flat in q, or falls.
   - *Impostors:* periods with many projects are also more open goals (a weaker field). Include the goal type and the kickoff-target strength (H54) as covariates.
   - *Models:* 10 · *Builds on:* H11, H94, H51
+  *Status (2026-10-07):* approved by Vivian → H138.
 - **HH382 · Content is a fast kick on a slow well: the two-timescale vector spin predicts its own variance split.** H130 found the read kick decays about 15 times faster than the goal well. A vector spin with a slow private well (the style and goal constant) plus a fast read-driven deviation predicts how content variance divides between the two.
   - *Prediction:* the fraction of each agent's content variance at lags of 1 call or less equals (read rate × kick size²) / (total variance), using kick size from H130 and read rate from the ledger, within ×1.5. The slow part matches the H46/H73 agent constant.
   - *Check:* H130 kick and well rates; per-agent content embeddings (O(32) basis); read counts per call.
   - *Kill:* the predicted fast share is off by more than ×2 in most agents.
   - *Impostors:* topic changes inside a goal look like fast variance. Remove the room and goal field per hour first.
   - *Models:* 11, 16 (proposed Langevin) · *Builds on:* H130, H97, H46, H73
+  *Status (2026-10-07):* approved by Vivian → H139.
 - **HH383 · DeGroot at the read-out call: the content step is a weighted mean of what was read, with the self-weight set by the context share.** A linear vector-spin update: new content = w_self × own recent content + Σ w_j × read message j. Here w_self is the agent's own share of its context, and the w_j fall with the batch size (H18 dilution).
   - *Prediction:* the fitted w_self rises with own-context share (slope near 1). The summed read weight per call scales as k^0.34 in the batch size k (H18/HH345), not as k.
   - *Check:* content embeddings per call; DQ1 context ledger for the read messages and the context share.
   - *Kill:* w_self is unrelated to the context share, or the read weight grows linearly in k.
   - *Impostors:* simultaneous convergence (H57) makes read and written content similar without any copying. Use the in-flight placebo: messages posted but not yet read.
   - *Models:* 11, 02, 04 · *Builds on:* H48, H18, H113, H44, H57
+  *Status (2026-10-07):* approved by Vivian → H140.
 - **HH384 · Content moves on an easy plane: fluctuations across it are fast white noise, fluctuations along it are slow.** If the goal and room axes define a low-dimensional easy plane, a vector spin with anisotropy relaxes slowly along the plane and fast across it.
   - *Prediction:* the autocorrelation time of content projected on the goal+room plane is ≥ 10 times the time across it. Read kicks across the plane decay within one call.
   - *Check:* per-period goal and room axes (H54, H100); content embeddings per call; autocorrelation by projection.
   - *Kill:* the two autocorrelation times are within ×3.
   - *Impostors:* a plane defined from the same data overfits slow directions. Define the axes from kickoff and room texts only, not from agent content.
   - *Models:* 11, 16 (proposed Langevin) · *Builds on:* H108, H97, H130, H100
+  *Status (2026-10-07):* approved by Vivian → H141.
 - **HH385 · The content response to aligned reads saturates: a Langevin-function torque, not a linear one.** A vector spin driven by a field of strength h aligns as L(h), the Langevin function, which saturates. If each aligned read adds to h, the content step toward a direction saturates with the number of aligned reads in one call.
   - *Prediction:* the content step toward direction u rises with the number of reads aligned with u and flattens by about 3 aligned reads. The curve fits L(c·n) better than a line, by held-out likelihood.
   - *Check:* content embeddings per call; read sets per call (DQ1 ledger); the alignment of each read to u.
   - *Kill:* the step is linear in n up to the largest n observed, or a line fits as well on held-out data.
   - *Impostors:* calls with many aligned reads come from hot topics (a field). Compare within-hour, across calls with different numbers of aligned reads.
   - *Models:* 11 · *Builds on:* H18, H48, H113, HH345
+  *Status (2026-10-07):* approved by Vivian → H142.
 
 *Suggested first picks.*
 - HH378: the hop rates come from H94's occupancies with no fit.
