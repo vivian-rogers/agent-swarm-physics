@@ -262,9 +262,9 @@ Order run: structural counts (no follow direction) → period folders with dated
 **Claim that stands:** in 41 testable exploration units (regimes I–III, 1,130 one-way named pairs), agents do not join the projects of the agents who name them once each agent's hop propensity is controlled (θ_name +0.01 [−0.07, +0.08]). The card's uncontrolled θ_name of −0.39 is a propensity artifact, which the no-following world reproduces (−0.21). *Exclusions:* P1, P3 and both HH kills are untestable (pooled power 0.18 at J = 1). The read-over-in-flight follow excess (+6.6 [+4.6, +8.7] × 10⁻³) is descriptive, because co-arrival fakes it in 74% of runs. The J ≈ 5 exclusion and the σ-class excess are post hoc.
 
 ## Round 2 redirects (proposed by the round-1 agent, 2026-10-07)
-- Move the coupling test to the hop call. Use a conditional logit over destinations at each hop (H133's design) with the namer's project as an alternative. That uses every named read at a hop, not pair totals, and should gain power. Add a co-arrival control (the partner's own recent arrival) before reading O4.
-- Build a pair-persistence null (a Markov chain per agent, or a time shift per agent-day) for σ. All classes exceed N1b, so pair direction has structure that N1b misses.
-- Re-run P4 with a same-hour co-arrival exclusion. If the excess survives at size ≤ 0.10, it is the only H137 signal worth confirming on #45–#47.
+- **H137-R1. Coupling at the hop call.** Fit a conditional logit over destinations at each hop (H133's design), with the namer's project as an alternative. It uses every named read at a hop, not pair totals, and should gain power. Add the partner's own recent arrival as a co-arrival control.
+- **H137-R2. Pair-persistence null for σ.** All naming classes exceed N1b, so pair direction has structure N1b misses. Build a per-agent Markov chain or an agent-day time-shift null.
+- **H137-R3. P4 without co-arrival.** Re-run read vs in-flight with a same-hour co-arrival exclusion. If the excess survives at size ≤ 0.10, it is the only H137 signal worth confirming on #45–#47.
 
 ## Notes
 - 2026-10-07 (round 1): shared code used, not copied: `infra/shared/project_calls.py` (labels). H137's pair and follow-hop helpers live in `analysis/h137lib.py`; move them to `infra/shared/` if H133/H134 need follow hops.
