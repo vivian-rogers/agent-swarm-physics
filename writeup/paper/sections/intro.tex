@@ -10,6 +10,12 @@
 \label{fig:hero}
 \end{figure}
 
+\begin{figure}[t]
+\includegraphics[width=\columnwidth]{js/scoring_scatter.pdf}
+\caption{Every scored claim, by how likely it is to be true and how much it would matter. Each point is one hypothesis card (132 in all). Credence $p$: the judged probability that the card's claim is true (Sec.~\ref{sec:faith}). Value if true $V$ (0--5): how much the claim would change what we know or do. Gray curves: equal estimated usefulness $\mathrm{EU}=pV$. Color: the family of the card's main physics model. Shape: mechanism depth (0, a pattern that repeats; 1, the model's own signature is predicted and a rival fails; 2, a natural experiment also agrees). Open markers: fragile claims, whose headline changed between data versions. Labels: the 20 claims with the highest EU; points with the same $V$ are moved apart sideways. Look at the upper right: the few claims that are both credible and valuable come mostly from the spin and field families, and none is confirmed on reserved data.}
+\label{fig:scatter}
+\end{figure}
+
 
 In the AI Village, a group of AI agents shares computers, files and a group chat, and works toward one shared goal at a time~\cite{aivillage}. Again and again, each agent forgets what it was just doing, and this is by design. Each agent is a language model inside a program, the \emph{scaffold}, that feeds the model text and carries out its actions. The model works in turns that we call \emph{model calls}, or \emph{calls}. At each call it reads its \emph{context window}, the block of text in front of it, and writes one output: a chat message, a command on its computer or a decision to wait. The context window is the agent's short-term memory. In the village's latest era, the scaffold wipes it each time it fills to 41 records. The agent keeps its notes and its files, but it loses the record of what it just read and did.
 
@@ -47,11 +53,6 @@ We treat each physics model as an \emph{effective theory}: a small model that pr
 
 The record runs from April 2025 to September 2026 (Fig.~\ref{fig:timeline}). In that time 46 agents from several AI labs worked through 51 \emph{goal periods}, each the time for one shared goal, usually a working week. Each starts with a \emph{kickoff}, the message that announces the goal. The goals were open-ended tasks: raise money for a charity, build a personal website, hold a debate, forecast the abilities of AI, run a YouTube channel. Some weeks were holidays, and in the last period each agent got its own private goal (Appendix~\ref{app:goals} lists all 51). Three scaffold changes divide the record into three \emph{regimes}: one shared chat room in daily sessions (I); several \emph{rooms}, separate chat channels (II); and continuous operation, own room only, with forced wipes (III).
 
-\begin{figure}[t]
-\includegraphics[width=\columnwidth]{js/scoring_scatter.pdf}
-\caption{Every scored claim, by how likely it is to be true and how much it would matter. Each point is one hypothesis card (132 in all). Credence $p$: the judged probability that the card's claim is true (Sec.~\ref{sec:faith}). Value if true $V$ (0--5): how much the claim would change what we know or do. Gray curves: equal estimated usefulness $\mathrm{EU}=pV$. Color: the family of the card's main physics model. Shape: mechanism depth (0, a pattern that repeats; 1, the model's own signature is predicted and a rival fails; 2, a natural experiment also agrees). Open markers: fragile claims, whose headline changed between data versions. Labels: the 20 claims with the highest EU; points with the same $V$ are moved apart sideways. Look at the upper right: the few claims that are both credible and valuable come mostly from the spin and field families, and none is confirmed on reserved data.}
-\label{fig:scatter}
-\end{figure}
 
 \subsection*{Weak echoes, strong pulls}
 
