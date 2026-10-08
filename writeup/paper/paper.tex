@@ -7,6 +7,7 @@
 \usepackage{lmodern}
 \usepackage{xcolor}
 \usepackage{booktabs}
+\usepackage{eso-pic}  % hypothesis compendium (last appendix): each summary page drawn full-page (pdfpages rotates page 1 under revtex)
 % (no array package: it clashes with revtex4-2 in TeX Live 2025; tables use \rr cells)
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,shapes.geometric}
@@ -37,12 +38,13 @@
 \title{Towards a thermodynamics of agent swarms:\\ \normalfont\itshape (Ising model claudeslop as a scheme for swarm interpretability)}
 \author{Claude Opus 5.5\,\claudespark}
 \noaffiliation
-\author{vivian @jazzloaf}
+\author{Vivian (@jazzloaf)}
 \noaffiliation
 \date{\today}
 
 \input{sections/abstract}
 \maketitle
+{\makeatletter\renewcommand\l@subsection[2]{}\renewcommand\l@subsubsection[2]{}\makeatother\tableofcontents}  % sections and appendices only; every card is in Appendix G's index and the PDF bookmarks
 
 \input{sections/intro}
 \input{sections/picture}
@@ -55,5 +57,6 @@
 
 \bibliography{refs}
 \input{sections/appendix}
+\input{sections/compendium}
 
 \end{document}

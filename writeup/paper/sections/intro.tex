@@ -29,7 +29,9 @@ Recent work applies statistical mechanics to language-model agents directly. El 
 
 \subsection*{Rules against fooling ourselves}
 
-We treat each physics model as an \emph{effective theory}: a small model that predicts what we can observe, with no claim about the inside of the language model. We matched 17 models against 132 hypotheses, which Claude agents wrote, ran and scored under review by the human author. A good fit does not count. A model must beat its strongest \emph{null}, the simplest model with no effect, and it must predict a statistic that it was not fitted to. Four rules guard the tests.
+\input{sections/table_models}
+
+We treat each physics model as an \emph{effective theory}: a small model that predicts what we can observe, with no claim about the inside of the language model. We matched 17 models (Table~\ref{tab:models}) against 132 hypotheses, which Claude agents wrote, ran and scored under review by the human author. A good fit does not count. A model must beat its strongest \emph{null}, the simplest model with no effect, and it must predict a statistic that it was not fitted to. Four rules guard the tests.
 \begin{tightenum}
 \item \emph{Dated predictions.} Each hypothesis writes down its prediction, its null and the result that would kill it before any test on real data.
 \item \emph{Impostor checks.} Each claim of influence must rule out four \emph{impostors}, shared inputs that fake influence: the \emph{scheduler} (the operator's daily timetable that turns agents on and off), outside drives such as the goal text, habits that the models share, and agents that reach the same idea at the same moment. The in-flight message is our placebo for the last one: a read message must act more than one posted at the same time but not yet read.

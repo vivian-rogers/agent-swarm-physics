@@ -7,7 +7,7 @@
 \def\hBadges{\hbadge{Complete}{60\%}{3987e5}{ffffff}\ \hbadge{Faithfulness}{1.5/5}{ee8584}{0b0b0b}\ \hbadge{Usefulness}{2.5/5}{e9e7e1}{0b0b0b}}
 \def\hPeriodSummary{7 supported, 5 failed, 3 mixed, 5 descriptive, 3 n/a}
 \def\hDate{Updated 2026-10-05}
-\def\hFooter{H11-potts-labor-vs-herding $\cdot$ generated 2026-10-04 20:49 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H11-potts-labor-vs-herding/README.md $\cdot$ ratings: H11 round-2 agent (suggested 60 / 1.5 / 2.5; previous calibrated 50 / 1.5 / 2.5)}
+\def\hFooter{H11-potts-labor-vs-herding $\cdot$ generated 2026-10-07 17:49 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H11-potts-labor-vs-herding/README.md $\cdot$ ratings: H11 round-2 agent (suggested 60 / 1.5 / 2.5; previous calibrated 50 / 1.5 / 2.5)}
 \def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G18 & $\times$ & 1b: P1 failed (sig.); P2 failed (sig.) (unchanged) \\
 G19 & $\checkmark$ & 1b: P1 supported; P2 supported (unchanged) \\
 G20 & d & 1b: descriptive (unchanged) \\
@@ -23,7 +23,7 @@ B assumptions & 1 & G ground truth & 1 \\
 C adequacy & 1 & H comparative & 1 \\
 D unfitted predictions & 1 & I transfer & 0 \\
 E interventional & 0 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
-\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} Why do agents pile on: imitation, or attraction to where the work already is?\item \textbf{H11-R1} Preferential attachment: P(join X) $\propto$ (recent activity on X)\textasciicircum{}$\alpha$.\item \textbf{H11-R2} Herding is stigmergic, not social: artifact activity predicts joining better than chat mentions of X (E3, vs H28).\item \textbf{H11-R3} Herding is a coordination solution that raises output; own-artifact spread duplicates effort (test against the work ledger).\end{itemize}}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} Why do agents pile on: imitation, or attraction to where the work already is?\item \textbf{Round-3 redirects (newest).}\item Move the attachment test to the call clock: the hazard of a join at call c as a function of commits to Y visible at c's t\_call vs commits made during c (an artifact in-flight placebo at 1–2 min, which the 30-min window cannot give).\item Recompute $\theta$ with work-defined n (committers only) and file-level overlap, to split watchers from duplicated work.\item Natives: \#40 has $\alpha$ = -1.32 [-2.60, -0.04] in attention (agents leave recently active projects: own worlds beside a hub); NE42 (\#39 $\to$ \#40) as a test of $\theta$ and $\alpha$ across a merge.\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage

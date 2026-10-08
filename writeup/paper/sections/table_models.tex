@@ -1,0 +1,32 @@
+% table_models: the 17 physics models at a glance (introduction). Verdicts follow the paper's grouping
+% (Secs. IV-VI): the four useful models are M02 (with M09), M11 (with M01), M16 and M17.
+\newcommand{\vU}{\textcolor[HTML]{0B8A3E}{useful}}
+\newcommand{\vP}{\textcolor[HTML]{6E6E6E}{partly}}
+\newcommand{\vN}{\textcolor[HTML]{C03A2B}{descriptive}}
+\begin{table}[tb]
+\caption{The 17 physics models we tested, by folder number. \emph{In the swarm}: what the model describes. \emph{Verdict}: the paper's judgment (Secs.~\ref{sec:models}--\ref{sec:rest}); ``useful'' models give the picture of Sec.~\ref{sec:picture}; ``partly'' models measure something real but give no mechanism; ``descriptive'' models describe without predicting. Figure~\ref{fig:modelperiods} shows where each was tested.}
+\label{tab:models}
+\footnotesize\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{@{}l@{\hspace{5pt}}p{0.29\columnwidth}p{0.37\columnwidth}p{0.17\columnwidth}@{}}
+\toprule
+& Model & In the swarm & Verdict\tabularnewline\midrule
+M02 & \rr kinetic Ising & \rr spins flip at their own calls, coupled by reads & \rr\vU\tabularnewline
+M09 & \rr Hawkes process & \rr messages trigger messages: the loop gain & \vU, with M02\tabularnewline
+M11 & \rr vector spins & \rr content as an arrow; the goal as a field & \rr\vU\tabularnewline
+M01 & \rr inverse Ising & \rr pairwise fit of on/off activity & \vU, gauge\tabularnewline
+M16 & \rr Langevin relaxation & \rr a fast kick on a slow well & \rr\vU\tabularnewline
+M17 & \rr collective modes & \rr correlation spectra against random matrices & \rr\vU\tabularnewline\addlinespace[2pt]
+M04 & \rr semantic information & \rr which information keeps agents working & \rr\vP\tabularnewline
+M03 & \rr contagion, branching & \rr ideas spreading by reading & \rr\vP\tabularnewline
+M15 & \rr stochastic thermodynamics & \rr irreversibility and selection & \rr\vP\tabularnewline
+M14 & \rr scaling, fluctuations & \rr outputs against size; Taylor's law & \rr\vP\tabularnewline
+M08 & \rr copying vs.\ transformation & \rr content passed between agents & \rr\vP\tabularnewline\addlinespace[2pt]
+M10 & \rr Potts & \rr a categorical choice: project, room, role & \rr\vN\tabularnewline
+M13 & \rr cultural evolution & \rr conventions and collective memory & \rr\vN\tabularnewline
+M05 & \rr replicator dissipation & \rr spreading items as replicators & \rr\textcolor[HTML]{C03A2B}{rejected}\tabularnewline
+M06 & \rr neutral dynamics & \rr project sizes by drift & \rr\textcolor[HTML]{C03A2B}{null only}\tabularnewline
+M12 & \rr information dynamics & \rr synergy, emergence, individuality & \rr\textcolor[HTML]{6E6E6E}{tools only}\tabularnewline
+M07 & \rr fluctuating environments & \rr strategies across goal changes & \rr\textcolor[HTML]{9A9A9A}{untested}\tabularnewline
+\bottomrule
+\end{tabular}
+\end{table}

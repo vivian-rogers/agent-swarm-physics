@@ -7,7 +7,7 @@
 \def\hBadges{\hbadge{Complete}{60\%}{3987e5}{ffffff}\ \hbadge{Faithfulness}{2/5}{f5bcbb}{0b0b0b}\ \hbadge{Usefulness}{3/5}{b7d3f6}{0b0b0b}}
 \def\hPeriodSummary{20 supported, 5 failed, 7 mixed, 8 descriptive}
 \def\hDate{Updated 2026-10-05}
-\def\hFooter{H74-change-detector $\cdot$ generated 2026-10-04 21:04 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H74-change-detector/README.md $\cdot$ ratings: H74 agent (suggested)}
+\def\hFooter{H74-change-detector $\cdot$ generated 2026-10-07 17:50 by infra/summaries/build\_summaries.py $\cdot$ card hypotheses/H74-change-detector/README.md $\cdot$ ratings: H74 agent (suggested)}
 \def\hPeriodTable{\noindent\begin{tabular}{@{}l@{\ }c@{\ }p{0.76\columnwidth}@{}}G02 & d & descriptive \\
 G03 & d & descriptive \\
 G04 & $\sim$ & mixed \\
@@ -23,7 +23,7 @@ B assumptions & 1 & G ground truth & 2 \\
 C adequacy & 1 & H comparative & 1 \\
 D unfitted predictions & 1 & I transfer & 1 \\
 E interventional & 1 &  &  \\\end{tabular}\par\smallskip Level: \textbf{hypothesis}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{writeup/paper.tex}).}
-\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} a cheap monitor that tells an operator, on the day, that the platform, the drive or the goal changed, with a known false-alarm rate.\item \textbf{H74-R1} Precision monitor.\item \textbf{H74-R2} Presence/retirement rule for formats.\item \textbf{H74-R3} Heavy-tailed baselines.\item \textbf{H74-R4} Provider API changes as natural experiments.\item \textbf{H74-R5} Holdout.\end{itemize}}
+\def\hRoundTwo{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\item \textbf{Essence.} a cheap monitor that tells an operator, on the day, that the platform, the drive or the goal changed, with a known false-alarm rate.\item \textbf{Round-3 redirects (newest).}\item \textbf{H74-R5} (unchanged). Run confirm.py on the reserved data after sign-off.\item \textbf{H74-R6} Split S into platform and provider streams. Provider-envelope signatures change with the model vendor, not the village; alert on them separately.\item \textbf{H74-R7} Scaffold changes need a new observable. Neither schema, counters, topic nor action mix sees them beyond chance.\item \textbf{H74-R8} Powered provider DiD. Use agent-day block permutations instead of \textasciitilde{}30 null windows, so that Holm over the tests can reject; test the infrastructure-error lead first.\end{itemize}}
 \input{content.tex}
 \begin{document}
 \makehpage
