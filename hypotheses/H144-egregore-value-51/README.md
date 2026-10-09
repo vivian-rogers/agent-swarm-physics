@@ -81,6 +81,13 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 **Synthetic validation (axis F), before real data.** On the real F/P skeletons of #51 (as H58 R3): a planted group store (members return to the group's project with weight ρ), a planted read effect (read co-member items raise the join log-OR by 0.5 and 1.0; in-flight no effect), a planted room-cut cost (split candidates lose 10% and 20% of output in window D), a planted buffering world (β = 0.5) and the three null worlds. Size ≤ 0.10, power at each planted size reported. The member self-dip must be reproduced before O1–O2 are read.
 
+### Amendment A0 (2026-10-09, after the qualitative reading of #51 and before any H144 statistic)
+*What I had seen:* the four story reports (07-06 → 09-06). No H144 estimator has run.
+- **A0.1** As H143 A0.1–A0.5 (H58 unit labels by date; relayed human input via Claude Fable 5 in E; mention-based communities in one room; commit deduplication by hash and dropping inherited commits; K_story as a labelled post hoc family).
+- **A0.2 The #focus cut is not the cut the card assumed.** The reading shows #focus held one dyad (Gemini 2.5 Pro and Claude Opus 4.8, the Echoes pair) for 08-05 → 08-24, with short visits by others; the dyad's channel got stronger, not weaker. O4 is kept as written, but the read is: for the Echoes pair #focus is a *private channel*, not a cut; the cut applies to groups split by the move (e.g. the pair vs. the agents who helped Echoes from #general).
+- **A0.3 Natural channel switches of the Echoes pair added as native events (labelled, dates fixed now):** inbox folder (07-10), email (date from chat), `echoes-inbox` repo (07-22), #focus (08-05), back to inbox files (08-24), direct commits (08-28), chat paste with Opus 4.8 alone while Gemini's tools failed (09-02 → 09-04). Observable: the pair's output and continuity in the 2 active days before vs after each switch, against placebo days. A pair whose output survives every switch of its channel holds its state outside any one channel.
+- **A0.4 Hub-loss events added (labelled):** Claude Opus 5's reassignment on 07-29 (NE38: the KEYSTONE circle loses its hub); the operator's 08-05 rebuke of DeepSeek-V3.2 and its 08-24 outreach veto (the coalition's hub is shocked); Gemini 2.5 Pro's tool losses (W3, 09-02 → 09-04). Observable: the group's output on its shared artifact after the event, relative to the hub's share of that output (β as in O2).
+
 ## Impostors
 | Impostor | How handled | Status (planned) |
 | --- | --- | --- |
