@@ -67,17 +67,26 @@ def element_events(debug: bool = False) -> tuple[pl.DataFrame, pl.DataFrame]:
     return ev, tab
 
 
+# Operational targets fixed on 2026-10-09 from H145's frozen labels, before any H147 outcome on a memeplex (card,
+# Round 1, "Targets"): DeepSeek-V3.2 = agent 17.
+DS32 = 17
+P4_PARASITIC = ("frameworks", "governance")     # with top_host == 17: "the DeepSeek-V3.2-centred coordination pattern"
+P4_NOT_PARASITIC = ("verify", "onboarding")
+P3_TARGET = "top_host == 17"                     # OP1, OP2; OP3 target (protections) has no H145 memeplex
+
+
 def load_patterns() -> list[dict]:
     mj = json.loads((C.H145_OUT / "memeplexes.json").read_text())
     pats = []
-    for i, m in enumerate(mj["memeplexes"]):
-        pats.append({"id": m.get("id", f"K{i:02d}"), "label": m.get("label"), "candidate": m.get("candidate"),
+    for m in mj["memeplexes"]:
+        pats.append({"id": m["id"], "label": m.get("candidate"), "candidate": m.get("candidate"),
                      "eids": [int(e) for e in m["elements"]], "h_K": m.get("h_K"), "top_host": m.get("top_host"),
-                     "n_hosts": m.get("n_hosts"), "labs": m.get("labs"), "source": "H145"})
-    for i, m in enumerate(mj.get("role_text_patterns", []) or []):
-        pats.append({"id": m.get("id", f"R{i:02d}"), "label": m.get("label"), "candidate": "role_text",
-                     "eids": [int(e) for e in m["elements"]], "h_K": m.get("h_K"), "top_host": m.get("top_host"),
-                     "n_hosts": m.get("n_hosts"), "labs": m.get("labs"), "source": "H145 role-text control"})
+                     "n_hosts": m.get("n_hosts"), "labs": m.get("labs"), "source": "H145",
+                     "field_seeded": m.get("field_seeded")})
+    for m in mj.get("role_patterns", []) or []:
+        pats.append({"id": m["id"], "label": f"role-text control ({m.get('kind')})", "candidate": "role_text",
+                     "eids": [int(e) for e in m["elements"]], "h_K": None, "top_host": None,
+                     "n_hosts": m.get("n_agents"), "labs": None, "source": "H145 role-text control"})
     return pats
 
 
@@ -304,6 +313,7 @@ def main():
                      "dV_raw": w["b_rate"]["raw"], "oth": w["b_oth"]["excess"], "oth_lo": w["b_oth"][OTH_FORM][0],
                      "oth_hi": w["b_oth"][OTH_FORM][1], "dV_dose_card": w["b_dose"]["excess"],
                      "I_excess": w["I"]["I_excess"], "I_identified": w["I"]["identified"], "kappa": w["kappa"],
+                     "n_host_bins": hh["est"]["n_host_bins"], "n_bins_host_fit": hh["est"]["n_bins"],
                      "host_c": hh["est"]["commits"], "host_c_lo": hh["ci"]["commits"][0],
                      "host_c_hi": hh["ci"]["commits"][1], "host_a": hh["est"]["align_bge"],
                      "host_a_lo": hh["ci"]["align_bge"][0], "host_a_hi": hh["ci"]["align_bge"][1],

@@ -141,6 +141,15 @@ With 2–4 same-weekday placebo days the 95th-percentile rule has size 0.15–0.
 - **A2 (O4, P4, K2).** The host relation is estimated at matched activity: log1p(statements) and log1p(non-pause calls) in the bin enter as covariates, beside the agent × day-part fixed effects and agent trends. A component counts toward a class only if its cluster-bootstrap CI excludes 0 in its direction. The card's form and the pseudo-pattern excess are variants. K2 is applied in the parasitic direction only (power 0.85 at −10%); a "no mutualist" result is inconclusive (power 0.35 at +20%).
 - **A3 (O2, O3, P2, P3, K3).** Placebo days for the dated events use any weekday (13–15 days; the same-weekday set of 2–4 days is a variant). Untestable as tests (synthetic size > 0.10 or power < 0.8): HL1, HL3, HL4, HL4b, OP1, OP2 and OP3 prevalence. They are reported as descriptive numbers. HL2 is the one testable hub loss (size 0.00, power 0.95). P2 is therefore read on HL2 only; P3's prevalence part is descriptive. P3's colonial-A part (A before vs after, day-block bootstrap CI) is computed as written.
 
+### Targets (fixed 2026-10-09 from H145's frozen memeplexes, before any H147 outcome on them)
+H145 froze 15 qualifying memeplexes K01–K15 (`memeplexes.json`, md5 9b899c34…; all hub-free, h_K 0.13–0.56; 12 of 15 have DeepSeek-V3.2 as top host) and six role-text controls R0–R5. Labels are H145's fixed token rule. The card's targets map as follows:
+- **Distributed** (h_K < 0.5): K01–K13, K15 (14 patterns). **Hub-centred** (h_K ≥ 0.6): none. K14 (h_K 0.56; 4 markers, 3 hosts) is neither.
+- **P2:** no hub-centred pattern exists, so P2's contrast is untestable. β is reported for patterns in which the lost agent held ≥ 5% of the hits before the event (HL2 is the only testable event, A3).
+- **P3:** "the DeepSeek-V3.2-centred pattern" = the memeplexes with top host DeepSeek-V3.2 (12). No memeplex carries the protections label, so OP3 has no target (n/a).
+- **P4:** "the DeepSeek-V3.2-centred coordination pattern" = memeplexes with top host DeepSeek-V3.2 and label frameworks or governance (K03, K06, K07, K11, K15); the prediction holds for it if ≥ half of them are parasitic by the A2 rule. Verification = K01, K02 (must not be parasitic); no onboarding memeplex exists.
+- **P5:** Spearman over the 15 memeplexes between the A2 commit effect and colonial A (excess over pseudo-patterns; H147's coarse E, see `analysis/run.py`).
+- Role-text controls R0–R5 are run through the same pipeline and reported beside the memeplexes.
+
 ## Results
 *Pending (real-data run waits for H145's memeplexes).*
 
