@@ -268,23 +268,25 @@ def element_tokens():
             out[row["eid"]] = [key.split(":", 1)[1]]
     # markers: hash -> normalized string, from the #51 agent chat rows (non-reserved; in memory)
     mk = {int(k.split(":", 1)[1]): e for e, k in zip(tab["eid"].to_list(), tab["key"].to_list()) if k.startswith("m:")}
-    cc = (pl.read_parquet(SH / "chat_core.parquet", columns=["message_id", "goal_no", "pt_date", "speaker_kind"])
+    cc = (pl.read_parquet(SH / "chat_core.parquet", columns=["message_id", "t", "goal_no", "pt_date", "speaker_kind"])
           .filter((pl.col("goal_no") == GOAL) & (pl.col("speaker_kind") == "agent")))
     held = np.array(holdout_mask(cc["pt_date"].to_list(), cc["goal_no"].to_list()))
     cc = cc.filter(pl.Series(~held))
-    txt = pl.scan_parquet(SH / "chat_text.parquet").select("message_id", "text").join(cc.lazy().select("message_id"), on="message_id").collect()
+    txt = (pl.scan_parquet(SH / "chat_text.parquet").select("message_id", "text")
+           .join(cc.lazy().select("message_id", "t"), on="message_id").collect().sort("t"))
     rf = IM.roster_full_names(ros)
     IM.dictionary()
-    found = {}
-    for t in txt["text"].to_list():
+    found, first_t = {}, {}
+    for t, tt in zip(txt["text"].to_list(), txt["t"].to_list()):
         for cl, x in IM.extract(t, rf):
             h = IM.marker_id(cl, x)
             if h in mk and mk[h] not in found:
                 found[mk[h]] = (cl, x)
+                first_t[mk[h]] = tt
     del txt
     for e, (cl, x) in found.items():
         out[e] = [x]
-    return out, {e: cl for e, (cl, x) in found.items()}
+    return out, {e: cl for e, (cl, x) in found.items()}, first_t
 
 
 def family_scores(tokens: list) -> dict:
@@ -321,16 +323,9 @@ def label_stage():
     import importlib
     disc = json.loads((OUT / "discovery.json").read_text())
     tab = pl.read_parquet(OUT / "elements.parquet")
-    toks, mcls = element_tokens()
+    toks, mcls, first_agent_t = element_tokens()
     log(f"tokens for {len(toks)} elements")
-    P = load_panel(120)
-    import scipy.sparse as sp  # noqa: F401
-    # first agent use per element (from the 30-min panel's event table is not stored; use the 2-h panel bin start)
-    C = P.X.tocoo()
-    first_bin = np.full(P.nE, np.iinfo(np.int64).max)
-    np.minimum.at(first_bin, C.col, C.row % P.bins.nB)
     t_exo = first_use_exo(tab)
-    bins_t0 = P.bins.t0
     keys = tab["key"].to_list()
     kinds = tab["kind"].to_list()
     mems = []
@@ -340,25 +335,23 @@ def label_stage():
         els = c["elements"]
         tk = [t for e in els for t in toks.get(e, [])]
         scores = family_scores(tk)
-        names = [toks[e][0] for e in els if kinds[e] == "marker" and mcls.get(e) == "N" and e in toks][:12]
+        # stored label tokens: no N-class marker strings (capitalised runs can be outside people's names) and no
+        # external-host slugs; the family scores above used every token in memory
+        n_names = sum(1 for e in els if kinds[e] == "marker" and mcls.get(e) == "N")
         words = [toks[e][0] for e in els if kinds[e] == "marker" and mcls.get(e) == "W" and e in toks][:8]
-        slugs = [keys[e].split(":", 1)[1] for e in els if kinds[e] in ("repo", "project")][:8]
+        slugs = [keys[e].split(":", 1)[1] for e in els if kinds[e] in ("repo", "project") and "." not in keys[e]][:8]
         ctw = [w for e in els if kinds[e] == "cluster" for w in toks.get(e, [])[:4]][:12]
         # field-seeded: K's earliest marker use is in an exogenous message (2-h bin resolution for agent uses)
         mk_e = [e for e in els if kinds[e] == "marker"]
         fs = None
         if mk_e:
-            t_agent = min(bins_t0[first_bin[e]] for e in mk_e if first_bin[e] < len(bins_t0)) if any(first_bin[e] < len(bins_t0) for e in mk_e) else None
+            ta = [first_agent_t[e] for e in mk_e if e in first_agent_t]
             tex = [t_exo[e] for e in mk_e if e in t_exo]
-            if tex:
-                te = min(tex).replace(tzinfo=None)
-                fs = bool(t_agent is None or np.datetime64(te, "us") < t_agent)
-            else:
-                fs = False
+            fs = bool(tex) and (not ta or min(tex) < min(ta))
         mems.append({"id": f"K{len(mems) + 1:02d}", **{k: c[k] for k in ("n_elements", "hosts", "n_hosts", "labs", "n_labs",
                      "lifetime_days", "span_days", "h_K", "top_host", "host_bins", "first_day", "last_day", "qualifies_hub_free", "kinds")},
                      "elements": els, "hub_label": "one agent's vocabulary" if c["h_K"] >= 0.8 else None,
-                     "label_tokens": {"names": names, "words": words, "slugs": slugs, "cluster_words": ctw},
+                     "label_tokens": {"n_name_markers": n_names, "words": words, "slugs": slugs, "cluster_words": ctw},
                      "family_scores": scores, "candidate": label_rule(scores), "field_seeded": fs})
     # role-text patterns (P4 positive controls): k-means (k 5, seed 0) on agent role vectors; each class -> the 6
     # cluster elements nearest its mean role vector; plus the kickoff pattern
