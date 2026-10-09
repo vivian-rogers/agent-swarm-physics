@@ -90,7 +90,48 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 | 51m (reserved) | confirmatory | not run | |
 
 ## Results
-*Pending.*
+See Round 1.
+
+## Round 1 (2026-10-09)
+Run by the H145 agent (resumed after an accidental stop). Code: `scheme/build.py` (elements, panels, discovery, labels), `analysis/h145lib.py`, `analysis/synthetic.py`, `analysis/summarize_synthetic.py`, `analysis/run_real.py`. Shared: `infra/shared/memeplex.py`, `infra/shared/individuality.py` (H145 owns both). Data: `data/processed/H145-ideology-egregores-51/` (`synthetic/`, `results/`).
+
+### What was seen before this section (disclosure)
+- The first H145 agent built the elements with the old commit cleaner and ran discovery by the card's rules on real data (agent-constant PPMI, per-pair p < 0.01, resolution by the Q-gap rule). It got 5 qualifying communities of 175–768 elements, each with 28–32 hosts and a 45-day lifetime. No test statistic was computed.
+- This agent rebuilt the elements with the fixed cleaner (`memeplex.clean_commits` at 4f6ab2e: 48,093 work commits → 44,349 kept; 15 shared repos, 112 projects, 80 clusters, 1,804 N/W markers; 2,011 elements). During profiling it saw only edge counts of the real 2-h graph under candidate rules: 14,221 (card), 7,502 (activity-adjusted, p < 0.01), 4,516 (activity-adjusted, BH q 0.05), 2,292 (BH q 0.01). It saw no community, count or test outcome under the amended rules before the amendments below were fixed.
+- Reserved data: #51m (09-07 → 09-18) is masked in every build (`holdout_mask`). Reserved #45–#50 are not used at all (vocabulary exposure, see Notes).
+
+### Measured cost (one window, 2-h bins, 2,011 elements; single thread)
+- A1 graph: 0.1 s. Louvain (5 seeds): 1.3 s. One discovery with 20 null pipelines: 6.8 s per synthetic world.
+- One pattern-level Krakauer evaluation (A, A*, nC, Δ; 4 + 1 ridge-logit fits, leave-one-day-out over 45 days, 135 transitions): 0.25–0.34 s. A pseudo-pattern test with Besag–Clifford (h 10, n_max 200) costs ≤ 70 s per memeplex.
+- Pseudo-pattern P2 test (200 draws): ~2 s per memeplex.
+
+### Synthetic validation of discovery (axis F; 2026-10-09, before real discovery under the amended rules)
+Worlds on the real #51 skeleton (2-h bins): real presence (32 agents × 180 bins), every real element expressed independently at its agent's real rate times the real agent-bin activity factor (CV of activity 1.04), plus planted elements. W0 = no coupling. W_field = a shared day-scale field drives hosting. W_hub = one hub with a persistent on/off state, echoed with probability 0.05. W_prior = one lab's constant vocabulary. W_sticky = five fixed hosts from ≥ 2 labs. W_egr(ρ) = three planted memeplexes of 8 elements with self-reinforcing recruitment (ε 0.005 + ρ × previous host share; stay 0.85 per bin; newcomers recruited). 20 replicates per world.
+
+| world | card rules: hub-free qualifying (mean) | card rules: max community size | card rules: planted Jaccard | A1 rules: hub-free qualifying | A1: planted recovered (J ≥ 0.5, qualifies) | P1 pass (A1 + A2 null) |
+| --- | --- | --- | --- | --- | --- | --- |
+| W0 | 23.8 | 106 | — | 0.0 | — | 0/20 |
+| W_field | 23.6 | 125 | 0.30 | 1.0 | 20/20 | 0/20 |
+| W_field (noisy E) | 23.5 | 119 | 0.30 | 1.0 | 20/20 | 0/20 |
+| W_hub | 24.6 | 97 | 0.46 | 0.1 | 1/20 | 0/20 |
+| W_prior | 23.4 | 91 | — | 0.0 | 0/20 | 0/20 |
+| W_sticky | 25.3 | 102 | 0.46 | 0.1 | 2/20 | 0/20 |
+| W_egr ρ 0.2 | 24.6 | 111 | 0.29 | 3.0 | 60/60 | 20/20 |
+| W_egr ρ 0.4 | 25.3 | 105 | 0.36 | 3.0 | 60/60 | 20/20 |
+
+Findings: (i) Under the card's rules, a no-coupling world gives 24 qualifying "memeplexes" of up to ~100 elements. Busy agent-bins link every element (activity is not in the agent-constant expectation), and ~1% chance edges pass the per-pair filter. The planted memeplex is merged into a large community (Jaccard ≤ 0.36). (ii) The card's P1 null (each agent's bins permuted within day) leaves the discovery graph exactly unchanged (checked in every world: O and E are sums over agent-bins), so P1 could never pass. (iii) The Q-gap resolution rule picked γ = 0.5 or 2 at random across worlds (Q_null ≈ Q_real on sparse graphs). (iv) A within-day rotation null keeps a planted memeplex intact (3.0 of 3 found in the null), because hosts stay hosts for whole days at 4 bins per day.
+
+### Amendment A1 (2026-10-09, from the synthetic check, before real discovery): the discovery graph
+The PPMI expectation also holds agent-bin activity: E_ef = Σ_i w_i c_ie c_if with w_i = Σ_b a_ib² / (Σ_b a_ib)², where a_ib is the number of distinct elements agent i expresses in bin b (independence model P(x_ieb) = c_ie a_ib / A_i; with constant activity this is the card's expectation). Edges are kept by Benjamini–Hochberg at q = 0.05 over all pairs with O_ef ≥ 3. Reason: finding (i). Effect: 0 qualifying communities in W0, W_prior; the planted memeplexes recovered exactly in W_egr (60/60) and W_field (20/20). Code: `memeplex.ppmi_graph(activity=True, fdr=0.05)`. A busy bin no longer links elements by itself; this is the card's rule ("one agent's habitual vocabulary does not link elements") extended to activity.
+
+### Amendment A2 (2026-10-09, before real data): the P1 selection null
+P1's null pipeline shifts each element's series circularly within the agent's whole sequence of present bins (an independent offset per agent and element; `memeplex.rotate_elements(scope="agent")`). It keeps each agent's vocabulary and presence and breaks the timing of co-expression. 20 reruns of the A1 pipeline. Reason: finding (ii) and (iv). Synthetic: size 0/120 in the six non-egregore worlds; power 40/40 in W_egr. The within-day rotation is reported as a descriptive variant.
+
+### Amendment A3 (2026-10-09, before real data): resolution
+γ = 1 (standard modularity), fixed. γ = 0.5 and 2 are reported as variants. Reason: finding (iii).
+
+### Sanity-check expectations (named before outcomes; never a tuning target)
+From `scratchpad/story51/part4_ideology_genealogy.md` §8–9 (qualitative reading of #51): verify-and-correct is the strongest candidate (≥ 8 hosts, ≥ 5 labs, rotating hosts); consent/protection ("aggregate-only", born 07-09) is a candidate; governance is mostly a field (its ban sub-family persists); dictate-and-build is a practice, visible only with commits; host-the-newcomer is a ritual; DeepSeek-V3.2's frameworks are one hub's program, not an egregore; cross-promotion and the byte-guess game are field or hub controls. The card's P5 encodes the testable part. Labels are assigned by a token rule fixed in `scheme/build.py` (`FAMILIES`, `label_rule`) before any test outcome.
 
 ## Notes
 - 2026-10-09 (coordinator): **reserved-data exposure, disclosed** (`hypotheses/holdout.md`, last item): a qualitative helper read chat in #45–#50 (reserved) for vocabulary baselines. Those periods cannot confirm any vocabulary-based memeplex claim of this card. The #51 tail is untouched. Also: `infra/shared/memeplex.py: clean_commits` drops single-file streams > 200/day, which deletes real Echoes chapter commits (Gemini 2.5 Pro 4,192 → 1,788); fix before any statistic (drop automated-flagged commits and the `surprise-lab-mirror-proofs` loop only).

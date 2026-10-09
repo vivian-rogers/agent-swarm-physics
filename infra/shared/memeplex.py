@@ -24,7 +24,8 @@ Commit cleaning (`clean_commits`; story-51 data traps): agent work commits (cano
 not automated); drop the surprise-lab-mirror-proofs repo (the screenshot loop's unflagged leftovers; busy single-file
 streams are kept: in #51 they are the Echoes pair's real chapter commits); drop commits by agents with no touching call on that repo that day (removes the other village's "-chat" identities in
 glm-5-3-flash-notes, which the ledger maps to roster agents); dedupe by hash; drop commits dated before the author's
-roster join date.
+roster join date. #51 counts (since 4f6ab2e): 48,093 work commits -> 1,519 mirror-loop -> 2,225 no call on the repo
+that day -> 44,349 kept (Gemini 2.5 Pro 4,307).
 
 Panels (`Panel`): counts per (agent, bin, element) as a CSR matrix with rows = agent * nB + bin, plus presence.
 Discovery (`discover`):
@@ -33,8 +34,13 @@ Discovery (`discover`):
            O_ef >= min_co (positive PMI beyond each agent's habitual vocabulary).
   partition Louvain with resolution gamma (local moving + aggregation) and Leiden's connectivity fix (a community that
            is not connected is split into its components); best of `n_seeds` seeds by modularity.
+           Switches (H145 Amendment A1, 2026-10-09; defaults reproduce the first build): activity=True adjusts E for
+           agent-bin activity (E_ef = sum_i w_i c_ie c_if, w_i = sum_b a_ib^2 / (sum_b a_ib)^2); fdr=q keeps edges by
+           Benjamini-Hochberg over all pairs with O_ef >= min_co instead of the per-pair p_edge. H145 uses
+           activity=True, fdr=0.05, gamma 1: on synthetic worlds on the #51 skeleton the defaults merge a planted
+           memeplex into large activity-driven communities.
   gamma    from a grid: the gamma that maximizes Q_real(gamma) - mean Q_null(gamma) over null panels
-           (`rotate_elements` surrogates); `choose_resolution`.
+           (`rotate_elements` surrogates); `choose_resolution`. H145 does not use it (A3: unstable on sparse graphs).
   qualify  >= 4 elements, >= 3 hosts (agents with >= 2 host bins) from >= 2 labs, lifetime >= 10 active days with >= 1
            host (span also reported); h_K = the largest share of K's expressions by one host (>= 0.8: "one agent's
            vocabulary").
@@ -42,8 +48,10 @@ Pattern state (`pattern_state`): n_K(b) = hosts among present agents; c_K(b) = w
 median expression bin) has the most expressions by hosts in b; levels: 0 = no host, then <= 4 quantile levels of
 positive n_K; symbol 0 = no host, else 1 + 3 (level - 1) + c.
 Surrogates: `rotate_elements` (each element's series circularly shifted within each agent-day's present bins; keeps
-per-agent-day element counts, breaks within-bin co-expression) and `rotate_agent_bins` (each agent's whole bin rows
-shifted within day; keeps within-agent co-expression, breaks cross-agent timing).
+per-agent-day element counts, breaks within-bin co-expression; scope="agent" shifts over the agent's whole present-bin
+sequence, H145's P1 null) and `rotate_agent_bins` (each agent's whole bin rows shifted within day; keeps within-agent
+co-expression, breaks cross-agent timing; it leaves the discovery graph exactly unchanged, so it is not a discovery
+null).
 
 Run `uv run python infra/shared/memeplex.py --verify`.
 """
@@ -233,7 +241,7 @@ def clean_commits(goal_no: int = 51, report: dict | None = None):
     held = np.array(holdout_mask(w["pt_date"].to_list(), w["goal_no"].to_list()))
     w = w.filter(pl.Series(~held))
     rep = {"work_commits": w.height}
-    # the screenshot-mirror loop: its unflagged leftovers (1,514 of them in #51, nearly all by one agent).
+    # the screenshot-mirror loop: its unflagged leftovers (1,519 of them in #51, nearly all by one agent).
     # Busy single-file streams are NOT dropped: in #51 they are the Echoes pair's real chapter commits.
     loop = pl.col("repo").str.ends_with("/surprise-lab-mirror-proofs")
     rep["drop_mirror_loop_repo"] = w.filter(loop).height
@@ -418,10 +426,30 @@ def _agent_day_blocks(bins: Bins):
     return start, length
 
 
-def rotate_elements(panel: Panel, rng: np.random.Generator, _cache: dict = {}) -> Panel:
+def rotate_elements(panel: Panel, rng: np.random.Generator, _cache: dict = {}, scope: str = "day") -> Panel:
     """Each element's series circularly shifted within each agent-day's present bins (an independent offset per
-    (agent-day, element)). Present bins of an agent-day are contiguous (span trim), so the shift is index arithmetic."""
+    (agent-day, element)). Present bins of an agent-day are contiguous (span trim), so the shift is index arithmetic.
+    scope="agent" (H145 Amendment A2): the shift runs over each agent's whole sequence of present bins (across days),
+    an independent offset per (agent, element); keeps each agent's element counts and present bins, breaks the timing
+    of co-expression at every scale."""
     import scipy.sparse as sp
+    if scope == "agent":
+        pr = panel.present_rows()
+        agent_of = pr // panel.bins.nB
+        nA = panel.bins.nA
+        L_a = np.bincount(agent_of, minlength=nA)
+        s_a = np.r_[0, np.cumsum(L_a)[:-1]]
+        rank = np.full(panel.X.shape[0], -1, np.int64)
+        rank[pr] = np.arange(len(pr)) - s_a[agent_of]
+        C = panel.X.tocoo()
+        r, c, v = C.row.astype(np.int64), C.col.astype(np.int64), C.data
+        a = r // panel.bins.nB
+        offs = rng.integers(0, 1 << 30, size=(nA, panel.nE))
+        La = np.maximum(L_a[a], 1)
+        r2 = pr[s_a[a] + (rank[r] + offs[a, c]) % La]
+        X = sp.csr_matrix((v, (r2, c)), shape=panel.X.shape)
+        X.sum_duplicates()
+        return panel_with(panel, X)
     key = id(panel.bins)
     if key not in _cache:
         _cache.clear()
@@ -458,10 +486,16 @@ def rotate_agent_bins(panel: Panel, rng: np.random.Generator) -> Panel:
 
 
 # ============================================================================ discovery
-def ppmi_graph(panel: Panel, min_co: int = 3, p_edge: float | None = 0.01) -> np.ndarray:
+def ppmi_graph(panel: Panel, min_co: int = 3, p_edge: float | None = 0.01, activity: bool = False,
+               fdr: float | None = None) -> np.ndarray:
     """W_ef = max(0, ln O_ef / E_ef) for O_ef >= min_co; O = co-expression counts over present agent-bins, E = the
     agent-constant expectation sum_i c_ie c_if / n_i. With p_edge, an edge is kept only if O_ef exceeds E_ef at a
-    one-sided Poisson p < p_edge (removes chance co-occurrences; p_edge=None gives the plain PPMI graph)."""
+    one-sided Poisson p < p_edge (removes chance co-occurrences; p_edge=None gives the plain PPMI graph).
+    activity=True (H145 Amendment A1): E_ef = sum_i w_i c_ie c_if with w_i = sum_b a_ib^2 / (sum_b a_ib)^2, where
+    a_ib = distinct elements agent i expresses in present bin b (independence model P(x_ieb) = c_ie a_ib / A_i), so a
+    busy agent-bin does not link elements by itself. With a_ib constant, w_i = 1 / n_i (the default).
+    fdr=q (H145 Amendment A1): keep an edge when its one-sided Poisson p passes Benjamini-Hochberg at level q over all
+    pairs with O_ef >= min_co (replaces the per-pair p_edge threshold, which lets ~1% chance edges through)."""
     import scipy.sparse as sp
     pr = panel.present_rows()
     Y = panel.binary()[pr]
@@ -472,20 +506,33 @@ def ppmi_graph(panel: Panel, min_co: int = 3, p_edge: float | None = 0.01) -> np
     A = sp.csr_matrix((np.ones(len(pr)), (agent_of, np.arange(len(pr)))), shape=(nA, len(pr)))
     Cc = (A @ Y).toarray()                               # [nA, nE] agent element counts
     n_i = np.bincount(agent_of, minlength=nA).astype(float)
-    Cw = Cc / np.sqrt(np.maximum(n_i, 1))[:, None]
+    if activity:
+        a = np.asarray(Y.sum(1)).ravel()
+        A_i = np.bincount(agent_of, weights=a, minlength=nA)
+        w_i = np.bincount(agent_of, weights=a * a, minlength=nA) / np.maximum(A_i, 1) ** 2
+        Cw = Cc * np.sqrt(w_i)[:, None]
+    else:
+        Cw = Cc / np.sqrt(np.maximum(n_i, 1))[:, None]
     E = Cw.T @ Cw
     np.fill_diagonal(E, 0)
     with np.errstate(divide="ignore", invalid="ignore"):
         W = np.where((O >= min_co) & (E > 0), np.log(O / E), 0.0)
     W = np.maximum(W, 0.0)
-    if p_edge is not None:
+    if p_edge is not None or fdr is not None:
         from scipy.stats import poisson
         iu = np.triu_indices_from(W, 1)
         sel = W[iu] > 0
         pv = np.ones(sel.shape)
         pv[sel] = poisson.sf(O[iu][sel] - 1, E[iu][sel])
         keep = np.zeros_like(W, bool)
-        keep[iu[0][sel], iu[1][sel]] = pv[sel] < p_edge
+        if fdr is not None:
+            m = int((O[iu] >= min_co).sum())
+            ps = np.sort(pv[sel])
+            ok = ps <= fdr * np.arange(1, len(ps) + 1) / max(m, 1)
+            thr = ps[np.flatnonzero(ok).max()] if ok.any() else -1.0
+            keep[iu[0][sel], iu[1][sel]] = pv[sel] <= thr
+        else:
+            keep[iu[0][sel], iu[1][sel]] = pv[sel] < p_edge
         keep = keep | keep.T
         W = np.where(keep, W, 0.0)
     return W
@@ -640,11 +687,11 @@ def qualifies(s: dict, min_el=4, min_hosts=3, min_labs=2, min_life=10) -> bool:
 
 
 def discover(panel: Panel, gamma: float, m: int = 2, min_co: int = 3, seed: int = 0, W: np.ndarray | None = None,
-             rules: dict | None = None) -> dict:
+             rules: dict | None = None, activity: bool = False, n_seeds: int = 5, fdr: float | None = None) -> dict:
     """Communities of the PPMI graph at resolution gamma, with pattern stats and the qualification flag."""
     rules = rules or {}
-    W = ppmi_graph(panel, min_co) if W is None else W
-    lab, q = louvain(W, gamma, seed)
+    W = ppmi_graph(panel, min_co, activity=activity, fdr=fdr) if W is None else W
+    lab, q = louvain(W, gamma, seed, n_seeds)
     out = []
     for c in np.unique(lab):
         K = np.flatnonzero(lab == c)
@@ -789,6 +836,20 @@ def verify() -> bool:
     with np.errstate(divide='ignore', invalid='ignore'):
         Wb = np.maximum(np.where((O >= 3) & (Ecalc > 0), np.log(O / Ecalc), 0), 0)
     check("ppmi_graph == brute force", np.allclose(ppmi_graph(panel, 3, p_edge=None), Wb, atol=1e-8))
+    # activity-adjusted expectation (A1) == brute force
+    a_ib = Y.sum(1)
+    Ea = np.zeros_like(O)
+    for a in range(nA):
+        ca = Y[ag == a].sum(0)
+        w = (a_ib[ag == a] ** 2).sum() / max(a_ib[ag == a].sum(), 1) ** 2
+        Ea += w * np.outer(ca, ca)
+    np.fill_diagonal(Ea, 0)
+    with np.errstate(divide='ignore', invalid='ignore'):
+        Wa = np.maximum(np.where((O >= 3) & (Ea > 0), np.log(O / Ea), 0), 0)
+    check("ppmi_graph(activity=True) == brute force", np.allclose(ppmi_graph(panel, 3, p_edge=None, activity=True), Wa, atol=1e-8))
+    Wf = ppmi_graph(panel, 3, activity=True, fdr=0.05)
+    check("BH-FDR graph keeps planted edges and drops background", Wf[60:, 60:][np.triu_indices(6, 1)].min() > 0
+          and (Wf[:60, :60] > 0).sum() <= 4, f"background edges={(Wf[:60, :60] > 0).sum() // 2}")
     nulls = [ppmi_graph(rotate_elements(panel, np.random.default_rng(100 + i)), 3) for i in range(3)]
     cr = choose_resolution(W, nulls)
     res = discover(panel, cr["gamma"], m=2, W=W, rules={"min_life": 3})
@@ -804,6 +865,11 @@ def verify() -> bool:
     Wr = ppmi_graph(rot, 3)
     check("rotate_elements breaks within-bin co-expression", Wr[60:, 60:][np.triu_indices(6, 1)].mean() < 0.5 * wp,
           f"planted after rotation={Wr[60:, 60:][np.triu_indices(6, 1)].mean():.2f}")
+    rag = rotate_elements(panel, rng, scope="agent")
+    per_a = lambda P: P.X.toarray().reshape(nA, nD * nb, nE).sum(1)
+    check("rotate_elements(scope='agent') keeps per-agent element counts", np.array_equal(per_a(panel), per_a(rag)))
+    Wg = ppmi_graph(rag, 3, activity=True, fdr=0.05)
+    check("agent-scope rotation removes the planted edges", (Wg[60:, 60:] > 0).sum() == 0, f"edges left={(Wg[60:, 60:] > 0).sum() // 2}")
     rab = rotate_agent_bins(panel, rng)
     Wa = ppmi_graph(rab, 3)
     check("rotate_agent_bins keeps the within-agent graph exactly", np.allclose(Wa, W))
