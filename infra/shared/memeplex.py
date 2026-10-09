@@ -21,8 +21,8 @@ Expression x_{i,e}(b) = 1 if agent i has >= 1 event of element e in bin b (state
 the marker, cleaned commit to the repo, call touching the project).
 
 Commit cleaning (`clean_commits`; story-51 data traps): agent work commits (canonical, not imported, author_kind agent,
-not automated); drop single-agent single-file streams > 200 a day (the surprise-lab-mirror-proofs screenshot loop);
-drop commits by agents with no touching call on that repo that day (removes the other village's "-chat" identities in
+not automated); drop the surprise-lab-mirror-proofs repo (the screenshot loop's unflagged leftovers; busy single-file
+streams are kept: in #51 they are the Echoes pair's real chapter commits); drop commits by agents with no touching call on that repo that day (removes the other village's "-chat" identities in
 glm-5-3-flash-notes, which the ledger maps to roster agents); dedupe by hash; drop commits dated before the author's
 roster join date.
 
@@ -233,13 +233,11 @@ def clean_commits(goal_no: int = 51, report: dict | None = None):
     held = np.array(holdout_mask(w["pt_date"].to_list(), w["goal_no"].to_list()))
     w = w.filter(pl.Series(~held))
     rep = {"work_commits": w.height}
-    # single-agent single-file streams > 200 a day
-    s1 = (w.filter(pl.col("n_files") <= 1).group_by("author_agent", "repo", "pt_date").len()
-          .filter(pl.col("len") > 200))
-    drop1 = w.join(s1.select("author_agent", "repo", "pt_date"), on=["author_agent", "repo", "pt_date"], how="semi") \
-        .filter(pl.col("n_files") <= 1)
-    w = w.join(drop1.select("hash", "repo"), on=["hash", "repo"], how="anti")
-    rep["drop_single_file_streams"] = drop1.height
+    # the screenshot-mirror loop: its unflagged leftovers (1,514 of them in #51, nearly all by one agent).
+    # Busy single-file streams are NOT dropped: in #51 they are the Echoes pair's real chapter commits.
+    loop = pl.col("repo").str.ends_with("/surprise-lab-mirror-proofs")
+    rep["drop_mirror_loop_repo"] = w.filter(loop).height
+    w = w.filter(~loop)
     # no touching call on the repo that day
     pc = (pl.scan_parquet(SH / "project_calls.parquet").filter((pl.col("goal_no") == goal_no) & ~pl.col("holdout"))
           .select("turn_id", "pt_date").collect())
