@@ -327,6 +327,8 @@ Two libraries for the ideology-egregore cards (H145 owns both; H146, H147 and H1
 
 ## Known issues
 
+- **`memeplex.build_elements` counts repo and project days in UTC** (H148 r1): `n_days` reaches 46 for these kinds against 45 working days (statement clusters and markers use `pt_date`). The count is descriptive; discovery does not use it. Use `pt_date` if a rule ever filters on it.
+- **Greedy boundary search inflates excess-over-random scores** (H148 r1, Amendment A1): the z of a system against matched random systems grows with each greedy step, so every seed reaches the size cap. Score each added part by its coupling to the system in both directions against a day-permutation null (H148's τ), and check out of sample on the other half of the days.
 - **`memeplex.clean_commits` deleted real work** (coordinator, 2026-10-09). Its rule "drop single-file streams > 200 a day" removed the Echoes pair's chapter commits (Gemini 2.5 Pro 4,307 → 1,788). **Resolved (4f6ab2e):** it drops the surprise-lab-mirror-proofs repo by name. The `canonical` flag already dedupes mirrored commits (hash dedupe removes 0 in #51).
 - **Exogenous input is nearly constant in #51 2-h bins** (H145 r1): nudges and operator or relayed messages fall in 94% of bins, so "any exogenous input in the bin" carries almost no information as an E component. Use counts or kinds.
 - **Binary host indicators give negative O-information under independence** (H146 r1): the sign rule has size 0.67–1.0. Compare Ω with surrogates (curveball) instead. Host specialization z-scores also run far above 2 for random element sets (median z 34): compare with frequency-matched pseudo-patterns.

@@ -5,6 +5,17 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-09 (evening) — Paper 2 round 1 done: H145–H148 (ideology egregores in #51); paper 2 rewritten in STE
+
+- **Restart.** Vivian had stopped the four runs by accident. Coordinator fixed `memeplex.clean_commits` first (4f6ab2e: drop the surprise-lab-mirror-proofs repo by name, keep busy single-file streams; Gemini 2.5 Pro 1,788 → 4,307 commits kept) and relaunched all four.
+- **H145 (memeplexes, individuality):** 15 cross-lab memeplexes against a null 95th percentile of 6 (P1 supported). Only K03 (engagement and papers) shows colonial A beyond fields: 0.20 bits per 2-h step [0.07, 0.33], second half only (post hoc), depends on the host threshold. Renewal passes narrowly for 3. Role-text controls show no A* either, so the field control is uninformative. The story's candidates do not come out (P5 failed). Amendments A1–A5 before real data (the card's discovery made ~24 false memeplexes in a no-coupling world).
+- **H146 (recruitment, behaviors): mixed.** Memeplexes return after a host's forced wipe at 0.90 of the placebo rate and faster after a re-read, but frequency-matched pseudo-patterns do the same. No repair after wipes or challenges. Recruitment underpowered.
+- **H147 (value, hosts):** forced wipes cost distributed memeplexes nothing (1 of 14 lose ≥ 10%; median +0.05 [0.00, 0.12]). Host relation null-dependent (3 parasitic against pseudo-patterns, none mutualist). κ not identified; hub loss untestable; the 08-24 veto descriptive.
+- **H148 (autonomous agent discovery): failed.** No system larger than one atom holds out of sample in both halves (0/16 agent-level, 1/72 element-level maxima); rotated data give as many maxima (K1 fires). Only 1 of 27 agents beats a within-day shuffle of its own states at 30 min, because agents hold one project for a day.
+- **Reading:** in #51, shared vocabulary survives wipes and changes hosts, but at these instruments it behaves as generic village vocabulary, not as an individual with its own behaviors. Suggested definition edits (O-information needs a surrogate comparison; specialization must beat pseudo-patterns) are open for Vivian.
+- **Shared fixes:** `build_summaries.round_two` no longer emits an empty list (11baa8c); infra/README notes on memeplex switches, nulls and known issues (a350499 and this entry).
+- **Paper 2** rewritten in STE with every village term defined at first use; figure labels without NE codes or room names (664bc1c).
+
 ## 2026-10-09 (night) — Paper 2 grows: related work, story figures, ideology genealogy; H145–H148 runs stopped by Vivian; reserved-data exposure
 
 - **Related work** (helper agent, 374d4ee): 14 verified works with notes (Dawkins; Boyd & Richerson; Claidière–Scott-Phillips–Sperber; List & Pettit; Hölldobler & Wilson; North; Kirchhoff et al.; Levin TAME; Oizumi–Albantakis–Tononi; Bertschinger et al.; Biehl et al.; Park et al.; Perez et al.; Vallinder & Hughes), 7 open PDFs, `sections/related.tex` wired in.
