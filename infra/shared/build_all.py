@@ -54,7 +54,9 @@ Steps (outputs in data/processed/shared/):
   libraries (lib: no build step; `--verify` runs their self-checks / reproductions): hazard_fe, semantic_kappa,
   kickoff_naming, idea_markers, idea_ledger, replicator_hosts, replicator_fit, replicator_sim, read_response,
   rooms_asof (H100 / H102 room of each statement), relabel (H100 joint two-period room relabel),
-  ep_newton (Newton-step EP estimators, legacy + corrected; 2026-10-04)
+  ep_newton (Newton-step EP estimators, legacy + corrected; 2026-10-04),
+  individuality (Krakauer held-out estimators, nulls, boundary expansion; H145, 2026-10-09),
+  memeplex (memeplex elements, expression panels, discovery; H145, 2026-10-09)
 Tests (--tests): infra/shared/tests/test_*.py
 
 Usage:
@@ -240,6 +242,10 @@ STEPS = [
      "deps": ["build_derived", "build_agent_vectors"], "outputs": []},
     {"name": "relabel", "cmd": "py", "script": "relabel.py", "lib": True, "deps": [], "outputs": []},
     {"name": "ep_newton", "cmd": "py", "script": "ep_newton.py", "lib": True, "deps": [], "outputs": []},
+    {"name": "individuality", "cmd": "py", "script": "individuality.py", "lib": True, "deps": [], "outputs": []},
+    {"name": "memeplex", "cmd": "py", "script": "memeplex.py", "lib": True,
+     "deps": ["scan_tables", "build_embeddings", "style_resid", "work_ledger", "project_calls", "idea_markers"],
+     "outputs": []},
     {"name": "null_sizes", "cmd": "py", "script": "nulls.py", "args": ["--calibrate", "--reps", "100", "--surr", "49", "--workers", "2"],
      "expensive": True, "outputs": ["null_sizes.parquet"]},
     {"name": "per_period_estimates", "cmd": "py", "script": "estimates.py", "args": ["--backfill"],
