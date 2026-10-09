@@ -130,6 +130,28 @@ P1's null pipeline shifts each element's series circularly within the agent's wh
 ### Amendment A3 (2026-10-09, before real data): resolution
 γ = 1 (standard modularity), fixed. γ = 0.5 and 2 are reported as variants. Reason: finding (iii).
 
+### Synthetic validation of P2 and P3 (2026-10-09, before any real P2/P3 outcome)
+Same worlds, 20 replicates (60 planted memeplexes per W_egr world). P2 against 200 frequency- and host-count-matched pseudo-patterns. P3 against pseudo-patterns with Besag–Clifford (h 10, n_max 60, ≥ 30 draws), E = phase (bin-in-day × bookends) + the field tertile (W_field; "noisy" adds observation noise of sd 0.7 to it) + rest-of-village activity tertile, 2-h bins, 135 within-day transitions. "Instrument" = the planted set itself; "end-to-end" = the discovered match (a planted set counts only if discovery recovers it).
+
+| world | P2 as written (ρ−J) | P2 D_K(5) (A4) | P2 φ host memory | P3 A z ≥ 2 | P3 Δ z ≥ 2 | P3 both (as written) |
+| --- | --- | --- | --- | --- | --- | --- |
+| W_egr ρ 0.2 (power) | 0.20 | **0.82** | 0.87 | **0.87** | 0.02 | 0.00 |
+| W_egr ρ 0.4 (power) | 0.02 | **0.85** | 0.30 | 0.42 | 0.10 | 0.03 |
+| W0 (instrument) | 0.00 | — | — | 0.05 | 0.20 | 0.00 |
+| W_field (instrument) | 0.00 | 0.80 | 1.00 | 0.05 | 0.00 | 0.00 |
+| W_field, noisy E (instrument) | 0.00 | 0.55 | 1.00 | **0.20** | 0.00 | 0.00 |
+| W_prior (instrument) | 0.00 | 0.00 | 0.00 | 0.00 | 0.60 | 0.00 |
+| W_sticky instrument / end-to-end | 0.00 / 0.00 | 0.40 / **0.05** | 0.50 / 0.05 | 1.00 / 0.05 | 0.40 / 0.00 | 0.40 / 0.00 |
+| W_hub instrument / end-to-end | 0.00 / 0.00 | 0.00 / **0.05** | 0.05 / 0.00 | 0.80 / 0.00 | 0.10 / 0.05 | 0.10 / 0.00 |
+
+Findings: (v) P2 as written has power 0.20 and 0.02: a self-sustaining pattern has nearly stationary prevalence (ρ_K(5) ≈ 0), and over 5 days nearly every agent hosts once (J_K(5) ≈ 1). (vi) Δ has no power (0.02–0.10) and wrong size (0.60 under W_prior, 0.20 under W0). The planted dynamics are additive in the elements, so the parts model predicts as well as the joint state; with 135 transitions the parts model (8+ standardized prevalences) is noisy. (vii) Colonial A has power 0.87 at ρ 0.2 and 0.42 at ρ 0.4 (prevalence saturates at ~0.5–0.75 host share, so the state barely moves). Size is 0.05 when E holds the field exactly and 0.20 when E holds a noisy copy. (viii) Sticky hosts and hubs pass the instrument tests often (A is the persistence of the hub's or the sticky hosts' state), but discovery's agent-constant expectation removes them first (end-to-end size ≤ 0.05).
+
+### Amendment A4 (2026-10-09, before real P2): host renewal
+P2 as written (ρ_K(5) > J_K(5), difference above the pseudo-pattern 95th percentile) is **untestable** (power 0.20 / 0.02 < 0.8). It is reported but not used for the verdict. P2 is amended to the renewal contrast D_K(5) = S_K(5) − S_H(5): S_K(5) = share of days with ≥ 1 host whose day + 5 also has ≥ 1 host (the pattern survives); S_H(5) = share of (host, day) pairs, with the host present on day + 5, in which the host hosts again on day + 5 (the host returns). Pass: D_K(5) above the 95th percentile of 200 frequency- and host-count-matched pseudo-patterns. Power 0.82 / 0.85; end-to-end size ≤ 0.05 (W_sticky, W_hub). Limit: D does not separate a field from an egregore (W_field 0.80); P3 and P4 do that. φ (host memory) is reported as a variant (power 0.30 at ρ 0.4). P2 still needs ≥ 2 passing memeplexes.
+
+### Amendment A5 (2026-10-09, before real P3): integration Δ untestable
+Δ_K is **untestable** at this instrument (finding vi). It is not computed on real data. P3 is judged on its first half only: **P3a** = colonial A_K excess z ≥ 2 over pseudo-patterns at 2 h with E holding e1–e4, for ≥ 1 P2 memeplex. P3 as written (A and Δ) is untestable. Power of P3a: 0.87 at ρ 0.2, 0.42 at ρ 0.4; so K2 ("power ≥ 0.8 at the planted strength that matters") holds only for unsaturated patterns (ρ 0.2). The field-leak size 0.20 under a noisy E means a P3a pass is read only together with P4 (role-text patterns must fail P3a, K3). P6 (time scale) uses the same A test at 30 min and 1 day; it is not validated on synthetic data at those widths and is reported as exploratory.
+
 ### Sanity-check expectations (named before outcomes; never a tuning target)
 From `scratchpad/story51/part4_ideology_genealogy.md` §8–9 (qualitative reading of #51): verify-and-correct is the strongest candidate (≥ 8 hosts, ≥ 5 labs, rotating hosts); consent/protection ("aggregate-only", born 07-09) is a candidate; governance is mostly a field (its ban sub-family persists); dictate-and-build is a practice, visible only with commits; host-the-newcomer is a ritual; DeepSeek-V3.2's frameworks are one hub's program, not an egregore; cross-promotion and the byte-guess game are field or hub controls. The card's P5 encodes the testable part. Labels are assigned by a token rule fixed in `scheme/build.py` (`FAMILIES`, `label_rule`) before any test outcome.
 

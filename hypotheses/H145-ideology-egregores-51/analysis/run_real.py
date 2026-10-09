@@ -22,7 +22,8 @@ RES = L.OUT / "results"
 N_NULL_PIPE = 20
 N_PSEUDO_P2 = 200
 BC = dict(h=10, n_max=200, min_draws=30)
-P2_RULE = "phi"            # Amendment A4 (fixed from the synthetic check before real data): host memory phi_K(5)
+P2_RULE = "D"              # Amendment A4 (fixed from the synthetic check before real data): renewal contrast D_K(5)
+WITH_DELTA = False         # Amendment A5: Delta untestable (synthetic power <= 0.10, size up to 0.60); not computed
 SEED = 20261009
 
 
@@ -129,9 +130,9 @@ def tests(rng):
         t = time.time()
         r = {"id": k["id"], "candidate": k["candidate"], "n_el": k["n_elements"], "h_K": k["h_K"],
              "field_seeded": k["field_seeded"], "P2": p2_one(P, k["elements"], es, rng),
-             "P3": p3_one(P, k["elements"], eb, es, rng)}
+             "P3": p3_one(P, k["elements"], eb, es, rng, with_delta=WITH_DELTA)}
         rows.append(r)
-        L.log(k["id"], k["candidate"], f"P2 {r['P2']['pass']} P3 A_z {r['P3'].get('A_z')} D_z {r['P3'].get('Delta_z')}",
+        L.log(k["id"], k["candidate"], f"P2 {r['P2']['pass']} P3 A_z {r['P3'].get('A_z')} A*_z {r['P3'].get('A_star_z')}",
               f"{time.time() - t:.0f}s")
     hub = []
     for k in mem["memeplexes"]:
