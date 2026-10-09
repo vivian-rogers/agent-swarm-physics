@@ -45,8 +45,11 @@ def log(*a):
 
 
 # ================================================================================================ inputs
-def element_events() -> tuple[pl.DataFrame, pl.DataFrame]:
+def element_events(debug: bool = False) -> tuple[pl.DataFrame, pl.DataFrame]:
     p = C.OUT / "elem_events.parquet"
+    if debug:
+        el = MP.build_elements(C.GOAL, k=80, model="bge", seed=0)
+        return el.events.with_columns(pl.col("agent").cast(pl.Int16), pl.col("eid").cast(pl.Int32)), el.table
     tab = pl.read_parquet(C.H145_OUT / "elements.parquet")
     if p.exists():
         ev = pl.read_parquet(p)
@@ -103,7 +106,7 @@ class Store:
 
 # ================================================================================================ colonial A
 class Colonial:
-    def __init__(self, ev: pl.DataFrame, nE: int):
+    def __init__(self, ev: pl.DataFrame, nE: int, debug: bool = False):
         self.bins = C.mbins()
         self.panel = MP.make_panel(ev, self.bins, nE)
         exo = pl.read_parquet(C.H145_OUT / "exo.parquet").filter(pl.col("src").is_in(["human", "relayed"])
@@ -135,7 +138,8 @@ class Colonial:
         for _ in range(B):
             pick = rng.choice(days, len(days), replace=True)
             idx = np.concatenate([by_day[int(d)] for d in pick])
-            dlab = np.concatenate([np.full(len(by_day[int(d)]), j) for j, d in enumerate(pick)])
+            # copies of a resampled day share its label, so leave-one-day-out holds all copies out together
+            dlab = np.concatenate([np.full(len(by_day[int(d)]), int(d)) for d in pick])
             r = IND.krakauer_discrete(s[idx + 1], s[idx], self.E[idx], dlab, 13, self.Ke)
             out.append(r["A"] if r.get("ok") else np.nan)
         return np.array(out, float)
@@ -240,17 +244,28 @@ def main():
     ap.add_argument("--n-pseudo", type=int, default=100)
     ap.add_argument("--B", type=int, default=200)
     ap.add_argument("--only", default=None, help="comma list of pattern ids")
+    ap.add_argument("--debug-random", action="store_true",
+                    help="code check only: two random element sets, no H145 inputs, output to the scratch folder")
     a = ap.parse_args()
+    global RES
+    if a.debug_random:
+        RES = C.SCRATCH / "village_H147" / "debug_results"
     RES.mkdir(parents=True, exist_ok=True)
     sk = L.load_skeleton()
-    ev, tab = element_events()
+    ev, tab = element_events(debug=a.debug_random)
     L.set_base(sk, ev["agent"].to_numpy(), ev["t"].dt.epoch("us").to_numpy())
     store = Store(ev, sk)
-    pats = load_patterns()
+    if a.debug_random:
+        rr = np.random.default_rng(5)
+        pats = [{"id": f"DBG{i}", "label": "random element set (code check)", "candidate": None,
+                 "eids": rr.choice(tab.sort("n_events", descending=True)["eid"].to_numpy()[:60], 8, replace=False).tolist(), "h_K": None, "top_host": None,
+                 "n_hosts": None, "labs": None, "source": "debug"} for i in range(2)]
+    else:
+        pats = load_patterns()
     if a.only:
         pats = [p for p in pats if p["id"] in a.only.split(",")]
     log("patterns:", len(pats), "elements:", tab.height, "element events:", ev.height)
-    col = Colonial(ev.select("agent", "t", "eid"), int(tab["eid"].max()) + 1)
+    col = Colonial(ev.select("agent", "t", "eid"), int(tab["eid"].max()) + 1, debug=a.debug_random)
     hp = L.HostPanel(sk)
     # K1 positive control (pattern-free)
     k1 = L.output_selfdip(sk, B=a.B)
@@ -283,6 +298,9 @@ def main():
                      "h_K": p["h_K"], "top_host": p["top_host"], "n_el": len(K),
                      "n_host_events": w["n_host_events"],
                      "dV_rate": w["b_rate"]["excess"], "dV_lo": w["b_rate"][CI_FORM][0], "dV_hi": w["b_rate"][CI_FORM][1],
+                     "dV_pq_lo": w["b_rate"]["pq"][0], "dV_pq_hi": w["b_rate"]["pq"][1],
+                     "P1_falsifier": bool(w["b_rate"]["excess"] <= -0.10 and w["b_rate"][CI_FORM][1] < 0
+                                          and w["b_rate"]["pq"][1] < 0),
                      "dV_raw": w["b_rate"]["raw"], "oth": w["b_oth"]["excess"], "oth_lo": w["b_oth"][OTH_FORM][0],
                      "oth_hi": w["b_oth"][OTH_FORM][1], "dV_dose_card": w["b_dose"]["excess"],
                      "I_excess": w["I"]["I_excess"], "I_identified": w["I"]["identified"], "kappa": w["kappa"],
@@ -297,6 +315,9 @@ def main():
             f"{time.time() - t1:.0f}s")
     df = pl.DataFrame(rows, infer_schema_length=None)
     df.write_parquet(RES / "patterns.parquet")
+    if a.debug_random:
+        log("debug done")
+        return
     C.provenance("results", "hypotheses/H147-egregore-value-and-hosts-51/analysis/run.py",
                  ["H145 memeplexes.json", "H145 elements.parquet", "H145 exo.parquet", "H147 scheme outputs"],
                  params={"n_pseudo": a.n_pseudo, "B": a.B, "ci_form": CI_FORM, "host_form": HOST_FORM,
