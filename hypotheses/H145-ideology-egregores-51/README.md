@@ -93,4 +93,5 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 *Pending.*
 
 ## Notes
+- 2026-10-09 (coordinator): **reserved-data exposure, disclosed** (`hypotheses/holdout.md`, last item): a qualitative helper read chat in #45–#50 (reserved) for vocabulary baselines. Those periods cannot confirm any vocabulary-based memeplex claim of this card. The #51 tail is untouched. Also: `infra/shared/memeplex.py: clean_commits` drops single-file streams > 200/day, which deletes real Echoes chapter commits (Gemini 2.5 Pro 4,192 → 1,788); fix before any statistic (drop automated-flagged commits and the `surprise-lab-mirror-proofs` loop only).
 - 2026-10-09: written by the coordinator from HH392–HH393. Efficient estimators are required (`scratchpad/village_egregore_brief.md`, "Efficient estimators"): integer-encoded counts with `np.bincount`, leave-one-day-out by subtraction, cached pseudo-pattern nulls, sequential stopping. Text is read in memory only; cluster labels are paraphrases.
