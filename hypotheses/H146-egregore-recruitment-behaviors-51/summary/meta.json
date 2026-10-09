@@ -1,0 +1,19 @@
+{
+ "complete": 70,
+ "faithfulness": 1.5,
+ "usefulness": 1.5,
+ "rationale": {
+  "complete": "Round 1 done on #51 exploration data: synthetic validation, per-pattern power on real skeletons, all six predictions on H145's 15 memeplexes and 8 post hoc candidates with pseudo-pattern nulls; confirm.py frozen, dry-run only.",
+  "faithfulness": "Calibrated tests (size <= 0.06) and a strong pseudo-pattern null; recruitment is unpowered as a negative (power <= 0.53) and newcomers untestable.",
+  "usefulness": "Operator-level: shared ideas survive context wipes at ~0.9 of the normal rate and come back faster when re-read, for any vocabulary; no peer repair to expect."
+ },
+ "one_line": "In #51 the memeplexes survive host wipes (HR 0.90) and are re-expressed faster when re-read, but random vocabulary does the same; no recruitment, repair or division of labor beyond pseudo-patterns.",
+ "models": [
+  {"model": "03-contagion", "role": "primary", "outcome": "mixed", "note": "read > in-flight expression exists but is generic (pseudo median delta 0.09); not pattern-specific; unpowered per pattern"},
+  {"model": "12-information-dynamics", "role": "secondary", "outcome": "failed", "note": "amended O-information rule met for 0/14 memeplexes; specialization at pseudo level"},
+  {"model": "13-cultural-evolution-conventions", "role": "secondary", "outcome": "mixed", "note": "patterns persist through wipes as generic vocabulary"}
+ ],
+ "rated_by": "H146 round-1 agent (suggested)",
+ "updated": "2026-10-09",
+ "v2": {"credence": null}
+}

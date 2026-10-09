@@ -1,6 +1,6 @@
 # H146 × G51: #51, agents pursue their own goals (2026-07-06 → 2026-09-04; 51m reserved)
 
-**Verdict:** pending
+**Verdict:** mixed
 **Role:** exploratory
 **Period:** regime III · own-goal mode · up to 32 agents · #general plus #focus from 08-05 · 45 non-reserved active days (units 51a–51l). Step changes used as covariates, not splits: 07-29 NE38, 08-05 #focus and bookends, 08-20 nudges stop, roster joins (07-09 … 09-04). 51m (09-07 → 09-18) is reserved and masked.
 
@@ -18,10 +18,23 @@
 - Counts against: P1/P1b positives explained by the hub (no-hub refit) or by Claude Fable 5's relayed input; P4 HR < 0.5; P5 and P6 no better than pseudo-patterns.
 
 ## Result
-*Pending.*
+*Round 1, 2026-10-09.* 15 H145 memeplexes (primary) and 8 qualitative candidates (post hoc). Full tables: card §Round 1; data `data/processed/H146-egregore-recruitment-behaviors-51/results/`; figure `../../figures/r1_obs.pdf`.
+
+| Prediction | Observed (95% CI) | Null | Verdict |
+| --- | --- | --- | --- |
+| P1/P1b read-gated recruitment | P1b CI > 0 for K02 0.59 [0.12, 1.05] (hub-carried) and K05 0.34 [0.15, 0.52]; p_pseudo 0.06, 0.35 | pseudo-patterns: median 0.09, 75% > 0 | not supported; inconclusive (power ≤ 0.53) |
+| P2 names recruit | no P1 pass | – | n/a |
+| P3 newcomers | see NE33 | – | untestable |
+| P4 survives amnesia | HR median 0.90 (0.78–1.11); read-gate CI > 1 in 10/15 | pseudo HR median 0.89; read-gate 1.39 (post hoc) | supported as written; generic |
+| P5 repair | wipe RR 0.95–1.07; DQ2 0.64–0.97; lapse 0.14–0.88 | placebo calls, neutral replies, continuing hosts | failed |
+| P6 division of labor | z_spec 9–153, beyond pseudo for K05, K15 only (p 0.032 each); Ω rule 0/14 | pseudo z median 34 | at pseudo level; Ω failed |
+
 
 ## Scorecard (period-specific axes)
-*Pending.*
+- C adequacy 0: no pattern beats pseudo-patterns.
+- D unfitted 1: repair and specialization fail against pseudo.
+- E interventional 1: NE41 wipes used.
+- G ground truth 1: named > unnamed in 7/15, also at pseudo level.
 
 ## Notes
 - 2026-10-09: event tables `data/processed/H146-egregore-recruitment-behaviors-51/events/`; results in `results/`.

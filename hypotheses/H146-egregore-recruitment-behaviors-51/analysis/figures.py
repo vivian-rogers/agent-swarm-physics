@@ -44,9 +44,10 @@ def ci_of(o, key):
 
 def obs():
     R = rows(load("real_h145.json"), BLUE) + rows(load("real_candidates.json"), ORANGE)
+    R = [x for x in R if x[0] != "K14"]   # 4 elements, 15 host bins: too small for every test
     if not R:
         return
-    fig, ax = plt.subplots(1, 3, figsize=(7.0, 2.6), sharey=True)
+    fig, ax = plt.subplots(1, 3, figsize=(7.0, 3.3), sharey=True)
     y = np.arange(len(R))[::-1]
     for yi, (k, lab, r, c, s) in zip(y, R):
         st, ps = r["stats"], r["pseudo"]["values"]
@@ -83,14 +84,14 @@ def obs():
     ax[1].axvline(0.8, color="#bbbbbb", lw=0.6, ls=":")
     ax[1].axvline(0.5, color="#bbbbbb", lw=0.6, ls="--")
     ax[2].axvline(1, color="#bbbbbb", lw=0.6)
-    ax[0].set_xlabel("P1b: read − in-flight log rate ratio")
-    ax[1].set_xlabel("P4: re-expression HR, wipe vs placebo")
-    ax[2].set_xlabel("P5: repair messages RR, wipe vs placebo")
+    ax[0].set_xlabel("P1b: read − in flight (log RR)")
+    ax[1].set_xlabel("P4: re-expression HR, wipe/placebo")
+    ax[2].set_xlabel("P5: repair RR, wipe/placebo")
     ax[2].scatter([], [], s=4, color=GRAY, label="pseudo-patterns")
     ax[2].scatter([], [], s=14, color=BLUE, label="H145 memeplex")
     ax[2].scatter([], [], s=14, color=ORANGE, label="candidate (post hoc)")
-    ax[2].legend(frameon=False, fontsize=6, loc="lower right")
-    fig.tight_layout()
+    fig.legend(*ax[2].get_legend_handles_labels(), frameon=False, fontsize=6.5, loc="upper center", ncol=3)
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
     FIG.mkdir(exist_ok=True)
     fig.savefig(FIG / "r1_obs.pdf")
     fig.savefig(FIG / "r1_obs.png", dpi=150)

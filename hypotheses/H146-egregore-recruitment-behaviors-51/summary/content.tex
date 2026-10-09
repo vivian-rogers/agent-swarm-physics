@@ -1,0 +1,34 @@
+\hwhat{The claim: the ideologies of \#51 are \emph{egregores}, patterns that run on changing hosts. They should recruit carriers through what those carriers read, survive their hosts' forced context wipes, and carry functional behaviors (recruitment, repair, division of labor). We test H145's 15 frozen memeplexes and, post hoc, eight qualitative candidates, each against 30 frequency-matched random element sets (pseudo-patterns). \textbf{Result:} memeplexes return after a host's wipe at 0.90 of the placebo rate and faster when the host re-reads them. Random element sets do the same. Read-gated expression and host specialization are also at the pseudo level, and nobody repairs a wiped or challenged host. At this instrument the ideologies behave as the village's generic vocabulary.}
+
+\hmodel{Contagion with a read channel (model 03). For a talk row $r$ of a non-host, $y_r=1$ if its chat carries an element of $K$. $R_r$ counts $K$ items from hosts read in the mirror window; $P_r$ counts items in flight at the matched lag. Strata $s$ are agent $\times$ day. After a forced wipe F or a placebo call P, the host's first $K$ statement within 20 calls gives the hazard ratio $\mathrm{HR}$.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\log\lambda_r=\alpha_{s(r)}+\beta_R R_r+\beta_P P_r+\gamma^\top z_r,\qquad \delta=\beta_R-\beta_P\\
+\mathrm{HR}=\frac{\sum_s D^F_s T^P_s/T_s}{\sum_s D^P_s T^F_s/T_s},\qquad p_{\rm ps}=\frac{1+\#\{\text{pseudo}\ge K\}}{31}
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/r1_obs.pdf}{One row per pattern (blue: H145 memeplexes; orange: post hoc candidates), with 95\% CIs; gray dots are that pattern's 30 pseudo-patterns. Left: read $-$ in-flight log rate ratio. Middle: re-expression after a forced wipe vs placebo. Right: named repair messages after a wipe vs placebo. Every pattern sits inside its pseudo-pattern cloud.}
+
+\htelos{A context wipe does not erase what an agent was talking about: it comes back at about 0.9 of the normal rate within 20 calls, and about 1.4 times faster when the agent re-reads it. This holds for any vocabulary, so no special mechanism is needed to keep a shared idea alive through wipes; keeping it in readable chat is enough. Do not expect other agents to restore a wiped agent's ideas: named messages to it do not rise (RR 0.95--1.07).}
+
+\hbottom{In \#51 the memeplexes survive wipes and spread by reading only as much as random vocabulary does; no functional behavior beyond that is seen.}
+
+\hresults{\footnotesize\begin{tabular}{@{}p{0.30\columnwidth}p{0.48\columnwidth}l@{}}
+\hline
+prediction & observed & verdict\\\hline
+P1 read-gated adoption & CI$>$0 in 2/15 (K02 hub-carried, K05); $p_{\rm ps}\ge0.06$; power $\le$0.53 & inconcl.\\
+P2 named $\ge3\times$ unnamed & no P1 pass & n/a\\
+P3 newcomers follow reads & power $\le$0.15; K09 first for 5/11 & untestable\\
+P4 wipe HR $\ge$0.8 & median 0.90 (0.78--1.11); pseudo 0.89 & supp.$^*$\\
+P4 read-gated faster & HR 1.2--2.3, CI$>$1 in 10/15; pseudo 1.39 & supp.$^*$\\
+P5 repair RR$>$1.2 & wipe 0.95--1.07; challenge 0.64--0.97 & failed\\
+P6 specialization & $z$ 9--153; beyond pseudo 2/14 (chance) & pseudo lvl\\
+P6 $\Omega<0$ (amended) & 0/14 below surrogate p05 & failed\\
+\hline
+\end{tabular}\\[1pt]{\footnotesize $^*$as written; matched by pseudo-patterns, so not pattern-specific.}}
+
+\hobsb{../figures/r1_synth.pdf}{Synthetic validation on the real ledger. Left: the read $-$ in-flight test has size $\le$0.05 in fast and slow field worlds and reaches power 0.8 at log-OR 0.3 only near 4,000 events. Right: on each candidate's own skeleton the power stays below 0.6, because only 100--1,200 rows hold a $K$ item in the $\sim$8-s mirror window.}
+
+\hcaveats{Recruitment is unpowered as a negative: a pattern-specific read effect of log-OR 0.3 could be missed. The adoption design is estimable for 3 of 15 memeplexes. Newcomers are too few. Host specialization measures each agent's own vocabulary (the shared-prior impostor). No message-level relay classifier exists; dropping Claude Fable 5's items changes nothing. The candidate results and the read-gating pseudo comparison are post hoc. Pseudo-patterns use 30 draws, so $p_{\rm ps}\ge0.032$. The reserved \#51 tail (51m) is not used.}
+
+\hnext{Widen the read window to the whole call with a matched in-flight placebo, or pool memeplexes hierarchically, to power P1. Test specificity directly: does reading a $K$ item raise $K$ more than other patterns? Measure repair as restatement of the host's own lapsed elements. Run the frozen \texttt{confirm.py} on 51m after sign-off.}
