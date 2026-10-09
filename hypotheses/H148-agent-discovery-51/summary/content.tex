@@ -1,0 +1,33 @@
+\hwhat{The claim: an autonomous search can find which systems in \#51 behave as individuals, at every scale and nested, with no candidate groups named in advance. A system is a set of atoms (agents, repos, rooms, H145 meaning elements). It is an individual when its own state predicts its future beyond everything outside it, on held-out days, and that holds when the search runs on odd days and is scored on even days and the reverse. \textbf{Result:} at 30-min resolution the search finds no system larger than one atom that holds out of sample, at the agent level or the element level. Its in-sample maxima are as many on time-rotated data. Agents' self-information lives at the day scale: a within-day shuffle of an agent's own states removes it for 26 of 27 agents.}
+
+\hmodel{Information dynamics (model 12), Krakauer individuality and boundary expansion. Atom $a$ joins system $X$ when it carries information about $X$'s future while it sits in the environment, and $X$ about $a$'s: the drop in non-closure $n_C$ on both sides. Each term is a held-out (leave-one-day-out) log-loss difference given the environment $E$ (phase, exogenous input incl.\ relayed human input, rest-of-village presence). The null shuffles $a$'s days within blocks of six same-parity days; it keeps $a$'s within-day dynamics and phase.}
+
+\hmath{\vspace{-5pt}\begin{gather*}
+\tau(a,X)=I(x';a\mid x,E)+I(a';x\mid a,E)\\
+z_\tau=(\tau-\langle\tau_{\rm perm}\rangle)/\sigma_{\rm perm},\quad \text{add if } z_\tau\ge3
+\end{gather*}\vspace{-7pt}}
+
+\hobs{../figures/g51.pdf}{Left: single-atom test per agent (colonial $A$ against a within-day permutation of the agent's own states), odd and even days. Only DeepSeek-V3.2 passes both halves. Right: the search. No system is discovered at either level; 0 of 16 agent-level and 1 of 72 element-level local maxima hold out of sample (one direction only), and rotated data give as many maxima.}
+
+\htelos{Do not expect 30-minute activity logs to reveal multi-agent individuals in a village like \#51. An agent's next state is predicted by which project it holds that day, not by its last half hour; give each agent a day plan it can keep. To find nested individuals, log at the day scale over months, or plant interventions; the search here needs a planted pair coupling of $\rho\ge0.9$ to reach 0.65 recovery.}
+
+\hbottom{No system larger than one atom behaves as an individual out of sample in \#51 at 30 minutes; agents are individuals only at the day scale.}
+
+\hresults{\footnotesize\begin{tabular}{@{}p{0.27\columnwidth}p{0.51\columnwidth}l@{}}
+\hline
+prediction & observed & verdict\\\hline
+P1 agents found ($\ge$90\%) & 1/27 = 0.04 [0.01, 0.18]; post hoc cross-day null 20/27 & failed\\
+P2 agent + own repo & 0/25; synthetic power $\le$0.08 & untestable\\
+P3 $\ge$3 agents' worth & none; planted pair recovery 0.40 ($\rho$ 0.7) & not ident.\\
+P4 memeplex individual & none of 140 elements; planted memeplex 0/3 & not ident.\\
+P5 no field system & 0 element systems discovered & vacuous\\
+P6 $\kappa>0$ & no candidate & not testable\\
+P7 rotated $\le$10\% of real & agents 13.3 vs 16 (0.83); elements 69 vs 72 (0.96) & failed (K1)\\
+\hline
+\end{tabular}}
+
+\hobsb{../figures/synthetic.pdf}{Synthetic validation on the real \#51 skeleton (20 replicates per world at the agent level). Left: worlds with a false multi-atom discovery, 0--0.10. Right: recovery. The planted pair is found in both directions in 0.40 of worlds at $\rho=0.7$ and 0.65 at $\rho=0.9$; the agent + own-repo closure in $\le$0.08.}
+
+\hcaveats{The search scores 30-min transitions within days; day-scale structure is in its nulls by design. The synthetic agents had no day-level persistence, so the pre-registered single-atom null was not checked against day-scale individuality. Power is low: K3 makes P3 and P4 not identifiable, and P2 untestable. Ten amendments (A1--A10) replace the card's matched-random excess, which grew without bound in the synthetic worlds; all are dated before real data. A diagnostic read the plug-in lagged information of 12 real agent--repo pairs before the synthetic commit (disclosed). The reserved tail 51m is not used.}
+
+\hnext{Rerun at the day scale with a day-level null (1-day bins need longer spans than one goal period). Use the H145 memeplex state directly as an atom. Test interventions (NE41 wipes) on single agents' day plans. Run the frozen \texttt{confirm.py} only after the reserved commit cleaner exists.}

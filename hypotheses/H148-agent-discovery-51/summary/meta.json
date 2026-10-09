@@ -1,0 +1,34 @@
+{
+ "complete": 75,
+ "faithfulness": 1.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done at the agent and element levels: rebuilt scheme on memeplex.clean_commits (4f6ab2e) and H145 bins; synthetic size and power (80 agent-level and 9 element-level worlds) committed before each real run; amendments A1-A10 dated before real data; all predictions computed; 7 estimates rows; G51 README; frozen confirm.py dry-run. Not done: day-scale rerun, bin sweep, kappa (no candidate), 51m.",
+  "faithfulness": "Scorecard A1 B1 C0 D0 E0 F1 G0 H0 I0. Calibrated coupling null (P(z>=3) 0.0017) and two-direction rule with size <= 0.10 per world, but power is low (pair 0.40 at rho 0.7) and the in-sample maxima match rotated data (K1).",
+  "usefulness": "Operator fact with a number: in #51 an agent's next 30-min state is predicted by its day's project, not by its last half hour (1/27 agents beat a within-day shuffle; 20/27 beat a cross-day one). Logs at this resolution do not reveal multi-agent individuals."
+ },
+ "one_line": "An autonomous Krakauer boundary search over #51's agents, repos, rooms and 140 meaning elements finds no system larger than one atom that holds out of sample at 30 min; agents are individuals only at the day scale (1/27 within-day, 20/27 cross-day post hoc).",
+ "models": [
+  {
+   "model": "12-information-dynamics",
+   "role": "primary",
+   "outcome": "failed",
+   "note": "Boundary search with transfer-term coupling and day-permutation nulls: no multi-atom individual out of sample; in-sample maxima as many as on rotated data (K1)"
+  },
+  {
+   "model": "04-semantic-information",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Kolchinsky-Wolpert value (kappa) not computed: no discovered multi-agent or memeplex individual"
+  }
+ ],
+ "rated_by": "H148 agent (suggested)",
+ "updated": "2026-10-09",
+ "v2": {
+  "claim": "In #51 (07-06 to 09-04, 30-min bins, odd/even day split), an autonomous Krakauer boundary search over 32 agents, 33 repos, 2 rooms and 140 meaning elements finds no system larger than one atom that holds out of sample in both directions (0/16 agent-level and 1/72 element-level local maxima hold one way; rotated data give as many maxima), and only 1 of 27 agents beats a within-day permutation of its own states.",
+  "scope": "#51 exploration days; 30-min bins only; power for planted pairs 0.40 (rho 0.7) to 0.65 (rho 0.9), memeplex 0/3; P2 untestable; P3-P4 not identifiable",
+  "direction": "negative",
+  "original_verdict": "failed",
+  "credence": null
+ }
+}

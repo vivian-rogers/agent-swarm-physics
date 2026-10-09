@@ -1,6 +1,6 @@
 # H148: Autonomous agent discovery in #51: the systems that are individuals, found by search at every scale and nested
 
-**Status:** round 1 in progress (2026-10-09): synthetic validation done at the agent level, amendments A1–A9 dated before real data. Card written 2026-10-09 from HH398 (Vivian: "any way you can develop your info dynamics framework to autonomously identify agents in the system?"). No H148 statistic has been computed. Uses H145's elements and the shared estimator `infra/shared/individuality.py` (H145 builds both and writes `scratchpad/H145_modules.READY` and `scratchpad/H145.READY`); until then it builds the search code and its synthetic validation.
+**Status:** round 1 done (2026-10-09): **failed** (P1 failed; P7 failed, so K1 fired) with P2 untestable and P3–P4 not identifiable. No system larger than one atom holds out of sample in #51 at 30 min. Card written 2026-10-09 from HH398 (Vivian: "any way you can develop your info dynamics framework to autonomously identify agents in the system?"). No H148 statistic has been computed. Uses H145's elements and the shared estimator `infra/shared/individuality.py` (H145 builds both and writes `scratchpad/H145_modules.READY` and `scratchpad/H145.READY`); until then it builds the search code and its synthetic validation.
 **Fields:** info theory, complex systems, philosophy of individuality
 **Literature:** [Krakauer et al. 2020](../../literature/krakauer-2020-information-theory-of-individuality.md) (boundary expansion); [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md) (Sec. 6: agents as maximizers of semantic information over system–environment splits); [Schwitzgebel 2015](../../literature/schwitzgebel-2015-united-states-probably-conscious.md) (no anti-nesting principle); [Vivian's essay](../../literature/jazzloaf-2026-agent-ecologies-essay.md) (agent observatories; fingerprints of agent-like systems)
 **Definitions used:** *egregore (ideology)* and *group superagent* (`physics-models/DEFINITIONS.md`); *Krakauer individuality*; *κ_c*; *environment E (impostor bundle)* as in H145.
@@ -40,21 +40,21 @@ The list of discovered individuals with their atoms, scale (agent, agent + artif
 Size- and composition-matched random systems (primary); the search rerun on within-atom time-shuffled data (calibrates how many local maxima a search finds by chance); field-only skeletons (DQ8 `simulate.py`); role-text and operator-topic systems as the field control.
 
 ## Faithfulness scorecard
-Scored per model, mapping and window; 0/1/2. Thresholds: `writeup/papers/thermodynamics/sections/method.tex`.
+Scored per model, mapping and window; 0/1/2. Thresholds: `writeup/papers/thermodynamics/sections/method.tex`. Round 1 scores: see "Scorecard (round 1)" below.
 **Rival models:** W_atoms (only single agents are individuals; nothing grows), W_field (the search grows systems along shared fields; they fail out of sample once E holds the fields), W_nested (planted nested individuals: an agent with its artifact inside a memeplex).
 **Reserved data:** 51m.
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | atoms and states from named tables; E as H145 | | |
-| B assumptions | Markov order 1; split-half stationarity; bin sweep | | |
-| C adequacy | local maxima beat matched random systems out of sample | | |
-| D unfitted predictions | the nesting structure and the κ of discovered individuals are not used by the search | | |
-| E interventional | NE41, hub losses, operator actions, #focus (κ) | | |
-| F identifiability | planted nested individuals recovered on the real skeleton; false discoveries in W_atoms and W_field | | |
-| G ground truth | each agent found; agent + own artifact found for most agents (H58); role texts not found | | |
-| H comparative | W_nested vs W_atoms vs W_field | | |
-| I transfer | 51m (not run) | | |
+| A mapping | atoms and states from named tables; E as H145 | 1 | named tables and H145 elements; content dropped from the agent state (A3); no role-text projections in E |
+| B assumptions | Markov order 1; split-half stationarity; bin sweep | 1 | odd/even split used; one width (30 min); day-level persistence sits in the single-atom null |
+| C adequacy | local maxima beat matched random systems out of sample | 0 | rotated data give as many maxima (0.83, 0.96); 0 real maxima hold in both directions |
+| D unfitted predictions | the nesting structure and the κ of discovered individuals are not used by the search | 0 | nothing discovered |
+| E interventional | NE41, hub losses, operator actions, #focus (κ) | 0 | no candidate |
+| F identifiability | planted nested individuals recovered on the real skeleton; false discoveries in W_atoms and W_field | 1 | size ≤ 0.10 per world; recovery 0.40 (ρ 0.7), 0.65 (ρ 0.9), memeplex 0/3 |
+| G ground truth | each agent found; agent + own artifact found for most agents (H58); role texts not found | 0 | 1/27 agents; 0/25 own-repo systems (untestable) |
+| H comparative | W_nested vs W_atoms vs W_field | 0 | real data distinguish none (no growth) |
+| I transfer | 51m (not run) | 0 | confirm.py frozen, dry-run only |
 
 ## Prediction
 *Written 2026-10-09, before running the analysis on real data.*
@@ -86,11 +86,11 @@ Scored per model, mapping and window; 0/1/2. Thresholds: `writeup/papers/thermod
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | pending | |
+| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | failed | P1 1/27 agents; 0 discoveries (agents, elements); P7 ratio 0.83 / 0.96 (K1) |
 | 51m (reserved) | confirmatory | not run | |
 
 ## Results
-*Pending.*
+See Round 1 below (2026-10-09). In short: no system larger than one atom holds out of sample in #51 at 30-min resolution; agents' self-information is day-level (1/27 pre-registered; 20/27 with a post hoc cross-day null); P2 untestable, P3–P4 not identifiable, K1 fired.
 
 ## Round 1 (2026-10-09)
 
@@ -163,5 +163,41 @@ Run: `analysis/run.py --level agents --shuffle-reps 3` (67 atoms; 345 / 330 tran
 - **What the single-atom result says.** At 30 min, an agent's state (which project it touches) carries information about its next state mainly through the day's state: a within-day shuffle of its own states keeps the held-out colonial A (median 0.18 bits per transition on odd days, 28 agents with ≥ 40 transitions) for 26 of 27 agents. Agents hold one project for most of a day. Self-information lives at the day scale. The synthetic agents had no day-level persistence, so the synthetic check did not anticipate this; the pre-registered null is conservative for day-scale individuality.
 - The two rooms are single-atom individuals under both nulls (talk volume persists within the day).
 
+### Results: element level (2026-10-09, after commit b9e4a38; non-reserved data only)
+Run: `analysis/run.py --level elements --shuffle-reps 2` (140 element atoms: 80 clusters, 60 markers; 25 role-text and 8 operator-topic elements; 18 min). Output: `results/elements_w30.json`, `search/elements_w30.json`, `individuals_elements.json`.
+
+| | Statistic | Rule | Verdict |
+| --- | --- | --- | --- |
+| P4 ideologies | 0 memeplex systems discovered; 72 local maxima (56 pairs, 15 triples, 1 quadruple), 1 holds out of sample in one direction (two elements, mean z 2.1) and is not matched by the other direction | K3: planted memeplex recovered 0/3 | **not identifiable** |
+| P5 fields not found | 0 discovered element systems, so 0 role-text or operator-topic systems | ≥ 1 field system falsifies | **supported (vacuous)**: nothing was discovered |
+| P7 calibration | rotated data: 64 and 74 local maxima (mean 69.0) vs 72 on real data, ratio 0.96; held: 2.0 vs 1 | ≤ 0.1 / ≥ 0.5 | **failed → K1** |
+| single elements | 1 / 140 elements beat the within-day permutation on both halves; post hoc cross-day null: 49 / 140 | — | descriptive |
+
+### Impostors (filled)
+| Impostor | How handled | Status |
+| --- | --- | --- |
+| Scheduler field | phase in E; DQ8 presence trim on the system's agents; day-permutation nulls keep each atom's phase; eligibility rule (A5); rotated-data calibrator (P7) | removed (synthetic null P(z ≥ 3) = 0.0017 with the trim vs 0.012 without) |
+| Exogenous field | exogenous input in E with relayed human input (A8); W_field size 1/20 (agent level), 0/3 (element level); P5 | partly (P5 is vacuous: nothing was discovered) |
+| Shared model priors | not modelled (no lab covariates); moot for a null result | open |
+| Contemporaneous convergence | coupling uses lagged transfer terms only; E lagged; odd/even split | partly |
+
+### Scorecard (round 1)
+| Axis | Test | Score | Evidence |
+| --- | --- | --- | --- |
+| A mapping | atoms from named tables (`project_calls.proj`, cleaned commits, chat rooms, H145 elements); E with relayed input | 1 | content dropped from the agent state (A3); role-text projections not in E |
+| B assumptions | Markov order 1; odd/even split; bin sweep | 1 | one width (30 min); day-level persistence sits in the single-atom null |
+| C adequacy | local maxima beat rotated data out of sample | 0 | ratio 0.83 (agents), 0.96 (elements); 0 held real maxima |
+| D unfitted predictions | nesting and κ of discovered individuals | 0 | nothing discovered |
+| E interventional | NE41, hub loss, operator actions (κ) | 0 | not run: no candidate |
+| F identifiability | planted recovery; false discoveries | 1 | size ≤ 0.10 per world; recovery 0.40 (ρ 0.7), 0.65 (ρ 0.9), memeplex 0/3, own link ≤ 0.08 |
+| G ground truth | agents found; agent + own repo; role texts not found | 0 | 1/27 agents (pre-registered); 0/25 own-repo systems (untestable) |
+| H comparative | W_nested vs W_atoms vs W_field on real data | 0 | real data match none: no growth |
+| I transfer | 51m | 0 | not run (`analysis/confirm.py` dry-run only) |
+
+**Claim that stands:** In #51 (07-06 → 09-04, 30-min bins, odd/even day split), an autonomous Krakauer boundary search over 32 agents, 33 repos, 2 rooms and 140 meaning elements finds no system larger than one atom that holds out of sample in both directions (0 of 16 agent-level and 1 of 72 element-level local maxima hold in one direction; rotated data give as many maxima, ratio 0.83 and 0.96), and only 1 of 27 agents beats a within-day permutation of its own states. Exclusions: P2 untestable (power ≤ 0.08); P3 and P4 not identifiable (K3: planted pair 0.40 at ρ 0.7, memeplex 0/3); P5 vacuous; P6 not testable; the cross-day single-atom result (20/27 agents) is post hoc; K1 fired, so no discovery would have been read.
+
 ## Notes
 - 2026-10-09: written by the coordinator. The estimator design note of the stopped H143 run (`scratchpad/village_H143/individuality_design.txt`) applies: H58's key names map to the published Krakauer names as H58 "colonial" = organismal A*, H58 "organismal" = colonial A, H58 "environmental" = nC; `project_calls.label` values are URLs and hosts and need a mapping to repo slugs; match nulls on non-pause calls (Terra and Luna made 61–83% of their calls as pauses).
+- 2026-10-09 (round 1, H148 agent): the run resumed a stopped draft; the draft's commit table (built before 4f6ab2e) was rebuilt with `memeplex.clean_commits`. Shared modules used: `memeplex.make_bins`, `memeplex.clean_commits`, `memeplex.slug`, `individuality.krakauer_discrete` (the batched evaluator in `h148lib.py` reproduces it exactly; `h148lib.verify()`), `individuality.transitions`, `individuality.delta_integration`, `individuality.rotate_within_day`, `individuality.onehot`. H145's frozen elements, expression panel, role patterns and exo table (memeplexes.json md5 9b899c34) were read only after `H145.READY`. `individuality.boundary_expand` was not used: its nC-only rule grows by estimator variance on joint codes (H145 note), and A1 replaces it with the transfer-term coupling.
+- Round 2 candidates: a day-scale search (1-day states with a day-level null, over several goal periods since one period gives 22 transitions per half); H145 memeplex states as atoms; a reserved-day commit cleaner so `confirm.py` can run.
+

@@ -14,7 +14,7 @@ Guard: the confirm mode needs both flags and a reserved-data ledger entry, and i
 reserved days (`memeplex.clean_commits` masks them; requested from the coordinator). Until then it refuses.
 
     uv run python confirm.py --dry-run
-        runs the identical scoring on a non-reserved stand-in (the last 12 exploration days, 2026-08-19 -> 09-04) from
+        runs the identical scoring on a non-reserved stand-in (the last 13 exploration days, 2026-08-19 -> 09-04) from
         the exploration panel; it reads no reserved row. The stand-in is a code check, not a test.
 """
 from __future__ import annotations

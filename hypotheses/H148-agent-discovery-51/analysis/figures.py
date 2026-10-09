@@ -28,12 +28,16 @@ def synthetic():
     rows = []
     for f, ws in S.items():
         tag = f.replace("synthetic_w30_", "")
+        if "za2.5" in tag:          # stopped variant (5 replicates), not used
+            continue
         for w, d in ws.items():
             rows.append((tag, w, d))
     fig, ax = plt.subplots(1, 2, figsize=(7.2, 2.8))
     labs = []
     for i, (tag, w, d) in enumerate(rows):
-        lab = f"{w}\n{tag} (n={d['n_reps']})"
+        short = {"el0": "agents", "el0_rho0.9": "agents ρ.9", "el140_elonly": "elements",
+                 "el140_elonly_d": "elements"}.get(tag, tag)
+        lab = f"{w.replace('W_', '')}\n{short}\nn={d['n_reps']}"
         labs.append(lab)
         k, n = d["worlds_with_false_multi"], d["n_reps"]
         lo, hi = d["worlds_with_false_multi_ci"]
@@ -65,6 +69,7 @@ def synthetic():
 def real(level: str = "agents"):
     R = json.loads((L.OUT / "results" / f"{level}_w30.json").read_text())
     sg = [r for r in R["singles"] if r["kind"] == "agent"]
+    sg = [r for r in sg if np.isfinite(r["z_h0"] if r["z_h0"] is not None else np.nan)]   # agents with >= 40 transitions
     sg.sort(key=lambda r: -(np.nan_to_num(r["z_h0"]) + np.nan_to_num(r["z_h1"])))
     fig, ax = plt.subplots(1, 2, figsize=(7.2, 3.0), gridspec_kw={"width_ratios": [1.4, 1]})
     x = np.arange(len(sg))
@@ -76,17 +81,23 @@ def real(level: str = "agents"):
     ax[0].set_ylabel("single-atom z (colonial A vs permutation)", fontsize=7)
     ax[0].set_title("(a) agents as single-atom individuals (green: both halves p ≤ 0.025)", fontsize=7)
     ax[0].legend(fontsize=6)
-    D = R["discovered"]
     ax[1].axis("off")
-    lines = [f"discovered systems (both directions): {len(D)}"]
-    for d in D:
-        lines.append(f"{d['scale']}: " + " + ".join(n[:22] for n in d["names"]))
-        lines.append(f"   z_oos {d['z_oos_h0']:.1f} / {d['z_oos_h1']:.1f}; matched-random z {d['z_matched_random_h1']:.1f}")
-    sh = R.get("shuffle", [])
-    lines.append("")
-    lines.append(f"rotated data: multi-atom discoveries {[s['n_multi'] for s in sh]}")
+    lines = []
+    for lv, lab in (("agents", "agent level (32 agents, 33 repos, 2 rooms)"), ("elements", "element level (140 elements)")):
+        f = L.OUT / "results" / f"{lv}_w30.json"
+        if not f.exists():
+            continue
+        Rv = json.loads(f.read_text())
+        p7 = Rv["predictions"]["P7"]
+        lines += [lab,
+                  f"  discovered (both directions): {len(Rv['discovered'])}",
+                  f"  local maxima: real {p7['real_local_maxima']}, rotated {p7['rotated_local_maxima_mean']:.1f}",
+                  f"  held out of sample: real {p7['real_held_maxima']}, rotated {p7['rotated_held_maxima_mean']:.1f}",
+                  ""]
+        for d in Rv["discovered"]:
+            lines.append("  " + d["scale"] + ": " + " + ".join(n[:16] for n in d["names"]))
     ax[1].text(0, 1, "\n".join(lines), va="top", fontsize=6, family="monospace")
-    ax[1].set_title("(b) discovered systems", fontsize=8)
+    ax[1].set_title("(b) the search on #51 (30-min bins)", fontsize=8)
     fig.tight_layout()
     fig.savefig(FIG / "g51.pdf")
     print("wrote", FIG / "g51.pdf")
@@ -95,4 +106,4 @@ def real(level: str = "agents"):
 if __name__ == "__main__":
     synthetic()
     if "--real" in sys.argv:
-        real("all" if "--all" in sys.argv else "agents")
+        real("agents")
