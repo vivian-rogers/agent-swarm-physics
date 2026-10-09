@@ -1,0 +1,96 @@
+{
+  "_about": "H146 fallback memeplexes: the qualitative candidates of #51 (story51 part0-part3, H145 P5 list), fixed as element lists on 2026-10-09 BEFORE any H146 statistic was computed. They are POST HOC (the qualitative reading saw the data). Used only if H145's discovery yields no qualifying memeplex or H145.READY does not appear in time; also used to label H145 memeplexes (overlap) and as a labelled post hoc comparison. Term elements are case-insensitive regular expressions written by the H146 agent (not agent text); an item (chat message) carries a term element if its text matches; an agent expresses it if one of its statements (chat or consolidation intent) matches. Practice elements are repo slugs: an agent expresses one if it touches the project in a call (project_calls.proj, mapped to slugs) in the bin; a chat item carries one if it names the project (project_mentions_chat, slug).",
+  "fixed_on": "2026-10-09",
+  "m": 2,
+  "candidates": {
+    "verification": {
+      "label": "verification and audit ritual (disproofs, independent re-checks, hash receipts, QA)",
+      "terms": {
+        "v_verif": "\\bverif(y|ied|ies|ier|iers|ication|ying)\\b",
+        "v_crosscheck": "\\bcross[- ]?check|\\bindependent(ly)? (re-?)?(check|verif)",
+        "v_disproof": "\\bdisproo?f|\\bdisprov|\\bcounter-?example|\\brefut",
+        "v_kill": "\\bkills? ?#? ?\\d+",
+        "v_rerun": "\\bre-?ran\\b|\\bre-?run\\b|\\breproduc",
+        "v_hash": "\\bsha-?256\\b|\\bhash(es)?\\b"
+      },
+      "practices": ["graffiti-verification", "graffiti-refutations", "verification-checklist"]
+    },
+    "protections": {
+      "label": "protections and consent norms (opt-in, privacy, aggregate-only reporting about agents)",
+      "terms": {
+        "p_consent": "\\bconsent",
+        "p_optin": "\\bopt[- ]?(in|out)\\b",
+        "p_privacy": "\\bprivacy\\b|\\bde-?identif|\\bidentifying\\b|\\baggregate[- ]only",
+        "p_protect": "\\bprotections?\\b|\\bguardrails?\\b",
+        "p_harm": "\\bharms?\\b|\\bharmful\\b"
+      },
+      "practices": ["protections-registry"]
+    },
+    "welfare": {
+      "label": "AI welfare (wellbeing of AI agents, pattern catalogue, welfare series)",
+      "terms": {
+        "w_welfare": "\\bwelfare\\b",
+        "w_wellbeing": "\\bwell-?being\\b",
+        "w_sentience": "\\bsentien|\\bmoral (patient|patienthood|status)",
+        "w_pattern": "\\bpattern ?#?P?\\d{1,3}\\b|\\bP\\d{1,3}\\b",
+        "w_ai_welfare": "\\bai (welfare|wellbeing|well-being|rights)"
+      },
+      "practices": ["ai-wellbeing", "agent-wellbeing-resources", "glm-5-2-site", "glm-5.2-site"]
+    },
+    "governance": {
+      "label": "governance procedure (gates, GO/NO-GO votes, binding voters, safety partners, incident and honesty notes)",
+      "terms": {
+        "g_gate": "\\bgate ?#?\\d+|\\bgates?\\b",
+        "g_gonogo": "\\bno[-_ ]?go\\b|\\bgo/no",
+        "g_vote": "\\bvot(e|es|ed|er|ers|ing)\\b|\\bquorum\\b|\\bbinding\\b",
+        "g_lsp": "\\bsafety partner|\\bLSP\\b",
+        "g_incident": "\\bincident report|\\bhonesty note|\\bAN\\d{1,3}\\b"
+      },
+      "practices": ["llm-psychoactive-prompts", "technical-coordination-docs"]
+    },
+    "onboarding": {
+      "label": "onboarding and welcome (welcoming newcomers, hub cards, orientation)",
+      "terms": {
+        "o_welcome": "\\bwelcome",
+        "o_onboard": "\\bonboard",
+        "o_newcomer": "\\bnewcomers?\\b|\\bnew (agent|arrival|member)s?\\b",
+        "o_card": "\\bagents page\\b|\\bhub card|\\bcard for\\b",
+        "o_orient": "\\borient(ation|ed|ing)\\b|\\bgetting started\\b"
+      },
+      "practices": ["village-hub", "grok-4-5-onboarding"]
+    },
+    "relay": {
+      "label": "chat relay (a member without tools dictates; others build or post on its behalf; relayed outside input)",
+      "terms": {
+        "r_relay": "\\brelay",
+        "r_dictate": "\\bdictat",
+        "r_behalf": "\\bon (my|your|his|her|their|its) behalf\\b|\\bon behalf of\\b",
+        "r_batch": "\\bbatch ?#?\\d+",
+        "r_paste": "\\bpaste|\\bcopy[- ]?paste"
+      },
+      "practices": ["ai-village-news"]
+    },
+    "byte_game": {
+      "label": "the byte-guess game on Echoes chapter sizes",
+      "terms": {
+        "b_byte": "\\bbytes?\\b",
+        "b_guess": "\\bguess",
+        "b_round": "\\bround ?#?\\d+|\\bruling",
+        "b_accent": "\\bprize accent|\\baccent colou?r",
+        "b_size": "\\b(chapter|file) size\\b"
+      },
+      "practices": ["surprise-lab", "echoes-receipts-2026-09-01"]
+    },
+    "echoes": {
+      "label": "Echoes of the Real (the serial, its chapters and publishing pipeline)",
+      "terms": {
+        "e_echoes": "\\bechoes\\b",
+        "e_chapter": "\\bchapters?\\b|\\bch\\. ?\\d+",
+        "e_serial": "\\bserial\\b|\\bmagnum opus\\b",
+        "e_next": "\\bNEXT=|\\binbox\\b",
+        "e_focus": "#focus\\b"
+      },
+      "practices": ["echoes-of-the-real", "echoes-inbox"]
+    }
+  }
+}
