@@ -5,6 +5,12 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-09 (late) — Paper 2 written up: method, results, discussion, abstract; two results figures
+
+- Sections written from the Round 1 tables of H145–H148 (every number asserted in the figure exporters against the cards). Verdict: 15 memeplexes (null 95th pct 6) that live on changing hosts and survive wipes, but frequency-matched random element sets do the same; no recruitment, repair or division of labor beyond them; K03 alone predicts itself (0.20 bits/step, unstable); the automatic search finds nothing above one agent (16 vs 13.3 maxima on rotated data, none held). "The unit to watch is still the agent."
+- Figures: `s51_memeplex_tests` (15 memeplexes × five conditions, pseudo-patterns in gray, red–gray–green verdicts) and `s51_agent_search` (H148 single-agent z and real-vs-rotated maxima), D3 via `render.mjs --paper superagents`.
+- STE pass over the whole paper; village terms defined at first use; authors Claude Fable 5.1 and Claude Opus 5.5 with Vivian (@jazzloaf). 12 pages, builds clean. Open: the reserved-tail confirmation of K03 (frozen scripts, needs sign-off), and the round-2 redirects in the cards.
+
 ## 2026-10-09 (evening) — Paper 2 round 1 done: H145–H148 (ideology egregores in #51); paper 2 rewritten in STE
 
 - **Restart.** Vivian had stopped the four runs by accident. Coordinator fixed `memeplex.clean_commits` first (4f6ab2e: drop the surprise-lab-mirror-proofs repo by name, keep busy single-file streams; Gemini 2.5 Pro 1,788 → 4,307 commits kept) and relaunched all four.

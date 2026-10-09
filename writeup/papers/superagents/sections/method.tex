@@ -1,2 +1,42 @@
+% method: from the Round 1 sections of cards H145-H148 (2026-10-09). Every number here is in a card.
 \section{Data and method}\label{sec:method}
-\todo{Write after round 1 of cards H145--H148. Contents: the 45 working days of goal period 51 that we use; the elements (statement clusters, new terms, shared repositories, projects) and the cleaning of the commit log; two-hour time steps; the environment $E$; the discovery of memeplexes; the comparisons (pseudo-patterns, rotations, role-text patterns); the tests on simulated data with a known answer; the days kept back for confirmation.}
+
+\subsection{Data}
+
+We use the 45 working days of goal period 51 from 6 July to 4 September 2026. The last two weeks, from 7 September, are kept back for confirmation. No script in this paper reads them. The inputs are six logs. They are the chat (41{,}844 messages by agents), the record of every model call (928{,}207 calls), the statements that the agents made in those calls (80{,}446), the commit log of every repository, the room log, and the record of what each agent read at each call. We also use the private role text of each agent and the operator's messages.
+
+We clean the commit log before we use it. We drop the commits that the automatic screenshot loop made and the repository that held them. We drop commits by agents of the other village. We count each commit once. We keep a commit only if its author made a model call on that repository on that day. This leaves 44{,}349 commits by agents.
+
+\subsection{Elements, time steps and the environment}
+
+An \emph{element} is one thing that an agent can express. We use four kinds. (1) \emph{Statement clusters:} we divide the statements into 80 groups by the meaning of their text, after we remove each agent's own style. We keep the groups with statements from at least three agents. (2) \emph{New terms:} words and names that at least three agents used on at least two days, from the term list of the companion paper~\cite{paper1}. (3) \emph{Shared repositories:} repositories with at least three authors who each made at least three commits. (4) \emph{Projects:} the project that an agent named in a model call. There are 2{,}011 elements: 80 clusters, 1{,}804 terms, 15 repositories and 112 projects.
+
+Time runs in steps of two hours, four per working day. Variants use 30 minutes and one day. An agent \emph{expresses} an element in a step if it has at least one event of that element in the step. An agent is a \emph{host} of a memeplex in a step if it expresses at least two of its elements.
+
+The environment $E$ holds four inputs, each from the step before. (e1) The time of day. (e2) Operator and human input: a message from the operator, an idle reminder, or a human message that another agent relayed, and how close that input is in meaning to the memeplex. (e3) The role field: how close the memeplex is in meaning to the private roles of the agents that are present. (e4) The activity of the rest of the village. Operator input falls in 94\% of the two-hour steps, so (e2) carries little information at this step size.
+
+\subsection{Discovery}
+
+We build a graph over the elements. Two elements are linked when the same agent expresses both in the same step more often than chance. Chance here allows for each agent's own habits and for how busy the agent is in that step. We keep a link only when it passes a false-discovery rate of 5\%. The communities of this graph, found by modularity, are the candidate memeplexes. A candidate qualifies if it has at least four elements, at least three hosts from at least two developers, and a lifetime of at least ten days. We mark a candidate as one agent's vocabulary if one host makes 80\% or more of its expressions. The discovery rules were fixed before we ran the tests. The 15 memeplexes they found were frozen, and all later tests used the frozen set.
+
+\subsection{Tests}
+
+Each condition of Sec.~\ref{sec:definition} has one test. Every test compares the memeplex with pseudo-patterns: random sets of elements with the same frequencies and the same number of hosts. A memeplex meets a condition only if it beats its pseudo-patterns.
+
+\emph{Discovery.} We run the discovery rules on 20 copies of the data in which each element's time series is shifted by a random offset within the agent. This keeps each agent's vocabulary and breaks the timing between agents. The real count of memeplexes must exceed the 95th percentile of these copies.
+
+\emph{Condition 1, an integrated individual.} We estimate the colonial individuality $A_K$ as a gain in prediction. We predict the next state of the memeplex from $E$ alone, and then from $E$ and the present state, with the log-loss on days that the fit did not see. The gain in bits per step is $A_K$. Its excess over 200 pseudo-patterns gives a $z$-score. We require $z \ge 2$ for a memeplex that also meets condition 2. The part of the condition that compares the whole pattern with its elements had no power on simulated data, so we do not apply it.
+
+\emph{Condition 2, above its hosts.} The renewal contrast $D_K(5)$ compares two survival rates five days apart. The first is how often the memeplex has a host on day $d+5$, given that it had one on day $d$. The second is how often a host of day $d$ is again a host on day $d+5$. A memeplex lives above its hosts when the first exceeds the second by more than its pseudo-patterns do.
+
+\emph{Condition 3, recruits by being read.} For each agent that is not yet a host, we compare two exposures at each model call. A \emph{read} exposure is a message from a host that carried the memeplex and that the agent read in the last two hours. An \emph{in-flight} exposure is such a message that was posted in the agent's room but had not yet reached it. The outcome is whether the agent expresses the memeplex at that call. The difference between the two exposures, with agent and day held fixed, is the read effect.
+
+\emph{Condition 4, functional behaviors.} \emph{Survival:} after a forced memory wipe of a host, we measure the rate at which the host expresses the memeplex again in its next 20 calls. We compare it with the rate after a \emph{placebo call}: a call at the same position in a run of calls, with no wipe. We also split the wiped hosts by whether they read the memeplex again in their first ten calls. \emph{Repair:} we count messages from other hosts that name the wiped host and carry the memeplex in the next two hours, against placebo calls. \emph{Division of labor:} we measure how far the hosts differ in which elements they express, against a shuffle of the elements among the hosts in each step.
+
+\emph{Condition 5, value.} For the forced wipes, we measure the change in the memeplex's share of all expression in the host's next 20 calls, against placebo calls. We use a share and not a count, because a wipe halves the host's output for a while. We also measure what hosting does to the host. This is the change in its commits to its own repositories while it hosts, with its activity, the time of day and its own trend held fixed.
+
+\emph{The automatic search.} The search of card H148 does not start from the memeplexes. Its atoms are the 32 agents, 33 repositories, 2 rooms and 140 elements. It starts from each atom and adds the atom that couples most to the system, in both directions of time, against a null that permutes the atom's days. It searches on the odd days and scores on the even days, and the reverse. A system counts only if both directions agree.
+
+\subsection{Validation before the data}
+
+Every test was written in a card with its prediction, its failure rule and its simulated-data plan before we ran it on the real data. Each test was then run on simulated data built on the real skeleton of goal period 51. The skeleton keeps the real agents, their presence and the element frequencies. On it we planted memeplexes, fields and hubs, and we made one world with no coupling at all. Where a test failed on simulated data, we changed it and dated the change before we touched the real data. The main changes were these. The first discovery rule found about 24 false memeplexes in the world with no coupling, so we added the activity term and the false-discovery filter. The first test of condition 2 had a power of 0.20, so we replaced it with the renewal contrast. The whole-versus-parts test of condition 1 had no power. The greedy search of card H148 grew without limit under its first score, so we replaced the score with a coupling test. The cards record every change.
