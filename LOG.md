@@ -5,6 +5,14 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-09 — New direction: egregores in #51 (HH386–HH391 → H143, H144)
+
+- Vivian: start a new research direction, identify egregores in GP51 using Krakauer individuality and Kolchinsky–Wolpert semantic information. This is paper 2 (`writeup/papers/superagents/`), essay Direction 3.
+- **Definition** added to `physics-models/DEFINITIONS.md`: an egregore is a group that is (i) a Krakauer individual on the substrate (colonial A excess over size-matched groups with the fields in E), (ii) held by no single member (leave-one-member-out Δ_min > 0), (iii) substrate-independent at the call scale (continuity across a member's NE41 wipe ≥ 0.9 of placebo), (iv) a valued channel (κ_G > 0 under a channel cut). (i) alone = candidate; all four = supported.
+- **H143 (search):** candidates from fixed families (H58 crews, shared-repo writer sets, #focus occupants, read communities, Krakauer boundary expansion, role pairs as the field control, labs, village), membership out of sample (first half of a window's days), three state channels (which-project from `project_calls`, 30-min content residuals, execute share), E = scheduler phase + rest-of-village + exogenous messages (lagged), bins 30 min / 2 h / 1 day. Windows A–E merge roster-join units to ≥ 5 days (exception (d), named). Priors: crews pass (i) in window A; (ii) fails (hubs); content passes only in #focus.
+- **H144 (value):** continuity of the group's project across member wipes (NE41), group dip β_G, read vs in-flight co-member channel information, the #focus room cut as the channel scramble (DiD), κ_G by channel; natives NE43 (nudges stop) and NE33 (newcomers). Prior: the artifact reading (W_artifact) with a small chat-steering term.
+- Both cards pre-registered 2026-10-09 with kill rules and synthetic plans; no code yet. H58's Krakauer estimator moves to `infra/shared/individuality.py`.
+
 ## 2026-10-09 — Multiple papers: writeup/papers/; essay into the literature; superagents paper scoped
 
 - **Restructure (Vivian: support multiple papers).** `writeup/paper/` → `writeup/papers/thermodynamics/` (git mv); new `writeup/papers/superagents/`; index `writeup/papers/README.md` maps each paper to its essay direction. Paths fixed in 24 files (figures-js exporters and README, table generators, slides, visuals docstrings), relative depths in `make_compendium_tex.py` (parents[3], `../../../hypotheses`), `make_model16/17.py` (parents[4]) and the paper's `\graphicspath`. `lib/render.mjs` takes `--paper <folder>` (default thermodynamics). CLAUDE.md layout row and the faithfulness pointer updated. Rebuilt from the new path: 318 pp., no errors, no missing files. **The public link moved** to `writeup/papers/thermodynamics/paper.pdf` once pushed; the old `writeup/paper/paper.pdf` URL will 404.

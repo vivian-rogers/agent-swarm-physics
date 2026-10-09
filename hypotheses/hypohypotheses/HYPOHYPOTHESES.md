@@ -1371,3 +1371,45 @@ Model 10 (Potts) held only as bookkeeping: H94's max-ent allocation is supported
 - HH379: one partition contrast decides between the read clock and the wall clock.
 - HH382: a variance split predicted from H130 without a new fit.
 - HH376: the Potts version of the strongest result, the named read-out coupling.
+
+## Egregores on a substrate of agents, in #51 (2026-10-09, coordinator, for Vivian)
+*Source:* Vivian's essay, Direction 3 (`literature/jazzloaf-2026-agent-ecologies-essay.md`): model emergent behavior as agents that run on a substrate of other agents. *Instruments:* Krakauer individuality (`literature/krakauer-2020-information-theory-of-individuality.md`) and Kolchinsky–Wolpert semantic information (`literature/kolchinsky-2018-semantic-information-autonomous-agency.md`). *What H01 and H58 left:* no superagent above agent + own artifact; the binary activity state had ≤ 7% power; the KW kernel was blind under hidden state; attraction crews of 6–8 in #51b–c are a lead, in-sample and not read-gated. *Why #51:* the largest N (21–32), the longest run (55 days), private goals (no shared kickoff field), the #focus side room (08-05 → 08-24, self-selected), NE41 wipes every ~14 min (the substrate loses its memory while the pattern may not), NE43 (operator organs removed), NE33 (newcomers), and a reserved tail for confirmation. The word *egregore* names the object: a group-level agent that lives on the agents the way we live on our cells.
+
+- **HH386 · An egregore is a Krakauer individual on the substrate: colonial individuality beyond size-matched groups, with the fields in E.** For a candidate set G (and its shared artifacts and channel), the group state (which project the group is on; the group's content direction; its work/talk mix) predicts its own next state beyond the environment E = (scheduler phase, the rest of the village, exogenous messages, lagged) and beyond size-matched random groups. H01 measured a binary activity state; this uses which-project (per-call labels), content (30-min style residuals) and behavior states, at 30 min, 2 h and 1 day.
+  - *Prediction:* colonial A excess z ≥ 2 for ≥ 1 candidate in #51 out of sample (membership from the first half of a window's days, scored on the second half); the attraction crews and the shared-repo crews pass on the allocation channel; assigned role pairs do not pass once the goal field is in E.
+  - *Check:* `project_calls`, `agent_win30_style_resid_period_*`, `behavior_states_v3`; held-out log-loss estimator (H58's, moved to `infra/shared/individuality.py`); 300 size-matched groups; within-day rotation null.
+  - *Kill:* no candidate passes out of sample with synthetic power ≥ 0.8 at a planted group store of ρ = 0.35.
+  - *Impostors:* scheduler (E; trimmed bins), private goals (agent identity as a covariate; rival pairs as the field control), shared priors (cross-lab candidates reported), convergence (E is strictly lagged; the read-gated test is HH389).
+  - *Models:* 12, 04 · *Builds on:* H01, H58, H81, HH296, HH321 · *Periods:* #51 a–l; #51 tail reserved
+  *Status (2026-10-09):* promoted at Vivian's request → H143.
+- **HH387 · The egregore's information is held by no single member: leave-one-member-out.** A Krakauer individual can be one hub plus followers (GPT-5.2 sat in 9 of 16 H58 qualifiers). An egregore's next state must be predicted by the group's past beyond every member's own past and own artifact.
+  - *Prediction:* for passing HH386 candidates, min over members of Δ_i = L(x′_G | x_i, a_i, E) − L(x′_G | x_G, E) > 0 with z ≥ 2 against size-matched groups; hub-and-spoke candidates fail (Δ_hub ≈ 0).
+  - *Check:* the same estimator with the member's own project, own artifact and own content as predictors.
+  - *Kill:* every passing candidate has a member whose own state carries the group's information (Δ_i ≤ 0 for some i).
+  - *Models:* 12 · *Builds on:* HH386, H58 (GPT-5.2), HH319 (synergy)
+  *Status (2026-10-09):* promoted at Vivian's request → H143.
+- **HH388 · The egregore outlives its substrate's memory: continuity across member wipes.** In #51 every member's context is erased every ~14 active minutes (NE41). If the group's state lives in the substrate's contexts, a member's wipe breaks the group's continuity; if it lives in the group (artifacts, chat, the others), it does not.
+  - *Prediction:* the group's state continuity across a member's forced wipe is ≥ 0.9 of its continuity across placebo calls; the member's own share of the group's output dips (the H58 self-dip), the group's output does not dip beyond the member's share (β ≤ 1).
+  - *Check:* `context_ledger_turns.reset_forced` events, H58 R3's F/P skeleton at call resolution (not H01's 5-min windows, where the positive control failed).
+  - *Kill:* continuity ratio < 0.7 for the passing candidates.
+  - *Models:* 04 · *Builds on:* H58 R3, H01 R6, H87
+  *Status (2026-10-09):* promoted at Vivian's request → H144.
+- **HH389 · The egregore's channel has value: read-gated joins and the room cut (Kolchinsky–Wolpert at the group level).** The group's channel is what co-members post. Its information I_chan is what a read co-member item tells about the member's next project; its value ΔV is what the group loses when the channel is cut. #51 has the cut: the #focus room (08-05 → 08-24) drops cross-room reads by 95% for groups split across rooms.
+  - *Prediction:* a read co-member item moves the member's next project toward the group's current project more than a posted-but-unread item at matched lag (the H58-R5 redirect); the room cut lowers continuity and output of split candidates against unsplit ones (DiD); κ_G = ΔV/I is identified and positive for ≥ 1 candidate.
+  - *Check:* `context_ledger_items` (read vs in-flight), `rooms_timeline`, `semantic_kappa.kappa_row`.
+  - *Kill:* read = in-flight for every candidate (the joins are convergence), and the room cut costs nothing (H01 R5d found +0.02 for crews).
+  - *Models:* 04 · *Builds on:* H58 R5 redirect, H67 (matched-lag placebo), H05, H01 R5d
+  *Status (2026-10-09):* promoted at Vivian's request → H144.
+- **HH390 · Operator organs: the village-level egregore loses closure when the operator stops (NE43).** HH305 at the #51 scale: the bookends stop on 08-05 and the nudges on 08-20. If the operator is an organ of a human–AI egregore, village nC (environmental determination with the operator in E) falls after each step and village colonial A does not rise to compensate.
+  - *Prediction:* nC(before) − nC(after) > 0 for both steps; colonial A of the village unchanged (z within ±1); the #focus split on 08-05 confounds the first step, so the second step (nudges, 08-20) is the cleaner test.
+  - *Check:* village state = the village's project-share vector and content centroid; E with and without operator variables.
+  - *Kill:* nC unchanged across 08-20 (the nudger carried no closure).
+  - *Models:* 12, 04 · *Builds on:* HH305, H74, H30, NE43
+  *Status (2026-10-09):* promoted at Vivian's request → H144 (N1) and H143 (N1).
+- **HH391 · Newcomers are absorbed by egregores, not by the village: enculturation at the group level (NE33).** Three agents join on 09-03/04 with empty memories. If an egregore exists, a newcomer's content and allocation move toward one group's state (the group it reads), not toward the village mean.
+  - *Prediction:* the newcomer's day-1 → day-2 move is closer to the centroid of the candidate it reads most than to the village centroid (bge and gte); the read-gated version beats in-flight.
+  - *Check:* `pair_day_reads` for whom the newcomer reads; content residuals; two days only (51k, 51l) and the reserved tail for confirmation.
+  - *Kill:* the move points at the village centroid or at the newcomer's own private goal.
+  - *Models:* 11, 12 · *Builds on:* H83 (enculturation), HH292, NE33 · *Periods:* 51k, 51l; #51 tail (reserved)
+  *Status (2026-10-09):* promoted at Vivian's request → H144 (N2).
+*Suggested first picks.* HH386 + HH387 together are the search (one card: candidate egregores, out of sample, with the field in E and the hub test). HH388 + HH389 together are the value (one card: does the group hold information its members lose, and is the channel worth anything). HH390 and HH391 are natives of #51 for the second card.

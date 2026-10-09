@@ -71,6 +71,12 @@ swarms; the dataset holds only the village's side of it.
 - Prefer content and artifact states over timing, where H01 had no power; run synthetic recovery first.
 - Unit of analysis stays one goal period (split at step changes); compare periods by their fitted values.
 
+## Cards (2026-10-09)
+
+- **H143 — Egregore search in #51** (`hypotheses/H143-egregore-search-51/`): Krakauer colonial individuality with the impostor bundle in E, out-of-sample candidates from eight families, the leave-one-member-out hub test, boundary expansion; natives NE43 and the #focus split. From HH386, HH387.
+- **H144 — Egregore value in #51** (`hypotheses/H144-egregore-value-51/`): continuity across member wipes (NE41), group dip, read-gated channel information, the #focus room cut as the channel scramble, κ_G by channel; natives NE43, NE33. From HH388–HH391.
+- The operational definition of an egregore is in `physics-models/DEFINITIONS.md` ("Egregore").
+
 ## Next step
 
-Write hypothesis ideas (HH, append-only numbering) for the Tier-1 periods, then promote the best to cards.
+Run H143 and H144 (synthetic validation first), then write HHs for #39→#40 (NE42 merge) and regime I (H81's slow mode under NE27/28/29).
