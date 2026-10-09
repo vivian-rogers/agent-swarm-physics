@@ -1,0 +1,36 @@
+{
+ "complete": 55,
+ "faithfulness": 1.0,
+ "usefulness": 1.0,
+ "rationale": {
+  "complete": "Round 1 done on #51 exploration data: elements rebuilt with the fixed cleaner, synthetic validation on the real skeleton (8 worlds x 20 reps) before real data, amendments A1-A5, frozen memeplexes, P1-P6 computed, post hoc robustness, 31 estimates rows, confirm.py frozen as dry-run. Missing: field control with A*, interventions, 51m.",
+  "faithfulness": "Discovery beats its null with calibrated size and power; renewal and colonial A pass only for 2-3 and 1 memeplexes with small margins; the field control is uninformative and two predictions (labels, time scale) failed. Scorecard A1 B1 C1 D1 E0 F1 G0 H1 I0.",
+  "usefulness": "Operator: shared vocabulary forms ~15 cross-lab topic communities carried mostly by the same agents; named norms are not shown to be self-sustaining. Method: the card's discovery rules produce ~24 false memeplexes without an activity-adjusted expectation."
+ },
+ "one_line": "#51 holds 15 cross-lab memeplexes beyond chance timing (null 95th pct 6), but only 2-3 renew their hosts and one broad topic community (K03) is a colonial individual beyond the coded fields (0.20 bits per 2-h step, z 2.96, fragile; field control uninformative).",
+ "models": [
+  {
+   "model": "12-information-dynamics",
+   "role": "primary",
+   "outcome": "mixed",
+   "note": "pattern-level colonial A beyond E for 1 of 15 memeplexes (K03, z 2.96); integration Delta untestable"
+  },
+  {
+   "model": "13-cultural-evolution-conventions",
+   "role": "secondary",
+   "outcome": "mixed",
+   "note": "15 cross-lab co-expression memeplexes beyond agent-scope rotation; host renewal for 2-3"
+  },
+  {
+   "model": "03-contagion",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "recruitment is H146's test"
+  }
+ ],
+ "rated_by": "H145 agent (suggested)",
+ "updated": "2026-10-09",
+ "v2": {
+  "credence": null
+ }
+}

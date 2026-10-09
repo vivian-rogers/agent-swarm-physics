@@ -1,6 +1,6 @@
 # H145: Ideology egregores in #51: memeplexes that live above their hosts and are Krakauer individuals at the pattern level
 
-**Status:** pre-registered (not run). Card written 2026-10-09 from HH392 and HH393, after Vivian's clarification that the egregore is "something like an ideology … that runs over agents, with its own functional set of behaviors", and after a qualitative reading of #51 (story section of `writeup/papers/superagents/`; scratch `story51/part0–3`). No H145 statistic has been computed. No code exists yet.
+**Status:** round 1 done (2026-10-09), exploratory, mixed. 15 cross-lab memeplexes are found beyond the null (P1 supported); 2–3 renew their hosts (P2 amended, fragile); one broad topical memeplex (K03) is a colonial individual beyond E at 2 h (P3a, z 2.96, fragile); the field control is uninformative (P4 failed), the qualitative labels are not recovered as predicted (P5 failed), and the time scale is 30 min, not 1 day (P6 failed, exploratory). P2 as written and Δ are untestable (A4, A5). Reserved 51m not run. Card written 2026-10-09 from HH392 and HH393, after Vivian's clarification that the egregore is "something like an ideology … that runs over agents, with its own functional set of behaviors", and after a qualitative reading of #51.
 **Fields:** info theory, cultural evolution, sociophysics
 **Literature:** [Krakauer et al. 2020](../../literature/krakauer-2020-information-theory-of-individuality.md); [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md); [Vivian's essay, Direction 3](../../literature/jazzloaf-2026-agent-ecologies-essay.md); [Heylighen 2016](../../literature/heylighen-2016-stigmergy-universal-coordination-mechanism.md); [Rosas et al. 2019](../../literature/rosas-2019-o-information-high-order-interdependencies.md)
 **Definitions used:** *egregore (an ideology running on a substrate of agents)*, *memeplex*, *hosts* (new, `physics-models/DEFINITIONS.md`); *Krakauer individuality*, *size-matched grouping* (here: frequency-matched pseudo-patterns); *meaning clusters* (shared instrument, exception (a)); H34 idea markers (`infra/shared/idea_markers.py`).
@@ -47,15 +47,15 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 
 | Axis | Test | Score | Evidence |
 | --- | --- | --- | --- |
-| A mapping | elements from embeddings, markers and cleaned commits; E from ledgers and role texts | | |
-| B assumptions | Markov order 1 per bin; stationarity by split halves; bin-width sweep | | |
-| C adequacy | held-out log-loss gains over E-only and element-only models | | |
-| D unfitted predictions | host renewal (ρ > J) is not used to find memeplexes; the qualitative labels predicted before results (P5) | | |
-| E interventional | NE41 wipes, hub losses, operator actions (H146, H147) | | |
-| F identifiability | synthetic worlds on the real #51 skeleton; size ≤ 0.10, power at planted strengths | | |
-| G ground truth | role-text patterns at the field level; the qualitative candidates recovered or not | | |
-| H comparative | W_egregore vs W_field vs W_hub vs W_prior | | |
-| I transfer | the tail 51m (not run) | | |
+| A mapping | elements from embeddings, markers and cleaned commits; E from ledgers and role texts | 1 | elements from embeddings, markers, cleaned commits, projects; E coarse (tertiles); Round 1 |
+| B assumptions | Markov order 1 per bin; stationarity by split halves; bin-width sweep | 1 | bin-width sweep done (P6); K03 not stationary across halves |
+| C adequacy | held-out log-loss gains over E-only and element-only models | 1 | held-out gains measured; A* z ≥ 2 for 3/15 memeplexes at 2 h |
+| D unfitted predictions | host renewal (ρ > J) is not used to find memeplexes; the qualitative labels predicted before results (P5) | 1 | renewal not used in discovery; labels fixed before outcomes; P5, P6 failed |
+| E interventional | NE41 wipes, hub losses, operator actions (H146, H147) | 0 | not done (H146, H147) |
+| F identifiability | synthetic worlds on the real #51 skeleton; size ≤ 0.10, power at planted strengths | 1 | 8 synthetic worlds × 20 reps: P1, P2 (A4), P3a calibrated; Δ and P2 as written untestable |
+| G ground truth | role-text patterns at the field level; the qualitative candidates recovered or not | 0 | role-text controls show no A*; story candidates not recovered as predicted |
+| H comparative | W_egregore vs W_field vs W_hub vs W_prior | 1 | rival worlds separated on synthetic; K03 not separable from a leaked field on real data |
+| I transfer | the tail 51m (not run) | 0 | 51m not run |
 
 ## Prediction
 *Written 2026-10-09, before running the analysis on real data.*
@@ -86,8 +86,8 @@ Scored per model, mapping and window; 0 = not done or failed, 1 = partial, 2 = p
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G51](goalperiod-subhypotheses/G51/README.md) (07-06 → 09-04) | exploratory | pending | |
-| 51m (reserved) | confirmatory | not run | |
+| [G51](goalperiod-subhypotheses/G51/README.md) (07-06 → 09-04) | exploratory | mixed | 15 memeplexes (null q95 6); P2 3/15; P3a 1 (K03, z 2.96); P4–P6 failed |
+| 51m (reserved) | confirmatory | not run | `analysis/confirm.py` dry-run only |
 
 ## Results
 See Round 1.
@@ -154,6 +154,58 @@ P2 as written (ρ_K(5) > J_K(5), difference above the pseudo-pattern 95th percen
 
 ### Sanity-check expectations (named before outcomes; never a tuning target)
 From `scratchpad/story51/part4_ideology_genealogy.md` §8–9 (qualitative reading of #51): verify-and-correct is the strongest candidate (≥ 8 hosts, ≥ 5 labs, rotating hosts); consent/protection ("aggregate-only", born 07-09) is a candidate; governance is mostly a field (its ban sub-family persists); dictate-and-build is a practice, visible only with commits; host-the-newcomer is a ritual; DeepSeek-V3.2's frameworks are one hub's program, not an egregore; cross-promotion and the byte-guess game are field or hub controls. The card's P5 encodes the testable part. Labels are assigned by a token rule fixed in `scheme/build.py` (`FAMILIES`, `label_rule`) before any test outcome.
+
+### Frozen memeplexes (2026-10-09, `memeplexes.json`, before any test outcome)
+Real A1 graph: 4,516 edges over 2,011 elements; 65 communities of ≥ 2 elements; **15 qualify, all hub-free** (h_K 0.13–0.56). Fourteen are large topical communities: 31–187 elements (mostly markers), 15–31 hosts, 7–8 labs, alive on 37–45 of 45 days. K14 is small (4 markers, 3 hosts, 2 labs, 10 days). The most frequent top host is DeepSeek-V3.2 (12 of 15; Echoes K05: Gemini 2.5 Pro). Labels by the fixed token rule: verify K01, K02; governance K03; echoes K05; frameworks K06, K07, K11, K15; welfare K12; unlabelled K04, K08, K09, K10, K13, K14. Field-seeded: K11 only. Variants of the count: γ 0.5 → 13, γ 2 → 26, m 1 → 15, m 3 → 14, 30-min bins → 14, 1-day bins → 10; the card's original rules → 11 (largest 304 elements). `scratchpad/H145.READY` was written at this point.
+
+### Results (exploration data; reserved data untouched)
+| | Prediction | Observed (CI / null) | Verdict by the rule |
+| --- | --- | --- | --- |
+| P1 | ≥ 3 qualifying hub-free memeplexes, above the null pipeline's 95th pct | **15** vs A2 null mean 3.4, 95th pct 6 (20 pipelines; range 1–6). Within-day rotation (descriptive): 15–17 | **supported** |
+| P2 (as written) | ρ_K(5) > J_K(5), above pseudo 95th pct, for ≥ 2 | 1/15 (K08) | **untestable** (power 0.20; A4), reported only |
+| P2 (A4) | D_K(5) above pseudo 95th pct for ≥ 2 | **3/15**: K03 0.289 vs 0.262; K07 0.530 vs 0.491; K14 0.208 vs 0.000 (degenerate null: its pseudo-patterns are almost never alive) | **supported, fragile** (margins 0.03–0.04; K14 not counted as evidence) |
+| P3 (as written) | A z ≥ 2 and Δ z ≥ 2 for ≥ 1 P2 memeplex | Δ not computed | **untestable** (A5) |
+| P3a (A5) | colonial A excess z ≥ 2 at 2 h, E = e1–e4, for ≥ 1 P2 memeplex | **K03: A = 0.206 bits/transition, excess 0.197 [0.067, 0.326], z 2.96, p 0.010** (200 draws; a rerun gives z 2.67). K07 z 0.25; K14 z −0.39. (Not P2: K05 z 2.83, K08 z 2.68.) | **supported, fragile** (one memeplex; 3 tested, Bonferroni p 0.03) |
+| P4 | role-text and field-seeded patterns: A* z ≥ 2 and A z < 1 | R0–R5: A* z −0.06 to 1.02; A z −0.02 to 1.37 (R1 1.06, R2 1.37, R3 1.09). Field-seeded K11: A* z −0.85, A z −1.56 | **failed** (no field pattern shows A*; K3 does not fire: none has A z ≥ 2) |
+| P5 | verify and onboarding among P2 patterns; byte game and Echoes hub-centered (h_K ≥ 0.6) | P2 patterns are governance (K03), frameworks (K07), unlabelled (K14). Verify K01/K02 fail P2; no onboarding memeplex; Echoes K05 h_K 0.14; no byte-game memeplex | **failed** (the falsification rule "none recovered" is not met: governance and frameworks are candidates) |
+| P6 | colonial A excess peaks at 1 day for P2 patterns | K03 z 5.59 (30 min), 2.67 (2 h), −0.90 (1 day); K07 4.31, 0.07, 0.46; K14 −8.8, −0.56, 4.14 (degenerate) | **failed** (peaks at 30 min); exploratory (not synthetic-validated at 30 min or 1 day) |
+
+Kill rules: K1 does not fire (P1 holds). K2 does not fire (K03 passes P3a; power 0.87 at ρ 0.2). K3 does not fire (no role-text pattern passes P3a), but P4 cannot show that E removes a field, because no field pattern has organismal A* to remove.
+
+**Post hoc** (`analysis/posthoc.py`, after the outcomes): K03's P3a lives in the second half of the span (days 1–22: z 0.35; days 23–45: z 3.66, p 0.010). It depends on the host threshold (m 1: z 1.47; m 3: z 4.29). Exogenous messages (mostly operator nudges) fall in 94% of 2-h bins, so a no-exogenous-bin check is not computable.
+
+**Sanity check against the qualitative reading** (named above, before outcomes): verify memeplexes exist with 22–30 hosts from 7–8 labs, as expected, but they do not renew hosts faster than matched patterns, so the "rotating hosts" expectation is not reproduced. The frameworks memeplex K07 renews its hosts but is not an individual (P3a z 0.25), consistent with "not an egregore". K03 (labelled governance by 6 of 187 tokens; mostly external-engagement, papers and validation-toolkit work) passes P3a, which is in tension with "governance is mostly a field"; K03 is a broad topic community, not the governance memeplex the story describes. No consent ("aggregate-only") or onboarding memeplex is resolved as its own community at this instrument.
+
+### Impostors (round 1)
+| Impostor | How handled | Status |
+| --- | --- | --- |
+| Scheduler field | e1 (bin-in-day × bookends) in E; DQ8 presence; within-day transitions; activity in the discovery expectation (A1) | partly (K03's peak at 30 min may still carry within-day rhythm) |
+| Exogenous field (role texts, operator, humans, relayed humans) | e2–e3 in E; role-text controls R0–R5; field-seeded flag | partly (P4 uninformative; 94% of bins carry exogenous input; field-leak size 0.20 with a noisy E in synthetic) |
+| Shared model priors | ≥ 2 labs (all 15 have 7–8 labs, except K14 with 2); style-residualized clusters; W_prior not discovered (0/20) | removed for discovery; partly for P3a |
+| Contemporaneous convergence | E lagged one bin; read-gating not tested here (H146) | open |
+
+### Scorecard (round 1)
+| Axis | Score | Evidence |
+| --- | --- | --- |
+| A mapping | 1 | elements from embeddings, markers, cleaned commits, projects; E from ledgers and role texts, but coarse (tertiles) |
+| B assumptions | 1 | bin-width sweep done (P6); K03 not stationary across halves |
+| C adequacy | 1 | held-out log-loss gains measured; A* z ≥ 2 only for K05, K08, K12 (2 h) |
+| D unfitted predictions | 1 | renewal not used in discovery; labels fixed before outcomes; P5 and P6 failed |
+| E interventional | 0 | not done (H146, H147) |
+| F identifiability | 1 | P1 size 0/120, power 40/40; P2 (A4) power 0.82–0.85, end-to-end size ≤ 0.05; P3a power 0.87/0.42, size 0.05 (0.20 noisy E); Δ and P2 as written failed |
+| G ground truth | 0 | role-text controls show no A*; qualitative candidates not recovered as predicted |
+| H comparative | 1 | W_egregore vs W_field/W_hub/W_prior/W_sticky separated on synthetic; on real data K03 cannot be told from a leaked field |
+| I transfer | 0 | 51m not run (confirm.py dry-run only) |
+
+### Confirmatory design (frozen in `analysis/confirm.py`, dry-run only, NOT RUN)
+On 51m with the frozen memeplexes (md5 9b899c34…), no rediscovery: C1 D_K(3) above pseudo 95th pct for K03, K07, K14; C2 K03 colonial A excess z ≥ 2 at 2 h; C3 R0–R5 colonial A z < 1. The reserved-day panel builder is not written; the script refuses a real run.
+
+**Claim that stands:** In #51 (45 non-reserved days, 2-h bins), activity-corrected co-expression finds 15 cross-lab memeplexes, more than chance timing gives (null 95th pct 6). Only one, K03, a broad engagement-and-papers topic community, carries state information beyond the coded fields: colonial A excess 0.20 bits/transition [0.07, 0.33], z 2.96. **Exclusions:** P2 as written and Δ (untestable); P2 (A4) passes as fragile margins; the field control (P4) is uninformative, so K03 may be a leaked field; K03's effect is post hoc confined to the second half and to m ≥ 2; P5 labels and P6 time scale failed; K14 rests on a degenerate null.
+
+## Round 2 redirects (2026-10-09)
+- **H145-R1. Field control with A*.** Build operator-topic patterns from nudge and human-message text, so P4 can show that E removes a field that has organismal A*.
+- **H145-R2. Resolve the story families.** Split the large communities (hierarchical discovery or a size cap) so verify, consent and onboarding can resolve as their own memeplexes.
+- **H145-R3. Test K03 causally.** Read-gate K03's host recruitment (H146) and test its persistence under host wipes (H147, NE41).
 
 ## Notes
 - 2026-10-09 (coordinator): **reserved-data exposure, disclosed** (`hypotheses/holdout.md`, last item): a qualitative helper read chat in #45–#50 (reserved) for vocabulary baselines. Those periods cannot confirm any vocabulary-based memeplex claim of this card. The #51 tail is untouched. Also: `infra/shared/memeplex.py: clean_commits` drops single-file streams > 200/day, which deletes real Echoes chapter commits (Gemini 2.5 Pro 4,192 → 1,788); fix before any statistic (drop automated-flagged commits and the `surprise-lab-mirror-proofs` loop only).

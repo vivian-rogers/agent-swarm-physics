@@ -1,0 +1,36 @@
+\hwhat{An \emph{ideology egregore} is a memeplex: a set of content elements that many agents express together, whose hosts change while the pattern persists, and whose own state predicts its next state beyond the fields that act on the agents. H145 discovers memeplexes in \#51 (45 non-reserved days, 32 agents, 8 labs) from 2,011 elements: meaning clusters, coined names and rare words, cleaned shared repos and touched projects. It then tests host renewal and Krakauer colonial individuality at the pattern level. \textbf{Result:} 15 cross-lab memeplexes exist beyond chance timing. Two or three renew their hosts. One broad topic community (K03) carries 0.20 bits per 2-h transition beyond the coded fields. The field control is uninformative, so K03 may still be a leaked field.}
+
+\hmodel{Models 12 (information dynamics) and 13 (conventions). Element expression $x_{i,e}(b)\in\{0,1\}$; hosts $H_K(b)=\{i:\sum_{e\in K}x_{i,e}(b)\ge2\}$; state $S_K(b)$ = host level $\times$ which third of $K$ dominates (13 symbols). Discovery: positive PMI of co-expression beyond each agent's vocabulary and each agent-bin's activity (A1), Benjamini--Hochberg edges, Louvain $\gamma=1$. $E$: scheduler phase, exogenous messages and their similarity to $K$, role-text field, rest-of-village activity, lagged one bin.}
+
+\hmath{\vspace{-6pt}\begin{gather*}
+E_{ef}=\sum_i w_i\,c_{ie}c_{if},\quad w_i=\frac{\sum_b a_{ib}^2}{(\sum_b a_{ib})^2}\\
+A_K=I(S'_K;S_K\mid E)=L(S'_K|E)-L(S'_K|S_K,E)\\
+A^*_K=I(S'_K;S_K)\\
+D_K(5)=S_K(5)-S_H(5)
+\end{gather*}\vspace{-8pt}}
+
+\hobs{../figures/r1_obs.pdf}{Real \#51 memeplexes. Left: host renewal $D_K(5)$ minus the 95th percentile of 200 frequency- and host-count-matched pseudo-patterns; three pass (green; K14 on a degenerate null). Right: colonial $A$ excess $z$ at 2 h with $E$ held; only K03 passes among the renewal patterns. Role-text field patterns R0--R5 (not shown) have $A^*$ $z\le1.0$ and $A$ $z\le1.4$.}
+
+\htelos{For an operator: the village's shared vocabulary organizes into about 15 large cross-lab topic communities, each carried by 15--31 agents on almost every day. Most are carried by the same agents day after day. Their next state is predictable from the schedule, operator input and role texts, not from the pattern itself. One broad engagement-and-papers community (K03) adds 0.20 bits per 2-h step beyond those inputs, in the second half of the period only. Do not treat the named norms (verification, consent, onboarding) as self-sustaining ideologies on this evidence.}
+
+\hbottom{Memeplexes exist in \#51 beyond chance; at most one is a pattern-level individual, and it may be a leaked field.}
+
+\hresults{\footnotesize\begin{tabular}{@{}p{0.27\columnwidth}p{0.51\columnwidth}l@{}}
+\hline
+prediction & observed & verdict\\\hline
+P1 $\ge$3 memeplexes & 15 vs null 95th pct 6 & supported\\
+P2 as written & power 0.20 in synthetic & untestable\\
+P2 renewal (A4) & 3/15 (margins 0.03--0.04) & supp.\ (fragile)\\
+P3 with $\Delta$ & $\Delta$ power $\le$0.10 & untestable\\
+P3a colonial $A$ (A5) & K03: 0.20 [0.07, 0.33] bits, $z$ 2.96 & supp.\ (fragile)\\
+P4 field controls & no $A^*$ ($z\le1.0$) & failed\\
+P5 story labels & verify, onboarding not in P2 set & failed\\
+P6 peak at 1 day & K03, K07 peak at 30 min & failed\\
+\hline
+\end{tabular}}
+
+\hobsb{../figures/r1_synth.pdf}{Synthetic validation on the real \#51 skeleton (20 replicates per world). Left: the card's discovery rules find $\sim$24 ``memeplexes'' even with no coupling; the amended rules (A1) find none, and recover every planted one. Right: pass rates of the amended renewal test and of colonial $A$; size $\le$0.05 end-to-end for hubs and sticky hosts, 0.20 for a field seen through a noisy $E$.}
+
+\hcaveats{Exploration data only; the reserved tail 51m is untouched. The first discovery (old rules, old cleaner) was seen before the amendments. Labels come from a token rule, and the large communities mix several story families. $E$ is coarse (tertiles), and exogenous input falls in 94\% of bins. K03's pass is post hoc confined to days 23--45 and to $m\ge2$, and a rerun of the null gives $z$ 2.67. The 30-min and 1-day tests are not synthetic-validated. Reserved \#45--\#50 were read for vocabulary by a helper and are not used.}
+
+\hnext{Build a field control with organismal $A^*$ (operator-topic patterns). Split the large communities so verify, consent and onboarding resolve. Read-gate K03's recruitment (H146) and test its value under wipes (H147). Run the frozen confirm on 51m after sign-off.}
