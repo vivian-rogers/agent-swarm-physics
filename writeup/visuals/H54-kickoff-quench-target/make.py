@@ -8,7 +8,7 @@ fig.pdf/png  (a) genericness-corrected target score of every day-1 content centr
 Inputs (read-only): data/processed/H54-kickoff-quench-target/NE34/{S_kick.npy, periods.parquet, results.json},
 G51/native.json; shared period_affordances (mode F = free week).
 Usage: uv run python writeup/visuals/H54-kickoff-quench-target/make.py
-Writes fig.pdf (double column) and the single-column fig_a.pdf (matrix) and fig_bc.pdf (rank, #51) for writeup/paper.
+Writes fig.pdf (double column) and the single-column fig_a.pdf (matrix) and fig_bc.pdf (rank, #51) for writeup/papers/thermodynamics.
 """
 from __future__ import annotations
 

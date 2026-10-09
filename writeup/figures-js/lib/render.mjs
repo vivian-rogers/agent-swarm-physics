@@ -2,10 +2,11 @@
 //
 //   node lib/render.mjs <name> [<name> ...]     # figs/<name>.js + data/processed/paper-figs/<name>.json
 //   node lib/render.mjs --all
+//   node lib/render.mjs --paper superagents <name>   # output to writeup/papers/superagents/figs/js
 //
 // A figure file sets window.FIG = { width: inches, height: inches, draw(svg, data), data?: '<other name>' }. The svg viewBox is in
 // points; lib/style.js (window.S) gives fonts, colors and axis helpers. Outputs:
-//   writeup/paper/figs/js/<name>.pdf   (vector; fonts embedded)
+//   writeup/papers/thermodynamics/figs/js/<name>.pdf   (vector; fonts embedded)
 //   writeup/figures-js/build/<name>.png  (preview for review only)
 import fs from "node:fs";
 import path from "node:path";
@@ -16,7 +17,12 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PROJ = path.resolve(HERE, "..");
 const ROOT = path.resolve(PROJ, "../..");
 const DATA = path.join(ROOT, "data/processed/paper-figs");
-const OUT = path.join(ROOT, "writeup/paper/figs/js");
+// --paper <name> picks the output folder writeup/papers/<name>/figs/js (default: thermodynamics)
+const argv = process.argv.slice(2);
+const pi = argv.indexOf("--paper");
+const PAPER = pi >= 0 ? argv[pi + 1] : "thermodynamics";
+if (pi >= 0) argv.splice(pi, 2);
+const OUT = path.join(ROOT, "writeup/papers", PAPER, "figs/js");
 const BUILD = path.join(PROJ, "build");
 const LM = "/usr/local/texlive/2025basic/texmf-dist/fonts/opentype/public";
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
@@ -78,7 +84,7 @@ async function renderOne(browser, spec) {
   return errs.length === 0;
 }
 
-const args = process.argv.slice(2);
+const args = argv;
 const names = args.includes("--all")
   ? fs.readdirSync(path.join(PROJ, "figs")).filter((f) => f.endsWith(".js")).map((f) => f.slice(0, -3))
   : args;

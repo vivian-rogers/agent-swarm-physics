@@ -2,7 +2,7 @@
   "name": "paper-figures",
   "private": true,
   "type": "module",
-  "description": "D3 figures for writeup/paper, rendered to vector PDF by headless Chrome. See README.md.",
+  "description": "D3 figures for writeup/papers/thermodynamics, rendered to vector PDF by headless Chrome. See README.md.",
   "scripts": {
     "render": "node lib/render.mjs"
   },

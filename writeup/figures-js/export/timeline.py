@@ -2,7 +2,7 @@
 
     uv run python writeup/figures-js/export/timeline.py
 
-Replaces writeup/paper/figs/timeline.pdf (infra/ai_village_overview/figures.py: fig_timeline).
+Replaces writeup/papers/thermodynamics/figs/timeline.pdf (infra/ai_village_overview/figures.py: fig_timeline).
 Sources (processed only):
   roster        data/processed/shared/roster.parquet (46 agents: lab, joined, left; left = null means active at export)
   goal periods  data/processed/shared/period_units.parquet (first start and last end of each goal's units)

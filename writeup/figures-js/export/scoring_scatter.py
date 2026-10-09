@@ -2,7 +2,7 @@
 
     uv run python writeup/figures-js/export/scoring_scatter.py
 
-Replaces writeup/paper/figs/scoring_scatter.pdf (writeup/figures/make_scoring_scatter.py). Same source:
+Replaces writeup/papers/thermodynamics/figs/scoring_scatter.pdf (writeup/figures/make_scoring_scatter.py). Same source:
 the `v2` block of every hypotheses/H*/summary/meta.json. Cards whose v2 credence is null (H133-H142, run on
 2026-10-07 and not yet scored) are left out, as in the paper's counts. No data table is read, so nothing to mask.
 Checks against the paper text (method.tex, "Scoring"): 132 scored claims, median credence 0.64, 82 claims at

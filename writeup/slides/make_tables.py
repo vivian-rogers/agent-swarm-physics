@@ -1,12 +1,12 @@
 """Slide frames for the paper's appendix tables (goal periods, EU ranking) and the matrix pages.
 
-Reads writeup/paper/sections/{goals_table,eu_table}.tex; writes writeup/slides/tables/*.tex.
+Reads writeup/papers/thermodynamics/sections/{goals_table,eu_table}.tex; writes writeup/slides/tables/*.tex.
 Usage: python3 writeup/slides/make_tables.py
 """
 import re
 from pathlib import Path
 
-SEC = Path("writeup/paper/sections"); OUT = Path("writeup/slides/tables"); OUT.mkdir(exist_ok=True)
+SEC = Path("writeup/papers/thermodynamics/sections"); OUT = Path("writeup/slides/tables"); OUT.mkdir(exist_ok=True)
 
 
 def trunc(t, n):

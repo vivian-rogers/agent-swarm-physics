@@ -1,4 +1,4 @@
-"""All scored hypotheses ranked by estimated usefulness -> writeup/paper/sections/eu_table.tex
+"""All scored hypotheses ranked by estimated usefulness -> writeup/papers/thermodynamics/sections/eu_table.tex
 
 Source: hypotheses/H*/summary/meta.json, field v2 (claim scoring v2): credence p, value_if_true V,
 expected_usefulness EU (= pV), mechanism_level M, fragile, original_verdict (the verdict column).
@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "dashboard"))
 import collect  # noqa: E402
 
-OUT = ROOT / "writeup/paper/sections/eu_table.tex"
+OUT = ROOT / "writeup/papers/thermodynamics/sections/eu_table.tex"
 PER = 44
 TITLE_MAX = 95
 VERDICT_MAX = 40
@@ -131,8 +131,8 @@ def load_rows() -> list[dict]:
     for mp in sorted(collect.HYP.glob("H*/summary/meta.json")):
         meta = json.loads(mp.read_text())
         v = meta.get("v2")
-        if not v:
-            continue
+        if not v or v.get("credence") is None or v.get("value_if_true") is None:
+            continue  # unscored cards (e.g. H133-H142 before scoring) are left out, as in the paper's counts
         hdir = mp.parent.parent
         text = (hdir / "README.md").read_text(errors="replace")
         title = text.splitlines()[0].lstrip("# ").strip().split(":", 1)[-1].strip()

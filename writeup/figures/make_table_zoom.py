@@ -5,7 +5,7 @@ Panel (b): the latest per-period verdict in each period README of the zoomed car
 (Verdict (r2) > Verdict (2) > Verdict (1c) > Verdict (1b) > Verdict).
 
 Usage: uv run python writeup/figures/make_table_zoom.py
-    -> writeup/figures/table_zoom.{pdf,png} and writeup/paper/figs/table_zoom.pdf
+    -> writeup/figures/table_zoom.{pdf,png} and writeup/papers/thermodynamics/figs/table_zoom.pdf
 """
 import re, sys
 from pathlib import Path
@@ -98,5 +98,5 @@ con = ConnectionPatch(xyA=(zj + 0.5, zi), coordsA=ax.transData, xyB=(-0.25, 0.4)
                       arrowstyle="-|>", color=vs.INK, lw=1.0, mutation_scale=8, connectionstyle="arc3,rad=-0.15")
 fig.add_artist(con)
 vs.save(fig, "writeup/figures/table_zoom")
-fig.savefig("writeup/paper/figs/table_zoom.pdf")
+fig.savefig("writeup/papers/thermodynamics/figs/table_zoom.pdf")
 print("ok", ZOOM_H, ZOOM_M, len(nes), "NE chips;", {k: v for k, v in sorted(verd.items())})

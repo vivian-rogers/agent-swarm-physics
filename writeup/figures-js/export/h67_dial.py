@@ -2,7 +2,7 @@
 
     uv run python writeup/figures-js/export/h67_dial.py
 
-Same input and selection as writeup/paper/figs/make_card_cols.py (h67_dial; the old h67_dial_col.pdf):
+Same input and selection as writeup/papers/thermodynamics/figs/make_card_cols.py (h67_dial; the old h67_dial_col.pdf):
 data/processed/H67-lagged-criticality-dial/results/periods.parquet, every row, regime from the card. Reserved periods are
 excluded by the card's build; asserted here against hypotheses/holdout.json.
 """

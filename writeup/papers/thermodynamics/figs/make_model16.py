@@ -10,8 +10,8 @@
 Plotting only, from existing outputs (no new analysis):
   data/processed/H125-kickoff-damped-oscillator/NE34/series.json, NE34/card.json
   data/processed/H130-ou-private-wells-51/results/natives.json, results/summary.json
-Usage (repo root): uv run python writeup/paper/figs/make_model16.py
-Output: writeup/paper/figs/model16_relaxation.{pdf,png}
+Usage (repo root): uv run python writeup/papers/thermodynamics/figs/make_model16.py
+Output: writeup/papers/thermodynamics/figs/model16_relaxation.{pdf,png}
 """
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(ROOT / "writeup/visuals"))
 import vstyle as vs  # noqa: E402
 

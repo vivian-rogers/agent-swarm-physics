@@ -1,4 +1,4 @@
-"""Full hypothesis x physics-model table (all scored hypotheses, 17 models) -> writeup/paper/figs/full_matrix.pdf
+"""Full hypothesis x physics-model table (all scored hypotheses, 17 models) -> writeup/papers/thermodynamics/figs/full_matrix.pdf
 (+ writeup/figures/full_matrix.png). Model assignments: meta.json `models` plus writeup/figures/model_overrides.py.
 
 Usage: uv run python writeup/figures/make_full_matrix.py
@@ -35,5 +35,5 @@ for k, (lab, c) in enumerate([("supported", OUT["supported"]), ("mixed", OUT["mi
     fig.patches.append(Rectangle((0.56 + 0.105 * k, 0.006), 0.012, 0.012, color=c, transform=fig.transFigure, figure=fig))
     fig.text(0.575 + 0.105 * k, 0.012, lab, fontsize=6, va="center")
 fig.subplots_adjust(left=0.18, right=0.99, top=0.90, bottom=0.03, wspace=0.95)
-fig.savefig("writeup/paper/figs/full_matrix.pdf"); fig.savefig("writeup/figures/full_matrix.png", dpi=200)
+fig.savefig("writeup/papers/thermodynamics/figs/full_matrix.pdf"); fig.savefig("writeup/figures/full_matrix.png", dpi=200)
 print(len(hs), "hypotheses,", len(cols), "models; rows", hs[0]["id"], "-", hs[half - 1]["id"], "|", hs[half]["id"], "-", hs[-1]["id"])

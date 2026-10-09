@@ -33,6 +33,7 @@ Papers on information, replicators, thermodynamics and agency; conventions, stig
 | [Mediano et al., Greater than the parts (causal emergence review)](mediano-2022-greater-than-the-parts-causal-emergence-review.md) | 2022 | info theory | A review of the ΦID emergence theory: cheap feature-specific criteria vs expensive emergence capacity; results depend on how parts are defined and are Granger-type unless interventional. |
 | [Lizier, Prokopenko & Zomaya, A framework for the local information dynamics of distributed computation](lizier-2008-framework-local-information-dynamics.md) | 2008 | info theory, complex systems | Local active storage, local transfer entropy and local separable information s = a + Σt; s < 0 marks modification. Needs long histories and about 10⁶ samples (stand-in for Lizier 2012). |
 | [Physics of Agents: Statistical Mechanics Predicts Collective Behavior of AI Agents](arxiv-2608.16578-physics-of-agents.md) (arXiv:2608.16578) | 2026 | stat mech, dynamics | *Not yet read; stub notes only.* The most directly relevant paper to this project by title. |
+| [Vivian (@jazzloaf), Preliminary thoughts towards a quantitative science and management of agent ecologies](jazzloaf-2026-agent-ecologies-essay.md) | 2026 | econophysics, thermodynamics, AI safety | The project's position essay: a free-energy argument for why misaligned swarms are favored, and four research directions; Direction 2 is the thermodynamics paper, Direction 3 (superagents on a substrate of agents) the superagents paper. |
 
 ## Cross-cutting themes
 

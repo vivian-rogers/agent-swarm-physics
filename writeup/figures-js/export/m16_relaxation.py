@@ -2,7 +2,7 @@
 
     uv run python writeup/figures-js/export/m16_relaxation.py
 
-Reuses writeup/paper/figs/make_model16.py: panel_a() and panel_b() compute the shown numbers (drawn on a throwaway
+Reuses writeup/papers/thermodynamics/figs/make_model16.py: panel_a() and panel_b() compute the shown numbers (drawn on a throwaway
 matplotlib axis and discarded), and the simulation of panel_c() is repeated here with the same code and seed.
 (a) H125 kickoff day profile, bge and gte, 90% CI, and the card's U; (b) H130 #51 own well vs read kick, each divided
 by its fitted amplitude, with the e^{-gamma n} fits and the rate ratio; (c) x = s + k simulation at the H130 rates.
@@ -20,7 +20,7 @@ from common import ROOT, write
 
 
 def load_m16():
-    spec = importlib.util.spec_from_file_location("make_model16", ROOT / "writeup/paper/figs/make_model16.py")
+    spec = importlib.util.spec_from_file_location("make_model16", ROOT / "writeup/papers/thermodynamics/figs/make_model16.py")
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
     return m

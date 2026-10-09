@@ -3,7 +3,7 @@ that name the reader, and the 95% CI of g.
 
     uv run python writeup/figures-js/export/h67_named.py
 
-Same rows as writeup/paper/figs/make_card_cols.py:h67_named (the old h67_named_col.pdf): H67 results/units.parquet,
+Same rows as writeup/papers/thermodynamics/figs/make_card_cols.py:h67_named (the old h67_named_col.pdf): H67 results/units.parquet,
 ok units of regime III, sorted by goal period and unit. Reserved periods are excluded by the card's build (asserted).
 g is the one-kernel read-out gain (the paper's number: median 0.13 over 25 units); g_named and g_unnamed come from the
 card's two-kernel fit and need not add up to g exactly (in 3 units g_unnamed < 0).

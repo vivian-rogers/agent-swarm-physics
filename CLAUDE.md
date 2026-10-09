@@ -23,7 +23,7 @@ the AI Village dataset as the primary system.
 | `hypotheses/hypohypotheses/` | Loose, speculative material. `HYPOHYPOTHESES.md`: one-line ideas, no rigor required; they graduate to an `H<NN>` folder once they have a model, a scheme and a prediction. `goal-periods.md`: every village goal period with its setup, size and a ranked list of suitable physics models. |
 | `literature/` | Papers (PDF) + one notes file per paper (same basename, `.md`). `literature/README.md` is the index. Don't re-extract or reprocess the PDFs; use the notes. |
 | `interpretation/` | Cross-hypothesis synthesis: what the results mean together. |
-| `writeup/` | Drafts for papers, posts, talks. |
+| `writeup/` | Papers, posts, talks. Each paper has its own folder `writeup/papers/<name>/` (index: `writeup/papers/README.md`); shared figure and table tools stay in `writeup/`. |
 | `LOG.md` | Dated lab notebook. Newest entry at the top. |
 
 ## Hypotheses
@@ -54,7 +54,7 @@ hypotheses/H<NN>-<slug>/
 
 - Number hypotheses sequentially (`H01`, `H02`, …); never reuse a number. Parked or refuted ones stay, with their status updated.
 - Write the prediction and the null/baseline in the card **before** running the analysis on real data.
-- Score every hypothesis on the nine faithfulness axes (A–I) in its card's scorecard; definitions and promotion thresholds are in `writeup/paper.tex` ("Assessing model faithfulness"). Fit is not faithfulness: beat the strongest null, predict unfitted statistics, and use natural experiments as interventions. Lock the holdout goal periods and NEs before exploring.
+- Score every hypothesis on the nine faithfulness axes (A–I) in its card's scorecard; definitions and promotion thresholds are in `writeup/papers/thermodynamics/sections/method.tex` ("Faithfulness, not fit"). Fit is not faithfulness: beat the strongest null, predict unfitted statistics, and use natural experiments as interventions. Lock the holdout goal periods and NEs before exploring.
 - **Unit of analysis: one goal period** (decided 2026-10-03), split further at any step change inside it (see `natural-experiments.md`). Fit models *within* a period. Compare periods by comparing their fitted parameters, treating each period as a point on a phase diagram; never fit one model to pooled periods. Exceptions must be named and justified in the card:
   - (a) **Shared instruments.** Embedding basis, meaning clusters, behavior taxonomy: a common ruler, so periods are comparable. A ruler is not a model.
   - (b) **Agent-level properties.** Style or prior field, memory set point. Check invariance across periods first.

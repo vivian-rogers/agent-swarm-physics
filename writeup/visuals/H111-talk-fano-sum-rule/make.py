@@ -6,7 +6,7 @@ Inputs (read only; non-holdout by construction, asserted again here):
   data/processed/H111-talk-fano-sum-rule/results/units.parquet   per-unit Phi(10 min), CIs, Phi_pred, g_lag (H67), null
   data/processed/H111-talk-fano-sum-rule/results/summary.json    pooled r_F per regime
 Panel (a) is a simulation (linear Hawkes swarm in one room); panel (b) is the measured village quantity.
-Outputs: fig.pdf / fig.png (double column, a|b) and fig_col.pdf (single column, a over b) for writeup/paper.
+Outputs: fig.pdf / fig.png (double column, a|b) and fig_col.pdf (single column, a over b) for writeup/papers/thermodynamics.
 """
 from __future__ import annotations
 

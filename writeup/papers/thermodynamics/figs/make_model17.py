@@ -9,8 +9,8 @@
 Plotting only, from existing outputs (no new analysis):
   data/processed/H12-groupthink-dimensional-collapse/r1b/unit_table.parquet
   data/processed/H12-groupthink-dimensional-collapse/r1b/native/g12_debates.parquet, r1b/native/native.json
-Usage (repo root): uv run python writeup/paper/figs/make_model17.py
-Output: writeup/paper/figs/model17_modes.{pdf,png}
+Usage (repo root): uv run python writeup/papers/thermodynamics/figs/make_model17.py
+Output: writeup/papers/thermodynamics/figs/model17_modes.{pdf,png}
 """
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import polars as pl  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(ROOT / "writeup/visuals"))
 import vstyle as vs  # noqa: E402
 

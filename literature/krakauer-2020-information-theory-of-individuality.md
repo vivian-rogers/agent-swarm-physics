@@ -1,7 +1,7 @@
 # The information theory of individuality
 
-**Citation:** David Krakauer, Nils Bertschinger, Eckehard Olbrich, Jessica C. Flack and Nihat Ay, *Theory Biosci.* 139, 209–223 (2020). arXiv:1412.2447 (PDF is arXiv v1, 2014).
-**File:** krakauer-2020-information-theory-of-individuality.pdf
+**Citation:** David Krakauer, Nils Bertschinger, Eckehard Olbrich, Jessica C. Flack and Nihat Ay, *Theory Biosci.* 139, 209–223 (2020), doi:10.1007/s12064-020-00313-7. arXiv:1412.2447.
+**File:** krakauer-2020-information-theory-of-individuality.pdf (published version, added 2026-10-09); krakauer-2020-information-theory-of-individuality-arxiv-v1.pdf (arXiv v1, 2014, which these notes were first written from).
 **Fields:** info theory, complex systems, biology of individuality
 
 ## Summary

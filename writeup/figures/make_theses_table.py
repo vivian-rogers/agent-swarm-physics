@@ -1,4 +1,4 @@
-"""DRAFT theses table -> writeup/paper/sections/theses_table.tex
+"""DRAFT theses table -> writeup/papers/thermodynamics/sections/theses_table.tex
 
 The 20 claims with the highest estimated usefulness among those with credence >= 0.6, from
 hypotheses/H*/summary/meta.json v2 (sorted by EU, then p, then card number; same order as eu_table.tex).
@@ -17,7 +17,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import make_eu_table as eu  # noqa: E402
 
-OUT = eu.ROOT / "writeup/paper/sections/theses_table.tex"
+OUT = eu.ROOT / "writeup/papers/thermodynamics/sections/theses_table.tex"
 N, PMIN, MAXW = 20, 0.6, 30
 
 # id: (start of the v2.claim it compresses, thesis in LaTeX)

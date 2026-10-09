@@ -3,7 +3,7 @@
 
     uv run python writeup/figures-js/export/table_zoom.py
 
-Replaces writeup/paper/figs/table_zoom.pdf (writeup/figures/make_table_zoom.py). Same sources and logic:
+Replaces writeup/papers/thermodynamics/figs/table_zoom.pdf (writeup/figures/make_table_zoom.py). Same sources and logic:
   (a) meta.json `models` of each card with writeup/figures/model_overrides.py applied (models 16 and 17);
   (b) the latest per-period verdict written in each period README of the H08 card
       (Verdict (r2) > Verdict (2) > Verdict (1c) > Verdict (1b) > Verdict), via dashboard/collect.

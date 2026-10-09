@@ -2,7 +2,7 @@
 
     uv run python writeup/figures-js/export/m17_modes.py
 
-Reuses writeup/paper/figs/make_model17.py: panel_a() and panel_b() run on a throwaway matplotlib axis so the counts,
+Reuses writeup/papers/thermodynamics/figs/make_model17.py: panel_a() and panel_b() run on a throwaway matplotlib axis so the counts,
 medians and the #12 statistics are the ones of the old figure (panel_a warns if a count differs from the card). The
 per-unit ratios are read with the same filter and columns as panel_a.
 (a) per scored unit (24 non-reserved units), top eigenvalue / calibrated 95% surrogate edge, three channels;
@@ -24,7 +24,7 @@ CHANS = (("activity", "l1_edge_trim"), ("talk", "talk_l1_edge_trim"), ("content"
 
 
 def load_m17():
-    spec = importlib.util.spec_from_file_location("make_model17", ROOT / "writeup/paper/figs/make_model17.py")
+    spec = importlib.util.spec_from_file_location("make_model17", ROOT / "writeup/papers/thermodynamics/figs/make_model17.py")
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
     return m

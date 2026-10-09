@@ -1,12 +1,13 @@
 # Paper figures (D3 → vector PDF)
 
-Figures for `writeup/paper/` drawn with D3 in headless Chrome and printed to vector PDF, set in the paper's own
+Figures for the papers in `writeup/papers/` drawn with D3 in headless Chrome and printed to vector PDF, set in the paper's own
 fonts (Latin Modern Roman 7/8, Latin Modern Math for Greek and symbols).
 
 ```
 uv run python writeup/figures-js/export/<name>.py     # data  -> data/processed/paper-figs/<name>.json (gitignored)
-cd writeup/figures-js && node lib/render.mjs <name>   # draw  -> writeup/paper/figs/js/<name>.pdf + build/<name>.png
+cd writeup/figures-js && node lib/render.mjs <name>   # draw  -> writeup/papers/thermodynamics/figs/js/<name>.pdf + build/<name>.png
 node lib/render.mjs --all
+node lib/render.mjs --paper superagents <name>        # output to writeup/papers/superagents/figs/js
 ```
 
 Setup once: `npm install` in this folder (d3, puppeteer-core; uses the installed Google Chrome).

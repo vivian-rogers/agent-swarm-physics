@@ -9,7 +9,7 @@ Inputs (read only; round 1b = context-ledger visibility; non-holdout by construc
   data/processed/H34-idea-cascades/r1b/G<NN>/trees.parquet            exposure-tree sizes (hashed ideas; no text)
   data/processed/H67-lagged-criticality-dial/results/periods.parquet  regime label per goal period
 The GW-NB size law is H34's own (hypotheses/H34-idea-cascades/analysis/h34stats.py, imported read-only).
-Outputs: fig.pdf/png (double column), fig_col.pdf (single column, a over b, for writeup/paper), writeup/animations/H34-idea-cascades.mp4 + H34-idea-cascades_poster.png (simulation).
+Outputs: fig.pdf/png (double column), fig_col.pdf (single column, a over b, for writeup/papers/thermodynamics), writeup/animations/H34-idea-cascades.mp4 + H34-idea-cascades_poster.png (simulation).
 """
 from __future__ import annotations
 

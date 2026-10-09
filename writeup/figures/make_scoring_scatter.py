@@ -1,7 +1,7 @@
 """Credence vs value for every v2-scored claim, with the top 10 by EU labelled.
 
 Usage: uv run python writeup/figures/make_scoring_scatter.py
-    -> writeup/figures/scoring_scatter.{pdf,png} and writeup/paper/figs/scoring_scatter.pdf
+    -> writeup/figures/scoring_scatter.{pdf,png} and writeup/papers/thermodynamics/figs/scoring_scatter.pdf
 """
 import json, glob, sys
 import numpy as np
@@ -46,5 +46,5 @@ ax.scatter([], [], s=16, facecolor="white", edgecolor=vs.INK2, label="fragile (o
 ax.legend(loc="lower right", fontsize=6.5, handletextpad=0.3)
 ax.set_title(f"{len(rows)} scored claims (median $p$ = {np.median([r[1] for r in rows]):.2f}); labels: top 10 by EU", fontsize=8)
 vs.save(fig, "writeup/figures/scoring_scatter")
-fig.savefig("writeup/paper/figs/scoring_scatter.pdf")
+fig.savefig("writeup/papers/thermodynamics/figs/scoring_scatter.pdf")
 print(len(rows), "claims; median p", np.median([r[1] for r in rows]), "; top 10:", top)

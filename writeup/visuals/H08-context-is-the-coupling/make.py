@@ -3,7 +3,7 @@
     uv run python writeup/visuals/H08-context-is-the-coupling/make.py            # fig + animation
     uv run python writeup/visuals/H08-context-is-the-coupling/make.py --no-anim  # fig only
 
-Writes fig.pdf (double column, a|b|c) and the single-column fig_a.pdf, fig_bc.pdf used by writeup/paper.
+Writes fig.pdf (double column, a|b|c) and the single-column fig_a.pdf, fig_bc.pdf used by writeup/papers/thermodynamics.
 
 Reads only processed outputs: data/processed/H08-context-is-the-coupling/r1b/ (c9.json per period, G38 readout and
 turns), plus the shared chat_core (message time, room, sender; no text) and roster (names). Non-holdout only; the
