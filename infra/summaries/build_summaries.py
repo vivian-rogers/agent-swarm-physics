@@ -257,25 +257,87 @@ def score_table(h: dict) -> str:
             rf"\par\smallskip Level: \textbf{{{tex_escape(h['level'])}}}. Scale 0 not done or failed, 1 partial, 2 passed (\texttt{{writeup/paper.tex}}).")
 
 
+# Headings (## to ####) or bold lead lines that open a later round's redirect list, e.g.
+# "### Round 3 redirects", "### Round-3 redirects (2026-10-05)", "**Round 3 redirects.**".
+LATER_REDIRECTS_RE = re.compile(r"^(?:#{2,4}[ \t]*|\*\*)Round[ -](\d+) redirects\b.*$", re.M)
+
+
+def _lead(text: str) -> str:
+    """First sentence, plus the second when the first is a short title such as "(unchanged)."."""
+    parts = re.split(r"(?<=[.!?])\s", re.sub(r"\*\*|`", "", text), maxsplit=2)
+    lead = parts[0]
+    if len(lead) < 60 and len(parts) > 1:
+        lead = lead + " " + parts[1]
+    return lead[:240]
+
+
+def later_redirects(card: str) -> tuple[int, list[str]] | None:
+    """Items of the newest "Round N redirects" list with N >= 3, or None.
+
+    The list is the run of "- " bullets right after the heading line. A section that only
+    points back to the round-2 list (no bullets) returns None, so the caller keeps round 2.
+    """
+    best = None
+    for m in LATER_REDIRECTS_RE.finditer(card):
+        n = int(m.group(1))
+        if n >= 3 and (best is None or n >= best[0]):
+            best = (n, m.end())
+    if best is None:
+        return None
+    bullets: list[str] = []
+    for line in card[best[1]:].splitlines()[1:]:
+        if line.startswith("- "):
+            bullets.append(line[2:].strip())
+        elif line.startswith("  ") and bullets:
+            continue  # sub-bullet or wrapped line of the previous item
+        elif not line.strip() and not bullets:
+            continue  # blank line between the heading and the first item
+        else:
+            break
+    if not bullets:
+        return None
+    items = []
+    for b in bullets:
+        m = re.match(r"^\*\*(H\d{2,}-R\d+)\.?\s*(.*?)\*\*\s*(.*)$", b)
+        if m:
+            rid, head, rest = m.group(1), m.group(2).strip(), m.group(3).strip()
+            if "superseded" in (head + rest).lower():
+                continue
+            text = (head + " " + rest).strip() if head else rest
+            items.append(rf"\textbf{{{rid}}} {tex_escape(_lead(text))}")
+        else:  # a bullet without a redirect id
+            items.append(tex_escape(_lead(b)))
+    return best[0], items
+
+
 def round_two(slug: str) -> str:
     card = (HYP / slug / "README.md").read_text(errors="replace")
-    if "## Round 2 redirects" not in card:
+    later = later_redirects(card)
+    if "## Round 2 redirects" not in card and later is None:
         return r"\textit{No round-2 redirects yet.}"
-    sec = card[card.index("## Round 2 redirects"):]
-    nxt = sec.find("\n## ", 5)
-    sec = sec[:nxt] if nxt > 0 else sec
     items = []
-    ess = re.search(r"\*\*What the direction is really after:\*\*\s*(.+)", sec)
-    if ess:
-        e = re.sub(r"\*\*", "", ess.group(1)).strip()
-        items.append(r"\textbf{Essence.} " + tex_escape(e if len(e) < 330 else e[:327] + "..."))
-    for m in re.finditer(r"^- \*\*(H\d{2,}-R\d+)\.?\s*(.*?)\*\*\s*(.*)$", sec, re.M):
-        rid, head, rest = m.group(1), m.group(2).strip(), m.group(3).strip()
-        if "superseded" in (head + rest).lower():
-            continue
-        text = (head + " " + rest).strip() if head else rest
-        first = re.split(r"(?<=[.!?])\s", re.sub(r"\*\*|`", "", text), maxsplit=1)[0]
-        items.append(rf"\textbf{{{rid}}} {tex_escape(first[:240])}")
+    if "## Round 2 redirects" in card:
+        sec = card[card.index("## Round 2 redirects"):]
+        nxt = sec.find("\n## ", 5)
+        sec = sec[:nxt] if nxt > 0 else sec
+        ess = re.search(r"\*\*What the direction is really after:\*\*\s*(.+)", sec)
+        if ess:
+            e = re.sub(r"\*\*", "", ess.group(1)).strip()
+            items.append(r"\textbf{Essence.} " + tex_escape(e if len(e) < 330 else e[:327] + "..."))
+        if later is None:
+            for m in re.finditer(r"^- \*\*(H\d{2,}-R\d+)\.?\s*(.*?)\*\*\s*(.*)$", sec, re.M):
+                rid, head, rest = m.group(1), m.group(2).strip(), m.group(3).strip()
+                if "superseded" in (head + rest).lower():
+                    continue
+                text = (head + " " + rest).strip() if head else rest
+                first = re.split(r"(?<=[.!?])\s", re.sub(r"\*\*|`", "", text), maxsplit=1)[0]
+                items.append(rf"\textbf{{{rid}}} {tex_escape(first[:240])}")
+    if later is not None:  # show the newest redirect list (round 3 or later) in place of round 2's
+        n, later_items = later
+        items.append(rf"\textbf{{Round-{n} redirects (newest).}}")
+        items.extend(later_items)
+    if not items:  # a redirects heading without parsable H<NN>-R<k> bullets
+        return r"\textit{No round-2 redirects yet.}"
     return r"\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}" + "".join(rf"\item {x}" for x in items) + r"\end{itemize}"
 
 
