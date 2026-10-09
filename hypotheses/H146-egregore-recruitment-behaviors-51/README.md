@@ -1,6 +1,6 @@
 # H146: Ideology egregores in #51 recruit by being read, survive their hosts' amnesia, and carry functional behaviors
 
-**Status:** pre-registered (not run). Card written 2026-10-09 from HH394 and HH395 after Vivian's clarification and the qualitative reading of #51. No H146 statistic has been computed. Runs on H145's memeplexes (`memeplexes.json`) once H145 writes `scratchpad/H145.READY`; until then it builds its event tables and synthetic validation on the qualitative candidates, labelled post hoc.
+**Status:** round 1 in progress (2026-10-09): synthetic validation and per-pattern power done (Amendment A1); real-data estimates pending. Card written 2026-10-09 from HH394 and HH395 after Vivian's clarification and the qualitative reading of #51. No H146 estimate on real data has been computed. Runs on H145's memeplexes (`memeplexes.json`) once H145 writes `scratchpad/H145.READY`; until then it builds its event tables and synthetic validation on the qualitative candidates, labelled post hoc.
 **Fields:** sociophysics, epidemics, info theory
 **Literature:** [Krakauer et al. 2020](../../literature/krakauer-2020-information-theory-of-individuality.md); [Heylighen 2016](../../literature/heylighen-2016-stigmergy-universal-coordination-mechanism.md); [Centola & Baronchelli 2015](../../literature/centola-2015-spontaneous-emergence-of-conventions.md); [Rosas et al. 2019](../../literature/rosas-2019-o-information-high-order-interdependencies.md); [Vivian's essay](../../literature/jazzloaf-2026-agent-ecologies-essay.md)
 **Definitions used:** *egregore (ideology)*, conditions 2–4; *in-flight placebo (matched-lag)* (H67); *named message*; *interaction (reply, DQ2 parent)*; *O-information (field-removed)* (model 12).
@@ -83,7 +83,97 @@ Scored per model, mapping and window; 0/1/2. Thresholds: `writeup/papers/thermod
 | 51m (reserved) | confirmatory | not run | |
 
 ## Results
-*Pending.*
+*Pending.* See "Round 1 (2026-10-09)" below.
+
+## Round 1 (2026-10-09)
+*Written by the H146 agent. Everything in this section above "Real data" was written and committed before any H146 estimate on real data. The per-pattern power checks use each pattern's real skeleton (item coding, exposures, at-risk rows, event counts, wipe and placebo events) with planted outcomes; they compute no estimate of a real effect.*
+
+### Inputs and instruments
+- **Event tables** (`scheme/build.py`, commit e57574f): 41,844 chat items, 928,207 calls, 69,048 statements, 40,956 talk rows with ≥ 1 own chat item, 26,733 matched-lag window items (mirror read / in flight), 930,398 read-out items, 129,499 project touches (`proj`, never `label`), 14,547 forced erasures F and 19,466 placebo calls P (ctx_pos 20, no reset in the next 10 calls, not first of day), 22,496 DQ2 parent replies (1,742 DQ2 opposes, 183 DQ10 validated disagreements), 11 newcomers (07-09 GPT-5.6 trio … 09-03/04 NE33). 51m is absent by construction (asserted). The tables use no commits, so the `clean_commits` fix (4f6ab2e) does not touch them.
+- **Pattern sets.** Primary: H145's memeplexes (`memeplexes.json`), coded through H145's frozen element map (`analysis/coding_h145.py`: H145's own agent × 2-h expression panel for hosts; cluster, marker and repo/project elements on chat items and statements). Comparison, **post hoc**: the eight qualitative candidates fixed in `scheme/candidates_story.json` before any statistic (regex terms on text in memory, plus practice repos; all-hours 2-h bins, no presence trim).
+- **Pseudo-patterns** (both sets): random element sets from H145's element pool, each element matched in agent-bin count (±25%) and agent count (±1), widened in recorded steps when no match is free.
+
+### Amendment A1 (2026-10-09, before real data; from the synthetic checks below, not post hoc)
+- **A1.1 Adoption rule.** Agent i adopts K in 2-h bin b if it is a host of K in b (≥ m = 2 elements) after ≥ 2 active days with no host bin. The adoption call is the first talk row in b whose own chat carries ≥ 1 K element. Rows of i are at risk during the spell, up to and including the adoption call. Adoption bins without such a row are dropped and counted.
+- **A1.2 P1b, expression response (amended P1).** The adoption design has power ≤ 0.28 at log-OR 0.3 even with 400 adoptions (table S1). P1b keeps the same contrast on more events: risk set = talk rows of agents with no host bin of K earlier that PT day; outcome = the row's own chat carries ≥ 1 K element. Same fit: conditional Poisson with agent × day strata, exposures read in the mirror window (Rm), in flight at matched lag (P), read at the call before the mirror (Rc_rest), read at earlier calls in 2 h (R2h); controls log density, all-item read and in-flight counts, lag and before-age bins; ridge 0.5; 1-h-block cluster sandwich. δ = β_Rm − β_P. P1 (adoption) and P1b are both reported; the verdict table names which one is used.
+- **A1.3 Untestability rule, per pattern.** Before its estimate, each pattern's own skeleton is run with planted outcomes (`analysis/power146.py`). A kill rule applies to a pattern only where that power is ≥ 0.8 at the card's effect size: P1/P1b and P3 at log-OR 0.3; P4 read-gating at a hazard ratio 2 after call 10; each P5 subtest at a rate ratio 1.5. Below 0.8, a null result is "inconclusive" and only a positive can count. P1/P1b positives need size ≤ 0.10 on the same skeleton (100 null replicates).
+- **A1.4 Relayed human input.** No message-level relay classifier exists (H143's A0.2 rule was never built). Robustness fit P1b_nofable drops every Claude Fable 5 item from host exposures (conservative).
+- **A1.5 Pseudo-pattern rule.** 30 pseudo-patterns per pattern (not 200, for cost). "Beats its pseudo-patterns" = p_pseudo = (1 + #{pseudo ≥ K}) / 31 ≤ 0.05 on the point estimate (for Ω: ≤). Pseudo-patterns get point estimates only (no bootstraps).
+- **A1.6 P2 ratio.** Excess-rate ratio (e^δ_named − 1)/(e^δ_unnamed − 1), with δ = read − in flight. Pass: ratio ≥ 3 and z(δ_named − δ_unnamed) ≥ 1.96 (or δ_unnamed ≤ 0 < δ_named with δ_named's CI above 0). Falsified: δ_named ≤ δ_unnamed. Only for patterns that pass P1 or P1b.
+- **A1.7 P4.** HR = Mantel–Haenszel rate ratio (agent × unit strata) of the host's first K statement per follow-up call, calls 1–20 after the event (truncated at the next reset or day end), F vs P; agent-day cluster bootstrap, B = 300. Hosts = host of K in a bin before the event within its previous 2 active days. Read-gating: landmark at call 10, events without re-expression by call 10; R+ = read ≥ 1 K-carrying item at calls 1–10 or touched a K practice project; HR(R+ vs R−) with the CI above 1 = "read-gated re-expression is faster".
+- **A1.8 P5.** Count of named K-carrying messages from other hosts to host i in the 2 h after the event. Subtests: wipe (F vs P host events); challenge (DQ10 validated disagreement, and DQ2 opposes) vs neutral replies to i's K-carrying message (the reply itself not counted); lapse (host on active day k, not on k + 1; window = first 2 h of day k + 2) vs continuing hosts, strata agent × activity tercile. Pass per subtest: RR > 1.2 and CI above 1; K3 also needs p_pseudo ≤ 0.05.
+- **A1.9 P6 O-information.** The card's sign rule (Ω/(n−2) < 0 after field removal) has size 0.67–1.0 in no-coupling and field worlds (table S3): Gaussian Ω on binary host indicators, and the plug-in discrete Ω, are negative under independence. Amended rule: discrete Ω/(n−2) (Miller–Madow) < 0 **and** below the 5th percentile of 100 curveball surrogates (each host's host-bin count and each bin's host count kept). The Gaussian field-removed Ω is reported only. Hosts: the ≤ 8 most frequent hosts with ≥ 10 host bins; bins where all are present.
+- **A1.10 P6 specialization.** I(host; element) over host-element triples in bins with ≥ 2 hosts; null = within-bin permutation of the hosts' element sets (keeps each bin's sets and each host's bins); Besag–Clifford stop at 10 exceedances or 200 draws; pass z ≥ 2.
+
+### Synthetic validation (axis F)
+Real skeletons, planted truth. Scripts: `analysis/synthetic_p1.py`, `analysis/synthetic_p456.py`; output `data/processed/H146-…/synthetic/`. Seeds fixed.
+
+**S1. P1 read vs in flight** (all 40,956 talk rows; 100 null and 60 power replicates per cell; "rej" = z(δ) > 1.96; q0 = share of items carrying K):
+
+| Design | World | Events | rej, q0 0.04 | rej, q0 0.12 |
+| --- | --- | --- | --- | --- |
+| adoption | convergence, slow field (5–60 min) | 150 / 400 | 0.02 / 0.02 | 0.01 / 0.02 |
+| adoption | convergence, fast field (0.5–3 min) | 150 / 400 | 0.00 / 0.05 | 0.02 / 0.04 |
+| adoption | contagion β 0.3 | 150 / 400 | 0.08 / 0.08 | 0.12 / 0.28 |
+| adoption | contagion β 0.6 | 150 / 400 | 0.23 / 0.23 | 0.20 / 0.50 |
+| expression | convergence slow / fast | 1,500 | 0.02 / 0.03 | 0.00 / 0.02 |
+| expression | no effect (β 0) | 1,500 | 0.04 | 0.01 |
+| expression | contagion β 0.3 | 500 / 1,500 / 4,000 | 0.08 / 0.10 / 0.38 | 0.20 / 0.35 / 0.78 |
+| expression | contagion β 0.6 | 500 / 1,500 / 4,000 | 0.22 / 0.62 / 0.92 | 0.48 / 0.78 / 0.97 |
+| expression | hub only (β 0.6); no-hub refit | 1,500 | 0.13; no-hub δ 0.02, rej 0.03 | 0.17; no-hub δ −0.05, rej 0.00 |
+| expression | named ×3 on β 0.3: P2 ratio ≥ 3 | 1,500 | 0.83 of replicates (ratio ≤ 1: 0.00) | 0.97 (0.00) |
+
+Size of the read − in-flight contrast is ≤ 0.05 in every convergence world with ≥ 150 events (0.08–0.11 at 50 events, where < 16% of replicates are estimable). Bias is toward 0 (−0.05 to −0.29 at β 0.6): read exposures at the call outside the mirror window absorb part of the planted effect. The no-hub refit separates W_hub from contagion. **The adoption design cannot reach power 0.8 at log-OR 0.3 at any event count a pattern can supply.**
+
+**S2. P4 and P5** (real F/P skeleton; 100 replicates):
+
+| Test | Planted | n events | Result |
+| --- | --- | --- | --- |
+| P4 HR F vs P | r = 1 | 300 / 1,500 | HR 1.06 / 0.99; 95% coverage 0.95 / 0.94; share HR ≥ 0.8: 0.87 / 1.00; share HR < 0.5: 0.00 / 0.00 |
+| P4 HR F vs P | r = 0.8 | 300 / 1,500 | HR 0.85 / 0.81; coverage 0.96 / 0.96; share HR < 0.5: 0.03 / 0.00 |
+| P4 HR F vs P | r = 0.5 (K2 world) | 300 / 1,500 | HR 0.54 / 0.50; share HR < 0.5: 0.46 / 0.48 |
+| P4 read-gating, CI above 1 | g = 1 / g = 2 | 1,500 | 0.05 / 0.85 (at 300: 0.05 / 0.07) |
+| P5 rule (RR > 1.2, CI above 1) | RR 1 / 1.5 / 2 | 300 + 300 | 0.01 / 0.48 / 0.87 |
+| P5 rule | RR 1 / 1.5 / 2 | 1,500 + 1,500 | 0.04 / 1.00 / 1.00 |
+| P5 rule | RR 1 / 1.5 / 2 | 20 + 200 | 0.06 / 0.08 / 0.11 |
+
+K2 (HR < 0.5) is a point-estimate rule: it fires in about half of the K2-world replicates and in ≤ 3% of replicates with r ≥ 0.8.
+
+**S3. P6** (real presence of the 8 most active agents; specialization 100/50 replicates, Ω 60 replicates on 172 all-present bins of 6 hosts):
+
+| Test | World | Result |
+| --- | --- | --- |
+| specialization z ≥ 2 | no coupling / shared field | 0.04 / 0.05 |
+| specialization z ≥ 2 | host-specific element mix λ 0.2 / 0.5 | 0.80 / 0.98 |
+| Ω card rule (Gaussian, field-removed, < 0) | no coupling / field / fixed budget / XOR | 0.67 / 1.00 / 0.00 / 0.60 |
+| Ω discrete < 0 | all four worlds | 0.95–1.00 |
+| Ω amended rule (A1.9) | no coupling / field / fixed budget / XOR triplet | 0.08 / 0.05 / 0.08 / 1.00 |
+
+**S4. Per-pattern power on the real skeletons** (`results/power_candidates.json`; the post hoc candidates; H145's memeplexes get the same check when `memeplexes.json` is final):
+
+| Candidate | Hosts (host bins) | Adoptions; P1 power β 0.3 | P1b events; read-exposed rows; power β 0.3 / 0.6; size | P3 events; power β 0.3 | P4 F; read-gate power | P5 power at RR 1.5: wipe / DQ2 / DQ10 / lapse |
+| --- | --- | --- | --- | --- | --- | --- |
+| verification | 28 (990) | 61; 0.02 | 5,190; 1,200; 0.20 / 0.50; 0.04 | 312; 0.03 | 7,231; 1.00 | 1.00 / 1.00 / 0.87 / 0.63 |
+| protections | 24 (378) | 66; 0.07 | 1,950; 566; 0.40 / 0.40; 0.02 | 64; 0.00 | 4,991; 1.00 | 1.00 / 0.97 / 0.27 / 0.25 |
+| welfare | 25 (745) | 50; 0.17 | 2,941; 1,123; 0.07 / 0.03; 0.06 | 64; 0.00 | 5,249; 1.00 | 1.00 / 1.00 / 0.27 / 0.48 |
+| governance | 20 (452) | 41; 0.00 | 1,584; 624; 0.23 / 0.73; 0.06 | 15; 0.00 | 4,317; 1.00 | 1.00 / 0.97 / 0.25 / 0.38 |
+| onboarding | 27 (342) | 49; 0.00 | 886; 188; 0.12 / 0.23; 0.00 | 105; 0.00 | 3,058; 0.85 | 1.00 / 0.50 / 0.08 / 0.13 |
+| relay | 27 (306) | 56; 0.05 | 1,877; 449; 0.08 / 0.13; 0.03 | 108; 0.03 | 4,153; 0.98 | 1.00 / 0.98 / 0.35 / 0.27 |
+| byte game | 19 (152) | 27; 0.00 | 710; 234; 0.15 / 0.87; 0.00 | 122; 0.00 | 1,611; 0.60 | 1.00 / 0.50 / 0.08 / 0.18 |
+| Echoes | 25 (871) | 35; 0.02 | 2,496; 1,209; 0.57 / 0.67; 0.05 | 86; 0.12 | 5,823; 1.00 | 1.00 / 1.00 / 0.30 / 0.43 |
+
+### Declared before any estimate (untestability rule, A1.3)
+- **P1 (adoption) and P1b: K1 cannot fire** for any candidate. Power at log-OR 0.3 is ≤ 0.17 (adoption) and ≤ 0.57 (P1b), because only 102–1,209 at-risk rows per pattern hold a K item in the mirror window. Only a positive can count; a null is "inconclusive". Size on the same skeletons is ≤ 0.06.
+- **P3 (newcomers): untestable** (power ≤ 0.12; 15–312 events in newcomers' first two active days). Reported as descriptive only.
+- **P2:** conditional on P1/P1b; computed only for patterns that pass.
+- **P4:** the HR is identified for every candidate (1,611–7,231 host wipes; in the survival world the share with HR ≥ 0.8 is ≥ 0.98, in the K2 world about half fall below 0.5). Read-gating is powered (≥ 0.85) for all candidates except the byte game (0.60).
+- **P5:** the wipe subtest is powered for all candidates (1.00). The DQ2-challenge subtest is powered for 6 of 8 (not onboarding, byte game: 0.50). The DQ10-challenge subtest is powered only for verification (0.87). The lapse subtest is unpowered for all (≤ 0.63).
+- **P6:** specialization power 0.80 at λ 0.2 (generic skeleton); Ω uses the amended rule A1.9.
+
+### Cost (measured)
+- Event tables load in 0.7 s; the H145 coding builds in 9 s; the candidate coding in about 20 s.
+- One P1/P1b fit: 0.03–0.04 s (41k rows, conditional Poisson, closed-form Newton steps). Per-pattern power stage: 45–60 s.
+- The estimate stage runs the full statistics once per pattern (bootstraps B = 300, 200 permutations, 100 surrogates) and point estimates on 30 pseudo-patterns.
 
 ## Notes
 - 2026-10-09: written by the coordinator. Traps (`infra/README.md`): forced wipes arrive with a chat backlog (88% at call 1); read vs in-flight must match before-message age; conditional-logit contrasts quasi-separate on sparse exposures (ridge 0.5 or Firth; ≥ 5 chosen rows per exposure); day-cluster bootstraps under-cover in short windows (1-h blocks within a day); `project_calls.label` carries over resets (use `proj`).
