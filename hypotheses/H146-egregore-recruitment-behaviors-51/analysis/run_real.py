@@ -209,6 +209,8 @@ def main():
     ap.add_argument("--stage", choices=["power", "estimate"], required=True)
     ap.add_argument("--n-pseudo", type=int, default=30)
     ap.add_argument("--only", default=None)
+    ap.add_argument("--skip-pseudo", action="store_true", help="estimate K only (pseudo-patterns later)")
+    ap.add_argument("--pseudo-only", action="store_true", help="add pseudo-patterns to an existing results file")
     A = ap.parse_args()
     import coding_h145 as CH
     t0 = time.time()
@@ -239,15 +241,24 @@ def main():
         return
     rng = np.random.default_rng(seed)
     res_path = OUTR / f"real_{A.set}.json"
-    res = json.loads(res_path.read_text()) if res_path.exists() and A.only else \
+    res = json.loads(res_path.read_text()) if res_path.exists() and (A.only or A.pseudo_only) else \
         {"set": A.set, "source": src, "coding": cod.source, "patterns": {}, "memeplex_info": mp_info}
     prof_pool = profiles(pool)
     for k, K in Ks.items():
         tk = time.time()
-        r = {"meta": meta.get(k, {}), "elements": K.tolist() if A.set == "h145" else
-             [cod.names[j] for j in K]}
-        r["stats"] = stage_estimate(ev, cod, K, ctrl, rng, full=True)
-        print(f"[{time.time() - t0:.0f}s] {k} real done ({time.time() - tk:.0f}s)", flush=True)
+        if A.pseudo_only:
+            r = res["patterns"][k]
+            rng = np.random.default_rng(seed + 7 + sorted(Ks).index(k))
+        else:
+            r = {"meta": meta.get(k, {}), "elements": K.tolist() if A.set == "h145" else
+                 [cod.names[j] for j in K]}
+            r["stats"] = stage_estimate(ev, cod, K, ctrl, rng, full=True)
+            print(f"[{time.time() - t0:.0f}s] {k} real done ({time.time() - tk:.0f}s)", flush=True)
+        if A.skip_pseudo:
+            res["patterns"][k] = r
+            res_path.write_text(json.dumps(jsonable(res), indent=1))
+            continue
+        r["pseudo_pool"] = {"elements": str(H145 / "elements.parquet"), "expr": str(H145 / "expr" / "w120.parquet")}
         prof_K = k_profile_in(cod, K)
         excl = set(K.tolist()) if A.set == "h145" else set()
         sets, wl = pseudo_sets(prof_K, prof_pool, excl, A.n_pseudo, rng)

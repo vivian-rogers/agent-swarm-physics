@@ -162,12 +162,35 @@ K2 (HR < 0.5) is a point-estimate rule: it fires in about half of the K2-world r
 | byte game | 19 (152) | 27; 0.00 | 710; 234; 0.15 / 0.87; 0.00 | 122; 0.00 | 1,611; 0.60 | 1.00 / 0.50 / 0.08 / 0.18 |
 | Echoes | 25 (871) | 35; 0.02 | 2,496; 1,209; 0.57 / 0.67; 0.05 | 86; 0.12 | 5,823; 1.00 | 1.00 / 1.00 / 0.30 / 0.43 |
 
+**S5. Per-pattern power on H145's 15 frozen memeplexes** (`results/power_h145.json`; `memeplexes.json` md5 9b899c34, frozen 2026-10-09 18:12 UTC; H145 coding):
+
+| Memeplex (H145 label) | Elements | Hosts (host bins) | Adoptions; P1 power β 0.3 | P1b events; read-exposed rows; power β 0.3 / 0.6; size | P3 events; power β 0.3 | P4 F; read-gate power | P5 power at RR 1.5: wipe / DQ2 / DQ10 / lapse |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| K01 (verify) | 68 | 31 (1,189) | 61; 0.00 | 2,613; 824; 0.53 / 0.97; 0.04 | 170; 0.10 | 10,372; 1.00 | 1.00 / 1.00 / 0.42 / 0.73 |
+| K02 (verify) | 37 | 26 (359) | 62; 0.00 | 1,395; 363; 0.08 / 0.03; 0.03 | 53; 0.00 | 4,476; 0.98 | 1.00 / 0.80 / 0.28 / 0.30 |
+| K03 (governance) | 187 | 31 (1,299) | 55; 0.13 | 3,244; 1158; 0.43 / 0.57; 0.03 | 141; 0.00 | 11,173; 1.00 | 1.00 / 1.00 / 0.70 / 0.82 |
+| K04 (unlabelled) | 64 | 31 (1,020) | 57; 0.00 | 2,620; 819; 0.20 / 0.13; 0.05 | 102; 0.00 | 10,072; 1.00 | 1.00 / 1.00 / 0.50 / 0.77 |
+| K05 (echoes) | 41 | 22 (307) | 46; 0.00 | 1,743; 366; 0.17 / 0.57; 0.04 | 50; 0.15 | 3,481; 0.88 | 1.00 / 0.68 / 0.10 / 0.28 |
+| K06 (frameworks) | 70 | 27 (608) | 55; 0.00 | 2,255; 677; 0.02 / 0.07; 0.00 | 166; 0.00 | 6,027; 1.00 | 1.00 / 0.97 / 0.28 / 0.43 |
+| K07 (frameworks) | 82 | 31 (655) | 68; 0.00 | 1,935; 501; 0.17 / 0.23; 0.01 | 72; 0.00 | 7,108; 1.00 | 1.00 / 1.00 / 0.25 / 0.68 |
+| K08 (unlabelled) | 129 | 27 (679) | 62; 0.05 | 2,008; 624; 0.35 / 0.50; 0.01 | 55; 0.02 | 7,312; 1.00 | 1.00 / 1.00 / 0.32 / 0.48 |
+| K09 (unlabelled) | 116 | 32 (1,399) | 64; 0.10 | 3,481; 1278; 0.32 / 0.53; 0.04 | 317; 0.00 | 10,026; 1.00 | 1.00 / 1.00 / 0.53 / 0.67 |
+| K10 (unlabelled) | 31 | 23 (226) | 49; 0.00 | 1,052; 292; 0.05 / 0.00; 0.01 | 38; 0.00 | 3,780; 0.97 | 1.00 / 0.82 / 0.08 / 0.20 |
+| K11 (frameworks) | 51 | 24 (470) | 66; 0.00 | 2,631; 659; 0.32 / 0.67; 0.05 | 46; 0.00 | 5,819; 1.00 | 1.00 / 1.00 / 0.17 / 0.63 |
+| K12 (welfare) | 153 | 32 (2,352) | 38; 0.00 | 4,869; 1871; 0.30 / 0.60; 0.01 | 268; 0.10 | 13,049; 1.00 | 1.00 / 1.00 / 0.72 / 0.62 |
+| K13 (unlabelled) | 140 | 32 (1,747) | 37; 0.03 | 4,307; 1518; 0.33 / 0.43; 0.06 | 164; 0.00 | 12,436; 1.00 | 1.00 / 1.00 / 0.77 / 0.83 |
+| K14 (unlabelled) | 4 | 5 (15) | 10; 0.00 | 78; 17; 0.00 / 0.00; 0.00 | 2; 0.00 | 427; 0.08 | 0.30 / 0.08 / – / 0.00 |
+| K15 (frameworks) | 45 | 18 (179) | 47; 0.00 | 1,252; 172; 0.28 / 0.43; 0.01 | 32; 0.00 | 2,648; 0.78 | 1.00 / 0.70 / 0.22 / 0.22 |
+
+K14 (4 markers, 5 hosts in H146's coding, 15 host bins) is too small for every test.
+
 ### Declared before any estimate (untestability rule, A1.3)
-- **P1 (adoption) and P1b: K1 cannot fire** for any candidate. Power at log-OR 0.3 is ≤ 0.17 (adoption) and ≤ 0.57 (P1b), because only 102–1,209 at-risk rows per pattern hold a K item in the mirror window. Only a positive can count; a null is "inconclusive". Size on the same skeletons is ≤ 0.06.
-- **P3 (newcomers): untestable** (power ≤ 0.12; 15–312 events in newcomers' first two active days). Reported as descriptive only.
+- **P1 (adoption) and P1b: K1 cannot fire** for any candidate or memeplex. Memeplexes: power at log-OR 0.3 ≤ 0.13 (adoption) and ≤ 0.53 (P1b; K01 0.53, K03 0.43, all others ≤ 0.35); size ≤ 0.06. Candidates: Power at log-OR 0.3 is ≤ 0.17 (adoption) and ≤ 0.57 (P1b), because only 102–1,209 at-risk rows per pattern hold a K item in the mirror window. Only a positive can count; a null is "inconclusive". Size on the same skeletons is ≤ 0.06.
+- **P3 (newcomers): untestable** (power ≤ 0.15; 2–317 events in newcomers' first two active days). Reported as descriptive only.
 - **P2:** conditional on P1/P1b; computed only for patterns that pass.
 - **P4:** the HR is identified for every candidate (1,611–7,231 host wipes; in the survival world the share with HR ≥ 0.8 is ≥ 0.98, in the K2 world about half fall below 0.5). Read-gating is powered (≥ 0.85) for all candidates except the byte game (0.60).
-- **P5:** the wipe subtest is powered for all candidates (1.00). The DQ2-challenge subtest is powered for 6 of 8 (not onboarding, byte game: 0.50). The DQ10-challenge subtest is powered only for verification (0.87). The lapse subtest is unpowered for all (≤ 0.63).
+- **P5 (memeplexes):** wipe powered for all but K14 (1.00); DQ2 challenge powered for 12 of 15 (not K05, K15, K14); DQ10 challenge unpowered for all (≤ 0.77); lapse powered for K03 and K13 only (0.82, 0.83). **P4 (memeplexes):** read-gating powered for all but K15 (0.78) and K14.
+- **P5 (candidates):** the wipe subtest is powered for all candidates (1.00). The DQ2-challenge subtest is powered for 6 of 8 (not onboarding, byte game: 0.50). The DQ10-challenge subtest is powered only for verification (0.87). The lapse subtest is unpowered for all (≤ 0.63).
 - **P6:** specialization power 0.80 at λ 0.2 (generic skeleton); Ω uses the amended rule A1.9.
 
 ### Cost (measured)

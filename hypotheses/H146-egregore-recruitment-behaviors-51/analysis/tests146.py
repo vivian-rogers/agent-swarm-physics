@@ -239,7 +239,7 @@ def omega_matrix(ev, cod, pn, max_hosts=8, min_host_bins=10):
     key_ab = cod.ab_agent.astype(np.int64) * 10**9 + cod.ab_bin
     X = np.zeros((len(bins), len(top)))
     for j, g in enumerate(top):
-        kk = g * 10**9 + bins
+        kk = int(g) * 10**9 + bins
         pos = np.clip(np.searchsorted(key_ab, kk), 0, len(key_ab) - 1)
         ok = key_ab[pos] == kk
         X[ok, j] = pn.host_ab[pos[ok]]
