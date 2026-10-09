@@ -35,11 +35,13 @@ def main():
         a.tick_params(labelsize=7, colors=INK)
     col = [CLS.get(c, MUTED) for c in df["class"]]
     lo, hi, est = df["dV_lo"].to_numpy(), df["dV_hi"].to_numpy(), df["dV_rate"].to_numpy()
+    lo, hi, est = np.clip(lo, -0.6, 0.8), np.clip(hi, -0.6, 0.8), np.clip(est, -0.6, 0.8)   # K14 (11 host bins) clipped
+    ax[0].set_xlim(-0.62, 0.82)
     ax[0].hlines(y, lo, hi, color=MUTED, lw=1.5)
     ax[0].scatter(est, y, s=22, color=INK, zorder=3)
     ax[0].axvspan(-0.05, 0.05, color="#dddddd", zorder=-1, lw=0)
     ax[0].axvline(-0.10, color=MUTED, lw=0.8, ls="--")
-    ax[0].set_xlabel(r"wipe value $\Delta V_{K,F}$ (rate form, excess)", fontsize=7.5)
+    ax[0].set_xlabel(r"wipe value $\Delta V_{K,F}$ (A1 rate form, excess; clipped at 0.8)", fontsize=7.5)
     ax[0].set_yticks(y, names, fontsize=6.5)
     for j, h in enumerate(df["h_K"].to_list()):
         ax[0].annotate(f"h={h:.2f}" if h is not None else "", (1.0, j), xycoords=("axes fraction", "data"),

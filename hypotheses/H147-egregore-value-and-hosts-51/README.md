@@ -1,6 +1,6 @@
 # H147: Ideology egregores in #51: the value of their information (Kolchinsky–Wolpert) and what they do to their hosts (mutualist or parasitic)
 
-**Status:** round 1 in progress (2026-10-09): scheme built, synthetic validation done and Amendments A1–A3 written before any real-data outcome; the real-data run waits for H145's frozen memeplexes. Card written 2026-10-09 from HH396 and HH397 after Vivian's clarification and the qualitative reading of #51.
+**Status:** round 1 done (2026-10-09), exploratory. P1 supported (forced erasures do not cost H145's distributed memeplexes their expression share: 1/14 falsifiers); P4 mixed (classes depend on the null); P5 not falsified, inconclusive; P2 untestable (no hub-centred memeplex; single events underpowered); P3 descriptive. Card written 2026-10-09 from HH396 and HH397 after Vivian's clarification and the qualitative reading of #51.
 **Fields:** info theory, thermodynamics, evolutionary ecology
 **Literature:** [Kolchinsky & Wolpert 2018](../../literature/kolchinsky-2018-semantic-information-autonomous-agency.md); [Sowinski et al. 2023](../../literature/sowinski-2023-semantic-information-resource-gathering-agents.md); [Krakauer et al. 2020](../../literature/krakauer-2020-information-theory-of-individuality.md); [Vivian's essay](../../literature/jazzloaf-2026-agent-ecologies-essay.md) (the alignment question: patterns that use agents as substrate)
 **Definitions used:** *egregore (ideology)*, condition 5 and the host relation (mutualist, parasitic, neutral); *κ_c (channel value per bit)*, *channel information I_c*, *channel value ΔV_c* (H70, H87); *goal field ĝ* (agent version, private roles).
@@ -79,10 +79,10 @@ Scored per model, mapping and window; 0/1/2.
 ## Results by goal period
 | Period | Role | Verdict | Key numbers |
 | --- | --- | --- | --- |
-| [G51](goalperiod-subhypotheses/G51/README.md) | exploratory | pending | |
-| [NE41](goalperiod-subhypotheses/NE41/README.md) (host wipes) | native | pending | |
-| [NE38](goalperiod-subhypotheses/NE38/README.md) (hub loss) | native | pending | |
-| [NE43](goalperiod-subhypotheses/NE43/README.md) (nudger stop) | native | pending | |
+| [G51](goalperiod-subhypotheses/G51/README.md) (host relation, P4–P5) | exploratory | mixed | A2: 8/15 memeplexes parasitic, 0 mutualist; beyond pseudo-patterns 3/15 parasitic (K02, K03, K14); P5 ρ = +0.21 [−0.42, 0.80] |
+| [NE41](goalperiod-subhypotheses/NE41/README.md) (host wipes, P1) | native | supported | 1/14 distributed memeplexes lose ≥ 10% (K06 −0.17); median ΔV_K,F +0.05 [0.00, 0.12]; K1 self-dip −0.40 commits |
+| [NE38](goalperiod-subhypotheses/NE38/README.md) (hub losses, P2) | native | descriptive | no hub-centred memeplex; HL2 (testable) β median 2.0 over 6 memeplexes, 2 beyond placebo (patterns grew) |
+| [NE43](goalperiod-subhypotheses/NE43/README.md) (operator actions, P3) | native | descriptive | DeepSeek-V3.2-top memeplexes after the 08-24 veto: median net prevalence −0.30, 0/12 beyond placebo; colonial A change CIs all include 0 |
 | 51m (reserved) | confirmatory | not run | |
 
 ## Round 1 (2026-10-09)
@@ -150,8 +150,59 @@ H145 froze 15 qualifying memeplexes K01–K15 (`memeplexes.json`, md5 9b899c34�
 - **P5:** Spearman over the 15 memeplexes between the A2 commit effect and colonial A (excess over pseudo-patterns; H147's coarse E, see `analysis/run.py`).
 - Role-text controls R0–R5 are run through the same pipeline and reported beside the memeplexes.
 
+### Results on exploration data (2026-10-09)
+Run: `analysis/run.py --n-pseudo 100 --B 200` (617 s; ≈ 30 s per memeplex), `analysis/summarize.py` (rules), `analysis/figures.py` (`figures/h147_obs.pdf`), `analysis/write_estimates.py` (63 native rows, period unit G51). Data: `data/processed/H147-egregore-value-and-hosts-51/results/`. Patterns: H145's 15 frozen memeplexes K01–K15 and its 6 role-text controls R0–R5. Element events were rebuilt with `memeplex.build_elements` and matched H145's `elements.parquet` key for key (2,011 elements, 280,491 events).
+
+| | Prediction | Result (95% CI) | Verdict by the rule |
+| --- | --- | --- | --- |
+| K1 | the wiped host's own output dips (positive control) | own commits −0.40 [−0.42, −0.36]; own-repo commits −0.40 [−0.42, −0.36]; statements −0.62 [−0.64, −0.59] in calls 1…20 after F vs P (29,693 events) | passes; wipe analyses are readable |
+| P1 | distributed memeplexes: ΔV_K,F within ±5%; κ not identified or ≈ 0. Falsified if ≥ 1/2 lose ≥ 10% (CI below 0) | 1/14 falsifiers (K06 −0.17, bootstrap [−0.27, −0.06], pseudo band [−0.26, −0.05]); median ΔV +0.05 [+0.00, +0.12]; 3/14 *gain* beyond both bands (K03 +0.16, K12 +0.07, K13 +0.12); others' response: 0/14 CIs exclude 0; I_K identified for 1/14 (K05) | **supported** (power 0.90 at −30%, 0.65 at −20%); the median sits at the +5% edge |
+| P2 | hub-centred (h_K ≥ 0.6) β ≈ 1, distributed β < 0.5 | no hub-centred memeplex (h_K 0.13–0.56). HL2 (the one testable event): β median 2.0 over 6 memeplexes with s ≥ 5%; 2/6 beyond the placebo band, both with the pattern growing (K01 β −6.8, K03 β −40.5) | **untestable** (A3); descriptive |
+| P3 | the 08-05 rebuke and 08-24 veto lower the DeepSeek-V3.2-centred pattern's prevalence ≥ 20%; its colonial A changes by less than its CI; the nudger stop lowers protections | 12 memeplexes with DeepSeek-V3.2 as top host. OP2: median net prevalence −0.30, 8/12 ≤ −20%, 0/12 beyond the any-weekday placebo band. OP1: median −0.09, 5/12 ≤ −20%, 1/12 beyond (K07 +1.98). Colonial A before vs after: 24/24 CIs include 0, CI widths ≈ 1–2 bits. OP3: no protections memeplex | **descriptive** (K3, A3); the A part is uninformative (CIs too wide) |
+| P4 | verification and onboarding: mutualist or neutral; the DeepSeek-V3.2-centred coordination pattern parasitic (own-repo commits ≤ −10%) | A2 (primary): coordination targets K03 −0.18 [−0.27, −0.08], K06 −0.12 [−0.20, −0.01], K07 −0.16 [−0.26, −0.04] parasitic; K11, K15 neutral (3/5). Verification: K01 neutral, K02 parasitic (commits −0.19 [−0.35, −0.01], alignment −0.25 [−0.36, −0.13]). All 15: 8 parasitic, 7 neutral, 0 mutualist. Beyond pseudo-patterns (variant): parasitic K02, K03, K14; mutualist K09 | **mixed** (coordination holds 3/5; verification fails for K02) |
+| P5 | Spearman(host relation, colonial A) > 0; falsified if ≤ 0 with ≥ 6 patterns | ρ = +0.21 [−0.42, 0.80], n = 15 | **not falsified**; inconclusive |
+| K2 | no pattern beyond ±5% with power ≥ 0.8 at −10% → no effect on the substrate | 6/15 memeplexes have a component CI beyond ±5% (K02, K03, K04, K08, K13, K14) | does not fire |
+| K3 | dated single events descriptive unless beyond the placebo 95th pct | applied (A3) | P2, P3 descriptive |
+
+**Generic hosting cost (post hoc reading of the pre-registered pseudo-pattern null).** Frequency-matched random element sets also cost their hosts at matched activity: pseudo-pattern medians are −0.07 (range −0.14 to +0.09) on own-repo commits and −0.09 (−0.16 to −0.03) on role alignment. So most of the A2 "parasitic" classes are a generic effect of talking about any shared topic in that bin. Only K02 (verification) and K03 (governance) stay parasitic beyond the pseudo-pattern median; K14 has only 11 host bins.
+
+**Role-text controls (positive control for the alignment instrument).** Hosting a role-text pattern raises role alignment by +0.15 to +0.59 (all six CIs above 0), and none changes own-repo commits beyond its CI except R5 (−0.15 [−0.25, −0.00]). Post hoc: role-text patterns lose expression share after a wipe (R3 −0.47, R4 −0.30, R5 −0.35), while memeplexes do not.
+
+**Wipes raise, not lower, some memeplexes (post hoc).** Three memeplexes (governance K03, welfare K12, K13) gain expression share in calls 1…20 after a forced erasure, beyond both the bootstrap and the pseudo-pattern band. This fits re-expression from chat and memory files after the context is rebuilt, not loss. κ_K,F is not identified: the wipe removes no measurable K-information in 13/14 memeplexes (I_K CI includes 0).
+
+### Impostors (round 1)
+| Impostor | How handled | Status |
+| --- | --- | --- |
+| Scheduler field | F timing set by the 41-call cap; placebo calls at matched segment position; stratum agent × unit; the A1 rate form cancels the post-wipe activity dip (0.70 vs 1.47 statements); day-part fixed effects and agent trends in the host fits | removed |
+| Exogenous field | role-text controls run through the same pipeline (alignment instrument validated); operator actions are treatments (descriptive); no regression on `goal_fields` directions | partly |
+| Shared model priors | all comparisons within agent; memeplexes span 7–8 labs (K14: 3 hosts) | removed (within agent) |
+| Contemporaneous convergence | wipes: own share within agent, n/a; the others' response is not read-gated (H146's test) | n/a (wipes); open (others' response) |
+
+### Scorecard (round 1)
+| Axis | Score | Evidence |
+| --- | --- | --- |
+| A mapping | 1 | V_K from H145's frozen elements and bins; A1 changed V from count to share; dated scrambles fixed before statistics |
+| B assumptions | 1 | matched placebo calls; segment-position dip measured and cancelled; stationarity around dated events not testable |
+| C adequacy | 1 | every statistic against 100 frequency-matched pseudo-patterns; most memeplexes inside the band |
+| D unfitted predictions | 0 | the β ordering was untestable (no hub-centred memeplex) |
+| E interventional | 1 | NE41 used as an intervention (14,593 forced erasures); hub losses and operator actions only descriptive |
+| F identifiability | 2 | synthetic size and power on the real skeleton for every test; K1 positive control passes |
+| G ground truth | 1 | role-text controls raise alignment (+0.15 to +0.59); no hub-centred ground truth |
+| H comparative | 1 | wipes cost nothing (W_artifact / W_egregore over a context-held pattern); W_artifact and W_egregore are not separated; W_hub cannot be tested |
+| I transfer | 0 | 51m not run; `analysis/confirm.py` frozen and guarded, dry-run only |
+
+**Claim that stands:** In #51 (07-06 → 09-04), forced context erasures of a memeplex's hosts do not lower its expression share: 1 of 14 distributed H145 memeplexes loses ≥ 10% (median ΔV_K,F = +0.05, 95% CI 0.00 to 0.12; synthetic power 0.90 at −30%). Exclusions: P2 untestable (no hub-centred memeplex; single events underpowered); P3 descriptive; the P4 host classes depend on the null (8/15 parasitic at matched activity, 3/15 beyond pseudo-patterns); P5 inconclusive; κ_K,F not identified; the post-wipe gains of K03, K12, K13 are post hoc.
+
+### Round 2 redirects
+**What the direction is really after:** whether an ideology's persistence depends on information held in particular carriers, and whether carrying it costs the carrier its assigned work beyond the generic cost of talking about any shared topic.
+- **H147-R1. Host relation against a matched null.** Make the pseudo-pattern excess (or pseudo-patterns matched on host identity) the primary null before calling any memeplex parasitic; test K02 and K03 on 51m with it.
+- **H147-R2. Where re-expression comes from.** Split a memeplex's re-expression after a wipe by source (memory file, chat backlog, artifacts) with the context ledger, to separate W_artifact from W_egregore.
+- **H147-R3. Pooled hub departures.** Pool tool losses and reassignments across periods instead of single events, so β has power.
+
 ## Results
-*Pending (real-data run waits for H145's memeplexes).*
+Round 1 (2026-10-09, above): P1 supported, P4 mixed, P5 inconclusive, P2 untestable, P3 descriptive. Per-period folders: `goalperiod-subhypotheses/G51`, `NE41`, `NE38`, `NE43`.
 
 ## Notes
 - 2026-10-09: written by the coordinator. Traps: own-repo commits must be cleaned (screenshot loop, other village's commits, mirrored pushes); forced wipes arrive with a chat backlog; the class × wipe sandwich test is anti-conservative (cluster bootstrap); `project_calls.label` carries over resets.
+- 2026-10-09 (round 1): `analysis/confirm.py --dry-run` ran the frozen C1/C2 pipeline on the non-reserved stand-in window E (08-24 → 09-04): 1/14 distributed falsifiers. This is a code check and a robustness split, not a test. The reserved build of the scheme is not written; it must be added and the script re-frozen at sign-off.
+- 2026-10-09 (round 1): shared-code observations. `memeplex.clean_commits` leaves 1 `-chat@agentvillage.org` commit after its no-call rule (H147 drops it from the raw git emails); its hash dedupe drops 0 rows in #51 (the `canonical` flag already dedupes). H145's role-text controls R0–R5 carry no h_K and no top host.

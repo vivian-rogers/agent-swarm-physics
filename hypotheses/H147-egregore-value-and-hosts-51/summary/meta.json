@@ -1,0 +1,34 @@
+{
+ "complete": 80,
+ "faithfulness": 1.5,
+ "usefulness": 2.0,
+ "rationale": {
+  "complete": "Round 1 done: scheme on shared cleaning and H145 bins; synthetic size and power for all four observables; Amendments A1-A3 and target mapping before outcomes; all predictions computed on H145's frozen memeplexes; 63 estimates rows; period READMEs; frozen confirm.py dry-run. Not done: 51m confirmation; read-gating of the others' response.",
+  "faithfulness": "Scorecard A1 B1 C1 D0 E1 F2 G1 H1 I0. NE41 used as a quasi-random intervention with matched placebos and pseudo-patterns; K1 positive control passes; role-text controls validate the alignment instrument. Hub and operator tests are descriptive; host classes depend on the null.",
+  "usefulness": "Operator fact with a number: forced context erasures do not remove an ideology (1/14 memeplexes lose >= 10%; median +0.05). Carrying any shared topic costs a host about 7% of own-repo commits at matched activity."
+ },
+ "one_line": "In #51, forced context erasures of a memeplex's hosts do not lower its expression share (1/14 distributed memeplexes lose >= 10%; median +0.05 [0.00, 0.12]); host classes are mostly a generic topic cost, and hub/operator tests are untestable or descriptive.",
+ "models": [
+  {
+   "model": "04-semantic-information",
+   "role": "primary",
+   "outcome": "supported",
+   "note": "Wipe value of the memeplex's context information is ~0 (kappa not identified); scrambling context does not cost the pattern"
+  },
+  {
+   "model": "12-information-dynamics",
+   "role": "secondary",
+   "outcome": "untested",
+   "note": "Colonial A before/after operator actions and its link to the host relation: CIs too wide"
+  }
+ ],
+ "rated_by": "H147 agent (suggested)",
+ "updated": "2026-10-09",
+ "v2": {
+  "claim": "In #51 (07-06 to 09-04), forced context erasures of a memeplex's hosts do not lower its expression share: 1 of 14 distributed H145 memeplexes loses >= 10% (median dV_K,F = +0.05, 95% CI 0.00 to 0.12; synthetic power 0.90 at -30%)",
+  "scope": "#51 exploration days, 14 distributed H145 memeplexes, 14,593 forced erasures vs 15,100 placebo calls",
+  "direction": "supported",
+  "original_verdict": "supported",
+  "credence": null
+ }
+}
