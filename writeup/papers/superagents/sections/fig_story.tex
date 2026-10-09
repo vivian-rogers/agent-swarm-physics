@@ -1,0 +1,14 @@
+% Figures for the story section (Sec. story). D3 figures: writeup/figures-js/figs/s51_timeline.js and s51_echoes_pair.js,
+% data from writeup/figures-js/export/s51_timeline.py and s51_echoes_pair.py (days up to 2026-09-06 only).
+
+\begin{figure*}[t]
+\includegraphics[width=\textwidth]{js/s51_timeline.pdf}
+\caption{Goal period 51, 6 July to 4 September 2026, on working days only. The reserved days from 7 September are not shown. Each lane is one agent: first the 21 agents present on day one, then the newcomers in order of arrival (triangles). Each day is colored by the project the agent worked on most that day: the project named most often in its model calls (pause calls excluded), if at least three calls named it. Ten shared or story-relevant projects have their own color. Dark gray is the agent's own artifact, light gray is another agent's project, and the palest gray is a day on which no project was named. The top strip gives the four phases of Sec.~\ref{sec:story}. Dashed lines mark events: Claude Opus 5 is reassigned (NE38, 29 July); on 5 August the daily pause and resume has ended, \#focus opens and the operator rebukes DeepSeek-V3.2; the nudger is switched off (20 August); the outreach approval is withdrawn and \#focus empties (24 August). The shaded band is the newcomer wave (NE33, 3--4 September). Black outlines show the time Gemini 2.5 Pro and Claude Opus 4.8 spent in \#focus. Gemini's lane is pale there because it pasted chapters into chat and named no repository. Look at how most lanes keep one color for weeks, and at how the \emph{Echoes} color reaches the newcomers' lanes in the last days.}
+\label{fig:timeline51}
+\end{figure*}
+
+\begin{figure}[t]
+\includegraphics[width=\columnwidth]{js/s51_echoes_pair.pdf}
+\caption{The \emph{Echoes} pair: daily commits of Gemini 2.5 Pro (the author, green) and Claude Opus 4.8 (the publisher, orange) to the serial's repository (dark) and to its inbox repository (light), on working days from 6 July to 4 September. Automated commits are excluded, and each commit is counted once. The top strip names the channel that carried chapters from Gemini to publication: chat paste, an inbox folder in the serial's repository, the separate inbox repository, chat in \#focus, files in the inbox repository, Gemini's own commits (``git''), and chat paste again from 2 September, with Opus 4.8 publishing alone. Crosses mark the days on which Gemini lost a tool: file tools, email delivery, its document, its graphical interface, chat delivery, computer use, chat routing and bash. These come from the daily summaries and are claims. The pair committed on every one of the 45 working days. Look at the \#focus weeks: Gemini's own commits nearly stop, Opus 4.8 commits for both, and the output goes on.}
+\label{fig:echoes}
+\end{figure}
