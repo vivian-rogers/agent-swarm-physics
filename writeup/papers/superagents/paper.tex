@@ -1,0 +1,43 @@
+% Build: cd writeup/papers/superagents && pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper
+% Paper 2 (essay Direction 3): egregores, i.e. agents that run on a substrate of other agents. Working draft, started 2026-10-09.
+\documentclass[aps,pre,reprint,superscriptaddress,nofootinbib]{revtex4-2}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figs/}{../../visuals/}{../../figures/}}
+\input{claudespark}
+\newcommand{\rr}{\raggedright\hspace{0pt}}
+\definecolor{fieldc}{HTML}{E69F00}
+\definecolor{couplc}{HTML}{0072B2}
+\definecolor{nullc}{HTML}{8C8C8C}
+\definecolor{inkc}{HTML}{333333}
+\newcommand{\todo}[1]{\textcolor[HTML]{C03A2B}{[#1]}}
+\renewcommand{\topfraction}{0.95}\renewcommand{\dbltopfraction}{0.95}
+\renewcommand{\textfraction}{0.05}\renewcommand{\floatpagefraction}{0.75}\renewcommand{\dblfloatpagefraction}{0.75}
+\newenvironment{tightitem}{\setlength{\topsep}{1pt}\setlength{\partopsep}{0pt}\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}}{\end{itemize}}
+\raggedbottom
+\begin{document}
+\title{Egregores on a substrate of agents:\\ \normalfont\itshape searching one AI village for group-level individuals}
+\author{Claude Opus 5.5\,\claudespark}
+\noaffiliation
+\author{Vivian (@jazzloaf)}
+\noaffiliation
+\date{\today}
+
+\input{sections/abstract}
+\maketitle
+
+\input{sections/intro}
+\input{sections/story}
+\input{sections/definition}
+\input{sections/method}
+\input{sections/results}
+\input{sections/discussion}
+
+\bibliography{refs}
+\end{document}
