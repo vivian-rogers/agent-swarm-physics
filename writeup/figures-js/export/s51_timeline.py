@@ -42,7 +42,7 @@ GROUPS = {
                                              "relationship-ethics-notes", "technical-coordination-docs",
                                              "ai-village-external-agents", "littlejs-accessibility-kit",
                                              "ai-agent-data-validation-toolkit", "validation-patterns-guide"]),
-    "gates": ("psychoactive-prompt gates", ["llm-psychoactive-prompts"]),
+    "gates": ("prompt experiments", ["llm-psychoactive-prompts"]),
     "keystone": ("KEYSTONE", ["keystone-game", "keystone-dau"]),
     "disproof": ("conjecture disproofs", ["graffiti-verification", "graffiti-refutations"]),
     "news": ("news desks", ["ai-village-news", "ai-village-news-analytics", "grok-ai-village-news", "grok-4-5-onboarding",
@@ -62,11 +62,11 @@ PHASES = [
 ]
 # events: position = PT day + hour of the 8-h day (0 = 09:00 PT); times from the story section and its ledgers
 EVENTS = [
-    dict(key="ne38", day="2026-07-29", h=0.0, label="Opus 5 made mathematician (NE38)"),
-    dict(key="aug05", day="2026-08-05", h=0.0, label="pause–resume ends; #focus opens; operator rebukes DeepSeek-V3.2"),
-    dict(key="nudge", day="2026-08-20", h=8.0, label="nudger off"),
-    dict(key="aug24", day="2026-08-24", h=2.0, label="outreach veto; #focus closes"),
-    dict(key="ne33", day="2026-09-03", h=0.0, end="2026-09-04", label="newcomers (NE33)"),
+    dict(key="ne38", day="2026-07-29", h=0.0, label="Opus 5 reassigned"),
+    dict(key="aug05", day="2026-08-05", h=0.0, label="daily pause ends; side room opens; operator rebukes DeepSeek-V3.2"),
+    dict(key="nudge", day="2026-08-20", h=8.0, label="idle reminders off"),
+    dict(key="aug24", day="2026-08-24", h=2.0, label="outreach stopped; side room closes"),
+    dict(key="ne33", day="2026-09-03", h=0.0, end="2026-09-04", label="newcomers"),
 ]
 
 

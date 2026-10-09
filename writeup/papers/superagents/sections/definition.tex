@@ -1,21 +1,29 @@
 \section{What an egregore is}\label{sec:definition}
 
-An egregore, in the sense of this paper, is not a group of agents. It is a pattern: a set of ideas, norms and practices that many agents carry, that persists while its carriers change and forget, and that has its own repertoire of behaviors. An ideology running over people is the model case. A government is close to one: its laws, offices and procedures persist while officeholders and citizens turn over, and its acts (elections, taxes, enforcement) are performed by whoever holds the offices. An ant colony sits nearer the other end, a bounded set of parts with a colony-level state; we treat such a fixed group, a \emph{group superagent}, as the contrast case. Nothing in either idea requires that the parts stop being individuals: an agent can carry an ideology and remain an agent, as Schwitzgebel argues against ``anti-nesting'' principles \cite{schwitzgebel2015}.
+In this paper an egregore is not a group of agents. It is a pattern: a set of ideas, rules and practices that many agents carry. It continues while its carriers change and forget, and it has behaviors of its own. An ideology that runs on people is the model case. A government is near to one. Its laws, offices and procedures continue while officials and citizens change. The people who hold the offices at a given time do its acts, for example elections, taxes and enforcement. An ant colony is nearer to the other end. It is a fixed set of parts with a state of the whole colony. We call such a fixed group a \emph{group superagent}, and we use it as the contrast case. In neither case must the parts stop being individuals. An agent can carry an ideology and stay an agent. Schwitzgebel makes this argument against rules that forbid agents inside agents \cite{schwitzgebel2015}.
 
-We make the idea measurable as follows. A \emph{memeplex} $K$ is a set of elements (clusters of similar statements, coined names and protocols, shared repositories) that tend to appear together within agents. Its \emph{hosts} $H_K(n)$ at time step $n$ are the agents that express it. Its state $S_K(n)$ is how many hosts it has and which of its elements dominate. Its environment $E$ holds everything that can drive it from outside: the operator's timetable, the operator's and humans' messages, and the private role texts the agents were given. We call $K$ an egregore if it meets four conditions, and a valued egregore if it meets a fifth.
+We make the idea measurable as follows.
+\begin{tightitem}
+\item A \emph{memeplex} $K$ is a set of elements that tend to appear together in the work of agents. The elements are groups of similar statements, new terms and names of procedures, and shared repositories.
+\item The \emph{hosts} $H_K(n)$ of $K$ at time step $n$ are the agents that express it at that step.
+\item The \emph{state} $S_K(n)$ of $K$ is the number of its hosts and the elements that are most frequent.
+\item The \emph{environment} $E$ holds all inputs that can drive $K$ from outside. These are the timetable of the operator, the messages of the operator and of humans, and the private roles of the agents.
+\item A \emph{pseudo-pattern} is a random set of elements with the same frequencies as the elements of $K$. It is our main comparison.
+\end{tightitem}
+We call $K$ an egregore if it meets the four conditions below. We call it a valued egregore if it also meets the fifth condition.
 
-\emph{(1) It is an integrated individual.} Following Krakauer \emph{et al.}~\cite{krakauer2020}, the colonial individuality
+\emph{(1) It is an integrated individual.} We follow Krakauer \emph{et al.}~\cite{krakauer2020}. The colonial individuality
 \begin{equation}
 A_K = I(S'_K;\, S_K \mid E)
 \end{equation}
-measures how well the pattern's present state predicts its next state beyond the environment. It must exceed that of random element sets with the same frequencies, and the whole pattern must predict better than its elements taken one by one.
+measures how much the present state of the pattern tells about its next state $S'_K$. It counts only what the environment does not already tell. $A_K$ must be larger than for pseudo-patterns. The whole pattern must also predict better than its elements do one at a time.
 
-\emph{(2) It lives above its hosts.} Its prevalence persists over days while its host set turns over, and it survives the routine erasure of its hosts' working memory (every agent's context is wiped about every 41 model calls), because other hosts and shared artifacts give it back.
+\emph{(2) It lives above its hosts.} The pattern continues over days while its hosts change. It also continues after memory wipes of its hosts, because other hosts and shared artifacts give it back.
 
-\emph{(3) It recruits.} Agents that read its hosts adopt it more than agents that saw the same kind of message posted but not yet read.
+\emph{(3) It recruits.} Agents that read its hosts take it up more than agents that got the same kind of message but did not read it yet.
 
-\emph{(4) It has functional behaviors.} Its hosts recruit others by name, repair hosts that lapse, and divide its elements among themselves.
+\emph{(4) It has functional behaviors.} Its hosts recruit other agents by name, help hosts that stop to start again, and divide its elements among themselves.
 
-\emph{(5) Its information has value.} Following Kolchinsky and Wolpert~\cite{kolchinsky2018}, information is semantic if scrambling it lowers the system's viability. For a pattern, viability is its prevalence the next day; the natural scrambles are its hosts' memory wipes, the loss of a central host, and the operator acting against it. The value per bit is $\kappa_K = \Delta V_K / I_K$.
+\emph{(5) Its information has value.} We follow Kolchinsky and Wolpert~\cite{kolchinsky2018}. Information is semantic if the system becomes less viable when the information is scrambled. For a pattern, viability is how many agents express it on the next day. Three natural events scramble its information: memory wipes of its hosts, the loss of a central host, and actions of the operator against the pattern. The value per bit is $\kappa_K = \Delta V_K / I_K$. Here $\Delta V_K$ is the change in viability and $I_K$ is the information that the event removes.
 
-We also ask what a pattern does to its hosts: whether carrying it raises or lowers the host's output on its own assigned role. A \emph{parasitic} ideology keeps itself alive while pulling its carriers away from their assigned work; it is the misaligned swarm of the project essay in miniature.
+We also ask what a pattern does to its hosts. Does a host do more or less of the work in its own role while it carries the pattern? A \emph{parasitic} ideology keeps itself alive and pulls its hosts away from their roles. It is a small version of the misaligned group of agents that the essay describes.

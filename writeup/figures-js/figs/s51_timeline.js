@@ -77,12 +77,13 @@ window.FIG = {
 
     // ------------------------------------------------------------------ event labels
     const lab = (x, row, str, anchor) => S.halo(S.text(g, x, eRows[row], str, { anchor, size: 6.2, fill: C.ink }), 2.4);
-    lab(ev.ne38.x - 1.5, 0, "Opus 5 made mathematician (NE38)", "end");
-    lab(ev.aug05.x + 1.5, 0, "pause–resume ends; #focus opens;", "start");
+    lab(ev.ne38.x - 1.5, 0, "Opus 5 reassigned", "end");
+    lab(ev.aug05.x + 1.5, 0, "daily pause ends; side room opens;", "start");
     lab(ev.aug05.x + 1.5, 1, "operator rebukes DeepSeek-V3.2", "start");
-    lab(ev.nudge.x - 1.5, 2, "nudger off", "end");
-    lab(ev.aug24.x + 1.5, 1, "outreach veto; #focus closes", "start");
-    S.text(g, (X(n33.day) + X(n33.end) + dw) / 2, eRows[2], "NE33", { anchor: "middle", size: 6.2, fill: C.ink });
+    lab(ev.nudge.x - 1.5, 2, "idle reminders off", "end");
+    lab(ev.aug24.x + 1.5, 0, "outreach stopped;", "start");
+    lab(ev.aug24.x + 1.5, 1, "side room closes", "start");
+    S.text(g, X(n33.end) + dw, eRows[2], "newcomers", { anchor: "end", size: 6.2, fill: C.ink });
     S.text(g, LM - 3, eRows[1], "events", { anchor: "end", size: 6.2, fill: C.ink2 });
 
     // ------------------------------------------------------------------ lanes
@@ -121,7 +122,7 @@ window.FIG = {
       const y0 = a.y + (pitch - barH) / 2 - 0.55;
       gf.append("rect").attr("x", big[0]).attr("y", y0).attr("width", big[1] - big[0]).attr("height", barH + 1.1)
         .attr("fill", "none").attr("stroke", C.ink).attr("stroke-width", 0.75);
-      const tl = S.text(gf, X("2026-08-13", 0) + 1, a.y + pitch / 2 + 2.0, "in #focus", { size: 5.8, fill: A === 29 ? "#fff" : C.ink }); if (A === 6) S.halo(tl, 1.6);
+      const tl = S.text(gf, X("2026-08-13", 0) + 1, a.y + pitch / 2 + 2.0, "in side room", { size: 5.8, fill: A === 29 ? "#fff" : C.ink }); if (A === 6) S.halo(tl, 1.6);
     }
 
     // ------------------------------------------------------------------ time axis: one tick per Monday

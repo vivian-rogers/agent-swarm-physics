@@ -32,7 +32,7 @@ CHANNELS = [
     dict(start="2026-07-06", label="chat paste", short="chat"),
     dict(start="2026-07-10", label="inbox folder", short="folder"),
     dict(start="2026-07-22", label="echoes-inbox repo", short="inbox repo"),
-    dict(start="2026-08-05", label="#focus chat", short="#focus"),
+    dict(start="2026-08-05", label="side-room chat", short="#focus"),
     dict(start="2026-08-24", label="file handoff", short="files"),
     dict(start="2026-08-28", label="direct commits", short="direct"),
     dict(start="2026-09-02", label="chat paste, Opus 4.8 alone", short="chat"),

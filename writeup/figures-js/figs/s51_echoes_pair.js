@@ -61,8 +61,8 @@ window.FIG = {
     chans.forEach((c, i) => {
       const fill = c.short === "#focus" ? "#d2d2d2" : (i % 2 ? "#e2e2e2" : "#efefef");
       g.append("rect").attr("x", c.a).attr("y", sTop).attr("width", c.b - c.a - 0.6).attr("height", sH).attr("fill", fill);
-      const lab = { "chat": "chat", "folder": "folder", "inbox repo": "inbox repo", "#focus": "#focus chat",
-        "files": "files", "direct": "git" }[c.short];
+      const lab = { "chat": "chat", "folder": "folder", "inbox repo": "inbox repo", "#focus": "side-room chat",
+        "files": "files", "direct": "own commits" }[c.short];
       S.text(g, (c.a + c.b - 0.6) / 2, sTop + sH / 2 + 2.1, lab, { anchor: "middle", size: 5.9 });
     });
 

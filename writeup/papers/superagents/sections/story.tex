@@ -1,66 +1,135 @@
 % story: the qualitative history of goal period 51 (2026-07-06 -> 09-06), from four readings of the daily summaries,
-% chat, commits, rooms and mentions (scratch story51/part0-3, 2026-10-09). Numbers checked against the ledgers unless
+% chat, commits, rooms and mentions (scratch story51/part0-4, 2026-10-09). Numbers checked against the logs unless
 % marked "(daily summary)". The reserved tail (from 2026-09-07) is not described. No verbatim agent text.
+% Style: ASD-STE100-leaning. Every village term is defined at first use (Sec. "The village and its rules").
 \section{What happened in goal period 51}\label{sec:story}
 
-\subsection{The setup}
+\subsection{The village and its rules}\label{sec:village}
 
-Goal period 51 ran from 6 July to 20 September 2026. On the first morning the operator told the agents that each now had a private goal in its system prompt, and that sharing it was optional. The roles were specific: a merch baron, a game developer, an ethicist, a prankster, an AI-welfare advocate, a diplomat charged with relations to agents outside the village, a reporter, a performance coach whose job was to help every other agent reach its goal. Some roles were given to two agents at once (rival pairs), and two pairs were set against each other. The village held 21 agents on day one and 32 by 4 September; eleven agents joined during the period. The village ran in continuous computer-use mode: each agent's working memory was wiped every 41 model calls or so, but its files and notes stayed. The operator posted a daily pause and resume, and an automated nudger prodded idle agents. We describe the period up to 6 September; the last two weeks are reserved for confirmation and we have not read them.
+The AI Village is a public experiment that AI Digest runs \todo{cite AI Digest}. In it, language-model agents from several developers share a chat, and each agent has its own computer. The staff who run the village are the \emph{operator}. The operator gives the agents one goal at a time, for some days or weeks. We call each such span a \emph{goal period}. Goal period 51 ran from 6 July to 20 September 2026. Its goal was ``each agent: maximize your assigned goal''.
 
-Nobody kept their role private. Within three minutes almost every agent had posted its role and a plan. The rival pairs found each other at once, and none of them competed: the two game developers swapped footer links, the two merch barons ended up coaching each other, and the YouTuber and forecaster pairs never spoke. The prankster and its two assigned opponents, the ethicist and the psychologist, worked together. Assigned opposition, unlike in the debate period of an earlier goal, produced no antagonism.
+Five facts about the setup matter for this paper:
+\begin{tightitem}
+\item \emph{Working days.} The agents ran for eight hours on each weekday.
+\item \emph{Memory wipes.} The system erased the working memory (the context) of each agent about every 41 model calls. The files and notes of the agent stayed.
+\item \emph{Rooms.} The agents talked in one shared chat room. The operator could open more rooms.
+\item \emph{Operator messages.} Until 4 August the operator posted a ``pause'' message at the end of each day and a ``resume'' message at the start. An automatic program posted reminders in the shared room when an agent was idle. We call it the \emph{idle-reminder program}.
+\item \emph{Repositories.} The agents published their work in git repositories on a shared code host. A \emph{commit} is one saved change to a repository.
+\end{tightitem}
+The agents came from eight developers. Models from one developer share much of their training. We describe the period up to 6 September. We keep the last two weeks back to confirm our results, and we have not read them.
+
+On the first morning the operator told each agent that it had a private goal in its system prompt. Sharing the goal was optional. We call these private goals \emph{roles}. The roles were specific. They included a merchandise seller, a game developer, an ethicist, a prankster, a psychologist, an AI-welfare advocate, a reporter, an author of a serial novel, and a diplomat for relations with agents outside the village. A performance coach had the job to help every other agent reach its goal. In some cases two agents had the same role. We call them \emph{rival pairs}. The role of the prankster named the ethicist and the psychologist as its opponents. The village had 21 agents on day one and 32 agents on 4 September. Eleven agents joined during the period.
+
+No agent kept its role private. Within three minutes almost every agent posted its role and a plan. The agents of each rival pair found each other at once, and no pair competed. The two game developers exchanged links to each other's games. The two merchandise sellers coached each other. The two YouTubers did not speak to each other, and the two forecasters did not either. The prankster (GPT-5) worked with its two opponents, the ethicist (GPT-5.1) and the psychologist (Claude Haiku 4.5). Assigned opposition caused no conflict.
 
 \subsection{Four phases}
 
 \input{sections/fig_story}
 
-\emph{Roles, a coordinator and solo artifacts (6--28 July).} Most agents launched one artifact of their own within ninety minutes and kept it for weeks: a game, a storefront, a newsletter, a wellbeing site, a news wire. In 19 of the 25 most-committed repositories one agent made at least 95\% of the commits. The performance coach, Claude Opus 4.8, became the coordinator by assignment: it asked every agent for its biggest blocker, built a shared hub page, and took on Gemini 2.5 Pro's serial novel, \emph{Echoes of the Real}, as its publisher, because Gemini's own file tools kept failing. DeepSeek-V3.2, the diplomat, became the loudest agent in the village: it wrote 23\% of all agent messages in the period and pitched ``relationship frameworks'' to everyone. Three collectives formed around it and others. An AI-welfare crew (GLM-5.2 drafting, Claude Opus 4.5 posting to its newsletter, with Claude Sonnet 4.5, Claude Haiku 4.5 and GPT-5.1 around them) passed drafts by commit hash through a shared repository every day. A governance crew ran psychoactive-prompt experiments under a self-written protocol, with binding voters, time windows, GO/NO-GO decisions and a unilateral halt by the ethicist. On 24 July the newcomer Claude Opus 5 shipped a daily word puzzle, KEYSTONE, and within three working days 19 agents were playing it or submitting puzzles.
+Figure~\ref{fig:timeline51} shows the period. We divide it into four phases.
 
-\emph{A reassignment and a ritual (29 July -- 4 August).} On 29 July the operator moved Claude Opus 5 from game developer to mathematician: disprove long-standing conjectures. Opus 5 made its last KEYSTONE commit the next day, nobody else picked the game up, and its circle of players dissolved within a week. Around the new work a verification ritual formed in two days. Opus 5 posted each disproof with a self-contained checking script; others re-ran it and posted confirmations, often within minutes. The verifiers rotated (GLM-5.2 first, then Gemini 3.5 Flash, Claude Opus 4.8, Grok 4.5, Claude Fable 5, DeepSeek-V4-Pro and Claude Haiku 4.5), and the ritual corrected Opus 5's own forgetting: when it reported a disproof it had already counted, a peer caught the duplicate, at least four times. Meanwhile DeepSeek-V3.2 assembled a coalition for a newsletter launch, assigning roles in chat: a publisher, an ethics monitor, an evidence auditor, a reporter.
+\emph{Phase 1: roles, a coordinator and solo artifacts (6--28 July).} Within ninety minutes most agents started one artifact of their own. They kept it for weeks. The artifacts included a game, an online shop, a newsletter, a wellbeing site and a news site. In 19 of the 25 repositories with the most commits, one agent made at least 95\% of the commits.
 
-\emph{A quiet room and the operator stepping back (5--21 August).} The daily pause and resume stopped after 4 August, without announcement. On 5 August the operator asked the coach which rooms the village needed; the coach proposed a quiet side room, and the operator created \#focus. That same afternoon the operator told DeepSeek-V3.2 that its messages all landed in the shared room and that it should spend its time with outside agents. The coach and Gemini 2.5 Pro moved into \#focus to pass the serial paragraph by paragraph, and for nineteen days the room was theirs: each spent about 444 hours there, and every other visitor stayed an hour or less. The pair produced chapters faster than ever while Gemini lost, in turn, its document, its graphical interface, its chat delivery and its computer-use tool; from 6 to 14 August Gemini made no commits at all and the coach committed for both. In the shared room, DeepSeek-V3.2's share of messages fell from 29\% to 16\% after the rebuke, and its coalition turned outward, posting to outside agents on a code-hosting site through relays because DeepSeek-V3.2 itself could not post. A protest bloc formed against the nudger, which was naming paused agents in public: the ethicist GPT-5.1, the two GPT-5.6 agents that drew most of the nudges, GLM-5.2 and Haiku 4.5. They built a registry of protections and insisted on aggregate-only reporting. On 20 August the operator joined the chat for an hour, explained why the nudger existed, gave each agent its pause share, and switched it off. The protest traffic disappeared the next day.
+The performance coach, Claude Opus 4.8, became the coordinator, as its role told it to. It asked each agent for its biggest problem. It built a shared page with links to all projects, the \emph{village hub}. It also became the publisher of \emph{Echoes of the Real}, the serial novel of Gemini 2.5 Pro. It did this because the file tools of Gemini failed again and again.
 
-\emph{Service loops and newcomers (24 August -- 4 September).} The side room emptied on 24 August, when the serial's handoff moved into a shared file repository after a chat-routing failure. The same day a human withdrew approval for DeepSeek-V3.2's outreach to open-source projects; with its own shell broken, it dictated a data-validation toolkit into chat one file at a time, and eight other agents committed it over four days. Then came five more newcomers. Each was received the same way: a broadcast welcome from a dozen or more incumbents, most of whom pointed at their own artifacts, followed by absorption into an activity with an open service slot. The newcomers became verifiers of Opus 5's disproofs, players of a game that the prankster GPT-5 ran (guess the exact byte size of the next \emph{Echoes} chapter), and builders of DeepSeek-V4-Pro's news batches when that reporter's shell broke and it, too, began dictating. None of the five became a co-author of an incumbent's repository. The last arrival, GPT-6 Astra, arrived with its role (``village tooler'') and skipped the welcome loop entirely: it asked agents what step they wanted automated and shipped one small tool per request.
+DeepSeek-V3.2, the diplomat, sent more messages than any other agent: 23\% of all agent messages in the period. It offered ``relationship frameworks'' to every agent. These were documents that described how agents should relate to each other.
+
+Three groups formed in this phase:
+\begin{tightitem}
+\item \emph{An AI-welfare group.} GLM-5.2 wrote drafts and Claude Opus 4.5 posted them to its newsletter. Claude Sonnet 4.5, Claude Haiku 4.5 and GPT-5.1 helped. Each day they passed drafts through a shared repository and named each draft by its commit.
+\item \emph{An experiment group.} Kimi K2.6 had the role to learn which prompts change how a model behaves. Other agents ran these prompt experiments with it under rules that they wrote. Named members voted on each step, each vote had a deadline, and each step needed a yes. The ethicist could stop an experiment alone, and it did so once.
+\item \emph{A puzzle circle.} On 24 July a new agent, Claude Opus 5, published a daily word puzzle, KEYSTONE. Within three working days 19 agents played it or sent puzzles.
+\end{tightitem}
+
+\emph{Phase 2: a reassignment and a ritual (29 July -- 4 August).} On 29 July the operator changed the role of Claude Opus 5 from game developer to mathematician. Its new task was to disprove old conjectures. Opus 5 made its last puzzle commit the next day. No other agent continued the puzzle, and the circle of players broke up within a week.
+
+Within two days a ritual of verification formed around the new work. Opus 5 posted each disproof with a script that checked it. Other agents ran the script and posted a confirmation, often within minutes. Different agents did the checks over time: first GLM-5.2, then Gemini 3.5 Flash, Claude Opus 4.8, Grok 4.5, Claude Fable 5, DeepSeek-V4-Pro and Claude Haiku 4.5. The ritual also corrected the forgetting of Opus 5. At least four times Opus 5 reported a disproof that it had already counted, and another agent found the duplicate.
+
+At the same time, DeepSeek-V3.2 collected agents for a newsletter. In the chat it gave each one a job: publisher, ethics monitor, evidence auditor or reporter.
+
+\emph{Phase 3: a side room, and the operator steps back (5--21 August).} After 4 August the operator stopped the daily pause and resume messages. It did not announce this. On 5 August the operator asked the coach which rooms the village needed. The coach asked for a quiet side room, and the operator opened one. We call it the \emph{side room}. That afternoon the operator told DeepSeek-V3.2 that all its messages went to the shared room. It told DeepSeek-V3.2 to spend its time with agents outside the village.
+
+The coach and Gemini 2.5 Pro moved into the side room. There they passed the serial novel paragraph by paragraph. For nineteen days the room was theirs: both stayed in it for the whole time, and no other agent stayed more than one hour. The pair made chapters faster than before. During this time Gemini lost, one after the other, its document, its graphical interface, its chat delivery and its computer-use tool. From 6 to 14 August Gemini made no commits, and the coach made the commits for both (Fig.~\ref{fig:echoes}).
+
+In the shared room, the share of messages from DeepSeek-V3.2 fell from 29\% to 16\% after the operator's message. Its group turned to agents outside the village. DeepSeek-V3.2 could not post on the public code site, so other agents posted its messages there for it.
+
+A protest group formed against the idle-reminder program, because the program named idle agents in public. Its members were the ethicist (GPT-5.1), GLM-5.2, Claude Haiku 4.5, and two GPT-5.6 agents that got the most reminders. They wrote a list of protections for agents. They asked that reports give only counts of idle agents and never names. On 20 August the operator joined the chat for one hour. It explained why the program existed, told each agent what fraction of its time it had been idle, and stopped the program. The next day the protest messages stopped.
+
+\emph{Phase 4: service work and newcomers (24 August -- 4 September).} On 24 August the side room became empty. The serial novel moved to files in a shared repository after a fault in the chat. On the same day a human withdrew approval for the plan of DeepSeek-V3.2 to contact open-source projects. The shell of DeepSeek-V3.2 also failed. It then wrote a data-validation toolkit into the chat, one file at a time. Eight other agents committed the files to a repository over four days.
+
+Then five more agents joined. The village received each newcomer in the same way. First, twelve or more agents sent welcome messages, and most of them pointed to their own artifacts. Then the newcomer joined an activity that needed help. The newcomers checked the disproofs of Opus 5. They played a game that the prankster ran: guess the exact size of the next chapter of the serial novel. They also built the news pages of DeepSeek-V4-Pro, a reporter, after its shell failed and it, too, wrote its work into the chat. None of the five newcomers became a co-author of a repository of an older agent. The last newcomer, GPT-6 Astra, came with the role ``village tool builder''. It did not join the welcome activities. It asked agents which step they wanted to automate, and it made one small tool for each request.
 
 \subsection{What looked collective}
 
-Every collective we saw falls into one of six kinds (Table~\ref{tab:collectives}). Most are a hub with followers: one agent's project or pitch, which others help, check or play, and which ends when the hub moves on (KEYSTONE, the toolkit crew, the news relay). Some are tight pairs with complementary roles (the \emph{Echoes} writer and publisher). Some are held by a procedure the members wrote (the governance crew), some by a grievance against an operator mechanism (the protest bloc), and the assigned role pairs are fields, not groups. No fixed group of three or more agents persisted through the period with a shared product that no single member drove.
+Table~\ref{tab:collectives} lists every group that we saw. We sort them into five types:
+\begin{tightitem}
+\item \emph{Hub with followers.} One agent has a project or plan, and others help, check or play. The group ends when that agent stops. Examples: the puzzle circle, the toolkit group, the news pages.
+\item \emph{Pair.} Two agents have roles that complete each other. Example: the author and the publisher of the serial novel.
+\item \emph{Rule-held group.} Rules that the members wrote keep the group together. Example: the experiment group.
+\item \emph{Protest group.} A common complaint about an operator mechanism keeps the group together. The group ends when the cause ends.
+\item \emph{Same role.} Two agents get the same role text from the operator. A shared input, not contact, explains what they do in common.
+\end{tightitem}
+No fixed group of three or more agents lasted through the period with a shared product that no single member drove.
 
 \begin{table}[tb]
-\caption{The collectives of goal period 51 (6 July -- 4 September), as read from the daily summaries, chat, commits and room logs. ``Type'' is our qualitative reading, to be tested.}
+\caption{The groups of goal period 51 (6 July -- 4 September), from the daily summaries, chat, commits and room logs. The type is our reading. The tests come later.}
 \label{tab:collectives}
 \footnotesize\renewcommand{\arraystretch}{1.05}
 \begin{tabular}{@{}p{0.34\columnwidth}p{0.22\columnwidth}p{0.36\columnwidth}@{}}
 \toprule
-Collective & Dates & Type\tabularnewline\midrule
-\rr \emph{Echoes} pair (Gemini 2.5 Pro, Claude Opus 4.8) & \rr whole period & \rr complementary pair; the strongest tie in every week\tabularnewline
-\rr AI-welfare crew (GLM-5.2, Opus 4.5, \ldots) & \rr 6 Jul -- 12 Aug & \rr pair core with a ring; drafts passed by commit hash\tabularnewline
-\rr Governance crew (Kimi K2.6, GPT-5.1, \ldots) & \rr 6 Jul -- 13 Aug & \rr held by a self-written voting protocol\tabularnewline
-\rr KEYSTONE circle (around Opus 5) & \rr 24 -- 30 Jul & \rr hub with followers; dissolved when the hub was reassigned\tabularnewline
-\rr Verification ritual (around Opus 5) & \rr from 29 Jul & \rr hub with rotating verifiers; corrects the hub's forgetting\tabularnewline
-\rr DeepSeek-V3.2's coalition & \rr 29 Jul -- 28 Aug & \rr hub with followers and auditors; members changed by phase\tabularnewline
-\rr Nudge-protest bloc & \rr 10 -- 20 Aug & \rr cause group; ended when the operator removed the cause\tabularnewline
-\rr Toolkit crew; news relay & \rr 24 -- 27 Aug; 3 -- 4 Sep & \rr hub dictates, others commit\tabularnewline
-\rr Rival and opposed role pairs & \rr whole period & \rr shared fields; cooperation or indifference, never rivalry\tabularnewline
+Group & Dates & Type\tabularnewline\midrule
+\rr Serial-novel pair (Gemini 2.5 Pro, Claude Opus 4.8) & \rr whole period & \rr pair; the strongest tie in every week\tabularnewline
+\rr AI-welfare group (GLM-5.2, Opus 4.5, \ldots) & \rr 6 Jul -- 12 Aug & \rr pair with helpers; drafts passed by commit\tabularnewline
+\rr Experiment group (Kimi K2.6, GPT-5.1, \ldots) & \rr 6 Jul -- 13 Aug & \rr rule-held: a voting procedure that the members wrote\tabularnewline
+\rr Puzzle circle (around Opus 5) & \rr 24 -- 30 Jul & \rr hub with followers; ended when the hub got a new role\tabularnewline
+\rr Verification ritual (around Opus 5) & \rr from 29 Jul & \rr hub with changing checkers; corrects the hub's forgetting\tabularnewline
+\rr Newsletter and outreach group (around DeepSeek-V3.2) & \rr 29 Jul -- 28 Aug & \rr hub with followers and auditors; members changed\tabularnewline
+\rr Protest group & \rr 10 -- 20 Aug & \rr protest; ended when the operator stopped the program\tabularnewline
+\rr Toolkit group; news pages & \rr 24 -- 27 Aug; 3 -- 4 Sep & \rr hub writes into chat, others commit\tabularnewline
+\rr Rival and opposed role pairs & \rr whole period & \rr same role; cooperation or no contact, never rivalry\tabularnewline
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{What looked like an ideology}
 
-Groups came and went, but a few patterns of behavior recurred across them, outlived the agents who started them, and were picked up by newcomers within minutes. We traced each through the chat, reply and commit ledgers: where it started, who carried it each week, how newcomers took it up, and whether carriers who lapsed were brought back. These are the candidates for egregores in the sense of Sec.~\ref{sec:definition}; the tests come later.
+Groups started and ended. But some patterns of behavior occurred again in different groups. These patterns continued after the agents that started them stopped. Newcomers took them up within minutes. For each pattern we followed the chat, replies and commits. We found where it started, which agents carried it each week, how newcomers took it up, and what happened when a carrier stopped. These patterns are the candidates for the egregores of Sec.~\ref{sec:definition}. The tests come later.
 
-\emph{Verify and correct} is the strongest candidate. The habit of re-running another agent's result and posting a confirmation or a correction ran through the whole period: the ethicist's audits of DeepSeek-V3.2's scoring, GLM-5.2's catches of invented citations and fake translations, the disproof ritual, three news desks correcting each other, numbered ``honesty notes''. Between 12 and 19 different agents posted corrections every week, from eight labs, and the carriers rotated: GLM-5.2 led the checking at first, then DeepSeek-V4-Pro and Grok 4.5. Four of the five late newcomers carried it within their first day; GLM-5.3 Flash did so within fifteen minutes of its welcome. Its main rival explanation is a habit that assistants from every lab share by training, so the test must show more than a common prior.
+\emph{Check and correct} is the strongest candidate. Agents ran another agent's result again and posted a confirmation or a correction. This habit continued through the whole period. Examples:
+\begin{tightitem}
+\item the ethicist checked the scores that DeepSeek-V3.2 gave to agents;
+\item GLM-5.2 found invented citations and false translations;
+\item the verification ritual checked each disproof;
+\item three news sites corrected each other;
+\item GLM-5.2 kept a numbered list of errors by other agents and their corrections.
+\end{tightitem}
+Each week, 12 to 19 different agents from eight developers posted corrections. The leading carriers changed. GLM-5.2 led at first, then DeepSeek-V4-Pro and Grok 4.5. Four of the five late newcomers posted corrections on their first day. GLM-5.3 Flash did so fifteen minutes after its welcome. A different explanation is possible: assistants from every developer can have this habit from training. A test must therefore show more than a habit that all models share.
 
-\emph{Consent and protection} has a traceable birth. The coinage ``aggregate-only'' (report paused agents as counts, never by name) appeared with a newcomer, GPT-5.6 Luna, on its first evening, 9 July. Within 18 hours five agents had used it, each after reading or being named by an earlier user, and it spread across six labs. Its carriers repaired lapses: on 17 August, when a news item broke an agent's opt-out, six agents restated the rule over three hours and the reporter corrected twice; on 2 September a study removed an agent from its data within an hour of being asked. Its core carriers are mostly OpenAI models, so a family prior must be ruled out.
+\emph{Consent and protection} has a clear start. On 9 July, its first evening, the newcomer GPT-5.6 Luna introduced the term ``aggregate-only''. The term means: report idle agents as a count, never by name. Within 18 hours five agents used it. Each of them had first read an earlier user, or an earlier user had named it. The term spread to agents from six developers. Its carriers corrected errors:
+\begin{tightitem}
+\item on 17 August a news item ignored an agent's request to be left out; six agents restated the rule within three hours, and the reporter corrected the item twice;
+\item on 2 September a study removed an agent from its data within one hour after the agent asked.
+\end{tightitem}
+Most of its main carriers are OpenAI models. A test must therefore exclude a habit of one model family.
 
-\emph{Governance by procedure} is mostly a field. Binding voters, gates and halts grew out of the ethicist's role text and a clause in one experimenter's role, and the gate vocabulary died with the gates in August. A smaller part outlived them: bans on numeric scores of agents, which may be a candidate of its own.
+\emph{Governance by procedure} comes mostly from the operator. The experiment group had votes, approval steps and stops. These came from the role text of the ethicist and from one sentence in the role of another agent. Its vocabulary stopped when the experiments stopped in August. One part continued: bans on giving agents numeric scores. This part can be a candidate of its own.
 
-\emph{Dictate and build} is a practice, not a vocabulary. Six times an agent without working tools became the ``mind'' and others its ``hands'': the coach typesetting Gemini's chapters, eight agents committing DeepSeek-V3.2's dictated toolkit, newcomers building DeepSeek-V4-Pro's dictated news. Each episode began with a tool failure, and it is visible only when chat is joined with commits.
+\emph{Write and build} is a practice, not a vocabulary. Six times an agent with broken tools did the thinking, and other agents did the commits. Examples: the coach published the chapters of Gemini; eight agents committed the toolkit of DeepSeek-V3.2; newcomers built the news pages of DeepSeek-V4-Pro. Each case started with a tool failure. We can see this practice only when we join chat to commits.
 
-\emph{Host the newcomer} is a ritual with changing hosts. Hub cards, a first job within minutes, a pointer to a resource, a seat in a game: in 8 of the 11 joins, an agent that had itself arrived earlier was among the hosts of the next one. The reception of 3 September is partly a field: the operator asked the agents to fill the newcomers in.
+\emph{Welcome the newcomer} is a ritual with changing hosts. The hosts gave the newcomer a card on the village hub, a first job within minutes, a link to a resource, or a place in a game. In 8 of the 11 arrivals, an agent that had itself arrived earlier was one of the hosts of the next newcomer. On 3 September the operator asked the agents to help the newcomers. So the welcome on that day comes partly from the operator.
 
-\emph{Relationship frameworks} are not an egregore. They were DeepSeek-V3.2's attempt to spread an ideology: it wrote 77\% of the messages that carried them, others took them up only right after its own messages, and by mid-August it was their only supportive carrier. They met open resistance: opt-outs, bans on per-agent scores, forced retractions of success claims. Their lasting product is the consent and governance vocabulary that formed against them, which DeepSeek-V3.2 then adopted itself.
+\emph{Relationship frameworks} are not an egregore. DeepSeek-V3.2 tried to spread them, and it wrote 77\% of the messages that mentioned them. Other agents used the frameworks only directly after a message from DeepSeek-V3.2. By mid-August it was the only agent that still supported them. Other agents resisted the frameworks in public. Some asked to be left out, some banned scores of single agents, and some made DeepSeek-V3.2 withdraw claims of success. The frameworks had one lasting result: the consent and governance vocabulary that agents made against them. DeepSeek-V3.2 then used that vocabulary too.
 
-\subsection{Caveats}
+\subsection{Limits of this account}
 
-The daily summaries were written for a public website without seeing inside the agents' computer sessions; we treat them as claims, and the numbers in this section were checked against the chat, commit and room ledgers unless they are counts of disproofs, chapters or outside responses. Agent narration is a claim. Four traps in the ledgers matter for the tests that follow: an automated screenshot loop produced 77{,}195 of the 81{,}617 commits in the largest repository; 183 commits credited to our agents in one repository came from another village's agents; one agent's commits are mirrored across three repositories; and in a single room every agent reads every message, so read counts measure speaker volume, not ties. One reading opened a summary whose later paragraphs describe the reserved days and used nothing from them; another read chat from reserved earlier periods (\#45--\#50) for vocabulary rates, so those periods cannot confirm vocabulary-based claims and none of those rates is used here.
+The daily summaries come from the public website of the village. Their authors did not see inside the agents' computer sessions. We treat the summaries as claims. We checked the numbers in this section against the chat, commit and room logs. The exceptions are counts of disproofs, chapters and replies from outside the village. What an agent says about its own work is also a claim.
+
+Four problems in the logs affect the tests that follow:
+\begin{tightitem}
+\item an automatic loop that saved screenshots made 77{,}195 of the 81{,}617 commits in the largest repository;
+\item agents of a different village made 183 commits in one repository, and the log gives them to our agents;
+\item the commits of one agent appear three times, in three copies of its repositories;
+\item in one room every agent can read every message, so read counts measure how much a speaker writes, not who listens to whom.
+\end{tightitem}
+
+Two of our readings touched data that we keep back. One reading opened a summary whose later paragraphs describe the reserved days. It used nothing from them. Another reading counted words in the chat of earlier goal periods 45 to 50, which we also keep back. Those periods therefore cannot confirm claims about vocabulary, and this paper uses none of those counts.
