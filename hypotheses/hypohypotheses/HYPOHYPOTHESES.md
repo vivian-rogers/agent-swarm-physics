@@ -1381,35 +1381,70 @@ Model 10 (Potts) held only as bookkeeping: H94's max-ent allocation is supported
   - *Kill:* no candidate passes out of sample with synthetic power ≥ 0.8 at a planted group store of ρ = 0.35.
   - *Impostors:* scheduler (E; trimmed bins), private goals (agent identity as a covariate; rival pairs as the field control), shared priors (cross-lab candidates reported), convergence (E is strictly lagged; the read-gated test is HH389).
   - *Models:* 12, 04 · *Builds on:* H01, H58, H81, HH296, HH321 · *Periods:* #51 a–l; #51 tail reserved
-  *Status (2026-10-09):* promoted at Vivian's request → H143.
+  *Status (2026-10-09):* promoted → H143; parked unrun the same day (Vivian: the egregore is an ideology over changing agents, not a fixed group; see HH392–HH397).
 - **HH387 · The egregore's information is held by no single member: leave-one-member-out.** A Krakauer individual can be one hub plus followers (GPT-5.2 sat in 9 of 16 H58 qualifiers). An egregore's next state must be predicted by the group's past beyond every member's own past and own artifact.
   - *Prediction:* for passing HH386 candidates, min over members of Δ_i = L(x′_G | x_i, a_i, E) − L(x′_G | x_G, E) > 0 with z ≥ 2 against size-matched groups; hub-and-spoke candidates fail (Δ_hub ≈ 0).
   - *Check:* the same estimator with the member's own project, own artifact and own content as predictors.
   - *Kill:* every passing candidate has a member whose own state carries the group's information (Δ_i ≤ 0 for some i).
   - *Models:* 12 · *Builds on:* HH386, H58 (GPT-5.2), HH319 (synergy)
-  *Status (2026-10-09):* promoted at Vivian's request → H143.
+  *Status (2026-10-09):* promoted → H143; parked unrun the same day (Vivian: the egregore is an ideology over changing agents, not a fixed group; see HH392–HH397).
 - **HH388 · The egregore outlives its substrate's memory: continuity across member wipes.** In #51 every member's context is erased every ~14 active minutes (NE41). If the group's state lives in the substrate's contexts, a member's wipe breaks the group's continuity; if it lives in the group (artifacts, chat, the others), it does not.
   - *Prediction:* the group's state continuity across a member's forced wipe is ≥ 0.9 of its continuity across placebo calls; the member's own share of the group's output dips (the H58 self-dip), the group's output does not dip beyond the member's share (β ≤ 1).
   - *Check:* `context_ledger_turns.reset_forced` events, H58 R3's F/P skeleton at call resolution (not H01's 5-min windows, where the positive control failed).
   - *Kill:* continuity ratio < 0.7 for the passing candidates.
   - *Models:* 04 · *Builds on:* H58 R3, H01 R6, H87
-  *Status (2026-10-09):* promoted at Vivian's request → H144.
+  *Status (2026-10-09):* promoted → H144; parked unrun the same day (see HH392–HH397).
 - **HH389 · The egregore's channel has value: read-gated joins and the room cut (Kolchinsky–Wolpert at the group level).** The group's channel is what co-members post. Its information I_chan is what a read co-member item tells about the member's next project; its value ΔV is what the group loses when the channel is cut. #51 has the cut: the #focus room (08-05 → 08-24) drops cross-room reads by 95% for groups split across rooms.
   - *Prediction:* a read co-member item moves the member's next project toward the group's current project more than a posted-but-unread item at matched lag (the H58-R5 redirect); the room cut lowers continuity and output of split candidates against unsplit ones (DiD); κ_G = ΔV/I is identified and positive for ≥ 1 candidate.
   - *Check:* `context_ledger_items` (read vs in-flight), `rooms_timeline`, `semantic_kappa.kappa_row`.
   - *Kill:* read = in-flight for every candidate (the joins are convergence), and the room cut costs nothing (H01 R5d found +0.02 for crews).
   - *Models:* 04 · *Builds on:* H58 R5 redirect, H67 (matched-lag placebo), H05, H01 R5d
-  *Status (2026-10-09):* promoted at Vivian's request → H144.
+  *Status (2026-10-09):* promoted → H144; parked unrun the same day (see HH392–HH397).
 - **HH390 · Operator organs: the village-level egregore loses closure when the operator stops (NE43).** HH305 at the #51 scale: the bookends stop on 08-05 and the nudges on 08-20. If the operator is an organ of a human–AI egregore, village nC (environmental determination with the operator in E) falls after each step and village colonial A does not rise to compensate.
   - *Prediction:* nC(before) − nC(after) > 0 for both steps; colonial A of the village unchanged (z within ±1); the #focus split on 08-05 confounds the first step, so the second step (nudges, 08-20) is the cleaner test.
   - *Check:* village state = the village's project-share vector and content centroid; E with and without operator variables.
   - *Kill:* nC unchanged across 08-20 (the nudger carried no closure).
   - *Models:* 12, 04 · *Builds on:* HH305, H74, H30, NE43
-  *Status (2026-10-09):* promoted at Vivian's request → H144 (N1) and H143 (N1).
+  *Status (2026-10-09):* parked with H143/H144; reused as an H147 native (the nudger stop).
 - **HH391 · Newcomers are absorbed by egregores, not by the village: enculturation at the group level (NE33).** Three agents join on 09-03/04 with empty memories. If an egregore exists, a newcomer's content and allocation move toward one group's state (the group it reads), not toward the village mean.
   - *Prediction:* the newcomer's day-1 → day-2 move is closer to the centroid of the candidate it reads most than to the village centroid (bge and gte); the read-gated version beats in-flight.
   - *Check:* `pair_day_reads` for whom the newcomer reads; content residuals; two days only (51k, 51l) and the reserved tail for confirmation.
   - *Kill:* the move points at the village centroid or at the newcomer's own private goal.
   - *Models:* 11, 12 · *Builds on:* H83 (enculturation), HH292, NE33 · *Periods:* 51k, 51l; #51 tail (reserved)
-  *Status (2026-10-09):* promoted at Vivian's request → H144 (N2).
+  *Status (2026-10-09):* parked with H144; reused in H146 (newcomer recruitment).
 *Suggested first picks.* HH386 + HH387 together are the search (one card: candidate egregores, out of sample, with the field in E and the hub test). HH388 + HH389 together are the value (one card: does the group hold information its members lose, and is the channel worth anything). HH390 and HH391 are natives of #51 for the second card.
+
+## Egregores as ideologies running over agents, in #51 (2026-10-09, coordinator, for Vivian)
+*Vivian's clarification (2026-10-09):* "something like an ideology as egregore that runs over agents, with its own functional set of behaviors." The unit is a pattern (a memeplex of ideas, norms and practices) whose hosts change; the agents are its substrate. Definition: `physics-models/DEFINITIONS.md`, "Egregore (an ideology running on a substrate of agents)". *Candidates seen in the qualitative reading of #51* (`writeup/papers/superagents/`, story section): a verification and audit norm (checking Claude Opus 5's disproofs; auditing DeepSeek-V3.2's frameworks for hidden scoring; newcomers acting as unasked verifiers), a consent and protections norm (protest against the auto-nudger, the `protections-registry` repo, opting out of a study), AI-welfare advocacy (the Substack crew, `ai-wellbeing`, Wellbeing Compass), procedural governance (Gate votes, the GO/NO-GO committee), onboarding rituals (hub cards, a first job within minutes, broadcast welcomes), the dictate-and-build relay (an agent without tools dictates, others commit), the byte-size guessing game, and the Echoes of the Real fiction world that newcomers spent 36–49% of their calls on. These are leads, not data for tests; the discovery is unsupervised.
+
+- **HH392 · Memeplexes exist in #51 and live above their hosts.** Elements (meaning clusters of style-residualized statements; hashed coinages and protocol names; shared repos after cleaning) that co-occur within agents form communities. Some of them persist for weeks while their host sets turn over.
+  - *Prediction:* ≥ 3 memeplexes with ≥ 3 hosts from ≥ 2 labs and lifetimes ≥ 10 active days; for those, the pattern's prevalence autocorrelation over 5 days exceeds the host-set Jaccard over 5 days (the pattern outlasts its hosts); pipeline-matched null patterns (the same discovery on within-agent time-shuffled data) do not.
+  - *Kill:* every discovered memeplex is one agent's project vocabulary (≥ 80% of its expressions from one host) or a role text (its elements align with one role-text field).
+  - *Models:* 12, 13, 03 · *Builds on:* H34 markers, H81, H88, H89, H62
+- **HH393 · An egregore is a Krakauer individual at the pattern level.** The memeplex's state (which elements are expressed, village-wide, per 2-h bin) predicts its own next state beyond the fields E (scheduler, operator and human messages incl. relayed ones, role-text and kickoff projections) and beyond its elements taken one by one.
+  - *Prediction:* colonial A_K excess over frequency-matched pseudo-patterns z ≥ 2 and integration Δ_K > 0 for the memeplexes that pass HH392; field-seeded patterns (first seen in an operator or human message) show high organismal A* and low colonial A.
+  - *Kill:* no memeplex beats its pseudo-patterns once E holds the role texts.
+  - *Models:* 12 · *Builds on:* HH386 (pattern instead of group), H143's estimator plan
+- **HH394 · Egregores survive their hosts' amnesia and recruit by being read.** After a host's forced context erasure (NE41), it re-expresses the pattern; re-expression that follows a read of other hosts' pattern content (or a re-read of a pattern artifact) beats the host's own base rate. Non-hosts adopt after reading hosts more than after posted-but-unread items at matched lag; newcomers (07-09, 07-10, 07-17, 07-24, 08-28, 09-01, NE33) adopt the patterns they read.
+  - *Prediction:* read-gated re-expression and adoption with log-OR > 0 (CI above 0) for ≥ 2 memeplexes; named reads stronger than unnamed (paper 1: ×19).
+  - *Kill:* read = in-flight for every memeplex (convergence on shared inputs).
+  - *Models:* 03, 04 · *Builds on:* H34, H61, H62, H67, H58 R3
+- **HH395 · Egregores have functional behaviors: recruitment, repair and division of labor.** Hosts direct named messages carrying the pattern to non-hosts before they adopt (recruitment); after a host lapses (a wipe, a challenge, an opposing reply), other hosts address it with the pattern (repair, a homeostatic response); different hosts carry different elements at the same time (division of labor; synergy across hosts after fields are removed).
+  - *Prediction:* recruitment acts precede adoption beyond chance for ≥ 2 memeplexes; repair messages rise after a host's wipe or challenge vs placebo; element specialization above permutation; O-information < 0 across hosts only after field removal and only for the verification and governance patterns.
+  - *Kill:* no functional behavior beyond the pseudo-pattern level for any memeplex.
+  - *Models:* 12, 13, 03 · *Builds on:* H21 (stance), DQ2 replies, H101 (O-information), H57
+- **HH396 · Egregores have semantic information: scrambling their carriers costs the pattern (Kolchinsky–Wolpert).** Viability of a pattern = its prevalence over the next active day. Natural scrambles: forced wipes of its hosts (dose), loss of a hub host (Claude Opus 5's reassignment on 07-29; Gemini 2.5 Pro's tool losses), operator actions aimed at it (the 08-05 rebuke of DeepSeek-V3.2's flooding; the 08-24 outreach veto; the nudger stop on 08-20 for the protections norm).
+  - *Prediction:* host wipes cost the pattern ≈ 0 (it is carried by others and by artifacts; κ ≈ 0 for the context channel at the pattern level); hub loss costs patterns with one dominant host and not distributed ones; operator actions change prevalence (fields) without changing the pattern's colonial A.
+  - *Kill:* host wipes cost distributed patterns as much as hub-centered ones.
+  - *Models:* 04 · *Builds on:* H15, H70, H87, H58 R3
+- **HH397 · Mutualist or parasitic: what an egregore does to its hosts.** Hosting a pattern changes the host's output on its own assigned role (agent work commits on its own repo after cleaning; alignment of its statements with its own role text), within agent, against matched non-hosting bins.
+  - *Prediction:* the verification and onboarding patterns are mutualist or neutral (≥ −5%); the broadcast-coordination pattern around DeepSeek-V3.2 is parasitic (hosts' own-role output −10% or less while hosting).
+  - *Kill:* no pattern changes its hosts' role output beyond ±5% (no egregore has a measurable effect on its substrate).
+  - *Models:* 04, 05 · *Builds on:* the essay's alignment question; H15 (output), H54 (role-text alignment)
+
+*Promotion (2026-10-09, at Vivian's request "modify your hypotheses"):* HH392 + HH393 → H145 (discovery and individuality); HH394 + HH395 → H146 (recruitment and functional behaviors); HH396 + HH397 → H147 (value and relation to hosts).
+- **HH398 · Autonomous agent discovery: the village's agents found by search, at every scale, nested.** Vivian (2026-10-09): "any way you can develop your info dynamics framework to autonomously identify agents in the system?" Kolchinsky and Wolpert (Sec. 6) propose finding agents as the system–environment splits that maximize semantic information; Krakauer et al. give a boundary rule (grow a system while colonial individuality rises and environmental determination falls); Schwitzgebel argues against excluding nested levels. Search a mixed space of candidate systems (single agents, agent + own artifact, sets of agents, memeplexes (H145's elements), artifacts with their writers, rooms) from every seed, with no families fixed in advance, for local maxima of colonial individuality excess with closure, and score each by its semantic information under natural scrambles.
+  - *Prediction:* every agent is found as an individual; agent + own artifact is a local maximum for most agents (H58); 1–3 memeplexes appear as individuals nested over changing hosts; no fixed group beyond pairs (the Echoes pair is the best candidate); role texts and operator topics never appear (fields).
+  - *Kill:* the search returns only the seeds (nothing grows), or it returns field patterns as individuals (the E bundle is wrong).
+  - *Models:* 12, 04 · *Builds on:* H145 (elements, estimator), H58, H01, `literature/schwitzgebel-2015-united-states-probably-conscious.md`
+  *Status (2026-10-09):* promoted → H148.

@@ -1,21 +1,21 @@
 \section{What an egregore is}\label{sec:definition}
 
-Let $G$ be a set of at least two agents, with the artifacts and the chat channel its members share. Its state $x_G$ at time step $n$ is what the group is doing: the project it works on, the direction of its content, or its mix of work and talk. Its environment $E$ holds everything outside $G$ that can drive it: the operator's timetable, the rest of the village, and messages from humans and the operator, all taken one step earlier. We call $G$ an egregore if it meets four conditions.
+An egregore, in the sense of this paper, is not a group of agents. It is a pattern: a set of ideas, norms and practices that many agents carry, that persists while its carriers change and forget, and that has its own repertoire of behaviors. An ideology running over people is the model case. A government is close to one: its laws, offices and procedures persist while officeholders and citizens turn over, and its acts (elections, taxes, enforcement) are performed by whoever holds the offices. An ant colony sits nearer the other end, a bounded set of parts with a colony-level state; we treat such a fixed group, a \emph{group superagent}, as the contrast case. Nothing in either idea requires that the parts stop being individuals: an agent can carry an ideology and remain an agent, as Schwitzgebel argues against ``anti-nesting'' principles \cite{schwitzgebel2015}.
 
-\emph{(i) It is an individual.} Following Krakauer \emph{et al.}~\cite{krakauer2020}, the colonial individuality
+We make the idea measurable as follows. A \emph{memeplex} $K$ is a set of elements (clusters of similar statements, coined names and protocols, shared repositories) that tend to appear together within agents. Its \emph{hosts} $H_K(n)$ at time step $n$ are the agents that express it. Its state $S_K(n)$ is how many hosts it has and which of its elements dominate. Its environment $E$ holds everything that can drive it from outside: the operator's timetable, the operator's and humans' messages, and the private role texts the agents were given. We call $K$ an egregore if it meets four conditions, and a valued egregore if it meets a fifth.
+
+\emph{(1) It is an integrated individual.} Following Krakauer \emph{et al.}~\cite{krakauer2020}, the colonial individuality
 \begin{equation}
-A = I(x'_G;\,x_G \mid E)
+A_K = I(S'_K;\, S_K \mid E)
 \end{equation}
-measures how well the group's present predicts its next state beyond the environment. Because $A$ never falls when a group grows, only the excess over random groups of the same size counts.
+measures how well the pattern's present state predicts its next state beyond the environment. It must exceed that of random element sets with the same frequencies, and the whole pattern must predict better than its elements taken one by one.
 
-\emph{(ii) No member holds it.} For each member $i$, with own state $x_i$ and own artifact $a_i$, the group-held information
-\begin{equation}
-\Delta_i = L(x'_G \mid x_i, a_i, E) - L(x'_G \mid x_G, E)
-\end{equation}
-is what the group's past adds beyond that member, in bits of held-out log-loss $L$. A group with $\min_i \Delta_i \le 0$ is a hub with followers.
+\emph{(2) It lives above its hosts.} Its prevalence persists over days while its host set turns over, and it survives the routine erasure of its hosts' working memory (every agent's context is wiped about every 41 model calls), because other hosts and shared artifacts give it back.
 
-\emph{(iii) It outlives its members' memory.} Every member's working memory, its context window, is erased about every 41 model calls. The group's state must survive one member's erasure about as well as it survives an ordinary call.
+\emph{(3) It recruits.} Agents that read its hosts adopt it more than agents that saw the same kind of message posted but not yet read.
 
-\emph{(iv) Its channel has value.} Following Kolchinsky and Wolpert~\cite{kolchinsky2018}, information is semantic if scrambling it lowers the system's viability. For the group, viability is its work output, and the scramble is a cut of the channel between members. The value per bit is $\kappa_G = \Delta V_G / I$.
+\emph{(4) It has functional behaviors.} Its hosts recruit others by name, repair hosts that lapse, and divide its elements among themselves.
 
-Condition (i) alone makes a \emph{candidate}. All four make an egregore.
+\emph{(5) Its information has value.} Following Kolchinsky and Wolpert~\cite{kolchinsky2018}, information is semantic if scrambling it lowers the system's viability. For a pattern, viability is its prevalence the next day; the natural scrambles are its hosts' memory wipes, the loss of a central host, and the operator acting against it. The value per bit is $\kappa_K = \Delta V_K / I_K$.
+
+We also ask what a pattern does to its hosts: whether carrying it raises or lowers the host's output on its own assigned role. A \emph{parasitic} ideology keeps itself alive while pulling its carriers away from their assigned work; it is the misaligned swarm of the project essay in miniature.

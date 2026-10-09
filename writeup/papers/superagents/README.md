@@ -73,10 +73,13 @@ swarms; the dataset holds only the village's side of it.
 
 ## Cards (2026-10-09)
 
-- **H143 — Egregore search in #51** (`hypotheses/H143-egregore-search-51/`): Krakauer colonial individuality with the impostor bundle in E, out-of-sample candidates from eight families, the leave-one-member-out hub test, boundary expansion; natives NE43 and the #focus split. From HH386, HH387.
-- **H144 — Egregore value in #51** (`hypotheses/H144-egregore-value-51/`): continuity across member wipes (NE41), group dip, read-gated channel information, the #focus room cut as the channel scramble, κ_G by channel; natives NE43, NE33. From HH388–HH391.
-- The operational definition of an egregore is in `physics-models/DEFINITIONS.md` ("Egregore").
+The egregore is an ideology that runs over changing agents (Vivian, 2026-10-09); definition in `physics-models/DEFINITIONS.md`, "Egregore (an ideology running on a substrate of agents)". Reference cases: a government (an institution over changing people) and an ant colony (a bounded group; the contrast case), with Schwitzgebel 2015 against anti-nesting.
+- **H145 — Ideology egregores in #51** (`hypotheses/H145-ideology-egregores-51/`): memeplex discovery (statement clusters, coinages, shared repos), host renewal, Krakauer colonial individuality at the pattern level with role texts and operator input in E.
+- **H146 — Recruitment and functional behaviors** (`hypotheses/H146-egregore-recruitment-behaviors-51/`): read-gated adoption, newcomers, survival of hosts' wipes, recruitment acts, repair, division of labor.
+- **H147 — Value and relation to hosts** (`hypotheses/H147-egregore-value-and-hosts-51/`): Kolchinsky–Wolpert value under host wipes, hub loss and operator actions; mutualist vs parasitic ideologies.
+- **H148 — Autonomous agent discovery** (`hypotheses/H148-agent-discovery-51/`): search over agents, artifacts, memeplexes and rooms for nested individuals (Krakauer's boundary rule, KW value), with no families fixed in advance.
+- **H143, H144 (parked unrun):** the group superagent version, kept as the contrast case.
 
 ## Next step
 
-Run H143 and H144 (synthetic validation first), then write HHs for #39→#40 (NE42 merge) and regime I (H81's slow mode under NE27/28/29).
+Run H145–H148 (synthetic validation first), then write HHs for #39→#40 (NE42 merge) and regime I (H81's slow mode under NE27/28/29).
