@@ -323,6 +323,8 @@ def main():
     ap.add_argument("--z-add", type=float, default=L.Z_ADD)
     ap.add_argument("--z-keep", type=float, default=L.Z_KEEP)
     ap.add_argument("--shuffle", action="store_true", help="rotate every atom within day (P7 calibrator)")
+    ap.add_argument("--scope", default="all", choices=["all", "elements"],
+                    help="elements: search over element atoms only (A10: cap 8, z_add 3.2)")
     ap.add_argument("--tag", default="")
     args = ap.parse_args()
     SYN.mkdir(parents=True, exist_ok=True)
@@ -345,7 +347,7 @@ def main():
         sg = L.singles(ev, list(Q.agent_rows[:4]))
         print(f"4 single-atom tests (both halves): {time.time() - t0:.2f} s", [round(x['p_h0'], 3) for x in sg])
         return
-    path = SYN / f"synthetic_w{args.width}_el{args.n_el}{args.tag}.jsonl"
+    path = SYN / f"synthetic_w{args.width}_el{args.n_el}{'_elonly' if args.scope == 'elements' else ''}{args.tag}.jsonl"
     done = set()
     if path.exists():
         for ln in path.read_text().splitlines():
@@ -360,11 +362,15 @@ def main():
             if args.shuffle:
                 rng = np.random.default_rng(77 + rep)
                 Q = Q.with_S(IND.rotate_within_day(Q.S, Q.day, rng))
-            res = L.discover(Q, seed=rep, **kw)
+            if args.scope == "elements":
+                res = L.discover(Q, seed=rep, cap=L.CAP_EL, z_add=L.Z_ADD_EL, z_keep=args.z_keep,
+                                 atoms=[a for a in range(Q.nA) if Q.kind[a] == "element"])
+            else:
+                res = L.discover(Q, seed=rep, **kw)
             sing = L.singles(res["ev"], list(Q.agent_rows), seed=rep)
             ev = evaluate(Q, truth, res, sing)
             row = {"world": wname, "rep": rep, "width": args.width, "rho": args.rho, "w": args.w,
-                   "n_el": args.n_el, "shuffle": args.shuffle, **kw, **ev,
+                   "n_el": args.n_el, "shuffle": args.shuffle, "scope": args.scope, **kw, **ev,
                    "n_maxima_h0": len(res["per_half"][0]["maxima"]), "n_maxima_h1": len(res["per_half"][1]["maxima"]),
                    "n_hold_h0": sum(m["holds"] for m in res["per_half"][0]["maxima"]),
                    "n_hold_h1": sum(m["holds"] for m in res["per_half"][1]["maxima"]),

@@ -113,9 +113,56 @@ def predictions(P, singles_tab, indiv, present_days, own_rows):
             "P3": {"n": len(p3), "ids": [d["id"] for d in p3]}}
 
 
+def element_predictions(P, indiv, ag_ind, ag_ind_ph, width) -> dict:
+    """P4 (memeplex individuals over changing hosts, nested over individual agents) and P5 (no role-text or
+    operator-topic system), for discovered systems with element atoms (rules: analysis/elements.py, A7)."""
+    import polars as pl
+    meta = P.meta["element_meta"]
+    e0 = int(np.flatnonzero(P.kind == "element")[0])
+    H145 = L.ROOT / "data/processed/H145-ideology-egregores-51"
+    ex = pl.read_parquet(H145 / f"expr/w{width}.parquet")
+    agents_h145 = json.loads((H145 / "expr/agents.json").read_text())["agents"]
+    row_of_agent = {int(a): int(np.flatnonzero(P.agent_of == a)[0]) for a in agents_h145 if (P.agent_of == a).any()}
+    mps = {K["id"]: set(K["elements"]) for K in json.loads((H145 / "memeplexes.json").read_text())["memeplexes"]}
+    p4, p5 = [], []
+    for d in indiv:
+        X = d["atoms"]
+        el = [a for a in X if P.kind[a] == "element"]
+        if not el:
+            continue
+        eids = [meta["eids"][a - e0] for a in el]
+        role = [meta["role_like"][a - e0] for a in el]
+        oper = [meta["oper_like"][a - e0] for a in el]
+        cls = {"id": d["id"], "n_elements": len(el), "role_text_system": bool(sum(role) >= len(el) / 2),
+               "operator_topic_system": bool(sum(oper) >= len(el) / 2),
+               "role_patterns": sorted({r for a in el for r in meta["role_of"][a - e0]})}
+        p5.append(cls)
+        if d["scale"] != "memeplex" or len(el) < 2:
+            continue
+        sub = ex.filter(pl.col("eid").is_in(eids) & (pl.col("count") > 0)).select("agent_row", "bin").unique()
+        hb = sub.group_by("agent_row").len()
+        hosts = {int(agents_h145[r]): int(n) for r, n in hb.iter_rows()}
+        tot = sum(hosts.values())
+        h_K = max(hosts.values()) / tot if tot else float("nan")
+        n_hosts2 = sum(1 for n in hosts.values() if n >= 2)
+        ind_hosts = [a for a in hosts if a in row_of_agent and ag_ind.get(row_of_agent[a], False)]
+        ind_hosts_ph = [a for a in hosts if a in row_of_agent and ag_ind_ph.get(row_of_agent[a], False)]
+        overlap = {k: len(set(eids) & v) / len(set(eids)) for k, v in mps.items() if set(eids) & v}
+        p4.append({"id": d["id"], "n_elements": len(el), "n_hosts_2bins": n_hosts2, "h_K": h_K,
+                   "changing_hosts": bool(n_hosts2 >= 3 and h_K < 0.8),
+                   "n_individual_hosts": len(ind_hosts), "n_individual_hosts_posthoc": len(ind_hosts_ph),
+                   "nested_over_individual_agents": bool(len(ind_hosts) >= 2),
+                   "share_in_h145_memeplex": overlap})
+    ok4 = [x for x in p4 if x["changing_hosts"] and x["nested_over_individual_agents"]]
+    bad5 = [x for x in p5 if x["role_text_system"] or x["operator_topic_system"]]
+    return {"P4": {"n_memeplex_individuals": len(p4), "n_meeting_P4": len(ok4), "detail": p4},
+            "P5": {"n_element_systems": len(p5), "n_field_systems": len(bad5), "detail": p5,
+                   "verdict": "failed" if bad5 else "supported"}}
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--level", default="agents", choices=["agents", "all"])
+    ap.add_argument("--level", default="agents", choices=["agents", "elements", "all"])
     ap.add_argument("--width", type=int, default=30)
     ap.add_argument("--shuffle-reps", type=int, default=2)
     ap.add_argument("--z-add", type=float, default=L.Z_ADD)
@@ -124,7 +171,11 @@ def main():
     RES.mkdir(parents=True, exist_ok=True)
     SEARCH.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
-    P = L.load_panel(args.width, with_elements=(args.level == "all"))
+    P = L.load_panel(args.width, with_elements=(args.level != "agents"))
+    if args.level == "elements":     # A10: element atoms only, cap 8, z_add 3.2
+        kw = dict(cap=L.CAP_EL, z_add=L.Z_ADD_EL, atoms=[a for a in range(P.nA) if P.kind[a] == "element"])
+    else:
+        kw = dict(z_add=args.z_add)
     ev = L.Evaluator(P)
     at = P.meta["atom_table"]
     own_rows = {}
@@ -136,8 +187,19 @@ def main():
     present_days = {int(a): int(np.unique(P.day[P.present[i]]).size) for i, a in enumerate(P.agent_rows)}
     print(f"panel: {P.nA} atoms, {P.nB} bins, transitions {ev.tr[0].size}/{ev.tr[1].size}", flush=True)
     sing = L.singles(ev, list(range(P.nA)), seed=0)
+    # post hoc (2026-10-09, after the pre-registered single-atom result): permutation across the half's days within
+    # E cells, so day-level state counts as the atom's own
+    sing_ph = L.singles(ev, list(range(P.nA)), seed=0, scope="half")
+    ag_res = RES / f"agents_w{args.width}.json"
+    if args.level != "agents" and ag_res.exists():   # agent single-atom flags from the agent-level run (P4 nesting)
+        prev = json.loads(ag_res.read_text())
+        ag_ind = {r["atom"]: r["individual"] for r in prev["singles"] if r["kind"] == "agent"}
+        ag_ind_ph = {r["atom"]: r["individual"] for r in prev["singles_posthoc_crossday"] if r["kind"] == "agent"}
+    else:
+        ag_ind = {r["atom"]: r["individual"] for r in sing if str(P.kind[r["atom"]]) == "agent"}
+        ag_ind_ph = {r["atom"]: r["individual"] for r in sing_ph if str(P.kind[r["atom"]]) == "agent"}
     print(f"singles done {time.time() - t0:.0f} s", flush=True)
-    res = L.discover(P, seed=0, log_every=20, z_add=args.z_add)
+    res = L.discover(P, seed=0, log_every=20, **kw)
     print(f"discover done {time.time() - t0:.0f} s; discovered {len(res['discovered'])}", flush=True)
     indiv = describe(P, ev, res, sing)
     multi_real = sum(1 for d in indiv if len(d["atoms"]) >= 2)
@@ -145,17 +207,29 @@ def main():
     for r in range(args.shuffle_reps):
         rng = np.random.default_rng(500 + r)
         Q = P.with_S(IND.rotate_within_day(P.S, P.day, rng))
-        rs = L.discover(Q, seed=100 + r, z_add=args.z_add)
+        rs = L.discover(Q, seed=100 + r, **kw)
         shuf.append({"rep": r, "n_disc": len(rs["discovered"]),
                      "n_multi": sum(1 for d in rs["discovered"] if len(d["atoms"]) >= 2),
+                     "n_maxima": sum(len(rs["per_half"][h]["maxima"]) for h in (0, 1)),
+                     "n_maxima_held": sum(m["holds"] for h in (0, 1) for m in rs["per_half"][h]["maxima"]),
                      "discovered": [d["atoms"] for d in rs["discovered"]]})
         print(f"shuffle {r}: {shuf[-1]['n_multi']} multi-atom discoveries ({time.time() - t0:.0f} s)", flush=True)
     pred = predictions(P, sing, indiv, present_days, own_rows)
+    ph = predictions(P, sing_ph, indiv, present_days, own_rows)["P1"]
+    pred["P1_posthoc_crossday"] = {**ph, "verdict": "post hoc (not a test of P1)"}
     ms = float(np.mean([s["n_multi"] for s in shuf])) if shuf else float("nan")
     ratio = ms / multi_real if multi_real else (float("inf") if ms > 0 else float("nan"))
-    pred["P7"] = {"real_multi": multi_real, "shuffled_multi_mean": ms, "ratio": ratio,
-                  "verdict": ("supported" if ratio <= 0.1 else "failed" if ratio >= 0.5 else "mixed")
-                  if multi_real else ("no multi-atom discoveries on real data" if ms == 0 else "failed")}
+    # P7 as written: multi-atom local maxima (per-half searches, both halves) on rotated vs real data
+    lm_real = sum(len(res["per_half"][h]["maxima"]) for h in (0, 1))
+    lm_shuf = float(np.mean([s["n_maxima"] for s in shuf])) if shuf else float("nan")
+    r_lm = lm_shuf / lm_real if lm_real else float("nan")
+    pred["P7"] = {"real_local_maxima": lm_real, "rotated_local_maxima_mean": lm_shuf, "ratio_local_maxima": r_lm,
+                  "real_held_maxima": sum(m["holds"] for h in (0, 1) for m in res["per_half"][h]["maxima"]),
+                  "rotated_held_maxima_mean": float(np.mean([s["n_maxima_held"] for s in shuf])) if shuf else None,
+                  "real_multi_discovered": multi_real, "rotated_multi_discovered_mean": ms, "ratio_discovered": ratio,
+                  "verdict": "supported" if r_lm <= 0.1 else "failed" if r_lm >= 0.5 else "mixed"}
+    if args.level != "agents":
+        pred.update(element_predictions(P, indiv, ag_ind, ag_ind_ph, args.width))
     graph = nesting_graph(P, indiv, sing)
     per_agent = {}
     for i, a in enumerate(P.agent_rows):
@@ -167,6 +241,8 @@ def main():
     out = {"level": args.level, "width": args.width, "n_atoms": P.nA, "z_add": args.z_add,
            "transitions": [int(ev.tr[0].size), int(ev.tr[1].size)],
            "singles": [{**r, "name": P.names[r["atom"]], "kind": str(P.kind[r["atom"]])} for r in sing],
+           "singles_posthoc_crossday": [{**r, "name": P.names[r["atom"]], "kind": str(P.kind[r["atom"]])}
+                                        for r in sing_ph],
            "discovered": indiv, "n_exact_agreement": res["n_exact"], "nesting": graph, "per_agent": per_agent,
            "shuffle": shuf, "predictions": pred, "secs": round(time.time() - t0, 1), "n_evals": res["n_evals"]}
     (RES / f"{lvl}.json").write_text(json.dumps(out, indent=1, default=float))

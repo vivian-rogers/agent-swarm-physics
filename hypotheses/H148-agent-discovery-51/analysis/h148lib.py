@@ -56,6 +56,8 @@ R_STEP = 40           # day-permutation draws per candidate in a search step (fi
 R_STAGE1 = 8          # first-stage draws for every candidate; the rest only for candidates with z >= SCREEN
 SCREEN = 1.0
 BLOCK = 6             # day-permutation blocks: 6 same-parity days
+CAP_EL, Z_ADD_EL = 8, 3.2   # element-level search (A10): element atoms only, cap 8, add threshold scaled to 140
+                            # candidates (same per-step false-add rate as 66 candidates at z 3)
 CBATCH = 1400         # rows per coupling batch
 SD_FLOOR = 0.002      # bits; floor on the null sd of tau (sparse atoms give near-constant nulls)
 STAT = "heldout"      # coupling statistic: held-out log-loss transfer terms, or "plugin" CMI
@@ -288,8 +290,11 @@ class Evaluator:
         return {h: {k: np.concatenate(v) for k, v in o.items()} for h, o in out.items()}
 
     # --- single-atom individuality (A1)
-    def single_test(self, a: int, he: int, rng: np.random.Generator, n_max: int = N_MAX_DRAWS) -> dict:
-        """Colonial A of atom a on half he vs within-(day, E) permutations of its source states (Besag-Clifford)."""
+    def single_test(self, a: int, he: int, rng: np.random.Generator, n_max: int = N_MAX_DRAWS,
+                    scope: str = "day") -> dict:
+        """Colonial A of atom a on half he vs permutations of its source states (Besag-Clifford). scope "day"
+        (A1, pre-registered): within (day, E) strata, so day-level state (which project today) is in the null;
+        scope "half" (post hoc, 2026-10-09): within E strata across the half's days, so only E is in the null."""
         P = self.P
         t = self.tr[he]
         b0 = P.b0[t]
@@ -305,7 +310,7 @@ class Evaluator:
             return {"A": np.nan, "p": 1.0, "z": np.nan, "draws": 0, "nC": np.nan, "Astar": np.nan}
         obs = batch_losses(x[None], xp[None], e[None], dd, nD)
         A = float(obs["A"][0])
-        strat = dd * KE + e
+        strat = dd * KE + e if scope == "day" else e.copy()
         so = np.argsort(strat, kind="stable")
         ss = strat[so]
         draws = []
@@ -763,12 +768,12 @@ def jacc(a, b) -> float:
     return len(a & b) / max(len(a | b), 1)
 
 
-def singles(ev: Evaluator, atoms: list, seed: int = 0) -> list:
-    """Single-atom individuality on both halves (A1)."""
+def singles(ev: Evaluator, atoms: list, seed: int = 0, scope: str = "day") -> list:
+    """Single-atom individuality on both halves (A1; scope as in Evaluator.single_test)."""
     rng = np.random.default_rng(seed)
     out = []
     for a in atoms:
-        r = {h: ev.single_test(a, h, rng) for h in (0, 1)}
+        r = {h: ev.single_test(a, h, rng, scope=scope) for h in (0, 1)}
         out.append({"atom": int(a), "A_h0": r[0]["A"], "A_h1": r[1]["A"], "p_h0": r[0]["p"], "p_h1": r[1]["p"],
                     "z_h0": r[0]["z"], "z_h1": r[1]["z"],
                     "individual": bool(r[0]["p"] <= P_SINGLE and r[1]["p"] <= P_SINGLE)})

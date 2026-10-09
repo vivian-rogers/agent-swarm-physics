@@ -142,5 +142,26 @@ Agent level (67 atoms, 30-min bins, Z_ADD = 3; 20 replicates each):
 - **P5** needs the element level; its size check is the element-level W_field run (in progress at this commit; recorded before the element-level real run).
 - Not completed: an element-level run is in progress (5 replicates per world, 140 element atoms); a Z_ADD = 2.5 variant was stopped after 5 W_atoms replicates (0 false; slower, 147 s per world) and is not used.
 
+### Element level: amendment A10 and synthetic check (2026-10-09, before the element-level real run)
+- **A10 Element-level search** (fixed before the element synthetic results): atoms = the 140 element atoms only (agents enter P4 through hosts, not as atoms); cap 8 atoms (the run brief's cap); add threshold z ≥ 3.2, which keeps the per-step false-add rate of 66 candidates at z 3 for 140 candidates. Reason: with all 207 atoms one world took > 20 min (in-sample growth over 193 candidates per step; profile: 263 search steps for 40 seeds, 90% of the time in held-out count tables).
+- Synthetic (140 element atoms, 3 replicates per world; 4.3–6.2 min per world): no discovery in any world (W_atoms 0/3, W_field 0/3, W_nested 0/3). The planted 6-element memeplex was recovered in 0/3 worlds (held local maxima: 0–3 per half). W_field: 0 field-element systems (0/3, Wilson [0, 0.56]).
+- **Consequences.** P4 stays "not identifiable" (K3; memeplex recovery 0/3). P5 is computed, but its size check rests on 3 worlds, and a search that finds nothing makes P5 hold by default; P5 is read as "no field system found", not as evidence that E removes fields.
+
+### Results: agent level (2026-10-09, after the synthetic commit 765f6d4; non-reserved data only)
+Run: `analysis/run.py --level agents --shuffle-reps 3` (67 atoms; 345 / 330 transitions; 145 s). Output: `results/agents_w30.json`, `search/agents_w30.json`, `individuals_agents.json`.
+
+| | Statistic (95% CI) | Rule | Verdict |
+| --- | --- | --- | --- |
+| P1 agents found | 1 of 27 agents present ≥ 10 days is a single-atom individual on both halves (DeepSeek-V3.2); no agent + own-repo system is discovered: 0.04 [0.01, 0.18] (Wilson) | ≥ 0.9 supported; < 0.5 falsified | **failed** |
+| P1 post hoc | permutation across the half's days within E cells (the day's state counts as the atom's own): 20 / 27 = 0.74 [0.55, 0.87]; artifacts 25 / 33; rooms 2 / 2 | — | post hoc, not a test |
+| P2 agent + artifact | 0 of 25 agents with an own repo sit in a discovered system | untestable (A1 power ≤ 0.08) | **untestable** (descriptive 0 / 25) |
+| P3 above the agents | 0 multi-atom systems discovered; 0 of 16 local maxima (8 odd-day, 8 even-day searches) hold out of sample | K3: recovery 0.40 < 0.8 | **not identifiable** |
+| P6 discovered agents | no multi-agent or memeplex individual to score | — | **not testable** |
+| P7 calibration | within-day rotated data: 16, 12, 12 local maxima (mean 13.3) vs 16 on real data, ratio 0.83; held out of sample: 0.33 vs 0 | ≤ 0.1 supported; ≥ 0.5 falsified | **failed → K1** |
+
+- **K1 fires.** The in-sample local maxima of the real search are as many as on rotated data. No discovery is read (there is none to read: no maximum holds out of sample).
+- **What the single-atom result says.** At 30 min, an agent's state (which project it touches) carries information about its next state mainly through the day's state: a within-day shuffle of its own states keeps the held-out colonial A (median 0.18 bits per transition on odd days, 28 agents with ≥ 40 transitions) for 26 of 27 agents. Agents hold one project for most of a day. Self-information lives at the day scale. The synthetic agents had no day-level persistence, so the synthetic check did not anticipate this; the pre-registered null is conservative for day-scale individuality.
+- The two rooms are single-atom individuals under both nulls (talk volume persists within the day).
+
 ## Notes
 - 2026-10-09: written by the coordinator. The estimator design note of the stopped H143 run (`scratchpad/village_H143/individuality_design.txt`) applies: H58's key names map to the published Krakauer names as H58 "colonial" = organismal A*, H58 "organismal" = colonial A, H58 "environmental" = nC; `project_calls.label` values are URLs and hosts and need a mapping to repo slugs; match nulls on non-pause calls (Terra and Luna made 61–83% of their calls as pauses).
