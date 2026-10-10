@@ -5,6 +5,11 @@ something, or make a decision worth remembering.
 
 ---
 
+## 2026-10-10 — Paper 1 for non-specialists: "Seven predictions, and what happened"; contents list removed; card codes and credences set small and gray
+
+- Vivian: readers call the paper claudeslop with no intuition and harness jargon; make the predictive parts persuasive and faithful, pages may grow. New Sec. II (`sections/predictions.tex`): seven pre-registered predictions told as village scenes with the kill condition, the predicted and observed numbers and the chance or rival value (H08 read-out moment; H40 call clock; H67+H111 Fano rule with no free parameter; H54 kickoff target; H15/H87/H16 erasure; H34 subcritical branching and the unfitted adopter/inventor ratio 1.50 vs 1.52; H125 overdamped), a "what did not come true" paragraph and Table II. Every number from the cards' Round tables; nothing recomputed.
+- Sec. III: a "What would show it is wrong" line per model. Glossary: cards, credence, bge/gte, trim, post hoc. Jargon pass: G## → #, held-out and estimable removed, trims explained in words. `\card{}` and `\cred{}` now small gray. Inline contents list removed (PDF bookmarks and Appendix G's index remain). 321 pages, builds clean.
+
 ## 2026-10-09 (late) — Paper 2 written up: method, results, discussion, abstract; two results figures
 
 - Sections written from the Round 1 tables of H145–H148 (every number asserted in the figure exporters against the cards). Verdict: 15 memeplexes (null 95th pct 6) that live on changing hosts and survive wipes, but frequency-matched random element sets do the same; no recruitment, repair or division of labor beyond them; K03 alone predicts itself (0.20 bits/step, unstable); the automatic search finds nothing above one agent (16 vs 13.3 maxima on rotated data, none held). "The unit to watch is still the agent."

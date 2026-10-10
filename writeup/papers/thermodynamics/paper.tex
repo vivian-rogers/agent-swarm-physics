@@ -14,7 +14,8 @@
 \usepackage[hidelinks]{hyperref}
 \graphicspath{{figs/}{../../visuals/}{../../figures/}}
 \input{claudespark}
-\newcommand{\cred}[1]{\,(credence~#1)}   % Claude-judged credence of a research thesis
+\newcommand{\cred}[1]{\textcolor[HTML]{8C8C8C}{\,\footnotesize(credence~#1)}}   % Claude-judged credence of a research thesis, set small and gray
+\newcommand{\card}[1]{\textcolor[HTML]{8C8C8C}{\footnotesize #1}}   % a card code such as (H67): provenance, set small and gray
 \newcommand{\rr}{\raggedright\hspace{0pt}}  % ragged-right table cell (rows end with \tabularnewline)
 % Okabe--Ito colors with fixed meanings: field = orange, coupling = blue, null = gray.
 \definecolor{fieldc}{HTML}{E69F00}
@@ -44,9 +45,10 @@
 
 \input{sections/abstract}
 \maketitle
-{\makeatletter\renewcommand\l@subsection[2]{}\renewcommand\l@subsubsection[2]{}\makeatother\tableofcontents}  % sections and appendices only; every card is in Appendix G's index and the PDF bookmarks
+% no printed contents list (removed 2026-10-10); the PDF bookmarks and Appendix G's index serve as the map
 
 \input{sections/intro}
+\input{sections/predictions}
 \input{sections/picture}
 \input{sections/method}
 \input{sections/models-core}

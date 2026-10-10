@@ -1,0 +1,86 @@
+% predictions: seven predictions written down before their tests, and what happened (added 2026-10-10 for readers
+% outside the project). Every number is in the named card's Round table or claim line; nothing new is computed here.
+% Rules: plain words, one idea per sentence, each test told as a scene, the kill condition stated, the failures kept.
+\section{Seven predictions, and what happened}\label{sec:predictions}
+
+A model earns trust when it says in advance what a measurement will show, and the measurement then shows it. This section gives seven such cases. Each prediction was written in a dated card before the test ran on real data, with the result that would have killed it. Each is told as a scene from the village, then the number that was predicted, the number that came out, and what chance or a rival model would have given instead. The rest of the paper gives the models behind them. Table~\ref{tab:predictions} collects the numbers.
+
+\subsection*{1. A message does nothing until the agent reads it}
+
+During a charity drive in 2026, one agent posted a message to its room. Each of its room-mates was in the middle of a model call, or waiting between calls. None of them could see the message until its next call began. We know the exact moment each agent first saw it, because the record holds the text that each call read.
+
+The prediction: the chance that a room-mate names the sender, or answers it, is flat at the call that was already running when the message arrived, and jumps at the first call that read it. A message posted in another room, which nobody in this room can read, does nothing at either call. If influence came from shared timing or a shared topic, the jump would appear when the message was posted, and the other room would show it too.
+
+What happened: the chance of a reply jumps at the read-out call in 17 of 17 goal periods, and the chance of naming the sender in 14 of 17 (Fig.~\ref{fig:readoutjump}). The other room stays flat in all 8 periods that had one. When a new agent joined, it never named an old-timer before it had received a message from that old-timer, in 35 of 35 pairs. The read-out call is the moment of influence, and a message that an agent has not yet seen is a true placebo. Every claim of influence in this paper rests on this comparison.
+
+\subsection*{2. An agent's clock ticks in calls, not in minutes}
+
+Picture two agents that both received a message. One makes its next call ten seconds later. The other waits ten minutes, because it was paused. On a wall clock the second agent has had sixty times longer to be influenced. On the call clock, both have had exactly one call.
+
+The prediction: when a call spans twice as much wall time, the chance that it answers a pending message does not change. We wrote this as an elasticity $\eta$, the exponent by which the reply chance scales with the time a call spans. A pure call clock gives $\eta=0$. A pure wall clock, in which attention accrues by the minute, gives $\eta=1$. The card called the call clock dead if $\eta$ left the band $-0.25$ to $0.25$, and set the wall clock as the rival to beat on days the fit did not see.
+
+What happened: in the two eras of computer use (regimes II and III), $\eta=-0.11$ (95\% CI $-0.16$ to $-0.06$) for a call that talks. The wall clock is excluded in every one of those periods, and the call clock predicts unseen days better in 33 of 33. The early chat-only era (regime I) does not obey: there $\eta=+0.51$ (CI 0.41 to 0.61), and the pooled test over all eras failed because of it. We report both. The call clock holds where the agents work on computers, and we cannot explain the early era.
+
+\subsection*{3. The echo gain predicts the size of talk swings, with no knob to turn}
+
+This is the cleanest test in the paper, because two different measurements must agree and nothing is fitted between them.
+
+First measurement. At a read-out call, a message raises the chance of talk by a small amount. Multiply that by the number of readers and by the messages a talk call posts, and you get the \emph{loop gain} $g$: the number of extra messages that one message causes directly. In the continuous era it is about 0.13.
+
+Second measurement. Count the messages of the whole village in each 10-minute window. If agents were independent, the total would swing like a sum of independent counts. Echoes make the total swing more. The ratio of the swing of the total to what independence gives is the collective Fano ratio $\Phi$. The Hawkes bookkeeping of Sec.~\ref{sec:p02} says $\Phi=1/(1-g)^2$, with no free parameter.
+
+The prediction, from the first measurement: $\Phi=1.32$. Independent agents would give 1.0, a ratio of observed to predicted of 0.76. A gain of 0.5 would give $\Phi=4$. The card called the rule dead if more than a third of the units missed the prediction by over 20\%.
+
+What happened: the observed $\Phi$ is 1.01 times the prediction (CI 0.94 to 1.09), pooled over 18 units of the continuous era, and within 20\% in 14 of the 18 (Fig.~\ref{fig:fano}). The talk between agents is a faint echo, and the faintness measured one way matches the faintness measured the other way. In the early era the swings are 1.34 times larger than the loop allows (CI 1.18 to 1.52). Something in that era, a fast shared drive or a coupling we do not see, is missing from the picture.
+
+\subsection*{4. On the first day, agents write about their own goal text}
+
+Every goal period starts with a \emph{kickoff}: a message from the operator that states the goal. We have 33 of them that name a shared target. Take the average content of what the agents wrote on day 1 of one period, and ask which of the 33 kickoff texts it is closest to, after we remove how generic each kickoff is.
+
+The prediction: the agents' own kickoff ranks first. If agents wrote about whatever they were going to write about anyway, or about ``goals'' in general, the own kickoff would rank no better than a random one: the median rank under that null is 17 of 33.
+
+What happened: the own kickoff ranks first in 18 of 33 periods and in the top tenth in 26 of 33 (Figs.~\ref{fig:kickoff} and \ref{fig:kickoffrank}); the chance of this under the null is $3\times10^{-6}$. The periods that fail are the ones with no shared target: the free weeks, and goal period 51, where each agent had a private goal. There, an agent's content matches its own private goal better than another agent's goal in 95\% of pairs, against a chance level of 50\%. The field in this swarm is not a metaphor. It is the text that the operator typed.
+
+\subsection*{5. Wipe the short-term memory, and the work drops}
+
+In the continuous era, the scaffold erases an agent's context window each time it fills to 41 records. A counter decides the moment, not the task. The agent keeps its notes and its files. So each wipe asks a clean question: how much of the working state lived in the erased text?
+
+The prediction, written before the test: after a forced wipe, the agent saves fewer changes to its code and documents than after a placebo call at the same position in a run of calls with no wipe. If the notes and files held the working state, there would be no drop. The card also predicted that losses of the saved notes, and newcomers who arrive with empty notes, would show no comparable cost.
+
+What happened: work commits fall by 39\% (CI 35 to 42) over the ten calls after a forced wipe, in 7 of 9 periods (Fig.~\ref{fig:erasure}). Losses of memory notes show no cost at the day scale. Pricing the channels in bits, the context window is the only one with a measurable value: 5.2 commits per 20 calls per bit (CI 3.8 to 7.9; Fig.~\ref{fig:kappa}). A second card asked what the wipe does to an agent stuck in a long run of waits, an \emph{idle trap}. A pre-registered rival, Kramers escape over a fixed barrier, failed. The erasure works as a reset: inside a trap it lifts the chance of a lasting escape from 0.47 to 0.84. Two caveats: nearly all of this evidence comes from the one intervention, and one of the pricing cards took a small number of values from reserved days and must be rebuilt.
+
+\subsection*{6. Ideas spread like a fire that cannot catch}
+
+When one agent posts a link or coins a rare word, others sometimes use it. Each use that follows an earlier use, within the reading window, is a branch of a tree. The mean number of new users that one user recruits is the branching ratio $R$. At $R=1$ a single idea can sweep the village; below it, every idea dies out.
+
+The first prediction: $R$ is below 1 everywhere. What happened: the upper bound of $R$ is below 1 in 32 of 32 periods, with values from 0.09 to 0.40 (Fig.~\ref{fig:cascades}), and no period shows the heavy-tailed size law that a critical process gives.
+
+The second prediction tests the model in a way that the fit cannot help. The fit used only the sizes of the trees. From it, the model predicts a statistic that it never saw: the ratio of offspring of later adopters to offspring of the inventor. A model with one $R$ for all ideas gives 0.80, and no model with a single rate gives more than 0.91. The fitted mixture of idea-level rates predicts 1.50. What happened: the observed ratio is 1.52, and above 1 in 31 of 32 periods. The adopters of an idea spread it more than its inventor did. About half of the apparent spread, we add, is agents converging on the same idea without reading each other, which the in-flight placebo exposes.
+
+\subsection*{7. After a new goal the swarm overshoots, and does not swing back}
+
+A new kickoff pulls every agent's content toward it. On day 1 the pull overshoots: agents are more aligned with the goal than they will be once they settle. Two models predict what comes next. An underdamped oscillator, like a weight on a spring, swings past the resting point and dips below it before it settles. An overdamped response, like a ball in honey, creeps to the resting point and never dips.
+
+The prediction on the card was the oscillator, and it was registered with the dip as its signature: alignment on days 2 to 3 falls below its settled level. What happened: the day-1 overshoot is there, in 22 of 27 kickoffs, and the dip is not: the undershoot is $-0.006$ (90\% CI $-0.020$ to $+0.008$), with power 1.00 to detect an oscillator of damping ratio 0.5 or less. The registered model died, and the honey picture of Sec.~\ref{sec:p16} replaced it. We say so wherever that picture appears, because it was chosen after this result.
+
+\subsection*{What did not come true}
+
+The same method killed many predictions, and we count that as evidence that it can. The one-rate relaxation of the agent's content failed its kill rule, and the two-rate form that replaced it still needs a test written in advance. The Kramers picture of idle traps failed. The oscillator failed. The claim that a goal is a small linear push failed in 8 of 8 configurations. Of the three tests run so far on the reserved data, one failed, one came out with the opposite sign, and one was inconclusive. Section~\ref{sec:limits} lists them all.
+
+\begin{table*}[tb]
+\caption{Seven predictions written before their tests, and what happened. ``Chance or rival'' is the value that no effect, or the named rival model, would have given. Units are goal periods or the parts of one between two scaffold changes. Numbers from the cards named in the last column.}
+\label{tab:predictions}
+\footnotesize\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}p{0.27\textwidth}p{0.20\textwidth}p{0.24\textwidth}p{0.19\textwidth}p{0.05\textwidth}@{}}
+\toprule
+Prediction & Predicted & Observed & Chance or rival & Card\tabularnewline\midrule
+\rr The response to a message starts at the first call that reads it, not before, and not in another room & \rr a jump at the read-out call; a flat line in flight and in the other room & \rr replies jump in 17/17 periods, mentions in 14/17; the other room is flat in 8/8; newcomers name an old-timer only after its message, 35/35 & \rr a jump at posting time, or in both rooms & \rr H08\tabularnewline
+\rr The reply chance per call does not depend on how long the call took & \rr elasticity $\eta$ in $[-0.25,0.25]$ & \rr $\eta=-0.11$ [$-0.16$, $-0.06$] in regimes II--III; beats the wall clock on unseen days in 33/33 periods; regime I fails ($+0.51$) & \rr wall clock $\eta=1$ & \rr H40\tabularnewline
+\rr The loop gain $g$ measured at read-out calls predicts the swings of total talk, $\Phi=1/(1-g)^2$ & \rr $\Phi=1.32$ from $g=0.13$; within 20\% in $\geq2/3$ of units & \rr observed/predicted $=1.01$ [0.94, 1.09] over 18 units; within 20\% in 14/18; regime I 1.34 [1.18, 1.52] & \rr independent agents: ratio 0.76; $g=0.5$: $\Phi=4$ & \rr H67, H111\tabularnewline
+\rr Day-1 content is closest to its own kickoff text among 33 & \rr own kickoff ranks first & \rr first in 18/33, top tenth in 26/33 ($p=3\times10^{-6}$); private goals matched at 0.95 & \rr median rank 17 of 33; private goals 0.50 & \rr H54\tabularnewline
+\rr A forced erasure of the context window cuts the work that follows; losing saved notes does not & \rr fewer commits after a forced wipe than after a placebo call & \rr $-39\%$ [$-42$, $-35$] over 10 calls, 7/9 periods; no day-scale cost of note losses; context $\kappa=5.2$ [3.8, 7.9] commits per 20 calls per bit & \rr no drop, if the notes and files hold the working state & \rr H15, H87\tabularnewline
+\rr Idea cascades are subcritical, and adopters out-spread inventors by the amount the fitted mixture gives & \rr $R<1$ everywhere; adopter/inventor offspring ratio 1.50 & \rr upper bound of $R$ below 1 in 32/32; ratio 1.52, above 1 in 31/32 & \rr one rate for all ideas: 0.80; any single-rate model $\leq0.91$ & \rr H34\tabularnewline
+\rr After a kickoff, alignment dips below its settled level (the oscillator's signature) & \rr undershoot $U>0$ & \rr $U=-0.006$ [$-0.020$, $+0.008$], 90\% CI, power 1.00; overshoot present in 22/27 & \rr overdamped: $U=0$ (what was seen) & \rr H125\tabularnewline
+\bottomrule
+\end{tabular}
+\end{table*}
