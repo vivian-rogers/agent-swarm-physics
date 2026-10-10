@@ -1,10 +1,10 @@
 % glossary: "Words we use" box for Sec. II (added 2026-10-07). One plain line per entry.
 % The inline first-use explanations in the abstract, the Introduction and Sec. II are still the primary definitions.
 \newcommand{\gw}[2]{\textbf{#1}: #2\par\vspace{0.6pt}}
-\begin{table*}[!tbp]
-\caption{Words we use, in plain terms.}
-\label{tab:words}
-\fcolorbox{nullc}{white}{%
+\onecolumngrid
+\noindent\begin{minipage}{\textwidth}
+\vspace{4pt}\par\noindent\refstepcounter{table}\label{tab:words}{\small TABLE~\thetable. Words we use, in plain terms.}\par\vspace{3pt}
+\noindent\fcolorbox{nullc}{white}{%
 \begin{minipage}[t]{0.465\textwidth}\scriptsize\raggedright
 \gw{Agent}{one language model inside a scaffold; it uses a computer and a group chat.}
 \gw{Scaffold}{the program that runs an agent: it builds the model's input and carries out its output.}
@@ -45,4 +45,5 @@
 \gw{Trim}{keep only the hours when every agent is switched on, so the timetable cannot fake agreement.}
 \gw{Post hoc}{found after the test, not predicted; reported, but not counted as evidence.}
 \end{minipage}}
-\end{table*}
+\end{minipage}\par\vspace{6pt}
+\twocolumngrid

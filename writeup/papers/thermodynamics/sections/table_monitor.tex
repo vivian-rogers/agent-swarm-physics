@@ -7,10 +7,10 @@
 \DeclareRobustCommand{\rk}[1]{\tikz[baseline=-0.6ex]{\rkdot{#1}{1}\rkdot{#1}{2}\rkdot{#1}{3}}}
 \newcommand{\grp}[1]{\multicolumn{7}{@{}l}{\rule{0pt}{2.3ex}\textsc{#1}}\tabularnewline[1pt]}
 \newcommand{\nt}{$^\dagger$}
-\begin{table*}[!tp]
-\caption{Quantities for operators to watch, grouped by what they measure and sorted by faithfulness. Values are exploratory. \emph{Estimated on}: the goal periods (\#), units (a period or its part between scaffold changes) or events behind each value, all outside the reserved data. \emph{F} (faithfulness): \rk{3} a pre-registered test beats the strongest null and a statistic the model did not fit agrees, in many periods; \rk{2} it beats the strongest null, but the test is post hoc or fragile, or covers few periods; \rk{1} post hoc in one period, or not measured. \emph{U} (usefulness to an operator): \rk{3} an alarm with a measured false-alarm rate, or a lever with a measured effect; \rk{2} an early warning whose action is untested; \rk{1} a description only. \nt\,The action has not been tested.}
-\label{tab:monitor}
-\footnotesize\renewcommand{\arraystretch}{1.0}
+\onecolumngrid
+\noindent\begin{minipage}{\textwidth}
+\vspace{4pt}\par\noindent\refstepcounter{table}\label{tab:monitor}{\small TABLE~\thetable. Quantities for operators to watch, grouped by what they measure and sorted by faithfulness. Values are exploratory. \emph{Estimated on}: the goal periods (\#), units (a period or its part between scaffold changes) or events behind each value, all outside the reserved data. \emph{F} (faithfulness): \rk{3} a pre-registered test beats the strongest null and a statistic the model did not fit agrees, in many periods; \rk{2} it beats the strongest null, but the test is post hoc or fragile, or covers few periods; \rk{1} post hoc in one period, or not measured. \emph{U} (usefulness to an operator): \rk{3} an alarm with a measured false-alarm rate, or a lever with a measured effect; \rk{2} an early warning whose action is untested; \rk{1} a description only. \nt\,The action has not been tested.}\par\vspace{3pt}
+\noindent\footnotesize\renewcommand{\arraystretch}{1.0}
 \begin{tabular}{@{}p{0.155\textwidth}p{0.19\textwidth}p{0.15\textwidth}p{0.17\textwidth}p{0.205\textwidth}@{\hspace{5pt}}c@{\hspace{5pt}}c@{}}
 \toprule
 Quantity & Value & Estimated on & Warning sign & What to do & F & U\tabularnewline\midrule
@@ -36,4 +36,5 @@ Quantity & Value & Estimated on & Warning sign & What to do & F & U\tabularnewli
 \rr Mode lifetimes $\tau_k$ & \rr not measured; one slow mode, $\tau\approx23$--28\,d (H81) & \rr regime I, 24 periods, \#2--\#31 & \rr shows what persists, not only what moves together & \rr No action yet. & \rk{1} & \rk{1}\tabularnewline[1.3pt]
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{minipage}\par\vspace{6pt}
+\twocolumngrid

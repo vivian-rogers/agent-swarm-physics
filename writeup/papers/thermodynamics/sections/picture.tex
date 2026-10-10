@@ -1,14 +1,13 @@
-% picture: "What the system is" -- the effective picture, built model by model (M02+09, 11+01, 16, 17),
+% picture: "The most faithful models" -- the effective picture, built model by model (M02+09, 11+01, 16, 17),
 % then the ranked observables. ASD-STE100 rules as in intro.tex. Revised 2026-10-07.
 % Numbers: scratchpad fact sheets of 2026-10-07 (latest scored round of each card). Derived values are labeled "derived".
 % Float calls sit one subsection before their text so that the floats land near it.
-\section{What the system is}\label{sec:picture}
+\section{The most faithful models}\label{sec:picture}
 
-This section builds the effective picture, one model at a time (Fig.~\ref{fig:picture}). We name each physics model by its folder number: M02 is model 02, the kinetic Ising model, and so on up to M17 (Table~\ref{tab:models} lists all 17). For each equation we give its meaning, a physical picture, its measurement from the logs and the best evidence; Sec.~\ref{sec:models} gives the full evidence. Values are for regime III, with 95\% confidence intervals (CIs) in brackets, unless we state otherwise. Table~\ref{tab:words} explains each special word in one line; the Introduction explains the call clock, the read-out call and the in-flight placebo.
-
+This section gives the four models that proved most faithful, one at a time, and the picture they make together (Fig.~\ref{fig:picture}). Faithful means that the model beat its strongest null and predicted statistics that it was not fitted to (Sec.~\ref{sec:faith}); it does not mean that the model says what the swarm is. We name each physics model by its folder number: M02 is model 02, the kinetic Ising model, and so on up to M17 (Table~\ref{tab:models} lists all 17). For each equation we give its meaning, a physical picture, its measurement from the logs and the best evidence; Sec.~\ref{sec:models} gives the full evidence. Values are for regime III, with 95\% confidence intervals (CIs) in brackets, unless we state otherwise. Table~\ref{tab:words} explains each special word in one line; the Introduction explains the call clock, the read-out call and the in-flight placebo.
 \input{sections/glossary}
+
 \input{sections/fig_picture}
-\input{sections/table_monitor}
 \begin{figure}[t]
 \centering\includegraphics[width=\columnwidth]{js/s2_readout_example.pdf}
 \caption{A message acts at the read-out call of its reader (M02, H08). One message of goal period 38 (star) and the calls of its room-mates (bars). Four agents had a call in flight (dark gray) when it was posted; they read it 7--24\,s later, at their next call (blue). Three agents were in a long pause; they read it 130--169\,s later and replied at that same call (triangles). Figure~\ref{fig:readoutjump} shows the same step in 17 periods.}
@@ -153,4 +152,4 @@ Two results from partly useful models complete the picture (Sec.~\ref{sec:partia
 The picture is also a design rule. On the evidence so far, the way to make a swarm coordinate is through the field: write the kickoff, name the agents you want to move, and keep their context windows intact. The chat between agents adds little at these sizes, and the chat-based levers (nudges, corrections) move almost nothing. If independence is the goal, the shared inputs are what to remove, not the chat. We have not tested these design rules as interventions; they are what the fitted picture implies.
 
 Table~\ref{tab:monitor} turns the picture into 16 ranked observables, each one number per goal period or week. Appendix~\ref{app:observables} gives the full definitions and proposed alarm levels.
-
+\input{sections/table_monitor}
